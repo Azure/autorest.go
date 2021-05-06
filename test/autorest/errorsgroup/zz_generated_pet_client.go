@@ -29,6 +29,8 @@ func NewPetClient(con *Connection) *PetClient {
 }
 
 // DoSomething - Asks pet to do something
+// If the operation fails it returns one of the following error types.
+// - *PetActionError, *PetHungryOrThirstyError, *PetSadError
 func (client *PetClient) DoSomething(ctx context.Context, whatAction string, options *PetDoSomethingOptions) (PetActionResponse, error) {
 	req, err := client.doSomethingCreateRequest(ctx, whatAction, options)
 	if err != nil {
@@ -83,6 +85,8 @@ func (client *PetClient) doSomethingHandleError(resp *azcore.Response) error {
 }
 
 // GetPetByID - Gets pets by id.
+// If the operation fails it returns one of the following error types.
+// - *AnimalNotFound, *LinkNotFound, *NotFoundErrorBase
 func (client *PetClient) GetPetByID(ctx context.Context, petID string, options *PetGetPetByIDOptions) (PetResponse, error) {
 	req, err := client.getPetByIDCreateRequest(ctx, petID, options)
 	if err != nil {

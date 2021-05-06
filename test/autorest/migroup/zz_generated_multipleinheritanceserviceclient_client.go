@@ -27,6 +27,7 @@ func NewMultipleInheritanceServiceClient(con *Connection) *MultipleInheritanceSe
 }
 
 // GetCat - Get a cat with name 'Whiskers' where likesMilk, meows, and hisses is true
+// If the operation fails it returns the *Error error type.
 func (client *MultipleInheritanceServiceClient) GetCat(ctx context.Context, options *MultipleInheritanceServiceClientGetCatOptions) (CatResponse, error) {
 	req, err := client.getCatCreateRequest(ctx, options)
 	if err != nil {
@@ -77,6 +78,7 @@ func (client *MultipleInheritanceServiceClient) getCatHandleError(resp *azcore.R
 }
 
 // GetFeline - Get a feline where meows and hisses are true
+// If the operation fails it returns the *Error error type.
 func (client *MultipleInheritanceServiceClient) GetFeline(ctx context.Context, options *MultipleInheritanceServiceClientGetFelineOptions) (FelineResponse, error) {
 	req, err := client.getFelineCreateRequest(ctx, options)
 	if err != nil {
@@ -127,6 +129,7 @@ func (client *MultipleInheritanceServiceClient) getFelineHandleError(resp *azcor
 }
 
 // GetHorse - Get a horse with name 'Fred' and isAShowHorse true
+// If the operation fails it returns the *Error error type.
 func (client *MultipleInheritanceServiceClient) GetHorse(ctx context.Context, options *MultipleInheritanceServiceClientGetHorseOptions) (HorseResponse, error) {
 	req, err := client.getHorseCreateRequest(ctx, options)
 	if err != nil {
@@ -177,6 +180,7 @@ func (client *MultipleInheritanceServiceClient) getHorseHandleError(resp *azcore
 }
 
 // GetKitten - Get a kitten with name 'Gatito' where likesMilk and meows is true, and hisses and eatsMiceYet is false
+// If the operation fails it returns the *Error error type.
 func (client *MultipleInheritanceServiceClient) GetKitten(ctx context.Context, options *MultipleInheritanceServiceClientGetKittenOptions) (KittenResponse, error) {
 	req, err := client.getKittenCreateRequest(ctx, options)
 	if err != nil {
@@ -227,6 +231,7 @@ func (client *MultipleInheritanceServiceClient) getKittenHandleError(resp *azcor
 }
 
 // GetPet - Get a pet with name 'Peanut'
+// If the operation fails it returns the *Error error type.
 func (client *MultipleInheritanceServiceClient) GetPet(ctx context.Context, options *MultipleInheritanceServiceClientGetPetOptions) (PetResponse, error) {
 	req, err := client.getPetCreateRequest(ctx, options)
 	if err != nil {
@@ -277,6 +282,7 @@ func (client *MultipleInheritanceServiceClient) getPetHandleError(resp *azcore.R
 }
 
 // PutCat - Put a cat with name 'Boots' where likesMilk and hisses is false, meows is true
+// If the operation fails it returns a generic error.
 func (client *MultipleInheritanceServiceClient) PutCat(ctx context.Context, cat Cat, options *MultipleInheritanceServiceClientPutCatOptions) (StringResponse, error) {
 	req, err := client.putCatCreateRequest(ctx, cat, options)
 	if err != nil {
@@ -326,6 +332,7 @@ func (client *MultipleInheritanceServiceClient) putCatHandleError(resp *azcore.R
 }
 
 // PutFeline - Put a feline who hisses and doesn't meow
+// If the operation fails it returns a generic error.
 func (client *MultipleInheritanceServiceClient) PutFeline(ctx context.Context, feline Feline, options *MultipleInheritanceServiceClientPutFelineOptions) (StringResponse, error) {
 	req, err := client.putFelineCreateRequest(ctx, feline, options)
 	if err != nil {
@@ -375,6 +382,7 @@ func (client *MultipleInheritanceServiceClient) putFelineHandleError(resp *azcor
 }
 
 // PutHorse - Put a horse with name 'General' and isAShowHorse false
+// If the operation fails it returns a generic error.
 func (client *MultipleInheritanceServiceClient) PutHorse(ctx context.Context, horse Horse, options *MultipleInheritanceServiceClientPutHorseOptions) (StringResponse, error) {
 	req, err := client.putHorseCreateRequest(ctx, horse, options)
 	if err != nil {
@@ -424,6 +432,7 @@ func (client *MultipleInheritanceServiceClient) putHorseHandleError(resp *azcore
 }
 
 // PutKitten - Put a kitten with name 'Kitty' where likesMilk and hisses is false, meows and eatsMiceYet is true
+// If the operation fails it returns a generic error.
 func (client *MultipleInheritanceServiceClient) PutKitten(ctx context.Context, kitten Kitten, options *MultipleInheritanceServiceClientPutKittenOptions) (StringResponse, error) {
 	req, err := client.putKittenCreateRequest(ctx, kitten, options)
 	if err != nil {
@@ -473,6 +482,7 @@ func (client *MultipleInheritanceServiceClient) putKittenHandleError(resp *azcor
 }
 
 // PutPet - Put a pet with name 'Butter'
+// If the operation fails it returns a generic error.
 func (client *MultipleInheritanceServiceClient) PutPet(ctx context.Context, pet Pet, options *MultipleInheritanceServiceClientPutPetOptions) (StringResponse, error) {
 	req, err := client.putPetCreateRequest(ctx, pet, options)
 	if err != nil {

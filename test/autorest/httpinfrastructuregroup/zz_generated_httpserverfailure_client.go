@@ -26,6 +26,7 @@ func NewHTTPServerFailureClient(con *Connection) *HTTPServerFailureClient {
 }
 
 // Delete505 - Return 505 status code - should be represented in the client as an error
+// If the operation fails it returns the *Error error type.
 func (client *HTTPServerFailureClient) Delete505(ctx context.Context, options *HTTPServerFailureDelete505Options) (*http.Response, error) {
 	req, err := client.delete505CreateRequest(ctx, options)
 	if err != nil {
@@ -67,6 +68,7 @@ func (client *HTTPServerFailureClient) delete505HandleError(resp *azcore.Respons
 }
 
 // Get501 - Return 501 status code - should be represented in the client as an error
+// If the operation fails it returns the *Error error type.
 func (client *HTTPServerFailureClient) Get501(ctx context.Context, options *HTTPServerFailureGet501Options) (*http.Response, error) {
 	req, err := client.get501CreateRequest(ctx, options)
 	if err != nil {
@@ -108,6 +110,7 @@ func (client *HTTPServerFailureClient) get501HandleError(resp *azcore.Response) 
 }
 
 // Head501 - Return 501 status code - should be represented in the client as an error
+// If the operation fails it returns the *Error error type.
 func (client *HTTPServerFailureClient) Head501(ctx context.Context, options *HTTPServerFailureHead501Options) (*http.Response, error) {
 	req, err := client.head501CreateRequest(ctx, options)
 	if err != nil {
@@ -149,6 +152,7 @@ func (client *HTTPServerFailureClient) head501HandleError(resp *azcore.Response)
 }
 
 // Post505 - Return 505 status code - should be represented in the client as an error
+// If the operation fails it returns the *Error error type.
 func (client *HTTPServerFailureClient) Post505(ctx context.Context, options *HTTPServerFailurePost505Options) (*http.Response, error) {
 	req, err := client.post505CreateRequest(ctx, options)
 	if err != nil {

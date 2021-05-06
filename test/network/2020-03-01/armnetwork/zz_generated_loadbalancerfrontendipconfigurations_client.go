@@ -31,6 +31,7 @@ func NewLoadBalancerFrontendIPConfigurationsClient(con *armcore.Connection, subs
 }
 
 // Get - Gets load balancer frontend IP configuration.
+// If the operation fails it returns the *CloudError error type.
 func (client *LoadBalancerFrontendIPConfigurationsClient) Get(ctx context.Context, resourceGroupName string, loadBalancerName string, frontendIPConfigurationName string, options *LoadBalancerFrontendIPConfigurationsGetOptions) (FrontendIPConfigurationResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, loadBalancerName, frontendIPConfigurationName, options)
 	if err != nil {
@@ -100,6 +101,7 @@ func (client *LoadBalancerFrontendIPConfigurationsClient) getHandleError(resp *a
 }
 
 // List - Gets all the load balancer frontend IP configurations.
+// If the operation fails it returns the *CloudError error type.
 func (client *LoadBalancerFrontendIPConfigurationsClient) List(resourceGroupName string, loadBalancerName string, options *LoadBalancerFrontendIPConfigurationsListOptions) LoadBalancerFrontendIPConfigurationListResultPager {
 	return &loadBalancerFrontendIPConfigurationListResultPager{
 		pipeline: client.con.Pipeline(),

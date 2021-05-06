@@ -29,6 +29,7 @@ func NewComplexModelClient(con *Connection) *ComplexModelClient {
 }
 
 // Create - Resets products.
+// If the operation fails it returns the *Error error type.
 func (client *ComplexModelClient) Create(ctx context.Context, subscriptionID string, resourceGroupName string, bodyParameter CatalogDictionaryOfArray, options *ComplexModelClientCreateOptions) (CatalogDictionaryResponse, error) {
 	req, err := client.createCreateRequest(ctx, subscriptionID, resourceGroupName, bodyParameter, options)
 	if err != nil {
@@ -92,6 +93,7 @@ func (client *ComplexModelClient) createHandleError(resp *azcore.Response) error
 // List - The Products endpoint returns information about the Uber products offered at a given location. The response includes the display name and other
 // details about each product, and lists the products in
 // the proper display order.
+// If the operation fails it returns the *Error error type.
 func (client *ComplexModelClient) List(ctx context.Context, resourceGroupName string, options *ComplexModelClientListOptions) (CatalogArrayResponse, error) {
 	req, err := client.listCreateRequest(ctx, resourceGroupName, options)
 	if err != nil {
@@ -150,6 +152,7 @@ func (client *ComplexModelClient) listHandleError(resp *azcore.Response) error {
 }
 
 // Update - Resets products.
+// If the operation fails it returns the *Error error type.
 func (client *ComplexModelClient) Update(ctx context.Context, subscriptionID string, resourceGroupName string, bodyParameter CatalogArrayOfDictionary, options *ComplexModelClientUpdateOptions) (CatalogArrayResponse, error) {
 	req, err := client.updateCreateRequest(ctx, subscriptionID, resourceGroupName, bodyParameter, options)
 	if err != nil {

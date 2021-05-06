@@ -24,6 +24,7 @@ type appendBlobClient struct {
 // AppendBlock - The Append Block operation commits a new block of data to the end of an existing append blob. The Append Block operation is permitted only
 // if the blob was created with x-ms-blob-type set to
 // AppendBlob. Append Block is supported only on version 2015-02-21 version or later.
+// If the operation fails it returns the *StorageError error type.
 func (client *appendBlobClient) AppendBlock(ctx context.Context, contentLength int64, body azcore.ReadSeekCloser, appendBlobAppendBlockOptions *AppendBlobAppendBlockOptions, leaseAccessConditions *LeaseAccessConditions, appendPositionAccessConditions *AppendPositionAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (AppendBlobAppendBlockResponse, error) {
 	req, err := client.appendBlockCreateRequest(ctx, contentLength, body, appendBlobAppendBlockOptions, leaseAccessConditions, appendPositionAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
 	if err != nil {
@@ -189,6 +190,7 @@ func (client *appendBlobClient) appendBlockHandleError(resp *azcore.Response) er
 // AppendBlockFromURL - The Append Block operation commits a new block of data to the end of an existing append blob where the contents are read from a
 // source url. The Append Block operation is permitted only if the blob was
 // created with x-ms-blob-type set to AppendBlob. Append Block is supported only on version 2015-02-21 version or later.
+// If the operation fails it returns the *StorageError error type.
 func (client *appendBlobClient) AppendBlockFromURL(ctx context.Context, sourceURL string, contentLength int64, appendBlobAppendBlockFromURLOptions *AppendBlobAppendBlockFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, appendPositionAccessConditions *AppendPositionAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (AppendBlobAppendBlockFromURLResponse, error) {
 	req, err := client.appendBlockFromURLCreateRequest(ctx, sourceURL, contentLength, appendBlobAppendBlockFromURLOptions, cpkInfo, cpkScopeInfo, leaseAccessConditions, appendPositionAccessConditions, modifiedAccessConditions, sourceModifiedAccessConditions)
 	if err != nil {
@@ -368,6 +370,7 @@ func (client *appendBlobClient) appendBlockFromURLHandleError(resp *azcore.Respo
 }
 
 // Create - The Create Append Blob operation creates a new append blob.
+// If the operation fails it returns the *StorageError error type.
 func (client *appendBlobClient) Create(ctx context.Context, contentLength int64, appendBlobCreateOptions *AppendBlobCreateOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (AppendBlobCreateResponse, error) {
 	req, err := client.createCreateRequest(ctx, contentLength, appendBlobCreateOptions, blobHTTPHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
 	if err != nil {
@@ -539,6 +542,7 @@ func (client *appendBlobClient) createHandleError(resp *azcore.Response) error {
 }
 
 // Seal - The Seal operation seals the Append Blob to make it read-only. Seal is supported only on version 2019-12-12 version or later.
+// If the operation fails it returns the *StorageError error type.
 func (client *appendBlobClient) Seal(ctx context.Context, appendBlobSealOptions *AppendBlobSealOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, appendPositionAccessConditions *AppendPositionAccessConditions) (AppendBlobSealResponse, error) {
 	req, err := client.sealCreateRequest(ctx, appendBlobSealOptions, leaseAccessConditions, modifiedAccessConditions, appendPositionAccessConditions)
 	if err != nil {

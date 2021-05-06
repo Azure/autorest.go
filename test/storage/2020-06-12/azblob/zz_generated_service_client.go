@@ -24,6 +24,7 @@ type serviceClient struct {
 // FilterBlobs - The Filter Blobs operation enables callers to list blobs across all containers whose tags match a given search expression. Filter blobs
 // searches across all containers within a storage account but can
 // be scoped within the expression to a single container.
+// If the operation fails it returns the *StorageError error type.
 func (client *serviceClient) FilterBlobs(ctx context.Context, options *ServiceFilterBlobsOptions) (FilterBlobSegmentResponse, error) {
 	req, err := client.filterBlobsCreateRequest(ctx, options)
 	if err != nil {
@@ -109,6 +110,7 @@ func (client *serviceClient) filterBlobsHandleError(resp *azcore.Response) error
 }
 
 // GetAccountInfo - Returns the sku name and account kind
+// If the operation fails it returns the *StorageError error type.
 func (client *serviceClient) GetAccountInfo(ctx context.Context, options *ServiceGetAccountInfoOptions) (ServiceGetAccountInfoResponse, error) {
 	req, err := client.getAccountInfoCreateRequest(ctx, options)
 	if err != nil {
@@ -190,6 +192,7 @@ func (client *serviceClient) getAccountInfoHandleError(resp *azcore.Response) er
 
 // GetProperties - gets the properties of a storage account's Blob service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing)
 // rules.
+// If the operation fails it returns the *StorageError error type.
 func (client *serviceClient) GetProperties(ctx context.Context, options *ServiceGetPropertiesOptions) (StorageServicePropertiesResponse, error) {
 	req, err := client.getPropertiesCreateRequest(ctx, options)
 	if err != nil {
@@ -261,6 +264,7 @@ func (client *serviceClient) getPropertiesHandleError(resp *azcore.Response) err
 
 // GetStatistics - Retrieves statistics related to replication for the Blob service. It is only available on the secondary location endpoint when read-access
 // geo-redundant replication is enabled for the storage account.
+// If the operation fails it returns the *StorageError error type.
 func (client *serviceClient) GetStatistics(ctx context.Context, options *ServiceGetStatisticsOptions) (StorageServiceStatsResponse, error) {
 	req, err := client.getStatisticsCreateRequest(ctx, options)
 	if err != nil {
@@ -338,6 +342,7 @@ func (client *serviceClient) getStatisticsHandleError(resp *azcore.Response) err
 }
 
 // GetUserDelegationKey - Retrieves a user delegation key for the Blob service. This is only a valid operation when using bearer token authentication.
+// If the operation fails it returns the *StorageError error type.
 func (client *serviceClient) GetUserDelegationKey(ctx context.Context, keyInfo KeyInfo, options *ServiceGetUserDelegationKeyOptions) (UserDelegationKeyResponse, error) {
 	req, err := client.getUserDelegationKeyCreateRequest(ctx, keyInfo, options)
 	if err != nil {
@@ -415,6 +420,7 @@ func (client *serviceClient) getUserDelegationKeyHandleError(resp *azcore.Respon
 }
 
 // ListContainersSegment - The List Containers Segment operation returns a list of the containers under the specified account
+// If the operation fails it returns the *StorageError error type.
 func (client *serviceClient) ListContainersSegment(options *ServiceListContainersSegmentOptions) ListContainersSegmentResponsePager {
 	return &listContainersSegmentResponsePager{
 		pipeline: client.con.Pipeline(),
@@ -497,6 +503,7 @@ func (client *serviceClient) listContainersSegmentHandleError(resp *azcore.Respo
 
 // SetProperties - Sets properties for a storage account's Blob service endpoint, including properties for Storage Analytics and CORS (Cross-Origin Resource
 // Sharing) rules
+// If the operation fails it returns the *StorageError error type.
 func (client *serviceClient) SetProperties(ctx context.Context, storageServiceProperties StorageServiceProperties, options *ServiceSetPropertiesOptions) (ServiceSetPropertiesResponse, error) {
 	req, err := client.setPropertiesCreateRequest(ctx, storageServiceProperties, options)
 	if err != nil {
@@ -563,6 +570,7 @@ func (client *serviceClient) setPropertiesHandleError(resp *azcore.Response) err
 }
 
 // SubmitBatch - The Batch operation allows multiple API calls to be embedded into a single HTTP request.
+// If the operation fails it returns the *StorageError error type.
 func (client *serviceClient) SubmitBatch(ctx context.Context, contentLength int64, multipartContentType string, body azcore.ReadSeekCloser, options *ServiceSubmitBatchOptions) (ServiceSubmitBatchResponse, error) {
 	req, err := client.submitBatchCreateRequest(ctx, contentLength, multipartContentType, body, options)
 	if err != nil {

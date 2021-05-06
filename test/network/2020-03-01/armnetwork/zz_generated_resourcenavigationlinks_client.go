@@ -31,6 +31,7 @@ func NewResourceNavigationLinksClient(con *armcore.Connection, subscriptionID st
 }
 
 // List - Gets a list of resource navigation links for a subnet.
+// If the operation fails it returns the *CloudError error type.
 func (client *ResourceNavigationLinksClient) List(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, options *ResourceNavigationLinksListOptions) (ResourceNavigationLinksListResultResponse, error) {
 	req, err := client.listCreateRequest(ctx, resourceGroupName, virtualNetworkName, subnetName, options)
 	if err != nil {

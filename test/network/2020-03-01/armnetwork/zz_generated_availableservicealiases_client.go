@@ -31,6 +31,7 @@ func NewAvailableServiceAliasesClient(con *armcore.Connection, subscriptionID st
 }
 
 // List - Gets all available service aliases for this subscription in this region.
+// If the operation fails it returns the *CloudError error type.
 func (client *AvailableServiceAliasesClient) List(location string, options *AvailableServiceAliasesListOptions) AvailableServiceAliasesResultPager {
 	return &availableServiceAliasesResultPager{
 		pipeline: client.con.Pipeline(),
@@ -92,6 +93,7 @@ func (client *AvailableServiceAliasesClient) listHandleError(resp *azcore.Respon
 }
 
 // ListByResourceGroup - Gets all available service aliases for this resource group in this region.
+// If the operation fails it returns the *CloudError error type.
 func (client *AvailableServiceAliasesClient) ListByResourceGroup(resourceGroupName string, location string, options *AvailableServiceAliasesListByResourceGroupOptions) AvailableServiceAliasesResultPager {
 	return &availableServiceAliasesResultPager{
 		pipeline: client.con.Pipeline(),

@@ -32,6 +32,7 @@ func NewNetworkSecurityGroupsClient(con *armcore.Connection, subscriptionID stri
 }
 
 // BeginCreateOrUpdate - Creates or updates a network security group in the specified resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkSecurityGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, parameters NetworkSecurityGroup, options *NetworkSecurityGroupsBeginCreateOrUpdateOptions) (NetworkSecurityGroupPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, networkSecurityGroupName, parameters, options)
 	if err != nil {
@@ -81,6 +82,7 @@ func (client *NetworkSecurityGroupsClient) ResumeCreateOrUpdate(ctx context.Cont
 }
 
 // CreateOrUpdate - Creates or updates a network security group in the specified resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkSecurityGroupsClient) createOrUpdate(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, parameters NetworkSecurityGroup, options *NetworkSecurityGroupsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, networkSecurityGroupName, parameters, options)
 	if err != nil {
@@ -146,6 +148,7 @@ func (client *NetworkSecurityGroupsClient) createOrUpdateHandleError(resp *azcor
 }
 
 // BeginDelete - Deletes the specified network security group.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkSecurityGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, options *NetworkSecurityGroupsBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, networkSecurityGroupName, options)
 	if err != nil {
@@ -195,6 +198,7 @@ func (client *NetworkSecurityGroupsClient) ResumeDelete(ctx context.Context, tok
 }
 
 // Delete - Deletes the specified network security group.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkSecurityGroupsClient) deleteOperation(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, options *NetworkSecurityGroupsBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, networkSecurityGroupName, options)
 	if err != nil {
@@ -251,6 +255,7 @@ func (client *NetworkSecurityGroupsClient) deleteHandleError(resp *azcore.Respon
 }
 
 // Get - Gets the specified network security group.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkSecurityGroupsClient) Get(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, options *NetworkSecurityGroupsGetOptions) (NetworkSecurityGroupResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkSecurityGroupName, options)
 	if err != nil {
@@ -319,6 +324,7 @@ func (client *NetworkSecurityGroupsClient) getHandleError(resp *azcore.Response)
 }
 
 // List - Gets all network security groups in a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkSecurityGroupsClient) List(resourceGroupName string, options *NetworkSecurityGroupsListOptions) NetworkSecurityGroupListResultPager {
 	return &networkSecurityGroupListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -380,6 +386,7 @@ func (client *NetworkSecurityGroupsClient) listHandleError(resp *azcore.Response
 }
 
 // ListAll - Gets all network security groups in a subscription.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkSecurityGroupsClient) ListAll(options *NetworkSecurityGroupsListAllOptions) NetworkSecurityGroupListResultPager {
 	return &networkSecurityGroupListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -437,6 +444,7 @@ func (client *NetworkSecurityGroupsClient) listAllHandleError(resp *azcore.Respo
 }
 
 // UpdateTags - Updates a network security group tags.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkSecurityGroupsClient) UpdateTags(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, parameters TagsObject, options *NetworkSecurityGroupsUpdateTagsOptions) (NetworkSecurityGroupResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, networkSecurityGroupName, parameters, options)
 	if err != nil {

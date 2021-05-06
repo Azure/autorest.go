@@ -27,6 +27,7 @@ func NewOperationsClient(con *armcore.Connection) *OperationsClient {
 }
 
 // List - Lists all of the available Network Rest API operations.
+// If the operation fails it returns the *CloudError error type.
 func (client *OperationsClient) List(options *OperationsListOptions) OperationListResultPager {
 	return &operationListResultPager{
 		pipeline: client.con.Pipeline(),

@@ -32,6 +32,7 @@ func NewIPAllocationsClient(con *armcore.Connection, subscriptionID string) *IPA
 }
 
 // BeginCreateOrUpdate - Creates or updates an IpAllocation in the specified resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *IPAllocationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ipAllocationName string, parameters IPAllocation, options *IPAllocationsBeginCreateOrUpdateOptions) (IPAllocationPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, ipAllocationName, parameters, options)
 	if err != nil {
@@ -81,6 +82,7 @@ func (client *IPAllocationsClient) ResumeCreateOrUpdate(ctx context.Context, tok
 }
 
 // CreateOrUpdate - Creates or updates an IpAllocation in the specified resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *IPAllocationsClient) createOrUpdate(ctx context.Context, resourceGroupName string, ipAllocationName string, parameters IPAllocation, options *IPAllocationsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, ipAllocationName, parameters, options)
 	if err != nil {
@@ -146,6 +148,7 @@ func (client *IPAllocationsClient) createOrUpdateHandleError(resp *azcore.Respon
 }
 
 // BeginDelete - Deletes the specified IpAllocation.
+// If the operation fails it returns the *CloudError error type.
 func (client *IPAllocationsClient) BeginDelete(ctx context.Context, resourceGroupName string, ipAllocationName string, options *IPAllocationsBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, ipAllocationName, options)
 	if err != nil {
@@ -195,6 +198,7 @@ func (client *IPAllocationsClient) ResumeDelete(ctx context.Context, token strin
 }
 
 // Delete - Deletes the specified IpAllocation.
+// If the operation fails it returns the *CloudError error type.
 func (client *IPAllocationsClient) deleteOperation(ctx context.Context, resourceGroupName string, ipAllocationName string, options *IPAllocationsBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, ipAllocationName, options)
 	if err != nil {
@@ -251,6 +255,7 @@ func (client *IPAllocationsClient) deleteHandleError(resp *azcore.Response) erro
 }
 
 // Get - Gets the specified IpAllocation by resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *IPAllocationsClient) Get(ctx context.Context, resourceGroupName string, ipAllocationName string, options *IPAllocationsGetOptions) (IPAllocationResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, ipAllocationName, options)
 	if err != nil {
@@ -319,6 +324,7 @@ func (client *IPAllocationsClient) getHandleError(resp *azcore.Response) error {
 }
 
 // List - Gets all IpAllocations in a subscription.
+// If the operation fails it returns the *CloudError error type.
 func (client *IPAllocationsClient) List(options *IPAllocationsListOptions) IPAllocationListResultPager {
 	return &ipAllocationListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -376,6 +382,7 @@ func (client *IPAllocationsClient) listHandleError(resp *azcore.Response) error 
 }
 
 // ListByResourceGroup - Gets all IpAllocations in a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *IPAllocationsClient) ListByResourceGroup(resourceGroupName string, options *IPAllocationsListByResourceGroupOptions) IPAllocationListResultPager {
 	return &ipAllocationListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -437,6 +444,7 @@ func (client *IPAllocationsClient) listByResourceGroupHandleError(resp *azcore.R
 }
 
 // UpdateTags - Updates a IpAllocation tags.
+// If the operation fails it returns the *CloudError error type.
 func (client *IPAllocationsClient) UpdateTags(ctx context.Context, resourceGroupName string, ipAllocationName string, parameters TagsObject, options *IPAllocationsUpdateTagsOptions) (IPAllocationResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, ipAllocationName, parameters, options)
 	if err != nil {

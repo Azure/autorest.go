@@ -27,6 +27,7 @@ func NewOperationsClient(con *armcore.Connection) *OperationsClient {
 }
 
 // List - Gets a list of compute operations.
+// If the operation fails it returns a generic error.
 func (client *OperationsClient) List(ctx context.Context, options *OperationsListOptions) (ComputeOperationListResultResponse, error) {
 	req, err := client.listCreateRequest(ctx, options)
 	if err != nil {

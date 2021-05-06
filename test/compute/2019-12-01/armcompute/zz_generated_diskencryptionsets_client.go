@@ -32,6 +32,7 @@ func NewDiskEncryptionSetsClient(con *armcore.Connection, subscriptionID string)
 }
 
 // BeginCreateOrUpdate - Creates or updates a disk encryption set
+// If the operation fails it returns the *CloudError error type.
 func (client *DiskEncryptionSetsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet DiskEncryptionSet, options *DiskEncryptionSetsBeginCreateOrUpdateOptions) (DiskEncryptionSetPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, diskEncryptionSetName, diskEncryptionSet, options)
 	if err != nil {
@@ -81,6 +82,7 @@ func (client *DiskEncryptionSetsClient) ResumeCreateOrUpdate(ctx context.Context
 }
 
 // CreateOrUpdate - Creates or updates a disk encryption set
+// If the operation fails it returns the *CloudError error type.
 func (client *DiskEncryptionSetsClient) createOrUpdate(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet DiskEncryptionSet, options *DiskEncryptionSetsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, diskEncryptionSetName, diskEncryptionSet, options)
 	if err != nil {
@@ -146,6 +148,7 @@ func (client *DiskEncryptionSetsClient) createOrUpdateHandleError(resp *azcore.R
 }
 
 // BeginDelete - Deletes a disk encryption set.
+// If the operation fails it returns the *CloudError error type.
 func (client *DiskEncryptionSetsClient) BeginDelete(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, options *DiskEncryptionSetsBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, diskEncryptionSetName, options)
 	if err != nil {
@@ -195,6 +198,7 @@ func (client *DiskEncryptionSetsClient) ResumeDelete(ctx context.Context, token 
 }
 
 // Delete - Deletes a disk encryption set.
+// If the operation fails it returns the *CloudError error type.
 func (client *DiskEncryptionSetsClient) deleteOperation(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, options *DiskEncryptionSetsBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, diskEncryptionSetName, options)
 	if err != nil {
@@ -251,6 +255,7 @@ func (client *DiskEncryptionSetsClient) deleteHandleError(resp *azcore.Response)
 }
 
 // Get - Gets information about a disk encryption set.
+// If the operation fails it returns the *CloudError error type.
 func (client *DiskEncryptionSetsClient) Get(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, options *DiskEncryptionSetsGetOptions) (DiskEncryptionSetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, diskEncryptionSetName, options)
 	if err != nil {
@@ -316,6 +321,7 @@ func (client *DiskEncryptionSetsClient) getHandleError(resp *azcore.Response) er
 }
 
 // List - Lists all the disk encryption sets under a subscription.
+// If the operation fails it returns the *CloudError error type.
 func (client *DiskEncryptionSetsClient) List(options *DiskEncryptionSetsListOptions) DiskEncryptionSetListPager {
 	return &diskEncryptionSetListPager{
 		pipeline: client.con.Pipeline(),
@@ -373,6 +379,7 @@ func (client *DiskEncryptionSetsClient) listHandleError(resp *azcore.Response) e
 }
 
 // ListByResourceGroup - Lists all the disk encryption sets under a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *DiskEncryptionSetsClient) ListByResourceGroup(resourceGroupName string, options *DiskEncryptionSetsListByResourceGroupOptions) DiskEncryptionSetListPager {
 	return &diskEncryptionSetListPager{
 		pipeline: client.con.Pipeline(),
@@ -434,6 +441,7 @@ func (client *DiskEncryptionSetsClient) listByResourceGroupHandleError(resp *azc
 }
 
 // BeginUpdate - Updates (patches) a disk encryption set.
+// If the operation fails it returns the *CloudError error type.
 func (client *DiskEncryptionSetsClient) BeginUpdate(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet DiskEncryptionSetUpdate, options *DiskEncryptionSetsBeginUpdateOptions) (DiskEncryptionSetPollerResponse, error) {
 	resp, err := client.update(ctx, resourceGroupName, diskEncryptionSetName, diskEncryptionSet, options)
 	if err != nil {
@@ -483,6 +491,7 @@ func (client *DiskEncryptionSetsClient) ResumeUpdate(ctx context.Context, token 
 }
 
 // Update - Updates (patches) a disk encryption set.
+// If the operation fails it returns the *CloudError error type.
 func (client *DiskEncryptionSetsClient) update(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet DiskEncryptionSetUpdate, options *DiskEncryptionSetsBeginUpdateOptions) (*azcore.Response, error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, diskEncryptionSetName, diskEncryptionSet, options)
 	if err != nil {

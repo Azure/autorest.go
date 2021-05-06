@@ -29,6 +29,7 @@ func NewHeaderClient(con *Connection) *HeaderClient {
 }
 
 // CustomRequestID - Send x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 in the header of the request
+// If the operation fails it returns the *Error error type.
 func (client *HeaderClient) CustomRequestID(ctx context.Context, options *HeaderCustomRequestIDOptions) (*http.Response, error) {
 	req, err := client.customRequestIDCreateRequest(ctx, options)
 	if err != nil {
@@ -70,6 +71,7 @@ func (client *HeaderClient) customRequestIDHandleError(resp *azcore.Response) er
 }
 
 // ParamBool - Send a post request with header values "scenario": "true", "value": true or "scenario": "false", "value": false
+// If the operation fails it returns the *Error error type.
 func (client *HeaderClient) ParamBool(ctx context.Context, scenario string, value bool, options *HeaderParamBoolOptions) (*http.Response, error) {
 	req, err := client.paramBoolCreateRequest(ctx, scenario, value, options)
 	if err != nil {
@@ -113,6 +115,7 @@ func (client *HeaderClient) paramBoolHandleError(resp *azcore.Response) error {
 }
 
 // ParamByte - Send a post request with header values "scenario": "valid", "value": "啊齄丂狛狜隣郎隣兀﨩"
+// If the operation fails it returns the *Error error type.
 func (client *HeaderClient) ParamByte(ctx context.Context, scenario string, value []byte, options *HeaderParamByteOptions) (*http.Response, error) {
 	req, err := client.paramByteCreateRequest(ctx, scenario, value, options)
 	if err != nil {
@@ -156,6 +159,7 @@ func (client *HeaderClient) paramByteHandleError(resp *azcore.Response) error {
 }
 
 // ParamDate - Send a post request with header values "scenario": "valid", "value": "2010-01-01" or "scenario": "min", "value": "0001-01-01"
+// If the operation fails it returns the *Error error type.
 func (client *HeaderClient) ParamDate(ctx context.Context, scenario string, value time.Time, options *HeaderParamDateOptions) (*http.Response, error) {
 	req, err := client.paramDateCreateRequest(ctx, scenario, value, options)
 	if err != nil {
@@ -199,6 +203,7 @@ func (client *HeaderClient) paramDateHandleError(resp *azcore.Response) error {
 }
 
 // ParamDatetime - Send a post request with header values "scenario": "valid", "value": "2010-01-01T12:34:56Z" or "scenario": "min", "value": "0001-01-01T00:00:00Z"
+// If the operation fails it returns the *Error error type.
 func (client *HeaderClient) ParamDatetime(ctx context.Context, scenario string, value time.Time, options *HeaderParamDatetimeOptions) (*http.Response, error) {
 	req, err := client.paramDatetimeCreateRequest(ctx, scenario, value, options)
 	if err != nil {
@@ -243,6 +248,7 @@ func (client *HeaderClient) paramDatetimeHandleError(resp *azcore.Response) erro
 
 // ParamDatetimeRFC1123 - Send a post request with header values "scenario": "valid", "value": "Wed, 01 Jan 2010 12:34:56 GMT" or "scenario": "min", "value":
 // "Mon, 01 Jan 0001 00:00:00 GMT"
+// If the operation fails it returns the *Error error type.
 func (client *HeaderClient) ParamDatetimeRFC1123(ctx context.Context, scenario string, options *HeaderParamDatetimeRFC1123Options) (*http.Response, error) {
 	req, err := client.paramDatetimeRFC1123CreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -288,6 +294,7 @@ func (client *HeaderClient) paramDatetimeRFC1123HandleError(resp *azcore.Respons
 }
 
 // ParamDouble - Send a post request with header values "scenario": "positive", "value": 7e120 or "scenario": "negative", "value": -3.0
+// If the operation fails it returns the *Error error type.
 func (client *HeaderClient) ParamDouble(ctx context.Context, scenario string, value float64, options *HeaderParamDoubleOptions) (*http.Response, error) {
 	req, err := client.paramDoubleCreateRequest(ctx, scenario, value, options)
 	if err != nil {
@@ -331,6 +338,7 @@ func (client *HeaderClient) paramDoubleHandleError(resp *azcore.Response) error 
 }
 
 // ParamDuration - Send a post request with header values "scenario": "valid", "value": "P123DT22H14M12.011S"
+// If the operation fails it returns the *Error error type.
 func (client *HeaderClient) ParamDuration(ctx context.Context, scenario string, value string, options *HeaderParamDurationOptions) (*http.Response, error) {
 	req, err := client.paramDurationCreateRequest(ctx, scenario, value, options)
 	if err != nil {
@@ -374,6 +382,7 @@ func (client *HeaderClient) paramDurationHandleError(resp *azcore.Response) erro
 }
 
 // ParamEnum - Send a post request with header values "scenario": "valid", "value": "GREY" or "scenario": "null", "value": null
+// If the operation fails it returns the *Error error type.
 func (client *HeaderClient) ParamEnum(ctx context.Context, scenario string, options *HeaderParamEnumOptions) (*http.Response, error) {
 	req, err := client.paramEnumCreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -419,6 +428,7 @@ func (client *HeaderClient) paramEnumHandleError(resp *azcore.Response) error {
 }
 
 // ParamExistingKey - Send a post request with header value "User-Agent": "overwrite"
+// If the operation fails it returns the *Error error type.
 func (client *HeaderClient) ParamExistingKey(ctx context.Context, userAgent string, options *HeaderParamExistingKeyOptions) (*http.Response, error) {
 	req, err := client.paramExistingKeyCreateRequest(ctx, userAgent, options)
 	if err != nil {
@@ -461,6 +471,7 @@ func (client *HeaderClient) paramExistingKeyHandleError(resp *azcore.Response) e
 }
 
 // ParamFloat - Send a post request with header values "scenario": "positive", "value": 0.07 or "scenario": "negative", "value": -3.0
+// If the operation fails it returns the *Error error type.
 func (client *HeaderClient) ParamFloat(ctx context.Context, scenario string, value float32, options *HeaderParamFloatOptions) (*http.Response, error) {
 	req, err := client.paramFloatCreateRequest(ctx, scenario, value, options)
 	if err != nil {
@@ -504,6 +515,7 @@ func (client *HeaderClient) paramFloatHandleError(resp *azcore.Response) error {
 }
 
 // ParamInteger - Send a post request with header values "scenario": "positive", "value": 1 or "scenario": "negative", "value": -2
+// If the operation fails it returns the *Error error type.
 func (client *HeaderClient) ParamInteger(ctx context.Context, scenario string, value int32, options *HeaderParamIntegerOptions) (*http.Response, error) {
 	req, err := client.paramIntegerCreateRequest(ctx, scenario, value, options)
 	if err != nil {
@@ -547,6 +559,7 @@ func (client *HeaderClient) paramIntegerHandleError(resp *azcore.Response) error
 }
 
 // ParamLong - Send a post request with header values "scenario": "positive", "value": 105 or "scenario": "negative", "value": -2
+// If the operation fails it returns the *Error error type.
 func (client *HeaderClient) ParamLong(ctx context.Context, scenario string, value int64, options *HeaderParamLongOptions) (*http.Response, error) {
 	req, err := client.paramLongCreateRequest(ctx, scenario, value, options)
 	if err != nil {
@@ -590,6 +603,7 @@ func (client *HeaderClient) paramLongHandleError(resp *azcore.Response) error {
 }
 
 // ParamProtectedKey - Send a post request with header value "Content-Type": "text/html"
+// If the operation fails it returns the *Error error type.
 func (client *HeaderClient) ParamProtectedKey(ctx context.Context, contentType string, options *HeaderParamProtectedKeyOptions) (*http.Response, error) {
 	req, err := client.paramProtectedKeyCreateRequest(ctx, contentType, options)
 	if err != nil {
@@ -633,6 +647,7 @@ func (client *HeaderClient) paramProtectedKeyHandleError(resp *azcore.Response) 
 
 // ParamString - Send a post request with header values "scenario": "valid", "value": "The quick brown fox jumps over the lazy dog" or "scenario": "null",
 // "value": null or "scenario": "empty", "value": ""
+// If the operation fails it returns the *Error error type.
 func (client *HeaderClient) ParamString(ctx context.Context, scenario string, options *HeaderParamStringOptions) (*http.Response, error) {
 	req, err := client.paramStringCreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -678,6 +693,7 @@ func (client *HeaderClient) paramStringHandleError(resp *azcore.Response) error 
 }
 
 // ResponseBool - Get a response with header value "value": true or false
+// If the operation fails it returns the *Error error type.
 func (client *HeaderClient) ResponseBool(ctx context.Context, scenario string, options *HeaderResponseBoolOptions) (HeaderResponseBoolResponse, error) {
 	req, err := client.responseBoolCreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -733,6 +749,7 @@ func (client *HeaderClient) responseBoolHandleError(resp *azcore.Response) error
 }
 
 // ResponseByte - Get a response with header values "啊齄丂狛狜隣郎隣兀﨩"
+// If the operation fails it returns the *Error error type.
 func (client *HeaderClient) ResponseByte(ctx context.Context, scenario string, options *HeaderResponseByteOptions) (HeaderResponseByteResponse, error) {
 	req, err := client.responseByteCreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -788,6 +805,7 @@ func (client *HeaderClient) responseByteHandleError(resp *azcore.Response) error
 }
 
 // ResponseDate - Get a response with header values "2010-01-01" or "0001-01-01"
+// If the operation fails it returns the *Error error type.
 func (client *HeaderClient) ResponseDate(ctx context.Context, scenario string, options *HeaderResponseDateOptions) (HeaderResponseDateResponse, error) {
 	req, err := client.responseDateCreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -843,6 +861,7 @@ func (client *HeaderClient) responseDateHandleError(resp *azcore.Response) error
 }
 
 // ResponseDatetime - Get a response with header values "2010-01-01T12:34:56Z" or "0001-01-01T00:00:00Z"
+// If the operation fails it returns the *Error error type.
 func (client *HeaderClient) ResponseDatetime(ctx context.Context, scenario string, options *HeaderResponseDatetimeOptions) (HeaderResponseDatetimeResponse, error) {
 	req, err := client.responseDatetimeCreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -898,6 +917,7 @@ func (client *HeaderClient) responseDatetimeHandleError(resp *azcore.Response) e
 }
 
 // ResponseDatetimeRFC1123 - Get a response with header values "Wed, 01 Jan 2010 12:34:56 GMT" or "Mon, 01 Jan 0001 00:00:00 GMT"
+// If the operation fails it returns the *Error error type.
 func (client *HeaderClient) ResponseDatetimeRFC1123(ctx context.Context, scenario string, options *HeaderResponseDatetimeRFC1123Options) (HeaderResponseDatetimeRFC1123Response, error) {
 	req, err := client.responseDatetimeRFC1123CreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -953,6 +973,7 @@ func (client *HeaderClient) responseDatetimeRFC1123HandleError(resp *azcore.Resp
 }
 
 // ResponseDouble - Get a response with header value "value": 7e120 or -3.0
+// If the operation fails it returns the *Error error type.
 func (client *HeaderClient) ResponseDouble(ctx context.Context, scenario string, options *HeaderResponseDoubleOptions) (HeaderResponseDoubleResponse, error) {
 	req, err := client.responseDoubleCreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -1008,6 +1029,7 @@ func (client *HeaderClient) responseDoubleHandleError(resp *azcore.Response) err
 }
 
 // ResponseDuration - Get a response with header values "P123DT22H14M12.011S"
+// If the operation fails it returns the *Error error type.
 func (client *HeaderClient) ResponseDuration(ctx context.Context, scenario string, options *HeaderResponseDurationOptions) (HeaderResponseDurationResponse, error) {
 	req, err := client.responseDurationCreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -1059,6 +1081,7 @@ func (client *HeaderClient) responseDurationHandleError(resp *azcore.Response) e
 }
 
 // ResponseEnum - Get a response with header values "GREY" or null
+// If the operation fails it returns the *Error error type.
 func (client *HeaderClient) ResponseEnum(ctx context.Context, scenario string, options *HeaderResponseEnumOptions) (HeaderResponseEnumResponse, error) {
 	req, err := client.responseEnumCreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -1110,6 +1133,7 @@ func (client *HeaderClient) responseEnumHandleError(resp *azcore.Response) error
 }
 
 // ResponseExistingKey - Get a response with header value "User-Agent": "overwrite"
+// If the operation fails it returns the *Error error type.
 func (client *HeaderClient) ResponseExistingKey(ctx context.Context, options *HeaderResponseExistingKeyOptions) (HeaderResponseExistingKeyResponse, error) {
 	req, err := client.responseExistingKeyCreateRequest(ctx, options)
 	if err != nil {
@@ -1160,6 +1184,7 @@ func (client *HeaderClient) responseExistingKeyHandleError(resp *azcore.Response
 }
 
 // ResponseFloat - Get a response with header value "value": 0.07 or -3.0
+// If the operation fails it returns the *Error error type.
 func (client *HeaderClient) ResponseFloat(ctx context.Context, scenario string, options *HeaderResponseFloatOptions) (HeaderResponseFloatResponse, error) {
 	req, err := client.responseFloatCreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -1216,6 +1241,7 @@ func (client *HeaderClient) responseFloatHandleError(resp *azcore.Response) erro
 }
 
 // ResponseInteger - Get a response with header value "value": 1 or -2
+// If the operation fails it returns the *Error error type.
 func (client *HeaderClient) ResponseInteger(ctx context.Context, scenario string, options *HeaderResponseIntegerOptions) (HeaderResponseIntegerResponse, error) {
 	req, err := client.responseIntegerCreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -1272,6 +1298,7 @@ func (client *HeaderClient) responseIntegerHandleError(resp *azcore.Response) er
 }
 
 // ResponseLong - Get a response with header value "value": 105 or -2
+// If the operation fails it returns the *Error error type.
 func (client *HeaderClient) ResponseLong(ctx context.Context, scenario string, options *HeaderResponseLongOptions) (HeaderResponseLongResponse, error) {
 	req, err := client.responseLongCreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -1327,6 +1354,7 @@ func (client *HeaderClient) responseLongHandleError(resp *azcore.Response) error
 }
 
 // ResponseProtectedKey - Get a response with header value "Content-Type": "text/html"
+// If the operation fails it returns the *Error error type.
 func (client *HeaderClient) ResponseProtectedKey(ctx context.Context, options *HeaderResponseProtectedKeyOptions) (HeaderResponseProtectedKeyResponse, error) {
 	req, err := client.responseProtectedKeyCreateRequest(ctx, options)
 	if err != nil {
@@ -1377,6 +1405,7 @@ func (client *HeaderClient) responseProtectedKeyHandleError(resp *azcore.Respons
 }
 
 // ResponseString - Get a response with header values "The quick brown fox jumps over the lazy dog" or null or ""
+// If the operation fails it returns the *Error error type.
 func (client *HeaderClient) ResponseString(ctx context.Context, scenario string, options *HeaderResponseStringOptions) (HeaderResponseStringResponse, error) {
 	req, err := client.responseStringCreateRequest(ctx, scenario, options)
 	if err != nil {

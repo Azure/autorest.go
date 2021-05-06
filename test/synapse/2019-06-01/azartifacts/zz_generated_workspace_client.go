@@ -19,6 +19,7 @@ type workspaceClient struct {
 }
 
 // Get - Get Workspace
+// If the operation fails it returns the *ErrorContract error type.
 func (client *workspaceClient) Get(ctx context.Context, options *WorkspaceGetOptions) (WorkspaceResponse, error) {
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {

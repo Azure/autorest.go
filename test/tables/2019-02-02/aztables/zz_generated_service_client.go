@@ -28,6 +28,7 @@ func NewServiceClient(con *Connection) *ServiceClient {
 }
 
 // GetProperties - Gets the properties of an account's Table service, including properties for Analytics and CORS (Cross-Origin Resource Sharing) rules.
+// If the operation fails it returns the *TableServiceError error type.
 func (client *ServiceClient) GetProperties(ctx context.Context, options *ServiceGetPropertiesOptions) (TableServicePropertiesResponse, error) {
 	req, err := client.getPropertiesCreateRequest(ctx, options)
 	if err != nil {
@@ -99,6 +100,7 @@ func (client *ServiceClient) getPropertiesHandleError(resp *azcore.Response) err
 
 // GetStatistics - Retrieves statistics related to replication for the Table service. It is only available on the secondary location endpoint when read-access
 // geo-redundant replication is enabled for the account.
+// If the operation fails it returns the *TableServiceError error type.
 func (client *ServiceClient) GetStatistics(ctx context.Context, options *ServiceGetStatisticsOptions) (TableServiceStatsResponse, error) {
 	req, err := client.getStatisticsCreateRequest(ctx, options)
 	if err != nil {
@@ -177,6 +179,7 @@ func (client *ServiceClient) getStatisticsHandleError(resp *azcore.Response) err
 
 // SetProperties - Sets properties for an account's Table service endpoint, including properties for Analytics and CORS (Cross-Origin Resource Sharing)
 // rules.
+// If the operation fails it returns the *TableServiceError error type.
 func (client *ServiceClient) SetProperties(ctx context.Context, tableServiceProperties TableServiceProperties, options *ServiceSetPropertiesOptions) (ServiceSetPropertiesResponse, error) {
 	req, err := client.setPropertiesCreateRequest(ctx, tableServiceProperties, options)
 	if err != nil {

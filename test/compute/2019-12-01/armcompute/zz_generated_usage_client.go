@@ -30,6 +30,7 @@ func NewUsageClient(con *armcore.Connection, subscriptionID string) *UsageClient
 }
 
 // List - Gets, for the specified location, the current compute resource usage information as well as the limits for compute resources under the subscription.
+// If the operation fails it returns a generic error.
 func (client *UsageClient) List(location string, options *UsageListOptions) ListUsagesResultPager {
 	return &listUsagesResultPager{
 		pipeline: client.con.Pipeline(),

@@ -26,6 +26,7 @@ func NewFloatClient(con *Connection) *FloatClient {
 }
 
 // Get - Get a float enum
+// If the operation fails it returns a generic error.
 func (client *FloatClient) Get(ctx context.Context, options *FloatGetOptions) (FloatEnumResponse, error) {
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
@@ -75,6 +76,7 @@ func (client *FloatClient) getHandleError(resp *azcore.Response) error {
 }
 
 // Put - Put a float enum
+// If the operation fails it returns a generic error.
 func (client *FloatClient) Put(ctx context.Context, options *FloatPutOptions) (StringResponse, error) {
 	req, err := client.putCreateRequest(ctx, options)
 	if err != nil {

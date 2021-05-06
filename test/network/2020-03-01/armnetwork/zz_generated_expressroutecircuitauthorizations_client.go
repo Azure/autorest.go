@@ -32,6 +32,7 @@ func NewExpressRouteCircuitAuthorizationsClient(con *armcore.Connection, subscri
 }
 
 // BeginCreateOrUpdate - Creates or updates an authorization in the specified express route circuit.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteCircuitAuthorizationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, circuitName string, authorizationName string, authorizationParameters ExpressRouteCircuitAuthorization, options *ExpressRouteCircuitAuthorizationsBeginCreateOrUpdateOptions) (ExpressRouteCircuitAuthorizationPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, circuitName, authorizationName, authorizationParameters, options)
 	if err != nil {
@@ -81,6 +82,7 @@ func (client *ExpressRouteCircuitAuthorizationsClient) ResumeCreateOrUpdate(ctx 
 }
 
 // CreateOrUpdate - Creates or updates an authorization in the specified express route circuit.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteCircuitAuthorizationsClient) createOrUpdate(ctx context.Context, resourceGroupName string, circuitName string, authorizationName string, authorizationParameters ExpressRouteCircuitAuthorization, options *ExpressRouteCircuitAuthorizationsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, circuitName, authorizationName, authorizationParameters, options)
 	if err != nil {
@@ -150,6 +152,7 @@ func (client *ExpressRouteCircuitAuthorizationsClient) createOrUpdateHandleError
 }
 
 // BeginDelete - Deletes the specified authorization from the specified express route circuit.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteCircuitAuthorizationsClient) BeginDelete(ctx context.Context, resourceGroupName string, circuitName string, authorizationName string, options *ExpressRouteCircuitAuthorizationsBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, circuitName, authorizationName, options)
 	if err != nil {
@@ -199,6 +202,7 @@ func (client *ExpressRouteCircuitAuthorizationsClient) ResumeDelete(ctx context.
 }
 
 // Delete - Deletes the specified authorization from the specified express route circuit.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteCircuitAuthorizationsClient) deleteOperation(ctx context.Context, resourceGroupName string, circuitName string, authorizationName string, options *ExpressRouteCircuitAuthorizationsBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, circuitName, authorizationName, options)
 	if err != nil {
@@ -259,6 +263,7 @@ func (client *ExpressRouteCircuitAuthorizationsClient) deleteHandleError(resp *a
 }
 
 // Get - Gets the specified authorization from the specified express route circuit.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteCircuitAuthorizationsClient) Get(ctx context.Context, resourceGroupName string, circuitName string, authorizationName string, options *ExpressRouteCircuitAuthorizationsGetOptions) (ExpressRouteCircuitAuthorizationResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, circuitName, authorizationName, options)
 	if err != nil {
@@ -328,6 +333,7 @@ func (client *ExpressRouteCircuitAuthorizationsClient) getHandleError(resp *azco
 }
 
 // List - Gets all authorizations in an express route circuit.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteCircuitAuthorizationsClient) List(resourceGroupName string, circuitName string, options *ExpressRouteCircuitAuthorizationsListOptions) AuthorizationListResultPager {
 	return &authorizationListResultPager{
 		pipeline: client.con.Pipeline(),

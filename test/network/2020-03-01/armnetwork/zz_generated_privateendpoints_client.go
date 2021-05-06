@@ -32,6 +32,7 @@ func NewPrivateEndpointsClient(con *armcore.Connection, subscriptionID string) *
 }
 
 // BeginCreateOrUpdate - Creates or updates an private endpoint in the specified resource group.
+// If the operation fails it returns the *Error error type.
 func (client *PrivateEndpointsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, privateEndpointName string, parameters PrivateEndpoint, options *PrivateEndpointsBeginCreateOrUpdateOptions) (PrivateEndpointPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, privateEndpointName, parameters, options)
 	if err != nil {
@@ -81,6 +82,7 @@ func (client *PrivateEndpointsClient) ResumeCreateOrUpdate(ctx context.Context, 
 }
 
 // CreateOrUpdate - Creates or updates an private endpoint in the specified resource group.
+// If the operation fails it returns the *Error error type.
 func (client *PrivateEndpointsClient) createOrUpdate(ctx context.Context, resourceGroupName string, privateEndpointName string, parameters PrivateEndpoint, options *PrivateEndpointsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, privateEndpointName, parameters, options)
 	if err != nil {
@@ -146,6 +148,7 @@ func (client *PrivateEndpointsClient) createOrUpdateHandleError(resp *azcore.Res
 }
 
 // BeginDelete - Deletes the specified private endpoint.
+// If the operation fails it returns the *Error error type.
 func (client *PrivateEndpointsClient) BeginDelete(ctx context.Context, resourceGroupName string, privateEndpointName string, options *PrivateEndpointsBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, privateEndpointName, options)
 	if err != nil {
@@ -195,6 +198,7 @@ func (client *PrivateEndpointsClient) ResumeDelete(ctx context.Context, token st
 }
 
 // Delete - Deletes the specified private endpoint.
+// If the operation fails it returns the *Error error type.
 func (client *PrivateEndpointsClient) deleteOperation(ctx context.Context, resourceGroupName string, privateEndpointName string, options *PrivateEndpointsBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, privateEndpointName, options)
 	if err != nil {
@@ -251,6 +255,7 @@ func (client *PrivateEndpointsClient) deleteHandleError(resp *azcore.Response) e
 }
 
 // Get - Gets the specified private endpoint by resource group.
+// If the operation fails it returns the *Error error type.
 func (client *PrivateEndpointsClient) Get(ctx context.Context, resourceGroupName string, privateEndpointName string, options *PrivateEndpointsGetOptions) (PrivateEndpointResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, privateEndpointName, options)
 	if err != nil {
@@ -319,6 +324,7 @@ func (client *PrivateEndpointsClient) getHandleError(resp *azcore.Response) erro
 }
 
 // List - Gets all private endpoints in a resource group.
+// If the operation fails it returns the *Error error type.
 func (client *PrivateEndpointsClient) List(resourceGroupName string, options *PrivateEndpointsListOptions) PrivateEndpointListResultPager {
 	return &privateEndpointListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -380,6 +386,7 @@ func (client *PrivateEndpointsClient) listHandleError(resp *azcore.Response) err
 }
 
 // ListBySubscription - Gets all private endpoints in a subscription.
+// If the operation fails it returns the *Error error type.
 func (client *PrivateEndpointsClient) ListBySubscription(options *PrivateEndpointsListBySubscriptionOptions) PrivateEndpointListResultPager {
 	return &privateEndpointListResultPager{
 		pipeline: client.con.Pipeline(),

@@ -30,6 +30,7 @@ func NewProximityPlacementGroupsClient(con *armcore.Connection, subscriptionID s
 }
 
 // CreateOrUpdate - Create or update a proximity placement group.
+// If the operation fails it returns a generic error.
 func (client *ProximityPlacementGroupsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, proximityPlacementGroupName string, parameters ProximityPlacementGroup, options *ProximityPlacementGroupsCreateOrUpdateOptions) (ProximityPlacementGroupResponse, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, proximityPlacementGroupName, parameters, options)
 	if err != nil {
@@ -94,6 +95,7 @@ func (client *ProximityPlacementGroupsClient) createOrUpdateHandleError(resp *az
 }
 
 // Delete - Delete a proximity placement group.
+// If the operation fails it returns a generic error.
 func (client *ProximityPlacementGroupsClient) Delete(ctx context.Context, resourceGroupName string, proximityPlacementGroupName string, options *ProximityPlacementGroupsDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, proximityPlacementGroupName, options)
 	if err != nil {
@@ -148,6 +150,7 @@ func (client *ProximityPlacementGroupsClient) deleteHandleError(resp *azcore.Res
 }
 
 // Get - Retrieves information about a proximity placement group .
+// If the operation fails it returns a generic error.
 func (client *ProximityPlacementGroupsClient) Get(ctx context.Context, resourceGroupName string, proximityPlacementGroupName string, options *ProximityPlacementGroupsGetOptions) (ProximityPlacementGroupResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, proximityPlacementGroupName, options)
 	if err != nil {
@@ -215,6 +218,7 @@ func (client *ProximityPlacementGroupsClient) getHandleError(resp *azcore.Respon
 }
 
 // ListByResourceGroup - Lists all proximity placement groups in a resource group.
+// If the operation fails it returns a generic error.
 func (client *ProximityPlacementGroupsClient) ListByResourceGroup(resourceGroupName string, options *ProximityPlacementGroupsListByResourceGroupOptions) ProximityPlacementGroupListResultPager {
 	return &proximityPlacementGroupListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -275,6 +279,7 @@ func (client *ProximityPlacementGroupsClient) listByResourceGroupHandleError(res
 }
 
 // ListBySubscription - Lists all proximity placement groups in a subscription.
+// If the operation fails it returns a generic error.
 func (client *ProximityPlacementGroupsClient) ListBySubscription(options *ProximityPlacementGroupsListBySubscriptionOptions) ProximityPlacementGroupListResultPager {
 	return &proximityPlacementGroupListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -331,6 +336,7 @@ func (client *ProximityPlacementGroupsClient) listBySubscriptionHandleError(resp
 }
 
 // Update - Update a proximity placement group.
+// If the operation fails it returns a generic error.
 func (client *ProximityPlacementGroupsClient) Update(ctx context.Context, resourceGroupName string, proximityPlacementGroupName string, parameters ProximityPlacementGroupUpdate, options *ProximityPlacementGroupsUpdateOptions) (ProximityPlacementGroupResponse, error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, proximityPlacementGroupName, parameters, options)
 	if err != nil {

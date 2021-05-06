@@ -32,6 +32,7 @@ func NewVirtualNetworkTapsClient(con *armcore.Connection, subscriptionID string)
 }
 
 // BeginCreateOrUpdate - Creates or updates a Virtual Network Tap.
+// If the operation fails it returns the *CloudError error type.
 func (client *VirtualNetworkTapsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, tapName string, parameters VirtualNetworkTap, options *VirtualNetworkTapsBeginCreateOrUpdateOptions) (VirtualNetworkTapPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, tapName, parameters, options)
 	if err != nil {
@@ -81,6 +82,7 @@ func (client *VirtualNetworkTapsClient) ResumeCreateOrUpdate(ctx context.Context
 }
 
 // CreateOrUpdate - Creates or updates a Virtual Network Tap.
+// If the operation fails it returns the *CloudError error type.
 func (client *VirtualNetworkTapsClient) createOrUpdate(ctx context.Context, resourceGroupName string, tapName string, parameters VirtualNetworkTap, options *VirtualNetworkTapsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, tapName, parameters, options)
 	if err != nil {
@@ -146,6 +148,7 @@ func (client *VirtualNetworkTapsClient) createOrUpdateHandleError(resp *azcore.R
 }
 
 // BeginDelete - Deletes the specified virtual network tap.
+// If the operation fails it returns the *CloudError error type.
 func (client *VirtualNetworkTapsClient) BeginDelete(ctx context.Context, resourceGroupName string, tapName string, options *VirtualNetworkTapsBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, tapName, options)
 	if err != nil {
@@ -195,6 +198,7 @@ func (client *VirtualNetworkTapsClient) ResumeDelete(ctx context.Context, token 
 }
 
 // Delete - Deletes the specified virtual network tap.
+// If the operation fails it returns the *CloudError error type.
 func (client *VirtualNetworkTapsClient) deleteOperation(ctx context.Context, resourceGroupName string, tapName string, options *VirtualNetworkTapsBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, tapName, options)
 	if err != nil {
@@ -251,6 +255,7 @@ func (client *VirtualNetworkTapsClient) deleteHandleError(resp *azcore.Response)
 }
 
 // Get - Gets information about the specified virtual network tap.
+// If the operation fails it returns the *CloudError error type.
 func (client *VirtualNetworkTapsClient) Get(ctx context.Context, resourceGroupName string, tapName string, options *VirtualNetworkTapsGetOptions) (VirtualNetworkTapResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, tapName, options)
 	if err != nil {
@@ -316,6 +321,7 @@ func (client *VirtualNetworkTapsClient) getHandleError(resp *azcore.Response) er
 }
 
 // ListAll - Gets all the VirtualNetworkTaps in a subscription.
+// If the operation fails it returns the *CloudError error type.
 func (client *VirtualNetworkTapsClient) ListAll(options *VirtualNetworkTapsListAllOptions) VirtualNetworkTapListResultPager {
 	return &virtualNetworkTapListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -373,6 +379,7 @@ func (client *VirtualNetworkTapsClient) listAllHandleError(resp *azcore.Response
 }
 
 // ListByResourceGroup - Gets all the VirtualNetworkTaps in a subscription.
+// If the operation fails it returns the *CloudError error type.
 func (client *VirtualNetworkTapsClient) ListByResourceGroup(resourceGroupName string, options *VirtualNetworkTapsListByResourceGroupOptions) VirtualNetworkTapListResultPager {
 	return &virtualNetworkTapListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -434,6 +441,7 @@ func (client *VirtualNetworkTapsClient) listByResourceGroupHandleError(resp *azc
 }
 
 // UpdateTags - Updates an VirtualNetworkTap tags.
+// If the operation fails it returns the *CloudError error type.
 func (client *VirtualNetworkTapsClient) UpdateTags(ctx context.Context, resourceGroupName string, tapName string, tapParameters TagsObject, options *VirtualNetworkTapsUpdateTagsOptions) (VirtualNetworkTapResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, tapName, tapParameters, options)
 	if err != nil {

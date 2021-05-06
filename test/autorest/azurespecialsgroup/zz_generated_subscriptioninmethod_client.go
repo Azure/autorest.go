@@ -30,6 +30,7 @@ func NewSubscriptionInMethodClient(con *Connection) *SubscriptionInMethodClient 
 
 // PostMethodLocalNull - POST method with subscriptionId modeled in the method. pass in subscription id = null, client-side validation should prevent you
 // from making this call
+// If the operation fails it returns the *Error error type.
 func (client *SubscriptionInMethodClient) PostMethodLocalNull(ctx context.Context, subscriptionID string, options *SubscriptionInMethodPostMethodLocalNullOptions) (*http.Response, error) {
 	req, err := client.postMethodLocalNullCreateRequest(ctx, subscriptionID, options)
 	if err != nil {
@@ -75,6 +76,7 @@ func (client *SubscriptionInMethodClient) postMethodLocalNullHandleError(resp *a
 }
 
 // PostMethodLocalValid - POST method with subscriptionId modeled in the method. pass in subscription id = '1234-5678-9012-3456' to succeed
+// If the operation fails it returns the *Error error type.
 func (client *SubscriptionInMethodClient) PostMethodLocalValid(ctx context.Context, subscriptionID string, options *SubscriptionInMethodPostMethodLocalValidOptions) (*http.Response, error) {
 	req, err := client.postMethodLocalValidCreateRequest(ctx, subscriptionID, options)
 	if err != nil {
@@ -120,6 +122,7 @@ func (client *SubscriptionInMethodClient) postMethodLocalValidHandleError(resp *
 }
 
 // PostPathLocalValid - POST method with subscriptionId modeled in the method. pass in subscription id = '1234-5678-9012-3456' to succeed
+// If the operation fails it returns the *Error error type.
 func (client *SubscriptionInMethodClient) PostPathLocalValid(ctx context.Context, subscriptionID string, options *SubscriptionInMethodPostPathLocalValidOptions) (*http.Response, error) {
 	req, err := client.postPathLocalValidCreateRequest(ctx, subscriptionID, options)
 	if err != nil {
@@ -165,6 +168,7 @@ func (client *SubscriptionInMethodClient) postPathLocalValidHandleError(resp *az
 }
 
 // PostSwaggerLocalValid - POST method with subscriptionId modeled in the method. pass in subscription id = '1234-5678-9012-3456' to succeed
+// If the operation fails it returns the *Error error type.
 func (client *SubscriptionInMethodClient) PostSwaggerLocalValid(ctx context.Context, subscriptionID string, options *SubscriptionInMethodPostSwaggerLocalValidOptions) (*http.Response, error) {
 	req, err := client.postSwaggerLocalValidCreateRequest(ctx, subscriptionID, options)
 	if err != nil {

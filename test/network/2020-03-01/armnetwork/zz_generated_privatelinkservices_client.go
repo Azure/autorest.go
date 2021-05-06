@@ -32,6 +32,7 @@ func NewPrivateLinkServicesClient(con *armcore.Connection, subscriptionID string
 }
 
 // BeginCheckPrivateLinkServiceVisibility - Checks whether the subscription is visible to private link service.
+// If the operation fails it returns the *CloudError error type.
 func (client *PrivateLinkServicesClient) BeginCheckPrivateLinkServiceVisibility(ctx context.Context, location string, parameters CheckPrivateLinkServiceVisibilityRequest, options *PrivateLinkServicesBeginCheckPrivateLinkServiceVisibilityOptions) (PrivateLinkServiceVisibilityPollerResponse, error) {
 	resp, err := client.checkPrivateLinkServiceVisibility(ctx, location, parameters, options)
 	if err != nil {
@@ -81,6 +82,7 @@ func (client *PrivateLinkServicesClient) ResumeCheckPrivateLinkServiceVisibility
 }
 
 // CheckPrivateLinkServiceVisibility - Checks whether the subscription is visible to private link service.
+// If the operation fails it returns the *CloudError error type.
 func (client *PrivateLinkServicesClient) checkPrivateLinkServiceVisibility(ctx context.Context, location string, parameters CheckPrivateLinkServiceVisibilityRequest, options *PrivateLinkServicesBeginCheckPrivateLinkServiceVisibilityOptions) (*azcore.Response, error) {
 	req, err := client.checkPrivateLinkServiceVisibilityCreateRequest(ctx, location, parameters, options)
 	if err != nil {
@@ -143,6 +145,7 @@ func (client *PrivateLinkServicesClient) checkPrivateLinkServiceVisibilityHandle
 
 // BeginCheckPrivateLinkServiceVisibilityByResourceGroup - Checks whether the subscription is visible to private link service in the specified resource
 // group.
+// If the operation fails it returns the *CloudError error type.
 func (client *PrivateLinkServicesClient) BeginCheckPrivateLinkServiceVisibilityByResourceGroup(ctx context.Context, location string, resourceGroupName string, parameters CheckPrivateLinkServiceVisibilityRequest, options *PrivateLinkServicesBeginCheckPrivateLinkServiceVisibilityByResourceGroupOptions) (PrivateLinkServiceVisibilityPollerResponse, error) {
 	resp, err := client.checkPrivateLinkServiceVisibilityByResourceGroup(ctx, location, resourceGroupName, parameters, options)
 	if err != nil {
@@ -192,6 +195,7 @@ func (client *PrivateLinkServicesClient) ResumeCheckPrivateLinkServiceVisibility
 }
 
 // CheckPrivateLinkServiceVisibilityByResourceGroup - Checks whether the subscription is visible to private link service in the specified resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *PrivateLinkServicesClient) checkPrivateLinkServiceVisibilityByResourceGroup(ctx context.Context, location string, resourceGroupName string, parameters CheckPrivateLinkServiceVisibilityRequest, options *PrivateLinkServicesBeginCheckPrivateLinkServiceVisibilityByResourceGroupOptions) (*azcore.Response, error) {
 	req, err := client.checkPrivateLinkServiceVisibilityByResourceGroupCreateRequest(ctx, location, resourceGroupName, parameters, options)
 	if err != nil {
@@ -257,6 +261,7 @@ func (client *PrivateLinkServicesClient) checkPrivateLinkServiceVisibilityByReso
 }
 
 // BeginCreateOrUpdate - Creates or updates an private link service in the specified resource group.
+// If the operation fails it returns the *Error error type.
 func (client *PrivateLinkServicesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, serviceName string, parameters PrivateLinkService, options *PrivateLinkServicesBeginCreateOrUpdateOptions) (PrivateLinkServicePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, serviceName, parameters, options)
 	if err != nil {
@@ -306,6 +311,7 @@ func (client *PrivateLinkServicesClient) ResumeCreateOrUpdate(ctx context.Contex
 }
 
 // CreateOrUpdate - Creates or updates an private link service in the specified resource group.
+// If the operation fails it returns the *Error error type.
 func (client *PrivateLinkServicesClient) createOrUpdate(ctx context.Context, resourceGroupName string, serviceName string, parameters PrivateLinkService, options *PrivateLinkServicesBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, serviceName, parameters, options)
 	if err != nil {
@@ -371,6 +377,7 @@ func (client *PrivateLinkServicesClient) createOrUpdateHandleError(resp *azcore.
 }
 
 // BeginDelete - Deletes the specified private link service.
+// If the operation fails it returns the *Error error type.
 func (client *PrivateLinkServicesClient) BeginDelete(ctx context.Context, resourceGroupName string, serviceName string, options *PrivateLinkServicesBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, serviceName, options)
 	if err != nil {
@@ -420,6 +427,7 @@ func (client *PrivateLinkServicesClient) ResumeDelete(ctx context.Context, token
 }
 
 // Delete - Deletes the specified private link service.
+// If the operation fails it returns the *Error error type.
 func (client *PrivateLinkServicesClient) deleteOperation(ctx context.Context, resourceGroupName string, serviceName string, options *PrivateLinkServicesBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, serviceName, options)
 	if err != nil {
@@ -476,6 +484,7 @@ func (client *PrivateLinkServicesClient) deleteHandleError(resp *azcore.Response
 }
 
 // BeginDeletePrivateEndpointConnection - Delete private end point connection for a private link service in a subscription.
+// If the operation fails it returns the *Error error type.
 func (client *PrivateLinkServicesClient) BeginDeletePrivateEndpointConnection(ctx context.Context, resourceGroupName string, serviceName string, peConnectionName string, options *PrivateLinkServicesBeginDeletePrivateEndpointConnectionOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deletePrivateEndpointConnection(ctx, resourceGroupName, serviceName, peConnectionName, options)
 	if err != nil {
@@ -525,6 +534,7 @@ func (client *PrivateLinkServicesClient) ResumeDeletePrivateEndpointConnection(c
 }
 
 // DeletePrivateEndpointConnection - Delete private end point connection for a private link service in a subscription.
+// If the operation fails it returns the *Error error type.
 func (client *PrivateLinkServicesClient) deletePrivateEndpointConnection(ctx context.Context, resourceGroupName string, serviceName string, peConnectionName string, options *PrivateLinkServicesBeginDeletePrivateEndpointConnectionOptions) (*azcore.Response, error) {
 	req, err := client.deletePrivateEndpointConnectionCreateRequest(ctx, resourceGroupName, serviceName, peConnectionName, options)
 	if err != nil {
@@ -585,6 +595,7 @@ func (client *PrivateLinkServicesClient) deletePrivateEndpointConnectionHandleEr
 }
 
 // Get - Gets the specified private link service by resource group.
+// If the operation fails it returns the *Error error type.
 func (client *PrivateLinkServicesClient) Get(ctx context.Context, resourceGroupName string, serviceName string, options *PrivateLinkServicesGetOptions) (PrivateLinkServiceResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, serviceName, options)
 	if err != nil {
@@ -653,6 +664,7 @@ func (client *PrivateLinkServicesClient) getHandleError(resp *azcore.Response) e
 }
 
 // GetPrivateEndpointConnection - Get the specific private end point connection by specific private link service in the resource group.
+// If the operation fails it returns the *Error error type.
 func (client *PrivateLinkServicesClient) GetPrivateEndpointConnection(ctx context.Context, resourceGroupName string, serviceName string, peConnectionName string, options *PrivateLinkServicesGetPrivateEndpointConnectionOptions) (PrivateEndpointConnectionResponse, error) {
 	req, err := client.getPrivateEndpointConnectionCreateRequest(ctx, resourceGroupName, serviceName, peConnectionName, options)
 	if err != nil {
@@ -725,6 +737,7 @@ func (client *PrivateLinkServicesClient) getPrivateEndpointConnectionHandleError
 }
 
 // List - Gets all private link services in a resource group.
+// If the operation fails it returns the *Error error type.
 func (client *PrivateLinkServicesClient) List(resourceGroupName string, options *PrivateLinkServicesListOptions) PrivateLinkServiceListResultPager {
 	return &privateLinkServiceListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -787,6 +800,7 @@ func (client *PrivateLinkServicesClient) listHandleError(resp *azcore.Response) 
 
 // ListAutoApprovedPrivateLinkServices - Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this
 // subscription in this region.
+// If the operation fails it returns the *CloudError error type.
 func (client *PrivateLinkServicesClient) ListAutoApprovedPrivateLinkServices(location string, options *PrivateLinkServicesListAutoApprovedPrivateLinkServicesOptions) AutoApprovedPrivateLinkServicesResultPager {
 	return &autoApprovedPrivateLinkServicesResultPager{
 		pipeline: client.con.Pipeline(),
@@ -849,6 +863,7 @@ func (client *PrivateLinkServicesClient) listAutoApprovedPrivateLinkServicesHand
 
 // ListAutoApprovedPrivateLinkServicesByResourceGroup - Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved
 // in this subscription in this region.
+// If the operation fails it returns the *CloudError error type.
 func (client *PrivateLinkServicesClient) ListAutoApprovedPrivateLinkServicesByResourceGroup(location string, resourceGroupName string, options *PrivateLinkServicesListAutoApprovedPrivateLinkServicesByResourceGroupOptions) AutoApprovedPrivateLinkServicesResultPager {
 	return &autoApprovedPrivateLinkServicesResultPager{
 		pipeline: client.con.Pipeline(),
@@ -914,6 +929,7 @@ func (client *PrivateLinkServicesClient) listAutoApprovedPrivateLinkServicesByRe
 }
 
 // ListBySubscription - Gets all private link service in a subscription.
+// If the operation fails it returns the *Error error type.
 func (client *PrivateLinkServicesClient) ListBySubscription(options *PrivateLinkServicesListBySubscriptionOptions) PrivateLinkServiceListResultPager {
 	return &privateLinkServiceListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -971,6 +987,7 @@ func (client *PrivateLinkServicesClient) listBySubscriptionHandleError(resp *azc
 }
 
 // ListPrivateEndpointConnections - Gets all private end point connections for a specific private link service.
+// If the operation fails it returns the *Error error type.
 func (client *PrivateLinkServicesClient) ListPrivateEndpointConnections(resourceGroupName string, serviceName string, options *PrivateLinkServicesListPrivateEndpointConnectionsOptions) PrivateEndpointConnectionListResultPager {
 	return &privateEndpointConnectionListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -1036,6 +1053,7 @@ func (client *PrivateLinkServicesClient) listPrivateEndpointConnectionsHandleErr
 }
 
 // UpdatePrivateEndpointConnection - Approve or reject private end point connection for a private link service in a subscription.
+// If the operation fails it returns the *Error error type.
 func (client *PrivateLinkServicesClient) UpdatePrivateEndpointConnection(ctx context.Context, resourceGroupName string, serviceName string, peConnectionName string, parameters PrivateEndpointConnection, options *PrivateLinkServicesUpdatePrivateEndpointConnectionOptions) (PrivateEndpointConnectionResponse, error) {
 	req, err := client.updatePrivateEndpointConnectionCreateRequest(ctx, resourceGroupName, serviceName, peConnectionName, parameters, options)
 	if err != nil {

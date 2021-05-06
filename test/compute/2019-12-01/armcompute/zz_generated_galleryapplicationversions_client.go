@@ -32,6 +32,7 @@ func NewGalleryApplicationVersionsClient(con *armcore.Connection, subscriptionID
 }
 
 // BeginCreateOrUpdate - Create or update a gallery Application Version.
+// If the operation fails it returns the *CloudError error type.
 func (client *GalleryApplicationVersionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplicationVersionName string, galleryApplicationVersion GalleryApplicationVersion, options *GalleryApplicationVersionsBeginCreateOrUpdateOptions) (GalleryApplicationVersionPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, galleryApplicationVersion, options)
 	if err != nil {
@@ -81,6 +82,7 @@ func (client *GalleryApplicationVersionsClient) ResumeCreateOrUpdate(ctx context
 }
 
 // CreateOrUpdate - Create or update a gallery Application Version.
+// If the operation fails it returns the *CloudError error type.
 func (client *GalleryApplicationVersionsClient) createOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplicationVersionName string, galleryApplicationVersion GalleryApplicationVersion, options *GalleryApplicationVersionsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, galleryApplicationVersion, options)
 	if err != nil {
@@ -154,6 +156,7 @@ func (client *GalleryApplicationVersionsClient) createOrUpdateHandleError(resp *
 }
 
 // BeginDelete - Delete a gallery Application Version.
+// If the operation fails it returns the *CloudError error type.
 func (client *GalleryApplicationVersionsClient) BeginDelete(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplicationVersionName string, options *GalleryApplicationVersionsBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, options)
 	if err != nil {
@@ -203,6 +206,7 @@ func (client *GalleryApplicationVersionsClient) ResumeDelete(ctx context.Context
 }
 
 // Delete - Delete a gallery Application Version.
+// If the operation fails it returns the *CloudError error type.
 func (client *GalleryApplicationVersionsClient) deleteOperation(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplicationVersionName string, options *GalleryApplicationVersionsBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, options)
 	if err != nil {
@@ -267,6 +271,7 @@ func (client *GalleryApplicationVersionsClient) deleteHandleError(resp *azcore.R
 }
 
 // Get - Retrieves information about a gallery Application Version.
+// If the operation fails it returns the *CloudError error type.
 func (client *GalleryApplicationVersionsClient) Get(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplicationVersionName string, options *GalleryApplicationVersionsGetOptions) (GalleryApplicationVersionResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, options)
 	if err != nil {
@@ -343,6 +348,7 @@ func (client *GalleryApplicationVersionsClient) getHandleError(resp *azcore.Resp
 }
 
 // ListByGalleryApplication - List gallery Application Versions in a gallery Application Definition.
+// If the operation fails it returns the *CloudError error type.
 func (client *GalleryApplicationVersionsClient) ListByGalleryApplication(resourceGroupName string, galleryName string, galleryApplicationName string, options *GalleryApplicationVersionsListByGalleryApplicationOptions) GalleryApplicationVersionListPager {
 	return &galleryApplicationVersionListPager{
 		pipeline: client.con.Pipeline(),
@@ -412,6 +418,7 @@ func (client *GalleryApplicationVersionsClient) listByGalleryApplicationHandleEr
 }
 
 // BeginUpdate - Update a gallery Application Version.
+// If the operation fails it returns the *CloudError error type.
 func (client *GalleryApplicationVersionsClient) BeginUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplicationVersionName string, galleryApplicationVersion GalleryApplicationVersionUpdate, options *GalleryApplicationVersionsBeginUpdateOptions) (GalleryApplicationVersionPollerResponse, error) {
 	resp, err := client.update(ctx, resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, galleryApplicationVersion, options)
 	if err != nil {
@@ -461,6 +468,7 @@ func (client *GalleryApplicationVersionsClient) ResumeUpdate(ctx context.Context
 }
 
 // Update - Update a gallery Application Version.
+// If the operation fails it returns the *CloudError error type.
 func (client *GalleryApplicationVersionsClient) update(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplicationVersionName string, galleryApplicationVersion GalleryApplicationVersionUpdate, options *GalleryApplicationVersionsBeginUpdateOptions) (*azcore.Response, error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, galleryApplicationVersion, options)
 	if err != nil {

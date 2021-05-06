@@ -32,6 +32,7 @@ func NewNetworkProfilesClient(con *armcore.Connection, subscriptionID string) *N
 }
 
 // CreateOrUpdate - Creates or updates a network profile.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkProfilesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, networkProfileName string, parameters NetworkProfile, options *NetworkProfilesCreateOrUpdateOptions) (NetworkProfileResponse, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, networkProfileName, parameters, options)
 	if err != nil {
@@ -97,6 +98,7 @@ func (client *NetworkProfilesClient) createOrUpdateHandleError(resp *azcore.Resp
 }
 
 // BeginDelete - Deletes the specified network profile.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkProfilesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkProfileName string, options *NetworkProfilesBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, networkProfileName, options)
 	if err != nil {
@@ -146,6 +148,7 @@ func (client *NetworkProfilesClient) ResumeDelete(ctx context.Context, token str
 }
 
 // Delete - Deletes the specified network profile.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkProfilesClient) deleteOperation(ctx context.Context, resourceGroupName string, networkProfileName string, options *NetworkProfilesBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, networkProfileName, options)
 	if err != nil {
@@ -202,6 +205,7 @@ func (client *NetworkProfilesClient) deleteHandleError(resp *azcore.Response) er
 }
 
 // Get - Gets the specified network profile in a specified resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkProfilesClient) Get(ctx context.Context, resourceGroupName string, networkProfileName string, options *NetworkProfilesGetOptions) (NetworkProfileResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkProfileName, options)
 	if err != nil {
@@ -270,6 +274,7 @@ func (client *NetworkProfilesClient) getHandleError(resp *azcore.Response) error
 }
 
 // List - Gets all network profiles in a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkProfilesClient) List(resourceGroupName string, options *NetworkProfilesListOptions) NetworkProfileListResultPager {
 	return &networkProfileListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -331,6 +336,7 @@ func (client *NetworkProfilesClient) listHandleError(resp *azcore.Response) erro
 }
 
 // ListAll - Gets all the network profiles in a subscription.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkProfilesClient) ListAll(options *NetworkProfilesListAllOptions) NetworkProfileListResultPager {
 	return &networkProfileListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -388,6 +394,7 @@ func (client *NetworkProfilesClient) listAllHandleError(resp *azcore.Response) e
 }
 
 // UpdateTags - Updates network profile tags.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkProfilesClient) UpdateTags(ctx context.Context, resourceGroupName string, networkProfileName string, parameters TagsObject, options *NetworkProfilesUpdateTagsOptions) (NetworkProfileResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, networkProfileName, parameters, options)
 	if err != nil {

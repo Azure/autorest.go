@@ -32,6 +32,7 @@ func NewVPNServerConfigurationsAssociatedWithVirtualWanClient(con *armcore.Conne
 }
 
 // BeginList - Gives the list of VpnServerConfigurations associated with Virtual Wan in a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) BeginList(ctx context.Context, resourceGroupName string, virtualWANName string, options *VPNServerConfigurationsAssociatedWithVirtualWanBeginListOptions) (VPNServerConfigurationsResponsePollerResponse, error) {
 	resp, err := client.listOperation(ctx, resourceGroupName, virtualWANName, options)
 	if err != nil {
@@ -81,6 +82,7 @@ func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) ResumeList(
 }
 
 // List - Gives the list of VpnServerConfigurations associated with Virtual Wan in a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) listOperation(ctx context.Context, resourceGroupName string, virtualWANName string, options *VPNServerConfigurationsAssociatedWithVirtualWanBeginListOptions) (*azcore.Response, error) {
 	req, err := client.listCreateRequest(ctx, resourceGroupName, virtualWANName, options)
 	if err != nil {

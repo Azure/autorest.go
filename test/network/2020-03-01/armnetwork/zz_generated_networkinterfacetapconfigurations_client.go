@@ -32,6 +32,7 @@ func NewNetworkInterfaceTapConfigurationsClient(con *armcore.Connection, subscri
 }
 
 // BeginCreateOrUpdate - Creates or updates a Tap configuration in the specified NetworkInterface.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkInterfaceTapConfigurationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, tapConfigurationParameters NetworkInterfaceTapConfiguration, options *NetworkInterfaceTapConfigurationsBeginCreateOrUpdateOptions) (NetworkInterfaceTapConfigurationPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, networkInterfaceName, tapConfigurationName, tapConfigurationParameters, options)
 	if err != nil {
@@ -81,6 +82,7 @@ func (client *NetworkInterfaceTapConfigurationsClient) ResumeCreateOrUpdate(ctx 
 }
 
 // CreateOrUpdate - Creates or updates a Tap configuration in the specified NetworkInterface.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkInterfaceTapConfigurationsClient) createOrUpdate(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, tapConfigurationParameters NetworkInterfaceTapConfiguration, options *NetworkInterfaceTapConfigurationsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, networkInterfaceName, tapConfigurationName, tapConfigurationParameters, options)
 	if err != nil {
@@ -150,6 +152,7 @@ func (client *NetworkInterfaceTapConfigurationsClient) createOrUpdateHandleError
 }
 
 // BeginDelete - Deletes the specified tap configuration from the NetworkInterface.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkInterfaceTapConfigurationsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, options *NetworkInterfaceTapConfigurationsBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, networkInterfaceName, tapConfigurationName, options)
 	if err != nil {
@@ -199,6 +202,7 @@ func (client *NetworkInterfaceTapConfigurationsClient) ResumeDelete(ctx context.
 }
 
 // Delete - Deletes the specified tap configuration from the NetworkInterface.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkInterfaceTapConfigurationsClient) deleteOperation(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, options *NetworkInterfaceTapConfigurationsBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, networkInterfaceName, tapConfigurationName, options)
 	if err != nil {
@@ -259,6 +263,7 @@ func (client *NetworkInterfaceTapConfigurationsClient) deleteHandleError(resp *a
 }
 
 // Get - Get the specified tap configuration on a network interface.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkInterfaceTapConfigurationsClient) Get(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, options *NetworkInterfaceTapConfigurationsGetOptions) (NetworkInterfaceTapConfigurationResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkInterfaceName, tapConfigurationName, options)
 	if err != nil {
@@ -328,6 +333,7 @@ func (client *NetworkInterfaceTapConfigurationsClient) getHandleError(resp *azco
 }
 
 // List - Get all Tap configurations in a network interface.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkInterfaceTapConfigurationsClient) List(resourceGroupName string, networkInterfaceName string, options *NetworkInterfaceTapConfigurationsListOptions) NetworkInterfaceTapConfigurationListResultPager {
 	return &networkInterfaceTapConfigurationListResultPager{
 		pipeline: client.con.Pipeline(),

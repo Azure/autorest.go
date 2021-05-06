@@ -55,6 +55,7 @@ type EnumPutReferencedOptions struct {
 	// placeholder for future optional parameters
 }
 
+// Implements the error and azcore.HTTPResponse interfaces.
 type Error struct {
 	raw     string
 	Message *string `json:"message,omitempty"`

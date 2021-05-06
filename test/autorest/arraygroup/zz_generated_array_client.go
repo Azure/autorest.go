@@ -27,6 +27,7 @@ func NewArrayClient(con *Connection) *ArrayClient {
 }
 
 // GetArrayEmpty - Get an empty array []
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetArrayEmpty(ctx context.Context, options *ArrayGetArrayEmptyOptions) (StringArrayArrayResponse, error) {
 	req, err := client.getArrayEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -77,6 +78,7 @@ func (client *ArrayClient) getArrayEmptyHandleError(resp *azcore.Response) error
 }
 
 // GetArrayItemEmpty - Get an array of array of strings [['1', '2', '3'], [], ['7', '8', '9']]
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetArrayItemEmpty(ctx context.Context, options *ArrayGetArrayItemEmptyOptions) (StringArrayArrayResponse, error) {
 	req, err := client.getArrayItemEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -127,6 +129,7 @@ func (client *ArrayClient) getArrayItemEmptyHandleError(resp *azcore.Response) e
 }
 
 // GetArrayItemNull - Get an array of array of strings [['1', '2', '3'], null, ['7', '8', '9']]
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetArrayItemNull(ctx context.Context, options *ArrayGetArrayItemNullOptions) (StringArrayArrayResponse, error) {
 	req, err := client.getArrayItemNullCreateRequest(ctx, options)
 	if err != nil {
@@ -177,6 +180,7 @@ func (client *ArrayClient) getArrayItemNullHandleError(resp *azcore.Response) er
 }
 
 // GetArrayNull - Get a null array
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetArrayNull(ctx context.Context, options *ArrayGetArrayNullOptions) (StringArrayArrayResponse, error) {
 	req, err := client.getArrayNullCreateRequest(ctx, options)
 	if err != nil {
@@ -227,6 +231,7 @@ func (client *ArrayClient) getArrayNullHandleError(resp *azcore.Response) error 
 }
 
 // GetArrayValid - Get an array of array of strings [['1', '2', '3'], ['4', '5', '6'], ['7', '8', '9']]
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetArrayValid(ctx context.Context, options *ArrayGetArrayValidOptions) (StringArrayArrayResponse, error) {
 	req, err := client.getArrayValidCreateRequest(ctx, options)
 	if err != nil {
@@ -277,6 +282,7 @@ func (client *ArrayClient) getArrayValidHandleError(resp *azcore.Response) error
 }
 
 // GetBase64URL - Get array value ['a string that gets encoded with base64url', 'test string' 'Lorem ipsum'] with the items base64url encoded
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetBase64URL(ctx context.Context, options *ArrayGetBase64URLOptions) (ByteArrayArrayResponse, error) {
 	req, err := client.getBase64URLCreateRequest(ctx, options)
 	if err != nil {
@@ -327,6 +333,7 @@ func (client *ArrayClient) getBase64URLHandleError(resp *azcore.Response) error 
 }
 
 // GetBooleanInvalidNull - Get boolean array value [true, null, false]
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetBooleanInvalidNull(ctx context.Context, options *ArrayGetBooleanInvalidNullOptions) (BoolArrayResponse, error) {
 	req, err := client.getBooleanInvalidNullCreateRequest(ctx, options)
 	if err != nil {
@@ -377,6 +384,7 @@ func (client *ArrayClient) getBooleanInvalidNullHandleError(resp *azcore.Respons
 }
 
 // GetBooleanInvalidString - Get boolean array value [true, 'boolean', false]
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetBooleanInvalidString(ctx context.Context, options *ArrayGetBooleanInvalidStringOptions) (BoolArrayResponse, error) {
 	req, err := client.getBooleanInvalidStringCreateRequest(ctx, options)
 	if err != nil {
@@ -427,6 +435,7 @@ func (client *ArrayClient) getBooleanInvalidStringHandleError(resp *azcore.Respo
 }
 
 // GetBooleanTfft - Get boolean array value [true, false, false, true]
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetBooleanTfft(ctx context.Context, options *ArrayGetBooleanTfftOptions) (BoolArrayResponse, error) {
 	req, err := client.getBooleanTfftCreateRequest(ctx, options)
 	if err != nil {
@@ -477,6 +486,7 @@ func (client *ArrayClient) getBooleanTfftHandleError(resp *azcore.Response) erro
 }
 
 // GetByteInvalidNull - Get byte array value [hex(AB, AC, AD), null] with the first item base64 encoded
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetByteInvalidNull(ctx context.Context, options *ArrayGetByteInvalidNullOptions) (ByteArrayArrayResponse, error) {
 	req, err := client.getByteInvalidNullCreateRequest(ctx, options)
 	if err != nil {
@@ -527,6 +537,7 @@ func (client *ArrayClient) getByteInvalidNullHandleError(resp *azcore.Response) 
 }
 
 // GetByteValid - Get byte array value [hex(FF FF FF FA), hex(01 02 03), hex (25, 29, 43)] with each item encoded in base64
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetByteValid(ctx context.Context, options *ArrayGetByteValidOptions) (ByteArrayArrayResponse, error) {
 	req, err := client.getByteValidCreateRequest(ctx, options)
 	if err != nil {
@@ -577,6 +588,7 @@ func (client *ArrayClient) getByteValidHandleError(resp *azcore.Response) error 
 }
 
 // GetComplexEmpty - Get empty array of complex type []
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetComplexEmpty(ctx context.Context, options *ArrayGetComplexEmptyOptions) (ProductArrayResponse, error) {
 	req, err := client.getComplexEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -627,6 +639,7 @@ func (client *ArrayClient) getComplexEmptyHandleError(resp *azcore.Response) err
 }
 
 // GetComplexItemEmpty - Get array of complex type with empty item [{'integer': 1 'string': '2'}, {}, {'integer': 5, 'string': '6'}]
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetComplexItemEmpty(ctx context.Context, options *ArrayGetComplexItemEmptyOptions) (ProductArrayResponse, error) {
 	req, err := client.getComplexItemEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -677,6 +690,7 @@ func (client *ArrayClient) getComplexItemEmptyHandleError(resp *azcore.Response)
 }
 
 // GetComplexItemNull - Get array of complex type with null item [{'integer': 1 'string': '2'}, null, {'integer': 5, 'string': '6'}]
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetComplexItemNull(ctx context.Context, options *ArrayGetComplexItemNullOptions) (ProductArrayResponse, error) {
 	req, err := client.getComplexItemNullCreateRequest(ctx, options)
 	if err != nil {
@@ -727,6 +741,7 @@ func (client *ArrayClient) getComplexItemNullHandleError(resp *azcore.Response) 
 }
 
 // GetComplexNull - Get array of complex type null value
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetComplexNull(ctx context.Context, options *ArrayGetComplexNullOptions) (ProductArrayResponse, error) {
 	req, err := client.getComplexNullCreateRequest(ctx, options)
 	if err != nil {
@@ -777,6 +792,7 @@ func (client *ArrayClient) getComplexNullHandleError(resp *azcore.Response) erro
 }
 
 // GetComplexValid - Get array of complex type with [{'integer': 1 'string': '2'}, {'integer': 3, 'string': '4'}, {'integer': 5, 'string': '6'}]
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetComplexValid(ctx context.Context, options *ArrayGetComplexValidOptions) (ProductArrayResponse, error) {
 	req, err := client.getComplexValidCreateRequest(ctx, options)
 	if err != nil {
@@ -827,6 +843,7 @@ func (client *ArrayClient) getComplexValidHandleError(resp *azcore.Response) err
 }
 
 // GetDateInvalidChars - Get date array value ['2011-03-22', 'date']
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetDateInvalidChars(ctx context.Context, options *ArrayGetDateInvalidCharsOptions) (TimeArrayResponse, error) {
 	req, err := client.getDateInvalidCharsCreateRequest(ctx, options)
 	if err != nil {
@@ -881,6 +898,7 @@ func (client *ArrayClient) getDateInvalidCharsHandleError(resp *azcore.Response)
 }
 
 // GetDateInvalidNull - Get date array value ['2012-01-01', null, '1776-07-04']
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetDateInvalidNull(ctx context.Context, options *ArrayGetDateInvalidNullOptions) (TimeArrayResponse, error) {
 	req, err := client.getDateInvalidNullCreateRequest(ctx, options)
 	if err != nil {
@@ -935,6 +953,7 @@ func (client *ArrayClient) getDateInvalidNullHandleError(resp *azcore.Response) 
 }
 
 // GetDateTimeInvalidChars - Get date array value ['2000-12-01t00:00:01z', 'date-time']
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetDateTimeInvalidChars(ctx context.Context, options *ArrayGetDateTimeInvalidCharsOptions) (TimeArrayResponse, error) {
 	req, err := client.getDateTimeInvalidCharsCreateRequest(ctx, options)
 	if err != nil {
@@ -989,6 +1008,7 @@ func (client *ArrayClient) getDateTimeInvalidCharsHandleError(resp *azcore.Respo
 }
 
 // GetDateTimeInvalidNull - Get date array value ['2000-12-01t00:00:01z', null]
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetDateTimeInvalidNull(ctx context.Context, options *ArrayGetDateTimeInvalidNullOptions) (TimeArrayResponse, error) {
 	req, err := client.getDateTimeInvalidNullCreateRequest(ctx, options)
 	if err != nil {
@@ -1043,6 +1063,7 @@ func (client *ArrayClient) getDateTimeInvalidNullHandleError(resp *azcore.Respon
 }
 
 // GetDateTimeRFC1123Valid - Get date-time array value ['Fri, 01 Dec 2000 00:00:01 GMT', 'Wed, 02 Jan 1980 00:11:35 GMT', 'Wed, 12 Oct 1492 10:15:01 GMT']
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetDateTimeRFC1123Valid(ctx context.Context, options *ArrayGetDateTimeRFC1123ValidOptions) (TimeArrayResponse, error) {
 	req, err := client.getDateTimeRFC1123ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1097,6 +1118,7 @@ func (client *ArrayClient) getDateTimeRFC1123ValidHandleError(resp *azcore.Respo
 }
 
 // GetDateTimeValid - Get date-time array value ['2000-12-01t00:00:01z', '1980-01-02T00:11:35+01:00', '1492-10-12T10:15:01-08:00']
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetDateTimeValid(ctx context.Context, options *ArrayGetDateTimeValidOptions) (TimeArrayResponse, error) {
 	req, err := client.getDateTimeValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1151,6 +1173,7 @@ func (client *ArrayClient) getDateTimeValidHandleError(resp *azcore.Response) er
 }
 
 // GetDateValid - Get integer array value ['2000-12-01', '1980-01-02', '1492-10-12']
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetDateValid(ctx context.Context, options *ArrayGetDateValidOptions) (TimeArrayResponse, error) {
 	req, err := client.getDateValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1205,6 +1228,7 @@ func (client *ArrayClient) getDateValidHandleError(resp *azcore.Response) error 
 }
 
 // GetDictionaryEmpty - Get an array of Dictionaries of type with value []
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetDictionaryEmpty(ctx context.Context, options *ArrayGetDictionaryEmptyOptions) (MapOfStringArrayResponse, error) {
 	req, err := client.getDictionaryEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -1256,6 +1280,7 @@ func (client *ArrayClient) getDictionaryEmptyHandleError(resp *azcore.Response) 
 
 // GetDictionaryItemEmpty - Get an array of Dictionaries of type with value [{'1': 'one', '2': 'two', '3': 'three'}, {}, {'7': 'seven', '8': 'eight', '9':
 // 'nine'}]
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetDictionaryItemEmpty(ctx context.Context, options *ArrayGetDictionaryItemEmptyOptions) (MapOfStringArrayResponse, error) {
 	req, err := client.getDictionaryItemEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -1307,6 +1332,7 @@ func (client *ArrayClient) getDictionaryItemEmptyHandleError(resp *azcore.Respon
 
 // GetDictionaryItemNull - Get an array of Dictionaries of type with value [{'1': 'one', '2': 'two', '3': 'three'}, null, {'7': 'seven', '8': 'eight', '9':
 // 'nine'}]
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetDictionaryItemNull(ctx context.Context, options *ArrayGetDictionaryItemNullOptions) (MapOfStringArrayResponse, error) {
 	req, err := client.getDictionaryItemNullCreateRequest(ctx, options)
 	if err != nil {
@@ -1357,6 +1383,7 @@ func (client *ArrayClient) getDictionaryItemNullHandleError(resp *azcore.Respons
 }
 
 // GetDictionaryNull - Get an array of Dictionaries with value null
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetDictionaryNull(ctx context.Context, options *ArrayGetDictionaryNullOptions) (MapOfStringArrayResponse, error) {
 	req, err := client.getDictionaryNullCreateRequest(ctx, options)
 	if err != nil {
@@ -1408,6 +1435,7 @@ func (client *ArrayClient) getDictionaryNullHandleError(resp *azcore.Response) e
 
 // GetDictionaryValid - Get an array of Dictionaries of type with value [{'1': 'one', '2': 'two', '3': 'three'}, {'4': 'four', '5': 'five', '6': 'six'},
 // {'7': 'seven', '8': 'eight', '9': 'nine'}]
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetDictionaryValid(ctx context.Context, options *ArrayGetDictionaryValidOptions) (MapOfStringArrayResponse, error) {
 	req, err := client.getDictionaryValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1458,6 +1486,7 @@ func (client *ArrayClient) getDictionaryValidHandleError(resp *azcore.Response) 
 }
 
 // GetDoubleInvalidNull - Get float array value [0.0, null, -1.2e20]
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetDoubleInvalidNull(ctx context.Context, options *ArrayGetDoubleInvalidNullOptions) (Float64ArrayResponse, error) {
 	req, err := client.getDoubleInvalidNullCreateRequest(ctx, options)
 	if err != nil {
@@ -1508,6 +1537,7 @@ func (client *ArrayClient) getDoubleInvalidNullHandleError(resp *azcore.Response
 }
 
 // GetDoubleInvalidString - Get boolean array value [1.0, 'number', 0.0]
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetDoubleInvalidString(ctx context.Context, options *ArrayGetDoubleInvalidStringOptions) (Float64ArrayResponse, error) {
 	req, err := client.getDoubleInvalidStringCreateRequest(ctx, options)
 	if err != nil {
@@ -1558,6 +1588,7 @@ func (client *ArrayClient) getDoubleInvalidStringHandleError(resp *azcore.Respon
 }
 
 // GetDoubleValid - Get float array value [0, -0.01, 1.2e20]
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetDoubleValid(ctx context.Context, options *ArrayGetDoubleValidOptions) (Float64ArrayResponse, error) {
 	req, err := client.getDoubleValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1608,6 +1639,7 @@ func (client *ArrayClient) getDoubleValidHandleError(resp *azcore.Response) erro
 }
 
 // GetDurationValid - Get duration array value ['P123DT22H14M12.011S', 'P5DT1H0M0S']
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetDurationValid(ctx context.Context, options *ArrayGetDurationValidOptions) (StringArrayResponse, error) {
 	req, err := client.getDurationValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1658,6 +1690,7 @@ func (client *ArrayClient) getDurationValidHandleError(resp *azcore.Response) er
 }
 
 // GetEmpty - Get empty array value []
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetEmpty(ctx context.Context, options *ArrayGetEmptyOptions) (Int32ArrayResponse, error) {
 	req, err := client.getEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -1708,6 +1741,7 @@ func (client *ArrayClient) getEmptyHandleError(resp *azcore.Response) error {
 }
 
 // GetEnumValid - Get enum array value ['foo1', 'foo2', 'foo3']
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetEnumValid(ctx context.Context, options *ArrayGetEnumValidOptions) (FooEnumArrayResponse, error) {
 	req, err := client.getEnumValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1758,6 +1792,7 @@ func (client *ArrayClient) getEnumValidHandleError(resp *azcore.Response) error 
 }
 
 // GetFloatInvalidNull - Get float array value [0.0, null, -1.2e20]
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetFloatInvalidNull(ctx context.Context, options *ArrayGetFloatInvalidNullOptions) (Float32ArrayResponse, error) {
 	req, err := client.getFloatInvalidNullCreateRequest(ctx, options)
 	if err != nil {
@@ -1808,6 +1843,7 @@ func (client *ArrayClient) getFloatInvalidNullHandleError(resp *azcore.Response)
 }
 
 // GetFloatInvalidString - Get boolean array value [1.0, 'number', 0.0]
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetFloatInvalidString(ctx context.Context, options *ArrayGetFloatInvalidStringOptions) (Float32ArrayResponse, error) {
 	req, err := client.getFloatInvalidStringCreateRequest(ctx, options)
 	if err != nil {
@@ -1858,6 +1894,7 @@ func (client *ArrayClient) getFloatInvalidStringHandleError(resp *azcore.Respons
 }
 
 // GetFloatValid - Get float array value [0, -0.01, 1.2e20]
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetFloatValid(ctx context.Context, options *ArrayGetFloatValidOptions) (Float32ArrayResponse, error) {
 	req, err := client.getFloatValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1908,6 +1945,7 @@ func (client *ArrayClient) getFloatValidHandleError(resp *azcore.Response) error
 }
 
 // GetIntInvalidNull - Get integer array value [1, null, 0]
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetIntInvalidNull(ctx context.Context, options *ArrayGetIntInvalidNullOptions) (Int32ArrayResponse, error) {
 	req, err := client.getIntInvalidNullCreateRequest(ctx, options)
 	if err != nil {
@@ -1958,6 +1996,7 @@ func (client *ArrayClient) getIntInvalidNullHandleError(resp *azcore.Response) e
 }
 
 // GetIntInvalidString - Get integer array value [1, 'integer', 0]
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetIntInvalidString(ctx context.Context, options *ArrayGetIntInvalidStringOptions) (Int32ArrayResponse, error) {
 	req, err := client.getIntInvalidStringCreateRequest(ctx, options)
 	if err != nil {
@@ -2008,6 +2047,7 @@ func (client *ArrayClient) getIntInvalidStringHandleError(resp *azcore.Response)
 }
 
 // GetIntegerValid - Get integer array value [1, -1, 3, 300]
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetIntegerValid(ctx context.Context, options *ArrayGetIntegerValidOptions) (Int32ArrayResponse, error) {
 	req, err := client.getIntegerValidCreateRequest(ctx, options)
 	if err != nil {
@@ -2058,6 +2098,7 @@ func (client *ArrayClient) getIntegerValidHandleError(resp *azcore.Response) err
 }
 
 // GetInvalid - Get invalid array [1, 2, 3
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetInvalid(ctx context.Context, options *ArrayGetInvalidOptions) (Int32ArrayResponse, error) {
 	req, err := client.getInvalidCreateRequest(ctx, options)
 	if err != nil {
@@ -2108,6 +2149,7 @@ func (client *ArrayClient) getInvalidHandleError(resp *azcore.Response) error {
 }
 
 // GetLongInvalidNull - Get long array value [1, null, 0]
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetLongInvalidNull(ctx context.Context, options *ArrayGetLongInvalidNullOptions) (Int64ArrayResponse, error) {
 	req, err := client.getLongInvalidNullCreateRequest(ctx, options)
 	if err != nil {
@@ -2158,6 +2200,7 @@ func (client *ArrayClient) getLongInvalidNullHandleError(resp *azcore.Response) 
 }
 
 // GetLongInvalidString - Get long array value [1, 'integer', 0]
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetLongInvalidString(ctx context.Context, options *ArrayGetLongInvalidStringOptions) (Int64ArrayResponse, error) {
 	req, err := client.getLongInvalidStringCreateRequest(ctx, options)
 	if err != nil {
@@ -2208,6 +2251,7 @@ func (client *ArrayClient) getLongInvalidStringHandleError(resp *azcore.Response
 }
 
 // GetLongValid - Get integer array value [1, -1, 3, 300]
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetLongValid(ctx context.Context, options *ArrayGetLongValidOptions) (Int64ArrayResponse, error) {
 	req, err := client.getLongValidCreateRequest(ctx, options)
 	if err != nil {
@@ -2258,6 +2302,7 @@ func (client *ArrayClient) getLongValidHandleError(resp *azcore.Response) error 
 }
 
 // GetNull - Get null array value
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetNull(ctx context.Context, options *ArrayGetNullOptions) (Int32ArrayResponse, error) {
 	req, err := client.getNullCreateRequest(ctx, options)
 	if err != nil {
@@ -2308,6 +2353,7 @@ func (client *ArrayClient) getNullHandleError(resp *azcore.Response) error {
 }
 
 // GetStringEnumValid - Get enum array value ['foo1', 'foo2', 'foo3']
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetStringEnumValid(ctx context.Context, options *ArrayGetStringEnumValidOptions) (Enum0ArrayResponse, error) {
 	req, err := client.getStringEnumValidCreateRequest(ctx, options)
 	if err != nil {
@@ -2358,6 +2404,7 @@ func (client *ArrayClient) getStringEnumValidHandleError(resp *azcore.Response) 
 }
 
 // GetStringValid - Get string array value ['foo1', 'foo2', 'foo3']
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetStringValid(ctx context.Context, options *ArrayGetStringValidOptions) (StringArrayResponse, error) {
 	req, err := client.getStringValidCreateRequest(ctx, options)
 	if err != nil {
@@ -2408,6 +2455,7 @@ func (client *ArrayClient) getStringValidHandleError(resp *azcore.Response) erro
 }
 
 // GetStringWithInvalid - Get string array value ['foo', 123, 'foo2']
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetStringWithInvalid(ctx context.Context, options *ArrayGetStringWithInvalidOptions) (StringArrayResponse, error) {
 	req, err := client.getStringWithInvalidCreateRequest(ctx, options)
 	if err != nil {
@@ -2458,6 +2506,7 @@ func (client *ArrayClient) getStringWithInvalidHandleError(resp *azcore.Response
 }
 
 // GetStringWithNull - Get string array value ['foo', null, 'foo2']
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetStringWithNull(ctx context.Context, options *ArrayGetStringWithNullOptions) (StringArrayResponse, error) {
 	req, err := client.getStringWithNullCreateRequest(ctx, options)
 	if err != nil {
@@ -2508,6 +2557,7 @@ func (client *ArrayClient) getStringWithNullHandleError(resp *azcore.Response) e
 }
 
 // GetUUIDInvalidChars - Get uuid array value ['6dcc7237-45fe-45c4-8a6b-3a8a3f625652', 'foo']
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetUUIDInvalidChars(ctx context.Context, options *ArrayGetUUIDInvalidCharsOptions) (StringArrayResponse, error) {
 	req, err := client.getUUIDInvalidCharsCreateRequest(ctx, options)
 	if err != nil {
@@ -2558,6 +2608,7 @@ func (client *ArrayClient) getUUIDInvalidCharsHandleError(resp *azcore.Response)
 }
 
 // GetUUIDValid - Get uuid array value ['6dcc7237-45fe-45c4-8a6b-3a8a3f625652', 'd1399005-30f7-40d6-8da6-dd7c89ad34db', 'f42f6aa1-a5bc-4ddf-907e-5f915de43205']
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetUUIDValid(ctx context.Context, options *ArrayGetUUIDValidOptions) (StringArrayResponse, error) {
 	req, err := client.getUUIDValidCreateRequest(ctx, options)
 	if err != nil {
@@ -2608,6 +2659,7 @@ func (client *ArrayClient) getUUIDValidHandleError(resp *azcore.Response) error 
 }
 
 // PutArrayValid - Put An array of array of strings [['1', '2', '3'], ['4', '5', '6'], ['7', '8', '9']]
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) PutArrayValid(ctx context.Context, arrayBody [][]*string, options *ArrayPutArrayValidOptions) (*http.Response, error) {
 	req, err := client.putArrayValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2649,6 +2701,7 @@ func (client *ArrayClient) putArrayValidHandleError(resp *azcore.Response) error
 }
 
 // PutBooleanTfft - Set array value empty [true, false, false, true]
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) PutBooleanTfft(ctx context.Context, arrayBody []*bool, options *ArrayPutBooleanTfftOptions) (*http.Response, error) {
 	req, err := client.putBooleanTfftCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2690,6 +2743,7 @@ func (client *ArrayClient) putBooleanTfftHandleError(resp *azcore.Response) erro
 }
 
 // PutByteValid - Put the array value [hex(FF FF FF FA), hex(01 02 03), hex (25, 29, 43)] with each elementencoded in base 64
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) PutByteValid(ctx context.Context, arrayBody [][]byte, options *ArrayPutByteValidOptions) (*http.Response, error) {
 	req, err := client.putByteValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2731,6 +2785,7 @@ func (client *ArrayClient) putByteValidHandleError(resp *azcore.Response) error 
 }
 
 // PutComplexValid - Put an array of complex type with values [{'integer': 1 'string': '2'}, {'integer': 3, 'string': '4'}, {'integer': 5, 'string': '6'}]
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) PutComplexValid(ctx context.Context, arrayBody []*Product, options *ArrayPutComplexValidOptions) (*http.Response, error) {
 	req, err := client.putComplexValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2772,6 +2827,7 @@ func (client *ArrayClient) putComplexValidHandleError(resp *azcore.Response) err
 }
 
 // PutDateTimeRFC1123Valid - Set array value ['Fri, 01 Dec 2000 00:00:01 GMT', 'Wed, 02 Jan 1980 00:11:35 GMT', 'Wed, 12 Oct 1492 10:15:01 GMT']
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) PutDateTimeRFC1123Valid(ctx context.Context, arrayBody []*time.Time, options *ArrayPutDateTimeRFC1123ValidOptions) (*http.Response, error) {
 	req, err := client.putDateTimeRFC1123ValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2817,6 +2873,7 @@ func (client *ArrayClient) putDateTimeRFC1123ValidHandleError(resp *azcore.Respo
 }
 
 // PutDateTimeValid - Set array value ['2000-12-01t00:00:01z', '1980-01-02T00:11:35+01:00', '1492-10-12T10:15:01-08:00']
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) PutDateTimeValid(ctx context.Context, arrayBody []*time.Time, options *ArrayPutDateTimeValidOptions) (*http.Response, error) {
 	req, err := client.putDateTimeValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2858,6 +2915,7 @@ func (client *ArrayClient) putDateTimeValidHandleError(resp *azcore.Response) er
 }
 
 // PutDateValid - Set array value ['2000-12-01', '1980-01-02', '1492-10-12']
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) PutDateValid(ctx context.Context, arrayBody []*time.Time, options *ArrayPutDateValidOptions) (*http.Response, error) {
 	req, err := client.putDateValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2904,6 +2962,7 @@ func (client *ArrayClient) putDateValidHandleError(resp *azcore.Response) error 
 
 // PutDictionaryValid - Get an array of Dictionaries of type with value [{'1': 'one', '2': 'two', '3': 'three'}, {'4': 'four', '5': 'five', '6': 'six'},
 // {'7': 'seven', '8': 'eight', '9': 'nine'}]
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) PutDictionaryValid(ctx context.Context, arrayBody []map[string]*string, options *ArrayPutDictionaryValidOptions) (*http.Response, error) {
 	req, err := client.putDictionaryValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2945,6 +3004,7 @@ func (client *ArrayClient) putDictionaryValidHandleError(resp *azcore.Response) 
 }
 
 // PutDoubleValid - Set array value [0, -0.01, 1.2e20]
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) PutDoubleValid(ctx context.Context, arrayBody []*float64, options *ArrayPutDoubleValidOptions) (*http.Response, error) {
 	req, err := client.putDoubleValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2986,6 +3046,7 @@ func (client *ArrayClient) putDoubleValidHandleError(resp *azcore.Response) erro
 }
 
 // PutDurationValid - Set array value ['P123DT22H14M12.011S', 'P5DT1H0M0S']
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) PutDurationValid(ctx context.Context, arrayBody []*string, options *ArrayPutDurationValidOptions) (*http.Response, error) {
 	req, err := client.putDurationValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -3027,6 +3088,7 @@ func (client *ArrayClient) putDurationValidHandleError(resp *azcore.Response) er
 }
 
 // PutEmpty - Set array value empty []
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) PutEmpty(ctx context.Context, arrayBody []*string, options *ArrayPutEmptyOptions) (*http.Response, error) {
 	req, err := client.putEmptyCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -3068,6 +3130,7 @@ func (client *ArrayClient) putEmptyHandleError(resp *azcore.Response) error {
 }
 
 // PutEnumValid - Set array value ['foo1', 'foo2', 'foo3']
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) PutEnumValid(ctx context.Context, arrayBody []*FooEnum, options *ArrayPutEnumValidOptions) (*http.Response, error) {
 	req, err := client.putEnumValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -3109,6 +3172,7 @@ func (client *ArrayClient) putEnumValidHandleError(resp *azcore.Response) error 
 }
 
 // PutFloatValid - Set array value [0, -0.01, 1.2e20]
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) PutFloatValid(ctx context.Context, arrayBody []*float32, options *ArrayPutFloatValidOptions) (*http.Response, error) {
 	req, err := client.putFloatValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -3150,6 +3214,7 @@ func (client *ArrayClient) putFloatValidHandleError(resp *azcore.Response) error
 }
 
 // PutIntegerValid - Set array value empty [1, -1, 3, 300]
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) PutIntegerValid(ctx context.Context, arrayBody []*int32, options *ArrayPutIntegerValidOptions) (*http.Response, error) {
 	req, err := client.putIntegerValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -3191,6 +3256,7 @@ func (client *ArrayClient) putIntegerValidHandleError(resp *azcore.Response) err
 }
 
 // PutLongValid - Set array value empty [1, -1, 3, 300]
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) PutLongValid(ctx context.Context, arrayBody []*int64, options *ArrayPutLongValidOptions) (*http.Response, error) {
 	req, err := client.putLongValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -3232,6 +3298,7 @@ func (client *ArrayClient) putLongValidHandleError(resp *azcore.Response) error 
 }
 
 // PutStringEnumValid - Set array value ['foo1', 'foo2', 'foo3']
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) PutStringEnumValid(ctx context.Context, arrayBody []*Enum1, options *ArrayPutStringEnumValidOptions) (*http.Response, error) {
 	req, err := client.putStringEnumValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -3273,6 +3340,7 @@ func (client *ArrayClient) putStringEnumValidHandleError(resp *azcore.Response) 
 }
 
 // PutStringValid - Set array value ['foo1', 'foo2', 'foo3']
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) PutStringValid(ctx context.Context, arrayBody []*string, options *ArrayPutStringValidOptions) (*http.Response, error) {
 	req, err := client.putStringValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -3314,6 +3382,7 @@ func (client *ArrayClient) putStringValidHandleError(resp *azcore.Response) erro
 }
 
 // PutUUIDValid - Set array value ['6dcc7237-45fe-45c4-8a6b-3a8a3f625652', 'd1399005-30f7-40d6-8da6-dd7c89ad34db', 'f42f6aa1-a5bc-4ddf-907e-5f915de43205']
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) PutUUIDValid(ctx context.Context, arrayBody []*string, options *ArrayPutUUIDValidOptions) (*http.Response, error) {
 	req, err := client.putUUIDValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {

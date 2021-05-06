@@ -20,6 +20,7 @@ type dataFlowDebugSessionClient struct {
 }
 
 // AddDataFlow - Add a data flow into debug session.
+// If the operation fails it returns the *CloudError error type.
 func (client *dataFlowDebugSessionClient) AddDataFlow(ctx context.Context, request DataFlowDebugPackage, options *DataFlowDebugSessionAddDataFlowOptions) (AddDataFlowToDebugSessionResponseResponse, error) {
 	req, err := client.addDataFlowCreateRequest(ctx, request, options)
 	if err != nil {
@@ -73,6 +74,7 @@ func (client *dataFlowDebugSessionClient) addDataFlowHandleError(resp *azcore.Re
 }
 
 // BeginCreateDataFlowDebugSession - Creates a data flow debug session.
+// If the operation fails it returns the *CloudError error type.
 func (client *dataFlowDebugSessionClient) BeginCreateDataFlowDebugSession(ctx context.Context, request CreateDataFlowDebugSessionRequest, options *DataFlowDebugSessionBeginCreateDataFlowDebugSessionOptions) (CreateDataFlowDebugSessionResponsePollerResponse, error) {
 	resp, err := client.createDataFlowDebugSession(ctx, request, options)
 	if err != nil {
@@ -120,6 +122,7 @@ func (client *dataFlowDebugSessionClient) ResumeCreateDataFlowDebugSession(ctx c
 }
 
 // CreateDataFlowDebugSession - Creates a data flow debug session.
+// If the operation fails it returns the *CloudError error type.
 func (client *dataFlowDebugSessionClient) createDataFlowDebugSession(ctx context.Context, request CreateDataFlowDebugSessionRequest, options *DataFlowDebugSessionBeginCreateDataFlowDebugSessionOptions) (*azcore.Response, error) {
 	req, err := client.createDataFlowDebugSessionCreateRequest(ctx, request, options)
 	if err != nil {
@@ -173,6 +176,7 @@ func (client *dataFlowDebugSessionClient) createDataFlowDebugSessionHandleError(
 }
 
 // DeleteDataFlowDebugSession - Deletes a data flow debug session.
+// If the operation fails it returns the *CloudError error type.
 func (client *dataFlowDebugSessionClient) DeleteDataFlowDebugSession(ctx context.Context, request DeleteDataFlowDebugSessionRequest, options *DataFlowDebugSessionDeleteDataFlowDebugSessionOptions) (*http.Response, error) {
 	req, err := client.deleteDataFlowDebugSessionCreateRequest(ctx, request, options)
 	if err != nil {
@@ -217,6 +221,7 @@ func (client *dataFlowDebugSessionClient) deleteDataFlowDebugSessionHandleError(
 }
 
 // BeginExecuteCommand - Execute a data flow debug command.
+// If the operation fails it returns the *CloudError error type.
 func (client *dataFlowDebugSessionClient) BeginExecuteCommand(ctx context.Context, request DataFlowDebugCommandRequest, options *DataFlowDebugSessionBeginExecuteCommandOptions) (DataFlowDebugCommandResponsePollerResponse, error) {
 	resp, err := client.executeCommand(ctx, request, options)
 	if err != nil {
@@ -264,6 +269,7 @@ func (client *dataFlowDebugSessionClient) ResumeExecuteCommand(ctx context.Conte
 }
 
 // ExecuteCommand - Execute a data flow debug command.
+// If the operation fails it returns the *CloudError error type.
 func (client *dataFlowDebugSessionClient) executeCommand(ctx context.Context, request DataFlowDebugCommandRequest, options *DataFlowDebugSessionBeginExecuteCommandOptions) (*azcore.Response, error) {
 	req, err := client.executeCommandCreateRequest(ctx, request, options)
 	if err != nil {
@@ -317,6 +323,7 @@ func (client *dataFlowDebugSessionClient) executeCommandHandleError(resp *azcore
 }
 
 // QueryDataFlowDebugSessionsByWorkspace - Query all active data flow debug sessions.
+// If the operation fails it returns the *CloudError error type.
 func (client *dataFlowDebugSessionClient) QueryDataFlowDebugSessionsByWorkspace(options *DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspaceOptions) QueryDataFlowDebugSessionsResponsePager {
 	return &queryDataFlowDebugSessionsResponsePager{
 		pipeline: client.con.Pipeline(),

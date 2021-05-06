@@ -23,6 +23,7 @@ type triggerClient struct {
 }
 
 // BeginCreateOrUpdateTrigger - Creates or updates a trigger.
+// If the operation fails it returns the *CloudError error type.
 func (client *triggerClient) BeginCreateOrUpdateTrigger(ctx context.Context, triggerName string, trigger TriggerResource, options *TriggerBeginCreateOrUpdateTriggerOptions) (TriggerResourcePollerResponse, error) {
 	resp, err := client.createOrUpdateTrigger(ctx, triggerName, trigger, options)
 	if err != nil {
@@ -70,6 +71,7 @@ func (client *triggerClient) ResumeCreateOrUpdateTrigger(ctx context.Context, to
 }
 
 // CreateOrUpdateTrigger - Creates or updates a trigger.
+// If the operation fails it returns the *CloudError error type.
 func (client *triggerClient) createOrUpdateTrigger(ctx context.Context, triggerName string, trigger TriggerResource, options *TriggerBeginCreateOrUpdateTriggerOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateTriggerCreateRequest(ctx, triggerName, trigger, options)
 	if err != nil {
@@ -130,6 +132,7 @@ func (client *triggerClient) createOrUpdateTriggerHandleError(resp *azcore.Respo
 }
 
 // BeginDeleteTrigger - Deletes a trigger.
+// If the operation fails it returns the *CloudError error type.
 func (client *triggerClient) BeginDeleteTrigger(ctx context.Context, triggerName string, options *TriggerBeginDeleteTriggerOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteTrigger(ctx, triggerName, options)
 	if err != nil {
@@ -177,6 +180,7 @@ func (client *triggerClient) ResumeDeleteTrigger(ctx context.Context, token stri
 }
 
 // DeleteTrigger - Deletes a trigger.
+// If the operation fails it returns the *CloudError error type.
 func (client *triggerClient) deleteTrigger(ctx context.Context, triggerName string, options *TriggerBeginDeleteTriggerOptions) (*azcore.Response, error) {
 	req, err := client.deleteTriggerCreateRequest(ctx, triggerName, options)
 	if err != nil {
@@ -225,6 +229,7 @@ func (client *triggerClient) deleteTriggerHandleError(resp *azcore.Response) err
 }
 
 // GetEventSubscriptionStatus - Get a trigger's event subscription status.
+// If the operation fails it returns the *CloudError error type.
 func (client *triggerClient) GetEventSubscriptionStatus(ctx context.Context, triggerName string, options *TriggerGetEventSubscriptionStatusOptions) (TriggerSubscriptionOperationStatusResponse, error) {
 	req, err := client.getEventSubscriptionStatusCreateRequest(ctx, triggerName, options)
 	if err != nil {
@@ -282,6 +287,7 @@ func (client *triggerClient) getEventSubscriptionStatusHandleError(resp *azcore.
 }
 
 // GetTrigger - Gets a trigger.
+// If the operation fails it returns the *CloudError error type.
 func (client *triggerClient) GetTrigger(ctx context.Context, triggerName string, options *TriggerGetTriggerOptions) (TriggerResourceResponse, error) {
 	req, err := client.getTriggerCreateRequest(ctx, triggerName, options)
 	if err != nil {
@@ -342,6 +348,7 @@ func (client *triggerClient) getTriggerHandleError(resp *azcore.Response) error 
 }
 
 // GetTriggersByWorkspace - Lists triggers.
+// If the operation fails it returns the *CloudError error type.
 func (client *triggerClient) GetTriggersByWorkspace(options *TriggerGetTriggersByWorkspaceOptions) TriggerListResponsePager {
 	return &triggerListResponsePager{
 		pipeline: client.con.Pipeline(),
@@ -395,6 +402,7 @@ func (client *triggerClient) getTriggersByWorkspaceHandleError(resp *azcore.Resp
 }
 
 // BeginStartTrigger - Starts a trigger.
+// If the operation fails it returns the *CloudError error type.
 func (client *triggerClient) BeginStartTrigger(ctx context.Context, triggerName string, options *TriggerBeginStartTriggerOptions) (HTTPPollerResponse, error) {
 	resp, err := client.startTrigger(ctx, triggerName, options)
 	if err != nil {
@@ -442,6 +450,7 @@ func (client *triggerClient) ResumeStartTrigger(ctx context.Context, token strin
 }
 
 // StartTrigger - Starts a trigger.
+// If the operation fails it returns the *CloudError error type.
 func (client *triggerClient) startTrigger(ctx context.Context, triggerName string, options *TriggerBeginStartTriggerOptions) (*azcore.Response, error) {
 	req, err := client.startTriggerCreateRequest(ctx, triggerName, options)
 	if err != nil {
@@ -490,6 +499,7 @@ func (client *triggerClient) startTriggerHandleError(resp *azcore.Response) erro
 }
 
 // BeginStopTrigger - Stops a trigger.
+// If the operation fails it returns the *CloudError error type.
 func (client *triggerClient) BeginStopTrigger(ctx context.Context, triggerName string, options *TriggerBeginStopTriggerOptions) (HTTPPollerResponse, error) {
 	resp, err := client.stopTrigger(ctx, triggerName, options)
 	if err != nil {
@@ -537,6 +547,7 @@ func (client *triggerClient) ResumeStopTrigger(ctx context.Context, token string
 }
 
 // StopTrigger - Stops a trigger.
+// If the operation fails it returns the *CloudError error type.
 func (client *triggerClient) stopTrigger(ctx context.Context, triggerName string, options *TriggerBeginStopTriggerOptions) (*azcore.Response, error) {
 	req, err := client.stopTriggerCreateRequest(ctx, triggerName, options)
 	if err != nil {
@@ -585,6 +596,7 @@ func (client *triggerClient) stopTriggerHandleError(resp *azcore.Response) error
 }
 
 // BeginSubscribeTriggerToEvents - Subscribe event trigger to events.
+// If the operation fails it returns the *CloudError error type.
 func (client *triggerClient) BeginSubscribeTriggerToEvents(ctx context.Context, triggerName string, options *TriggerBeginSubscribeTriggerToEventsOptions) (TriggerSubscriptionOperationStatusPollerResponse, error) {
 	resp, err := client.subscribeTriggerToEvents(ctx, triggerName, options)
 	if err != nil {
@@ -632,6 +644,7 @@ func (client *triggerClient) ResumeSubscribeTriggerToEvents(ctx context.Context,
 }
 
 // SubscribeTriggerToEvents - Subscribe event trigger to events.
+// If the operation fails it returns the *CloudError error type.
 func (client *triggerClient) subscribeTriggerToEvents(ctx context.Context, triggerName string, options *TriggerBeginSubscribeTriggerToEventsOptions) (*azcore.Response, error) {
 	req, err := client.subscribeTriggerToEventsCreateRequest(ctx, triggerName, options)
 	if err != nil {
@@ -689,6 +702,7 @@ func (client *triggerClient) subscribeTriggerToEventsHandleError(resp *azcore.Re
 }
 
 // BeginUnsubscribeTriggerFromEvents - Unsubscribe event trigger from events.
+// If the operation fails it returns the *CloudError error type.
 func (client *triggerClient) BeginUnsubscribeTriggerFromEvents(ctx context.Context, triggerName string, options *TriggerBeginUnsubscribeTriggerFromEventsOptions) (TriggerSubscriptionOperationStatusPollerResponse, error) {
 	resp, err := client.unsubscribeTriggerFromEvents(ctx, triggerName, options)
 	if err != nil {
@@ -736,6 +750,7 @@ func (client *triggerClient) ResumeUnsubscribeTriggerFromEvents(ctx context.Cont
 }
 
 // UnsubscribeTriggerFromEvents - Unsubscribe event trigger from events.
+// If the operation fails it returns the *CloudError error type.
 func (client *triggerClient) unsubscribeTriggerFromEvents(ctx context.Context, triggerName string, options *TriggerBeginUnsubscribeTriggerFromEventsOptions) (*azcore.Response, error) {
 	req, err := client.unsubscribeTriggerFromEventsCreateRequest(ctx, triggerName, options)
 	if err != nil {

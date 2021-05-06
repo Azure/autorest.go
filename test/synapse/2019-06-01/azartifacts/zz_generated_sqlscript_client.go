@@ -23,6 +23,7 @@ type sqlScriptClient struct {
 }
 
 // BeginCreateOrUpdateSQLScript - Creates or updates a Sql Script.
+// If the operation fails it returns the *CloudError error type.
 func (client *sqlScriptClient) BeginCreateOrUpdateSQLScript(ctx context.Context, sqlScriptName string, sqlScript SQLScriptResource, options *SQLScriptBeginCreateOrUpdateSQLScriptOptions) (SQLScriptResourcePollerResponse, error) {
 	resp, err := client.createOrUpdateSQLScript(ctx, sqlScriptName, sqlScript, options)
 	if err != nil {
@@ -70,6 +71,7 @@ func (client *sqlScriptClient) ResumeCreateOrUpdateSQLScript(ctx context.Context
 }
 
 // CreateOrUpdateSQLScript - Creates or updates a Sql Script.
+// If the operation fails it returns the *CloudError error type.
 func (client *sqlScriptClient) createOrUpdateSQLScript(ctx context.Context, sqlScriptName string, sqlScript SQLScriptResource, options *SQLScriptBeginCreateOrUpdateSQLScriptOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateSQLScriptCreateRequest(ctx, sqlScriptName, sqlScript, options)
 	if err != nil {
@@ -130,6 +132,7 @@ func (client *sqlScriptClient) createOrUpdateSQLScriptHandleError(resp *azcore.R
 }
 
 // BeginDeleteSQLScript - Deletes a Sql Script.
+// If the operation fails it returns the *CloudError error type.
 func (client *sqlScriptClient) BeginDeleteSQLScript(ctx context.Context, sqlScriptName string, options *SQLScriptBeginDeleteSQLScriptOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteSQLScript(ctx, sqlScriptName, options)
 	if err != nil {
@@ -177,6 +180,7 @@ func (client *sqlScriptClient) ResumeDeleteSQLScript(ctx context.Context, token 
 }
 
 // DeleteSQLScript - Deletes a Sql Script.
+// If the operation fails it returns the *CloudError error type.
 func (client *sqlScriptClient) deleteSQLScript(ctx context.Context, sqlScriptName string, options *SQLScriptBeginDeleteSQLScriptOptions) (*azcore.Response, error) {
 	req, err := client.deleteSQLScriptCreateRequest(ctx, sqlScriptName, options)
 	if err != nil {
@@ -225,6 +229,7 @@ func (client *sqlScriptClient) deleteSQLScriptHandleError(resp *azcore.Response)
 }
 
 // GetSQLScript - Gets a sql script.
+// If the operation fails it returns the *CloudError error type.
 func (client *sqlScriptClient) GetSQLScript(ctx context.Context, sqlScriptName string, options *SQLScriptGetSQLScriptOptions) (SQLScriptResourceResponse, error) {
 	req, err := client.getSQLScriptCreateRequest(ctx, sqlScriptName, options)
 	if err != nil {
@@ -285,6 +290,7 @@ func (client *sqlScriptClient) getSQLScriptHandleError(resp *azcore.Response) er
 }
 
 // GetSQLScriptsByWorkspace - Lists sql scripts.
+// If the operation fails it returns the *CloudError error type.
 func (client *sqlScriptClient) GetSQLScriptsByWorkspace(options *SQLScriptGetSQLScriptsByWorkspaceOptions) SQLScriptsListResponsePager {
 	return &sqlScriptsListResponsePager{
 		pipeline: client.con.Pipeline(),
@@ -338,6 +344,7 @@ func (client *sqlScriptClient) getSQLScriptsByWorkspaceHandleError(resp *azcore.
 }
 
 // BeginRenameSQLScript - Renames a sqlScript.
+// If the operation fails it returns the *CloudError error type.
 func (client *sqlScriptClient) BeginRenameSQLScript(ctx context.Context, sqlScriptName string, request ArtifactRenameRequest, options *SQLScriptBeginRenameSQLScriptOptions) (HTTPPollerResponse, error) {
 	resp, err := client.renameSQLScript(ctx, sqlScriptName, request, options)
 	if err != nil {
@@ -385,6 +392,7 @@ func (client *sqlScriptClient) ResumeRenameSQLScript(ctx context.Context, token 
 }
 
 // RenameSQLScript - Renames a sqlScript.
+// If the operation fails it returns the *CloudError error type.
 func (client *sqlScriptClient) renameSQLScript(ctx context.Context, sqlScriptName string, request ArtifactRenameRequest, options *SQLScriptBeginRenameSQLScriptOptions) (*azcore.Response, error) {
 	req, err := client.renameSQLScriptCreateRequest(ctx, sqlScriptName, request, options)
 	if err != nil {

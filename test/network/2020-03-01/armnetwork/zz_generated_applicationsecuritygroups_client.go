@@ -32,6 +32,7 @@ func NewApplicationSecurityGroupsClient(con *armcore.Connection, subscriptionID 
 }
 
 // BeginCreateOrUpdate - Creates or updates an application security group.
+// If the operation fails it returns the *CloudError error type.
 func (client *ApplicationSecurityGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string, parameters ApplicationSecurityGroup, options *ApplicationSecurityGroupsBeginCreateOrUpdateOptions) (ApplicationSecurityGroupPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, applicationSecurityGroupName, parameters, options)
 	if err != nil {
@@ -81,6 +82,7 @@ func (client *ApplicationSecurityGroupsClient) ResumeCreateOrUpdate(ctx context.
 }
 
 // CreateOrUpdate - Creates or updates an application security group.
+// If the operation fails it returns the *CloudError error type.
 func (client *ApplicationSecurityGroupsClient) createOrUpdate(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string, parameters ApplicationSecurityGroup, options *ApplicationSecurityGroupsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, applicationSecurityGroupName, parameters, options)
 	if err != nil {
@@ -146,6 +148,7 @@ func (client *ApplicationSecurityGroupsClient) createOrUpdateHandleError(resp *a
 }
 
 // BeginDelete - Deletes the specified application security group.
+// If the operation fails it returns the *CloudError error type.
 func (client *ApplicationSecurityGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string, options *ApplicationSecurityGroupsBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, applicationSecurityGroupName, options)
 	if err != nil {
@@ -195,6 +198,7 @@ func (client *ApplicationSecurityGroupsClient) ResumeDelete(ctx context.Context,
 }
 
 // Delete - Deletes the specified application security group.
+// If the operation fails it returns the *CloudError error type.
 func (client *ApplicationSecurityGroupsClient) deleteOperation(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string, options *ApplicationSecurityGroupsBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, applicationSecurityGroupName, options)
 	if err != nil {
@@ -251,6 +255,7 @@ func (client *ApplicationSecurityGroupsClient) deleteHandleError(resp *azcore.Re
 }
 
 // Get - Gets information about the specified application security group.
+// If the operation fails it returns the *CloudError error type.
 func (client *ApplicationSecurityGroupsClient) Get(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string, options *ApplicationSecurityGroupsGetOptions) (ApplicationSecurityGroupResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, applicationSecurityGroupName, options)
 	if err != nil {
@@ -316,6 +321,7 @@ func (client *ApplicationSecurityGroupsClient) getHandleError(resp *azcore.Respo
 }
 
 // List - Gets all the application security groups in a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *ApplicationSecurityGroupsClient) List(resourceGroupName string, options *ApplicationSecurityGroupsListOptions) ApplicationSecurityGroupListResultPager {
 	return &applicationSecurityGroupListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -377,6 +383,7 @@ func (client *ApplicationSecurityGroupsClient) listHandleError(resp *azcore.Resp
 }
 
 // ListAll - Gets all application security groups in a subscription.
+// If the operation fails it returns the *CloudError error type.
 func (client *ApplicationSecurityGroupsClient) ListAll(options *ApplicationSecurityGroupsListAllOptions) ApplicationSecurityGroupListResultPager {
 	return &applicationSecurityGroupListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -434,6 +441,7 @@ func (client *ApplicationSecurityGroupsClient) listAllHandleError(resp *azcore.R
 }
 
 // UpdateTags - Updates an application security group's tags.
+// If the operation fails it returns the *CloudError error type.
 func (client *ApplicationSecurityGroupsClient) UpdateTags(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string, parameters TagsObject, options *ApplicationSecurityGroupsUpdateTagsOptions) (ApplicationSecurityGroupResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, applicationSecurityGroupName, parameters, options)
 	if err != nil {

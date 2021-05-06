@@ -32,6 +32,7 @@ func NewVirtualHubsClient(con *armcore.Connection, subscriptionID string) *Virtu
 }
 
 // BeginCreateOrUpdate - Creates a VirtualHub resource if it doesn't exist else updates the existing VirtualHub.
+// If the operation fails it returns the *CloudError error type.
 func (client *VirtualHubsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualHubName string, virtualHubParameters VirtualHub, options *VirtualHubsBeginCreateOrUpdateOptions) (VirtualHubPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualHubName, virtualHubParameters, options)
 	if err != nil {
@@ -81,6 +82,7 @@ func (client *VirtualHubsClient) ResumeCreateOrUpdate(ctx context.Context, token
 }
 
 // CreateOrUpdate - Creates a VirtualHub resource if it doesn't exist else updates the existing VirtualHub.
+// If the operation fails it returns the *CloudError error type.
 func (client *VirtualHubsClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualHubName string, virtualHubParameters VirtualHub, options *VirtualHubsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, virtualHubName, virtualHubParameters, options)
 	if err != nil {
@@ -146,6 +148,7 @@ func (client *VirtualHubsClient) createOrUpdateHandleError(resp *azcore.Response
 }
 
 // BeginDelete - Deletes a VirtualHub.
+// If the operation fails it returns the *CloudError error type.
 func (client *VirtualHubsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualHubName string, options *VirtualHubsBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, virtualHubName, options)
 	if err != nil {
@@ -195,6 +198,7 @@ func (client *VirtualHubsClient) ResumeDelete(ctx context.Context, token string)
 }
 
 // Delete - Deletes a VirtualHub.
+// If the operation fails it returns the *CloudError error type.
 func (client *VirtualHubsClient) deleteOperation(ctx context.Context, resourceGroupName string, virtualHubName string, options *VirtualHubsBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, virtualHubName, options)
 	if err != nil {
@@ -251,6 +255,7 @@ func (client *VirtualHubsClient) deleteHandleError(resp *azcore.Response) error 
 }
 
 // Get - Retrieves the details of a VirtualHub.
+// If the operation fails it returns the *CloudError error type.
 func (client *VirtualHubsClient) Get(ctx context.Context, resourceGroupName string, virtualHubName string, options *VirtualHubsGetOptions) (VirtualHubResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, virtualHubName, options)
 	if err != nil {
@@ -316,6 +321,7 @@ func (client *VirtualHubsClient) getHandleError(resp *azcore.Response) error {
 }
 
 // List - Lists all the VirtualHubs in a subscription.
+// If the operation fails it returns the *CloudError error type.
 func (client *VirtualHubsClient) List(options *VirtualHubsListOptions) ListVirtualHubsResultPager {
 	return &listVirtualHubsResultPager{
 		pipeline: client.con.Pipeline(),
@@ -373,6 +379,7 @@ func (client *VirtualHubsClient) listHandleError(resp *azcore.Response) error {
 }
 
 // ListByResourceGroup - Lists all the VirtualHubs in a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *VirtualHubsClient) ListByResourceGroup(resourceGroupName string, options *VirtualHubsListByResourceGroupOptions) ListVirtualHubsResultPager {
 	return &listVirtualHubsResultPager{
 		pipeline: client.con.Pipeline(),
@@ -434,6 +441,7 @@ func (client *VirtualHubsClient) listByResourceGroupHandleError(resp *azcore.Res
 }
 
 // UpdateTags - Updates VirtualHub tags.
+// If the operation fails it returns the *CloudError error type.
 func (client *VirtualHubsClient) UpdateTags(ctx context.Context, resourceGroupName string, virtualHubName string, virtualHubParameters TagsObject, options *VirtualHubsUpdateTagsOptions) (VirtualHubResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, virtualHubName, virtualHubParameters, options)
 	if err != nil {

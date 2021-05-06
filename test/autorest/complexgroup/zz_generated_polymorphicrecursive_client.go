@@ -26,6 +26,7 @@ func NewPolymorphicrecursiveClient(con *Connection) *PolymorphicrecursiveClient 
 }
 
 // GetValid - Get complex types that are polymorphic and have recursive references
+// If the operation fails it returns the *Error error type.
 func (client *PolymorphicrecursiveClient) GetValid(ctx context.Context, options *PolymorphicrecursiveGetValidOptions) (FishResponse, error) {
 	req, err := client.getValidCreateRequest(ctx, options)
 	if err != nil {
@@ -76,6 +77,7 @@ func (client *PolymorphicrecursiveClient) getValidHandleError(resp *azcore.Respo
 }
 
 // PutValid - Put complex types that are polymorphic and have recursive references
+// If the operation fails it returns the *Error error type.
 func (client *PolymorphicrecursiveClient) PutValid(ctx context.Context, complexBody FishClassification, options *PolymorphicrecursivePutValidOptions) (*http.Response, error) {
 	req, err := client.putValidCreateRequest(ctx, complexBody, options)
 	if err != nil {

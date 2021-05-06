@@ -32,6 +32,7 @@ func NewVPNSitesConfigurationClient(con *armcore.Connection, subscriptionID stri
 }
 
 // BeginDownload - Gives the sas-url to download the configurations for vpn-sites in a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *VPNSitesConfigurationClient) BeginDownload(ctx context.Context, resourceGroupName string, virtualWANName string, request GetVPNSitesConfigurationRequest, options *VPNSitesConfigurationBeginDownloadOptions) (HTTPPollerResponse, error) {
 	resp, err := client.download(ctx, resourceGroupName, virtualWANName, request, options)
 	if err != nil {
@@ -81,6 +82,7 @@ func (client *VPNSitesConfigurationClient) ResumeDownload(ctx context.Context, t
 }
 
 // Download - Gives the sas-url to download the configurations for vpn-sites in a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *VPNSitesConfigurationClient) download(ctx context.Context, resourceGroupName string, virtualWANName string, request GetVPNSitesConfigurationRequest, options *VPNSitesConfigurationBeginDownloadOptions) (*azcore.Response, error) {
 	req, err := client.downloadCreateRequest(ctx, resourceGroupName, virtualWANName, request, options)
 	if err != nil {

@@ -23,6 +23,7 @@ type datasetClient struct {
 }
 
 // BeginCreateOrUpdateDataset - Creates or updates a dataset.
+// If the operation fails it returns the *CloudError error type.
 func (client *datasetClient) BeginCreateOrUpdateDataset(ctx context.Context, datasetName string, dataset DatasetResource, options *DatasetBeginCreateOrUpdateDatasetOptions) (DatasetResourcePollerResponse, error) {
 	resp, err := client.createOrUpdateDataset(ctx, datasetName, dataset, options)
 	if err != nil {
@@ -70,6 +71,7 @@ func (client *datasetClient) ResumeCreateOrUpdateDataset(ctx context.Context, to
 }
 
 // CreateOrUpdateDataset - Creates or updates a dataset.
+// If the operation fails it returns the *CloudError error type.
 func (client *datasetClient) createOrUpdateDataset(ctx context.Context, datasetName string, dataset DatasetResource, options *DatasetBeginCreateOrUpdateDatasetOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateDatasetCreateRequest(ctx, datasetName, dataset, options)
 	if err != nil {
@@ -130,6 +132,7 @@ func (client *datasetClient) createOrUpdateDatasetHandleError(resp *azcore.Respo
 }
 
 // BeginDeleteDataset - Deletes a dataset.
+// If the operation fails it returns the *CloudError error type.
 func (client *datasetClient) BeginDeleteDataset(ctx context.Context, datasetName string, options *DatasetBeginDeleteDatasetOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteDataset(ctx, datasetName, options)
 	if err != nil {
@@ -177,6 +180,7 @@ func (client *datasetClient) ResumeDeleteDataset(ctx context.Context, token stri
 }
 
 // DeleteDataset - Deletes a dataset.
+// If the operation fails it returns the *CloudError error type.
 func (client *datasetClient) deleteDataset(ctx context.Context, datasetName string, options *DatasetBeginDeleteDatasetOptions) (*azcore.Response, error) {
 	req, err := client.deleteDatasetCreateRequest(ctx, datasetName, options)
 	if err != nil {
@@ -225,6 +229,7 @@ func (client *datasetClient) deleteDatasetHandleError(resp *azcore.Response) err
 }
 
 // GetDataset - Gets a dataset.
+// If the operation fails it returns the *CloudError error type.
 func (client *datasetClient) GetDataset(ctx context.Context, datasetName string, options *DatasetGetDatasetOptions) (DatasetResourceResponse, error) {
 	req, err := client.getDatasetCreateRequest(ctx, datasetName, options)
 	if err != nil {
@@ -285,6 +290,7 @@ func (client *datasetClient) getDatasetHandleError(resp *azcore.Response) error 
 }
 
 // GetDatasetsByWorkspace - Lists datasets.
+// If the operation fails it returns the *CloudError error type.
 func (client *datasetClient) GetDatasetsByWorkspace(options *DatasetGetDatasetsByWorkspaceOptions) DatasetListResponsePager {
 	return &datasetListResponsePager{
 		pipeline: client.con.Pipeline(),
@@ -338,6 +344,7 @@ func (client *datasetClient) getDatasetsByWorkspaceHandleError(resp *azcore.Resp
 }
 
 // BeginRenameDataset - Renames a dataset.
+// If the operation fails it returns the *CloudError error type.
 func (client *datasetClient) BeginRenameDataset(ctx context.Context, datasetName string, request ArtifactRenameRequest, options *DatasetBeginRenameDatasetOptions) (HTTPPollerResponse, error) {
 	resp, err := client.renameDataset(ctx, datasetName, request, options)
 	if err != nil {
@@ -385,6 +392,7 @@ func (client *datasetClient) ResumeRenameDataset(ctx context.Context, token stri
 }
 
 // RenameDataset - Renames a dataset.
+// If the operation fails it returns the *CloudError error type.
 func (client *datasetClient) renameDataset(ctx context.Context, datasetName string, request ArtifactRenameRequest, options *DatasetBeginRenameDatasetOptions) (*azcore.Response, error) {
 	req, err := client.renameDatasetCreateRequest(ctx, datasetName, request, options)
 	if err != nil {

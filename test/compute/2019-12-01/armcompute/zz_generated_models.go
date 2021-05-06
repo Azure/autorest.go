@@ -302,6 +302,7 @@ type BootDiagnosticsInstanceView struct {
 }
 
 // CloudError - An error response from the Compute service.
+// Implements the error and azcore.HTTPResponse interfaces.
 type CloudError struct {
 	raw string
 	// Api error.

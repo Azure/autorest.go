@@ -32,6 +32,7 @@ func NewRouteTablesClient(con *armcore.Connection, subscriptionID string) *Route
 }
 
 // BeginCreateOrUpdate - Create or updates a route table in a specified resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *RouteTablesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, routeTableName string, parameters RouteTable, options *RouteTablesBeginCreateOrUpdateOptions) (RouteTablePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, routeTableName, parameters, options)
 	if err != nil {
@@ -81,6 +82,7 @@ func (client *RouteTablesClient) ResumeCreateOrUpdate(ctx context.Context, token
 }
 
 // CreateOrUpdate - Create or updates a route table in a specified resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *RouteTablesClient) createOrUpdate(ctx context.Context, resourceGroupName string, routeTableName string, parameters RouteTable, options *RouteTablesBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, routeTableName, parameters, options)
 	if err != nil {
@@ -146,6 +148,7 @@ func (client *RouteTablesClient) createOrUpdateHandleError(resp *azcore.Response
 }
 
 // BeginDelete - Deletes the specified route table.
+// If the operation fails it returns the *CloudError error type.
 func (client *RouteTablesClient) BeginDelete(ctx context.Context, resourceGroupName string, routeTableName string, options *RouteTablesBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, routeTableName, options)
 	if err != nil {
@@ -195,6 +198,7 @@ func (client *RouteTablesClient) ResumeDelete(ctx context.Context, token string)
 }
 
 // Delete - Deletes the specified route table.
+// If the operation fails it returns the *CloudError error type.
 func (client *RouteTablesClient) deleteOperation(ctx context.Context, resourceGroupName string, routeTableName string, options *RouteTablesBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, routeTableName, options)
 	if err != nil {
@@ -251,6 +255,7 @@ func (client *RouteTablesClient) deleteHandleError(resp *azcore.Response) error 
 }
 
 // Get - Gets the specified route table.
+// If the operation fails it returns the *CloudError error type.
 func (client *RouteTablesClient) Get(ctx context.Context, resourceGroupName string, routeTableName string, options *RouteTablesGetOptions) (RouteTableResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, routeTableName, options)
 	if err != nil {
@@ -319,6 +324,7 @@ func (client *RouteTablesClient) getHandleError(resp *azcore.Response) error {
 }
 
 // List - Gets all route tables in a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *RouteTablesClient) List(resourceGroupName string, options *RouteTablesListOptions) RouteTableListResultPager {
 	return &routeTableListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -380,6 +386,7 @@ func (client *RouteTablesClient) listHandleError(resp *azcore.Response) error {
 }
 
 // ListAll - Gets all route tables in a subscription.
+// If the operation fails it returns the *CloudError error type.
 func (client *RouteTablesClient) ListAll(options *RouteTablesListAllOptions) RouteTableListResultPager {
 	return &routeTableListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -437,6 +444,7 @@ func (client *RouteTablesClient) listAllHandleError(resp *azcore.Response) error
 }
 
 // UpdateTags - Updates a route table tags.
+// If the operation fails it returns the *CloudError error type.
 func (client *RouteTablesClient) UpdateTags(ctx context.Context, resourceGroupName string, routeTableName string, parameters TagsObject, options *RouteTablesUpdateTagsOptions) (RouteTableResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, routeTableName, parameters, options)
 	if err != nil {

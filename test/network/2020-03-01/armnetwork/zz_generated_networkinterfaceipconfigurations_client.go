@@ -31,6 +31,7 @@ func NewNetworkInterfaceIPConfigurationsClient(con *armcore.Connection, subscrip
 }
 
 // Get - Gets the specified network interface ip configuration.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkInterfaceIPConfigurationsClient) Get(ctx context.Context, resourceGroupName string, networkInterfaceName string, ipConfigurationName string, options *NetworkInterfaceIPConfigurationsGetOptions) (NetworkInterfaceIPConfigurationResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkInterfaceName, ipConfigurationName, options)
 	if err != nil {
@@ -100,6 +101,7 @@ func (client *NetworkInterfaceIPConfigurationsClient) getHandleError(resp *azcor
 }
 
 // List - Get all ip configurations in a network interface.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkInterfaceIPConfigurationsClient) List(resourceGroupName string, networkInterfaceName string, options *NetworkInterfaceIPConfigurationsListOptions) NetworkInterfaceIPConfigurationListResultPager {
 	return &networkInterfaceIPConfigurationListResultPager{
 		pipeline: client.con.Pipeline(),

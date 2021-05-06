@@ -31,6 +31,7 @@ func NewDisksClient(con *armcore.Connection, subscriptionID string) *DisksClient
 }
 
 // BeginCreateOrUpdate - Creates or updates a disk.
+// If the operation fails it returns a generic error.
 func (client *DisksClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, diskName string, disk Disk, options *DisksBeginCreateOrUpdateOptions) (DiskPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, diskName, disk, options)
 	if err != nil {
@@ -80,6 +81,7 @@ func (client *DisksClient) ResumeCreateOrUpdate(ctx context.Context, token strin
 }
 
 // CreateOrUpdate - Creates or updates a disk.
+// If the operation fails it returns a generic error.
 func (client *DisksClient) createOrUpdate(ctx context.Context, resourceGroupName string, diskName string, disk Disk, options *DisksBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, diskName, disk, options)
 	if err != nil {
@@ -144,6 +146,7 @@ func (client *DisksClient) createOrUpdateHandleError(resp *azcore.Response) erro
 }
 
 // BeginDelete - Deletes a disk.
+// If the operation fails it returns a generic error.
 func (client *DisksClient) BeginDelete(ctx context.Context, resourceGroupName string, diskName string, options *DisksBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, diskName, options)
 	if err != nil {
@@ -193,6 +196,7 @@ func (client *DisksClient) ResumeDelete(ctx context.Context, token string) (HTTP
 }
 
 // Delete - Deletes a disk.
+// If the operation fails it returns a generic error.
 func (client *DisksClient) deleteOperation(ctx context.Context, resourceGroupName string, diskName string, options *DisksBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, diskName, options)
 	if err != nil {
@@ -247,6 +251,7 @@ func (client *DisksClient) deleteHandleError(resp *azcore.Response) error {
 }
 
 // Get - Gets information about a disk.
+// If the operation fails it returns a generic error.
 func (client *DisksClient) Get(ctx context.Context, resourceGroupName string, diskName string, options *DisksGetOptions) (DiskResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, diskName, options)
 	if err != nil {
@@ -311,6 +316,7 @@ func (client *DisksClient) getHandleError(resp *azcore.Response) error {
 }
 
 // BeginGrantAccess - Grants access to a disk.
+// If the operation fails it returns a generic error.
 func (client *DisksClient) BeginGrantAccess(ctx context.Context, resourceGroupName string, diskName string, grantAccessData GrantAccessData, options *DisksBeginGrantAccessOptions) (AccessURIPollerResponse, error) {
 	resp, err := client.grantAccess(ctx, resourceGroupName, diskName, grantAccessData, options)
 	if err != nil {
@@ -360,6 +366,7 @@ func (client *DisksClient) ResumeGrantAccess(ctx context.Context, token string) 
 }
 
 // GrantAccess - Grants access to a disk.
+// If the operation fails it returns a generic error.
 func (client *DisksClient) grantAccess(ctx context.Context, resourceGroupName string, diskName string, grantAccessData GrantAccessData, options *DisksBeginGrantAccessOptions) (*azcore.Response, error) {
 	req, err := client.grantAccessCreateRequest(ctx, resourceGroupName, diskName, grantAccessData, options)
 	if err != nil {
@@ -424,6 +431,7 @@ func (client *DisksClient) grantAccessHandleError(resp *azcore.Response) error {
 }
 
 // List - Lists all the disks under a subscription.
+// If the operation fails it returns a generic error.
 func (client *DisksClient) List(options *DisksListOptions) DiskListPager {
 	return &diskListPager{
 		pipeline: client.con.Pipeline(),
@@ -480,6 +488,7 @@ func (client *DisksClient) listHandleError(resp *azcore.Response) error {
 }
 
 // ListByResourceGroup - Lists all the disks under a resource group.
+// If the operation fails it returns a generic error.
 func (client *DisksClient) ListByResourceGroup(resourceGroupName string, options *DisksListByResourceGroupOptions) DiskListPager {
 	return &diskListPager{
 		pipeline: client.con.Pipeline(),
@@ -540,6 +549,7 @@ func (client *DisksClient) listByResourceGroupHandleError(resp *azcore.Response)
 }
 
 // BeginRevokeAccess - Revokes access to a disk.
+// If the operation fails it returns a generic error.
 func (client *DisksClient) BeginRevokeAccess(ctx context.Context, resourceGroupName string, diskName string, options *DisksBeginRevokeAccessOptions) (HTTPPollerResponse, error) {
 	resp, err := client.revokeAccess(ctx, resourceGroupName, diskName, options)
 	if err != nil {
@@ -589,6 +599,7 @@ func (client *DisksClient) ResumeRevokeAccess(ctx context.Context, token string)
 }
 
 // RevokeAccess - Revokes access to a disk.
+// If the operation fails it returns a generic error.
 func (client *DisksClient) revokeAccess(ctx context.Context, resourceGroupName string, diskName string, options *DisksBeginRevokeAccessOptions) (*azcore.Response, error) {
 	req, err := client.revokeAccessCreateRequest(ctx, resourceGroupName, diskName, options)
 	if err != nil {
@@ -643,6 +654,7 @@ func (client *DisksClient) revokeAccessHandleError(resp *azcore.Response) error 
 }
 
 // BeginUpdate - Updates (patches) a disk.
+// If the operation fails it returns a generic error.
 func (client *DisksClient) BeginUpdate(ctx context.Context, resourceGroupName string, diskName string, disk DiskUpdate, options *DisksBeginUpdateOptions) (DiskPollerResponse, error) {
 	resp, err := client.update(ctx, resourceGroupName, diskName, disk, options)
 	if err != nil {
@@ -692,6 +704,7 @@ func (client *DisksClient) ResumeUpdate(ctx context.Context, token string) (Disk
 }
 
 // Update - Updates (patches) a disk.
+// If the operation fails it returns a generic error.
 func (client *DisksClient) update(ctx context.Context, resourceGroupName string, diskName string, disk DiskUpdate, options *DisksBeginUpdateOptions) (*azcore.Response, error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, diskName, disk, options)
 	if err != nil {

@@ -115,6 +115,9 @@ class StructDef {
     if (hasDescription(this.Language)) {
       text += `${comment(this.Language.description, '// ', undefined, commentLength)}\n`;
     }
+    if (this.Language.errorType) {
+      text += '// Implements the error and azcore.HTTPResponse interfaces.\n';
+    }
     text += `type ${this.Language.name} struct {\n`;
     // any composed types go first
     for (const comp of values(this.ComposedOf)) {

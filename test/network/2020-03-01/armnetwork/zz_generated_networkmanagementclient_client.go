@@ -32,6 +32,7 @@ func NewNetworkManagementClient(con *armcore.Connection, subscriptionID string) 
 }
 
 // CheckDNSNameAvailability - Checks whether a domain name in the cloudapp.azure.com zone is available for use.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkManagementClient) CheckDNSNameAvailability(ctx context.Context, location string, domainNameLabel string, options *NetworkManagementClientCheckDNSNameAvailabilityOptions) (DNSNameAvailabilityResultResponse, error) {
 	req, err := client.checkDNSNameAvailabilityCreateRequest(ctx, location, domainNameLabel, options)
 	if err != nil {
@@ -94,6 +95,7 @@ func (client *NetworkManagementClient) checkDNSNameAvailabilityHandleError(resp 
 }
 
 // BeginDeleteBastionShareableLink - Deletes the Bastion Shareable Links for all the VMs specified in the request.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkManagementClient) BeginDeleteBastionShareableLink(ctx context.Context, resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest, options *NetworkManagementClientBeginDeleteBastionShareableLinkOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteBastionShareableLink(ctx, resourceGroupName, bastionHostName, bslRequest, options)
 	if err != nil {
@@ -143,6 +145,7 @@ func (client *NetworkManagementClient) ResumeDeleteBastionShareableLink(ctx cont
 }
 
 // DeleteBastionShareableLink - Deletes the Bastion Shareable Links for all the VMs specified in the request.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkManagementClient) deleteBastionShareableLink(ctx context.Context, resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest, options *NetworkManagementClientBeginDeleteBastionShareableLinkOptions) (*azcore.Response, error) {
 	req, err := client.deleteBastionShareableLinkCreateRequest(ctx, resourceGroupName, bastionHostName, bslRequest, options)
 	if err != nil {
@@ -199,6 +202,7 @@ func (client *NetworkManagementClient) deleteBastionShareableLinkHandleError(res
 }
 
 // DisconnectActiveSessions - Returns the list of currently active sessions on the Bastion.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkManagementClient) DisconnectActiveSessions(resourceGroupName string, bastionHostName string, sessionIDs SessionIDs, options *NetworkManagementClientDisconnectActiveSessionsOptions) BastionSessionDeleteResultPager {
 	return &bastionSessionDeleteResultPager{
 		pipeline: client.con.Pipeline(),
@@ -265,6 +269,7 @@ func (client *NetworkManagementClient) disconnectActiveSessionsHandleError(resp 
 
 // BeginGeneratevirtualwanvpnserverconfigurationvpnprofile - Generates a unique VPN profile for P2S clients for VirtualWan and associated VpnServerConfiguration
 // combination in the specified resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkManagementClient) BeginGeneratevirtualwanvpnserverconfigurationvpnprofile(ctx context.Context, resourceGroupName string, virtualWANName string, vpnClientParams VirtualWanVPNProfileParameters, options *NetworkManagementClientBeginGeneratevirtualwanvpnserverconfigurationvpnprofileOptions) (VPNProfileResponsePollerResponse, error) {
 	resp, err := client.generatevirtualwanvpnserverconfigurationvpnprofile(ctx, resourceGroupName, virtualWANName, vpnClientParams, options)
 	if err != nil {
@@ -315,6 +320,7 @@ func (client *NetworkManagementClient) ResumeGeneratevirtualwanvpnserverconfigur
 
 // Generatevirtualwanvpnserverconfigurationvpnprofile - Generates a unique VPN profile for P2S clients for VirtualWan and associated VpnServerConfiguration
 // combination in the specified resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkManagementClient) generatevirtualwanvpnserverconfigurationvpnprofile(ctx context.Context, resourceGroupName string, virtualWANName string, vpnClientParams VirtualWanVPNProfileParameters, options *NetworkManagementClientBeginGeneratevirtualwanvpnserverconfigurationvpnprofileOptions) (*azcore.Response, error) {
 	req, err := client.generatevirtualwanvpnserverconfigurationvpnprofileCreateRequest(ctx, resourceGroupName, virtualWANName, vpnClientParams, options)
 	if err != nil {
@@ -380,6 +386,7 @@ func (client *NetworkManagementClient) generatevirtualwanvpnserverconfigurationv
 }
 
 // BeginGetActiveSessions - Returns the list of currently active sessions on the Bastion.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkManagementClient) BeginGetActiveSessions(ctx context.Context, resourceGroupName string, bastionHostName string, options *NetworkManagementClientBeginGetActiveSessionsOptions) (BastionActiveSessionListResultPagerPollerResponse, error) {
 	resp, err := client.getActiveSessions(ctx, resourceGroupName, bastionHostName, options)
 	if err != nil {
@@ -457,6 +464,7 @@ func (client *NetworkManagementClient) ResumeGetActiveSessions(ctx context.Conte
 }
 
 // GetActiveSessions - Returns the list of currently active sessions on the Bastion.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkManagementClient) getActiveSessions(ctx context.Context, resourceGroupName string, bastionHostName string, options *NetworkManagementClientBeginGetActiveSessionsOptions) (*azcore.Response, error) {
 	req, err := client.getActiveSessionsCreateRequest(ctx, resourceGroupName, bastionHostName, options)
 	if err != nil {
@@ -522,6 +530,7 @@ func (client *NetworkManagementClient) getActiveSessionsHandleError(resp *azcore
 }
 
 // GetBastionShareableLink - Return the Bastion Shareable Links for all the VMs specified in the request.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkManagementClient) GetBastionShareableLink(resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest, options *NetworkManagementClientGetBastionShareableLinkOptions) BastionShareableLinkListResultPager {
 	return &bastionShareableLinkListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -587,6 +596,7 @@ func (client *NetworkManagementClient) getBastionShareableLinkHandleError(resp *
 }
 
 // BeginPutBastionShareableLink - Creates a Bastion Shareable Links for all the VMs specified in the request.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkManagementClient) BeginPutBastionShareableLink(ctx context.Context, resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest, options *NetworkManagementClientBeginPutBastionShareableLinkOptions) (BastionShareableLinkListResultPagerPollerResponse, error) {
 	resp, err := client.putBastionShareableLink(ctx, resourceGroupName, bastionHostName, bslRequest, options)
 	if err != nil {
@@ -664,6 +674,7 @@ func (client *NetworkManagementClient) ResumePutBastionShareableLink(ctx context
 }
 
 // PutBastionShareableLink - Creates a Bastion Shareable Links for all the VMs specified in the request.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkManagementClient) putBastionShareableLink(ctx context.Context, resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest, options *NetworkManagementClientBeginPutBastionShareableLinkOptions) (*azcore.Response, error) {
 	req, err := client.putBastionShareableLinkCreateRequest(ctx, resourceGroupName, bastionHostName, bslRequest, options)
 	if err != nil {
@@ -729,6 +740,7 @@ func (client *NetworkManagementClient) putBastionShareableLinkHandleError(resp *
 }
 
 // SupportedSecurityProviders - Gives the supported security providers for the virtual wan.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkManagementClient) SupportedSecurityProviders(ctx context.Context, resourceGroupName string, virtualWANName string, options *NetworkManagementClientSupportedSecurityProvidersOptions) (VirtualWanSecurityProvidersResponse, error) {
 	req, err := client.supportedSecurityProvidersCreateRequest(ctx, resourceGroupName, virtualWANName, options)
 	if err != nil {

@@ -32,6 +32,7 @@ func NewSubnetsClient(con *armcore.Connection, subscriptionID string) *SubnetsCl
 }
 
 // BeginCreateOrUpdate - Creates or updates a subnet in the specified virtual network.
+// If the operation fails it returns the *CloudError error type.
 func (client *SubnetsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, subnetParameters Subnet, options *SubnetsBeginCreateOrUpdateOptions) (SubnetPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualNetworkName, subnetName, subnetParameters, options)
 	if err != nil {
@@ -81,6 +82,7 @@ func (client *SubnetsClient) ResumeCreateOrUpdate(ctx context.Context, token str
 }
 
 // CreateOrUpdate - Creates or updates a subnet in the specified virtual network.
+// If the operation fails it returns the *CloudError error type.
 func (client *SubnetsClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, subnetParameters Subnet, options *SubnetsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, virtualNetworkName, subnetName, subnetParameters, options)
 	if err != nil {
@@ -150,6 +152,7 @@ func (client *SubnetsClient) createOrUpdateHandleError(resp *azcore.Response) er
 }
 
 // BeginDelete - Deletes the specified subnet.
+// If the operation fails it returns the *CloudError error type.
 func (client *SubnetsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, options *SubnetsBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, virtualNetworkName, subnetName, options)
 	if err != nil {
@@ -199,6 +202,7 @@ func (client *SubnetsClient) ResumeDelete(ctx context.Context, token string) (HT
 }
 
 // Delete - Deletes the specified subnet.
+// If the operation fails it returns the *CloudError error type.
 func (client *SubnetsClient) deleteOperation(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, options *SubnetsBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, virtualNetworkName, subnetName, options)
 	if err != nil {
@@ -259,6 +263,7 @@ func (client *SubnetsClient) deleteHandleError(resp *azcore.Response) error {
 }
 
 // Get - Gets the specified subnet by virtual network and resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *SubnetsClient) Get(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, options *SubnetsGetOptions) (SubnetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, virtualNetworkName, subnetName, options)
 	if err != nil {
@@ -331,6 +336,7 @@ func (client *SubnetsClient) getHandleError(resp *azcore.Response) error {
 }
 
 // List - Gets all subnets in a virtual network.
+// If the operation fails it returns the *CloudError error type.
 func (client *SubnetsClient) List(resourceGroupName string, virtualNetworkName string, options *SubnetsListOptions) SubnetListResultPager {
 	return &subnetListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -396,6 +402,7 @@ func (client *SubnetsClient) listHandleError(resp *azcore.Response) error {
 }
 
 // BeginPrepareNetworkPolicies - Prepares a subnet by applying network intent policies.
+// If the operation fails it returns the *CloudError error type.
 func (client *SubnetsClient) BeginPrepareNetworkPolicies(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, prepareNetworkPoliciesRequestParameters PrepareNetworkPoliciesRequest, options *SubnetsBeginPrepareNetworkPoliciesOptions) (HTTPPollerResponse, error) {
 	resp, err := client.prepareNetworkPolicies(ctx, resourceGroupName, virtualNetworkName, subnetName, prepareNetworkPoliciesRequestParameters, options)
 	if err != nil {
@@ -445,6 +452,7 @@ func (client *SubnetsClient) ResumePrepareNetworkPolicies(ctx context.Context, t
 }
 
 // PrepareNetworkPolicies - Prepares a subnet by applying network intent policies.
+// If the operation fails it returns the *CloudError error type.
 func (client *SubnetsClient) prepareNetworkPolicies(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, prepareNetworkPoliciesRequestParameters PrepareNetworkPoliciesRequest, options *SubnetsBeginPrepareNetworkPoliciesOptions) (*azcore.Response, error) {
 	req, err := client.prepareNetworkPoliciesCreateRequest(ctx, resourceGroupName, virtualNetworkName, subnetName, prepareNetworkPoliciesRequestParameters, options)
 	if err != nil {
@@ -505,6 +513,7 @@ func (client *SubnetsClient) prepareNetworkPoliciesHandleError(resp *azcore.Resp
 }
 
 // BeginUnprepareNetworkPolicies - Unprepares a subnet by removing network intent policies.
+// If the operation fails it returns the *CloudError error type.
 func (client *SubnetsClient) BeginUnprepareNetworkPolicies(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, unprepareNetworkPoliciesRequestParameters UnprepareNetworkPoliciesRequest, options *SubnetsBeginUnprepareNetworkPoliciesOptions) (HTTPPollerResponse, error) {
 	resp, err := client.unprepareNetworkPolicies(ctx, resourceGroupName, virtualNetworkName, subnetName, unprepareNetworkPoliciesRequestParameters, options)
 	if err != nil {
@@ -554,6 +563,7 @@ func (client *SubnetsClient) ResumeUnprepareNetworkPolicies(ctx context.Context,
 }
 
 // UnprepareNetworkPolicies - Unprepares a subnet by removing network intent policies.
+// If the operation fails it returns the *CloudError error type.
 func (client *SubnetsClient) unprepareNetworkPolicies(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, unprepareNetworkPoliciesRequestParameters UnprepareNetworkPoliciesRequest, options *SubnetsBeginUnprepareNetworkPoliciesOptions) (*azcore.Response, error) {
 	req, err := client.unprepareNetworkPoliciesCreateRequest(ctx, resourceGroupName, virtualNetworkName, subnetName, unprepareNetworkPoliciesRequestParameters, options)
 	if err != nil {

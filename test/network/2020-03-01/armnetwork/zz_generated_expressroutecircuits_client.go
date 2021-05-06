@@ -32,6 +32,7 @@ func NewExpressRouteCircuitsClient(con *armcore.Connection, subscriptionID strin
 }
 
 // BeginCreateOrUpdate - Creates or updates an express route circuit.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteCircuitsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, circuitName string, parameters ExpressRouteCircuit, options *ExpressRouteCircuitsBeginCreateOrUpdateOptions) (ExpressRouteCircuitPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, circuitName, parameters, options)
 	if err != nil {
@@ -81,6 +82,7 @@ func (client *ExpressRouteCircuitsClient) ResumeCreateOrUpdate(ctx context.Conte
 }
 
 // CreateOrUpdate - Creates or updates an express route circuit.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteCircuitsClient) createOrUpdate(ctx context.Context, resourceGroupName string, circuitName string, parameters ExpressRouteCircuit, options *ExpressRouteCircuitsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, circuitName, parameters, options)
 	if err != nil {
@@ -146,6 +148,7 @@ func (client *ExpressRouteCircuitsClient) createOrUpdateHandleError(resp *azcore
 }
 
 // BeginDelete - Deletes the specified express route circuit.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteCircuitsClient) BeginDelete(ctx context.Context, resourceGroupName string, circuitName string, options *ExpressRouteCircuitsBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, circuitName, options)
 	if err != nil {
@@ -195,6 +198,7 @@ func (client *ExpressRouteCircuitsClient) ResumeDelete(ctx context.Context, toke
 }
 
 // Delete - Deletes the specified express route circuit.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteCircuitsClient) deleteOperation(ctx context.Context, resourceGroupName string, circuitName string, options *ExpressRouteCircuitsBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, circuitName, options)
 	if err != nil {
@@ -251,6 +255,7 @@ func (client *ExpressRouteCircuitsClient) deleteHandleError(resp *azcore.Respons
 }
 
 // Get - Gets information about the specified express route circuit.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteCircuitsClient) Get(ctx context.Context, resourceGroupName string, circuitName string, options *ExpressRouteCircuitsGetOptions) (ExpressRouteCircuitResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, circuitName, options)
 	if err != nil {
@@ -316,6 +321,7 @@ func (client *ExpressRouteCircuitsClient) getHandleError(resp *azcore.Response) 
 }
 
 // GetPeeringStats - Gets all stats from an express route circuit in a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteCircuitsClient) GetPeeringStats(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, options *ExpressRouteCircuitsGetPeeringStatsOptions) (ExpressRouteCircuitStatsResponse, error) {
 	req, err := client.getPeeringStatsCreateRequest(ctx, resourceGroupName, circuitName, peeringName, options)
 	if err != nil {
@@ -385,6 +391,7 @@ func (client *ExpressRouteCircuitsClient) getPeeringStatsHandleError(resp *azcor
 }
 
 // GetStats - Gets all the stats from an express route circuit in a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteCircuitsClient) GetStats(ctx context.Context, resourceGroupName string, circuitName string, options *ExpressRouteCircuitsGetStatsOptions) (ExpressRouteCircuitStatsResponse, error) {
 	req, err := client.getStatsCreateRequest(ctx, resourceGroupName, circuitName, options)
 	if err != nil {
@@ -450,6 +457,7 @@ func (client *ExpressRouteCircuitsClient) getStatsHandleError(resp *azcore.Respo
 }
 
 // List - Gets all the express route circuits in a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteCircuitsClient) List(resourceGroupName string, options *ExpressRouteCircuitsListOptions) ExpressRouteCircuitListResultPager {
 	return &expressRouteCircuitListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -511,6 +519,7 @@ func (client *ExpressRouteCircuitsClient) listHandleError(resp *azcore.Response)
 }
 
 // ListAll - Gets all the express route circuits in a subscription.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteCircuitsClient) ListAll(options *ExpressRouteCircuitsListAllOptions) ExpressRouteCircuitListResultPager {
 	return &expressRouteCircuitListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -568,6 +577,7 @@ func (client *ExpressRouteCircuitsClient) listAllHandleError(resp *azcore.Respon
 }
 
 // BeginListArpTable - Gets the currently advertised ARP table associated with the express route circuit in a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteCircuitsClient) BeginListArpTable(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, devicePath string, options *ExpressRouteCircuitsBeginListArpTableOptions) (ExpressRouteCircuitsArpTableListResultPollerResponse, error) {
 	resp, err := client.listArpTable(ctx, resourceGroupName, circuitName, peeringName, devicePath, options)
 	if err != nil {
@@ -617,6 +627,7 @@ func (client *ExpressRouteCircuitsClient) ResumeListArpTable(ctx context.Context
 }
 
 // ListArpTable - Gets the currently advertised ARP table associated with the express route circuit in a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteCircuitsClient) listArpTable(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, devicePath string, options *ExpressRouteCircuitsBeginListArpTableOptions) (*azcore.Response, error) {
 	req, err := client.listArpTableCreateRequest(ctx, resourceGroupName, circuitName, peeringName, devicePath, options)
 	if err != nil {
@@ -690,6 +701,7 @@ func (client *ExpressRouteCircuitsClient) listArpTableHandleError(resp *azcore.R
 }
 
 // BeginListRoutesTable - Gets the currently advertised routes table associated with the express route circuit in a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteCircuitsClient) BeginListRoutesTable(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, devicePath string, options *ExpressRouteCircuitsBeginListRoutesTableOptions) (ExpressRouteCircuitsRoutesTableListResultPollerResponse, error) {
 	resp, err := client.listRoutesTable(ctx, resourceGroupName, circuitName, peeringName, devicePath, options)
 	if err != nil {
@@ -739,6 +751,7 @@ func (client *ExpressRouteCircuitsClient) ResumeListRoutesTable(ctx context.Cont
 }
 
 // ListRoutesTable - Gets the currently advertised routes table associated with the express route circuit in a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteCircuitsClient) listRoutesTable(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, devicePath string, options *ExpressRouteCircuitsBeginListRoutesTableOptions) (*azcore.Response, error) {
 	req, err := client.listRoutesTableCreateRequest(ctx, resourceGroupName, circuitName, peeringName, devicePath, options)
 	if err != nil {
@@ -812,6 +825,7 @@ func (client *ExpressRouteCircuitsClient) listRoutesTableHandleError(resp *azcor
 }
 
 // BeginListRoutesTableSummary - Gets the currently advertised routes table summary associated with the express route circuit in a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteCircuitsClient) BeginListRoutesTableSummary(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, devicePath string, options *ExpressRouteCircuitsBeginListRoutesTableSummaryOptions) (ExpressRouteCircuitsRoutesTableSummaryListResultPollerResponse, error) {
 	resp, err := client.listRoutesTableSummary(ctx, resourceGroupName, circuitName, peeringName, devicePath, options)
 	if err != nil {
@@ -861,6 +875,7 @@ func (client *ExpressRouteCircuitsClient) ResumeListRoutesTableSummary(ctx conte
 }
 
 // ListRoutesTableSummary - Gets the currently advertised routes table summary associated with the express route circuit in a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteCircuitsClient) listRoutesTableSummary(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, devicePath string, options *ExpressRouteCircuitsBeginListRoutesTableSummaryOptions) (*azcore.Response, error) {
 	req, err := client.listRoutesTableSummaryCreateRequest(ctx, resourceGroupName, circuitName, peeringName, devicePath, options)
 	if err != nil {
@@ -934,6 +949,7 @@ func (client *ExpressRouteCircuitsClient) listRoutesTableSummaryHandleError(resp
 }
 
 // UpdateTags - Updates an express route circuit tags.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteCircuitsClient) UpdateTags(ctx context.Context, resourceGroupName string, circuitName string, parameters TagsObject, options *ExpressRouteCircuitsUpdateTagsOptions) (ExpressRouteCircuitResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, circuitName, parameters, options)
 	if err != nil {

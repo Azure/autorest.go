@@ -32,6 +32,7 @@ func NewExpressRouteCrossConnectionPeeringsClient(con *armcore.Connection, subsc
 }
 
 // BeginCreateOrUpdate - Creates or updates a peering in the specified ExpressRouteCrossConnection.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteCrossConnectionPeeringsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, peeringParameters ExpressRouteCrossConnectionPeering, options *ExpressRouteCrossConnectionPeeringsBeginCreateOrUpdateOptions) (ExpressRouteCrossConnectionPeeringPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, crossConnectionName, peeringName, peeringParameters, options)
 	if err != nil {
@@ -81,6 +82,7 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) ResumeCreateOrUpdate(ct
 }
 
 // CreateOrUpdate - Creates or updates a peering in the specified ExpressRouteCrossConnection.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteCrossConnectionPeeringsClient) createOrUpdate(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, peeringParameters ExpressRouteCrossConnectionPeering, options *ExpressRouteCrossConnectionPeeringsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, crossConnectionName, peeringName, peeringParameters, options)
 	if err != nil {
@@ -150,6 +152,7 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) createOrUpdateHandleErr
 }
 
 // BeginDelete - Deletes the specified peering from the ExpressRouteCrossConnection.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteCrossConnectionPeeringsClient) BeginDelete(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, options *ExpressRouteCrossConnectionPeeringsBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, crossConnectionName, peeringName, options)
 	if err != nil {
@@ -199,6 +202,7 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) ResumeDelete(ctx contex
 }
 
 // Delete - Deletes the specified peering from the ExpressRouteCrossConnection.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteCrossConnectionPeeringsClient) deleteOperation(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, options *ExpressRouteCrossConnectionPeeringsBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, crossConnectionName, peeringName, options)
 	if err != nil {
@@ -259,6 +263,7 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) deleteHandleError(resp 
 }
 
 // Get - Gets the specified peering for the ExpressRouteCrossConnection.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteCrossConnectionPeeringsClient) Get(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, options *ExpressRouteCrossConnectionPeeringsGetOptions) (ExpressRouteCrossConnectionPeeringResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, crossConnectionName, peeringName, options)
 	if err != nil {
@@ -328,6 +333,7 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) getHandleError(resp *az
 }
 
 // List - Gets all peerings in a specified ExpressRouteCrossConnection.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteCrossConnectionPeeringsClient) List(resourceGroupName string, crossConnectionName string, options *ExpressRouteCrossConnectionPeeringsListOptions) ExpressRouteCrossConnectionPeeringListPager {
 	return &expressRouteCrossConnectionPeeringListPager{
 		pipeline: client.con.Pipeline(),

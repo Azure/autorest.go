@@ -30,6 +30,8 @@ func NewAutoRestValidationTestClient(con *Connection, subscriptionID string) *Au
 	return &AutoRestValidationTestClient{con: con, subscriptionID: subscriptionID}
 }
 
+// GetWithConstantInPath -
+// If the operation fails it returns a generic error.
 func (client *AutoRestValidationTestClient) GetWithConstantInPath(ctx context.Context, options *AutoRestValidationTestGetWithConstantInPathOptions) (*http.Response, error) {
 	req, err := client.getWithConstantInPathCreateRequest(ctx, options)
 	if err != nil {
@@ -69,6 +71,8 @@ func (client *AutoRestValidationTestClient) getWithConstantInPathHandleError(res
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
+// PostWithConstantInBody -
+// If the operation fails it returns a generic error.
 func (client *AutoRestValidationTestClient) PostWithConstantInBody(ctx context.Context, options *AutoRestValidationTestPostWithConstantInBodyOptions) (ProductResponse, error) {
 	req, err := client.postWithConstantInBodyCreateRequest(ctx, options)
 	if err != nil {
@@ -122,6 +126,7 @@ func (client *AutoRestValidationTestClient) postWithConstantInBodyHandleError(re
 }
 
 // ValidationOfBody - Validates body parameters on the method. See swagger for details.
+// If the operation fails it returns the *Error error type.
 func (client *AutoRestValidationTestClient) ValidationOfBody(ctx context.Context, resourceGroupName string, id int32, options *AutoRestValidationTestValidationOfBodyOptions) (ProductResponse, error) {
 	req, err := client.validationOfBodyCreateRequest(ctx, resourceGroupName, id, options)
 	if err != nil {
@@ -187,6 +192,7 @@ func (client *AutoRestValidationTestClient) validationOfBodyHandleError(resp *az
 }
 
 // ValidationOfMethodParameters - Validates input parameters on the method. See swagger for details.
+// If the operation fails it returns the *Error error type.
 func (client *AutoRestValidationTestClient) ValidationOfMethodParameters(ctx context.Context, resourceGroupName string, id int32, options *AutoRestValidationTestValidationOfMethodParametersOptions) (ProductResponse, error) {
 	req, err := client.validationOfMethodParametersCreateRequest(ctx, resourceGroupName, id, options)
 	if err != nil {

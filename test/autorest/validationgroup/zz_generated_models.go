@@ -48,6 +48,7 @@ type ConstantProduct struct {
 	ConstProperty2 *string `json:"constProperty2,omitempty"`
 }
 
+// Implements the error and azcore.HTTPResponse interfaces.
 type Error struct {
 	raw     string
 	Code    *int32  `json:"code,omitempty"`

@@ -32,6 +32,7 @@ func NewNetworkVirtualAppliancesClient(con *armcore.Connection, subscriptionID s
 }
 
 // BeginCreateOrUpdate - Creates or updates the specified Network Virtual Appliance.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkVirtualAppliancesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, parameters NetworkVirtualAppliance, options *NetworkVirtualAppliancesBeginCreateOrUpdateOptions) (NetworkVirtualAppliancePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, networkVirtualApplianceName, parameters, options)
 	if err != nil {
@@ -81,6 +82,7 @@ func (client *NetworkVirtualAppliancesClient) ResumeCreateOrUpdate(ctx context.C
 }
 
 // CreateOrUpdate - Creates or updates the specified Network Virtual Appliance.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkVirtualAppliancesClient) createOrUpdate(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, parameters NetworkVirtualAppliance, options *NetworkVirtualAppliancesBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, networkVirtualApplianceName, parameters, options)
 	if err != nil {
@@ -146,6 +148,7 @@ func (client *NetworkVirtualAppliancesClient) createOrUpdateHandleError(resp *az
 }
 
 // BeginDelete - Deletes the specified Network Virtual Appliance.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkVirtualAppliancesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, options *NetworkVirtualAppliancesBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, networkVirtualApplianceName, options)
 	if err != nil {
@@ -195,6 +198,7 @@ func (client *NetworkVirtualAppliancesClient) ResumeDelete(ctx context.Context, 
 }
 
 // Delete - Deletes the specified Network Virtual Appliance.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkVirtualAppliancesClient) deleteOperation(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, options *NetworkVirtualAppliancesBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, networkVirtualApplianceName, options)
 	if err != nil {
@@ -251,6 +255,7 @@ func (client *NetworkVirtualAppliancesClient) deleteHandleError(resp *azcore.Res
 }
 
 // Get - Gets the specified Network Virtual Appliance.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkVirtualAppliancesClient) Get(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, options *NetworkVirtualAppliancesGetOptions) (NetworkVirtualApplianceResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkVirtualApplianceName, options)
 	if err != nil {
@@ -319,6 +324,7 @@ func (client *NetworkVirtualAppliancesClient) getHandleError(resp *azcore.Respon
 }
 
 // List - Gets all Network Virtual Appliances in a subscription.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkVirtualAppliancesClient) List(options *NetworkVirtualAppliancesListOptions) NetworkVirtualApplianceListResultPager {
 	return &networkVirtualApplianceListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -376,6 +382,7 @@ func (client *NetworkVirtualAppliancesClient) listHandleError(resp *azcore.Respo
 }
 
 // ListByResourceGroup - Lists all Network Virtual Appliances in a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkVirtualAppliancesClient) ListByResourceGroup(resourceGroupName string, options *NetworkVirtualAppliancesListByResourceGroupOptions) NetworkVirtualApplianceListResultPager {
 	return &networkVirtualApplianceListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -437,6 +444,7 @@ func (client *NetworkVirtualAppliancesClient) listByResourceGroupHandleError(res
 }
 
 // UpdateTags - Updates a Network Virtual Appliance.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkVirtualAppliancesClient) UpdateTags(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, parameters TagsObject, options *NetworkVirtualAppliancesUpdateTagsOptions) (NetworkVirtualApplianceResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, networkVirtualApplianceName, parameters, options)
 	if err != nil {

@@ -26,6 +26,7 @@ func NewFormdataClient(con *Connection) *FormdataClient {
 }
 
 // UploadFile - Upload file
+// If the operation fails it returns the *Error error type.
 func (client *FormdataClient) UploadFile(ctx context.Context, fileContent azcore.ReadSeekCloser, fileName string, options *FormdataUploadFileOptions) (*http.Response, error) {
 	req, err := client.uploadFileCreateRequest(ctx, fileContent, fileName, options)
 	if err != nil {
@@ -74,6 +75,7 @@ func (client *FormdataClient) uploadFileHandleError(resp *azcore.Response) error
 }
 
 // UploadFileViaBody - Upload file
+// If the operation fails it returns the *Error error type.
 func (client *FormdataClient) UploadFileViaBody(ctx context.Context, fileContent azcore.ReadSeekCloser, options *FormdataUploadFileViaBodyOptions) (*http.Response, error) {
 	req, err := client.uploadFileViaBodyCreateRequest(ctx, fileContent, options)
 	if err != nil {
@@ -116,6 +118,7 @@ func (client *FormdataClient) uploadFileViaBodyHandleError(resp *azcore.Response
 }
 
 // UploadFiles - Upload multiple files
+// If the operation fails it returns the *Error error type.
 func (client *FormdataClient) UploadFiles(ctx context.Context, fileContent []azcore.ReadSeekCloser, options *FormdataUploadFilesOptions) (*http.Response, error) {
 	req, err := client.uploadFilesCreateRequest(ctx, fileContent, options)
 	if err != nil {

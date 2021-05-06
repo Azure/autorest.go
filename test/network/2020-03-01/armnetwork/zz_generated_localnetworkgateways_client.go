@@ -32,6 +32,7 @@ func NewLocalNetworkGatewaysClient(con *armcore.Connection, subscriptionID strin
 }
 
 // BeginCreateOrUpdate - Creates or updates a local network gateway in the specified resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *LocalNetworkGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, parameters LocalNetworkGateway, options *LocalNetworkGatewaysBeginCreateOrUpdateOptions) (LocalNetworkGatewayPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, localNetworkGatewayName, parameters, options)
 	if err != nil {
@@ -81,6 +82,7 @@ func (client *LocalNetworkGatewaysClient) ResumeCreateOrUpdate(ctx context.Conte
 }
 
 // CreateOrUpdate - Creates or updates a local network gateway in the specified resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *LocalNetworkGatewaysClient) createOrUpdate(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, parameters LocalNetworkGateway, options *LocalNetworkGatewaysBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, localNetworkGatewayName, parameters, options)
 	if err != nil {
@@ -146,6 +148,7 @@ func (client *LocalNetworkGatewaysClient) createOrUpdateHandleError(resp *azcore
 }
 
 // BeginDelete - Deletes the specified local network gateway.
+// If the operation fails it returns the *CloudError error type.
 func (client *LocalNetworkGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, options *LocalNetworkGatewaysBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, localNetworkGatewayName, options)
 	if err != nil {
@@ -195,6 +198,7 @@ func (client *LocalNetworkGatewaysClient) ResumeDelete(ctx context.Context, toke
 }
 
 // Delete - Deletes the specified local network gateway.
+// If the operation fails it returns the *CloudError error type.
 func (client *LocalNetworkGatewaysClient) deleteOperation(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, options *LocalNetworkGatewaysBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, localNetworkGatewayName, options)
 	if err != nil {
@@ -251,6 +255,7 @@ func (client *LocalNetworkGatewaysClient) deleteHandleError(resp *azcore.Respons
 }
 
 // Get - Gets the specified local network gateway in a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *LocalNetworkGatewaysClient) Get(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, options *LocalNetworkGatewaysGetOptions) (LocalNetworkGatewayResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, localNetworkGatewayName, options)
 	if err != nil {
@@ -316,6 +321,7 @@ func (client *LocalNetworkGatewaysClient) getHandleError(resp *azcore.Response) 
 }
 
 // List - Gets all the local network gateways in a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *LocalNetworkGatewaysClient) List(resourceGroupName string, options *LocalNetworkGatewaysListOptions) LocalNetworkGatewayListResultPager {
 	return &localNetworkGatewayListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -377,6 +383,7 @@ func (client *LocalNetworkGatewaysClient) listHandleError(resp *azcore.Response)
 }
 
 // UpdateTags - Updates a local network gateway tags.
+// If the operation fails it returns the *CloudError error type.
 func (client *LocalNetworkGatewaysClient) UpdateTags(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, parameters TagsObject, options *LocalNetworkGatewaysUpdateTagsOptions) (LocalNetworkGatewayResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, localNetworkGatewayName, parameters, options)
 	if err != nil {

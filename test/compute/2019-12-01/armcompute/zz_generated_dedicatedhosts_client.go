@@ -31,6 +31,7 @@ func NewDedicatedHostsClient(con *armcore.Connection, subscriptionID string) *De
 }
 
 // BeginCreateOrUpdate - Create or update a dedicated host .
+// If the operation fails it returns a generic error.
 func (client *DedicatedHostsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, parameters DedicatedHost, options *DedicatedHostsBeginCreateOrUpdateOptions) (DedicatedHostPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, hostGroupName, hostName, parameters, options)
 	if err != nil {
@@ -80,6 +81,7 @@ func (client *DedicatedHostsClient) ResumeCreateOrUpdate(ctx context.Context, to
 }
 
 // CreateOrUpdate - Create or update a dedicated host .
+// If the operation fails it returns a generic error.
 func (client *DedicatedHostsClient) createOrUpdate(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, parameters DedicatedHost, options *DedicatedHostsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, hostGroupName, hostName, parameters, options)
 	if err != nil {
@@ -148,6 +150,7 @@ func (client *DedicatedHostsClient) createOrUpdateHandleError(resp *azcore.Respo
 }
 
 // BeginDelete - Delete a dedicated host.
+// If the operation fails it returns a generic error.
 func (client *DedicatedHostsClient) BeginDelete(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, options *DedicatedHostsBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, hostGroupName, hostName, options)
 	if err != nil {
@@ -197,6 +200,7 @@ func (client *DedicatedHostsClient) ResumeDelete(ctx context.Context, token stri
 }
 
 // Delete - Delete a dedicated host.
+// If the operation fails it returns a generic error.
 func (client *DedicatedHostsClient) deleteOperation(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, options *DedicatedHostsBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, hostGroupName, hostName, options)
 	if err != nil {
@@ -255,6 +259,7 @@ func (client *DedicatedHostsClient) deleteHandleError(resp *azcore.Response) err
 }
 
 // Get - Retrieves information about a dedicated host.
+// If the operation fails it returns a generic error.
 func (client *DedicatedHostsClient) Get(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, options *DedicatedHostsGetOptions) (DedicatedHostResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, hostGroupName, hostName, options)
 	if err != nil {
@@ -327,6 +332,7 @@ func (client *DedicatedHostsClient) getHandleError(resp *azcore.Response) error 
 
 // ListByHostGroup - Lists all of the dedicated hosts in the specified dedicated host group. Use the nextLink property in the response to get the next page
 // of dedicated hosts.
+// If the operation fails it returns a generic error.
 func (client *DedicatedHostsClient) ListByHostGroup(resourceGroupName string, hostGroupName string, options *DedicatedHostsListByHostGroupOptions) DedicatedHostListResultPager {
 	return &dedicatedHostListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -391,6 +397,7 @@ func (client *DedicatedHostsClient) listByHostGroupHandleError(resp *azcore.Resp
 }
 
 // BeginUpdate - Update an dedicated host .
+// If the operation fails it returns a generic error.
 func (client *DedicatedHostsClient) BeginUpdate(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, parameters DedicatedHostUpdate, options *DedicatedHostsBeginUpdateOptions) (DedicatedHostPollerResponse, error) {
 	resp, err := client.update(ctx, resourceGroupName, hostGroupName, hostName, parameters, options)
 	if err != nil {
@@ -440,6 +447,7 @@ func (client *DedicatedHostsClient) ResumeUpdate(ctx context.Context, token stri
 }
 
 // Update - Update an dedicated host .
+// If the operation fails it returns a generic error.
 func (client *DedicatedHostsClient) update(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, parameters DedicatedHostUpdate, options *DedicatedHostsBeginUpdateOptions) (*azcore.Response, error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, hostGroupName, hostName, parameters, options)
 	if err != nil {

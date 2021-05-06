@@ -32,6 +32,7 @@ func NewServiceEndpointPoliciesClient(con *armcore.Connection, subscriptionID st
 }
 
 // BeginCreateOrUpdate - Creates or updates a service Endpoint Policies.
+// If the operation fails it returns the *CloudError error type.
 func (client *ServiceEndpointPoliciesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, parameters ServiceEndpointPolicy, options *ServiceEndpointPoliciesBeginCreateOrUpdateOptions) (ServiceEndpointPolicyPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, serviceEndpointPolicyName, parameters, options)
 	if err != nil {
@@ -81,6 +82,7 @@ func (client *ServiceEndpointPoliciesClient) ResumeCreateOrUpdate(ctx context.Co
 }
 
 // CreateOrUpdate - Creates or updates a service Endpoint Policies.
+// If the operation fails it returns the *CloudError error type.
 func (client *ServiceEndpointPoliciesClient) createOrUpdate(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, parameters ServiceEndpointPolicy, options *ServiceEndpointPoliciesBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, serviceEndpointPolicyName, parameters, options)
 	if err != nil {
@@ -146,6 +148,7 @@ func (client *ServiceEndpointPoliciesClient) createOrUpdateHandleError(resp *azc
 }
 
 // BeginDelete - Deletes the specified service endpoint policy.
+// If the operation fails it returns the *CloudError error type.
 func (client *ServiceEndpointPoliciesClient) BeginDelete(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, options *ServiceEndpointPoliciesBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, serviceEndpointPolicyName, options)
 	if err != nil {
@@ -195,6 +198,7 @@ func (client *ServiceEndpointPoliciesClient) ResumeDelete(ctx context.Context, t
 }
 
 // Delete - Deletes the specified service endpoint policy.
+// If the operation fails it returns the *CloudError error type.
 func (client *ServiceEndpointPoliciesClient) deleteOperation(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, options *ServiceEndpointPoliciesBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, serviceEndpointPolicyName, options)
 	if err != nil {
@@ -251,6 +255,7 @@ func (client *ServiceEndpointPoliciesClient) deleteHandleError(resp *azcore.Resp
 }
 
 // Get - Gets the specified service Endpoint Policies in a specified resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *ServiceEndpointPoliciesClient) Get(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, options *ServiceEndpointPoliciesGetOptions) (ServiceEndpointPolicyResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, serviceEndpointPolicyName, options)
 	if err != nil {
@@ -319,6 +324,7 @@ func (client *ServiceEndpointPoliciesClient) getHandleError(resp *azcore.Respons
 }
 
 // List - Gets all the service endpoint policies in a subscription.
+// If the operation fails it returns the *CloudError error type.
 func (client *ServiceEndpointPoliciesClient) List(options *ServiceEndpointPoliciesListOptions) ServiceEndpointPolicyListResultPager {
 	return &serviceEndpointPolicyListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -376,6 +382,7 @@ func (client *ServiceEndpointPoliciesClient) listHandleError(resp *azcore.Respon
 }
 
 // ListByResourceGroup - Gets all service endpoint Policies in a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *ServiceEndpointPoliciesClient) ListByResourceGroup(resourceGroupName string, options *ServiceEndpointPoliciesListByResourceGroupOptions) ServiceEndpointPolicyListResultPager {
 	return &serviceEndpointPolicyListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -437,6 +444,7 @@ func (client *ServiceEndpointPoliciesClient) listByResourceGroupHandleError(resp
 }
 
 // UpdateTags - Updates tags of a service endpoint policy.
+// If the operation fails it returns the *CloudError error type.
 func (client *ServiceEndpointPoliciesClient) UpdateTags(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, parameters TagsObject, options *ServiceEndpointPoliciesUpdateTagsOptions) (ServiceEndpointPolicyResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, serviceEndpointPolicyName, parameters, options)
 	if err != nil {

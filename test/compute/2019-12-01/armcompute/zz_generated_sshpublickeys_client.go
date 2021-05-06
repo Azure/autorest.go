@@ -30,6 +30,7 @@ func NewSSHPublicKeysClient(con *armcore.Connection, subscriptionID string) *SSH
 }
 
 // Create - Creates a new SSH public key resource.
+// If the operation fails it returns a generic error.
 func (client *SSHPublicKeysClient) Create(ctx context.Context, resourceGroupName string, sshPublicKeyName string, parameters SSHPublicKeyResource, options *SSHPublicKeysCreateOptions) (SSHPublicKeyResourceResponse, error) {
 	req, err := client.createCreateRequest(ctx, resourceGroupName, sshPublicKeyName, parameters, options)
 	if err != nil {
@@ -94,6 +95,7 @@ func (client *SSHPublicKeysClient) createHandleError(resp *azcore.Response) erro
 }
 
 // Delete - Delete an SSH public key.
+// If the operation fails it returns a generic error.
 func (client *SSHPublicKeysClient) Delete(ctx context.Context, resourceGroupName string, sshPublicKeyName string, options *SSHPublicKeysDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, sshPublicKeyName, options)
 	if err != nil {
@@ -150,6 +152,7 @@ func (client *SSHPublicKeysClient) deleteHandleError(resp *azcore.Response) erro
 // GenerateKeyPair - Generates and returns a public/private key pair and populates the SSH public key resource with the public key. The length of the key
 // will be 3072 bits. This operation can only be performed once per
 // SSH public key resource.
+// If the operation fails it returns a generic error.
 func (client *SSHPublicKeysClient) GenerateKeyPair(ctx context.Context, resourceGroupName string, sshPublicKeyName string, options *SSHPublicKeysGenerateKeyPairOptions) (SSHPublicKeyGenerateKeyPairResultResponse, error) {
 	req, err := client.generateKeyPairCreateRequest(ctx, resourceGroupName, sshPublicKeyName, options)
 	if err != nil {
@@ -214,6 +217,7 @@ func (client *SSHPublicKeysClient) generateKeyPairHandleError(resp *azcore.Respo
 }
 
 // Get - Retrieves information about an SSH public key.
+// If the operation fails it returns a generic error.
 func (client *SSHPublicKeysClient) Get(ctx context.Context, resourceGroupName string, sshPublicKeyName string, options *SSHPublicKeysGetOptions) (SSHPublicKeyResourceResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, sshPublicKeyName, options)
 	if err != nil {
@@ -279,6 +283,7 @@ func (client *SSHPublicKeysClient) getHandleError(resp *azcore.Response) error {
 
 // ListByResourceGroup - Lists all of the SSH public keys in the specified resource group. Use the nextLink property in the response to get the next page
 // of SSH public keys.
+// If the operation fails it returns a generic error.
 func (client *SSHPublicKeysClient) ListByResourceGroup(resourceGroupName string, options *SSHPublicKeysListByResourceGroupOptions) SSHPublicKeysGroupListResultPager {
 	return &sshPublicKeysGroupListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -340,6 +345,7 @@ func (client *SSHPublicKeysClient) listByResourceGroupHandleError(resp *azcore.R
 
 // ListBySubscription - Lists all of the SSH public keys in the subscription. Use the nextLink property in the response to get the next page of SSH public
 // keys.
+// If the operation fails it returns a generic error.
 func (client *SSHPublicKeysClient) ListBySubscription(options *SSHPublicKeysListBySubscriptionOptions) SSHPublicKeysGroupListResultPager {
 	return &sshPublicKeysGroupListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -396,6 +402,7 @@ func (client *SSHPublicKeysClient) listBySubscriptionHandleError(resp *azcore.Re
 }
 
 // Update - Updates a new SSH public key resource.
+// If the operation fails it returns a generic error.
 func (client *SSHPublicKeysClient) Update(ctx context.Context, resourceGroupName string, sshPublicKeyName string, parameters SSHPublicKeyUpdateResource, options *SSHPublicKeysUpdateOptions) (SSHPublicKeyResourceResponse, error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, sshPublicKeyName, parameters, options)
 	if err != nil {

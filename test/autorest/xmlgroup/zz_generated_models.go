@@ -339,6 +339,7 @@ type CorsRule struct {
 	MaxAgeInSeconds *int32 `xml:"MaxAgeInSeconds"`
 }
 
+// Implements the error and azcore.HTTPResponse interfaces.
 type Error struct {
 	raw     string
 	Message *string `xml:"message"`

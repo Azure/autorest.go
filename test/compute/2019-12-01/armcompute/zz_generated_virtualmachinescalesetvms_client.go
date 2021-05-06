@@ -34,6 +34,7 @@ func NewVirtualMachineScaleSetVMsClient(con *armcore.Connection, subscriptionID 
 // BeginDeallocate - Deallocates a specific virtual machine in a VM scale set. Shuts down the virtual machine and releases the compute resources it uses.
 // You are not billed for the compute resources of this virtual
 // machine once it is deallocated.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineScaleSetVMsClient) BeginDeallocate(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsBeginDeallocateOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deallocate(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
 	if err != nil {
@@ -85,6 +86,7 @@ func (client *VirtualMachineScaleSetVMsClient) ResumeDeallocate(ctx context.Cont
 // Deallocate - Deallocates a specific virtual machine in a VM scale set. Shuts down the virtual machine and releases the compute resources it uses. You
 // are not billed for the compute resources of this virtual
 // machine once it is deallocated.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineScaleSetVMsClient) deallocate(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsBeginDeallocateOptions) (*azcore.Response, error) {
 	req, err := client.deallocateCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
 	if err != nil {
@@ -143,6 +145,7 @@ func (client *VirtualMachineScaleSetVMsClient) deallocateHandleError(resp *azcor
 }
 
 // BeginDelete - Deletes a virtual machine from a VM scale set.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineScaleSetVMsClient) BeginDelete(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
 	if err != nil {
@@ -192,6 +195,7 @@ func (client *VirtualMachineScaleSetVMsClient) ResumeDelete(ctx context.Context,
 }
 
 // Delete - Deletes a virtual machine from a VM scale set.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineScaleSetVMsClient) deleteOperation(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
 	if err != nil {
@@ -250,6 +254,7 @@ func (client *VirtualMachineScaleSetVMsClient) deleteHandleError(resp *azcore.Re
 }
 
 // Get - Gets a virtual machine from a VM scale set.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineScaleSetVMsClient) Get(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsGetOptions) (VirtualMachineScaleSetVMResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
 	if err != nil {
@@ -321,6 +326,7 @@ func (client *VirtualMachineScaleSetVMsClient) getHandleError(resp *azcore.Respo
 }
 
 // GetInstanceView - Gets the status of a virtual machine from a VM scale set.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineScaleSetVMsClient) GetInstanceView(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsGetInstanceViewOptions) (VirtualMachineScaleSetVMInstanceViewResponse, error) {
 	req, err := client.getInstanceViewCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
 	if err != nil {
@@ -389,6 +395,7 @@ func (client *VirtualMachineScaleSetVMsClient) getInstanceViewHandleError(resp *
 }
 
 // List - Gets a list of all virtual machines in a VM scale sets.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineScaleSetVMsClient) List(resourceGroupName string, virtualMachineScaleSetName string, options *VirtualMachineScaleSetVMsListOptions) VirtualMachineScaleSetVMListResultPager {
 	return &virtualMachineScaleSetVMListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -463,6 +470,7 @@ func (client *VirtualMachineScaleSetVMsClient) listHandleError(resp *azcore.Resp
 
 // BeginPerformMaintenance - Shuts down the virtual machine in a VMScaleSet, moves it to an already updated node, and powers it back on during the self-service
 // phase of planned maintenance.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineScaleSetVMsClient) BeginPerformMaintenance(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsBeginPerformMaintenanceOptions) (HTTPPollerResponse, error) {
 	resp, err := client.performMaintenance(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
 	if err != nil {
@@ -513,6 +521,7 @@ func (client *VirtualMachineScaleSetVMsClient) ResumePerformMaintenance(ctx cont
 
 // PerformMaintenance - Shuts down the virtual machine in a VMScaleSet, moves it to an already updated node, and powers it back on during the self-service
 // phase of planned maintenance.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineScaleSetVMsClient) performMaintenance(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsBeginPerformMaintenanceOptions) (*azcore.Response, error) {
 	req, err := client.performMaintenanceCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
 	if err != nil {
@@ -573,6 +582,7 @@ func (client *VirtualMachineScaleSetVMsClient) performMaintenanceHandleError(res
 // BeginPowerOff - Power off (stop) a virtual machine in a VM scale set. Note that resources are still attached and you are getting charged for the resources.
 // Instead, use deallocate to release resources and avoid
 // charges.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineScaleSetVMsClient) BeginPowerOff(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsBeginPowerOffOptions) (HTTPPollerResponse, error) {
 	resp, err := client.powerOff(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
 	if err != nil {
@@ -624,6 +634,7 @@ func (client *VirtualMachineScaleSetVMsClient) ResumePowerOff(ctx context.Contex
 // PowerOff - Power off (stop) a virtual machine in a VM scale set. Note that resources are still attached and you are getting charged for the resources.
 // Instead, use deallocate to release resources and avoid
 // charges.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineScaleSetVMsClient) powerOff(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsBeginPowerOffOptions) (*azcore.Response, error) {
 	req, err := client.powerOffCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
 	if err != nil {
@@ -685,6 +696,7 @@ func (client *VirtualMachineScaleSetVMsClient) powerOffHandleError(resp *azcore.
 }
 
 // BeginRedeploy - Shuts down the virtual machine in the virtual machine scale set, moves it to a new node, and powers it back on.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineScaleSetVMsClient) BeginRedeploy(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsBeginRedeployOptions) (HTTPPollerResponse, error) {
 	resp, err := client.redeploy(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
 	if err != nil {
@@ -734,6 +746,7 @@ func (client *VirtualMachineScaleSetVMsClient) ResumeRedeploy(ctx context.Contex
 }
 
 // Redeploy - Shuts down the virtual machine in the virtual machine scale set, moves it to a new node, and powers it back on.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineScaleSetVMsClient) redeploy(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsBeginRedeployOptions) (*azcore.Response, error) {
 	req, err := client.redeployCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
 	if err != nil {
@@ -792,6 +805,7 @@ func (client *VirtualMachineScaleSetVMsClient) redeployHandleError(resp *azcore.
 }
 
 // BeginReimage - Reimages (upgrade the operating system) a specific virtual machine in a VM scale set.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineScaleSetVMsClient) BeginReimage(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsBeginReimageOptions) (HTTPPollerResponse, error) {
 	resp, err := client.reimage(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
 	if err != nil {
@@ -841,6 +855,7 @@ func (client *VirtualMachineScaleSetVMsClient) ResumeReimage(ctx context.Context
 }
 
 // Reimage - Reimages (upgrade the operating system) a specific virtual machine in a VM scale set.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineScaleSetVMsClient) reimage(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsBeginReimageOptions) (*azcore.Response, error) {
 	req, err := client.reimageCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
 	if err != nil {
@@ -903,6 +918,7 @@ func (client *VirtualMachineScaleSetVMsClient) reimageHandleError(resp *azcore.R
 
 // BeginReimageAll - Allows you to re-image all the disks ( including data disks ) in the a VM scale set instance. This operation is only supported for
 // managed disks.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineScaleSetVMsClient) BeginReimageAll(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsBeginReimageAllOptions) (HTTPPollerResponse, error) {
 	resp, err := client.reimageAll(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
 	if err != nil {
@@ -953,6 +969,7 @@ func (client *VirtualMachineScaleSetVMsClient) ResumeReimageAll(ctx context.Cont
 
 // ReimageAll - Allows you to re-image all the disks ( including data disks ) in the a VM scale set instance. This operation is only supported for managed
 // disks.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineScaleSetVMsClient) reimageAll(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsBeginReimageAllOptions) (*azcore.Response, error) {
 	req, err := client.reimageAllCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
 	if err != nil {
@@ -1011,6 +1028,7 @@ func (client *VirtualMachineScaleSetVMsClient) reimageAllHandleError(resp *azcor
 }
 
 // BeginRestart - Restarts a virtual machine in a VM scale set.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineScaleSetVMsClient) BeginRestart(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsBeginRestartOptions) (HTTPPollerResponse, error) {
 	resp, err := client.restart(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
 	if err != nil {
@@ -1060,6 +1078,7 @@ func (client *VirtualMachineScaleSetVMsClient) ResumeRestart(ctx context.Context
 }
 
 // Restart - Restarts a virtual machine in a VM scale set.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineScaleSetVMsClient) restart(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsBeginRestartOptions) (*azcore.Response, error) {
 	req, err := client.restartCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
 	if err != nil {
@@ -1118,6 +1137,7 @@ func (client *VirtualMachineScaleSetVMsClient) restartHandleError(resp *azcore.R
 }
 
 // BeginRunCommand - Run command on a virtual machine in a VM scale set.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineScaleSetVMsClient) BeginRunCommand(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, parameters RunCommandInput, options *VirtualMachineScaleSetVMsBeginRunCommandOptions) (RunCommandResultPollerResponse, error) {
 	resp, err := client.runCommand(ctx, resourceGroupName, vmScaleSetName, instanceID, parameters, options)
 	if err != nil {
@@ -1167,6 +1187,7 @@ func (client *VirtualMachineScaleSetVMsClient) ResumeRunCommand(ctx context.Cont
 }
 
 // RunCommand - Run command on a virtual machine in a VM scale set.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineScaleSetVMsClient) runCommand(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, parameters RunCommandInput, options *VirtualMachineScaleSetVMsBeginRunCommandOptions) (*azcore.Response, error) {
 	req, err := client.runCommandCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceID, parameters, options)
 	if err != nil {
@@ -1236,6 +1257,7 @@ func (client *VirtualMachineScaleSetVMsClient) runCommandHandleError(resp *azcor
 
 // SimulateEviction - The operation to simulate the eviction of spot virtual machine in a VM scale set. The eviction will occur within 30 minutes of calling
 // the API
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineScaleSetVMsClient) SimulateEviction(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsSimulateEvictionOptions) (*http.Response, error) {
 	req, err := client.simulateEvictionCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
 	if err != nil {
@@ -1294,6 +1316,7 @@ func (client *VirtualMachineScaleSetVMsClient) simulateEvictionHandleError(resp 
 }
 
 // BeginStart - Starts a virtual machine in a VM scale set.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineScaleSetVMsClient) BeginStart(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsBeginStartOptions) (HTTPPollerResponse, error) {
 	resp, err := client.start(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
 	if err != nil {
@@ -1343,6 +1366,7 @@ func (client *VirtualMachineScaleSetVMsClient) ResumeStart(ctx context.Context, 
 }
 
 // Start - Starts a virtual machine in a VM scale set.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineScaleSetVMsClient) start(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsBeginStartOptions) (*azcore.Response, error) {
 	req, err := client.startCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
 	if err != nil {
@@ -1401,6 +1425,7 @@ func (client *VirtualMachineScaleSetVMsClient) startHandleError(resp *azcore.Res
 }
 
 // BeginUpdate - Updates a virtual machine of a VM scale set.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineScaleSetVMsClient) BeginUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, parameters VirtualMachineScaleSetVM, options *VirtualMachineScaleSetVMsBeginUpdateOptions) (VirtualMachineScaleSetVMPollerResponse, error) {
 	resp, err := client.update(ctx, resourceGroupName, vmScaleSetName, instanceID, parameters, options)
 	if err != nil {
@@ -1450,6 +1475,7 @@ func (client *VirtualMachineScaleSetVMsClient) ResumeUpdate(ctx context.Context,
 }
 
 // Update - Updates a virtual machine of a VM scale set.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineScaleSetVMsClient) update(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, parameters VirtualMachineScaleSetVM, options *VirtualMachineScaleSetVMsBeginUpdateOptions) (*azcore.Response, error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceID, parameters, options)
 	if err != nil {

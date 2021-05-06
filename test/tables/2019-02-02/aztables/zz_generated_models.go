@@ -590,6 +590,7 @@ type TableResponseResponse struct {
 }
 
 // TableServiceError - Table Service error.
+// Implements the error and azcore.HTTPResponse interfaces.
 type TableServiceError struct {
 	raw string
 	// The error message.

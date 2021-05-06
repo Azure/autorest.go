@@ -26,6 +26,7 @@ func NewFilesClient(con *Connection) *FilesClient {
 }
 
 // GetEmptyFile - Get empty file
+// If the operation fails it returns the *Error error type.
 func (client *FilesClient) GetEmptyFile(ctx context.Context, options *FilesGetEmptyFileOptions) (*http.Response, error) {
 	req, err := client.getEmptyFileCreateRequest(ctx, options)
 	if err != nil {
@@ -68,6 +69,7 @@ func (client *FilesClient) getEmptyFileHandleError(resp *azcore.Response) error 
 }
 
 // GetFile - Get file
+// If the operation fails it returns the *Error error type.
 func (client *FilesClient) GetFile(ctx context.Context, options *FilesGetFileOptions) (*http.Response, error) {
 	req, err := client.getFileCreateRequest(ctx, options)
 	if err != nil {
@@ -110,6 +112,7 @@ func (client *FilesClient) getFileHandleError(resp *azcore.Response) error {
 }
 
 // GetFileLarge - Get a large file
+// If the operation fails it returns the *Error error type.
 func (client *FilesClient) GetFileLarge(ctx context.Context, options *FilesGetFileLargeOptions) (*http.Response, error) {
 	req, err := client.getFileLargeCreateRequest(ctx, options)
 	if err != nil {

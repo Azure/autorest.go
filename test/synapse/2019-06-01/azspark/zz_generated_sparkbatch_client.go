@@ -22,6 +22,7 @@ type sparkBatchClient struct {
 }
 
 // CancelSparkBatchJob - Cancels a running spark batch job.
+// If the operation fails it returns a generic error.
 func (client *sparkBatchClient) CancelSparkBatchJob(ctx context.Context, batchID int32, options *SparkBatchCancelSparkBatchJobOptions) (*http.Response, error) {
 	req, err := client.cancelSparkBatchJobCreateRequest(ctx, batchID, options)
 	if err != nil {
@@ -62,6 +63,7 @@ func (client *sparkBatchClient) cancelSparkBatchJobHandleError(resp *azcore.Resp
 }
 
 // CreateSparkBatchJob - Create new spark batch job.
+// If the operation fails it returns a generic error.
 func (client *sparkBatchClient) CreateSparkBatchJob(ctx context.Context, sparkBatchJobOptions SparkBatchJobOptions, options *SparkBatchCreateSparkBatchJobOptions) (SparkBatchJobResponse, error) {
 	req, err := client.createSparkBatchJobCreateRequest(ctx, sparkBatchJobOptions, options)
 	if err != nil {
@@ -116,6 +118,7 @@ func (client *sparkBatchClient) createSparkBatchJobHandleError(resp *azcore.Resp
 }
 
 // GetSparkBatchJob - Gets a single spark batch job.
+// If the operation fails it returns a generic error.
 func (client *sparkBatchClient) GetSparkBatchJob(ctx context.Context, batchID int32, options *SparkBatchGetSparkBatchJobOptions) (SparkBatchJobResponse, error) {
 	req, err := client.getSparkBatchJobCreateRequest(ctx, batchID, options)
 	if err != nil {
@@ -171,6 +174,7 @@ func (client *sparkBatchClient) getSparkBatchJobHandleError(resp *azcore.Respons
 }
 
 // GetSparkBatchJobs - List all spark batch jobs which are running under a particular spark pool.
+// If the operation fails it returns a generic error.
 func (client *sparkBatchClient) GetSparkBatchJobs(ctx context.Context, options *SparkBatchGetSparkBatchJobsOptions) (SparkBatchJobCollectionResponse, error) {
 	req, err := client.getSparkBatchJobsCreateRequest(ctx, options)
 	if err != nil {

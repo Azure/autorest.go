@@ -32,6 +32,7 @@ func NewVirtualHubRouteTableV2SClient(con *armcore.Connection, subscriptionID st
 }
 
 // BeginCreateOrUpdate - Creates a VirtualHubRouteTableV2 resource if it doesn't exist else updates the existing VirtualHubRouteTableV2.
+// If the operation fails it returns the *Error error type.
 func (client *VirtualHubRouteTableV2SClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualHubName string, routeTableName string, virtualHubRouteTableV2Parameters VirtualHubRouteTableV2, options *VirtualHubRouteTableV2SBeginCreateOrUpdateOptions) (VirtualHubRouteTableV2PollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualHubName, routeTableName, virtualHubRouteTableV2Parameters, options)
 	if err != nil {
@@ -81,6 +82,7 @@ func (client *VirtualHubRouteTableV2SClient) ResumeCreateOrUpdate(ctx context.Co
 }
 
 // CreateOrUpdate - Creates a VirtualHubRouteTableV2 resource if it doesn't exist else updates the existing VirtualHubRouteTableV2.
+// If the operation fails it returns the *Error error type.
 func (client *VirtualHubRouteTableV2SClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualHubName string, routeTableName string, virtualHubRouteTableV2Parameters VirtualHubRouteTableV2, options *VirtualHubRouteTableV2SBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, virtualHubName, routeTableName, virtualHubRouteTableV2Parameters, options)
 	if err != nil {
@@ -150,6 +152,7 @@ func (client *VirtualHubRouteTableV2SClient) createOrUpdateHandleError(resp *azc
 }
 
 // BeginDelete - Deletes a VirtualHubRouteTableV2.
+// If the operation fails it returns the *Error error type.
 func (client *VirtualHubRouteTableV2SClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualHubName string, routeTableName string, options *VirtualHubRouteTableV2SBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, virtualHubName, routeTableName, options)
 	if err != nil {
@@ -199,6 +202,7 @@ func (client *VirtualHubRouteTableV2SClient) ResumeDelete(ctx context.Context, t
 }
 
 // Delete - Deletes a VirtualHubRouteTableV2.
+// If the operation fails it returns the *Error error type.
 func (client *VirtualHubRouteTableV2SClient) deleteOperation(ctx context.Context, resourceGroupName string, virtualHubName string, routeTableName string, options *VirtualHubRouteTableV2SBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, virtualHubName, routeTableName, options)
 	if err != nil {
@@ -259,6 +263,7 @@ func (client *VirtualHubRouteTableV2SClient) deleteHandleError(resp *azcore.Resp
 }
 
 // Get - Retrieves the details of a VirtualHubRouteTableV2.
+// If the operation fails it returns the *Error error type.
 func (client *VirtualHubRouteTableV2SClient) Get(ctx context.Context, resourceGroupName string, virtualHubName string, routeTableName string, options *VirtualHubRouteTableV2SGetOptions) (VirtualHubRouteTableV2Response, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, virtualHubName, routeTableName, options)
 	if err != nil {
@@ -328,6 +333,7 @@ func (client *VirtualHubRouteTableV2SClient) getHandleError(resp *azcore.Respons
 }
 
 // List - Retrieves the details of all VirtualHubRouteTableV2s.
+// If the operation fails it returns the *CloudError error type.
 func (client *VirtualHubRouteTableV2SClient) List(resourceGroupName string, virtualHubName string, options *VirtualHubRouteTableV2SListOptions) ListVirtualHubRouteTableV2SResultPager {
 	return &listVirtualHubRouteTableV2SResultPager{
 		pipeline: client.con.Pipeline(),

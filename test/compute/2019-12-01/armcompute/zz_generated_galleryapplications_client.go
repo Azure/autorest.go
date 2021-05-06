@@ -32,6 +32,7 @@ func NewGalleryApplicationsClient(con *armcore.Connection, subscriptionID string
 }
 
 // BeginCreateOrUpdate - Create or update a gallery Application Definition.
+// If the operation fails it returns the *CloudError error type.
 func (client *GalleryApplicationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplication GalleryApplication, options *GalleryApplicationsBeginCreateOrUpdateOptions) (GalleryApplicationPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, galleryName, galleryApplicationName, galleryApplication, options)
 	if err != nil {
@@ -81,6 +82,7 @@ func (client *GalleryApplicationsClient) ResumeCreateOrUpdate(ctx context.Contex
 }
 
 // CreateOrUpdate - Create or update a gallery Application Definition.
+// If the operation fails it returns the *CloudError error type.
 func (client *GalleryApplicationsClient) createOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplication GalleryApplication, options *GalleryApplicationsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, galleryName, galleryApplicationName, galleryApplication, options)
 	if err != nil {
@@ -150,6 +152,7 @@ func (client *GalleryApplicationsClient) createOrUpdateHandleError(resp *azcore.
 }
 
 // BeginDelete - Delete a gallery Application.
+// If the operation fails it returns the *CloudError error type.
 func (client *GalleryApplicationsClient) BeginDelete(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, options *GalleryApplicationsBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, galleryName, galleryApplicationName, options)
 	if err != nil {
@@ -199,6 +202,7 @@ func (client *GalleryApplicationsClient) ResumeDelete(ctx context.Context, token
 }
 
 // Delete - Delete a gallery Application.
+// If the operation fails it returns the *CloudError error type.
 func (client *GalleryApplicationsClient) deleteOperation(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, options *GalleryApplicationsBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, galleryName, galleryApplicationName, options)
 	if err != nil {
@@ -259,6 +263,7 @@ func (client *GalleryApplicationsClient) deleteHandleError(resp *azcore.Response
 }
 
 // Get - Retrieves information about a gallery Application Definition.
+// If the operation fails it returns the *CloudError error type.
 func (client *GalleryApplicationsClient) Get(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, options *GalleryApplicationsGetOptions) (GalleryApplicationResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, galleryName, galleryApplicationName, options)
 	if err != nil {
@@ -328,6 +333,7 @@ func (client *GalleryApplicationsClient) getHandleError(resp *azcore.Response) e
 }
 
 // ListByGallery - List gallery Application Definitions in a gallery.
+// If the operation fails it returns the *CloudError error type.
 func (client *GalleryApplicationsClient) ListByGallery(resourceGroupName string, galleryName string, options *GalleryApplicationsListByGalleryOptions) GalleryApplicationListPager {
 	return &galleryApplicationListPager{
 		pipeline: client.con.Pipeline(),
@@ -393,6 +399,7 @@ func (client *GalleryApplicationsClient) listByGalleryHandleError(resp *azcore.R
 }
 
 // BeginUpdate - Update a gallery Application Definition.
+// If the operation fails it returns the *CloudError error type.
 func (client *GalleryApplicationsClient) BeginUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplication GalleryApplicationUpdate, options *GalleryApplicationsBeginUpdateOptions) (GalleryApplicationPollerResponse, error) {
 	resp, err := client.update(ctx, resourceGroupName, galleryName, galleryApplicationName, galleryApplication, options)
 	if err != nil {
@@ -442,6 +449,7 @@ func (client *GalleryApplicationsClient) ResumeUpdate(ctx context.Context, token
 }
 
 // Update - Update a gallery Application Definition.
+// If the operation fails it returns the *CloudError error type.
 func (client *GalleryApplicationsClient) update(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplication GalleryApplicationUpdate, options *GalleryApplicationsBeginUpdateOptions) (*azcore.Response, error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, galleryName, galleryApplicationName, galleryApplication, options)
 	if err != nil {

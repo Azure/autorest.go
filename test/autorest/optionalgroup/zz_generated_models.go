@@ -23,6 +23,7 @@ type ClassWrapper struct {
 	Value *Product `json:"value,omitempty"`
 }
 
+// Implements the error and azcore.HTTPResponse interfaces.
 type Error struct {
 	raw     string
 	Message *string `json:"message,omitempty"`

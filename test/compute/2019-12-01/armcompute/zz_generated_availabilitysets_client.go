@@ -30,6 +30,7 @@ func NewAvailabilitySetsClient(con *armcore.Connection, subscriptionID string) *
 }
 
 // CreateOrUpdate - Create or update an availability set.
+// If the operation fails it returns a generic error.
 func (client *AvailabilitySetsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, availabilitySetName string, parameters AvailabilitySet, options *AvailabilitySetsCreateOrUpdateOptions) (AvailabilitySetResponse, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, availabilitySetName, parameters, options)
 	if err != nil {
@@ -94,6 +95,7 @@ func (client *AvailabilitySetsClient) createOrUpdateHandleError(resp *azcore.Res
 }
 
 // Delete - Delete an availability set.
+// If the operation fails it returns a generic error.
 func (client *AvailabilitySetsClient) Delete(ctx context.Context, resourceGroupName string, availabilitySetName string, options *AvailabilitySetsDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, availabilitySetName, options)
 	if err != nil {
@@ -148,6 +150,7 @@ func (client *AvailabilitySetsClient) deleteHandleError(resp *azcore.Response) e
 }
 
 // Get - Retrieves information about an availability set.
+// If the operation fails it returns a generic error.
 func (client *AvailabilitySetsClient) Get(ctx context.Context, resourceGroupName string, availabilitySetName string, options *AvailabilitySetsGetOptions) (AvailabilitySetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, availabilitySetName, options)
 	if err != nil {
@@ -212,6 +215,7 @@ func (client *AvailabilitySetsClient) getHandleError(resp *azcore.Response) erro
 }
 
 // List - Lists all availability sets in a resource group.
+// If the operation fails it returns a generic error.
 func (client *AvailabilitySetsClient) List(resourceGroupName string, options *AvailabilitySetsListOptions) AvailabilitySetListResultPager {
 	return &availabilitySetListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -272,6 +276,7 @@ func (client *AvailabilitySetsClient) listHandleError(resp *azcore.Response) err
 }
 
 // ListAvailableSizes - Lists all available virtual machine sizes that can be used to create a new virtual machine in an existing availability set.
+// If the operation fails it returns a generic error.
 func (client *AvailabilitySetsClient) ListAvailableSizes(ctx context.Context, resourceGroupName string, availabilitySetName string, options *AvailabilitySetsListAvailableSizesOptions) (VirtualMachineSizeListResultResponse, error) {
 	req, err := client.listAvailableSizesCreateRequest(ctx, resourceGroupName, availabilitySetName, options)
 	if err != nil {
@@ -336,6 +341,7 @@ func (client *AvailabilitySetsClient) listAvailableSizesHandleError(resp *azcore
 }
 
 // ListBySubscription - Lists all availability sets in a subscription.
+// If the operation fails it returns a generic error.
 func (client *AvailabilitySetsClient) ListBySubscription(options *AvailabilitySetsListBySubscriptionOptions) AvailabilitySetListResultPager {
 	return &availabilitySetListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -395,6 +401,7 @@ func (client *AvailabilitySetsClient) listBySubscriptionHandleError(resp *azcore
 }
 
 // Update - Update an availability set.
+// If the operation fails it returns a generic error.
 func (client *AvailabilitySetsClient) Update(ctx context.Context, resourceGroupName string, availabilitySetName string, parameters AvailabilitySetUpdate, options *AvailabilitySetsUpdateOptions) (AvailabilitySetResponse, error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, availabilitySetName, parameters, options)
 	if err != nil {

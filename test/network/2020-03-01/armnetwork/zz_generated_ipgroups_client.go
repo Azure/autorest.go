@@ -32,6 +32,7 @@ func NewIPGroupsClient(con *armcore.Connection, subscriptionID string) *IPGroups
 }
 
 // BeginCreateOrUpdate - Creates or updates an ipGroups in a specified resource group.
+// If the operation fails it returns the *Error error type.
 func (client *IPGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ipGroupsName string, parameters IPGroup, options *IPGroupsBeginCreateOrUpdateOptions) (IPGroupPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, ipGroupsName, parameters, options)
 	if err != nil {
@@ -81,6 +82,7 @@ func (client *IPGroupsClient) ResumeCreateOrUpdate(ctx context.Context, token st
 }
 
 // CreateOrUpdate - Creates or updates an ipGroups in a specified resource group.
+// If the operation fails it returns the *Error error type.
 func (client *IPGroupsClient) createOrUpdate(ctx context.Context, resourceGroupName string, ipGroupsName string, parameters IPGroup, options *IPGroupsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, ipGroupsName, parameters, options)
 	if err != nil {
@@ -146,6 +148,7 @@ func (client *IPGroupsClient) createOrUpdateHandleError(resp *azcore.Response) e
 }
 
 // BeginDelete - Deletes the specified ipGroups.
+// If the operation fails it returns the *Error error type.
 func (client *IPGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, ipGroupsName string, options *IPGroupsBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, ipGroupsName, options)
 	if err != nil {
@@ -195,6 +198,7 @@ func (client *IPGroupsClient) ResumeDelete(ctx context.Context, token string) (H
 }
 
 // Delete - Deletes the specified ipGroups.
+// If the operation fails it returns the *Error error type.
 func (client *IPGroupsClient) deleteOperation(ctx context.Context, resourceGroupName string, ipGroupsName string, options *IPGroupsBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, ipGroupsName, options)
 	if err != nil {
@@ -251,6 +255,7 @@ func (client *IPGroupsClient) deleteHandleError(resp *azcore.Response) error {
 }
 
 // Get - Gets the specified ipGroups.
+// If the operation fails it returns the *Error error type.
 func (client *IPGroupsClient) Get(ctx context.Context, resourceGroupName string, ipGroupsName string, options *IPGroupsGetOptions) (IPGroupResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, ipGroupsName, options)
 	if err != nil {
@@ -319,6 +324,7 @@ func (client *IPGroupsClient) getHandleError(resp *azcore.Response) error {
 }
 
 // List - Gets all IpGroups in a subscription.
+// If the operation fails it returns the *Error error type.
 func (client *IPGroupsClient) List(options *IPGroupsListOptions) IPGroupListResultPager {
 	return &ipGroupListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -376,6 +382,7 @@ func (client *IPGroupsClient) listHandleError(resp *azcore.Response) error {
 }
 
 // ListByResourceGroup - Gets all IpGroups in a resource group.
+// If the operation fails it returns the *Error error type.
 func (client *IPGroupsClient) ListByResourceGroup(resourceGroupName string, options *IPGroupsListByResourceGroupOptions) IPGroupListResultPager {
 	return &ipGroupListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -437,6 +444,7 @@ func (client *IPGroupsClient) listByResourceGroupHandleError(resp *azcore.Respon
 }
 
 // UpdateGroups - Updates tags of an IpGroups resource.
+// If the operation fails it returns the *Error error type.
 func (client *IPGroupsClient) UpdateGroups(ctx context.Context, resourceGroupName string, ipGroupsName string, parameters TagsObject, options *IPGroupsUpdateGroupsOptions) (IPGroupResponse, error) {
 	req, err := client.updateGroupsCreateRequest(ctx, resourceGroupName, ipGroupsName, parameters, options)
 	if err != nil {

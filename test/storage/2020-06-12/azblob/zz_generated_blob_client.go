@@ -25,6 +25,7 @@ type blobClient struct {
 
 // AbortCopyFromURL - The Abort Copy From URL operation aborts a pending Copy From URL operation, and leaves a destination blob with zero length and full
 // metadata.
+// If the operation fails it returns the *StorageError error type.
 func (client *blobClient) AbortCopyFromURL(ctx context.Context, copyID string, blobAbortCopyFromURLOptions *BlobAbortCopyFromURLOptions, leaseAccessConditions *LeaseAccessConditions) (BlobAbortCopyFromURLResponse, error) {
 	req, err := client.abortCopyFromURLCreateRequest(ctx, copyID, blobAbortCopyFromURLOptions, leaseAccessConditions)
 	if err != nil {
@@ -102,6 +103,7 @@ func (client *blobClient) abortCopyFromURLHandleError(resp *azcore.Response) err
 }
 
 // AcquireLease - [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations
+// If the operation fails it returns the *StorageError error type.
 func (client *blobClient) AcquireLease(ctx context.Context, blobAcquireLeaseOptions *BlobAcquireLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (BlobAcquireLeaseResponse, error) {
 	req, err := client.acquireLeaseCreateRequest(ctx, blobAcquireLeaseOptions, modifiedAccessConditions)
 	if err != nil {
@@ -209,6 +211,7 @@ func (client *blobClient) acquireLeaseHandleError(resp *azcore.Response) error {
 }
 
 // BreakLease - [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations
+// If the operation fails it returns the *StorageError error type.
 func (client *blobClient) BreakLease(ctx context.Context, blobBreakLeaseOptions *BlobBreakLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (BlobBreakLeaseResponse, error) {
 	req, err := client.breakLeaseCreateRequest(ctx, blobBreakLeaseOptions, modifiedAccessConditions)
 	if err != nil {
@@ -318,6 +321,7 @@ func (client *blobClient) breakLeaseHandleError(resp *azcore.Response) error {
 }
 
 // ChangeLease - [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations
+// If the operation fails it returns the *StorageError error type.
 func (client *blobClient) ChangeLease(ctx context.Context, leaseID string, proposedLeaseID string, blobChangeLeaseOptions *BlobChangeLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (BlobChangeLeaseResponse, error) {
 	req, err := client.changeLeaseCreateRequest(ctx, leaseID, proposedLeaseID, blobChangeLeaseOptions, modifiedAccessConditions)
 	if err != nil {
@@ -421,6 +425,7 @@ func (client *blobClient) changeLeaseHandleError(resp *azcore.Response) error {
 }
 
 // CopyFromURL - The Copy From URL operation copies a blob or an internet resource to a new blob. It will not return a response until the copy is complete.
+// If the operation fails it returns the *StorageError error type.
 func (client *blobClient) CopyFromURL(ctx context.Context, copySource string, blobCopyFromURLOptions *BlobCopyFromURLOptions, sourceModifiedAccessConditions *SourceModifiedAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (BlobCopyFromURLResponse, error) {
 	req, err := client.copyFromURLCreateRequest(ctx, copySource, blobCopyFromURLOptions, sourceModifiedAccessConditions, modifiedAccessConditions, leaseAccessConditions)
 	if err != nil {
@@ -580,6 +585,7 @@ func (client *blobClient) copyFromURLHandleError(resp *azcore.Response) error {
 }
 
 // CreateSnapshot - The Create Snapshot operation creates a read-only snapshot of a blob
+// If the operation fails it returns the *StorageError error type.
 func (client *blobClient) CreateSnapshot(ctx context.Context, blobCreateSnapshotOptions *BlobCreateSnapshotOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (BlobCreateSnapshotResponse, error) {
 	req, err := client.createSnapshotCreateRequest(ctx, blobCreateSnapshotOptions, cpkInfo, cpkScopeInfo, modifiedAccessConditions, leaseAccessConditions)
 	if err != nil {
@@ -720,6 +726,7 @@ func (client *blobClient) createSnapshotHandleError(resp *azcore.Response) error
 // which blobs and snapshots have been soft deleted. You can then use the Undelete Blob API to restore a soft-deleted blob. All other operations on a soft-deleted
 // blob or snapshot causes the service to
 // return an HTTP status code of 404 (ResourceNotFound).
+// If the operation fails it returns the *StorageError error type.
 func (client *blobClient) Delete(ctx context.Context, blobDeleteOptions *BlobDeleteOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (BlobDeleteResponse, error) {
 	req, err := client.deleteCreateRequest(ctx, blobDeleteOptions, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
@@ -821,6 +828,7 @@ func (client *blobClient) deleteHandleError(resp *azcore.Response) error {
 }
 
 // DeleteImmutabilityPolicy - The Delete Immutability Policy operation deletes the immutability policy on the blob
+// If the operation fails it returns the *StorageError error type.
 func (client *blobClient) DeleteImmutabilityPolicy(ctx context.Context, options *BlobDeleteImmutabilityPolicyOptions) (BlobDeleteImmutabilityPolicyResponse, error) {
 	req, err := client.deleteImmutabilityPolicyCreateRequest(ctx, options)
 	if err != nil {
@@ -894,6 +902,7 @@ func (client *blobClient) deleteImmutabilityPolicyHandleError(resp *azcore.Respo
 
 // Download - The Download operation reads or downloads a blob from the system, including its metadata and properties. You can also call Download to read
 // a snapshot.
+// If the operation fails it returns the *StorageError error type.
 func (client *blobClient) Download(ctx context.Context, blobDownloadOptions *BlobDownloadOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, modifiedAccessConditions *ModifiedAccessConditions) (BlobDownloadResponse, error) {
 	req, err := client.downloadCreateRequest(ctx, blobDownloadOptions, leaseAccessConditions, cpkInfo, modifiedAccessConditions)
 	if err != nil {
@@ -1196,6 +1205,7 @@ func (client *blobClient) downloadHandleError(resp *azcore.Response) error {
 }
 
 // GetAccessControl - Get the owner, group, permissions, or access control list for a blob.
+// If the operation fails it returns the *DataLakeStorageError error type.
 func (client *blobClient) GetAccessControl(ctx context.Context, blobGetAccessControlOptions *BlobGetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (BlobGetAccessControlResponse, error) {
 	req, err := client.getAccessControlCreateRequest(ctx, blobGetAccessControlOptions, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
@@ -1305,6 +1315,7 @@ func (client *blobClient) getAccessControlHandleError(resp *azcore.Response) err
 }
 
 // GetAccountInfo - Returns the sku name and account kind
+// If the operation fails it returns the *StorageError error type.
 func (client *blobClient) GetAccountInfo(ctx context.Context, options *BlobGetAccountInfoOptions) (BlobGetAccountInfoResponse, error) {
 	req, err := client.getAccountInfoCreateRequest(ctx, options)
 	if err != nil {
@@ -1379,6 +1390,7 @@ func (client *blobClient) getAccountInfoHandleError(resp *azcore.Response) error
 
 // GetProperties - The Get Properties operation returns all user-defined metadata, standard HTTP properties, and system properties for the blob. It does
 // not return the content of the blob.
+// If the operation fails it returns the *StorageError error type.
 func (client *blobClient) GetProperties(ctx context.Context, blobGetPropertiesOptions *BlobGetPropertiesOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, modifiedAccessConditions *ModifiedAccessConditions) (BlobGetPropertiesResponse, error) {
 	req, err := client.getPropertiesCreateRequest(ctx, blobGetPropertiesOptions, leaseAccessConditions, cpkInfo, modifiedAccessConditions)
 	if err != nil {
@@ -1701,6 +1713,7 @@ func (client *blobClient) getPropertiesHandleError(resp *azcore.Response) error 
 }
 
 // GetTags - The Get Tags operation enables users to get the tags associated with a blob.
+// If the operation fails it returns the *StorageError error type.
 func (client *blobClient) GetTags(ctx context.Context, blobGetTagsOptions *BlobGetTagsOptions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (BlobTagsResponse, error) {
 	req, err := client.getTagsCreateRequest(ctx, blobGetTagsOptions, modifiedAccessConditions, leaseAccessConditions)
 	if err != nil {
@@ -1789,6 +1802,7 @@ func (client *blobClient) getTagsHandleError(resp *azcore.Response) error {
 }
 
 // Query - The Query operation enables users to select/project on blob data by providing simple query expressions.
+// If the operation fails it returns the *StorageError error type.
 func (client *blobClient) Query(ctx context.Context, blobQueryOptions *BlobQueryOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, modifiedAccessConditions *ModifiedAccessConditions) (BlobQueryResponse, error) {
 	req, err := client.queryCreateRequest(ctx, blobQueryOptions, leaseAccessConditions, cpkInfo, modifiedAccessConditions)
 	if err != nil {
@@ -2024,6 +2038,7 @@ func (client *blobClient) queryHandleError(resp *azcore.Response) error {
 }
 
 // ReleaseLease - [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations
+// If the operation fails it returns the *StorageError error type.
 func (client *blobClient) ReleaseLease(ctx context.Context, leaseID string, blobReleaseLeaseOptions *BlobReleaseLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (BlobReleaseLeaseResponse, error) {
 	req, err := client.releaseLeaseCreateRequest(ctx, leaseID, blobReleaseLeaseOptions, modifiedAccessConditions)
 	if err != nil {
@@ -2127,6 +2142,7 @@ func (client *blobClient) releaseLeaseHandleError(resp *azcore.Response) error {
 // information, see Specifying Conditional Headers for Blob Service Operations [https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations].
 // To
 // fail if the destination already exists, use a conditional request with If-None-Match: "*".
+// If the operation fails it returns the *DataLakeStorageError error type.
 func (client *blobClient) Rename(ctx context.Context, renameSource string, blobRenameOptions *BlobRenameOptions, directoryHTTPHeaders *DirectoryHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (BlobRenameResponse, error) {
 	req, err := client.renameCreateRequest(ctx, renameSource, blobRenameOptions, directoryHTTPHeaders, leaseAccessConditions, modifiedAccessConditions, sourceModifiedAccessConditions)
 	if err != nil {
@@ -2273,6 +2289,7 @@ func (client *blobClient) renameHandleError(resp *azcore.Response) error {
 }
 
 // RenewLease - [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations
+// If the operation fails it returns the *StorageError error type.
 func (client *blobClient) RenewLease(ctx context.Context, leaseID string, blobRenewLeaseOptions *BlobRenewLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (BlobRenewLeaseResponse, error) {
 	req, err := client.renewLeaseCreateRequest(ctx, leaseID, blobRenewLeaseOptions, modifiedAccessConditions)
 	if err != nil {
@@ -2375,6 +2392,7 @@ func (client *blobClient) renewLeaseHandleError(resp *azcore.Response) error {
 }
 
 // SetAccessControl - Set the owner, group, permissions, or access control list for a blob.
+// If the operation fails it returns the *DataLakeStorageError error type.
 func (client *blobClient) SetAccessControl(ctx context.Context, blobSetAccessControlOptions *BlobSetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (BlobSetAccessControlResponse, error) {
 	req, err := client.setAccessControlCreateRequest(ctx, blobSetAccessControlOptions, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
@@ -2481,6 +2499,7 @@ func (client *blobClient) setAccessControlHandleError(resp *azcore.Response) err
 }
 
 // SetExpiry - Sets the time a blob will expire and be deleted.
+// If the operation fails it returns the *StorageError error type.
 func (client *blobClient) SetExpiry(ctx context.Context, expiryOptions BlobExpiryOptions, options *BlobSetExpiryOptions) (BlobSetExpiryResponse, error) {
 	req, err := client.setExpiryCreateRequest(ctx, expiryOptions, options)
 	if err != nil {
@@ -2567,6 +2586,7 @@ func (client *blobClient) setExpiryHandleError(resp *azcore.Response) error {
 }
 
 // SetHTTPHeaders - The Set HTTP Headers operation sets system properties on the blob
+// If the operation fails it returns the *StorageError error type.
 func (client *blobClient) SetHTTPHeaders(ctx context.Context, blobSetHTTPHeadersOptions *BlobSetHTTPHeadersOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (BlobSetHTTPHeadersResponse, error) {
 	req, err := client.setHTTPHeadersCreateRequest(ctx, blobSetHTTPHeadersOptions, blobHTTPHeaders, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
@@ -2692,6 +2712,7 @@ func (client *blobClient) setHTTPHeadersHandleError(resp *azcore.Response) error
 }
 
 // SetImmutabilityPolicy - The Set Immutability Policy operation sets the immutability policy on the blob
+// If the operation fails it returns the *StorageError error type.
 func (client *blobClient) SetImmutabilityPolicy(ctx context.Context, blobSetImmutabilityPolicyOptions *BlobSetImmutabilityPolicyOptions, modifiedAccessConditions *ModifiedAccessConditions) (BlobSetImmutabilityPolicyResponse, error) {
 	req, err := client.setImmutabilityPolicyCreateRequest(ctx, blobSetImmutabilityPolicyOptions, modifiedAccessConditions)
 	if err != nil {
@@ -2783,6 +2804,7 @@ func (client *blobClient) setImmutabilityPolicyHandleError(resp *azcore.Response
 }
 
 // SetLegalHold - The Set Legal Hold operation sets a legal hold on the blob.
+// If the operation fails it returns the *StorageError error type.
 func (client *blobClient) SetLegalHold(ctx context.Context, legalHold bool, options *BlobSetLegalHoldOptions) (BlobSetLegalHoldResponse, error) {
 	req, err := client.setLegalHoldCreateRequest(ctx, legalHold, options)
 	if err != nil {
@@ -2863,6 +2885,7 @@ func (client *blobClient) setLegalHoldHandleError(resp *azcore.Response) error {
 }
 
 // SetMetadata - The Set Blob Metadata operation sets user-defined metadata for the specified blob as one or more name-value pairs
+// If the operation fails it returns the *StorageError error type.
 func (client *blobClient) SetMetadata(ctx context.Context, blobSetMetadataOptions *BlobSetMetadataOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (BlobSetMetadataResponse, error) {
 	req, err := client.setMetadataCreateRequest(ctx, blobSetMetadataOptions, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
 	if err != nil {
@@ -2996,6 +3019,7 @@ func (client *blobClient) setMetadataHandleError(resp *azcore.Response) error {
 }
 
 // SetTags - The Set Tags operation enables users to set tags on a blob.
+// If the operation fails it returns the *StorageError error type.
 func (client *blobClient) SetTags(ctx context.Context, blobSetTagsOptions *BlobSetTagsOptions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (BlobSetTagsResponse, error) {
 	req, err := client.setTagsCreateRequest(ctx, blobSetTagsOptions, modifiedAccessConditions, leaseAccessConditions)
 	if err != nil {
@@ -3089,6 +3113,7 @@ func (client *blobClient) setTagsHandleError(resp *azcore.Response) error {
 // a blob storage account (locally redundant storage only). A
 // premium page blob's tier determines the allowed size, IOPS, and bandwidth of the blob. A block blob's tier determines Hot/Cool/Archive storage type.
 // This operation does not update the blob's ETag.
+// If the operation fails it returns the *StorageError error type.
 func (client *blobClient) SetTier(ctx context.Context, tier AccessTier, blobSetTierOptions *BlobSetTierOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (BlobSetTierResponse, error) {
 	req, err := client.setTierCreateRequest(ctx, tier, blobSetTierOptions, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
@@ -3170,6 +3195,7 @@ func (client *blobClient) setTierHandleError(resp *azcore.Response) error {
 }
 
 // StartCopyFromURL - The Start Copy From URL operation copies a blob or an internet resource to a new blob.
+// If the operation fails it returns the *StorageError error type.
 func (client *blobClient) StartCopyFromURL(ctx context.Context, copySource string, blobStartCopyFromURLOptions *BlobStartCopyFromURLOptions, sourceModifiedAccessConditions *SourceModifiedAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (BlobStartCopyFromURLResponse, error) {
 	req, err := client.startCopyFromURLCreateRequest(ctx, copySource, blobStartCopyFromURLOptions, sourceModifiedAccessConditions, modifiedAccessConditions, leaseAccessConditions)
 	if err != nil {
@@ -3320,6 +3346,7 @@ func (client *blobClient) startCopyFromURLHandleError(resp *azcore.Response) err
 }
 
 // Undelete - Undelete a blob that was previously soft deleted
+// If the operation fails it returns the *StorageError error type.
 func (client *blobClient) Undelete(ctx context.Context, options *BlobUndeleteOptions) (BlobUndeleteResponse, error) {
 	req, err := client.undeleteCreateRequest(ctx, options)
 	if err != nil {

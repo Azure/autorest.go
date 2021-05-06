@@ -26,6 +26,7 @@ func NewBoolClient(con *Connection) *BoolClient {
 }
 
 // GetFalse - Get false Boolean value
+// If the operation fails it returns the *Error error type.
 func (client *BoolClient) GetFalse(ctx context.Context, options *BoolGetFalseOptions) (BoolResponse, error) {
 	req, err := client.getFalseCreateRequest(ctx, options)
 	if err != nil {
@@ -76,6 +77,7 @@ func (client *BoolClient) getFalseHandleError(resp *azcore.Response) error {
 }
 
 // GetInvalid - Get invalid Boolean value
+// If the operation fails it returns the *Error error type.
 func (client *BoolClient) GetInvalid(ctx context.Context, options *BoolGetInvalidOptions) (BoolResponse, error) {
 	req, err := client.getInvalidCreateRequest(ctx, options)
 	if err != nil {
@@ -126,6 +128,7 @@ func (client *BoolClient) getInvalidHandleError(resp *azcore.Response) error {
 }
 
 // GetNull - Get null Boolean value
+// If the operation fails it returns the *Error error type.
 func (client *BoolClient) GetNull(ctx context.Context, options *BoolGetNullOptions) (BoolResponse, error) {
 	req, err := client.getNullCreateRequest(ctx, options)
 	if err != nil {
@@ -176,6 +179,7 @@ func (client *BoolClient) getNullHandleError(resp *azcore.Response) error {
 }
 
 // GetTrue - Get true Boolean value
+// If the operation fails it returns the *Error error type.
 func (client *BoolClient) GetTrue(ctx context.Context, options *BoolGetTrueOptions) (BoolResponse, error) {
 	req, err := client.getTrueCreateRequest(ctx, options)
 	if err != nil {
@@ -226,6 +230,7 @@ func (client *BoolClient) getTrueHandleError(resp *azcore.Response) error {
 }
 
 // PutFalse - Set Boolean value false
+// If the operation fails it returns the *Error error type.
 func (client *BoolClient) PutFalse(ctx context.Context, options *BoolPutFalseOptions) (*http.Response, error) {
 	req, err := client.putFalseCreateRequest(ctx, options)
 	if err != nil {
@@ -267,6 +272,7 @@ func (client *BoolClient) putFalseHandleError(resp *azcore.Response) error {
 }
 
 // PutTrue - Set Boolean value true
+// If the operation fails it returns the *Error error type.
 func (client *BoolClient) PutTrue(ctx context.Context, options *BoolPutTrueOptions) (*http.Response, error) {
 	req, err := client.putTrueCreateRequest(ctx, options)
 	if err != nil {

@@ -30,6 +30,7 @@ func NewParameterGroupingClient(con *Connection) *ParameterGroupingClient {
 }
 
 // PostMultiParamGroups - Post parameters from multiple different parameter groups
+// If the operation fails it returns the *Error error type.
 func (client *ParameterGroupingClient) PostMultiParamGroups(ctx context.Context, firstParameterGroup *FirstParameterGroup, parameterGroupingPostMultiParamGroupsSecondParamGroup *ParameterGroupingPostMultiParamGroupsSecondParamGroup) (*http.Response, error) {
 	req, err := client.postMultiParamGroupsCreateRequest(ctx, firstParameterGroup, parameterGroupingPostMultiParamGroupsSecondParamGroup)
 	if err != nil {
@@ -85,6 +86,7 @@ func (client *ParameterGroupingClient) postMultiParamGroupsHandleError(resp *azc
 }
 
 // PostOptional - Post a bunch of optional parameters grouped
+// If the operation fails it returns the *Error error type.
 func (client *ParameterGroupingClient) PostOptional(ctx context.Context, options *ParameterGroupingPostOptionalParameters) (*http.Response, error) {
 	req, err := client.postOptionalCreateRequest(ctx, options)
 	if err != nil {
@@ -134,6 +136,7 @@ func (client *ParameterGroupingClient) postOptionalHandleError(resp *azcore.Resp
 }
 
 // PostRequired - Post a bunch of required parameters grouped
+// If the operation fails it returns the *Error error type.
 func (client *ParameterGroupingClient) PostRequired(ctx context.Context, parameterGroupingPostRequiredParameters ParameterGroupingPostRequiredParameters) (*http.Response, error) {
 	req, err := client.postRequiredCreateRequest(ctx, parameterGroupingPostRequiredParameters)
 	if err != nil {
@@ -187,6 +190,7 @@ func (client *ParameterGroupingClient) postRequiredHandleError(resp *azcore.Resp
 }
 
 // PostSharedParameterGroupObject - Post parameters with a shared parameter group object
+// If the operation fails it returns the *Error error type.
 func (client *ParameterGroupingClient) PostSharedParameterGroupObject(ctx context.Context, options *FirstParameterGroup) (*http.Response, error) {
 	req, err := client.postSharedParameterGroupObjectCreateRequest(ctx, options)
 	if err != nil {

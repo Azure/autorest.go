@@ -32,6 +32,7 @@ func NewVirtualNetworksClient(con *armcore.Connection, subscriptionID string) *V
 }
 
 // CheckIPAddressAvailability - Checks whether a private IP address is available for use.
+// If the operation fails it returns the *CloudError error type.
 func (client *VirtualNetworksClient) CheckIPAddressAvailability(ctx context.Context, resourceGroupName string, virtualNetworkName string, ipAddress string, options *VirtualNetworksCheckIPAddressAvailabilityOptions) (IPAddressAvailabilityResultResponse, error) {
 	req, err := client.checkIPAddressAvailabilityCreateRequest(ctx, resourceGroupName, virtualNetworkName, ipAddress, options)
 	if err != nil {
@@ -98,6 +99,7 @@ func (client *VirtualNetworksClient) checkIPAddressAvailabilityHandleError(resp 
 }
 
 // BeginCreateOrUpdate - Creates or updates a virtual network in the specified resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *VirtualNetworksClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkName string, parameters VirtualNetwork, options *VirtualNetworksBeginCreateOrUpdateOptions) (VirtualNetworkPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualNetworkName, parameters, options)
 	if err != nil {
@@ -147,6 +149,7 @@ func (client *VirtualNetworksClient) ResumeCreateOrUpdate(ctx context.Context, t
 }
 
 // CreateOrUpdate - Creates or updates a virtual network in the specified resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *VirtualNetworksClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkName string, parameters VirtualNetwork, options *VirtualNetworksBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, virtualNetworkName, parameters, options)
 	if err != nil {
@@ -212,6 +215,7 @@ func (client *VirtualNetworksClient) createOrUpdateHandleError(resp *azcore.Resp
 }
 
 // BeginDelete - Deletes the specified virtual network.
+// If the operation fails it returns the *CloudError error type.
 func (client *VirtualNetworksClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualNetworkName string, options *VirtualNetworksBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, virtualNetworkName, options)
 	if err != nil {
@@ -261,6 +265,7 @@ func (client *VirtualNetworksClient) ResumeDelete(ctx context.Context, token str
 }
 
 // Delete - Deletes the specified virtual network.
+// If the operation fails it returns the *CloudError error type.
 func (client *VirtualNetworksClient) deleteOperation(ctx context.Context, resourceGroupName string, virtualNetworkName string, options *VirtualNetworksBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, virtualNetworkName, options)
 	if err != nil {
@@ -317,6 +322,7 @@ func (client *VirtualNetworksClient) deleteHandleError(resp *azcore.Response) er
 }
 
 // Get - Gets the specified virtual network by resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *VirtualNetworksClient) Get(ctx context.Context, resourceGroupName string, virtualNetworkName string, options *VirtualNetworksGetOptions) (VirtualNetworkResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, virtualNetworkName, options)
 	if err != nil {
@@ -385,6 +391,7 @@ func (client *VirtualNetworksClient) getHandleError(resp *azcore.Response) error
 }
 
 // List - Gets all virtual networks in a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *VirtualNetworksClient) List(resourceGroupName string, options *VirtualNetworksListOptions) VirtualNetworkListResultPager {
 	return &virtualNetworkListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -446,6 +453,7 @@ func (client *VirtualNetworksClient) listHandleError(resp *azcore.Response) erro
 }
 
 // ListAll - Gets all virtual networks in a subscription.
+// If the operation fails it returns the *CloudError error type.
 func (client *VirtualNetworksClient) ListAll(options *VirtualNetworksListAllOptions) VirtualNetworkListResultPager {
 	return &virtualNetworkListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -503,6 +511,7 @@ func (client *VirtualNetworksClient) listAllHandleError(resp *azcore.Response) e
 }
 
 // ListUsage - Lists usage stats.
+// If the operation fails it returns the *CloudError error type.
 func (client *VirtualNetworksClient) ListUsage(resourceGroupName string, virtualNetworkName string, options *VirtualNetworksListUsageOptions) VirtualNetworkListUsageResultPager {
 	return &virtualNetworkListUsageResultPager{
 		pipeline: client.con.Pipeline(),
@@ -568,6 +577,7 @@ func (client *VirtualNetworksClient) listUsageHandleError(resp *azcore.Response)
 }
 
 // UpdateTags - Updates a virtual network tags.
+// If the operation fails it returns the *CloudError error type.
 func (client *VirtualNetworksClient) UpdateTags(ctx context.Context, resourceGroupName string, virtualNetworkName string, parameters TagsObject, options *VirtualNetworksUpdateTagsOptions) (VirtualNetworkResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, virtualNetworkName, parameters, options)
 	if err != nil {

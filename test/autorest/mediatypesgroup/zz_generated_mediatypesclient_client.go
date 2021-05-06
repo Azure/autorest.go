@@ -27,6 +27,7 @@ func NewMediaTypesClient(con *Connection) *MediaTypesClient {
 }
 
 // AnalyzeBody - Analyze body, that could be different media types.
+// If the operation fails it returns a generic error.
 func (client *MediaTypesClient) AnalyzeBody(ctx context.Context, contentType ContentType, options *MediaTypesClientAnalyzeBodyOptions) (StringResponse, error) {
 	req, err := client.analyzeBodyCreateRequest(ctx, contentType, options)
 	if err != nil {
@@ -80,6 +81,7 @@ func (client *MediaTypesClient) analyzeBodyHandleError(resp *azcore.Response) er
 }
 
 // AnalyzeBodyWithSourcePath - Analyze body, that could be different media types.
+// If the operation fails it returns a generic error.
 func (client *MediaTypesClient) AnalyzeBodyWithSourcePath(ctx context.Context, options *MediaTypesClientAnalyzeBodyWithSourcePathOptions) (StringResponse, error) {
 	req, err := client.analyzeBodyWithSourcePathCreateRequest(ctx, options)
 	if err != nil {
@@ -132,6 +134,7 @@ func (client *MediaTypesClient) analyzeBodyWithSourcePathHandleError(resp *azcor
 }
 
 // ContentTypeWithEncoding - Pass in contentType 'text/plain; encoding=UTF-8' to pass test. Value for input does not matter
+// If the operation fails it returns a generic error.
 func (client *MediaTypesClient) ContentTypeWithEncoding(ctx context.Context, options *MediaTypesClientContentTypeWithEncodingOptions) (StringResponse, error) {
 	req, err := client.contentTypeWithEncodingCreateRequest(ctx, options)
 	if err != nil {

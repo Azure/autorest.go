@@ -30,6 +30,7 @@ func NewVirtualMachineSizesClient(con *armcore.Connection, subscriptionID string
 }
 
 // List - This API is deprecated. Use Resources Skus [https://docs.microsoft.com/en-us/rest/api/compute/resourceskus/list]
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineSizesClient) List(ctx context.Context, location string, options *VirtualMachineSizesListOptions) (VirtualMachineSizeListResultResponse, error) {
 	req, err := client.listCreateRequest(ctx, location, options)
 	if err != nil {

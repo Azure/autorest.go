@@ -32,6 +32,7 @@ func NewVPNConnectionsClient(con *armcore.Connection, subscriptionID string) *VP
 }
 
 // BeginCreateOrUpdate - Creates a vpn connection to a scalable vpn gateway if it doesn't exist else updates the existing connection.
+// If the operation fails it returns the *CloudError error type.
 func (client *VPNConnectionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, vpnConnectionParameters VPNConnection, options *VPNConnectionsBeginCreateOrUpdateOptions) (VPNConnectionPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, gatewayName, connectionName, vpnConnectionParameters, options)
 	if err != nil {
@@ -81,6 +82,7 @@ func (client *VPNConnectionsClient) ResumeCreateOrUpdate(ctx context.Context, to
 }
 
 // CreateOrUpdate - Creates a vpn connection to a scalable vpn gateway if it doesn't exist else updates the existing connection.
+// If the operation fails it returns the *CloudError error type.
 func (client *VPNConnectionsClient) createOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, vpnConnectionParameters VPNConnection, options *VPNConnectionsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, gatewayName, connectionName, vpnConnectionParameters, options)
 	if err != nil {
@@ -150,6 +152,7 @@ func (client *VPNConnectionsClient) createOrUpdateHandleError(resp *azcore.Respo
 }
 
 // BeginDelete - Deletes a vpn connection.
+// If the operation fails it returns the *CloudError error type.
 func (client *VPNConnectionsClient) BeginDelete(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, options *VPNConnectionsBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, gatewayName, connectionName, options)
 	if err != nil {
@@ -199,6 +202,7 @@ func (client *VPNConnectionsClient) ResumeDelete(ctx context.Context, token stri
 }
 
 // Delete - Deletes a vpn connection.
+// If the operation fails it returns the *CloudError error type.
 func (client *VPNConnectionsClient) deleteOperation(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, options *VPNConnectionsBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, gatewayName, connectionName, options)
 	if err != nil {
@@ -259,6 +263,7 @@ func (client *VPNConnectionsClient) deleteHandleError(resp *azcore.Response) err
 }
 
 // Get - Retrieves the details of a vpn connection.
+// If the operation fails it returns the *CloudError error type.
 func (client *VPNConnectionsClient) Get(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, options *VPNConnectionsGetOptions) (VPNConnectionResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, gatewayName, connectionName, options)
 	if err != nil {
@@ -328,6 +333,7 @@ func (client *VPNConnectionsClient) getHandleError(resp *azcore.Response) error 
 }
 
 // ListByVPNGateway - Retrieves all vpn connections for a particular virtual wan vpn gateway.
+// If the operation fails it returns the *CloudError error type.
 func (client *VPNConnectionsClient) ListByVPNGateway(resourceGroupName string, gatewayName string, options *VPNConnectionsListByVPNGatewayOptions) ListVPNConnectionsResultPager {
 	return &listVPNConnectionsResultPager{
 		pipeline: client.con.Pipeline(),

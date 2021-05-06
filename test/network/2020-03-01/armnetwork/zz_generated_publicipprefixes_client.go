@@ -32,6 +32,7 @@ func NewPublicIPPrefixesClient(con *armcore.Connection, subscriptionID string) *
 }
 
 // BeginCreateOrUpdate - Creates or updates a static or dynamic public IP prefix.
+// If the operation fails it returns the *CloudError error type.
 func (client *PublicIPPrefixesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, publicIPPrefixName string, parameters PublicIPPrefix, options *PublicIPPrefixesBeginCreateOrUpdateOptions) (PublicIPPrefixPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, publicIPPrefixName, parameters, options)
 	if err != nil {
@@ -81,6 +82,7 @@ func (client *PublicIPPrefixesClient) ResumeCreateOrUpdate(ctx context.Context, 
 }
 
 // CreateOrUpdate - Creates or updates a static or dynamic public IP prefix.
+// If the operation fails it returns the *CloudError error type.
 func (client *PublicIPPrefixesClient) createOrUpdate(ctx context.Context, resourceGroupName string, publicIPPrefixName string, parameters PublicIPPrefix, options *PublicIPPrefixesBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, publicIPPrefixName, parameters, options)
 	if err != nil {
@@ -146,6 +148,7 @@ func (client *PublicIPPrefixesClient) createOrUpdateHandleError(resp *azcore.Res
 }
 
 // BeginDelete - Deletes the specified public IP prefix.
+// If the operation fails it returns the *CloudError error type.
 func (client *PublicIPPrefixesClient) BeginDelete(ctx context.Context, resourceGroupName string, publicIPPrefixName string, options *PublicIPPrefixesBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, publicIPPrefixName, options)
 	if err != nil {
@@ -195,6 +198,7 @@ func (client *PublicIPPrefixesClient) ResumeDelete(ctx context.Context, token st
 }
 
 // Delete - Deletes the specified public IP prefix.
+// If the operation fails it returns the *CloudError error type.
 func (client *PublicIPPrefixesClient) deleteOperation(ctx context.Context, resourceGroupName string, publicIPPrefixName string, options *PublicIPPrefixesBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, publicIPPrefixName, options)
 	if err != nil {
@@ -251,6 +255,7 @@ func (client *PublicIPPrefixesClient) deleteHandleError(resp *azcore.Response) e
 }
 
 // Get - Gets the specified public IP prefix in a specified resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *PublicIPPrefixesClient) Get(ctx context.Context, resourceGroupName string, publicIPPrefixName string, options *PublicIPPrefixesGetOptions) (PublicIPPrefixResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, publicIPPrefixName, options)
 	if err != nil {
@@ -319,6 +324,7 @@ func (client *PublicIPPrefixesClient) getHandleError(resp *azcore.Response) erro
 }
 
 // List - Gets all public IP prefixes in a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *PublicIPPrefixesClient) List(resourceGroupName string, options *PublicIPPrefixesListOptions) PublicIPPrefixListResultPager {
 	return &publicIPPrefixListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -380,6 +386,7 @@ func (client *PublicIPPrefixesClient) listHandleError(resp *azcore.Response) err
 }
 
 // ListAll - Gets all the public IP prefixes in a subscription.
+// If the operation fails it returns the *CloudError error type.
 func (client *PublicIPPrefixesClient) ListAll(options *PublicIPPrefixesListAllOptions) PublicIPPrefixListResultPager {
 	return &publicIPPrefixListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -437,6 +444,7 @@ func (client *PublicIPPrefixesClient) listAllHandleError(resp *azcore.Response) 
 }
 
 // UpdateTags - Updates public IP prefix tags.
+// If the operation fails it returns the *CloudError error type.
 func (client *PublicIPPrefixesClient) UpdateTags(ctx context.Context, resourceGroupName string, publicIPPrefixName string, parameters TagsObject, options *PublicIPPrefixesUpdateTagsOptions) (PublicIPPrefixResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, publicIPPrefixName, parameters, options)
 	if err != nil {

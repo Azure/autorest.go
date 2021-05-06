@@ -28,6 +28,7 @@ type blockBlobClient struct {
 // this by specifying whether to commit a block from the committed block list or from the uncommitted block list, or to commit the most recently uploaded
 // version of the block, whichever list it may
 // belong to.
+// If the operation fails it returns the *StorageError error type.
 func (client *blockBlobClient) CommitBlockList(ctx context.Context, blocks BlockLookupList, blockBlobCommitBlockListOptions *BlockBlobCommitBlockListOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (BlockBlobCommitBlockListResponse, error) {
 	req, err := client.commitBlockListCreateRequest(ctx, blocks, blockBlobCommitBlockListOptions, blobHTTPHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
 	if err != nil {
@@ -214,6 +215,7 @@ func (client *blockBlobClient) commitBlockListHandleError(resp *azcore.Response)
 }
 
 // GetBlockList - The Get Block List operation retrieves the list of blocks that have been uploaded as part of a block blob
+// If the operation fails it returns the *StorageError error type.
 func (client *blockBlobClient) GetBlockList(ctx context.Context, listType BlockListType, blockBlobGetBlockListOptions *BlockBlobGetBlockListOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (BlockListResponse, error) {
 	req, err := client.getBlockListCreateRequest(ctx, listType, blockBlobGetBlockListOptions, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
@@ -324,6 +326,7 @@ func (client *blockBlobClient) getBlockListHandleError(resp *azcore.Response) er
 // supported with Put Blob from URL; the content of an existing blob is overwritten with the content of the new blob. To perform partial updates to a block
 // blob’s contents using a source URL, use the Put
 // Block from URL API in conjunction with Put Block List.
+// If the operation fails it returns the *StorageError error type.
 func (client *blockBlobClient) PutBlobFromURL(ctx context.Context, contentLength int64, copySource string, blockBlobPutBlobFromURLOptions *BlockBlobPutBlobFromURLOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (BlockBlobPutBlobFromURLResponse, error) {
 	req, err := client.putBlobFromURLCreateRequest(ctx, contentLength, copySource, blockBlobPutBlobFromURLOptions, blobHTTPHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions, sourceModifiedAccessConditions)
 	if err != nil {
@@ -514,6 +517,7 @@ func (client *blockBlobClient) putBlobFromURLHandleError(resp *azcore.Response) 
 }
 
 // StageBlock - The Stage Block operation creates a new block to be committed as part of a blob
+// If the operation fails it returns the *StorageError error type.
 func (client *blockBlobClient) StageBlock(ctx context.Context, blockID string, contentLength int64, body azcore.ReadSeekCloser, blockBlobStageBlockOptions *BlockBlobStageBlockOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo) (BlockBlobStageBlockResponse, error) {
 	req, err := client.stageBlockCreateRequest(ctx, blockID, contentLength, body, blockBlobStageBlockOptions, leaseAccessConditions, cpkInfo, cpkScopeInfo)
 	if err != nil {
@@ -636,6 +640,7 @@ func (client *blockBlobClient) stageBlockHandleError(resp *azcore.Response) erro
 }
 
 // StageBlockFromURL - The Stage Block operation creates a new block to be committed as part of a blob where the contents are read from a URL.
+// If the operation fails it returns the *StorageError error type.
 func (client *blockBlobClient) StageBlockFromURL(ctx context.Context, blockID string, contentLength int64, sourceURL string, blockBlobStageBlockFromURLOptions *BlockBlobStageBlockFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (BlockBlobStageBlockFromURLResponse, error) {
 	req, err := client.stageBlockFromURLCreateRequest(ctx, blockID, contentLength, sourceURL, blockBlobStageBlockFromURLOptions, cpkInfo, cpkScopeInfo, leaseAccessConditions, sourceModifiedAccessConditions)
 	if err != nil {
@@ -777,6 +782,7 @@ func (client *blockBlobClient) stageBlockFromURLHandleError(resp *azcore.Respons
 // on the blob. Partial updates are not supported with Put
 // Blob; the content of the existing blob is overwritten with the content of the new blob. To perform a partial update of the content of a block blob, use
 // the Put Block List operation.
+// If the operation fails it returns the *StorageError error type.
 func (client *blockBlobClient) Upload(ctx context.Context, contentLength int64, body azcore.ReadSeekCloser, blockBlobUploadOptions *BlockBlobUploadOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (BlockBlobUploadResponse, error) {
 	req, err := client.uploadCreateRequest(ctx, contentLength, body, blockBlobUploadOptions, blobHTTPHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
 	if err != nil {

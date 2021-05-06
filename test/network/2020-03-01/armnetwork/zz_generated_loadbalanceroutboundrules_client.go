@@ -31,6 +31,7 @@ func NewLoadBalancerOutboundRulesClient(con *armcore.Connection, subscriptionID 
 }
 
 // Get - Gets the specified load balancer outbound rule.
+// If the operation fails it returns the *CloudError error type.
 func (client *LoadBalancerOutboundRulesClient) Get(ctx context.Context, resourceGroupName string, loadBalancerName string, outboundRuleName string, options *LoadBalancerOutboundRulesGetOptions) (OutboundRuleResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, loadBalancerName, outboundRuleName, options)
 	if err != nil {
@@ -100,6 +101,7 @@ func (client *LoadBalancerOutboundRulesClient) getHandleError(resp *azcore.Respo
 }
 
 // List - Gets all the outbound rules in a load balancer.
+// If the operation fails it returns the *CloudError error type.
 func (client *LoadBalancerOutboundRulesClient) List(resourceGroupName string, loadBalancerName string, options *LoadBalancerOutboundRulesListOptions) LoadBalancerOutboundRuleListResultPager {
 	return &loadBalancerOutboundRuleListResultPager{
 		pipeline: client.con.Pipeline(),

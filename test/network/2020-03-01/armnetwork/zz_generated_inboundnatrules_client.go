@@ -32,6 +32,7 @@ func NewInboundNatRulesClient(con *armcore.Connection, subscriptionID string) *I
 }
 
 // BeginCreateOrUpdate - Creates or updates a load balancer inbound nat rule.
+// If the operation fails it returns the *CloudError error type.
 func (client *InboundNatRulesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, inboundNatRuleParameters InboundNatRule, options *InboundNatRulesBeginCreateOrUpdateOptions) (InboundNatRulePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, loadBalancerName, inboundNatRuleName, inboundNatRuleParameters, options)
 	if err != nil {
@@ -81,6 +82,7 @@ func (client *InboundNatRulesClient) ResumeCreateOrUpdate(ctx context.Context, t
 }
 
 // CreateOrUpdate - Creates or updates a load balancer inbound nat rule.
+// If the operation fails it returns the *CloudError error type.
 func (client *InboundNatRulesClient) createOrUpdate(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, inboundNatRuleParameters InboundNatRule, options *InboundNatRulesBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, loadBalancerName, inboundNatRuleName, inboundNatRuleParameters, options)
 	if err != nil {
@@ -150,6 +152,7 @@ func (client *InboundNatRulesClient) createOrUpdateHandleError(resp *azcore.Resp
 }
 
 // BeginDelete - Deletes the specified load balancer inbound nat rule.
+// If the operation fails it returns the *CloudError error type.
 func (client *InboundNatRulesClient) BeginDelete(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, options *InboundNatRulesBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, loadBalancerName, inboundNatRuleName, options)
 	if err != nil {
@@ -199,6 +202,7 @@ func (client *InboundNatRulesClient) ResumeDelete(ctx context.Context, token str
 }
 
 // Delete - Deletes the specified load balancer inbound nat rule.
+// If the operation fails it returns the *CloudError error type.
 func (client *InboundNatRulesClient) deleteOperation(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, options *InboundNatRulesBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, loadBalancerName, inboundNatRuleName, options)
 	if err != nil {
@@ -259,6 +263,7 @@ func (client *InboundNatRulesClient) deleteHandleError(resp *azcore.Response) er
 }
 
 // Get - Gets the specified load balancer inbound nat rule.
+// If the operation fails it returns the *CloudError error type.
 func (client *InboundNatRulesClient) Get(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, options *InboundNatRulesGetOptions) (InboundNatRuleResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, loadBalancerName, inboundNatRuleName, options)
 	if err != nil {
@@ -331,6 +336,7 @@ func (client *InboundNatRulesClient) getHandleError(resp *azcore.Response) error
 }
 
 // List - Gets all the inbound nat rules in a load balancer.
+// If the operation fails it returns the *CloudError error type.
 func (client *InboundNatRulesClient) List(resourceGroupName string, loadBalancerName string, options *InboundNatRulesListOptions) InboundNatRuleListResultPager {
 	return &inboundNatRuleListResultPager{
 		pipeline: client.con.Pipeline(),

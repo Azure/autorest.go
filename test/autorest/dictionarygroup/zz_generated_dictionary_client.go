@@ -27,6 +27,7 @@ func NewDictionaryClient(con *Connection) *DictionaryClient {
 }
 
 // GetArrayEmpty - Get an empty dictionary {}
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) GetArrayEmpty(ctx context.Context, options *DictionaryGetArrayEmptyOptions) (MapOfStringArrayResponse, error) {
 	req, err := client.getArrayEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -77,6 +78,7 @@ func (client *DictionaryClient) getArrayEmptyHandleError(resp *azcore.Response) 
 }
 
 // GetArrayItemEmpty - Get an array of array of strings [{"0": ["1", "2", "3"], "1": [], "2": ["7", "8", "9"]}
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) GetArrayItemEmpty(ctx context.Context, options *DictionaryGetArrayItemEmptyOptions) (MapOfStringArrayResponse, error) {
 	req, err := client.getArrayItemEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -127,6 +129,7 @@ func (client *DictionaryClient) getArrayItemEmptyHandleError(resp *azcore.Respon
 }
 
 // GetArrayItemNull - Get an dictionary of array of strings {"0": ["1", "2", "3"], "1": null, "2": ["7", "8", "9"]}
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) GetArrayItemNull(ctx context.Context, options *DictionaryGetArrayItemNullOptions) (MapOfStringArrayResponse, error) {
 	req, err := client.getArrayItemNullCreateRequest(ctx, options)
 	if err != nil {
@@ -177,6 +180,7 @@ func (client *DictionaryClient) getArrayItemNullHandleError(resp *azcore.Respons
 }
 
 // GetArrayNull - Get a null array
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) GetArrayNull(ctx context.Context, options *DictionaryGetArrayNullOptions) (MapOfStringArrayResponse, error) {
 	req, err := client.getArrayNullCreateRequest(ctx, options)
 	if err != nil {
@@ -227,6 +231,7 @@ func (client *DictionaryClient) getArrayNullHandleError(resp *azcore.Response) e
 }
 
 // GetArrayValid - Get an array of array of strings {"0": ["1", "2", "3"], "1": ["4", "5", "6"], "2": ["7", "8", "9"]}
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) GetArrayValid(ctx context.Context, options *DictionaryGetArrayValidOptions) (MapOfStringArrayResponse, error) {
 	req, err := client.getArrayValidCreateRequest(ctx, options)
 	if err != nil {
@@ -277,6 +282,7 @@ func (client *DictionaryClient) getArrayValidHandleError(resp *azcore.Response) 
 }
 
 // GetBase64URL - Get base64url dictionary value {"0": "a string that gets encoded with base64url", "1": "test string", "2": "Lorem ipsum"}
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) GetBase64URL(ctx context.Context, options *DictionaryGetBase64URLOptions) (MapOfByteArrayResponse, error) {
 	req, err := client.getBase64URLCreateRequest(ctx, options)
 	if err != nil {
@@ -327,6 +333,7 @@ func (client *DictionaryClient) getBase64URLHandleError(resp *azcore.Response) e
 }
 
 // GetBooleanInvalidNull - Get boolean dictionary value {"0": true, "1": null, "2": false }
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) GetBooleanInvalidNull(ctx context.Context, options *DictionaryGetBooleanInvalidNullOptions) (MapOfBoolResponse, error) {
 	req, err := client.getBooleanInvalidNullCreateRequest(ctx, options)
 	if err != nil {
@@ -377,6 +384,7 @@ func (client *DictionaryClient) getBooleanInvalidNullHandleError(resp *azcore.Re
 }
 
 // GetBooleanInvalidString - Get boolean dictionary value '{"0": true, "1": "boolean", "2": false}'
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) GetBooleanInvalidString(ctx context.Context, options *DictionaryGetBooleanInvalidStringOptions) (MapOfBoolResponse, error) {
 	req, err := client.getBooleanInvalidStringCreateRequest(ctx, options)
 	if err != nil {
@@ -427,6 +435,7 @@ func (client *DictionaryClient) getBooleanInvalidStringHandleError(resp *azcore.
 }
 
 // GetBooleanTfft - Get boolean dictionary value {"0": true, "1": false, "2": false, "3": true }
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) GetBooleanTfft(ctx context.Context, options *DictionaryGetBooleanTfftOptions) (MapOfBoolResponse, error) {
 	req, err := client.getBooleanTfftCreateRequest(ctx, options)
 	if err != nil {
@@ -477,6 +486,7 @@ func (client *DictionaryClient) getBooleanTfftHandleError(resp *azcore.Response)
 }
 
 // GetByteInvalidNull - Get byte dictionary value {"0": hex(FF FF FF FA), "1": null} with the first item base64 encoded
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) GetByteInvalidNull(ctx context.Context, options *DictionaryGetByteInvalidNullOptions) (MapOfByteArrayResponse, error) {
 	req, err := client.getByteInvalidNullCreateRequest(ctx, options)
 	if err != nil {
@@ -527,6 +537,7 @@ func (client *DictionaryClient) getByteInvalidNullHandleError(resp *azcore.Respo
 }
 
 // GetByteValid - Get byte dictionary value {"0": hex(FF FF FF FA), "1": hex(01 02 03), "2": hex (25, 29, 43)} with each item encoded in base64
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) GetByteValid(ctx context.Context, options *DictionaryGetByteValidOptions) (MapOfByteArrayResponse, error) {
 	req, err := client.getByteValidCreateRequest(ctx, options)
 	if err != nil {
@@ -577,6 +588,7 @@ func (client *DictionaryClient) getByteValidHandleError(resp *azcore.Response) e
 }
 
 // GetComplexEmpty - Get empty dictionary of complex type {}
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) GetComplexEmpty(ctx context.Context, options *DictionaryGetComplexEmptyOptions) (MapOfWidgetResponse, error) {
 	req, err := client.getComplexEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -627,6 +639,7 @@ func (client *DictionaryClient) getComplexEmptyHandleError(resp *azcore.Response
 }
 
 // GetComplexItemEmpty - Get dictionary of complex type with empty item {"0": {"integer": 1, "string": "2"}, "1:" {}, "2": {"integer": 5, "string": "6"}}
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) GetComplexItemEmpty(ctx context.Context, options *DictionaryGetComplexItemEmptyOptions) (MapOfWidgetResponse, error) {
 	req, err := client.getComplexItemEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -677,6 +690,7 @@ func (client *DictionaryClient) getComplexItemEmptyHandleError(resp *azcore.Resp
 }
 
 // GetComplexItemNull - Get dictionary of complex type with null item {"0": {"integer": 1, "string": "2"}, "1": null, "2": {"integer": 5, "string": "6"}}
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) GetComplexItemNull(ctx context.Context, options *DictionaryGetComplexItemNullOptions) (MapOfWidgetResponse, error) {
 	req, err := client.getComplexItemNullCreateRequest(ctx, options)
 	if err != nil {
@@ -727,6 +741,7 @@ func (client *DictionaryClient) getComplexItemNullHandleError(resp *azcore.Respo
 }
 
 // GetComplexNull - Get dictionary of complex type null value
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) GetComplexNull(ctx context.Context, options *DictionaryGetComplexNullOptions) (MapOfWidgetResponse, error) {
 	req, err := client.getComplexNullCreateRequest(ctx, options)
 	if err != nil {
@@ -778,6 +793,7 @@ func (client *DictionaryClient) getComplexNullHandleError(resp *azcore.Response)
 
 // GetComplexValid - Get dictionary of complex type with {"0": {"integer": 1, "string": "2"}, "1": {"integer": 3, "string": "4"}, "2": {"integer": 5, "string":
 // "6"}}
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) GetComplexValid(ctx context.Context, options *DictionaryGetComplexValidOptions) (MapOfWidgetResponse, error) {
 	req, err := client.getComplexValidCreateRequest(ctx, options)
 	if err != nil {
@@ -828,6 +844,7 @@ func (client *DictionaryClient) getComplexValidHandleError(resp *azcore.Response
 }
 
 // GetDateInvalidChars - Get date dictionary value {"0": "2011-03-22", "1": "date"}
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) GetDateInvalidChars(ctx context.Context, options *DictionaryGetDateInvalidCharsOptions) (MapOfTimeResponse, error) {
 	req, err := client.getDateInvalidCharsCreateRequest(ctx, options)
 	if err != nil {
@@ -882,6 +899,7 @@ func (client *DictionaryClient) getDateInvalidCharsHandleError(resp *azcore.Resp
 }
 
 // GetDateInvalidNull - Get date dictionary value {"0": "2012-01-01", "1": null, "2": "1776-07-04"}
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) GetDateInvalidNull(ctx context.Context, options *DictionaryGetDateInvalidNullOptions) (MapOfTimeResponse, error) {
 	req, err := client.getDateInvalidNullCreateRequest(ctx, options)
 	if err != nil {
@@ -936,6 +954,7 @@ func (client *DictionaryClient) getDateInvalidNullHandleError(resp *azcore.Respo
 }
 
 // GetDateTimeInvalidChars - Get date dictionary value {"0": "2000-12-01t00:00:01z", "1": "date-time"}
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) GetDateTimeInvalidChars(ctx context.Context, options *DictionaryGetDateTimeInvalidCharsOptions) (MapOfTimeResponse, error) {
 	req, err := client.getDateTimeInvalidCharsCreateRequest(ctx, options)
 	if err != nil {
@@ -990,6 +1009,7 @@ func (client *DictionaryClient) getDateTimeInvalidCharsHandleError(resp *azcore.
 }
 
 // GetDateTimeInvalidNull - Get date dictionary value {"0": "2000-12-01t00:00:01z", "1": null}
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) GetDateTimeInvalidNull(ctx context.Context, options *DictionaryGetDateTimeInvalidNullOptions) (MapOfTimeResponse, error) {
 	req, err := client.getDateTimeInvalidNullCreateRequest(ctx, options)
 	if err != nil {
@@ -1045,6 +1065,7 @@ func (client *DictionaryClient) getDateTimeInvalidNullHandleError(resp *azcore.R
 
 // GetDateTimeRFC1123Valid - Get date-time-rfc1123 dictionary value {"0": "Fri, 01 Dec 2000 00:00:01 GMT", "1": "Wed, 02 Jan 1980 00:11:35 GMT", "2": "Wed,
 // 12 Oct 1492 10:15:01 GMT"}
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) GetDateTimeRFC1123Valid(ctx context.Context, options *DictionaryGetDateTimeRFC1123ValidOptions) (MapOfTimeResponse, error) {
 	req, err := client.getDateTimeRFC1123ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1099,6 +1120,7 @@ func (client *DictionaryClient) getDateTimeRFC1123ValidHandleError(resp *azcore.
 }
 
 // GetDateTimeValid - Get date-time dictionary value {"0": "2000-12-01t00:00:01z", "1": "1980-01-02T00:11:35+01:00", "2": "1492-10-12T10:15:01-08:00"}
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) GetDateTimeValid(ctx context.Context, options *DictionaryGetDateTimeValidOptions) (MapOfTimeResponse, error) {
 	req, err := client.getDateTimeValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1153,6 +1175,7 @@ func (client *DictionaryClient) getDateTimeValidHandleError(resp *azcore.Respons
 }
 
 // GetDateValid - Get integer dictionary value {"0": "2000-12-01", "1": "1980-01-02", "2": "1492-10-12"}
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) GetDateValid(ctx context.Context, options *DictionaryGetDateValidOptions) (MapOfTimeResponse, error) {
 	req, err := client.getDateValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1207,6 +1230,7 @@ func (client *DictionaryClient) getDateValidHandleError(resp *azcore.Response) e
 }
 
 // GetDictionaryEmpty - Get an dictionaries of dictionaries of type with value {}
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) GetDictionaryEmpty(ctx context.Context, options *DictionaryGetDictionaryEmptyOptions) (MapOfMapOfStringResponse, error) {
 	req, err := client.getDictionaryEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -1258,6 +1282,7 @@ func (client *DictionaryClient) getDictionaryEmptyHandleError(resp *azcore.Respo
 
 // GetDictionaryItemEmpty - Get an dictionaries of dictionaries of type with value {"0": {"1": "one", "2": "two", "3": "three"}, "1": {}, "2": {"7": "seven",
 // "8": "eight", "9": "nine"}}
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) GetDictionaryItemEmpty(ctx context.Context, options *DictionaryGetDictionaryItemEmptyOptions) (MapOfMapOfStringResponse, error) {
 	req, err := client.getDictionaryItemEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -1309,6 +1334,7 @@ func (client *DictionaryClient) getDictionaryItemEmptyHandleError(resp *azcore.R
 
 // GetDictionaryItemNull - Get an dictionaries of dictionaries of type with value {"0": {"1": "one", "2": "two", "3": "three"}, "1": null, "2": {"7": "seven",
 // "8": "eight", "9": "nine"}}
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) GetDictionaryItemNull(ctx context.Context, options *DictionaryGetDictionaryItemNullOptions) (MapOfMapOfStringResponse, error) {
 	req, err := client.getDictionaryItemNullCreateRequest(ctx, options)
 	if err != nil {
@@ -1359,6 +1385,7 @@ func (client *DictionaryClient) getDictionaryItemNullHandleError(resp *azcore.Re
 }
 
 // GetDictionaryNull - Get an dictionaries of dictionaries with value null
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) GetDictionaryNull(ctx context.Context, options *DictionaryGetDictionaryNullOptions) (MapOfMapOfStringResponse, error) {
 	req, err := client.getDictionaryNullCreateRequest(ctx, options)
 	if err != nil {
@@ -1410,6 +1437,7 @@ func (client *DictionaryClient) getDictionaryNullHandleError(resp *azcore.Respon
 
 // GetDictionaryValid - Get an dictionaries of dictionaries of type with value {"0": {"1": "one", "2": "two", "3": "three"}, "1": {"4": "four", "5": "five",
 // "6": "six"}, "2": {"7": "seven", "8": "eight", "9": "nine"}}
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) GetDictionaryValid(ctx context.Context, options *DictionaryGetDictionaryValidOptions) (MapOfMapOfStringResponse, error) {
 	req, err := client.getDictionaryValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1460,6 +1488,7 @@ func (client *DictionaryClient) getDictionaryValidHandleError(resp *azcore.Respo
 }
 
 // GetDoubleInvalidNull - Get float dictionary value {"0": 0.0, "1": null, "2": 1.2e20}
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) GetDoubleInvalidNull(ctx context.Context, options *DictionaryGetDoubleInvalidNullOptions) (MapOfFloat64Response, error) {
 	req, err := client.getDoubleInvalidNullCreateRequest(ctx, options)
 	if err != nil {
@@ -1510,6 +1539,7 @@ func (client *DictionaryClient) getDoubleInvalidNullHandleError(resp *azcore.Res
 }
 
 // GetDoubleInvalidString - Get boolean dictionary value {"0": 1.0, "1": "number", "2": 0.0}
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) GetDoubleInvalidString(ctx context.Context, options *DictionaryGetDoubleInvalidStringOptions) (MapOfFloat64Response, error) {
 	req, err := client.getDoubleInvalidStringCreateRequest(ctx, options)
 	if err != nil {
@@ -1560,6 +1590,7 @@ func (client *DictionaryClient) getDoubleInvalidStringHandleError(resp *azcore.R
 }
 
 // GetDoubleValid - Get float dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) GetDoubleValid(ctx context.Context, options *DictionaryGetDoubleValidOptions) (MapOfFloat64Response, error) {
 	req, err := client.getDoubleValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1610,6 +1641,7 @@ func (client *DictionaryClient) getDoubleValidHandleError(resp *azcore.Response)
 }
 
 // GetDurationValid - Get duration dictionary value {"0": "P123DT22H14M12.011S", "1": "P5DT1H0M0S"}
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) GetDurationValid(ctx context.Context, options *DictionaryGetDurationValidOptions) (MapOfStringResponse, error) {
 	req, err := client.getDurationValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1660,6 +1692,7 @@ func (client *DictionaryClient) getDurationValidHandleError(resp *azcore.Respons
 }
 
 // GetEmpty - Get empty dictionary value {}
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) GetEmpty(ctx context.Context, options *DictionaryGetEmptyOptions) (MapOfInt32Response, error) {
 	req, err := client.getEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -1710,6 +1743,7 @@ func (client *DictionaryClient) getEmptyHandleError(resp *azcore.Response) error
 }
 
 // GetEmptyStringKey - Get Dictionary with key as empty string
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) GetEmptyStringKey(ctx context.Context, options *DictionaryGetEmptyStringKeyOptions) (MapOfStringResponse, error) {
 	req, err := client.getEmptyStringKeyCreateRequest(ctx, options)
 	if err != nil {
@@ -1760,6 +1794,7 @@ func (client *DictionaryClient) getEmptyStringKeyHandleError(resp *azcore.Respon
 }
 
 // GetFloatInvalidNull - Get float dictionary value {"0": 0.0, "1": null, "2": 1.2e20}
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) GetFloatInvalidNull(ctx context.Context, options *DictionaryGetFloatInvalidNullOptions) (MapOfFloat32Response, error) {
 	req, err := client.getFloatInvalidNullCreateRequest(ctx, options)
 	if err != nil {
@@ -1810,6 +1845,7 @@ func (client *DictionaryClient) getFloatInvalidNullHandleError(resp *azcore.Resp
 }
 
 // GetFloatInvalidString - Get boolean dictionary value {"0": 1.0, "1": "number", "2": 0.0}
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) GetFloatInvalidString(ctx context.Context, options *DictionaryGetFloatInvalidStringOptions) (MapOfFloat32Response, error) {
 	req, err := client.getFloatInvalidStringCreateRequest(ctx, options)
 	if err != nil {
@@ -1860,6 +1896,7 @@ func (client *DictionaryClient) getFloatInvalidStringHandleError(resp *azcore.Re
 }
 
 // GetFloatValid - Get float dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) GetFloatValid(ctx context.Context, options *DictionaryGetFloatValidOptions) (MapOfFloat32Response, error) {
 	req, err := client.getFloatValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1910,6 +1947,7 @@ func (client *DictionaryClient) getFloatValidHandleError(resp *azcore.Response) 
 }
 
 // GetIntInvalidNull - Get integer dictionary value {"0": 1, "1": null, "2": 0}
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) GetIntInvalidNull(ctx context.Context, options *DictionaryGetIntInvalidNullOptions) (MapOfInt32Response, error) {
 	req, err := client.getIntInvalidNullCreateRequest(ctx, options)
 	if err != nil {
@@ -1960,6 +1998,7 @@ func (client *DictionaryClient) getIntInvalidNullHandleError(resp *azcore.Respon
 }
 
 // GetIntInvalidString - Get integer dictionary value {"0": 1, "1": "integer", "2": 0}
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) GetIntInvalidString(ctx context.Context, options *DictionaryGetIntInvalidStringOptions) (MapOfInt32Response, error) {
 	req, err := client.getIntInvalidStringCreateRequest(ctx, options)
 	if err != nil {
@@ -2010,6 +2049,7 @@ func (client *DictionaryClient) getIntInvalidStringHandleError(resp *azcore.Resp
 }
 
 // GetIntegerValid - Get integer dictionary value {"0": 1, "1": -1, "2": 3, "3": 300}
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) GetIntegerValid(ctx context.Context, options *DictionaryGetIntegerValidOptions) (MapOfInt32Response, error) {
 	req, err := client.getIntegerValidCreateRequest(ctx, options)
 	if err != nil {
@@ -2060,6 +2100,7 @@ func (client *DictionaryClient) getIntegerValidHandleError(resp *azcore.Response
 }
 
 // GetInvalid - Get invalid Dictionary value
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) GetInvalid(ctx context.Context, options *DictionaryGetInvalidOptions) (MapOfStringResponse, error) {
 	req, err := client.getInvalidCreateRequest(ctx, options)
 	if err != nil {
@@ -2110,6 +2151,7 @@ func (client *DictionaryClient) getInvalidHandleError(resp *azcore.Response) err
 }
 
 // GetLongInvalidNull - Get long dictionary value {"0": 1, "1": null, "2": 0}
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) GetLongInvalidNull(ctx context.Context, options *DictionaryGetLongInvalidNullOptions) (MapOfInt64Response, error) {
 	req, err := client.getLongInvalidNullCreateRequest(ctx, options)
 	if err != nil {
@@ -2160,6 +2202,7 @@ func (client *DictionaryClient) getLongInvalidNullHandleError(resp *azcore.Respo
 }
 
 // GetLongInvalidString - Get long dictionary value {"0": 1, "1": "integer", "2": 0}
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) GetLongInvalidString(ctx context.Context, options *DictionaryGetLongInvalidStringOptions) (MapOfInt64Response, error) {
 	req, err := client.getLongInvalidStringCreateRequest(ctx, options)
 	if err != nil {
@@ -2210,6 +2253,7 @@ func (client *DictionaryClient) getLongInvalidStringHandleError(resp *azcore.Res
 }
 
 // GetLongValid - Get integer dictionary value {"0": 1, "1": -1, "2": 3, "3": 300}
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) GetLongValid(ctx context.Context, options *DictionaryGetLongValidOptions) (MapOfInt64Response, error) {
 	req, err := client.getLongValidCreateRequest(ctx, options)
 	if err != nil {
@@ -2260,6 +2304,7 @@ func (client *DictionaryClient) getLongValidHandleError(resp *azcore.Response) e
 }
 
 // GetNull - Get null dictionary value
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) GetNull(ctx context.Context, options *DictionaryGetNullOptions) (MapOfInt32Response, error) {
 	req, err := client.getNullCreateRequest(ctx, options)
 	if err != nil {
@@ -2310,6 +2355,7 @@ func (client *DictionaryClient) getNullHandleError(resp *azcore.Response) error 
 }
 
 // GetNullKey - Get Dictionary with null key
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) GetNullKey(ctx context.Context, options *DictionaryGetNullKeyOptions) (MapOfStringResponse, error) {
 	req, err := client.getNullKeyCreateRequest(ctx, options)
 	if err != nil {
@@ -2360,6 +2406,7 @@ func (client *DictionaryClient) getNullKeyHandleError(resp *azcore.Response) err
 }
 
 // GetNullValue - Get Dictionary with null value
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) GetNullValue(ctx context.Context, options *DictionaryGetNullValueOptions) (MapOfStringResponse, error) {
 	req, err := client.getNullValueCreateRequest(ctx, options)
 	if err != nil {
@@ -2410,6 +2457,7 @@ func (client *DictionaryClient) getNullValueHandleError(resp *azcore.Response) e
 }
 
 // GetStringValid - Get string dictionary value {"0": "foo1", "1": "foo2", "2": "foo3"}
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) GetStringValid(ctx context.Context, options *DictionaryGetStringValidOptions) (MapOfStringResponse, error) {
 	req, err := client.getStringValidCreateRequest(ctx, options)
 	if err != nil {
@@ -2460,6 +2508,7 @@ func (client *DictionaryClient) getStringValidHandleError(resp *azcore.Response)
 }
 
 // GetStringWithInvalid - Get string dictionary value {"0": "foo", "1": 123, "2": "foo2"}
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) GetStringWithInvalid(ctx context.Context, options *DictionaryGetStringWithInvalidOptions) (MapOfStringResponse, error) {
 	req, err := client.getStringWithInvalidCreateRequest(ctx, options)
 	if err != nil {
@@ -2510,6 +2559,7 @@ func (client *DictionaryClient) getStringWithInvalidHandleError(resp *azcore.Res
 }
 
 // GetStringWithNull - Get string dictionary value {"0": "foo", "1": null, "2": "foo2"}
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) GetStringWithNull(ctx context.Context, options *DictionaryGetStringWithNullOptions) (MapOfStringResponse, error) {
 	req, err := client.getStringWithNullCreateRequest(ctx, options)
 	if err != nil {
@@ -2560,6 +2610,7 @@ func (client *DictionaryClient) getStringWithNullHandleError(resp *azcore.Respon
 }
 
 // PutArrayValid - Put An array of array of strings {"0": ["1", "2", "3"], "1": ["4", "5", "6"], "2": ["7", "8", "9"]}
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) PutArrayValid(ctx context.Context, arrayBody map[string][]*string, options *DictionaryPutArrayValidOptions) (*http.Response, error) {
 	req, err := client.putArrayValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2601,6 +2652,7 @@ func (client *DictionaryClient) putArrayValidHandleError(resp *azcore.Response) 
 }
 
 // PutBooleanTfft - Set dictionary value empty {"0": true, "1": false, "2": false, "3": true }
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) PutBooleanTfft(ctx context.Context, arrayBody map[string]*bool, options *DictionaryPutBooleanTfftOptions) (*http.Response, error) {
 	req, err := client.putBooleanTfftCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2642,6 +2694,7 @@ func (client *DictionaryClient) putBooleanTfftHandleError(resp *azcore.Response)
 }
 
 // PutByteValid - Put the dictionary value {"0": hex(FF FF FF FA), "1": hex(01 02 03), "2": hex (25, 29, 43)} with each elementencoded in base 64
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) PutByteValid(ctx context.Context, arrayBody map[string][]byte, options *DictionaryPutByteValidOptions) (*http.Response, error) {
 	req, err := client.putByteValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2684,6 +2737,7 @@ func (client *DictionaryClient) putByteValidHandleError(resp *azcore.Response) e
 
 // PutComplexValid - Put an dictionary of complex type with values {"0": {"integer": 1, "string": "2"}, "1": {"integer": 3, "string": "4"}, "2": {"integer":
 // 5, "string": "6"}}
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) PutComplexValid(ctx context.Context, arrayBody map[string]*Widget, options *DictionaryPutComplexValidOptions) (*http.Response, error) {
 	req, err := client.putComplexValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2726,6 +2780,7 @@ func (client *DictionaryClient) putComplexValidHandleError(resp *azcore.Response
 
 // PutDateTimeRFC1123Valid - Set dictionary value empty {"0": "Fri, 01 Dec 2000 00:00:01 GMT", "1": "Wed, 02 Jan 1980 00:11:35 GMT", "2": "Wed, 12 Oct 1492
 // 10:15:01 GMT"}
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) PutDateTimeRFC1123Valid(ctx context.Context, arrayBody map[string]*time.Time, options *DictionaryPutDateTimeRFC1123ValidOptions) (*http.Response, error) {
 	req, err := client.putDateTimeRFC1123ValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2771,6 +2826,7 @@ func (client *DictionaryClient) putDateTimeRFC1123ValidHandleError(resp *azcore.
 }
 
 // PutDateTimeValid - Set dictionary value {"0": "2000-12-01t00:00:01z", "1": "1980-01-02T00:11:35+01:00", "2": "1492-10-12T10:15:01-08:00"}
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) PutDateTimeValid(ctx context.Context, arrayBody map[string]*time.Time, options *DictionaryPutDateTimeValidOptions) (*http.Response, error) {
 	req, err := client.putDateTimeValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2816,6 +2872,7 @@ func (client *DictionaryClient) putDateTimeValidHandleError(resp *azcore.Respons
 }
 
 // PutDateValid - Set dictionary value {"0": "2000-12-01", "1": "1980-01-02", "2": "1492-10-12"}
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) PutDateValid(ctx context.Context, arrayBody map[string]*time.Time, options *DictionaryPutDateValidOptions) (*http.Response, error) {
 	req, err := client.putDateValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2862,6 +2919,7 @@ func (client *DictionaryClient) putDateValidHandleError(resp *azcore.Response) e
 
 // PutDictionaryValid - Get an dictionaries of dictionaries of type with value {"0": {"1": "one", "2": "two", "3": "three"}, "1": {"4": "four", "5": "five",
 // "6": "six"}, "2": {"7": "seven", "8": "eight", "9": "nine"}}
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) PutDictionaryValid(ctx context.Context, arrayBody map[string]map[string]*string, options *DictionaryPutDictionaryValidOptions) (*http.Response, error) {
 	req, err := client.putDictionaryValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2903,6 +2961,7 @@ func (client *DictionaryClient) putDictionaryValidHandleError(resp *azcore.Respo
 }
 
 // PutDoubleValid - Set dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) PutDoubleValid(ctx context.Context, arrayBody map[string]*float64, options *DictionaryPutDoubleValidOptions) (*http.Response, error) {
 	req, err := client.putDoubleValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2944,6 +3003,7 @@ func (client *DictionaryClient) putDoubleValidHandleError(resp *azcore.Response)
 }
 
 // PutDurationValid - Set dictionary value {"0": "P123DT22H14M12.011S", "1": "P5DT1H0M0S"}
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) PutDurationValid(ctx context.Context, arrayBody map[string]*string, options *DictionaryPutDurationValidOptions) (*http.Response, error) {
 	req, err := client.putDurationValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2985,6 +3045,7 @@ func (client *DictionaryClient) putDurationValidHandleError(resp *azcore.Respons
 }
 
 // PutEmpty - Set dictionary value empty {}
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) PutEmpty(ctx context.Context, arrayBody map[string]*string, options *DictionaryPutEmptyOptions) (*http.Response, error) {
 	req, err := client.putEmptyCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -3026,6 +3087,7 @@ func (client *DictionaryClient) putEmptyHandleError(resp *azcore.Response) error
 }
 
 // PutFloatValid - Set dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) PutFloatValid(ctx context.Context, arrayBody map[string]*float32, options *DictionaryPutFloatValidOptions) (*http.Response, error) {
 	req, err := client.putFloatValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -3067,6 +3129,7 @@ func (client *DictionaryClient) putFloatValidHandleError(resp *azcore.Response) 
 }
 
 // PutIntegerValid - Set dictionary value empty {"0": 1, "1": -1, "2": 3, "3": 300}
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) PutIntegerValid(ctx context.Context, arrayBody map[string]*int32, options *DictionaryPutIntegerValidOptions) (*http.Response, error) {
 	req, err := client.putIntegerValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -3108,6 +3171,7 @@ func (client *DictionaryClient) putIntegerValidHandleError(resp *azcore.Response
 }
 
 // PutLongValid - Set dictionary value empty {"0": 1, "1": -1, "2": 3, "3": 300}
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) PutLongValid(ctx context.Context, arrayBody map[string]*int64, options *DictionaryPutLongValidOptions) (*http.Response, error) {
 	req, err := client.putLongValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -3149,6 +3213,7 @@ func (client *DictionaryClient) putLongValidHandleError(resp *azcore.Response) e
 }
 
 // PutStringValid - Set dictionary value {"0": "foo1", "1": "foo2", "2": "foo3"}
+// If the operation fails it returns the *Error error type.
 func (client *DictionaryClient) PutStringValid(ctx context.Context, arrayBody map[string]*string, options *DictionaryPutStringValidOptions) (*http.Response, error) {
 	req, err := client.putStringValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {

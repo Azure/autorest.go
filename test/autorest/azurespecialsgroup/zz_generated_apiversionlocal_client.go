@@ -26,6 +26,7 @@ func NewAPIVersionLocalClient(con *Connection) *APIVersionLocalClient {
 }
 
 // GetMethodLocalNull - Get method with api-version modeled in the method. pass in api-version = null to succeed
+// If the operation fails it returns the *Error error type.
 func (client *APIVersionLocalClient) GetMethodLocalNull(ctx context.Context, options *APIVersionLocalGetMethodLocalNullOptions) (*http.Response, error) {
 	req, err := client.getMethodLocalNullCreateRequest(ctx, options)
 	if err != nil {
@@ -72,6 +73,7 @@ func (client *APIVersionLocalClient) getMethodLocalNullHandleError(resp *azcore.
 }
 
 // GetMethodLocalValid - Get method with api-version modeled in the method. pass in api-version = '2.0' to succeed
+// If the operation fails it returns the *Error error type.
 func (client *APIVersionLocalClient) GetMethodLocalValid(ctx context.Context, options *APIVersionLocalGetMethodLocalValidOptions) (*http.Response, error) {
 	req, err := client.getMethodLocalValidCreateRequest(ctx, options)
 	if err != nil {
@@ -116,6 +118,7 @@ func (client *APIVersionLocalClient) getMethodLocalValidHandleError(resp *azcore
 }
 
 // GetPathLocalValid - Get method with api-version modeled in the method. pass in api-version = '2.0' to succeed
+// If the operation fails it returns the *Error error type.
 func (client *APIVersionLocalClient) GetPathLocalValid(ctx context.Context, options *APIVersionLocalGetPathLocalValidOptions) (*http.Response, error) {
 	req, err := client.getPathLocalValidCreateRequest(ctx, options)
 	if err != nil {
@@ -160,6 +163,7 @@ func (client *APIVersionLocalClient) getPathLocalValidHandleError(resp *azcore.R
 }
 
 // GetSwaggerLocalValid - Get method with api-version modeled in the method. pass in api-version = '2.0' to succeed
+// If the operation fails it returns the *Error error type.
 func (client *APIVersionLocalClient) GetSwaggerLocalValid(ctx context.Context, options *APIVersionLocalGetSwaggerLocalValidOptions) (*http.Response, error) {
 	req, err := client.getSwaggerLocalValidCreateRequest(ctx, options)
 	if err != nil {

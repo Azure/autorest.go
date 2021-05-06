@@ -92,13 +92,14 @@ func (l *LinkNotFound) UnmarshalJSON(data []byte) error {
 // NotFoundErrorBaseClassification provides polymorphic access to related types.
 // Call the interface's GetNotFoundErrorBase() method to access the common type.
 // Use a type switch to determine the concrete type.  The possible types are:
-// - *NotFoundErrorBase, *AnimalNotFound, *LinkNotFound
+// - *AnimalNotFound, *LinkNotFound, *NotFoundErrorBase
 type NotFoundErrorBaseClassification interface {
 	error
 	// GetNotFoundErrorBase returns the NotFoundErrorBase content of the underlying type.
 	GetNotFoundErrorBase() *NotFoundErrorBase
 }
 
+// Implements the error and azcore.HTTPResponse interfaces.
 type NotFoundErrorBase struct {
 	BaseError
 	raw          string
@@ -164,6 +165,7 @@ type PetActionErrorClassification interface {
 	GetPetActionError() *PetActionError
 }
 
+// Implements the error and azcore.HTTPResponse interfaces.
 type PetActionError struct {
 	raw string
 	// the error message
@@ -264,7 +266,7 @@ type PetResponse struct {
 // PetSadErrorClassification provides polymorphic access to related types.
 // Call the interface's GetPetSadError() method to access the common type.
 // Use a type switch to determine the concrete type.  The possible types are:
-// - *PetSadError, *PetHungryOrThirstyError
+// - *PetHungryOrThirstyError, *PetSadError
 type PetSadErrorClassification interface {
 	PetActionErrorClassification
 	// GetPetSadError returns the PetSadError content of the underlying type.

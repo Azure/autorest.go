@@ -32,6 +32,7 @@ func NewAzureFirewallsClient(con *armcore.Connection, subscriptionID string) *Az
 }
 
 // BeginCreateOrUpdate - Creates or updates the specified Azure Firewall.
+// If the operation fails it returns the *CloudError error type.
 func (client *AzureFirewallsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, azureFirewallName string, parameters AzureFirewall, options *AzureFirewallsBeginCreateOrUpdateOptions) (AzureFirewallPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, azureFirewallName, parameters, options)
 	if err != nil {
@@ -81,6 +82,7 @@ func (client *AzureFirewallsClient) ResumeCreateOrUpdate(ctx context.Context, to
 }
 
 // CreateOrUpdate - Creates or updates the specified Azure Firewall.
+// If the operation fails it returns the *CloudError error type.
 func (client *AzureFirewallsClient) createOrUpdate(ctx context.Context, resourceGroupName string, azureFirewallName string, parameters AzureFirewall, options *AzureFirewallsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, azureFirewallName, parameters, options)
 	if err != nil {
@@ -146,6 +148,7 @@ func (client *AzureFirewallsClient) createOrUpdateHandleError(resp *azcore.Respo
 }
 
 // BeginDelete - Deletes the specified Azure Firewall.
+// If the operation fails it returns the *CloudError error type.
 func (client *AzureFirewallsClient) BeginDelete(ctx context.Context, resourceGroupName string, azureFirewallName string, options *AzureFirewallsBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, azureFirewallName, options)
 	if err != nil {
@@ -195,6 +198,7 @@ func (client *AzureFirewallsClient) ResumeDelete(ctx context.Context, token stri
 }
 
 // Delete - Deletes the specified Azure Firewall.
+// If the operation fails it returns the *CloudError error type.
 func (client *AzureFirewallsClient) deleteOperation(ctx context.Context, resourceGroupName string, azureFirewallName string, options *AzureFirewallsBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, azureFirewallName, options)
 	if err != nil {
@@ -251,6 +255,7 @@ func (client *AzureFirewallsClient) deleteHandleError(resp *azcore.Response) err
 }
 
 // Get - Gets the specified Azure Firewall.
+// If the operation fails it returns the *CloudError error type.
 func (client *AzureFirewallsClient) Get(ctx context.Context, resourceGroupName string, azureFirewallName string, options *AzureFirewallsGetOptions) (AzureFirewallResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, azureFirewallName, options)
 	if err != nil {
@@ -316,6 +321,7 @@ func (client *AzureFirewallsClient) getHandleError(resp *azcore.Response) error 
 }
 
 // List - Lists all Azure Firewalls in a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *AzureFirewallsClient) List(resourceGroupName string, options *AzureFirewallsListOptions) AzureFirewallListResultPager {
 	return &azureFirewallListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -377,6 +383,7 @@ func (client *AzureFirewallsClient) listHandleError(resp *azcore.Response) error
 }
 
 // ListAll - Gets all the Azure Firewalls in a subscription.
+// If the operation fails it returns the *CloudError error type.
 func (client *AzureFirewallsClient) ListAll(options *AzureFirewallsListAllOptions) AzureFirewallListResultPager {
 	return &azureFirewallListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -434,6 +441,7 @@ func (client *AzureFirewallsClient) listAllHandleError(resp *azcore.Response) er
 }
 
 // BeginUpdateTags - Updates tags of an Azure Firewall resource.
+// If the operation fails it returns the *CloudError error type.
 func (client *AzureFirewallsClient) BeginUpdateTags(ctx context.Context, resourceGroupName string, azureFirewallName string, parameters TagsObject, options *AzureFirewallsBeginUpdateTagsOptions) (AzureFirewallPollerResponse, error) {
 	resp, err := client.updateTags(ctx, resourceGroupName, azureFirewallName, parameters, options)
 	if err != nil {
@@ -483,6 +491,7 @@ func (client *AzureFirewallsClient) ResumeUpdateTags(ctx context.Context, token 
 }
 
 // UpdateTags - Updates tags of an Azure Firewall resource.
+// If the operation fails it returns the *CloudError error type.
 func (client *AzureFirewallsClient) updateTags(ctx context.Context, resourceGroupName string, azureFirewallName string, parameters TagsObject, options *AzureFirewallsBeginUpdateTagsOptions) (*azcore.Response, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, azureFirewallName, parameters, options)
 	if err != nil {

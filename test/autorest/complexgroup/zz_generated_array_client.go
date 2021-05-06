@@ -26,6 +26,7 @@ func NewArrayClient(con *Connection) *ArrayClient {
 }
 
 // GetEmpty - Get complex types with array property which is empty
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetEmpty(ctx context.Context, options *ArrayGetEmptyOptions) (ArrayWrapperResponse, error) {
 	req, err := client.getEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -76,6 +77,7 @@ func (client *ArrayClient) getEmptyHandleError(resp *azcore.Response) error {
 }
 
 // GetNotProvided - Get complex types with array property while server doesn't provide a response payload
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetNotProvided(ctx context.Context, options *ArrayGetNotProvidedOptions) (ArrayWrapperResponse, error) {
 	req, err := client.getNotProvidedCreateRequest(ctx, options)
 	if err != nil {
@@ -126,6 +128,7 @@ func (client *ArrayClient) getNotProvidedHandleError(resp *azcore.Response) erro
 }
 
 // GetValid - Get complex types with array property
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) GetValid(ctx context.Context, options *ArrayGetValidOptions) (ArrayWrapperResponse, error) {
 	req, err := client.getValidCreateRequest(ctx, options)
 	if err != nil {
@@ -176,6 +179,7 @@ func (client *ArrayClient) getValidHandleError(resp *azcore.Response) error {
 }
 
 // PutEmpty - Put complex types with array property which is empty
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) PutEmpty(ctx context.Context, complexBody ArrayWrapper, options *ArrayPutEmptyOptions) (*http.Response, error) {
 	req, err := client.putEmptyCreateRequest(ctx, complexBody, options)
 	if err != nil {
@@ -217,6 +221,7 @@ func (client *ArrayClient) putEmptyHandleError(resp *azcore.Response) error {
 }
 
 // PutValid - Put complex types with array property
+// If the operation fails it returns the *Error error type.
 func (client *ArrayClient) PutValid(ctx context.Context, complexBody ArrayWrapper, options *ArrayPutValidOptions) (*http.Response, error) {
 	req, err := client.putValidCreateRequest(ctx, complexBody, options)
 	if err != nil {

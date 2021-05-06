@@ -31,6 +31,7 @@ func NewLoadBalancerNetworkInterfacesClient(con *armcore.Connection, subscriptio
 }
 
 // List - Gets associated load balancer network interfaces.
+// If the operation fails it returns the *CloudError error type.
 func (client *LoadBalancerNetworkInterfacesClient) List(resourceGroupName string, loadBalancerName string, options *LoadBalancerNetworkInterfacesListOptions) NetworkInterfaceListResultPager {
 	return &networkInterfaceListResultPager{
 		pipeline: client.con.Pipeline(),

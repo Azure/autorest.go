@@ -26,6 +26,7 @@ func NewEnumClient(con *Connection) *EnumClient {
 }
 
 // GetNotExpandable - Get enum value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'.
+// If the operation fails it returns the *Error error type.
 func (client *EnumClient) GetNotExpandable(ctx context.Context, options *EnumGetNotExpandableOptions) (ColorsResponse, error) {
 	req, err := client.getNotExpandableCreateRequest(ctx, options)
 	if err != nil {
@@ -76,6 +77,7 @@ func (client *EnumClient) getNotExpandableHandleError(resp *azcore.Response) err
 }
 
 // GetReferenced - Get enum value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'.
+// If the operation fails it returns the *Error error type.
 func (client *EnumClient) GetReferenced(ctx context.Context, options *EnumGetReferencedOptions) (ColorsResponse, error) {
 	req, err := client.getReferencedCreateRequest(ctx, options)
 	if err != nil {
@@ -126,6 +128,7 @@ func (client *EnumClient) getReferencedHandleError(resp *azcore.Response) error 
 }
 
 // GetReferencedConstant - Get value 'green-color' from the constant.
+// If the operation fails it returns the *Error error type.
 func (client *EnumClient) GetReferencedConstant(ctx context.Context, options *EnumGetReferencedConstantOptions) (RefColorConstantResponse, error) {
 	req, err := client.getReferencedConstantCreateRequest(ctx, options)
 	if err != nil {
@@ -176,6 +179,7 @@ func (client *EnumClient) getReferencedConstantHandleError(resp *azcore.Response
 }
 
 // PutNotExpandable - Sends value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'
+// If the operation fails it returns the *Error error type.
 func (client *EnumClient) PutNotExpandable(ctx context.Context, stringBody Colors, options *EnumPutNotExpandableOptions) (*http.Response, error) {
 	req, err := client.putNotExpandableCreateRequest(ctx, stringBody, options)
 	if err != nil {
@@ -217,6 +221,7 @@ func (client *EnumClient) putNotExpandableHandleError(resp *azcore.Response) err
 }
 
 // PutReferenced - Sends value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'
+// If the operation fails it returns the *Error error type.
 func (client *EnumClient) PutReferenced(ctx context.Context, enumStringBody Colors, options *EnumPutReferencedOptions) (*http.Response, error) {
 	req, err := client.putReferencedCreateRequest(ctx, enumStringBody, options)
 	if err != nil {
@@ -258,6 +263,7 @@ func (client *EnumClient) putReferencedHandleError(resp *azcore.Response) error 
 }
 
 // PutReferencedConstant - Sends value 'green-color' from a constant
+// If the operation fails it returns the *Error error type.
 func (client *EnumClient) PutReferencedConstant(ctx context.Context, enumStringBody RefColorConstant, options *EnumPutReferencedConstantOptions) (*http.Response, error) {
 	req, err := client.putReferencedConstantCreateRequest(ctx, enumStringBody, options)
 	if err != nil {

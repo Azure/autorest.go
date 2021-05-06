@@ -32,6 +32,7 @@ func NewBastionHostsClient(con *armcore.Connection, subscriptionID string) *Bast
 }
 
 // BeginCreateOrUpdate - Creates or updates the specified Bastion Host.
+// If the operation fails it returns the *CloudError error type.
 func (client *BastionHostsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, bastionHostName string, parameters BastionHost, options *BastionHostsBeginCreateOrUpdateOptions) (BastionHostPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, bastionHostName, parameters, options)
 	if err != nil {
@@ -81,6 +82,7 @@ func (client *BastionHostsClient) ResumeCreateOrUpdate(ctx context.Context, toke
 }
 
 // CreateOrUpdate - Creates or updates the specified Bastion Host.
+// If the operation fails it returns the *CloudError error type.
 func (client *BastionHostsClient) createOrUpdate(ctx context.Context, resourceGroupName string, bastionHostName string, parameters BastionHost, options *BastionHostsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, bastionHostName, parameters, options)
 	if err != nil {
@@ -146,6 +148,7 @@ func (client *BastionHostsClient) createOrUpdateHandleError(resp *azcore.Respons
 }
 
 // BeginDelete - Deletes the specified Bastion Host.
+// If the operation fails it returns the *CloudError error type.
 func (client *BastionHostsClient) BeginDelete(ctx context.Context, resourceGroupName string, bastionHostName string, options *BastionHostsBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, bastionHostName, options)
 	if err != nil {
@@ -195,6 +198,7 @@ func (client *BastionHostsClient) ResumeDelete(ctx context.Context, token string
 }
 
 // Delete - Deletes the specified Bastion Host.
+// If the operation fails it returns the *CloudError error type.
 func (client *BastionHostsClient) deleteOperation(ctx context.Context, resourceGroupName string, bastionHostName string, options *BastionHostsBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, bastionHostName, options)
 	if err != nil {
@@ -251,6 +255,7 @@ func (client *BastionHostsClient) deleteHandleError(resp *azcore.Response) error
 }
 
 // Get - Gets the specified Bastion Host.
+// If the operation fails it returns the *CloudError error type.
 func (client *BastionHostsClient) Get(ctx context.Context, resourceGroupName string, bastionHostName string, options *BastionHostsGetOptions) (BastionHostResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, bastionHostName, options)
 	if err != nil {
@@ -316,6 +321,7 @@ func (client *BastionHostsClient) getHandleError(resp *azcore.Response) error {
 }
 
 // List - Lists all Bastion Hosts in a subscription.
+// If the operation fails it returns the *CloudError error type.
 func (client *BastionHostsClient) List(options *BastionHostsListOptions) BastionHostListResultPager {
 	return &bastionHostListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -373,6 +379,7 @@ func (client *BastionHostsClient) listHandleError(resp *azcore.Response) error {
 }
 
 // ListByResourceGroup - Lists all Bastion Hosts in a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *BastionHostsClient) ListByResourceGroup(resourceGroupName string, options *BastionHostsListByResourceGroupOptions) BastionHostListResultPager {
 	return &bastionHostListResultPager{
 		pipeline: client.con.Pipeline(),

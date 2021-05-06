@@ -23,6 +23,7 @@ type pipelineRunClient struct {
 }
 
 // CancelPipelineRun - Cancel a pipeline run by its run ID.
+// If the operation fails it returns the *CloudError error type.
 func (client *pipelineRunClient) CancelPipelineRun(ctx context.Context, runID string, options *PipelineRunCancelPipelineRunOptions) (*http.Response, error) {
 	req, err := client.cancelPipelineRunCreateRequest(ctx, runID, options)
 	if err != nil {
@@ -74,6 +75,7 @@ func (client *pipelineRunClient) cancelPipelineRunHandleError(resp *azcore.Respo
 }
 
 // GetPipelineRun - Get a pipeline run by its run ID.
+// If the operation fails it returns the *CloudError error type.
 func (client *pipelineRunClient) GetPipelineRun(ctx context.Context, runID string, options *PipelineRunGetPipelineRunOptions) (PipelineRunResponse, error) {
 	req, err := client.getPipelineRunCreateRequest(ctx, runID, options)
 	if err != nil {
@@ -131,6 +133,7 @@ func (client *pipelineRunClient) getPipelineRunHandleError(resp *azcore.Response
 }
 
 // QueryActivityRuns - Query activity runs based on input filter conditions.
+// If the operation fails it returns the *CloudError error type.
 func (client *pipelineRunClient) QueryActivityRuns(ctx context.Context, pipelineName string, runID string, filterParameters RunFilterParameters, options *PipelineRunQueryActivityRunsOptions) (ActivityRunsQueryResponseResponse, error) {
 	req, err := client.queryActivityRunsCreateRequest(ctx, pipelineName, runID, filterParameters, options)
 	if err != nil {
@@ -192,6 +195,7 @@ func (client *pipelineRunClient) queryActivityRunsHandleError(resp *azcore.Respo
 }
 
 // QueryPipelineRunsByWorkspace - Query pipeline runs in the workspace based on input filter conditions.
+// If the operation fails it returns the *CloudError error type.
 func (client *pipelineRunClient) QueryPipelineRunsByWorkspace(ctx context.Context, filterParameters RunFilterParameters, options *PipelineRunQueryPipelineRunsByWorkspaceOptions) (PipelineRunsQueryResponseResponse, error) {
 	req, err := client.queryPipelineRunsByWorkspaceCreateRequest(ctx, filterParameters, options)
 	if err != nil {

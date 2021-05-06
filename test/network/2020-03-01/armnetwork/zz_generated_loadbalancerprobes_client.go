@@ -31,6 +31,7 @@ func NewLoadBalancerProbesClient(con *armcore.Connection, subscriptionID string)
 }
 
 // Get - Gets load balancer probe.
+// If the operation fails it returns the *CloudError error type.
 func (client *LoadBalancerProbesClient) Get(ctx context.Context, resourceGroupName string, loadBalancerName string, probeName string, options *LoadBalancerProbesGetOptions) (ProbeResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, loadBalancerName, probeName, options)
 	if err != nil {
@@ -100,6 +101,7 @@ func (client *LoadBalancerProbesClient) getHandleError(resp *azcore.Response) er
 }
 
 // List - Gets all the load balancer probes.
+// If the operation fails it returns the *CloudError error type.
 func (client *LoadBalancerProbesClient) List(resourceGroupName string, loadBalancerName string, options *LoadBalancerProbesListOptions) LoadBalancerProbeListResultPager {
 	return &loadBalancerProbeListResultPager{
 		pipeline: client.con.Pipeline(),

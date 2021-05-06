@@ -22,6 +22,7 @@ type sqlPoolsClient struct {
 }
 
 // Get - Get Sql Pool
+// If the operation fails it returns the *ErrorContract error type.
 func (client *sqlPoolsClient) Get(ctx context.Context, sqlPoolName string, options *SQLPoolsGetOptions) (SQLPoolResponse, error) {
 	req, err := client.getCreateRequest(ctx, sqlPoolName, options)
 	if err != nil {
@@ -79,6 +80,7 @@ func (client *sqlPoolsClient) getHandleError(resp *azcore.Response) error {
 }
 
 // List - List Sql Pools
+// If the operation fails it returns the *ErrorContract error type.
 func (client *sqlPoolsClient) List(ctx context.Context, options *SQLPoolsListOptions) (SQLPoolInfoListResultResponse, error) {
 	req, err := client.listCreateRequest(ctx, options)
 	if err != nil {

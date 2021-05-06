@@ -31,6 +31,7 @@ func NewExpressRoutePortsLocationsClient(con *armcore.Connection, subscriptionID
 }
 
 // Get - Retrieves a single ExpressRoutePort peering location, including the list of available bandwidths available at said peering location.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRoutePortsLocationsClient) Get(ctx context.Context, locationName string, options *ExpressRoutePortsLocationsGetOptions) (ExpressRoutePortsLocationResponse, error) {
 	req, err := client.getCreateRequest(ctx, locationName, options)
 	if err != nil {
@@ -93,6 +94,7 @@ func (client *ExpressRoutePortsLocationsClient) getHandleError(resp *azcore.Resp
 
 // List - Retrieves all ExpressRoutePort peering locations. Does not return available bandwidths for each location. Available bandwidths can only be obtained
 // when retrieving a specific peering location.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRoutePortsLocationsClient) List(options *ExpressRoutePortsLocationsListOptions) ExpressRoutePortsLocationListResultPager {
 	return &expressRoutePortsLocationListResultPager{
 		pipeline: client.con.Pipeline(),

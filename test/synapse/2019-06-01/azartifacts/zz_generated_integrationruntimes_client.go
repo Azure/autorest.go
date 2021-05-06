@@ -22,6 +22,7 @@ type integrationRuntimesClient struct {
 }
 
 // Get - Get Integration Runtime
+// If the operation fails it returns the *ErrorContract error type.
 func (client *integrationRuntimesClient) Get(ctx context.Context, integrationRuntimeName string, options *IntegrationRuntimesGetOptions) (IntegrationRuntimeResourceResponse, error) {
 	req, err := client.getCreateRequest(ctx, integrationRuntimeName, options)
 	if err != nil {
@@ -79,6 +80,7 @@ func (client *integrationRuntimesClient) getHandleError(resp *azcore.Response) e
 }
 
 // List - List Integration Runtimes
+// If the operation fails it returns the *ErrorContract error type.
 func (client *integrationRuntimesClient) List(ctx context.Context, options *IntegrationRuntimesListOptions) (IntegrationRuntimeListResponseResponse, error) {
 	req, err := client.listCreateRequest(ctx, options)
 	if err != nil {

@@ -31,6 +31,7 @@ func NewPagingClient(con *Connection) *PagingClient {
 }
 
 // GetMultiplePages - A paging operation that includes a nextLink that has 10 pages
+// If the operation fails it returns a generic error.
 func (client *PagingClient) GetMultiplePages(options *PagingGetMultiplePagesOptions) ProductResultPager {
 	return &productResultPager{
 		pipeline: client.con.Pipeline(),
@@ -89,6 +90,7 @@ func (client *PagingClient) getMultiplePagesHandleError(resp *azcore.Response) e
 }
 
 // GetMultiplePagesFailure - A paging operation that receives a 400 on the second call
+// If the operation fails it returns a generic error.
 func (client *PagingClient) GetMultiplePagesFailure(options *PagingGetMultiplePagesFailureOptions) ProductResultPager {
 	return &productResultPager{
 		pipeline: client.con.Pipeline(),
@@ -138,6 +140,7 @@ func (client *PagingClient) getMultiplePagesFailureHandleError(resp *azcore.Resp
 }
 
 // GetMultiplePagesFailureURI - A paging operation that receives an invalid nextLink
+// If the operation fails it returns a generic error.
 func (client *PagingClient) GetMultiplePagesFailureURI(options *PagingGetMultiplePagesFailureURIOptions) ProductResultPager {
 	return &productResultPager{
 		pipeline: client.con.Pipeline(),
@@ -187,6 +190,7 @@ func (client *PagingClient) getMultiplePagesFailureURIHandleError(resp *azcore.R
 }
 
 // GetMultiplePagesFragmentNextLink - A paging operation that doesn't return a full URL, just a fragment
+// If the operation fails it returns a generic error.
 func (client *PagingClient) GetMultiplePagesFragmentNextLink(apiVersion string, tenant string, options *PagingGetMultiplePagesFragmentNextLinkOptions) OdataProductResultPager {
 	return &odataProductResultPager{
 		pipeline: client.con.Pipeline(),
@@ -243,6 +247,7 @@ func (client *PagingClient) getMultiplePagesFragmentNextLinkHandleError(resp *az
 }
 
 // GetMultiplePagesFragmentWithGroupingNextLink - A paging operation that doesn't return a full URL, just a fragment with parameters grouped
+// If the operation fails it returns a generic error.
 func (client *PagingClient) GetMultiplePagesFragmentWithGroupingNextLink(customParameterGroup CustomParameterGroup) OdataProductResultPager {
 	return &odataProductResultPager{
 		pipeline: client.con.Pipeline(),
@@ -299,6 +304,7 @@ func (client *PagingClient) getMultiplePagesFragmentWithGroupingNextLinkHandleEr
 }
 
 // BeginGetMultiplePagesLRO - A long-running paging operation that includes a nextLink that has 10 pages
+// If the operation fails it returns a generic error.
 func (client *PagingClient) BeginGetMultiplePagesLRO(ctx context.Context, options *PagingBeginGetMultiplePagesLROOptions) (ProductResultPagerPollerResponse, error) {
 	resp, err := client.getMultiplePagesLRO(ctx, options)
 	if err != nil {
@@ -376,6 +382,7 @@ func (client *PagingClient) ResumeGetMultiplePagesLRO(ctx context.Context, token
 }
 
 // GetMultiplePagesLRO - A long-running paging operation that includes a nextLink that has 10 pages
+// If the operation fails it returns a generic error.
 func (client *PagingClient) getMultiplePagesLRO(ctx context.Context, options *PagingBeginGetMultiplePagesLROOptions) (*azcore.Response, error) {
 	req, err := client.getMultiplePagesLROCreateRequest(ctx, options)
 	if err != nil {
@@ -435,6 +442,7 @@ func (client *PagingClient) getMultiplePagesLROHandleError(resp *azcore.Response
 
 // GetMultiplePagesRetryFirst - A paging operation that fails on the first call with 500 and then retries and then get a response including a nextLink that
 // has 10 pages
+// If the operation fails it returns a generic error.
 func (client *PagingClient) GetMultiplePagesRetryFirst(options *PagingGetMultiplePagesRetryFirstOptions) ProductResultPager {
 	return &productResultPager{
 		pipeline: client.con.Pipeline(),
@@ -485,6 +493,7 @@ func (client *PagingClient) getMultiplePagesRetryFirstHandleError(resp *azcore.R
 
 // GetMultiplePagesRetrySecond - A paging operation that includes a nextLink that has 10 pages, of which the 2nd call fails first with 500. The client should
 // retry and finish all 10 pages eventually.
+// If the operation fails it returns a generic error.
 func (client *PagingClient) GetMultiplePagesRetrySecond(options *PagingGetMultiplePagesRetrySecondOptions) ProductResultPager {
 	return &productResultPager{
 		pipeline: client.con.Pipeline(),
@@ -534,6 +543,7 @@ func (client *PagingClient) getMultiplePagesRetrySecondHandleError(resp *azcore.
 }
 
 // GetMultiplePagesWithOffset - A paging operation that includes a nextLink that has 10 pages
+// If the operation fails it returns a generic error.
 func (client *PagingClient) GetMultiplePagesWithOffset(pagingGetMultiplePagesWithOffsetOptions PagingGetMultiplePagesWithOffsetOptions) ProductResultPager {
 	return &productResultPager{
 		pipeline: client.con.Pipeline(),
@@ -593,6 +603,7 @@ func (client *PagingClient) getMultiplePagesWithOffsetHandleError(resp *azcore.R
 }
 
 // GetNoItemNamePages - A paging operation that must return result of the default 'value' node.
+// If the operation fails it returns a generic error.
 func (client *PagingClient) GetNoItemNamePages(options *PagingGetNoItemNamePagesOptions) ProductResultValuePager {
 	return &productResultValuePager{
 		pipeline: client.con.Pipeline(),
@@ -642,6 +653,7 @@ func (client *PagingClient) getNoItemNamePagesHandleError(resp *azcore.Response)
 }
 
 // GetNullNextLinkNamePages - A paging operation that must ignore any kind of nextLink, and stop after page 1.
+// If the operation fails it returns a generic error.
 func (client *PagingClient) GetNullNextLinkNamePages(ctx context.Context, options *PagingGetNullNextLinkNamePagesOptions) (ProductResultResponse, error) {
 	req, err := client.getNullNextLinkNamePagesCreateRequest(ctx, options)
 	if err != nil {
@@ -691,6 +703,7 @@ func (client *PagingClient) getNullNextLinkNamePagesHandleError(resp *azcore.Res
 }
 
 // GetOdataMultiplePages - A paging operation that includes a nextLink in odata format that has 10 pages
+// If the operation fails it returns a generic error.
 func (client *PagingClient) GetOdataMultiplePages(options *PagingGetOdataMultiplePagesOptions) OdataProductResultPager {
 	return &odataProductResultPager{
 		pipeline: client.con.Pipeline(),
@@ -749,6 +762,7 @@ func (client *PagingClient) getOdataMultiplePagesHandleError(resp *azcore.Respon
 }
 
 // GetPagingModelWithItemNameWithXMSClientName - A paging operation that returns a paging model whose item name is is overriden by x-ms-client-name 'indexes'.
+// If the operation fails it returns a generic error.
 func (client *PagingClient) GetPagingModelWithItemNameWithXMSClientName(options *PagingGetPagingModelWithItemNameWithXMSClientNameOptions) ProductResultValueWithXMSClientNamePager {
 	return &productResultValueWithXMSClientNamePager{
 		pipeline: client.con.Pipeline(),
@@ -798,6 +812,7 @@ func (client *PagingClient) getPagingModelWithItemNameWithXMSClientNameHandleErr
 }
 
 // GetSinglePages - A paging operation that finishes on the first call without a nextlink
+// If the operation fails it returns a generic error.
 func (client *PagingClient) GetSinglePages(options *PagingGetSinglePagesOptions) ProductResultPager {
 	return &productResultPager{
 		pipeline: client.con.Pipeline(),
@@ -847,6 +862,7 @@ func (client *PagingClient) getSinglePagesHandleError(resp *azcore.Response) err
 }
 
 // GetSinglePagesFailure - A paging operation that receives a 400 on the first call
+// If the operation fails it returns a generic error.
 func (client *PagingClient) GetSinglePagesFailure(options *PagingGetSinglePagesFailureOptions) ProductResultPager {
 	return &productResultPager{
 		pipeline: client.con.Pipeline(),
@@ -897,6 +913,7 @@ func (client *PagingClient) getSinglePagesFailureHandleError(resp *azcore.Respon
 
 // GetWithQueryParams - A paging operation that includes a next operation. It has a different query parameter from it's next operation nextOperationWithQueryParams.
 // Returns a ProductResult
+// If the operation fails it returns a generic error.
 func (client *PagingClient) GetWithQueryParams(requiredQueryParameter int32, options *PagingGetWithQueryParamsOptions) ProductResultPager {
 	return &productResultPager{
 		pipeline: client.con.Pipeline(),

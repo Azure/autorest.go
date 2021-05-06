@@ -24,6 +24,7 @@ type pipelineClient struct {
 }
 
 // BeginCreateOrUpdatePipeline - Creates or updates a pipeline.
+// If the operation fails it returns the *CloudError error type.
 func (client *pipelineClient) BeginCreateOrUpdatePipeline(ctx context.Context, pipelineName string, pipeline PipelineResource, options *PipelineBeginCreateOrUpdatePipelineOptions) (PipelineResourcePollerResponse, error) {
 	resp, err := client.createOrUpdatePipeline(ctx, pipelineName, pipeline, options)
 	if err != nil {
@@ -71,6 +72,7 @@ func (client *pipelineClient) ResumeCreateOrUpdatePipeline(ctx context.Context, 
 }
 
 // CreateOrUpdatePipeline - Creates or updates a pipeline.
+// If the operation fails it returns the *CloudError error type.
 func (client *pipelineClient) createOrUpdatePipeline(ctx context.Context, pipelineName string, pipeline PipelineResource, options *PipelineBeginCreateOrUpdatePipelineOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdatePipelineCreateRequest(ctx, pipelineName, pipeline, options)
 	if err != nil {
@@ -131,6 +133,7 @@ func (client *pipelineClient) createOrUpdatePipelineHandleError(resp *azcore.Res
 }
 
 // CreatePipelineRun - Creates a run of a pipeline.
+// If the operation fails it returns the *CloudError error type.
 func (client *pipelineClient) CreatePipelineRun(ctx context.Context, pipelineName string, options *PipelineCreatePipelineRunOptions) (CreateRunResponseResponse, error) {
 	req, err := client.createPipelineRunCreateRequest(ctx, pipelineName, options)
 	if err != nil {
@@ -200,6 +203,7 @@ func (client *pipelineClient) createPipelineRunHandleError(resp *azcore.Response
 }
 
 // BeginDeletePipeline - Deletes a pipeline.
+// If the operation fails it returns the *CloudError error type.
 func (client *pipelineClient) BeginDeletePipeline(ctx context.Context, pipelineName string, options *PipelineBeginDeletePipelineOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deletePipeline(ctx, pipelineName, options)
 	if err != nil {
@@ -247,6 +251,7 @@ func (client *pipelineClient) ResumeDeletePipeline(ctx context.Context, token st
 }
 
 // DeletePipeline - Deletes a pipeline.
+// If the operation fails it returns the *CloudError error type.
 func (client *pipelineClient) deletePipeline(ctx context.Context, pipelineName string, options *PipelineBeginDeletePipelineOptions) (*azcore.Response, error) {
 	req, err := client.deletePipelineCreateRequest(ctx, pipelineName, options)
 	if err != nil {
@@ -295,6 +300,7 @@ func (client *pipelineClient) deletePipelineHandleError(resp *azcore.Response) e
 }
 
 // GetPipeline - Gets a pipeline.
+// If the operation fails it returns the *CloudError error type.
 func (client *pipelineClient) GetPipeline(ctx context.Context, pipelineName string, options *PipelineGetPipelineOptions) (PipelineResourceResponse, error) {
 	req, err := client.getPipelineCreateRequest(ctx, pipelineName, options)
 	if err != nil {
@@ -355,6 +361,7 @@ func (client *pipelineClient) getPipelineHandleError(resp *azcore.Response) erro
 }
 
 // GetPipelinesByWorkspace - Lists pipelines.
+// If the operation fails it returns the *CloudError error type.
 func (client *pipelineClient) GetPipelinesByWorkspace(options *PipelineGetPipelinesByWorkspaceOptions) PipelineListResponsePager {
 	return &pipelineListResponsePager{
 		pipeline: client.con.Pipeline(),
@@ -408,6 +415,7 @@ func (client *pipelineClient) getPipelinesByWorkspaceHandleError(resp *azcore.Re
 }
 
 // BeginRenamePipeline - Renames a pipeline.
+// If the operation fails it returns the *CloudError error type.
 func (client *pipelineClient) BeginRenamePipeline(ctx context.Context, pipelineName string, request ArtifactRenameRequest, options *PipelineBeginRenamePipelineOptions) (HTTPPollerResponse, error) {
 	resp, err := client.renamePipeline(ctx, pipelineName, request, options)
 	if err != nil {
@@ -455,6 +463,7 @@ func (client *pipelineClient) ResumeRenamePipeline(ctx context.Context, token st
 }
 
 // RenamePipeline - Renames a pipeline.
+// If the operation fails it returns the *CloudError error type.
 func (client *pipelineClient) renamePipeline(ctx context.Context, pipelineName string, request ArtifactRenameRequest, options *PipelineBeginRenamePipelineOptions) (*azcore.Response, error) {
 	req, err := client.renamePipelineCreateRequest(ctx, pipelineName, request, options)
 	if err != nil {

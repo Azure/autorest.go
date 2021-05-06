@@ -32,6 +32,7 @@ func NewFlowLogsClient(con *armcore.Connection, subscriptionID string) *FlowLogs
 }
 
 // BeginCreateOrUpdate - Create or update a flow log for the specified network security group.
+// If the operation fails it returns the *ErrorResponse error type.
 func (client *FlowLogsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, parameters FlowLog, options *FlowLogsBeginCreateOrUpdateOptions) (FlowLogPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, networkWatcherName, flowLogName, parameters, options)
 	if err != nil {
@@ -81,6 +82,7 @@ func (client *FlowLogsClient) ResumeCreateOrUpdate(ctx context.Context, token st
 }
 
 // CreateOrUpdate - Create or update a flow log for the specified network security group.
+// If the operation fails it returns the *ErrorResponse error type.
 func (client *FlowLogsClient) createOrUpdate(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, parameters FlowLog, options *FlowLogsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, networkWatcherName, flowLogName, parameters, options)
 	if err != nil {
@@ -150,6 +152,7 @@ func (client *FlowLogsClient) createOrUpdateHandleError(resp *azcore.Response) e
 }
 
 // BeginDelete - Deletes the specified flow log resource.
+// If the operation fails it returns the *ErrorResponse error type.
 func (client *FlowLogsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, options *FlowLogsBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, networkWatcherName, flowLogName, options)
 	if err != nil {
@@ -199,6 +202,7 @@ func (client *FlowLogsClient) ResumeDelete(ctx context.Context, token string) (H
 }
 
 // Delete - Deletes the specified flow log resource.
+// If the operation fails it returns the *ErrorResponse error type.
 func (client *FlowLogsClient) deleteOperation(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, options *FlowLogsBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, networkWatcherName, flowLogName, options)
 	if err != nil {
@@ -259,6 +263,7 @@ func (client *FlowLogsClient) deleteHandleError(resp *azcore.Response) error {
 }
 
 // Get - Gets a flow log resource by name.
+// If the operation fails it returns the *ErrorResponse error type.
 func (client *FlowLogsClient) Get(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, options *FlowLogsGetOptions) (FlowLogResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkWatcherName, flowLogName, options)
 	if err != nil {
@@ -328,6 +333,7 @@ func (client *FlowLogsClient) getHandleError(resp *azcore.Response) error {
 }
 
 // List - Lists all flow log resources for the specified Network Watcher.
+// If the operation fails it returns the *ErrorResponse error type.
 func (client *FlowLogsClient) List(resourceGroupName string, networkWatcherName string, options *FlowLogsListOptions) FlowLogListResultPager {
 	return &flowLogListResultPager{
 		pipeline: client.con.Pipeline(),

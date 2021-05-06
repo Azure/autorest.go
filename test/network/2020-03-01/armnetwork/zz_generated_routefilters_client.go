@@ -32,6 +32,7 @@ func NewRouteFiltersClient(con *armcore.Connection, subscriptionID string) *Rout
 }
 
 // BeginCreateOrUpdate - Creates or updates a route filter in a specified resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *RouteFiltersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, routeFilterName string, routeFilterParameters RouteFilter, options *RouteFiltersBeginCreateOrUpdateOptions) (RouteFilterPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, routeFilterName, routeFilterParameters, options)
 	if err != nil {
@@ -81,6 +82,7 @@ func (client *RouteFiltersClient) ResumeCreateOrUpdate(ctx context.Context, toke
 }
 
 // CreateOrUpdate - Creates or updates a route filter in a specified resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *RouteFiltersClient) createOrUpdate(ctx context.Context, resourceGroupName string, routeFilterName string, routeFilterParameters RouteFilter, options *RouteFiltersBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, routeFilterName, routeFilterParameters, options)
 	if err != nil {
@@ -146,6 +148,7 @@ func (client *RouteFiltersClient) createOrUpdateHandleError(resp *azcore.Respons
 }
 
 // BeginDelete - Deletes the specified route filter.
+// If the operation fails it returns the *CloudError error type.
 func (client *RouteFiltersClient) BeginDelete(ctx context.Context, resourceGroupName string, routeFilterName string, options *RouteFiltersBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, routeFilterName, options)
 	if err != nil {
@@ -195,6 +198,7 @@ func (client *RouteFiltersClient) ResumeDelete(ctx context.Context, token string
 }
 
 // Delete - Deletes the specified route filter.
+// If the operation fails it returns the *CloudError error type.
 func (client *RouteFiltersClient) deleteOperation(ctx context.Context, resourceGroupName string, routeFilterName string, options *RouteFiltersBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, routeFilterName, options)
 	if err != nil {
@@ -251,6 +255,7 @@ func (client *RouteFiltersClient) deleteHandleError(resp *azcore.Response) error
 }
 
 // Get - Gets the specified route filter.
+// If the operation fails it returns the *CloudError error type.
 func (client *RouteFiltersClient) Get(ctx context.Context, resourceGroupName string, routeFilterName string, options *RouteFiltersGetOptions) (RouteFilterResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, routeFilterName, options)
 	if err != nil {
@@ -319,6 +324,7 @@ func (client *RouteFiltersClient) getHandleError(resp *azcore.Response) error {
 }
 
 // List - Gets all route filters in a subscription.
+// If the operation fails it returns the *CloudError error type.
 func (client *RouteFiltersClient) List(options *RouteFiltersListOptions) RouteFilterListResultPager {
 	return &routeFilterListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -376,6 +382,7 @@ func (client *RouteFiltersClient) listHandleError(resp *azcore.Response) error {
 }
 
 // ListByResourceGroup - Gets all route filters in a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *RouteFiltersClient) ListByResourceGroup(resourceGroupName string, options *RouteFiltersListByResourceGroupOptions) RouteFilterListResultPager {
 	return &routeFilterListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -437,6 +444,7 @@ func (client *RouteFiltersClient) listByResourceGroupHandleError(resp *azcore.Re
 }
 
 // UpdateTags - Updates tags of a route filter.
+// If the operation fails it returns the *CloudError error type.
 func (client *RouteFiltersClient) UpdateTags(ctx context.Context, resourceGroupName string, routeFilterName string, parameters TagsObject, options *RouteFiltersUpdateTagsOptions) (RouteFilterResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, routeFilterName, parameters, options)
 	if err != nil {

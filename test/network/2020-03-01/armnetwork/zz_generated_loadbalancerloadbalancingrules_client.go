@@ -31,6 +31,7 @@ func NewLoadBalancerLoadBalancingRulesClient(con *armcore.Connection, subscripti
 }
 
 // Get - Gets the specified load balancer load balancing rule.
+// If the operation fails it returns the *CloudError error type.
 func (client *LoadBalancerLoadBalancingRulesClient) Get(ctx context.Context, resourceGroupName string, loadBalancerName string, loadBalancingRuleName string, options *LoadBalancerLoadBalancingRulesGetOptions) (LoadBalancingRuleResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, loadBalancerName, loadBalancingRuleName, options)
 	if err != nil {
@@ -100,6 +101,7 @@ func (client *LoadBalancerLoadBalancingRulesClient) getHandleError(resp *azcore.
 }
 
 // List - Gets all the load balancing rules in a load balancer.
+// If the operation fails it returns the *CloudError error type.
 func (client *LoadBalancerLoadBalancingRulesClient) List(resourceGroupName string, loadBalancerName string, options *LoadBalancerLoadBalancingRulesListOptions) LoadBalancerLoadBalancingRuleListResultPager {
 	return &loadBalancerLoadBalancingRuleListResultPager{
 		pipeline: client.con.Pipeline(),

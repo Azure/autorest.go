@@ -2949,6 +2949,7 @@ type CpkScopeInfo struct {
 	EncryptionScope *string
 }
 
+// Implements the error and azcore.HTTPResponse interfaces.
 type DataLakeStorageError struct {
 	raw string
 	// The service error response object.
@@ -4165,6 +4166,7 @@ type StaticWebsite struct {
 	IndexDocument *string `xml:"IndexDocument"`
 }
 
+// Implements the error and azcore.HTTPResponse interfaces.
 type StorageError struct {
 	raw     string
 	Message *string `xml:"Message"`

@@ -31,6 +31,7 @@ func NewVPNSiteLinkConnectionsClient(con *armcore.Connection, subscriptionID str
 }
 
 // Get - Retrieves the details of a vpn site link connection.
+// If the operation fails it returns the *CloudError error type.
 func (client *VPNSiteLinkConnectionsClient) Get(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, linkConnectionName string, options *VPNSiteLinkConnectionsGetOptions) (VPNSiteLinkConnectionResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, gatewayName, connectionName, linkConnectionName, options)
 	if err != nil {

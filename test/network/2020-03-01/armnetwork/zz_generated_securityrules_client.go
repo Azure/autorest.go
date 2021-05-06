@@ -32,6 +32,7 @@ func NewSecurityRulesClient(con *armcore.Connection, subscriptionID string) *Sec
 }
 
 // BeginCreateOrUpdate - Creates or updates a security rule in the specified network security group.
+// If the operation fails it returns the *CloudError error type.
 func (client *SecurityRulesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, securityRuleParameters SecurityRule, options *SecurityRulesBeginCreateOrUpdateOptions) (SecurityRulePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, networkSecurityGroupName, securityRuleName, securityRuleParameters, options)
 	if err != nil {
@@ -81,6 +82,7 @@ func (client *SecurityRulesClient) ResumeCreateOrUpdate(ctx context.Context, tok
 }
 
 // CreateOrUpdate - Creates or updates a security rule in the specified network security group.
+// If the operation fails it returns the *CloudError error type.
 func (client *SecurityRulesClient) createOrUpdate(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, securityRuleParameters SecurityRule, options *SecurityRulesBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, networkSecurityGroupName, securityRuleName, securityRuleParameters, options)
 	if err != nil {
@@ -150,6 +152,7 @@ func (client *SecurityRulesClient) createOrUpdateHandleError(resp *azcore.Respon
 }
 
 // BeginDelete - Deletes the specified network security rule.
+// If the operation fails it returns the *CloudError error type.
 func (client *SecurityRulesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, options *SecurityRulesBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, networkSecurityGroupName, securityRuleName, options)
 	if err != nil {
@@ -199,6 +202,7 @@ func (client *SecurityRulesClient) ResumeDelete(ctx context.Context, token strin
 }
 
 // Delete - Deletes the specified network security rule.
+// If the operation fails it returns the *CloudError error type.
 func (client *SecurityRulesClient) deleteOperation(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, options *SecurityRulesBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, networkSecurityGroupName, securityRuleName, options)
 	if err != nil {
@@ -259,6 +263,7 @@ func (client *SecurityRulesClient) deleteHandleError(resp *azcore.Response) erro
 }
 
 // Get - Get the specified network security rule.
+// If the operation fails it returns the *CloudError error type.
 func (client *SecurityRulesClient) Get(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, options *SecurityRulesGetOptions) (SecurityRuleResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkSecurityGroupName, securityRuleName, options)
 	if err != nil {
@@ -328,6 +333,7 @@ func (client *SecurityRulesClient) getHandleError(resp *azcore.Response) error {
 }
 
 // List - Gets all security rules in a network security group.
+// If the operation fails it returns the *CloudError error type.
 func (client *SecurityRulesClient) List(resourceGroupName string, networkSecurityGroupName string, options *SecurityRulesListOptions) SecurityRuleListResultPager {
 	return &securityRuleListResultPager{
 		pipeline: client.con.Pipeline(),

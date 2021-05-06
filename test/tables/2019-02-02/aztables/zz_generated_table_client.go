@@ -32,6 +32,7 @@ func NewTableClient(con *Connection) *TableClient {
 }
 
 // Create - Creates a new table under the given account.
+// If the operation fails it returns the *TableServiceError error type.
 // Possible return types are *TableResponseResponse, *TableCreateResponse
 func (client *TableClient) Create(ctx context.Context, tableProperties TableProperties, tableCreateOptions *TableCreateOptions, queryOptions *QueryOptions) (interface{}, error) {
 	req, err := client.createCreateRequest(ctx, tableProperties, tableCreateOptions, queryOptions)
@@ -143,6 +144,7 @@ func (client *TableClient) createHandleError(resp *azcore.Response) error {
 }
 
 // Delete - Operation permanently deletes the specified table.
+// If the operation fails it returns the *TableServiceError error type.
 func (client *TableClient) Delete(ctx context.Context, table string, options *TableDeleteOptions) (TableDeleteResponse, error) {
 	req, err := client.deleteCreateRequest(ctx, table, options)
 	if err != nil {
@@ -214,6 +216,7 @@ func (client *TableClient) deleteHandleError(resp *azcore.Response) error {
 }
 
 // DeleteEntity - Deletes the specified entity in a table.
+// If the operation fails it returns the *TableServiceError error type.
 func (client *TableClient) DeleteEntity(ctx context.Context, table string, partitionKey string, rowKey string, ifMatch string, tableDeleteEntityOptions *TableDeleteEntityOptions, queryOptions *QueryOptions) (TableDeleteEntityResponse, error) {
 	req, err := client.deleteEntityCreateRequest(ctx, table, partitionKey, rowKey, ifMatch, tableDeleteEntityOptions, queryOptions)
 	if err != nil {
@@ -303,6 +306,7 @@ func (client *TableClient) deleteEntityHandleError(resp *azcore.Response) error 
 }
 
 // GetAccessPolicy - Retrieves details about any stored access policies specified on the table that may be used with Shared Access Signatures.
+// If the operation fails it returns the *TableServiceError error type.
 func (client *TableClient) GetAccessPolicy(ctx context.Context, table string, options *TableGetAccessPolicyOptions) (SignedIdentifierArrayResponse, error) {
 	req, err := client.getAccessPolicyCreateRequest(ctx, table, options)
 	if err != nil {
@@ -383,6 +387,7 @@ func (client *TableClient) getAccessPolicyHandleError(resp *azcore.Response) err
 }
 
 // InsertEntity - Insert entity in a table.
+// If the operation fails it returns the *TableServiceError error type.
 // Possible return types are *MapOfInterfaceResponse, *TableInsertEntityResponse
 func (client *TableClient) InsertEntity(ctx context.Context, table string, tableInsertEntityOptions *TableInsertEntityOptions, queryOptions *QueryOptions) (interface{}, error) {
 	req, err := client.insertEntityCreateRequest(ctx, table, tableInsertEntityOptions, queryOptions)
@@ -522,6 +527,7 @@ func (client *TableClient) insertEntityHandleError(resp *azcore.Response) error 
 }
 
 // MergeEntity - Merge entity in a table.
+// If the operation fails it returns the *TableServiceError error type.
 func (client *TableClient) MergeEntity(ctx context.Context, table string, partitionKey string, rowKey string, tableMergeEntityOptions *TableMergeEntityOptions, queryOptions *QueryOptions) (TableMergeEntityResponse, error) {
 	req, err := client.mergeEntityCreateRequest(ctx, table, partitionKey, rowKey, tableMergeEntityOptions, queryOptions)
 	if err != nil {
@@ -619,6 +625,7 @@ func (client *TableClient) mergeEntityHandleError(resp *azcore.Response) error {
 }
 
 // Query - Queries tables under the given account.
+// If the operation fails it returns a generic error.
 func (client *TableClient) Query(ctx context.Context, tableQueryOptions *TableQueryOptions, queryOptions *QueryOptions) (TableQueryResponseResponse, error) {
 	req, err := client.queryCreateRequest(ctx, tableQueryOptions, queryOptions)
 	if err != nil {
@@ -710,6 +717,7 @@ func (client *TableClient) queryHandleError(resp *azcore.Response) error {
 }
 
 // QueryEntities - Queries entities in a table.
+// If the operation fails it returns the *TableServiceError error type.
 func (client *TableClient) QueryEntities(ctx context.Context, table string, tableQueryEntitiesOptions *TableQueryEntitiesOptions, queryOptions *QueryOptions) (TableEntityQueryResponseResponse, error) {
 	req, err := client.queryEntitiesCreateRequest(ctx, table, tableQueryEntitiesOptions, queryOptions)
 	if err != nil {
@@ -815,6 +823,7 @@ func (client *TableClient) queryEntitiesHandleError(resp *azcore.Response) error
 }
 
 // QueryEntityWithPartitionAndRowKey - Queries a single entity in a table.
+// If the operation fails it returns the *TableServiceError error type.
 func (client *TableClient) QueryEntityWithPartitionAndRowKey(ctx context.Context, table string, partitionKey string, rowKey string, tableQueryEntityWithPartitionAndRowKeyOptions *TableQueryEntityWithPartitionAndRowKeyOptions, queryOptions *QueryOptions) (MapOfInterfaceResponse, error) {
 	req, err := client.queryEntityWithPartitionAndRowKeyCreateRequest(ctx, table, partitionKey, rowKey, tableQueryEntityWithPartitionAndRowKeyOptions, queryOptions)
 	if err != nil {
@@ -928,6 +937,7 @@ func (client *TableClient) queryEntityWithPartitionAndRowKeyHandleError(resp *az
 }
 
 // SetAccessPolicy - Sets stored access policies for the table that may be used with Shared Access Signatures.
+// If the operation fails it returns the *TableServiceError error type.
 func (client *TableClient) SetAccessPolicy(ctx context.Context, table string, options *TableSetAccessPolicyOptions) (TableSetAccessPolicyResponse, error) {
 	req, err := client.setAccessPolicyCreateRequest(ctx, table, options)
 	if err != nil {
@@ -1012,6 +1022,7 @@ func (client *TableClient) setAccessPolicyHandleError(resp *azcore.Response) err
 }
 
 // UpdateEntity - Update entity in a table.
+// If the operation fails it returns the *TableServiceError error type.
 func (client *TableClient) UpdateEntity(ctx context.Context, table string, partitionKey string, rowKey string, tableUpdateEntityOptions *TableUpdateEntityOptions, queryOptions *QueryOptions) (TableUpdateEntityResponse, error) {
 	req, err := client.updateEntityCreateRequest(ctx, table, partitionKey, rowKey, tableUpdateEntityOptions, queryOptions)
 	if err != nil {

@@ -31,6 +31,7 @@ func NewContainerServicesClient(con *armcore.Connection, subscriptionID string) 
 }
 
 // BeginCreateOrUpdate - Creates or updates a container service with the specified configuration of orchestrator, masters, and agents.
+// If the operation fails it returns a generic error.
 func (client *ContainerServicesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, containerServiceName string, parameters ContainerService, options *ContainerServicesBeginCreateOrUpdateOptions) (ContainerServicePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, containerServiceName, parameters, options)
 	if err != nil {
@@ -80,6 +81,7 @@ func (client *ContainerServicesClient) ResumeCreateOrUpdate(ctx context.Context,
 }
 
 // CreateOrUpdate - Creates or updates a container service with the specified configuration of orchestrator, masters, and agents.
+// If the operation fails it returns a generic error.
 func (client *ContainerServicesClient) createOrUpdate(ctx context.Context, resourceGroupName string, containerServiceName string, parameters ContainerService, options *ContainerServicesBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, containerServiceName, parameters, options)
 	if err != nil {
@@ -147,6 +149,7 @@ func (client *ContainerServicesClient) createOrUpdateHandleError(resp *azcore.Re
 // created as part of creating a container service, including
 // storage accounts, VMs, and availability sets. All the other resources created with the container service are part of the same resource group and can
 // be deleted individually.
+// If the operation fails it returns a generic error.
 func (client *ContainerServicesClient) BeginDelete(ctx context.Context, resourceGroupName string, containerServiceName string, options *ContainerServicesBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, containerServiceName, options)
 	if err != nil {
@@ -199,6 +202,7 @@ func (client *ContainerServicesClient) ResumeDelete(ctx context.Context, token s
 // as part of creating a container service, including
 // storage accounts, VMs, and availability sets. All the other resources created with the container service are part of the same resource group and can
 // be deleted individually.
+// If the operation fails it returns a generic error.
 func (client *ContainerServicesClient) deleteOperation(ctx context.Context, resourceGroupName string, containerServiceName string, options *ContainerServicesBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, containerServiceName, options)
 	if err != nil {
@@ -255,6 +259,7 @@ func (client *ContainerServicesClient) deleteHandleError(resp *azcore.Response) 
 // Get - Gets the properties of the specified container service in the specified subscription and resource group. The operation returns the properties including
 // state, orchestrator, number of masters and
 // agents, and FQDNs of masters and agents.
+// If the operation fails it returns a generic error.
 func (client *ContainerServicesClient) Get(ctx context.Context, resourceGroupName string, containerServiceName string, options *ContainerServicesGetOptions) (ContainerServiceResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, containerServiceName, options)
 	if err != nil {
@@ -321,6 +326,7 @@ func (client *ContainerServicesClient) getHandleError(resp *azcore.Response) err
 // List - Gets a list of container services in the specified subscription. The operation returns properties of each container service including state, orchestrator,
 // number of masters and agents, and FQDNs of
 // masters and agents.
+// If the operation fails it returns a generic error.
 func (client *ContainerServicesClient) List(options *ContainerServicesListOptions) ContainerServiceListResultPager {
 	return &containerServiceListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -379,6 +385,7 @@ func (client *ContainerServicesClient) listHandleError(resp *azcore.Response) er
 // ListByResourceGroup - Gets a list of container services in the specified subscription and resource group. The operation returns properties of each container
 // service including state, orchestrator, number of masters and
 // agents, and FQDNs of masters and agents.
+// If the operation fails it returns a generic error.
 func (client *ContainerServicesClient) ListByResourceGroup(resourceGroupName string, options *ContainerServicesListByResourceGroupOptions) ContainerServiceListResultPager {
 	return &containerServiceListResultPager{
 		pipeline: client.con.Pipeline(),

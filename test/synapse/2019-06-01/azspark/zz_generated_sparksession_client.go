@@ -22,6 +22,7 @@ type sparkSessionClient struct {
 }
 
 // CancelSparkSession - Cancels a running spark session.
+// If the operation fails it returns a generic error.
 func (client *sparkSessionClient) CancelSparkSession(ctx context.Context, sessionID int32, options *SparkSessionCancelSparkSessionOptions) (*http.Response, error) {
 	req, err := client.cancelSparkSessionCreateRequest(ctx, sessionID, options)
 	if err != nil {
@@ -62,6 +63,7 @@ func (client *sparkSessionClient) cancelSparkSessionHandleError(resp *azcore.Res
 }
 
 // CancelSparkStatement - Kill a statement within a session.
+// If the operation fails it returns a generic error.
 func (client *sparkSessionClient) CancelSparkStatement(ctx context.Context, sessionID int32, statementID int32, options *SparkSessionCancelSparkStatementOptions) (SparkStatementCancellationResultResponse, error) {
 	req, err := client.cancelSparkStatementCreateRequest(ctx, sessionID, statementID, options)
 	if err != nil {
@@ -113,6 +115,7 @@ func (client *sparkSessionClient) cancelSparkStatementHandleError(resp *azcore.R
 }
 
 // CreateSparkSession - Create new spark session.
+// If the operation fails it returns a generic error.
 func (client *sparkSessionClient) CreateSparkSession(ctx context.Context, sparkSessionOptions SparkSessionOptions, options *SparkSessionCreateSparkSessionOptions) (SparkSessionResponse, error) {
 	req, err := client.createSparkSessionCreateRequest(ctx, sparkSessionOptions, options)
 	if err != nil {
@@ -167,6 +170,7 @@ func (client *sparkSessionClient) createSparkSessionHandleError(resp *azcore.Res
 }
 
 // CreateSparkStatement - Create statement within a spark session.
+// If the operation fails it returns a generic error.
 func (client *sparkSessionClient) CreateSparkStatement(ctx context.Context, sessionID int32, sparkStatementOptions SparkStatementOptions, options *SparkSessionCreateSparkStatementOptions) (SparkStatementResponse, error) {
 	req, err := client.createSparkStatementCreateRequest(ctx, sessionID, sparkStatementOptions, options)
 	if err != nil {
@@ -217,6 +221,7 @@ func (client *sparkSessionClient) createSparkStatementHandleError(resp *azcore.R
 }
 
 // GetSparkSession - Gets a single spark session.
+// If the operation fails it returns a generic error.
 func (client *sparkSessionClient) GetSparkSession(ctx context.Context, sessionID int32, options *SparkSessionGetSparkSessionOptions) (SparkSessionResponse, error) {
 	req, err := client.getSparkSessionCreateRequest(ctx, sessionID, options)
 	if err != nil {
@@ -272,6 +277,7 @@ func (client *sparkSessionClient) getSparkSessionHandleError(resp *azcore.Respon
 }
 
 // GetSparkSessions - List all spark sessions which are running under a particular spark pool.
+// If the operation fails it returns a generic error.
 func (client *sparkSessionClient) GetSparkSessions(ctx context.Context, options *SparkSessionGetSparkSessionsOptions) (SparkSessionCollectionResponse, error) {
 	req, err := client.getSparkSessionsCreateRequest(ctx, options)
 	if err != nil {
@@ -332,6 +338,7 @@ func (client *sparkSessionClient) getSparkSessionsHandleError(resp *azcore.Respo
 }
 
 // GetSparkStatement - Gets a single statement within a spark session.
+// If the operation fails it returns a generic error.
 func (client *sparkSessionClient) GetSparkStatement(ctx context.Context, sessionID int32, statementID int32, options *SparkSessionGetSparkStatementOptions) (SparkStatementResponse, error) {
 	req, err := client.getSparkStatementCreateRequest(ctx, sessionID, statementID, options)
 	if err != nil {
@@ -383,6 +390,7 @@ func (client *sparkSessionClient) getSparkStatementHandleError(resp *azcore.Resp
 }
 
 // GetSparkStatements - Gets a list of statements within a spark session.
+// If the operation fails it returns a generic error.
 func (client *sparkSessionClient) GetSparkStatements(ctx context.Context, sessionID int32, options *SparkSessionGetSparkStatementsOptions) (SparkStatementCollectionResponse, error) {
 	req, err := client.getSparkStatementsCreateRequest(ctx, sessionID, options)
 	if err != nil {
@@ -433,6 +441,7 @@ func (client *sparkSessionClient) getSparkStatementsHandleError(resp *azcore.Res
 }
 
 // ResetSparkSessionTimeout - Sends a keep alive call to the current session to reset the session timeout.
+// If the operation fails it returns a generic error.
 func (client *sparkSessionClient) ResetSparkSessionTimeout(ctx context.Context, sessionID int32, options *SparkSessionResetSparkSessionTimeoutOptions) (*http.Response, error) {
 	req, err := client.resetSparkSessionTimeoutCreateRequest(ctx, sessionID, options)
 	if err != nil {

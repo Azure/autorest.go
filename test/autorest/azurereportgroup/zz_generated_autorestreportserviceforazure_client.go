@@ -26,6 +26,7 @@ func NewAutoRestReportServiceForAzureClient(con *Connection) *AutoRestReportServ
 }
 
 // GetReport - Get test coverage report
+// If the operation fails it returns the *Error error type.
 func (client *AutoRestReportServiceForAzureClient) GetReport(ctx context.Context, options *AutoRestReportServiceForAzureGetReportOptions) (MapOfInt32Response, error) {
 	req, err := client.getReportCreateRequest(ctx, options)
 	if err != nil {

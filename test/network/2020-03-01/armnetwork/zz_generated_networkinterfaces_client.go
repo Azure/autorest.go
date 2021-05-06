@@ -32,6 +32,7 @@ func NewNetworkInterfacesClient(con *armcore.Connection, subscriptionID string) 
 }
 
 // BeginCreateOrUpdate - Creates or updates a network interface.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkInterfacesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkInterfaceName string, parameters NetworkInterface, options *NetworkInterfacesBeginCreateOrUpdateOptions) (NetworkInterfacePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, networkInterfaceName, parameters, options)
 	if err != nil {
@@ -81,6 +82,7 @@ func (client *NetworkInterfacesClient) ResumeCreateOrUpdate(ctx context.Context,
 }
 
 // CreateOrUpdate - Creates or updates a network interface.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkInterfacesClient) createOrUpdate(ctx context.Context, resourceGroupName string, networkInterfaceName string, parameters NetworkInterface, options *NetworkInterfacesBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, networkInterfaceName, parameters, options)
 	if err != nil {
@@ -146,6 +148,7 @@ func (client *NetworkInterfacesClient) createOrUpdateHandleError(resp *azcore.Re
 }
 
 // BeginDelete - Deletes the specified network interface.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkInterfacesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *NetworkInterfacesBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, networkInterfaceName, options)
 	if err != nil {
@@ -195,6 +198,7 @@ func (client *NetworkInterfacesClient) ResumeDelete(ctx context.Context, token s
 }
 
 // Delete - Deletes the specified network interface.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkInterfacesClient) deleteOperation(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *NetworkInterfacesBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, networkInterfaceName, options)
 	if err != nil {
@@ -251,6 +255,7 @@ func (client *NetworkInterfacesClient) deleteHandleError(resp *azcore.Response) 
 }
 
 // Get - Gets information about the specified network interface.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkInterfacesClient) Get(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *NetworkInterfacesGetOptions) (NetworkInterfaceResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkInterfaceName, options)
 	if err != nil {
@@ -319,6 +324,7 @@ func (client *NetworkInterfacesClient) getHandleError(resp *azcore.Response) err
 }
 
 // BeginGetEffectiveRouteTable - Gets all route tables applied to a network interface.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkInterfacesClient) BeginGetEffectiveRouteTable(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *NetworkInterfacesBeginGetEffectiveRouteTableOptions) (EffectiveRouteListResultPollerResponse, error) {
 	resp, err := client.getEffectiveRouteTable(ctx, resourceGroupName, networkInterfaceName, options)
 	if err != nil {
@@ -368,6 +374,7 @@ func (client *NetworkInterfacesClient) ResumeGetEffectiveRouteTable(ctx context.
 }
 
 // GetEffectiveRouteTable - Gets all route tables applied to a network interface.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkInterfacesClient) getEffectiveRouteTable(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *NetworkInterfacesBeginGetEffectiveRouteTableOptions) (*azcore.Response, error) {
 	req, err := client.getEffectiveRouteTableCreateRequest(ctx, resourceGroupName, networkInterfaceName, options)
 	if err != nil {
@@ -433,6 +440,7 @@ func (client *NetworkInterfacesClient) getEffectiveRouteTableHandleError(resp *a
 }
 
 // GetVirtualMachineScaleSetIPConfiguration - Get the specified network interface ip configuration in a virtual machine scale set.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkInterfacesClient) GetVirtualMachineScaleSetIPConfiguration(ctx context.Context, resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, ipConfigurationName string, options *NetworkInterfacesGetVirtualMachineScaleSetIPConfigurationOptions) (NetworkInterfaceIPConfigurationResponse, error) {
 	req, err := client.getVirtualMachineScaleSetIPConfigurationCreateRequest(ctx, resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, ipConfigurationName, options)
 	if err != nil {
@@ -513,6 +521,7 @@ func (client *NetworkInterfacesClient) getVirtualMachineScaleSetIPConfigurationH
 }
 
 // GetVirtualMachineScaleSetNetworkInterface - Get the specified network interface in a virtual machine scale set.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkInterfacesClient) GetVirtualMachineScaleSetNetworkInterface(ctx context.Context, resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, options *NetworkInterfacesGetVirtualMachineScaleSetNetworkInterfaceOptions) (NetworkInterfaceResponse, error) {
 	req, err := client.getVirtualMachineScaleSetNetworkInterfaceCreateRequest(ctx, resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, options)
 	if err != nil {
@@ -589,6 +598,7 @@ func (client *NetworkInterfacesClient) getVirtualMachineScaleSetNetworkInterface
 }
 
 // List - Gets all network interfaces in a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkInterfacesClient) List(resourceGroupName string, options *NetworkInterfacesListOptions) NetworkInterfaceListResultPager {
 	return &networkInterfaceListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -650,6 +660,7 @@ func (client *NetworkInterfacesClient) listHandleError(resp *azcore.Response) er
 }
 
 // ListAll - Gets all network interfaces in a subscription.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkInterfacesClient) ListAll(options *NetworkInterfacesListAllOptions) NetworkInterfaceListResultPager {
 	return &networkInterfaceListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -707,6 +718,7 @@ func (client *NetworkInterfacesClient) listAllHandleError(resp *azcore.Response)
 }
 
 // BeginListEffectiveNetworkSecurityGroups - Gets all network security groups applied to a network interface.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkInterfacesClient) BeginListEffectiveNetworkSecurityGroups(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *NetworkInterfacesBeginListEffectiveNetworkSecurityGroupsOptions) (EffectiveNetworkSecurityGroupListResultPollerResponse, error) {
 	resp, err := client.listEffectiveNetworkSecurityGroups(ctx, resourceGroupName, networkInterfaceName, options)
 	if err != nil {
@@ -756,6 +768,7 @@ func (client *NetworkInterfacesClient) ResumeListEffectiveNetworkSecurityGroups(
 }
 
 // ListEffectiveNetworkSecurityGroups - Gets all network security groups applied to a network interface.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkInterfacesClient) listEffectiveNetworkSecurityGroups(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *NetworkInterfacesBeginListEffectiveNetworkSecurityGroupsOptions) (*azcore.Response, error) {
 	req, err := client.listEffectiveNetworkSecurityGroupsCreateRequest(ctx, resourceGroupName, networkInterfaceName, options)
 	if err != nil {
@@ -821,6 +834,7 @@ func (client *NetworkInterfacesClient) listEffectiveNetworkSecurityGroupsHandleE
 }
 
 // ListVirtualMachineScaleSetIPConfigurations - Get the specified network interface ip configuration in a virtual machine scale set.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkInterfacesClient) ListVirtualMachineScaleSetIPConfigurations(resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, options *NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsOptions) NetworkInterfaceIPConfigurationListResultPager {
 	return &networkInterfaceIPConfigurationListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -897,6 +911,7 @@ func (client *NetworkInterfacesClient) listVirtualMachineScaleSetIPConfiguration
 }
 
 // ListVirtualMachineScaleSetNetworkInterfaces - Gets all network interfaces in a virtual machine scale set.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkInterfacesClient) ListVirtualMachineScaleSetNetworkInterfaces(resourceGroupName string, virtualMachineScaleSetName string, options *NetworkInterfacesListVirtualMachineScaleSetNetworkInterfacesOptions) NetworkInterfaceListResultPager {
 	return &networkInterfaceListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -962,6 +977,7 @@ func (client *NetworkInterfacesClient) listVirtualMachineScaleSetNetworkInterfac
 }
 
 // ListVirtualMachineScaleSetVMNetworkInterfaces - Gets information about all network interfaces in a virtual machine in a virtual machine scale set.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkInterfacesClient) ListVirtualMachineScaleSetVMNetworkInterfaces(resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, options *NetworkInterfacesListVirtualMachineScaleSetVMNetworkInterfacesOptions) NetworkInterfaceListResultPager {
 	return &networkInterfaceListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -1031,6 +1047,7 @@ func (client *NetworkInterfacesClient) listVirtualMachineScaleSetVMNetworkInterf
 }
 
 // UpdateTags - Updates a network interface tags.
+// If the operation fails it returns the *CloudError error type.
 func (client *NetworkInterfacesClient) UpdateTags(ctx context.Context, resourceGroupName string, networkInterfaceName string, parameters TagsObject, options *NetworkInterfacesUpdateTagsOptions) (NetworkInterfaceResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, networkInterfaceName, parameters, options)
 	if err != nil {

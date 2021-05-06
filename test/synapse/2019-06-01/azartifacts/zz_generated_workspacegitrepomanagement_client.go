@@ -19,6 +19,7 @@ type workspaceGitRepoManagementClient struct {
 }
 
 // GetGitHubAccessToken - Get the GitHub access token.
+// If the operation fails it returns a generic error.
 func (client *workspaceGitRepoManagementClient) GetGitHubAccessToken(ctx context.Context, gitHubAccessTokenRequest GitHubAccessTokenRequest, options *WorkspaceGitRepoManagementGetGitHubAccessTokenOptions) (GitHubAccessTokenResponseResponse, error) {
 	req, err := client.getGitHubAccessTokenCreateRequest(ctx, gitHubAccessTokenRequest, options)
 	if err != nil {

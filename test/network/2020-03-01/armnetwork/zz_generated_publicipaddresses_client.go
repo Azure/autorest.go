@@ -32,6 +32,7 @@ func NewPublicIPAddressesClient(con *armcore.Connection, subscriptionID string) 
 }
 
 // BeginCreateOrUpdate - Creates or updates a static or dynamic public IP address.
+// If the operation fails it returns the *CloudError error type.
 func (client *PublicIPAddressesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, publicIPAddressName string, parameters PublicIPAddress, options *PublicIPAddressesBeginCreateOrUpdateOptions) (PublicIPAddressPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, publicIPAddressName, parameters, options)
 	if err != nil {
@@ -81,6 +82,7 @@ func (client *PublicIPAddressesClient) ResumeCreateOrUpdate(ctx context.Context,
 }
 
 // CreateOrUpdate - Creates or updates a static or dynamic public IP address.
+// If the operation fails it returns the *CloudError error type.
 func (client *PublicIPAddressesClient) createOrUpdate(ctx context.Context, resourceGroupName string, publicIPAddressName string, parameters PublicIPAddress, options *PublicIPAddressesBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, publicIPAddressName, parameters, options)
 	if err != nil {
@@ -146,6 +148,7 @@ func (client *PublicIPAddressesClient) createOrUpdateHandleError(resp *azcore.Re
 }
 
 // BeginDelete - Deletes the specified public IP address.
+// If the operation fails it returns the *CloudError error type.
 func (client *PublicIPAddressesClient) BeginDelete(ctx context.Context, resourceGroupName string, publicIPAddressName string, options *PublicIPAddressesBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, publicIPAddressName, options)
 	if err != nil {
@@ -195,6 +198,7 @@ func (client *PublicIPAddressesClient) ResumeDelete(ctx context.Context, token s
 }
 
 // Delete - Deletes the specified public IP address.
+// If the operation fails it returns the *CloudError error type.
 func (client *PublicIPAddressesClient) deleteOperation(ctx context.Context, resourceGroupName string, publicIPAddressName string, options *PublicIPAddressesBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, publicIPAddressName, options)
 	if err != nil {
@@ -251,6 +255,7 @@ func (client *PublicIPAddressesClient) deleteHandleError(resp *azcore.Response) 
 }
 
 // Get - Gets the specified public IP address in a specified resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *PublicIPAddressesClient) Get(ctx context.Context, resourceGroupName string, publicIPAddressName string, options *PublicIPAddressesGetOptions) (PublicIPAddressResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, publicIPAddressName, options)
 	if err != nil {
@@ -319,6 +324,7 @@ func (client *PublicIPAddressesClient) getHandleError(resp *azcore.Response) err
 }
 
 // GetVirtualMachineScaleSetPublicIPAddress - Get the specified public IP address in a virtual machine scale set.
+// If the operation fails it returns the *CloudError error type.
 func (client *PublicIPAddressesClient) GetVirtualMachineScaleSetPublicIPAddress(ctx context.Context, resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, ipConfigurationName string, publicIPAddressName string, options *PublicIPAddressesGetVirtualMachineScaleSetPublicIPAddressOptions) (PublicIPAddressResponse, error) {
 	req, err := client.getVirtualMachineScaleSetPublicIPAddressCreateRequest(ctx, resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, ipConfigurationName, publicIPAddressName, options)
 	if err != nil {
@@ -403,6 +409,7 @@ func (client *PublicIPAddressesClient) getVirtualMachineScaleSetPublicIPAddressH
 }
 
 // List - Gets all public IP addresses in a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *PublicIPAddressesClient) List(resourceGroupName string, options *PublicIPAddressesListOptions) PublicIPAddressListResultPager {
 	return &publicIPAddressListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -464,6 +471,7 @@ func (client *PublicIPAddressesClient) listHandleError(resp *azcore.Response) er
 }
 
 // ListAll - Gets all the public IP addresses in a subscription.
+// If the operation fails it returns the *CloudError error type.
 func (client *PublicIPAddressesClient) ListAll(options *PublicIPAddressesListAllOptions) PublicIPAddressListResultPager {
 	return &publicIPAddressListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -521,6 +529,7 @@ func (client *PublicIPAddressesClient) listAllHandleError(resp *azcore.Response)
 }
 
 // ListVirtualMachineScaleSetPublicIPAddresses - Gets information about all public IP addresses on a virtual machine scale set level.
+// If the operation fails it returns the *CloudError error type.
 func (client *PublicIPAddressesClient) ListVirtualMachineScaleSetPublicIPAddresses(resourceGroupName string, virtualMachineScaleSetName string, options *PublicIPAddressesListVirtualMachineScaleSetPublicIPAddressesOptions) PublicIPAddressListResultPager {
 	return &publicIPAddressListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -587,6 +596,7 @@ func (client *PublicIPAddressesClient) listVirtualMachineScaleSetPublicIPAddress
 
 // ListVirtualMachineScaleSetVMPublicIPAddresses - Gets information about all public IP addresses in a virtual machine IP configuration in a virtual machine
 // scale set.
+// If the operation fails it returns the *CloudError error type.
 func (client *PublicIPAddressesClient) ListVirtualMachineScaleSetVMPublicIPAddresses(resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, ipConfigurationName string, options *PublicIPAddressesListVirtualMachineScaleSetVMPublicIPAddressesOptions) PublicIPAddressListResultPager {
 	return &publicIPAddressListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -664,6 +674,7 @@ func (client *PublicIPAddressesClient) listVirtualMachineScaleSetVMPublicIPAddre
 }
 
 // UpdateTags - Updates public IP address tags.
+// If the operation fails it returns the *CloudError error type.
 func (client *PublicIPAddressesClient) UpdateTags(ctx context.Context, resourceGroupName string, publicIPAddressName string, parameters TagsObject, options *PublicIPAddressesUpdateTagsOptions) (PublicIPAddressResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, publicIPAddressName, parameters, options)
 	if err != nil {

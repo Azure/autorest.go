@@ -22,6 +22,7 @@ type bigDataPoolsClient struct {
 }
 
 // Get - Get Big Data Pool
+// If the operation fails it returns the *ErrorContract error type.
 func (client *bigDataPoolsClient) Get(ctx context.Context, bigDataPoolName string, options *BigDataPoolsGetOptions) (BigDataPoolResourceInfoResponse, error) {
 	req, err := client.getCreateRequest(ctx, bigDataPoolName, options)
 	if err != nil {
@@ -79,6 +80,7 @@ func (client *bigDataPoolsClient) getHandleError(resp *azcore.Response) error {
 }
 
 // List - List Big Data Pools
+// If the operation fails it returns the *ErrorContract error type.
 func (client *bigDataPoolsClient) List(ctx context.Context, options *BigDataPoolsListOptions) (BigDataPoolResourceInfoListResultResponse, error) {
 	req, err := client.listCreateRequest(ctx, options)
 	if err != nil {

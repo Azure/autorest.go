@@ -26,6 +26,7 @@ func NewHTTPSuccessClient(con *Connection) *HTTPSuccessClient {
 }
 
 // Head200 - Return 200 status code if successful
+// If the operation fails it returns a generic error.
 func (client *HTTPSuccessClient) Head200(ctx context.Context, options *HTTPSuccessHead200Options) (BooleanResponse, error) {
 	req, err := client.head200CreateRequest(ctx, options)
 	if err != nil {
@@ -68,6 +69,7 @@ func (client *HTTPSuccessClient) head200HandleError(resp *azcore.Response) error
 }
 
 // Head204 - Return 204 status code if successful
+// If the operation fails it returns a generic error.
 func (client *HTTPSuccessClient) Head204(ctx context.Context, options *HTTPSuccessHead204Options) (BooleanResponse, error) {
 	req, err := client.head204CreateRequest(ctx, options)
 	if err != nil {
@@ -110,6 +112,7 @@ func (client *HTTPSuccessClient) head204HandleError(resp *azcore.Response) error
 }
 
 // Head404 - Return 404 status code if successful
+// If the operation fails it returns a generic error.
 func (client *HTTPSuccessClient) Head404(ctx context.Context, options *HTTPSuccessHead404Options) (BooleanResponse, error) {
 	req, err := client.head404CreateRequest(ctx, options)
 	if err != nil {

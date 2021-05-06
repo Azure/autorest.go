@@ -32,6 +32,7 @@ func NewGalleriesClient(con *armcore.Connection, subscriptionID string) *Galleri
 }
 
 // BeginCreateOrUpdate - Create or update a Shared Image Gallery.
+// If the operation fails it returns the *CloudError error type.
 func (client *GalleriesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, gallery Gallery, options *GalleriesBeginCreateOrUpdateOptions) (GalleryPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, galleryName, gallery, options)
 	if err != nil {
@@ -81,6 +82,7 @@ func (client *GalleriesClient) ResumeCreateOrUpdate(ctx context.Context, token s
 }
 
 // CreateOrUpdate - Create or update a Shared Image Gallery.
+// If the operation fails it returns the *CloudError error type.
 func (client *GalleriesClient) createOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, gallery Gallery, options *GalleriesBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, galleryName, gallery, options)
 	if err != nil {
@@ -146,6 +148,7 @@ func (client *GalleriesClient) createOrUpdateHandleError(resp *azcore.Response) 
 }
 
 // BeginDelete - Delete a Shared Image Gallery.
+// If the operation fails it returns the *CloudError error type.
 func (client *GalleriesClient) BeginDelete(ctx context.Context, resourceGroupName string, galleryName string, options *GalleriesBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, galleryName, options)
 	if err != nil {
@@ -195,6 +198,7 @@ func (client *GalleriesClient) ResumeDelete(ctx context.Context, token string) (
 }
 
 // Delete - Delete a Shared Image Gallery.
+// If the operation fails it returns the *CloudError error type.
 func (client *GalleriesClient) deleteOperation(ctx context.Context, resourceGroupName string, galleryName string, options *GalleriesBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, galleryName, options)
 	if err != nil {
@@ -251,6 +255,7 @@ func (client *GalleriesClient) deleteHandleError(resp *azcore.Response) error {
 }
 
 // Get - Retrieves information about a Shared Image Gallery.
+// If the operation fails it returns the *CloudError error type.
 func (client *GalleriesClient) Get(ctx context.Context, resourceGroupName string, galleryName string, options *GalleriesGetOptions) (GalleryResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, galleryName, options)
 	if err != nil {
@@ -316,6 +321,7 @@ func (client *GalleriesClient) getHandleError(resp *azcore.Response) error {
 }
 
 // List - List galleries under a subscription.
+// If the operation fails it returns the *CloudError error type.
 func (client *GalleriesClient) List(options *GalleriesListOptions) GalleryListPager {
 	return &galleryListPager{
 		pipeline: client.con.Pipeline(),
@@ -373,6 +379,7 @@ func (client *GalleriesClient) listHandleError(resp *azcore.Response) error {
 }
 
 // ListByResourceGroup - List galleries under a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *GalleriesClient) ListByResourceGroup(resourceGroupName string, options *GalleriesListByResourceGroupOptions) GalleryListPager {
 	return &galleryListPager{
 		pipeline: client.con.Pipeline(),
@@ -434,6 +441,7 @@ func (client *GalleriesClient) listByResourceGroupHandleError(resp *azcore.Respo
 }
 
 // BeginUpdate - Update a Shared Image Gallery.
+// If the operation fails it returns the *CloudError error type.
 func (client *GalleriesClient) BeginUpdate(ctx context.Context, resourceGroupName string, galleryName string, gallery GalleryUpdate, options *GalleriesBeginUpdateOptions) (GalleryPollerResponse, error) {
 	resp, err := client.update(ctx, resourceGroupName, galleryName, gallery, options)
 	if err != nil {
@@ -483,6 +491,7 @@ func (client *GalleriesClient) ResumeUpdate(ctx context.Context, token string) (
 }
 
 // Update - Update a Shared Image Gallery.
+// If the operation fails it returns the *CloudError error type.
 func (client *GalleriesClient) update(ctx context.Context, resourceGroupName string, galleryName string, gallery GalleryUpdate, options *GalleriesBeginUpdateOptions) (*azcore.Response, error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, galleryName, gallery, options)
 	if err != nil {

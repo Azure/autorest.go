@@ -32,6 +32,7 @@ func NewWebApplicationFirewallPoliciesClient(con *armcore.Connection, subscripti
 }
 
 // CreateOrUpdate - Creates or update policy with specified rule set name within a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *WebApplicationFirewallPoliciesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, policyName string, parameters WebApplicationFirewallPolicy, options *WebApplicationFirewallPoliciesCreateOrUpdateOptions) (WebApplicationFirewallPolicyResponse, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, policyName, parameters, options)
 	if err != nil {
@@ -97,6 +98,7 @@ func (client *WebApplicationFirewallPoliciesClient) createOrUpdateHandleError(re
 }
 
 // BeginDelete - Deletes Policy.
+// If the operation fails it returns the *CloudError error type.
 func (client *WebApplicationFirewallPoliciesClient) BeginDelete(ctx context.Context, resourceGroupName string, policyName string, options *WebApplicationFirewallPoliciesBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, policyName, options)
 	if err != nil {
@@ -146,6 +148,7 @@ func (client *WebApplicationFirewallPoliciesClient) ResumeDelete(ctx context.Con
 }
 
 // Delete - Deletes Policy.
+// If the operation fails it returns the *CloudError error type.
 func (client *WebApplicationFirewallPoliciesClient) deleteOperation(ctx context.Context, resourceGroupName string, policyName string, options *WebApplicationFirewallPoliciesBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, policyName, options)
 	if err != nil {
@@ -202,6 +205,7 @@ func (client *WebApplicationFirewallPoliciesClient) deleteHandleError(resp *azco
 }
 
 // Get - Retrieve protection policy with specified name within a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *WebApplicationFirewallPoliciesClient) Get(ctx context.Context, resourceGroupName string, policyName string, options *WebApplicationFirewallPoliciesGetOptions) (WebApplicationFirewallPolicyResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, policyName, options)
 	if err != nil {
@@ -267,6 +271,7 @@ func (client *WebApplicationFirewallPoliciesClient) getHandleError(resp *azcore.
 }
 
 // List - Lists all of the protection policies within a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *WebApplicationFirewallPoliciesClient) List(resourceGroupName string, options *WebApplicationFirewallPoliciesListOptions) WebApplicationFirewallPolicyListResultPager {
 	return &webApplicationFirewallPolicyListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -328,6 +333,7 @@ func (client *WebApplicationFirewallPoliciesClient) listHandleError(resp *azcore
 }
 
 // ListAll - Gets all the WAF policies in a subscription.
+// If the operation fails it returns the *CloudError error type.
 func (client *WebApplicationFirewallPoliciesClient) ListAll(options *WebApplicationFirewallPoliciesListAllOptions) WebApplicationFirewallPolicyListResultPager {
 	return &webApplicationFirewallPolicyListResultPager{
 		pipeline: client.con.Pipeline(),

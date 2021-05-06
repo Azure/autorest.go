@@ -33,6 +33,7 @@ func NewNetworkWatchersClient(con *armcore.Connection, subscriptionID string) *N
 
 // BeginCheckConnectivity - Verifies the possibility of establishing a direct TCP connection from a virtual machine to a given endpoint including another
 // VM or an arbitrary remote server.
+// If the operation fails it returns the *ErrorResponse error type.
 func (client *NetworkWatchersClient) BeginCheckConnectivity(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters ConnectivityParameters, options *NetworkWatchersBeginCheckConnectivityOptions) (ConnectivityInformationPollerResponse, error) {
 	resp, err := client.checkConnectivity(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
@@ -83,6 +84,7 @@ func (client *NetworkWatchersClient) ResumeCheckConnectivity(ctx context.Context
 
 // CheckConnectivity - Verifies the possibility of establishing a direct TCP connection from a virtual machine to a given endpoint including another VM
 // or an arbitrary remote server.
+// If the operation fails it returns the *ErrorResponse error type.
 func (client *NetworkWatchersClient) checkConnectivity(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters ConnectivityParameters, options *NetworkWatchersBeginCheckConnectivityOptions) (*azcore.Response, error) {
 	req, err := client.checkConnectivityCreateRequest(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
@@ -148,6 +150,7 @@ func (client *NetworkWatchersClient) checkConnectivityHandleError(resp *azcore.R
 }
 
 // CreateOrUpdate - Creates or updates a network watcher in the specified resource group.
+// If the operation fails it returns the *ErrorResponse error type.
 func (client *NetworkWatchersClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters NetworkWatcher, options *NetworkWatchersCreateOrUpdateOptions) (NetworkWatcherResponse, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
@@ -213,6 +216,7 @@ func (client *NetworkWatchersClient) createOrUpdateHandleError(resp *azcore.Resp
 }
 
 // BeginDelete - Deletes the specified network watcher resource.
+// If the operation fails it returns the *ErrorResponse error type.
 func (client *NetworkWatchersClient) BeginDelete(ctx context.Context, resourceGroupName string, networkWatcherName string, options *NetworkWatchersBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, networkWatcherName, options)
 	if err != nil {
@@ -262,6 +266,7 @@ func (client *NetworkWatchersClient) ResumeDelete(ctx context.Context, token str
 }
 
 // Delete - Deletes the specified network watcher resource.
+// If the operation fails it returns the *ErrorResponse error type.
 func (client *NetworkWatchersClient) deleteOperation(ctx context.Context, resourceGroupName string, networkWatcherName string, options *NetworkWatchersBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, networkWatcherName, options)
 	if err != nil {
@@ -318,6 +323,7 @@ func (client *NetworkWatchersClient) deleteHandleError(resp *azcore.Response) er
 }
 
 // Get - Gets the specified network watcher by resource group.
+// If the operation fails it returns the *ErrorResponse error type.
 func (client *NetworkWatchersClient) Get(ctx context.Context, resourceGroupName string, networkWatcherName string, options *NetworkWatchersGetOptions) (NetworkWatcherResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkWatcherName, options)
 	if err != nil {
@@ -384,6 +390,7 @@ func (client *NetworkWatchersClient) getHandleError(resp *azcore.Response) error
 
 // BeginGetAzureReachabilityReport - NOTE: This feature is currently in preview and still being tested for stability. Gets the relative latency score for
 // internet service providers from a specified location to Azure regions.
+// If the operation fails it returns the *ErrorResponse error type.
 func (client *NetworkWatchersClient) BeginGetAzureReachabilityReport(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters AzureReachabilityReportParameters, options *NetworkWatchersBeginGetAzureReachabilityReportOptions) (AzureReachabilityReportPollerResponse, error) {
 	resp, err := client.getAzureReachabilityReport(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
@@ -434,6 +441,7 @@ func (client *NetworkWatchersClient) ResumeGetAzureReachabilityReport(ctx contex
 
 // GetAzureReachabilityReport - NOTE: This feature is currently in preview and still being tested for stability. Gets the relative latency score for internet
 // service providers from a specified location to Azure regions.
+// If the operation fails it returns the *ErrorResponse error type.
 func (client *NetworkWatchersClient) getAzureReachabilityReport(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters AzureReachabilityReportParameters, options *NetworkWatchersBeginGetAzureReachabilityReportOptions) (*azcore.Response, error) {
 	req, err := client.getAzureReachabilityReportCreateRequest(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
@@ -499,6 +507,7 @@ func (client *NetworkWatchersClient) getAzureReachabilityReportHandleError(resp 
 }
 
 // BeginGetFlowLogStatus - Queries status of flow log and traffic analytics (optional) on a specified resource.
+// If the operation fails it returns the *ErrorResponse error type.
 func (client *NetworkWatchersClient) BeginGetFlowLogStatus(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters FlowLogStatusParameters, options *NetworkWatchersBeginGetFlowLogStatusOptions) (FlowLogInformationPollerResponse, error) {
 	resp, err := client.getFlowLogStatus(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
@@ -548,6 +557,7 @@ func (client *NetworkWatchersClient) ResumeGetFlowLogStatus(ctx context.Context,
 }
 
 // GetFlowLogStatus - Queries status of flow log and traffic analytics (optional) on a specified resource.
+// If the operation fails it returns the *ErrorResponse error type.
 func (client *NetworkWatchersClient) getFlowLogStatus(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters FlowLogStatusParameters, options *NetworkWatchersBeginGetFlowLogStatusOptions) (*azcore.Response, error) {
 	req, err := client.getFlowLogStatusCreateRequest(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
@@ -617,6 +627,7 @@ func (client *NetworkWatchersClient) getFlowLogStatusHandleError(resp *azcore.Re
 // the result of evaluating these rules. Customers must provide details of a flow like source, destination, protocol, etc. The API returns whether traffic
 // was allowed or denied, the rules evaluated for
 // the specified flow and the evaluation results.
+// If the operation fails it returns the *ErrorResponse error type.
 func (client *NetworkWatchersClient) BeginGetNetworkConfigurationDiagnostic(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters NetworkConfigurationDiagnosticParameters, options *NetworkWatchersBeginGetNetworkConfigurationDiagnosticOptions) (NetworkConfigurationDiagnosticResponsePollerResponse, error) {
 	resp, err := client.getNetworkConfigurationDiagnostic(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
@@ -670,6 +681,7 @@ func (client *NetworkWatchersClient) ResumeGetNetworkConfigurationDiagnostic(ctx
 // the result of evaluating these rules. Customers must provide details of a flow like source, destination, protocol, etc. The API returns whether traffic
 // was allowed or denied, the rules evaluated for
 // the specified flow and the evaluation results.
+// If the operation fails it returns the *ErrorResponse error type.
 func (client *NetworkWatchersClient) getNetworkConfigurationDiagnostic(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters NetworkConfigurationDiagnosticParameters, options *NetworkWatchersBeginGetNetworkConfigurationDiagnosticOptions) (*azcore.Response, error) {
 	req, err := client.getNetworkConfigurationDiagnosticCreateRequest(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
@@ -735,6 +747,7 @@ func (client *NetworkWatchersClient) getNetworkConfigurationDiagnosticHandleErro
 }
 
 // BeginGetNextHop - Gets the next hop from the specified VM.
+// If the operation fails it returns the *ErrorResponse error type.
 func (client *NetworkWatchersClient) BeginGetNextHop(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters NextHopParameters, options *NetworkWatchersBeginGetNextHopOptions) (NextHopResultPollerResponse, error) {
 	resp, err := client.getNextHop(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
@@ -784,6 +797,7 @@ func (client *NetworkWatchersClient) ResumeGetNextHop(ctx context.Context, token
 }
 
 // GetNextHop - Gets the next hop from the specified VM.
+// If the operation fails it returns the *ErrorResponse error type.
 func (client *NetworkWatchersClient) getNextHop(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters NextHopParameters, options *NetworkWatchersBeginGetNextHopOptions) (*azcore.Response, error) {
 	req, err := client.getNextHopCreateRequest(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
@@ -849,6 +863,7 @@ func (client *NetworkWatchersClient) getNextHopHandleError(resp *azcore.Response
 }
 
 // GetTopology - Gets the current network topology by resource group.
+// If the operation fails it returns the *ErrorResponse error type.
 func (client *NetworkWatchersClient) GetTopology(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters TopologyParameters, options *NetworkWatchersGetTopologyOptions) (TopologyResponse, error) {
 	req, err := client.getTopologyCreateRequest(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
@@ -914,6 +929,7 @@ func (client *NetworkWatchersClient) getTopologyHandleError(resp *azcore.Respons
 }
 
 // BeginGetTroubleshooting - Initiate troubleshooting on a specified resource.
+// If the operation fails it returns the *ErrorResponse error type.
 func (client *NetworkWatchersClient) BeginGetTroubleshooting(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters TroubleshootingParameters, options *NetworkWatchersBeginGetTroubleshootingOptions) (TroubleshootingResultPollerResponse, error) {
 	resp, err := client.getTroubleshooting(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
@@ -963,6 +979,7 @@ func (client *NetworkWatchersClient) ResumeGetTroubleshooting(ctx context.Contex
 }
 
 // GetTroubleshooting - Initiate troubleshooting on a specified resource.
+// If the operation fails it returns the *ErrorResponse error type.
 func (client *NetworkWatchersClient) getTroubleshooting(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters TroubleshootingParameters, options *NetworkWatchersBeginGetTroubleshootingOptions) (*azcore.Response, error) {
 	req, err := client.getTroubleshootingCreateRequest(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
@@ -1028,6 +1045,7 @@ func (client *NetworkWatchersClient) getTroubleshootingHandleError(resp *azcore.
 }
 
 // BeginGetTroubleshootingResult - Get the last completed troubleshooting result on a specified resource.
+// If the operation fails it returns the *ErrorResponse error type.
 func (client *NetworkWatchersClient) BeginGetTroubleshootingResult(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters QueryTroubleshootingParameters, options *NetworkWatchersBeginGetTroubleshootingResultOptions) (TroubleshootingResultPollerResponse, error) {
 	resp, err := client.getTroubleshootingResult(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
@@ -1077,6 +1095,7 @@ func (client *NetworkWatchersClient) ResumeGetTroubleshootingResult(ctx context.
 }
 
 // GetTroubleshootingResult - Get the last completed troubleshooting result on a specified resource.
+// If the operation fails it returns the *ErrorResponse error type.
 func (client *NetworkWatchersClient) getTroubleshootingResult(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters QueryTroubleshootingParameters, options *NetworkWatchersBeginGetTroubleshootingResultOptions) (*azcore.Response, error) {
 	req, err := client.getTroubleshootingResultCreateRequest(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
@@ -1142,6 +1161,7 @@ func (client *NetworkWatchersClient) getTroubleshootingResultHandleError(resp *a
 }
 
 // BeginGetVMSecurityRules - Gets the configured and effective security group rules on the specified VM.
+// If the operation fails it returns the *ErrorResponse error type.
 func (client *NetworkWatchersClient) BeginGetVMSecurityRules(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters SecurityGroupViewParameters, options *NetworkWatchersBeginGetVMSecurityRulesOptions) (SecurityGroupViewResultPollerResponse, error) {
 	resp, err := client.getVMSecurityRules(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
@@ -1191,6 +1211,7 @@ func (client *NetworkWatchersClient) ResumeGetVMSecurityRules(ctx context.Contex
 }
 
 // GetVMSecurityRules - Gets the configured and effective security group rules on the specified VM.
+// If the operation fails it returns the *ErrorResponse error type.
 func (client *NetworkWatchersClient) getVMSecurityRules(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters SecurityGroupViewParameters, options *NetworkWatchersBeginGetVMSecurityRulesOptions) (*azcore.Response, error) {
 	req, err := client.getVMSecurityRulesCreateRequest(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
@@ -1256,6 +1277,7 @@ func (client *NetworkWatchersClient) getVMSecurityRulesHandleError(resp *azcore.
 }
 
 // List - Gets all network watchers by resource group.
+// If the operation fails it returns the *ErrorResponse error type.
 func (client *NetworkWatchersClient) List(ctx context.Context, resourceGroupName string, options *NetworkWatchersListOptions) (NetworkWatcherListResultResponse, error) {
 	req, err := client.listCreateRequest(ctx, resourceGroupName, options)
 	if err != nil {
@@ -1317,6 +1339,7 @@ func (client *NetworkWatchersClient) listHandleError(resp *azcore.Response) erro
 }
 
 // ListAll - Gets all network watchers by subscription.
+// If the operation fails it returns the *ErrorResponse error type.
 func (client *NetworkWatchersClient) ListAll(ctx context.Context, options *NetworkWatchersListAllOptions) (NetworkWatcherListResultResponse, error) {
 	req, err := client.listAllCreateRequest(ctx, options)
 	if err != nil {
@@ -1375,6 +1398,7 @@ func (client *NetworkWatchersClient) listAllHandleError(resp *azcore.Response) e
 
 // BeginListAvailableProviders - NOTE: This feature is currently in preview and still being tested for stability. Lists all available internet service providers
 // for a specified Azure region.
+// If the operation fails it returns the *ErrorResponse error type.
 func (client *NetworkWatchersClient) BeginListAvailableProviders(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters AvailableProvidersListParameters, options *NetworkWatchersBeginListAvailableProvidersOptions) (AvailableProvidersListPollerResponse, error) {
 	resp, err := client.listAvailableProviders(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
@@ -1425,6 +1449,7 @@ func (client *NetworkWatchersClient) ResumeListAvailableProviders(ctx context.Co
 
 // ListAvailableProviders - NOTE: This feature is currently in preview and still being tested for stability. Lists all available internet service providers
 // for a specified Azure region.
+// If the operation fails it returns the *ErrorResponse error type.
 func (client *NetworkWatchersClient) listAvailableProviders(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters AvailableProvidersListParameters, options *NetworkWatchersBeginListAvailableProvidersOptions) (*azcore.Response, error) {
 	req, err := client.listAvailableProvidersCreateRequest(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
@@ -1490,6 +1515,7 @@ func (client *NetworkWatchersClient) listAvailableProvidersHandleError(resp *azc
 }
 
 // BeginSetFlowLogConfiguration - Configures flow log and traffic analytics (optional) on a specified resource.
+// If the operation fails it returns the *ErrorResponse error type.
 func (client *NetworkWatchersClient) BeginSetFlowLogConfiguration(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters FlowLogInformation, options *NetworkWatchersBeginSetFlowLogConfigurationOptions) (FlowLogInformationPollerResponse, error) {
 	resp, err := client.setFlowLogConfiguration(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
@@ -1539,6 +1565,7 @@ func (client *NetworkWatchersClient) ResumeSetFlowLogConfiguration(ctx context.C
 }
 
 // SetFlowLogConfiguration - Configures flow log and traffic analytics (optional) on a specified resource.
+// If the operation fails it returns the *ErrorResponse error type.
 func (client *NetworkWatchersClient) setFlowLogConfiguration(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters FlowLogInformation, options *NetworkWatchersBeginSetFlowLogConfigurationOptions) (*azcore.Response, error) {
 	req, err := client.setFlowLogConfigurationCreateRequest(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
@@ -1604,6 +1631,7 @@ func (client *NetworkWatchersClient) setFlowLogConfigurationHandleError(resp *az
 }
 
 // UpdateTags - Updates a network watcher tags.
+// If the operation fails it returns the *ErrorResponse error type.
 func (client *NetworkWatchersClient) UpdateTags(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters TagsObject, options *NetworkWatchersUpdateTagsOptions) (NetworkWatcherResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
@@ -1669,6 +1697,7 @@ func (client *NetworkWatchersClient) updateTagsHandleError(resp *azcore.Response
 }
 
 // BeginVerifyIPFlow - Verify IP flow from the specified VM to a location given the currently configured NSG rules.
+// If the operation fails it returns the *ErrorResponse error type.
 func (client *NetworkWatchersClient) BeginVerifyIPFlow(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters VerificationIPFlowParameters, options *NetworkWatchersBeginVerifyIPFlowOptions) (VerificationIPFlowResultPollerResponse, error) {
 	resp, err := client.verifyIPFlow(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
@@ -1718,6 +1747,7 @@ func (client *NetworkWatchersClient) ResumeVerifyIPFlow(ctx context.Context, tok
 }
 
 // VerifyIPFlow - Verify IP flow from the specified VM to a location given the currently configured NSG rules.
+// If the operation fails it returns the *ErrorResponse error type.
 func (client *NetworkWatchersClient) verifyIPFlow(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters VerificationIPFlowParameters, options *NetworkWatchersBeginVerifyIPFlowOptions) (*azcore.Response, error) {
 	req, err := client.verifyIPFlowCreateRequest(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {

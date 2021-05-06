@@ -32,6 +32,7 @@ func NewLoadBalancersClient(con *armcore.Connection, subscriptionID string) *Loa
 }
 
 // BeginCreateOrUpdate - Creates or updates a load balancer.
+// If the operation fails it returns the *CloudError error type.
 func (client *LoadBalancersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, loadBalancerName string, parameters LoadBalancer, options *LoadBalancersBeginCreateOrUpdateOptions) (LoadBalancerPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, loadBalancerName, parameters, options)
 	if err != nil {
@@ -81,6 +82,7 @@ func (client *LoadBalancersClient) ResumeCreateOrUpdate(ctx context.Context, tok
 }
 
 // CreateOrUpdate - Creates or updates a load balancer.
+// If the operation fails it returns the *CloudError error type.
 func (client *LoadBalancersClient) createOrUpdate(ctx context.Context, resourceGroupName string, loadBalancerName string, parameters LoadBalancer, options *LoadBalancersBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, loadBalancerName, parameters, options)
 	if err != nil {
@@ -146,6 +148,7 @@ func (client *LoadBalancersClient) createOrUpdateHandleError(resp *azcore.Respon
 }
 
 // BeginDelete - Deletes the specified load balancer.
+// If the operation fails it returns the *CloudError error type.
 func (client *LoadBalancersClient) BeginDelete(ctx context.Context, resourceGroupName string, loadBalancerName string, options *LoadBalancersBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, loadBalancerName, options)
 	if err != nil {
@@ -195,6 +198,7 @@ func (client *LoadBalancersClient) ResumeDelete(ctx context.Context, token strin
 }
 
 // Delete - Deletes the specified load balancer.
+// If the operation fails it returns the *CloudError error type.
 func (client *LoadBalancersClient) deleteOperation(ctx context.Context, resourceGroupName string, loadBalancerName string, options *LoadBalancersBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, loadBalancerName, options)
 	if err != nil {
@@ -251,6 +255,7 @@ func (client *LoadBalancersClient) deleteHandleError(resp *azcore.Response) erro
 }
 
 // Get - Gets the specified load balancer.
+// If the operation fails it returns the *CloudError error type.
 func (client *LoadBalancersClient) Get(ctx context.Context, resourceGroupName string, loadBalancerName string, options *LoadBalancersGetOptions) (LoadBalancerResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, loadBalancerName, options)
 	if err != nil {
@@ -319,6 +324,7 @@ func (client *LoadBalancersClient) getHandleError(resp *azcore.Response) error {
 }
 
 // List - Gets all the load balancers in a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *LoadBalancersClient) List(resourceGroupName string, options *LoadBalancersListOptions) LoadBalancerListResultPager {
 	return &loadBalancerListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -380,6 +386,7 @@ func (client *LoadBalancersClient) listHandleError(resp *azcore.Response) error 
 }
 
 // ListAll - Gets all the load balancers in a subscription.
+// If the operation fails it returns the *CloudError error type.
 func (client *LoadBalancersClient) ListAll(options *LoadBalancersListAllOptions) LoadBalancerListResultPager {
 	return &loadBalancerListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -437,6 +444,7 @@ func (client *LoadBalancersClient) listAllHandleError(resp *azcore.Response) err
 }
 
 // UpdateTags - Updates a load balancer tags.
+// If the operation fails it returns the *CloudError error type.
 func (client *LoadBalancersClient) UpdateTags(ctx context.Context, resourceGroupName string, loadBalancerName string, parameters TagsObject, options *LoadBalancersUpdateTagsOptions) (LoadBalancerResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, loadBalancerName, parameters, options)
 	if err != nil {

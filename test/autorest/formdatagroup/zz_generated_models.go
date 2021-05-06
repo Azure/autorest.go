@@ -9,6 +9,7 @@ package formdatagroup
 
 import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 
+// Implements the error and azcore.HTTPResponse interfaces.
 type Error struct {
 	raw     string
 	Message *string `json:"message,omitempty"`

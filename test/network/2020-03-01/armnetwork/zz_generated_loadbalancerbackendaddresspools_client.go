@@ -31,6 +31,7 @@ func NewLoadBalancerBackendAddressPoolsClient(con *armcore.Connection, subscript
 }
 
 // Get - Gets load balancer backend address pool.
+// If the operation fails it returns the *CloudError error type.
 func (client *LoadBalancerBackendAddressPoolsClient) Get(ctx context.Context, resourceGroupName string, loadBalancerName string, backendAddressPoolName string, options *LoadBalancerBackendAddressPoolsGetOptions) (BackendAddressPoolResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, loadBalancerName, backendAddressPoolName, options)
 	if err != nil {
@@ -100,6 +101,7 @@ func (client *LoadBalancerBackendAddressPoolsClient) getHandleError(resp *azcore
 }
 
 // List - Gets all the load balancer backed address pools.
+// If the operation fails it returns the *CloudError error type.
 func (client *LoadBalancerBackendAddressPoolsClient) List(resourceGroupName string, loadBalancerName string, options *LoadBalancerBackendAddressPoolsListOptions) LoadBalancerBackendAddressPoolListResultPager {
 	return &loadBalancerBackendAddressPoolListResultPager{
 		pipeline: client.con.Pipeline(),

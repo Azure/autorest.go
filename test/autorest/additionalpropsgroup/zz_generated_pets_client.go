@@ -26,6 +26,7 @@ func NewPetsClient(con *Connection) *PetsClient {
 }
 
 // CreateAPInProperties - Create a Pet which contains more properties than what is defined.
+// If the operation fails it returns the *Error error type.
 func (client *PetsClient) CreateAPInProperties(ctx context.Context, createParameters PetAPInProperties, options *PetsCreateAPInPropertiesOptions) (PetAPInPropertiesResponse, error) {
 	req, err := client.createAPInPropertiesCreateRequest(ctx, createParameters, options)
 	if err != nil {
@@ -76,6 +77,7 @@ func (client *PetsClient) createAPInPropertiesHandleError(resp *azcore.Response)
 }
 
 // CreateAPInPropertiesWithAPString - Create a Pet which contains more properties than what is defined.
+// If the operation fails it returns the *Error error type.
 func (client *PetsClient) CreateAPInPropertiesWithAPString(ctx context.Context, createParameters PetAPInPropertiesWithAPString, options *PetsCreateAPInPropertiesWithAPStringOptions) (PetAPInPropertiesWithAPStringResponse, error) {
 	req, err := client.createAPInPropertiesWithAPStringCreateRequest(ctx, createParameters, options)
 	if err != nil {
@@ -126,6 +128,7 @@ func (client *PetsClient) createAPInPropertiesWithAPStringHandleError(resp *azco
 }
 
 // CreateAPObject - Create a Pet which contains more properties than what is defined.
+// If the operation fails it returns the *Error error type.
 func (client *PetsClient) CreateAPObject(ctx context.Context, createParameters PetAPObject, options *PetsCreateAPObjectOptions) (PetAPObjectResponse, error) {
 	req, err := client.createAPObjectCreateRequest(ctx, createParameters, options)
 	if err != nil {
@@ -176,6 +179,7 @@ func (client *PetsClient) createAPObjectHandleError(resp *azcore.Response) error
 }
 
 // CreateAPString - Create a Pet which contains more properties than what is defined.
+// If the operation fails it returns the *Error error type.
 func (client *PetsClient) CreateAPString(ctx context.Context, createParameters PetAPString, options *PetsCreateAPStringOptions) (PetAPStringResponse, error) {
 	req, err := client.createAPStringCreateRequest(ctx, createParameters, options)
 	if err != nil {
@@ -226,6 +230,7 @@ func (client *PetsClient) createAPStringHandleError(resp *azcore.Response) error
 }
 
 // CreateAPTrue - Create a Pet which contains more properties than what is defined.
+// If the operation fails it returns the *Error error type.
 func (client *PetsClient) CreateAPTrue(ctx context.Context, createParameters PetAPTrue, options *PetsCreateAPTrueOptions) (PetAPTrueResponse, error) {
 	req, err := client.createAPTrueCreateRequest(ctx, createParameters, options)
 	if err != nil {
@@ -276,6 +281,7 @@ func (client *PetsClient) createAPTrueHandleError(resp *azcore.Response) error {
 }
 
 // CreateCatAPTrue - Create a CatAPTrue which contains more properties than what is defined.
+// If the operation fails it returns the *Error error type.
 func (client *PetsClient) CreateCatAPTrue(ctx context.Context, createParameters CatAPTrue, options *PetsCreateCatAPTrueOptions) (CatAPTrueResponse, error) {
 	req, err := client.createCatAPTrueCreateRequest(ctx, createParameters, options)
 	if err != nil {

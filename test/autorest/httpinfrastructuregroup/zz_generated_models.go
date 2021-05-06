@@ -64,6 +64,7 @@ type DResponse struct {
 	RawResponse *http.Response
 }
 
+// Implements the error and azcore.HTTPResponse interfaces.
 type Error struct {
 	raw     string
 	Message *string `json:"message,omitempty"`
@@ -698,6 +699,7 @@ type MultipleResponsesGetDefaultNone400NoneOptions struct {
 	// placeholder for future optional parameters
 }
 
+// Implements the error and azcore.HTTPResponse interfaces.
 type MyException struct {
 	raw        string
 	StatusCode *string `json:"statusCode,omitempty"`

@@ -509,6 +509,7 @@ type DurationWrapperResponse struct {
 	RawResponse *http.Response
 }
 
+// Implements the error and azcore.HTTPResponse interfaces.
 type Error struct {
 	raw     string
 	Message *string `json:"message,omitempty"`
@@ -524,7 +525,7 @@ func (e Error) Error() string {
 // FishClassification provides polymorphic access to related types.
 // Call the interface's GetFish() method to access the common type.
 // Use a type switch to determine the concrete type.  The possible types are:
-// - *Fish, *Cookiecuttershark, *Goblinshark, *Salmon, *Sawshark, *Shark, *SmartSalmon
+// - *Cookiecuttershark, *Fish, *Goblinshark, *Salmon, *Sawshark, *Shark, *SmartSalmon
 type FishClassification interface {
 	// GetFish returns the Fish content of the underlying type.
 	GetFish() *Fish
@@ -1108,7 +1109,7 @@ func (s *Sawshark) UnmarshalJSON(data []byte) error {
 // SharkClassification provides polymorphic access to related types.
 // Call the interface's GetShark() method to access the common type.
 // Use a type switch to determine the concrete type.  The possible types are:
-// - *Shark, *Cookiecuttershark, *Goblinshark, *Sawshark
+// - *Cookiecuttershark, *Goblinshark, *Sawshark, *Shark
 type SharkClassification interface {
 	FishClassification
 	// GetShark returns the Shark content of the underlying type.

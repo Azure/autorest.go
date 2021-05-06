@@ -26,6 +26,7 @@ func NewNumberClient(con *Connection) *NumberClient {
 }
 
 // GetBigDecimal - Get big decimal value 2.5976931e+101
+// If the operation fails it returns the *Error error type.
 func (client *NumberClient) GetBigDecimal(ctx context.Context, options *NumberGetBigDecimalOptions) (Float64Response, error) {
 	req, err := client.getBigDecimalCreateRequest(ctx, options)
 	if err != nil {
@@ -76,6 +77,7 @@ func (client *NumberClient) getBigDecimalHandleError(resp *azcore.Response) erro
 }
 
 // GetBigDecimalNegativeDecimal - Get big decimal value -99999999.99
+// If the operation fails it returns the *Error error type.
 func (client *NumberClient) GetBigDecimalNegativeDecimal(ctx context.Context, options *NumberGetBigDecimalNegativeDecimalOptions) (Float64Response, error) {
 	req, err := client.getBigDecimalNegativeDecimalCreateRequest(ctx, options)
 	if err != nil {
@@ -126,6 +128,7 @@ func (client *NumberClient) getBigDecimalNegativeDecimalHandleError(resp *azcore
 }
 
 // GetBigDecimalPositiveDecimal - Get big decimal value 99999999.99
+// If the operation fails it returns the *Error error type.
 func (client *NumberClient) GetBigDecimalPositiveDecimal(ctx context.Context, options *NumberGetBigDecimalPositiveDecimalOptions) (Float64Response, error) {
 	req, err := client.getBigDecimalPositiveDecimalCreateRequest(ctx, options)
 	if err != nil {
@@ -176,6 +179,7 @@ func (client *NumberClient) getBigDecimalPositiveDecimalHandleError(resp *azcore
 }
 
 // GetBigDouble - Get big double value 2.5976931e+101
+// If the operation fails it returns the *Error error type.
 func (client *NumberClient) GetBigDouble(ctx context.Context, options *NumberGetBigDoubleOptions) (Float64Response, error) {
 	req, err := client.getBigDoubleCreateRequest(ctx, options)
 	if err != nil {
@@ -226,6 +230,7 @@ func (client *NumberClient) getBigDoubleHandleError(resp *azcore.Response) error
 }
 
 // GetBigDoubleNegativeDecimal - Get big double value -99999999.99
+// If the operation fails it returns the *Error error type.
 func (client *NumberClient) GetBigDoubleNegativeDecimal(ctx context.Context, options *NumberGetBigDoubleNegativeDecimalOptions) (Float64Response, error) {
 	req, err := client.getBigDoubleNegativeDecimalCreateRequest(ctx, options)
 	if err != nil {
@@ -276,6 +281,7 @@ func (client *NumberClient) getBigDoubleNegativeDecimalHandleError(resp *azcore.
 }
 
 // GetBigDoublePositiveDecimal - Get big double value 99999999.99
+// If the operation fails it returns the *Error error type.
 func (client *NumberClient) GetBigDoublePositiveDecimal(ctx context.Context, options *NumberGetBigDoublePositiveDecimalOptions) (Float64Response, error) {
 	req, err := client.getBigDoublePositiveDecimalCreateRequest(ctx, options)
 	if err != nil {
@@ -326,6 +332,7 @@ func (client *NumberClient) getBigDoublePositiveDecimalHandleError(resp *azcore.
 }
 
 // GetBigFloat - Get big float value 3.402823e+20
+// If the operation fails it returns the *Error error type.
 func (client *NumberClient) GetBigFloat(ctx context.Context, options *NumberGetBigFloatOptions) (Float32Response, error) {
 	req, err := client.getBigFloatCreateRequest(ctx, options)
 	if err != nil {
@@ -376,6 +383,7 @@ func (client *NumberClient) getBigFloatHandleError(resp *azcore.Response) error 
 }
 
 // GetInvalidDecimal - Get invalid decimal Number value
+// If the operation fails it returns the *Error error type.
 func (client *NumberClient) GetInvalidDecimal(ctx context.Context, options *NumberGetInvalidDecimalOptions) (Float64Response, error) {
 	req, err := client.getInvalidDecimalCreateRequest(ctx, options)
 	if err != nil {
@@ -426,6 +434,7 @@ func (client *NumberClient) getInvalidDecimalHandleError(resp *azcore.Response) 
 }
 
 // GetInvalidDouble - Get invalid double Number value
+// If the operation fails it returns the *Error error type.
 func (client *NumberClient) GetInvalidDouble(ctx context.Context, options *NumberGetInvalidDoubleOptions) (Float64Response, error) {
 	req, err := client.getInvalidDoubleCreateRequest(ctx, options)
 	if err != nil {
@@ -476,6 +485,7 @@ func (client *NumberClient) getInvalidDoubleHandleError(resp *azcore.Response) e
 }
 
 // GetInvalidFloat - Get invalid float Number value
+// If the operation fails it returns the *Error error type.
 func (client *NumberClient) GetInvalidFloat(ctx context.Context, options *NumberGetInvalidFloatOptions) (Float32Response, error) {
 	req, err := client.getInvalidFloatCreateRequest(ctx, options)
 	if err != nil {
@@ -526,6 +536,7 @@ func (client *NumberClient) getInvalidFloatHandleError(resp *azcore.Response) er
 }
 
 // GetNull - Get null Number value
+// If the operation fails it returns the *Error error type.
 func (client *NumberClient) GetNull(ctx context.Context, options *NumberGetNullOptions) (Float32Response, error) {
 	req, err := client.getNullCreateRequest(ctx, options)
 	if err != nil {
@@ -576,6 +587,7 @@ func (client *NumberClient) getNullHandleError(resp *azcore.Response) error {
 }
 
 // GetSmallDecimal - Get small decimal value 2.5976931e-101
+// If the operation fails it returns the *Error error type.
 func (client *NumberClient) GetSmallDecimal(ctx context.Context, options *NumberGetSmallDecimalOptions) (Float64Response, error) {
 	req, err := client.getSmallDecimalCreateRequest(ctx, options)
 	if err != nil {
@@ -626,6 +638,7 @@ func (client *NumberClient) getSmallDecimalHandleError(resp *azcore.Response) er
 }
 
 // GetSmallDouble - Get big double value 2.5976931e-101
+// If the operation fails it returns the *Error error type.
 func (client *NumberClient) GetSmallDouble(ctx context.Context, options *NumberGetSmallDoubleOptions) (Float64Response, error) {
 	req, err := client.getSmallDoubleCreateRequest(ctx, options)
 	if err != nil {
@@ -676,6 +689,7 @@ func (client *NumberClient) getSmallDoubleHandleError(resp *azcore.Response) err
 }
 
 // GetSmallFloat - Get big double value 3.402823e-20
+// If the operation fails it returns the *Error error type.
 func (client *NumberClient) GetSmallFloat(ctx context.Context, options *NumberGetSmallFloatOptions) (Float64Response, error) {
 	req, err := client.getSmallFloatCreateRequest(ctx, options)
 	if err != nil {
@@ -726,6 +740,7 @@ func (client *NumberClient) getSmallFloatHandleError(resp *azcore.Response) erro
 }
 
 // PutBigDecimal - Put big decimal value 2.5976931e+101
+// If the operation fails it returns the *Error error type.
 func (client *NumberClient) PutBigDecimal(ctx context.Context, numberBody float64, options *NumberPutBigDecimalOptions) (*http.Response, error) {
 	req, err := client.putBigDecimalCreateRequest(ctx, numberBody, options)
 	if err != nil {
@@ -767,6 +782,7 @@ func (client *NumberClient) putBigDecimalHandleError(resp *azcore.Response) erro
 }
 
 // PutBigDecimalNegativeDecimal - Put big decimal value -99999999.99
+// If the operation fails it returns the *Error error type.
 func (client *NumberClient) PutBigDecimalNegativeDecimal(ctx context.Context, options *NumberPutBigDecimalNegativeDecimalOptions) (*http.Response, error) {
 	req, err := client.putBigDecimalNegativeDecimalCreateRequest(ctx, options)
 	if err != nil {
@@ -808,6 +824,7 @@ func (client *NumberClient) putBigDecimalNegativeDecimalHandleError(resp *azcore
 }
 
 // PutBigDecimalPositiveDecimal - Put big decimal value 99999999.99
+// If the operation fails it returns the *Error error type.
 func (client *NumberClient) PutBigDecimalPositiveDecimal(ctx context.Context, options *NumberPutBigDecimalPositiveDecimalOptions) (*http.Response, error) {
 	req, err := client.putBigDecimalPositiveDecimalCreateRequest(ctx, options)
 	if err != nil {
@@ -849,6 +866,7 @@ func (client *NumberClient) putBigDecimalPositiveDecimalHandleError(resp *azcore
 }
 
 // PutBigDouble - Put big double value 2.5976931e+101
+// If the operation fails it returns the *Error error type.
 func (client *NumberClient) PutBigDouble(ctx context.Context, numberBody float64, options *NumberPutBigDoubleOptions) (*http.Response, error) {
 	req, err := client.putBigDoubleCreateRequest(ctx, numberBody, options)
 	if err != nil {
@@ -890,6 +908,7 @@ func (client *NumberClient) putBigDoubleHandleError(resp *azcore.Response) error
 }
 
 // PutBigDoubleNegativeDecimal - Put big double value -99999999.99
+// If the operation fails it returns the *Error error type.
 func (client *NumberClient) PutBigDoubleNegativeDecimal(ctx context.Context, options *NumberPutBigDoubleNegativeDecimalOptions) (*http.Response, error) {
 	req, err := client.putBigDoubleNegativeDecimalCreateRequest(ctx, options)
 	if err != nil {
@@ -931,6 +950,7 @@ func (client *NumberClient) putBigDoubleNegativeDecimalHandleError(resp *azcore.
 }
 
 // PutBigDoublePositiveDecimal - Put big double value 99999999.99
+// If the operation fails it returns the *Error error type.
 func (client *NumberClient) PutBigDoublePositiveDecimal(ctx context.Context, options *NumberPutBigDoublePositiveDecimalOptions) (*http.Response, error) {
 	req, err := client.putBigDoublePositiveDecimalCreateRequest(ctx, options)
 	if err != nil {
@@ -972,6 +992,7 @@ func (client *NumberClient) putBigDoublePositiveDecimalHandleError(resp *azcore.
 }
 
 // PutBigFloat - Put big float value 3.402823e+20
+// If the operation fails it returns the *Error error type.
 func (client *NumberClient) PutBigFloat(ctx context.Context, numberBody float32, options *NumberPutBigFloatOptions) (*http.Response, error) {
 	req, err := client.putBigFloatCreateRequest(ctx, numberBody, options)
 	if err != nil {
@@ -1013,6 +1034,7 @@ func (client *NumberClient) putBigFloatHandleError(resp *azcore.Response) error 
 }
 
 // PutSmallDecimal - Put small decimal value 2.5976931e-101
+// If the operation fails it returns the *Error error type.
 func (client *NumberClient) PutSmallDecimal(ctx context.Context, numberBody float64, options *NumberPutSmallDecimalOptions) (*http.Response, error) {
 	req, err := client.putSmallDecimalCreateRequest(ctx, numberBody, options)
 	if err != nil {
@@ -1054,6 +1076,7 @@ func (client *NumberClient) putSmallDecimalHandleError(resp *azcore.Response) er
 }
 
 // PutSmallDouble - Put small double value 2.5976931e-101
+// If the operation fails it returns the *Error error type.
 func (client *NumberClient) PutSmallDouble(ctx context.Context, numberBody float64, options *NumberPutSmallDoubleOptions) (*http.Response, error) {
 	req, err := client.putSmallDoubleCreateRequest(ctx, numberBody, options)
 	if err != nil {
@@ -1095,6 +1118,7 @@ func (client *NumberClient) putSmallDoubleHandleError(resp *azcore.Response) err
 }
 
 // PutSmallFloat - Put small float value 3.402823e-20
+// If the operation fails it returns the *Error error type.
 func (client *NumberClient) PutSmallFloat(ctx context.Context, numberBody float32, options *NumberPutSmallFloatOptions) (*http.Response, error) {
 	req, err := client.putSmallFloatCreateRequest(ctx, numberBody, options)
 	if err != nil {

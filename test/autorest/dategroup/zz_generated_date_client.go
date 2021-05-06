@@ -27,6 +27,7 @@ func NewDateClient(con *Connection) *DateClient {
 }
 
 // GetInvalidDate - Get invalid date value
+// If the operation fails it returns the *Error error type.
 func (client *DateClient) GetInvalidDate(ctx context.Context, options *DateGetInvalidDateOptions) (TimeResponse, error) {
 	req, err := client.getInvalidDateCreateRequest(ctx, options)
 	if err != nil {
@@ -77,6 +78,7 @@ func (client *DateClient) getInvalidDateHandleError(resp *azcore.Response) error
 }
 
 // GetMaxDate - Get max date value 9999-12-31
+// If the operation fails it returns the *Error error type.
 func (client *DateClient) GetMaxDate(ctx context.Context, options *DateGetMaxDateOptions) (TimeResponse, error) {
 	req, err := client.getMaxDateCreateRequest(ctx, options)
 	if err != nil {
@@ -127,6 +129,7 @@ func (client *DateClient) getMaxDateHandleError(resp *azcore.Response) error {
 }
 
 // GetMinDate - Get min date value 0000-01-01
+// If the operation fails it returns the *Error error type.
 func (client *DateClient) GetMinDate(ctx context.Context, options *DateGetMinDateOptions) (TimeResponse, error) {
 	req, err := client.getMinDateCreateRequest(ctx, options)
 	if err != nil {
@@ -177,6 +180,7 @@ func (client *DateClient) getMinDateHandleError(resp *azcore.Response) error {
 }
 
 // GetNull - Get null date value
+// If the operation fails it returns the *Error error type.
 func (client *DateClient) GetNull(ctx context.Context, options *DateGetNullOptions) (TimeResponse, error) {
 	req, err := client.getNullCreateRequest(ctx, options)
 	if err != nil {
@@ -227,6 +231,7 @@ func (client *DateClient) getNullHandleError(resp *azcore.Response) error {
 }
 
 // GetOverflowDate - Get overflow date value
+// If the operation fails it returns the *Error error type.
 func (client *DateClient) GetOverflowDate(ctx context.Context, options *DateGetOverflowDateOptions) (TimeResponse, error) {
 	req, err := client.getOverflowDateCreateRequest(ctx, options)
 	if err != nil {
@@ -277,6 +282,7 @@ func (client *DateClient) getOverflowDateHandleError(resp *azcore.Response) erro
 }
 
 // GetUnderflowDate - Get underflow date value
+// If the operation fails it returns the *Error error type.
 func (client *DateClient) GetUnderflowDate(ctx context.Context, options *DateGetUnderflowDateOptions) (TimeResponse, error) {
 	req, err := client.getUnderflowDateCreateRequest(ctx, options)
 	if err != nil {
@@ -327,6 +333,7 @@ func (client *DateClient) getUnderflowDateHandleError(resp *azcore.Response) err
 }
 
 // PutMaxDate - Put max date value 9999-12-31
+// If the operation fails it returns the *Error error type.
 func (client *DateClient) PutMaxDate(ctx context.Context, dateBody time.Time, options *DatePutMaxDateOptions) (*http.Response, error) {
 	req, err := client.putMaxDateCreateRequest(ctx, dateBody, options)
 	if err != nil {
@@ -368,6 +375,7 @@ func (client *DateClient) putMaxDateHandleError(resp *azcore.Response) error {
 }
 
 // PutMinDate - Put min date value 0000-01-01
+// If the operation fails it returns the *Error error type.
 func (client *DateClient) PutMinDate(ctx context.Context, dateBody time.Time, options *DatePutMinDateOptions) (*http.Response, error) {
 	req, err := client.putMinDateCreateRequest(ctx, dateBody, options)
 	if err != nil {

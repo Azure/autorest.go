@@ -31,6 +31,7 @@ func NewAvailablePrivateEndpointTypesClient(con *armcore.Connection, subscriptio
 }
 
 // List - Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region.
+// If the operation fails it returns the *CloudError error type.
 func (client *AvailablePrivateEndpointTypesClient) List(location string, options *AvailablePrivateEndpointTypesListOptions) AvailablePrivateEndpointTypesResultPager {
 	return &availablePrivateEndpointTypesResultPager{
 		pipeline: client.con.Pipeline(),
@@ -92,6 +93,7 @@ func (client *AvailablePrivateEndpointTypesClient) listHandleError(resp *azcore.
 }
 
 // ListByResourceGroup - Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region.
+// If the operation fails it returns the *CloudError error type.
 func (client *AvailablePrivateEndpointTypesClient) ListByResourceGroup(location string, resourceGroupName string, options *AvailablePrivateEndpointTypesListByResourceGroupOptions) AvailablePrivateEndpointTypesResultPager {
 	return &availablePrivateEndpointTypesResultPager{
 		pipeline: client.con.Pipeline(),

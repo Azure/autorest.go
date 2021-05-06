@@ -31,6 +31,7 @@ func NewVirtualMachineExtensionsClient(con *armcore.Connection, subscriptionID s
 }
 
 // BeginCreateOrUpdate - The operation to create or update the extension.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineExtensionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, extensionParameters VirtualMachineExtension, options *VirtualMachineExtensionsBeginCreateOrUpdateOptions) (VirtualMachineExtensionPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, vmName, vmExtensionName, extensionParameters, options)
 	if err != nil {
@@ -80,6 +81,7 @@ func (client *VirtualMachineExtensionsClient) ResumeCreateOrUpdate(ctx context.C
 }
 
 // CreateOrUpdate - The operation to create or update the extension.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineExtensionsClient) createOrUpdate(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, extensionParameters VirtualMachineExtension, options *VirtualMachineExtensionsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, vmName, vmExtensionName, extensionParameters, options)
 	if err != nil {
@@ -148,6 +150,7 @@ func (client *VirtualMachineExtensionsClient) createOrUpdateHandleError(resp *az
 }
 
 // BeginDelete - The operation to delete the extension.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineExtensionsClient) BeginDelete(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, options *VirtualMachineExtensionsBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, vmName, vmExtensionName, options)
 	if err != nil {
@@ -197,6 +200,7 @@ func (client *VirtualMachineExtensionsClient) ResumeDelete(ctx context.Context, 
 }
 
 // Delete - The operation to delete the extension.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineExtensionsClient) deleteOperation(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, options *VirtualMachineExtensionsBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, vmName, vmExtensionName, options)
 	if err != nil {
@@ -255,6 +259,7 @@ func (client *VirtualMachineExtensionsClient) deleteHandleError(resp *azcore.Res
 }
 
 // Get - The operation to get the extension.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineExtensionsClient) Get(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, options *VirtualMachineExtensionsGetOptions) (VirtualMachineExtensionResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, vmName, vmExtensionName, options)
 	if err != nil {
@@ -326,6 +331,7 @@ func (client *VirtualMachineExtensionsClient) getHandleError(resp *azcore.Respon
 }
 
 // List - The operation to get all extensions of a Virtual Machine.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineExtensionsClient) List(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachineExtensionsListOptions) (VirtualMachineExtensionsListResultResponse, error) {
 	req, err := client.listCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
@@ -393,6 +399,7 @@ func (client *VirtualMachineExtensionsClient) listHandleError(resp *azcore.Respo
 }
 
 // BeginUpdate - The operation to update the extension.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineExtensionsClient) BeginUpdate(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, extensionParameters VirtualMachineExtensionUpdate, options *VirtualMachineExtensionsBeginUpdateOptions) (VirtualMachineExtensionPollerResponse, error) {
 	resp, err := client.update(ctx, resourceGroupName, vmName, vmExtensionName, extensionParameters, options)
 	if err != nil {
@@ -442,6 +449,7 @@ func (client *VirtualMachineExtensionsClient) ResumeUpdate(ctx context.Context, 
 }
 
 // Update - The operation to update the extension.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineExtensionsClient) update(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, extensionParameters VirtualMachineExtensionUpdate, options *VirtualMachineExtensionsBeginUpdateOptions) (*azcore.Response, error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, vmName, vmExtensionName, extensionParameters, options)
 	if err != nil {

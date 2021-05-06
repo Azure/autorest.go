@@ -31,6 +31,7 @@ func NewHubVirtualNetworkConnectionsClient(con *armcore.Connection, subscription
 }
 
 // Get - Retrieves the details of a HubVirtualNetworkConnection.
+// If the operation fails it returns the *CloudError error type.
 func (client *HubVirtualNetworkConnectionsClient) Get(ctx context.Context, resourceGroupName string, virtualHubName string, connectionName string, options *HubVirtualNetworkConnectionsGetOptions) (HubVirtualNetworkConnectionResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, virtualHubName, connectionName, options)
 	if err != nil {
@@ -100,6 +101,7 @@ func (client *HubVirtualNetworkConnectionsClient) getHandleError(resp *azcore.Re
 }
 
 // List - Retrieves the details of all HubVirtualNetworkConnections.
+// If the operation fails it returns the *CloudError error type.
 func (client *HubVirtualNetworkConnectionsClient) List(resourceGroupName string, virtualHubName string, options *HubVirtualNetworkConnectionsListOptions) ListHubVirtualNetworkConnectionsResultPager {
 	return &listHubVirtualNetworkConnectionsResultPager{
 		pipeline: client.con.Pipeline(),

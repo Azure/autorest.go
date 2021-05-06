@@ -32,6 +32,7 @@ func NewRoutesClient(con *armcore.Connection, subscriptionID string) *RoutesClie
 }
 
 // BeginCreateOrUpdate - Creates or updates a route in the specified route table.
+// If the operation fails it returns the *CloudError error type.
 func (client *RoutesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, routeTableName string, routeName string, routeParameters Route, options *RoutesBeginCreateOrUpdateOptions) (RoutePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, routeTableName, routeName, routeParameters, options)
 	if err != nil {
@@ -81,6 +82,7 @@ func (client *RoutesClient) ResumeCreateOrUpdate(ctx context.Context, token stri
 }
 
 // CreateOrUpdate - Creates or updates a route in the specified route table.
+// If the operation fails it returns the *CloudError error type.
 func (client *RoutesClient) createOrUpdate(ctx context.Context, resourceGroupName string, routeTableName string, routeName string, routeParameters Route, options *RoutesBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, routeTableName, routeName, routeParameters, options)
 	if err != nil {
@@ -150,6 +152,7 @@ func (client *RoutesClient) createOrUpdateHandleError(resp *azcore.Response) err
 }
 
 // BeginDelete - Deletes the specified route from a route table.
+// If the operation fails it returns the *CloudError error type.
 func (client *RoutesClient) BeginDelete(ctx context.Context, resourceGroupName string, routeTableName string, routeName string, options *RoutesBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, routeTableName, routeName, options)
 	if err != nil {
@@ -199,6 +202,7 @@ func (client *RoutesClient) ResumeDelete(ctx context.Context, token string) (HTT
 }
 
 // Delete - Deletes the specified route from a route table.
+// If the operation fails it returns the *CloudError error type.
 func (client *RoutesClient) deleteOperation(ctx context.Context, resourceGroupName string, routeTableName string, routeName string, options *RoutesBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, routeTableName, routeName, options)
 	if err != nil {
@@ -259,6 +263,7 @@ func (client *RoutesClient) deleteHandleError(resp *azcore.Response) error {
 }
 
 // Get - Gets the specified route from a route table.
+// If the operation fails it returns the *CloudError error type.
 func (client *RoutesClient) Get(ctx context.Context, resourceGroupName string, routeTableName string, routeName string, options *RoutesGetOptions) (RouteResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, routeTableName, routeName, options)
 	if err != nil {
@@ -328,6 +333,7 @@ func (client *RoutesClient) getHandleError(resp *azcore.Response) error {
 }
 
 // List - Gets all routes in a route table.
+// If the operation fails it returns the *CloudError error type.
 func (client *RoutesClient) List(resourceGroupName string, routeTableName string, options *RoutesListOptions) RouteListResultPager {
 	return &routeListResultPager{
 		pipeline: client.con.Pipeline(),

@@ -26,6 +26,7 @@ func NewPolymorphismClient(con *Connection) *PolymorphismClient {
 }
 
 // GetComplicated - Get complex types that are polymorphic, but not at the root of the hierarchy; also have additional properties
+// If the operation fails it returns the *Error error type.
 func (client *PolymorphismClient) GetComplicated(ctx context.Context, options *PolymorphismGetComplicatedOptions) (SalmonResponse, error) {
 	req, err := client.getComplicatedCreateRequest(ctx, options)
 	if err != nil {
@@ -78,6 +79,7 @@ func (client *PolymorphismClient) getComplicatedHandleError(resp *azcore.Respons
 // GetComposedWithDiscriminator - Get complex object composing a polymorphic scalar property and array property with polymorphic element type, with discriminator
 // specified. Deserialization must NOT fail and use the discriminator type
 // specified on the wire.
+// If the operation fails it returns the *Error error type.
 func (client *PolymorphismClient) GetComposedWithDiscriminator(ctx context.Context, options *PolymorphismGetComposedWithDiscriminatorOptions) (DotFishMarketResponse, error) {
 	req, err := client.getComposedWithDiscriminatorCreateRequest(ctx, options)
 	if err != nil {
@@ -130,6 +132,7 @@ func (client *PolymorphismClient) getComposedWithDiscriminatorHandleError(resp *
 // GetComposedWithoutDiscriminator - Get complex object composing a polymorphic scalar property and array property with polymorphic element type, without
 // discriminator specified on wire. Deserialization must NOT fail and use the explicit
 // type of the property.
+// If the operation fails it returns the *Error error type.
 func (client *PolymorphismClient) GetComposedWithoutDiscriminator(ctx context.Context, options *PolymorphismGetComposedWithoutDiscriminatorOptions) (DotFishMarketResponse, error) {
 	req, err := client.getComposedWithoutDiscriminatorCreateRequest(ctx, options)
 	if err != nil {
@@ -180,6 +183,7 @@ func (client *PolymorphismClient) getComposedWithoutDiscriminatorHandleError(res
 }
 
 // GetDotSyntax - Get complex types that are polymorphic, JSON key contains a dot
+// If the operation fails it returns the *Error error type.
 func (client *PolymorphismClient) GetDotSyntax(ctx context.Context, options *PolymorphismGetDotSyntaxOptions) (DotFishResponse, error) {
 	req, err := client.getDotSyntaxCreateRequest(ctx, options)
 	if err != nil {
@@ -230,6 +234,7 @@ func (client *PolymorphismClient) getDotSyntaxHandleError(resp *azcore.Response)
 }
 
 // GetValid - Get complex types that are polymorphic
+// If the operation fails it returns the *Error error type.
 func (client *PolymorphismClient) GetValid(ctx context.Context, options *PolymorphismGetValidOptions) (FishResponse, error) {
 	req, err := client.getValidCreateRequest(ctx, options)
 	if err != nil {
@@ -280,6 +285,7 @@ func (client *PolymorphismClient) getValidHandleError(resp *azcore.Response) err
 }
 
 // PutComplicated - Put complex types that are polymorphic, but not at the root of the hierarchy; also have additional properties
+// If the operation fails it returns the *Error error type.
 func (client *PolymorphismClient) PutComplicated(ctx context.Context, complexBody SalmonClassification, options *PolymorphismPutComplicatedOptions) (*http.Response, error) {
 	req, err := client.putComplicatedCreateRequest(ctx, complexBody, options)
 	if err != nil {
@@ -321,6 +327,7 @@ func (client *PolymorphismClient) putComplicatedHandleError(resp *azcore.Respons
 }
 
 // PutMissingDiscriminator - Put complex types that are polymorphic, omitting the discriminator
+// If the operation fails it returns the *Error error type.
 func (client *PolymorphismClient) PutMissingDiscriminator(ctx context.Context, complexBody SalmonClassification, options *PolymorphismPutMissingDiscriminatorOptions) (SalmonResponse, error) {
 	req, err := client.putMissingDiscriminatorCreateRequest(ctx, complexBody, options)
 	if err != nil {
@@ -371,6 +378,7 @@ func (client *PolymorphismClient) putMissingDiscriminatorHandleError(resp *azcor
 }
 
 // PutValid - Put complex types that are polymorphic
+// If the operation fails it returns the *Error error type.
 func (client *PolymorphismClient) PutValid(ctx context.Context, complexBody FishClassification, options *PolymorphismPutValidOptions) (*http.Response, error) {
 	req, err := client.putValidCreateRequest(ctx, complexBody, options)
 	if err != nil {
@@ -413,6 +421,7 @@ func (client *PolymorphismClient) putValidHandleError(resp *azcore.Response) err
 
 // PutValidMissingRequired - Put complex types that are polymorphic, attempting to omit required 'birthday' field - the request should not be allowed from
 // the client
+// If the operation fails it returns the *Error error type.
 func (client *PolymorphismClient) PutValidMissingRequired(ctx context.Context, complexBody FishClassification, options *PolymorphismPutValidMissingRequiredOptions) (*http.Response, error) {
 	req, err := client.putValidMissingRequiredCreateRequest(ctx, complexBody, options)
 	if err != nil {

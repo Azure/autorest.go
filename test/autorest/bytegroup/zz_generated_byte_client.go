@@ -26,6 +26,7 @@ func NewByteClient(con *Connection) *ByteClient {
 }
 
 // GetEmpty - Get empty byte value ''
+// If the operation fails it returns the *Error error type.
 func (client *ByteClient) GetEmpty(ctx context.Context, options *ByteGetEmptyOptions) (ByteArrayResponse, error) {
 	req, err := client.getEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -76,6 +77,7 @@ func (client *ByteClient) getEmptyHandleError(resp *azcore.Response) error {
 }
 
 // GetInvalid - Get invalid byte value ':::SWAGGER::::'
+// If the operation fails it returns the *Error error type.
 func (client *ByteClient) GetInvalid(ctx context.Context, options *ByteGetInvalidOptions) (ByteArrayResponse, error) {
 	req, err := client.getInvalidCreateRequest(ctx, options)
 	if err != nil {
@@ -126,6 +128,7 @@ func (client *ByteClient) getInvalidHandleError(resp *azcore.Response) error {
 }
 
 // GetNonASCII - Get non-ascii byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)
+// If the operation fails it returns the *Error error type.
 func (client *ByteClient) GetNonASCII(ctx context.Context, options *ByteGetNonASCIIOptions) (ByteArrayResponse, error) {
 	req, err := client.getNonASCIICreateRequest(ctx, options)
 	if err != nil {
@@ -176,6 +179,7 @@ func (client *ByteClient) getNonASCIIHandleError(resp *azcore.Response) error {
 }
 
 // GetNull - Get null byte value
+// If the operation fails it returns the *Error error type.
 func (client *ByteClient) GetNull(ctx context.Context, options *ByteGetNullOptions) (ByteArrayResponse, error) {
 	req, err := client.getNullCreateRequest(ctx, options)
 	if err != nil {
@@ -226,6 +230,7 @@ func (client *ByteClient) getNullHandleError(resp *azcore.Response) error {
 }
 
 // PutNonASCII - Put non-ascii byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)
+// If the operation fails it returns the *Error error type.
 func (client *ByteClient) PutNonASCII(ctx context.Context, byteBody []byte, options *BytePutNonASCIIOptions) (*http.Response, error) {
 	req, err := client.putNonASCIICreateRequest(ctx, byteBody, options)
 	if err != nil {

@@ -23,6 +23,7 @@ type linkedServiceClient struct {
 }
 
 // BeginCreateOrUpdateLinkedService - Creates or updates a linked service.
+// If the operation fails it returns the *CloudError error type.
 func (client *linkedServiceClient) BeginCreateOrUpdateLinkedService(ctx context.Context, linkedServiceName string, linkedService LinkedServiceResource, options *LinkedServiceBeginCreateOrUpdateLinkedServiceOptions) (LinkedServiceResourcePollerResponse, error) {
 	resp, err := client.createOrUpdateLinkedService(ctx, linkedServiceName, linkedService, options)
 	if err != nil {
@@ -70,6 +71,7 @@ func (client *linkedServiceClient) ResumeCreateOrUpdateLinkedService(ctx context
 }
 
 // CreateOrUpdateLinkedService - Creates or updates a linked service.
+// If the operation fails it returns the *CloudError error type.
 func (client *linkedServiceClient) createOrUpdateLinkedService(ctx context.Context, linkedServiceName string, linkedService LinkedServiceResource, options *LinkedServiceBeginCreateOrUpdateLinkedServiceOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateLinkedServiceCreateRequest(ctx, linkedServiceName, linkedService, options)
 	if err != nil {
@@ -130,6 +132,7 @@ func (client *linkedServiceClient) createOrUpdateLinkedServiceHandleError(resp *
 }
 
 // BeginDeleteLinkedService - Deletes a linked service.
+// If the operation fails it returns the *CloudError error type.
 func (client *linkedServiceClient) BeginDeleteLinkedService(ctx context.Context, linkedServiceName string, options *LinkedServiceBeginDeleteLinkedServiceOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteLinkedService(ctx, linkedServiceName, options)
 	if err != nil {
@@ -177,6 +180,7 @@ func (client *linkedServiceClient) ResumeDeleteLinkedService(ctx context.Context
 }
 
 // DeleteLinkedService - Deletes a linked service.
+// If the operation fails it returns the *CloudError error type.
 func (client *linkedServiceClient) deleteLinkedService(ctx context.Context, linkedServiceName string, options *LinkedServiceBeginDeleteLinkedServiceOptions) (*azcore.Response, error) {
 	req, err := client.deleteLinkedServiceCreateRequest(ctx, linkedServiceName, options)
 	if err != nil {
@@ -225,6 +229,7 @@ func (client *linkedServiceClient) deleteLinkedServiceHandleError(resp *azcore.R
 }
 
 // GetLinkedService - Gets a linked service.
+// If the operation fails it returns the *CloudError error type.
 func (client *linkedServiceClient) GetLinkedService(ctx context.Context, linkedServiceName string, options *LinkedServiceGetLinkedServiceOptions) (LinkedServiceResourceResponse, error) {
 	req, err := client.getLinkedServiceCreateRequest(ctx, linkedServiceName, options)
 	if err != nil {
@@ -285,6 +290,7 @@ func (client *linkedServiceClient) getLinkedServiceHandleError(resp *azcore.Resp
 }
 
 // GetLinkedServicesByWorkspace - Lists linked services.
+// If the operation fails it returns the *CloudError error type.
 func (client *linkedServiceClient) GetLinkedServicesByWorkspace(options *LinkedServiceGetLinkedServicesByWorkspaceOptions) LinkedServiceListResponsePager {
 	return &linkedServiceListResponsePager{
 		pipeline: client.con.Pipeline(),
@@ -338,6 +344,7 @@ func (client *linkedServiceClient) getLinkedServicesByWorkspaceHandleError(resp 
 }
 
 // BeginRenameLinkedService - Renames a linked service.
+// If the operation fails it returns the *CloudError error type.
 func (client *linkedServiceClient) BeginRenameLinkedService(ctx context.Context, linkedServiceName string, request ArtifactRenameRequest, options *LinkedServiceBeginRenameLinkedServiceOptions) (HTTPPollerResponse, error) {
 	resp, err := client.renameLinkedService(ctx, linkedServiceName, request, options)
 	if err != nil {
@@ -385,6 +392,7 @@ func (client *linkedServiceClient) ResumeRenameLinkedService(ctx context.Context
 }
 
 // RenameLinkedService - Renames a linked service.
+// If the operation fails it returns the *CloudError error type.
 func (client *linkedServiceClient) renameLinkedService(ctx context.Context, linkedServiceName string, request ArtifactRenameRequest, options *LinkedServiceBeginRenameLinkedServiceOptions) (*azcore.Response, error) {
 	req, err := client.renameLinkedServiceCreateRequest(ctx, linkedServiceName, request, options)
 	if err != nil {

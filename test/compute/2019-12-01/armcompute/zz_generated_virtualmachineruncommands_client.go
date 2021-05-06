@@ -30,6 +30,7 @@ func NewVirtualMachineRunCommandsClient(con *armcore.Connection, subscriptionID 
 }
 
 // Get - Gets specific run command for a subscription in a location.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineRunCommandsClient) Get(ctx context.Context, location string, commandID string, options *VirtualMachineRunCommandsGetOptions) (RunCommandDocumentResponse, error) {
 	req, err := client.getCreateRequest(ctx, location, commandID, options)
 	if err != nil {
@@ -94,6 +95,7 @@ func (client *VirtualMachineRunCommandsClient) getHandleError(resp *azcore.Respo
 }
 
 // List - Lists all available run commands for a subscription in a location.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineRunCommandsClient) List(location string, options *VirtualMachineRunCommandsListOptions) RunCommandListResultPager {
 	return &runCommandListResultPager{
 		pipeline: client.con.Pipeline(),

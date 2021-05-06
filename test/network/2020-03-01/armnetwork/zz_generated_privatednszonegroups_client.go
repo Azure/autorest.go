@@ -32,6 +32,7 @@ func NewPrivateDNSZoneGroupsClient(con *armcore.Connection, subscriptionID strin
 }
 
 // BeginCreateOrUpdate - Creates or updates a private dns zone group in the specified private endpoint.
+// If the operation fails it returns the *CloudError error type.
 func (client *PrivateDNSZoneGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, privateEndpointName string, privateDNSZoneGroupName string, parameters PrivateDNSZoneGroup, options *PrivateDNSZoneGroupsBeginCreateOrUpdateOptions) (PrivateDNSZoneGroupPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, privateEndpointName, privateDNSZoneGroupName, parameters, options)
 	if err != nil {
@@ -81,6 +82,7 @@ func (client *PrivateDNSZoneGroupsClient) ResumeCreateOrUpdate(ctx context.Conte
 }
 
 // CreateOrUpdate - Creates or updates a private dns zone group in the specified private endpoint.
+// If the operation fails it returns the *CloudError error type.
 func (client *PrivateDNSZoneGroupsClient) createOrUpdate(ctx context.Context, resourceGroupName string, privateEndpointName string, privateDNSZoneGroupName string, parameters PrivateDNSZoneGroup, options *PrivateDNSZoneGroupsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, privateEndpointName, privateDNSZoneGroupName, parameters, options)
 	if err != nil {
@@ -150,6 +152,7 @@ func (client *PrivateDNSZoneGroupsClient) createOrUpdateHandleError(resp *azcore
 }
 
 // BeginDelete - Deletes the specified private dns zone group.
+// If the operation fails it returns the *CloudError error type.
 func (client *PrivateDNSZoneGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, privateEndpointName string, privateDNSZoneGroupName string, options *PrivateDNSZoneGroupsBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, privateEndpointName, privateDNSZoneGroupName, options)
 	if err != nil {
@@ -199,6 +202,7 @@ func (client *PrivateDNSZoneGroupsClient) ResumeDelete(ctx context.Context, toke
 }
 
 // Delete - Deletes the specified private dns zone group.
+// If the operation fails it returns the *CloudError error type.
 func (client *PrivateDNSZoneGroupsClient) deleteOperation(ctx context.Context, resourceGroupName string, privateEndpointName string, privateDNSZoneGroupName string, options *PrivateDNSZoneGroupsBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, privateEndpointName, privateDNSZoneGroupName, options)
 	if err != nil {
@@ -259,6 +263,7 @@ func (client *PrivateDNSZoneGroupsClient) deleteHandleError(resp *azcore.Respons
 }
 
 // Get - Gets the private dns zone group resource by specified private dns zone group name.
+// If the operation fails it returns the *CloudError error type.
 func (client *PrivateDNSZoneGroupsClient) Get(ctx context.Context, resourceGroupName string, privateEndpointName string, privateDNSZoneGroupName string, options *PrivateDNSZoneGroupsGetOptions) (PrivateDNSZoneGroupResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, privateEndpointName, privateDNSZoneGroupName, options)
 	if err != nil {
@@ -328,6 +333,7 @@ func (client *PrivateDNSZoneGroupsClient) getHandleError(resp *azcore.Response) 
 }
 
 // List - Gets all private dns zone groups in a private endpoint.
+// If the operation fails it returns the *Error error type.
 func (client *PrivateDNSZoneGroupsClient) List(privateEndpointName string, resourceGroupName string, options *PrivateDNSZoneGroupsListOptions) PrivateDNSZoneGroupListResultPager {
 	return &privateDNSZoneGroupListResultPager{
 		pipeline: client.con.Pipeline(),

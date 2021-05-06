@@ -28,6 +28,7 @@ func NewPetClient(con *Connection) *PetClient {
 }
 
 // AddPet - add pet
+// If the operation fails it returns a generic error.
 func (client *PetClient) AddPet(ctx context.Context, options *PetAddPetOptions) (PetResponse, error) {
 	req, err := client.addPetCreateRequest(ctx, options)
 	if err != nil {
@@ -80,6 +81,7 @@ func (client *PetClient) addPetHandleError(resp *azcore.Response) error {
 }
 
 // GetByPetID - get pet by id
+// If the operation fails it returns a generic error.
 func (client *PetClient) GetByPetID(ctx context.Context, petID string, options *PetGetByPetIDOptions) (PetResponse, error) {
 	req, err := client.getByPetIDCreateRequest(ctx, petID, options)
 	if err != nil {

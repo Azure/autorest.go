@@ -13,6 +13,7 @@ import (
 	"time"
 )
 
+// Implements the error and azcore.HTTPResponse interfaces.
 type CloudError struct {
 	raw     string
 	Code    *int32  `json:"code,omitempty"`

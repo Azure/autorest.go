@@ -32,6 +32,7 @@ func NewVirtualWansClient(con *armcore.Connection, subscriptionID string) *Virtu
 }
 
 // BeginCreateOrUpdate - Creates a VirtualWAN resource if it doesn't exist else updates the existing VirtualWAN.
+// If the operation fails it returns the *CloudError error type.
 func (client *VirtualWansClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualWANName string, wanParameters VirtualWAN, options *VirtualWansBeginCreateOrUpdateOptions) (VirtualWANPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualWANName, wanParameters, options)
 	if err != nil {
@@ -81,6 +82,7 @@ func (client *VirtualWansClient) ResumeCreateOrUpdate(ctx context.Context, token
 }
 
 // CreateOrUpdate - Creates a VirtualWAN resource if it doesn't exist else updates the existing VirtualWAN.
+// If the operation fails it returns the *CloudError error type.
 func (client *VirtualWansClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualWANName string, wanParameters VirtualWAN, options *VirtualWansBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, virtualWANName, wanParameters, options)
 	if err != nil {
@@ -146,6 +148,7 @@ func (client *VirtualWansClient) createOrUpdateHandleError(resp *azcore.Response
 }
 
 // BeginDelete - Deletes a VirtualWAN.
+// If the operation fails it returns the *CloudError error type.
 func (client *VirtualWansClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualWANName string, options *VirtualWansBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, virtualWANName, options)
 	if err != nil {
@@ -195,6 +198,7 @@ func (client *VirtualWansClient) ResumeDelete(ctx context.Context, token string)
 }
 
 // Delete - Deletes a VirtualWAN.
+// If the operation fails it returns the *CloudError error type.
 func (client *VirtualWansClient) deleteOperation(ctx context.Context, resourceGroupName string, virtualWANName string, options *VirtualWansBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, virtualWANName, options)
 	if err != nil {
@@ -251,6 +255,7 @@ func (client *VirtualWansClient) deleteHandleError(resp *azcore.Response) error 
 }
 
 // Get - Retrieves the details of a VirtualWAN.
+// If the operation fails it returns the *CloudError error type.
 func (client *VirtualWansClient) Get(ctx context.Context, resourceGroupName string, virtualWANName string, options *VirtualWansGetOptions) (VirtualWANResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, virtualWANName, options)
 	if err != nil {
@@ -316,6 +321,7 @@ func (client *VirtualWansClient) getHandleError(resp *azcore.Response) error {
 }
 
 // List - Lists all the VirtualWANs in a subscription.
+// If the operation fails it returns the *CloudError error type.
 func (client *VirtualWansClient) List(options *VirtualWansListOptions) ListVirtualWANsResultPager {
 	return &listVirtualWANsResultPager{
 		pipeline: client.con.Pipeline(),
@@ -373,6 +379,7 @@ func (client *VirtualWansClient) listHandleError(resp *azcore.Response) error {
 }
 
 // ListByResourceGroup - Lists all the VirtualWANs in a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *VirtualWansClient) ListByResourceGroup(resourceGroupName string, options *VirtualWansListByResourceGroupOptions) ListVirtualWANsResultPager {
 	return &listVirtualWANsResultPager{
 		pipeline: client.con.Pipeline(),
@@ -434,6 +441,7 @@ func (client *VirtualWansClient) listByResourceGroupHandleError(resp *azcore.Res
 }
 
 // UpdateTags - Updates a VirtualWAN tags.
+// If the operation fails it returns the *CloudError error type.
 func (client *VirtualWansClient) UpdateTags(ctx context.Context, resourceGroupName string, virtualWANName string, wanParameters TagsObject, options *VirtualWansUpdateTagsOptions) (VirtualWANResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, virtualWANName, wanParameters, options)
 	if err != nil {

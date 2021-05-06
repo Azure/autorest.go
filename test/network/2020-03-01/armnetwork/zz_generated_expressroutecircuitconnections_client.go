@@ -32,6 +32,7 @@ func NewExpressRouteCircuitConnectionsClient(con *armcore.Connection, subscripti
 }
 
 // BeginCreateOrUpdate - Creates or updates a Express Route Circuit Connection in the specified express route circuits.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteCircuitConnectionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, connectionName string, expressRouteCircuitConnectionParameters ExpressRouteCircuitConnection, options *ExpressRouteCircuitConnectionsBeginCreateOrUpdateOptions) (ExpressRouteCircuitConnectionPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, circuitName, peeringName, connectionName, expressRouteCircuitConnectionParameters, options)
 	if err != nil {
@@ -81,6 +82,7 @@ func (client *ExpressRouteCircuitConnectionsClient) ResumeCreateOrUpdate(ctx con
 }
 
 // CreateOrUpdate - Creates or updates a Express Route Circuit Connection in the specified express route circuits.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteCircuitConnectionsClient) createOrUpdate(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, connectionName string, expressRouteCircuitConnectionParameters ExpressRouteCircuitConnection, options *ExpressRouteCircuitConnectionsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, circuitName, peeringName, connectionName, expressRouteCircuitConnectionParameters, options)
 	if err != nil {
@@ -154,6 +156,7 @@ func (client *ExpressRouteCircuitConnectionsClient) createOrUpdateHandleError(re
 }
 
 // BeginDelete - Deletes the specified Express Route Circuit Connection from the specified express route circuit.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteCircuitConnectionsClient) BeginDelete(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, connectionName string, options *ExpressRouteCircuitConnectionsBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, circuitName, peeringName, connectionName, options)
 	if err != nil {
@@ -203,6 +206,7 @@ func (client *ExpressRouteCircuitConnectionsClient) ResumeDelete(ctx context.Con
 }
 
 // Delete - Deletes the specified Express Route Circuit Connection from the specified express route circuit.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteCircuitConnectionsClient) deleteOperation(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, connectionName string, options *ExpressRouteCircuitConnectionsBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, circuitName, peeringName, connectionName, options)
 	if err != nil {
@@ -267,6 +271,7 @@ func (client *ExpressRouteCircuitConnectionsClient) deleteHandleError(resp *azco
 }
 
 // Get - Gets the specified Express Route Circuit Connection from the specified express route circuit.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteCircuitConnectionsClient) Get(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, connectionName string, options *ExpressRouteCircuitConnectionsGetOptions) (ExpressRouteCircuitConnectionResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, circuitName, peeringName, connectionName, options)
 	if err != nil {
@@ -340,6 +345,7 @@ func (client *ExpressRouteCircuitConnectionsClient) getHandleError(resp *azcore.
 }
 
 // List - Gets all global reach connections associated with a private peering in an express route circuit.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteCircuitConnectionsClient) List(resourceGroupName string, circuitName string, peeringName string, options *ExpressRouteCircuitConnectionsListOptions) ExpressRouteCircuitConnectionListResultPager {
 	return &expressRouteCircuitConnectionListResultPager{
 		pipeline: client.con.Pipeline(),

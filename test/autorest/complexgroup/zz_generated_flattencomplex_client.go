@@ -25,6 +25,8 @@ func NewFlattencomplexClient(con *Connection) *FlattencomplexClient {
 	return &FlattencomplexClient{con: con}
 }
 
+// GetValid -
+// If the operation fails it returns a generic error.
 func (client *FlattencomplexClient) GetValid(ctx context.Context, options *FlattencomplexGetValidOptions) (MyBaseTypeResponse, error) {
 	req, err := client.getValidCreateRequest(ctx, options)
 	if err != nil {

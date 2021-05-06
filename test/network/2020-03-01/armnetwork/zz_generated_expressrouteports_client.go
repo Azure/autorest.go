@@ -32,6 +32,7 @@ func NewExpressRoutePortsClient(con *armcore.Connection, subscriptionID string) 
 }
 
 // BeginCreateOrUpdate - Creates or updates the specified ExpressRoutePort resource.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRoutePortsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, expressRoutePortName string, parameters ExpressRoutePort, options *ExpressRoutePortsBeginCreateOrUpdateOptions) (ExpressRoutePortPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, expressRoutePortName, parameters, options)
 	if err != nil {
@@ -81,6 +82,7 @@ func (client *ExpressRoutePortsClient) ResumeCreateOrUpdate(ctx context.Context,
 }
 
 // CreateOrUpdate - Creates or updates the specified ExpressRoutePort resource.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRoutePortsClient) createOrUpdate(ctx context.Context, resourceGroupName string, expressRoutePortName string, parameters ExpressRoutePort, options *ExpressRoutePortsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, expressRoutePortName, parameters, options)
 	if err != nil {
@@ -146,6 +148,7 @@ func (client *ExpressRoutePortsClient) createOrUpdateHandleError(resp *azcore.Re
 }
 
 // BeginDelete - Deletes the specified ExpressRoutePort resource.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRoutePortsClient) BeginDelete(ctx context.Context, resourceGroupName string, expressRoutePortName string, options *ExpressRoutePortsBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, expressRoutePortName, options)
 	if err != nil {
@@ -195,6 +198,7 @@ func (client *ExpressRoutePortsClient) ResumeDelete(ctx context.Context, token s
 }
 
 // Delete - Deletes the specified ExpressRoutePort resource.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRoutePortsClient) deleteOperation(ctx context.Context, resourceGroupName string, expressRoutePortName string, options *ExpressRoutePortsBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, expressRoutePortName, options)
 	if err != nil {
@@ -251,6 +255,7 @@ func (client *ExpressRoutePortsClient) deleteHandleError(resp *azcore.Response) 
 }
 
 // Get - Retrieves the requested ExpressRoutePort resource.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRoutePortsClient) Get(ctx context.Context, resourceGroupName string, expressRoutePortName string, options *ExpressRoutePortsGetOptions) (ExpressRoutePortResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, expressRoutePortName, options)
 	if err != nil {
@@ -316,6 +321,7 @@ func (client *ExpressRoutePortsClient) getHandleError(resp *azcore.Response) err
 }
 
 // List - List all the ExpressRoutePort resources in the specified subscription.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRoutePortsClient) List(options *ExpressRoutePortsListOptions) ExpressRoutePortListResultPager {
 	return &expressRoutePortListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -373,6 +379,7 @@ func (client *ExpressRoutePortsClient) listHandleError(resp *azcore.Response) er
 }
 
 // ListByResourceGroup - List all the ExpressRoutePort resources in the specified resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRoutePortsClient) ListByResourceGroup(resourceGroupName string, options *ExpressRoutePortsListByResourceGroupOptions) ExpressRoutePortListResultPager {
 	return &expressRoutePortListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -434,6 +441,7 @@ func (client *ExpressRoutePortsClient) listByResourceGroupHandleError(resp *azco
 }
 
 // UpdateTags - Update ExpressRoutePort tags.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRoutePortsClient) UpdateTags(ctx context.Context, resourceGroupName string, expressRoutePortName string, parameters TagsObject, options *ExpressRoutePortsUpdateTagsOptions) (ExpressRoutePortResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, expressRoutePortName, parameters, options)
 	if err != nil {

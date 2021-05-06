@@ -23,6 +23,7 @@ type notebookClient struct {
 }
 
 // BeginCreateOrUpdateNotebook - Creates or updates a Note Book.
+// If the operation fails it returns the *CloudError error type.
 func (client *notebookClient) BeginCreateOrUpdateNotebook(ctx context.Context, notebookName string, notebook NotebookResource, options *NotebookBeginCreateOrUpdateNotebookOptions) (NotebookResourcePollerResponse, error) {
 	resp, err := client.createOrUpdateNotebook(ctx, notebookName, notebook, options)
 	if err != nil {
@@ -70,6 +71,7 @@ func (client *notebookClient) ResumeCreateOrUpdateNotebook(ctx context.Context, 
 }
 
 // CreateOrUpdateNotebook - Creates or updates a Note Book.
+// If the operation fails it returns the *CloudError error type.
 func (client *notebookClient) createOrUpdateNotebook(ctx context.Context, notebookName string, notebook NotebookResource, options *NotebookBeginCreateOrUpdateNotebookOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateNotebookCreateRequest(ctx, notebookName, notebook, options)
 	if err != nil {
@@ -130,6 +132,7 @@ func (client *notebookClient) createOrUpdateNotebookHandleError(resp *azcore.Res
 }
 
 // BeginDeleteNotebook - Deletes a Note book.
+// If the operation fails it returns the *CloudError error type.
 func (client *notebookClient) BeginDeleteNotebook(ctx context.Context, notebookName string, options *NotebookBeginDeleteNotebookOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteNotebook(ctx, notebookName, options)
 	if err != nil {
@@ -177,6 +180,7 @@ func (client *notebookClient) ResumeDeleteNotebook(ctx context.Context, token st
 }
 
 // DeleteNotebook - Deletes a Note book.
+// If the operation fails it returns the *CloudError error type.
 func (client *notebookClient) deleteNotebook(ctx context.Context, notebookName string, options *NotebookBeginDeleteNotebookOptions) (*azcore.Response, error) {
 	req, err := client.deleteNotebookCreateRequest(ctx, notebookName, options)
 	if err != nil {
@@ -225,6 +229,7 @@ func (client *notebookClient) deleteNotebookHandleError(resp *azcore.Response) e
 }
 
 // GetNotebook - Gets a Note Book.
+// If the operation fails it returns the *CloudError error type.
 func (client *notebookClient) GetNotebook(ctx context.Context, notebookName string, options *NotebookGetNotebookOptions) (NotebookResourceResponse, error) {
 	req, err := client.getNotebookCreateRequest(ctx, notebookName, options)
 	if err != nil {
@@ -285,6 +290,7 @@ func (client *notebookClient) getNotebookHandleError(resp *azcore.Response) erro
 }
 
 // GetNotebookSummaryByWorkSpace - Lists a summary of Notebooks.
+// If the operation fails it returns the *CloudError error type.
 func (client *notebookClient) GetNotebookSummaryByWorkSpace(options *NotebookGetNotebookSummaryByWorkSpaceOptions) NotebookListResponsePager {
 	return &notebookListResponsePager{
 		pipeline: client.con.Pipeline(),
@@ -338,6 +344,7 @@ func (client *notebookClient) getNotebookSummaryByWorkSpaceHandleError(resp *azc
 }
 
 // GetNotebooksByWorkspace - Lists Notebooks.
+// If the operation fails it returns the *CloudError error type.
 func (client *notebookClient) GetNotebooksByWorkspace(options *NotebookGetNotebooksByWorkspaceOptions) NotebookListResponsePager {
 	return &notebookListResponsePager{
 		pipeline: client.con.Pipeline(),
@@ -391,6 +398,7 @@ func (client *notebookClient) getNotebooksByWorkspaceHandleError(resp *azcore.Re
 }
 
 // BeginRenameNotebook - Renames a notebook.
+// If the operation fails it returns the *CloudError error type.
 func (client *notebookClient) BeginRenameNotebook(ctx context.Context, notebookName string, request ArtifactRenameRequest, options *NotebookBeginRenameNotebookOptions) (HTTPPollerResponse, error) {
 	resp, err := client.renameNotebook(ctx, notebookName, request, options)
 	if err != nil {
@@ -438,6 +446,7 @@ func (client *notebookClient) ResumeRenameNotebook(ctx context.Context, token st
 }
 
 // RenameNotebook - Renames a notebook.
+// If the operation fails it returns the *CloudError error type.
 func (client *notebookClient) renameNotebook(ctx context.Context, notebookName string, request ArtifactRenameRequest, options *NotebookBeginRenameNotebookOptions) (*azcore.Response, error) {
 	req, err := client.renameNotebookCreateRequest(ctx, notebookName, request, options)
 	if err != nil {

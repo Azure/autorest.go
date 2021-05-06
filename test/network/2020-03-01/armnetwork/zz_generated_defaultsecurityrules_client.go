@@ -31,6 +31,7 @@ func NewDefaultSecurityRulesClient(con *armcore.Connection, subscriptionID strin
 }
 
 // Get - Get the specified default network security rule.
+// If the operation fails it returns the *CloudError error type.
 func (client *DefaultSecurityRulesClient) Get(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, defaultSecurityRuleName string, options *DefaultSecurityRulesGetOptions) (SecurityRuleResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkSecurityGroupName, defaultSecurityRuleName, options)
 	if err != nil {
@@ -100,6 +101,7 @@ func (client *DefaultSecurityRulesClient) getHandleError(resp *azcore.Response) 
 }
 
 // List - Gets all default security rules in a network security group.
+// If the operation fails it returns the *CloudError error type.
 func (client *DefaultSecurityRulesClient) List(resourceGroupName string, networkSecurityGroupName string, options *DefaultSecurityRulesListOptions) SecurityRuleListResultPager {
 	return &securityRuleListResultPager{
 		pipeline: client.con.Pipeline(),

@@ -32,6 +32,7 @@ func NewVirtualNetworkPeeringsClient(con *armcore.Connection, subscriptionID str
 }
 
 // BeginCreateOrUpdate - Creates or updates a peering in the specified virtual network.
+// If the operation fails it returns the *CloudError error type.
 func (client *VirtualNetworkPeeringsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkName string, virtualNetworkPeeringName string, virtualNetworkPeeringParameters VirtualNetworkPeering, options *VirtualNetworkPeeringsBeginCreateOrUpdateOptions) (VirtualNetworkPeeringPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualNetworkName, virtualNetworkPeeringName, virtualNetworkPeeringParameters, options)
 	if err != nil {
@@ -81,6 +82,7 @@ func (client *VirtualNetworkPeeringsClient) ResumeCreateOrUpdate(ctx context.Con
 }
 
 // CreateOrUpdate - Creates or updates a peering in the specified virtual network.
+// If the operation fails it returns the *CloudError error type.
 func (client *VirtualNetworkPeeringsClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkName string, virtualNetworkPeeringName string, virtualNetworkPeeringParameters VirtualNetworkPeering, options *VirtualNetworkPeeringsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, virtualNetworkName, virtualNetworkPeeringName, virtualNetworkPeeringParameters, options)
 	if err != nil {
@@ -150,6 +152,7 @@ func (client *VirtualNetworkPeeringsClient) createOrUpdateHandleError(resp *azco
 }
 
 // BeginDelete - Deletes the specified virtual network peering.
+// If the operation fails it returns the *CloudError error type.
 func (client *VirtualNetworkPeeringsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualNetworkName string, virtualNetworkPeeringName string, options *VirtualNetworkPeeringsBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, virtualNetworkName, virtualNetworkPeeringName, options)
 	if err != nil {
@@ -199,6 +202,7 @@ func (client *VirtualNetworkPeeringsClient) ResumeDelete(ctx context.Context, to
 }
 
 // Delete - Deletes the specified virtual network peering.
+// If the operation fails it returns the *CloudError error type.
 func (client *VirtualNetworkPeeringsClient) deleteOperation(ctx context.Context, resourceGroupName string, virtualNetworkName string, virtualNetworkPeeringName string, options *VirtualNetworkPeeringsBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, virtualNetworkName, virtualNetworkPeeringName, options)
 	if err != nil {
@@ -259,6 +263,7 @@ func (client *VirtualNetworkPeeringsClient) deleteHandleError(resp *azcore.Respo
 }
 
 // Get - Gets the specified virtual network peering.
+// If the operation fails it returns the *CloudError error type.
 func (client *VirtualNetworkPeeringsClient) Get(ctx context.Context, resourceGroupName string, virtualNetworkName string, virtualNetworkPeeringName string, options *VirtualNetworkPeeringsGetOptions) (VirtualNetworkPeeringResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, virtualNetworkName, virtualNetworkPeeringName, options)
 	if err != nil {
@@ -328,6 +333,7 @@ func (client *VirtualNetworkPeeringsClient) getHandleError(resp *azcore.Response
 }
 
 // List - Gets all virtual network peerings in a virtual network.
+// If the operation fails it returns the *CloudError error type.
 func (client *VirtualNetworkPeeringsClient) List(resourceGroupName string, virtualNetworkName string, options *VirtualNetworkPeeringsListOptions) VirtualNetworkPeeringListResultPager {
 	return &virtualNetworkPeeringListResultPager{
 		pipeline: client.con.Pipeline(),

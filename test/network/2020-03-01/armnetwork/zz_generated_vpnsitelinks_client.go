@@ -31,6 +31,7 @@ func NewVPNSiteLinksClient(con *armcore.Connection, subscriptionID string) *VPNS
 }
 
 // Get - Retrieves the details of a VPN site link.
+// If the operation fails it returns the *CloudError error type.
 func (client *VPNSiteLinksClient) Get(ctx context.Context, resourceGroupName string, vpnSiteName string, vpnSiteLinkName string, options *VPNSiteLinksGetOptions) (VPNSiteLinkResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, vpnSiteName, vpnSiteLinkName, options)
 	if err != nil {
@@ -100,6 +101,7 @@ func (client *VPNSiteLinksClient) getHandleError(resp *azcore.Response) error {
 }
 
 // ListByVPNSite - Lists all the vpnSiteLinks in a resource group for a vpn site.
+// If the operation fails it returns the *CloudError error type.
 func (client *VPNSiteLinksClient) ListByVPNSite(resourceGroupName string, vpnSiteName string, options *VPNSiteLinksListByVPNSiteOptions) ListVPNSiteLinksResultPager {
 	return &listVPNSiteLinksResultPager{
 		pipeline: client.con.Pipeline(),

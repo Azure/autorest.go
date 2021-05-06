@@ -22,6 +22,7 @@ type triggerRunClient struct {
 }
 
 // CancelTriggerInstance - Cancel single trigger instance by runId.
+// If the operation fails it returns the *CloudError error type.
 func (client *triggerRunClient) CancelTriggerInstance(ctx context.Context, triggerName string, runID string, options *TriggerRunCancelTriggerInstanceOptions) (*http.Response, error) {
 	req, err := client.cancelTriggerInstanceCreateRequest(ctx, triggerName, runID, options)
 	if err != nil {
@@ -74,6 +75,7 @@ func (client *triggerRunClient) cancelTriggerInstanceHandleError(resp *azcore.Re
 }
 
 // QueryTriggerRunsByWorkspace - Query trigger runs.
+// If the operation fails it returns the *CloudError error type.
 func (client *triggerRunClient) QueryTriggerRunsByWorkspace(ctx context.Context, filterParameters RunFilterParameters, options *TriggerRunQueryTriggerRunsByWorkspaceOptions) (TriggerRunsQueryResponseResponse, error) {
 	req, err := client.queryTriggerRunsByWorkspaceCreateRequest(ctx, filterParameters, options)
 	if err != nil {
@@ -127,6 +129,7 @@ func (client *triggerRunClient) queryTriggerRunsByWorkspaceHandleError(resp *azc
 }
 
 // RerunTriggerInstance - Rerun single trigger instance by runId.
+// If the operation fails it returns the *CloudError error type.
 func (client *triggerRunClient) RerunTriggerInstance(ctx context.Context, triggerName string, runID string, options *TriggerRunRerunTriggerInstanceOptions) (*http.Response, error) {
 	req, err := client.rerunTriggerInstanceCreateRequest(ctx, triggerName, runID, options)
 	if err != nil {

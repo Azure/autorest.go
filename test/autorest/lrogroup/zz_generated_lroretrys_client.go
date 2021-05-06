@@ -29,6 +29,7 @@ func NewLRORetrysClient(con *Connection) *LRORetrysClient {
 
 // BeginDelete202Retry200 - Long running delete request, service returns a 500, then a 202 to the initial request. Polls return this value until the last
 // poll returns a ‘200’ with ProvisioningState=’Succeeded’
+// If the operation fails it returns the *CloudError error type.
 func (client *LRORetrysClient) BeginDelete202Retry200(ctx context.Context, options *LRORetrysBeginDelete202Retry200Options) (HTTPPollerResponse, error) {
 	resp, err := client.delete202Retry200(ctx, options)
 	if err != nil {
@@ -79,6 +80,7 @@ func (client *LRORetrysClient) ResumeDelete202Retry200(ctx context.Context, toke
 
 // Delete202Retry200 - Long running delete request, service returns a 500, then a 202 to the initial request. Polls return this value until the last poll
 // returns a ‘200’ with ProvisioningState=’Succeeded’
+// If the operation fails it returns the *CloudError error type.
 func (client *LRORetrysClient) delete202Retry200(ctx context.Context, options *LRORetrysBeginDelete202Retry200Options) (*azcore.Response, error) {
 	req, err := client.delete202Retry200CreateRequest(ctx, options)
 	if err != nil {
@@ -121,6 +123,7 @@ func (client *LRORetrysClient) delete202Retry200HandleError(resp *azcore.Respons
 
 // BeginDeleteAsyncRelativeRetrySucceeded - Long running delete request, service returns a 500, then a 202 to the initial request. Poll the endpoint indicated
 // in the Azure-AsyncOperation header for operation status
+// If the operation fails it returns the *CloudError error type.
 func (client *LRORetrysClient) BeginDeleteAsyncRelativeRetrySucceeded(ctx context.Context, options *LRORetrysBeginDeleteAsyncRelativeRetrySucceededOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteAsyncRelativeRetrySucceeded(ctx, options)
 	if err != nil {
@@ -171,6 +174,7 @@ func (client *LRORetrysClient) ResumeDeleteAsyncRelativeRetrySucceeded(ctx conte
 
 // DeleteAsyncRelativeRetrySucceeded - Long running delete request, service returns a 500, then a 202 to the initial request. Poll the endpoint indicated
 // in the Azure-AsyncOperation header for operation status
+// If the operation fails it returns the *CloudError error type.
 func (client *LRORetrysClient) deleteAsyncRelativeRetrySucceeded(ctx context.Context, options *LRORetrysBeginDeleteAsyncRelativeRetrySucceededOptions) (*azcore.Response, error) {
 	req, err := client.deleteAsyncRelativeRetrySucceededCreateRequest(ctx, options)
 	if err != nil {
@@ -214,6 +218,7 @@ func (client *LRORetrysClient) deleteAsyncRelativeRetrySucceededHandleError(resp
 // BeginDeleteProvisioning202Accepted200Succeeded - Long running delete request, service returns a 500, then a 202 to the initial request, with an entity
 // that contains ProvisioningState=’Accepted’. Polls return this value until the last poll returns a
 // ‘200’ with ProvisioningState=’Succeeded’
+// If the operation fails it returns the *CloudError error type.
 func (client *LRORetrysClient) BeginDeleteProvisioning202Accepted200Succeeded(ctx context.Context, options *LRORetrysBeginDeleteProvisioning202Accepted200SucceededOptions) (ProductPollerResponse, error) {
 	resp, err := client.deleteProvisioning202Accepted200Succeeded(ctx, options)
 	if err != nil {
@@ -265,6 +270,7 @@ func (client *LRORetrysClient) ResumeDeleteProvisioning202Accepted200Succeeded(c
 // DeleteProvisioning202Accepted200Succeeded - Long running delete request, service returns a 500, then a 202 to the initial request, with an entity that
 // contains ProvisioningState=’Accepted’. Polls return this value until the last poll returns a
 // ‘200’ with ProvisioningState=’Succeeded’
+// If the operation fails it returns the *CloudError error type.
 func (client *LRORetrysClient) deleteProvisioning202Accepted200Succeeded(ctx context.Context, options *LRORetrysBeginDeleteProvisioning202Accepted200SucceededOptions) (*azcore.Response, error) {
 	req, err := client.deleteProvisioning202Accepted200SucceededCreateRequest(ctx, options)
 	if err != nil {
@@ -316,6 +322,7 @@ func (client *LRORetrysClient) deleteProvisioning202Accepted200SucceededHandleEr
 
 // BeginPost202Retry200 - Long running post request, service returns a 500, then a 202 to the initial request, with 'Location' and 'Retry-After' headers,
 // Polls return a 200 with a response body after success
+// If the operation fails it returns the *CloudError error type.
 func (client *LRORetrysClient) BeginPost202Retry200(ctx context.Context, options *LRORetrysBeginPost202Retry200Options) (HTTPPollerResponse, error) {
 	resp, err := client.post202Retry200(ctx, options)
 	if err != nil {
@@ -366,6 +373,7 @@ func (client *LRORetrysClient) ResumePost202Retry200(ctx context.Context, token 
 
 // Post202Retry200 - Long running post request, service returns a 500, then a 202 to the initial request, with 'Location' and 'Retry-After' headers, Polls
 // return a 200 with a response body after success
+// If the operation fails it returns the *CloudError error type.
 func (client *LRORetrysClient) post202Retry200(ctx context.Context, options *LRORetrysBeginPost202Retry200Options) (*azcore.Response, error) {
 	req, err := client.post202Retry200CreateRequest(ctx, options)
 	if err != nil {
@@ -412,6 +420,7 @@ func (client *LRORetrysClient) post202Retry200HandleError(resp *azcore.Response)
 // BeginPostAsyncRelativeRetrySucceeded - Long running post request, service returns a 500, then a 202 to the initial request, with an entity that contains
 // ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation
 // header for operation status
+// If the operation fails it returns the *CloudError error type.
 func (client *LRORetrysClient) BeginPostAsyncRelativeRetrySucceeded(ctx context.Context, options *LRORetrysBeginPostAsyncRelativeRetrySucceededOptions) (HTTPPollerResponse, error) {
 	resp, err := client.postAsyncRelativeRetrySucceeded(ctx, options)
 	if err != nil {
@@ -463,6 +472,7 @@ func (client *LRORetrysClient) ResumePostAsyncRelativeRetrySucceeded(ctx context
 // PostAsyncRelativeRetrySucceeded - Long running post request, service returns a 500, then a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’.
 // Poll the endpoint indicated in the Azure-AsyncOperation
 // header for operation status
+// If the operation fails it returns the *CloudError error type.
 func (client *LRORetrysClient) postAsyncRelativeRetrySucceeded(ctx context.Context, options *LRORetrysBeginPostAsyncRelativeRetrySucceededOptions) (*azcore.Response, error) {
 	req, err := client.postAsyncRelativeRetrySucceededCreateRequest(ctx, options)
 	if err != nil {
@@ -509,6 +519,7 @@ func (client *LRORetrysClient) postAsyncRelativeRetrySucceededHandleError(resp *
 // BeginPut201CreatingSucceeded200 - Long running put request, service returns a 500, then a 201 to the initial request, with an entity that contains ProvisioningState=’Creating’.
 // Polls return this value until the last poll returns a
 // ‘200’ with ProvisioningState=’Succeeded’
+// If the operation fails it returns the *CloudError error type.
 func (client *LRORetrysClient) BeginPut201CreatingSucceeded200(ctx context.Context, options *LRORetrysBeginPut201CreatingSucceeded200Options) (ProductPollerResponse, error) {
 	resp, err := client.put201CreatingSucceeded200(ctx, options)
 	if err != nil {
@@ -560,6 +571,7 @@ func (client *LRORetrysClient) ResumePut201CreatingSucceeded200(ctx context.Cont
 // Put201CreatingSucceeded200 - Long running put request, service returns a 500, then a 201 to the initial request, with an entity that contains ProvisioningState=’Creating’.
 // Polls return this value until the last poll returns a
 // ‘200’ with ProvisioningState=’Succeeded’
+// If the operation fails it returns the *CloudError error type.
 func (client *LRORetrysClient) put201CreatingSucceeded200(ctx context.Context, options *LRORetrysBeginPut201CreatingSucceeded200Options) (*azcore.Response, error) {
 	req, err := client.put201CreatingSucceeded200CreateRequest(ctx, options)
 	if err != nil {
@@ -615,6 +627,7 @@ func (client *LRORetrysClient) put201CreatingSucceeded200HandleError(resp *azcor
 // BeginPutAsyncRelativeRetrySucceeded - Long running put request, service returns a 500, then a 200 to the initial request, with an entity that contains
 // ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation
 // header for operation status
+// If the operation fails it returns the *CloudError error type.
 func (client *LRORetrysClient) BeginPutAsyncRelativeRetrySucceeded(ctx context.Context, options *LRORetrysBeginPutAsyncRelativeRetrySucceededOptions) (ProductPollerResponse, error) {
 	resp, err := client.putAsyncRelativeRetrySucceeded(ctx, options)
 	if err != nil {
@@ -666,6 +679,7 @@ func (client *LRORetrysClient) ResumePutAsyncRelativeRetrySucceeded(ctx context.
 // PutAsyncRelativeRetrySucceeded - Long running put request, service returns a 500, then a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’.
 // Poll the endpoint indicated in the Azure-AsyncOperation
 // header for operation status
+// If the operation fails it returns the *CloudError error type.
 func (client *LRORetrysClient) putAsyncRelativeRetrySucceeded(ctx context.Context, options *LRORetrysBeginPutAsyncRelativeRetrySucceededOptions) (*azcore.Response, error) {
 	req, err := client.putAsyncRelativeRetrySucceededCreateRequest(ctx, options)
 	if err != nil {

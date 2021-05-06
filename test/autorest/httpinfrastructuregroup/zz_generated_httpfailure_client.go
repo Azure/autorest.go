@@ -27,6 +27,7 @@ func NewHTTPFailureClient(con *Connection) *HTTPFailureClient {
 }
 
 // GetEmptyError - Get empty error form server
+// If the operation fails it returns the *Error error type.
 func (client *HTTPFailureClient) GetEmptyError(ctx context.Context, options *HTTPFailureGetEmptyErrorOptions) (BoolResponse, error) {
 	req, err := client.getEmptyErrorCreateRequest(ctx, options)
 	if err != nil {
@@ -77,6 +78,7 @@ func (client *HTTPFailureClient) getEmptyErrorHandleError(resp *azcore.Response)
 }
 
 // GetNoModelEmpty - Get empty response from server
+// If the operation fails it returns a generic error.
 func (client *HTTPFailureClient) GetNoModelEmpty(ctx context.Context, options *HTTPFailureGetNoModelEmptyOptions) (BoolResponse, error) {
 	req, err := client.getNoModelEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -126,6 +128,7 @@ func (client *HTTPFailureClient) getNoModelEmptyHandleError(resp *azcore.Respons
 }
 
 // GetNoModelError - Get empty error form server
+// If the operation fails it returns a generic error.
 func (client *HTTPFailureClient) GetNoModelError(ctx context.Context, options *HTTPFailureGetNoModelErrorOptions) (BoolResponse, error) {
 	req, err := client.getNoModelErrorCreateRequest(ctx, options)
 	if err != nil {

@@ -32,6 +32,7 @@ func NewVirtualMachineScaleSetVMExtensionsClient(con *armcore.Connection, subscr
 }
 
 // BeginCreateOrUpdate - The operation to create or update the VMSS VM extension.
+// If the operation fails it returns the *CloudError error type.
 func (client *VirtualMachineScaleSetVMExtensionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, vmExtensionName string, extensionParameters VirtualMachineExtension, options *VirtualMachineScaleSetVMExtensionsBeginCreateOrUpdateOptions) (VirtualMachineExtensionPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, vmScaleSetName, instanceID, vmExtensionName, extensionParameters, options)
 	if err != nil {
@@ -81,6 +82,7 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) ResumeCreateOrUpdate(ctx
 }
 
 // CreateOrUpdate - The operation to create or update the VMSS VM extension.
+// If the operation fails it returns the *CloudError error type.
 func (client *VirtualMachineScaleSetVMExtensionsClient) createOrUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, vmExtensionName string, extensionParameters VirtualMachineExtension, options *VirtualMachineScaleSetVMExtensionsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceID, vmExtensionName, extensionParameters, options)
 	if err != nil {
@@ -154,6 +156,7 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) createOrUpdateHandleErro
 }
 
 // BeginDelete - The operation to delete the VMSS VM extension.
+// If the operation fails it returns the *CloudError error type.
 func (client *VirtualMachineScaleSetVMExtensionsClient) BeginDelete(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, vmExtensionName string, options *VirtualMachineScaleSetVMExtensionsBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, vmScaleSetName, instanceID, vmExtensionName, options)
 	if err != nil {
@@ -203,6 +206,7 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) ResumeDelete(ctx context
 }
 
 // Delete - The operation to delete the VMSS VM extension.
+// If the operation fails it returns the *CloudError error type.
 func (client *VirtualMachineScaleSetVMExtensionsClient) deleteOperation(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, vmExtensionName string, options *VirtualMachineScaleSetVMExtensionsBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceID, vmExtensionName, options)
 	if err != nil {
@@ -267,6 +271,7 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) deleteHandleError(resp *
 }
 
 // Get - The operation to get the VMSS VM extension.
+// If the operation fails it returns the *CloudError error type.
 func (client *VirtualMachineScaleSetVMExtensionsClient) Get(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, vmExtensionName string, options *VirtualMachineScaleSetVMExtensionsGetOptions) (VirtualMachineExtensionResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceID, vmExtensionName, options)
 	if err != nil {
@@ -343,6 +348,7 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) getHandleError(resp *azc
 }
 
 // List - The operation to get all extensions of an instance in Virtual Machine Scaleset.
+// If the operation fails it returns the *CloudError error type.
 func (client *VirtualMachineScaleSetVMExtensionsClient) List(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMExtensionsListOptions) (VirtualMachineExtensionsListResultResponse, error) {
 	req, err := client.listCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
 	if err != nil {
@@ -415,6 +421,7 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) listHandleError(resp *az
 }
 
 // BeginUpdate - The operation to update the VMSS VM extension.
+// If the operation fails it returns the *CloudError error type.
 func (client *VirtualMachineScaleSetVMExtensionsClient) BeginUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, vmExtensionName string, extensionParameters VirtualMachineExtensionUpdate, options *VirtualMachineScaleSetVMExtensionsBeginUpdateOptions) (VirtualMachineExtensionPollerResponse, error) {
 	resp, err := client.update(ctx, resourceGroupName, vmScaleSetName, instanceID, vmExtensionName, extensionParameters, options)
 	if err != nil {
@@ -464,6 +471,7 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) ResumeUpdate(ctx context
 }
 
 // Update - The operation to update the VMSS VM extension.
+// If the operation fails it returns the *CloudError error type.
 func (client *VirtualMachineScaleSetVMExtensionsClient) update(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, vmExtensionName string, extensionParameters VirtualMachineExtensionUpdate, options *VirtualMachineScaleSetVMExtensionsBeginUpdateOptions) (*azcore.Response, error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceID, vmExtensionName, extensionParameters, options)
 	if err != nil {

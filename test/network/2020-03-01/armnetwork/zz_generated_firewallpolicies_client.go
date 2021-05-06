@@ -32,6 +32,7 @@ func NewFirewallPoliciesClient(con *armcore.Connection, subscriptionID string) *
 }
 
 // BeginCreateOrUpdate - Creates or updates the specified Firewall Policy.
+// If the operation fails it returns the *CloudError error type.
 func (client *FirewallPoliciesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, firewallPolicyName string, parameters FirewallPolicy, options *FirewallPoliciesBeginCreateOrUpdateOptions) (FirewallPolicyPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, firewallPolicyName, parameters, options)
 	if err != nil {
@@ -81,6 +82,7 @@ func (client *FirewallPoliciesClient) ResumeCreateOrUpdate(ctx context.Context, 
 }
 
 // CreateOrUpdate - Creates or updates the specified Firewall Policy.
+// If the operation fails it returns the *CloudError error type.
 func (client *FirewallPoliciesClient) createOrUpdate(ctx context.Context, resourceGroupName string, firewallPolicyName string, parameters FirewallPolicy, options *FirewallPoliciesBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, firewallPolicyName, parameters, options)
 	if err != nil {
@@ -146,6 +148,7 @@ func (client *FirewallPoliciesClient) createOrUpdateHandleError(resp *azcore.Res
 }
 
 // BeginDelete - Deletes the specified Firewall Policy.
+// If the operation fails it returns the *CloudError error type.
 func (client *FirewallPoliciesClient) BeginDelete(ctx context.Context, resourceGroupName string, firewallPolicyName string, options *FirewallPoliciesBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, firewallPolicyName, options)
 	if err != nil {
@@ -195,6 +198,7 @@ func (client *FirewallPoliciesClient) ResumeDelete(ctx context.Context, token st
 }
 
 // Delete - Deletes the specified Firewall Policy.
+// If the operation fails it returns the *CloudError error type.
 func (client *FirewallPoliciesClient) deleteOperation(ctx context.Context, resourceGroupName string, firewallPolicyName string, options *FirewallPoliciesBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, firewallPolicyName, options)
 	if err != nil {
@@ -251,6 +255,7 @@ func (client *FirewallPoliciesClient) deleteHandleError(resp *azcore.Response) e
 }
 
 // Get - Gets the specified Firewall Policy.
+// If the operation fails it returns the *CloudError error type.
 func (client *FirewallPoliciesClient) Get(ctx context.Context, resourceGroupName string, firewallPolicyName string, options *FirewallPoliciesGetOptions) (FirewallPolicyResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, firewallPolicyName, options)
 	if err != nil {
@@ -319,6 +324,7 @@ func (client *FirewallPoliciesClient) getHandleError(resp *azcore.Response) erro
 }
 
 // List - Lists all Firewall Policies in a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *FirewallPoliciesClient) List(resourceGroupName string, options *FirewallPoliciesListOptions) FirewallPolicyListResultPager {
 	return &firewallPolicyListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -380,6 +386,7 @@ func (client *FirewallPoliciesClient) listHandleError(resp *azcore.Response) err
 }
 
 // ListAll - Gets all the Firewall Policies in a subscription.
+// If the operation fails it returns the *CloudError error type.
 func (client *FirewallPoliciesClient) ListAll(options *FirewallPoliciesListAllOptions) FirewallPolicyListResultPager {
 	return &firewallPolicyListResultPager{
 		pipeline: client.con.Pipeline(),

@@ -2740,6 +2740,7 @@ type CheckPrivateLinkServiceVisibilityRequest struct {
 }
 
 // CloudError - An error response from the service.
+// Implements the error and azcore.HTTPResponse interfaces.
 type CloudError struct {
 	raw string
 	// Cloud error body.
@@ -4028,6 +4029,7 @@ type EndpointServicesListResultResponse struct {
 }
 
 // Error - Common error representation.
+// Implements the error and azcore.HTTPResponse interfaces.
 type Error struct {
 	raw string
 	// Error code.
@@ -4065,6 +4067,7 @@ type ErrorDetails struct {
 }
 
 // ErrorResponse - The error object.
+// Implements the error and azcore.HTTPResponse interfaces.
 type ErrorResponse struct {
 	raw string
 	// The error details object.
@@ -5784,7 +5787,7 @@ type FirewallPolicyResponse struct {
 // FirewallPolicyRuleClassification provides polymorphic access to related types.
 // Call the interface's GetFirewallPolicyRule() method to access the common type.
 // Use a type switch to determine the concrete type.  The possible types are:
-// - *FirewallPolicyRule, *FirewallPolicyFilterRule, *FirewallPolicyNatRule
+// - *FirewallPolicyFilterRule, *FirewallPolicyNatRule, *FirewallPolicyRule
 type FirewallPolicyRuleClassification interface {
 	// GetFirewallPolicyRule returns the FirewallPolicyRule content of the underlying type.
 	GetFirewallPolicyRule() *FirewallPolicyRule
@@ -5847,7 +5850,7 @@ func (f *FirewallPolicyRule) unmarshalInternal(rawMsg map[string]json.RawMessage
 // FirewallPolicyRuleConditionClassification provides polymorphic access to related types.
 // Call the interface's GetFirewallPolicyRuleCondition() method to access the common type.
 // Use a type switch to determine the concrete type.  The possible types are:
-// - *FirewallPolicyRuleCondition, *ApplicationRuleCondition, *NatRuleCondition, *NetworkRuleCondition
+// - *ApplicationRuleCondition, *FirewallPolicyRuleCondition, *NatRuleCondition, *NetworkRuleCondition
 type FirewallPolicyRuleConditionClassification interface {
 	// GetFirewallPolicyRuleCondition returns the FirewallPolicyRuleCondition content of the underlying type.
 	GetFirewallPolicyRuleCondition() *FirewallPolicyRuleCondition

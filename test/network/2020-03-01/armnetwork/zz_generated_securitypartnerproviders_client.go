@@ -32,6 +32,7 @@ func NewSecurityPartnerProvidersClient(con *armcore.Connection, subscriptionID s
 }
 
 // BeginCreateOrUpdate - Creates or updates the specified Security Partner Provider.
+// If the operation fails it returns the *CloudError error type.
 func (client *SecurityPartnerProvidersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, parameters SecurityPartnerProvider, options *SecurityPartnerProvidersBeginCreateOrUpdateOptions) (SecurityPartnerProviderPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, securityPartnerProviderName, parameters, options)
 	if err != nil {
@@ -81,6 +82,7 @@ func (client *SecurityPartnerProvidersClient) ResumeCreateOrUpdate(ctx context.C
 }
 
 // CreateOrUpdate - Creates or updates the specified Security Partner Provider.
+// If the operation fails it returns the *CloudError error type.
 func (client *SecurityPartnerProvidersClient) createOrUpdate(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, parameters SecurityPartnerProvider, options *SecurityPartnerProvidersBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, securityPartnerProviderName, parameters, options)
 	if err != nil {
@@ -146,6 +148,7 @@ func (client *SecurityPartnerProvidersClient) createOrUpdateHandleError(resp *az
 }
 
 // BeginDelete - Deletes the specified Security Partner Provider.
+// If the operation fails it returns the *CloudError error type.
 func (client *SecurityPartnerProvidersClient) BeginDelete(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, options *SecurityPartnerProvidersBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, securityPartnerProviderName, options)
 	if err != nil {
@@ -195,6 +198,7 @@ func (client *SecurityPartnerProvidersClient) ResumeDelete(ctx context.Context, 
 }
 
 // Delete - Deletes the specified Security Partner Provider.
+// If the operation fails it returns the *CloudError error type.
 func (client *SecurityPartnerProvidersClient) deleteOperation(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, options *SecurityPartnerProvidersBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, securityPartnerProviderName, options)
 	if err != nil {
@@ -251,6 +255,7 @@ func (client *SecurityPartnerProvidersClient) deleteHandleError(resp *azcore.Res
 }
 
 // Get - Gets the specified Security Partner Provider.
+// If the operation fails it returns the *CloudError error type.
 func (client *SecurityPartnerProvidersClient) Get(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, options *SecurityPartnerProvidersGetOptions) (SecurityPartnerProviderResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, securityPartnerProviderName, options)
 	if err != nil {
@@ -316,6 +321,7 @@ func (client *SecurityPartnerProvidersClient) getHandleError(resp *azcore.Respon
 }
 
 // List - Gets all the Security Partner Providers in a subscription.
+// If the operation fails it returns the *CloudError error type.
 func (client *SecurityPartnerProvidersClient) List(options *SecurityPartnerProvidersListOptions) SecurityPartnerProviderListResultPager {
 	return &securityPartnerProviderListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -373,6 +379,7 @@ func (client *SecurityPartnerProvidersClient) listHandleError(resp *azcore.Respo
 }
 
 // ListByResourceGroup - Lists all Security Partner Providers in a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *SecurityPartnerProvidersClient) ListByResourceGroup(resourceGroupName string, options *SecurityPartnerProvidersListByResourceGroupOptions) SecurityPartnerProviderListResultPager {
 	return &securityPartnerProviderListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -434,6 +441,7 @@ func (client *SecurityPartnerProvidersClient) listByResourceGroupHandleError(res
 }
 
 // UpdateTags - Updates tags of a Security Partner Provider resource.
+// If the operation fails it returns the *CloudError error type.
 func (client *SecurityPartnerProvidersClient) UpdateTags(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, parameters TagsObject, options *SecurityPartnerProvidersUpdateTagsOptions) (SecurityPartnerProviderResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, securityPartnerProviderName, parameters, options)
 	if err != nil {

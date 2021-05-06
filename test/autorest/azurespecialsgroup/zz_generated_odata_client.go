@@ -27,6 +27,7 @@ func NewOdataClient(con *Connection) *OdataClient {
 }
 
 // GetWithFilter - Specify filter parameter with value '$filter=id gt 5 and name eq 'foo'&$orderby=id&$top=10'
+// If the operation fails it returns the *Error error type.
 func (client *OdataClient) GetWithFilter(ctx context.Context, options *OdataGetWithFilterOptions) (*http.Response, error) {
 	req, err := client.getWithFilterCreateRequest(ctx, options)
 	if err != nil {

@@ -31,6 +31,7 @@ func NewSnapshotsClient(con *armcore.Connection, subscriptionID string) *Snapsho
 }
 
 // BeginCreateOrUpdate - Creates or updates a snapshot.
+// If the operation fails it returns a generic error.
 func (client *SnapshotsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, snapshotName string, snapshot Snapshot, options *SnapshotsBeginCreateOrUpdateOptions) (SnapshotPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, snapshotName, snapshot, options)
 	if err != nil {
@@ -80,6 +81,7 @@ func (client *SnapshotsClient) ResumeCreateOrUpdate(ctx context.Context, token s
 }
 
 // CreateOrUpdate - Creates or updates a snapshot.
+// If the operation fails it returns a generic error.
 func (client *SnapshotsClient) createOrUpdate(ctx context.Context, resourceGroupName string, snapshotName string, snapshot Snapshot, options *SnapshotsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, snapshotName, snapshot, options)
 	if err != nil {
@@ -144,6 +146,7 @@ func (client *SnapshotsClient) createOrUpdateHandleError(resp *azcore.Response) 
 }
 
 // BeginDelete - Deletes a snapshot.
+// If the operation fails it returns a generic error.
 func (client *SnapshotsClient) BeginDelete(ctx context.Context, resourceGroupName string, snapshotName string, options *SnapshotsBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, snapshotName, options)
 	if err != nil {
@@ -193,6 +196,7 @@ func (client *SnapshotsClient) ResumeDelete(ctx context.Context, token string) (
 }
 
 // Delete - Deletes a snapshot.
+// If the operation fails it returns a generic error.
 func (client *SnapshotsClient) deleteOperation(ctx context.Context, resourceGroupName string, snapshotName string, options *SnapshotsBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, snapshotName, options)
 	if err != nil {
@@ -247,6 +251,7 @@ func (client *SnapshotsClient) deleteHandleError(resp *azcore.Response) error {
 }
 
 // Get - Gets information about a snapshot.
+// If the operation fails it returns a generic error.
 func (client *SnapshotsClient) Get(ctx context.Context, resourceGroupName string, snapshotName string, options *SnapshotsGetOptions) (SnapshotResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, snapshotName, options)
 	if err != nil {
@@ -311,6 +316,7 @@ func (client *SnapshotsClient) getHandleError(resp *azcore.Response) error {
 }
 
 // BeginGrantAccess - Grants access to a snapshot.
+// If the operation fails it returns a generic error.
 func (client *SnapshotsClient) BeginGrantAccess(ctx context.Context, resourceGroupName string, snapshotName string, grantAccessData GrantAccessData, options *SnapshotsBeginGrantAccessOptions) (AccessURIPollerResponse, error) {
 	resp, err := client.grantAccess(ctx, resourceGroupName, snapshotName, grantAccessData, options)
 	if err != nil {
@@ -360,6 +366,7 @@ func (client *SnapshotsClient) ResumeGrantAccess(ctx context.Context, token stri
 }
 
 // GrantAccess - Grants access to a snapshot.
+// If the operation fails it returns a generic error.
 func (client *SnapshotsClient) grantAccess(ctx context.Context, resourceGroupName string, snapshotName string, grantAccessData GrantAccessData, options *SnapshotsBeginGrantAccessOptions) (*azcore.Response, error) {
 	req, err := client.grantAccessCreateRequest(ctx, resourceGroupName, snapshotName, grantAccessData, options)
 	if err != nil {
@@ -424,6 +431,7 @@ func (client *SnapshotsClient) grantAccessHandleError(resp *azcore.Response) err
 }
 
 // List - Lists snapshots under a subscription.
+// If the operation fails it returns a generic error.
 func (client *SnapshotsClient) List(options *SnapshotsListOptions) SnapshotListPager {
 	return &snapshotListPager{
 		pipeline: client.con.Pipeline(),
@@ -480,6 +488,7 @@ func (client *SnapshotsClient) listHandleError(resp *azcore.Response) error {
 }
 
 // ListByResourceGroup - Lists snapshots under a resource group.
+// If the operation fails it returns a generic error.
 func (client *SnapshotsClient) ListByResourceGroup(resourceGroupName string, options *SnapshotsListByResourceGroupOptions) SnapshotListPager {
 	return &snapshotListPager{
 		pipeline: client.con.Pipeline(),
@@ -540,6 +549,7 @@ func (client *SnapshotsClient) listByResourceGroupHandleError(resp *azcore.Respo
 }
 
 // BeginRevokeAccess - Revokes access to a snapshot.
+// If the operation fails it returns a generic error.
 func (client *SnapshotsClient) BeginRevokeAccess(ctx context.Context, resourceGroupName string, snapshotName string, options *SnapshotsBeginRevokeAccessOptions) (HTTPPollerResponse, error) {
 	resp, err := client.revokeAccess(ctx, resourceGroupName, snapshotName, options)
 	if err != nil {
@@ -589,6 +599,7 @@ func (client *SnapshotsClient) ResumeRevokeAccess(ctx context.Context, token str
 }
 
 // RevokeAccess - Revokes access to a snapshot.
+// If the operation fails it returns a generic error.
 func (client *SnapshotsClient) revokeAccess(ctx context.Context, resourceGroupName string, snapshotName string, options *SnapshotsBeginRevokeAccessOptions) (*azcore.Response, error) {
 	req, err := client.revokeAccessCreateRequest(ctx, resourceGroupName, snapshotName, options)
 	if err != nil {
@@ -643,6 +654,7 @@ func (client *SnapshotsClient) revokeAccessHandleError(resp *azcore.Response) er
 }
 
 // BeginUpdate - Updates (patches) a snapshot.
+// If the operation fails it returns a generic error.
 func (client *SnapshotsClient) BeginUpdate(ctx context.Context, resourceGroupName string, snapshotName string, snapshot SnapshotUpdate, options *SnapshotsBeginUpdateOptions) (SnapshotPollerResponse, error) {
 	resp, err := client.update(ctx, resourceGroupName, snapshotName, snapshot, options)
 	if err != nil {
@@ -692,6 +704,7 @@ func (client *SnapshotsClient) ResumeUpdate(ctx context.Context, token string) (
 }
 
 // Update - Updates (patches) a snapshot.
+// If the operation fails it returns a generic error.
 func (client *SnapshotsClient) update(ctx context.Context, resourceGroupName string, snapshotName string, snapshot SnapshotUpdate, options *SnapshotsBeginUpdateOptions) (*azcore.Response, error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, snapshotName, snapshot, options)
 	if err != nil {

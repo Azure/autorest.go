@@ -23,6 +23,7 @@ type dataFlowClient struct {
 }
 
 // BeginCreateOrUpdateDataFlow - Creates or updates a data flow.
+// If the operation fails it returns the *CloudError error type.
 func (client *dataFlowClient) BeginCreateOrUpdateDataFlow(ctx context.Context, dataFlowName string, dataFlow DataFlowResource, options *DataFlowBeginCreateOrUpdateDataFlowOptions) (DataFlowResourcePollerResponse, error) {
 	resp, err := client.createOrUpdateDataFlow(ctx, dataFlowName, dataFlow, options)
 	if err != nil {
@@ -70,6 +71,7 @@ func (client *dataFlowClient) ResumeCreateOrUpdateDataFlow(ctx context.Context, 
 }
 
 // CreateOrUpdateDataFlow - Creates or updates a data flow.
+// If the operation fails it returns the *CloudError error type.
 func (client *dataFlowClient) createOrUpdateDataFlow(ctx context.Context, dataFlowName string, dataFlow DataFlowResource, options *DataFlowBeginCreateOrUpdateDataFlowOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateDataFlowCreateRequest(ctx, dataFlowName, dataFlow, options)
 	if err != nil {
@@ -130,6 +132,7 @@ func (client *dataFlowClient) createOrUpdateDataFlowHandleError(resp *azcore.Res
 }
 
 // BeginDeleteDataFlow - Deletes a data flow.
+// If the operation fails it returns the *CloudError error type.
 func (client *dataFlowClient) BeginDeleteDataFlow(ctx context.Context, dataFlowName string, options *DataFlowBeginDeleteDataFlowOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteDataFlow(ctx, dataFlowName, options)
 	if err != nil {
@@ -177,6 +180,7 @@ func (client *dataFlowClient) ResumeDeleteDataFlow(ctx context.Context, token st
 }
 
 // DeleteDataFlow - Deletes a data flow.
+// If the operation fails it returns the *CloudError error type.
 func (client *dataFlowClient) deleteDataFlow(ctx context.Context, dataFlowName string, options *DataFlowBeginDeleteDataFlowOptions) (*azcore.Response, error) {
 	req, err := client.deleteDataFlowCreateRequest(ctx, dataFlowName, options)
 	if err != nil {
@@ -225,6 +229,7 @@ func (client *dataFlowClient) deleteDataFlowHandleError(resp *azcore.Response) e
 }
 
 // GetDataFlow - Gets a data flow.
+// If the operation fails it returns the *CloudError error type.
 func (client *dataFlowClient) GetDataFlow(ctx context.Context, dataFlowName string, options *DataFlowGetDataFlowOptions) (DataFlowResourceResponse, error) {
 	req, err := client.getDataFlowCreateRequest(ctx, dataFlowName, options)
 	if err != nil {
@@ -285,6 +290,7 @@ func (client *dataFlowClient) getDataFlowHandleError(resp *azcore.Response) erro
 }
 
 // GetDataFlowsByWorkspace - Lists data flows.
+// If the operation fails it returns the *CloudError error type.
 func (client *dataFlowClient) GetDataFlowsByWorkspace(options *DataFlowGetDataFlowsByWorkspaceOptions) DataFlowListResponsePager {
 	return &dataFlowListResponsePager{
 		pipeline: client.con.Pipeline(),
@@ -338,6 +344,7 @@ func (client *dataFlowClient) getDataFlowsByWorkspaceHandleError(resp *azcore.Re
 }
 
 // BeginRenameDataFlow - Renames a dataflow.
+// If the operation fails it returns the *CloudError error type.
 func (client *dataFlowClient) BeginRenameDataFlow(ctx context.Context, dataFlowName string, request ArtifactRenameRequest, options *DataFlowBeginRenameDataFlowOptions) (HTTPPollerResponse, error) {
 	resp, err := client.renameDataFlow(ctx, dataFlowName, request, options)
 	if err != nil {
@@ -385,6 +392,7 @@ func (client *dataFlowClient) ResumeRenameDataFlow(ctx context.Context, token st
 }
 
 // RenameDataFlow - Renames a dataflow.
+// If the operation fails it returns the *CloudError error type.
 func (client *dataFlowClient) renameDataFlow(ctx context.Context, dataFlowName string, request ArtifactRenameRequest, options *DataFlowBeginRenameDataFlowOptions) (*azcore.Response, error) {
 	req, err := client.renameDataFlowCreateRequest(ctx, dataFlowName, request, options)
 	if err != nil {

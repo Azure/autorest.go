@@ -31,6 +31,7 @@ func NewDedicatedHostGroupsClient(con *armcore.Connection, subscriptionID string
 
 // CreateOrUpdate - Create or update a dedicated host group. For details of Dedicated Host and Dedicated Host Groups please see Dedicated Host Documentation
 // [https://go.microsoft.com/fwlink/?linkid=2082596]
+// If the operation fails it returns a generic error.
 func (client *DedicatedHostGroupsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, hostGroupName string, parameters DedicatedHostGroup, options *DedicatedHostGroupsCreateOrUpdateOptions) (DedicatedHostGroupResponse, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, hostGroupName, parameters, options)
 	if err != nil {
@@ -95,6 +96,7 @@ func (client *DedicatedHostGroupsClient) createOrUpdateHandleError(resp *azcore.
 }
 
 // Delete - Delete a dedicated host group.
+// If the operation fails it returns a generic error.
 func (client *DedicatedHostGroupsClient) Delete(ctx context.Context, resourceGroupName string, hostGroupName string, options *DedicatedHostGroupsDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, hostGroupName, options)
 	if err != nil {
@@ -149,6 +151,7 @@ func (client *DedicatedHostGroupsClient) deleteHandleError(resp *azcore.Response
 }
 
 // Get - Retrieves information about a dedicated host group.
+// If the operation fails it returns a generic error.
 func (client *DedicatedHostGroupsClient) Get(ctx context.Context, resourceGroupName string, hostGroupName string, options *DedicatedHostGroupsGetOptions) (DedicatedHostGroupResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, hostGroupName, options)
 	if err != nil {
@@ -214,6 +217,7 @@ func (client *DedicatedHostGroupsClient) getHandleError(resp *azcore.Response) e
 
 // ListByResourceGroup - Lists all of the dedicated host groups in the specified resource group. Use the nextLink property in the response to get the next
 // page of dedicated host groups.
+// If the operation fails it returns a generic error.
 func (client *DedicatedHostGroupsClient) ListByResourceGroup(resourceGroupName string, options *DedicatedHostGroupsListByResourceGroupOptions) DedicatedHostGroupListResultPager {
 	return &dedicatedHostGroupListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -275,6 +279,7 @@ func (client *DedicatedHostGroupsClient) listByResourceGroupHandleError(resp *az
 
 // ListBySubscription - Lists all of the dedicated host groups in the subscription. Use the nextLink property in the response to get the next page of dedicated
 // host groups.
+// If the operation fails it returns a generic error.
 func (client *DedicatedHostGroupsClient) ListBySubscription(options *DedicatedHostGroupsListBySubscriptionOptions) DedicatedHostGroupListResultPager {
 	return &dedicatedHostGroupListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -331,6 +336,7 @@ func (client *DedicatedHostGroupsClient) listBySubscriptionHandleError(resp *azc
 }
 
 // Update - Update an dedicated host group.
+// If the operation fails it returns a generic error.
 func (client *DedicatedHostGroupsClient) Update(ctx context.Context, resourceGroupName string, hostGroupName string, parameters DedicatedHostGroupUpdate, options *DedicatedHostGroupsUpdateOptions) (DedicatedHostGroupResponse, error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, hostGroupName, parameters, options)
 	if err != nil {

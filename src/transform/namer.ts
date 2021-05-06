@@ -76,6 +76,7 @@ export async function namer(session: Session<CodeModel>) {
       for (const child of values(obj.discriminator.all)) {
         details.discriminatorTypes.push('*' + child.language.go!.name);
       }
+      (<Array<string>>details.discriminatorTypes).sort();
     }
     for (const prop of values(obj.properties)) {
       const details = <Language>prop.language.go;

@@ -32,6 +32,7 @@ func NewDdosCustomPoliciesClient(con *armcore.Connection, subscriptionID string)
 }
 
 // BeginCreateOrUpdate - Creates or updates a DDoS custom policy.
+// If the operation fails it returns the *CloudError error type.
 func (client *DdosCustomPoliciesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ddosCustomPolicyName string, parameters DdosCustomPolicy, options *DdosCustomPoliciesBeginCreateOrUpdateOptions) (DdosCustomPolicyPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, ddosCustomPolicyName, parameters, options)
 	if err != nil {
@@ -81,6 +82,7 @@ func (client *DdosCustomPoliciesClient) ResumeCreateOrUpdate(ctx context.Context
 }
 
 // CreateOrUpdate - Creates or updates a DDoS custom policy.
+// If the operation fails it returns the *CloudError error type.
 func (client *DdosCustomPoliciesClient) createOrUpdate(ctx context.Context, resourceGroupName string, ddosCustomPolicyName string, parameters DdosCustomPolicy, options *DdosCustomPoliciesBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, ddosCustomPolicyName, parameters, options)
 	if err != nil {
@@ -146,6 +148,7 @@ func (client *DdosCustomPoliciesClient) createOrUpdateHandleError(resp *azcore.R
 }
 
 // BeginDelete - Deletes the specified DDoS custom policy.
+// If the operation fails it returns the *CloudError error type.
 func (client *DdosCustomPoliciesClient) BeginDelete(ctx context.Context, resourceGroupName string, ddosCustomPolicyName string, options *DdosCustomPoliciesBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, ddosCustomPolicyName, options)
 	if err != nil {
@@ -195,6 +198,7 @@ func (client *DdosCustomPoliciesClient) ResumeDelete(ctx context.Context, token 
 }
 
 // Delete - Deletes the specified DDoS custom policy.
+// If the operation fails it returns the *CloudError error type.
 func (client *DdosCustomPoliciesClient) deleteOperation(ctx context.Context, resourceGroupName string, ddosCustomPolicyName string, options *DdosCustomPoliciesBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, ddosCustomPolicyName, options)
 	if err != nil {
@@ -251,6 +255,7 @@ func (client *DdosCustomPoliciesClient) deleteHandleError(resp *azcore.Response)
 }
 
 // Get - Gets information about the specified DDoS custom policy.
+// If the operation fails it returns the *CloudError error type.
 func (client *DdosCustomPoliciesClient) Get(ctx context.Context, resourceGroupName string, ddosCustomPolicyName string, options *DdosCustomPoliciesGetOptions) (DdosCustomPolicyResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, ddosCustomPolicyName, options)
 	if err != nil {
@@ -316,6 +321,7 @@ func (client *DdosCustomPoliciesClient) getHandleError(resp *azcore.Response) er
 }
 
 // UpdateTags - Update a DDoS custom policy tags.
+// If the operation fails it returns the *CloudError error type.
 func (client *DdosCustomPoliciesClient) UpdateTags(ctx context.Context, resourceGroupName string, ddosCustomPolicyName string, parameters TagsObject, options *DdosCustomPoliciesUpdateTagsOptions) (DdosCustomPolicyResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, ddosCustomPolicyName, parameters, options)
 	if err != nil {

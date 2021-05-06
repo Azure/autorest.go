@@ -31,6 +31,7 @@ func NewVirtualMachineExtensionImagesClient(con *armcore.Connection, subscriptio
 }
 
 // Get - Gets a virtual machine extension image.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineExtensionImagesClient) Get(ctx context.Context, location string, publisherName string, typeParam string, version string, options *VirtualMachineExtensionImagesGetOptions) (VirtualMachineExtensionImageResponse, error) {
 	req, err := client.getCreateRequest(ctx, location, publisherName, typeParam, version, options)
 	if err != nil {
@@ -103,6 +104,7 @@ func (client *VirtualMachineExtensionImagesClient) getHandleError(resp *azcore.R
 }
 
 // ListTypes - Gets a list of virtual machine extension image types.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineExtensionImagesClient) ListTypes(ctx context.Context, location string, publisherName string, options *VirtualMachineExtensionImagesListTypesOptions) (VirtualMachineExtensionImageArrayResponse, error) {
 	req, err := client.listTypesCreateRequest(ctx, location, publisherName, options)
 	if err != nil {
@@ -167,6 +169,7 @@ func (client *VirtualMachineExtensionImagesClient) listTypesHandleError(resp *az
 }
 
 // ListVersions - Gets a list of virtual machine extension image versions.
+// If the operation fails it returns a generic error.
 func (client *VirtualMachineExtensionImagesClient) ListVersions(ctx context.Context, location string, publisherName string, typeParam string, options *VirtualMachineExtensionImagesListVersionsOptions) (VirtualMachineExtensionImageArrayResponse, error) {
 	req, err := client.listVersionsCreateRequest(ctx, location, publisherName, typeParam, options)
 	if err != nil {

@@ -9,6 +9,7 @@ package urlgroup
 
 import "time"
 
+// Implements the error and azcore.HTTPResponse interfaces.
 type Error struct {
 	raw     string
 	Message *string `json:"message,omitempty"`

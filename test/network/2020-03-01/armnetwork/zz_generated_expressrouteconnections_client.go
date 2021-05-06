@@ -32,6 +32,7 @@ func NewExpressRouteConnectionsClient(con *armcore.Connection, subscriptionID st
 }
 
 // BeginCreateOrUpdate - Creates a connection between an ExpressRoute gateway and an ExpressRoute circuit.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteConnectionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, connectionName string, putExpressRouteConnectionParameters ExpressRouteConnection, options *ExpressRouteConnectionsBeginCreateOrUpdateOptions) (ExpressRouteConnectionPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, expressRouteGatewayName, connectionName, putExpressRouteConnectionParameters, options)
 	if err != nil {
@@ -81,6 +82,7 @@ func (client *ExpressRouteConnectionsClient) ResumeCreateOrUpdate(ctx context.Co
 }
 
 // CreateOrUpdate - Creates a connection between an ExpressRoute gateway and an ExpressRoute circuit.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteConnectionsClient) createOrUpdate(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, connectionName string, putExpressRouteConnectionParameters ExpressRouteConnection, options *ExpressRouteConnectionsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, expressRouteGatewayName, connectionName, putExpressRouteConnectionParameters, options)
 	if err != nil {
@@ -150,6 +152,7 @@ func (client *ExpressRouteConnectionsClient) createOrUpdateHandleError(resp *azc
 }
 
 // BeginDelete - Deletes a connection to a ExpressRoute circuit.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteConnectionsClient) BeginDelete(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, connectionName string, options *ExpressRouteConnectionsBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, expressRouteGatewayName, connectionName, options)
 	if err != nil {
@@ -199,6 +202,7 @@ func (client *ExpressRouteConnectionsClient) ResumeDelete(ctx context.Context, t
 }
 
 // Delete - Deletes a connection to a ExpressRoute circuit.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteConnectionsClient) deleteOperation(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, connectionName string, options *ExpressRouteConnectionsBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, expressRouteGatewayName, connectionName, options)
 	if err != nil {
@@ -259,6 +263,7 @@ func (client *ExpressRouteConnectionsClient) deleteHandleError(resp *azcore.Resp
 }
 
 // Get - Gets the specified ExpressRouteConnection.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteConnectionsClient) Get(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, connectionName string, options *ExpressRouteConnectionsGetOptions) (ExpressRouteConnectionResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, expressRouteGatewayName, connectionName, options)
 	if err != nil {
@@ -328,6 +333,7 @@ func (client *ExpressRouteConnectionsClient) getHandleError(resp *azcore.Respons
 }
 
 // List - Lists ExpressRouteConnections.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteConnectionsClient) List(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, options *ExpressRouteConnectionsListOptions) (ExpressRouteConnectionListResponse, error) {
 	req, err := client.listCreateRequest(ctx, resourceGroupName, expressRouteGatewayName, options)
 	if err != nil {

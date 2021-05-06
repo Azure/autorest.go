@@ -31,6 +31,7 @@ func NewServiceTagsClient(con *armcore.Connection, subscriptionID string) *Servi
 }
 
 // List - Gets a list of service tag information resources.
+// If the operation fails it returns the *CloudError error type.
 func (client *ServiceTagsClient) List(ctx context.Context, location string, options *ServiceTagsListOptions) (ServiceTagsListResultResponse, error) {
 	req, err := client.listCreateRequest(ctx, location, options)
 	if err != nil {

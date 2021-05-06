@@ -26,6 +26,7 @@ func NewHTTPSuccessClient(con *Connection) *HTTPSuccessClient {
 }
 
 // Delete200 - Delete simple boolean value true returns 200
+// If the operation fails it returns the *Error error type.
 func (client *HTTPSuccessClient) Delete200(ctx context.Context, options *HTTPSuccessDelete200Options) (*http.Response, error) {
 	req, err := client.delete200CreateRequest(ctx, options)
 	if err != nil {
@@ -67,6 +68,7 @@ func (client *HTTPSuccessClient) delete200HandleError(resp *azcore.Response) err
 }
 
 // Delete202 - Delete true Boolean value in request returns 202 (accepted)
+// If the operation fails it returns the *Error error type.
 func (client *HTTPSuccessClient) Delete202(ctx context.Context, options *HTTPSuccessDelete202Options) (*http.Response, error) {
 	req, err := client.delete202CreateRequest(ctx, options)
 	if err != nil {
@@ -108,6 +110,7 @@ func (client *HTTPSuccessClient) delete202HandleError(resp *azcore.Response) err
 }
 
 // Delete204 - Delete true Boolean value in request returns 204 (no content)
+// If the operation fails it returns the *Error error type.
 func (client *HTTPSuccessClient) Delete204(ctx context.Context, options *HTTPSuccessDelete204Options) (*http.Response, error) {
 	req, err := client.delete204CreateRequest(ctx, options)
 	if err != nil {
@@ -149,6 +152,7 @@ func (client *HTTPSuccessClient) delete204HandleError(resp *azcore.Response) err
 }
 
 // Get200 - Get 200 success
+// If the operation fails it returns the *Error error type.
 func (client *HTTPSuccessClient) Get200(ctx context.Context, options *HTTPSuccessGet200Options) (BoolResponse, error) {
 	req, err := client.get200CreateRequest(ctx, options)
 	if err != nil {
@@ -199,6 +203,7 @@ func (client *HTTPSuccessClient) get200HandleError(resp *azcore.Response) error 
 }
 
 // Head200 - Return 200 status code if successful
+// If the operation fails it returns the *Error error type.
 func (client *HTTPSuccessClient) Head200(ctx context.Context, options *HTTPSuccessHead200Options) (BooleanResponse, error) {
 	req, err := client.head200CreateRequest(ctx, options)
 	if err != nil {
@@ -243,6 +248,7 @@ func (client *HTTPSuccessClient) head200HandleError(resp *azcore.Response) error
 }
 
 // Head204 - Return 204 status code if successful
+// If the operation fails it returns the *Error error type.
 func (client *HTTPSuccessClient) Head204(ctx context.Context, options *HTTPSuccessHead204Options) (BooleanResponse, error) {
 	req, err := client.head204CreateRequest(ctx, options)
 	if err != nil {
@@ -287,6 +293,7 @@ func (client *HTTPSuccessClient) head204HandleError(resp *azcore.Response) error
 }
 
 // Head404 - Return 404 status code
+// If the operation fails it returns the *Error error type.
 func (client *HTTPSuccessClient) Head404(ctx context.Context, options *HTTPSuccessHead404Options) (BooleanResponse, error) {
 	req, err := client.head404CreateRequest(ctx, options)
 	if err != nil {
@@ -331,6 +338,7 @@ func (client *HTTPSuccessClient) head404HandleError(resp *azcore.Response) error
 }
 
 // Options200 - Options 200 success
+// If the operation fails it returns the *Error error type.
 func (client *HTTPSuccessClient) Options200(ctx context.Context, options *HTTPSuccessOptions200Options) (BoolResponse, error) {
 	req, err := client.options200CreateRequest(ctx, options)
 	if err != nil {
@@ -381,6 +389,7 @@ func (client *HTTPSuccessClient) options200HandleError(resp *azcore.Response) er
 }
 
 // Patch200 - Patch true Boolean value in request returning 200
+// If the operation fails it returns the *Error error type.
 func (client *HTTPSuccessClient) Patch200(ctx context.Context, options *HTTPSuccessPatch200Options) (*http.Response, error) {
 	req, err := client.patch200CreateRequest(ctx, options)
 	if err != nil {
@@ -422,6 +431,7 @@ func (client *HTTPSuccessClient) patch200HandleError(resp *azcore.Response) erro
 }
 
 // Patch202 - Patch true Boolean value in request returns 202
+// If the operation fails it returns the *Error error type.
 func (client *HTTPSuccessClient) Patch202(ctx context.Context, options *HTTPSuccessPatch202Options) (*http.Response, error) {
 	req, err := client.patch202CreateRequest(ctx, options)
 	if err != nil {
@@ -463,6 +473,7 @@ func (client *HTTPSuccessClient) patch202HandleError(resp *azcore.Response) erro
 }
 
 // Patch204 - Patch true Boolean value in request returns 204 (no content)
+// If the operation fails it returns the *Error error type.
 func (client *HTTPSuccessClient) Patch204(ctx context.Context, options *HTTPSuccessPatch204Options) (*http.Response, error) {
 	req, err := client.patch204CreateRequest(ctx, options)
 	if err != nil {
@@ -504,6 +515,7 @@ func (client *HTTPSuccessClient) patch204HandleError(resp *azcore.Response) erro
 }
 
 // Post200 - Post bollean value true in request that returns a 200
+// If the operation fails it returns the *Error error type.
 func (client *HTTPSuccessClient) Post200(ctx context.Context, options *HTTPSuccessPost200Options) (*http.Response, error) {
 	req, err := client.post200CreateRequest(ctx, options)
 	if err != nil {
@@ -545,6 +557,7 @@ func (client *HTTPSuccessClient) post200HandleError(resp *azcore.Response) error
 }
 
 // Post201 - Post true Boolean value in request returns 201 (Created)
+// If the operation fails it returns the *Error error type.
 func (client *HTTPSuccessClient) Post201(ctx context.Context, options *HTTPSuccessPost201Options) (*http.Response, error) {
 	req, err := client.post201CreateRequest(ctx, options)
 	if err != nil {
@@ -586,6 +599,7 @@ func (client *HTTPSuccessClient) post201HandleError(resp *azcore.Response) error
 }
 
 // Post202 - Post true Boolean value in request returns 202 (Accepted)
+// If the operation fails it returns the *Error error type.
 func (client *HTTPSuccessClient) Post202(ctx context.Context, options *HTTPSuccessPost202Options) (*http.Response, error) {
 	req, err := client.post202CreateRequest(ctx, options)
 	if err != nil {
@@ -627,6 +641,7 @@ func (client *HTTPSuccessClient) post202HandleError(resp *azcore.Response) error
 }
 
 // Post204 - Post true Boolean value in request returns 204 (no content)
+// If the operation fails it returns the *Error error type.
 func (client *HTTPSuccessClient) Post204(ctx context.Context, options *HTTPSuccessPost204Options) (*http.Response, error) {
 	req, err := client.post204CreateRequest(ctx, options)
 	if err != nil {
@@ -668,6 +683,7 @@ func (client *HTTPSuccessClient) post204HandleError(resp *azcore.Response) error
 }
 
 // Put200 - Put boolean value true returning 200 success
+// If the operation fails it returns the *Error error type.
 func (client *HTTPSuccessClient) Put200(ctx context.Context, options *HTTPSuccessPut200Options) (*http.Response, error) {
 	req, err := client.put200CreateRequest(ctx, options)
 	if err != nil {
@@ -709,6 +725,7 @@ func (client *HTTPSuccessClient) put200HandleError(resp *azcore.Response) error 
 }
 
 // Put201 - Put true Boolean value in request returns 201
+// If the operation fails it returns the *Error error type.
 func (client *HTTPSuccessClient) Put201(ctx context.Context, options *HTTPSuccessPut201Options) (*http.Response, error) {
 	req, err := client.put201CreateRequest(ctx, options)
 	if err != nil {
@@ -750,6 +767,7 @@ func (client *HTTPSuccessClient) put201HandleError(resp *azcore.Response) error 
 }
 
 // Put202 - Put true Boolean value in request returns 202 (Accepted)
+// If the operation fails it returns the *Error error type.
 func (client *HTTPSuccessClient) Put202(ctx context.Context, options *HTTPSuccessPut202Options) (*http.Response, error) {
 	req, err := client.put202CreateRequest(ctx, options)
 	if err != nil {
@@ -791,6 +809,7 @@ func (client *HTTPSuccessClient) put202HandleError(resp *azcore.Response) error 
 }
 
 // Put204 - Put true Boolean value in request returns 204 (no content)
+// If the operation fails it returns the *Error error type.
 func (client *HTTPSuccessClient) Put204(ctx context.Context, options *HTTPSuccessPut204Options) (*http.Response, error) {
 	req, err := client.put204CreateRequest(ctx, options)
 	if err != nil {

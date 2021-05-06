@@ -32,6 +32,7 @@ func NewApplicationGatewaysClient(con *armcore.Connection, subscriptionID string
 }
 
 // BeginBackendHealth - Gets the backend health of the specified application gateway in a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *ApplicationGatewaysClient) BeginBackendHealth(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysBeginBackendHealthOptions) (ApplicationGatewayBackendHealthPollerResponse, error) {
 	resp, err := client.backendHealth(ctx, resourceGroupName, applicationGatewayName, options)
 	if err != nil {
@@ -81,6 +82,7 @@ func (client *ApplicationGatewaysClient) ResumeBackendHealth(ctx context.Context
 }
 
 // BackendHealth - Gets the backend health of the specified application gateway in a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *ApplicationGatewaysClient) backendHealth(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysBeginBackendHealthOptions) (*azcore.Response, error) {
 	req, err := client.backendHealthCreateRequest(ctx, resourceGroupName, applicationGatewayName, options)
 	if err != nil {
@@ -150,6 +152,7 @@ func (client *ApplicationGatewaysClient) backendHealthHandleError(resp *azcore.R
 
 // BeginBackendHealthOnDemand - Gets the backend health for given combination of backend pool and http setting of the specified application gateway in a
 // resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *ApplicationGatewaysClient) BeginBackendHealthOnDemand(ctx context.Context, resourceGroupName string, applicationGatewayName string, probeRequest ApplicationGatewayOnDemandProbe, options *ApplicationGatewaysBeginBackendHealthOnDemandOptions) (ApplicationGatewayBackendHealthOnDemandPollerResponse, error) {
 	resp, err := client.backendHealthOnDemand(ctx, resourceGroupName, applicationGatewayName, probeRequest, options)
 	if err != nil {
@@ -200,6 +203,7 @@ func (client *ApplicationGatewaysClient) ResumeBackendHealthOnDemand(ctx context
 
 // BackendHealthOnDemand - Gets the backend health for given combination of backend pool and http setting of the specified application gateway in a resource
 // group.
+// If the operation fails it returns the *CloudError error type.
 func (client *ApplicationGatewaysClient) backendHealthOnDemand(ctx context.Context, resourceGroupName string, applicationGatewayName string, probeRequest ApplicationGatewayOnDemandProbe, options *ApplicationGatewaysBeginBackendHealthOnDemandOptions) (*azcore.Response, error) {
 	req, err := client.backendHealthOnDemandCreateRequest(ctx, resourceGroupName, applicationGatewayName, probeRequest, options)
 	if err != nil {
@@ -268,6 +272,7 @@ func (client *ApplicationGatewaysClient) backendHealthOnDemandHandleError(resp *
 }
 
 // BeginCreateOrUpdate - Creates or updates the specified application gateway.
+// If the operation fails it returns the *CloudError error type.
 func (client *ApplicationGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, applicationGatewayName string, parameters ApplicationGateway, options *ApplicationGatewaysBeginCreateOrUpdateOptions) (ApplicationGatewayPollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, applicationGatewayName, parameters, options)
 	if err != nil {
@@ -317,6 +322,7 @@ func (client *ApplicationGatewaysClient) ResumeCreateOrUpdate(ctx context.Contex
 }
 
 // CreateOrUpdate - Creates or updates the specified application gateway.
+// If the operation fails it returns the *CloudError error type.
 func (client *ApplicationGatewaysClient) createOrUpdate(ctx context.Context, resourceGroupName string, applicationGatewayName string, parameters ApplicationGateway, options *ApplicationGatewaysBeginCreateOrUpdateOptions) (*azcore.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, applicationGatewayName, parameters, options)
 	if err != nil {
@@ -382,6 +388,7 @@ func (client *ApplicationGatewaysClient) createOrUpdateHandleError(resp *azcore.
 }
 
 // BeginDelete - Deletes the specified application gateway.
+// If the operation fails it returns the *CloudError error type.
 func (client *ApplicationGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysBeginDeleteOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, applicationGatewayName, options)
 	if err != nil {
@@ -431,6 +438,7 @@ func (client *ApplicationGatewaysClient) ResumeDelete(ctx context.Context, token
 }
 
 // Delete - Deletes the specified application gateway.
+// If the operation fails it returns the *CloudError error type.
 func (client *ApplicationGatewaysClient) deleteOperation(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysBeginDeleteOptions) (*azcore.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, applicationGatewayName, options)
 	if err != nil {
@@ -487,6 +495,7 @@ func (client *ApplicationGatewaysClient) deleteHandleError(resp *azcore.Response
 }
 
 // Get - Gets the specified application gateway.
+// If the operation fails it returns the *CloudError error type.
 func (client *ApplicationGatewaysClient) Get(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysGetOptions) (ApplicationGatewayResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, applicationGatewayName, options)
 	if err != nil {
@@ -552,6 +561,7 @@ func (client *ApplicationGatewaysClient) getHandleError(resp *azcore.Response) e
 }
 
 // GetSSLPredefinedPolicy - Gets Ssl predefined policy with the specified policy name.
+// If the operation fails it returns the *CloudError error type.
 func (client *ApplicationGatewaysClient) GetSSLPredefinedPolicy(ctx context.Context, predefinedPolicyName string, options *ApplicationGatewaysGetSSLPredefinedPolicyOptions) (ApplicationGatewaySSLPredefinedPolicyResponse, error) {
 	req, err := client.getSSLPredefinedPolicyCreateRequest(ctx, predefinedPolicyName, options)
 	if err != nil {
@@ -613,6 +623,7 @@ func (client *ApplicationGatewaysClient) getSSLPredefinedPolicyHandleError(resp 
 }
 
 // List - Lists all application gateways in a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *ApplicationGatewaysClient) List(resourceGroupName string, options *ApplicationGatewaysListOptions) ApplicationGatewayListResultPager {
 	return &applicationGatewayListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -674,6 +685,7 @@ func (client *ApplicationGatewaysClient) listHandleError(resp *azcore.Response) 
 }
 
 // ListAll - Gets all the application gateways in a subscription.
+// If the operation fails it returns the *CloudError error type.
 func (client *ApplicationGatewaysClient) ListAll(options *ApplicationGatewaysListAllOptions) ApplicationGatewayListResultPager {
 	return &applicationGatewayListResultPager{
 		pipeline: client.con.Pipeline(),
@@ -731,6 +743,7 @@ func (client *ApplicationGatewaysClient) listAllHandleError(resp *azcore.Respons
 }
 
 // ListAvailableRequestHeaders - Lists all available request headers.
+// If the operation fails it returns the *Error error type.
 func (client *ApplicationGatewaysClient) ListAvailableRequestHeaders(ctx context.Context, options *ApplicationGatewaysListAvailableRequestHeadersOptions) (StringArrayResponse, error) {
 	req, err := client.listAvailableRequestHeadersCreateRequest(ctx, options)
 	if err != nil {
@@ -788,6 +801,7 @@ func (client *ApplicationGatewaysClient) listAvailableRequestHeadersHandleError(
 }
 
 // ListAvailableResponseHeaders - Lists all available response headers.
+// If the operation fails it returns the *Error error type.
 func (client *ApplicationGatewaysClient) ListAvailableResponseHeaders(ctx context.Context, options *ApplicationGatewaysListAvailableResponseHeadersOptions) (StringArrayResponse, error) {
 	req, err := client.listAvailableResponseHeadersCreateRequest(ctx, options)
 	if err != nil {
@@ -845,6 +859,7 @@ func (client *ApplicationGatewaysClient) listAvailableResponseHeadersHandleError
 }
 
 // ListAvailableSSLOptions - Lists available Ssl options for configuring Ssl policy.
+// If the operation fails it returns the *CloudError error type.
 func (client *ApplicationGatewaysClient) ListAvailableSSLOptions(ctx context.Context, options *ApplicationGatewaysListAvailableSSLOptionsOptions) (ApplicationGatewayAvailableSSLOptionsResponse, error) {
 	req, err := client.listAvailableSSLOptionsCreateRequest(ctx, options)
 	if err != nil {
@@ -902,6 +917,7 @@ func (client *ApplicationGatewaysClient) listAvailableSSLOptionsHandleError(resp
 }
 
 // ListAvailableSSLPredefinedPolicies - Lists all SSL predefined policies for configuring Ssl policy.
+// If the operation fails it returns the *CloudError error type.
 func (client *ApplicationGatewaysClient) ListAvailableSSLPredefinedPolicies(options *ApplicationGatewaysListAvailableSSLPredefinedPoliciesOptions) ApplicationGatewayAvailableSSLPredefinedPoliciesPager {
 	return &applicationGatewayAvailableSSLPredefinedPoliciesPager{
 		pipeline: client.con.Pipeline(),
@@ -959,6 +975,7 @@ func (client *ApplicationGatewaysClient) listAvailableSSLPredefinedPoliciesHandl
 }
 
 // ListAvailableServerVariables - Lists all available server variables.
+// If the operation fails it returns the *Error error type.
 func (client *ApplicationGatewaysClient) ListAvailableServerVariables(ctx context.Context, options *ApplicationGatewaysListAvailableServerVariablesOptions) (StringArrayResponse, error) {
 	req, err := client.listAvailableServerVariablesCreateRequest(ctx, options)
 	if err != nil {
@@ -1016,6 +1033,7 @@ func (client *ApplicationGatewaysClient) listAvailableServerVariablesHandleError
 }
 
 // ListAvailableWafRuleSets - Lists all available web application firewall rule sets.
+// If the operation fails it returns the *CloudError error type.
 func (client *ApplicationGatewaysClient) ListAvailableWafRuleSets(ctx context.Context, options *ApplicationGatewaysListAvailableWafRuleSetsOptions) (ApplicationGatewayAvailableWafRuleSetsResultResponse, error) {
 	req, err := client.listAvailableWafRuleSetsCreateRequest(ctx, options)
 	if err != nil {
@@ -1073,6 +1091,7 @@ func (client *ApplicationGatewaysClient) listAvailableWafRuleSetsHandleError(res
 }
 
 // BeginStart - Starts the specified application gateway.
+// If the operation fails it returns the *CloudError error type.
 func (client *ApplicationGatewaysClient) BeginStart(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysBeginStartOptions) (HTTPPollerResponse, error) {
 	resp, err := client.start(ctx, resourceGroupName, applicationGatewayName, options)
 	if err != nil {
@@ -1122,6 +1141,7 @@ func (client *ApplicationGatewaysClient) ResumeStart(ctx context.Context, token 
 }
 
 // Start - Starts the specified application gateway.
+// If the operation fails it returns the *CloudError error type.
 func (client *ApplicationGatewaysClient) start(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysBeginStartOptions) (*azcore.Response, error) {
 	req, err := client.startCreateRequest(ctx, resourceGroupName, applicationGatewayName, options)
 	if err != nil {
@@ -1178,6 +1198,7 @@ func (client *ApplicationGatewaysClient) startHandleError(resp *azcore.Response)
 }
 
 // BeginStop - Stops the specified application gateway in a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *ApplicationGatewaysClient) BeginStop(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysBeginStopOptions) (HTTPPollerResponse, error) {
 	resp, err := client.stop(ctx, resourceGroupName, applicationGatewayName, options)
 	if err != nil {
@@ -1227,6 +1248,7 @@ func (client *ApplicationGatewaysClient) ResumeStop(ctx context.Context, token s
 }
 
 // Stop - Stops the specified application gateway in a resource group.
+// If the operation fails it returns the *CloudError error type.
 func (client *ApplicationGatewaysClient) stop(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysBeginStopOptions) (*azcore.Response, error) {
 	req, err := client.stopCreateRequest(ctx, resourceGroupName, applicationGatewayName, options)
 	if err != nil {
@@ -1283,6 +1305,7 @@ func (client *ApplicationGatewaysClient) stopHandleError(resp *azcore.Response) 
 }
 
 // UpdateTags - Updates the specified application gateway tags.
+// If the operation fails it returns the *CloudError error type.
 func (client *ApplicationGatewaysClient) UpdateTags(ctx context.Context, resourceGroupName string, applicationGatewayName string, parameters TagsObject, options *ApplicationGatewaysUpdateTagsOptions) (ApplicationGatewayResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, applicationGatewayName, parameters, options)
 	if err != nil {

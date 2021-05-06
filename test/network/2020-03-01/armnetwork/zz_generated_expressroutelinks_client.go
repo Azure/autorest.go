@@ -31,6 +31,7 @@ func NewExpressRouteLinksClient(con *armcore.Connection, subscriptionID string) 
 }
 
 // Get - Retrieves the specified ExpressRouteLink resource.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteLinksClient) Get(ctx context.Context, resourceGroupName string, expressRoutePortName string, linkName string, options *ExpressRouteLinksGetOptions) (ExpressRouteLinkResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, expressRoutePortName, linkName, options)
 	if err != nil {
@@ -100,6 +101,7 @@ func (client *ExpressRouteLinksClient) getHandleError(resp *azcore.Response) err
 }
 
 // List - Retrieve the ExpressRouteLink sub-resources of the specified ExpressRoutePort resource.
+// If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteLinksClient) List(resourceGroupName string, expressRoutePortName string, options *ExpressRouteLinksListOptions) ExpressRouteLinkListResultPager {
 	return &expressRouteLinkListResultPager{
 		pipeline: client.con.Pipeline(),

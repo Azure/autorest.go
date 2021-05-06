@@ -26,6 +26,7 @@ func NewAutoRestReportServiceClient(con *Connection) *AutoRestReportServiceClien
 }
 
 // GetOptionalReport - Get optional test coverage report
+// If the operation fails it returns the *Error error type.
 func (client *AutoRestReportServiceClient) GetOptionalReport(ctx context.Context, options *AutoRestReportServiceGetOptionalReportOptions) (MapOfInt32Response, error) {
 	req, err := client.getOptionalReportCreateRequest(ctx, options)
 	if err != nil {
@@ -81,6 +82,7 @@ func (client *AutoRestReportServiceClient) getOptionalReportHandleError(resp *az
 }
 
 // GetReport - Get test coverage report
+// If the operation fails it returns the *Error error type.
 func (client *AutoRestReportServiceClient) GetReport(ctx context.Context, options *AutoRestReportServiceGetReportOptions) (MapOfInt32Response, error) {
 	req, err := client.getReportCreateRequest(ctx, options)
 	if err != nil {

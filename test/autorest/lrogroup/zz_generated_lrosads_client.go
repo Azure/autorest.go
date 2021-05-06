@@ -28,6 +28,7 @@ func NewLROSADsClient(con *Connection) *LROSADsClient {
 }
 
 // BeginDelete202NonRetry400 - Long running delete request, service returns a 202 with a location header
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) BeginDelete202NonRetry400(ctx context.Context, options *LROSADsBeginDelete202NonRetry400Options) (HTTPPollerResponse, error) {
 	resp, err := client.delete202NonRetry400(ctx, options)
 	if err != nil {
@@ -77,6 +78,7 @@ func (client *LROSADsClient) ResumeDelete202NonRetry400(ctx context.Context, tok
 }
 
 // Delete202NonRetry400 - Long running delete request, service returns a 202 with a location header
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) delete202NonRetry400(ctx context.Context, options *LROSADsBeginDelete202NonRetry400Options) (*azcore.Response, error) {
 	req, err := client.delete202NonRetry400CreateRequest(ctx, options)
 	if err != nil {
@@ -119,6 +121,7 @@ func (client *LROSADsClient) delete202NonRetry400HandleError(resp *azcore.Respon
 
 // BeginDelete202RetryInvalidHeader - Long running delete request, service returns a 202 to the initial request receing a reponse with an invalid 'Location'
 // and 'Retry-After' headers
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) BeginDelete202RetryInvalidHeader(ctx context.Context, options *LROSADsBeginDelete202RetryInvalidHeaderOptions) (HTTPPollerResponse, error) {
 	resp, err := client.delete202RetryInvalidHeader(ctx, options)
 	if err != nil {
@@ -169,6 +172,7 @@ func (client *LROSADsClient) ResumeDelete202RetryInvalidHeader(ctx context.Conte
 
 // Delete202RetryInvalidHeader - Long running delete request, service returns a 202 to the initial request receing a reponse with an invalid 'Location'
 // and 'Retry-After' headers
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) delete202RetryInvalidHeader(ctx context.Context, options *LROSADsBeginDelete202RetryInvalidHeaderOptions) (*azcore.Response, error) {
 	req, err := client.delete202RetryInvalidHeaderCreateRequest(ctx, options)
 	if err != nil {
@@ -210,6 +214,7 @@ func (client *LROSADsClient) delete202RetryInvalidHeaderHandleError(resp *azcore
 }
 
 // BeginDelete204Succeeded - Long running delete request, service returns a 204 to the initial request, indicating success.
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) BeginDelete204Succeeded(ctx context.Context, options *LROSADsBeginDelete204SucceededOptions) (HTTPPollerResponse, error) {
 	resp, err := client.delete204Succeeded(ctx, options)
 	if err != nil {
@@ -259,6 +264,7 @@ func (client *LROSADsClient) ResumeDelete204Succeeded(ctx context.Context, token
 }
 
 // Delete204Succeeded - Long running delete request, service returns a 204 to the initial request, indicating success.
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) delete204Succeeded(ctx context.Context, options *LROSADsBeginDelete204SucceededOptions) (*azcore.Response, error) {
 	req, err := client.delete204SucceededCreateRequest(ctx, options)
 	if err != nil {
@@ -301,6 +307,7 @@ func (client *LROSADsClient) delete204SucceededHandleError(resp *azcore.Response
 
 // BeginDeleteAsyncRelativeRetry400 - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation
 // header for operation status
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) BeginDeleteAsyncRelativeRetry400(ctx context.Context, options *LROSADsBeginDeleteAsyncRelativeRetry400Options) (HTTPPollerResponse, error) {
 	resp, err := client.deleteAsyncRelativeRetry400(ctx, options)
 	if err != nil {
@@ -351,6 +358,7 @@ func (client *LROSADsClient) ResumeDeleteAsyncRelativeRetry400(ctx context.Conte
 
 // DeleteAsyncRelativeRetry400 - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation
 // header for operation status
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) deleteAsyncRelativeRetry400(ctx context.Context, options *LROSADsBeginDeleteAsyncRelativeRetry400Options) (*azcore.Response, error) {
 	req, err := client.deleteAsyncRelativeRetry400CreateRequest(ctx, options)
 	if err != nil {
@@ -393,6 +401,7 @@ func (client *LROSADsClient) deleteAsyncRelativeRetry400HandleError(resp *azcore
 
 // BeginDeleteAsyncRelativeRetryInvalidHeader - Long running delete request, service returns a 202 to the initial request. The endpoint indicated in the
 // Azure-AsyncOperation header is invalid
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) BeginDeleteAsyncRelativeRetryInvalidHeader(ctx context.Context, options *LROSADsBeginDeleteAsyncRelativeRetryInvalidHeaderOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteAsyncRelativeRetryInvalidHeader(ctx, options)
 	if err != nil {
@@ -443,6 +452,7 @@ func (client *LROSADsClient) ResumeDeleteAsyncRelativeRetryInvalidHeader(ctx con
 
 // DeleteAsyncRelativeRetryInvalidHeader - Long running delete request, service returns a 202 to the initial request. The endpoint indicated in the Azure-AsyncOperation
 // header is invalid
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) deleteAsyncRelativeRetryInvalidHeader(ctx context.Context, options *LROSADsBeginDeleteAsyncRelativeRetryInvalidHeaderOptions) (*azcore.Response, error) {
 	req, err := client.deleteAsyncRelativeRetryInvalidHeaderCreateRequest(ctx, options)
 	if err != nil {
@@ -485,6 +495,7 @@ func (client *LROSADsClient) deleteAsyncRelativeRetryInvalidHeaderHandleError(re
 
 // BeginDeleteAsyncRelativeRetryInvalidJSONPolling - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated
 // in the Azure-AsyncOperation header for operation status
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) BeginDeleteAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, options *LROSADsBeginDeleteAsyncRelativeRetryInvalidJSONPollingOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteAsyncRelativeRetryInvalidJSONPolling(ctx, options)
 	if err != nil {
@@ -535,6 +546,7 @@ func (client *LROSADsClient) ResumeDeleteAsyncRelativeRetryInvalidJSONPolling(ct
 
 // DeleteAsyncRelativeRetryInvalidJSONPolling - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in
 // the Azure-AsyncOperation header for operation status
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) deleteAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, options *LROSADsBeginDeleteAsyncRelativeRetryInvalidJSONPollingOptions) (*azcore.Response, error) {
 	req, err := client.deleteAsyncRelativeRetryInvalidJSONPollingCreateRequest(ctx, options)
 	if err != nil {
@@ -577,6 +589,7 @@ func (client *LROSADsClient) deleteAsyncRelativeRetryInvalidJSONPollingHandleErr
 
 // BeginDeleteAsyncRelativeRetryNoStatus - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in the
 // Azure-AsyncOperation header for operation status
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) BeginDeleteAsyncRelativeRetryNoStatus(ctx context.Context, options *LROSADsBeginDeleteAsyncRelativeRetryNoStatusOptions) (HTTPPollerResponse, error) {
 	resp, err := client.deleteAsyncRelativeRetryNoStatus(ctx, options)
 	if err != nil {
@@ -627,6 +640,7 @@ func (client *LROSADsClient) ResumeDeleteAsyncRelativeRetryNoStatus(ctx context.
 
 // DeleteAsyncRelativeRetryNoStatus - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation
 // header for operation status
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) deleteAsyncRelativeRetryNoStatus(ctx context.Context, options *LROSADsBeginDeleteAsyncRelativeRetryNoStatusOptions) (*azcore.Response, error) {
 	req, err := client.deleteAsyncRelativeRetryNoStatusCreateRequest(ctx, options)
 	if err != nil {
@@ -668,6 +682,7 @@ func (client *LROSADsClient) deleteAsyncRelativeRetryNoStatusHandleError(resp *a
 }
 
 // BeginDeleteNonRetry400 - Long running delete request, service returns a 400 with an error body
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) BeginDeleteNonRetry400(ctx context.Context, options *LROSADsBeginDeleteNonRetry400Options) (HTTPPollerResponse, error) {
 	resp, err := client.deleteNonRetry400(ctx, options)
 	if err != nil {
@@ -717,6 +732,7 @@ func (client *LROSADsClient) ResumeDeleteNonRetry400(ctx context.Context, token 
 }
 
 // DeleteNonRetry400 - Long running delete request, service returns a 400 with an error body
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) deleteNonRetry400(ctx context.Context, options *LROSADsBeginDeleteNonRetry400Options) (*azcore.Response, error) {
 	req, err := client.deleteNonRetry400CreateRequest(ctx, options)
 	if err != nil {
@@ -758,6 +774,7 @@ func (client *LROSADsClient) deleteNonRetry400HandleError(resp *azcore.Response)
 }
 
 // BeginPost202NoLocation - Long running post request, service returns a 202 to the initial request, without a location header.
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) BeginPost202NoLocation(ctx context.Context, options *LROSADsBeginPost202NoLocationOptions) (HTTPPollerResponse, error) {
 	resp, err := client.post202NoLocation(ctx, options)
 	if err != nil {
@@ -807,6 +824,7 @@ func (client *LROSADsClient) ResumePost202NoLocation(ctx context.Context, token 
 }
 
 // Post202NoLocation - Long running post request, service returns a 202 to the initial request, without a location header.
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) post202NoLocation(ctx context.Context, options *LROSADsBeginPost202NoLocationOptions) (*azcore.Response, error) {
 	req, err := client.post202NoLocationCreateRequest(ctx, options)
 	if err != nil {
@@ -851,6 +869,7 @@ func (client *LROSADsClient) post202NoLocationHandleError(resp *azcore.Response)
 }
 
 // BeginPost202NonRetry400 - Long running post request, service returns a 202 with a location header
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) BeginPost202NonRetry400(ctx context.Context, options *LROSADsBeginPost202NonRetry400Options) (HTTPPollerResponse, error) {
 	resp, err := client.post202NonRetry400(ctx, options)
 	if err != nil {
@@ -900,6 +919,7 @@ func (client *LROSADsClient) ResumePost202NonRetry400(ctx context.Context, token
 }
 
 // Post202NonRetry400 - Long running post request, service returns a 202 with a location header
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) post202NonRetry400(ctx context.Context, options *LROSADsBeginPost202NonRetry400Options) (*azcore.Response, error) {
 	req, err := client.post202NonRetry400CreateRequest(ctx, options)
 	if err != nil {
@@ -944,6 +964,7 @@ func (client *LROSADsClient) post202NonRetry400HandleError(resp *azcore.Response
 }
 
 // BeginPost202RetryInvalidHeader - Long running post request, service returns a 202 to the initial request, with invalid 'Location' and 'Retry-After' headers.
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) BeginPost202RetryInvalidHeader(ctx context.Context, options *LROSADsBeginPost202RetryInvalidHeaderOptions) (HTTPPollerResponse, error) {
 	resp, err := client.post202RetryInvalidHeader(ctx, options)
 	if err != nil {
@@ -993,6 +1014,7 @@ func (client *LROSADsClient) ResumePost202RetryInvalidHeader(ctx context.Context
 }
 
 // Post202RetryInvalidHeader - Long running post request, service returns a 202 to the initial request, with invalid 'Location' and 'Retry-After' headers.
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) post202RetryInvalidHeader(ctx context.Context, options *LROSADsBeginPost202RetryInvalidHeaderOptions) (*azcore.Response, error) {
 	req, err := client.post202RetryInvalidHeaderCreateRequest(ctx, options)
 	if err != nil {
@@ -1038,6 +1060,7 @@ func (client *LROSADsClient) post202RetryInvalidHeaderHandleError(resp *azcore.R
 
 // BeginPostAsyncRelativeRetry400 - Long running post request, service returns a 202 to the initial request Poll the endpoint indicated in the Azure-AsyncOperation
 // header for operation status
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) BeginPostAsyncRelativeRetry400(ctx context.Context, options *LROSADsBeginPostAsyncRelativeRetry400Options) (HTTPPollerResponse, error) {
 	resp, err := client.postAsyncRelativeRetry400(ctx, options)
 	if err != nil {
@@ -1088,6 +1111,7 @@ func (client *LROSADsClient) ResumePostAsyncRelativeRetry400(ctx context.Context
 
 // PostAsyncRelativeRetry400 - Long running post request, service returns a 202 to the initial request Poll the endpoint indicated in the Azure-AsyncOperation
 // header for operation status
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) postAsyncRelativeRetry400(ctx context.Context, options *LROSADsBeginPostAsyncRelativeRetry400Options) (*azcore.Response, error) {
 	req, err := client.postAsyncRelativeRetry400CreateRequest(ctx, options)
 	if err != nil {
@@ -1134,6 +1158,7 @@ func (client *LROSADsClient) postAsyncRelativeRetry400HandleError(resp *azcore.R
 // BeginPostAsyncRelativeRetryInvalidHeader - Long running post request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’.
 // The endpoint indicated in the Azure-AsyncOperation header is
 // invalid.
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) BeginPostAsyncRelativeRetryInvalidHeader(ctx context.Context, options *LROSADsBeginPostAsyncRelativeRetryInvalidHeaderOptions) (HTTPPollerResponse, error) {
 	resp, err := client.postAsyncRelativeRetryInvalidHeader(ctx, options)
 	if err != nil {
@@ -1185,6 +1210,7 @@ func (client *LROSADsClient) ResumePostAsyncRelativeRetryInvalidHeader(ctx conte
 // PostAsyncRelativeRetryInvalidHeader - Long running post request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’.
 // The endpoint indicated in the Azure-AsyncOperation header is
 // invalid.
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) postAsyncRelativeRetryInvalidHeader(ctx context.Context, options *LROSADsBeginPostAsyncRelativeRetryInvalidHeaderOptions) (*azcore.Response, error) {
 	req, err := client.postAsyncRelativeRetryInvalidHeaderCreateRequest(ctx, options)
 	if err != nil {
@@ -1231,6 +1257,7 @@ func (client *LROSADsClient) postAsyncRelativeRetryInvalidHeaderHandleError(resp
 // BeginPostAsyncRelativeRetryInvalidJSONPolling - Long running post request, service returns a 202 to the initial request, with an entity that contains
 // ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) BeginPostAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, options *LROSADsBeginPostAsyncRelativeRetryInvalidJSONPollingOptions) (HTTPPollerResponse, error) {
 	resp, err := client.postAsyncRelativeRetryInvalidJSONPolling(ctx, options)
 	if err != nil {
@@ -1282,6 +1309,7 @@ func (client *LROSADsClient) ResumePostAsyncRelativeRetryInvalidJSONPolling(ctx 
 // PostAsyncRelativeRetryInvalidJSONPolling - Long running post request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’.
 // Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) postAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, options *LROSADsBeginPostAsyncRelativeRetryInvalidJSONPollingOptions) (*azcore.Response, error) {
 	req, err := client.postAsyncRelativeRetryInvalidJSONPollingCreateRequest(ctx, options)
 	if err != nil {
@@ -1328,6 +1356,7 @@ func (client *LROSADsClient) postAsyncRelativeRetryInvalidJSONPollingHandleError
 // BeginPostAsyncRelativeRetryNoPayload - Long running post request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’.
 // Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) BeginPostAsyncRelativeRetryNoPayload(ctx context.Context, options *LROSADsBeginPostAsyncRelativeRetryNoPayloadOptions) (HTTPPollerResponse, error) {
 	resp, err := client.postAsyncRelativeRetryNoPayload(ctx, options)
 	if err != nil {
@@ -1379,6 +1408,7 @@ func (client *LROSADsClient) ResumePostAsyncRelativeRetryNoPayload(ctx context.C
 // PostAsyncRelativeRetryNoPayload - Long running post request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’.
 // Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) postAsyncRelativeRetryNoPayload(ctx context.Context, options *LROSADsBeginPostAsyncRelativeRetryNoPayloadOptions) (*azcore.Response, error) {
 	req, err := client.postAsyncRelativeRetryNoPayloadCreateRequest(ctx, options)
 	if err != nil {
@@ -1423,6 +1453,7 @@ func (client *LROSADsClient) postAsyncRelativeRetryNoPayloadHandleError(resp *az
 }
 
 // BeginPostNonRetry400 - Long running post request, service returns a 400 with no error body
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) BeginPostNonRetry400(ctx context.Context, options *LROSADsBeginPostNonRetry400Options) (HTTPPollerResponse, error) {
 	resp, err := client.postNonRetry400(ctx, options)
 	if err != nil {
@@ -1472,6 +1503,7 @@ func (client *LROSADsClient) ResumePostNonRetry400(ctx context.Context, token st
 }
 
 // PostNonRetry400 - Long running post request, service returns a 400 with no error body
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) postNonRetry400(ctx context.Context, options *LROSADsBeginPostNonRetry400Options) (*azcore.Response, error) {
 	req, err := client.postNonRetry400CreateRequest(ctx, options)
 	if err != nil {
@@ -1516,6 +1548,7 @@ func (client *LROSADsClient) postNonRetry400HandleError(resp *azcore.Response) e
 }
 
 // BeginPut200InvalidJSON - Long running put request, service returns a 200 to the initial request, with an entity that is not a valid json
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) BeginPut200InvalidJSON(ctx context.Context, options *LROSADsBeginPut200InvalidJSONOptions) (ProductPollerResponse, error) {
 	resp, err := client.put200InvalidJSON(ctx, options)
 	if err != nil {
@@ -1565,6 +1598,7 @@ func (client *LROSADsClient) ResumePut200InvalidJSON(ctx context.Context, token 
 }
 
 // Put200InvalidJSON - Long running put request, service returns a 200 to the initial request, with an entity that is not a valid json
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) put200InvalidJSON(ctx context.Context, options *LROSADsBeginPut200InvalidJSONOptions) (*azcore.Response, error) {
 	req, err := client.put200InvalidJSONCreateRequest(ctx, options)
 	if err != nil {
@@ -1619,6 +1653,7 @@ func (client *LROSADsClient) put200InvalidJSONHandleError(resp *azcore.Response)
 
 // BeginPutAsyncRelativeRetry400 - Long running put request, service returns a 200 with ProvisioningState=’Creating’. Poll the endpoint indicated in the
 // Azure-AsyncOperation header for operation status
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) BeginPutAsyncRelativeRetry400(ctx context.Context, options *LROSADsBeginPutAsyncRelativeRetry400Options) (ProductPollerResponse, error) {
 	resp, err := client.putAsyncRelativeRetry400(ctx, options)
 	if err != nil {
@@ -1669,6 +1704,7 @@ func (client *LROSADsClient) ResumePutAsyncRelativeRetry400(ctx context.Context,
 
 // PutAsyncRelativeRetry400 - Long running put request, service returns a 200 with ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation
 // header for operation status
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) putAsyncRelativeRetry400(ctx context.Context, options *LROSADsBeginPutAsyncRelativeRetry400Options) (*azcore.Response, error) {
 	req, err := client.putAsyncRelativeRetry400CreateRequest(ctx, options)
 	if err != nil {
@@ -1723,6 +1759,7 @@ func (client *LROSADsClient) putAsyncRelativeRetry400HandleError(resp *azcore.Re
 
 // BeginPutAsyncRelativeRetryInvalidHeader - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’.
 // The endpoint indicated in the Azure-AsyncOperation header is invalid.
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) BeginPutAsyncRelativeRetryInvalidHeader(ctx context.Context, options *LROSADsBeginPutAsyncRelativeRetryInvalidHeaderOptions) (ProductPollerResponse, error) {
 	resp, err := client.putAsyncRelativeRetryInvalidHeader(ctx, options)
 	if err != nil {
@@ -1773,6 +1810,7 @@ func (client *LROSADsClient) ResumePutAsyncRelativeRetryInvalidHeader(ctx contex
 
 // PutAsyncRelativeRetryInvalidHeader - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’.
 // The endpoint indicated in the Azure-AsyncOperation header is invalid.
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) putAsyncRelativeRetryInvalidHeader(ctx context.Context, options *LROSADsBeginPutAsyncRelativeRetryInvalidHeaderOptions) (*azcore.Response, error) {
 	req, err := client.putAsyncRelativeRetryInvalidHeaderCreateRequest(ctx, options)
 	if err != nil {
@@ -1828,6 +1866,7 @@ func (client *LROSADsClient) putAsyncRelativeRetryInvalidHeaderHandleError(resp 
 // BeginPutAsyncRelativeRetryInvalidJSONPolling - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’.
 // Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) BeginPutAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, options *LROSADsBeginPutAsyncRelativeRetryInvalidJSONPollingOptions) (ProductPollerResponse, error) {
 	resp, err := client.putAsyncRelativeRetryInvalidJSONPolling(ctx, options)
 	if err != nil {
@@ -1879,6 +1918,7 @@ func (client *LROSADsClient) ResumePutAsyncRelativeRetryInvalidJSONPolling(ctx c
 // PutAsyncRelativeRetryInvalidJSONPolling - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’.
 // Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) putAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, options *LROSADsBeginPutAsyncRelativeRetryInvalidJSONPollingOptions) (*azcore.Response, error) {
 	req, err := client.putAsyncRelativeRetryInvalidJSONPollingCreateRequest(ctx, options)
 	if err != nil {
@@ -1934,6 +1974,7 @@ func (client *LROSADsClient) putAsyncRelativeRetryInvalidJSONPollingHandleError(
 // BeginPutAsyncRelativeRetryNoStatus - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’.
 // Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) BeginPutAsyncRelativeRetryNoStatus(ctx context.Context, options *LROSADsBeginPutAsyncRelativeRetryNoStatusOptions) (ProductPollerResponse, error) {
 	resp, err := client.putAsyncRelativeRetryNoStatus(ctx, options)
 	if err != nil {
@@ -1985,6 +2026,7 @@ func (client *LROSADsClient) ResumePutAsyncRelativeRetryNoStatus(ctx context.Con
 // PutAsyncRelativeRetryNoStatus - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’.
 // Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) putAsyncRelativeRetryNoStatus(ctx context.Context, options *LROSADsBeginPutAsyncRelativeRetryNoStatusOptions) (*azcore.Response, error) {
 	req, err := client.putAsyncRelativeRetryNoStatusCreateRequest(ctx, options)
 	if err != nil {
@@ -2040,6 +2082,7 @@ func (client *LROSADsClient) putAsyncRelativeRetryNoStatusHandleError(resp *azco
 // BeginPutAsyncRelativeRetryNoStatusPayload - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’.
 // Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) BeginPutAsyncRelativeRetryNoStatusPayload(ctx context.Context, options *LROSADsBeginPutAsyncRelativeRetryNoStatusPayloadOptions) (ProductPollerResponse, error) {
 	resp, err := client.putAsyncRelativeRetryNoStatusPayload(ctx, options)
 	if err != nil {
@@ -2091,6 +2134,7 @@ func (client *LROSADsClient) ResumePutAsyncRelativeRetryNoStatusPayload(ctx cont
 // PutAsyncRelativeRetryNoStatusPayload - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’.
 // Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) putAsyncRelativeRetryNoStatusPayload(ctx context.Context, options *LROSADsBeginPutAsyncRelativeRetryNoStatusPayloadOptions) (*azcore.Response, error) {
 	req, err := client.putAsyncRelativeRetryNoStatusPayloadCreateRequest(ctx, options)
 	if err != nil {
@@ -2144,6 +2188,7 @@ func (client *LROSADsClient) putAsyncRelativeRetryNoStatusPayloadHandleError(res
 }
 
 // BeginPutError201NoProvisioningStatePayload - Long running put request, service returns a 201 to the initial request with no payload
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) BeginPutError201NoProvisioningStatePayload(ctx context.Context, options *LROSADsBeginPutError201NoProvisioningStatePayloadOptions) (ProductPollerResponse, error) {
 	resp, err := client.putError201NoProvisioningStatePayload(ctx, options)
 	if err != nil {
@@ -2193,6 +2238,7 @@ func (client *LROSADsClient) ResumePutError201NoProvisioningStatePayload(ctx con
 }
 
 // PutError201NoProvisioningStatePayload - Long running put request, service returns a 201 to the initial request with no payload
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) putError201NoProvisioningStatePayload(ctx context.Context, options *LROSADsBeginPutError201NoProvisioningStatePayloadOptions) (*azcore.Response, error) {
 	req, err := client.putError201NoProvisioningStatePayloadCreateRequest(ctx, options)
 	if err != nil {
@@ -2246,6 +2292,7 @@ func (client *LROSADsClient) putError201NoProvisioningStatePayloadHandleError(re
 }
 
 // BeginPutNonRetry201Creating400 - Long running put request, service returns a Product with 'ProvisioningState' = 'Creating' and 201 response code
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) BeginPutNonRetry201Creating400(ctx context.Context, options *LROSADsBeginPutNonRetry201Creating400Options) (ProductPollerResponse, error) {
 	resp, err := client.putNonRetry201Creating400(ctx, options)
 	if err != nil {
@@ -2295,6 +2342,7 @@ func (client *LROSADsClient) ResumePutNonRetry201Creating400(ctx context.Context
 }
 
 // PutNonRetry201Creating400 - Long running put request, service returns a Product with 'ProvisioningState' = 'Creating' and 201 response code
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) putNonRetry201Creating400(ctx context.Context, options *LROSADsBeginPutNonRetry201Creating400Options) (*azcore.Response, error) {
 	req, err := client.putNonRetry201Creating400CreateRequest(ctx, options)
 	if err != nil {
@@ -2349,6 +2397,7 @@ func (client *LROSADsClient) putNonRetry201Creating400HandleError(resp *azcore.R
 
 // BeginPutNonRetry201Creating400InvalidJSON - Long running put request, service returns a Product with 'ProvisioningState' = 'Creating' and 201 response
 // code
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) BeginPutNonRetry201Creating400InvalidJSON(ctx context.Context, options *LROSADsBeginPutNonRetry201Creating400InvalidJSONOptions) (ProductPollerResponse, error) {
 	resp, err := client.putNonRetry201Creating400InvalidJSON(ctx, options)
 	if err != nil {
@@ -2398,6 +2447,7 @@ func (client *LROSADsClient) ResumePutNonRetry201Creating400InvalidJSON(ctx cont
 }
 
 // PutNonRetry201Creating400InvalidJSON - Long running put request, service returns a Product with 'ProvisioningState' = 'Creating' and 201 response code
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) putNonRetry201Creating400InvalidJSON(ctx context.Context, options *LROSADsBeginPutNonRetry201Creating400InvalidJSONOptions) (*azcore.Response, error) {
 	req, err := client.putNonRetry201Creating400InvalidJSONCreateRequest(ctx, options)
 	if err != nil {
@@ -2451,6 +2501,7 @@ func (client *LROSADsClient) putNonRetry201Creating400InvalidJSONHandleError(res
 }
 
 // BeginPutNonRetry400 - Long running put request, service returns a 400 to the initial request
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) BeginPutNonRetry400(ctx context.Context, options *LROSADsBeginPutNonRetry400Options) (ProductPollerResponse, error) {
 	resp, err := client.putNonRetry400(ctx, options)
 	if err != nil {
@@ -2500,6 +2551,7 @@ func (client *LROSADsClient) ResumePutNonRetry400(ctx context.Context, token str
 }
 
 // PutNonRetry400 - Long running put request, service returns a 400 to the initial request
+// If the operation fails it returns the *CloudError error type.
 func (client *LROSADsClient) putNonRetry400(ctx context.Context, options *LROSADsBeginPutNonRetry400Options) (*azcore.Response, error) {
 	req, err := client.putNonRetry400CreateRequest(ctx, options)
 	if err != nil {

@@ -50,6 +50,7 @@ type APIVersionLocalGetSwaggerLocalValidOptions struct {
 	// placeholder for future optional parameters
 }
 
+// Implements the error and azcore.HTTPResponse interfaces.
 type Error struct {
 	raw        string
 	ConstantID *int32  `json:"constantId,omitempty"`

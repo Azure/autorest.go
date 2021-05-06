@@ -26,6 +26,7 @@ func NewIntClient(con *Connection) *IntClient {
 }
 
 // Get - Get an int enum
+// If the operation fails it returns a generic error.
 func (client *IntClient) Get(ctx context.Context, options *IntGetOptions) (IntEnumResponse, error) {
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
@@ -75,6 +76,7 @@ func (client *IntClient) getHandleError(resp *azcore.Response) error {
 }
 
 // Put - Put an int enum
+// If the operation fails it returns a generic error.
 func (client *IntClient) Put(ctx context.Context, options *IntPutOptions) (StringResponse, error) {
 	req, err := client.putCreateRequest(ctx, options)
 	if err != nil {

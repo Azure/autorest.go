@@ -31,6 +31,7 @@ func NewBgpServiceCommunitiesClient(con *armcore.Connection, subscriptionID stri
 }
 
 // List - Gets all the available bgp service communities.
+// If the operation fails it returns the *CloudError error type.
 func (client *BgpServiceCommunitiesClient) List(options *BgpServiceCommunitiesListOptions) BgpServiceCommunityListResultPager {
 	return &bgpServiceCommunityListResultPager{
 		pipeline: client.con.Pipeline(),
