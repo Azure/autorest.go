@@ -30,17 +30,17 @@ func TestGetValid(t *testing.T) {
 		Fish: Fish{
 			Fishtype: to.StringPtr("salmon"),
 			Length:   to.Float32Ptr(1),
-			Siblings: &[]FishClassification{
+			Siblings: []FishClassification{
 				&Shark{
 					Fish: Fish{
 						Fishtype: to.StringPtr("shark"),
 						Length:   to.Float32Ptr(20),
-						Siblings: &[]FishClassification{
+						Siblings: []FishClassification{
 							&Salmon{
 								Fish: Fish{
 									Fishtype: to.StringPtr("salmon"),
 									Length:   to.Float32Ptr(2),
-									Siblings: &[]FishClassification{
+									Siblings: []FishClassification{
 										&Shark{
 											Fish: Fish{
 												Fishtype: to.StringPtr("shark"),
@@ -60,7 +60,7 @@ func TestGetValid(t *testing.T) {
 												Age:      to.Int32Ptr(105),
 												Birthday: &sawBday,
 											},
-											Picture: &[]byte{255, 255, 255, 255, 254},
+											Picture: []byte{255, 255, 255, 255, 254},
 										},
 									},
 									Species: to.StringPtr("coho"),
@@ -73,13 +73,13 @@ func TestGetValid(t *testing.T) {
 									Fish: Fish{
 										Fishtype: to.StringPtr("sawshark"),
 										Length:   to.Float32Ptr(10),
-										Siblings: &[]FishClassification{},
+										Siblings: []FishClassification{},
 										Species:  to.StringPtr("dangerous"),
 									},
 									Age:      to.Int32Ptr(105),
 									Birthday: &sawBday,
 								},
-								Picture: &[]byte{255, 255, 255, 255, 254},
+								Picture: []byte{255, 255, 255, 255, 254},
 							},
 						},
 						Species: to.StringPtr("predator"),
@@ -92,13 +92,13 @@ func TestGetValid(t *testing.T) {
 						Fish: Fish{
 							Fishtype: to.StringPtr("sawshark"),
 							Length:   to.Float32Ptr(10),
-							Siblings: &[]FishClassification{},
+							Siblings: []FishClassification{},
 							Species:  to.StringPtr("dangerous"),
 						},
 						Age:      to.Int32Ptr(105),
 						Birthday: &sawBday,
 					},
-					Picture: &[]byte{255, 255, 255, 255, 254},
+					Picture: []byte{255, 255, 255, 255, 254},
 				},
 			},
 			Species: to.StringPtr("king"),
@@ -119,17 +119,17 @@ func TestPutValid(t *testing.T) {
 		Fish: Fish{
 			Fishtype: to.StringPtr("salmon"),
 			Length:   to.Float32Ptr(1),
-			Siblings: &[]FishClassification{
+			Siblings: []FishClassification{
 				&Shark{
 					Fish: Fish{
 						Fishtype: to.StringPtr("shark"),
 						Length:   to.Float32Ptr(20),
-						Siblings: &[]FishClassification{
+						Siblings: []FishClassification{
 							&Salmon{
 								Fish: Fish{
 									Fishtype: to.StringPtr("salmon"),
 									Length:   to.Float32Ptr(2),
-									Siblings: &[]FishClassification{
+									Siblings: []FishClassification{
 										&Shark{
 											Fish: Fish{
 												Fishtype: to.StringPtr("shark"),
@@ -149,7 +149,7 @@ func TestPutValid(t *testing.T) {
 												Age:      to.Int32Ptr(105),
 												Birthday: &sawBday,
 											},
-											Picture: &[]byte{255, 255, 255, 255, 254},
+											Picture: []byte{255, 255, 255, 255, 254},
 										},
 									},
 									Species: to.StringPtr("coho"),
@@ -162,13 +162,13 @@ func TestPutValid(t *testing.T) {
 									Fish: Fish{
 										Fishtype: to.StringPtr("sawshark"),
 										Length:   to.Float32Ptr(10),
-										Siblings: &[]FishClassification{},
+										Siblings: []FishClassification{},
 										Species:  to.StringPtr("dangerous"),
 									},
 									Age:      to.Int32Ptr(105),
 									Birthday: &sawBday,
 								},
-								Picture: &[]byte{255, 255, 255, 255, 254},
+								Picture: []byte{255, 255, 255, 255, 254},
 							},
 						},
 						Species: to.StringPtr("predator"),
@@ -181,13 +181,13 @@ func TestPutValid(t *testing.T) {
 						Fish: Fish{
 							Fishtype: to.StringPtr("sawshark"),
 							Length:   to.Float32Ptr(10),
-							Siblings: &[]FishClassification{},
+							Siblings: []FishClassification{},
 							Species:  to.StringPtr("dangerous"),
 						},
 						Age:      to.Int32Ptr(105),
 						Birthday: &sawBday,
 					},
-					Picture: &[]byte{255, 255, 255, 255, 254},
+					Picture: []byte{255, 255, 255, 255, 254},
 				},
 			},
 			Species: to.StringPtr("king"),

@@ -48,13 +48,13 @@ type SparkBatchJob struct {
 	AppID *string `json:"appId,omitempty"`
 
 	// The detailed application info.
-	AppInfo *map[string]*string `json:"appInfo,omitempty"`
+	AppInfo map[string]*string `json:"appInfo,omitempty"`
 
 	// The artifact identifier.
 	ArtifactID *string `json:"artifactId,omitempty"`
 
 	// The error information.
-	Errors *[]*SparkServiceError `json:"errorInfo,omitempty"`
+	Errors []*SparkServiceError `json:"errorInfo,omitempty"`
 
 	// The session Id.
 	ID *int32 `json:"id,omitempty"`
@@ -64,7 +64,7 @@ type SparkBatchJob struct {
 	LivyInfo *SparkBatchJobState `json:"livyInfo,omitempty"`
 
 	// The log lines.
-	LogLines *[]*string `json:"log,omitempty"`
+	LogLines []*string `json:"log,omitempty"`
 
 	// The batch name.
 	Name *string `json:"name,omitempty"`
@@ -91,10 +91,34 @@ type SparkBatchJob struct {
 	SubmitterName *string `json:"submitterName,omitempty"`
 
 	// The tags.
-	Tags *map[string]*string `json:"tags,omitempty"`
+	Tags map[string]*string `json:"tags,omitempty"`
 
 	// The workspace name.
 	WorkspaceName *string `json:"workspaceName,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SparkBatchJob.
+func (s SparkBatchJob) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "appId", s.AppID)
+	populate(objectMap, "appInfo", s.AppInfo)
+	populate(objectMap, "artifactId", s.ArtifactID)
+	populate(objectMap, "errorInfo", s.Errors)
+	populate(objectMap, "id", s.ID)
+	populate(objectMap, "jobType", s.JobType)
+	populate(objectMap, "livyInfo", s.LivyInfo)
+	populate(objectMap, "log", s.LogLines)
+	populate(objectMap, "name", s.Name)
+	populate(objectMap, "pluginInfo", s.Plugin)
+	populate(objectMap, "result", s.Result)
+	populate(objectMap, "schedulerInfo", s.Scheduler)
+	populate(objectMap, "sparkPoolName", s.SparkPoolName)
+	populate(objectMap, "state", s.State)
+	populate(objectMap, "submitterId", s.SubmitterID)
+	populate(objectMap, "submitterName", s.SubmitterName)
+	populate(objectMap, "tags", s.Tags)
+	populate(objectMap, "workspaceName", s.WorkspaceName)
+	return json.Marshal(objectMap)
 }
 
 // SparkBatchJobCollection - Response for batch list operation.
@@ -103,10 +127,19 @@ type SparkBatchJobCollection struct {
 	From *int32 `json:"from,omitempty"`
 
 	// Batch list
-	Sessions *[]*SparkBatchJob `json:"sessions,omitempty"`
+	Sessions []*SparkBatchJob `json:"sessions,omitempty"`
 
 	// Number of sessions fetched.
 	Total *int32 `json:"total,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SparkBatchJobCollection.
+func (s SparkBatchJobCollection) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "from", s.From)
+	populate(objectMap, "sessions", s.Sessions)
+	populate(objectMap, "total", s.Total)
+	return json.Marshal(objectMap)
 }
 
 // SparkBatchJobCollectionResponse is the response envelope for operations that return a SparkBatchJobCollection type.
@@ -119,26 +152,48 @@ type SparkBatchJobCollectionResponse struct {
 }
 
 type SparkBatchJobOptions struct {
-	Archives   *[]*string `json:"archives,omitempty"`
-	Arguments  *[]*string `json:"args,omitempty"`
-	ArtifactID *string    `json:"artifactId,omitempty"`
-	ClassName  *string    `json:"className,omitempty"`
+	Archives   []*string `json:"archives,omitempty"`
+	Arguments  []*string `json:"args,omitempty"`
+	ArtifactID *string   `json:"artifactId,omitempty"`
+	ClassName  *string   `json:"className,omitempty"`
 
 	// Dictionary of
-	Configuration  *map[string]*string `json:"conf,omitempty"`
-	DriverCores    *int32              `json:"driverCores,omitempty"`
-	DriverMemory   *string             `json:"driverMemory,omitempty"`
-	ExecutorCores  *int32              `json:"executorCores,omitempty"`
-	ExecutorCount  *int32              `json:"numExecutors,omitempty"`
-	ExecutorMemory *string             `json:"executorMemory,omitempty"`
-	File           *string             `json:"file,omitempty"`
-	Files          *[]*string          `json:"files,omitempty"`
-	Jars           *[]*string          `json:"jars,omitempty"`
-	Name           *string             `json:"name,omitempty"`
-	PythonFiles    *[]*string          `json:"pyFiles,omitempty"`
+	Configuration  map[string]*string `json:"conf,omitempty"`
+	DriverCores    *int32             `json:"driverCores,omitempty"`
+	DriverMemory   *string            `json:"driverMemory,omitempty"`
+	ExecutorCores  *int32             `json:"executorCores,omitempty"`
+	ExecutorCount  *int32             `json:"numExecutors,omitempty"`
+	ExecutorMemory *string            `json:"executorMemory,omitempty"`
+	File           *string            `json:"file,omitempty"`
+	Files          []*string          `json:"files,omitempty"`
+	Jars           []*string          `json:"jars,omitempty"`
+	Name           *string            `json:"name,omitempty"`
+	PythonFiles    []*string          `json:"pyFiles,omitempty"`
 
 	// Dictionary of
-	Tags *map[string]*string `json:"tags,omitempty"`
+	Tags map[string]*string `json:"tags,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SparkBatchJobOptions.
+func (s SparkBatchJobOptions) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "archives", s.Archives)
+	populate(objectMap, "args", s.Arguments)
+	populate(objectMap, "artifactId", s.ArtifactID)
+	populate(objectMap, "className", s.ClassName)
+	populate(objectMap, "conf", s.Configuration)
+	populate(objectMap, "driverCores", s.DriverCores)
+	populate(objectMap, "driverMemory", s.DriverMemory)
+	populate(objectMap, "executorCores", s.ExecutorCores)
+	populate(objectMap, "numExecutors", s.ExecutorCount)
+	populate(objectMap, "executorMemory", s.ExecutorMemory)
+	populate(objectMap, "file", s.File)
+	populate(objectMap, "files", s.Files)
+	populate(objectMap, "jars", s.Jars)
+	populate(objectMap, "name", s.Name)
+	populate(objectMap, "pyFiles", s.PythonFiles)
+	populate(objectMap, "tags", s.Tags)
+	return json.Marshal(objectMap)
 }
 
 // SparkBatchJobResponse is the response envelope for operations that return a SparkBatchJob type.
@@ -249,22 +304,42 @@ func (s *SparkBatchJobState) UnmarshalJSON(data []byte) error {
 }
 
 type SparkRequest struct {
-	Archives  *[]*string `json:"archives,omitempty"`
-	Arguments *[]*string `json:"args,omitempty"`
-	ClassName *string    `json:"className,omitempty"`
+	Archives  []*string `json:"archives,omitempty"`
+	Arguments []*string `json:"args,omitempty"`
+	ClassName *string   `json:"className,omitempty"`
 
 	// Dictionary of
-	Configuration  *map[string]*string `json:"conf,omitempty"`
-	DriverCores    *int32              `json:"driverCores,omitempty"`
-	DriverMemory   *string             `json:"driverMemory,omitempty"`
-	ExecutorCores  *int32              `json:"executorCores,omitempty"`
-	ExecutorCount  *int32              `json:"numExecutors,omitempty"`
-	ExecutorMemory *string             `json:"executorMemory,omitempty"`
-	File           *string             `json:"file,omitempty"`
-	Files          *[]*string          `json:"files,omitempty"`
-	Jars           *[]*string          `json:"jars,omitempty"`
-	Name           *string             `json:"name,omitempty"`
-	PythonFiles    *[]*string          `json:"pyFiles,omitempty"`
+	Configuration  map[string]*string `json:"conf,omitempty"`
+	DriverCores    *int32             `json:"driverCores,omitempty"`
+	DriverMemory   *string            `json:"driverMemory,omitempty"`
+	ExecutorCores  *int32             `json:"executorCores,omitempty"`
+	ExecutorCount  *int32             `json:"numExecutors,omitempty"`
+	ExecutorMemory *string            `json:"executorMemory,omitempty"`
+	File           *string            `json:"file,omitempty"`
+	Files          []*string          `json:"files,omitempty"`
+	Jars           []*string          `json:"jars,omitempty"`
+	Name           *string            `json:"name,omitempty"`
+	PythonFiles    []*string          `json:"pyFiles,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SparkRequest.
+func (s SparkRequest) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "archives", s.Archives)
+	populate(objectMap, "args", s.Arguments)
+	populate(objectMap, "className", s.ClassName)
+	populate(objectMap, "conf", s.Configuration)
+	populate(objectMap, "driverCores", s.DriverCores)
+	populate(objectMap, "driverMemory", s.DriverMemory)
+	populate(objectMap, "executorCores", s.ExecutorCores)
+	populate(objectMap, "numExecutors", s.ExecutorCount)
+	populate(objectMap, "executorMemory", s.ExecutorMemory)
+	populate(objectMap, "file", s.File)
+	populate(objectMap, "files", s.Files)
+	populate(objectMap, "jars", s.Jars)
+	populate(objectMap, "name", s.Name)
+	populate(objectMap, "pyFiles", s.PythonFiles)
+	return json.Marshal(objectMap)
 }
 
 type SparkScheduler struct {
@@ -402,15 +477,15 @@ type SparkSession struct {
 	AppID *string `json:"appId,omitempty"`
 
 	// Dictionary of
-	AppInfo    *map[string]*string   `json:"appInfo,omitempty"`
-	ArtifactID *string               `json:"artifactId,omitempty"`
-	Errors     *[]*SparkServiceError `json:"errorInfo,omitempty"`
-	ID         *int32                `json:"id,omitempty"`
+	AppInfo    map[string]*string   `json:"appInfo,omitempty"`
+	ArtifactID *string              `json:"artifactId,omitempty"`
+	Errors     []*SparkServiceError `json:"errorInfo,omitempty"`
+	ID         *int32               `json:"id,omitempty"`
 
 	// The job type.
 	JobType       *SparkJobType           `json:"jobType,omitempty"`
 	LivyInfo      *SparkSessionState      `json:"livyInfo,omitempty"`
-	LogLines      *[]*string              `json:"log,omitempty"`
+	LogLines      []*string               `json:"log,omitempty"`
 	Name          *string                 `json:"name,omitempty"`
 	Plugin        *SparkServicePlugin     `json:"pluginInfo,omitempty"`
 	Result        *SparkSessionResultType `json:"result,omitempty"`
@@ -421,8 +496,32 @@ type SparkSession struct {
 	SubmitterName *string                 `json:"submitterName,omitempty"`
 
 	// Dictionary of
-	Tags          *map[string]*string `json:"tags,omitempty"`
-	WorkspaceName *string             `json:"workspaceName,omitempty"`
+	Tags          map[string]*string `json:"tags,omitempty"`
+	WorkspaceName *string            `json:"workspaceName,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SparkSession.
+func (s SparkSession) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "appId", s.AppID)
+	populate(objectMap, "appInfo", s.AppInfo)
+	populate(objectMap, "artifactId", s.ArtifactID)
+	populate(objectMap, "errorInfo", s.Errors)
+	populate(objectMap, "id", s.ID)
+	populate(objectMap, "jobType", s.JobType)
+	populate(objectMap, "livyInfo", s.LivyInfo)
+	populate(objectMap, "log", s.LogLines)
+	populate(objectMap, "name", s.Name)
+	populate(objectMap, "pluginInfo", s.Plugin)
+	populate(objectMap, "result", s.Result)
+	populate(objectMap, "schedulerInfo", s.Scheduler)
+	populate(objectMap, "sparkPoolName", s.SparkPoolName)
+	populate(objectMap, "state", s.State)
+	populate(objectMap, "submitterId", s.SubmitterID)
+	populate(objectMap, "submitterName", s.SubmitterName)
+	populate(objectMap, "tags", s.Tags)
+	populate(objectMap, "workspaceName", s.WorkspaceName)
+	return json.Marshal(objectMap)
 }
 
 // SparkSessionCancelSparkSessionOptions contains the optional parameters for the SparkSession.CancelSparkSession method.
@@ -436,9 +535,18 @@ type SparkSessionCancelSparkStatementOptions struct {
 }
 
 type SparkSessionCollection struct {
-	From     *int32           `json:"from,omitempty"`
-	Sessions *[]*SparkSession `json:"sessions,omitempty"`
-	Total    *int32           `json:"total,omitempty"`
+	From     *int32          `json:"from,omitempty"`
+	Sessions []*SparkSession `json:"sessions,omitempty"`
+	Total    *int32          `json:"total,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SparkSessionCollection.
+func (s SparkSessionCollection) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "from", s.From)
+	populate(objectMap, "sessions", s.Sessions)
+	populate(objectMap, "total", s.Total)
+	return json.Marshal(objectMap)
 }
 
 // SparkSessionCollectionResponse is the response envelope for operations that return a SparkSessionCollection type.
@@ -487,26 +595,48 @@ type SparkSessionGetSparkStatementsOptions struct {
 }
 
 type SparkSessionOptions struct {
-	Archives   *[]*string `json:"archives,omitempty"`
-	Arguments  *[]*string `json:"args,omitempty"`
-	ArtifactID *string    `json:"artifactId,omitempty"`
-	ClassName  *string    `json:"className,omitempty"`
+	Archives   []*string `json:"archives,omitempty"`
+	Arguments  []*string `json:"args,omitempty"`
+	ArtifactID *string   `json:"artifactId,omitempty"`
+	ClassName  *string   `json:"className,omitempty"`
 
 	// Dictionary of
-	Configuration  *map[string]*string `json:"conf,omitempty"`
-	DriverCores    *int32              `json:"driverCores,omitempty"`
-	DriverMemory   *string             `json:"driverMemory,omitempty"`
-	ExecutorCores  *int32              `json:"executorCores,omitempty"`
-	ExecutorCount  *int32              `json:"numExecutors,omitempty"`
-	ExecutorMemory *string             `json:"executorMemory,omitempty"`
-	File           *string             `json:"file,omitempty"`
-	Files          *[]*string          `json:"files,omitempty"`
-	Jars           *[]*string          `json:"jars,omitempty"`
-	Name           *string             `json:"name,omitempty"`
-	PythonFiles    *[]*string          `json:"pyFiles,omitempty"`
+	Configuration  map[string]*string `json:"conf,omitempty"`
+	DriverCores    *int32             `json:"driverCores,omitempty"`
+	DriverMemory   *string            `json:"driverMemory,omitempty"`
+	ExecutorCores  *int32             `json:"executorCores,omitempty"`
+	ExecutorCount  *int32             `json:"numExecutors,omitempty"`
+	ExecutorMemory *string            `json:"executorMemory,omitempty"`
+	File           *string            `json:"file,omitempty"`
+	Files          []*string          `json:"files,omitempty"`
+	Jars           []*string          `json:"jars,omitempty"`
+	Name           *string            `json:"name,omitempty"`
+	PythonFiles    []*string          `json:"pyFiles,omitempty"`
 
 	// Dictionary of
-	Tags *map[string]*string `json:"tags,omitempty"`
+	Tags map[string]*string `json:"tags,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SparkSessionOptions.
+func (s SparkSessionOptions) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "archives", s.Archives)
+	populate(objectMap, "args", s.Arguments)
+	populate(objectMap, "artifactId", s.ArtifactID)
+	populate(objectMap, "className", s.ClassName)
+	populate(objectMap, "conf", s.Configuration)
+	populate(objectMap, "driverCores", s.DriverCores)
+	populate(objectMap, "driverMemory", s.DriverMemory)
+	populate(objectMap, "executorCores", s.ExecutorCores)
+	populate(objectMap, "numExecutors", s.ExecutorCount)
+	populate(objectMap, "executorMemory", s.ExecutorMemory)
+	populate(objectMap, "file", s.File)
+	populate(objectMap, "files", s.Files)
+	populate(objectMap, "jars", s.Jars)
+	populate(objectMap, "name", s.Name)
+	populate(objectMap, "pyFiles", s.PythonFiles)
+	populate(objectMap, "tags", s.Tags)
+	return json.Marshal(objectMap)
 }
 
 // SparkSessionResetSparkSessionTimeoutOptions contains the optional parameters for the SparkSession.ResetSparkSessionTimeout method.
@@ -640,8 +770,16 @@ type SparkStatementCancellationResultResponse struct {
 }
 
 type SparkStatementCollection struct {
-	Statements *[]*SparkStatement `json:"statements,omitempty"`
-	Total      *int32             `json:"total_statements,omitempty"`
+	Statements []*SparkStatement `json:"statements,omitempty"`
+	Total      *int32            `json:"total_statements,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SparkStatementCollection.
+func (s SparkStatementCollection) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "statements", s.Statements)
+	populate(objectMap, "total_statements", s.Total)
+	return json.Marshal(objectMap)
 }
 
 // SparkStatementCollectionResponse is the response envelope for operations that return a SparkStatementCollection type.
@@ -663,7 +801,19 @@ type SparkStatementOutput struct {
 	ErrorValue     *string     `json:"evalue,omitempty"`
 	ExecutionCount *int32      `json:"execution_count,omitempty"`
 	Status         *string     `json:"status,omitempty"`
-	Traceback      *[]*string  `json:"traceback,omitempty"`
+	Traceback      []*string   `json:"traceback,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SparkStatementOutput.
+func (s SparkStatementOutput) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "data", s.Data)
+	populate(objectMap, "ename", s.ErrorName)
+	populate(objectMap, "evalue", s.ErrorValue)
+	populate(objectMap, "execution_count", s.ExecutionCount)
+	populate(objectMap, "status", s.Status)
+	populate(objectMap, "traceback", s.Traceback)
+	return json.Marshal(objectMap)
 }
 
 // SparkStatementResponse is the response envelope for operations that return a SparkStatement type.

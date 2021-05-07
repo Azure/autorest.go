@@ -8,8 +8,11 @@
 package aztables
 
 import (
+	"encoding/json"
 	"encoding/xml"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
+	"reflect"
 	"time"
 )
 
@@ -364,7 +367,15 @@ type TableEntityQueryResponse struct {
 	OdataMetadata *string `json:"odata.metadata,omitempty"`
 
 	// List of table entities.
-	Value *[]map[string]interface{} `json:"value,omitempty"`
+	Value []map[string]interface{} `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type TableEntityQueryResponse.
+func (t TableEntityQueryResponse) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "odata.metadata", t.OdataMetadata)
+	populate(objectMap, "value", t.Value)
+	return json.Marshal(objectMap)
 }
 
 // TableEntityQueryResponseResponse is the response envelope for operations that return a TableEntityQueryResponse type.
@@ -516,7 +527,15 @@ type TableQueryResponse struct {
 	OdataMetadata *string `json:"odata.metadata,omitempty"`
 
 	// List of tables.
-	Value *[]*TableResponseProperties `json:"value,omitempty"`
+	Value []*TableResponseProperties `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type TableQueryResponse.
+func (t TableQueryResponse) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "odata.metadata", t.OdataMetadata)
+	populate(objectMap, "value", t.Value)
+	return json.Marshal(objectMap)
 }
 
 // TableQueryResponseResponse is the response envelope for operations that return a TableQueryResponse type.
@@ -606,7 +625,7 @@ func (e TableServiceError) Error() string {
 // TableServiceProperties - Table Service Properties.
 type TableServiceProperties struct {
 	// The set of CORS rules.
-	Cors *[]*CorsRule `xml:"Cors>CorsRule"`
+	Cors []*CorsRule `xml:"Cors>CorsRule"`
 
 	// A summary of request statistics grouped by API in hourly aggregates for tables.
 	HourMetrics *Metrics `xml:"HourMetrics"`
@@ -624,8 +643,12 @@ func (t TableServiceProperties) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	type alias TableServiceProperties
 	aux := &struct {
 		*alias
+		Cors *[]*CorsRule `xml:"Cors>CorsRule"`
 	}{
 		alias: (*alias)(&t),
+	}
+	if t.Cors != nil {
+		aux.Cors = &t.Cors
 	}
 	return e.EncodeElement(aux, start)
 }
@@ -736,4 +759,14 @@ type TableUpdateEntityResponse struct {
 
 	// Version contains the information returned from the x-ms-version header response.
 	Version *string
+}
+
+func populate(m map[string]interface{}, k string, v interface{}) {
+	if v == nil {
+		return
+	} else if azcore.IsNullValue(v) {
+		m[k] = nil
+	} else if !reflect.ValueOf(v).IsNil() {
+		m[k] = v
+	}
 }

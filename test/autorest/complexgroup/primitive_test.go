@@ -138,7 +138,7 @@ func TestPrimitiveGetByte(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetByte: %v", err)
 	}
-	if r := cmp.Diff(result.ByteWrapper, &ByteWrapper{Field: &[]byte{255, 254, 253, 252, 0, 250, 249, 248, 247, 246}}); r != "" {
+	if r := cmp.Diff(result.ByteWrapper, &ByteWrapper{Field: []byte{255, 254, 253, 252, 0, 250, 249, 248, 247, 246}}); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -157,8 +157,7 @@ func TestPrimitivePutBool(t *testing.T) {
 
 func TestPrimitivePutByte(t *testing.T) {
 	client := newPrimitiveClient()
-	val := []byte{255, 254, 253, 252, 0, 250, 249, 248, 247, 246}
-	result, err := client.PutByte(context.Background(), ByteWrapper{Field: &val}, nil)
+	result, err := client.PutByte(context.Background(), ByteWrapper{Field: []byte{255, 254, 253, 252, 0, 250, 249, 248, 247, 246}}, nil)
 	if err != nil {
 		t.Fatalf("PutByte: %v", err)
 	}

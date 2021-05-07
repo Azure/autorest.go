@@ -110,33 +110,6 @@ export function hasPolymorphicField(obj: ObjectSchema): boolean {
   return false;
 }
 
-// returns the object's position in an inheritence hierarchy
-export function getRelationship(obj: ObjectSchema): 'none' | 'root' | 'parent' | 'leaf' {
-  let hasParent = false;
-  for (const parent of values(obj.parents?.immediate)) {
-    if (isObjectSchema(parent)) {
-      hasParent = true;
-      break;
-    }
-  }
-  let hasChild = false;
-  for (const child of values(obj.children?.immediate)) {
-    if (isObjectSchema(child)) {
-      hasChild = true;
-      break;
-    }
-  }
-  if (!hasParent && !hasChild) {
-    return 'none';
-  } else if (!hasChild) {
-    return 'leaf';
-  } else if (!hasParent) {
-    return 'root';
-  } else {
-    return 'parent';
-  }
-}
-
 // returns the schema response for this operation.
 // calling this on multi-response operations will result in an error.
 export function getResponse(op: Operation): SchemaResponse | undefined {

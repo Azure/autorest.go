@@ -21,7 +21,7 @@ func TestDictionaryGetEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetEmpty: %v", err)
 	}
-	if r := cmp.Diff(result.DictionaryWrapper, &DictionaryWrapper{DefaultProgram: &map[string]*string{}}); r != "" {
+	if r := cmp.Diff(result.DictionaryWrapper, &DictionaryWrapper{DefaultProgram: map[string]*string{}}); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -55,7 +55,7 @@ func TestDictionaryGetValid(t *testing.T) {
 		t.Fatalf("GetValid: %v", err)
 	}
 	s1, s2, s3, s4 := "notepad", "mspaint", "excel", ""
-	val := DictionaryWrapper{DefaultProgram: &map[string]*string{"txt": &s1, "bmp": &s2, "xls": &s3, "exe": &s4, "": nil}}
+	val := DictionaryWrapper{DefaultProgram: map[string]*string{"txt": &s1, "bmp": &s2, "xls": &s3, "exe": &s4, "": nil}}
 	if r := cmp.Diff(result.DictionaryWrapper, &val); r != "" {
 		t.Fatal(r)
 	}
@@ -63,7 +63,7 @@ func TestDictionaryGetValid(t *testing.T) {
 
 func TestDictionaryPutEmpty(t *testing.T) {
 	client := newDictionaryClient()
-	result, err := client.PutEmpty(context.Background(), DictionaryWrapper{DefaultProgram: &map[string]*string{}}, nil)
+	result, err := client.PutEmpty(context.Background(), DictionaryWrapper{DefaultProgram: map[string]*string{}}, nil)
 	if err != nil {
 		t.Fatalf("PutEmpty: %v", err)
 	}
@@ -75,7 +75,7 @@ func TestDictionaryPutEmpty(t *testing.T) {
 func TestDictionaryPutValid(t *testing.T) {
 	client := newDictionaryClient()
 	s1, s2, s3, s4 := "notepad", "mspaint", "excel", ""
-	result, err := client.PutValid(context.Background(), DictionaryWrapper{DefaultProgram: &map[string]*string{"txt": &s1, "bmp": &s2, "xls": &s3, "exe": &s4, "": nil}}, nil)
+	result, err := client.PutValid(context.Background(), DictionaryWrapper{DefaultProgram: map[string]*string{"txt": &s1, "bmp": &s2, "xls": &s3, "exe": &s4, "": nil}}, nil)
 	if err != nil {
 		t.Fatalf("PutValid: %v", err)
 	}

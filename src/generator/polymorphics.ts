@@ -72,7 +72,7 @@ export async function generatePolymorphicHelpers(session: Session<CodeModel>): P
     text += '}\n\n';
 
     // array unmarshaller
-    text += `func unmarshal${discName}Array(rawMsg json.RawMessage) (*[]${discName}, error) {\n`;
+    text += `func unmarshal${discName}Array(rawMsg json.RawMessage) ([]${discName}, error) {\n`;
     text += '\tif rawMsg == nil {\n';
     text += '\t\treturn nil, nil\n';
     text += '\t}\n';
@@ -88,7 +88,7 @@ export async function generatePolymorphicHelpers(session: Session<CodeModel>): P
     text += '\t\t}\n';
     text += '\t\tfArray[index] = f\n';
     text += '\t}\n';
-    text += '\treturn &fArray, nil\n';
+    text += '\treturn fArray, nil\n';
     text += '}\n\n';
   }
   return text;

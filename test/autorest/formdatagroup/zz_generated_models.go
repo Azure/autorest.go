@@ -7,7 +7,11 @@
 
 package formdatagroup
 
-import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
+import (
+	"encoding/json"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"reflect"
+)
 
 // Implements the error and azcore.HTTPResponse interfaces.
 type Error struct {
@@ -47,5 +51,22 @@ type Paths1MqqetpFormdataStreamUploadfilePostRequestbodyContentMultipartFormData
 
 type Paths1P3Stk3FormdataStreamUploadfilesPostRequestbodyContentMultipartFormDataSchema struct {
 	// Files to upload.
-	FileContent *[]azcore.ReadSeekCloser `json:"fileContent,omitempty"`
+	FileContent []azcore.ReadSeekCloser `json:"fileContent,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type Paths1P3Stk3FormdataStreamUploadfilesPostRequestbodyContentMultipartFormDataSchema.
+func (p Paths1P3Stk3FormdataStreamUploadfilesPostRequestbodyContentMultipartFormDataSchema) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "fileContent", p.FileContent)
+	return json.Marshal(objectMap)
+}
+
+func populate(m map[string]interface{}, k string, v interface{}) {
+	if v == nil {
+		return
+	} else if azcore.IsNullValue(v) {
+		m[k] = nil
+	} else if !reflect.ValueOf(v).IsNil() {
+		m[k] = v
+	}
 }

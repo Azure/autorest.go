@@ -7,7 +7,12 @@
 
 package validationgroup
 
-import "net/http"
+import (
+	"encoding/json"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"net/http"
+	"reflect"
+)
 
 // AutoRestValidationTestGetWithConstantInPathOptions contains the optional parameters for the AutoRestValidationTest.GetWithConstantInPath method.
 type AutoRestValidationTestGetWithConstantInPathOptions struct {
@@ -83,10 +88,24 @@ type Product struct {
 	ConstStringAsEnum *string `json:"constStringAsEnum,omitempty"`
 
 	// Non required array of unique items from 0 to 6 elements.
-	DisplayNames *[]*string `json:"display_names,omitempty"`
+	DisplayNames []*string `json:"display_names,omitempty"`
 
 	// Image URL representing the product.
 	Image *string `json:"image,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type Product.
+func (p Product) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "capacity", p.Capacity)
+	populate(objectMap, "child", p.Child)
+	populate(objectMap, "constChild", p.ConstChild)
+	populate(objectMap, "constInt", p.ConstInt)
+	populate(objectMap, "constString", p.ConstString)
+	populate(objectMap, "constStringAsEnum", p.ConstStringAsEnum)
+	populate(objectMap, "display_names", p.DisplayNames)
+	populate(objectMap, "image", p.Image)
+	return json.Marshal(objectMap)
 }
 
 // ProductResponse is the response envelope for operations that return a Product type.
@@ -96,4 +115,14 @@ type ProductResponse struct {
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+func populate(m map[string]interface{}, k string, v interface{}) {
+	if v == nil {
+		return
+	} else if azcore.IsNullValue(v) {
+		m[k] = nil
+	} else if !reflect.ValueOf(v).IsNil() {
+		m[k] = v
+	}
 }

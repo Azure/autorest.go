@@ -38,7 +38,7 @@ func unmarshalNotFoundErrorBaseClassification(rawMsg json.RawMessage) (NotFoundE
 	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalNotFoundErrorBaseClassificationArray(rawMsg json.RawMessage) (*[]NotFoundErrorBaseClassification, error) {
+func unmarshalNotFoundErrorBaseClassificationArray(rawMsg json.RawMessage) ([]NotFoundErrorBaseClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
@@ -54,7 +54,7 @@ func unmarshalNotFoundErrorBaseClassificationArray(rawMsg json.RawMessage) (*[]N
 		}
 		fArray[index] = f
 	}
-	return &fArray, nil
+	return fArray, nil
 }
 
 type petActionError struct {
@@ -86,7 +86,7 @@ func unmarshalPetActionErrorClassification(rawMsg json.RawMessage) (PetActionErr
 	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalPetActionErrorClassificationArray(rawMsg json.RawMessage) (*[]PetActionErrorClassification, error) {
+func unmarshalPetActionErrorClassificationArray(rawMsg json.RawMessage) ([]PetActionErrorClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
@@ -102,7 +102,7 @@ func unmarshalPetActionErrorClassificationArray(rawMsg json.RawMessage) (*[]PetA
 		}
 		fArray[index] = f
 	}
-	return &fArray, nil
+	return fArray, nil
 }
 
 func unmarshalPetSadErrorClassification(rawMsg json.RawMessage) (PetSadErrorClassification, error) {
@@ -123,7 +123,7 @@ func unmarshalPetSadErrorClassification(rawMsg json.RawMessage) (PetSadErrorClas
 	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalPetSadErrorClassificationArray(rawMsg json.RawMessage) (*[]PetSadErrorClassification, error) {
+func unmarshalPetSadErrorClassificationArray(rawMsg json.RawMessage) ([]PetSadErrorClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
 	}
@@ -139,5 +139,5 @@ func unmarshalPetSadErrorClassificationArray(rawMsg json.RawMessage) (*[]PetSadE
 		}
 		fArray[index] = f
 	}
-	return &fArray, nil
+	return fArray, nil
 }

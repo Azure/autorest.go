@@ -7,12 +7,32 @@
 
 package optionalgroup
 
+import (
+	"encoding/json"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"reflect"
+)
+
 type ArrayOptionalWrapper struct {
-	Value *[]*string `json:"value,omitempty"`
+	Value []*string `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ArrayOptionalWrapper.
+func (a ArrayOptionalWrapper) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "value", a.Value)
+	return json.Marshal(objectMap)
 }
 
 type ArrayWrapper struct {
-	Value *[]*string `json:"value,omitempty"`
+	Value []*string `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ArrayWrapper.
+func (a ArrayWrapper) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "value", a.Value)
+	return json.Marshal(objectMap)
 }
 
 type ClassOptionalWrapper struct {
@@ -199,4 +219,14 @@ type StringOptionalWrapper struct {
 
 type StringWrapper struct {
 	Value *string `json:"value,omitempty"`
+}
+
+func populate(m map[string]interface{}, k string, v interface{}) {
+	if v == nil {
+		return
+	} else if azcore.IsNullValue(v) {
+		m[k] = nil
+	} else if !reflect.ValueOf(v).IsNil() {
+		m[k] = v
+	}
 }

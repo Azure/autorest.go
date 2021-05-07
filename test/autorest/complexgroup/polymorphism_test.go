@@ -34,7 +34,7 @@ func TestPolymorphismGetComplicated(t *testing.T) {
 	expectedFish := Fish{
 		Fishtype: to.StringPtr("smart_salmon"),
 		Length:   to.Float32Ptr(1),
-		Siblings: &[]FishClassification{
+		Siblings: []FishClassification{
 			&Shark{
 				Fish: Fish{
 					Fishtype: to.StringPtr("shark"),
@@ -53,7 +53,7 @@ func TestPolymorphismGetComplicated(t *testing.T) {
 					Age:      to.Int32Ptr(105),
 					Birthday: &sawBday,
 				},
-				Picture: &[]byte{255, 255, 255, 255, 254},
+				Picture: []byte{255, 255, 255, 255, 254},
 			},
 			&Goblinshark{
 				Shark: Shark{
@@ -78,7 +78,7 @@ func TestPolymorphismGetComplicated(t *testing.T) {
 	}
 	if r := cmp.Diff(salmon, &SmartSalmon{
 		Salmon: expectedSalmon,
-		AdditionalProperties: &map[string]interface{}{
+		AdditionalProperties: map[string]interface{}{
 			"additionalProperty1": float64(1),
 			"additionalProperty2": false,
 			"additionalProperty3": "hello",
@@ -109,7 +109,7 @@ func TestPolymorphismGetComposedWithDiscriminator(t *testing.T) {
 		t.Fatal(err)
 	}
 	if r := cmp.Diff(result.DotFishMarket, &DotFishMarket{
-		Fishes: &[]DotFishClassification{
+		Fishes: []DotFishClassification{
 			&DotSalmon{
 				DotFish: DotFish{
 					FishType: to.StringPtr("DotSalmon"),
@@ -127,7 +127,7 @@ func TestPolymorphismGetComposedWithDiscriminator(t *testing.T) {
 				Iswild:   to.BoolPtr(true),
 			},
 		},
-		Salmons: &[]*DotSalmon{
+		Salmons: []*DotSalmon{
 			{
 				DotFish: DotFish{
 					FishType: to.StringPtr("DotSalmon"),
@@ -174,7 +174,7 @@ func TestPolymorphismGetComposedWithoutDiscriminator(t *testing.T) {
 		t.Fatal(err)
 	}
 	if r := cmp.Diff(result.DotFishMarket, &DotFishMarket{
-		Fishes: &[]DotFishClassification{
+		Fishes: []DotFishClassification{
 			&DotFish{
 				Species: to.StringPtr("king"),
 			},
@@ -182,7 +182,7 @@ func TestPolymorphismGetComposedWithoutDiscriminator(t *testing.T) {
 				Species: to.StringPtr("king"),
 			},
 		},
-		Salmons: &[]*DotSalmon{
+		Salmons: []*DotSalmon{
 			{
 				DotFish: DotFish{
 					Species: to.StringPtr("king"),
@@ -250,7 +250,7 @@ func TestPolymorphismGetValid(t *testing.T) {
 		Fish: Fish{
 			Fishtype: to.StringPtr("salmon"),
 			Length:   to.Float32Ptr(1),
-			Siblings: &[]FishClassification{
+			Siblings: []FishClassification{
 				&Shark{
 					Fish: Fish{
 						Fishtype: to.StringPtr("shark"),
@@ -270,7 +270,7 @@ func TestPolymorphismGetValid(t *testing.T) {
 						Age:      to.Int32Ptr(105),
 						Birthday: &sawBday,
 					},
-					Picture: &[]byte{255, 255, 255, 255, 254},
+					Picture: []byte{255, 255, 255, 255, 254},
 				},
 				&Goblinshark{
 					Shark: Shark{
@@ -306,7 +306,7 @@ func TestPolymorphismPutComplicated(t *testing.T) {
 			Fish: Fish{
 				Fishtype: to.StringPtr("smart_salmon"),
 				Length:   to.Float32Ptr(1),
-				Siblings: &[]FishClassification{
+				Siblings: []FishClassification{
 					&Shark{
 						Fish: Fish{
 							Fishtype: to.StringPtr("shark"),
@@ -325,7 +325,7 @@ func TestPolymorphismPutComplicated(t *testing.T) {
 							Age:      to.Int32Ptr(105),
 							Birthday: &sawBday,
 						},
-						Picture: &[]byte{255, 255, 255, 255, 254},
+						Picture: []byte{255, 255, 255, 255, 254},
 					},
 					&Goblinshark{
 						Shark: Shark{
@@ -346,7 +346,7 @@ func TestPolymorphismPutComplicated(t *testing.T) {
 			Iswild:   to.BoolPtr(true),
 			Location: to.StringPtr("alaska"),
 		},
-		AdditionalProperties: &map[string]interface{}{
+		AdditionalProperties: map[string]interface{}{
 			"additionalProperty1": float64(1),
 			"additionalProperty2": false,
 			"additionalProperty3": "hello",
@@ -376,7 +376,7 @@ func TestPolymorphismPutMissingDiscriminator(t *testing.T) {
 	result, err := client.PutMissingDiscriminator(context.Background(), &Salmon{
 		Fish: Fish{
 			Length: to.Float32Ptr(1),
-			Siblings: &[]FishClassification{
+			Siblings: []FishClassification{
 				&Shark{
 					Fish: Fish{
 						Length:  to.Float32Ptr(20),
@@ -394,7 +394,7 @@ func TestPolymorphismPutMissingDiscriminator(t *testing.T) {
 						Age:      to.Int32Ptr(105),
 						Birthday: &sawBday,
 					},
-					Picture: &[]byte{255, 255, 255, 255, 254},
+					Picture: []byte{255, 255, 255, 255, 254},
 				},
 				&Goblinshark{
 					Shark: Shark{
@@ -431,7 +431,7 @@ func TestPolymorphismPutValid(t *testing.T) {
 	resp, err := client.PutValid(context.Background(), &Salmon{
 		Fish: Fish{
 			Length: to.Float32Ptr(1),
-			Siblings: &[]FishClassification{
+			Siblings: []FishClassification{
 				&Shark{
 					Fish: Fish{
 						Length:  to.Float32Ptr(20),
@@ -449,7 +449,7 @@ func TestPolymorphismPutValid(t *testing.T) {
 						Age:      to.Int32Ptr(105),
 						Birthday: &sawBday,
 					},
-					Picture: &[]byte{255, 255, 255, 255, 254},
+					Picture: []byte{255, 255, 255, 255, 254},
 				},
 				&Goblinshark{
 					Shark: Shark{

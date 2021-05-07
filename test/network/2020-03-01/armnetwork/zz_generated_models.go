@@ -31,7 +31,14 @@ type AADAuthenticationParameters struct {
 // AddressSpace contains an array of IP address ranges that can be used by subnets of the virtual network.
 type AddressSpace struct {
 	// A list of address blocks reserved for this virtual network in CIDR notation.
-	AddressPrefixes *[]*string `json:"addressPrefixes,omitempty"`
+	AddressPrefixes []*string `json:"addressPrefixes,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AddressSpace.
+func (a AddressSpace) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "addressPrefixes", a.AddressPrefixes)
+	return json.Marshal(objectMap)
 }
 
 // ApplicationGateway - Application gateway resource.
@@ -47,7 +54,17 @@ type ApplicationGateway struct {
 	Properties *ApplicationGatewayPropertiesFormat `json:"properties,omitempty"`
 
 	// A list of availability zones denoting where the resource needs to come from.
-	Zones *[]*string `json:"zones,omitempty"`
+	Zones []*string `json:"zones,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ApplicationGateway.
+func (a ApplicationGateway) MarshalJSON() ([]byte, error) {
+	objectMap := a.Resource.marshalInternal()
+	populate(objectMap, "etag", a.Etag)
+	populate(objectMap, "identity", a.Identity)
+	populate(objectMap, "properties", a.Properties)
+	populate(objectMap, "zones", a.Zones)
+	return json.Marshal(objectMap)
 }
 
 // ApplicationGatewayAuthenticationCertificate - Authentication certificates of an application gateway.
@@ -64,6 +81,16 @@ type ApplicationGatewayAuthenticationCertificate struct {
 
 	// READ-ONLY; Type of the resource.
 	Type *string `json:"type,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ApplicationGatewayAuthenticationCertificate.
+func (a ApplicationGatewayAuthenticationCertificate) MarshalJSON() ([]byte, error) {
+	objectMap := a.SubResource.marshalInternal()
+	populate(objectMap, "etag", a.Etag)
+	populate(objectMap, "name", a.Name)
+	populate(objectMap, "properties", a.Properties)
+	populate(objectMap, "type", a.Type)
+	return json.Marshal(objectMap)
 }
 
 // ApplicationGatewayAuthenticationCertificatePropertiesFormat - Authentication certificates properties of an application gateway.
@@ -91,19 +118,36 @@ type ApplicationGatewayAvailableSSLOptions struct {
 	Properties *ApplicationGatewayAvailableSSLOptionsPropertiesFormat `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type ApplicationGatewayAvailableSSLOptions.
+func (a ApplicationGatewayAvailableSSLOptions) MarshalJSON() ([]byte, error) {
+	objectMap := a.Resource.marshalInternal()
+	populate(objectMap, "properties", a.Properties)
+	return json.Marshal(objectMap)
+}
+
 // ApplicationGatewayAvailableSSLOptionsPropertiesFormat - Properties of ApplicationGatewayAvailableSslOptions.
 type ApplicationGatewayAvailableSSLOptionsPropertiesFormat struct {
 	// List of available Ssl cipher suites.
-	AvailableCipherSuites *[]*ApplicationGatewaySSLCipherSuite `json:"availableCipherSuites,omitempty"`
+	AvailableCipherSuites []*ApplicationGatewaySSLCipherSuite `json:"availableCipherSuites,omitempty"`
 
 	// List of available Ssl protocols.
-	AvailableProtocols *[]*ApplicationGatewaySSLProtocol `json:"availableProtocols,omitempty"`
+	AvailableProtocols []*ApplicationGatewaySSLProtocol `json:"availableProtocols,omitempty"`
 
 	// Name of the Ssl predefined policy applied by default to application gateway.
 	DefaultPolicy *ApplicationGatewaySSLPolicyName `json:"defaultPolicy,omitempty"`
 
 	// List of available Ssl predefined policy.
-	PredefinedPolicies *[]*SubResource `json:"predefinedPolicies,omitempty"`
+	PredefinedPolicies []*SubResource `json:"predefinedPolicies,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ApplicationGatewayAvailableSSLOptionsPropertiesFormat.
+func (a ApplicationGatewayAvailableSSLOptionsPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "availableCipherSuites", a.AvailableCipherSuites)
+	populate(objectMap, "availableProtocols", a.AvailableProtocols)
+	populate(objectMap, "defaultPolicy", a.DefaultPolicy)
+	populate(objectMap, "predefinedPolicies", a.PredefinedPolicies)
+	return json.Marshal(objectMap)
 }
 
 // ApplicationGatewayAvailableSSLOptionsResponse is the response envelope for operations that return a ApplicationGatewayAvailableSSLOptions type.
@@ -121,7 +165,15 @@ type ApplicationGatewayAvailableSSLPredefinedPolicies struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of available Ssl predefined policy.
-	Value *[]*ApplicationGatewaySSLPredefinedPolicy `json:"value,omitempty"`
+	Value []*ApplicationGatewaySSLPredefinedPolicy `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ApplicationGatewayAvailableSSLPredefinedPolicies.
+func (a ApplicationGatewayAvailableSSLPredefinedPolicies) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", a.NextLink)
+	populate(objectMap, "value", a.Value)
+	return json.Marshal(objectMap)
 }
 
 // ApplicationGatewayAvailableSSLPredefinedPoliciesResponse is the response envelope for operations that return a ApplicationGatewayAvailableSSLPredefinedPolicies
@@ -137,7 +189,14 @@ type ApplicationGatewayAvailableSSLPredefinedPoliciesResponse struct {
 // ApplicationGatewayAvailableWafRuleSetsResult - Response for ApplicationGatewayAvailableWafRuleSets API service call.
 type ApplicationGatewayAvailableWafRuleSetsResult struct {
 	// The list of application gateway rule sets.
-	Value *[]*ApplicationGatewayFirewallRuleSet `json:"value,omitempty"`
+	Value []*ApplicationGatewayFirewallRuleSet `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ApplicationGatewayAvailableWafRuleSetsResult.
+func (a ApplicationGatewayAvailableWafRuleSetsResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "value", a.Value)
+	return json.Marshal(objectMap)
 }
 
 // ApplicationGatewayAvailableWafRuleSetsResultResponse is the response envelope for operations that return a ApplicationGatewayAvailableWafRuleSetsResult
@@ -175,16 +234,35 @@ type ApplicationGatewayBackendAddressPool struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type ApplicationGatewayBackendAddressPool.
+func (a ApplicationGatewayBackendAddressPool) MarshalJSON() ([]byte, error) {
+	objectMap := a.SubResource.marshalInternal()
+	populate(objectMap, "etag", a.Etag)
+	populate(objectMap, "name", a.Name)
+	populate(objectMap, "properties", a.Properties)
+	populate(objectMap, "type", a.Type)
+	return json.Marshal(objectMap)
+}
+
 // ApplicationGatewayBackendAddressPoolPropertiesFormat - Properties of Backend Address Pool of an application gateway.
 type ApplicationGatewayBackendAddressPoolPropertiesFormat struct {
 	// Backend addresses.
-	BackendAddresses *[]*ApplicationGatewayBackendAddress `json:"backendAddresses,omitempty"`
+	BackendAddresses []*ApplicationGatewayBackendAddress `json:"backendAddresses,omitempty"`
 
 	// READ-ONLY; Collection of references to IPs defined in network interfaces.
-	BackendIPConfigurations *[]*NetworkInterfaceIPConfiguration `json:"backendIPConfigurations,omitempty" azure:"ro"`
+	BackendIPConfigurations []*NetworkInterfaceIPConfiguration `json:"backendIPConfigurations,omitempty" azure:"ro"`
 
 	// READ-ONLY; The provisioning state of the backend address pool resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ApplicationGatewayBackendAddressPoolPropertiesFormat.
+func (a ApplicationGatewayBackendAddressPoolPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "backendAddresses", a.BackendAddresses)
+	populate(objectMap, "backendIPConfigurations", a.BackendIPConfigurations)
+	populate(objectMap, "provisioningState", a.ProvisioningState)
+	return json.Marshal(objectMap)
 }
 
 // ApplicationGatewayBackendHTTPSettings - Backend address pool settings of an application gateway.
@@ -203,13 +281,23 @@ type ApplicationGatewayBackendHTTPSettings struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type ApplicationGatewayBackendHTTPSettings.
+func (a ApplicationGatewayBackendHTTPSettings) MarshalJSON() ([]byte, error) {
+	objectMap := a.SubResource.marshalInternal()
+	populate(objectMap, "etag", a.Etag)
+	populate(objectMap, "name", a.Name)
+	populate(objectMap, "properties", a.Properties)
+	populate(objectMap, "type", a.Type)
+	return json.Marshal(objectMap)
+}
+
 // ApplicationGatewayBackendHTTPSettingsPropertiesFormat - Properties of Backend address pool settings of an application gateway.
 type ApplicationGatewayBackendHTTPSettingsPropertiesFormat struct {
 	// Cookie name to use for the affinity cookie.
 	AffinityCookieName *string `json:"affinityCookieName,omitempty"`
 
 	// Array of references to application gateway authentication certificates.
-	AuthenticationCertificates *[]*SubResource `json:"authenticationCertificates,omitempty"`
+	AuthenticationCertificates []*SubResource `json:"authenticationCertificates,omitempty"`
 
 	// Connection draining of the backend http settings resource.
 	ConnectionDraining *ApplicationGatewayConnectionDraining `json:"connectionDraining,omitempty"`
@@ -246,13 +334,40 @@ type ApplicationGatewayBackendHTTPSettingsPropertiesFormat struct {
 	RequestTimeout *int32 `json:"requestTimeout,omitempty"`
 
 	// Array of references to application gateway trusted root certificates.
-	TrustedRootCertificates *[]*SubResource `json:"trustedRootCertificates,omitempty"`
+	TrustedRootCertificates []*SubResource `json:"trustedRootCertificates,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ApplicationGatewayBackendHTTPSettingsPropertiesFormat.
+func (a ApplicationGatewayBackendHTTPSettingsPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "affinityCookieName", a.AffinityCookieName)
+	populate(objectMap, "authenticationCertificates", a.AuthenticationCertificates)
+	populate(objectMap, "connectionDraining", a.ConnectionDraining)
+	populate(objectMap, "cookieBasedAffinity", a.CookieBasedAffinity)
+	populate(objectMap, "hostName", a.HostName)
+	populate(objectMap, "path", a.Path)
+	populate(objectMap, "pickHostNameFromBackendAddress", a.PickHostNameFromBackendAddress)
+	populate(objectMap, "port", a.Port)
+	populate(objectMap, "probe", a.Probe)
+	populate(objectMap, "probeEnabled", a.ProbeEnabled)
+	populate(objectMap, "protocol", a.Protocol)
+	populate(objectMap, "provisioningState", a.ProvisioningState)
+	populate(objectMap, "requestTimeout", a.RequestTimeout)
+	populate(objectMap, "trustedRootCertificates", a.TrustedRootCertificates)
+	return json.Marshal(objectMap)
 }
 
 // ApplicationGatewayBackendHealth - Response for ApplicationGatewayBackendHealth API service call.
 type ApplicationGatewayBackendHealth struct {
 	// A list of ApplicationGatewayBackendHealthPool resources.
-	BackendAddressPools *[]*ApplicationGatewayBackendHealthPool `json:"backendAddressPools,omitempty"`
+	BackendAddressPools []*ApplicationGatewayBackendHealthPool `json:"backendAddressPools,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ApplicationGatewayBackendHealth.
+func (a ApplicationGatewayBackendHealth) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "backendAddressPools", a.BackendAddressPools)
+	return json.Marshal(objectMap)
 }
 
 // ApplicationGatewayBackendHealthHTTPSettings - Application gateway BackendHealthHttp settings.
@@ -261,7 +376,15 @@ type ApplicationGatewayBackendHealthHTTPSettings struct {
 	BackendHTTPSettings *ApplicationGatewayBackendHTTPSettings `json:"backendHttpSettings,omitempty"`
 
 	// List of ApplicationGatewayBackendHealthServer resources.
-	Servers *[]*ApplicationGatewayBackendHealthServer `json:"servers,omitempty"`
+	Servers []*ApplicationGatewayBackendHealthServer `json:"servers,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ApplicationGatewayBackendHealthHTTPSettings.
+func (a ApplicationGatewayBackendHealthHTTPSettings) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "backendHttpSettings", a.BackendHTTPSettings)
+	populate(objectMap, "servers", a.Servers)
+	return json.Marshal(objectMap)
 }
 
 // ApplicationGatewayBackendHealthOnDemand - Result of on demand test probe.
@@ -313,7 +436,15 @@ type ApplicationGatewayBackendHealthPool struct {
 	BackendAddressPool *ApplicationGatewayBackendAddressPool `json:"backendAddressPool,omitempty"`
 
 	// List of ApplicationGatewayBackendHealthHttpSettings resources.
-	BackendHTTPSettingsCollection *[]*ApplicationGatewayBackendHealthHTTPSettings `json:"backendHttpSettingsCollection,omitempty"`
+	BackendHTTPSettingsCollection []*ApplicationGatewayBackendHealthHTTPSettings `json:"backendHttpSettingsCollection,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ApplicationGatewayBackendHealthPool.
+func (a ApplicationGatewayBackendHealthPool) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "backendAddressPool", a.BackendAddressPool)
+	populate(objectMap, "backendHttpSettingsCollection", a.BackendHTTPSettingsCollection)
+	return json.Marshal(objectMap)
 }
 
 // ApplicationGatewayBackendHealthResponse is the response envelope for operations that return a ApplicationGatewayBackendHealth type.
@@ -365,7 +496,15 @@ type ApplicationGatewayFirewallDisabledRuleGroup struct {
 	RuleGroupName *string `json:"ruleGroupName,omitempty"`
 
 	// The list of rules that will be disabled. If null, all rules of the rule group will be disabled.
-	Rules *[]*int32 `json:"rules,omitempty"`
+	Rules []*int32 `json:"rules,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ApplicationGatewayFirewallDisabledRuleGroup.
+func (a ApplicationGatewayFirewallDisabledRuleGroup) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "ruleGroupName", a.RuleGroupName)
+	populate(objectMap, "rules", a.Rules)
+	return json.Marshal(objectMap)
 }
 
 // ApplicationGatewayFirewallExclusion - Allow to exclude some variable satisfy the condition for the WAF check.
@@ -398,7 +537,16 @@ type ApplicationGatewayFirewallRuleGroup struct {
 	RuleGroupName *string `json:"ruleGroupName,omitempty"`
 
 	// The rules of the web application firewall rule group.
-	Rules *[]*ApplicationGatewayFirewallRule `json:"rules,omitempty"`
+	Rules []*ApplicationGatewayFirewallRule `json:"rules,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ApplicationGatewayFirewallRuleGroup.
+func (a ApplicationGatewayFirewallRuleGroup) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "description", a.Description)
+	populate(objectMap, "ruleGroupName", a.RuleGroupName)
+	populate(objectMap, "rules", a.Rules)
+	return json.Marshal(objectMap)
 }
 
 // ApplicationGatewayFirewallRuleSet - A web application firewall rule set.
@@ -408,19 +556,36 @@ type ApplicationGatewayFirewallRuleSet struct {
 	Properties *ApplicationGatewayFirewallRuleSetPropertiesFormat `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type ApplicationGatewayFirewallRuleSet.
+func (a ApplicationGatewayFirewallRuleSet) MarshalJSON() ([]byte, error) {
+	objectMap := a.Resource.marshalInternal()
+	populate(objectMap, "properties", a.Properties)
+	return json.Marshal(objectMap)
+}
+
 // ApplicationGatewayFirewallRuleSetPropertiesFormat - Properties of the web application firewall rule set.
 type ApplicationGatewayFirewallRuleSetPropertiesFormat struct {
 	// READ-ONLY; The provisioning state of the web application firewall rule set.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
 	// The rule groups of the web application firewall rule set.
-	RuleGroups *[]*ApplicationGatewayFirewallRuleGroup `json:"ruleGroups,omitempty"`
+	RuleGroups []*ApplicationGatewayFirewallRuleGroup `json:"ruleGroups,omitempty"`
 
 	// The type of the web application firewall rule set.
 	RuleSetType *string `json:"ruleSetType,omitempty"`
 
 	// The version of the web application firewall rule set type.
 	RuleSetVersion *string `json:"ruleSetVersion,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ApplicationGatewayFirewallRuleSetPropertiesFormat.
+func (a ApplicationGatewayFirewallRuleSetPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "provisioningState", a.ProvisioningState)
+	populate(objectMap, "ruleGroups", a.RuleGroups)
+	populate(objectMap, "ruleSetType", a.RuleSetType)
+	populate(objectMap, "ruleSetVersion", a.RuleSetVersion)
+	return json.Marshal(objectMap)
 }
 
 // ApplicationGatewayFrontendIPConfiguration - Frontend IP configuration of an application gateway.
@@ -437,6 +602,16 @@ type ApplicationGatewayFrontendIPConfiguration struct {
 
 	// READ-ONLY; Type of the resource.
 	Type *string `json:"type,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ApplicationGatewayFrontendIPConfiguration.
+func (a ApplicationGatewayFrontendIPConfiguration) MarshalJSON() ([]byte, error) {
+	objectMap := a.SubResource.marshalInternal()
+	populate(objectMap, "etag", a.Etag)
+	populate(objectMap, "name", a.Name)
+	populate(objectMap, "properties", a.Properties)
+	populate(objectMap, "type", a.Type)
+	return json.Marshal(objectMap)
 }
 
 // ApplicationGatewayFrontendIPConfigurationPropertiesFormat - Properties of Frontend IP configuration of an application gateway.
@@ -473,6 +648,16 @@ type ApplicationGatewayFrontendPort struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type ApplicationGatewayFrontendPort.
+func (a ApplicationGatewayFrontendPort) MarshalJSON() ([]byte, error) {
+	objectMap := a.SubResource.marshalInternal()
+	populate(objectMap, "etag", a.Etag)
+	populate(objectMap, "name", a.Name)
+	populate(objectMap, "properties", a.Properties)
+	populate(objectMap, "type", a.Type)
+	return json.Marshal(objectMap)
+}
+
 // ApplicationGatewayFrontendPortPropertiesFormat - Properties of Frontend port of an application gateway.
 type ApplicationGatewayFrontendPortPropertiesFormat struct {
 	// Frontend port.
@@ -498,10 +683,20 @@ type ApplicationGatewayHTTPListener struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type ApplicationGatewayHTTPListener.
+func (a ApplicationGatewayHTTPListener) MarshalJSON() ([]byte, error) {
+	objectMap := a.SubResource.marshalInternal()
+	populate(objectMap, "etag", a.Etag)
+	populate(objectMap, "name", a.Name)
+	populate(objectMap, "properties", a.Properties)
+	populate(objectMap, "type", a.Type)
+	return json.Marshal(objectMap)
+}
+
 // ApplicationGatewayHTTPListenerPropertiesFormat - Properties of HTTP listener of an application gateway.
 type ApplicationGatewayHTTPListenerPropertiesFormat struct {
 	// Custom error configurations of the HTTP listener.
-	CustomErrorConfigurations *[]*ApplicationGatewayCustomError `json:"customErrorConfigurations,omitempty"`
+	CustomErrorConfigurations []*ApplicationGatewayCustomError `json:"customErrorConfigurations,omitempty"`
 
 	// Reference to the FirewallPolicy resource.
 	FirewallPolicy *SubResource `json:"firewallPolicy,omitempty"`
@@ -516,7 +711,7 @@ type ApplicationGatewayHTTPListenerPropertiesFormat struct {
 	HostName *string `json:"hostName,omitempty"`
 
 	// List of Host names for HTTP Listener that allows special wildcard characters as well.
-	HostNames *[]*string `json:"hostNames,omitempty"`
+	HostNames []*string `json:"hostNames,omitempty"`
 
 	// Protocol of the HTTP listener.
 	Protocol *ApplicationGatewayProtocol `json:"protocol,omitempty"`
@@ -529,6 +724,22 @@ type ApplicationGatewayHTTPListenerPropertiesFormat struct {
 
 	// SSL certificate resource of an application gateway.
 	SSLCertificate *SubResource `json:"sslCertificate,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ApplicationGatewayHTTPListenerPropertiesFormat.
+func (a ApplicationGatewayHTTPListenerPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "customErrorConfigurations", a.CustomErrorConfigurations)
+	populate(objectMap, "firewallPolicy", a.FirewallPolicy)
+	populate(objectMap, "frontendIPConfiguration", a.FrontendIPConfiguration)
+	populate(objectMap, "frontendPort", a.FrontendPort)
+	populate(objectMap, "hostName", a.HostName)
+	populate(objectMap, "hostNames", a.HostNames)
+	populate(objectMap, "protocol", a.Protocol)
+	populate(objectMap, "provisioningState", a.ProvisioningState)
+	populate(objectMap, "requireServerNameIndication", a.RequireServerNameIndication)
+	populate(objectMap, "sslCertificate", a.SSLCertificate)
+	return json.Marshal(objectMap)
 }
 
 // ApplicationGatewayHeaderConfiguration - Header configuration of the Actions set in Application Gateway.
@@ -556,6 +767,16 @@ type ApplicationGatewayIPConfiguration struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type ApplicationGatewayIPConfiguration.
+func (a ApplicationGatewayIPConfiguration) MarshalJSON() ([]byte, error) {
+	objectMap := a.SubResource.marshalInternal()
+	populate(objectMap, "etag", a.Etag)
+	populate(objectMap, "name", a.Name)
+	populate(objectMap, "properties", a.Properties)
+	populate(objectMap, "type", a.Type)
+	return json.Marshal(objectMap)
+}
+
 // ApplicationGatewayIPConfigurationPropertiesFormat - Properties of IP configuration of an application gateway.
 type ApplicationGatewayIPConfigurationPropertiesFormat struct {
 	// READ-ONLY; The provisioning state of the application gateway IP configuration resource.
@@ -571,7 +792,15 @@ type ApplicationGatewayListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of an application gateways in a resource group.
-	Value *[]*ApplicationGateway `json:"value,omitempty"`
+	Value []*ApplicationGateway `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ApplicationGatewayListResult.
+func (a ApplicationGatewayListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", a.NextLink)
+	populate(objectMap, "value", a.Value)
+	return json.Marshal(objectMap)
 }
 
 // ApplicationGatewayListResultResponse is the response envelope for operations that return a ApplicationGatewayListResult type.
@@ -627,6 +856,16 @@ type ApplicationGatewayPathRule struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type ApplicationGatewayPathRule.
+func (a ApplicationGatewayPathRule) MarshalJSON() ([]byte, error) {
+	objectMap := a.SubResource.marshalInternal()
+	populate(objectMap, "etag", a.Etag)
+	populate(objectMap, "name", a.Name)
+	populate(objectMap, "properties", a.Properties)
+	populate(objectMap, "type", a.Type)
+	return json.Marshal(objectMap)
+}
+
 // ApplicationGatewayPathRulePropertiesFormat - Properties of path rule of an application gateway.
 type ApplicationGatewayPathRulePropertiesFormat struct {
 	// Backend address pool resource of URL path map path rule.
@@ -639,7 +878,7 @@ type ApplicationGatewayPathRulePropertiesFormat struct {
 	FirewallPolicy *SubResource `json:"firewallPolicy,omitempty"`
 
 	// Path rules of URL path map.
-	Paths *[]*string `json:"paths,omitempty"`
+	Paths []*string `json:"paths,omitempty"`
 
 	// READ-ONLY; The provisioning state of the path rule resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
@@ -649,6 +888,19 @@ type ApplicationGatewayPathRulePropertiesFormat struct {
 
 	// Rewrite rule set resource of URL path map path rule.
 	RewriteRuleSet *SubResource `json:"rewriteRuleSet,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ApplicationGatewayPathRulePropertiesFormat.
+func (a ApplicationGatewayPathRulePropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "backendAddressPool", a.BackendAddressPool)
+	populate(objectMap, "backendHttpSettings", a.BackendHTTPSettings)
+	populate(objectMap, "firewallPolicy", a.FirewallPolicy)
+	populate(objectMap, "paths", a.Paths)
+	populate(objectMap, "provisioningState", a.ProvisioningState)
+	populate(objectMap, "redirectConfiguration", a.RedirectConfiguration)
+	populate(objectMap, "rewriteRuleSet", a.RewriteRuleSet)
+	return json.Marshal(objectMap)
 }
 
 // ApplicationGatewayPollerResponse is the response envelope for operations that asynchronously return a ApplicationGateway type.
@@ -679,13 +931,31 @@ type ApplicationGatewayProbe struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type ApplicationGatewayProbe.
+func (a ApplicationGatewayProbe) MarshalJSON() ([]byte, error) {
+	objectMap := a.SubResource.marshalInternal()
+	populate(objectMap, "etag", a.Etag)
+	populate(objectMap, "name", a.Name)
+	populate(objectMap, "properties", a.Properties)
+	populate(objectMap, "type", a.Type)
+	return json.Marshal(objectMap)
+}
+
 // ApplicationGatewayProbeHealthResponseMatch - Application gateway probe health response match.
 type ApplicationGatewayProbeHealthResponseMatch struct {
 	// Body that must be contained in the health response. Default value is empty.
 	Body *string `json:"body,omitempty"`
 
 	// Allowed ranges of healthy status codes. Default range of healthy status codes is 200-399.
-	StatusCodes *[]*string `json:"statusCodes,omitempty"`
+	StatusCodes []*string `json:"statusCodes,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ApplicationGatewayProbeHealthResponseMatch.
+func (a ApplicationGatewayProbeHealthResponseMatch) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "body", a.Body)
+	populate(objectMap, "statusCodes", a.StatusCodes)
+	return json.Marshal(objectMap)
 }
 
 // ApplicationGatewayProbePropertiesFormat - Properties of probe of an application gateway.
@@ -732,21 +1002,21 @@ type ApplicationGatewayProbePropertiesFormat struct {
 type ApplicationGatewayPropertiesFormat struct {
 	// Authentication certificates of the application gateway resource. For default limits, see Application Gateway limits
 	// [https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits].
-	AuthenticationCertificates *[]*ApplicationGatewayAuthenticationCertificate `json:"authenticationCertificates,omitempty"`
+	AuthenticationCertificates []*ApplicationGatewayAuthenticationCertificate `json:"authenticationCertificates,omitempty"`
 
 	// Autoscale Configuration.
 	AutoscaleConfiguration *ApplicationGatewayAutoscaleConfiguration `json:"autoscaleConfiguration,omitempty"`
 
 	// Backend address pool of the application gateway resource. For default limits, see Application Gateway limits
 	// [https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits].
-	BackendAddressPools *[]*ApplicationGatewayBackendAddressPool `json:"backendAddressPools,omitempty"`
+	BackendAddressPools []*ApplicationGatewayBackendAddressPool `json:"backendAddressPools,omitempty"`
 
 	// Backend http settings of the application gateway resource. For default limits, see Application Gateway limits
 	// [https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits].
-	BackendHTTPSettingsCollection *[]*ApplicationGatewayBackendHTTPSettings `json:"backendHttpSettingsCollection,omitempty"`
+	BackendHTTPSettingsCollection []*ApplicationGatewayBackendHTTPSettings `json:"backendHttpSettingsCollection,omitempty"`
 
 	// Custom error configurations of the application gateway resource.
-	CustomErrorConfigurations *[]*ApplicationGatewayCustomError `json:"customErrorConfigurations,omitempty"`
+	CustomErrorConfigurations []*ApplicationGatewayCustomError `json:"customErrorConfigurations,omitempty"`
 
 	// Whether FIPS is enabled on the application gateway resource.
 	EnableFips *bool `json:"enableFips,omitempty"`
@@ -762,58 +1032,90 @@ type ApplicationGatewayPropertiesFormat struct {
 
 	// Frontend IP addresses of the application gateway resource. For default limits, see Application Gateway limits
 	// [https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits].
-	FrontendIPConfigurations *[]*ApplicationGatewayFrontendIPConfiguration `json:"frontendIPConfigurations,omitempty"`
+	FrontendIPConfigurations []*ApplicationGatewayFrontendIPConfiguration `json:"frontendIPConfigurations,omitempty"`
 
 	// Frontend ports of the application gateway resource. For default limits, see Application Gateway limits [https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits].
-	FrontendPorts *[]*ApplicationGatewayFrontendPort `json:"frontendPorts,omitempty"`
+	FrontendPorts []*ApplicationGatewayFrontendPort `json:"frontendPorts,omitempty"`
 
 	// Subnets of the application gateway resource. For default limits, see Application Gateway limits [https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits].
-	GatewayIPConfigurations *[]*ApplicationGatewayIPConfiguration `json:"gatewayIPConfigurations,omitempty"`
+	GatewayIPConfigurations []*ApplicationGatewayIPConfiguration `json:"gatewayIPConfigurations,omitempty"`
 
 	// Http listeners of the application gateway resource. For default limits, see Application Gateway limits [https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits].
-	HTTPListeners *[]*ApplicationGatewayHTTPListener `json:"httpListeners,omitempty"`
+	HTTPListeners []*ApplicationGatewayHTTPListener `json:"httpListeners,omitempty"`
 
 	// READ-ONLY; Operational state of the application gateway resource.
 	OperationalState *ApplicationGatewayOperationalState `json:"operationalState,omitempty" azure:"ro"`
 
 	// Probes of the application gateway resource.
-	Probes *[]*ApplicationGatewayProbe `json:"probes,omitempty"`
+	Probes []*ApplicationGatewayProbe `json:"probes,omitempty"`
 
 	// READ-ONLY; The provisioning state of the application gateway resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
 	// Redirect configurations of the application gateway resource. For default limits, see Application Gateway limits
 	// [https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits].
-	RedirectConfigurations *[]*ApplicationGatewayRedirectConfiguration `json:"redirectConfigurations,omitempty"`
+	RedirectConfigurations []*ApplicationGatewayRedirectConfiguration `json:"redirectConfigurations,omitempty"`
 
 	// Request routing rules of the application gateway resource.
-	RequestRoutingRules *[]*ApplicationGatewayRequestRoutingRule `json:"requestRoutingRules,omitempty"`
+	RequestRoutingRules []*ApplicationGatewayRequestRoutingRule `json:"requestRoutingRules,omitempty"`
 
 	// READ-ONLY; The resource GUID property of the application gateway resource.
 	ResourceGUID *string `json:"resourceGuid,omitempty" azure:"ro"`
 
 	// Rewrite rules for the application gateway resource.
-	RewriteRuleSets *[]*ApplicationGatewayRewriteRuleSet `json:"rewriteRuleSets,omitempty"`
+	RewriteRuleSets []*ApplicationGatewayRewriteRuleSet `json:"rewriteRuleSets,omitempty"`
 
 	// SKU of the application gateway resource.
 	SKU *ApplicationGatewaySKU `json:"sku,omitempty"`
 
 	// SSL certificates of the application gateway resource. For default limits, see Application Gateway limits [https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits]
 	// .
-	SSLCertificates *[]*ApplicationGatewaySSLCertificate `json:"sslCertificates,omitempty"`
+	SSLCertificates []*ApplicationGatewaySSLCertificate `json:"sslCertificates,omitempty"`
 
 	// SSL policy of the application gateway resource.
 	SSLPolicy *ApplicationGatewaySSLPolicy `json:"sslPolicy,omitempty"`
 
 	// Trusted Root certificates of the application gateway resource. For default limits, see Application Gateway limits
 	// [https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits].
-	TrustedRootCertificates *[]*ApplicationGatewayTrustedRootCertificate `json:"trustedRootCertificates,omitempty"`
+	TrustedRootCertificates []*ApplicationGatewayTrustedRootCertificate `json:"trustedRootCertificates,omitempty"`
 
 	// URL path map of the application gateway resource. For default limits, see Application Gateway limits [https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits].
-	URLPathMaps *[]*ApplicationGatewayURLPathMap `json:"urlPathMaps,omitempty"`
+	URLPathMaps []*ApplicationGatewayURLPathMap `json:"urlPathMaps,omitempty"`
 
 	// Web application firewall configuration.
 	WebApplicationFirewallConfiguration *ApplicationGatewayWebApplicationFirewallConfiguration `json:"webApplicationFirewallConfiguration,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ApplicationGatewayPropertiesFormat.
+func (a ApplicationGatewayPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "authenticationCertificates", a.AuthenticationCertificates)
+	populate(objectMap, "autoscaleConfiguration", a.AutoscaleConfiguration)
+	populate(objectMap, "backendAddressPools", a.BackendAddressPools)
+	populate(objectMap, "backendHttpSettingsCollection", a.BackendHTTPSettingsCollection)
+	populate(objectMap, "customErrorConfigurations", a.CustomErrorConfigurations)
+	populate(objectMap, "enableFips", a.EnableFips)
+	populate(objectMap, "enableHttp2", a.EnableHTTP2)
+	populate(objectMap, "firewallPolicy", a.FirewallPolicy)
+	populate(objectMap, "forceFirewallPolicyAssociation", a.ForceFirewallPolicyAssociation)
+	populate(objectMap, "frontendIPConfigurations", a.FrontendIPConfigurations)
+	populate(objectMap, "frontendPorts", a.FrontendPorts)
+	populate(objectMap, "gatewayIPConfigurations", a.GatewayIPConfigurations)
+	populate(objectMap, "httpListeners", a.HTTPListeners)
+	populate(objectMap, "operationalState", a.OperationalState)
+	populate(objectMap, "probes", a.Probes)
+	populate(objectMap, "provisioningState", a.ProvisioningState)
+	populate(objectMap, "redirectConfigurations", a.RedirectConfigurations)
+	populate(objectMap, "requestRoutingRules", a.RequestRoutingRules)
+	populate(objectMap, "resourceGuid", a.ResourceGUID)
+	populate(objectMap, "rewriteRuleSets", a.RewriteRuleSets)
+	populate(objectMap, "sku", a.SKU)
+	populate(objectMap, "sslCertificates", a.SSLCertificates)
+	populate(objectMap, "sslPolicy", a.SSLPolicy)
+	populate(objectMap, "trustedRootCertificates", a.TrustedRootCertificates)
+	populate(objectMap, "urlPathMaps", a.URLPathMaps)
+	populate(objectMap, "webApplicationFirewallConfiguration", a.WebApplicationFirewallConfiguration)
+	return json.Marshal(objectMap)
 }
 
 // ApplicationGatewayRedirectConfiguration - Redirect configuration of an application gateway.
@@ -832,6 +1134,16 @@ type ApplicationGatewayRedirectConfiguration struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type ApplicationGatewayRedirectConfiguration.
+func (a ApplicationGatewayRedirectConfiguration) MarshalJSON() ([]byte, error) {
+	objectMap := a.SubResource.marshalInternal()
+	populate(objectMap, "etag", a.Etag)
+	populate(objectMap, "name", a.Name)
+	populate(objectMap, "properties", a.Properties)
+	populate(objectMap, "type", a.Type)
+	return json.Marshal(objectMap)
+}
+
 // ApplicationGatewayRedirectConfigurationPropertiesFormat - Properties of redirect configuration of the application gateway.
 type ApplicationGatewayRedirectConfigurationPropertiesFormat struct {
 	// Include path in the redirected url.
@@ -841,13 +1153,13 @@ type ApplicationGatewayRedirectConfigurationPropertiesFormat struct {
 	IncludeQueryString *bool `json:"includeQueryString,omitempty"`
 
 	// Path rules specifying redirect configuration.
-	PathRules *[]*SubResource `json:"pathRules,omitempty"`
+	PathRules []*SubResource `json:"pathRules,omitempty"`
 
 	// HTTP redirection type.
 	RedirectType *ApplicationGatewayRedirectType `json:"redirectType,omitempty"`
 
 	// Request routing specifying redirect configuration.
-	RequestRoutingRules *[]*SubResource `json:"requestRoutingRules,omitempty"`
+	RequestRoutingRules []*SubResource `json:"requestRoutingRules,omitempty"`
 
 	// Reference to a listener to redirect the request to.
 	TargetListener *SubResource `json:"targetListener,omitempty"`
@@ -856,7 +1168,21 @@ type ApplicationGatewayRedirectConfigurationPropertiesFormat struct {
 	TargetURL *string `json:"targetUrl,omitempty"`
 
 	// Url path maps specifying default redirect configuration.
-	URLPathMaps *[]*SubResource `json:"urlPathMaps,omitempty"`
+	URLPathMaps []*SubResource `json:"urlPathMaps,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ApplicationGatewayRedirectConfigurationPropertiesFormat.
+func (a ApplicationGatewayRedirectConfigurationPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "includePath", a.IncludePath)
+	populate(objectMap, "includeQueryString", a.IncludeQueryString)
+	populate(objectMap, "pathRules", a.PathRules)
+	populate(objectMap, "redirectType", a.RedirectType)
+	populate(objectMap, "requestRoutingRules", a.RequestRoutingRules)
+	populate(objectMap, "targetListener", a.TargetListener)
+	populate(objectMap, "targetUrl", a.TargetURL)
+	populate(objectMap, "urlPathMaps", a.URLPathMaps)
+	return json.Marshal(objectMap)
 }
 
 // ApplicationGatewayRequestRoutingRule - Request routing rule of an application gateway.
@@ -873,6 +1199,16 @@ type ApplicationGatewayRequestRoutingRule struct {
 
 	// READ-ONLY; Type of the resource.
 	Type *string `json:"type,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ApplicationGatewayRequestRoutingRule.
+func (a ApplicationGatewayRequestRoutingRule) MarshalJSON() ([]byte, error) {
+	objectMap := a.SubResource.marshalInternal()
+	populate(objectMap, "etag", a.Etag)
+	populate(objectMap, "name", a.Name)
+	populate(objectMap, "properties", a.Properties)
+	populate(objectMap, "type", a.Type)
+	return json.Marshal(objectMap)
 }
 
 // ApplicationGatewayRequestRoutingRulePropertiesFormat - Properties of request routing rule of the application gateway.
@@ -920,7 +1256,7 @@ type ApplicationGatewayRewriteRule struct {
 	ActionSet *ApplicationGatewayRewriteRuleActionSet `json:"actionSet,omitempty"`
 
 	// Conditions based on which the action set execution will be evaluated.
-	Conditions *[]*ApplicationGatewayRewriteRuleCondition `json:"conditions,omitempty"`
+	Conditions []*ApplicationGatewayRewriteRuleCondition `json:"conditions,omitempty"`
 
 	// Name of the rewrite rule that is unique within an Application Gateway.
 	Name *string `json:"name,omitempty"`
@@ -929,16 +1265,35 @@ type ApplicationGatewayRewriteRule struct {
 	RuleSequence *int32 `json:"ruleSequence,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type ApplicationGatewayRewriteRule.
+func (a ApplicationGatewayRewriteRule) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "actionSet", a.ActionSet)
+	populate(objectMap, "conditions", a.Conditions)
+	populate(objectMap, "name", a.Name)
+	populate(objectMap, "ruleSequence", a.RuleSequence)
+	return json.Marshal(objectMap)
+}
+
 // ApplicationGatewayRewriteRuleActionSet - Set of actions in the Rewrite Rule in Application Gateway.
 type ApplicationGatewayRewriteRuleActionSet struct {
 	// Request Header Actions in the Action Set.
-	RequestHeaderConfigurations *[]*ApplicationGatewayHeaderConfiguration `json:"requestHeaderConfigurations,omitempty"`
+	RequestHeaderConfigurations []*ApplicationGatewayHeaderConfiguration `json:"requestHeaderConfigurations,omitempty"`
 
 	// Response Header Actions in the Action Set.
-	ResponseHeaderConfigurations *[]*ApplicationGatewayHeaderConfiguration `json:"responseHeaderConfigurations,omitempty"`
+	ResponseHeaderConfigurations []*ApplicationGatewayHeaderConfiguration `json:"responseHeaderConfigurations,omitempty"`
 
 	// Url Configuration Action in the Action Set.
 	URLConfiguration *ApplicationGatewayURLConfiguration `json:"urlConfiguration,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ApplicationGatewayRewriteRuleActionSet.
+func (a ApplicationGatewayRewriteRuleActionSet) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "requestHeaderConfigurations", a.RequestHeaderConfigurations)
+	populate(objectMap, "responseHeaderConfigurations", a.ResponseHeaderConfigurations)
+	populate(objectMap, "urlConfiguration", a.URLConfiguration)
+	return json.Marshal(objectMap)
 }
 
 // ApplicationGatewayRewriteRuleCondition - Set of conditions in the Rewrite Rule in Application Gateway.
@@ -969,13 +1324,30 @@ type ApplicationGatewayRewriteRuleSet struct {
 	Properties *ApplicationGatewayRewriteRuleSetPropertiesFormat `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type ApplicationGatewayRewriteRuleSet.
+func (a ApplicationGatewayRewriteRuleSet) MarshalJSON() ([]byte, error) {
+	objectMap := a.SubResource.marshalInternal()
+	populate(objectMap, "etag", a.Etag)
+	populate(objectMap, "name", a.Name)
+	populate(objectMap, "properties", a.Properties)
+	return json.Marshal(objectMap)
+}
+
 // ApplicationGatewayRewriteRuleSetPropertiesFormat - Properties of rewrite rule set of the application gateway.
 type ApplicationGatewayRewriteRuleSetPropertiesFormat struct {
 	// READ-ONLY; The provisioning state of the rewrite rule set resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
 	// Rewrite rules in the rewrite rule set.
-	RewriteRules *[]*ApplicationGatewayRewriteRule `json:"rewriteRules,omitempty"`
+	RewriteRules []*ApplicationGatewayRewriteRule `json:"rewriteRules,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ApplicationGatewayRewriteRuleSetPropertiesFormat.
+func (a ApplicationGatewayRewriteRuleSetPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "provisioningState", a.ProvisioningState)
+	populate(objectMap, "rewriteRules", a.RewriteRules)
+	return json.Marshal(objectMap)
 }
 
 // ApplicationGatewaySKU - SKU of an application gateway.
@@ -1006,6 +1378,16 @@ type ApplicationGatewaySSLCertificate struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type ApplicationGatewaySSLCertificate.
+func (a ApplicationGatewaySSLCertificate) MarshalJSON() ([]byte, error) {
+	objectMap := a.SubResource.marshalInternal()
+	populate(objectMap, "etag", a.Etag)
+	populate(objectMap, "name", a.Name)
+	populate(objectMap, "properties", a.Properties)
+	populate(objectMap, "type", a.Type)
+	return json.Marshal(objectMap)
+}
+
 // ApplicationGatewaySSLCertificatePropertiesFormat - Properties of SSL certificates of an application gateway.
 type ApplicationGatewaySSLCertificatePropertiesFormat struct {
 	// Base-64 encoded pfx certificate. Only applicable in PUT Request.
@@ -1027,10 +1409,10 @@ type ApplicationGatewaySSLCertificatePropertiesFormat struct {
 // ApplicationGatewaySSLPolicy - Application Gateway Ssl policy.
 type ApplicationGatewaySSLPolicy struct {
 	// Ssl cipher suites to be enabled in the specified order to application gateway.
-	CipherSuites *[]*ApplicationGatewaySSLCipherSuite `json:"cipherSuites,omitempty"`
+	CipherSuites []*ApplicationGatewaySSLCipherSuite `json:"cipherSuites,omitempty"`
 
 	// Ssl protocols to be disabled on application gateway.
-	DisabledSSLProtocols *[]*ApplicationGatewaySSLProtocol `json:"disabledSslProtocols,omitempty"`
+	DisabledSSLProtocols []*ApplicationGatewaySSLProtocol `json:"disabledSslProtocols,omitempty"`
 
 	// Minimum version of Ssl protocol to be supported on application gateway.
 	MinProtocolVersion *ApplicationGatewaySSLProtocol `json:"minProtocolVersion,omitempty"`
@@ -1040,6 +1422,17 @@ type ApplicationGatewaySSLPolicy struct {
 
 	// Type of Ssl Policy.
 	PolicyType *ApplicationGatewaySSLPolicyType `json:"policyType,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ApplicationGatewaySSLPolicy.
+func (a ApplicationGatewaySSLPolicy) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "cipherSuites", a.CipherSuites)
+	populate(objectMap, "disabledSslProtocols", a.DisabledSSLProtocols)
+	populate(objectMap, "minProtocolVersion", a.MinProtocolVersion)
+	populate(objectMap, "policyName", a.PolicyName)
+	populate(objectMap, "policyType", a.PolicyType)
+	return json.Marshal(objectMap)
 }
 
 // ApplicationGatewaySSLPredefinedPolicy - An Ssl predefined policy.
@@ -1052,13 +1445,29 @@ type ApplicationGatewaySSLPredefinedPolicy struct {
 	Properties *ApplicationGatewaySSLPredefinedPolicyPropertiesFormat `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type ApplicationGatewaySSLPredefinedPolicy.
+func (a ApplicationGatewaySSLPredefinedPolicy) MarshalJSON() ([]byte, error) {
+	objectMap := a.SubResource.marshalInternal()
+	populate(objectMap, "name", a.Name)
+	populate(objectMap, "properties", a.Properties)
+	return json.Marshal(objectMap)
+}
+
 // ApplicationGatewaySSLPredefinedPolicyPropertiesFormat - Properties of ApplicationGatewaySslPredefinedPolicy.
 type ApplicationGatewaySSLPredefinedPolicyPropertiesFormat struct {
 	// Ssl cipher suites to be enabled in the specified order for application gateway.
-	CipherSuites *[]*ApplicationGatewaySSLCipherSuite `json:"cipherSuites,omitempty"`
+	CipherSuites []*ApplicationGatewaySSLCipherSuite `json:"cipherSuites,omitempty"`
 
 	// Minimum version of Ssl protocol to be supported on application gateway.
 	MinProtocolVersion *ApplicationGatewaySSLProtocol `json:"minProtocolVersion,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ApplicationGatewaySSLPredefinedPolicyPropertiesFormat.
+func (a ApplicationGatewaySSLPredefinedPolicyPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "cipherSuites", a.CipherSuites)
+	populate(objectMap, "minProtocolVersion", a.MinProtocolVersion)
+	return json.Marshal(objectMap)
 }
 
 // ApplicationGatewaySSLPredefinedPolicyResponse is the response envelope for operations that return a ApplicationGatewaySSLPredefinedPolicy type.
@@ -1084,6 +1493,16 @@ type ApplicationGatewayTrustedRootCertificate struct {
 
 	// READ-ONLY; Type of the resource.
 	Type *string `json:"type,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ApplicationGatewayTrustedRootCertificate.
+func (a ApplicationGatewayTrustedRootCertificate) MarshalJSON() ([]byte, error) {
+	objectMap := a.SubResource.marshalInternal()
+	populate(objectMap, "etag", a.Etag)
+	populate(objectMap, "name", a.Name)
+	populate(objectMap, "properties", a.Properties)
+	populate(objectMap, "type", a.Type)
+	return json.Marshal(objectMap)
 }
 
 // ApplicationGatewayTrustedRootCertificatePropertiesFormat - Trusted Root certificates properties of an application gateway.
@@ -1126,6 +1545,16 @@ type ApplicationGatewayURLPathMap struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type ApplicationGatewayURLPathMap.
+func (a ApplicationGatewayURLPathMap) MarshalJSON() ([]byte, error) {
+	objectMap := a.SubResource.marshalInternal()
+	populate(objectMap, "etag", a.Etag)
+	populate(objectMap, "name", a.Name)
+	populate(objectMap, "properties", a.Properties)
+	populate(objectMap, "type", a.Type)
+	return json.Marshal(objectMap)
+}
+
 // ApplicationGatewayURLPathMapPropertiesFormat - Properties of UrlPathMap of the application gateway.
 type ApplicationGatewayURLPathMapPropertiesFormat struct {
 	// Default backend address pool resource of URL path map.
@@ -1141,22 +1570,34 @@ type ApplicationGatewayURLPathMapPropertiesFormat struct {
 	DefaultRewriteRuleSet *SubResource `json:"defaultRewriteRuleSet,omitempty"`
 
 	// Path rule of URL path map resource.
-	PathRules *[]*ApplicationGatewayPathRule `json:"pathRules,omitempty"`
+	PathRules []*ApplicationGatewayPathRule `json:"pathRules,omitempty"`
 
 	// READ-ONLY; The provisioning state of the URL path map resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type ApplicationGatewayURLPathMapPropertiesFormat.
+func (a ApplicationGatewayURLPathMapPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "defaultBackendAddressPool", a.DefaultBackendAddressPool)
+	populate(objectMap, "defaultBackendHttpSettings", a.DefaultBackendHTTPSettings)
+	populate(objectMap, "defaultRedirectConfiguration", a.DefaultRedirectConfiguration)
+	populate(objectMap, "defaultRewriteRuleSet", a.DefaultRewriteRuleSet)
+	populate(objectMap, "pathRules", a.PathRules)
+	populate(objectMap, "provisioningState", a.ProvisioningState)
+	return json.Marshal(objectMap)
+}
+
 // ApplicationGatewayWebApplicationFirewallConfiguration - Application gateway web application firewall configuration.
 type ApplicationGatewayWebApplicationFirewallConfiguration struct {
 	// The disabled rule groups.
-	DisabledRuleGroups *[]*ApplicationGatewayFirewallDisabledRuleGroup `json:"disabledRuleGroups,omitempty"`
+	DisabledRuleGroups []*ApplicationGatewayFirewallDisabledRuleGroup `json:"disabledRuleGroups,omitempty"`
 
 	// Whether the web application firewall is enabled or not.
 	Enabled *bool `json:"enabled,omitempty"`
 
 	// The exclusion list.
-	Exclusions *[]*ApplicationGatewayFirewallExclusion `json:"exclusions,omitempty"`
+	Exclusions []*ApplicationGatewayFirewallExclusion `json:"exclusions,omitempty"`
 
 	// Maximum file upload size in Mb for WAF.
 	FileUploadLimitInMb *int32 `json:"fileUploadLimitInMb,omitempty"`
@@ -1178,6 +1619,22 @@ type ApplicationGatewayWebApplicationFirewallConfiguration struct {
 
 	// The version of the rule set type.
 	RuleSetVersion *string `json:"ruleSetVersion,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ApplicationGatewayWebApplicationFirewallConfiguration.
+func (a ApplicationGatewayWebApplicationFirewallConfiguration) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "disabledRuleGroups", a.DisabledRuleGroups)
+	populate(objectMap, "enabled", a.Enabled)
+	populate(objectMap, "exclusions", a.Exclusions)
+	populate(objectMap, "fileUploadLimitInMb", a.FileUploadLimitInMb)
+	populate(objectMap, "firewallMode", a.FirewallMode)
+	populate(objectMap, "maxRequestBodySize", a.MaxRequestBodySize)
+	populate(objectMap, "maxRequestBodySizeInKb", a.MaxRequestBodySizeInKb)
+	populate(objectMap, "requestBodyCheck", a.RequestBodyCheck)
+	populate(objectMap, "ruleSetType", a.RuleSetType)
+	populate(objectMap, "ruleSetVersion", a.RuleSetVersion)
+	return json.Marshal(objectMap)
 }
 
 // ApplicationGatewaysBeginBackendHealthOnDemandOptions contains the optional parameters for the ApplicationGateways.BeginBackendHealthOnDemand method.
@@ -1272,22 +1729,22 @@ type ApplicationGatewaysUpdateTagsOptions struct {
 type ApplicationRuleCondition struct {
 	FirewallPolicyRuleCondition
 	// List of destination IP addresses or Service Tags.
-	DestinationAddresses *[]*string `json:"destinationAddresses,omitempty"`
+	DestinationAddresses []*string `json:"destinationAddresses,omitempty"`
 
 	// List of FQDN Tags for this rule condition.
-	FqdnTags *[]*string `json:"fqdnTags,omitempty"`
+	FqdnTags []*string `json:"fqdnTags,omitempty"`
 
 	// Array of Application Protocols.
-	Protocols *[]*FirewallPolicyRuleConditionApplicationProtocol `json:"protocols,omitempty"`
+	Protocols []*FirewallPolicyRuleConditionApplicationProtocol `json:"protocols,omitempty"`
 
 	// List of source IP addresses for this rule.
-	SourceAddresses *[]*string `json:"sourceAddresses,omitempty"`
+	SourceAddresses []*string `json:"sourceAddresses,omitempty"`
 
 	// List of source IpGroups for this rule.
-	SourceIPGroups *[]*string `json:"sourceIpGroups,omitempty"`
+	SourceIPGroups []*string `json:"sourceIpGroups,omitempty"`
 
 	// List of FQDNs for this rule condition.
-	TargetFqdns *[]*string `json:"targetFqdns,omitempty"`
+	TargetFqdns []*string `json:"targetFqdns,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ApplicationRuleCondition.
@@ -1347,13 +1804,29 @@ type ApplicationSecurityGroup struct {
 	Properties *ApplicationSecurityGroupPropertiesFormat `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type ApplicationSecurityGroup.
+func (a ApplicationSecurityGroup) MarshalJSON() ([]byte, error) {
+	objectMap := a.Resource.marshalInternal()
+	populate(objectMap, "etag", a.Etag)
+	populate(objectMap, "properties", a.Properties)
+	return json.Marshal(objectMap)
+}
+
 // ApplicationSecurityGroupListResult - A list of application security groups.
 type ApplicationSecurityGroupListResult struct {
 	// READ-ONLY; The URL to get the next set of results.
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 
 	// A list of application security groups.
-	Value *[]*ApplicationSecurityGroup `json:"value,omitempty"`
+	Value []*ApplicationSecurityGroup `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ApplicationSecurityGroupListResult.
+func (a ApplicationSecurityGroupListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", a.NextLink)
+	populate(objectMap, "value", a.Value)
+	return json.Marshal(objectMap)
 }
 
 // ApplicationSecurityGroupListResultResponse is the response envelope for operations that return a ApplicationSecurityGroupListResult type.
@@ -1433,7 +1906,15 @@ type AuthorizationListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// The authorizations in an ExpressRoute Circuit.
-	Value *[]*ExpressRouteCircuitAuthorization `json:"value,omitempty"`
+	Value []*ExpressRouteCircuitAuthorization `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AuthorizationListResult.
+func (a AuthorizationListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", a.NextLink)
+	populate(objectMap, "value", a.Value)
+	return json.Marshal(objectMap)
 }
 
 // AuthorizationListResultResponse is the response envelope for operations that return a AuthorizationListResult type.
@@ -1469,7 +1950,15 @@ type AutoApprovedPrivateLinkServicesResult struct {
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 
 	// An array of auto approved private link service.
-	Value *[]*AutoApprovedPrivateLinkService `json:"value,omitempty"`
+	Value []*AutoApprovedPrivateLinkService `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AutoApprovedPrivateLinkServicesResult.
+func (a AutoApprovedPrivateLinkServicesResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", a.NextLink)
+	populate(objectMap, "value", a.Value)
+	return json.Marshal(objectMap)
 }
 
 // AutoApprovedPrivateLinkServicesResultResponse is the response envelope for operations that return a AutoApprovedPrivateLinkServicesResult type.
@@ -1496,7 +1985,7 @@ type Availability struct {
 // AvailableDelegation - The serviceName of an AvailableDelegation indicates a possible delegation for a subnet.
 type AvailableDelegation struct {
 	// The actions permitted to the service upon delegation.
-	Actions *[]*string `json:"actions,omitempty"`
+	Actions []*string `json:"actions,omitempty"`
 
 	// A unique identifier of the AvailableDelegation resource.
 	ID *string `json:"id,omitempty"`
@@ -1511,6 +2000,17 @@ type AvailableDelegation struct {
 	Type *string `json:"type,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type AvailableDelegation.
+func (a AvailableDelegation) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "actions", a.Actions)
+	populate(objectMap, "id", a.ID)
+	populate(objectMap, "name", a.Name)
+	populate(objectMap, "serviceName", a.ServiceName)
+	populate(objectMap, "type", a.Type)
+	return json.Marshal(objectMap)
+}
+
 // AvailableDelegationsListOptions contains the optional parameters for the AvailableDelegations.List method.
 type AvailableDelegationsListOptions struct {
 	// placeholder for future optional parameters
@@ -1522,7 +2022,15 @@ type AvailableDelegationsResult struct {
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 
 	// An array of available delegations.
-	Value *[]*AvailableDelegation `json:"value,omitempty"`
+	Value []*AvailableDelegation `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AvailableDelegationsResult.
+func (a AvailableDelegationsResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", a.NextLink)
+	populate(objectMap, "value", a.Value)
+	return json.Marshal(objectMap)
 }
 
 // AvailableDelegationsResultResponse is the response envelope for operations that return a AvailableDelegationsResult type.
@@ -1570,7 +2078,15 @@ type AvailablePrivateEndpointTypesResult struct {
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 
 	// An array of available privateEndpoint type.
-	Value *[]*AvailablePrivateEndpointType `json:"value,omitempty"`
+	Value []*AvailablePrivateEndpointType `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AvailablePrivateEndpointTypesResult.
+func (a AvailablePrivateEndpointTypesResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", a.NextLink)
+	populate(objectMap, "value", a.Value)
+	return json.Marshal(objectMap)
 }
 
 // AvailablePrivateEndpointTypesResultResponse is the response envelope for operations that return a AvailablePrivateEndpointTypesResult type.
@@ -1585,7 +2101,14 @@ type AvailablePrivateEndpointTypesResultResponse struct {
 // AvailableProvidersList - List of available countries with details.
 type AvailableProvidersList struct {
 	// List of available countries.
-	Countries *[]*AvailableProvidersListCountry `json:"countries,omitempty"`
+	Countries []*AvailableProvidersListCountry `json:"countries,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AvailableProvidersList.
+func (a AvailableProvidersList) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "countries", a.Countries)
+	return json.Marshal(objectMap)
 }
 
 // AvailableProvidersListCity - City or town details.
@@ -1594,7 +2117,15 @@ type AvailableProvidersListCity struct {
 	CityName *string `json:"cityName,omitempty"`
 
 	// A list of Internet service providers.
-	Providers *[]*string `json:"providers,omitempty"`
+	Providers []*string `json:"providers,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AvailableProvidersListCity.
+func (a AvailableProvidersListCity) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "cityName", a.CityName)
+	populate(objectMap, "providers", a.Providers)
+	return json.Marshal(objectMap)
 }
 
 // AvailableProvidersListCountry - Country details.
@@ -1603,16 +2134,25 @@ type AvailableProvidersListCountry struct {
 	CountryName *string `json:"countryName,omitempty"`
 
 	// A list of Internet service providers.
-	Providers *[]*string `json:"providers,omitempty"`
+	Providers []*string `json:"providers,omitempty"`
 
 	// List of available states in the country.
-	States *[]*AvailableProvidersListState `json:"states,omitempty"`
+	States []*AvailableProvidersListState `json:"states,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AvailableProvidersListCountry.
+func (a AvailableProvidersListCountry) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "countryName", a.CountryName)
+	populate(objectMap, "providers", a.Providers)
+	populate(objectMap, "states", a.States)
+	return json.Marshal(objectMap)
 }
 
 // AvailableProvidersListParameters - Constraints that determine the list of available Internet service providers.
 type AvailableProvidersListParameters struct {
 	// A list of Azure regions.
-	AzureLocations *[]*string `json:"azureLocations,omitempty"`
+	AzureLocations []*string `json:"azureLocations,omitempty"`
 
 	// The city or town for available providers list.
 	City *string `json:"city,omitempty"`
@@ -1622,6 +2162,16 @@ type AvailableProvidersListParameters struct {
 
 	// The state for available providers list.
 	State *string `json:"state,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AvailableProvidersListParameters.
+func (a AvailableProvidersListParameters) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "azureLocations", a.AzureLocations)
+	populate(objectMap, "city", a.City)
+	populate(objectMap, "country", a.Country)
+	populate(objectMap, "state", a.State)
+	return json.Marshal(objectMap)
 }
 
 // AvailableProvidersListPollerResponse is the response envelope for operations that asynchronously return a AvailableProvidersList type.
@@ -1648,13 +2198,22 @@ type AvailableProvidersListResponse struct {
 // AvailableProvidersListState - State details.
 type AvailableProvidersListState struct {
 	// List of available cities or towns in the state.
-	Cities *[]*AvailableProvidersListCity `json:"cities,omitempty"`
+	Cities []*AvailableProvidersListCity `json:"cities,omitempty"`
 
 	// A list of Internet service providers.
-	Providers *[]*string `json:"providers,omitempty"`
+	Providers []*string `json:"providers,omitempty"`
 
 	// The state name.
 	StateName *string `json:"stateName,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AvailableProvidersListState.
+func (a AvailableProvidersListState) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "cities", a.Cities)
+	populate(objectMap, "providers", a.Providers)
+	populate(objectMap, "stateName", a.StateName)
+	return json.Marshal(objectMap)
 }
 
 // AvailableResourceGroupDelegationsListOptions contains the optional parameters for the AvailableResourceGroupDelegations.List method.
@@ -1693,7 +2252,15 @@ type AvailableServiceAliasesResult struct {
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 
 	// An array of available service aliases.
-	Value *[]*AvailableServiceAlias `json:"value,omitempty"`
+	Value []*AvailableServiceAlias `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AvailableServiceAliasesResult.
+func (a AvailableServiceAliasesResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", a.NextLink)
+	populate(objectMap, "value", a.Value)
+	return json.Marshal(objectMap)
 }
 
 // AvailableServiceAliasesResultResponse is the response envelope for operations that return a AvailableServiceAliasesResult type.
@@ -1728,7 +2295,16 @@ type AzureFirewall struct {
 	Properties *AzureFirewallPropertiesFormat `json:"properties,omitempty"`
 
 	// A list of availability zones denoting where the resource needs to come from.
-	Zones *[]*string `json:"zones,omitempty"`
+	Zones []*string `json:"zones,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzureFirewall.
+func (a AzureFirewall) MarshalJSON() ([]byte, error) {
+	objectMap := a.Resource.marshalInternal()
+	populate(objectMap, "etag", a.Etag)
+	populate(objectMap, "properties", a.Properties)
+	populate(objectMap, "zones", a.Zones)
+	return json.Marshal(objectMap)
 }
 
 // AzureFirewallApplicationRule - Properties of an application rule.
@@ -1737,22 +2313,35 @@ type AzureFirewallApplicationRule struct {
 	Description *string `json:"description,omitempty"`
 
 	// List of FQDN Tags for this rule.
-	FqdnTags *[]*string `json:"fqdnTags,omitempty"`
+	FqdnTags []*string `json:"fqdnTags,omitempty"`
 
 	// Name of the application rule.
 	Name *string `json:"name,omitempty"`
 
 	// Array of ApplicationRuleProtocols.
-	Protocols *[]*AzureFirewallApplicationRuleProtocol `json:"protocols,omitempty"`
+	Protocols []*AzureFirewallApplicationRuleProtocol `json:"protocols,omitempty"`
 
 	// List of source IP addresses for this rule.
-	SourceAddresses *[]*string `json:"sourceAddresses,omitempty"`
+	SourceAddresses []*string `json:"sourceAddresses,omitempty"`
 
 	// List of source IpGroups for this rule.
-	SourceIPGroups *[]*string `json:"sourceIpGroups,omitempty"`
+	SourceIPGroups []*string `json:"sourceIpGroups,omitempty"`
 
 	// List of FQDNs for this rule.
-	TargetFqdns *[]*string `json:"targetFqdns,omitempty"`
+	TargetFqdns []*string `json:"targetFqdns,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzureFirewallApplicationRule.
+func (a AzureFirewallApplicationRule) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "description", a.Description)
+	populate(objectMap, "fqdnTags", a.FqdnTags)
+	populate(objectMap, "name", a.Name)
+	populate(objectMap, "protocols", a.Protocols)
+	populate(objectMap, "sourceAddresses", a.SourceAddresses)
+	populate(objectMap, "sourceIpGroups", a.SourceIPGroups)
+	populate(objectMap, "targetFqdns", a.TargetFqdns)
+	return json.Marshal(objectMap)
 }
 
 // AzureFirewallApplicationRuleCollection - Application rule collection resource.
@@ -1768,6 +2357,15 @@ type AzureFirewallApplicationRuleCollection struct {
 	Properties *AzureFirewallApplicationRuleCollectionPropertiesFormat `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type AzureFirewallApplicationRuleCollection.
+func (a AzureFirewallApplicationRuleCollection) MarshalJSON() ([]byte, error) {
+	objectMap := a.SubResource.marshalInternal()
+	populate(objectMap, "etag", a.Etag)
+	populate(objectMap, "name", a.Name)
+	populate(objectMap, "properties", a.Properties)
+	return json.Marshal(objectMap)
+}
+
 // AzureFirewallApplicationRuleCollectionPropertiesFormat - Properties of the application rule collection.
 type AzureFirewallApplicationRuleCollectionPropertiesFormat struct {
 	// The action type of a rule collection.
@@ -1780,7 +2378,17 @@ type AzureFirewallApplicationRuleCollectionPropertiesFormat struct {
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
 	// Collection of rules used by a application rule collection.
-	Rules *[]*AzureFirewallApplicationRule `json:"rules,omitempty"`
+	Rules []*AzureFirewallApplicationRule `json:"rules,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzureFirewallApplicationRuleCollectionPropertiesFormat.
+func (a AzureFirewallApplicationRuleCollectionPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "action", a.Action)
+	populate(objectMap, "priority", a.Priority)
+	populate(objectMap, "provisioningState", a.ProvisioningState)
+	populate(objectMap, "rules", a.Rules)
+	return json.Marshal(objectMap)
 }
 
 // AzureFirewallApplicationRuleProtocol - Properties of the application rule protocol.
@@ -1802,13 +2410,29 @@ type AzureFirewallFqdnTag struct {
 	Properties *AzureFirewallFqdnTagPropertiesFormat `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type AzureFirewallFqdnTag.
+func (a AzureFirewallFqdnTag) MarshalJSON() ([]byte, error) {
+	objectMap := a.Resource.marshalInternal()
+	populate(objectMap, "etag", a.Etag)
+	populate(objectMap, "properties", a.Properties)
+	return json.Marshal(objectMap)
+}
+
 // AzureFirewallFqdnTagListResult - Response for ListAzureFirewallFqdnTags API service call.
 type AzureFirewallFqdnTagListResult struct {
 	// URL to get the next set of results.
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of Azure Firewall FQDN Tags in a resource group.
-	Value *[]*AzureFirewallFqdnTag `json:"value,omitempty"`
+	Value []*AzureFirewallFqdnTag `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzureFirewallFqdnTagListResult.
+func (a AzureFirewallFqdnTagListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", a.NextLink)
+	populate(objectMap, "value", a.Value)
+	return json.Marshal(objectMap)
 }
 
 // AzureFirewallFqdnTagListResultResponse is the response envelope for operations that return a AzureFirewallFqdnTagListResult type.
@@ -1850,6 +2474,16 @@ type AzureFirewallIPConfiguration struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type AzureFirewallIPConfiguration.
+func (a AzureFirewallIPConfiguration) MarshalJSON() ([]byte, error) {
+	objectMap := a.SubResource.marshalInternal()
+	populate(objectMap, "etag", a.Etag)
+	populate(objectMap, "name", a.Name)
+	populate(objectMap, "properties", a.Properties)
+	populate(objectMap, "type", a.Type)
+	return json.Marshal(objectMap)
+}
+
 // AzureFirewallIPConfigurationPropertiesFormat - Properties of IP configuration of an Azure Firewall.
 type AzureFirewallIPConfigurationPropertiesFormat struct {
 	// READ-ONLY; The Firewall Internal Load Balancer IP to be used as the next hop in User Defined Routes.
@@ -1880,7 +2514,15 @@ type AzureFirewallListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of Azure Firewalls in a resource group.
-	Value *[]*AzureFirewall `json:"value,omitempty"`
+	Value []*AzureFirewall `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzureFirewallListResult.
+func (a AzureFirewallListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", a.NextLink)
+	populate(objectMap, "value", a.Value)
+	return json.Marshal(objectMap)
 }
 
 // AzureFirewallListResultResponse is the response envelope for operations that return a AzureFirewallListResult type.
@@ -1904,22 +2546,22 @@ type AzureFirewallNatRule struct {
 	Description *string `json:"description,omitempty"`
 
 	// List of destination IP addresses for this rule. Supports IP ranges, prefixes, and service tags.
-	DestinationAddresses *[]*string `json:"destinationAddresses,omitempty"`
+	DestinationAddresses []*string `json:"destinationAddresses,omitempty"`
 
 	// List of destination ports.
-	DestinationPorts *[]*string `json:"destinationPorts,omitempty"`
+	DestinationPorts []*string `json:"destinationPorts,omitempty"`
 
 	// Name of the NAT rule.
 	Name *string `json:"name,omitempty"`
 
 	// Array of AzureFirewallNetworkRuleProtocols applicable to this NAT rule.
-	Protocols *[]*AzureFirewallNetworkRuleProtocol `json:"protocols,omitempty"`
+	Protocols []*AzureFirewallNetworkRuleProtocol `json:"protocols,omitempty"`
 
 	// List of source IP addresses for this rule.
-	SourceAddresses *[]*string `json:"sourceAddresses,omitempty"`
+	SourceAddresses []*string `json:"sourceAddresses,omitempty"`
 
 	// List of source IpGroups for this rule.
-	SourceIPGroups *[]*string `json:"sourceIpGroups,omitempty"`
+	SourceIPGroups []*string `json:"sourceIpGroups,omitempty"`
 
 	// The translated address for this NAT rule.
 	TranslatedAddress *string `json:"translatedAddress,omitempty"`
@@ -1929,6 +2571,22 @@ type AzureFirewallNatRule struct {
 
 	// The translated port for this NAT rule.
 	TranslatedPort *string `json:"translatedPort,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzureFirewallNatRule.
+func (a AzureFirewallNatRule) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "description", a.Description)
+	populate(objectMap, "destinationAddresses", a.DestinationAddresses)
+	populate(objectMap, "destinationPorts", a.DestinationPorts)
+	populate(objectMap, "name", a.Name)
+	populate(objectMap, "protocols", a.Protocols)
+	populate(objectMap, "sourceAddresses", a.SourceAddresses)
+	populate(objectMap, "sourceIpGroups", a.SourceIPGroups)
+	populate(objectMap, "translatedAddress", a.TranslatedAddress)
+	populate(objectMap, "translatedFqdn", a.TranslatedFqdn)
+	populate(objectMap, "translatedPort", a.TranslatedPort)
+	return json.Marshal(objectMap)
 }
 
 // AzureFirewallNatRuleCollection - NAT rule collection resource.
@@ -1944,6 +2602,15 @@ type AzureFirewallNatRuleCollection struct {
 	Properties *AzureFirewallNatRuleCollectionProperties `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type AzureFirewallNatRuleCollection.
+func (a AzureFirewallNatRuleCollection) MarshalJSON() ([]byte, error) {
+	objectMap := a.SubResource.marshalInternal()
+	populate(objectMap, "etag", a.Etag)
+	populate(objectMap, "name", a.Name)
+	populate(objectMap, "properties", a.Properties)
+	return json.Marshal(objectMap)
+}
+
 // AzureFirewallNatRuleCollectionProperties - Properties of the NAT rule collection.
 type AzureFirewallNatRuleCollectionProperties struct {
 	// The action type of a NAT rule collection.
@@ -1956,7 +2623,17 @@ type AzureFirewallNatRuleCollectionProperties struct {
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
 	// Collection of rules used by a NAT rule collection.
-	Rules *[]*AzureFirewallNatRule `json:"rules,omitempty"`
+	Rules []*AzureFirewallNatRule `json:"rules,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzureFirewallNatRuleCollectionProperties.
+func (a AzureFirewallNatRuleCollectionProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "action", a.Action)
+	populate(objectMap, "priority", a.Priority)
+	populate(objectMap, "provisioningState", a.ProvisioningState)
+	populate(objectMap, "rules", a.Rules)
+	return json.Marshal(objectMap)
 }
 
 // AzureFirewallNetworkRule - Properties of the network rule.
@@ -1965,28 +2642,43 @@ type AzureFirewallNetworkRule struct {
 	Description *string `json:"description,omitempty"`
 
 	// List of destination IP addresses.
-	DestinationAddresses *[]*string `json:"destinationAddresses,omitempty"`
+	DestinationAddresses []*string `json:"destinationAddresses,omitempty"`
 
 	// List of destination FQDNs.
-	DestinationFqdns *[]*string `json:"destinationFqdns,omitempty"`
+	DestinationFqdns []*string `json:"destinationFqdns,omitempty"`
 
 	// List of destination IpGroups for this rule.
-	DestinationIPGroups *[]*string `json:"destinationIpGroups,omitempty"`
+	DestinationIPGroups []*string `json:"destinationIpGroups,omitempty"`
 
 	// List of destination ports.
-	DestinationPorts *[]*string `json:"destinationPorts,omitempty"`
+	DestinationPorts []*string `json:"destinationPorts,omitempty"`
 
 	// Name of the network rule.
 	Name *string `json:"name,omitempty"`
 
 	// Array of AzureFirewallNetworkRuleProtocols.
-	Protocols *[]*AzureFirewallNetworkRuleProtocol `json:"protocols,omitempty"`
+	Protocols []*AzureFirewallNetworkRuleProtocol `json:"protocols,omitempty"`
 
 	// List of source IP addresses for this rule.
-	SourceAddresses *[]*string `json:"sourceAddresses,omitempty"`
+	SourceAddresses []*string `json:"sourceAddresses,omitempty"`
 
 	// List of source IpGroups for this rule.
-	SourceIPGroups *[]*string `json:"sourceIpGroups,omitempty"`
+	SourceIPGroups []*string `json:"sourceIpGroups,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzureFirewallNetworkRule.
+func (a AzureFirewallNetworkRule) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "description", a.Description)
+	populate(objectMap, "destinationAddresses", a.DestinationAddresses)
+	populate(objectMap, "destinationFqdns", a.DestinationFqdns)
+	populate(objectMap, "destinationIpGroups", a.DestinationIPGroups)
+	populate(objectMap, "destinationPorts", a.DestinationPorts)
+	populate(objectMap, "name", a.Name)
+	populate(objectMap, "protocols", a.Protocols)
+	populate(objectMap, "sourceAddresses", a.SourceAddresses)
+	populate(objectMap, "sourceIpGroups", a.SourceIPGroups)
+	return json.Marshal(objectMap)
 }
 
 // AzureFirewallNetworkRuleCollection - Network rule collection resource.
@@ -2002,6 +2694,15 @@ type AzureFirewallNetworkRuleCollection struct {
 	Properties *AzureFirewallNetworkRuleCollectionPropertiesFormat `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type AzureFirewallNetworkRuleCollection.
+func (a AzureFirewallNetworkRuleCollection) MarshalJSON() ([]byte, error) {
+	objectMap := a.SubResource.marshalInternal()
+	populate(objectMap, "etag", a.Etag)
+	populate(objectMap, "name", a.Name)
+	populate(objectMap, "properties", a.Properties)
+	return json.Marshal(objectMap)
+}
+
 // AzureFirewallNetworkRuleCollectionPropertiesFormat - Properties of the network rule collection.
 type AzureFirewallNetworkRuleCollectionPropertiesFormat struct {
 	// The action type of a rule collection.
@@ -2014,7 +2715,17 @@ type AzureFirewallNetworkRuleCollectionPropertiesFormat struct {
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
 	// Collection of rules used by a network rule collection.
-	Rules *[]*AzureFirewallNetworkRule `json:"rules,omitempty"`
+	Rules []*AzureFirewallNetworkRule `json:"rules,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzureFirewallNetworkRuleCollectionPropertiesFormat.
+func (a AzureFirewallNetworkRuleCollectionPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "action", a.Action)
+	populate(objectMap, "priority", a.Priority)
+	populate(objectMap, "provisioningState", a.ProvisioningState)
+	populate(objectMap, "rules", a.Rules)
+	return json.Marshal(objectMap)
 }
 
 // AzureFirewallPollerResponse is the response envelope for operations that asynchronously return a AzureFirewall type.
@@ -2032,10 +2743,10 @@ type AzureFirewallPollerResponse struct {
 // AzureFirewallPropertiesFormat - Properties of the Azure Firewall.
 type AzureFirewallPropertiesFormat struct {
 	// The additional properties used to further config this azure firewall.
-	AdditionalProperties *map[string]*string `json:"additionalProperties,omitempty"`
+	AdditionalProperties map[string]*string `json:"additionalProperties,omitempty"`
 
 	// Collection of application rule collections used by Azure Firewall.
-	ApplicationRuleCollections *[]*AzureFirewallApplicationRuleCollection `json:"applicationRuleCollections,omitempty"`
+	ApplicationRuleCollections []*AzureFirewallApplicationRuleCollection `json:"applicationRuleCollections,omitempty"`
 
 	// The firewallPolicy associated with this azure firewall.
 	FirewallPolicy *SubResource `json:"firewallPolicy,omitempty"`
@@ -2044,19 +2755,19 @@ type AzureFirewallPropertiesFormat struct {
 	HubIPAddresses *HubIPAddresses `json:"hubIpAddresses,omitempty" azure:"ro"`
 
 	// IP configuration of the Azure Firewall resource.
-	IPConfigurations *[]*AzureFirewallIPConfiguration `json:"ipConfigurations,omitempty"`
+	IPConfigurations []*AzureFirewallIPConfiguration `json:"ipConfigurations,omitempty"`
 
 	// READ-ONLY; IpGroups associated with AzureFirewall.
-	IPGroups *[]*AzureFirewallIPGroups `json:"ipGroups,omitempty" azure:"ro"`
+	IPGroups []*AzureFirewallIPGroups `json:"ipGroups,omitempty" azure:"ro"`
 
 	// IP configuration of the Azure Firewall used for management traffic.
 	ManagementIPConfiguration *AzureFirewallIPConfiguration `json:"managementIpConfiguration,omitempty"`
 
 	// Collection of NAT rule collections used by Azure Firewall.
-	NatRuleCollections *[]*AzureFirewallNatRuleCollection `json:"natRuleCollections,omitempty"`
+	NatRuleCollections []*AzureFirewallNatRuleCollection `json:"natRuleCollections,omitempty"`
 
 	// Collection of network rule collections used by Azure Firewall.
-	NetworkRuleCollections *[]*AzureFirewallNetworkRuleCollection `json:"networkRuleCollections,omitempty"`
+	NetworkRuleCollections []*AzureFirewallNetworkRuleCollection `json:"networkRuleCollections,omitempty"`
 
 	// READ-ONLY; The provisioning state of the Azure firewall resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
@@ -2069,6 +2780,25 @@ type AzureFirewallPropertiesFormat struct {
 
 	// The virtualHub to which the firewall belongs.
 	VirtualHub *SubResource `json:"virtualHub,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzureFirewallPropertiesFormat.
+func (a AzureFirewallPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "additionalProperties", a.AdditionalProperties)
+	populate(objectMap, "applicationRuleCollections", a.ApplicationRuleCollections)
+	populate(objectMap, "firewallPolicy", a.FirewallPolicy)
+	populate(objectMap, "hubIpAddresses", a.HubIPAddresses)
+	populate(objectMap, "ipConfigurations", a.IPConfigurations)
+	populate(objectMap, "ipGroups", a.IPGroups)
+	populate(objectMap, "managementIpConfiguration", a.ManagementIPConfiguration)
+	populate(objectMap, "natRuleCollections", a.NatRuleCollections)
+	populate(objectMap, "networkRuleCollections", a.NetworkRuleCollections)
+	populate(objectMap, "provisioningState", a.ProvisioningState)
+	populate(objectMap, "sku", a.SKU)
+	populate(objectMap, "threatIntelMode", a.ThreatIntelMode)
+	populate(objectMap, "virtualHub", a.VirtualHub)
+	return json.Marshal(objectMap)
 }
 
 // AzureFirewallPublicIPAddress - Public IP Address associated with azure firewall.
@@ -2140,7 +2870,16 @@ type AzureReachabilityReport struct {
 	ProviderLocation *AzureReachabilityReportLocation `json:"providerLocation,omitempty"`
 
 	// List of Azure reachability report items.
-	ReachabilityReport *[]*AzureReachabilityReportItem `json:"reachabilityReport,omitempty"`
+	ReachabilityReport []*AzureReachabilityReportItem `json:"reachabilityReport,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzureReachabilityReport.
+func (a AzureReachabilityReport) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "aggregationLevel", a.AggregationLevel)
+	populate(objectMap, "providerLocation", a.ProviderLocation)
+	populate(objectMap, "reachabilityReport", a.ReachabilityReport)
+	return json.Marshal(objectMap)
 }
 
 // AzureReachabilityReportItem - Azure reachability report details for a given provider location.
@@ -2149,10 +2888,19 @@ type AzureReachabilityReportItem struct {
 	AzureLocation *string `json:"azureLocation,omitempty"`
 
 	// List of latency details for each of the time series.
-	Latencies *[]*AzureReachabilityReportLatencyInfo `json:"latencies,omitempty"`
+	Latencies []*AzureReachabilityReportLatencyInfo `json:"latencies,omitempty"`
 
 	// The Internet service provider.
 	Provider *string `json:"provider,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AzureReachabilityReportItem.
+func (a AzureReachabilityReportItem) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "azureLocation", a.AzureLocation)
+	populate(objectMap, "latencies", a.Latencies)
+	populate(objectMap, "provider", a.Provider)
+	return json.Marshal(objectMap)
 }
 
 // AzureReachabilityReportLatencyInfo - Details on latency for a time series.
@@ -2212,7 +2960,7 @@ type AzureReachabilityReportLocation struct {
 // AzureReachabilityReportParameters - Geographic and time constraints for Azure reachability report.
 type AzureReachabilityReportParameters struct {
 	// Optional Azure regions to scope the query to.
-	AzureLocations *[]*string `json:"azureLocations,omitempty"`
+	AzureLocations []*string `json:"azureLocations,omitempty"`
 
 	// The end time for the Azure reachability report.
 	EndTime *time.Time `json:"endTime,omitempty"`
@@ -2221,7 +2969,7 @@ type AzureReachabilityReportParameters struct {
 	ProviderLocation *AzureReachabilityReportLocation `json:"providerLocation,omitempty"`
 
 	// List of Internet service providers.
-	Providers *[]*string `json:"providers,omitempty"`
+	Providers []*string `json:"providers,omitempty"`
 
 	// The start time for the Azure reachability report.
 	StartTime *time.Time `json:"startTime,omitempty"`
@@ -2301,7 +3049,7 @@ type BGPCommunity struct {
 	CommunityName *string `json:"communityName,omitempty"`
 
 	// The prefixes that the bgp community contains.
-	CommunityPrefixes *[]*string `json:"communityPrefixes,omitempty"`
+	CommunityPrefixes []*string `json:"communityPrefixes,omitempty"`
 
 	// The value of the bgp community. For more information: https://docs.microsoft.com/en-us/azure/expressroute/expressroute-routing.
 	CommunityValue *string `json:"communityValue,omitempty"`
@@ -2314,6 +3062,18 @@ type BGPCommunity struct {
 
 	// The region which the service support. e.g. For O365, region is Global.
 	ServiceSupportedRegion *string `json:"serviceSupportedRegion,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type BGPCommunity.
+func (b BGPCommunity) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "communityName", b.CommunityName)
+	populate(objectMap, "communityPrefixes", b.CommunityPrefixes)
+	populate(objectMap, "communityValue", b.CommunityValue)
+	populate(objectMap, "isAuthorizedToUse", b.IsAuthorizedToUse)
+	populate(objectMap, "serviceGroup", b.ServiceGroup)
+	populate(objectMap, "serviceSupportedRegion", b.ServiceSupportedRegion)
+	return json.Marshal(objectMap)
 }
 
 // BackendAddressPool - Pool of backend IP addresses.
@@ -2332,22 +3092,43 @@ type BackendAddressPool struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type BackendAddressPool.
+func (b BackendAddressPool) MarshalJSON() ([]byte, error) {
+	objectMap := b.SubResource.marshalInternal()
+	populate(objectMap, "etag", b.Etag)
+	populate(objectMap, "name", b.Name)
+	populate(objectMap, "properties", b.Properties)
+	populate(objectMap, "type", b.Type)
+	return json.Marshal(objectMap)
+}
+
 // BackendAddressPoolPropertiesFormat - Properties of the backend address pool.
 type BackendAddressPoolPropertiesFormat struct {
 	// READ-ONLY; An array of references to IP addresses defined in network interfaces.
-	BackendIPConfigurations *[]*NetworkInterfaceIPConfiguration `json:"backendIPConfigurations,omitempty" azure:"ro"`
+	BackendIPConfigurations []*NetworkInterfaceIPConfiguration `json:"backendIPConfigurations,omitempty" azure:"ro"`
 
 	// READ-ONLY; An array of references to load balancing rules that use this backend address pool.
-	LoadBalancingRules *[]*SubResource `json:"loadBalancingRules,omitempty" azure:"ro"`
+	LoadBalancingRules []*SubResource `json:"loadBalancingRules,omitempty" azure:"ro"`
 
 	// READ-ONLY; A reference to an outbound rule that uses this backend address pool.
 	OutboundRule *SubResource `json:"outboundRule,omitempty" azure:"ro"`
 
 	// READ-ONLY; An array of references to outbound rules that use this backend address pool.
-	OutboundRules *[]*SubResource `json:"outboundRules,omitempty" azure:"ro"`
+	OutboundRules []*SubResource `json:"outboundRules,omitempty" azure:"ro"`
 
 	// READ-ONLY; The provisioning state of the backend address pool resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type BackendAddressPoolPropertiesFormat.
+func (b BackendAddressPoolPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "backendIPConfigurations", b.BackendIPConfigurations)
+	populate(objectMap, "loadBalancingRules", b.LoadBalancingRules)
+	populate(objectMap, "outboundRule", b.OutboundRule)
+	populate(objectMap, "outboundRules", b.OutboundRules)
+	populate(objectMap, "provisioningState", b.ProvisioningState)
+	return json.Marshal(objectMap)
 }
 
 // BackendAddressPoolResponse is the response envelope for operations that return a BackendAddressPool type.
@@ -2401,7 +3182,15 @@ type BastionActiveSessionListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of active sessions on the bastion.
-	Value *[]*BastionActiveSession `json:"value,omitempty"`
+	Value []*BastionActiveSession `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type BastionActiveSessionListResult.
+func (b BastionActiveSessionListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", b.NextLink)
+	populate(objectMap, "value", b.Value)
+	return json.Marshal(objectMap)
 }
 
 // BastionActiveSessionListResultPagerPollerResponse is the response envelope for operations that asynchronously return a BastionActiveSessionListResultPager
@@ -2436,6 +3225,14 @@ type BastionHost struct {
 	Properties *BastionHostPropertiesFormat `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type BastionHost.
+func (b BastionHost) MarshalJSON() ([]byte, error) {
+	objectMap := b.Resource.marshalInternal()
+	populate(objectMap, "etag", b.Etag)
+	populate(objectMap, "properties", b.Properties)
+	return json.Marshal(objectMap)
+}
+
 // BastionHostIPConfiguration - IP configuration of an Bastion Host.
 type BastionHostIPConfiguration struct {
 	SubResource
@@ -2450,6 +3247,16 @@ type BastionHostIPConfiguration struct {
 
 	// READ-ONLY; Ip configuration type.
 	Type *string `json:"type,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type BastionHostIPConfiguration.
+func (b BastionHostIPConfiguration) MarshalJSON() ([]byte, error) {
+	objectMap := b.SubResource.marshalInternal()
+	populate(objectMap, "etag", b.Etag)
+	populate(objectMap, "name", b.Name)
+	populate(objectMap, "properties", b.Properties)
+	populate(objectMap, "type", b.Type)
+	return json.Marshal(objectMap)
 }
 
 // BastionHostIPConfigurationPropertiesFormat - Properties of IP configuration of an Bastion Host.
@@ -2473,7 +3280,15 @@ type BastionHostListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of Bastion Hosts in a resource group.
-	Value *[]*BastionHost `json:"value,omitempty"`
+	Value []*BastionHost `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type BastionHostListResult.
+func (b BastionHostListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", b.NextLink)
+	populate(objectMap, "value", b.Value)
+	return json.Marshal(objectMap)
 }
 
 // BastionHostListResultResponse is the response envelope for operations that return a BastionHostListResult type.
@@ -2503,10 +3318,19 @@ type BastionHostPropertiesFormat struct {
 	DNSName *string `json:"dnsName,omitempty"`
 
 	// IP configuration of the Bastion Host resource.
-	IPConfigurations *[]*BastionHostIPConfiguration `json:"ipConfigurations,omitempty"`
+	IPConfigurations []*BastionHostIPConfiguration `json:"ipConfigurations,omitempty"`
 
 	// READ-ONLY; The provisioning state of the bastion host resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type BastionHostPropertiesFormat.
+func (b BastionHostPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "dnsName", b.DNSName)
+	populate(objectMap, "ipConfigurations", b.IPConfigurations)
+	populate(objectMap, "provisioningState", b.ProvisioningState)
+	return json.Marshal(objectMap)
 }
 
 // BastionHostResponse is the response envelope for operations that return a BastionHost type.
@@ -2549,7 +3373,15 @@ type BastionSessionDeleteResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of sessions with their corresponding state.
-	Value *[]*BastionSessionState `json:"value,omitempty"`
+	Value []*BastionSessionState `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type BastionSessionDeleteResult.
+func (b BastionSessionDeleteResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", b.NextLink)
+	populate(objectMap, "value", b.Value)
+	return json.Marshal(objectMap)
 }
 
 // BastionSessionDeleteResultResponse is the response envelope for operations that return a BastionSessionDeleteResult type.
@@ -2591,7 +3423,14 @@ type BastionShareableLink struct {
 // BastionShareableLinkListRequest - Post request for all the Bastion Shareable Link endpoints.
 type BastionShareableLinkListRequest struct {
 	// List of VM references.
-	VMs *[]*BastionShareableLink `json:"vms,omitempty"`
+	VMs []*BastionShareableLink `json:"vms,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type BastionShareableLinkListRequest.
+func (b BastionShareableLinkListRequest) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "vms", b.VMs)
+	return json.Marshal(objectMap)
 }
 
 // BastionShareableLinkListResult - Response for all the Bastion Shareable Link endpoints.
@@ -2600,7 +3439,15 @@ type BastionShareableLinkListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of Bastion Shareable Links for the request.
-	Value *[]*BastionShareableLink `json:"value,omitempty"`
+	Value []*BastionShareableLink `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type BastionShareableLinkListResult.
+func (b BastionShareableLinkListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", b.NextLink)
+	populate(objectMap, "value", b.Value)
+	return json.Marshal(objectMap)
 }
 
 // BastionShareableLinkListResultPagerPollerResponse is the response envelope for operations that asynchronously return a BastionShareableLinkListResultPager
@@ -2655,7 +3502,14 @@ type BgpPeerStatus struct {
 // BgpPeerStatusListResult - Response for list BGP peer status API service call.
 type BgpPeerStatusListResult struct {
 	// List of BGP peers.
-	Value *[]*BgpPeerStatus `json:"value,omitempty"`
+	Value []*BgpPeerStatus `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type BgpPeerStatusListResult.
+func (b BgpPeerStatusListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "value", b.Value)
+	return json.Marshal(objectMap)
 }
 
 // BgpPeerStatusListResultPollerResponse is the response envelope for operations that asynchronously return a BgpPeerStatusListResult type.
@@ -2691,13 +3545,28 @@ type BgpServiceCommunity struct {
 	Properties *BgpServiceCommunityPropertiesFormat `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type BgpServiceCommunity.
+func (b BgpServiceCommunity) MarshalJSON() ([]byte, error) {
+	objectMap := b.Resource.marshalInternal()
+	populate(objectMap, "properties", b.Properties)
+	return json.Marshal(objectMap)
+}
+
 // BgpServiceCommunityListResult - Response for the ListServiceCommunity API service call.
 type BgpServiceCommunityListResult struct {
 	// The URL to get the next set of results.
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// A list of service community resources.
-	Value *[]*BgpServiceCommunity `json:"value,omitempty"`
+	Value []*BgpServiceCommunity `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type BgpServiceCommunityListResult.
+func (b BgpServiceCommunityListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", b.NextLink)
+	populate(objectMap, "value", b.Value)
+	return json.Marshal(objectMap)
 }
 
 // BgpServiceCommunityListResultResponse is the response envelope for operations that return a BgpServiceCommunityListResult type.
@@ -2712,10 +3581,18 @@ type BgpServiceCommunityListResultResponse struct {
 // BgpServiceCommunityPropertiesFormat - Properties of Service Community.
 type BgpServiceCommunityPropertiesFormat struct {
 	// A list of bgp communities.
-	BgpCommunities *[]*BGPCommunity `json:"bgpCommunities,omitempty"`
+	BgpCommunities []*BGPCommunity `json:"bgpCommunities,omitempty"`
 
 	// The name of the bgp community. e.g. Skype.
 	ServiceName *string `json:"serviceName,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type BgpServiceCommunityPropertiesFormat.
+func (b BgpServiceCommunityPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "bgpCommunities", b.BgpCommunities)
+	populate(objectMap, "serviceName", b.ServiceName)
+	return json.Marshal(objectMap)
 }
 
 // BgpSettings - BGP settings details.
@@ -2727,10 +3604,20 @@ type BgpSettings struct {
 	BgpPeeringAddress *string `json:"bgpPeeringAddress,omitempty"`
 
 	// BGP peering address with IP configuration ID for virtual network gateway.
-	BgpPeeringAddresses *[]*IPConfigurationBgpPeeringAddress `json:"bgpPeeringAddresses,omitempty"`
+	BgpPeeringAddresses []*IPConfigurationBgpPeeringAddress `json:"bgpPeeringAddresses,omitempty"`
 
 	// The weight added to routes learned from this BGP speaker.
 	PeerWeight *int32 `json:"peerWeight,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type BgpSettings.
+func (b BgpSettings) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "asn", b.Asn)
+	populate(objectMap, "bgpPeeringAddress", b.BgpPeeringAddress)
+	populate(objectMap, "bgpPeeringAddresses", b.BgpPeeringAddresses)
+	populate(objectMap, "peerWeight", b.PeerWeight)
+	return json.Marshal(objectMap)
 }
 
 // CheckPrivateLinkServiceVisibilityRequest - Request body of the CheckPrivateLinkServiceVisibility API service call.
@@ -2759,13 +3646,23 @@ type CloudErrorBody struct {
 	Code *string `json:"code,omitempty"`
 
 	// A list of additional details about the error.
-	Details *[]*CloudErrorBody `json:"details,omitempty"`
+	Details []*CloudErrorBody `json:"details,omitempty"`
 
 	// A message describing the error, intended to be suitable for display in a user interface.
 	Message *string `json:"message,omitempty"`
 
 	// The target of the particular error. For example, the name of the property in error.
 	Target *string `json:"target,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type CloudErrorBody.
+func (c CloudErrorBody) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "code", c.Code)
+	populate(objectMap, "details", c.Details)
+	populate(objectMap, "message", c.Message)
+	populate(objectMap, "target", c.Target)
+	return json.Marshal(objectMap)
 }
 
 type Components1Jq1T4ISchemasManagedserviceidentityPropertiesUserassignedidentitiesAdditionalproperties struct {
@@ -2785,7 +3682,16 @@ type ConnectionMonitor struct {
 	Properties *ConnectionMonitorParameters `json:"properties,omitempty"`
 
 	// Connection monitor tags.
-	Tags *map[string]*string `json:"tags,omitempty"`
+	Tags map[string]*string `json:"tags,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ConnectionMonitor.
+func (c ConnectionMonitor) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "location", c.Location)
+	populate(objectMap, "properties", c.Properties)
+	populate(objectMap, "tags", c.Tags)
+	return json.Marshal(objectMap)
 }
 
 // ConnectionMonitorDestination - Describes the destination of connection monitor.
@@ -2818,10 +3724,18 @@ type ConnectionMonitorEndpoint struct {
 // ConnectionMonitorEndpointFilter - Describes the connection monitor endpoint filter.
 type ConnectionMonitorEndpointFilter struct {
 	// List of items in the filter.
-	Items *[]*ConnectionMonitorEndpointFilterItem `json:"items,omitempty"`
+	Items []*ConnectionMonitorEndpointFilterItem `json:"items,omitempty"`
 
 	// The behavior of the endpoint filter. Currently only 'Include' is supported.
 	Type *ConnectionMonitorEndpointFilterType `json:"type,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ConnectionMonitorEndpointFilter.
+func (c ConnectionMonitorEndpointFilter) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "items", c.Items)
+	populate(objectMap, "type", c.Type)
+	return json.Marshal(objectMap)
 }
 
 // ConnectionMonitorEndpointFilterItem - Describes the connection monitor endpoint filter item.
@@ -2848,10 +3762,22 @@ type ConnectionMonitorHTTPConfiguration struct {
 	PreferHTTPS *bool `json:"preferHTTPS,omitempty"`
 
 	// The HTTP headers to transmit with the request.
-	RequestHeaders *[]*HTTPHeader `json:"requestHeaders,omitempty"`
+	RequestHeaders []*HTTPHeader `json:"requestHeaders,omitempty"`
 
 	// HTTP status codes to consider successful. For instance, "2xx,301-304,418".
-	ValidStatusCodeRanges *[]*string `json:"validStatusCodeRanges,omitempty"`
+	ValidStatusCodeRanges []*string `json:"validStatusCodeRanges,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ConnectionMonitorHTTPConfiguration.
+func (c ConnectionMonitorHTTPConfiguration) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "method", c.Method)
+	populate(objectMap, "path", c.Path)
+	populate(objectMap, "port", c.Port)
+	populate(objectMap, "preferHTTPS", c.PreferHTTPS)
+	populate(objectMap, "requestHeaders", c.RequestHeaders)
+	populate(objectMap, "validStatusCodeRanges", c.ValidStatusCodeRanges)
+	return json.Marshal(objectMap)
 }
 
 // ConnectionMonitorIcmpConfiguration - Describes the ICMP configuration.
@@ -2863,7 +3789,14 @@ type ConnectionMonitorIcmpConfiguration struct {
 // ConnectionMonitorListResult - List of connection monitors.
 type ConnectionMonitorListResult struct {
 	// Information about connection monitors.
-	Value *[]*ConnectionMonitorResult `json:"value,omitempty"`
+	Value []*ConnectionMonitorResult `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ConnectionMonitorListResult.
+func (c ConnectionMonitorListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "value", c.Value)
+	return json.Marshal(objectMap)
 }
 
 // ConnectionMonitorListResultResponse is the response envelope for operations that return a ConnectionMonitorListResult type.
@@ -2893,7 +3826,7 @@ type ConnectionMonitorParameters struct {
 	Destination *ConnectionMonitorDestination `json:"destination,omitempty"`
 
 	// List of connection monitor endpoints.
-	Endpoints *[]*ConnectionMonitorEndpoint `json:"endpoints,omitempty"`
+	Endpoints []*ConnectionMonitorEndpoint `json:"endpoints,omitempty"`
 
 	// Monitoring interval in seconds.
 	MonitoringIntervalInSeconds *int32 `json:"monitoringIntervalInSeconds,omitempty"`
@@ -2902,16 +3835,31 @@ type ConnectionMonitorParameters struct {
 	Notes *string `json:"notes,omitempty"`
 
 	// List of connection monitor outputs.
-	Outputs *[]*ConnectionMonitorOutput `json:"outputs,omitempty"`
+	Outputs []*ConnectionMonitorOutput `json:"outputs,omitempty"`
 
 	// Describes the source of connection monitor.
 	Source *ConnectionMonitorSource `json:"source,omitempty"`
 
 	// List of connection monitor test configurations.
-	TestConfigurations *[]*ConnectionMonitorTestConfiguration `json:"testConfigurations,omitempty"`
+	TestConfigurations []*ConnectionMonitorTestConfiguration `json:"testConfigurations,omitempty"`
 
 	// List of connection monitor test groups.
-	TestGroups *[]*ConnectionMonitorTestGroup `json:"testGroups,omitempty"`
+	TestGroups []*ConnectionMonitorTestGroup `json:"testGroups,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ConnectionMonitorParameters.
+func (c ConnectionMonitorParameters) MarshalJSON() ([]byte, error) {
+	objectMap := c.marshalInternal()
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type ConnectionMonitorParameters.
+func (c *ConnectionMonitorParameters) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	return c.unmarshalInternal(rawMsg)
 }
 
 func (c ConnectionMonitorParameters) marshalInternal() map[string]interface{} {
@@ -2973,7 +3921,15 @@ type ConnectionMonitorQueryResult struct {
 	SourceStatus *ConnectionMonitorSourceStatus `json:"sourceStatus,omitempty"`
 
 	// Information about connection states.
-	States *[]*ConnectionStateSnapshot `json:"states,omitempty"`
+	States []*ConnectionStateSnapshot `json:"states,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ConnectionMonitorQueryResult.
+func (c ConnectionMonitorQueryResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "sourceStatus", c.SourceStatus)
+	populate(objectMap, "states", c.States)
+	return json.Marshal(objectMap)
 }
 
 // ConnectionMonitorQueryResultPollerResponse is the response envelope for operations that asynchronously return a ConnectionMonitorQueryResult type.
@@ -3015,10 +3971,23 @@ type ConnectionMonitorResult struct {
 	Properties *ConnectionMonitorResultProperties `json:"properties,omitempty"`
 
 	// Connection monitor tags.
-	Tags *map[string]*string `json:"tags,omitempty"`
+	Tags map[string]*string `json:"tags,omitempty"`
 
 	// READ-ONLY; Connection monitor type.
 	Type *string `json:"type,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ConnectionMonitorResult.
+func (c ConnectionMonitorResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "etag", c.Etag)
+	populate(objectMap, "id", c.ID)
+	populate(objectMap, "location", c.Location)
+	populate(objectMap, "name", c.Name)
+	populate(objectMap, "properties", c.Properties)
+	populate(objectMap, "tags", c.Tags)
+	populate(objectMap, "type", c.Type)
+	return json.Marshal(objectMap)
 }
 
 // ConnectionMonitorResultPollerResponse is the response envelope for operations that asynchronously return a ConnectionMonitorResult type.
@@ -3156,7 +4125,7 @@ type ConnectionMonitorTestConfiguration struct {
 // ConnectionMonitorTestGroup - Describes the connection monitor test group.
 type ConnectionMonitorTestGroup struct {
 	// List of destination endpoint names.
-	Destinations *[]*string `json:"destinations,omitempty"`
+	Destinations []*string `json:"destinations,omitempty"`
 
 	// Value indicating whether test group is disabled.
 	Disable *bool `json:"disable,omitempty"`
@@ -3165,10 +4134,21 @@ type ConnectionMonitorTestGroup struct {
 	Name *string `json:"name,omitempty"`
 
 	// List of source endpoint names.
-	Sources *[]*string `json:"sources,omitempty"`
+	Sources []*string `json:"sources,omitempty"`
 
 	// List of test configuration names.
-	TestConfigurations *[]*string `json:"testConfigurations,omitempty"`
+	TestConfigurations []*string `json:"testConfigurations,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ConnectionMonitorTestGroup.
+func (c ConnectionMonitorTestGroup) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "destinations", c.Destinations)
+	populate(objectMap, "disable", c.Disable)
+	populate(objectMap, "name", c.Name)
+	populate(objectMap, "sources", c.Sources)
+	populate(objectMap, "testConfigurations", c.TestConfigurations)
+	return json.Marshal(objectMap)
 }
 
 // ConnectionMonitorWorkspaceSettings - Describes the settings for producing output into a log analytics workspace.
@@ -3251,6 +4231,13 @@ type ConnectionSharedKey struct {
 	Value *string `json:"value,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type ConnectionSharedKey.
+func (c ConnectionSharedKey) MarshalJSON() ([]byte, error) {
+	objectMap := c.SubResource.marshalInternal()
+	populate(objectMap, "value", c.Value)
+	return json.Marshal(objectMap)
+}
+
 // ConnectionSharedKeyPollerResponse is the response envelope for operations that asynchronously return a ConnectionSharedKey type.
 type ConnectionSharedKeyPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
@@ -3287,7 +4274,7 @@ type ConnectionStateSnapshot struct {
 	EvaluationState *EvaluationState `json:"evaluationState,omitempty"`
 
 	// READ-ONLY; List of hops between the source and the destination.
-	Hops *[]*ConnectivityHop `json:"hops,omitempty" azure:"ro"`
+	Hops []*ConnectivityHop `json:"hops,omitempty" azure:"ro"`
 
 	// Maximum latency in ms.
 	MaxLatencyInMs *int32 `json:"maxLatencyInMs,omitempty"`
@@ -3393,16 +4380,28 @@ type ConnectivityHop struct {
 	ID *string `json:"id,omitempty" azure:"ro"`
 
 	// READ-ONLY; List of issues.
-	Issues *[]*ConnectivityIssue `json:"issues,omitempty" azure:"ro"`
+	Issues []*ConnectivityIssue `json:"issues,omitempty" azure:"ro"`
 
 	// READ-ONLY; List of next hop identifiers.
-	NextHopIDs *[]*string `json:"nextHopIds,omitempty" azure:"ro"`
+	NextHopIDs []*string `json:"nextHopIds,omitempty" azure:"ro"`
 
 	// READ-ONLY; The ID of the resource corresponding to this hop.
 	ResourceID *string `json:"resourceId,omitempty" azure:"ro"`
 
 	// READ-ONLY; The type of the hop.
 	Type *string `json:"type,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ConnectivityHop.
+func (c ConnectivityHop) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "address", c.Address)
+	populate(objectMap, "id", c.ID)
+	populate(objectMap, "issues", c.Issues)
+	populate(objectMap, "nextHopIds", c.NextHopIDs)
+	populate(objectMap, "resourceId", c.ResourceID)
+	populate(objectMap, "type", c.Type)
+	return json.Marshal(objectMap)
 }
 
 // ConnectivityInformation - Information on the connectivity status.
@@ -3414,7 +4413,7 @@ type ConnectivityInformation struct {
 	ConnectionStatus *ConnectionStatus `json:"connectionStatus,omitempty" azure:"ro"`
 
 	// READ-ONLY; List of hops between the source and the destination.
-	Hops *[]*ConnectivityHop `json:"hops,omitempty" azure:"ro"`
+	Hops []*ConnectivityHop `json:"hops,omitempty" azure:"ro"`
 
 	// READ-ONLY; Maximum latency in milliseconds.
 	MaxLatencyInMs *int32 `json:"maxLatencyInMs,omitempty" azure:"ro"`
@@ -3427,6 +4426,19 @@ type ConnectivityInformation struct {
 
 	// READ-ONLY; Total number of probes sent.
 	ProbesSent *int32 `json:"probesSent,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ConnectivityInformation.
+func (c ConnectivityInformation) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "avgLatencyInMs", c.AvgLatencyInMs)
+	populate(objectMap, "connectionStatus", c.ConnectionStatus)
+	populate(objectMap, "hops", c.Hops)
+	populate(objectMap, "maxLatencyInMs", c.MaxLatencyInMs)
+	populate(objectMap, "minLatencyInMs", c.MinLatencyInMs)
+	populate(objectMap, "probesFailed", c.ProbesFailed)
+	populate(objectMap, "probesSent", c.ProbesSent)
+	return json.Marshal(objectMap)
 }
 
 // ConnectivityInformationPollerResponse is the response envelope for operations that asynchronously return a ConnectivityInformation type.
@@ -3453,7 +4465,7 @@ type ConnectivityInformationResponse struct {
 // ConnectivityIssue - Information about an issue encountered in the process of checking for connectivity.
 type ConnectivityIssue struct {
 	// READ-ONLY; Provides additional context on the issue.
-	Context *[]map[string]*string `json:"context,omitempty" azure:"ro"`
+	Context []map[string]*string `json:"context,omitempty" azure:"ro"`
 
 	// READ-ONLY; The origin of the issue.
 	Origin *Origin `json:"origin,omitempty" azure:"ro"`
@@ -3463,6 +4475,16 @@ type ConnectivityIssue struct {
 
 	// READ-ONLY; The type of issue.
 	Type *IssueType `json:"type,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ConnectivityIssue.
+func (c ConnectivityIssue) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "context", c.Context)
+	populate(objectMap, "origin", c.Origin)
+	populate(objectMap, "severity", c.Severity)
+	populate(objectMap, "type", c.Type)
+	return json.Marshal(objectMap)
 }
 
 // ConnectivityParameters - Parameters that determine how the connectivity check will be performed.
@@ -3513,6 +4535,16 @@ type ContainerNetworkInterface struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type ContainerNetworkInterface.
+func (c ContainerNetworkInterface) MarshalJSON() ([]byte, error) {
+	objectMap := c.SubResource.marshalInternal()
+	populate(objectMap, "etag", c.Etag)
+	populate(objectMap, "name", c.Name)
+	populate(objectMap, "properties", c.Properties)
+	populate(objectMap, "type", c.Type)
+	return json.Marshal(objectMap)
+}
+
 // ContainerNetworkInterfaceConfiguration - Container network interface configuration child resource.
 type ContainerNetworkInterfaceConfiguration struct {
 	SubResource
@@ -3529,16 +4561,35 @@ type ContainerNetworkInterfaceConfiguration struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type ContainerNetworkInterfaceConfiguration.
+func (c ContainerNetworkInterfaceConfiguration) MarshalJSON() ([]byte, error) {
+	objectMap := c.SubResource.marshalInternal()
+	populate(objectMap, "etag", c.Etag)
+	populate(objectMap, "name", c.Name)
+	populate(objectMap, "properties", c.Properties)
+	populate(objectMap, "type", c.Type)
+	return json.Marshal(objectMap)
+}
+
 // ContainerNetworkInterfaceConfigurationPropertiesFormat - Container network interface configuration properties.
 type ContainerNetworkInterfaceConfigurationPropertiesFormat struct {
 	// A list of container network interfaces created from this container network interface configuration.
-	ContainerNetworkInterfaces *[]*SubResource `json:"containerNetworkInterfaces,omitempty"`
+	ContainerNetworkInterfaces []*SubResource `json:"containerNetworkInterfaces,omitempty"`
 
 	// A list of ip configurations of the container network interface configuration.
-	IPConfigurations *[]*IPConfigurationProfile `json:"ipConfigurations,omitempty"`
+	IPConfigurations []*IPConfigurationProfile `json:"ipConfigurations,omitempty"`
 
 	// READ-ONLY; The provisioning state of the container network interface configuration resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ContainerNetworkInterfaceConfigurationPropertiesFormat.
+func (c ContainerNetworkInterfaceConfigurationPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "containerNetworkInterfaces", c.ContainerNetworkInterfaces)
+	populate(objectMap, "ipConfigurations", c.IPConfigurations)
+	populate(objectMap, "provisioningState", c.ProvisioningState)
+	return json.Marshal(objectMap)
 }
 
 // ContainerNetworkInterfaceIPConfiguration - The ip configuration for a container network interface.
@@ -3571,10 +4622,20 @@ type ContainerNetworkInterfacePropertiesFormat struct {
 	ContainerNetworkInterfaceConfiguration *ContainerNetworkInterfaceConfiguration `json:"containerNetworkInterfaceConfiguration,omitempty" azure:"ro"`
 
 	// READ-ONLY; Reference to the ip configuration on this container nic.
-	IPConfigurations *[]*ContainerNetworkInterfaceIPConfiguration `json:"ipConfigurations,omitempty" azure:"ro"`
+	IPConfigurations []*ContainerNetworkInterfaceIPConfiguration `json:"ipConfigurations,omitempty" azure:"ro"`
 
 	// READ-ONLY; The provisioning state of the container network interface resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ContainerNetworkInterfacePropertiesFormat.
+func (c ContainerNetworkInterfacePropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "container", c.Container)
+	populate(objectMap, "containerNetworkInterfaceConfiguration", c.ContainerNetworkInterfaceConfiguration)
+	populate(objectMap, "ipConfigurations", c.IPConfigurations)
+	populate(objectMap, "provisioningState", c.ProvisioningState)
+	return json.Marshal(objectMap)
 }
 
 // CustomDNSConfigPropertiesFormat - Contains custom Dns resolution configuration from customer.
@@ -3583,7 +4644,15 @@ type CustomDNSConfigPropertiesFormat struct {
 	Fqdn *string `json:"fqdn,omitempty"`
 
 	// A list of private ip addresses of the private endpoint.
-	IPAddresses *[]*string `json:"ipAddresses,omitempty"`
+	IPAddresses []*string `json:"ipAddresses,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type CustomDNSConfigPropertiesFormat.
+func (c CustomDNSConfigPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "fqdn", c.Fqdn)
+	populate(objectMap, "ipAddresses", c.IPAddresses)
+	return json.Marshal(objectMap)
 }
 
 // DNSNameAvailabilityResult - Response for the CheckDnsNameAvailability API service call.
@@ -3631,6 +4700,14 @@ type DdosCustomPolicy struct {
 	Properties *DdosCustomPolicyPropertiesFormat `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type DdosCustomPolicy.
+func (d DdosCustomPolicy) MarshalJSON() ([]byte, error) {
+	objectMap := d.Resource.marshalInternal()
+	populate(objectMap, "etag", d.Etag)
+	populate(objectMap, "properties", d.Properties)
+	return json.Marshal(objectMap)
+}
+
 // DdosCustomPolicyPollerResponse is the response envelope for operations that asynchronously return a DdosCustomPolicy type.
 type DdosCustomPolicyPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
@@ -3646,17 +4723,27 @@ type DdosCustomPolicyPollerResponse struct {
 // DdosCustomPolicyPropertiesFormat - DDoS custom policy properties.
 type DdosCustomPolicyPropertiesFormat struct {
 	// The protocol-specific DDoS policy customization parameters.
-	ProtocolCustomSettings *[]*ProtocolCustomSettingsFormat `json:"protocolCustomSettings,omitempty"`
+	ProtocolCustomSettings []*ProtocolCustomSettingsFormat `json:"protocolCustomSettings,omitempty"`
 
 	// READ-ONLY; The provisioning state of the DDoS custom policy resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
 	// READ-ONLY; The list of public IPs associated with the DDoS custom policy resource. This list is read-only.
-	PublicIPAddresses *[]*SubResource `json:"publicIPAddresses,omitempty" azure:"ro"`
+	PublicIPAddresses []*SubResource `json:"publicIPAddresses,omitempty" azure:"ro"`
 
 	// READ-ONLY; The resource GUID property of the DDoS custom policy resource. It uniquely identifies the resource, even if the user changes its name or migrate
 	// the resource across subscriptions or resource groups.
 	ResourceGUID *string `json:"resourceGuid,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type DdosCustomPolicyPropertiesFormat.
+func (d DdosCustomPolicyPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "protocolCustomSettings", d.ProtocolCustomSettings)
+	populate(objectMap, "provisioningState", d.ProvisioningState)
+	populate(objectMap, "publicIPAddresses", d.PublicIPAddresses)
+	populate(objectMap, "resourceGuid", d.ResourceGUID)
+	return json.Marshal(objectMap)
 }
 
 // DdosCustomPolicyResponse is the response envelope for operations that return a DdosCustomPolicy type.
@@ -3686,10 +4773,23 @@ type DdosProtectionPlan struct {
 	Properties *DdosProtectionPlanPropertiesFormat `json:"properties,omitempty"`
 
 	// Resource tags.
-	Tags *map[string]*string `json:"tags,omitempty"`
+	Tags map[string]*string `json:"tags,omitempty"`
 
 	// READ-ONLY; Resource type.
 	Type *string `json:"type,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type DdosProtectionPlan.
+func (d DdosProtectionPlan) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "etag", d.Etag)
+	populate(objectMap, "id", d.ID)
+	populate(objectMap, "location", d.Location)
+	populate(objectMap, "name", d.Name)
+	populate(objectMap, "properties", d.Properties)
+	populate(objectMap, "tags", d.Tags)
+	populate(objectMap, "type", d.Type)
+	return json.Marshal(objectMap)
 }
 
 // DdosProtectionPlanListResult - A list of DDoS protection plans.
@@ -3698,7 +4798,15 @@ type DdosProtectionPlanListResult struct {
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 
 	// A list of DDoS protection plans.
-	Value *[]*DdosProtectionPlan `json:"value,omitempty"`
+	Value []*DdosProtectionPlan `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type DdosProtectionPlanListResult.
+func (d DdosProtectionPlanListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", d.NextLink)
+	populate(objectMap, "value", d.Value)
+	return json.Marshal(objectMap)
 }
 
 // DdosProtectionPlanListResultResponse is the response envelope for operations that return a DdosProtectionPlanListResult type.
@@ -3732,7 +4840,16 @@ type DdosProtectionPlanPropertiesFormat struct {
 	ResourceGUID *string `json:"resourceGuid,omitempty" azure:"ro"`
 
 	// READ-ONLY; The list of virtual networks associated with the DDoS protection plan resource. This list is read-only.
-	VirtualNetworks *[]*SubResource `json:"virtualNetworks,omitempty" azure:"ro"`
+	VirtualNetworks []*SubResource `json:"virtualNetworks,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type DdosProtectionPlanPropertiesFormat.
+func (d DdosProtectionPlanPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "provisioningState", d.ProvisioningState)
+	populate(objectMap, "resourceGuid", d.ResourceGUID)
+	populate(objectMap, "virtualNetworks", d.VirtualNetworks)
+	return json.Marshal(objectMap)
 }
 
 // DdosProtectionPlanResponse is the response envelope for operations that return a DdosProtectionPlan type.
@@ -3809,6 +4926,15 @@ type Delegation struct {
 	Properties *ServiceDelegationPropertiesFormat `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type Delegation.
+func (d Delegation) MarshalJSON() ([]byte, error) {
+	objectMap := d.SubResource.marshalInternal()
+	populate(objectMap, "etag", d.Etag)
+	populate(objectMap, "name", d.Name)
+	populate(objectMap, "properties", d.Properties)
+	return json.Marshal(objectMap)
+}
+
 // DeviceProperties - List of properties of the device.
 type DeviceProperties struct {
 	// Model of the device.
@@ -3825,7 +4951,14 @@ type DeviceProperties struct {
 // options.
 type DhcpOptions struct {
 	// The list of DNS servers IP addresses.
-	DNSServers *[]*string `json:"dnsServers,omitempty"`
+	DNSServers []*string `json:"dnsServers,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type DhcpOptions.
+func (d DhcpOptions) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "dnsServers", d.DNSServers)
+	return json.Marshal(objectMap)
 }
 
 // Dimension of the metric.
@@ -3846,13 +4979,23 @@ type EffectiveNetworkSecurityGroup struct {
 	Association *EffectiveNetworkSecurityGroupAssociation `json:"association,omitempty"`
 
 	// A collection of effective security rules.
-	EffectiveSecurityRules *[]*EffectiveNetworkSecurityRule `json:"effectiveSecurityRules,omitempty"`
+	EffectiveSecurityRules []*EffectiveNetworkSecurityRule `json:"effectiveSecurityRules,omitempty"`
 
 	// The ID of network security group that is applied.
 	NetworkSecurityGroup *SubResource `json:"networkSecurityGroup,omitempty"`
 
 	// Mapping of tags to list of IP Addresses included within the tag.
 	TagMap *string `json:"tagMap,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type EffectiveNetworkSecurityGroup.
+func (e EffectiveNetworkSecurityGroup) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "association", e.Association)
+	populate(objectMap, "effectiveSecurityRules", e.EffectiveSecurityRules)
+	populate(objectMap, "networkSecurityGroup", e.NetworkSecurityGroup)
+	populate(objectMap, "tagMap", e.TagMap)
+	return json.Marshal(objectMap)
 }
 
 // EffectiveNetworkSecurityGroupAssociation - The effective network security group association.
@@ -3870,7 +5013,15 @@ type EffectiveNetworkSecurityGroupListResult struct {
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 
 	// A list of effective network security groups.
-	Value *[]*EffectiveNetworkSecurityGroup `json:"value,omitempty"`
+	Value []*EffectiveNetworkSecurityGroup `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type EffectiveNetworkSecurityGroupListResult.
+func (e EffectiveNetworkSecurityGroupListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", e.NextLink)
+	populate(objectMap, "value", e.Value)
+	return json.Marshal(objectMap)
 }
 
 // EffectiveNetworkSecurityGroupListResultPollerResponse is the response envelope for operations that asynchronously return a EffectiveNetworkSecurityGroupListResult
@@ -3905,23 +5056,23 @@ type EffectiveNetworkSecurityRule struct {
 
 	// The destination address prefixes. Expected values include CIDR IP ranges, Default Tags (VirtualNetwork, AzureLoadBalancer, Internet), System Tags, and
 	// the asterisk (*).
-	DestinationAddressPrefixes *[]*string `json:"destinationAddressPrefixes,omitempty"`
+	DestinationAddressPrefixes []*string `json:"destinationAddressPrefixes,omitempty"`
 
 	// The destination port or range.
 	DestinationPortRange *string `json:"destinationPortRange,omitempty"`
 
 	// The destination port ranges. Expected values include a single integer between 0 and 65535, a range using '-' as separator (e.g. 100-400), or an asterisk
 	// (*).
-	DestinationPortRanges *[]*string `json:"destinationPortRanges,omitempty"`
+	DestinationPortRanges []*string `json:"destinationPortRanges,omitempty"`
 
 	// The direction of the rule.
 	Direction *SecurityRuleDirection `json:"direction,omitempty"`
 
 	// Expanded destination address prefix.
-	ExpandedDestinationAddressPrefix *[]*string `json:"expandedDestinationAddressPrefix,omitempty"`
+	ExpandedDestinationAddressPrefix []*string `json:"expandedDestinationAddressPrefix,omitempty"`
 
 	// The expanded source address prefix.
-	ExpandedSourceAddressPrefix *[]*string `json:"expandedSourceAddressPrefix,omitempty"`
+	ExpandedSourceAddressPrefix []*string `json:"expandedSourceAddressPrefix,omitempty"`
 
 	// The name of the security rule specified by the user (if created by the user).
 	Name *string `json:"name,omitempty"`
@@ -3937,19 +5088,40 @@ type EffectiveNetworkSecurityRule struct {
 
 	// The source address prefixes. Expected values include CIDR IP ranges, Default Tags (VirtualNetwork, AzureLoadBalancer, Internet), System Tags, and the
 	// asterisk (*).
-	SourceAddressPrefixes *[]*string `json:"sourceAddressPrefixes,omitempty"`
+	SourceAddressPrefixes []*string `json:"sourceAddressPrefixes,omitempty"`
 
 	// The source port or range.
 	SourcePortRange *string `json:"sourcePortRange,omitempty"`
 
 	// The source port ranges. Expected values include a single integer between 0 and 65535, a range using '-' as separator (e.g. 100-400), or an asterisk (*).
-	SourcePortRanges *[]*string `json:"sourcePortRanges,omitempty"`
+	SourcePortRanges []*string `json:"sourcePortRanges,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type EffectiveNetworkSecurityRule.
+func (e EffectiveNetworkSecurityRule) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "access", e.Access)
+	populate(objectMap, "destinationAddressPrefix", e.DestinationAddressPrefix)
+	populate(objectMap, "destinationAddressPrefixes", e.DestinationAddressPrefixes)
+	populate(objectMap, "destinationPortRange", e.DestinationPortRange)
+	populate(objectMap, "destinationPortRanges", e.DestinationPortRanges)
+	populate(objectMap, "direction", e.Direction)
+	populate(objectMap, "expandedDestinationAddressPrefix", e.ExpandedDestinationAddressPrefix)
+	populate(objectMap, "expandedSourceAddressPrefix", e.ExpandedSourceAddressPrefix)
+	populate(objectMap, "name", e.Name)
+	populate(objectMap, "priority", e.Priority)
+	populate(objectMap, "protocol", e.Protocol)
+	populate(objectMap, "sourceAddressPrefix", e.SourceAddressPrefix)
+	populate(objectMap, "sourceAddressPrefixes", e.SourceAddressPrefixes)
+	populate(objectMap, "sourcePortRange", e.SourcePortRange)
+	populate(objectMap, "sourcePortRanges", e.SourcePortRanges)
+	return json.Marshal(objectMap)
 }
 
 // EffectiveRoute - Effective Route.
 type EffectiveRoute struct {
 	// The address prefixes of the effective routes in CIDR notation.
-	AddressPrefix *[]*string `json:"addressPrefix,omitempty"`
+	AddressPrefix []*string `json:"addressPrefix,omitempty"`
 
 	// If true, on-premises routes are not propagated to the network interfaces in the subnet.
 	DisableBgpRoutePropagation *bool `json:"disableBgpRoutePropagation,omitempty"`
@@ -3958,7 +5130,7 @@ type EffectiveRoute struct {
 	Name *string `json:"name,omitempty"`
 
 	// The IP address of the next hop of the effective route.
-	NextHopIPAddress *[]*string `json:"nextHopIpAddress,omitempty"`
+	NextHopIPAddress []*string `json:"nextHopIpAddress,omitempty"`
 
 	// The type of Azure hop the packet should be sent to.
 	NextHopType *RouteNextHopType `json:"nextHopType,omitempty"`
@@ -3970,13 +5142,34 @@ type EffectiveRoute struct {
 	State *EffectiveRouteState `json:"state,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type EffectiveRoute.
+func (e EffectiveRoute) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "addressPrefix", e.AddressPrefix)
+	populate(objectMap, "disableBgpRoutePropagation", e.DisableBgpRoutePropagation)
+	populate(objectMap, "name", e.Name)
+	populate(objectMap, "nextHopIpAddress", e.NextHopIPAddress)
+	populate(objectMap, "nextHopType", e.NextHopType)
+	populate(objectMap, "source", e.Source)
+	populate(objectMap, "state", e.State)
+	return json.Marshal(objectMap)
+}
+
 // EffectiveRouteListResult - Response for list effective route API service call.
 type EffectiveRouteListResult struct {
 	// READ-ONLY; The URL to get the next set of results.
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 
 	// A list of effective routes.
-	Value *[]*EffectiveRoute `json:"value,omitempty"`
+	Value []*EffectiveRoute `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type EffectiveRouteListResult.
+func (e EffectiveRouteListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", e.NextLink)
+	populate(objectMap, "value", e.Value)
+	return json.Marshal(objectMap)
 }
 
 // EffectiveRouteListResultPollerResponse is the response envelope for operations that asynchronously return a EffectiveRouteListResult type.
@@ -4010,13 +5203,29 @@ type EndpointServiceResult struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type EndpointServiceResult.
+func (e EndpointServiceResult) MarshalJSON() ([]byte, error) {
+	objectMap := e.SubResource.marshalInternal()
+	populate(objectMap, "name", e.Name)
+	populate(objectMap, "type", e.Type)
+	return json.Marshal(objectMap)
+}
+
 // EndpointServicesListResult - Response for the ListAvailableEndpointServices API service call.
 type EndpointServicesListResult struct {
 	// The URL to get the next set of results.
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of available endpoint services in a region.
-	Value *[]*EndpointServiceResult `json:"value,omitempty"`
+	Value []*EndpointServiceResult `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type EndpointServicesListResult.
+func (e EndpointServicesListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", e.NextLink)
+	populate(objectMap, "value", e.Value)
+	return json.Marshal(objectMap)
 }
 
 // EndpointServicesListResultResponse is the response envelope for operations that return a EndpointServicesListResult type.
@@ -4036,7 +5245,7 @@ type Error struct {
 	Code *string `json:"code,omitempty"`
 
 	// Error details.
-	Details *[]*ErrorDetails `json:"details,omitempty"`
+	Details []*ErrorDetails `json:"details,omitempty"`
 
 	// Inner error message.
 	InnerError *string `json:"innerError,omitempty"`
@@ -4092,7 +5301,17 @@ type EvaluatedNetworkSecurityGroup struct {
 	NetworkSecurityGroupID *string `json:"networkSecurityGroupId,omitempty"`
 
 	// READ-ONLY; List of network security rules evaluation results.
-	RulesEvaluationResult *[]*NetworkSecurityRulesEvaluationResult `json:"rulesEvaluationResult,omitempty" azure:"ro"`
+	RulesEvaluationResult []*NetworkSecurityRulesEvaluationResult `json:"rulesEvaluationResult,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type EvaluatedNetworkSecurityGroup.
+func (e EvaluatedNetworkSecurityGroup) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "appliedTo", e.AppliedTo)
+	populate(objectMap, "matchedRule", e.MatchedRule)
+	populate(objectMap, "networkSecurityGroupId", e.NetworkSecurityGroupID)
+	populate(objectMap, "rulesEvaluationResult", e.RulesEvaluationResult)
+	return json.Marshal(objectMap)
 }
 
 // ExpressRouteCircuit resource.
@@ -4106,6 +5325,15 @@ type ExpressRouteCircuit struct {
 
 	// The SKU.
 	SKU *ExpressRouteCircuitSKU `json:"sku,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ExpressRouteCircuit.
+func (e ExpressRouteCircuit) MarshalJSON() ([]byte, error) {
+	objectMap := e.Resource.marshalInternal()
+	populate(objectMap, "etag", e.Etag)
+	populate(objectMap, "properties", e.Properties)
+	populate(objectMap, "sku", e.SKU)
+	return json.Marshal(objectMap)
 }
 
 // ExpressRouteCircuitArpTable - The ARP table associated with the ExpressRouteCircuit.
@@ -4137,6 +5365,16 @@ type ExpressRouteCircuitAuthorization struct {
 
 	// READ-ONLY; Type of the resource.
 	Type *string `json:"type,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ExpressRouteCircuitAuthorization.
+func (e ExpressRouteCircuitAuthorization) MarshalJSON() ([]byte, error) {
+	objectMap := e.SubResource.marshalInternal()
+	populate(objectMap, "etag", e.Etag)
+	populate(objectMap, "name", e.Name)
+	populate(objectMap, "properties", e.Properties)
+	populate(objectMap, "type", e.Type)
+	return json.Marshal(objectMap)
 }
 
 // ExpressRouteCircuitAuthorizationPollerResponse is the response envelope for operations that asynchronously return a ExpressRouteCircuitAuthorization
@@ -4198,6 +5436,16 @@ type ExpressRouteCircuitConnection struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type ExpressRouteCircuitConnection.
+func (e ExpressRouteCircuitConnection) MarshalJSON() ([]byte, error) {
+	objectMap := e.SubResource.marshalInternal()
+	populate(objectMap, "etag", e.Etag)
+	populate(objectMap, "name", e.Name)
+	populate(objectMap, "properties", e.Properties)
+	populate(objectMap, "type", e.Type)
+	return json.Marshal(objectMap)
+}
+
 // ExpressRouteCircuitConnectionListResult - Response for ListConnections API service call retrieves all global reach connections that belongs to a Private
 // Peering for an ExpressRouteCircuit.
 type ExpressRouteCircuitConnectionListResult struct {
@@ -4205,7 +5453,15 @@ type ExpressRouteCircuitConnectionListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// The global reach connection associated with Private Peering in an ExpressRoute Circuit.
-	Value *[]*ExpressRouteCircuitConnection `json:"value,omitempty"`
+	Value []*ExpressRouteCircuitConnection `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ExpressRouteCircuitConnectionListResult.
+func (e ExpressRouteCircuitConnectionListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", e.NextLink)
+	populate(objectMap, "value", e.Value)
+	return json.Marshal(objectMap)
 }
 
 // ExpressRouteCircuitConnectionListResultResponse is the response envelope for operations that return a ExpressRouteCircuitConnectionListResult type.
@@ -4289,7 +5545,15 @@ type ExpressRouteCircuitListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// A list of ExpressRouteCircuits in a resource group.
-	Value *[]*ExpressRouteCircuit `json:"value,omitempty"`
+	Value []*ExpressRouteCircuit `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ExpressRouteCircuitListResult.
+func (e ExpressRouteCircuitListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", e.NextLink)
+	populate(objectMap, "value", e.Value)
+	return json.Marshal(objectMap)
 }
 
 // ExpressRouteCircuitListResultResponse is the response envelope for operations that return a ExpressRouteCircuitListResult type.
@@ -4317,13 +5581,23 @@ type ExpressRouteCircuitPeering struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type ExpressRouteCircuitPeering.
+func (e ExpressRouteCircuitPeering) MarshalJSON() ([]byte, error) {
+	objectMap := e.SubResource.marshalInternal()
+	populate(objectMap, "etag", e.Etag)
+	populate(objectMap, "name", e.Name)
+	populate(objectMap, "properties", e.Properties)
+	populate(objectMap, "type", e.Type)
+	return json.Marshal(objectMap)
+}
+
 // ExpressRouteCircuitPeeringConfig - Specifies the peering configuration.
 type ExpressRouteCircuitPeeringConfig struct {
 	// The communities of bgp peering. Specified for microsoft peering.
-	AdvertisedCommunities *[]*string `json:"advertisedCommunities,omitempty"`
+	AdvertisedCommunities []*string `json:"advertisedCommunities,omitempty"`
 
 	// The reference to AdvertisedPublicPrefixes.
-	AdvertisedPublicPrefixes *[]*string `json:"advertisedPublicPrefixes,omitempty"`
+	AdvertisedPublicPrefixes []*string `json:"advertisedPublicPrefixes,omitempty"`
 
 	// READ-ONLY; The advertised public prefix state of the Peering resource.
 	AdvertisedPublicPrefixesState *ExpressRouteCircuitPeeringAdvertisedPublicPrefixState `json:"advertisedPublicPrefixesState,omitempty" azure:"ro"`
@@ -4338,6 +5612,18 @@ type ExpressRouteCircuitPeeringConfig struct {
 	RoutingRegistryName *string `json:"routingRegistryName,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type ExpressRouteCircuitPeeringConfig.
+func (e ExpressRouteCircuitPeeringConfig) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "advertisedCommunities", e.AdvertisedCommunities)
+	populate(objectMap, "advertisedPublicPrefixes", e.AdvertisedPublicPrefixes)
+	populate(objectMap, "advertisedPublicPrefixesState", e.AdvertisedPublicPrefixesState)
+	populate(objectMap, "customerASN", e.CustomerASN)
+	populate(objectMap, "legacyMode", e.LegacyMode)
+	populate(objectMap, "routingRegistryName", e.RoutingRegistryName)
+	return json.Marshal(objectMap)
+}
+
 // ExpressRouteCircuitPeeringID - ExpressRoute circuit peering identifier.
 type ExpressRouteCircuitPeeringID struct {
 	// The ID of the ExpressRoute circuit peering.
@@ -4350,7 +5636,15 @@ type ExpressRouteCircuitPeeringListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// The peerings in an express route circuit.
-	Value *[]*ExpressRouteCircuitPeering `json:"value,omitempty"`
+	Value []*ExpressRouteCircuitPeering `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ExpressRouteCircuitPeeringListResult.
+func (e ExpressRouteCircuitPeeringListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", e.NextLink)
+	populate(objectMap, "value", e.Value)
+	return json.Marshal(objectMap)
 }
 
 // ExpressRouteCircuitPeeringListResultResponse is the response envelope for operations that return a ExpressRouteCircuitPeeringListResult type.
@@ -4380,7 +5674,7 @@ type ExpressRouteCircuitPeeringPropertiesFormat struct {
 	AzureASN *int32 `json:"azureASN,omitempty"`
 
 	// The list of circuit connections associated with Azure Private Peering for this circuit.
-	Connections *[]*ExpressRouteCircuitConnection `json:"connections,omitempty"`
+	Connections []*ExpressRouteCircuitConnection `json:"connections,omitempty"`
 
 	// The ExpressRoute connection.
 	ExpressRouteConnection *ExpressRouteConnectionID `json:"expressRouteConnection,omitempty"`
@@ -4401,7 +5695,7 @@ type ExpressRouteCircuitPeeringPropertiesFormat struct {
 	PeerASN *int64 `json:"peerASN,omitempty"`
 
 	// READ-ONLY; The list of peered circuit connections associated with Azure Private Peering for this circuit.
-	PeeredConnections *[]*PeerExpressRouteCircuitConnection `json:"peeredConnections,omitempty" azure:"ro"`
+	PeeredConnections []*PeerExpressRouteCircuitConnection `json:"peeredConnections,omitempty" azure:"ro"`
 
 	// The peering type.
 	PeeringType *ExpressRoutePeeringType `json:"peeringType,omitempty"`
@@ -4435,6 +5729,32 @@ type ExpressRouteCircuitPeeringPropertiesFormat struct {
 
 	// The VLAN ID.
 	VlanID *int32 `json:"vlanId,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ExpressRouteCircuitPeeringPropertiesFormat.
+func (e ExpressRouteCircuitPeeringPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "azureASN", e.AzureASN)
+	populate(objectMap, "connections", e.Connections)
+	populate(objectMap, "expressRouteConnection", e.ExpressRouteConnection)
+	populate(objectMap, "gatewayManagerEtag", e.GatewayManagerEtag)
+	populate(objectMap, "ipv6PeeringConfig", e.IPv6PeeringConfig)
+	populate(objectMap, "lastModifiedBy", e.LastModifiedBy)
+	populate(objectMap, "microsoftPeeringConfig", e.MicrosoftPeeringConfig)
+	populate(objectMap, "peerASN", e.PeerASN)
+	populate(objectMap, "peeredConnections", e.PeeredConnections)
+	populate(objectMap, "peeringType", e.PeeringType)
+	populate(objectMap, "primaryAzurePort", e.PrimaryAzurePort)
+	populate(objectMap, "primaryPeerAddressPrefix", e.PrimaryPeerAddressPrefix)
+	populate(objectMap, "provisioningState", e.ProvisioningState)
+	populate(objectMap, "routeFilter", e.RouteFilter)
+	populate(objectMap, "secondaryAzurePort", e.SecondaryAzurePort)
+	populate(objectMap, "secondaryPeerAddressPrefix", e.SecondaryPeerAddressPrefix)
+	populate(objectMap, "sharedKey", e.SharedKey)
+	populate(objectMap, "state", e.State)
+	populate(objectMap, "stats", e.Stats)
+	populate(objectMap, "vlanId", e.VlanID)
+	return json.Marshal(objectMap)
 }
 
 // ExpressRouteCircuitPeeringResponse is the response envelope for operations that return a ExpressRouteCircuitPeering type.
@@ -4484,7 +5804,7 @@ type ExpressRouteCircuitPropertiesFormat struct {
 	AllowClassicOperations *bool `json:"allowClassicOperations,omitempty"`
 
 	// The list of authorizations.
-	Authorizations *[]*ExpressRouteCircuitAuthorization `json:"authorizations,omitempty"`
+	Authorizations []*ExpressRouteCircuitAuthorization `json:"authorizations,omitempty"`
 
 	// The bandwidth of the circuit when the circuit is provisioned on an ExpressRoutePort resource.
 	BandwidthInGbps *float32 `json:"bandwidthInGbps,omitempty"`
@@ -4502,7 +5822,7 @@ type ExpressRouteCircuitPropertiesFormat struct {
 	GlobalReachEnabled *bool `json:"globalReachEnabled,omitempty"`
 
 	// The list of peerings.
-	Peerings *[]*ExpressRouteCircuitPeering `json:"peerings,omitempty"`
+	Peerings []*ExpressRouteCircuitPeering `json:"peerings,omitempty"`
 
 	// READ-ONLY; The provisioning state of the express route circuit resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
@@ -4521,6 +5841,26 @@ type ExpressRouteCircuitPropertiesFormat struct {
 
 	// READ-ONLY; The identifier of the circuit traffic. Outer tag for QinQ encapsulation.
 	Stag *int32 `json:"stag,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ExpressRouteCircuitPropertiesFormat.
+func (e ExpressRouteCircuitPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "allowClassicOperations", e.AllowClassicOperations)
+	populate(objectMap, "authorizations", e.Authorizations)
+	populate(objectMap, "bandwidthInGbps", e.BandwidthInGbps)
+	populate(objectMap, "circuitProvisioningState", e.CircuitProvisioningState)
+	populate(objectMap, "expressRoutePort", e.ExpressRoutePort)
+	populate(objectMap, "gatewayManagerEtag", e.GatewayManagerEtag)
+	populate(objectMap, "globalReachEnabled", e.GlobalReachEnabled)
+	populate(objectMap, "peerings", e.Peerings)
+	populate(objectMap, "provisioningState", e.ProvisioningState)
+	populate(objectMap, "serviceKey", e.ServiceKey)
+	populate(objectMap, "serviceProviderNotes", e.ServiceProviderNotes)
+	populate(objectMap, "serviceProviderProperties", e.ServiceProviderProperties)
+	populate(objectMap, "serviceProviderProvisioningState", e.ServiceProviderProvisioningState)
+	populate(objectMap, "stag", e.Stag)
+	return json.Marshal(objectMap)
 }
 
 // ExpressRouteCircuitReference - Reference to an express route circuit.
@@ -4628,7 +5968,15 @@ type ExpressRouteCircuitsArpTableListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// A list of the ARP tables.
-	Value *[]*ExpressRouteCircuitArpTable `json:"value,omitempty"`
+	Value []*ExpressRouteCircuitArpTable `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ExpressRouteCircuitsArpTableListResult.
+func (e ExpressRouteCircuitsArpTableListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", e.NextLink)
+	populate(objectMap, "value", e.Value)
+	return json.Marshal(objectMap)
 }
 
 // ExpressRouteCircuitsArpTableListResultPollerResponse is the response envelope for operations that asynchronously return a ExpressRouteCircuitsArpTableListResult
@@ -4709,7 +6057,15 @@ type ExpressRouteCircuitsRoutesTableListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// The list of routes table.
-	Value *[]*ExpressRouteCircuitRoutesTable `json:"value,omitempty"`
+	Value []*ExpressRouteCircuitRoutesTable `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ExpressRouteCircuitsRoutesTableListResult.
+func (e ExpressRouteCircuitsRoutesTableListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", e.NextLink)
+	populate(objectMap, "value", e.Value)
+	return json.Marshal(objectMap)
 }
 
 // ExpressRouteCircuitsRoutesTableListResultPollerResponse is the response envelope for operations that asynchronously return a ExpressRouteCircuitsRoutesTableListResult
@@ -4740,7 +6096,15 @@ type ExpressRouteCircuitsRoutesTableSummaryListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// A list of the routes table.
-	Value *[]*ExpressRouteCircuitRoutesTableSummary `json:"value,omitempty"`
+	Value []*ExpressRouteCircuitRoutesTableSummary `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ExpressRouteCircuitsRoutesTableSummaryListResult.
+func (e ExpressRouteCircuitsRoutesTableSummaryListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", e.NextLink)
+	populate(objectMap, "value", e.Value)
+	return json.Marshal(objectMap)
 }
 
 // ExpressRouteCircuitsRoutesTableSummaryListResultPollerResponse is the response envelope for operations that asynchronously return a ExpressRouteCircuitsRoutesTableSummaryListResult
@@ -4781,6 +6145,14 @@ type ExpressRouteConnection struct {
 	Properties *ExpressRouteConnectionProperties `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type ExpressRouteConnection.
+func (e ExpressRouteConnection) MarshalJSON() ([]byte, error) {
+	objectMap := e.SubResource.marshalInternal()
+	populate(objectMap, "name", e.Name)
+	populate(objectMap, "properties", e.Properties)
+	return json.Marshal(objectMap)
+}
+
 // ExpressRouteConnectionID - The ID of the ExpressRouteConnection.
 type ExpressRouteConnectionID struct {
 	// READ-ONLY; The ID of the ExpressRouteConnection.
@@ -4790,7 +6162,14 @@ type ExpressRouteConnectionID struct {
 // ExpressRouteConnectionList - ExpressRouteConnection list.
 type ExpressRouteConnectionList struct {
 	// The list of ExpressRoute connections.
-	Value *[]*ExpressRouteConnection `json:"value,omitempty"`
+	Value []*ExpressRouteConnection `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ExpressRouteConnectionList.
+func (e ExpressRouteConnectionList) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "value", e.Value)
+	return json.Marshal(objectMap)
 }
 
 // ExpressRouteConnectionListResponse is the response envelope for operations that return a ExpressRouteConnectionList type.
@@ -4871,13 +6250,29 @@ type ExpressRouteCrossConnection struct {
 	Properties *ExpressRouteCrossConnectionProperties `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type ExpressRouteCrossConnection.
+func (e ExpressRouteCrossConnection) MarshalJSON() ([]byte, error) {
+	objectMap := e.Resource.marshalInternal()
+	populate(objectMap, "etag", e.Etag)
+	populate(objectMap, "properties", e.Properties)
+	return json.Marshal(objectMap)
+}
+
 // ExpressRouteCrossConnectionListResult - Response for ListExpressRouteCrossConnection API service call.
 type ExpressRouteCrossConnectionListResult struct {
 	// READ-ONLY; The URL to get the next set of results.
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 
 	// A list of ExpressRouteCrossConnection resources.
-	Value *[]*ExpressRouteCrossConnection `json:"value,omitempty"`
+	Value []*ExpressRouteCrossConnection `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ExpressRouteCrossConnectionListResult.
+func (e ExpressRouteCrossConnectionListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", e.NextLink)
+	populate(objectMap, "value", e.Value)
+	return json.Marshal(objectMap)
 }
 
 // ExpressRouteCrossConnectionListResultResponse is the response envelope for operations that return a ExpressRouteCrossConnectionListResult type.
@@ -4902,13 +6297,30 @@ type ExpressRouteCrossConnectionPeering struct {
 	Properties *ExpressRouteCrossConnectionPeeringProperties `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type ExpressRouteCrossConnectionPeering.
+func (e ExpressRouteCrossConnectionPeering) MarshalJSON() ([]byte, error) {
+	objectMap := e.SubResource.marshalInternal()
+	populate(objectMap, "etag", e.Etag)
+	populate(objectMap, "name", e.Name)
+	populate(objectMap, "properties", e.Properties)
+	return json.Marshal(objectMap)
+}
+
 // ExpressRouteCrossConnectionPeeringList - Response for ListPeering API service call retrieves all peerings that belong to an ExpressRouteCrossConnection.
 type ExpressRouteCrossConnectionPeeringList struct {
 	// READ-ONLY; The URL to get the next set of results.
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 
 	// The peerings in an express route cross connection.
-	Value *[]*ExpressRouteCrossConnectionPeering `json:"value,omitempty"`
+	Value []*ExpressRouteCrossConnectionPeering `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ExpressRouteCrossConnectionPeeringList.
+func (e ExpressRouteCrossConnectionPeeringList) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", e.NextLink)
+	populate(objectMap, "value", e.Value)
+	return json.Marshal(objectMap)
 }
 
 // ExpressRouteCrossConnectionPeeringListResponse is the response envelope for operations that return a ExpressRouteCrossConnectionPeeringList type.
@@ -5035,7 +6447,7 @@ type ExpressRouteCrossConnectionProperties struct {
 	PeeringLocation *string `json:"peeringLocation,omitempty"`
 
 	// The list of peerings.
-	Peerings *[]*ExpressRouteCrossConnectionPeering `json:"peerings,omitempty"`
+	Peerings []*ExpressRouteCrossConnectionPeering `json:"peerings,omitempty"`
 
 	// READ-ONLY; The name of the primary port.
 	PrimaryAzurePort *string `json:"primaryAzurePort,omitempty" azure:"ro"`
@@ -5054,6 +6466,22 @@ type ExpressRouteCrossConnectionProperties struct {
 
 	// The provisioning state of the circuit in the connectivity provider system.
 	ServiceProviderProvisioningState *ServiceProviderProvisioningState `json:"serviceProviderProvisioningState,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ExpressRouteCrossConnectionProperties.
+func (e ExpressRouteCrossConnectionProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "bandwidthInMbps", e.BandwidthInMbps)
+	populate(objectMap, "expressRouteCircuit", e.ExpressRouteCircuit)
+	populate(objectMap, "peeringLocation", e.PeeringLocation)
+	populate(objectMap, "peerings", e.Peerings)
+	populate(objectMap, "primaryAzurePort", e.PrimaryAzurePort)
+	populate(objectMap, "provisioningState", e.ProvisioningState)
+	populate(objectMap, "sTag", e.STag)
+	populate(objectMap, "secondaryAzurePort", e.SecondaryAzurePort)
+	populate(objectMap, "serviceProviderNotes", e.ServiceProviderNotes)
+	populate(objectMap, "serviceProviderProvisioningState", e.ServiceProviderProvisioningState)
+	return json.Marshal(objectMap)
 }
 
 // ExpressRouteCrossConnectionResponse is the response envelope for operations that return a ExpressRouteCrossConnection type.
@@ -5122,7 +6550,15 @@ type ExpressRouteCrossConnectionsRoutesTableSummaryListResult struct {
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 
 	// A list of the routes table.
-	Value *[]*ExpressRouteCrossConnectionRoutesTableSummary `json:"value,omitempty"`
+	Value []*ExpressRouteCrossConnectionRoutesTableSummary `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ExpressRouteCrossConnectionsRoutesTableSummaryListResult.
+func (e ExpressRouteCrossConnectionsRoutesTableSummaryListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", e.NextLink)
+	populate(objectMap, "value", e.Value)
+	return json.Marshal(objectMap)
 }
 
 // ExpressRouteCrossConnectionsRoutesTableSummaryListResultPollerResponse is the response envelope for operations that asynchronously return a ExpressRouteCrossConnectionsRoutesTableSummaryListResult
@@ -5163,10 +6599,25 @@ type ExpressRouteGateway struct {
 	Properties *ExpressRouteGatewayProperties `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type ExpressRouteGateway.
+func (e ExpressRouteGateway) MarshalJSON() ([]byte, error) {
+	objectMap := e.Resource.marshalInternal()
+	populate(objectMap, "etag", e.Etag)
+	populate(objectMap, "properties", e.Properties)
+	return json.Marshal(objectMap)
+}
+
 // ExpressRouteGatewayList - List of ExpressRoute gateways.
 type ExpressRouteGatewayList struct {
 	// List of ExpressRoute gateways.
-	Value *[]*ExpressRouteGateway `json:"value,omitempty"`
+	Value []*ExpressRouteGateway `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ExpressRouteGatewayList.
+func (e ExpressRouteGatewayList) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "value", e.Value)
+	return json.Marshal(objectMap)
 }
 
 // ExpressRouteGatewayListResponse is the response envelope for operations that return a ExpressRouteGatewayList type.
@@ -5196,13 +6647,23 @@ type ExpressRouteGatewayProperties struct {
 	AutoScaleConfiguration *ExpressRouteGatewayPropertiesAutoScaleConfiguration `json:"autoScaleConfiguration,omitempty"`
 
 	// READ-ONLY; List of ExpressRoute connections to the ExpressRoute gateway.
-	ExpressRouteConnections *[]*ExpressRouteConnection `json:"expressRouteConnections,omitempty" azure:"ro"`
+	ExpressRouteConnections []*ExpressRouteConnection `json:"expressRouteConnections,omitempty" azure:"ro"`
 
 	// READ-ONLY; The provisioning state of the express route gateway resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
 	// The Virtual Hub where the ExpressRoute gateway is or will be deployed.
 	VirtualHub *VirtualHubID `json:"virtualHub,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ExpressRouteGatewayProperties.
+func (e ExpressRouteGatewayProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "autoScaleConfiguration", e.AutoScaleConfiguration)
+	populate(objectMap, "expressRouteConnections", e.ExpressRouteConnections)
+	populate(objectMap, "provisioningState", e.ProvisioningState)
+	populate(objectMap, "virtualHub", e.VirtualHub)
+	return json.Marshal(objectMap)
 }
 
 // ExpressRouteGatewayPropertiesAutoScaleConfiguration - Configuration for auto scaling.
@@ -5267,13 +6728,30 @@ type ExpressRouteLink struct {
 	Properties *ExpressRouteLinkPropertiesFormat `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type ExpressRouteLink.
+func (e ExpressRouteLink) MarshalJSON() ([]byte, error) {
+	objectMap := e.SubResource.marshalInternal()
+	populate(objectMap, "etag", e.Etag)
+	populate(objectMap, "name", e.Name)
+	populate(objectMap, "properties", e.Properties)
+	return json.Marshal(objectMap)
+}
+
 // ExpressRouteLinkListResult - Response for ListExpressRouteLinks API service call.
 type ExpressRouteLinkListResult struct {
 	// The URL to get the next set of results.
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// The list of ExpressRouteLink sub-resources.
-	Value *[]*ExpressRouteLink `json:"value,omitempty"`
+	Value []*ExpressRouteLink `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ExpressRouteLinkListResult.
+func (e ExpressRouteLinkListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", e.NextLink)
+	populate(objectMap, "value", e.Value)
+	return json.Marshal(objectMap)
 }
 
 // ExpressRouteLinkListResultResponse is the response envelope for operations that return a ExpressRouteLinkListResult type.
@@ -5356,13 +6834,30 @@ type ExpressRoutePort struct {
 	Properties *ExpressRoutePortPropertiesFormat `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type ExpressRoutePort.
+func (e ExpressRoutePort) MarshalJSON() ([]byte, error) {
+	objectMap := e.Resource.marshalInternal()
+	populate(objectMap, "etag", e.Etag)
+	populate(objectMap, "identity", e.Identity)
+	populate(objectMap, "properties", e.Properties)
+	return json.Marshal(objectMap)
+}
+
 // ExpressRoutePortListResult - Response for ListExpressRoutePorts API service call.
 type ExpressRoutePortListResult struct {
 	// The URL to get the next set of results.
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// A list of ExpressRoutePort resources.
-	Value *[]*ExpressRoutePort `json:"value,omitempty"`
+	Value []*ExpressRoutePort `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ExpressRoutePortListResult.
+func (e ExpressRoutePortListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", e.NextLink)
+	populate(objectMap, "value", e.Value)
+	return json.Marshal(objectMap)
 }
 
 // ExpressRoutePortListResultResponse is the response envelope for operations that return a ExpressRoutePortListResult type.
@@ -5395,7 +6890,7 @@ type ExpressRoutePortPropertiesFormat struct {
 	BandwidthInGbps *int32 `json:"bandwidthInGbps,omitempty"`
 
 	// READ-ONLY; Reference the ExpressRoute circuit(s) that are provisioned on this ExpressRoutePort resource.
-	Circuits *[]*SubResource `json:"circuits,omitempty" azure:"ro"`
+	Circuits []*SubResource `json:"circuits,omitempty" azure:"ro"`
 
 	// Encapsulation method on physical ports.
 	Encapsulation *ExpressRoutePortsEncapsulation `json:"encapsulation,omitempty"`
@@ -5404,7 +6899,7 @@ type ExpressRoutePortPropertiesFormat struct {
 	EtherType *string `json:"etherType,omitempty" azure:"ro"`
 
 	// The set of physical links of the ExpressRoutePort resource.
-	Links *[]*ExpressRouteLink `json:"links,omitempty"`
+	Links []*ExpressRouteLink `json:"links,omitempty"`
 
 	// READ-ONLY; Maximum transmission unit of the physical port pair(s).
 	Mtu *string `json:"mtu,omitempty" azure:"ro"`
@@ -5420,6 +6915,23 @@ type ExpressRoutePortPropertiesFormat struct {
 
 	// READ-ONLY; The resource GUID property of the express route port resource.
 	ResourceGUID *string `json:"resourceGuid,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ExpressRoutePortPropertiesFormat.
+func (e ExpressRoutePortPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "allocationDate", e.AllocationDate)
+	populate(objectMap, "bandwidthInGbps", e.BandwidthInGbps)
+	populate(objectMap, "circuits", e.Circuits)
+	populate(objectMap, "encapsulation", e.Encapsulation)
+	populate(objectMap, "etherType", e.EtherType)
+	populate(objectMap, "links", e.Links)
+	populate(objectMap, "mtu", e.Mtu)
+	populate(objectMap, "peeringLocation", e.PeeringLocation)
+	populate(objectMap, "provisionedBandwidthInGbps", e.ProvisionedBandwidthInGbps)
+	populate(objectMap, "provisioningState", e.ProvisioningState)
+	populate(objectMap, "resourceGuid", e.ResourceGUID)
+	return json.Marshal(objectMap)
 }
 
 // ExpressRoutePortResponse is the response envelope for operations that return a ExpressRoutePort type.
@@ -5463,6 +6975,13 @@ type ExpressRoutePortsLocation struct {
 	Properties *ExpressRoutePortsLocationPropertiesFormat `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type ExpressRoutePortsLocation.
+func (e ExpressRoutePortsLocation) MarshalJSON() ([]byte, error) {
+	objectMap := e.Resource.marshalInternal()
+	populate(objectMap, "properties", e.Properties)
+	return json.Marshal(objectMap)
+}
+
 // ExpressRoutePortsLocationBandwidths - Real-time inventory of available ExpressRoute port bandwidths.
 type ExpressRoutePortsLocationBandwidths struct {
 	// READ-ONLY; Bandwidth descriptive name.
@@ -5478,7 +6997,15 @@ type ExpressRoutePortsLocationListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// The list of all ExpressRoutePort peering locations.
-	Value *[]*ExpressRoutePortsLocation `json:"value,omitempty"`
+	Value []*ExpressRoutePortsLocation `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ExpressRoutePortsLocationListResult.
+func (e ExpressRoutePortsLocationListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", e.NextLink)
+	populate(objectMap, "value", e.Value)
+	return json.Marshal(objectMap)
 }
 
 // ExpressRoutePortsLocationListResultResponse is the response envelope for operations that return a ExpressRoutePortsLocationListResult type.
@@ -5496,13 +7023,23 @@ type ExpressRoutePortsLocationPropertiesFormat struct {
 	Address *string `json:"address,omitempty" azure:"ro"`
 
 	// The inventory of available ExpressRoutePort bandwidths.
-	AvailableBandwidths *[]*ExpressRoutePortsLocationBandwidths `json:"availableBandwidths,omitempty"`
+	AvailableBandwidths []*ExpressRoutePortsLocationBandwidths `json:"availableBandwidths,omitempty"`
 
 	// READ-ONLY; Contact details of peering locations.
 	Contact *string `json:"contact,omitempty" azure:"ro"`
 
 	// READ-ONLY; The provisioning state of the express route port location resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ExpressRoutePortsLocationPropertiesFormat.
+func (e ExpressRoutePortsLocationPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "address", e.Address)
+	populate(objectMap, "availableBandwidths", e.AvailableBandwidths)
+	populate(objectMap, "contact", e.Contact)
+	populate(objectMap, "provisioningState", e.ProvisioningState)
+	return json.Marshal(objectMap)
 }
 
 // ExpressRoutePortsLocationResponse is the response envelope for operations that return a ExpressRoutePortsLocation type.
@@ -5536,6 +7073,13 @@ type ExpressRouteServiceProvider struct {
 	Properties *ExpressRouteServiceProviderPropertiesFormat `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type ExpressRouteServiceProvider.
+func (e ExpressRouteServiceProvider) MarshalJSON() ([]byte, error) {
+	objectMap := e.Resource.marshalInternal()
+	populate(objectMap, "properties", e.Properties)
+	return json.Marshal(objectMap)
+}
+
 // ExpressRouteServiceProviderBandwidthsOffered - Contains bandwidths offered in ExpressRouteServiceProvider resources.
 type ExpressRouteServiceProviderBandwidthsOffered struct {
 	// The OfferName.
@@ -5551,7 +7095,15 @@ type ExpressRouteServiceProviderListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// A list of ExpressRouteResourceProvider resources.
-	Value *[]*ExpressRouteServiceProvider `json:"value,omitempty"`
+	Value []*ExpressRouteServiceProvider `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ExpressRouteServiceProviderListResult.
+func (e ExpressRouteServiceProviderListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", e.NextLink)
+	populate(objectMap, "value", e.Value)
+	return json.Marshal(objectMap)
 }
 
 // ExpressRouteServiceProviderListResultResponse is the response envelope for operations that return a ExpressRouteServiceProviderListResult type.
@@ -5566,13 +7118,22 @@ type ExpressRouteServiceProviderListResultResponse struct {
 // ExpressRouteServiceProviderPropertiesFormat - Properties of ExpressRouteServiceProvider.
 type ExpressRouteServiceProviderPropertiesFormat struct {
 	// A list of bandwidths offered.
-	BandwidthsOffered *[]*ExpressRouteServiceProviderBandwidthsOffered `json:"bandwidthsOffered,omitempty"`
+	BandwidthsOffered []*ExpressRouteServiceProviderBandwidthsOffered `json:"bandwidthsOffered,omitempty"`
 
 	// A list of peering locations.
-	PeeringLocations *[]*string `json:"peeringLocations,omitempty"`
+	PeeringLocations []*string `json:"peeringLocations,omitempty"`
 
 	// READ-ONLY; The provisioning state of the express route service provider resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ExpressRouteServiceProviderPropertiesFormat.
+func (e ExpressRouteServiceProviderPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "bandwidthsOffered", e.BandwidthsOffered)
+	populate(objectMap, "peeringLocations", e.PeeringLocations)
+	populate(objectMap, "provisioningState", e.ProvisioningState)
+	return json.Marshal(objectMap)
 }
 
 // ExpressRouteServiceProvidersListOptions contains the optional parameters for the ExpressRouteServiceProviders.List method.
@@ -5616,6 +7177,14 @@ type FirewallPolicy struct {
 	Properties *FirewallPolicyPropertiesFormat `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type FirewallPolicy.
+func (f FirewallPolicy) MarshalJSON() ([]byte, error) {
+	objectMap := f.Resource.marshalInternal()
+	populate(objectMap, "etag", f.Etag)
+	populate(objectMap, "properties", f.Properties)
+	return json.Marshal(objectMap)
+}
+
 // FirewallPolicyFilterRule - Firewall Policy Filter Rule.
 type FirewallPolicyFilterRule struct {
 	FirewallPolicyRule
@@ -5623,7 +7192,7 @@ type FirewallPolicyFilterRule struct {
 	Action *FirewallPolicyFilterRuleAction `json:"action,omitempty"`
 
 	// Collection of rule conditions used by a rule.
-	RuleConditions *[]FirewallPolicyRuleConditionClassification `json:"ruleConditions,omitempty"`
+	RuleConditions []FirewallPolicyRuleConditionClassification `json:"ruleConditions,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type FirewallPolicyFilterRule.
@@ -5669,7 +7238,15 @@ type FirewallPolicyListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of Firewall Policies in a resource group.
-	Value *[]*FirewallPolicy `json:"value,omitempty"`
+	Value []*FirewallPolicy `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type FirewallPolicyListResult.
+func (f FirewallPolicyListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", f.NextLink)
+	populate(objectMap, "value", f.Value)
+	return json.Marshal(objectMap)
 }
 
 // FirewallPolicyListResultResponse is the response envelope for operations that return a FirewallPolicyListResult type.
@@ -5760,19 +7337,31 @@ type FirewallPolicyPropertiesFormat struct {
 	BasePolicy *SubResource `json:"basePolicy,omitempty"`
 
 	// READ-ONLY; List of references to Child Firewall Policies.
-	ChildPolicies *[]*SubResource `json:"childPolicies,omitempty" azure:"ro"`
+	ChildPolicies []*SubResource `json:"childPolicies,omitempty" azure:"ro"`
 
 	// READ-ONLY; List of references to Azure Firewalls that this Firewall Policy is associated with.
-	Firewalls *[]*SubResource `json:"firewalls,omitempty" azure:"ro"`
+	Firewalls []*SubResource `json:"firewalls,omitempty" azure:"ro"`
 
 	// READ-ONLY; The provisioning state of the firewall policy resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
 	// READ-ONLY; List of references to FirewallPolicyRuleGroups.
-	RuleGroups *[]*SubResource `json:"ruleGroups,omitempty" azure:"ro"`
+	RuleGroups []*SubResource `json:"ruleGroups,omitempty" azure:"ro"`
 
 	// The operation mode for Threat Intelligence.
 	ThreatIntelMode *AzureFirewallThreatIntelMode `json:"threatIntelMode,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type FirewallPolicyPropertiesFormat.
+func (f FirewallPolicyPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "basePolicy", f.BasePolicy)
+	populate(objectMap, "childPolicies", f.ChildPolicies)
+	populate(objectMap, "firewalls", f.Firewalls)
+	populate(objectMap, "provisioningState", f.ProvisioningState)
+	populate(objectMap, "ruleGroups", f.RuleGroups)
+	populate(objectMap, "threatIntelMode", f.ThreatIntelMode)
+	return json.Marshal(objectMap)
 }
 
 // FirewallPolicyResponse is the response envelope for operations that return a FirewallPolicy type.
@@ -5937,13 +7526,31 @@ type FirewallPolicyRuleGroup struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type FirewallPolicyRuleGroup.
+func (f FirewallPolicyRuleGroup) MarshalJSON() ([]byte, error) {
+	objectMap := f.SubResource.marshalInternal()
+	populate(objectMap, "etag", f.Etag)
+	populate(objectMap, "name", f.Name)
+	populate(objectMap, "properties", f.Properties)
+	populate(objectMap, "type", f.Type)
+	return json.Marshal(objectMap)
+}
+
 // FirewallPolicyRuleGroupListResult - Response for ListFirewallPolicyRuleGroups API service call.
 type FirewallPolicyRuleGroupListResult struct {
 	// URL to get the next set of results.
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of FirewallPolicyRuleGroups in a FirewallPolicy.
-	Value *[]*FirewallPolicyRuleGroup `json:"value,omitempty"`
+	Value []*FirewallPolicyRuleGroup `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type FirewallPolicyRuleGroupListResult.
+func (f FirewallPolicyRuleGroupListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", f.NextLink)
+	populate(objectMap, "value", f.Value)
+	return json.Marshal(objectMap)
 }
 
 // FirewallPolicyRuleGroupListResultResponse is the response envelope for operations that return a FirewallPolicyRuleGroupListResult type.
@@ -5976,7 +7583,16 @@ type FirewallPolicyRuleGroupProperties struct {
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
 	// Group of Firewall Policy rules.
-	Rules *[]FirewallPolicyRuleClassification `json:"rules,omitempty"`
+	Rules []FirewallPolicyRuleClassification `json:"rules,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type FirewallPolicyRuleGroupProperties.
+func (f FirewallPolicyRuleGroupProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "priority", f.Priority)
+	populate(objectMap, "provisioningState", f.ProvisioningState)
+	populate(objectMap, "rules", f.Rules)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type FirewallPolicyRuleGroupProperties.
@@ -6044,6 +7660,14 @@ type FlowLog struct {
 	Properties *FlowLogPropertiesFormat `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type FlowLog.
+func (f FlowLog) MarshalJSON() ([]byte, error) {
+	objectMap := f.Resource.marshalInternal()
+	populate(objectMap, "etag", f.Etag)
+	populate(objectMap, "properties", f.Properties)
+	return json.Marshal(objectMap)
+}
+
 // FlowLogFormatParameters - Parameters that define the flow log format.
 type FlowLogFormatParameters struct {
 	// The file type of flow log.
@@ -6092,7 +7716,15 @@ type FlowLogListResult struct {
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 
 	// Information about flow log resource.
-	Value *[]*FlowLog `json:"value,omitempty"`
+	Value []*FlowLog `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type FlowLogListResult.
+func (f FlowLogListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", f.NextLink)
+	populate(objectMap, "value", f.Value)
+	return json.Marshal(objectMap)
 }
 
 // FlowLogListResultResponse is the response envelope for operations that return a FlowLogListResult type.
@@ -6209,22 +7841,33 @@ type FrontendIPConfiguration struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 
 	// A list of availability zones denoting the IP allocated for the resource needs to come from.
-	Zones *[]*string `json:"zones,omitempty"`
+	Zones []*string `json:"zones,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type FrontendIPConfiguration.
+func (f FrontendIPConfiguration) MarshalJSON() ([]byte, error) {
+	objectMap := f.SubResource.marshalInternal()
+	populate(objectMap, "etag", f.Etag)
+	populate(objectMap, "name", f.Name)
+	populate(objectMap, "properties", f.Properties)
+	populate(objectMap, "type", f.Type)
+	populate(objectMap, "zones", f.Zones)
+	return json.Marshal(objectMap)
 }
 
 // FrontendIPConfigurationPropertiesFormat - Properties of Frontend IP Configuration of the load balancer.
 type FrontendIPConfigurationPropertiesFormat struct {
 	// READ-ONLY; An array of references to inbound pools that use this frontend IP.
-	InboundNatPools *[]*SubResource `json:"inboundNatPools,omitempty" azure:"ro"`
+	InboundNatPools []*SubResource `json:"inboundNatPools,omitempty" azure:"ro"`
 
 	// READ-ONLY; An array of references to inbound rules that use this frontend IP.
-	InboundNatRules *[]*SubResource `json:"inboundNatRules,omitempty" azure:"ro"`
+	InboundNatRules []*SubResource `json:"inboundNatRules,omitempty" azure:"ro"`
 
 	// READ-ONLY; An array of references to load balancing rules that use this frontend IP.
-	LoadBalancingRules *[]*SubResource `json:"loadBalancingRules,omitempty" azure:"ro"`
+	LoadBalancingRules []*SubResource `json:"loadBalancingRules,omitempty" azure:"ro"`
 
 	// READ-ONLY; An array of references to outbound rules that use this frontend IP.
-	OutboundRules *[]*SubResource `json:"outboundRules,omitempty" azure:"ro"`
+	OutboundRules []*SubResource `json:"outboundRules,omitempty" azure:"ro"`
 
 	// The private IP address of the IP configuration.
 	PrivateIPAddress *string `json:"privateIPAddress,omitempty"`
@@ -6246,6 +7889,23 @@ type FrontendIPConfigurationPropertiesFormat struct {
 
 	// The reference to the subnet resource.
 	Subnet *Subnet `json:"subnet,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type FrontendIPConfigurationPropertiesFormat.
+func (f FrontendIPConfigurationPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "inboundNatPools", f.InboundNatPools)
+	populate(objectMap, "inboundNatRules", f.InboundNatRules)
+	populate(objectMap, "loadBalancingRules", f.LoadBalancingRules)
+	populate(objectMap, "outboundRules", f.OutboundRules)
+	populate(objectMap, "privateIPAddress", f.PrivateIPAddress)
+	populate(objectMap, "privateIPAddressVersion", f.PrivateIPAddressVersion)
+	populate(objectMap, "privateIPAllocationMethod", f.PrivateIPAllocationMethod)
+	populate(objectMap, "provisioningState", f.ProvisioningState)
+	populate(objectMap, "publicIPAddress", f.PublicIPAddress)
+	populate(objectMap, "publicIPPrefix", f.PublicIPPrefix)
+	populate(objectMap, "subnet", f.Subnet)
+	return json.Marshal(objectMap)
 }
 
 // FrontendIPConfigurationResponse is the response envelope for operations that return a FrontendIPConfiguration type.
@@ -6284,7 +7944,14 @@ type GatewayRoute struct {
 // GatewayRouteListResult - List of virtual network gateway routes.
 type GatewayRouteListResult struct {
 	// List of gateway routes.
-	Value *[]*GatewayRoute `json:"value,omitempty"`
+	Value []*GatewayRoute `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type GatewayRouteListResult.
+func (g GatewayRouteListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "value", g.Value)
+	return json.Marshal(objectMap)
 }
 
 // GatewayRouteListResultPollerResponse is the response envelope for operations that asynchronously return a GatewayRouteListResult type.
@@ -6314,19 +7981,36 @@ type GetVPNSitesConfigurationRequest struct {
 	OutputBlobSasURL *string `json:"outputBlobSasUrl,omitempty"`
 
 	// List of resource-ids of the vpn-sites for which config is to be downloaded.
-	VPNSites *[]*string `json:"vpnSites,omitempty"`
+	VPNSites []*string `json:"vpnSites,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type GetVPNSitesConfigurationRequest.
+func (g GetVPNSitesConfigurationRequest) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "outputBlobSasUrl", g.OutputBlobSasURL)
+	populate(objectMap, "vpnSites", g.VPNSites)
+	return json.Marshal(objectMap)
 }
 
 // HTTPConfiguration - HTTP configuration of the connectivity check.
 type HTTPConfiguration struct {
 	// List of HTTP headers.
-	Headers *[]*HTTPHeader `json:"headers,omitempty"`
+	Headers []*HTTPHeader `json:"headers,omitempty"`
 
 	// HTTP method.
 	Method *HTTPMethod `json:"method,omitempty"`
 
 	// Valid status codes.
-	ValidStatusCodes *[]*int32 `json:"validStatusCodes,omitempty"`
+	ValidStatusCodes []*int32 `json:"validStatusCodes,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type HTTPConfiguration.
+func (h HTTPConfiguration) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "headers", h.Headers)
+	populate(objectMap, "method", h.Method)
+	populate(objectMap, "validStatusCodes", h.ValidStatusCodes)
+	return json.Marshal(objectMap)
 }
 
 // HTTPHeader - The HTTP header.
@@ -6356,7 +8040,15 @@ type HubIPAddresses struct {
 	PrivateIPAddress *string `json:"privateIPAddress,omitempty"`
 
 	// List of Public IP addresses associated with azure firewall.
-	PublicIPAddresses *[]*AzureFirewallPublicIPAddress `json:"publicIPAddresses,omitempty"`
+	PublicIPAddresses []*AzureFirewallPublicIPAddress `json:"publicIPAddresses,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type HubIPAddresses.
+func (h HubIPAddresses) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "privateIPAddress", h.PrivateIPAddress)
+	populate(objectMap, "publicIPAddresses", h.PublicIPAddresses)
+	return json.Marshal(objectMap)
 }
 
 // HubVirtualNetworkConnection Resource.
@@ -6370,6 +8062,15 @@ type HubVirtualNetworkConnection struct {
 
 	// Properties of the hub virtual network connection.
 	Properties *HubVirtualNetworkConnectionProperties `json:"properties,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type HubVirtualNetworkConnection.
+func (h HubVirtualNetworkConnection) MarshalJSON() ([]byte, error) {
+	objectMap := h.SubResource.marshalInternal()
+	populate(objectMap, "etag", h.Etag)
+	populate(objectMap, "name", h.Name)
+	populate(objectMap, "properties", h.Properties)
+	return json.Marshal(objectMap)
 }
 
 // HubVirtualNetworkConnectionProperties - Parameters for HubVirtualNetworkConnection.
@@ -6415,7 +8116,15 @@ type IPAddressAvailabilityResult struct {
 	Available *bool `json:"available,omitempty"`
 
 	// Contains other available private IP addresses if the asked for address is taken.
-	AvailableIPAddresses *[]*string `json:"availableIPAddresses,omitempty"`
+	AvailableIPAddresses []*string `json:"availableIPAddresses,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type IPAddressAvailabilityResult.
+func (i IPAddressAvailabilityResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "available", i.Available)
+	populate(objectMap, "availableIPAddresses", i.AvailableIPAddresses)
+	return json.Marshal(objectMap)
 }
 
 // IPAddressAvailabilityResultResponse is the response envelope for operations that return a IPAddressAvailabilityResult type.
@@ -6437,13 +8146,29 @@ type IPAllocation struct {
 	Properties *IPAllocationPropertiesFormat `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type IPAllocation.
+func (i IPAllocation) MarshalJSON() ([]byte, error) {
+	objectMap := i.Resource.marshalInternal()
+	populate(objectMap, "etag", i.Etag)
+	populate(objectMap, "properties", i.Properties)
+	return json.Marshal(objectMap)
+}
+
 // IPAllocationListResult - Response for the ListIpAllocations API service call.
 type IPAllocationListResult struct {
 	// The URL to get the next set of results.
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// A list of IpAllocation resources.
-	Value *[]*IPAllocation `json:"value,omitempty"`
+	Value []*IPAllocation `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type IPAllocationListResult.
+func (i IPAllocationListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", i.NextLink)
+	populate(objectMap, "value", i.Value)
+	return json.Marshal(objectMap)
 }
 
 // IPAllocationListResultResponse is the response envelope for operations that return a IPAllocationListResult type.
@@ -6470,7 +8195,7 @@ type IPAllocationPollerResponse struct {
 // IPAllocationPropertiesFormat - Properties of the IpAllocation.
 type IPAllocationPropertiesFormat struct {
 	// IpAllocation tags.
-	AllocationTags *map[string]*string `json:"allocationTags,omitempty"`
+	AllocationTags map[string]*string `json:"allocationTags,omitempty"`
 
 	// The IPAM allocation ID.
 	IpamAllocationID *string `json:"ipamAllocationId,omitempty"`
@@ -6492,6 +8217,20 @@ type IPAllocationPropertiesFormat struct {
 
 	// READ-ONLY; The VirtualNetwork that using the prefix of this IpAllocation resource.
 	VirtualNetwork *SubResource `json:"virtualNetwork,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type IPAllocationPropertiesFormat.
+func (i IPAllocationPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "allocationTags", i.AllocationTags)
+	populate(objectMap, "ipamAllocationId", i.IpamAllocationID)
+	populate(objectMap, "prefix", i.Prefix)
+	populate(objectMap, "prefixLength", i.PrefixLength)
+	populate(objectMap, "prefixType", i.PrefixType)
+	populate(objectMap, "subnet", i.Subnet)
+	populate(objectMap, "type", i.Type)
+	populate(objectMap, "virtualNetwork", i.VirtualNetwork)
+	return json.Marshal(objectMap)
 }
 
 // IPAllocationResponse is the response envelope for operations that return a IPAllocation type.
@@ -6547,19 +8286,38 @@ type IPConfiguration struct {
 	Properties *IPConfigurationPropertiesFormat `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type IPConfiguration.
+func (i IPConfiguration) MarshalJSON() ([]byte, error) {
+	objectMap := i.SubResource.marshalInternal()
+	populate(objectMap, "etag", i.Etag)
+	populate(objectMap, "name", i.Name)
+	populate(objectMap, "properties", i.Properties)
+	return json.Marshal(objectMap)
+}
+
 // IPConfigurationBgpPeeringAddress - Properties of IPConfigurationBgpPeeringAddress.
 type IPConfigurationBgpPeeringAddress struct {
 	// The list of custom BGP peering addresses which belong to IP configuration.
-	CustomBgpIPAddresses *[]*string `json:"customBgpIpAddresses,omitempty"`
+	CustomBgpIPAddresses []*string `json:"customBgpIpAddresses,omitempty"`
 
 	// READ-ONLY; The list of default BGP peering addresses which belong to IP configuration.
-	DefaultBgpIPAddresses *[]*string `json:"defaultBgpIpAddresses,omitempty" azure:"ro"`
+	DefaultBgpIPAddresses []*string `json:"defaultBgpIpAddresses,omitempty" azure:"ro"`
 
 	// The ID of IP configuration which belongs to gateway.
 	IPConfigurationID *string `json:"ipconfigurationId,omitempty"`
 
 	// READ-ONLY; The list of tunnel public IP addresses which belong to IP configuration.
-	TunnelIPAddresses *[]*string `json:"tunnelIpAddresses,omitempty" azure:"ro"`
+	TunnelIPAddresses []*string `json:"tunnelIpAddresses,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type IPConfigurationBgpPeeringAddress.
+func (i IPConfigurationBgpPeeringAddress) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "customBgpIpAddresses", i.CustomBgpIPAddresses)
+	populate(objectMap, "defaultBgpIpAddresses", i.DefaultBgpIPAddresses)
+	populate(objectMap, "ipconfigurationId", i.IPConfigurationID)
+	populate(objectMap, "tunnelIpAddresses", i.TunnelIPAddresses)
+	return json.Marshal(objectMap)
 }
 
 // IPConfigurationProfile - IP configuration profile child resource.
@@ -6576,6 +8334,16 @@ type IPConfigurationProfile struct {
 
 	// READ-ONLY; Sub Resource type.
 	Type *string `json:"type,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type IPConfigurationProfile.
+func (i IPConfigurationProfile) MarshalJSON() ([]byte, error) {
+	objectMap := i.SubResource.marshalInternal()
+	populate(objectMap, "etag", i.Etag)
+	populate(objectMap, "name", i.Name)
+	populate(objectMap, "properties", i.Properties)
+	populate(objectMap, "type", i.Type)
+	return json.Marshal(objectMap)
 }
 
 // IPConfigurationProfilePropertiesFormat - IP configuration profile properties.
@@ -6615,13 +8383,29 @@ type IPGroup struct {
 	Properties *IPGroupPropertiesFormat `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type IPGroup.
+func (i IPGroup) MarshalJSON() ([]byte, error) {
+	objectMap := i.Resource.marshalInternal()
+	populate(objectMap, "etag", i.Etag)
+	populate(objectMap, "properties", i.Properties)
+	return json.Marshal(objectMap)
+}
+
 // IPGroupListResult - Response for the ListIpGroups API service call.
 type IPGroupListResult struct {
 	// URL to get the next set of results.
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// The list of IpGroups information resources.
-	Value *[]*IPGroup `json:"value,omitempty"`
+	Value []*IPGroup `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type IPGroupListResult.
+func (i IPGroupListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", i.NextLink)
+	populate(objectMap, "value", i.Value)
+	return json.Marshal(objectMap)
 }
 
 // IPGroupListResultResponse is the response envelope for operations that return a IPGroupListResult type.
@@ -6648,13 +8432,22 @@ type IPGroupPollerResponse struct {
 // IPGroupPropertiesFormat - The IpGroups property information.
 type IPGroupPropertiesFormat struct {
 	// READ-ONLY; List of references to Azure resources that this IpGroups is associated with.
-	Firewalls *[]*SubResource `json:"firewalls,omitempty" azure:"ro"`
+	Firewalls []*SubResource `json:"firewalls,omitempty" azure:"ro"`
 
 	// IpAddresses/IpAddressPrefixes in the IpGroups resource.
-	IPAddresses *[]*string `json:"ipAddresses,omitempty"`
+	IPAddresses []*string `json:"ipAddresses,omitempty"`
 
 	// READ-ONLY; The provisioning state of the IpGroups resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type IPGroupPropertiesFormat.
+func (i IPGroupPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "firewalls", i.Firewalls)
+	populate(objectMap, "ipAddresses", i.IPAddresses)
+	populate(objectMap, "provisioningState", i.ProvisioningState)
+	return json.Marshal(objectMap)
 }
 
 // IPGroupResponse is the response envelope for operations that return a IPGroup type.
@@ -6776,6 +8569,16 @@ type InboundNatPool struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type InboundNatPool.
+func (i InboundNatPool) MarshalJSON() ([]byte, error) {
+	objectMap := i.SubResource.marshalInternal()
+	populate(objectMap, "etag", i.Etag)
+	populate(objectMap, "name", i.Name)
+	populate(objectMap, "properties", i.Properties)
+	populate(objectMap, "type", i.Type)
+	return json.Marshal(objectMap)
+}
+
 // InboundNatPoolPropertiesFormat - Properties of Inbound NAT pool.
 type InboundNatPoolPropertiesFormat struct {
 	// The port used for internal connections on the endpoint. Acceptable values are between 1 and 65535.
@@ -6828,13 +8631,31 @@ type InboundNatRule struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type InboundNatRule.
+func (i InboundNatRule) MarshalJSON() ([]byte, error) {
+	objectMap := i.SubResource.marshalInternal()
+	populate(objectMap, "etag", i.Etag)
+	populate(objectMap, "name", i.Name)
+	populate(objectMap, "properties", i.Properties)
+	populate(objectMap, "type", i.Type)
+	return json.Marshal(objectMap)
+}
+
 // InboundNatRuleListResult - Response for ListInboundNatRule API service call.
 type InboundNatRuleListResult struct {
 	// READ-ONLY; The URL to get the next set of results.
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 
 	// A list of inbound nat rules in a load balancer.
-	Value *[]*InboundNatRule `json:"value,omitempty"`
+	Value []*InboundNatRule `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type InboundNatRuleListResult.
+func (i InboundNatRuleListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", i.NextLink)
+	populate(objectMap, "value", i.Value)
+	return json.Marshal(objectMap)
 }
 
 // InboundNatRuleListResultResponse is the response envelope for operations that return a InboundNatRuleListResult type.
@@ -6929,7 +8750,15 @@ type ListHubVirtualNetworkConnectionsResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of HubVirtualNetworkConnections.
-	Value *[]*HubVirtualNetworkConnection `json:"value,omitempty"`
+	Value []*HubVirtualNetworkConnection `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ListHubVirtualNetworkConnectionsResult.
+func (l ListHubVirtualNetworkConnectionsResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", l.NextLink)
+	populate(objectMap, "value", l.Value)
+	return json.Marshal(objectMap)
 }
 
 // ListHubVirtualNetworkConnectionsResultResponse is the response envelope for operations that return a ListHubVirtualNetworkConnectionsResult type.
@@ -6948,7 +8777,15 @@ type ListP2SVPNGatewaysResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of P2SVpnGateways.
-	Value *[]*P2SVPNGateway `json:"value,omitempty"`
+	Value []*P2SVPNGateway `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ListP2SVPNGatewaysResult.
+func (l ListP2SVPNGatewaysResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", l.NextLink)
+	populate(objectMap, "value", l.Value)
+	return json.Marshal(objectMap)
 }
 
 // ListP2SVPNGatewaysResultResponse is the response envelope for operations that return a ListP2SVPNGatewaysResult type.
@@ -6967,7 +8804,15 @@ type ListVPNConnectionsResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of Vpn Connections.
-	Value *[]*VPNConnection `json:"value,omitempty"`
+	Value []*VPNConnection `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ListVPNConnectionsResult.
+func (l ListVPNConnectionsResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", l.NextLink)
+	populate(objectMap, "value", l.Value)
+	return json.Marshal(objectMap)
 }
 
 // ListVPNConnectionsResultResponse is the response envelope for operations that return a ListVPNConnectionsResult type.
@@ -6986,7 +8831,15 @@ type ListVPNGatewaysResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of VpnGateways.
-	Value *[]*VPNGateway `json:"value,omitempty"`
+	Value []*VPNGateway `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ListVPNGatewaysResult.
+func (l ListVPNGatewaysResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", l.NextLink)
+	populate(objectMap, "value", l.Value)
+	return json.Marshal(objectMap)
 }
 
 // ListVPNGatewaysResultResponse is the response envelope for operations that return a ListVPNGatewaysResult type.
@@ -7005,7 +8858,15 @@ type ListVPNServerConfigurationsResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of VpnServerConfigurations.
-	Value *[]*VPNServerConfiguration `json:"value,omitempty"`
+	Value []*VPNServerConfiguration `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ListVPNServerConfigurationsResult.
+func (l ListVPNServerConfigurationsResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", l.NextLink)
+	populate(objectMap, "value", l.Value)
+	return json.Marshal(objectMap)
 }
 
 // ListVPNServerConfigurationsResultResponse is the response envelope for operations that return a ListVPNServerConfigurationsResult type.
@@ -7024,7 +8885,15 @@ type ListVPNSiteLinkConnectionsResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of VpnSiteLinkConnections.
-	Value *[]*VPNSiteLinkConnection `json:"value,omitempty"`
+	Value []*VPNSiteLinkConnection `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ListVPNSiteLinkConnectionsResult.
+func (l ListVPNSiteLinkConnectionsResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", l.NextLink)
+	populate(objectMap, "value", l.Value)
+	return json.Marshal(objectMap)
 }
 
 // ListVPNSiteLinkConnectionsResultResponse is the response envelope for operations that return a ListVPNSiteLinkConnectionsResult type.
@@ -7043,7 +8912,15 @@ type ListVPNSiteLinksResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of VpnSitesLinks.
-	Value *[]*VPNSiteLink `json:"value,omitempty"`
+	Value []*VPNSiteLink `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ListVPNSiteLinksResult.
+func (l ListVPNSiteLinksResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", l.NextLink)
+	populate(objectMap, "value", l.Value)
+	return json.Marshal(objectMap)
 }
 
 // ListVPNSiteLinksResultResponse is the response envelope for operations that return a ListVPNSiteLinksResult type.
@@ -7061,7 +8938,15 @@ type ListVPNSitesResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of VpnSites.
-	Value *[]*VPNSite `json:"value,omitempty"`
+	Value []*VPNSite `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ListVPNSitesResult.
+func (l ListVPNSitesResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", l.NextLink)
+	populate(objectMap, "value", l.Value)
+	return json.Marshal(objectMap)
 }
 
 // ListVPNSitesResultResponse is the response envelope for operations that return a ListVPNSitesResult type.
@@ -7079,7 +8964,15 @@ type ListVirtualHubRouteTableV2SResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of VirtualHubRouteTableV2s.
-	Value *[]*VirtualHubRouteTableV2 `json:"value,omitempty"`
+	Value []*VirtualHubRouteTableV2 `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ListVirtualHubRouteTableV2SResult.
+func (l ListVirtualHubRouteTableV2SResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", l.NextLink)
+	populate(objectMap, "value", l.Value)
+	return json.Marshal(objectMap)
 }
 
 // ListVirtualHubRouteTableV2SResultResponse is the response envelope for operations that return a ListVirtualHubRouteTableV2SResult type.
@@ -7097,7 +8990,15 @@ type ListVirtualHubsResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of VirtualHubs.
-	Value *[]*VirtualHub `json:"value,omitempty"`
+	Value []*VirtualHub `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ListVirtualHubsResult.
+func (l ListVirtualHubsResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", l.NextLink)
+	populate(objectMap, "value", l.Value)
+	return json.Marshal(objectMap)
 }
 
 // ListVirtualHubsResultResponse is the response envelope for operations that return a ListVirtualHubsResult type.
@@ -7115,7 +9016,15 @@ type ListVirtualWANsResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of VirtualWANs.
-	Value *[]*VirtualWAN `json:"value,omitempty"`
+	Value []*VirtualWAN `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ListVirtualWANsResult.
+func (l ListVirtualWANsResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", l.NextLink)
+	populate(objectMap, "value", l.Value)
+	return json.Marshal(objectMap)
 }
 
 // ListVirtualWANsResultResponse is the response envelope for operations that return a ListVirtualWANsResult type.
@@ -7140,13 +9049,30 @@ type LoadBalancer struct {
 	SKU *LoadBalancerSKU `json:"sku,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type LoadBalancer.
+func (l LoadBalancer) MarshalJSON() ([]byte, error) {
+	objectMap := l.Resource.marshalInternal()
+	populate(objectMap, "etag", l.Etag)
+	populate(objectMap, "properties", l.Properties)
+	populate(objectMap, "sku", l.SKU)
+	return json.Marshal(objectMap)
+}
+
 // LoadBalancerBackendAddressPoolListResult - Response for ListBackendAddressPool API service call.
 type LoadBalancerBackendAddressPoolListResult struct {
 	// READ-ONLY; The URL to get the next set of results.
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 
 	// A list of backend address pools in a load balancer.
-	Value *[]*BackendAddressPool `json:"value,omitempty"`
+	Value []*BackendAddressPool `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type LoadBalancerBackendAddressPoolListResult.
+func (l LoadBalancerBackendAddressPoolListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", l.NextLink)
+	populate(objectMap, "value", l.Value)
+	return json.Marshal(objectMap)
 }
 
 // LoadBalancerBackendAddressPoolListResultResponse is the response envelope for operations that return a LoadBalancerBackendAddressPoolListResult type.
@@ -7174,7 +9100,15 @@ type LoadBalancerFrontendIPConfigurationListResult struct {
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 
 	// A list of frontend IP configurations in a load balancer.
-	Value *[]*FrontendIPConfiguration `json:"value,omitempty"`
+	Value []*FrontendIPConfiguration `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type LoadBalancerFrontendIPConfigurationListResult.
+func (l LoadBalancerFrontendIPConfigurationListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", l.NextLink)
+	populate(objectMap, "value", l.Value)
+	return json.Marshal(objectMap)
 }
 
 // LoadBalancerFrontendIPConfigurationListResultResponse is the response envelope for operations that return a LoadBalancerFrontendIPConfigurationListResult
@@ -7203,7 +9137,15 @@ type LoadBalancerListResult struct {
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 
 	// A list of load balancers in a resource group.
-	Value *[]*LoadBalancer `json:"value,omitempty"`
+	Value []*LoadBalancer `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type LoadBalancerListResult.
+func (l LoadBalancerListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", l.NextLink)
+	populate(objectMap, "value", l.Value)
+	return json.Marshal(objectMap)
 }
 
 // LoadBalancerListResultResponse is the response envelope for operations that return a LoadBalancerListResult type.
@@ -7221,7 +9163,15 @@ type LoadBalancerLoadBalancingRuleListResult struct {
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 
 	// A list of load balancing rules in a load balancer.
-	Value *[]*LoadBalancingRule `json:"value,omitempty"`
+	Value []*LoadBalancingRule `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type LoadBalancerLoadBalancingRuleListResult.
+func (l LoadBalancerLoadBalancingRuleListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", l.NextLink)
+	populate(objectMap, "value", l.Value)
+	return json.Marshal(objectMap)
 }
 
 // LoadBalancerLoadBalancingRuleListResultResponse is the response envelope for operations that return a LoadBalancerLoadBalancingRuleListResult type.
@@ -7254,7 +9204,15 @@ type LoadBalancerOutboundRuleListResult struct {
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 
 	// A list of outbound rules in a load balancer.
-	Value *[]*OutboundRule `json:"value,omitempty"`
+	Value []*OutboundRule `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type LoadBalancerOutboundRuleListResult.
+func (l LoadBalancerOutboundRuleListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", l.NextLink)
+	populate(objectMap, "value", l.Value)
+	return json.Marshal(objectMap)
 }
 
 // LoadBalancerOutboundRuleListResultResponse is the response envelope for operations that return a LoadBalancerOutboundRuleListResult type.
@@ -7294,7 +9252,15 @@ type LoadBalancerProbeListResult struct {
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 
 	// A list of probes in a load balancer.
-	Value *[]*Probe `json:"value,omitempty"`
+	Value []*Probe `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type LoadBalancerProbeListResult.
+func (l LoadBalancerProbeListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", l.NextLink)
+	populate(objectMap, "value", l.Value)
+	return json.Marshal(objectMap)
 }
 
 // LoadBalancerProbeListResultResponse is the response envelope for operations that return a LoadBalancerProbeListResult type.
@@ -7319,10 +9285,10 @@ type LoadBalancerProbesListOptions struct {
 // LoadBalancerPropertiesFormat - Properties of the load balancer.
 type LoadBalancerPropertiesFormat struct {
 	// Collection of backend address pools used by a load balancer.
-	BackendAddressPools *[]*BackendAddressPool `json:"backendAddressPools,omitempty"`
+	BackendAddressPools []*BackendAddressPool `json:"backendAddressPools,omitempty"`
 
 	// Object representing the frontend IPs to be used for the load balancer.
-	FrontendIPConfigurations *[]*FrontendIPConfiguration `json:"frontendIPConfigurations,omitempty"`
+	FrontendIPConfigurations []*FrontendIPConfiguration `json:"frontendIPConfigurations,omitempty"`
 
 	// Defines an external port range for inbound NAT to a single backend port on NICs associated with a load balancer. Inbound NAT rules are created automatically
 	// for each NIC associated with the Load
@@ -7330,28 +9296,43 @@ type LoadBalancerPropertiesFormat struct {
 	// Inbound NAT pools are referenced from virtual
 	// machine scale sets. NICs that are associated with individual virtual machines cannot reference an inbound NAT pool. They have to reference individual
 	// inbound NAT rules.
-	InboundNatPools *[]*InboundNatPool `json:"inboundNatPools,omitempty"`
+	InboundNatPools []*InboundNatPool `json:"inboundNatPools,omitempty"`
 
 	// Collection of inbound NAT Rules used by a load balancer. Defining inbound NAT rules on your load balancer is mutually exclusive with defining an inbound
 	// NAT pool. Inbound NAT pools are referenced from
 	// virtual machine scale sets. NICs that are associated with individual virtual machines cannot reference an Inbound NAT pool. They have to reference individual
 	// inbound NAT rules.
-	InboundNatRules *[]*InboundNatRule `json:"inboundNatRules,omitempty"`
+	InboundNatRules []*InboundNatRule `json:"inboundNatRules,omitempty"`
 
 	// Object collection representing the load balancing rules Gets the provisioning.
-	LoadBalancingRules *[]*LoadBalancingRule `json:"loadBalancingRules,omitempty"`
+	LoadBalancingRules []*LoadBalancingRule `json:"loadBalancingRules,omitempty"`
 
 	// The outbound rules.
-	OutboundRules *[]*OutboundRule `json:"outboundRules,omitempty"`
+	OutboundRules []*OutboundRule `json:"outboundRules,omitempty"`
 
 	// Collection of probe objects used in the load balancer.
-	Probes *[]*Probe `json:"probes,omitempty"`
+	Probes []*Probe `json:"probes,omitempty"`
 
 	// READ-ONLY; The provisioning state of the load balancer resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
 	// READ-ONLY; The resource GUID property of the load balancer resource.
 	ResourceGUID *string `json:"resourceGuid,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type LoadBalancerPropertiesFormat.
+func (l LoadBalancerPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "backendAddressPools", l.BackendAddressPools)
+	populate(objectMap, "frontendIPConfigurations", l.FrontendIPConfigurations)
+	populate(objectMap, "inboundNatPools", l.InboundNatPools)
+	populate(objectMap, "inboundNatRules", l.InboundNatRules)
+	populate(objectMap, "loadBalancingRules", l.LoadBalancingRules)
+	populate(objectMap, "outboundRules", l.OutboundRules)
+	populate(objectMap, "probes", l.Probes)
+	populate(objectMap, "provisioningState", l.ProvisioningState)
+	populate(objectMap, "resourceGuid", l.ResourceGUID)
+	return json.Marshal(objectMap)
 }
 
 // LoadBalancerResponse is the response envelope for operations that return a LoadBalancer type.
@@ -7414,6 +9395,16 @@ type LoadBalancingRule struct {
 
 	// READ-ONLY; Type of the resource.
 	Type *string `json:"type,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type LoadBalancingRule.
+func (l LoadBalancingRule) MarshalJSON() ([]byte, error) {
+	objectMap := l.SubResource.marshalInternal()
+	populate(objectMap, "etag", l.Etag)
+	populate(objectMap, "name", l.Name)
+	populate(objectMap, "properties", l.Properties)
+	populate(objectMap, "type", l.Type)
+	return json.Marshal(objectMap)
 }
 
 // LoadBalancingRulePropertiesFormat - Properties of the load balancer.
@@ -7479,13 +9470,29 @@ type LocalNetworkGateway struct {
 	Properties *LocalNetworkGatewayPropertiesFormat `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type LocalNetworkGateway.
+func (l LocalNetworkGateway) MarshalJSON() ([]byte, error) {
+	objectMap := l.Resource.marshalInternal()
+	populate(objectMap, "etag", l.Etag)
+	populate(objectMap, "properties", l.Properties)
+	return json.Marshal(objectMap)
+}
+
 // LocalNetworkGatewayListResult - Response for ListLocalNetworkGateways API service call.
 type LocalNetworkGatewayListResult struct {
 	// READ-ONLY; The URL to get the next set of results.
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 
 	// A list of local network gateways that exists in a resource group.
-	Value *[]*LocalNetworkGateway `json:"value,omitempty"`
+	Value []*LocalNetworkGateway `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type LocalNetworkGatewayListResult.
+func (l LocalNetworkGatewayListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", l.NextLink)
+	populate(objectMap, "value", l.Value)
+	return json.Marshal(objectMap)
 }
 
 // LocalNetworkGatewayListResultResponse is the response envelope for operations that return a LocalNetworkGatewayListResult type.
@@ -7582,7 +9589,15 @@ type ManagedRuleGroupOverride struct {
 	RuleGroupName *string `json:"ruleGroupName,omitempty"`
 
 	// List of rules that will be disabled. If none specified, all rules in the group will be disabled.
-	Rules *[]*ManagedRuleOverride `json:"rules,omitempty"`
+	Rules []*ManagedRuleOverride `json:"rules,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ManagedRuleGroupOverride.
+func (m ManagedRuleGroupOverride) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "ruleGroupName", m.RuleGroupName)
+	populate(objectMap, "rules", m.Rules)
+	return json.Marshal(objectMap)
 }
 
 // ManagedRuleOverride - Defines a managed rule group override setting.
@@ -7597,7 +9612,7 @@ type ManagedRuleOverride struct {
 // ManagedRuleSet - Defines a managed rule set.
 type ManagedRuleSet struct {
 	// Defines the rule group overrides to apply to the rule set.
-	RuleGroupOverrides *[]*ManagedRuleGroupOverride `json:"ruleGroupOverrides,omitempty"`
+	RuleGroupOverrides []*ManagedRuleGroupOverride `json:"ruleGroupOverrides,omitempty"`
 
 	// Defines the rule set type to use.
 	RuleSetType *string `json:"ruleSetType,omitempty"`
@@ -7606,13 +9621,30 @@ type ManagedRuleSet struct {
 	RuleSetVersion *string `json:"ruleSetVersion,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type ManagedRuleSet.
+func (m ManagedRuleSet) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "ruleGroupOverrides", m.RuleGroupOverrides)
+	populate(objectMap, "ruleSetType", m.RuleSetType)
+	populate(objectMap, "ruleSetVersion", m.RuleSetVersion)
+	return json.Marshal(objectMap)
+}
+
 // ManagedRulesDefinition - Allow to exclude some variable satisfy the condition for the WAF check.
 type ManagedRulesDefinition struct {
 	// The Exclusions that are applied on the policy.
-	Exclusions *[]*OwaspCrsExclusionEntry `json:"exclusions,omitempty"`
+	Exclusions []*OwaspCrsExclusionEntry `json:"exclusions,omitempty"`
 
 	// The managed rule sets that are associated with the policy.
-	ManagedRuleSets *[]*ManagedRuleSet `json:"managedRuleSets,omitempty"`
+	ManagedRuleSets []*ManagedRuleSet `json:"managedRuleSets,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ManagedRulesDefinition.
+func (m ManagedRulesDefinition) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "exclusions", m.Exclusions)
+	populate(objectMap, "managedRuleSets", m.ManagedRuleSets)
+	return json.Marshal(objectMap)
 }
 
 // ManagedServiceIdentity - Identity for the resource.
@@ -7630,16 +9662,26 @@ type ManagedServiceIdentity struct {
 
 	// The list of user identities associated with resource. The user identity dictionary key references will be ARM resource ids in the form:
 	// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
-	UserAssignedIdentities *map[string]*Components1Jq1T4ISchemasManagedserviceidentityPropertiesUserassignedidentitiesAdditionalproperties `json:"userAssignedIdentities,omitempty"`
+	UserAssignedIdentities map[string]*Components1Jq1T4ISchemasManagedserviceidentityPropertiesUserassignedidentitiesAdditionalproperties `json:"userAssignedIdentities,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ManagedServiceIdentity.
+func (m ManagedServiceIdentity) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "principalId", m.PrincipalID)
+	populate(objectMap, "tenantId", m.TenantID)
+	populate(objectMap, "type", m.Type)
+	populate(objectMap, "userAssignedIdentities", m.UserAssignedIdentities)
+	return json.Marshal(objectMap)
 }
 
 // MatchCondition - Define match conditions.
 type MatchCondition struct {
 	// Match value.
-	MatchValues *[]*string `json:"matchValues,omitempty"`
+	MatchValues []*string `json:"matchValues,omitempty"`
 
 	// List of match variables.
-	MatchVariables *[]*MatchVariable `json:"matchVariables,omitempty"`
+	MatchVariables []*MatchVariable `json:"matchVariables,omitempty"`
 
 	// Whether this is negate condition or not.
 	NegationConditon *bool `json:"negationConditon,omitempty"`
@@ -7648,7 +9690,18 @@ type MatchCondition struct {
 	Operator *WebApplicationFirewallOperator `json:"operator,omitempty"`
 
 	// List of transforms.
-	Transforms *[]*WebApplicationFirewallTransform `json:"transforms,omitempty"`
+	Transforms []*WebApplicationFirewallTransform `json:"transforms,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type MatchCondition.
+func (m MatchCondition) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "matchValues", m.MatchValues)
+	populate(objectMap, "matchVariables", m.MatchVariables)
+	populate(objectMap, "negationConditon", m.NegationConditon)
+	populate(objectMap, "operator", m.Operator)
+	populate(objectMap, "transforms", m.Transforms)
+	return json.Marshal(objectMap)
 }
 
 // MatchVariable - Define match variables.
@@ -7675,10 +9728,10 @@ type MetricSpecification struct {
 	AggregationType *string `json:"aggregationType,omitempty"`
 
 	// List of availability.
-	Availabilities *[]*Availability `json:"availabilities,omitempty"`
+	Availabilities []*Availability `json:"availabilities,omitempty"`
 
 	// List of dimensions.
-	Dimensions *[]*Dimension `json:"dimensions,omitempty"`
+	Dimensions []*Dimension `json:"dimensions,omitempty"`
 
 	// The description of the metric.
 	DisplayDescription *string `json:"displayDescription,omitempty"`
@@ -7714,6 +9767,26 @@ type MetricSpecification struct {
 	Unit *string `json:"unit,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type MetricSpecification.
+func (m MetricSpecification) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "aggregationType", m.AggregationType)
+	populate(objectMap, "availabilities", m.Availabilities)
+	populate(objectMap, "dimensions", m.Dimensions)
+	populate(objectMap, "displayDescription", m.DisplayDescription)
+	populate(objectMap, "displayName", m.DisplayName)
+	populate(objectMap, "enableRegionalMdmAccount", m.EnableRegionalMdmAccount)
+	populate(objectMap, "fillGapWithZero", m.FillGapWithZero)
+	populate(objectMap, "isInternal", m.IsInternal)
+	populate(objectMap, "metricFilterPattern", m.MetricFilterPattern)
+	populate(objectMap, "name", m.Name)
+	populate(objectMap, "resourceIdDimensionNameOverride", m.ResourceIDDimensionNameOverride)
+	populate(objectMap, "sourceMdmAccount", m.SourceMdmAccount)
+	populate(objectMap, "sourceMdmNamespace", m.SourceMdmNamespace)
+	populate(objectMap, "unit", m.Unit)
+	return json.Marshal(objectMap)
+}
+
 // NatGateway - Nat Gateway resource.
 type NatGateway struct {
 	Resource
@@ -7727,7 +9800,17 @@ type NatGateway struct {
 	SKU *NatGatewaySKU `json:"sku,omitempty"`
 
 	// A list of availability zones denoting the zone in which Nat Gateway should be deployed.
-	Zones *[]*string `json:"zones,omitempty"`
+	Zones []*string `json:"zones,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type NatGateway.
+func (n NatGateway) MarshalJSON() ([]byte, error) {
+	objectMap := n.Resource.marshalInternal()
+	populate(objectMap, "etag", n.Etag)
+	populate(objectMap, "properties", n.Properties)
+	populate(objectMap, "sku", n.SKU)
+	populate(objectMap, "zones", n.Zones)
+	return json.Marshal(objectMap)
 }
 
 // NatGatewayListResult - Response for ListNatGateways API service call.
@@ -7736,7 +9819,15 @@ type NatGatewayListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// A list of Nat Gateways that exists in a resource group.
-	Value *[]*NatGateway `json:"value,omitempty"`
+	Value []*NatGateway `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type NatGatewayListResult.
+func (n NatGatewayListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", n.NextLink)
+	populate(objectMap, "value", n.Value)
+	return json.Marshal(objectMap)
 }
 
 // NatGatewayListResultResponse is the response envelope for operations that return a NatGatewayListResult type.
@@ -7769,16 +9860,28 @@ type NatGatewayPropertiesFormat struct {
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
 	// An array of public ip addresses associated with the nat gateway resource.
-	PublicIPAddresses *[]*SubResource `json:"publicIpAddresses,omitempty"`
+	PublicIPAddresses []*SubResource `json:"publicIpAddresses,omitempty"`
 
 	// An array of public ip prefixes associated with the nat gateway resource.
-	PublicIPPrefixes *[]*SubResource `json:"publicIpPrefixes,omitempty"`
+	PublicIPPrefixes []*SubResource `json:"publicIpPrefixes,omitempty"`
 
 	// READ-ONLY; The resource GUID property of the NAT gateway resource.
 	ResourceGUID *string `json:"resourceGuid,omitempty" azure:"ro"`
 
 	// READ-ONLY; An array of references to the subnets using this nat gateway resource.
-	Subnets *[]*SubResource `json:"subnets,omitempty" azure:"ro"`
+	Subnets []*SubResource `json:"subnets,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type NatGatewayPropertiesFormat.
+func (n NatGatewayPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "idleTimeoutInMinutes", n.IdleTimeoutInMinutes)
+	populate(objectMap, "provisioningState", n.ProvisioningState)
+	populate(objectMap, "publicIpAddresses", n.PublicIPAddresses)
+	populate(objectMap, "publicIpPrefixes", n.PublicIPPrefixes)
+	populate(objectMap, "resourceGuid", n.ResourceGUID)
+	populate(objectMap, "subnets", n.Subnets)
+	return json.Marshal(objectMap)
 }
 
 // NatGatewayResponse is the response envelope for operations that return a NatGateway type.
@@ -7831,19 +9934,19 @@ type NatGatewaysUpdateTagsOptions struct {
 type NatRuleCondition struct {
 	FirewallPolicyRuleCondition
 	// List of destination IP addresses or Service Tags.
-	DestinationAddresses *[]*string `json:"destinationAddresses,omitempty"`
+	DestinationAddresses []*string `json:"destinationAddresses,omitempty"`
 
 	// List of destination ports.
-	DestinationPorts *[]*string `json:"destinationPorts,omitempty"`
+	DestinationPorts []*string `json:"destinationPorts,omitempty"`
 
 	// Array of FirewallPolicyRuleConditionNetworkProtocols.
-	IPProtocols *[]*FirewallPolicyRuleConditionNetworkProtocol `json:"ipProtocols,omitempty"`
+	IPProtocols []*FirewallPolicyRuleConditionNetworkProtocol `json:"ipProtocols,omitempty"`
 
 	// List of source IP addresses for this rule.
-	SourceAddresses *[]*string `json:"sourceAddresses,omitempty"`
+	SourceAddresses []*string `json:"sourceAddresses,omitempty"`
 
 	// List of source IpGroups for this rule.
-	SourceIPGroups *[]*string `json:"sourceIpGroups,omitempty"`
+	SourceIPGroups []*string `json:"sourceIpGroups,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type NatRuleCondition.
@@ -7892,7 +9995,7 @@ func (n *NatRuleCondition) UnmarshalJSON(data []byte) error {
 // NetworkConfigurationDiagnosticParameters - Parameters to get network configuration diagnostic.
 type NetworkConfigurationDiagnosticParameters struct {
 	// List of network configuration diagnostic profiles.
-	Profiles *[]*NetworkConfigurationDiagnosticProfile `json:"profiles,omitempty"`
+	Profiles []*NetworkConfigurationDiagnosticProfile `json:"profiles,omitempty"`
 
 	// The ID of the target resource to perform network configuration diagnostic. Valid options are VM, NetworkInterface, VMSS/NetworkInterface and Application
 	// Gateway.
@@ -7900,6 +10003,15 @@ type NetworkConfigurationDiagnosticParameters struct {
 
 	// Verbosity level.
 	VerbosityLevel *VerbosityLevel `json:"verbosityLevel,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type NetworkConfigurationDiagnosticParameters.
+func (n NetworkConfigurationDiagnosticParameters) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "profiles", n.Profiles)
+	populate(objectMap, "targetResourceId", n.TargetResourceID)
+	populate(objectMap, "verbosityLevel", n.VerbosityLevel)
+	return json.Marshal(objectMap)
 }
 
 // NetworkConfigurationDiagnosticProfile - Parameters to compare with network configuration.
@@ -7923,7 +10035,14 @@ type NetworkConfigurationDiagnosticProfile struct {
 // NetworkConfigurationDiagnosticResponse - Results of network configuration diagnostic on the target resource.
 type NetworkConfigurationDiagnosticResponse struct {
 	// READ-ONLY; List of network configuration diagnostic results.
-	Results *[]*NetworkConfigurationDiagnosticResult `json:"results,omitempty" azure:"ro"`
+	Results []*NetworkConfigurationDiagnosticResult `json:"results,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type NetworkConfigurationDiagnosticResponse.
+func (n NetworkConfigurationDiagnosticResponse) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "results", n.Results)
+	return json.Marshal(objectMap)
 }
 
 // NetworkConfigurationDiagnosticResponsePollerResponse is the response envelope for operations that asynchronously return a NetworkConfigurationDiagnosticResponse
@@ -7964,6 +10083,13 @@ type NetworkIntentPolicy struct {
 	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type NetworkIntentPolicy.
+func (n NetworkIntentPolicy) MarshalJSON() ([]byte, error) {
+	objectMap := n.Resource.marshalInternal()
+	populate(objectMap, "etag", n.Etag)
+	return json.Marshal(objectMap)
+}
+
 // NetworkIntentPolicyConfiguration - Details of NetworkIntentPolicyConfiguration for PrepareNetworkPoliciesRequest.
 type NetworkIntentPolicyConfiguration struct {
 	// The name of the Network Intent Policy for storing in target subscription.
@@ -7983,13 +10109,29 @@ type NetworkInterface struct {
 	Properties *NetworkInterfacePropertiesFormat `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type NetworkInterface.
+func (n NetworkInterface) MarshalJSON() ([]byte, error) {
+	objectMap := n.Resource.marshalInternal()
+	populate(objectMap, "etag", n.Etag)
+	populate(objectMap, "properties", n.Properties)
+	return json.Marshal(objectMap)
+}
+
 // NetworkInterfaceAssociation - Network interface and its custom security rules.
 type NetworkInterfaceAssociation struct {
 	// READ-ONLY; Network interface ID.
 	ID *string `json:"id,omitempty" azure:"ro"`
 
 	// Collection of custom security rules.
-	SecurityRules *[]*SecurityRule `json:"securityRules,omitempty"`
+	SecurityRules []*SecurityRule `json:"securityRules,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type NetworkInterfaceAssociation.
+func (n NetworkInterfaceAssociation) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "id", n.ID)
+	populate(objectMap, "securityRules", n.SecurityRules)
+	return json.Marshal(objectMap)
 }
 
 // NetworkInterfaceDNSSettings - DNS settings of a network interface.
@@ -7997,12 +10139,12 @@ type NetworkInterfaceDNSSettings struct {
 	// READ-ONLY; If the VM that uses this NIC is part of an Availability Set, then this list will have the union of all DNS servers from all NICs that are
 	// part of the Availability Set. This property is what is
 	// configured on each of those VMs.
-	AppliedDNSServers *[]*string `json:"appliedDnsServers,omitempty" azure:"ro"`
+	AppliedDNSServers []*string `json:"appliedDnsServers,omitempty" azure:"ro"`
 
 	// List of DNS servers IP addresses. Use 'AzureProvidedDNS' to switch to azure provided DNS resolution. 'AzureProvidedDNS' value cannot be combined with
 	// other IPs, it must be the only value in dnsServers
 	// collection.
-	DNSServers *[]*string `json:"dnsServers,omitempty"`
+	DNSServers []*string `json:"dnsServers,omitempty"`
 
 	// Relative DNS name for this NIC used for internal communications between VMs in the same virtual network.
 	InternalDNSNameLabel *string `json:"internalDnsNameLabel,omitempty"`
@@ -8014,6 +10156,17 @@ type NetworkInterfaceDNSSettings struct {
 
 	// READ-ONLY; Fully qualified DNS name supporting internal communications between VMs in the same virtual network.
 	InternalFqdn *string `json:"internalFqdn,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type NetworkInterfaceDNSSettings.
+func (n NetworkInterfaceDNSSettings) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "appliedDnsServers", n.AppliedDNSServers)
+	populate(objectMap, "dnsServers", n.DNSServers)
+	populate(objectMap, "internalDnsNameLabel", n.InternalDNSNameLabel)
+	populate(objectMap, "internalDomainNameSuffix", n.InternalDomainNameSuffix)
+	populate(objectMap, "internalFqdn", n.InternalFqdn)
+	return json.Marshal(objectMap)
 }
 
 // NetworkInterfaceIPConfiguration - IPConfiguration in a network interface.
@@ -8029,13 +10182,30 @@ type NetworkInterfaceIPConfiguration struct {
 	Properties *NetworkInterfaceIPConfigurationPropertiesFormat `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type NetworkInterfaceIPConfiguration.
+func (n NetworkInterfaceIPConfiguration) MarshalJSON() ([]byte, error) {
+	objectMap := n.SubResource.marshalInternal()
+	populate(objectMap, "etag", n.Etag)
+	populate(objectMap, "name", n.Name)
+	populate(objectMap, "properties", n.Properties)
+	return json.Marshal(objectMap)
+}
+
 // NetworkInterfaceIPConfigurationListResult - Response for list ip configurations API service call.
 type NetworkInterfaceIPConfigurationListResult struct {
 	// READ-ONLY; The URL to get the next set of results.
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 
 	// A list of ip configurations.
-	Value *[]*NetworkInterfaceIPConfiguration `json:"value,omitempty"`
+	Value []*NetworkInterfaceIPConfiguration `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type NetworkInterfaceIPConfigurationListResult.
+func (n NetworkInterfaceIPConfigurationListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", n.NextLink)
+	populate(objectMap, "value", n.Value)
+	return json.Marshal(objectMap)
 }
 
 // NetworkInterfaceIPConfigurationListResultResponse is the response envelope for operations that return a NetworkInterfaceIPConfigurationListResult type.
@@ -8050,7 +10220,7 @@ type NetworkInterfaceIPConfigurationListResultResponse struct {
 // NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties - PrivateLinkConnection properties for the network interface.
 type NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties struct {
 	// READ-ONLY; List of FQDNs for current private link connection.
-	Fqdns *[]*string `json:"fqdns,omitempty" azure:"ro"`
+	Fqdns []*string `json:"fqdns,omitempty" azure:"ro"`
 
 	// READ-ONLY; The group ID for current private link connection.
 	GroupID *string `json:"groupId,omitempty" azure:"ro"`
@@ -8059,19 +10229,28 @@ type NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties struct {
 	RequiredMemberName *string `json:"requiredMemberName,omitempty" azure:"ro"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties.
+func (n NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "fqdns", n.Fqdns)
+	populate(objectMap, "groupId", n.GroupID)
+	populate(objectMap, "requiredMemberName", n.RequiredMemberName)
+	return json.Marshal(objectMap)
+}
+
 // NetworkInterfaceIPConfigurationPropertiesFormat - Properties of IP configuration.
 type NetworkInterfaceIPConfigurationPropertiesFormat struct {
 	// The reference to ApplicationGatewayBackendAddressPool resource.
-	ApplicationGatewayBackendAddressPools *[]*ApplicationGatewayBackendAddressPool `json:"applicationGatewayBackendAddressPools,omitempty"`
+	ApplicationGatewayBackendAddressPools []*ApplicationGatewayBackendAddressPool `json:"applicationGatewayBackendAddressPools,omitempty"`
 
 	// Application security groups in which the IP configuration is included.
-	ApplicationSecurityGroups *[]*ApplicationSecurityGroup `json:"applicationSecurityGroups,omitempty"`
+	ApplicationSecurityGroups []*ApplicationSecurityGroup `json:"applicationSecurityGroups,omitempty"`
 
 	// The reference to LoadBalancerBackendAddressPool resource.
-	LoadBalancerBackendAddressPools *[]*BackendAddressPool `json:"loadBalancerBackendAddressPools,omitempty"`
+	LoadBalancerBackendAddressPools []*BackendAddressPool `json:"loadBalancerBackendAddressPools,omitempty"`
 
 	// A list of references of LoadBalancerInboundNatRules.
-	LoadBalancerInboundNatRules *[]*InboundNatRule `json:"loadBalancerInboundNatRules,omitempty"`
+	LoadBalancerInboundNatRules []*InboundNatRule `json:"loadBalancerInboundNatRules,omitempty"`
 
 	// Whether this is a primary customer address on the network interface.
 	Primary *bool `json:"primary,omitempty"`
@@ -8098,7 +10277,26 @@ type NetworkInterfaceIPConfigurationPropertiesFormat struct {
 	Subnet *Subnet `json:"subnet,omitempty"`
 
 	// The reference to Virtual Network Taps.
-	VirtualNetworkTaps *[]*VirtualNetworkTap `json:"virtualNetworkTaps,omitempty"`
+	VirtualNetworkTaps []*VirtualNetworkTap `json:"virtualNetworkTaps,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type NetworkInterfaceIPConfigurationPropertiesFormat.
+func (n NetworkInterfaceIPConfigurationPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "applicationGatewayBackendAddressPools", n.ApplicationGatewayBackendAddressPools)
+	populate(objectMap, "applicationSecurityGroups", n.ApplicationSecurityGroups)
+	populate(objectMap, "loadBalancerBackendAddressPools", n.LoadBalancerBackendAddressPools)
+	populate(objectMap, "loadBalancerInboundNatRules", n.LoadBalancerInboundNatRules)
+	populate(objectMap, "primary", n.Primary)
+	populate(objectMap, "privateIPAddress", n.PrivateIPAddress)
+	populate(objectMap, "privateIPAddressVersion", n.PrivateIPAddressVersion)
+	populate(objectMap, "privateIPAllocationMethod", n.PrivateIPAllocationMethod)
+	populate(objectMap, "privateLinkConnectionProperties", n.PrivateLinkConnectionProperties)
+	populate(objectMap, "provisioningState", n.ProvisioningState)
+	populate(objectMap, "publicIPAddress", n.PublicIPAddress)
+	populate(objectMap, "subnet", n.Subnet)
+	populate(objectMap, "virtualNetworkTaps", n.VirtualNetworkTaps)
+	return json.Marshal(objectMap)
 }
 
 // NetworkInterfaceIPConfigurationResponse is the response envelope for operations that return a NetworkInterfaceIPConfiguration type.
@@ -8126,7 +10324,15 @@ type NetworkInterfaceListResult struct {
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 
 	// A list of network interfaces in a resource group.
-	Value *[]*NetworkInterface `json:"value,omitempty"`
+	Value []*NetworkInterface `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type NetworkInterfaceListResult.
+func (n NetworkInterfaceListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", n.NextLink)
+	populate(objectMap, "value", n.Value)
+	return json.Marshal(objectMap)
 }
 
 // NetworkInterfaceListResultResponse is the response envelope for operations that return a NetworkInterfaceListResult type.
@@ -8144,7 +10350,15 @@ type NetworkInterfaceLoadBalancerListResult struct {
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 
 	// A list of load balancers.
-	Value *[]*LoadBalancer `json:"value,omitempty"`
+	Value []*LoadBalancer `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type NetworkInterfaceLoadBalancerListResult.
+func (n NetworkInterfaceLoadBalancerListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", n.NextLink)
+	populate(objectMap, "value", n.Value)
+	return json.Marshal(objectMap)
 }
 
 // NetworkInterfaceLoadBalancerListResultResponse is the response envelope for operations that return a NetworkInterfaceLoadBalancerListResult type.
@@ -8185,10 +10399,10 @@ type NetworkInterfacePropertiesFormat struct {
 	EnableIPForwarding *bool `json:"enableIPForwarding,omitempty"`
 
 	// READ-ONLY; A list of references to linked BareMetal resources.
-	HostedWorkloads *[]*string `json:"hostedWorkloads,omitempty" azure:"ro"`
+	HostedWorkloads []*string `json:"hostedWorkloads,omitempty" azure:"ro"`
 
 	// A list of IPConfigurations of the network interface.
-	IPConfigurations *[]*NetworkInterfaceIPConfiguration `json:"ipConfigurations,omitempty"`
+	IPConfigurations []*NetworkInterfaceIPConfiguration `json:"ipConfigurations,omitempty"`
 
 	// READ-ONLY; The MAC address of the network interface.
 	MacAddress *string `json:"macAddress,omitempty" azure:"ro"`
@@ -8209,10 +10423,29 @@ type NetworkInterfacePropertiesFormat struct {
 	ResourceGUID *string `json:"resourceGuid,omitempty" azure:"ro"`
 
 	// READ-ONLY; A list of TapConfigurations of the network interface.
-	TapConfigurations *[]*NetworkInterfaceTapConfiguration `json:"tapConfigurations,omitempty" azure:"ro"`
+	TapConfigurations []*NetworkInterfaceTapConfiguration `json:"tapConfigurations,omitempty" azure:"ro"`
 
 	// READ-ONLY; The reference to a virtual machine.
 	VirtualMachine *SubResource `json:"virtualMachine,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type NetworkInterfacePropertiesFormat.
+func (n NetworkInterfacePropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "dnsSettings", n.DNSSettings)
+	populate(objectMap, "enableAcceleratedNetworking", n.EnableAcceleratedNetworking)
+	populate(objectMap, "enableIPForwarding", n.EnableIPForwarding)
+	populate(objectMap, "hostedWorkloads", n.HostedWorkloads)
+	populate(objectMap, "ipConfigurations", n.IPConfigurations)
+	populate(objectMap, "macAddress", n.MacAddress)
+	populate(objectMap, "networkSecurityGroup", n.NetworkSecurityGroup)
+	populate(objectMap, "primary", n.Primary)
+	populate(objectMap, "privateEndpoint", n.PrivateEndpoint)
+	populate(objectMap, "provisioningState", n.ProvisioningState)
+	populate(objectMap, "resourceGuid", n.ResourceGUID)
+	populate(objectMap, "tapConfigurations", n.TapConfigurations)
+	populate(objectMap, "virtualMachine", n.VirtualMachine)
+	return json.Marshal(objectMap)
 }
 
 // NetworkInterfaceResponse is the response envelope for operations that return a NetworkInterface type.
@@ -8240,13 +10473,31 @@ type NetworkInterfaceTapConfiguration struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type NetworkInterfaceTapConfiguration.
+func (n NetworkInterfaceTapConfiguration) MarshalJSON() ([]byte, error) {
+	objectMap := n.SubResource.marshalInternal()
+	populate(objectMap, "etag", n.Etag)
+	populate(objectMap, "name", n.Name)
+	populate(objectMap, "properties", n.Properties)
+	populate(objectMap, "type", n.Type)
+	return json.Marshal(objectMap)
+}
+
 // NetworkInterfaceTapConfigurationListResult - Response for list tap configurations API service call.
 type NetworkInterfaceTapConfigurationListResult struct {
 	// READ-ONLY; The URL to get the next set of results.
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 
 	// A list of tap configurations.
-	Value *[]*NetworkInterfaceTapConfiguration `json:"value,omitempty"`
+	Value []*NetworkInterfaceTapConfiguration `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type NetworkInterfaceTapConfigurationListResult.
+func (n NetworkInterfaceTapConfigurationListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", n.NextLink)
+	populate(objectMap, "value", n.Value)
+	return json.Marshal(objectMap)
 }
 
 // NetworkInterfaceTapConfigurationListResultResponse is the response envelope for operations that return a NetworkInterfaceTapConfigurationListResult type.
@@ -8439,13 +10690,29 @@ type NetworkProfile struct {
 	Properties *NetworkProfilePropertiesFormat `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type NetworkProfile.
+func (n NetworkProfile) MarshalJSON() ([]byte, error) {
+	objectMap := n.Resource.marshalInternal()
+	populate(objectMap, "etag", n.Etag)
+	populate(objectMap, "properties", n.Properties)
+	return json.Marshal(objectMap)
+}
+
 // NetworkProfileListResult - Response for ListNetworkProfiles API service call.
 type NetworkProfileListResult struct {
 	// The URL to get the next set of results.
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// A list of network profiles that exist in a resource group.
-	Value *[]*NetworkProfile `json:"value,omitempty"`
+	Value []*NetworkProfile `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type NetworkProfileListResult.
+func (n NetworkProfileListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", n.NextLink)
+	populate(objectMap, "value", n.Value)
+	return json.Marshal(objectMap)
 }
 
 // NetworkProfileListResultResponse is the response envelope for operations that return a NetworkProfileListResult type.
@@ -8460,16 +10727,26 @@ type NetworkProfileListResultResponse struct {
 // NetworkProfilePropertiesFormat - Network profile properties.
 type NetworkProfilePropertiesFormat struct {
 	// List of chid container network interface configurations.
-	ContainerNetworkInterfaceConfigurations *[]*ContainerNetworkInterfaceConfiguration `json:"containerNetworkInterfaceConfigurations,omitempty"`
+	ContainerNetworkInterfaceConfigurations []*ContainerNetworkInterfaceConfiguration `json:"containerNetworkInterfaceConfigurations,omitempty"`
 
 	// READ-ONLY; List of child container network interfaces.
-	ContainerNetworkInterfaces *[]*ContainerNetworkInterface `json:"containerNetworkInterfaces,omitempty" azure:"ro"`
+	ContainerNetworkInterfaces []*ContainerNetworkInterface `json:"containerNetworkInterfaces,omitempty" azure:"ro"`
 
 	// READ-ONLY; The provisioning state of the network profile resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
 	// READ-ONLY; The resource GUID property of the network profile resource.
 	ResourceGUID *string `json:"resourceGuid,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type NetworkProfilePropertiesFormat.
+func (n NetworkProfilePropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "containerNetworkInterfaceConfigurations", n.ContainerNetworkInterfaceConfigurations)
+	populate(objectMap, "containerNetworkInterfaces", n.ContainerNetworkInterfaces)
+	populate(objectMap, "provisioningState", n.ProvisioningState)
+	populate(objectMap, "resourceGuid", n.ResourceGUID)
+	return json.Marshal(objectMap)
 }
 
 // NetworkProfileResponse is the response envelope for operations that return a NetworkProfile type.
@@ -8516,22 +10793,22 @@ type NetworkProfilesUpdateTagsOptions struct {
 type NetworkRuleCondition struct {
 	FirewallPolicyRuleCondition
 	// List of destination IP addresses or Service Tags.
-	DestinationAddresses *[]*string `json:"destinationAddresses,omitempty"`
+	DestinationAddresses []*string `json:"destinationAddresses,omitempty"`
 
 	// List of destination IpGroups for this rule.
-	DestinationIPGroups *[]*string `json:"destinationIpGroups,omitempty"`
+	DestinationIPGroups []*string `json:"destinationIpGroups,omitempty"`
 
 	// List of destination ports.
-	DestinationPorts *[]*string `json:"destinationPorts,omitempty"`
+	DestinationPorts []*string `json:"destinationPorts,omitempty"`
 
 	// Array of FirewallPolicyRuleConditionNetworkProtocols.
-	IPProtocols *[]*FirewallPolicyRuleConditionNetworkProtocol `json:"ipProtocols,omitempty"`
+	IPProtocols []*FirewallPolicyRuleConditionNetworkProtocol `json:"ipProtocols,omitempty"`
 
 	// List of source IP addresses for this rule.
-	SourceAddresses *[]*string `json:"sourceAddresses,omitempty"`
+	SourceAddresses []*string `json:"sourceAddresses,omitempty"`
 
 	// List of source IpGroups for this rule.
-	SourceIPGroups *[]*string `json:"sourceIpGroups,omitempty"`
+	SourceIPGroups []*string `json:"sourceIpGroups,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type NetworkRuleCondition.
@@ -8591,13 +10868,29 @@ type NetworkSecurityGroup struct {
 	Properties *NetworkSecurityGroupPropertiesFormat `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type NetworkSecurityGroup.
+func (n NetworkSecurityGroup) MarshalJSON() ([]byte, error) {
+	objectMap := n.Resource.marshalInternal()
+	populate(objectMap, "etag", n.Etag)
+	populate(objectMap, "properties", n.Properties)
+	return json.Marshal(objectMap)
+}
+
 // NetworkSecurityGroupListResult - Response for ListNetworkSecurityGroups API service call.
 type NetworkSecurityGroupListResult struct {
 	// The URL to get the next set of results.
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// A list of NetworkSecurityGroup resources.
-	Value *[]*NetworkSecurityGroup `json:"value,omitempty"`
+	Value []*NetworkSecurityGroup `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type NetworkSecurityGroupListResult.
+func (n NetworkSecurityGroupListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", n.NextLink)
+	populate(objectMap, "value", n.Value)
+	return json.Marshal(objectMap)
 }
 
 // NetworkSecurityGroupListResultResponse is the response envelope for operations that return a NetworkSecurityGroupListResult type.
@@ -8624,13 +10917,13 @@ type NetworkSecurityGroupPollerResponse struct {
 // NetworkSecurityGroupPropertiesFormat - Network Security Group resource.
 type NetworkSecurityGroupPropertiesFormat struct {
 	// READ-ONLY; The default security rules of network security group.
-	DefaultSecurityRules *[]*SecurityRule `json:"defaultSecurityRules,omitempty" azure:"ro"`
+	DefaultSecurityRules []*SecurityRule `json:"defaultSecurityRules,omitempty" azure:"ro"`
 
 	// READ-ONLY; A collection of references to flow log resources.
-	FlowLogs *[]*FlowLog `json:"flowLogs,omitempty" azure:"ro"`
+	FlowLogs []*FlowLog `json:"flowLogs,omitempty" azure:"ro"`
 
 	// READ-ONLY; A collection of references to network interfaces.
-	NetworkInterfaces *[]*NetworkInterface `json:"networkInterfaces,omitempty" azure:"ro"`
+	NetworkInterfaces []*NetworkInterface `json:"networkInterfaces,omitempty" azure:"ro"`
 
 	// READ-ONLY; The provisioning state of the network security group resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
@@ -8639,10 +10932,23 @@ type NetworkSecurityGroupPropertiesFormat struct {
 	ResourceGUID *string `json:"resourceGuid,omitempty" azure:"ro"`
 
 	// A collection of security rules of the network security group.
-	SecurityRules *[]*SecurityRule `json:"securityRules,omitempty"`
+	SecurityRules []*SecurityRule `json:"securityRules,omitempty"`
 
 	// READ-ONLY; A collection of references to subnets.
-	Subnets *[]*Subnet `json:"subnets,omitempty" azure:"ro"`
+	Subnets []*Subnet `json:"subnets,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type NetworkSecurityGroupPropertiesFormat.
+func (n NetworkSecurityGroupPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "defaultSecurityRules", n.DefaultSecurityRules)
+	populate(objectMap, "flowLogs", n.FlowLogs)
+	populate(objectMap, "networkInterfaces", n.NetworkInterfaces)
+	populate(objectMap, "provisioningState", n.ProvisioningState)
+	populate(objectMap, "resourceGuid", n.ResourceGUID)
+	populate(objectMap, "securityRules", n.SecurityRules)
+	populate(objectMap, "subnets", n.Subnets)
+	return json.Marshal(objectMap)
 }
 
 // NetworkSecurityGroupResponse is the response envelope for operations that return a NetworkSecurityGroup type.
@@ -8657,10 +10963,18 @@ type NetworkSecurityGroupResponse struct {
 // NetworkSecurityGroupResult - Network configuration diagnostic result corresponded provided traffic query.
 type NetworkSecurityGroupResult struct {
 	// READ-ONLY; List of results network security groups diagnostic.
-	EvaluatedNetworkSecurityGroups *[]*EvaluatedNetworkSecurityGroup `json:"evaluatedNetworkSecurityGroups,omitempty" azure:"ro"`
+	EvaluatedNetworkSecurityGroups []*EvaluatedNetworkSecurityGroup `json:"evaluatedNetworkSecurityGroups,omitempty" azure:"ro"`
 
 	// The network traffic is allowed or denied.
 	SecurityRuleAccessResult *SecurityRuleAccess `json:"securityRuleAccessResult,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type NetworkSecurityGroupResult.
+func (n NetworkSecurityGroupResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "evaluatedNetworkSecurityGroups", n.EvaluatedNetworkSecurityGroups)
+	populate(objectMap, "securityRuleAccessResult", n.SecurityRuleAccessResult)
+	return json.Marshal(objectMap)
 }
 
 // NetworkSecurityGroupsBeginCreateOrUpdateOptions contains the optional parameters for the NetworkSecurityGroups.BeginCreateOrUpdate method.
@@ -8731,13 +11045,31 @@ type NetworkVirtualAppliance struct {
 	SKU *VirtualApplianceSKUProperties `json:"sku,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type NetworkVirtualAppliance.
+func (n NetworkVirtualAppliance) MarshalJSON() ([]byte, error) {
+	objectMap := n.Resource.marshalInternal()
+	populate(objectMap, "etag", n.Etag)
+	populate(objectMap, "identity", n.Identity)
+	populate(objectMap, "properties", n.Properties)
+	populate(objectMap, "sku", n.SKU)
+	return json.Marshal(objectMap)
+}
+
 // NetworkVirtualApplianceListResult - Response for ListNetworkVirtualAppliances API service call.
 type NetworkVirtualApplianceListResult struct {
 	// URL to get the next set of results.
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of Network Virtual Appliances.
-	Value *[]*NetworkVirtualAppliance `json:"value,omitempty"`
+	Value []*NetworkVirtualAppliance `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type NetworkVirtualApplianceListResult.
+func (n NetworkVirtualApplianceListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", n.NextLink)
+	populate(objectMap, "value", n.Value)
+	return json.Marshal(objectMap)
 }
 
 // NetworkVirtualApplianceListResultResponse is the response envelope for operations that return a NetworkVirtualApplianceListResult type.
@@ -8764,10 +11096,10 @@ type NetworkVirtualAppliancePollerResponse struct {
 // NetworkVirtualAppliancePropertiesFormat - Network Virtual Appliance definition.
 type NetworkVirtualAppliancePropertiesFormat struct {
 	// BootStrapConfigurationBlob storage URLs.
-	BootStrapConfigurationBlob *[]*string `json:"bootStrapConfigurationBlob,omitempty"`
+	BootStrapConfigurationBlob []*string `json:"bootStrapConfigurationBlob,omitempty"`
 
 	// CloudInitConfigurationBlob storage URLs.
-	CloudInitConfigurationBlob *[]*string `json:"cloudInitConfigurationBlob,omitempty"`
+	CloudInitConfigurationBlob []*string `json:"cloudInitConfigurationBlob,omitempty"`
 
 	// READ-ONLY; The provisioning state of the resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
@@ -8776,10 +11108,22 @@ type NetworkVirtualAppliancePropertiesFormat struct {
 	VirtualApplianceAsn *int64 `json:"virtualApplianceAsn,omitempty"`
 
 	// READ-ONLY; List of Virtual Appliance Network Interfaces.
-	VirtualApplianceNics *[]*VirtualApplianceNicProperties `json:"virtualApplianceNics,omitempty" azure:"ro"`
+	VirtualApplianceNics []*VirtualApplianceNicProperties `json:"virtualApplianceNics,omitempty" azure:"ro"`
 
 	// The Virtual Hub where Network Virtual Appliance is being deployed.
 	VirtualHub *SubResource `json:"virtualHub,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type NetworkVirtualAppliancePropertiesFormat.
+func (n NetworkVirtualAppliancePropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "bootStrapConfigurationBlob", n.BootStrapConfigurationBlob)
+	populate(objectMap, "cloudInitConfigurationBlob", n.CloudInitConfigurationBlob)
+	populate(objectMap, "provisioningState", n.ProvisioningState)
+	populate(objectMap, "virtualApplianceAsn", n.VirtualApplianceAsn)
+	populate(objectMap, "virtualApplianceNics", n.VirtualApplianceNics)
+	populate(objectMap, "virtualHub", n.VirtualHub)
+	return json.Marshal(objectMap)
 }
 
 // NetworkVirtualApplianceResponse is the response envelope for operations that return a NetworkVirtualAppliance type.
@@ -8832,10 +11176,25 @@ type NetworkWatcher struct {
 	Properties *NetworkWatcherPropertiesFormat `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type NetworkWatcher.
+func (n NetworkWatcher) MarshalJSON() ([]byte, error) {
+	objectMap := n.Resource.marshalInternal()
+	populate(objectMap, "etag", n.Etag)
+	populate(objectMap, "properties", n.Properties)
+	return json.Marshal(objectMap)
+}
+
 // NetworkWatcherListResult - Response for ListNetworkWatchers API service call.
 type NetworkWatcherListResult struct {
 	// List of network watcher resources.
-	Value *[]*NetworkWatcher `json:"value,omitempty"`
+	Value []*NetworkWatcher `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type NetworkWatcherListResult.
+func (n NetworkWatcherListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "value", n.Value)
+	return json.Marshal(objectMap)
 }
 
 // NetworkWatcherListResultResponse is the response envelope for operations that return a NetworkWatcherListResult type.
@@ -9039,7 +11398,15 @@ type OperationListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of Network operations supported by the Network resource provider.
-	Value *[]*Operation `json:"value,omitempty"`
+	Value []*Operation `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type OperationListResult.
+func (o OperationListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", o.NextLink)
+	populate(objectMap, "value", o.Value)
+	return json.Marshal(objectMap)
 }
 
 // OperationListResultResponse is the response envelope for operations that return a OperationListResult type.
@@ -9060,10 +11427,18 @@ type OperationPropertiesFormat struct {
 // OperationPropertiesFormatServiceSpecification - Specification of the service.
 type OperationPropertiesFormatServiceSpecification struct {
 	// Operation log specification.
-	LogSpecifications *[]*LogSpecification `json:"logSpecifications,omitempty"`
+	LogSpecifications []*LogSpecification `json:"logSpecifications,omitempty"`
 
 	// Operation service specification.
-	MetricSpecifications *[]*MetricSpecification `json:"metricSpecifications,omitempty"`
+	MetricSpecifications []*MetricSpecification `json:"metricSpecifications,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type OperationPropertiesFormatServiceSpecification.
+func (o OperationPropertiesFormatServiceSpecification) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "logSpecifications", o.LogSpecifications)
+	populate(objectMap, "metricSpecifications", o.MetricSpecifications)
+	return json.Marshal(objectMap)
 }
 
 // OperationsListOptions contains the optional parameters for the Operations.List method.
@@ -9087,6 +11462,16 @@ type OutboundRule struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type OutboundRule.
+func (o OutboundRule) MarshalJSON() ([]byte, error) {
+	objectMap := o.SubResource.marshalInternal()
+	populate(objectMap, "etag", o.Etag)
+	populate(objectMap, "name", o.Name)
+	populate(objectMap, "properties", o.Properties)
+	populate(objectMap, "type", o.Type)
+	return json.Marshal(objectMap)
+}
+
 // OutboundRulePropertiesFormat - Outbound rule of the load balancer.
 type OutboundRulePropertiesFormat struct {
 	// The number of outbound ports to be used for NAT.
@@ -9100,7 +11485,7 @@ type OutboundRulePropertiesFormat struct {
 	EnableTCPReset *bool `json:"enableTcpReset,omitempty"`
 
 	// The Frontend IP addresses of the load balancer.
-	FrontendIPConfigurations *[]*SubResource `json:"frontendIPConfigurations,omitempty"`
+	FrontendIPConfigurations []*SubResource `json:"frontendIPConfigurations,omitempty"`
 
 	// The timeout for the TCP idle connection.
 	IdleTimeoutInMinutes *int32 `json:"idleTimeoutInMinutes,omitempty"`
@@ -9110,6 +11495,19 @@ type OutboundRulePropertiesFormat struct {
 
 	// READ-ONLY; The provisioning state of the outbound rule resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type OutboundRulePropertiesFormat.
+func (o OutboundRulePropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "allocatedOutboundPorts", o.AllocatedOutboundPorts)
+	populate(objectMap, "backendAddressPool", o.BackendAddressPool)
+	populate(objectMap, "enableTcpReset", o.EnableTCPReset)
+	populate(objectMap, "frontendIPConfigurations", o.FrontendIPConfigurations)
+	populate(objectMap, "idleTimeoutInMinutes", o.IdleTimeoutInMinutes)
+	populate(objectMap, "protocol", o.Protocol)
+	populate(objectMap, "provisioningState", o.ProvisioningState)
+	return json.Marshal(objectMap)
 }
 
 // OutboundRuleResponse is the response envelope for operations that return a OutboundRule type.
@@ -9146,6 +11544,15 @@ type P2SConnectionConfiguration struct {
 	Properties *P2SConnectionConfigurationProperties `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type P2SConnectionConfiguration.
+func (p P2SConnectionConfiguration) MarshalJSON() ([]byte, error) {
+	objectMap := p.SubResource.marshalInternal()
+	populate(objectMap, "etag", p.Etag)
+	populate(objectMap, "name", p.Name)
+	populate(objectMap, "properties", p.Properties)
+	return json.Marshal(objectMap)
+}
+
 // P2SConnectionConfigurationProperties - Parameters for P2SConnectionConfiguration.
 type P2SConnectionConfigurationProperties struct {
 	// READ-ONLY; The provisioning state of the P2SConnectionConfiguration resource.
@@ -9179,7 +11586,15 @@ type P2SVPNConnectionHealthRequest struct {
 	OutputBlobSasURL *string `json:"outputBlobSasUrl,omitempty"`
 
 	// The list of p2s vpn user names whose p2s vpn connection detailed health to retrieve for.
-	VPNUserNamesFilter *[]*string `json:"vpnUserNamesFilter,omitempty"`
+	VPNUserNamesFilter []*string `json:"vpnUserNamesFilter,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type P2SVPNConnectionHealthRequest.
+func (p P2SVPNConnectionHealthRequest) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "outputBlobSasUrl", p.OutputBlobSasURL)
+	populate(objectMap, "vpnUserNamesFilter", p.VPNUserNamesFilter)
+	return json.Marshal(objectMap)
 }
 
 // P2SVPNConnectionHealthResponse is the response envelope for operations that return a P2SVPNConnectionHealth type.
@@ -9194,7 +11609,14 @@ type P2SVPNConnectionHealthResponse struct {
 // P2SVPNConnectionRequest - List of p2s vpn connections to be disconnected.
 type P2SVPNConnectionRequest struct {
 	// List of p2s vpn connection Ids.
-	VPNConnectionIDs *[]*string `json:"vpnConnectionIds,omitempty"`
+	VPNConnectionIDs []*string `json:"vpnConnectionIds,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type P2SVPNConnectionRequest.
+func (p P2SVPNConnectionRequest) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "vpnConnectionIds", p.VPNConnectionIDs)
+	return json.Marshal(objectMap)
 }
 
 // P2SVPNGateway - P2SVpnGateway Resource.
@@ -9205,6 +11627,14 @@ type P2SVPNGateway struct {
 
 	// Properties of the P2SVpnGateway.
 	Properties *P2SVPNGatewayProperties `json:"properties,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type P2SVPNGateway.
+func (p P2SVPNGateway) MarshalJSON() ([]byte, error) {
+	objectMap := p.Resource.marshalInternal()
+	populate(objectMap, "etag", p.Etag)
+	populate(objectMap, "properties", p.Properties)
+	return json.Marshal(objectMap)
 }
 
 // P2SVPNGatewayPollerResponse is the response envelope for operations that asynchronously return a P2SVPNGateway type.
@@ -9222,7 +11652,7 @@ type P2SVPNGatewayPollerResponse struct {
 // P2SVPNGatewayProperties - Parameters for P2SVpnGateway.
 type P2SVPNGatewayProperties struct {
 	// List of all p2s connection configurations of the gateway.
-	P2SConnectionConfigurations *[]*P2SConnectionConfiguration `json:"p2SConnectionConfigurations,omitempty"`
+	P2SConnectionConfigurations []*P2SConnectionConfiguration `json:"p2SConnectionConfigurations,omitempty"`
 
 	// READ-ONLY; The provisioning state of the P2S VPN gateway resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
@@ -9238,6 +11668,18 @@ type P2SVPNGatewayProperties struct {
 
 	// The VirtualHub to which the gateway belongs.
 	VirtualHub *SubResource `json:"virtualHub,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type P2SVPNGatewayProperties.
+func (p P2SVPNGatewayProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "p2SConnectionConfigurations", p.P2SConnectionConfigurations)
+	populate(objectMap, "provisioningState", p.ProvisioningState)
+	populate(objectMap, "vpnClientConnectionHealth", p.VPNClientConnectionHealth)
+	populate(objectMap, "vpnGatewayScaleUnit", p.VPNGatewayScaleUnit)
+	populate(objectMap, "vpnServerConfiguration", p.VPNServerConfiguration)
+	populate(objectMap, "virtualHub", p.VirtualHub)
+	return json.Marshal(objectMap)
 }
 
 // P2SVPNGatewayResponse is the response envelope for operations that return a P2SVPNGateway type.
@@ -9341,7 +11783,14 @@ type PacketCaptureFilter struct {
 // PacketCaptureListResult - List of packet capture sessions.
 type PacketCaptureListResult struct {
 	// Information about packet capture sessions.
-	Value *[]*PacketCaptureResult `json:"value,omitempty"`
+	Value []*PacketCaptureResult `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type PacketCaptureListResult.
+func (p PacketCaptureListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "value", p.Value)
+	return json.Marshal(objectMap)
 }
 
 // PacketCaptureListResultResponse is the response envelope for operations that return a PacketCaptureListResult type.
@@ -9359,7 +11808,7 @@ type PacketCaptureParameters struct {
 	BytesToCapturePerPacket *int32 `json:"bytesToCapturePerPacket,omitempty"`
 
 	// A list of packet capture filters.
-	Filters *[]*PacketCaptureFilter `json:"filters,omitempty"`
+	Filters []*PacketCaptureFilter `json:"filters,omitempty"`
 
 	// The storage location for a packet capture session.
 	StorageLocation *PacketCaptureStorageLocation `json:"storageLocation,omitempty"`
@@ -9374,6 +11823,23 @@ type PacketCaptureParameters struct {
 	TotalBytesPerSession *int32 `json:"totalBytesPerSession,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type PacketCaptureParameters.
+func (p PacketCaptureParameters) MarshalJSON() ([]byte, error) {
+	objectMap := p.marshalInternal()
+	return json.Marshal(objectMap)
+}
+
+func (p PacketCaptureParameters) marshalInternal() map[string]interface{} {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "bytesToCapturePerPacket", p.BytesToCapturePerPacket)
+	populate(objectMap, "filters", p.Filters)
+	populate(objectMap, "storageLocation", p.StorageLocation)
+	populate(objectMap, "target", p.Target)
+	populate(objectMap, "timeLimitInSeconds", p.TimeLimitInSeconds)
+	populate(objectMap, "totalBytesPerSession", p.TotalBytesPerSession)
+	return objectMap
+}
+
 // PacketCaptureQueryStatusResult - Status of packet capture session.
 type PacketCaptureQueryStatusResult struct {
 	// The start time of the packet capture session.
@@ -9386,7 +11852,7 @@ type PacketCaptureQueryStatusResult struct {
 	Name *string `json:"name,omitempty"`
 
 	// List of errors of packet capture session.
-	PacketCaptureError *[]*PcError `json:"packetCaptureError,omitempty"`
+	PacketCaptureError []*PcError `json:"packetCaptureError,omitempty"`
 
 	// The status of the packet capture session.
 	PacketCaptureStatus *PcStatus `json:"packetCaptureStatus,omitempty"`
@@ -9499,6 +11965,13 @@ type PacketCaptureResultProperties struct {
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type PacketCaptureResultProperties.
+func (p PacketCaptureResultProperties) MarshalJSON() ([]byte, error) {
+	objectMap := p.PacketCaptureParameters.marshalInternal()
+	populate(objectMap, "provisioningState", p.ProvisioningState)
+	return json.Marshal(objectMap)
+}
+
 // PacketCaptureResultResponse is the response envelope for operations that return a PacketCaptureResult type.
 type PacketCaptureResultResponse struct {
 	// Information about packet capture session.
@@ -9565,10 +12038,21 @@ type PatchRouteFilter struct {
 	Properties *RouteFilterPropertiesFormat `json:"properties,omitempty"`
 
 	// Resource tags.
-	Tags *map[string]*string `json:"tags,omitempty"`
+	Tags map[string]*string `json:"tags,omitempty"`
 
 	// READ-ONLY; Resource type.
 	Type *string `json:"type,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type PatchRouteFilter.
+func (p PatchRouteFilter) MarshalJSON() ([]byte, error) {
+	objectMap := p.SubResource.marshalInternal()
+	populate(objectMap, "etag", p.Etag)
+	populate(objectMap, "name", p.Name)
+	populate(objectMap, "properties", p.Properties)
+	populate(objectMap, "tags", p.Tags)
+	populate(objectMap, "type", p.Type)
+	return json.Marshal(objectMap)
 }
 
 // PatchRouteFilterRule - Route Filter Rule Resource.
@@ -9582,6 +12066,15 @@ type PatchRouteFilterRule struct {
 
 	// Properties of the route filter rule.
 	Properties *RouteFilterRulePropertiesFormat `json:"properties,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type PatchRouteFilterRule.
+func (p PatchRouteFilterRule) MarshalJSON() ([]byte, error) {
+	objectMap := p.SubResource.marshalInternal()
+	populate(objectMap, "etag", p.Etag)
+	populate(objectMap, "name", p.Name)
+	populate(objectMap, "properties", p.Properties)
+	return json.Marshal(objectMap)
 }
 
 // PeerExpressRouteCircuitConnection - Peer Express Route Circuit Connection in an ExpressRouteCircuitPeering resource.
@@ -9600,6 +12093,16 @@ type PeerExpressRouteCircuitConnection struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type PeerExpressRouteCircuitConnection.
+func (p PeerExpressRouteCircuitConnection) MarshalJSON() ([]byte, error) {
+	objectMap := p.SubResource.marshalInternal()
+	populate(objectMap, "etag", p.Etag)
+	populate(objectMap, "name", p.Name)
+	populate(objectMap, "properties", p.Properties)
+	populate(objectMap, "type", p.Type)
+	return json.Marshal(objectMap)
+}
+
 // PeerExpressRouteCircuitConnectionListResult - Response for ListPeeredConnections API service call retrieves all global reach peer circuit connections
 // that belongs to a Private Peering for an ExpressRouteCircuit.
 type PeerExpressRouteCircuitConnectionListResult struct {
@@ -9607,7 +12110,15 @@ type PeerExpressRouteCircuitConnectionListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// The global reach peer circuit connection associated with Private Peering in an ExpressRoute Circuit.
-	Value *[]*PeerExpressRouteCircuitConnection `json:"value,omitempty"`
+	Value []*PeerExpressRouteCircuitConnection `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type PeerExpressRouteCircuitConnectionListResult.
+func (p PeerExpressRouteCircuitConnectionListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", p.NextLink)
+	populate(objectMap, "value", p.Value)
+	return json.Marshal(objectMap)
 }
 
 // PeerExpressRouteCircuitConnectionListResultResponse is the response envelope for operations that return a PeerExpressRouteCircuitConnectionListResult
@@ -9684,10 +12195,18 @@ type PolicySettings struct {
 // PrepareNetworkPoliciesRequest - Details of PrepareNetworkPolicies for Subnet.
 type PrepareNetworkPoliciesRequest struct {
 	// A list of NetworkIntentPolicyConfiguration.
-	NetworkIntentPolicyConfigurations *[]*NetworkIntentPolicyConfiguration `json:"networkIntentPolicyConfigurations,omitempty"`
+	NetworkIntentPolicyConfigurations []*NetworkIntentPolicyConfiguration `json:"networkIntentPolicyConfigurations,omitempty"`
 
 	// The name of the service for which subnet is being prepared for.
 	ServiceName *string `json:"serviceName,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type PrepareNetworkPoliciesRequest.
+func (p PrepareNetworkPoliciesRequest) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "networkIntentPolicyConfigurations", p.NetworkIntentPolicyConfigurations)
+	populate(objectMap, "serviceName", p.ServiceName)
+	return json.Marshal(objectMap)
 }
 
 // PrivateDNSZoneConfig - PrivateDnsZoneConfig resource.
@@ -9712,13 +12231,30 @@ type PrivateDNSZoneGroup struct {
 	Properties *PrivateDNSZoneGroupPropertiesFormat `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type PrivateDNSZoneGroup.
+func (p PrivateDNSZoneGroup) MarshalJSON() ([]byte, error) {
+	objectMap := p.SubResource.marshalInternal()
+	populate(objectMap, "etag", p.Etag)
+	populate(objectMap, "name", p.Name)
+	populate(objectMap, "properties", p.Properties)
+	return json.Marshal(objectMap)
+}
+
 // PrivateDNSZoneGroupListResult - Response for the ListPrivateDnsZoneGroups API service call.
 type PrivateDNSZoneGroupListResult struct {
 	// READ-ONLY; The URL to get the next set of results.
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 
 	// A list of private dns zone group resources in a private endpoint.
-	Value *[]*PrivateDNSZoneGroup `json:"value,omitempty"`
+	Value []*PrivateDNSZoneGroup `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type PrivateDNSZoneGroupListResult.
+func (p PrivateDNSZoneGroupListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", p.NextLink)
+	populate(objectMap, "value", p.Value)
+	return json.Marshal(objectMap)
 }
 
 // PrivateDNSZoneGroupListResultResponse is the response envelope for operations that return a PrivateDNSZoneGroupListResult type.
@@ -9745,10 +12281,18 @@ type PrivateDNSZoneGroupPollerResponse struct {
 // PrivateDNSZoneGroupPropertiesFormat - Properties of the private dns zone group.
 type PrivateDNSZoneGroupPropertiesFormat struct {
 	// A collection of private dns zone configurations of the private dns zone group.
-	PrivateDNSZoneConfigs *[]*PrivateDNSZoneConfig `json:"privateDnsZoneConfigs,omitempty"`
+	PrivateDNSZoneConfigs []*PrivateDNSZoneConfig `json:"privateDnsZoneConfigs,omitempty"`
 
 	// READ-ONLY; The provisioning state of the private dns zone group resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type PrivateDNSZoneGroupPropertiesFormat.
+func (p PrivateDNSZoneGroupPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "privateDnsZoneConfigs", p.PrivateDNSZoneConfigs)
+	populate(objectMap, "provisioningState", p.ProvisioningState)
+	return json.Marshal(objectMap)
 }
 
 // PrivateDNSZoneGroupResponse is the response envelope for operations that return a PrivateDNSZoneGroup type.
@@ -9786,7 +12330,15 @@ type PrivateDNSZonePropertiesFormat struct {
 	PrivateDNSZoneID *string `json:"privateDnsZoneId,omitempty"`
 
 	// READ-ONLY; A collection of information regarding a recordSet, holding information to identify private resources.
-	RecordSets *[]*RecordSet `json:"recordSets,omitempty" azure:"ro"`
+	RecordSets []*RecordSet `json:"recordSets,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type PrivateDNSZonePropertiesFormat.
+func (p PrivateDNSZonePropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "privateDnsZoneId", p.PrivateDNSZoneID)
+	populate(objectMap, "recordSets", p.RecordSets)
+	return json.Marshal(objectMap)
 }
 
 // PrivateEndpoint - Private endpoint resource.
@@ -9797,6 +12349,14 @@ type PrivateEndpoint struct {
 
 	// Properties of the private endpoint.
 	Properties *PrivateEndpointProperties `json:"properties,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type PrivateEndpoint.
+func (p PrivateEndpoint) MarshalJSON() ([]byte, error) {
+	objectMap := p.Resource.marshalInternal()
+	populate(objectMap, "etag", p.Etag)
+	populate(objectMap, "properties", p.Properties)
+	return json.Marshal(objectMap)
 }
 
 // PrivateEndpointConnection resource.
@@ -9815,13 +12375,31 @@ type PrivateEndpointConnection struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type PrivateEndpointConnection.
+func (p PrivateEndpointConnection) MarshalJSON() ([]byte, error) {
+	objectMap := p.SubResource.marshalInternal()
+	populate(objectMap, "etag", p.Etag)
+	populate(objectMap, "name", p.Name)
+	populate(objectMap, "properties", p.Properties)
+	populate(objectMap, "type", p.Type)
+	return json.Marshal(objectMap)
+}
+
 // PrivateEndpointConnectionListResult - Response for the ListPrivateEndpointConnection API service call.
 type PrivateEndpointConnectionListResult struct {
 	// READ-ONLY; The URL to get the next set of results.
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 
 	// A list of PrivateEndpointConnection resources for a specific private link service.
-	Value *[]*PrivateEndpointConnection `json:"value,omitempty"`
+	Value []*PrivateEndpointConnection `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type PrivateEndpointConnectionListResult.
+func (p PrivateEndpointConnectionListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", p.NextLink)
+	populate(objectMap, "value", p.Value)
+	return json.Marshal(objectMap)
 }
 
 // PrivateEndpointConnectionListResultResponse is the response envelope for operations that return a PrivateEndpointConnectionListResult type.
@@ -9863,7 +12441,15 @@ type PrivateEndpointListResult struct {
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 
 	// A list of private endpoint resources in a resource group.
-	Value *[]*PrivateEndpoint `json:"value,omitempty"`
+	Value []*PrivateEndpoint `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type PrivateEndpointListResult.
+func (p PrivateEndpointListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", p.NextLink)
+	populate(objectMap, "value", p.Value)
+	return json.Marshal(objectMap)
 }
 
 // PrivateEndpointListResultResponse is the response envelope for operations that return a PrivateEndpointListResult type.
@@ -9890,23 +12476,35 @@ type PrivateEndpointPollerResponse struct {
 // PrivateEndpointProperties - Properties of the private endpoint.
 type PrivateEndpointProperties struct {
 	// An array of custom dns configurations.
-	CustomDNSConfigs *[]*CustomDNSConfigPropertiesFormat `json:"customDnsConfigs,omitempty"`
+	CustomDNSConfigs []*CustomDNSConfigPropertiesFormat `json:"customDnsConfigs,omitempty"`
 
 	// A grouping of information about the connection to the remote resource. Used when the network admin does not have access to approve connections to the
 	// remote resource.
-	ManualPrivateLinkServiceConnections *[]*PrivateLinkServiceConnection `json:"manualPrivateLinkServiceConnections,omitempty"`
+	ManualPrivateLinkServiceConnections []*PrivateLinkServiceConnection `json:"manualPrivateLinkServiceConnections,omitempty"`
 
 	// READ-ONLY; An array of references to the network interfaces created for this private endpoint.
-	NetworkInterfaces *[]*NetworkInterface `json:"networkInterfaces,omitempty" azure:"ro"`
+	NetworkInterfaces []*NetworkInterface `json:"networkInterfaces,omitempty" azure:"ro"`
 
 	// A grouping of information about the connection to the remote resource.
-	PrivateLinkServiceConnections *[]*PrivateLinkServiceConnection `json:"privateLinkServiceConnections,omitempty"`
+	PrivateLinkServiceConnections []*PrivateLinkServiceConnection `json:"privateLinkServiceConnections,omitempty"`
 
 	// READ-ONLY; The provisioning state of the private endpoint resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
 	// The ID of the subnet from which the private IP will be allocated.
 	Subnet *Subnet `json:"subnet,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type PrivateEndpointProperties.
+func (p PrivateEndpointProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "customDnsConfigs", p.CustomDNSConfigs)
+	populate(objectMap, "manualPrivateLinkServiceConnections", p.ManualPrivateLinkServiceConnections)
+	populate(objectMap, "networkInterfaces", p.NetworkInterfaces)
+	populate(objectMap, "privateLinkServiceConnections", p.PrivateLinkServiceConnections)
+	populate(objectMap, "provisioningState", p.ProvisioningState)
+	populate(objectMap, "subnet", p.Subnet)
+	return json.Marshal(objectMap)
 }
 
 // PrivateEndpointResponse is the response envelope for operations that return a PrivateEndpoint type.
@@ -9954,6 +12552,14 @@ type PrivateLinkService struct {
 	Properties *PrivateLinkServiceProperties `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type PrivateLinkService.
+func (p PrivateLinkService) MarshalJSON() ([]byte, error) {
+	objectMap := p.Resource.marshalInternal()
+	populate(objectMap, "etag", p.Etag)
+	populate(objectMap, "properties", p.Properties)
+	return json.Marshal(objectMap)
+}
+
 // PrivateLinkServiceConnection resource.
 type PrivateLinkServiceConnection struct {
 	SubResource
@@ -9970,10 +12576,20 @@ type PrivateLinkServiceConnection struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type PrivateLinkServiceConnection.
+func (p PrivateLinkServiceConnection) MarshalJSON() ([]byte, error) {
+	objectMap := p.SubResource.marshalInternal()
+	populate(objectMap, "etag", p.Etag)
+	populate(objectMap, "name", p.Name)
+	populate(objectMap, "properties", p.Properties)
+	populate(objectMap, "type", p.Type)
+	return json.Marshal(objectMap)
+}
+
 // PrivateLinkServiceConnectionProperties - Properties of the PrivateLinkServiceConnection.
 type PrivateLinkServiceConnectionProperties struct {
 	// The ID(s) of the group(s) obtained from the remote resource that this private endpoint should connect to.
-	GroupIDs *[]*string `json:"groupIds,omitempty"`
+	GroupIDs []*string `json:"groupIds,omitempty"`
 
 	// A collection of read-only information about the state of the connection to the remote resource.
 	PrivateLinkServiceConnectionState *PrivateLinkServiceConnectionState `json:"privateLinkServiceConnectionState,omitempty"`
@@ -9986,6 +12602,17 @@ type PrivateLinkServiceConnectionProperties struct {
 
 	// A message passed to the owner of the remote resource with this connection request. Restricted to 140 chars.
 	RequestMessage *string `json:"requestMessage,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type PrivateLinkServiceConnectionProperties.
+func (p PrivateLinkServiceConnectionProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "groupIds", p.GroupIDs)
+	populate(objectMap, "privateLinkServiceConnectionState", p.PrivateLinkServiceConnectionState)
+	populate(objectMap, "privateLinkServiceId", p.PrivateLinkServiceID)
+	populate(objectMap, "provisioningState", p.ProvisioningState)
+	populate(objectMap, "requestMessage", p.RequestMessage)
+	return json.Marshal(objectMap)
 }
 
 // PrivateLinkServiceConnectionState - A collection of information about the state of the connection between service consumer and provider.
@@ -10016,6 +12643,16 @@ type PrivateLinkServiceIPConfiguration struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type PrivateLinkServiceIPConfiguration.
+func (p PrivateLinkServiceIPConfiguration) MarshalJSON() ([]byte, error) {
+	objectMap := p.SubResource.marshalInternal()
+	populate(objectMap, "etag", p.Etag)
+	populate(objectMap, "name", p.Name)
+	populate(objectMap, "properties", p.Properties)
+	populate(objectMap, "type", p.Type)
+	return json.Marshal(objectMap)
+}
+
 // PrivateLinkServiceIPConfigurationProperties - Properties of private link service IP configuration.
 type PrivateLinkServiceIPConfigurationProperties struct {
 	// Whether the ip configuration is primary or not.
@@ -10043,7 +12680,15 @@ type PrivateLinkServiceListResult struct {
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 
 	// A list of PrivateLinkService resources in a resource group.
-	Value *[]*PrivateLinkService `json:"value,omitempty"`
+	Value []*PrivateLinkService `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type PrivateLinkServiceListResult.
+func (p PrivateLinkServiceListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", p.NextLink)
+	populate(objectMap, "value", p.Value)
+	return json.Marshal(objectMap)
 }
 
 // PrivateLinkServiceListResultResponse is the response envelope for operations that return a PrivateLinkServiceListResult type.
@@ -10079,25 +12724,41 @@ type PrivateLinkServiceProperties struct {
 	EnableProxyProtocol *bool `json:"enableProxyProtocol,omitempty"`
 
 	// The list of Fqdn.
-	Fqdns *[]*string `json:"fqdns,omitempty"`
+	Fqdns []*string `json:"fqdns,omitempty"`
 
 	// An array of private link service IP configurations.
-	IPConfigurations *[]*PrivateLinkServiceIPConfiguration `json:"ipConfigurations,omitempty"`
+	IPConfigurations []*PrivateLinkServiceIPConfiguration `json:"ipConfigurations,omitempty"`
 
 	// An array of references to the load balancer IP configurations.
-	LoadBalancerFrontendIPConfigurations *[]*FrontendIPConfiguration `json:"loadBalancerFrontendIpConfigurations,omitempty"`
+	LoadBalancerFrontendIPConfigurations []*FrontendIPConfiguration `json:"loadBalancerFrontendIpConfigurations,omitempty"`
 
 	// READ-ONLY; An array of references to the network interfaces created for this private link service.
-	NetworkInterfaces *[]*NetworkInterface `json:"networkInterfaces,omitempty" azure:"ro"`
+	NetworkInterfaces []*NetworkInterface `json:"networkInterfaces,omitempty" azure:"ro"`
 
 	// READ-ONLY; An array of list about connections to the private endpoint.
-	PrivateEndpointConnections *[]*PrivateEndpointConnection `json:"privateEndpointConnections,omitempty" azure:"ro"`
+	PrivateEndpointConnections []*PrivateEndpointConnection `json:"privateEndpointConnections,omitempty" azure:"ro"`
 
 	// READ-ONLY; The provisioning state of the private link service resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
 	// The visibility list of the private link service.
 	Visibility *PrivateLinkServicePropertiesVisibility `json:"visibility,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type PrivateLinkServiceProperties.
+func (p PrivateLinkServiceProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "alias", p.Alias)
+	populate(objectMap, "autoApproval", p.AutoApproval)
+	populate(objectMap, "enableProxyProtocol", p.EnableProxyProtocol)
+	populate(objectMap, "fqdns", p.Fqdns)
+	populate(objectMap, "ipConfigurations", p.IPConfigurations)
+	populate(objectMap, "loadBalancerFrontendIpConfigurations", p.LoadBalancerFrontendIPConfigurations)
+	populate(objectMap, "networkInterfaces", p.NetworkInterfaces)
+	populate(objectMap, "privateEndpointConnections", p.PrivateEndpointConnections)
+	populate(objectMap, "provisioningState", p.ProvisioningState)
+	populate(objectMap, "visibility", p.Visibility)
+	return json.Marshal(objectMap)
 }
 
 // PrivateLinkServicePropertiesAutoApproval - The auto-approval list of the private link service.
@@ -10236,6 +12897,16 @@ type Probe struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type Probe.
+func (p Probe) MarshalJSON() ([]byte, error) {
+	objectMap := p.SubResource.marshalInternal()
+	populate(objectMap, "etag", p.Etag)
+	populate(objectMap, "name", p.Name)
+	populate(objectMap, "properties", p.Properties)
+	populate(objectMap, "type", p.Type)
+	return json.Marshal(objectMap)
+}
+
 // ProbePropertiesFormat - Load balancer probe resource.
 type ProbePropertiesFormat struct {
 	// The interval, in seconds, for how frequently to probe the endpoint for health status. Typically, the interval is slightly less than half the allocated
@@ -10244,7 +12915,7 @@ type ProbePropertiesFormat struct {
 	IntervalInSeconds *int32 `json:"intervalInSeconds,omitempty"`
 
 	// READ-ONLY; The load balancer rules that use this probe.
-	LoadBalancingRules *[]*SubResource `json:"loadBalancingRules,omitempty" azure:"ro"`
+	LoadBalancingRules []*SubResource `json:"loadBalancingRules,omitempty" azure:"ro"`
 
 	// The number of probes where if no response, will result in stopping further traffic from being delivered to the endpoint. This values allows endpoints
 	// to be taken out of rotation faster or slower than
@@ -10265,6 +12936,19 @@ type ProbePropertiesFormat struct {
 	// The URI used for requesting health status from the VM. Path is required if a protocol is set to http. Otherwise, it is not allowed. There is no default
 	// value.
 	RequestPath *string `json:"requestPath,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ProbePropertiesFormat.
+func (p ProbePropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "intervalInSeconds", p.IntervalInSeconds)
+	populate(objectMap, "loadBalancingRules", p.LoadBalancingRules)
+	populate(objectMap, "numberOfProbes", p.NumberOfProbes)
+	populate(objectMap, "port", p.Port)
+	populate(objectMap, "protocol", p.Protocol)
+	populate(objectMap, "provisioningState", p.ProvisioningState)
+	populate(objectMap, "requestPath", p.RequestPath)
+	return json.Marshal(objectMap)
 }
 
 // ProbeResponse is the response envelope for operations that return a Probe type.
@@ -10312,7 +12996,17 @@ type PublicIPAddress struct {
 	SKU *PublicIPAddressSKU `json:"sku,omitempty"`
 
 	// A list of availability zones denoting the IP allocated for the resource needs to come from.
-	Zones *[]*string `json:"zones,omitempty"`
+	Zones []*string `json:"zones,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type PublicIPAddress.
+func (p PublicIPAddress) MarshalJSON() ([]byte, error) {
+	objectMap := p.Resource.marshalInternal()
+	populate(objectMap, "etag", p.Etag)
+	populate(objectMap, "properties", p.Properties)
+	populate(objectMap, "sku", p.SKU)
+	populate(objectMap, "zones", p.Zones)
+	return json.Marshal(objectMap)
 }
 
 // PublicIPAddressDNSSettings - Contains FQDN of the DNS record associated with the public IP address.
@@ -10338,7 +13032,15 @@ type PublicIPAddressListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// A list of public IP addresses that exists in a resource group.
-	Value *[]*PublicIPAddress `json:"value,omitempty"`
+	Value []*PublicIPAddress `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type PublicIPAddressListResult.
+func (p PublicIPAddressListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", p.NextLink)
+	populate(objectMap, "value", p.Value)
+	return json.Marshal(objectMap)
 }
 
 // PublicIPAddressListResultResponse is the response envelope for operations that return a PublicIPAddressListResult type.
@@ -10377,7 +13079,7 @@ type PublicIPAddressPropertiesFormat struct {
 	IPConfiguration *IPConfiguration `json:"ipConfiguration,omitempty" azure:"ro"`
 
 	// The list of tags associated with the public IP address.
-	IPTags *[]*IPTag `json:"ipTags,omitempty"`
+	IPTags []*IPTag `json:"ipTags,omitempty"`
 
 	// The idle timeout of the public IP address.
 	IdleTimeoutInMinutes *int32 `json:"idleTimeoutInMinutes,omitempty"`
@@ -10396,6 +13098,23 @@ type PublicIPAddressPropertiesFormat struct {
 
 	// READ-ONLY; The resource GUID property of the public IP address resource.
 	ResourceGUID *string `json:"resourceGuid,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type PublicIPAddressPropertiesFormat.
+func (p PublicIPAddressPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "dnsSettings", p.DNSSettings)
+	populate(objectMap, "ddosSettings", p.DdosSettings)
+	populate(objectMap, "ipAddress", p.IPAddress)
+	populate(objectMap, "ipConfiguration", p.IPConfiguration)
+	populate(objectMap, "ipTags", p.IPTags)
+	populate(objectMap, "idleTimeoutInMinutes", p.IdleTimeoutInMinutes)
+	populate(objectMap, "provisioningState", p.ProvisioningState)
+	populate(objectMap, "publicIPAddressVersion", p.PublicIPAddressVersion)
+	populate(objectMap, "publicIPAllocationMethod", p.PublicIPAllocationMethod)
+	populate(objectMap, "publicIPPrefix", p.PublicIPPrefix)
+	populate(objectMap, "resourceGuid", p.ResourceGUID)
+	return json.Marshal(objectMap)
 }
 
 // PublicIPAddressResponse is the response envelope for operations that return a PublicIPAddress type.
@@ -10476,7 +13195,17 @@ type PublicIPPrefix struct {
 	SKU *PublicIPPrefixSKU `json:"sku,omitempty"`
 
 	// A list of availability zones denoting the IP allocated for the resource needs to come from.
-	Zones *[]*string `json:"zones,omitempty"`
+	Zones []*string `json:"zones,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type PublicIPPrefix.
+func (p PublicIPPrefix) MarshalJSON() ([]byte, error) {
+	objectMap := p.Resource.marshalInternal()
+	populate(objectMap, "etag", p.Etag)
+	populate(objectMap, "properties", p.Properties)
+	populate(objectMap, "sku", p.SKU)
+	populate(objectMap, "zones", p.Zones)
+	return json.Marshal(objectMap)
 }
 
 // PublicIPPrefixListResult - Response for ListPublicIpPrefixes API service call.
@@ -10485,7 +13214,15 @@ type PublicIPPrefixListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// A list of public IP prefixes that exists in a resource group.
-	Value *[]*PublicIPPrefix `json:"value,omitempty"`
+	Value []*PublicIPPrefix `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type PublicIPPrefixListResult.
+func (p PublicIPPrefixListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", p.NextLink)
+	populate(objectMap, "value", p.Value)
+	return json.Marshal(objectMap)
 }
 
 // PublicIPPrefixListResultResponse is the response envelope for operations that return a PublicIPPrefixListResult type.
@@ -10515,7 +13252,7 @@ type PublicIPPrefixPropertiesFormat struct {
 	IPPrefix *string `json:"ipPrefix,omitempty" azure:"ro"`
 
 	// The list of tags associated with the public IP prefix.
-	IPTags *[]*IPTag `json:"ipTags,omitempty"`
+	IPTags []*IPTag `json:"ipTags,omitempty"`
 
 	// READ-ONLY; The reference to load balancer frontend IP configuration associated with the public IP prefix.
 	LoadBalancerFrontendIPConfiguration *SubResource `json:"loadBalancerFrontendIpConfiguration,omitempty" azure:"ro"`
@@ -10530,10 +13267,24 @@ type PublicIPPrefixPropertiesFormat struct {
 	PublicIPAddressVersion *IPVersion `json:"publicIPAddressVersion,omitempty"`
 
 	// READ-ONLY; The list of all referenced PublicIPAddresses.
-	PublicIPAddresses *[]*ReferencedPublicIPAddress `json:"publicIPAddresses,omitempty" azure:"ro"`
+	PublicIPAddresses []*ReferencedPublicIPAddress `json:"publicIPAddresses,omitempty" azure:"ro"`
 
 	// READ-ONLY; The resource GUID property of the public IP prefix resource.
 	ResourceGUID *string `json:"resourceGuid,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type PublicIPPrefixPropertiesFormat.
+func (p PublicIPPrefixPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "ipPrefix", p.IPPrefix)
+	populate(objectMap, "ipTags", p.IPTags)
+	populate(objectMap, "loadBalancerFrontendIpConfiguration", p.LoadBalancerFrontendIPConfiguration)
+	populate(objectMap, "prefixLength", p.PrefixLength)
+	populate(objectMap, "provisioningState", p.ProvisioningState)
+	populate(objectMap, "publicIPAddressVersion", p.PublicIPAddressVersion)
+	populate(objectMap, "publicIPAddresses", p.PublicIPAddresses)
+	populate(objectMap, "resourceGuid", p.ResourceGUID)
+	return json.Marshal(objectMap)
 }
 
 // PublicIPPrefixResponse is the response envelope for operations that return a PublicIPPrefix type.
@@ -10606,7 +13357,7 @@ type RecordSet struct {
 	Fqdn *string `json:"fqdn,omitempty"`
 
 	// The private ip address of the private endpoint.
-	IPAddresses *[]*string `json:"ipAddresses,omitempty"`
+	IPAddresses []*string `json:"ipAddresses,omitempty"`
 
 	// READ-ONLY; The provisioning state of the recordset.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
@@ -10619,6 +13370,18 @@ type RecordSet struct {
 
 	// Recordset time to live.
 	TTL *int32 `json:"ttl,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type RecordSet.
+func (r RecordSet) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "fqdn", r.Fqdn)
+	populate(objectMap, "ipAddresses", r.IPAddresses)
+	populate(objectMap, "provisioningState", r.ProvisioningState)
+	populate(objectMap, "recordSetName", r.RecordSetName)
+	populate(objectMap, "recordType", r.RecordType)
+	populate(objectMap, "ttl", r.TTL)
+	return json.Marshal(objectMap)
 }
 
 // ReferencedPublicIPAddress - Reference to a public IP address.
@@ -10639,10 +13402,26 @@ type Resource struct {
 	Name *string `json:"name,omitempty" azure:"ro"`
 
 	// Resource tags.
-	Tags *map[string]*string `json:"tags,omitempty"`
+	Tags map[string]*string `json:"tags,omitempty"`
 
 	// READ-ONLY; Resource type.
 	Type *string `json:"type,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type Resource.
+func (r Resource) MarshalJSON() ([]byte, error) {
+	objectMap := r.marshalInternal()
+	return json.Marshal(objectMap)
+}
+
+func (r Resource) marshalInternal() map[string]interface{} {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "id", r.ID)
+	populate(objectMap, "location", r.Location)
+	populate(objectMap, "name", r.Name)
+	populate(objectMap, "tags", r.Tags)
+	populate(objectMap, "type", r.Type)
+	return objectMap
 }
 
 // ResourceNavigationLink resource.
@@ -10659,6 +13438,16 @@ type ResourceNavigationLink struct {
 
 	// READ-ONLY; Resource type.
 	Type *string `json:"type,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ResourceNavigationLink.
+func (r ResourceNavigationLink) MarshalJSON() ([]byte, error) {
+	objectMap := r.SubResource.marshalInternal()
+	populate(objectMap, "etag", r.Etag)
+	populate(objectMap, "name", r.Name)
+	populate(objectMap, "properties", r.Properties)
+	populate(objectMap, "type", r.Type)
+	return json.Marshal(objectMap)
 }
 
 // ResourceNavigationLinkFormat - Properties of ResourceNavigationLink.
@@ -10684,7 +13473,15 @@ type ResourceNavigationLinksListResult struct {
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 
 	// The resource navigation links in a subnet.
-	Value *[]*ResourceNavigationLink `json:"value,omitempty"`
+	Value []*ResourceNavigationLink `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ResourceNavigationLinksListResult.
+func (r ResourceNavigationLinksListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", r.NextLink)
+	populate(objectMap, "value", r.Value)
+	return json.Marshal(objectMap)
 }
 
 // ResourceNavigationLinksListResultResponse is the response envelope for operations that return a ResourceNavigationLinksListResult type.
@@ -10699,7 +13496,19 @@ type ResourceNavigationLinksListResultResponse struct {
 // ResourceSet - The base resource set for visibility and auto-approval.
 type ResourceSet struct {
 	// The list of subscriptions.
-	Subscriptions *[]*string `json:"subscriptions,omitempty"`
+	Subscriptions []*string `json:"subscriptions,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ResourceSet.
+func (r ResourceSet) MarshalJSON() ([]byte, error) {
+	objectMap := r.marshalInternal()
+	return json.Marshal(objectMap)
+}
+
+func (r ResourceSet) marshalInternal() map[string]interface{} {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "subscriptions", r.Subscriptions)
+	return objectMap
 }
 
 // RetentionPolicyParameters - Parameters that define the retention policy for flow log.
@@ -10724,6 +13533,15 @@ type Route struct {
 	Properties *RoutePropertiesFormat `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type Route.
+func (r Route) MarshalJSON() ([]byte, error) {
+	objectMap := r.SubResource.marshalInternal()
+	populate(objectMap, "etag", r.Etag)
+	populate(objectMap, "name", r.Name)
+	populate(objectMap, "properties", r.Properties)
+	return json.Marshal(objectMap)
+}
+
 // RouteFilter - Route Filter Resource.
 type RouteFilter struct {
 	Resource
@@ -10734,13 +13552,29 @@ type RouteFilter struct {
 	Properties *RouteFilterPropertiesFormat `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type RouteFilter.
+func (r RouteFilter) MarshalJSON() ([]byte, error) {
+	objectMap := r.Resource.marshalInternal()
+	populate(objectMap, "etag", r.Etag)
+	populate(objectMap, "properties", r.Properties)
+	return json.Marshal(objectMap)
+}
+
 // RouteFilterListResult - Response for the ListRouteFilters API service call.
 type RouteFilterListResult struct {
 	// The URL to get the next set of results.
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// A list of route filters in a resource group.
-	Value *[]*RouteFilter `json:"value,omitempty"`
+	Value []*RouteFilter `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type RouteFilterListResult.
+func (r RouteFilterListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", r.NextLink)
+	populate(objectMap, "value", r.Value)
+	return json.Marshal(objectMap)
 }
 
 // RouteFilterListResultResponse is the response envelope for operations that return a RouteFilterListResult type.
@@ -10767,16 +13601,26 @@ type RouteFilterPollerResponse struct {
 // RouteFilterPropertiesFormat - Route Filter Resource.
 type RouteFilterPropertiesFormat struct {
 	// READ-ONLY; A collection of references to express route circuit ipv6 peerings.
-	IPv6Peerings *[]*ExpressRouteCircuitPeering `json:"ipv6Peerings,omitempty" azure:"ro"`
+	IPv6Peerings []*ExpressRouteCircuitPeering `json:"ipv6Peerings,omitempty" azure:"ro"`
 
 	// READ-ONLY; A collection of references to express route circuit peerings.
-	Peerings *[]*ExpressRouteCircuitPeering `json:"peerings,omitempty" azure:"ro"`
+	Peerings []*ExpressRouteCircuitPeering `json:"peerings,omitempty" azure:"ro"`
 
 	// READ-ONLY; The provisioning state of the route filter resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
 	// Collection of RouteFilterRules contained within a route filter.
-	Rules *[]*RouteFilterRule `json:"rules,omitempty"`
+	Rules []*RouteFilterRule `json:"rules,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type RouteFilterPropertiesFormat.
+func (r RouteFilterPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "ipv6Peerings", r.IPv6Peerings)
+	populate(objectMap, "peerings", r.Peerings)
+	populate(objectMap, "provisioningState", r.ProvisioningState)
+	populate(objectMap, "rules", r.Rules)
+	return json.Marshal(objectMap)
 }
 
 // RouteFilterResponse is the response envelope for operations that return a RouteFilter type.
@@ -10804,13 +13648,31 @@ type RouteFilterRule struct {
 	Properties *RouteFilterRulePropertiesFormat `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type RouteFilterRule.
+func (r RouteFilterRule) MarshalJSON() ([]byte, error) {
+	objectMap := r.SubResource.marshalInternal()
+	populate(objectMap, "etag", r.Etag)
+	populate(objectMap, "location", r.Location)
+	populate(objectMap, "name", r.Name)
+	populate(objectMap, "properties", r.Properties)
+	return json.Marshal(objectMap)
+}
+
 // RouteFilterRuleListResult - Response for the ListRouteFilterRules API service call.
 type RouteFilterRuleListResult struct {
 	// The URL to get the next set of results.
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// A list of RouteFilterRules in a resource group.
-	Value *[]*RouteFilterRule `json:"value,omitempty"`
+	Value []*RouteFilterRule `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type RouteFilterRuleListResult.
+func (r RouteFilterRuleListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", r.NextLink)
+	populate(objectMap, "value", r.Value)
+	return json.Marshal(objectMap)
 }
 
 // RouteFilterRuleListResultResponse is the response envelope for operations that return a RouteFilterRuleListResult type.
@@ -10840,13 +13702,23 @@ type RouteFilterRulePropertiesFormat struct {
 	Access *Access `json:"access,omitempty"`
 
 	// The collection for bgp community values to filter on. e.g. ['12076:5010','12076:5020'].
-	Communities *[]*string `json:"communities,omitempty"`
+	Communities []*string `json:"communities,omitempty"`
 
 	// READ-ONLY; The provisioning state of the route filter rule resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
 	// The rule type of the rule.
 	RouteFilterRuleType *RouteFilterRuleType `json:"routeFilterRuleType,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type RouteFilterRulePropertiesFormat.
+func (r RouteFilterRulePropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "access", r.Access)
+	populate(objectMap, "communities", r.Communities)
+	populate(objectMap, "provisioningState", r.ProvisioningState)
+	populate(objectMap, "routeFilterRuleType", r.RouteFilterRuleType)
+	return json.Marshal(objectMap)
 }
 
 // RouteFilterRuleResponse is the response envelope for operations that return a RouteFilterRule type.
@@ -10915,7 +13787,15 @@ type RouteListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// A list of routes in a resource group.
-	Value *[]*Route `json:"value,omitempty"`
+	Value []*Route `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type RouteListResult.
+func (r RouteListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", r.NextLink)
+	populate(objectMap, "value", r.Value)
+	return json.Marshal(objectMap)
 }
 
 // RouteListResultResponse is the response envelope for operations that return a RouteListResult type.
@@ -10973,13 +13853,29 @@ type RouteTable struct {
 	Properties *RouteTablePropertiesFormat `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type RouteTable.
+func (r RouteTable) MarshalJSON() ([]byte, error) {
+	objectMap := r.Resource.marshalInternal()
+	populate(objectMap, "etag", r.Etag)
+	populate(objectMap, "properties", r.Properties)
+	return json.Marshal(objectMap)
+}
+
 // RouteTableListResult - Response for the ListRouteTable API service call.
 type RouteTableListResult struct {
 	// The URL to get the next set of results.
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// A list of route tables in a resource group.
-	Value *[]*RouteTable `json:"value,omitempty"`
+	Value []*RouteTable `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type RouteTableListResult.
+func (r RouteTableListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", r.NextLink)
+	populate(objectMap, "value", r.Value)
+	return json.Marshal(objectMap)
 }
 
 // RouteTableListResultResponse is the response envelope for operations that return a RouteTableListResult type.
@@ -11012,10 +13908,20 @@ type RouteTablePropertiesFormat struct {
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
 	// Collection of routes contained within a route table.
-	Routes *[]*Route `json:"routes,omitempty"`
+	Routes []*Route `json:"routes,omitempty"`
 
 	// READ-ONLY; A collection of references to subnets.
-	Subnets *[]*Subnet `json:"subnets,omitempty" azure:"ro"`
+	Subnets []*Subnet `json:"subnets,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type RouteTablePropertiesFormat.
+func (r RouteTablePropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "disableBgpRoutePropagation", r.DisableBgpRoutePropagation)
+	populate(objectMap, "provisioningState", r.ProvisioningState)
+	populate(objectMap, "routes", r.Routes)
+	populate(objectMap, "subnets", r.Subnets)
+	return json.Marshal(objectMap)
 }
 
 // RouteTableResponse is the response envelope for operations that return a RouteTable type.
@@ -11096,7 +14002,14 @@ type SecurityGroupViewParameters struct {
 // SecurityGroupViewResult - The information about security rules applied to the specified VM.
 type SecurityGroupViewResult struct {
 	// List of network interfaces on the specified VM.
-	NetworkInterfaces *[]*SecurityGroupNetworkInterface `json:"networkInterfaces,omitempty"`
+	NetworkInterfaces []*SecurityGroupNetworkInterface `json:"networkInterfaces,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SecurityGroupViewResult.
+func (s SecurityGroupViewResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "networkInterfaces", s.NetworkInterfaces)
+	return json.Marshal(objectMap)
 }
 
 // SecurityGroupViewResultPollerResponse is the response envelope for operations that asynchronously return a SecurityGroupViewResult type.
@@ -11130,13 +14043,29 @@ type SecurityPartnerProvider struct {
 	Properties *SecurityPartnerProviderPropertiesFormat `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type SecurityPartnerProvider.
+func (s SecurityPartnerProvider) MarshalJSON() ([]byte, error) {
+	objectMap := s.Resource.marshalInternal()
+	populate(objectMap, "etag", s.Etag)
+	populate(objectMap, "properties", s.Properties)
+	return json.Marshal(objectMap)
+}
+
 // SecurityPartnerProviderListResult - Response for ListSecurityPartnerProviders API service call.
 type SecurityPartnerProviderListResult struct {
 	// URL to get the next set of results.
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of Security Partner Providers in a resource group.
-	Value *[]*SecurityPartnerProvider `json:"value,omitempty"`
+	Value []*SecurityPartnerProvider `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SecurityPartnerProviderListResult.
+func (s SecurityPartnerProviderListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", s.NextLink)
+	populate(objectMap, "value", s.Value)
+	return json.Marshal(objectMap)
 }
 
 // SecurityPartnerProviderListResultResponse is the response envelope for operations that return a SecurityPartnerProviderListResult type.
@@ -11227,13 +14156,22 @@ type SecurityRule struct {
 	Properties *SecurityRulePropertiesFormat `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type SecurityRule.
+func (s SecurityRule) MarshalJSON() ([]byte, error) {
+	objectMap := s.SubResource.marshalInternal()
+	populate(objectMap, "etag", s.Etag)
+	populate(objectMap, "name", s.Name)
+	populate(objectMap, "properties", s.Properties)
+	return json.Marshal(objectMap)
+}
+
 // SecurityRuleAssociations - All security rules associated with the network interface.
 type SecurityRuleAssociations struct {
 	// Collection of default security rules of the network security group.
-	DefaultSecurityRules *[]*SecurityRule `json:"defaultSecurityRules,omitempty"`
+	DefaultSecurityRules []*SecurityRule `json:"defaultSecurityRules,omitempty"`
 
 	// Collection of effective security rules.
-	EffectiveSecurityRules *[]*EffectiveNetworkSecurityRule `json:"effectiveSecurityRules,omitempty"`
+	EffectiveSecurityRules []*EffectiveNetworkSecurityRule `json:"effectiveSecurityRules,omitempty"`
 
 	// Network interface and it's custom security rules.
 	NetworkInterfaceAssociation *NetworkInterfaceAssociation `json:"networkInterfaceAssociation,omitempty"`
@@ -11242,13 +14180,31 @@ type SecurityRuleAssociations struct {
 	SubnetAssociation *SubnetAssociation `json:"subnetAssociation,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type SecurityRuleAssociations.
+func (s SecurityRuleAssociations) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "defaultSecurityRules", s.DefaultSecurityRules)
+	populate(objectMap, "effectiveSecurityRules", s.EffectiveSecurityRules)
+	populate(objectMap, "networkInterfaceAssociation", s.NetworkInterfaceAssociation)
+	populate(objectMap, "subnetAssociation", s.SubnetAssociation)
+	return json.Marshal(objectMap)
+}
+
 // SecurityRuleListResult - Response for ListSecurityRule API service call. Retrieves all security rules that belongs to a network security group.
 type SecurityRuleListResult struct {
 	// The URL to get the next set of results.
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// The security rules in a network security group.
-	Value *[]*SecurityRule `json:"value,omitempty"`
+	Value []*SecurityRule `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SecurityRuleListResult.
+func (s SecurityRuleListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", s.NextLink)
+	populate(objectMap, "value", s.Value)
+	return json.Marshal(objectMap)
 }
 
 // SecurityRuleListResultResponse is the response envelope for operations that return a SecurityRuleListResult type.
@@ -11286,16 +14242,16 @@ type SecurityRulePropertiesFormat struct {
 	DestinationAddressPrefix *string `json:"destinationAddressPrefix,omitempty"`
 
 	// The destination address prefixes. CIDR or destination IP ranges.
-	DestinationAddressPrefixes *[]*string `json:"destinationAddressPrefixes,omitempty"`
+	DestinationAddressPrefixes []*string `json:"destinationAddressPrefixes,omitempty"`
 
 	// The application security group specified as destination.
-	DestinationApplicationSecurityGroups *[]*ApplicationSecurityGroup `json:"destinationApplicationSecurityGroups,omitempty"`
+	DestinationApplicationSecurityGroups []*ApplicationSecurityGroup `json:"destinationApplicationSecurityGroups,omitempty"`
 
 	// The destination port or range. Integer or range between 0 and 65535. Asterisk '*' can also be used to match all ports.
 	DestinationPortRange *string `json:"destinationPortRange,omitempty"`
 
 	// The destination port ranges.
-	DestinationPortRanges *[]*string `json:"destinationPortRanges,omitempty"`
+	DestinationPortRanges []*string `json:"destinationPortRanges,omitempty"`
 
 	// The direction of the rule. The direction specifies if rule will be evaluated on incoming or outgoing traffic.
 	Direction *SecurityRuleDirection `json:"direction,omitempty"`
@@ -11316,16 +14272,38 @@ type SecurityRulePropertiesFormat struct {
 	SourceAddressPrefix *string `json:"sourceAddressPrefix,omitempty"`
 
 	// The CIDR or source IP ranges.
-	SourceAddressPrefixes *[]*string `json:"sourceAddressPrefixes,omitempty"`
+	SourceAddressPrefixes []*string `json:"sourceAddressPrefixes,omitempty"`
 
 	// The application security group specified as source.
-	SourceApplicationSecurityGroups *[]*ApplicationSecurityGroup `json:"sourceApplicationSecurityGroups,omitempty"`
+	SourceApplicationSecurityGroups []*ApplicationSecurityGroup `json:"sourceApplicationSecurityGroups,omitempty"`
 
 	// The source port or range. Integer or range between 0 and 65535. Asterisk '*' can also be used to match all ports.
 	SourcePortRange *string `json:"sourcePortRange,omitempty"`
 
 	// The source port ranges.
-	SourcePortRanges *[]*string `json:"sourcePortRanges,omitempty"`
+	SourcePortRanges []*string `json:"sourcePortRanges,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SecurityRulePropertiesFormat.
+func (s SecurityRulePropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "access", s.Access)
+	populate(objectMap, "description", s.Description)
+	populate(objectMap, "destinationAddressPrefix", s.DestinationAddressPrefix)
+	populate(objectMap, "destinationAddressPrefixes", s.DestinationAddressPrefixes)
+	populate(objectMap, "destinationApplicationSecurityGroups", s.DestinationApplicationSecurityGroups)
+	populate(objectMap, "destinationPortRange", s.DestinationPortRange)
+	populate(objectMap, "destinationPortRanges", s.DestinationPortRanges)
+	populate(objectMap, "direction", s.Direction)
+	populate(objectMap, "priority", s.Priority)
+	populate(objectMap, "protocol", s.Protocol)
+	populate(objectMap, "provisioningState", s.ProvisioningState)
+	populate(objectMap, "sourceAddressPrefix", s.SourceAddressPrefix)
+	populate(objectMap, "sourceAddressPrefixes", s.SourceAddressPrefixes)
+	populate(objectMap, "sourceApplicationSecurityGroups", s.SourceApplicationSecurityGroups)
+	populate(objectMap, "sourcePortRange", s.SourcePortRange)
+	populate(objectMap, "sourcePortRanges", s.SourcePortRanges)
+	return json.Marshal(objectMap)
 }
 
 // SecurityRuleResponse is the response envelope for operations that return a SecurityRule type.
@@ -11373,6 +14351,16 @@ type ServiceAssociationLink struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type ServiceAssociationLink.
+func (s ServiceAssociationLink) MarshalJSON() ([]byte, error) {
+	objectMap := s.SubResource.marshalInternal()
+	populate(objectMap, "etag", s.Etag)
+	populate(objectMap, "name", s.Name)
+	populate(objectMap, "properties", s.Properties)
+	populate(objectMap, "type", s.Type)
+	return json.Marshal(objectMap)
+}
+
 // ServiceAssociationLinkPropertiesFormat - Properties of ServiceAssociationLink.
 type ServiceAssociationLinkPropertiesFormat struct {
 	// If true, the resource can be deleted.
@@ -11385,10 +14373,21 @@ type ServiceAssociationLinkPropertiesFormat struct {
 	LinkedResourceType *string `json:"linkedResourceType,omitempty"`
 
 	// A list of locations.
-	Locations *[]*string `json:"locations,omitempty"`
+	Locations []*string `json:"locations,omitempty"`
 
 	// READ-ONLY; The provisioning state of the service association link resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ServiceAssociationLinkPropertiesFormat.
+func (s ServiceAssociationLinkPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "allowDelete", s.AllowDelete)
+	populate(objectMap, "link", s.Link)
+	populate(objectMap, "linkedResourceType", s.LinkedResourceType)
+	populate(objectMap, "locations", s.Locations)
+	populate(objectMap, "provisioningState", s.ProvisioningState)
+	return json.Marshal(objectMap)
 }
 
 // ServiceAssociationLinksListOptions contains the optional parameters for the ServiceAssociationLinks.List method.
@@ -11402,7 +14401,15 @@ type ServiceAssociationLinksListResult struct {
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 
 	// The service association links in a subnet.
-	Value *[]*ServiceAssociationLink `json:"value,omitempty"`
+	Value []*ServiceAssociationLink `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ServiceAssociationLinksListResult.
+func (s ServiceAssociationLinksListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", s.NextLink)
+	populate(objectMap, "value", s.Value)
+	return json.Marshal(objectMap)
 }
 
 // ServiceAssociationLinksListResultResponse is the response envelope for operations that return a ServiceAssociationLinksListResult type.
@@ -11417,13 +14424,22 @@ type ServiceAssociationLinksListResultResponse struct {
 // ServiceDelegationPropertiesFormat - Properties of a service delegation.
 type ServiceDelegationPropertiesFormat struct {
 	// READ-ONLY; The actions permitted to the service upon delegation.
-	Actions *[]*string `json:"actions,omitempty" azure:"ro"`
+	Actions []*string `json:"actions,omitempty" azure:"ro"`
 
 	// READ-ONLY; The provisioning state of the service delegation resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
 	// The name of the service to whom the subnet should be delegated (e.g. Microsoft.Sql/servers).
 	ServiceName *string `json:"serviceName,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ServiceDelegationPropertiesFormat.
+func (s ServiceDelegationPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "actions", s.Actions)
+	populate(objectMap, "provisioningState", s.ProvisioningState)
+	populate(objectMap, "serviceName", s.ServiceName)
+	return json.Marshal(objectMap)
 }
 
 // ServiceEndpointPoliciesBeginCreateOrUpdateOptions contains the optional parameters for the ServiceEndpointPolicies.BeginCreateOrUpdate method.
@@ -11467,6 +14483,14 @@ type ServiceEndpointPolicy struct {
 	Properties *ServiceEndpointPolicyPropertiesFormat `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type ServiceEndpointPolicy.
+func (s ServiceEndpointPolicy) MarshalJSON() ([]byte, error) {
+	objectMap := s.Resource.marshalInternal()
+	populate(objectMap, "etag", s.Etag)
+	populate(objectMap, "properties", s.Properties)
+	return json.Marshal(objectMap)
+}
+
 // ServiceEndpointPolicyDefinition - Service Endpoint policy definitions.
 type ServiceEndpointPolicyDefinition struct {
 	SubResource
@@ -11480,6 +14504,15 @@ type ServiceEndpointPolicyDefinition struct {
 	Properties *ServiceEndpointPolicyDefinitionPropertiesFormat `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type ServiceEndpointPolicyDefinition.
+func (s ServiceEndpointPolicyDefinition) MarshalJSON() ([]byte, error) {
+	objectMap := s.SubResource.marshalInternal()
+	populate(objectMap, "etag", s.Etag)
+	populate(objectMap, "name", s.Name)
+	populate(objectMap, "properties", s.Properties)
+	return json.Marshal(objectMap)
+}
+
 // ServiceEndpointPolicyDefinitionListResult - Response for ListServiceEndpointPolicyDefinition API service call. Retrieves all service endpoint policy
 // definition that belongs to a service endpoint policy.
 type ServiceEndpointPolicyDefinitionListResult struct {
@@ -11487,7 +14520,15 @@ type ServiceEndpointPolicyDefinitionListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// The service endpoint policy definition in a service endpoint policy.
-	Value *[]*ServiceEndpointPolicyDefinition `json:"value,omitempty"`
+	Value []*ServiceEndpointPolicyDefinition `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ServiceEndpointPolicyDefinitionListResult.
+func (s ServiceEndpointPolicyDefinitionListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", s.NextLink)
+	populate(objectMap, "value", s.Value)
+	return json.Marshal(objectMap)
 }
 
 // ServiceEndpointPolicyDefinitionListResultResponse is the response envelope for operations that return a ServiceEndpointPolicyDefinitionListResult type.
@@ -11524,7 +14565,17 @@ type ServiceEndpointPolicyDefinitionPropertiesFormat struct {
 	Service *string `json:"service,omitempty"`
 
 	// A list of service resources.
-	ServiceResources *[]*string `json:"serviceResources,omitempty"`
+	ServiceResources []*string `json:"serviceResources,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ServiceEndpointPolicyDefinitionPropertiesFormat.
+func (s ServiceEndpointPolicyDefinitionPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "description", s.Description)
+	populate(objectMap, "provisioningState", s.ProvisioningState)
+	populate(objectMap, "service", s.Service)
+	populate(objectMap, "serviceResources", s.ServiceResources)
+	return json.Marshal(objectMap)
 }
 
 // ServiceEndpointPolicyDefinitionResponse is the response envelope for operations that return a ServiceEndpointPolicyDefinition type.
@@ -11564,7 +14615,15 @@ type ServiceEndpointPolicyListResult struct {
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 
 	// A list of ServiceEndpointPolicy resources.
-	Value *[]*ServiceEndpointPolicy `json:"value,omitempty"`
+	Value []*ServiceEndpointPolicy `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ServiceEndpointPolicyListResult.
+func (s ServiceEndpointPolicyListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", s.NextLink)
+	populate(objectMap, "value", s.Value)
+	return json.Marshal(objectMap)
 }
 
 // ServiceEndpointPolicyListResultResponse is the response envelope for operations that return a ServiceEndpointPolicyListResult type.
@@ -11597,10 +14656,20 @@ type ServiceEndpointPolicyPropertiesFormat struct {
 	ResourceGUID *string `json:"resourceGuid,omitempty" azure:"ro"`
 
 	// A collection of service endpoint policy definitions of the service endpoint policy.
-	ServiceEndpointPolicyDefinitions *[]*ServiceEndpointPolicyDefinition `json:"serviceEndpointPolicyDefinitions,omitempty"`
+	ServiceEndpointPolicyDefinitions []*ServiceEndpointPolicyDefinition `json:"serviceEndpointPolicyDefinitions,omitempty"`
 
 	// READ-ONLY; A collection of references to subnets.
-	Subnets *[]*Subnet `json:"subnets,omitempty" azure:"ro"`
+	Subnets []*Subnet `json:"subnets,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ServiceEndpointPolicyPropertiesFormat.
+func (s ServiceEndpointPolicyPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "provisioningState", s.ProvisioningState)
+	populate(objectMap, "resourceGuid", s.ResourceGUID)
+	populate(objectMap, "serviceEndpointPolicyDefinitions", s.ServiceEndpointPolicyDefinitions)
+	populate(objectMap, "subnets", s.Subnets)
+	return json.Marshal(objectMap)
 }
 
 // ServiceEndpointPolicyResponse is the response envelope for operations that return a ServiceEndpointPolicy type.
@@ -11615,13 +14684,22 @@ type ServiceEndpointPolicyResponse struct {
 // ServiceEndpointPropertiesFormat - The service endpoint properties.
 type ServiceEndpointPropertiesFormat struct {
 	// A list of locations.
-	Locations *[]*string `json:"locations,omitempty"`
+	Locations []*string `json:"locations,omitempty"`
 
 	// READ-ONLY; The provisioning state of the service endpoint resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
 	// The type of the endpoint service.
 	Service *string `json:"service,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ServiceEndpointPropertiesFormat.
+func (s ServiceEndpointPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "locations", s.Locations)
+	populate(objectMap, "provisioningState", s.ProvisioningState)
+	populate(objectMap, "service", s.Service)
+	return json.Marshal(objectMap)
 }
 
 // ServiceTagInformation - The service tag information.
@@ -11639,7 +14717,7 @@ type ServiceTagInformation struct {
 // ServiceTagInformationPropertiesFormat - Properties of the service tag information.
 type ServiceTagInformationPropertiesFormat struct {
 	// READ-ONLY; The list of IP address prefixes.
-	AddressPrefixes *[]*string `json:"addressPrefixes,omitempty" azure:"ro"`
+	AddressPrefixes []*string `json:"addressPrefixes,omitempty" azure:"ro"`
 
 	// READ-ONLY; The iteration number of service tag.
 	ChangeNumber *string `json:"changeNumber,omitempty" azure:"ro"`
@@ -11649,6 +14727,16 @@ type ServiceTagInformationPropertiesFormat struct {
 
 	// READ-ONLY; The name of system service.
 	SystemService *string `json:"systemService,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ServiceTagInformationPropertiesFormat.
+func (s ServiceTagInformationPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "addressPrefixes", s.AddressPrefixes)
+	populate(objectMap, "changeNumber", s.ChangeNumber)
+	populate(objectMap, "region", s.Region)
+	populate(objectMap, "systemService", s.SystemService)
+	return json.Marshal(objectMap)
 }
 
 // ServiceTagsListOptions contains the optional parameters for the ServiceTags.List method.
@@ -11674,7 +14762,19 @@ type ServiceTagsListResult struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 
 	// READ-ONLY; The list of service tag information resources.
-	Values *[]*ServiceTagInformation `json:"values,omitempty" azure:"ro"`
+	Values []*ServiceTagInformation `json:"values,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ServiceTagsListResult.
+func (s ServiceTagsListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "changeNumber", s.ChangeNumber)
+	populate(objectMap, "cloud", s.Cloud)
+	populate(objectMap, "id", s.ID)
+	populate(objectMap, "name", s.Name)
+	populate(objectMap, "type", s.Type)
+	populate(objectMap, "values", s.Values)
+	return json.Marshal(objectMap)
 }
 
 // ServiceTagsListResultResponse is the response envelope for operations that return a ServiceTagsListResult type.
@@ -11689,7 +14789,14 @@ type ServiceTagsListResultResponse struct {
 // SessionIDs - List of session IDs.
 type SessionIDs struct {
 	// List of session IDs.
-	SessionIDs *[]*string `json:"sessionIds,omitempty"`
+	SessionIDs []*string `json:"sessionIds,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SessionIDs.
+func (s SessionIDs) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "sessionIds", s.SessionIDs)
+	return json.Marshal(objectMap)
 }
 
 // StringArrayResponse is the response envelope for operations that return a []*string type.
@@ -11726,6 +14833,18 @@ type SubResource struct {
 	ID *string `json:"id,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type SubResource.
+func (s SubResource) MarshalJSON() ([]byte, error) {
+	objectMap := s.marshalInternal()
+	return json.Marshal(objectMap)
+}
+
+func (s SubResource) marshalInternal() map[string]interface{} {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "id", s.ID)
+	return objectMap
+}
+
 // Subnet in a virtual network resource.
 type Subnet struct {
 	SubResource
@@ -11739,13 +14858,30 @@ type Subnet struct {
 	Properties *SubnetPropertiesFormat `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type Subnet.
+func (s Subnet) MarshalJSON() ([]byte, error) {
+	objectMap := s.SubResource.marshalInternal()
+	populate(objectMap, "etag", s.Etag)
+	populate(objectMap, "name", s.Name)
+	populate(objectMap, "properties", s.Properties)
+	return json.Marshal(objectMap)
+}
+
 // SubnetAssociation - Subnet and it's custom security rules.
 type SubnetAssociation struct {
 	// READ-ONLY; Subnet ID.
 	ID *string `json:"id,omitempty" azure:"ro"`
 
 	// Collection of custom security rules.
-	SecurityRules *[]*SecurityRule `json:"securityRules,omitempty"`
+	SecurityRules []*SecurityRule `json:"securityRules,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SubnetAssociation.
+func (s SubnetAssociation) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "id", s.ID)
+	populate(objectMap, "securityRules", s.SecurityRules)
+	return json.Marshal(objectMap)
 }
 
 // SubnetListResult - Response for ListSubnets API service callRetrieves all subnet that belongs to a virtual network.
@@ -11754,7 +14890,15 @@ type SubnetListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// The subnets in a virtual network.
-	Value *[]*Subnet `json:"value,omitempty"`
+	Value []*Subnet `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SubnetListResult.
+func (s SubnetListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", s.NextLink)
+	populate(objectMap, "value", s.Value)
+	return json.Marshal(objectMap)
 }
 
 // SubnetListResultResponse is the response envelope for operations that return a SubnetListResult type.
@@ -11784,19 +14928,19 @@ type SubnetPropertiesFormat struct {
 	AddressPrefix *string `json:"addressPrefix,omitempty"`
 
 	// List of address prefixes for the subnet.
-	AddressPrefixes *[]*string `json:"addressPrefixes,omitempty"`
+	AddressPrefixes []*string `json:"addressPrefixes,omitempty"`
 
 	// An array of references to the delegations on the subnet.
-	Delegations *[]*Delegation `json:"delegations,omitempty"`
+	Delegations []*Delegation `json:"delegations,omitempty"`
 
 	// Array of IpAllocation which reference this subnet.
-	IPAllocations *[]*SubResource `json:"ipAllocations,omitempty"`
+	IPAllocations []*SubResource `json:"ipAllocations,omitempty"`
 
 	// READ-ONLY; Array of IP configuration profiles which reference this subnet.
-	IPConfigurationProfiles *[]*IPConfigurationProfile `json:"ipConfigurationProfiles,omitempty" azure:"ro"`
+	IPConfigurationProfiles []*IPConfigurationProfile `json:"ipConfigurationProfiles,omitempty" azure:"ro"`
 
 	// READ-ONLY; An array of references to the network interface IP configurations using subnet.
-	IPConfigurations *[]*IPConfiguration `json:"ipConfigurations,omitempty" azure:"ro"`
+	IPConfigurations []*IPConfiguration `json:"ipConfigurations,omitempty" azure:"ro"`
 
 	// Nat gateway associated with this subnet.
 	NatGateway *SubResource `json:"natGateway,omitempty"`
@@ -11808,7 +14952,7 @@ type SubnetPropertiesFormat struct {
 	PrivateEndpointNetworkPolicies *string `json:"privateEndpointNetworkPolicies,omitempty"`
 
 	// READ-ONLY; An array of references to private endpoints.
-	PrivateEndpoints *[]*PrivateEndpoint `json:"privateEndpoints,omitempty" azure:"ro"`
+	PrivateEndpoints []*PrivateEndpoint `json:"privateEndpoints,omitempty" azure:"ro"`
 
 	// Enable or Disable apply network policies on private link service in the subnet.
 	PrivateLinkServiceNetworkPolicies *string `json:"privateLinkServiceNetworkPolicies,omitempty"`
@@ -11820,19 +14964,43 @@ type SubnetPropertiesFormat struct {
 	Purpose *string `json:"purpose,omitempty" azure:"ro"`
 
 	// READ-ONLY; An array of references to the external resources using subnet.
-	ResourceNavigationLinks *[]*ResourceNavigationLink `json:"resourceNavigationLinks,omitempty" azure:"ro"`
+	ResourceNavigationLinks []*ResourceNavigationLink `json:"resourceNavigationLinks,omitempty" azure:"ro"`
 
 	// The reference to the RouteTable resource.
 	RouteTable *RouteTable `json:"routeTable,omitempty"`
 
 	// READ-ONLY; An array of references to services injecting into this subnet.
-	ServiceAssociationLinks *[]*ServiceAssociationLink `json:"serviceAssociationLinks,omitempty" azure:"ro"`
+	ServiceAssociationLinks []*ServiceAssociationLink `json:"serviceAssociationLinks,omitempty" azure:"ro"`
 
 	// An array of service endpoint policies.
-	ServiceEndpointPolicies *[]*ServiceEndpointPolicy `json:"serviceEndpointPolicies,omitempty"`
+	ServiceEndpointPolicies []*ServiceEndpointPolicy `json:"serviceEndpointPolicies,omitempty"`
 
 	// An array of service endpoints.
-	ServiceEndpoints *[]*ServiceEndpointPropertiesFormat `json:"serviceEndpoints,omitempty"`
+	ServiceEndpoints []*ServiceEndpointPropertiesFormat `json:"serviceEndpoints,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SubnetPropertiesFormat.
+func (s SubnetPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "addressPrefix", s.AddressPrefix)
+	populate(objectMap, "addressPrefixes", s.AddressPrefixes)
+	populate(objectMap, "delegations", s.Delegations)
+	populate(objectMap, "ipAllocations", s.IPAllocations)
+	populate(objectMap, "ipConfigurationProfiles", s.IPConfigurationProfiles)
+	populate(objectMap, "ipConfigurations", s.IPConfigurations)
+	populate(objectMap, "natGateway", s.NatGateway)
+	populate(objectMap, "networkSecurityGroup", s.NetworkSecurityGroup)
+	populate(objectMap, "privateEndpointNetworkPolicies", s.PrivateEndpointNetworkPolicies)
+	populate(objectMap, "privateEndpoints", s.PrivateEndpoints)
+	populate(objectMap, "privateLinkServiceNetworkPolicies", s.PrivateLinkServiceNetworkPolicies)
+	populate(objectMap, "provisioningState", s.ProvisioningState)
+	populate(objectMap, "purpose", s.Purpose)
+	populate(objectMap, "resourceNavigationLinks", s.ResourceNavigationLinks)
+	populate(objectMap, "routeTable", s.RouteTable)
+	populate(objectMap, "serviceAssociationLinks", s.ServiceAssociationLinks)
+	populate(objectMap, "serviceEndpointPolicies", s.ServiceEndpointPolicies)
+	populate(objectMap, "serviceEndpoints", s.ServiceEndpoints)
+	return json.Marshal(objectMap)
 }
 
 // SubnetResponse is the response envelope for operations that return a Subnet type.
@@ -11878,7 +15046,7 @@ type SubnetsListOptions struct {
 // TagsObject - Tags object for patch operations.
 type TagsObject struct {
 	// Resource tags.
-	Tags *map[string]*string `json:"tags,omitempty"`
+	Tags map[string]*string `json:"tags,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type TagsObject.
@@ -11900,7 +15068,7 @@ type Topology struct {
 	LastModified *time.Time `json:"lastModified,omitempty" azure:"ro"`
 
 	// A list of topology resources.
-	Resources *[]*TopologyResource `json:"resources,omitempty"`
+	Resources []*TopologyResource `json:"resources,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type Topology.
@@ -11973,7 +15141,7 @@ type TopologyParameters struct {
 // TopologyResource - The network resource topology information for the given resource group.
 type TopologyResource struct {
 	// Holds the associations the resource has with other resources in the resource group.
-	Associations *[]*TopologyAssociation `json:"associations,omitempty"`
+	Associations []*TopologyAssociation `json:"associations,omitempty"`
 
 	// ID of the resource.
 	ID *string `json:"id,omitempty"`
@@ -11983,6 +15151,16 @@ type TopologyResource struct {
 
 	// Name of the resource.
 	Name *string `json:"name,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type TopologyResource.
+func (t TopologyResource) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "associations", t.Associations)
+	populate(objectMap, "id", t.ID)
+	populate(objectMap, "location", t.Location)
+	populate(objectMap, "name", t.Name)
+	return json.Marshal(objectMap)
 }
 
 // TopologyResponse is the response envelope for operations that return a Topology type.
@@ -12021,10 +15199,18 @@ type TrafficAnalyticsProperties struct {
 // TrafficSelectorPolicy - An traffic selector policy for a virtual network gateway connection.
 type TrafficSelectorPolicy struct {
 	// A collection of local address spaces in CIDR format.
-	LocalAddressRanges *[]*string `json:"localAddressRanges,omitempty"`
+	LocalAddressRanges []*string `json:"localAddressRanges,omitempty"`
 
 	// A collection of remote address spaces in CIDR format.
-	RemoteAddressRanges *[]*string `json:"remoteAddressRanges,omitempty"`
+	RemoteAddressRanges []*string `json:"remoteAddressRanges,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type TrafficSelectorPolicy.
+func (t TrafficSelectorPolicy) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "localAddressRanges", t.LocalAddressRanges)
+	populate(objectMap, "remoteAddressRanges", t.RemoteAddressRanges)
+	return json.Marshal(objectMap)
 }
 
 // TroubleshootingDetails - Information gained from troubleshooting of specified resource.
@@ -12039,10 +15225,21 @@ type TroubleshootingDetails struct {
 	ReasonType *string `json:"reasonType,omitempty"`
 
 	// List of recommended actions.
-	RecommendedActions *[]*TroubleshootingRecommendedActions `json:"recommendedActions,omitempty"`
+	RecommendedActions []*TroubleshootingRecommendedActions `json:"recommendedActions,omitempty"`
 
 	// A summary of troubleshooting.
 	Summary *string `json:"summary,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type TroubleshootingDetails.
+func (t TroubleshootingDetails) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "detail", t.Detail)
+	populate(objectMap, "id", t.ID)
+	populate(objectMap, "reasonType", t.ReasonType)
+	populate(objectMap, "recommendedActions", t.RecommendedActions)
+	populate(objectMap, "summary", t.Summary)
+	return json.Marshal(objectMap)
 }
 
 // TroubleshootingParameters - Parameters that define the resource to troubleshoot.
@@ -12087,7 +15284,7 @@ type TroubleshootingResult struct {
 	EndTime *time.Time `json:"endTime,omitempty"`
 
 	// Information from troubleshooting.
-	Results *[]*TroubleshootingDetails `json:"results,omitempty"`
+	Results []*TroubleshootingDetails `json:"results,omitempty"`
 
 	// The start time of the troubleshooting.
 	StartTime *time.Time `json:"startTime,omitempty"`
@@ -12219,7 +15416,15 @@ type UsagesListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// The list network resource usages.
-	Value *[]*Usage `json:"value,omitempty"`
+	Value []*Usage `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type UsagesListResult.
+func (u UsagesListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", u.NextLink)
+	populate(objectMap, "value", u.Value)
+	return json.Marshal(objectMap)
 }
 
 // UsagesListResultResponse is the response envelope for operations that return a UsagesListResult type.
@@ -12254,28 +15459,45 @@ type VPNClientConfiguration struct {
 	RadiusServerSecret *string `json:"radiusServerSecret,omitempty"`
 
 	// The radiusServers property for multiple radius server configuration.
-	RadiusServers *[]*RadiusServer `json:"radiusServers,omitempty"`
+	RadiusServers []*RadiusServer `json:"radiusServers,omitempty"`
 
 	// The reference to the address space resource which represents Address space for P2S VpnClient.
 	VPNClientAddressPool *AddressSpace `json:"vpnClientAddressPool,omitempty"`
 
 	// VpnClientIpsecPolicies for virtual network gateway P2S client.
-	VPNClientIPSecPolicies *[]*IPSecPolicy `json:"vpnClientIpsecPolicies,omitempty"`
+	VPNClientIPSecPolicies []*IPSecPolicy `json:"vpnClientIpsecPolicies,omitempty"`
 
 	// VpnClientProtocols for Virtual network gateway.
-	VPNClientProtocols *[]*VPNClientProtocol `json:"vpnClientProtocols,omitempty"`
+	VPNClientProtocols []*VPNClientProtocol `json:"vpnClientProtocols,omitempty"`
 
 	// VpnClientRevokedCertificate for Virtual network gateway.
-	VPNClientRevokedCertificates *[]*VPNClientRevokedCertificate `json:"vpnClientRevokedCertificates,omitempty"`
+	VPNClientRevokedCertificates []*VPNClientRevokedCertificate `json:"vpnClientRevokedCertificates,omitempty"`
 
 	// VpnClientRootCertificate for virtual network gateway.
-	VPNClientRootCertificates *[]*VPNClientRootCertificate `json:"vpnClientRootCertificates,omitempty"`
+	VPNClientRootCertificates []*VPNClientRootCertificate `json:"vpnClientRootCertificates,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type VPNClientConfiguration.
+func (v VPNClientConfiguration) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "aadAudience", v.AADAudience)
+	populate(objectMap, "aadIssuer", v.AADIssuer)
+	populate(objectMap, "aadTenant", v.AADTenant)
+	populate(objectMap, "radiusServerAddress", v.RadiusServerAddress)
+	populate(objectMap, "radiusServerSecret", v.RadiusServerSecret)
+	populate(objectMap, "radiusServers", v.RadiusServers)
+	populate(objectMap, "vpnClientAddressPool", v.VPNClientAddressPool)
+	populate(objectMap, "vpnClientIpsecPolicies", v.VPNClientIPSecPolicies)
+	populate(objectMap, "vpnClientProtocols", v.VPNClientProtocols)
+	populate(objectMap, "vpnClientRevokedCertificates", v.VPNClientRevokedCertificates)
+	populate(objectMap, "vpnClientRootCertificates", v.VPNClientRootCertificates)
+	return json.Marshal(objectMap)
 }
 
 // VPNClientConnectionHealth - VpnClientConnectionHealth properties.
 type VPNClientConnectionHealth struct {
 	// List of allocated ip addresses to the connected p2s vpn clients.
-	AllocatedIPAddresses *[]*string `json:"allocatedIpAddresses,omitempty"`
+	AllocatedIPAddresses []*string `json:"allocatedIpAddresses,omitempty"`
 
 	// READ-ONLY; Total of the Egress Bytes Transferred in this connection.
 	TotalEgressBytesTransferred *int64 `json:"totalEgressBytesTransferred,omitempty" azure:"ro"`
@@ -12285,6 +15507,16 @@ type VPNClientConnectionHealth struct {
 
 	// The total of p2s vpn clients connected at this time to this P2SVpnGateway.
 	VPNClientConnectionsCount *int32 `json:"vpnClientConnectionsCount,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type VPNClientConnectionHealth.
+func (v VPNClientConnectionHealth) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "allocatedIpAddresses", v.AllocatedIPAddresses)
+	populate(objectMap, "totalEgressBytesTransferred", v.TotalEgressBytesTransferred)
+	populate(objectMap, "totalIngressBytesTransferred", v.TotalIngressBytesTransferred)
+	populate(objectMap, "vpnClientConnectionsCount", v.VPNClientConnectionsCount)
+	return json.Marshal(objectMap)
 }
 
 // VPNClientConnectionHealthDetail - VPN client connection health detail.
@@ -12329,7 +15561,14 @@ type VPNClientConnectionHealthDetail struct {
 // VPNClientConnectionHealthDetailListResult - List of virtual network gateway vpn client connection health.
 type VPNClientConnectionHealthDetailListResult struct {
 	// List of vpn client connection health.
-	Value *[]*VPNClientConnectionHealthDetail `json:"value,omitempty"`
+	Value []*VPNClientConnectionHealthDetail `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type VPNClientConnectionHealthDetailListResult.
+func (v VPNClientConnectionHealthDetailListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "value", v.Value)
+	return json.Marshal(objectMap)
 }
 
 // VPNClientConnectionHealthDetailListResultPollerResponse is the response envelope for operations that asynchronously return a VPNClientConnectionHealthDetailListResult
@@ -12409,7 +15648,7 @@ type VPNClientParameters struct {
 
 	// A list of client root certificates public certificate data encoded as Base-64 strings. Optional parameter for external radius based authentication with
 	// EAPTLS.
-	ClientRootCertificates *[]*string `json:"clientRootCertificates,omitempty"`
+	ClientRootCertificates []*string `json:"clientRootCertificates,omitempty"`
 
 	// VPN client Processor Architecture.
 	ProcessorArchitecture *ProcessorArchitecture `json:"processorArchitecture,omitempty"`
@@ -12418,6 +15657,16 @@ type VPNClientParameters struct {
 	// has been configured with EAPTLS
 	// authentication.
 	RadiusServerAuthCertificate *string `json:"radiusServerAuthCertificate,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type VPNClientParameters.
+func (v VPNClientParameters) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "authenticationMethod", v.AuthenticationMethod)
+	populate(objectMap, "clientRootCertificates", v.ClientRootCertificates)
+	populate(objectMap, "processorArchitecture", v.ProcessorArchitecture)
+	populate(objectMap, "radiusServerAuthCertificate", v.RadiusServerAuthCertificate)
+	return json.Marshal(objectMap)
 }
 
 // VPNClientRevokedCertificate - VPN client revoked certificate of virtual network gateway.
@@ -12431,6 +15680,15 @@ type VPNClientRevokedCertificate struct {
 
 	// Properties of the vpn client revoked certificate.
 	Properties *VPNClientRevokedCertificatePropertiesFormat `json:"properties,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type VPNClientRevokedCertificate.
+func (v VPNClientRevokedCertificate) MarshalJSON() ([]byte, error) {
+	objectMap := v.SubResource.marshalInternal()
+	populate(objectMap, "etag", v.Etag)
+	populate(objectMap, "name", v.Name)
+	populate(objectMap, "properties", v.Properties)
+	return json.Marshal(objectMap)
 }
 
 // VPNClientRevokedCertificatePropertiesFormat - Properties of the revoked VPN client certificate of virtual network gateway.
@@ -12455,6 +15713,15 @@ type VPNClientRootCertificate struct {
 	Properties *VPNClientRootCertificatePropertiesFormat `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type VPNClientRootCertificate.
+func (v VPNClientRootCertificate) MarshalJSON() ([]byte, error) {
+	objectMap := v.SubResource.marshalInternal()
+	populate(objectMap, "etag", v.Etag)
+	populate(objectMap, "name", v.Name)
+	populate(objectMap, "properties", v.Properties)
+	return json.Marshal(objectMap)
+}
+
 // VPNClientRootCertificatePropertiesFormat - Properties of SSL certificates of application gateway.
 type VPNClientRootCertificatePropertiesFormat struct {
 	// READ-ONLY; The provisioning state of the VPN client root certificate resource.
@@ -12475,6 +15742,15 @@ type VPNConnection struct {
 
 	// Properties of the VPN connection.
 	Properties *VPNConnectionProperties `json:"properties,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type VPNConnection.
+func (v VPNConnection) MarshalJSON() ([]byte, error) {
+	objectMap := v.SubResource.marshalInternal()
+	populate(objectMap, "etag", v.Etag)
+	populate(objectMap, "name", v.Name)
+	populate(objectMap, "properties", v.Properties)
+	return json.Marshal(objectMap)
 }
 
 // VPNConnectionPollerResponse is the response envelope for operations that asynchronously return a VPNConnection type.
@@ -12513,7 +15789,7 @@ type VPNConnectionProperties struct {
 	EnableRateLimiting *bool `json:"enableRateLimiting,omitempty"`
 
 	// The IPSec Policies to be considered by this connection.
-	IPSecPolicies *[]*IPSecPolicy `json:"ipsecPolicies,omitempty"`
+	IPSecPolicies []*IPSecPolicy `json:"ipsecPolicies,omitempty"`
 
 	// READ-ONLY; Ingress bytes transferred.
 	IngressBytesTransferred *int64 `json:"ingressBytesTransferred,omitempty" azure:"ro"`
@@ -12540,7 +15816,30 @@ type VPNConnectionProperties struct {
 	VPNConnectionProtocolType *VirtualNetworkGatewayConnectionProtocol `json:"vpnConnectionProtocolType,omitempty"`
 
 	// List of all vpn site link connections to the gateway.
-	VPNLinkConnections *[]*VPNSiteLinkConnection `json:"vpnLinkConnections,omitempty"`
+	VPNLinkConnections []*VPNSiteLinkConnection `json:"vpnLinkConnections,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type VPNConnectionProperties.
+func (v VPNConnectionProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "connectionBandwidth", v.ConnectionBandwidth)
+	populate(objectMap, "connectionStatus", v.ConnectionStatus)
+	populate(objectMap, "dpdTimeoutSeconds", v.DpdTimeoutSeconds)
+	populate(objectMap, "egressBytesTransferred", v.EgressBytesTransferred)
+	populate(objectMap, "enableBgp", v.EnableBgp)
+	populate(objectMap, "enableInternetSecurity", v.EnableInternetSecurity)
+	populate(objectMap, "enableRateLimiting", v.EnableRateLimiting)
+	populate(objectMap, "ipsecPolicies", v.IPSecPolicies)
+	populate(objectMap, "ingressBytesTransferred", v.IngressBytesTransferred)
+	populate(objectMap, "provisioningState", v.ProvisioningState)
+	populate(objectMap, "remoteVpnSite", v.RemoteVPNSite)
+	populate(objectMap, "routingWeight", v.RoutingWeight)
+	populate(objectMap, "sharedKey", v.SharedKey)
+	populate(objectMap, "useLocalAzureIpAddress", v.UseLocalAzureIPAddress)
+	populate(objectMap, "usePolicyBasedTrafficSelectors", v.UsePolicyBasedTrafficSelectors)
+	populate(objectMap, "vpnConnectionProtocolType", v.VPNConnectionProtocolType)
+	populate(objectMap, "vpnLinkConnections", v.VPNLinkConnections)
+	return json.Marshal(objectMap)
 }
 
 // VPNConnectionResponse is the response envelope for operations that return a VPNConnection type.
@@ -12594,6 +15893,14 @@ type VPNGateway struct {
 	Properties *VPNGatewayProperties `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type VPNGateway.
+func (v VPNGateway) MarshalJSON() ([]byte, error) {
+	objectMap := v.Resource.marshalInternal()
+	populate(objectMap, "etag", v.Etag)
+	populate(objectMap, "properties", v.Properties)
+	return json.Marshal(objectMap)
+}
+
 // VPNGatewayPollerResponse is the response envelope for operations that asynchronously return a VPNGateway type.
 type VPNGatewayPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
@@ -12612,7 +15919,7 @@ type VPNGatewayProperties struct {
 	BgpSettings *BgpSettings `json:"bgpSettings,omitempty"`
 
 	// List of all vpn connections to the gateway.
-	Connections *[]*VPNConnection `json:"connections,omitempty"`
+	Connections []*VPNConnection `json:"connections,omitempty"`
 
 	// READ-ONLY; The provisioning state of the VPN gateway resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
@@ -12622,6 +15929,17 @@ type VPNGatewayProperties struct {
 
 	// The VirtualHub to which the gateway belongs.
 	VirtualHub *SubResource `json:"virtualHub,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type VPNGatewayProperties.
+func (v VPNGatewayProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "bgpSettings", v.BgpSettings)
+	populate(objectMap, "connections", v.Connections)
+	populate(objectMap, "provisioningState", v.ProvisioningState)
+	populate(objectMap, "vpnGatewayScaleUnit", v.VPNGatewayScaleUnit)
+	populate(objectMap, "virtualHub", v.VirtualHub)
+	return json.Marshal(objectMap)
 }
 
 // VPNGatewayResponse is the response envelope for operations that return a VPNGateway type.
@@ -12776,6 +16094,14 @@ type VPNServerConfiguration struct {
 	Properties *VPNServerConfigurationProperties `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type VPNServerConfiguration.
+func (v VPNServerConfiguration) MarshalJSON() ([]byte, error) {
+	objectMap := v.Resource.marshalInternal()
+	populate(objectMap, "etag", v.Etag)
+	populate(objectMap, "properties", v.Properties)
+	return json.Marshal(objectMap)
+}
+
 // VPNServerConfigurationPollerResponse is the response envelope for operations that asynchronously return a VPNServerConfiguration type.
 type VPNServerConfigurationPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
@@ -12800,40 +16126,61 @@ type VPNServerConfigurationProperties struct {
 	Name *string `json:"name,omitempty"`
 
 	// READ-ONLY; List of references to P2SVpnGateways.
-	P2SVPNGateways *[]*P2SVPNGateway `json:"p2SVpnGateways,omitempty" azure:"ro"`
+	P2SVPNGateways []*P2SVPNGateway `json:"p2SVpnGateways,omitempty" azure:"ro"`
 
 	// READ-ONLY; The provisioning state of the VpnServerConfiguration resource. Possible values are: 'Updating', 'Deleting', and 'Failed'.
 	ProvisioningState *string `json:"provisioningState,omitempty" azure:"ro"`
 
 	// Radius client root certificate of VpnServerConfiguration.
-	RadiusClientRootCertificates *[]*VPNServerConfigRadiusClientRootCertificate `json:"radiusClientRootCertificates,omitempty"`
+	RadiusClientRootCertificates []*VPNServerConfigRadiusClientRootCertificate `json:"radiusClientRootCertificates,omitempty"`
 
 	// The radius server address property of the VpnServerConfiguration resource for point to site client connection.
 	RadiusServerAddress *string `json:"radiusServerAddress,omitempty"`
 
 	// Radius Server root certificate of VpnServerConfiguration.
-	RadiusServerRootCertificates *[]*VPNServerConfigRadiusServerRootCertificate `json:"radiusServerRootCertificates,omitempty"`
+	RadiusServerRootCertificates []*VPNServerConfigRadiusServerRootCertificate `json:"radiusServerRootCertificates,omitempty"`
 
 	// The radius secret property of the VpnServerConfiguration resource for point to site client connection.
 	RadiusServerSecret *string `json:"radiusServerSecret,omitempty"`
 
 	// Multiple Radius Server configuration for VpnServerConfiguration.
-	RadiusServers *[]*RadiusServer `json:"radiusServers,omitempty"`
+	RadiusServers []*RadiusServer `json:"radiusServers,omitempty"`
 
 	// VPN authentication types for the VpnServerConfiguration.
-	VPNAuthenticationTypes *[]*VPNAuthenticationType `json:"vpnAuthenticationTypes,omitempty"`
+	VPNAuthenticationTypes []*VPNAuthenticationType `json:"vpnAuthenticationTypes,omitempty"`
 
 	// VpnClientIpsecPolicies for VpnServerConfiguration.
-	VPNClientIPSecPolicies *[]*IPSecPolicy `json:"vpnClientIpsecPolicies,omitempty"`
+	VPNClientIPSecPolicies []*IPSecPolicy `json:"vpnClientIpsecPolicies,omitempty"`
 
 	// VPN client revoked certificate of VpnServerConfiguration.
-	VPNClientRevokedCertificates *[]*VPNServerConfigVPNClientRevokedCertificate `json:"vpnClientRevokedCertificates,omitempty"`
+	VPNClientRevokedCertificates []*VPNServerConfigVPNClientRevokedCertificate `json:"vpnClientRevokedCertificates,omitempty"`
 
 	// VPN client root certificate of VpnServerConfiguration.
-	VPNClientRootCertificates *[]*VPNServerConfigVPNClientRootCertificate `json:"vpnClientRootCertificates,omitempty"`
+	VPNClientRootCertificates []*VPNServerConfigVPNClientRootCertificate `json:"vpnClientRootCertificates,omitempty"`
 
 	// VPN protocols for the VpnServerConfiguration.
-	VPNProtocols *[]*VPNGatewayTunnelingProtocol `json:"vpnProtocols,omitempty"`
+	VPNProtocols []*VPNGatewayTunnelingProtocol `json:"vpnProtocols,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type VPNServerConfigurationProperties.
+func (v VPNServerConfigurationProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "aadAuthenticationParameters", v.AADAuthenticationParameters)
+	populate(objectMap, "etag", v.Etag)
+	populate(objectMap, "name", v.Name)
+	populate(objectMap, "p2SVpnGateways", v.P2SVPNGateways)
+	populate(objectMap, "provisioningState", v.ProvisioningState)
+	populate(objectMap, "radiusClientRootCertificates", v.RadiusClientRootCertificates)
+	populate(objectMap, "radiusServerAddress", v.RadiusServerAddress)
+	populate(objectMap, "radiusServerRootCertificates", v.RadiusServerRootCertificates)
+	populate(objectMap, "radiusServerSecret", v.RadiusServerSecret)
+	populate(objectMap, "radiusServers", v.RadiusServers)
+	populate(objectMap, "vpnAuthenticationTypes", v.VPNAuthenticationTypes)
+	populate(objectMap, "vpnClientIpsecPolicies", v.VPNClientIPSecPolicies)
+	populate(objectMap, "vpnClientRevokedCertificates", v.VPNClientRevokedCertificates)
+	populate(objectMap, "vpnClientRootCertificates", v.VPNClientRootCertificates)
+	populate(objectMap, "vpnProtocols", v.VPNProtocols)
+	return json.Marshal(objectMap)
 }
 
 // VPNServerConfigurationResponse is the response envelope for operations that return a VPNServerConfiguration type.
@@ -12879,7 +16226,14 @@ type VPNServerConfigurationsListOptions struct {
 // VPNServerConfigurationsResponse - VpnServerConfigurations list associated with VirtualWan Response.
 type VPNServerConfigurationsResponse struct {
 	// List of VpnServerConfigurations associated with VirtualWan.
-	VPNServerConfigurationResourceIDs *[]*string `json:"vpnServerConfigurationResourceIds,omitempty"`
+	VPNServerConfigurationResourceIDs []*string `json:"vpnServerConfigurationResourceIds,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type VPNServerConfigurationsResponse.
+func (v VPNServerConfigurationsResponse) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "vpnServerConfigurationResourceIds", v.VPNServerConfigurationResourceIDs)
+	return json.Marshal(objectMap)
 }
 
 // VPNServerConfigurationsResponsePollerResponse is the response envelope for operations that asynchronously return a VPNServerConfigurationsResponse type.
@@ -12918,6 +16272,14 @@ type VPNSite struct {
 	Properties *VPNSiteProperties `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type VPNSite.
+func (v VPNSite) MarshalJSON() ([]byte, error) {
+	objectMap := v.Resource.marshalInternal()
+	populate(objectMap, "etag", v.Etag)
+	populate(objectMap, "properties", v.Properties)
+	return json.Marshal(objectMap)
+}
+
 // VPNSiteID - VpnSite Resource.
 type VPNSiteID struct {
 	// READ-ONLY; The resource-uri of the vpn-site for which config is to be fetched.
@@ -12940,6 +16302,16 @@ type VPNSiteLink struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type VPNSiteLink.
+func (v VPNSiteLink) MarshalJSON() ([]byte, error) {
+	objectMap := v.SubResource.marshalInternal()
+	populate(objectMap, "etag", v.Etag)
+	populate(objectMap, "name", v.Name)
+	populate(objectMap, "properties", v.Properties)
+	populate(objectMap, "type", v.Type)
+	return json.Marshal(objectMap)
+}
+
 // VPNSiteLinkConnection - VpnSiteLinkConnection Resource.
 type VPNSiteLinkConnection struct {
 	SubResource
@@ -12954,6 +16326,16 @@ type VPNSiteLinkConnection struct {
 
 	// READ-ONLY; Resource type.
 	Type *string `json:"type,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type VPNSiteLinkConnection.
+func (v VPNSiteLinkConnection) MarshalJSON() ([]byte, error) {
+	objectMap := v.SubResource.marshalInternal()
+	populate(objectMap, "etag", v.Etag)
+	populate(objectMap, "name", v.Name)
+	populate(objectMap, "properties", v.Properties)
+	populate(objectMap, "type", v.Type)
+	return json.Marshal(objectMap)
 }
 
 // VPNSiteLinkConnectionProperties - Parameters for VpnConnection.
@@ -12974,7 +16356,7 @@ type VPNSiteLinkConnectionProperties struct {
 	EnableRateLimiting *bool `json:"enableRateLimiting,omitempty"`
 
 	// The IPSec Policies to be considered by this connection.
-	IPSecPolicies *[]*IPSecPolicy `json:"ipsecPolicies,omitempty"`
+	IPSecPolicies []*IPSecPolicy `json:"ipsecPolicies,omitempty"`
 
 	// READ-ONLY; Ingress bytes transferred.
 	IngressBytesTransferred *int64 `json:"ingressBytesTransferred,omitempty" azure:"ro"`
@@ -12999,6 +16381,26 @@ type VPNSiteLinkConnectionProperties struct {
 
 	// Id of the connected vpn site link.
 	VPNSiteLink *SubResource `json:"vpnSiteLink,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type VPNSiteLinkConnectionProperties.
+func (v VPNSiteLinkConnectionProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "connectionBandwidth", v.ConnectionBandwidth)
+	populate(objectMap, "connectionStatus", v.ConnectionStatus)
+	populate(objectMap, "egressBytesTransferred", v.EgressBytesTransferred)
+	populate(objectMap, "enableBgp", v.EnableBgp)
+	populate(objectMap, "enableRateLimiting", v.EnableRateLimiting)
+	populate(objectMap, "ipsecPolicies", v.IPSecPolicies)
+	populate(objectMap, "ingressBytesTransferred", v.IngressBytesTransferred)
+	populate(objectMap, "provisioningState", v.ProvisioningState)
+	populate(objectMap, "routingWeight", v.RoutingWeight)
+	populate(objectMap, "sharedKey", v.SharedKey)
+	populate(objectMap, "useLocalAzureIpAddress", v.UseLocalAzureIPAddress)
+	populate(objectMap, "usePolicyBasedTrafficSelectors", v.UsePolicyBasedTrafficSelectors)
+	populate(objectMap, "vpnConnectionProtocolType", v.VPNConnectionProtocolType)
+	populate(objectMap, "vpnSiteLink", v.VPNSiteLink)
+	return json.Marshal(objectMap)
 }
 
 // VPNSiteLinkConnectionResponse is the response envelope for operations that return a VPNSiteLinkConnection type.
@@ -13088,10 +16490,25 @@ type VPNSiteProperties struct {
 	SiteKey *string `json:"siteKey,omitempty"`
 
 	// List of all vpn site links.
-	VPNSiteLinks *[]*VPNSiteLink `json:"vpnSiteLinks,omitempty"`
+	VPNSiteLinks []*VPNSiteLink `json:"vpnSiteLinks,omitempty"`
 
 	// The VirtualWAN to which the vpnSite belongs.
 	VirtualWan *SubResource `json:"virtualWan,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type VPNSiteProperties.
+func (v VPNSiteProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "addressSpace", v.AddressSpace)
+	populate(objectMap, "bgpProperties", v.BgpProperties)
+	populate(objectMap, "deviceProperties", v.DeviceProperties)
+	populate(objectMap, "ipAddress", v.IPAddress)
+	populate(objectMap, "isSecuritySite", v.IsSecuritySite)
+	populate(objectMap, "provisioningState", v.ProvisioningState)
+	populate(objectMap, "siteKey", v.SiteKey)
+	populate(objectMap, "vpnSiteLinks", v.VPNSiteLinks)
+	populate(objectMap, "virtualWan", v.VirtualWan)
+	return json.Marshal(objectMap)
 }
 
 // VPNSiteResponse is the response envelope for operations that return a VPNSite type.
@@ -13229,6 +16646,14 @@ type VirtualHub struct {
 	Properties *VirtualHubProperties `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type VirtualHub.
+func (v VirtualHub) MarshalJSON() ([]byte, error) {
+	objectMap := v.Resource.marshalInternal()
+	populate(objectMap, "etag", v.Etag)
+	populate(objectMap, "properties", v.Properties)
+	return json.Marshal(objectMap)
+}
+
 // VirtualHubID - Virtual Hub identifier.
 type VirtualHubID struct {
 	// The resource URI for the Virtual Hub where the ExpressRoute gateway is or will be deployed. The Virtual Hub resource and the ExpressRoute gateway resource
@@ -13281,13 +16706,32 @@ type VirtualHubProperties struct {
 	VPNGateway *SubResource `json:"vpnGateway,omitempty"`
 
 	// List of all virtual hub route table v2s associated with this VirtualHub.
-	VirtualHubRouteTableV2S *[]*VirtualHubRouteTableV2 `json:"virtualHubRouteTableV2s,omitempty"`
+	VirtualHubRouteTableV2S []*VirtualHubRouteTableV2 `json:"virtualHubRouteTableV2s,omitempty"`
 
 	// List of all vnet connections with this VirtualHub.
-	VirtualNetworkConnections *[]*HubVirtualNetworkConnection `json:"virtualNetworkConnections,omitempty"`
+	VirtualNetworkConnections []*HubVirtualNetworkConnection `json:"virtualNetworkConnections,omitempty"`
 
 	// The VirtualWAN to which the VirtualHub belongs.
 	VirtualWan *SubResource `json:"virtualWan,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type VirtualHubProperties.
+func (v VirtualHubProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "addressPrefix", v.AddressPrefix)
+	populate(objectMap, "azureFirewall", v.AzureFirewall)
+	populate(objectMap, "expressRouteGateway", v.ExpressRouteGateway)
+	populate(objectMap, "p2SVpnGateway", v.P2SVPNGateway)
+	populate(objectMap, "provisioningState", v.ProvisioningState)
+	populate(objectMap, "routeTable", v.RouteTable)
+	populate(objectMap, "sku", v.SKU)
+	populate(objectMap, "securityPartnerProvider", v.SecurityPartnerProvider)
+	populate(objectMap, "securityProviderName", v.SecurityProviderName)
+	populate(objectMap, "vpnGateway", v.VPNGateway)
+	populate(objectMap, "virtualHubRouteTableV2s", v.VirtualHubRouteTableV2S)
+	populate(objectMap, "virtualNetworkConnections", v.VirtualNetworkConnections)
+	populate(objectMap, "virtualWan", v.VirtualWan)
+	return json.Marshal(objectMap)
 }
 
 // VirtualHubResponse is the response envelope for operations that return a VirtualHub type.
@@ -13302,16 +16746,31 @@ type VirtualHubResponse struct {
 // VirtualHubRoute - VirtualHub route.
 type VirtualHubRoute struct {
 	// List of all addressPrefixes.
-	AddressPrefixes *[]*string `json:"addressPrefixes,omitempty"`
+	AddressPrefixes []*string `json:"addressPrefixes,omitempty"`
 
 	// NextHop ip address.
 	NextHopIPAddress *string `json:"nextHopIpAddress,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type VirtualHubRoute.
+func (v VirtualHubRoute) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "addressPrefixes", v.AddressPrefixes)
+	populate(objectMap, "nextHopIpAddress", v.NextHopIPAddress)
+	return json.Marshal(objectMap)
+}
+
 // VirtualHubRouteTable - VirtualHub route table.
 type VirtualHubRouteTable struct {
 	// List of all routes.
-	Routes *[]*VirtualHubRoute `json:"routes,omitempty"`
+	Routes []*VirtualHubRoute `json:"routes,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type VirtualHubRouteTable.
+func (v VirtualHubRouteTable) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "routes", v.Routes)
+	return json.Marshal(objectMap)
 }
 
 // VirtualHubRouteTableV2 Resource.
@@ -13325,6 +16784,15 @@ type VirtualHubRouteTableV2 struct {
 
 	// Properties of the virtual hub route table v2.
 	Properties *VirtualHubRouteTableV2Properties `json:"properties,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type VirtualHubRouteTableV2.
+func (v VirtualHubRouteTableV2) MarshalJSON() ([]byte, error) {
+	objectMap := v.SubResource.marshalInternal()
+	populate(objectMap, "etag", v.Etag)
+	populate(objectMap, "name", v.Name)
+	populate(objectMap, "properties", v.Properties)
+	return json.Marshal(objectMap)
 }
 
 // VirtualHubRouteTableV2PollerResponse is the response envelope for operations that asynchronously return a VirtualHubRouteTableV2 type.
@@ -13342,13 +16810,22 @@ type VirtualHubRouteTableV2PollerResponse struct {
 // VirtualHubRouteTableV2Properties - Parameters for VirtualHubRouteTableV2.
 type VirtualHubRouteTableV2Properties struct {
 	// List of all connections attached to this route table v2.
-	AttachedConnections *[]*string `json:"attachedConnections,omitempty"`
+	AttachedConnections []*string `json:"attachedConnections,omitempty"`
 
 	// READ-ONLY; The provisioning state of the virtual hub route table v2 resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
 	// List of all routes.
-	Routes *[]*VirtualHubRouteV2 `json:"routes,omitempty"`
+	Routes []*VirtualHubRouteV2 `json:"routes,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type VirtualHubRouteTableV2Properties.
+func (v VirtualHubRouteTableV2Properties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "attachedConnections", v.AttachedConnections)
+	populate(objectMap, "provisioningState", v.ProvisioningState)
+	populate(objectMap, "routes", v.Routes)
+	return json.Marshal(objectMap)
 }
 
 // VirtualHubRouteTableV2Response is the response envelope for operations that return a VirtualHubRouteTableV2 type.
@@ -13386,13 +16863,23 @@ type VirtualHubRouteV2 struct {
 	DestinationType *string `json:"destinationType,omitempty"`
 
 	// List of all destinations.
-	Destinations *[]*string `json:"destinations,omitempty"`
+	Destinations []*string `json:"destinations,omitempty"`
 
 	// The type of next hops.
 	NextHopType *string `json:"nextHopType,omitempty"`
 
 	// NextHops ip address.
-	NextHops *[]*string `json:"nextHops,omitempty"`
+	NextHops []*string `json:"nextHops,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type VirtualHubRouteV2.
+func (v VirtualHubRouteV2) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "destinationType", v.DestinationType)
+	populate(objectMap, "destinations", v.Destinations)
+	populate(objectMap, "nextHopType", v.NextHopType)
+	populate(objectMap, "nextHops", v.NextHops)
+	return json.Marshal(objectMap)
 }
 
 // VirtualHubsBeginCreateOrUpdateOptions contains the optional parameters for the VirtualHubs.BeginCreateOrUpdate method.
@@ -13435,6 +16922,14 @@ type VirtualNetwork struct {
 	Properties *VirtualNetworkPropertiesFormat `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type VirtualNetwork.
+func (v VirtualNetwork) MarshalJSON() ([]byte, error) {
+	objectMap := v.Resource.marshalInternal()
+	populate(objectMap, "etag", v.Etag)
+	populate(objectMap, "properties", v.Properties)
+	return json.Marshal(objectMap)
+}
+
 // VirtualNetworkBgpCommunities - Bgp Communities sent over ExpressRoute with each route corresponding to a prefix in this VNET.
 type VirtualNetworkBgpCommunities struct {
 	// READ-ONLY; The BGP community associated with the region of the virtual network.
@@ -13460,6 +16955,14 @@ type VirtualNetworkGateway struct {
 	Properties *VirtualNetworkGatewayPropertiesFormat `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type VirtualNetworkGateway.
+func (v VirtualNetworkGateway) MarshalJSON() ([]byte, error) {
+	objectMap := v.Resource.marshalInternal()
+	populate(objectMap, "etag", v.Etag)
+	populate(objectMap, "properties", v.Properties)
+	return json.Marshal(objectMap)
+}
+
 // VirtualNetworkGatewayConnection - A common class for general resource information.
 type VirtualNetworkGatewayConnection struct {
 	Resource
@@ -13470,6 +16973,14 @@ type VirtualNetworkGatewayConnection struct {
 	Properties *VirtualNetworkGatewayConnectionPropertiesFormat `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type VirtualNetworkGatewayConnection.
+func (v VirtualNetworkGatewayConnection) MarshalJSON() ([]byte, error) {
+	objectMap := v.Resource.marshalInternal()
+	populate(objectMap, "etag", v.Etag)
+	populate(objectMap, "properties", v.Properties)
+	return json.Marshal(objectMap)
+}
+
 // VirtualNetworkGatewayConnectionListEntity - A common class for general resource information.
 type VirtualNetworkGatewayConnectionListEntity struct {
 	Resource
@@ -13478,6 +16989,14 @@ type VirtualNetworkGatewayConnectionListEntity struct {
 
 	// Properties of the virtual network gateway connection.
 	Properties *VirtualNetworkGatewayConnectionListEntityPropertiesFormat `json:"properties,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type VirtualNetworkGatewayConnectionListEntity.
+func (v VirtualNetworkGatewayConnectionListEntity) MarshalJSON() ([]byte, error) {
+	objectMap := v.Resource.marshalInternal()
+	populate(objectMap, "etag", v.Etag)
+	populate(objectMap, "properties", v.Properties)
+	return json.Marshal(objectMap)
 }
 
 // VirtualNetworkGatewayConnectionListEntityPropertiesFormat - VirtualNetworkGatewayConnection properties.
@@ -13504,7 +17023,7 @@ type VirtualNetworkGatewayConnectionListEntityPropertiesFormat struct {
 	ExpressRouteGatewayBypass *bool `json:"expressRouteGatewayBypass,omitempty"`
 
 	// The IPSec Policies to be considered by this connection.
-	IPSecPolicies *[]*IPSecPolicy `json:"ipsecPolicies,omitempty"`
+	IPSecPolicies []*IPSecPolicy `json:"ipsecPolicies,omitempty"`
 
 	// READ-ONLY; The ingress bytes transferred in this connection.
 	IngressBytesTransferred *int64 `json:"ingressBytesTransferred,omitempty" azure:"ro"`
@@ -13528,10 +17047,10 @@ type VirtualNetworkGatewayConnectionListEntityPropertiesFormat struct {
 	SharedKey *string `json:"sharedKey,omitempty"`
 
 	// The Traffic Selector Policies to be considered by this connection.
-	TrafficSelectorPolicies *[]*TrafficSelectorPolicy `json:"trafficSelectorPolicies,omitempty"`
+	TrafficSelectorPolicies []*TrafficSelectorPolicy `json:"trafficSelectorPolicies,omitempty"`
 
 	// READ-ONLY; Collection of all tunnels' connection health status.
-	TunnelConnectionStatus *[]*TunnelConnectionHealth `json:"tunnelConnectionStatus,omitempty" azure:"ro"`
+	TunnelConnectionStatus []*TunnelConnectionHealth `json:"tunnelConnectionStatus,omitempty" azure:"ro"`
 
 	// Enable policy-based traffic selectors.
 	UsePolicyBasedTrafficSelectors *bool `json:"usePolicyBasedTrafficSelectors,omitempty"`
@@ -13543,13 +17062,47 @@ type VirtualNetworkGatewayConnectionListEntityPropertiesFormat struct {
 	VirtualNetworkGateway2 *VirtualNetworkConnectionGatewayReference `json:"virtualNetworkGateway2,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type VirtualNetworkGatewayConnectionListEntityPropertiesFormat.
+func (v VirtualNetworkGatewayConnectionListEntityPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "authorizationKey", v.AuthorizationKey)
+	populate(objectMap, "connectionProtocol", v.ConnectionProtocol)
+	populate(objectMap, "connectionStatus", v.ConnectionStatus)
+	populate(objectMap, "connectionType", v.ConnectionType)
+	populate(objectMap, "egressBytesTransferred", v.EgressBytesTransferred)
+	populate(objectMap, "enableBgp", v.EnableBgp)
+	populate(objectMap, "expressRouteGatewayBypass", v.ExpressRouteGatewayBypass)
+	populate(objectMap, "ipsecPolicies", v.IPSecPolicies)
+	populate(objectMap, "ingressBytesTransferred", v.IngressBytesTransferred)
+	populate(objectMap, "localNetworkGateway2", v.LocalNetworkGateway2)
+	populate(objectMap, "peer", v.Peer)
+	populate(objectMap, "provisioningState", v.ProvisioningState)
+	populate(objectMap, "resourceGuid", v.ResourceGUID)
+	populate(objectMap, "routingWeight", v.RoutingWeight)
+	populate(objectMap, "sharedKey", v.SharedKey)
+	populate(objectMap, "trafficSelectorPolicies", v.TrafficSelectorPolicies)
+	populate(objectMap, "tunnelConnectionStatus", v.TunnelConnectionStatus)
+	populate(objectMap, "usePolicyBasedTrafficSelectors", v.UsePolicyBasedTrafficSelectors)
+	populate(objectMap, "virtualNetworkGateway1", v.VirtualNetworkGateway1)
+	populate(objectMap, "virtualNetworkGateway2", v.VirtualNetworkGateway2)
+	return json.Marshal(objectMap)
+}
+
 // VirtualNetworkGatewayConnectionListResult - Response for the ListVirtualNetworkGatewayConnections API service call.
 type VirtualNetworkGatewayConnectionListResult struct {
 	// READ-ONLY; The URL to get the next set of results.
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 
 	// A list of VirtualNetworkGatewayConnection resources that exists in a resource group.
-	Value *[]*VirtualNetworkGatewayConnection `json:"value,omitempty"`
+	Value []*VirtualNetworkGatewayConnection `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type VirtualNetworkGatewayConnectionListResult.
+func (v VirtualNetworkGatewayConnectionListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", v.NextLink)
+	populate(objectMap, "value", v.Value)
+	return json.Marshal(objectMap)
 }
 
 // VirtualNetworkGatewayConnectionListResultResponse is the response envelope for operations that return a VirtualNetworkGatewayConnectionListResult type.
@@ -13600,7 +17153,7 @@ type VirtualNetworkGatewayConnectionPropertiesFormat struct {
 	ExpressRouteGatewayBypass *bool `json:"expressRouteGatewayBypass,omitempty"`
 
 	// The IPSec Policies to be considered by this connection.
-	IPSecPolicies *[]*IPSecPolicy `json:"ipsecPolicies,omitempty"`
+	IPSecPolicies []*IPSecPolicy `json:"ipsecPolicies,omitempty"`
 
 	// READ-ONLY; The ingress bytes transferred in this connection.
 	IngressBytesTransferred *int64 `json:"ingressBytesTransferred,omitempty" azure:"ro"`
@@ -13624,10 +17177,10 @@ type VirtualNetworkGatewayConnectionPropertiesFormat struct {
 	SharedKey *string `json:"sharedKey,omitempty"`
 
 	// The Traffic Selector Policies to be considered by this connection.
-	TrafficSelectorPolicies *[]*TrafficSelectorPolicy `json:"trafficSelectorPolicies,omitempty"`
+	TrafficSelectorPolicies []*TrafficSelectorPolicy `json:"trafficSelectorPolicies,omitempty"`
 
 	// READ-ONLY; Collection of all tunnels' connection health status.
-	TunnelConnectionStatus *[]*TunnelConnectionHealth `json:"tunnelConnectionStatus,omitempty" azure:"ro"`
+	TunnelConnectionStatus []*TunnelConnectionHealth `json:"tunnelConnectionStatus,omitempty" azure:"ro"`
 
 	// Use private local Azure IP for the connection.
 	UseLocalAzureIPAddress *bool `json:"useLocalAzureIpAddress,omitempty"`
@@ -13640,6 +17193,34 @@ type VirtualNetworkGatewayConnectionPropertiesFormat struct {
 
 	// The reference to virtual network gateway resource.
 	VirtualNetworkGateway2 *VirtualNetworkGateway `json:"virtualNetworkGateway2,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type VirtualNetworkGatewayConnectionPropertiesFormat.
+func (v VirtualNetworkGatewayConnectionPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "authorizationKey", v.AuthorizationKey)
+	populate(objectMap, "connectionProtocol", v.ConnectionProtocol)
+	populate(objectMap, "connectionStatus", v.ConnectionStatus)
+	populate(objectMap, "connectionType", v.ConnectionType)
+	populate(objectMap, "dpdTimeoutSeconds", v.DpdTimeoutSeconds)
+	populate(objectMap, "egressBytesTransferred", v.EgressBytesTransferred)
+	populate(objectMap, "enableBgp", v.EnableBgp)
+	populate(objectMap, "expressRouteGatewayBypass", v.ExpressRouteGatewayBypass)
+	populate(objectMap, "ipsecPolicies", v.IPSecPolicies)
+	populate(objectMap, "ingressBytesTransferred", v.IngressBytesTransferred)
+	populate(objectMap, "localNetworkGateway2", v.LocalNetworkGateway2)
+	populate(objectMap, "peer", v.Peer)
+	populate(objectMap, "provisioningState", v.ProvisioningState)
+	populate(objectMap, "resourceGuid", v.ResourceGUID)
+	populate(objectMap, "routingWeight", v.RoutingWeight)
+	populate(objectMap, "sharedKey", v.SharedKey)
+	populate(objectMap, "trafficSelectorPolicies", v.TrafficSelectorPolicies)
+	populate(objectMap, "tunnelConnectionStatus", v.TunnelConnectionStatus)
+	populate(objectMap, "useLocalAzureIpAddress", v.UseLocalAzureIPAddress)
+	populate(objectMap, "usePolicyBasedTrafficSelectors", v.UsePolicyBasedTrafficSelectors)
+	populate(objectMap, "virtualNetworkGateway1", v.VirtualNetworkGateway1)
+	populate(objectMap, "virtualNetworkGateway2", v.VirtualNetworkGateway2)
+	return json.Marshal(objectMap)
 }
 
 // VirtualNetworkGatewayConnectionResponse is the response envelope for operations that return a VirtualNetworkGatewayConnection type.
@@ -13720,6 +17301,15 @@ type VirtualNetworkGatewayIPConfiguration struct {
 	Properties *VirtualNetworkGatewayIPConfigurationPropertiesFormat `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type VirtualNetworkGatewayIPConfiguration.
+func (v VirtualNetworkGatewayIPConfiguration) MarshalJSON() ([]byte, error) {
+	objectMap := v.SubResource.marshalInternal()
+	populate(objectMap, "etag", v.Etag)
+	populate(objectMap, "name", v.Name)
+	populate(objectMap, "properties", v.Properties)
+	return json.Marshal(objectMap)
+}
+
 // VirtualNetworkGatewayIPConfigurationPropertiesFormat - Properties of VirtualNetworkGatewayIPConfiguration.
 type VirtualNetworkGatewayIPConfigurationPropertiesFormat struct {
 	// READ-ONLY; Private IP Address for this gateway.
@@ -13744,7 +17334,15 @@ type VirtualNetworkGatewayListConnectionsResult struct {
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 
 	// A list of VirtualNetworkGatewayConnection resources that exists in a resource group.
-	Value *[]*VirtualNetworkGatewayConnectionListEntity `json:"value,omitempty"`
+	Value []*VirtualNetworkGatewayConnectionListEntity `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type VirtualNetworkGatewayListConnectionsResult.
+func (v VirtualNetworkGatewayListConnectionsResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", v.NextLink)
+	populate(objectMap, "value", v.Value)
+	return json.Marshal(objectMap)
 }
 
 // VirtualNetworkGatewayListConnectionsResultResponse is the response envelope for operations that return a VirtualNetworkGatewayListConnectionsResult type.
@@ -13762,7 +17360,15 @@ type VirtualNetworkGatewayListResult struct {
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 
 	// A list of VirtualNetworkGateway resources that exists in a resource group.
-	Value *[]*VirtualNetworkGateway `json:"value,omitempty"`
+	Value []*VirtualNetworkGateway `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type VirtualNetworkGatewayListResult.
+func (v VirtualNetworkGatewayListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", v.NextLink)
+	populate(objectMap, "value", v.Value)
+	return json.Marshal(objectMap)
 }
 
 // VirtualNetworkGatewayListResultResponse is the response envelope for operations that return a VirtualNetworkGatewayListResult type.
@@ -13815,7 +17421,7 @@ type VirtualNetworkGatewayPropertiesFormat struct {
 	GatewayType *VirtualNetworkGatewayType `json:"gatewayType,omitempty"`
 
 	// IP configurations for virtual network gateway.
-	IPConfigurations *[]*VirtualNetworkGatewayIPConfiguration `json:"ipConfigurations,omitempty"`
+	IPConfigurations []*VirtualNetworkGatewayIPConfiguration `json:"ipConfigurations,omitempty"`
 
 	// READ-ONLY; The IP address allocated by the gateway to which dns requests can be sent.
 	InboundDNSForwardingEndpoint *string `json:"inboundDnsForwardingEndpoint,omitempty" azure:"ro"`
@@ -13837,6 +17443,28 @@ type VirtualNetworkGatewayPropertiesFormat struct {
 
 	// The type of this virtual network gateway.
 	VPNType *VPNType `json:"vpnType,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type VirtualNetworkGatewayPropertiesFormat.
+func (v VirtualNetworkGatewayPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "activeActive", v.Active)
+	populate(objectMap, "bgpSettings", v.BgpSettings)
+	populate(objectMap, "customRoutes", v.CustomRoutes)
+	populate(objectMap, "enableBgp", v.EnableBgp)
+	populate(objectMap, "enableDnsForwarding", v.EnableDNSForwarding)
+	populate(objectMap, "enablePrivateIpAddress", v.EnablePrivateIPAddress)
+	populate(objectMap, "gatewayDefaultSite", v.GatewayDefaultSite)
+	populate(objectMap, "gatewayType", v.GatewayType)
+	populate(objectMap, "ipConfigurations", v.IPConfigurations)
+	populate(objectMap, "inboundDnsForwardingEndpoint", v.InboundDNSForwardingEndpoint)
+	populate(objectMap, "provisioningState", v.ProvisioningState)
+	populate(objectMap, "resourceGuid", v.ResourceGUID)
+	populate(objectMap, "sku", v.SKU)
+	populate(objectMap, "vpnClientConfiguration", v.VPNClientConfiguration)
+	populate(objectMap, "vpnGatewayGeneration", v.VPNGatewayGeneration)
+	populate(objectMap, "vpnType", v.VPNType)
+	return json.Marshal(objectMap)
 }
 
 // VirtualNetworkGatewayResponse is the response envelope for operations that return a VirtualNetworkGateway type.
@@ -13987,7 +17615,15 @@ type VirtualNetworkListResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// A list of VirtualNetwork resources in a resource group.
-	Value *[]*VirtualNetwork `json:"value,omitempty"`
+	Value []*VirtualNetwork `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type VirtualNetworkListResult.
+func (v VirtualNetworkListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", v.NextLink)
+	populate(objectMap, "value", v.Value)
+	return json.Marshal(objectMap)
 }
 
 // VirtualNetworkListResultResponse is the response envelope for operations that return a VirtualNetworkListResult type.
@@ -14005,7 +17641,15 @@ type VirtualNetworkListUsageResult struct {
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// READ-ONLY; VirtualNetwork usage stats.
-	Value *[]*VirtualNetworkUsage `json:"value,omitempty" azure:"ro"`
+	Value []*VirtualNetworkUsage `json:"value,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type VirtualNetworkListUsageResult.
+func (v VirtualNetworkListUsageResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", v.NextLink)
+	populate(objectMap, "value", v.Value)
+	return json.Marshal(objectMap)
 }
 
 // VirtualNetworkListUsageResultResponse is the response envelope for operations that return a VirtualNetworkListUsageResult type.
@@ -14030,13 +17674,30 @@ type VirtualNetworkPeering struct {
 	Properties *VirtualNetworkPeeringPropertiesFormat `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type VirtualNetworkPeering.
+func (v VirtualNetworkPeering) MarshalJSON() ([]byte, error) {
+	objectMap := v.SubResource.marshalInternal()
+	populate(objectMap, "etag", v.Etag)
+	populate(objectMap, "name", v.Name)
+	populate(objectMap, "properties", v.Properties)
+	return json.Marshal(objectMap)
+}
+
 // VirtualNetworkPeeringListResult - Response for ListSubnets API service call. Retrieves all subnets that belong to a virtual network.
 type VirtualNetworkPeeringListResult struct {
 	// The URL to get the next set of results.
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// The peerings in a virtual network.
-	Value *[]*VirtualNetworkPeering `json:"value,omitempty"`
+	Value []*VirtualNetworkPeering `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type VirtualNetworkPeeringListResult.
+func (v VirtualNetworkPeeringListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", v.NextLink)
+	populate(objectMap, "value", v.Value)
+	return json.Marshal(objectMap)
 }
 
 // VirtualNetworkPeeringListResultResponse is the response envelope for operations that return a VirtualNetworkPeeringListResult type.
@@ -14154,7 +17815,7 @@ type VirtualNetworkPropertiesFormat struct {
 	EnableVMProtection *bool `json:"enableVmProtection,omitempty"`
 
 	// Array of IpAllocation which reference this VNET.
-	IPAllocations *[]*SubResource `json:"ipAllocations,omitempty"`
+	IPAllocations []*SubResource `json:"ipAllocations,omitempty"`
 
 	// READ-ONLY; The provisioning state of the virtual network resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
@@ -14163,10 +17824,27 @@ type VirtualNetworkPropertiesFormat struct {
 	ResourceGUID *string `json:"resourceGuid,omitempty" azure:"ro"`
 
 	// A list of subnets in a Virtual Network.
-	Subnets *[]*Subnet `json:"subnets,omitempty"`
+	Subnets []*Subnet `json:"subnets,omitempty"`
 
 	// A list of peerings in a Virtual Network.
-	VirtualNetworkPeerings *[]*VirtualNetworkPeering `json:"virtualNetworkPeerings,omitempty"`
+	VirtualNetworkPeerings []*VirtualNetworkPeering `json:"virtualNetworkPeerings,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type VirtualNetworkPropertiesFormat.
+func (v VirtualNetworkPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "addressSpace", v.AddressSpace)
+	populate(objectMap, "bgpCommunities", v.BgpCommunities)
+	populate(objectMap, "ddosProtectionPlan", v.DdosProtectionPlan)
+	populate(objectMap, "dhcpOptions", v.DhcpOptions)
+	populate(objectMap, "enableDdosProtection", v.EnableDdosProtection)
+	populate(objectMap, "enableVmProtection", v.EnableVMProtection)
+	populate(objectMap, "ipAllocations", v.IPAllocations)
+	populate(objectMap, "provisioningState", v.ProvisioningState)
+	populate(objectMap, "resourceGuid", v.ResourceGUID)
+	populate(objectMap, "subnets", v.Subnets)
+	populate(objectMap, "virtualNetworkPeerings", v.VirtualNetworkPeerings)
+	return json.Marshal(objectMap)
 }
 
 // VirtualNetworkResponse is the response envelope for operations that return a VirtualNetwork type.
@@ -14188,13 +17866,29 @@ type VirtualNetworkTap struct {
 	Properties *VirtualNetworkTapPropertiesFormat `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type VirtualNetworkTap.
+func (v VirtualNetworkTap) MarshalJSON() ([]byte, error) {
+	objectMap := v.Resource.marshalInternal()
+	populate(objectMap, "etag", v.Etag)
+	populate(objectMap, "properties", v.Properties)
+	return json.Marshal(objectMap)
+}
+
 // VirtualNetworkTapListResult - Response for ListVirtualNetworkTap API service call.
 type VirtualNetworkTapListResult struct {
 	// The URL to get the next set of results.
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// A list of VirtualNetworkTaps in a resource group.
-	Value *[]*VirtualNetworkTap `json:"value,omitempty"`
+	Value []*VirtualNetworkTap `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type VirtualNetworkTapListResult.
+func (v VirtualNetworkTapListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", v.NextLink)
+	populate(objectMap, "value", v.Value)
+	return json.Marshal(objectMap)
 }
 
 // VirtualNetworkTapListResultResponse is the response envelope for operations that return a VirtualNetworkTapListResult type.
@@ -14230,13 +17924,25 @@ type VirtualNetworkTapPropertiesFormat struct {
 	DestinationPort *int32 `json:"destinationPort,omitempty"`
 
 	// READ-ONLY; Specifies the list of resource IDs for the network interface IP configuration that needs to be tapped.
-	NetworkInterfaceTapConfigurations *[]*NetworkInterfaceTapConfiguration `json:"networkInterfaceTapConfigurations,omitempty" azure:"ro"`
+	NetworkInterfaceTapConfigurations []*NetworkInterfaceTapConfiguration `json:"networkInterfaceTapConfigurations,omitempty" azure:"ro"`
 
 	// READ-ONLY; The provisioning state of the virtual network tap resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
 	// READ-ONLY; The resource GUID property of the virtual network tap resource.
 	ResourceGUID *string `json:"resourceGuid,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type VirtualNetworkTapPropertiesFormat.
+func (v VirtualNetworkTapPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "destinationLoadBalancerFrontEndIPConfiguration", v.DestinationLoadBalancerFrontEndIPConfiguration)
+	populate(objectMap, "destinationNetworkInterfaceIPConfiguration", v.DestinationNetworkInterfaceIPConfiguration)
+	populate(objectMap, "destinationPort", v.DestinationPort)
+	populate(objectMap, "networkInterfaceTapConfigurations", v.NetworkInterfaceTapConfigurations)
+	populate(objectMap, "provisioningState", v.ProvisioningState)
+	populate(objectMap, "resourceGuid", v.ResourceGUID)
+	return json.Marshal(objectMap)
 }
 
 // VirtualNetworkTapResponse is the response envelope for operations that return a VirtualNetworkTap type.
@@ -14356,13 +18062,29 @@ type VirtualRouter struct {
 	Properties *VirtualRouterPropertiesFormat `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type VirtualRouter.
+func (v VirtualRouter) MarshalJSON() ([]byte, error) {
+	objectMap := v.Resource.marshalInternal()
+	populate(objectMap, "etag", v.Etag)
+	populate(objectMap, "properties", v.Properties)
+	return json.Marshal(objectMap)
+}
+
 // VirtualRouterListResult - Response for ListVirtualRouters API service call.
 type VirtualRouterListResult struct {
 	// URL to get the next set of results.
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of Virtual Routers.
-	Value *[]*VirtualRouter `json:"value,omitempty"`
+	Value []*VirtualRouter `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type VirtualRouterListResult.
+func (v VirtualRouterListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", v.NextLink)
+	populate(objectMap, "value", v.Value)
+	return json.Marshal(objectMap)
 }
 
 // VirtualRouterListResultResponse is the response envelope for operations that return a VirtualRouterListResult type.
@@ -14390,13 +18112,31 @@ type VirtualRouterPeering struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type VirtualRouterPeering.
+func (v VirtualRouterPeering) MarshalJSON() ([]byte, error) {
+	objectMap := v.SubResource.marshalInternal()
+	populate(objectMap, "etag", v.Etag)
+	populate(objectMap, "name", v.Name)
+	populate(objectMap, "properties", v.Properties)
+	populate(objectMap, "type", v.Type)
+	return json.Marshal(objectMap)
+}
+
 // VirtualRouterPeeringListResult - Response for ListVirtualRouterPeerings API service call.
 type VirtualRouterPeeringListResult struct {
 	// URL to get the next set of results.
 	NextLink *string `json:"nextLink,omitempty"`
 
 	// List of VirtualRouterPeerings in a VirtualRouter.
-	Value *[]*VirtualRouterPeering `json:"value,omitempty"`
+	Value []*VirtualRouterPeering `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type VirtualRouterPeeringListResult.
+func (v VirtualRouterPeeringListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", v.NextLink)
+	populate(objectMap, "value", v.Value)
+	return json.Marshal(objectMap)
 }
 
 // VirtualRouterPeeringListResultResponse is the response envelope for operations that return a VirtualRouterPeeringListResult type.
@@ -14482,7 +18222,7 @@ type VirtualRouterPropertiesFormat struct {
 	HostedSubnet *SubResource `json:"hostedSubnet,omitempty"`
 
 	// READ-ONLY; List of references to VirtualRouterPeerings.
-	Peerings *[]*SubResource `json:"peerings,omitempty" azure:"ro"`
+	Peerings []*SubResource `json:"peerings,omitempty" azure:"ro"`
 
 	// READ-ONLY; The provisioning state of the resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
@@ -14491,7 +18231,19 @@ type VirtualRouterPropertiesFormat struct {
 	VirtualRouterAsn *int64 `json:"virtualRouterAsn,omitempty"`
 
 	// VirtualRouter IPs.
-	VirtualRouterIPs *[]*string `json:"virtualRouterIps,omitempty"`
+	VirtualRouterIPs []*string `json:"virtualRouterIps,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type VirtualRouterPropertiesFormat.
+func (v VirtualRouterPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "hostedGateway", v.HostedGateway)
+	populate(objectMap, "hostedSubnet", v.HostedSubnet)
+	populate(objectMap, "peerings", v.Peerings)
+	populate(objectMap, "provisioningState", v.ProvisioningState)
+	populate(objectMap, "virtualRouterAsn", v.VirtualRouterAsn)
+	populate(objectMap, "virtualRouterIps", v.VirtualRouterIPs)
+	return json.Marshal(objectMap)
 }
 
 // VirtualRouterResponse is the response envelope for operations that return a VirtualRouter type.
@@ -14539,6 +18291,14 @@ type VirtualWAN struct {
 	Properties *VirtualWanProperties `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type VirtualWAN.
+func (v VirtualWAN) MarshalJSON() ([]byte, error) {
+	objectMap := v.Resource.marshalInternal()
+	populate(objectMap, "etag", v.Etag)
+	populate(objectMap, "properties", v.Properties)
+	return json.Marshal(objectMap)
+}
+
 // VirtualWANPollerResponse is the response envelope for operations that asynchronously return a VirtualWAN type.
 type VirtualWANPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
@@ -14581,10 +18341,24 @@ type VirtualWanProperties struct {
 	Type *string `json:"type,omitempty"`
 
 	// READ-ONLY; List of VpnSites in the VirtualWAN.
-	VPNSites *[]*SubResource `json:"vpnSites,omitempty" azure:"ro"`
+	VPNSites []*SubResource `json:"vpnSites,omitempty" azure:"ro"`
 
 	// READ-ONLY; List of VirtualHubs in the VirtualWAN.
-	VirtualHubs *[]*SubResource `json:"virtualHubs,omitempty" azure:"ro"`
+	VirtualHubs []*SubResource `json:"virtualHubs,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type VirtualWanProperties.
+func (v VirtualWanProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "allowBranchToBranchTraffic", v.AllowBranchToBranchTraffic)
+	populate(objectMap, "allowVnetToVnetTraffic", v.AllowVnetToVnetTraffic)
+	populate(objectMap, "disableVpnEncryption", v.DisableVPNEncryption)
+	populate(objectMap, "office365LocalBreakoutCategory", v.Office365LocalBreakoutCategory)
+	populate(objectMap, "provisioningState", v.ProvisioningState)
+	populate(objectMap, "type", v.Type)
+	populate(objectMap, "vpnSites", v.VPNSites)
+	populate(objectMap, "virtualHubs", v.VirtualHubs)
+	return json.Marshal(objectMap)
 }
 
 // VirtualWanSecurityProvider - Collection of SecurityProviders.
@@ -14602,7 +18376,14 @@ type VirtualWanSecurityProvider struct {
 // VirtualWanSecurityProviders - Collection of SecurityProviders.
 type VirtualWanSecurityProviders struct {
 	// List of VirtualWAN security providers.
-	SupportedProviders *[]*VirtualWanSecurityProvider `json:"supportedProviders,omitempty"`
+	SupportedProviders []*VirtualWanSecurityProvider `json:"supportedProviders,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type VirtualWanSecurityProviders.
+func (v VirtualWanSecurityProviders) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "supportedProviders", v.SupportedProviders)
+	return json.Marshal(objectMap)
 }
 
 // VirtualWanSecurityProvidersResponse is the response envelope for operations that return a VirtualWanSecurityProviders type.
@@ -14662,7 +18443,7 @@ type WebApplicationFirewallCustomRule struct {
 	Etag *string `json:"etag,omitempty" azure:"ro"`
 
 	// List of match conditions.
-	MatchConditions *[]*MatchCondition `json:"matchConditions,omitempty"`
+	MatchConditions []*MatchCondition `json:"matchConditions,omitempty"`
 
 	// The name of the resource that is unique within a policy. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
@@ -14672,6 +18453,18 @@ type WebApplicationFirewallCustomRule struct {
 
 	// The rule type.
 	RuleType *WebApplicationFirewallRuleType `json:"ruleType,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type WebApplicationFirewallCustomRule.
+func (w WebApplicationFirewallCustomRule) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "action", w.Action)
+	populate(objectMap, "etag", w.Etag)
+	populate(objectMap, "matchConditions", w.MatchConditions)
+	populate(objectMap, "name", w.Name)
+	populate(objectMap, "priority", w.Priority)
+	populate(objectMap, "ruleType", w.RuleType)
+	return json.Marshal(objectMap)
 }
 
 // WebApplicationFirewallPoliciesBeginDeleteOptions contains the optional parameters for the WebApplicationFirewallPolicies.BeginDelete method.
@@ -14709,6 +18502,14 @@ type WebApplicationFirewallPolicy struct {
 	Properties *WebApplicationFirewallPolicyPropertiesFormat `json:"properties,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type WebApplicationFirewallPolicy.
+func (w WebApplicationFirewallPolicy) MarshalJSON() ([]byte, error) {
+	objectMap := w.Resource.marshalInternal()
+	populate(objectMap, "etag", w.Etag)
+	populate(objectMap, "properties", w.Properties)
+	return json.Marshal(objectMap)
+}
+
 // WebApplicationFirewallPolicyListResult - Result of the request to list WebApplicationFirewallPolicies. It contains a list of WebApplicationFirewallPolicy
 // objects and a URL link to get the next set of results.
 type WebApplicationFirewallPolicyListResult struct {
@@ -14716,7 +18517,15 @@ type WebApplicationFirewallPolicyListResult struct {
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 
 	// READ-ONLY; List of WebApplicationFirewallPolicies within a resource group.
-	Value *[]*WebApplicationFirewallPolicy `json:"value,omitempty" azure:"ro"`
+	Value []*WebApplicationFirewallPolicy `json:"value,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type WebApplicationFirewallPolicyListResult.
+func (w WebApplicationFirewallPolicyListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", w.NextLink)
+	populate(objectMap, "value", w.Value)
+	return json.Marshal(objectMap)
 }
 
 // WebApplicationFirewallPolicyListResultResponse is the response envelope for operations that return a WebApplicationFirewallPolicyListResult type.
@@ -14732,19 +18541,19 @@ type WebApplicationFirewallPolicyListResultResponse struct {
 // WebApplicationFirewallPolicyPropertiesFormat - Defines web application firewall policy properties.
 type WebApplicationFirewallPolicyPropertiesFormat struct {
 	// READ-ONLY; A collection of references to application gateways.
-	ApplicationGateways *[]*ApplicationGateway `json:"applicationGateways,omitempty" azure:"ro"`
+	ApplicationGateways []*ApplicationGateway `json:"applicationGateways,omitempty" azure:"ro"`
 
 	// The custom rules inside the policy.
-	CustomRules *[]*WebApplicationFirewallCustomRule `json:"customRules,omitempty"`
+	CustomRules []*WebApplicationFirewallCustomRule `json:"customRules,omitempty"`
 
 	// READ-ONLY; A collection of references to application gateway http listeners.
-	HTTPListeners *[]*SubResource `json:"httpListeners,omitempty" azure:"ro"`
+	HTTPListeners []*SubResource `json:"httpListeners,omitempty" azure:"ro"`
 
 	// Describes the managedRules structure.
 	ManagedRules *ManagedRulesDefinition `json:"managedRules,omitempty"`
 
 	// READ-ONLY; A collection of references to application gateway path rules.
-	PathBasedRules *[]*SubResource `json:"pathBasedRules,omitempty" azure:"ro"`
+	PathBasedRules []*SubResource `json:"pathBasedRules,omitempty" azure:"ro"`
 
 	// The PolicySettings for policy.
 	PolicySettings *PolicySettings `json:"policySettings,omitempty"`
@@ -14754,6 +18563,20 @@ type WebApplicationFirewallPolicyPropertiesFormat struct {
 
 	// READ-ONLY; Resource status of the policy.
 	ResourceState *WebApplicationFirewallPolicyResourceState `json:"resourceState,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type WebApplicationFirewallPolicyPropertiesFormat.
+func (w WebApplicationFirewallPolicyPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "applicationGateways", w.ApplicationGateways)
+	populate(objectMap, "customRules", w.CustomRules)
+	populate(objectMap, "httpListeners", w.HTTPListeners)
+	populate(objectMap, "managedRules", w.ManagedRules)
+	populate(objectMap, "pathBasedRules", w.PathBasedRules)
+	populate(objectMap, "policySettings", w.PolicySettings)
+	populate(objectMap, "provisioningState", w.ProvisioningState)
+	populate(objectMap, "resourceState", w.ResourceState)
+	return json.Marshal(objectMap)
 }
 
 // WebApplicationFirewallPolicyResponse is the response envelope for operations that return a WebApplicationFirewallPolicy type.

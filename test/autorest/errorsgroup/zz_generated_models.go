@@ -48,6 +48,15 @@ type BaseError struct {
 	SomeBaseProp *string `json:"someBaseProp,omitempty"`
 }
 
+// UnmarshalJSON implements the json.Unmarshaller interface for type BaseError.
+func (b *BaseError) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	return b.unmarshalInternal(rawMsg)
+}
+
 func (b *BaseError) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
