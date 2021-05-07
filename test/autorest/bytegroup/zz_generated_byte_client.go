@@ -56,7 +56,7 @@ func (client *ByteClient) getEmptyCreateRequest(ctx context.Context, options *By
 
 // getEmptyHandleResponse handles the GetEmpty response.
 func (client *ByteClient) getEmptyHandleResponse(resp *azcore.Response) (ByteArrayResponse, error) {
-	var val *[]byte
+	var val []byte
 	if err := resp.UnmarshalAsByteArray(&val, azcore.Base64StdFormat); err != nil {
 		return ByteArrayResponse{}, err
 	}
@@ -107,7 +107,7 @@ func (client *ByteClient) getInvalidCreateRequest(ctx context.Context, options *
 
 // getInvalidHandleResponse handles the GetInvalid response.
 func (client *ByteClient) getInvalidHandleResponse(resp *azcore.Response) (ByteArrayResponse, error) {
-	var val *[]byte
+	var val []byte
 	if err := resp.UnmarshalAsByteArray(&val, azcore.Base64StdFormat); err != nil {
 		return ByteArrayResponse{}, err
 	}
@@ -158,7 +158,7 @@ func (client *ByteClient) getNonASCIICreateRequest(ctx context.Context, options 
 
 // getNonASCIIHandleResponse handles the GetNonASCII response.
 func (client *ByteClient) getNonASCIIHandleResponse(resp *azcore.Response) (ByteArrayResponse, error) {
-	var val *[]byte
+	var val []byte
 	if err := resp.UnmarshalAsByteArray(&val, azcore.Base64StdFormat); err != nil {
 		return ByteArrayResponse{}, err
 	}
@@ -209,7 +209,7 @@ func (client *ByteClient) getNullCreateRequest(ctx context.Context, options *Byt
 
 // getNullHandleResponse handles the GetNull response.
 func (client *ByteClient) getNullHandleResponse(resp *azcore.Response) (ByteArrayResponse, error) {
-	var val *[]byte
+	var val []byte
 	if err := resp.UnmarshalAsByteArray(&val, azcore.Base64StdFormat); err != nil {
 		return ByteArrayResponse{}, err
 	}

@@ -15,7 +15,7 @@ type ByteArrayResponse struct {
 	RawResponse *http.Response
 
 	// The null byte value
-	Value *[]byte
+	Value []byte
 }
 
 // ByteGetEmptyOptions contains the optional parameters for the Byte.GetEmpty method.

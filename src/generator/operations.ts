@@ -122,6 +122,7 @@ function formatHeaderResponseValue(propName: string, header: string, schema: Sch
   }
   let text = `\tif val := resp.Header.Get("${header}"); val != "" {\n`;
   const name = propName.uncapitalize();
+  let byRef = '&';
   switch (schema.type) {
     case SchemaType.Boolean:
       imports.add('strconv');
@@ -135,6 +136,7 @@ function formatHeaderResponseValue(propName: string, header: string, schema: Sch
         byteFormat = 'RawURL';
       }
       text += `\t\t${name}, err := base64.${byteFormat}Encoding.DecodeString(val)\n`;
+      byRef = '';
       break;
     case SchemaType.Choice:
     case SchemaType.SealedChoice:
@@ -186,7 +188,7 @@ function formatHeaderResponseValue(propName: string, header: string, schema: Sch
   text += `\t\tif err != nil {\n`;
   text += `\t\t\treturn ${zeroResp}, err\n`;
   text += `\t\t}\n`;
-  text += `\t\t${respObj}.${propName} = &${name}\n`;
+  text += `\t\t${respObj}.${propName} = ${byRef}${name}\n`;
   text += '\t}\n';
   return text;
 }

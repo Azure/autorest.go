@@ -964,6 +964,7 @@ function newRespProperty(name: string, desc: string, schema: Schema): Property {
   const prop = newProperty(name, desc, schema);
   if (schema.type === SchemaType.Any ||
     schema.type === SchemaType.Array ||
+    schema.type === SchemaType.ByteArray ||
     schema.type === SchemaType.Binary ||
     schema.type === SchemaType.Dictionary ||
     (isObjectSchema(schema) && schema.discriminator)) {

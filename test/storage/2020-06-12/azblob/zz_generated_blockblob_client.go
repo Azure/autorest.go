@@ -157,14 +157,14 @@ func (client *blockBlobClient) commitBlockListHandleResponse(resp *azcore.Respon
 		if err != nil {
 			return BlockBlobCommitBlockListResponse{}, err
 		}
-		result.ContentMD5 = &contentMD5
+		result.ContentMD5 = contentMD5
 	}
 	if val := resp.Header.Get("x-ms-content-crc64"); val != "" {
 		xMSContentCRC64, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
 			return BlockBlobCommitBlockListResponse{}, err
 		}
-		result.XMSContentCRC64 = &xMSContentCRC64
+		result.XMSContentCRC64 = xMSContentCRC64
 	}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
@@ -466,7 +466,7 @@ func (client *blockBlobClient) putBlobFromURLHandleResponse(resp *azcore.Respons
 		if err != nil {
 			return BlockBlobPutBlobFromURLResponse{}, err
 		}
-		result.ContentMD5 = &contentMD5
+		result.ContentMD5 = contentMD5
 	}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
@@ -585,7 +585,7 @@ func (client *blockBlobClient) stageBlockHandleResponse(resp *azcore.Response) (
 		if err != nil {
 			return BlockBlobStageBlockResponse{}, err
 		}
-		result.ContentMD5 = &contentMD5
+		result.ContentMD5 = contentMD5
 	}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
@@ -608,7 +608,7 @@ func (client *blockBlobClient) stageBlockHandleResponse(resp *azcore.Response) (
 		if err != nil {
 			return BlockBlobStageBlockResponse{}, err
 		}
-		result.XMSContentCRC64 = &xMSContentCRC64
+		result.XMSContentCRC64 = xMSContentCRC64
 	}
 	if val := resp.Header.Get("x-ms-request-server-encrypted"); val != "" {
 		isServerEncrypted, err := strconv.ParseBool(val)
@@ -724,14 +724,14 @@ func (client *blockBlobClient) stageBlockFromURLHandleResponse(resp *azcore.Resp
 		if err != nil {
 			return BlockBlobStageBlockFromURLResponse{}, err
 		}
-		result.ContentMD5 = &contentMD5
+		result.ContentMD5 = contentMD5
 	}
 	if val := resp.Header.Get("x-ms-content-crc64"); val != "" {
 		xMSContentCRC64, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
 			return BlockBlobStageBlockFromURLResponse{}, err
 		}
-		result.XMSContentCRC64 = &xMSContentCRC64
+		result.XMSContentCRC64 = xMSContentCRC64
 	}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
@@ -909,7 +909,7 @@ func (client *blockBlobClient) uploadHandleResponse(resp *azcore.Response) (Bloc
 		if err != nil {
 			return BlockBlobUploadResponse{}, err
 		}
-		result.ContentMD5 = &contentMD5
+		result.ContentMD5 = contentMD5
 	}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val

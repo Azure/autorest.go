@@ -300,7 +300,7 @@ func TestHeaderResponseByte(t *testing.T) {
 		t.Fatalf("unexpected status code %d", s)
 	}
 	val := []byte("啊齄丂狛狜隣郎隣兀﨩")
-	if r := cmp.Diff(result.Value, &val); r != "" {
+	if r := cmp.Diff(result.Value, val); r != "" {
 		t.Fatal(r)
 	}
 }

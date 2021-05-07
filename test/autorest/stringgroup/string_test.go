@@ -51,7 +51,7 @@ func TestStringGetBase64Encoded(t *testing.T) {
 		t.Fatalf("unexpected status code %d", s)
 	}
 	val := []byte("a string that gets encoded with base64")
-	if r := cmp.Diff(result.Value, &val); r != "" {
+	if r := cmp.Diff(result.Value, val); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -65,7 +65,7 @@ func TestStringGetBase64URLEncoded(t *testing.T) {
 	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
-	if r := cmp.Diff(*result.Value, []byte("a string that gets encoded with base64url")); r != "" {
+	if r := cmp.Diff(result.Value, []byte("a string that gets encoded with base64url")); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -115,7 +115,7 @@ func TestStringGetNullBase64URLEncoded(t *testing.T) {
 	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
-	if r := cmp.Diff(result.Value, (*[]byte)(nil)); r != "" {
+	if r := cmp.Diff(result.Value, ([]byte)(nil)); r != "" {
 		t.Fatal(r)
 	}
 }

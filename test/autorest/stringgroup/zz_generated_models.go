@@ -13,7 +13,7 @@ import "net/http"
 type ByteArrayResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-	Value       *[]byte
+	Value       []byte
 }
 
 // ColorsResponse is the response envelope for operations that return a Colors type.

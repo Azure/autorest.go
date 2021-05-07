@@ -2,4 +2,4 @@ module aztables
 
 go 1.13
 
-require github.com/Azure/azure-sdk-for-go/sdk/azcore v0.15.0
+require github.com/Azure/azure-sdk-for-go/sdk/azcore v0.16.0
