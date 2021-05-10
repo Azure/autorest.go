@@ -176,7 +176,7 @@ namespace AutoRest.Go.Model
         /// </summary>
         public bool NeedsCustomMarshalling => 
             BaseIsPolymorphic || IsPolymorphic || HasFlattenedFields || AllProperties.Any(p => p.ModelType is DictionaryTypeGo) ||
-            (AllProperties.Any(p => p.IsReadOnly) && !AllProperties.All(p => p.IsReadOnly));
+            AllProperties.Any(p => p.IsReadOnly);
 
         /// <summary>
         /// Gets the root type of the inheritance chain.

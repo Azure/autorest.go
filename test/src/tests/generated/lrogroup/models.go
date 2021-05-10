@@ -3332,3 +3332,9 @@ type SubResource struct {
 	// ID - READ-ONLY; Sub Resource Id
 	ID *string `json:"id,omitempty"`
 }
+
+// MarshalJSON is the custom marshaler for SubResource.
+func (sr SubResource) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	return json.Marshal(objectMap)
+}
