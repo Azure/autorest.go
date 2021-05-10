@@ -168,12 +168,10 @@ namespace AutoRest.Go
         {
             if (prefix)
             {
+                // we first add the enum type name as the prefix to every enum value - if we do this, we should get no conflict in the following AssureUniqueNames call.
                 AddEnumTypePrefix(cmg);
             }
-            else
-            {
-                AssureUniqueNames(cmg);
-            }
+            AssureUniqueNames(cmg);
         }
 
         private static void AddEnumTypePrefix(CodeModelGo cmg)
@@ -184,7 +182,10 @@ namespace AutoRest.Go
                 foreach (var v in em.Values)
                 {
                     // we need to invoke the CodeNamerGo here to ensure the names are properly transformed
-                    v.Name = CodeNamerGo.Instance.GetTypeName(em.Name.FixedValue) + CodeNamerGo.Instance.GetEnumMemberName(v.Name);
+                    var typeName = CodeNamerGo.Instance.GetTypeName(em.Name.FixedValue);
+                    var valueName = CodeNamerGo.Instance.GetEnumMemberName(v.Name);
+                    // check if the value startsWith the type name to avoid duplicate type name prefix (in case of the discriminator enumerations)
+                    v.Name = valueName.StartsWith(typeName) ? valueName : typeName + valueName;
                 }
             }
         }
