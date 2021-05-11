@@ -128,7 +128,7 @@ type HeaderResponseByteResponse struct {
 	RawResponse *http.Response
 
 	// Value contains the information returned from the value header response.
-	Value *[]byte
+	Value []byte
 }
 
 // HeaderResponseDateOptions contains the optional parameters for the Header.ResponseDate method.

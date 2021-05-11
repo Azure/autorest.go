@@ -84,7 +84,7 @@ type AppendBlobAppendBlockFromURLResponse struct {
 	BlobCommittedBlockCount *int32
 
 	// ContentMD5 contains the information returned from the Content-MD5 header response.
-	ContentMD5 *[]byte
+	ContentMD5 []byte
 
 	// Date contains the information returned from the Date header response.
 	Date *time.Time
@@ -114,7 +114,7 @@ type AppendBlobAppendBlockFromURLResponse struct {
 	Version *string
 
 	// XMSContentCRC64 contains the information returned from the x-ms-content-crc64 header response.
-	XMSContentCRC64 *[]byte
+	XMSContentCRC64 []byte
 }
 
 // AppendBlobAppendBlockOptions contains the optional parameters for the AppendBlob.AppendBlock method.
@@ -142,7 +142,7 @@ type AppendBlobAppendBlockResponse struct {
 	ClientRequestID *string
 
 	// ContentMD5 contains the information returned from the Content-MD5 header response.
-	ContentMD5 *[]byte
+	ContentMD5 []byte
 
 	// Date contains the information returned from the Date header response.
 	Date *time.Time
@@ -172,7 +172,7 @@ type AppendBlobAppendBlockResponse struct {
 	Version *string
 
 	// XMSContentCRC64 contains the information returned from the x-ms-content-crc64 header response.
-	XMSContentCRC64 *[]byte
+	XMSContentCRC64 []byte
 }
 
 // AppendBlobCreateOptions contains the optional parameters for the AppendBlob.Create method.
@@ -203,7 +203,7 @@ type AppendBlobCreateResponse struct {
 	ClientRequestID *string
 
 	// ContentMD5 contains the information returned from the Content-MD5 header response.
-	ContentMD5 *[]byte
+	ContentMD5 []byte
 
 	// Date contains the information returned from the Date header response.
 	Date *time.Time
@@ -490,7 +490,7 @@ type BlobCopyFromURLResponse struct {
 	ClientRequestID *string
 
 	// ContentMD5 contains the information returned from the Content-MD5 header response.
-	ContentMD5 *[]byte
+	ContentMD5 []byte
 
 	// CopyID contains the information returned from the x-ms-copy-id header response.
 	CopyID *string
@@ -520,7 +520,7 @@ type BlobCopyFromURLResponse struct {
 	VersionID *string
 
 	// XMSContentCRC64 contains the information returned from the x-ms-content-crc64 header response.
-	XMSContentCRC64 *[]byte
+	XMSContentCRC64 []byte
 }
 
 // BlobCreateSnapshotOptions contains the optional parameters for the Blob.CreateSnapshot method.
@@ -669,7 +669,7 @@ type BlobDownloadResponse struct {
 	BlobCommittedBlockCount *int32
 
 	// BlobContentMD5 contains the information returned from the x-ms-blob-content-md5 header response.
-	BlobContentMD5 *[]byte
+	BlobContentMD5 []byte
 
 	// BlobSequenceNumber contains the information returned from the x-ms-blob-sequence-number header response.
 	BlobSequenceNumber *int64
@@ -684,7 +684,7 @@ type BlobDownloadResponse struct {
 	ClientRequestID *string
 
 	// ContentCRC64 contains the information returned from the x-ms-content-crc64 header response.
-	ContentCRC64 *[]byte
+	ContentCRC64 []byte
 
 	// ContentDisposition contains the information returned from the Content-Disposition header response.
 	ContentDisposition *string
@@ -699,7 +699,7 @@ type BlobDownloadResponse struct {
 	ContentLength *int64
 
 	// ContentMD5 contains the information returned from the Content-MD5 header response.
-	ContentMD5 *[]byte
+	ContentMD5 []byte
 
 	// ContentRange contains the information returned from the Content-Range header response.
 	ContentRange *string
@@ -950,7 +950,7 @@ type BlobGetPropertiesResponse struct {
 	ContentLength *int64
 
 	// ContentMD5 contains the information returned from the Content-MD5 header response.
-	ContentMD5 *[]byte
+	ContentMD5 []byte
 
 	// ContentType contains the information returned from the Content-Type header response.
 	ContentType *string
@@ -1295,7 +1295,7 @@ type BlobQueryResponse struct {
 	BlobCommittedBlockCount *int32
 
 	// BlobContentMD5 contains the information returned from the x-ms-blob-content-md5 header response.
-	BlobContentMD5 *[]byte
+	BlobContentMD5 []byte
 
 	// BlobSequenceNumber contains the information returned from the x-ms-blob-sequence-number header response.
 	BlobSequenceNumber *int64
@@ -1310,7 +1310,7 @@ type BlobQueryResponse struct {
 	ClientRequestID *string
 
 	// ContentCRC64 contains the information returned from the x-ms-content-crc64 header response.
-	ContentCRC64 *[]byte
+	ContentCRC64 []byte
 
 	// ContentDisposition contains the information returned from the Content-Disposition header response.
 	ContentDisposition *string
@@ -1325,7 +1325,7 @@ type BlobQueryResponse struct {
 	ContentLength *int64
 
 	// ContentMD5 contains the information returned from the Content-MD5 header response.
-	ContentMD5 *[]byte
+	ContentMD5 []byte
 
 	// ContentRange contains the information returned from the Content-Range header response.
 	ContentRange *string
@@ -1986,7 +1986,7 @@ type BlockBlobCommitBlockListResponse struct {
 	ClientRequestID *string
 
 	// ContentMD5 contains the information returned from the Content-MD5 header response.
-	ContentMD5 *[]byte
+	ContentMD5 []byte
 
 	// Date contains the information returned from the Date header response.
 	Date *time.Time
@@ -2019,7 +2019,7 @@ type BlockBlobCommitBlockListResponse struct {
 	VersionID *string
 
 	// XMSContentCRC64 contains the information returned from the x-ms-content-crc64 header response.
-	XMSContentCRC64 *[]byte
+	XMSContentCRC64 []byte
 }
 
 // BlockBlobGetBlockListOptions contains the optional parameters for the BlockBlob.GetBlockList method.
@@ -2065,7 +2065,7 @@ type BlockBlobPutBlobFromURLResponse struct {
 	ClientRequestID *string
 
 	// ContentMD5 contains the information returned from the Content-MD5 header response.
-	ContentMD5 *[]byte
+	ContentMD5 []byte
 
 	// Date contains the information returned from the Date header response.
 	Date *time.Time
@@ -2119,7 +2119,7 @@ type BlockBlobStageBlockFromURLResponse struct {
 	ClientRequestID *string
 
 	// ContentMD5 contains the information returned from the Content-MD5 header response.
-	ContentMD5 *[]byte
+	ContentMD5 []byte
 
 	// Date contains the information returned from the Date header response.
 	Date *time.Time
@@ -2143,7 +2143,7 @@ type BlockBlobStageBlockFromURLResponse struct {
 	Version *string
 
 	// XMSContentCRC64 contains the information returned from the x-ms-content-crc64 header response.
-	XMSContentCRC64 *[]byte
+	XMSContentCRC64 []byte
 }
 
 // BlockBlobStageBlockOptions contains the optional parameters for the BlockBlob.StageBlock method.
@@ -2165,7 +2165,7 @@ type BlockBlobStageBlockResponse struct {
 	ClientRequestID *string
 
 	// ContentMD5 contains the information returned from the Content-MD5 header response.
-	ContentMD5 *[]byte
+	ContentMD5 []byte
 
 	// Date contains the information returned from the Date header response.
 	Date *time.Time
@@ -2189,7 +2189,7 @@ type BlockBlobStageBlockResponse struct {
 	Version *string
 
 	// XMSContentCRC64 contains the information returned from the x-ms-content-crc64 header response.
-	XMSContentCRC64 *[]byte
+	XMSContentCRC64 []byte
 }
 
 // BlockBlobUploadOptions contains the optional parameters for the BlockBlob.Upload method.
@@ -2224,7 +2224,7 @@ type BlockBlobUploadResponse struct {
 	ClientRequestID *string
 
 	// ContentMD5 contains the information returned from the Content-MD5 header response.
-	ContentMD5 *[]byte
+	ContentMD5 []byte
 
 	// Date contains the information returned from the Date header response.
 	Date *time.Time
@@ -3613,7 +3613,7 @@ type PageBlobClearPagesResponse struct {
 	ClientRequestID *string
 
 	// ContentMD5 contains the information returned from the Content-MD5 header response.
-	ContentMD5 *[]byte
+	ContentMD5 []byte
 
 	// Date contains the information returned from the Date header response.
 	Date *time.Time
@@ -3634,7 +3634,7 @@ type PageBlobClearPagesResponse struct {
 	Version *string
 
 	// XMSContentCRC64 contains the information returned from the x-ms-content-crc64 header response.
-	XMSContentCRC64 *[]byte
+	XMSContentCRC64 []byte
 }
 
 // PageBlobCopyIncrementalOptions contains the optional parameters for the PageBlob.CopyIncremental method.
@@ -3709,7 +3709,7 @@ type PageBlobCreateResponse struct {
 	ClientRequestID *string
 
 	// ContentMD5 contains the information returned from the Content-MD5 header response.
-	ContentMD5 *[]byte
+	ContentMD5 []byte
 
 	// Date contains the information returned from the Date header response.
 	Date *time.Time
@@ -3874,7 +3874,7 @@ type PageBlobUploadPagesFromURLResponse struct {
 	BlobSequenceNumber *int64
 
 	// ContentMD5 contains the information returned from the Content-MD5 header response.
-	ContentMD5 *[]byte
+	ContentMD5 []byte
 
 	// Date contains the information returned from the Date header response.
 	Date *time.Time
@@ -3904,7 +3904,7 @@ type PageBlobUploadPagesFromURLResponse struct {
 	Version *string
 
 	// XMSContentCRC64 contains the information returned from the x-ms-content-crc64 header response.
-	XMSContentCRC64 *[]byte
+	XMSContentCRC64 []byte
 }
 
 // PageBlobUploadPagesOptions contains the optional parameters for the PageBlob.UploadPages method.
@@ -3931,7 +3931,7 @@ type PageBlobUploadPagesResponse struct {
 	ClientRequestID *string
 
 	// ContentMD5 contains the information returned from the Content-MD5 header response.
-	ContentMD5 *[]byte
+	ContentMD5 []byte
 
 	// Date contains the information returned from the Date header response.
 	Date *time.Time
@@ -3961,7 +3961,7 @@ type PageBlobUploadPagesResponse struct {
 	Version *string
 
 	// XMSContentCRC64 contains the information returned from the x-ms-content-crc64 header response.
-	XMSContentCRC64 *[]byte
+	XMSContentCRC64 []byte
 }
 
 // PageList - the list of pages

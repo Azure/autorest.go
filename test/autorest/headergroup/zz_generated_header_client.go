@@ -786,7 +786,7 @@ func (client *HeaderClient) responseByteHandleResponse(resp *azcore.Response) (H
 		if err != nil {
 			return HeaderResponseByteResponse{}, err
 		}
-		result.Value = &value
+		result.Value = value
 	}
 	return result, nil
 }

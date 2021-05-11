@@ -56,7 +56,7 @@ func (client *StringClient) getBase64EncodedCreateRequest(ctx context.Context, o
 
 // getBase64EncodedHandleResponse handles the GetBase64Encoded response.
 func (client *StringClient) getBase64EncodedHandleResponse(resp *azcore.Response) (ByteArrayResponse, error) {
-	var val *[]byte
+	var val []byte
 	if err := resp.UnmarshalAsByteArray(&val, azcore.Base64StdFormat); err != nil {
 		return ByteArrayResponse{}, err
 	}
@@ -107,7 +107,7 @@ func (client *StringClient) getBase64URLEncodedCreateRequest(ctx context.Context
 
 // getBase64URLEncodedHandleResponse handles the GetBase64URLEncoded response.
 func (client *StringClient) getBase64URLEncodedHandleResponse(resp *azcore.Response) (ByteArrayResponse, error) {
-	var val *[]byte
+	var val []byte
 	if err := resp.UnmarshalAsByteArray(&val, azcore.Base64URLFormat); err != nil {
 		return ByteArrayResponse{}, err
 	}
@@ -362,7 +362,7 @@ func (client *StringClient) getNullBase64URLEncodedCreateRequest(ctx context.Con
 
 // getNullBase64URLEncodedHandleResponse handles the GetNullBase64URLEncoded response.
 func (client *StringClient) getNullBase64URLEncodedHandleResponse(resp *azcore.Response) (ByteArrayResponse, error) {
-	var val *[]byte
+	var val []byte
 	if err := resp.UnmarshalAsByteArray(&val, azcore.Base64URLFormat); err != nil {
 		return ByteArrayResponse{}, err
 	}

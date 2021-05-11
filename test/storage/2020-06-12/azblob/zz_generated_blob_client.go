@@ -559,14 +559,14 @@ func (client *blobClient) copyFromURLHandleResponse(resp *azcore.Response) (Blob
 		if err != nil {
 			return BlobCopyFromURLResponse{}, err
 		}
-		result.ContentMD5 = &contentMD5
+		result.ContentMD5 = contentMD5
 	}
 	if val := resp.Header.Get("x-ms-content-crc64"); val != "" {
 		xMSContentCRC64, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
 			return BlobCopyFromURLResponse{}, err
 		}
-		result.XMSContentCRC64 = &xMSContentCRC64
+		result.XMSContentCRC64 = xMSContentCRC64
 	}
 	return result, nil
 }
@@ -1031,7 +1031,7 @@ func (client *blobClient) downloadHandleResponse(resp *azcore.Response) (BlobDow
 		if err != nil {
 			return BlobDownloadResponse{}, err
 		}
-		result.ContentMD5 = &contentMD5
+		result.ContentMD5 = contentMD5
 	}
 	if val := resp.Header.Get("Content-Encoding"); val != "" {
 		result.ContentEncoding = &val
@@ -1141,7 +1141,7 @@ func (client *blobClient) downloadHandleResponse(resp *azcore.Response) (BlobDow
 		if err != nil {
 			return BlobDownloadResponse{}, err
 		}
-		result.BlobContentMD5 = &blobContentMD5
+		result.BlobContentMD5 = blobContentMD5
 	}
 	if val := resp.Header.Get("x-ms-tag-count"); val != "" {
 		tagCount, err := strconv.ParseInt(val, 10, 64)
@@ -1186,7 +1186,7 @@ func (client *blobClient) downloadHandleResponse(resp *azcore.Response) (BlobDow
 		if err != nil {
 			return BlobDownloadResponse{}, err
 		}
-		result.ContentCRC64 = &contentCRC64
+		result.ContentCRC64 = contentCRC64
 	}
 	return result, nil
 }
@@ -1557,7 +1557,7 @@ func (client *blobClient) getPropertiesHandleResponse(resp *azcore.Response) (Bl
 		if err != nil {
 			return BlobGetPropertiesResponse{}, err
 		}
-		result.ContentMD5 = &contentMD5
+		result.ContentMD5 = contentMD5
 	}
 	if val := resp.Header.Get("Content-Encoding"); val != "" {
 		result.ContentEncoding = &val
@@ -1912,7 +1912,7 @@ func (client *blobClient) queryHandleResponse(resp *azcore.Response) (BlobQueryR
 		if err != nil {
 			return BlobQueryResponse{}, err
 		}
-		result.ContentMD5 = &contentMD5
+		result.ContentMD5 = contentMD5
 	}
 	if val := resp.Header.Get("Content-Encoding"); val != "" {
 		result.ContentEncoding = &val
@@ -2012,14 +2012,14 @@ func (client *blobClient) queryHandleResponse(resp *azcore.Response) (BlobQueryR
 		if err != nil {
 			return BlobQueryResponse{}, err
 		}
-		result.BlobContentMD5 = &blobContentMD5
+		result.BlobContentMD5 = blobContentMD5
 	}
 	if val := resp.Header.Get("x-ms-content-crc64"); val != "" {
 		contentCRC64, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
 			return BlobQueryResponse{}, err
 		}
-		result.ContentCRC64 = &contentCRC64
+		result.ContentCRC64 = contentCRC64
 	}
 	return result, nil
 }
