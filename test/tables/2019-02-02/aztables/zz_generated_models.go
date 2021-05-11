@@ -18,13 +18,13 @@ import (
 
 // AccessPolicy - An Access policy.
 type AccessPolicy struct {
-	// The datetime that the policy expires.
+	// REQUIRED; The datetime that the policy expires.
 	Expiry *time.Time `xml:"Expiry"`
 
-	// The permissions for the acl policy.
+	// REQUIRED; The permissions for the acl policy.
 	Permission *string `xml:"Permission"`
 
-	// The start datetime from which the policy is active.
+	// REQUIRED; The start datetime from which the policy is active.
 	Start *time.Time `xml:"Start"`
 }
 
@@ -66,32 +66,32 @@ func (a *AccessPolicy) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 // prevents a web page from calling APIs in a different domain; CORS provides a secure way to allow one domain (the origin domain) to call APIs in another
 // domain.
 type CorsRule struct {
-	// The request headers that the origin domain may specify on the CORS request.
+	// REQUIRED; The request headers that the origin domain may specify on the CORS request.
 	AllowedHeaders *string `xml:"AllowedHeaders"`
 
-	// The methods (HTTP request verbs) that the origin domain may use for a CORS request. (comma separated)
+	// REQUIRED; The methods (HTTP request verbs) that the origin domain may use for a CORS request. (comma separated)
 	AllowedMethods *string `xml:"AllowedMethods"`
 
-	// The origin domains that are permitted to make a request against the service via CORS. The origin domain is the domain from which the request originates.
-	// Note that the origin must be an exact
+	// REQUIRED; The origin domains that are permitted to make a request against the service via CORS. The origin domain is the domain from which the request
+	// originates. Note that the origin must be an exact
 	// case-sensitive match with the origin that the user age sends to the service. You can also use the wildcard character '*' to allow all origin domains
 	// to make requests via CORS.
 	AllowedOrigins *string `xml:"AllowedOrigins"`
 
-	// The response headers that may be sent in the response to the CORS request and exposed by the browser to the request issuer.
+	// REQUIRED; The response headers that may be sent in the response to the CORS request and exposed by the browser to the request issuer.
 	ExposedHeaders *string `xml:"ExposedHeaders"`
 
-	// The maximum amount time that a browser should cache the preflight OPTIONS request.
+	// REQUIRED; The maximum amount time that a browser should cache the preflight OPTIONS request.
 	MaxAgeInSeconds *int32 `xml:"MaxAgeInSeconds"`
 }
 
 type GeoReplication struct {
-	// A GMT date/time value, to the second. All primary writes preceding this value are guaranteed to be available for read operations at the secondary. Primary
-	// writes after this point in time may or may
+	// REQUIRED; A GMT date/time value, to the second. All primary writes preceding this value are guaranteed to be available for read operations at the secondary.
+	// Primary writes after this point in time may or may
 	// not be available for reads.
 	LastSyncTime *time.Time `xml:"LastSyncTime"`
 
-	// The status of the secondary location.
+	// REQUIRED; The status of the secondary location.
 	Status *GeoReplicationStatusType `xml:"Status"`
 }
 
@@ -126,19 +126,19 @@ func (g *GeoReplication) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 
 // Logging - Azure Analytics Logging settings.
 type Logging struct {
-	// Indicates whether all delete requests should be logged.
+	// REQUIRED; Indicates whether all delete requests should be logged.
 	Delete *bool `xml:"Delete"`
 
-	// Indicates whether all read requests should be logged.
+	// REQUIRED; Indicates whether all read requests should be logged.
 	Read *bool `xml:"Read"`
 
-	// The retention policy.
+	// REQUIRED; The retention policy.
 	RetentionPolicy *RetentionPolicy `xml:"RetentionPolicy"`
 
-	// The version of Analytics to configure.
+	// REQUIRED; The version of Analytics to configure.
 	Version *string `xml:"Version"`
 
-	// Indicates whether all write requests should be logged.
+	// REQUIRED; Indicates whether all write requests should be logged.
 	Write *bool `xml:"Write"`
 }
 
@@ -179,7 +179,7 @@ type MapOfInterfaceResponse struct {
 }
 
 type Metrics struct {
-	// Indicates whether metrics are enabled for the Table service.
+	// REQUIRED; Indicates whether metrics are enabled for the Table service.
 	Enabled *bool `xml:"Enabled"`
 
 	// Indicates whether metrics should generate summary statistics for called API operations.
@@ -209,7 +209,7 @@ type RetentionPolicy struct {
 	// Indicates the number of days that metrics or logging or soft-deleted data should be retained. All data older than this value will be deleted.
 	Days *int32 `xml:"Days"`
 
-	// Indicates whether a retention policy is enabled for the service.
+	// REQUIRED; Indicates whether a retention policy is enabled for the service.
 	Enabled *bool `xml:"Enabled"`
 }
 
@@ -254,10 +254,10 @@ type ServiceSetPropertiesResponse struct {
 
 // SignedIdentifier - A signed identifier.
 type SignedIdentifier struct {
-	// The access policy.
+	// REQUIRED; The access policy.
 	AccessPolicy *AccessPolicy `xml:"AccessPolicy"`
 
-	// A unique id.
+	// REQUIRED; A unique id.
 	ID *string `xml:"Id"`
 }
 

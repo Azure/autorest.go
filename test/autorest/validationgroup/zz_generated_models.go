@@ -37,7 +37,7 @@ type AutoRestValidationTestValidationOfMethodParametersOptions struct {
 
 // ChildProduct - The product documentation.
 type ChildProduct struct {
-	// Constant string
+	// REQUIRED; Constant string
 	ConstProperty *string `json:"constProperty,omitempty"`
 
 	// Count
@@ -46,10 +46,10 @@ type ChildProduct struct {
 
 // ConstantProduct - The product documentation.
 type ConstantProduct struct {
-	// Constant string
+	// REQUIRED; Constant string
 	ConstProperty *string `json:"constProperty,omitempty"`
 
-	// Constant string2
+	// REQUIRED; Constant string2
 	ConstProperty2 *string `json:"constProperty2,omitempty"`
 }
 
@@ -72,16 +72,16 @@ type Product struct {
 	// Non required int betwen 0 and 100 exclusive.
 	Capacity *int32 `json:"capacity,omitempty"`
 
-	// The product documentation.
+	// REQUIRED; The product documentation.
 	Child *ChildProduct `json:"child,omitempty"`
 
-	// The product documentation.
+	// REQUIRED; The product documentation.
 	ConstChild *ConstantProduct `json:"constChild,omitempty"`
 
-	// Constant int
+	// REQUIRED; Constant int
 	ConstInt *int32 `json:"constInt,omitempty"`
 
-	// Constant string
+	// REQUIRED; Constant string
 	ConstString *string `json:"constString,omitempty"`
 
 	// Constant string as Enum

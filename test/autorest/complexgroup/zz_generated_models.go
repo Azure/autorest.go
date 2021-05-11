@@ -384,6 +384,7 @@ type DotFishClassification interface {
 }
 
 type DotFish struct {
+	// FishType - REQUIRED
 	FishType *string `json:"fish.type,omitempty"`
 	Species  *string `json:"species,omitempty"`
 }
@@ -583,7 +584,10 @@ type FishClassification interface {
 }
 
 type Fish struct {
-	Fishtype *string              `json:"fishtype,omitempty"`
+	// Fishtype - REQUIRED
+	Fishtype *string `json:"fishtype,omitempty"`
+
+	// Length - REQUIRED
 	Length   *float32             `json:"length,omitempty"`
 	Siblings []FishClassification `json:"siblings,omitempty"`
 	Species  *string              `json:"species,omitempty"`
@@ -760,8 +764,10 @@ type MyBaseTypeClassification interface {
 
 type MyBaseType struct {
 	Helper *MyBaseHelperType `json:"helper,omitempty"`
-	Kind   *MyKind           `json:"kind,omitempty"`
-	PropB1 *string           `json:"propB1,omitempty"`
+
+	// Kind - REQUIRED
+	Kind   *MyKind `json:"kind,omitempty"`
+	PropB1 *string `json:"propB1,omitempty"`
 }
 
 // GetMyBaseType implements the MyBaseTypeClassification interface for type MyBaseType.
@@ -1182,7 +1188,9 @@ type SharkClassification interface {
 
 type Shark struct {
 	Fish
-	Age      *int32     `json:"age,omitempty"`
+	Age *int32 `json:"age,omitempty"`
+
+	// Birthday - REQUIRED
 	Birthday *time.Time `json:"birthday,omitempty"`
 }
 

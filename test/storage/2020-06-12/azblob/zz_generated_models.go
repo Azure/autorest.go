@@ -286,6 +286,7 @@ type AppendPositionAccessConditions struct {
 
 // ArrowConfiguration - arrow configuration
 type ArrowConfiguration struct {
+	// Schema - REQUIRED
 	Schema []*ArrowField `xml:"Schema>Field"`
 }
 
@@ -309,7 +310,9 @@ type ArrowField struct {
 	Name      *string `xml:"Name"`
 	Precision *int32  `xml:"Precision"`
 	Scale     *int32  `xml:"Scale"`
-	Type      *string `xml:"Type"`
+
+	// Type - REQUIRED
+	Type *string `xml:"Type"`
 }
 
 // BlobAbortCopyFromURLOptions contains the optional parameters for the Blob.AbortCopyFromURL method.
@@ -796,6 +799,7 @@ type BlobDownloadResponse struct {
 }
 
 type BlobFlatListSegment struct {
+	// BlobItems - REQUIRED
 	BlobItems []*BlobItemInternal `xml:"Blob"`
 }
 
@@ -1092,6 +1096,7 @@ type BlobHTTPHeaders struct {
 }
 
 type BlobHierarchyListSegment struct {
+	// BlobItems - REQUIRED
 	BlobItems    []*BlobItemInternal `xml:"Blob"`
 	BlobPrefixes []*BlobPrefix       `xml:"BlobPrefix"`
 }
@@ -1118,19 +1123,25 @@ func (b BlobHierarchyListSegment) MarshalXML(e *xml.Encoder, start xml.StartElem
 // BlobItemInternal - An Azure Storage blob
 type BlobItemInternal struct {
 	// Blob tags
-	BlobTags         *BlobTags     `xml:"Tags"`
+	BlobTags *BlobTags `xml:"Tags"`
+
+	// Deleted - REQUIRED
 	Deleted          *bool         `xml:"Deleted"`
 	IsCurrentVersion *bool         `xml:"IsCurrentVersion"`
 	Metadata         *BlobMetadata `xml:"Metadata"`
-	Name             *string       `xml:"Name"`
+
+	// Name - REQUIRED
+	Name *string `xml:"Name"`
 
 	// Dictionary of
 	ObjectReplicationMetadata map[string]*string `xml:"ObjectReplicationMetadata"`
 
-	// Properties of a blob
+	// REQUIRED; Properties of a blob
 	Properties *BlobPropertiesInternal `xml:"Properties"`
-	Snapshot   *string                 `xml:"Snapshot"`
-	VersionID  *string                 `xml:"VersionId"`
+
+	// Snapshot - REQUIRED
+	Snapshot  *string `xml:"Snapshot"`
+	VersionID *string `xml:"VersionId"`
 }
 
 // UnmarshalXML implements the xml.Unmarshaller interface for type BlobItemInternal.
@@ -1156,6 +1167,7 @@ type BlobMetadata struct {
 }
 
 type BlobPrefix struct {
+	// Name - REQUIRED
 	Name *string `xml:"Name"`
 }
 
@@ -1188,7 +1200,9 @@ type BlobPropertiesInternal struct {
 	DestinationSnapshot       *string         `xml:"DestinationSnapshot"`
 
 	// The name of the encryption scope under which the blob is encrypted.
-	EncryptionScope             *string                     `xml:"EncryptionScope"`
+	EncryptionScope *string `xml:"EncryptionScope"`
+
+	// Etag - REQUIRED
 	Etag                        *string                     `xml:"Etag"`
 	ExpiresOn                   *time.Time                  `xml:"Expiry-Time"`
 	ImmutabilityPolicyExpiresOn *time.Time                  `xml:"ImmutabilityPolicyUntilDate"`
@@ -1196,11 +1210,13 @@ type BlobPropertiesInternal struct {
 	IncrementalCopy             *bool                       `xml:"IncrementalCopy"`
 	IsSealed                    *bool                       `xml:"Sealed"`
 	LastAccessedOn              *time.Time                  `xml:"LastAccessTime"`
-	LastModified                *time.Time                  `xml:"Last-Modified"`
-	LeaseDuration               *LeaseDurationType          `xml:"LeaseDuration"`
-	LeaseState                  *LeaseStateType             `xml:"LeaseState"`
-	LeaseStatus                 *LeaseStatusType            `xml:"LeaseStatus"`
-	LegalHold                   *bool                       `xml:"LegalHold"`
+
+	// LastModified - REQUIRED
+	LastModified  *time.Time         `xml:"Last-Modified"`
+	LeaseDuration *LeaseDurationType `xml:"LeaseDuration"`
+	LeaseState    *LeaseStateType    `xml:"LeaseState"`
+	LeaseStatus   *LeaseStatusType   `xml:"LeaseStatus"`
+	LegalHold     *bool              `xml:"LegalHold"`
 
 	// If an object is in rehydrate pending state then this header is returned with priority of rehydrate. Valid values are High and Standard.
 	RehydratePriority      *RehydratePriority `xml:"RehydratePriority"`
@@ -1870,12 +1886,16 @@ type BlobStartCopyFromURLResponse struct {
 }
 
 type BlobTag struct {
-	Key   *string `xml:"Key"`
+	// Key - REQUIRED
+	Key *string `xml:"Key"`
+
+	// Value - REQUIRED
 	Value *string `xml:"Value"`
 }
 
 // BlobTags - Blob tags
 type BlobTags struct {
+	// BlobTagSet - REQUIRED
 	BlobTagSet []*BlobTag `xml:"TagSet>Tag"`
 }
 
@@ -1945,10 +1965,10 @@ type BlobUndeleteResponse struct {
 
 // Block - Represents a single block in a block blob. It describes the block's ID and size.
 type Block struct {
-	// The base64 encoded block ID.
+	// REQUIRED; The base64 encoded block ID.
 	Name *string `xml:"Name"`
 
-	// The block size in bytes.
+	// REQUIRED; The block size in bytes.
 	Size *int64 `xml:"Size"`
 }
 
@@ -2343,7 +2363,10 @@ func (b BlockLookupList) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 }
 
 type ClearRange struct {
-	End   *int64 `xml:"End"`
+	// End - REQUIRED
+	End *int64 `xml:"End"`
+
+	// Start - REQUIRED
 	Start *int64 `xml:"Start"`
 }
 
@@ -2648,9 +2671,11 @@ type ContainerItem struct {
 
 	// Dictionary of
 	Metadata map[string]*string `xml:"Metadata"`
-	Name     *string            `xml:"Name"`
 
-	// Properties of a container
+	// Name - REQUIRED
+	Name *string `xml:"Name"`
+
+	// REQUIRED; Properties of a container
 	Properties *ContainerProperties `xml:"Properties"`
 	Version    *string              `xml:"Version"`
 }
@@ -2719,12 +2744,16 @@ type ContainerListBlobHierarchySegmentOptions struct {
 type ContainerProperties struct {
 	DefaultEncryptionScope *string    `xml:"DefaultEncryptionScope"`
 	DeletedTime            *time.Time `xml:"DeletedTime"`
-	Etag                   *string    `xml:"Etag"`
-	HasImmutabilityPolicy  *bool      `xml:"HasImmutabilityPolicy"`
-	HasLegalHold           *bool      `xml:"HasLegalHold"`
+
+	// Etag - REQUIRED
+	Etag                  *string `xml:"Etag"`
+	HasImmutabilityPolicy *bool   `xml:"HasImmutabilityPolicy"`
+	HasLegalHold          *bool   `xml:"HasLegalHold"`
 
 	// Indicates if version level worm is enabled on this container.
-	IsVersionLevelWormEnabled      *bool              `xml:"VersionLevelWormEnabled"`
+	IsVersionLevelWormEnabled *bool `xml:"VersionLevelWormEnabled"`
+
+	// LastModified - REQUIRED
 	LastModified                   *time.Time         `xml:"Last-Modified"`
 	LeaseDuration                  *LeaseDurationType `xml:"LeaseDuration"`
 	LeaseState                     *LeaseStateType    `xml:"LeaseState"`
@@ -3000,22 +3029,22 @@ type ContainerSubmitBatchResponse struct {
 // prevents a web page from calling APIs in a different domain; CORS provides a secure way to allow one domain (the origin domain) to call APIs in another
 // domain
 type CorsRule struct {
-	// the request headers that the origin domain may specify on the CORS request.
+	// REQUIRED; the request headers that the origin domain may specify on the CORS request.
 	AllowedHeaders *string `xml:"AllowedHeaders"`
 
-	// The methods (HTTP request verbs) that the origin domain may use for a CORS request. (comma separated)
+	// REQUIRED; The methods (HTTP request verbs) that the origin domain may use for a CORS request. (comma separated)
 	AllowedMethods *string `xml:"AllowedMethods"`
 
-	// The origin domains that are permitted to make a request against the storage service via CORS. The origin domain is the domain from which the request
-	// originates. Note that the origin must be an exact
+	// REQUIRED; The origin domains that are permitted to make a request against the storage service via CORS. The origin domain is the domain from which the
+	// request originates. Note that the origin must be an exact
 	// case-sensitive match with the origin that the user age sends to the service. You can also use the wildcard character '*' to allow all origin domains
 	// to make requests via CORS.
 	AllowedOrigins *string `xml:"AllowedOrigins"`
 
-	// The response headers that may be sent in the response to the CORS request and exposed by the browser to the request issuer
+	// REQUIRED; The response headers that may be sent in the response to the CORS request and exposed by the browser to the request issuer
 	ExposedHeaders *string `xml:"ExposedHeaders"`
 
-	// The maximum amount time that a browser should cache the preflight OPTIONS request.
+	// REQUIRED; The maximum amount time that a browser should cache the preflight OPTIONS request.
 	MaxAgeInSeconds *int32 `xml:"MaxAgeInSeconds"`
 }
 
@@ -3062,19 +3091,19 @@ type DataLakeStorageErrorAutoGenerated struct {
 
 // DelimitedTextConfiguration - delimited text configuration
 type DelimitedTextConfiguration struct {
-	// column separator
+	// REQUIRED; column separator
 	ColumnSeparator *string `xml:"ColumnSeparator"`
 
-	// escape char
+	// REQUIRED; escape char
 	EscapeChar *string `xml:"EscapeChar"`
 
-	// field quote
+	// REQUIRED; field quote
 	FieldQuote *string `xml:"FieldQuote"`
 
-	// has headers
+	// REQUIRED; has headers
 	HeadersPresent *bool `xml:"HasHeaders"`
 
-	// record separator
+	// REQUIRED; record separator
 	RecordSeparator *string `xml:"RecordSeparator"`
 }
 
@@ -3320,8 +3349,11 @@ type DirectorySetAccessControlResponse struct {
 
 // FilterBlobItem - Blob info from a Filter Blobs API call
 type FilterBlobItem struct {
+	// ContainerName - REQUIRED
 	ContainerName *string `xml:"ContainerName"`
-	Name          *string `xml:"Name"`
+
+	// Name - REQUIRED
+	Name *string `xml:"Name"`
 
 	// Blob tags
 	Tags *BlobTags `xml:"Tags"`
@@ -3329,10 +3361,15 @@ type FilterBlobItem struct {
 
 // FilterBlobSegment - The result of a Filter Blobs API call
 type FilterBlobSegment struct {
-	Blobs           []*FilterBlobItem `xml:"Blobs>Blob"`
-	NextMarker      *string           `xml:"NextMarker"`
-	ServiceEndpoint *string           `xml:"ServiceEndpoint,attr"`
-	Where           *string           `xml:"Where"`
+	// Blobs - REQUIRED
+	Blobs      []*FilterBlobItem `xml:"Blobs>Blob"`
+	NextMarker *string           `xml:"NextMarker"`
+
+	// ServiceEndpoint - REQUIRED
+	ServiceEndpoint *string `xml:"ServiceEndpoint,attr"`
+
+	// Where - REQUIRED
+	Where *string `xml:"Where"`
 }
 
 // MarshalXML implements the xml.Marshaller interface for type FilterBlobSegment.
@@ -3373,12 +3410,12 @@ type FilterBlobSegmentResponse struct {
 
 // GeoReplication - Geo-Replication information for the Secondary Storage Service
 type GeoReplication struct {
-	// A GMT date/time value, to the second. All primary writes preceding this value are guaranteed to be available for read operations at the secondary. Primary
-	// writes after this point in time may or may
+	// REQUIRED; A GMT date/time value, to the second. All primary writes preceding this value are guaranteed to be available for read operations at the secondary.
+	// Primary writes after this point in time may or may
 	// not be available for reads.
 	LastSyncTime *time.Time `xml:"LastSyncTime"`
 
-	// The status of the secondary location
+	// REQUIRED; The status of the secondary location
 	Status *GeoReplicationStatusType `xml:"Status"`
 }
 
@@ -3413,16 +3450,16 @@ func (g *GeoReplication) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 
 // JSONTextConfiguration - json text configuration
 type JSONTextConfiguration struct {
-	// record separator
+	// REQUIRED; record separator
 	RecordSeparator *string `xml:"RecordSeparator"`
 }
 
 // KeyInfo - Key information
 type KeyInfo struct {
-	// The date-time the key expires in ISO 8601 UTC time
+	// REQUIRED; The date-time the key expires in ISO 8601 UTC time
 	Expiry *string `xml:"Expiry"`
 
-	// The date-time the key is active in ISO 8601 UTC time
+	// REQUIRED; The date-time the key is active in ISO 8601 UTC time
 	Start *string `xml:"Start"`
 }
 
@@ -3434,13 +3471,18 @@ type LeaseAccessConditions struct {
 
 // ListBlobsFlatSegmentResponse - An enumeration of blobs
 type ListBlobsFlatSegmentResponse struct {
-	ContainerName   *string              `xml:"ContainerName,attr"`
-	Marker          *string              `xml:"Marker"`
-	MaxResults      *int32               `xml:"MaxResults"`
-	NextMarker      *string              `xml:"NextMarker"`
-	Prefix          *string              `xml:"Prefix"`
-	Segment         *BlobFlatListSegment `xml:"Blobs"`
-	ServiceEndpoint *string              `xml:"ServiceEndpoint,attr"`
+	// ContainerName - REQUIRED
+	ContainerName *string `xml:"ContainerName,attr"`
+	Marker        *string `xml:"Marker"`
+	MaxResults    *int32  `xml:"MaxResults"`
+	NextMarker    *string `xml:"NextMarker"`
+	Prefix        *string `xml:"Prefix"`
+
+	// Segment - REQUIRED
+	Segment *BlobFlatListSegment `xml:"Blobs"`
+
+	// ServiceEndpoint - REQUIRED
+	ServiceEndpoint *string `xml:"ServiceEndpoint,attr"`
 }
 
 // ListBlobsFlatSegmentResponseResponse is the response envelope for operations that return a ListBlobsFlatSegmentResponse type.
@@ -3469,14 +3511,19 @@ type ListBlobsFlatSegmentResponseResponse struct {
 
 // ListBlobsHierarchySegmentResponse - An enumeration of blobs
 type ListBlobsHierarchySegmentResponse struct {
-	ContainerName   *string                   `xml:"ContainerName,attr"`
-	Delimiter       *string                   `xml:"Delimiter"`
-	Marker          *string                   `xml:"Marker"`
-	MaxResults      *int32                    `xml:"MaxResults"`
-	NextMarker      *string                   `xml:"NextMarker"`
-	Prefix          *string                   `xml:"Prefix"`
-	Segment         *BlobHierarchyListSegment `xml:"Blobs"`
-	ServiceEndpoint *string                   `xml:"ServiceEndpoint,attr"`
+	// ContainerName - REQUIRED
+	ContainerName *string `xml:"ContainerName,attr"`
+	Delimiter     *string `xml:"Delimiter"`
+	Marker        *string `xml:"Marker"`
+	MaxResults    *int32  `xml:"MaxResults"`
+	NextMarker    *string `xml:"NextMarker"`
+	Prefix        *string `xml:"Prefix"`
+
+	// Segment - REQUIRED
+	Segment *BlobHierarchyListSegment `xml:"Blobs"`
+
+	// ServiceEndpoint - REQUIRED
+	ServiceEndpoint *string `xml:"ServiceEndpoint,attr"`
 }
 
 // ListBlobsHierarchySegmentResponseResponse is the response envelope for operations that return a ListBlobsHierarchySegmentResponse type.
@@ -3505,12 +3552,15 @@ type ListBlobsHierarchySegmentResponseResponse struct {
 
 // ListContainersSegmentResponse - An enumeration of containers
 type ListContainersSegmentResponse struct {
-	ContainerItems  []*ContainerItem `xml:"Containers>Container"`
-	Marker          *string          `xml:"Marker"`
-	MaxResults      *int32           `xml:"MaxResults"`
-	NextMarker      *string          `xml:"NextMarker"`
-	Prefix          *string          `xml:"Prefix"`
-	ServiceEndpoint *string          `xml:"ServiceEndpoint,attr"`
+	// ContainerItems - REQUIRED
+	ContainerItems []*ContainerItem `xml:"Containers>Container"`
+	Marker         *string          `xml:"Marker"`
+	MaxResults     *int32           `xml:"MaxResults"`
+	NextMarker     *string          `xml:"NextMarker"`
+	Prefix         *string          `xml:"Prefix"`
+
+	// ServiceEndpoint - REQUIRED
+	ServiceEndpoint *string `xml:"ServiceEndpoint,attr"`
 }
 
 // MarshalXML implements the xml.Marshaller interface for type ListContainersSegmentResponse.
@@ -3548,25 +3598,25 @@ type ListContainersSegmentResponseResponse struct {
 
 // Logging - Azure Analytics Logging settings.
 type Logging struct {
-	// Indicates whether all delete requests should be logged.
+	// REQUIRED; Indicates whether all delete requests should be logged.
 	Delete *bool `xml:"Delete"`
 
-	// Indicates whether all read requests should be logged.
+	// REQUIRED; Indicates whether all read requests should be logged.
 	Read *bool `xml:"Read"`
 
-	// the retention policy which determines how long the associated data should persist
+	// REQUIRED; the retention policy which determines how long the associated data should persist
 	RetentionPolicy *RetentionPolicy `xml:"RetentionPolicy"`
 
-	// The version of Storage Analytics to configure.
+	// REQUIRED; The version of Storage Analytics to configure.
 	Version *string `xml:"Version"`
 
-	// Indicates whether all write requests should be logged.
+	// REQUIRED; Indicates whether all write requests should be logged.
 	Write *bool `xml:"Write"`
 }
 
 // Metrics - a summary of request statistics grouped by API in hour or minute aggregates for blobs
 type Metrics struct {
-	// Indicates whether metrics are enabled for the Blob service.
+	// REQUIRED; Indicates whether metrics are enabled for the Blob service.
 	Enabled *bool `xml:"Enabled"`
 
 	// Indicates whether metrics should generate summary statistics for called API operations.
@@ -4020,7 +4070,10 @@ type PageListResponse struct {
 }
 
 type PageRange struct {
-	End   *int64 `xml:"End"`
+	// End - REQUIRED
+	End *int64 `xml:"End"`
+
+	// Start - REQUIRED
 	Start *int64 `xml:"Start"`
 }
 
@@ -4040,12 +4093,12 @@ type QueryFormat struct {
 
 // QueryRequest - the quick query body
 type QueryRequest struct {
-	// a query statement
+	// REQUIRED; a query statement
 	Expression          *string             `xml:"Expression"`
 	InputSerialization  *QuerySerialization `xml:"InputSerialization"`
 	OutputSerialization *QuerySerialization `xml:"OutputSerialization"`
 
-	// the query type
+	// REQUIRED; the query type
 	QueryType *string `xml:"QueryType"`
 }
 
@@ -4062,6 +4115,7 @@ func (q QueryRequest) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 }
 
 type QuerySerialization struct {
+	// Format - REQUIRED
 	Format *QueryFormat `xml:"Format"`
 }
 
@@ -4073,7 +4127,7 @@ type RetentionPolicy struct {
 	// Indicates the number of days that metrics or logging or soft-deleted data should be retained. All data older than this value will be deleted
 	Days *int32 `xml:"Days"`
 
-	// Indicates whether a retention policy is enabled for the storage service
+	// REQUIRED; Indicates whether a retention policy is enabled for the storage service
 	Enabled *bool `xml:"Enabled"`
 }
 
@@ -4238,10 +4292,10 @@ type ServiceSubmitBatchResponse struct {
 
 // SignedIdentifier - signed identifier
 type SignedIdentifier struct {
-	// An Access policy
+	// REQUIRED; An Access policy
 	AccessPolicy *AccessPolicy `xml:"AccessPolicy"`
 
-	// a unique id
+	// REQUIRED; a unique id
 	ID *string `xml:"Id"`
 }
 
@@ -4294,7 +4348,7 @@ type StaticWebsite struct {
 	// Absolute path of the default index page
 	DefaultIndexDocumentPath *string `xml:"DefaultIndexDocumentPath"`
 
-	// Indicates whether this account is hosting a static website
+	// REQUIRED; Indicates whether this account is hosting a static website
 	Enabled *bool `xml:"Enabled"`
 
 	// The absolute path of the custom 404 page
@@ -4403,25 +4457,25 @@ type StorageServiceStatsResponse struct {
 
 // UserDelegationKey - A user delegation key
 type UserDelegationKey struct {
-	// The date-time the key expires
+	// REQUIRED; The date-time the key expires
 	SignedExpiry *time.Time `xml:"SignedExpiry"`
 
-	// The Azure Active Directory object ID in GUID format.
+	// REQUIRED; The Azure Active Directory object ID in GUID format.
 	SignedOid *string `xml:"SignedOid"`
 
-	// Abbreviation of the Azure Storage service that accepts the key
+	// REQUIRED; Abbreviation of the Azure Storage service that accepts the key
 	SignedService *string `xml:"SignedService"`
 
-	// The date-time the key is active
+	// REQUIRED; The date-time the key is active
 	SignedStart *time.Time `xml:"SignedStart"`
 
-	// The Azure Active Directory tenant ID in GUID format
+	// REQUIRED; The Azure Active Directory tenant ID in GUID format
 	SignedTid *string `xml:"SignedTid"`
 
-	// The service version that created the key
+	// REQUIRED; The service version that created the key
 	SignedVersion *string `xml:"SignedVersion"`
 
-	// The key as a base64 string
+	// REQUIRED; The key as a base64 string
 	Value *string `xml:"Value"`
 }
 

@@ -111,8 +111,10 @@ type NotFoundErrorBaseClassification interface {
 // Implements the error and azcore.HTTPResponse interfaces.
 type NotFoundErrorBase struct {
 	BaseError
-	raw          string
-	Reason       *string `json:"reason,omitempty"`
+	raw    string
+	Reason *string `json:"reason,omitempty"`
+
+	// WhatNotFound - REQUIRED
 	WhatNotFound *string `json:"whatNotFound,omitempty"`
 }
 
@@ -179,7 +181,9 @@ type PetActionError struct {
 	raw string
 	// the error message
 	ErrorMessage *string `json:"errorMessage,omitempty"`
-	ErrorType    *string `json:"errorType,omitempty"`
+
+	// ErrorType - REQUIRED
+	ErrorType *string `json:"errorType,omitempty"`
 }
 
 // Error implements the error interface for type PetActionError.

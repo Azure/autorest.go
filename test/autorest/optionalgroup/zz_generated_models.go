@@ -25,6 +25,7 @@ func (a ArrayOptionalWrapper) MarshalJSON() ([]byte, error) {
 }
 
 type ArrayWrapper struct {
+	// Value - REQUIRED
 	Value []*string `json:"value,omitempty"`
 }
 
@@ -40,6 +41,7 @@ type ClassOptionalWrapper struct {
 }
 
 type ClassWrapper struct {
+	// Value - REQUIRED
 	Value *Product `json:"value,omitempty"`
 }
 
@@ -205,10 +207,12 @@ type IntOptionalWrapper struct {
 }
 
 type IntWrapper struct {
+	// Value - REQUIRED
 	Value *int32 `json:"value,omitempty"`
 }
 
 type Product struct {
+	// ID - REQUIRED
 	ID   *int32  `json:"id,omitempty"`
 	Name *string `json:"name,omitempty"`
 }
@@ -218,6 +222,7 @@ type StringOptionalWrapper struct {
 }
 
 type StringWrapper struct {
+	// Value - REQUIRED
 	Value *string `json:"value,omitempty"`
 }
 

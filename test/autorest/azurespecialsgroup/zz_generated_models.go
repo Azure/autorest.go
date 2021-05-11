@@ -52,7 +52,8 @@ type APIVersionLocalGetSwaggerLocalValidOptions struct {
 
 // Implements the error and azcore.HTTPResponse interfaces.
 type Error struct {
-	raw        string
+	raw string
+	// ConstantID - REQUIRED
 	ConstantID *int32  `json:"constantId,omitempty"`
 	Message    *string `json:"message,omitempty"`
 	Status     *int32  `json:"status,omitempty"`

@@ -69,7 +69,7 @@ func (e Error) Error() string {
 }
 
 type RefColorConstant struct {
-	// Referenced Color Constant Description.
+	// REQUIRED; Referenced Color Constant Description.
 	ColorConstant *string `json:"ColorConstant,omitempty"`
 
 	// Sample string.
