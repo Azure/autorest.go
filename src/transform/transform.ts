@@ -94,11 +94,13 @@ async function process(session: Session<CodeModel>) {
       }
       if (prop.required) {
         descriptionMods.push('REQUIRED');
+      } else {
+        descriptionMods.push('OPTIONAL');
       }
       if (prop.language.go!.description) {
         descriptionMods.push(parseComments(prop.language.go!.description));
         prop.language.go!.description = descriptionMods.join('; ');
-      } else if (descriptionMods.length > 0) {
+      } else {
         prop.language.go!.description = prop.language.go!.name + ' - ' + descriptionMods.join('; ');
       }
       const details = <Language>prop.schema.language.go;
