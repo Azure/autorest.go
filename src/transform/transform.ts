@@ -88,23 +88,18 @@ async function process(session: Session<CodeModel>) {
       }
     }
     for (const prop of values(obj.properties)) {
-      let descriptionMods = '';
+      const descriptionMods = new Array<string>();
       if (prop.readOnly) {
-        descriptionMods = 'READ-ONLY';
+        descriptionMods.push('READ-ONLY');
       }
       if (prop.required) {
-        if (descriptionMods !== '') {
-          descriptionMods += '; ';
-        }
-        descriptionMods += 'REQUIRED';
+        descriptionMods.push('REQUIRED');
       }
       if (prop.language.go!.description) {
-        prop.language.go!.description = parseComments(prop.language.go!.description);
-        if (descriptionMods !== '') {
-          prop.language.go!.description = descriptionMods + '; ' + prop.language.go!.description;
-        }
-      } else if (descriptionMods !== '') {
-        prop.language.go!.description = prop.language.go!.name + ' - ' + descriptionMods;
+        descriptionMods.push(parseComments(prop.language.go!.description));
+        prop.language.go!.description = descriptionMods.join('; ');
+      } else if (descriptionMods.length > 0) {
+        prop.language.go!.description = prop.language.go!.name + ' - ' + descriptionMods.join('; ');
       }
       const details = <Language>prop.schema.language.go;
       details.name = `${schemaTypeToGoType(session.model, prop.schema, true)}`;
