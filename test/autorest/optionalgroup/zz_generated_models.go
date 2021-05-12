@@ -14,7 +14,6 @@ import (
 )
 
 type ArrayOptionalWrapper struct {
-	// Value - OPTIONAL
 	Value []*string `json:"value,omitempty"`
 }
 
@@ -26,7 +25,7 @@ func (a ArrayOptionalWrapper) MarshalJSON() ([]byte, error) {
 }
 
 type ArrayWrapper struct {
-	// Value - REQUIRED
+	// REQUIRED
 	Value []*string `json:"value,omitempty"`
 }
 
@@ -38,23 +37,19 @@ func (a ArrayWrapper) MarshalJSON() ([]byte, error) {
 }
 
 type ClassOptionalWrapper struct {
-	// Value - OPTIONAL
 	Value *Product `json:"value,omitempty"`
 }
 
 type ClassWrapper struct {
-	// Value - REQUIRED
+	// REQUIRED
 	Value *Product `json:"value,omitempty"`
 }
 
 // Implements the error and azcore.HTTPResponse interfaces.
 type Error struct {
-	raw string
-	// Message - OPTIONAL
+	raw     string
 	Message *string `json:"message,omitempty"`
-
-	// Status - OPTIONAL
-	Status *int32 `json:"status,omitempty"`
+	Status  *int32  `json:"status,omitempty"`
 }
 
 // Error implements the error interface for type Error.
@@ -208,30 +203,26 @@ type ImplicitPutOptionalQueryOptions struct {
 }
 
 type IntOptionalWrapper struct {
-	// Value - OPTIONAL
 	Value *int32 `json:"value,omitempty"`
 }
 
 type IntWrapper struct {
-	// Value - REQUIRED
+	// REQUIRED
 	Value *int32 `json:"value,omitempty"`
 }
 
 type Product struct {
-	// ID - REQUIRED
-	ID *int32 `json:"id,omitempty"`
-
-	// Name - OPTIONAL
+	// REQUIRED
+	ID   *int32  `json:"id,omitempty"`
 	Name *string `json:"name,omitempty"`
 }
 
 type StringOptionalWrapper struct {
-	// Value - OPTIONAL
 	Value *string `json:"value,omitempty"`
 }
 
 type StringWrapper struct {
-	// Value - REQUIRED
+	// REQUIRED
 	Value *string `json:"value,omitempty"`
 }
 

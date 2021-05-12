@@ -386,12 +386,9 @@ type Enum0ArrayResponse struct {
 
 // Implements the error and azcore.HTTPResponse interfaces.
 type Error struct {
-	raw string
-	// Message - OPTIONAL
+	raw     string
 	Message *string `json:"message,omitempty"`
-
-	// Status - OPTIONAL
-	Status *int32 `json:"status,omitempty"`
+	Status  *int32  `json:"status,omitempty"`
 }
 
 // Error implements the error interface for type Error.
@@ -455,11 +452,8 @@ type MapOfStringArrayResponse struct {
 }
 
 type Product struct {
-	// Integer - OPTIONAL
-	Integer *int32 `json:"integer,omitempty"`
-
-	// String - OPTIONAL
-	String *string `json:"string,omitempty"`
+	Integer *int32  `json:"integer,omitempty"`
+	String  *string `json:"string,omitempty"`
 }
 
 // ProductArrayResponse is the response envelope for operations that return a []*Product type.

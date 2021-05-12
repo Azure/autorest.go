@@ -40,7 +40,7 @@ type ChildProduct struct {
 	// REQUIRED; Constant string
 	ConstProperty *string `json:"constProperty,omitempty"`
 
-	// OPTIONAL; Count
+	// Count
 	Count *int32 `json:"count,omitempty"`
 }
 
@@ -55,14 +55,9 @@ type ConstantProduct struct {
 
 // Implements the error and azcore.HTTPResponse interfaces.
 type Error struct {
-	raw string
-	// Code - OPTIONAL
-	Code *int32 `json:"code,omitempty"`
-
-	// Fields - OPTIONAL
-	Fields *string `json:"fields,omitempty"`
-
-	// Message - OPTIONAL
+	raw     string
+	Code    *int32  `json:"code,omitempty"`
+	Fields  *string `json:"fields,omitempty"`
 	Message *string `json:"message,omitempty"`
 }
 
@@ -86,16 +81,16 @@ type Product struct {
 	// REQUIRED; Constant string
 	ConstString *string `json:"constString,omitempty"`
 
-	// OPTIONAL; Non required int betwen 0 and 100 exclusive.
+	// Non required int betwen 0 and 100 exclusive.
 	Capacity *int32 `json:"capacity,omitempty"`
 
-	// OPTIONAL; Constant string as Enum
+	// Constant string as Enum
 	ConstStringAsEnum *string `json:"constStringAsEnum,omitempty"`
 
-	// OPTIONAL; Non required array of unique items from 0 to 6 elements.
+	// Non required array of unique items from 0 to 6 elements.
 	DisplayNames []*string `json:"display_names,omitempty"`
 
-	// OPTIONAL; Image URL representing the product.
+	// Image URL representing the product.
 	Image *string `json:"image,omitempty"`
 }
 

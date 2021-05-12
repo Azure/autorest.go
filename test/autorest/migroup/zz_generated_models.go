@@ -12,7 +12,6 @@ import "net/http"
 type Cat struct {
 	Feline
 	Pet
-	// LikesMilk - OPTIONAL
 	LikesMilk *bool `json:"likesMilk,omitempty"`
 }
 
@@ -26,12 +25,9 @@ type CatResponse struct {
 
 // Implements the error and azcore.HTTPResponse interfaces.
 type Error struct {
-	raw string
-	// Message - OPTIONAL
+	raw     string
 	Message *string `json:"message,omitempty"`
-
-	// Status - OPTIONAL
-	Status *int32 `json:"status,omitempty"`
+	Status  *int32  `json:"status,omitempty"`
 }
 
 // Error implements the error interface for type Error.
@@ -41,11 +37,8 @@ func (e Error) Error() string {
 }
 
 type Feline struct {
-	// Hisses - OPTIONAL
 	Hisses *bool `json:"hisses,omitempty"`
-
-	// Meows - OPTIONAL
-	Meows *bool `json:"meows,omitempty"`
+	Meows  *bool `json:"meows,omitempty"`
 }
 
 // FelineResponse is the response envelope for operations that return a Feline type.
@@ -58,7 +51,6 @@ type FelineResponse struct {
 
 type Horse struct {
 	Pet
-	// IsAShowHorse - OPTIONAL
 	IsAShowHorse *bool `json:"isAShowHorse,omitempty"`
 }
 
@@ -72,7 +64,6 @@ type HorseResponse struct {
 
 type Kitten struct {
 	Cat
-	// EatsMiceYet - OPTIONAL
 	EatsMiceYet *bool `json:"eatsMiceYet,omitempty"`
 }
 
@@ -135,7 +126,7 @@ type MultipleInheritanceServiceClientPutPetOptions struct {
 }
 
 type Pet struct {
-	// Name - REQUIRED
+	// REQUIRED
 	Name *string `json:"name,omitempty"`
 }
 

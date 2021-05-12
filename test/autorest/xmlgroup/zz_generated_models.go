@@ -60,10 +60,7 @@ func (a *AccessPolicy) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 
 // AppleBarrel - A barrel of apples.
 type AppleBarrel struct {
-	// BadApples - OPTIONAL
-	BadApples []*string `xml:"BadApples>Apple"`
-
-	// GoodApples - OPTIONAL
+	BadApples  []*string `xml:"BadApples>Apple"`
 	GoodApples []*string `xml:"GoodApples>Apple"`
 }
 
@@ -97,14 +94,10 @@ type AppleBarrelResponse struct {
 
 // Banana - A banana.
 type Banana struct {
-	// OPTIONAL; The time at which you should reconsider eating this banana
+	// The time at which you should reconsider eating this banana
 	Expiration *time.Time `xml:"expiration"`
-
-	// Flavor - OPTIONAL
-	Flavor *string `xml:"flavor"`
-
-	// Name - OPTIONAL
-	Name *string `xml:"name"`
+	Flavor     *string    `xml:"flavor"`
+	Name       *string    `xml:"name"`
 }
 
 // MarshalXML implements the xml.Marshaller interface for type Banana.
@@ -157,19 +150,19 @@ type BananaResponse struct {
 
 // Blob - An Azure Storage blob
 type Blob struct {
-	// Deleted - REQUIRED
+	// REQUIRED
 	Deleted *bool `xml:"Deleted"`
 
-	// Name - REQUIRED
+	// REQUIRED
 	Name *string `xml:"Name"`
 
 	// REQUIRED; Properties of a blob
 	Properties *BlobProperties `xml:"Properties"`
 
-	// Snapshot - REQUIRED
+	// REQUIRED
 	Snapshot *string `xml:"Snapshot"`
 
-	// OPTIONAL; Dictionary of
+	// Dictionary of
 	Metadata map[string]*string `xml:"Metadata"`
 }
 
@@ -190,95 +183,45 @@ func (b *Blob) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 }
 
 type BlobPrefix struct {
-	// Name - REQUIRED
+	// REQUIRED
 	Name *string `xml:"Name"`
 }
 
 // BlobProperties - Properties of a blob
 type BlobProperties struct {
-	// Etag - REQUIRED
+	// REQUIRED
 	Etag *string `xml:"Etag"`
 
-	// LastModified - REQUIRED
-	LastModified *time.Time `xml:"Last-Modified"`
+	// REQUIRED
+	LastModified       *time.Time     `xml:"Last-Modified"`
+	AccessTier         *AccessTier    `xml:"AccessTier"`
+	AccessTierInferred *bool          `xml:"AccessTierInferred"`
+	ArchiveStatus      *ArchiveStatus `xml:"ArchiveStatus"`
+	BlobSequenceNumber *int32         `xml:"x-ms-blob-sequence-number"`
+	BlobType           *BlobType      `xml:"BlobType"`
+	CacheControl       *string        `xml:"Cache-Control"`
+	ContentDisposition *string        `xml:"Content-Disposition"`
+	ContentEncoding    *string        `xml:"Content-Encoding"`
+	ContentLanguage    *string        `xml:"Content-Language"`
 
-	// AccessTier - OPTIONAL
-	AccessTier *AccessTier `xml:"AccessTier"`
-
-	// AccessTierInferred - OPTIONAL
-	AccessTierInferred *bool `xml:"AccessTierInferred"`
-
-	// ArchiveStatus - OPTIONAL
-	ArchiveStatus *ArchiveStatus `xml:"ArchiveStatus"`
-
-	// BlobSequenceNumber - OPTIONAL
-	BlobSequenceNumber *int32 `xml:"x-ms-blob-sequence-number"`
-
-	// BlobType - OPTIONAL
-	BlobType *BlobType `xml:"BlobType"`
-
-	// CacheControl - OPTIONAL
-	CacheControl *string `xml:"Cache-Control"`
-
-	// ContentDisposition - OPTIONAL
-	ContentDisposition *string `xml:"Content-Disposition"`
-
-	// ContentEncoding - OPTIONAL
-	ContentEncoding *string `xml:"Content-Encoding"`
-
-	// ContentLanguage - OPTIONAL
-	ContentLanguage *string `xml:"Content-Language"`
-
-	// OPTIONAL; Size in bytes
-	ContentLength *int64 `xml:"Content-Length"`
-
-	// ContentMD5 - OPTIONAL
-	ContentMD5 *string `xml:"Content-MD5"`
-
-	// ContentType - OPTIONAL
-	ContentType *string `xml:"Content-Type"`
-
-	// CopyCompletionTime - OPTIONAL
-	CopyCompletionTime *time.Time `xml:"CopyCompletionTime"`
-
-	// CopyID - OPTIONAL
-	CopyID *string `xml:"CopyId"`
-
-	// CopyProgress - OPTIONAL
-	CopyProgress *string `xml:"CopyProgress"`
-
-	// CopySource - OPTIONAL
-	CopySource *string `xml:"CopySource"`
-
-	// CopyStatus - OPTIONAL
-	CopyStatus *CopyStatusType `xml:"CopyStatus"`
-
-	// CopyStatusDescription - OPTIONAL
-	CopyStatusDescription *string `xml:"CopyStatusDescription"`
-
-	// DeletedTime - OPTIONAL
-	DeletedTime *time.Time `xml:"DeletedTime"`
-
-	// DestinationSnapshot - OPTIONAL
-	DestinationSnapshot *string `xml:"DestinationSnapshot"`
-
-	// IncrementalCopy - OPTIONAL
-	IncrementalCopy *bool `xml:"IncrementalCopy"`
-
-	// LeaseDuration - OPTIONAL
-	LeaseDuration *LeaseDurationType `xml:"LeaseDuration"`
-
-	// LeaseState - OPTIONAL
-	LeaseState *LeaseStateType `xml:"LeaseState"`
-
-	// LeaseStatus - OPTIONAL
-	LeaseStatus *LeaseStatusType `xml:"LeaseStatus"`
-
-	// RemainingRetentionDays - OPTIONAL
-	RemainingRetentionDays *int32 `xml:"RemainingRetentionDays"`
-
-	// ServerEncrypted - OPTIONAL
-	ServerEncrypted *bool `xml:"ServerEncrypted"`
+	// Size in bytes
+	ContentLength          *int64             `xml:"Content-Length"`
+	ContentMD5             *string            `xml:"Content-MD5"`
+	ContentType            *string            `xml:"Content-Type"`
+	CopyCompletionTime     *time.Time         `xml:"CopyCompletionTime"`
+	CopyID                 *string            `xml:"CopyId"`
+	CopyProgress           *string            `xml:"CopyProgress"`
+	CopySource             *string            `xml:"CopySource"`
+	CopyStatus             *CopyStatusType    `xml:"CopyStatus"`
+	CopyStatusDescription  *string            `xml:"CopyStatusDescription"`
+	DeletedTime            *time.Time         `xml:"DeletedTime"`
+	DestinationSnapshot    *string            `xml:"DestinationSnapshot"`
+	IncrementalCopy        *bool              `xml:"IncrementalCopy"`
+	LeaseDuration          *LeaseDurationType `xml:"LeaseDuration"`
+	LeaseState             *LeaseStateType    `xml:"LeaseState"`
+	LeaseStatus            *LeaseStatusType   `xml:"LeaseStatus"`
+	RemainingRetentionDays *int32             `xml:"RemainingRetentionDays"`
+	ServerEncrypted        *bool              `xml:"ServerEncrypted"`
 }
 
 // MarshalXML implements the xml.Marshaller interface for type BlobProperties.
@@ -319,10 +262,7 @@ func (b *BlobProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 }
 
 type Blobs struct {
-	// Blob - OPTIONAL
-	Blob []*Blob `xml:"Blob"`
-
-	// BlobPrefix - OPTIONAL
+	Blob       []*Blob       `xml:"Blob"`
 	BlobPrefix []*BlobPrefix `xml:"BlobPrefix"`
 }
 
@@ -347,25 +287,25 @@ func (b Blobs) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 // ComplexTypeNoMeta - I am a complex type with no XML node
 type ComplexTypeNoMeta struct {
-	// OPTIONAL; The id of the res
+	// The id of the res
 	ID *string `xml:"ID"`
 }
 
 // ComplexTypeWithMeta - I am a complex type with XML node
 type ComplexTypeWithMeta struct {
-	// OPTIONAL; The id of the res
+	// The id of the res
 	ID *string `xml:"ID"`
 }
 
 // Container - An Azure Storage container
 type Container struct {
-	// Name - REQUIRED
+	// REQUIRED
 	Name *string `xml:"Name"`
 
 	// REQUIRED; Properties of a container
 	Properties *ContainerProperties `xml:"Properties"`
 
-	// OPTIONAL; Dictionary of
+	// Dictionary of
 	Metadata map[string]*string `xml:"Metadata"`
 }
 
@@ -387,23 +327,15 @@ func (c *Container) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 
 // ContainerProperties - Properties of a container
 type ContainerProperties struct {
-	// Etag - REQUIRED
+	// REQUIRED
 	Etag *string `xml:"Etag"`
 
-	// LastModified - REQUIRED
-	LastModified *time.Time `xml:"Last-Modified"`
-
-	// LeaseDuration - OPTIONAL
+	// REQUIRED
+	LastModified  *time.Time         `xml:"Last-Modified"`
 	LeaseDuration *LeaseDurationType `xml:"LeaseDuration"`
-
-	// LeaseState - OPTIONAL
-	LeaseState *LeaseStateType `xml:"LeaseState"`
-
-	// LeaseStatus - OPTIONAL
-	LeaseStatus *LeaseStatusType `xml:"LeaseStatus"`
-
-	// PublicAccess - OPTIONAL
-	PublicAccess *PublicAccessType `xml:"PublicAccess"`
+	LeaseState    *LeaseStateType    `xml:"LeaseState"`
+	LeaseStatus   *LeaseStatusType   `xml:"LeaseStatus"`
+	PublicAccess  *PublicAccessType  `xml:"PublicAccess"`
 }
 
 // MarshalXML implements the xml.Marshaller interface for type ContainerProperties.
@@ -461,12 +393,9 @@ type CorsRule struct {
 
 // Implements the error and azcore.HTTPResponse interfaces.
 type Error struct {
-	raw string
-	// Message - OPTIONAL
+	raw     string
 	Message *string `xml:"message"`
-
-	// Status - OPTIONAL
-	Status *int32 `xml:"status"`
+	Status  *int32  `xml:"status"`
 }
 
 // Error implements the error interface for type Error.
@@ -476,12 +405,10 @@ func (e Error) Error() string {
 }
 
 type JSONInput struct {
-	// ID - OPTIONAL
 	ID *int32 `json:"id,omitempty"`
 }
 
 type JSONOutput struct {
-	// ID - OPTIONAL
 	ID *int32 `json:"id,omitempty"`
 }
 
@@ -495,28 +422,26 @@ type JSONOutputResponse struct {
 
 // ListBlobsResponse - An enumeration of blobs
 type ListBlobsResponse struct {
-	// Blobs - REQUIRED
+	// REQUIRED
 	Blobs *Blobs `xml:"Blobs"`
 
-	// ContainerName - REQUIRED
+	// REQUIRED
 	ContainerName *string `xml:"ContainerName,attr"`
 
-	// Delimiter - REQUIRED
+	// REQUIRED
 	Delimiter *string `xml:"Delimiter"`
 
-	// Marker - REQUIRED
+	// REQUIRED
 	Marker *string `xml:"Marker"`
 
-	// MaxResults - REQUIRED
+	// REQUIRED
 	MaxResults *int32 `xml:"MaxResults"`
 
-	// NextMarker - REQUIRED
+	// REQUIRED
 	NextMarker *string `xml:"NextMarker"`
 
-	// Prefix - REQUIRED
-	Prefix *string `xml:"Prefix"`
-
-	// ServiceEndpoint - OPTIONAL
+	// REQUIRED
+	Prefix          *string `xml:"Prefix"`
 	ServiceEndpoint *string `xml:"ServiceEndpoint,attr"`
 }
 
@@ -531,23 +456,19 @@ type ListBlobsResponseResponse struct {
 
 // ListContainersResponse - An enumeration of containers
 type ListContainersResponse struct {
-	// MaxResults - REQUIRED
+	// REQUIRED
 	MaxResults *int32 `xml:"MaxResults"`
 
-	// NextMarker - REQUIRED
+	// REQUIRED
 	NextMarker *string `xml:"NextMarker"`
 
-	// Prefix - REQUIRED
+	// REQUIRED
 	Prefix *string `xml:"Prefix"`
 
-	// ServiceEndpoint - REQUIRED
-	ServiceEndpoint *string `xml:"ServiceEndpoint,attr"`
-
-	// Containers - OPTIONAL
-	Containers []*Container `xml:"Containers>Container"`
-
-	// Marker - OPTIONAL
-	Marker *string `xml:"Marker"`
+	// REQUIRED
+	ServiceEndpoint *string      `xml:"ServiceEndpoint,attr"`
+	Containers      []*Container `xml:"Containers>Container"`
+	Marker          *string      `xml:"Marker"`
 }
 
 // MarshalXML implements the xml.Marshaller interface for type ListContainersResponse.
@@ -596,22 +517,22 @@ type Metrics struct {
 	// REQUIRED; Indicates whether metrics are enabled for the Blob service.
 	Enabled *bool `xml:"Enabled"`
 
-	// OPTIONAL; Indicates whether metrics should generate summary statistics for called API operations.
+	// Indicates whether metrics should generate summary statistics for called API operations.
 	IncludeAPIs *bool `xml:"IncludeAPIs"`
 
-	// OPTIONAL; the retention policy
+	// the retention policy
 	RetentionPolicy *RetentionPolicy `xml:"RetentionPolicy"`
 
-	// OPTIONAL; The version of Storage Analytics to configure.
+	// The version of Storage Analytics to configure.
 	Version *string `xml:"Version"`
 }
 
 // ObjectWithXMsTextProperty - Contans property
 type ObjectWithXMsTextProperty struct {
-	// OPTIONAL; Returned value should be 'I am text'
+	// Returned value should be 'I am text'
 	Content *string `xml:"content"`
 
-	// OPTIONAL; Returned value should be 'english'
+	// Returned value should be 'english'
 	Language *string `xml:"language,attr"`
 }
 
@@ -629,16 +550,16 @@ type RetentionPolicy struct {
 	// REQUIRED; Indicates whether a retention policy is enabled for the storage service
 	Enabled *bool `xml:"Enabled"`
 
-	// OPTIONAL; Indicates the number of days that metrics or logging or soft-deleted data should be retained. All data older than this value will be deleted
+	// Indicates the number of days that metrics or logging or soft-deleted data should be retained. All data older than this value will be deleted
 	Days *int32 `xml:"Days"`
 }
 
 // RootWithRefAndMeta - I am root, and I ref a model WITH meta
 type RootWithRefAndMeta struct {
-	// OPTIONAL; XML will use XMLComplexTypeWithMeta
+	// XML will use XMLComplexTypeWithMeta
 	RefToModel *ComplexTypeWithMeta `xml:"XMLComplexTypeWithMeta"`
 
-	// OPTIONAL; Something else (just to avoid flattening)
+	// Something else (just to avoid flattening)
 	Something *string `xml:"Something"`
 }
 
@@ -653,10 +574,10 @@ type RootWithRefAndMetaResponse struct {
 
 // RootWithRefAndNoMeta - I am root, and I ref a model with no meta
 type RootWithRefAndNoMeta struct {
-	// OPTIONAL; XML will use RefToModel
+	// XML will use RefToModel
 	RefToModel *ComplexTypeNoMeta `xml:"RefToModel"`
 
-	// OPTIONAL; Something else (just to avoid flattening)
+	// Something else (just to avoid flattening)
 	Something *string `xml:"Something"`
 }
 
@@ -689,14 +610,9 @@ type SignedIdentifierArrayResponse struct {
 
 // Slide - A slide in a slideshow
 type Slide struct {
-	// Items - OPTIONAL
 	Items []*string `xml:"item"`
-
-	// Title - OPTIONAL
-	Title *string `xml:"title"`
-
-	// Type - OPTIONAL
-	Type *string `xml:"type,attr"`
+	Title *string   `xml:"title"`
+	Type  *string   `xml:"type,attr"`
 }
 
 // MarshalXML implements the xml.Marshaller interface for type Slide.
@@ -716,17 +632,10 @@ func (s Slide) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 // Slideshow - Data about a slideshow
 type Slideshow struct {
-	// Author - OPTIONAL
-	Author *string `xml:"author,attr"`
-
-	// Date - OPTIONAL
-	Date *string `xml:"date,attr"`
-
-	// Slides - OPTIONAL
+	Author *string  `xml:"author,attr"`
+	Date   *string  `xml:"date,attr"`
 	Slides []*Slide `xml:"slide"`
-
-	// Title - OPTIONAL
-	Title *string `xml:"title,attr"`
+	Title  *string  `xml:"title,attr"`
 }
 
 // MarshalXML implements the xml.Marshaller interface for type Slideshow.
@@ -756,23 +665,23 @@ type SlideshowResponse struct {
 
 // StorageServiceProperties - Storage Service Properties.
 type StorageServiceProperties struct {
-	// OPTIONAL; The set of CORS rules.
+	// The set of CORS rules.
 	Cors []*CorsRule `xml:"Cors>CorsRule"`
 
-	// OPTIONAL; The default version to use for requests to the Blob service if an incoming request's version is not specified. Possible values include version
-	// 2008-10-27 and all more recent versions
+	// The default version to use for requests to the Blob service if an incoming request's version is not specified. Possible values include version 2008-10-27
+	// and all more recent versions
 	DefaultServiceVersion *string `xml:"DefaultServiceVersion"`
 
-	// OPTIONAL; The Delete Retention Policy for the service
+	// The Delete Retention Policy for the service
 	DeleteRetentionPolicy *RetentionPolicy `xml:"DeleteRetentionPolicy"`
 
-	// OPTIONAL; A summary of request statistics grouped by API in hourly aggregates for blobs
+	// A summary of request statistics grouped by API in hourly aggregates for blobs
 	HourMetrics *Metrics `xml:"HourMetrics"`
 
-	// OPTIONAL; Azure Analytics Logging settings
+	// Azure Analytics Logging settings
 	Logging *Logging `xml:"Logging"`
 
-	// OPTIONAL; a summary of request statistics grouped by API in minute aggregates for blobs
+	// a summary of request statistics grouped by API in minute aggregates for blobs
 	MinuteMetrics *Metrics `xml:"MinuteMetrics"`
 }
 

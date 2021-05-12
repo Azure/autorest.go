@@ -15,13 +15,11 @@ import (
 )
 
 type Animal struct {
-	// AniType - OPTIONAL
 	AniType *string `json:"aniType,omitempty"`
 }
 
 type AnimalNotFound struct {
 	NotFoundErrorBase
-	// Name - OPTIONAL
 	Name *string `json:"name,omitempty"`
 }
 
@@ -47,7 +45,6 @@ func (a *AnimalNotFound) UnmarshalJSON(data []byte) error {
 }
 
 type BaseError struct {
-	// SomeBaseProp - OPTIONAL
 	SomeBaseProp *string `json:"someBaseProp,omitempty"`
 }
 
@@ -77,7 +74,6 @@ func (b *BaseError) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 
 type LinkNotFound struct {
 	NotFoundErrorBase
-	// WhatSubAddress - OPTIONAL
 	WhatSubAddress *string `json:"whatSubAddress,omitempty"`
 }
 
@@ -116,11 +112,9 @@ type NotFoundErrorBaseClassification interface {
 type NotFoundErrorBase struct {
 	BaseError
 	raw string
-	// WhatNotFound - REQUIRED
+	// REQUIRED
 	WhatNotFound *string `json:"whatNotFound,omitempty"`
-
-	// Reason - OPTIONAL
-	Reason *string `json:"reason,omitempty"`
+	Reason       *string `json:"reason,omitempty"`
 }
 
 // Error implements the error interface for type NotFoundErrorBase.
@@ -167,7 +161,7 @@ type Pet struct {
 }
 
 type PetAction struct {
-	// OPTIONAL; action feedback
+	// action feedback
 	ActionResponse *string `json:"actionResponse,omitempty"`
 }
 
@@ -184,10 +178,10 @@ type PetActionErrorClassification interface {
 // Implements the error and azcore.HTTPResponse interfaces.
 type PetActionError struct {
 	raw string
-	// ErrorType - REQUIRED
+	// REQUIRED
 	ErrorType *string `json:"errorType,omitempty"`
 
-	// OPTIONAL; the error message
+	// the error message
 	ErrorMessage *string `json:"errorMessage,omitempty"`
 }
 
@@ -248,7 +242,7 @@ type PetGetPetByIDOptions struct {
 
 type PetHungryOrThirstyError struct {
 	PetSadError
-	// OPTIONAL; is the pet hungry or thirsty or both
+	// is the pet hungry or thirsty or both
 	HungryOrThirsty *string `json:"hungryOrThirsty,omitempty"`
 }
 
@@ -293,7 +287,7 @@ type PetSadErrorClassification interface {
 
 type PetSadError struct {
 	PetActionError
-	// OPTIONAL; why is the pet sad
+	// why is the pet sad
 	Reason *string `json:"reason,omitempty"`
 }
 

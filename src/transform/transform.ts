@@ -93,15 +93,11 @@ async function process(session: Session<CodeModel>) {
         descriptionMods.push('READ-ONLY');
       } else if (prop.required) {
         descriptionMods.push('REQUIRED');
-      } else {
-        descriptionMods.push('OPTIONAL');
       }
       if (prop.language.go!.description) {
         descriptionMods.push(parseComments(prop.language.go!.description));
-        prop.language.go!.description = descriptionMods.join('; ');
-      } else {
-        prop.language.go!.description = prop.language.go!.name + ' - ' + descriptionMods.join('; ');
       }
+      prop.language.go!.description = descriptionMods.join('; ');
       const details = <Language>prop.schema.language.go;
       details.name = `${schemaTypeToGoType(session.model, prop.schema, true)}`;
       if (prop.schema.type === SchemaType.Any || (isObjectSchema(prop.schema) && prop.schema.discriminator)) {

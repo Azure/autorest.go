@@ -18,11 +18,8 @@ import (
 
 // Implements the error and azcore.HTTPResponse interfaces.
 type CloudError struct {
-	raw string
-	// Code - OPTIONAL
-	Code *int32 `json:"code,omitempty"`
-
-	// Message - OPTIONAL
+	raw     string
+	Code    *int32  `json:"code,omitempty"`
 	Message *string `json:"message,omitempty"`
 }
 
@@ -494,24 +491,22 @@ type LROsCustomHeaderBeginPutAsyncRetrySucceededOptions struct {
 }
 
 type OperationResult struct {
-	// Error - OPTIONAL
 	Error *OperationResultError `json:"error,omitempty"`
 
-	// OPTIONAL; The status of the request
+	// The status of the request
 	Status *OperationResultStatus `json:"status,omitempty"`
 }
 
 type OperationResultError struct {
-	// OPTIONAL; The error code for an operation failure
+	// The error code for an operation failure
 	Code *int32 `json:"code,omitempty"`
 
-	// OPTIONAL; The detailed arror message
+	// The detailed arror message
 	Message *string `json:"message,omitempty"`
 }
 
 type Product struct {
 	Resource
-	// Properties - OPTIONAL
 	Properties *ProductProperties `json:"properties,omitempty"`
 }
 
@@ -556,10 +551,9 @@ type ProductPollerResponse struct {
 }
 
 type ProductProperties struct {
-	// ProvisioningState - OPTIONAL
 	ProvisioningState *string `json:"provisioningState,omitempty"`
 
-	// ProvisioningStateValues - READ-ONLY
+	// READ-ONLY
 	ProvisioningStateValues *ProductPropertiesProvisioningStateValues `json:"provisioningStateValues,omitempty" azure:"ro"`
 }
 
@@ -572,10 +566,10 @@ type ProductResponse struct {
 }
 
 type Resource struct {
-	// OPTIONAL; Resource Location
+	// Resource Location
 	Location *string `json:"location,omitempty"`
 
-	// OPTIONAL; Dictionary of
+	// Dictionary of
 	Tags map[string]*string `json:"tags,omitempty"`
 
 	// READ-ONLY; Resource Id
@@ -605,10 +599,7 @@ func (r Resource) marshalInternal() map[string]interface{} {
 }
 
 type SKU struct {
-	// ID - OPTIONAL
-	ID *string `json:"id,omitempty"`
-
-	// Name - OPTIONAL
+	ID   *string `json:"id,omitempty"`
 	Name *string `json:"name,omitempty"`
 }
 
@@ -633,7 +624,6 @@ type SKUResponse struct {
 
 type SubProduct struct {
 	SubResource
-	// Properties - OPTIONAL
 	Properties *SubProductProperties `json:"properties,omitempty"`
 }
 
@@ -650,10 +640,9 @@ type SubProductPollerResponse struct {
 }
 
 type SubProductProperties struct {
-	// ProvisioningState - OPTIONAL
 	ProvisioningState *string `json:"provisioningState,omitempty"`
 
-	// ProvisioningStateValues - READ-ONLY
+	// READ-ONLY
 	ProvisioningStateValues *SubProductPropertiesProvisioningStateValues `json:"provisioningStateValues,omitempty" azure:"ro"`
 }
 

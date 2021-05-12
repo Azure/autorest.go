@@ -47,55 +47,53 @@ type SparkBatchJob struct {
 	// REQUIRED; The session Id.
 	ID *int32 `json:"id,omitempty"`
 
-	// OPTIONAL; The application id of this session
+	// The application id of this session
 	AppID *string `json:"appId,omitempty"`
 
-	// OPTIONAL; The detailed application info.
+	// The detailed application info.
 	AppInfo map[string]*string `json:"appInfo,omitempty"`
 
-	// OPTIONAL; The artifact identifier.
+	// The artifact identifier.
 	ArtifactID *string `json:"artifactId,omitempty"`
 
-	// OPTIONAL; The error information.
+	// The error information.
 	Errors []*SparkServiceError `json:"errorInfo,omitempty"`
 
-	// OPTIONAL; The job type.
-	JobType *SparkJobType `json:"jobType,omitempty"`
-
-	// LivyInfo - OPTIONAL
+	// The job type.
+	JobType  *SparkJobType       `json:"jobType,omitempty"`
 	LivyInfo *SparkBatchJobState `json:"livyInfo,omitempty"`
 
-	// OPTIONAL; The log lines.
+	// The log lines.
 	LogLines []*string `json:"log,omitempty"`
 
-	// OPTIONAL; The batch name.
+	// The batch name.
 	Name *string `json:"name,omitempty"`
 
-	// OPTIONAL; The plugin information.
+	// The plugin information.
 	Plugin *SparkServicePlugin `json:"pluginInfo,omitempty"`
 
-	// OPTIONAL; The Spark batch job result.
+	// The Spark batch job result.
 	Result *SparkBatchJobResultType `json:"result,omitempty"`
 
-	// OPTIONAL; The scheduler information.
+	// The scheduler information.
 	Scheduler *SparkScheduler `json:"schedulerInfo,omitempty"`
 
-	// OPTIONAL; The Spark pool name.
+	// The Spark pool name.
 	SparkPoolName *string `json:"sparkPoolName,omitempty"`
 
-	// OPTIONAL; The batch state
+	// The batch state
 	State *string `json:"state,omitempty"`
 
-	// OPTIONAL; The submitter identifier.
+	// The submitter identifier.
 	SubmitterID *string `json:"submitterId,omitempty"`
 
-	// OPTIONAL; The submitter name.
+	// The submitter name.
 	SubmitterName *string `json:"submitterName,omitempty"`
 
-	// OPTIONAL; The tags.
+	// The tags.
 	Tags map[string]*string `json:"tags,omitempty"`
 
-	// OPTIONAL; The workspace name.
+	// The workspace name.
 	WorkspaceName *string `json:"workspaceName,omitempty"`
 }
 
@@ -131,7 +129,7 @@ type SparkBatchJobCollection struct {
 	// REQUIRED; Number of sessions fetched.
 	Total *int32 `json:"total,omitempty"`
 
-	// OPTIONAL; Batch list
+	// Batch list
 	Sessions []*SparkBatchJob `json:"sessions,omitempty"`
 }
 
@@ -154,52 +152,28 @@ type SparkBatchJobCollectionResponse struct {
 }
 
 type SparkBatchJobOptions struct {
-	// File - REQUIRED
+	// REQUIRED
 	File *string `json:"file,omitempty"`
 
-	// Name - REQUIRED
-	Name *string `json:"name,omitempty"`
+	// REQUIRED
+	Name       *string   `json:"name,omitempty"`
+	Archives   []*string `json:"archives,omitempty"`
+	Arguments  []*string `json:"args,omitempty"`
+	ArtifactID *string   `json:"artifactId,omitempty"`
+	ClassName  *string   `json:"className,omitempty"`
 
-	// Archives - OPTIONAL
-	Archives []*string `json:"archives,omitempty"`
+	// Dictionary of
+	Configuration  map[string]*string `json:"conf,omitempty"`
+	DriverCores    *int32             `json:"driverCores,omitempty"`
+	DriverMemory   *string            `json:"driverMemory,omitempty"`
+	ExecutorCores  *int32             `json:"executorCores,omitempty"`
+	ExecutorCount  *int32             `json:"numExecutors,omitempty"`
+	ExecutorMemory *string            `json:"executorMemory,omitempty"`
+	Files          []*string          `json:"files,omitempty"`
+	Jars           []*string          `json:"jars,omitempty"`
+	PythonFiles    []*string          `json:"pyFiles,omitempty"`
 
-	// Arguments - OPTIONAL
-	Arguments []*string `json:"args,omitempty"`
-
-	// ArtifactID - OPTIONAL
-	ArtifactID *string `json:"artifactId,omitempty"`
-
-	// ClassName - OPTIONAL
-	ClassName *string `json:"className,omitempty"`
-
-	// OPTIONAL; Dictionary of
-	Configuration map[string]*string `json:"conf,omitempty"`
-
-	// DriverCores - OPTIONAL
-	DriverCores *int32 `json:"driverCores,omitempty"`
-
-	// DriverMemory - OPTIONAL
-	DriverMemory *string `json:"driverMemory,omitempty"`
-
-	// ExecutorCores - OPTIONAL
-	ExecutorCores *int32 `json:"executorCores,omitempty"`
-
-	// ExecutorCount - OPTIONAL
-	ExecutorCount *int32 `json:"numExecutors,omitempty"`
-
-	// ExecutorMemory - OPTIONAL
-	ExecutorMemory *string `json:"executorMemory,omitempty"`
-
-	// Files - OPTIONAL
-	Files []*string `json:"files,omitempty"`
-
-	// Jars - OPTIONAL
-	Jars []*string `json:"jars,omitempty"`
-
-	// PythonFiles - OPTIONAL
-	PythonFiles []*string `json:"pyFiles,omitempty"`
-
-	// OPTIONAL; Dictionary of
+	// Dictionary of
 	Tags map[string]*string `json:"tags,omitempty"`
 }
 
@@ -233,31 +207,29 @@ type SparkBatchJobResponse struct {
 }
 
 type SparkBatchJobState struct {
-	// OPTIONAL; the Spark job state.
+	// the Spark job state.
 	CurrentState *string `json:"currentState,omitempty"`
 
-	// OPTIONAL; time that at which "dead" livy state was first seen.
-	DeadAt *time.Time `json:"deadAt,omitempty"`
-
-	// JobCreationRequest - OPTIONAL
+	// time that at which "dead" livy state was first seen.
+	DeadAt             *time.Time    `json:"deadAt,omitempty"`
 	JobCreationRequest *SparkRequest `json:"jobCreationRequest,omitempty"`
 
-	// OPTIONAL; the time that at which "not_started" livy state was first seen.
+	// the time that at which "not_started" livy state was first seen.
 	NotStartedAt *time.Time `json:"notStartedAt,omitempty"`
 
-	// OPTIONAL; the time that at which "recovering" livy state was first seen.
+	// the time that at which "recovering" livy state was first seen.
 	RecoveringAt *time.Time `json:"recoveringAt,omitempty"`
 
-	// OPTIONAL; the time that at which "running" livy state was first seen.
+	// the time that at which "running" livy state was first seen.
 	RunningAt *time.Time `json:"runningAt,omitempty"`
 
-	// OPTIONAL; the time that at which "starting" livy state was first seen.
+	// the time that at which "starting" livy state was first seen.
 	StartingAt *time.Time `json:"startingAt,omitempty"`
 
-	// OPTIONAL; the time that at which "success" livy state was first seen.
+	// the time that at which "success" livy state was first seen.
 	SuccessAt *time.Time `json:"successAt,omitempty"`
 
-	// OPTIONAL; the time that at which "killed" livy state was first seen.
+	// the time that at which "killed" livy state was first seen.
 	TerminatedAt *time.Time `json:"killedAt,omitempty"`
 }
 
@@ -335,47 +307,22 @@ func (s *SparkBatchJobState) UnmarshalJSON(data []byte) error {
 }
 
 type SparkRequest struct {
-	// Archives - OPTIONAL
-	Archives []*string `json:"archives,omitempty"`
-
-	// Arguments - OPTIONAL
+	Archives  []*string `json:"archives,omitempty"`
 	Arguments []*string `json:"args,omitempty"`
+	ClassName *string   `json:"className,omitempty"`
 
-	// ClassName - OPTIONAL
-	ClassName *string `json:"className,omitempty"`
-
-	// OPTIONAL; Dictionary of
-	Configuration map[string]*string `json:"conf,omitempty"`
-
-	// DriverCores - OPTIONAL
-	DriverCores *int32 `json:"driverCores,omitempty"`
-
-	// DriverMemory - OPTIONAL
-	DriverMemory *string `json:"driverMemory,omitempty"`
-
-	// ExecutorCores - OPTIONAL
-	ExecutorCores *int32 `json:"executorCores,omitempty"`
-
-	// ExecutorCount - OPTIONAL
-	ExecutorCount *int32 `json:"numExecutors,omitempty"`
-
-	// ExecutorMemory - OPTIONAL
-	ExecutorMemory *string `json:"executorMemory,omitempty"`
-
-	// File - OPTIONAL
-	File *string `json:"file,omitempty"`
-
-	// Files - OPTIONAL
-	Files []*string `json:"files,omitempty"`
-
-	// Jars - OPTIONAL
-	Jars []*string `json:"jars,omitempty"`
-
-	// Name - OPTIONAL
-	Name *string `json:"name,omitempty"`
-
-	// PythonFiles - OPTIONAL
-	PythonFiles []*string `json:"pyFiles,omitempty"`
+	// Dictionary of
+	Configuration  map[string]*string `json:"conf,omitempty"`
+	DriverCores    *int32             `json:"driverCores,omitempty"`
+	DriverMemory   *string            `json:"driverMemory,omitempty"`
+	ExecutorCores  *int32             `json:"executorCores,omitempty"`
+	ExecutorCount  *int32             `json:"numExecutors,omitempty"`
+	ExecutorMemory *string            `json:"executorMemory,omitempty"`
+	File           *string            `json:"file,omitempty"`
+	Files          []*string          `json:"files,omitempty"`
+	Jars           []*string          `json:"jars,omitempty"`
+	Name           *string            `json:"name,omitempty"`
+	PythonFiles    []*string          `json:"pyFiles,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type SparkRequest.
@@ -399,20 +346,11 @@ func (s SparkRequest) MarshalJSON() ([]byte, error) {
 }
 
 type SparkScheduler struct {
-	// CancellationRequestedAt - OPTIONAL
-	CancellationRequestedAt *time.Time `json:"cancellationRequestedAt,omitempty"`
-
-	// CurrentState - OPTIONAL
-	CurrentState *SchedulerCurrentState `json:"currentState,omitempty"`
-
-	// EndedAt - OPTIONAL
-	EndedAt *time.Time `json:"endedAt,omitempty"`
-
-	// ScheduledAt - OPTIONAL
-	ScheduledAt *time.Time `json:"scheduledAt,omitempty"`
-
-	// SubmittedAt - OPTIONAL
-	SubmittedAt *time.Time `json:"submittedAt,omitempty"`
+	CancellationRequestedAt *time.Time             `json:"cancellationRequestedAt,omitempty"`
+	CurrentState            *SchedulerCurrentState `json:"currentState,omitempty"`
+	EndedAt                 *time.Time             `json:"endedAt,omitempty"`
+	ScheduledAt             *time.Time             `json:"scheduledAt,omitempty"`
+	SubmittedAt             *time.Time             `json:"submittedAt,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type SparkScheduler.
@@ -467,34 +405,18 @@ func (s *SparkScheduler) UnmarshalJSON(data []byte) error {
 }
 
 type SparkServiceError struct {
-	// ErrorCode - OPTIONAL
-	ErrorCode *string `json:"errorCode,omitempty"`
-
-	// Message - OPTIONAL
-	Message *string `json:"message,omitempty"`
-
-	// Source - OPTIONAL
-	Source *SparkErrorSource `json:"source,omitempty"`
+	ErrorCode *string           `json:"errorCode,omitempty"`
+	Message   *string           `json:"message,omitempty"`
+	Source    *SparkErrorSource `json:"source,omitempty"`
 }
 
 type SparkServicePlugin struct {
-	// CleanupStartedAt - OPTIONAL
-	CleanupStartedAt *time.Time `json:"cleanupStartedAt,omitempty"`
-
-	// CurrentState - OPTIONAL
-	CurrentState *PluginCurrentState `json:"currentState,omitempty"`
-
-	// MonitoringStartedAt - OPTIONAL
-	MonitoringStartedAt *time.Time `json:"monitoringStartedAt,omitempty"`
-
-	// PreparationStartedAt - OPTIONAL
-	PreparationStartedAt *time.Time `json:"preparationStartedAt,omitempty"`
-
-	// ResourceAcquisitionStartedAt - OPTIONAL
-	ResourceAcquisitionStartedAt *time.Time `json:"resourceAcquisitionStartedAt,omitempty"`
-
-	// SubmissionStartedAt - OPTIONAL
-	SubmissionStartedAt *time.Time `json:"submissionStartedAt,omitempty"`
+	CleanupStartedAt             *time.Time          `json:"cleanupStartedAt,omitempty"`
+	CurrentState                 *PluginCurrentState `json:"currentState,omitempty"`
+	MonitoringStartedAt          *time.Time          `json:"monitoringStartedAt,omitempty"`
+	PreparationStartedAt         *time.Time          `json:"preparationStartedAt,omitempty"`
+	ResourceAcquisitionStartedAt *time.Time          `json:"resourceAcquisitionStartedAt,omitempty"`
+	SubmissionStartedAt          *time.Time          `json:"submissionStartedAt,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type SparkServicePlugin.
@@ -555,59 +477,31 @@ func (s *SparkServicePlugin) UnmarshalJSON(data []byte) error {
 }
 
 type SparkSession struct {
-	// ID - REQUIRED
-	ID *int32 `json:"id,omitempty"`
-
-	// AppID - OPTIONAL
+	// REQUIRED
+	ID    *int32  `json:"id,omitempty"`
 	AppID *string `json:"appId,omitempty"`
 
-	// OPTIONAL; Dictionary of
-	AppInfo map[string]*string `json:"appInfo,omitempty"`
+	// Dictionary of
+	AppInfo    map[string]*string   `json:"appInfo,omitempty"`
+	ArtifactID *string              `json:"artifactId,omitempty"`
+	Errors     []*SparkServiceError `json:"errorInfo,omitempty"`
 
-	// ArtifactID - OPTIONAL
-	ArtifactID *string `json:"artifactId,omitempty"`
+	// The job type.
+	JobType       *SparkJobType           `json:"jobType,omitempty"`
+	LivyInfo      *SparkSessionState      `json:"livyInfo,omitempty"`
+	LogLines      []*string               `json:"log,omitempty"`
+	Name          *string                 `json:"name,omitempty"`
+	Plugin        *SparkServicePlugin     `json:"pluginInfo,omitempty"`
+	Result        *SparkSessionResultType `json:"result,omitempty"`
+	Scheduler     *SparkScheduler         `json:"schedulerInfo,omitempty"`
+	SparkPoolName *string                 `json:"sparkPoolName,omitempty"`
+	State         *string                 `json:"state,omitempty"`
+	SubmitterID   *string                 `json:"submitterId,omitempty"`
+	SubmitterName *string                 `json:"submitterName,omitempty"`
 
-	// Errors - OPTIONAL
-	Errors []*SparkServiceError `json:"errorInfo,omitempty"`
-
-	// OPTIONAL; The job type.
-	JobType *SparkJobType `json:"jobType,omitempty"`
-
-	// LivyInfo - OPTIONAL
-	LivyInfo *SparkSessionState `json:"livyInfo,omitempty"`
-
-	// LogLines - OPTIONAL
-	LogLines []*string `json:"log,omitempty"`
-
-	// Name - OPTIONAL
-	Name *string `json:"name,omitempty"`
-
-	// Plugin - OPTIONAL
-	Plugin *SparkServicePlugin `json:"pluginInfo,omitempty"`
-
-	// Result - OPTIONAL
-	Result *SparkSessionResultType `json:"result,omitempty"`
-
-	// Scheduler - OPTIONAL
-	Scheduler *SparkScheduler `json:"schedulerInfo,omitempty"`
-
-	// SparkPoolName - OPTIONAL
-	SparkPoolName *string `json:"sparkPoolName,omitempty"`
-
-	// State - OPTIONAL
-	State *string `json:"state,omitempty"`
-
-	// SubmitterID - OPTIONAL
-	SubmitterID *string `json:"submitterId,omitempty"`
-
-	// SubmitterName - OPTIONAL
-	SubmitterName *string `json:"submitterName,omitempty"`
-
-	// OPTIONAL; Dictionary of
-	Tags map[string]*string `json:"tags,omitempty"`
-
-	// WorkspaceName - OPTIONAL
-	WorkspaceName *string `json:"workspaceName,omitempty"`
+	// Dictionary of
+	Tags          map[string]*string `json:"tags,omitempty"`
+	WorkspaceName *string            `json:"workspaceName,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type SparkSession.
@@ -645,13 +539,11 @@ type SparkSessionCancelSparkStatementOptions struct {
 }
 
 type SparkSessionCollection struct {
-	// From - REQUIRED
+	// REQUIRED
 	From *int32 `json:"from,omitempty"`
 
-	// Total - REQUIRED
-	Total *int32 `json:"total,omitempty"`
-
-	// Sessions - OPTIONAL
+	// REQUIRED
+	Total    *int32          `json:"total,omitempty"`
 	Sessions []*SparkSession `json:"sessions,omitempty"`
 }
 
@@ -710,52 +602,26 @@ type SparkSessionGetSparkStatementsOptions struct {
 }
 
 type SparkSessionOptions struct {
-	// Name - REQUIRED
-	Name *string `json:"name,omitempty"`
+	// REQUIRED
+	Name       *string   `json:"name,omitempty"`
+	Archives   []*string `json:"archives,omitempty"`
+	Arguments  []*string `json:"args,omitempty"`
+	ArtifactID *string   `json:"artifactId,omitempty"`
+	ClassName  *string   `json:"className,omitempty"`
 
-	// Archives - OPTIONAL
-	Archives []*string `json:"archives,omitempty"`
+	// Dictionary of
+	Configuration  map[string]*string `json:"conf,omitempty"`
+	DriverCores    *int32             `json:"driverCores,omitempty"`
+	DriverMemory   *string            `json:"driverMemory,omitempty"`
+	ExecutorCores  *int32             `json:"executorCores,omitempty"`
+	ExecutorCount  *int32             `json:"numExecutors,omitempty"`
+	ExecutorMemory *string            `json:"executorMemory,omitempty"`
+	File           *string            `json:"file,omitempty"`
+	Files          []*string          `json:"files,omitempty"`
+	Jars           []*string          `json:"jars,omitempty"`
+	PythonFiles    []*string          `json:"pyFiles,omitempty"`
 
-	// Arguments - OPTIONAL
-	Arguments []*string `json:"args,omitempty"`
-
-	// ArtifactID - OPTIONAL
-	ArtifactID *string `json:"artifactId,omitempty"`
-
-	// ClassName - OPTIONAL
-	ClassName *string `json:"className,omitempty"`
-
-	// OPTIONAL; Dictionary of
-	Configuration map[string]*string `json:"conf,omitempty"`
-
-	// DriverCores - OPTIONAL
-	DriverCores *int32 `json:"driverCores,omitempty"`
-
-	// DriverMemory - OPTIONAL
-	DriverMemory *string `json:"driverMemory,omitempty"`
-
-	// ExecutorCores - OPTIONAL
-	ExecutorCores *int32 `json:"executorCores,omitempty"`
-
-	// ExecutorCount - OPTIONAL
-	ExecutorCount *int32 `json:"numExecutors,omitempty"`
-
-	// ExecutorMemory - OPTIONAL
-	ExecutorMemory *string `json:"executorMemory,omitempty"`
-
-	// File - OPTIONAL
-	File *string `json:"file,omitempty"`
-
-	// Files - OPTIONAL
-	Files []*string `json:"files,omitempty"`
-
-	// Jars - OPTIONAL
-	Jars []*string `json:"jars,omitempty"`
-
-	// PythonFiles - OPTIONAL
-	PythonFiles []*string `json:"pyFiles,omitempty"`
-
-	// OPTIONAL; Dictionary of
+	// Dictionary of
 	Tags map[string]*string `json:"tags,omitempty"`
 }
 
@@ -794,38 +660,17 @@ type SparkSessionResponse struct {
 }
 
 type SparkSessionState struct {
-	// BusyAt - OPTIONAL
-	BusyAt *time.Time `json:"busyAt,omitempty"`
-
-	// CurrentState - OPTIONAL
-	CurrentState *string `json:"currentState,omitempty"`
-
-	// DeadAt - OPTIONAL
-	DeadAt *time.Time `json:"deadAt,omitempty"`
-
-	// ErrorAt - OPTIONAL
-	ErrorAt *time.Time `json:"errorAt,omitempty"`
-
-	// IdleAt - OPTIONAL
-	IdleAt *time.Time `json:"idleAt,omitempty"`
-
-	// JobCreationRequest - OPTIONAL
+	BusyAt             *time.Time    `json:"busyAt,omitempty"`
+	CurrentState       *string       `json:"currentState,omitempty"`
+	DeadAt             *time.Time    `json:"deadAt,omitempty"`
+	ErrorAt            *time.Time    `json:"errorAt,omitempty"`
+	IdleAt             *time.Time    `json:"idleAt,omitempty"`
 	JobCreationRequest *SparkRequest `json:"jobCreationRequest,omitempty"`
-
-	// NotStartedAt - OPTIONAL
-	NotStartedAt *time.Time `json:"notStartedAt,omitempty"`
-
-	// RecoveringAt - OPTIONAL
-	RecoveringAt *time.Time `json:"recoveringAt,omitempty"`
-
-	// ShuttingDownAt - OPTIONAL
-	ShuttingDownAt *time.Time `json:"shuttingDownAt,omitempty"`
-
-	// StartingAt - OPTIONAL
-	StartingAt *time.Time `json:"startingAt,omitempty"`
-
-	// TerminatedAt - OPTIONAL
-	TerminatedAt *time.Time `json:"killedAt,omitempty"`
+	NotStartedAt       *time.Time    `json:"notStartedAt,omitempty"`
+	RecoveringAt       *time.Time    `json:"recoveringAt,omitempty"`
+	ShuttingDownAt     *time.Time    `json:"shuttingDownAt,omitempty"`
+	StartingAt         *time.Time    `json:"startingAt,omitempty"`
+	TerminatedAt       *time.Time    `json:"killedAt,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type SparkSessionState.
@@ -914,21 +759,15 @@ func (s *SparkSessionState) UnmarshalJSON(data []byte) error {
 }
 
 type SparkStatement struct {
-	// ID - REQUIRED
-	ID *int32 `json:"id,omitempty"`
-
-	// Code - OPTIONAL
-	Code *string `json:"code,omitempty"`
-
-	// Output - OPTIONAL
+	// REQUIRED
+	ID     *int32                `json:"id,omitempty"`
+	Code   *string               `json:"code,omitempty"`
 	Output *SparkStatementOutput `json:"output,omitempty"`
-
-	// State - OPTIONAL
-	State *string `json:"state,omitempty"`
+	State  *string               `json:"state,omitempty"`
 }
 
 type SparkStatementCancellationResult struct {
-	// OPTIONAL; The msg property from the Livy API. The value is always "canceled".
+	// The msg property from the Livy API. The value is always "canceled".
 	Message *string `json:"msg,omitempty"`
 }
 
@@ -940,10 +779,8 @@ type SparkStatementCancellationResultResponse struct {
 }
 
 type SparkStatementCollection struct {
-	// Total - REQUIRED
-	Total *int32 `json:"total_statements,omitempty"`
-
-	// Statements - OPTIONAL
+	// REQUIRED
+	Total      *int32            `json:"total_statements,omitempty"`
 	Statements []*SparkStatement `json:"statements,omitempty"`
 }
 
@@ -963,31 +800,20 @@ type SparkStatementCollectionResponse struct {
 }
 
 type SparkStatementOptions struct {
-	// Code - OPTIONAL
-	Code *string `json:"code,omitempty"`
-
-	// Kind - OPTIONAL
+	Code *string                     `json:"code,omitempty"`
 	Kind *SparkStatementLanguageType `json:"kind,omitempty"`
 }
 
 type SparkStatementOutput struct {
-	// ExecutionCount - REQUIRED
+	// REQUIRED
 	ExecutionCount *int32 `json:"execution_count,omitempty"`
 
-	// OPTIONAL; Any object
-	Data interface{} `json:"data,omitempty"`
-
-	// ErrorName - OPTIONAL
-	ErrorName *string `json:"ename,omitempty"`
-
-	// ErrorValue - OPTIONAL
-	ErrorValue *string `json:"evalue,omitempty"`
-
-	// Status - OPTIONAL
-	Status *string `json:"status,omitempty"`
-
-	// Traceback - OPTIONAL
-	Traceback []*string `json:"traceback,omitempty"`
+	// Any object
+	Data       interface{} `json:"data,omitempty"`
+	ErrorName  *string     `json:"ename,omitempty"`
+	ErrorValue *string     `json:"evalue,omitempty"`
+	Status     *string     `json:"status,omitempty"`
+	Traceback  []*string   `json:"traceback,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type SparkStatementOutput.

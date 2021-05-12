@@ -25,11 +25,8 @@ type CustomParameterGroup struct {
 }
 
 type OdataProductResult struct {
-	// OdataNextLink - OPTIONAL
-	OdataNextLink *string `json:"odata.nextLink,omitempty"`
-
-	// Values - OPTIONAL
-	Values []*Product `json:"values,omitempty"`
+	OdataNextLink *string    `json:"odata.nextLink,omitempty"`
+	Values        []*Product `json:"values,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type OdataProductResult.
@@ -49,7 +46,7 @@ type OdataProductResultResponse struct {
 }
 
 type OperationResult struct {
-	// OPTIONAL; The status of the request
+	// The status of the request
 	Status *OperationResultStatus `json:"status,omitempty"`
 }
 
@@ -154,24 +151,17 @@ type PagingGetWithQueryParamsOptions struct {
 }
 
 type Product struct {
-	// Properties - OPTIONAL
 	Properties *ProductProperties `json:"properties,omitempty"`
 }
 
 type ProductProperties struct {
-	// ID - OPTIONAL
-	ID *int32 `json:"id,omitempty"`
-
-	// Name - OPTIONAL
+	ID   *int32  `json:"id,omitempty"`
 	Name *string `json:"name,omitempty"`
 }
 
 type ProductResult struct {
-	// NextLink - OPTIONAL
-	NextLink *string `json:"nextLink,omitempty"`
-
-	// Values - OPTIONAL
-	Values []*Product `json:"values,omitempty"`
+	NextLink *string    `json:"nextLink,omitempty"`
+	Values   []*Product `json:"values,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ProductResult.
@@ -203,11 +193,8 @@ type ProductResultResponse struct {
 }
 
 type ProductResultValue struct {
-	// NextLink - OPTIONAL
-	NextLink *string `json:"nextLink,omitempty"`
-
-	// Value - OPTIONAL
-	Value []*Product `json:"value,omitempty"`
+	NextLink *string    `json:"nextLink,omitempty"`
+	Value    []*Product `json:"value,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ProductResultValue.
@@ -227,11 +214,8 @@ type ProductResultValueResponse struct {
 }
 
 type ProductResultValueWithXMSClientName struct {
-	// Indexes - OPTIONAL
-	Indexes []*Product `json:"values,omitempty"`
-
-	// NextLink - OPTIONAL
-	NextLink *string `json:"nextLink,omitempty"`
+	Indexes  []*Product `json:"values,omitempty"`
+	NextLink *string    `json:"nextLink,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ProductResultValueWithXMSClientName.
