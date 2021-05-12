@@ -15,13 +15,13 @@ import (
 
 // AccessPolicy - An Access policy
 type AccessPolicy struct {
-	// the date-time the policy expires
+	// REQUIRED; the date-time the policy expires
 	Expiry *time.Time `xml:"Expiry"`
 
-	// the permissions for the acl policy
+	// REQUIRED; the permissions for the acl policy
 	Permission *string `xml:"Permission"`
 
-	// the date-time the policy is active
+	// REQUIRED; the date-time the policy is active
 	Start *time.Time `xml:"Start"`
 }
 
@@ -150,15 +150,20 @@ type BananaResponse struct {
 
 // Blob - An Azure Storage blob
 type Blob struct {
+	// REQUIRED
 	Deleted *bool `xml:"Deleted"`
+
+	// REQUIRED
+	Name *string `xml:"Name"`
+
+	// REQUIRED; Properties of a blob
+	Properties *BlobProperties `xml:"Properties"`
+
+	// REQUIRED
+	Snapshot *string `xml:"Snapshot"`
 
 	// Dictionary of
 	Metadata map[string]*string `xml:"Metadata"`
-	Name     *string            `xml:"Name"`
-
-	// Properties of a blob
-	Properties *BlobProperties `xml:"Properties"`
-	Snapshot   *string         `xml:"Snapshot"`
 }
 
 // UnmarshalXML implements the xml.Unmarshaller interface for type Blob.
@@ -178,11 +183,17 @@ func (b *Blob) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 }
 
 type BlobPrefix struct {
+	// REQUIRED
 	Name *string `xml:"Name"`
 }
 
 // BlobProperties - Properties of a blob
 type BlobProperties struct {
+	// REQUIRED
+	Etag *string `xml:"Etag"`
+
+	// REQUIRED
+	LastModified       *time.Time     `xml:"Last-Modified"`
 	AccessTier         *AccessTier    `xml:"AccessTier"`
 	AccessTierInferred *bool          `xml:"AccessTierInferred"`
 	ArchiveStatus      *ArchiveStatus `xml:"ArchiveStatus"`
@@ -205,9 +216,7 @@ type BlobProperties struct {
 	CopyStatusDescription  *string            `xml:"CopyStatusDescription"`
 	DeletedTime            *time.Time         `xml:"DeletedTime"`
 	DestinationSnapshot    *string            `xml:"DestinationSnapshot"`
-	Etag                   *string            `xml:"Etag"`
 	IncrementalCopy        *bool              `xml:"IncrementalCopy"`
-	LastModified           *time.Time         `xml:"Last-Modified"`
 	LeaseDuration          *LeaseDurationType `xml:"LeaseDuration"`
 	LeaseState             *LeaseStateType    `xml:"LeaseState"`
 	LeaseStatus            *LeaseStatusType   `xml:"LeaseStatus"`
@@ -290,12 +299,14 @@ type ComplexTypeWithMeta struct {
 
 // Container - An Azure Storage container
 type Container struct {
+	// REQUIRED
+	Name *string `xml:"Name"`
+
+	// REQUIRED; Properties of a container
+	Properties *ContainerProperties `xml:"Properties"`
+
 	// Dictionary of
 	Metadata map[string]*string `xml:"Metadata"`
-	Name     *string            `xml:"Name"`
-
-	// Properties of a container
-	Properties *ContainerProperties `xml:"Properties"`
 }
 
 // UnmarshalXML implements the xml.Unmarshaller interface for type Container.
@@ -316,7 +327,10 @@ func (c *Container) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 
 // ContainerProperties - Properties of a container
 type ContainerProperties struct {
-	Etag          *string            `xml:"Etag"`
+	// REQUIRED
+	Etag *string `xml:"Etag"`
+
+	// REQUIRED
 	LastModified  *time.Time         `xml:"Last-Modified"`
 	LeaseDuration *LeaseDurationType `xml:"LeaseDuration"`
 	LeaseState    *LeaseStateType    `xml:"LeaseState"`
@@ -358,22 +372,22 @@ func (c *ContainerProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 // prevents a web page from calling APIs in a different domain; CORS provides a secure way to allow one domain (the origin domain) to call APIs in another
 // domain
 type CorsRule struct {
-	// the request headers that the origin domain may specify on the CORS request.
+	// REQUIRED; the request headers that the origin domain may specify on the CORS request.
 	AllowedHeaders *string `xml:"AllowedHeaders"`
 
-	// The methods (HTTP request verbs) that the origin domain may use for a CORS request. (comma separated)
+	// REQUIRED; The methods (HTTP request verbs) that the origin domain may use for a CORS request. (comma separated)
 	AllowedMethods *string `xml:"AllowedMethods"`
 
-	// The origin domains that are permitted to make a request against the storage service via CORS. The origin domain is the domain from which the request
-	// originates. Note that the origin must be an exact
+	// REQUIRED; The origin domains that are permitted to make a request against the storage service via CORS. The origin domain is the domain from which the
+	// request originates. Note that the origin must be an exact
 	// case-sensitive match with the origin that the user age sends to the service. You can also use the wildcard character '*' to allow all origin domains
 	// to make requests via CORS.
 	AllowedOrigins *string `xml:"AllowedOrigins"`
 
-	// The response headers that may be sent in the response to the CORS request and exposed by the browser to the request issuer
+	// REQUIRED; The response headers that may be sent in the response to the CORS request and exposed by the browser to the request issuer
 	ExposedHeaders *string `xml:"ExposedHeaders"`
 
-	// The maximum amount time that a browser should cache the preflight OPTIONS request.
+	// REQUIRED; The maximum amount time that a browser should cache the preflight OPTIONS request.
 	MaxAgeInSeconds *int32 `xml:"MaxAgeInSeconds"`
 }
 
@@ -408,12 +422,25 @@ type JSONOutputResponse struct {
 
 // ListBlobsResponse - An enumeration of blobs
 type ListBlobsResponse struct {
-	Blobs           *Blobs  `xml:"Blobs"`
-	ContainerName   *string `xml:"ContainerName,attr"`
-	Delimiter       *string `xml:"Delimiter"`
-	Marker          *string `xml:"Marker"`
-	MaxResults      *int32  `xml:"MaxResults"`
-	NextMarker      *string `xml:"NextMarker"`
+	// REQUIRED
+	Blobs *Blobs `xml:"Blobs"`
+
+	// REQUIRED
+	ContainerName *string `xml:"ContainerName,attr"`
+
+	// REQUIRED
+	Delimiter *string `xml:"Delimiter"`
+
+	// REQUIRED
+	Marker *string `xml:"Marker"`
+
+	// REQUIRED
+	MaxResults *int32 `xml:"MaxResults"`
+
+	// REQUIRED
+	NextMarker *string `xml:"NextMarker"`
+
+	// REQUIRED
 	Prefix          *string `xml:"Prefix"`
 	ServiceEndpoint *string `xml:"ServiceEndpoint,attr"`
 }
@@ -429,12 +456,19 @@ type ListBlobsResponseResponse struct {
 
 // ListContainersResponse - An enumeration of containers
 type ListContainersResponse struct {
+	// REQUIRED
+	MaxResults *int32 `xml:"MaxResults"`
+
+	// REQUIRED
+	NextMarker *string `xml:"NextMarker"`
+
+	// REQUIRED
+	Prefix *string `xml:"Prefix"`
+
+	// REQUIRED
+	ServiceEndpoint *string      `xml:"ServiceEndpoint,attr"`
 	Containers      []*Container `xml:"Containers>Container"`
 	Marker          *string      `xml:"Marker"`
-	MaxResults      *int32       `xml:"MaxResults"`
-	NextMarker      *string      `xml:"NextMarker"`
-	Prefix          *string      `xml:"Prefix"`
-	ServiceEndpoint *string      `xml:"ServiceEndpoint,attr"`
 }
 
 // MarshalXML implements the xml.Marshaller interface for type ListContainersResponse.
@@ -463,24 +497,24 @@ type ListContainersResponseResponse struct {
 
 // Logging - Azure Analytics Logging settings.
 type Logging struct {
-	// Indicates whether all delete requests should be logged.
+	// REQUIRED; Indicates whether all delete requests should be logged.
 	Delete *bool `xml:"Delete"`
 
-	// Indicates whether all read requests should be logged.
+	// REQUIRED; Indicates whether all read requests should be logged.
 	Read *bool `xml:"Read"`
 
-	// the retention policy
+	// REQUIRED; the retention policy
 	RetentionPolicy *RetentionPolicy `xml:"RetentionPolicy"`
 
-	// The version of Storage Analytics to configure.
+	// REQUIRED; The version of Storage Analytics to configure.
 	Version *string `xml:"Version"`
 
-	// Indicates whether all write requests should be logged.
+	// REQUIRED; Indicates whether all write requests should be logged.
 	Write *bool `xml:"Write"`
 }
 
 type Metrics struct {
-	// Indicates whether metrics are enabled for the Blob service.
+	// REQUIRED; Indicates whether metrics are enabled for the Blob service.
 	Enabled *bool `xml:"Enabled"`
 
 	// Indicates whether metrics should generate summary statistics for called API operations.
@@ -513,11 +547,11 @@ type ObjectWithXMsTextPropertyResponse struct {
 
 // RetentionPolicy - the retention policy
 type RetentionPolicy struct {
+	// REQUIRED; Indicates whether a retention policy is enabled for the storage service
+	Enabled *bool `xml:"Enabled"`
+
 	// Indicates the number of days that metrics or logging or soft-deleted data should be retained. All data older than this value will be deleted
 	Days *int32 `xml:"Days"`
-
-	// Indicates whether a retention policy is enabled for the storage service
-	Enabled *bool `xml:"Enabled"`
 }
 
 // RootWithRefAndMeta - I am root, and I ref a model WITH meta
@@ -558,10 +592,10 @@ type RootWithRefAndNoMetaResponse struct {
 
 // SignedIdentifier - signed identifier
 type SignedIdentifier struct {
-	// The access policy
+	// REQUIRED; The access policy
 	AccessPolicy *AccessPolicy `xml:"AccessPolicy"`
 
-	// a unique id
+	// REQUIRED; a unique id
 	ID *string `xml:"Id"`
 }
 

@@ -44,9 +44,6 @@ func (a AddressSpace) MarshalJSON() ([]byte, error) {
 // ApplicationGateway - Application gateway resource.
 type ApplicationGateway struct {
 	Resource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// The identity of the application gateway, if configured.
 	Identity *ManagedServiceIdentity `json:"identity,omitempty"`
 
@@ -55,6 +52,9 @@ type ApplicationGateway struct {
 
 	// A list of availability zones denoting where the resource needs to come from.
 	Zones []*string `json:"zones,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ApplicationGateway.
@@ -70,14 +70,14 @@ func (a ApplicationGateway) MarshalJSON() ([]byte, error) {
 // ApplicationGatewayAuthenticationCertificate - Authentication certificates of an application gateway.
 type ApplicationGatewayAuthenticationCertificate struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Name of the authentication certificate that is unique within an Application Gateway.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of the application gateway authentication certificate.
 	Properties *ApplicationGatewayAuthenticationCertificatePropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 
 	// READ-ONLY; Type of the resource.
 	Type *string `json:"type,omitempty" azure:"ro"`
@@ -104,11 +104,11 @@ type ApplicationGatewayAuthenticationCertificatePropertiesFormat struct {
 
 // ApplicationGatewayAutoscaleConfiguration - Application Gateway autoscale configuration.
 type ApplicationGatewayAutoscaleConfiguration struct {
+	// REQUIRED; Lower bound on number of Application Gateway capacity.
+	MinCapacity *int32 `json:"minCapacity,omitempty"`
+
 	// Upper bound on number of Application Gateway capacity.
 	MaxCapacity *int32 `json:"maxCapacity,omitempty"`
-
-	// Lower bound on number of Application Gateway capacity.
-	MinCapacity *int32 `json:"minCapacity,omitempty"`
 }
 
 // ApplicationGatewayAvailableSSLOptions - Response for ApplicationGatewayAvailableSslOptions API service call.
@@ -221,14 +221,14 @@ type ApplicationGatewayBackendAddress struct {
 // ApplicationGatewayBackendAddressPool - Backend Address Pool of an application gateway.
 type ApplicationGatewayBackendAddressPool struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Name of the backend address pool that is unique within an Application Gateway.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of the application gateway backend address pool.
 	Properties *ApplicationGatewayBackendAddressPoolPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 
 	// READ-ONLY; Type of the resource.
 	Type *string `json:"type,omitempty" azure:"ro"`
@@ -268,14 +268,14 @@ func (a ApplicationGatewayBackendAddressPoolPropertiesFormat) MarshalJSON() ([]b
 // ApplicationGatewayBackendHTTPSettings - Backend address pool settings of an application gateway.
 type ApplicationGatewayBackendHTTPSettings struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Name of the backend http settings that is unique within an Application Gateway.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of the application gateway backend HTTP settings.
 	Properties *ApplicationGatewayBackendHTTPSettingsPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 
 	// READ-ONLY; Type of the resource.
 	Type *string `json:"type,omitempty" azure:"ro"`
@@ -326,15 +326,15 @@ type ApplicationGatewayBackendHTTPSettingsPropertiesFormat struct {
 	// The protocol used to communicate with the backend.
 	Protocol *ApplicationGatewayProtocol `json:"protocol,omitempty"`
 
-	// READ-ONLY; The provisioning state of the backend HTTP settings resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
 	// Request timeout in seconds. Application Gateway will fail the request if response is not received within RequestTimeout. Acceptable values are from 1
 	// second to 86400 seconds.
 	RequestTimeout *int32 `json:"requestTimeout,omitempty"`
 
 	// Array of references to application gateway trusted root certificates.
 	TrustedRootCertificates []*SubResource `json:"trustedRootCertificates,omitempty"`
+
+	// READ-ONLY; The provisioning state of the backend HTTP settings resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ApplicationGatewayBackendHTTPSettingsPropertiesFormat.
@@ -474,10 +474,10 @@ type ApplicationGatewayBackendHealthServer struct {
 // ApplicationGatewayConnectionDraining - Connection draining allows open connections to a backend server to be active for a specified time after the backend
 // server got removed from the configuration.
 type ApplicationGatewayConnectionDraining struct {
-	// The number of seconds connection draining is active. Acceptable values are from 1 second to 3600 seconds.
+	// REQUIRED; The number of seconds connection draining is active. Acceptable values are from 1 second to 3600 seconds.
 	DrainTimeoutInSec *int32 `json:"drainTimeoutInSec,omitempty"`
 
-	// Whether connection draining is enabled or not.
+	// REQUIRED; Whether connection draining is enabled or not.
 	Enabled *bool `json:"enabled,omitempty"`
 }
 
@@ -492,7 +492,7 @@ type ApplicationGatewayCustomError struct {
 
 // ApplicationGatewayFirewallDisabledRuleGroup - Allows to disable rules within a rule group or an entire rule group.
 type ApplicationGatewayFirewallDisabledRuleGroup struct {
-	// The name of the rule group that will be disabled.
+	// REQUIRED; The name of the rule group that will be disabled.
 	RuleGroupName *string `json:"ruleGroupName,omitempty"`
 
 	// The list of rules that will be disabled. If null, all rules of the rule group will be disabled.
@@ -509,35 +509,35 @@ func (a ApplicationGatewayFirewallDisabledRuleGroup) MarshalJSON() ([]byte, erro
 
 // ApplicationGatewayFirewallExclusion - Allow to exclude some variable satisfy the condition for the WAF check.
 type ApplicationGatewayFirewallExclusion struct {
-	// The variable to be excluded.
+	// REQUIRED; The variable to be excluded.
 	MatchVariable *string `json:"matchVariable,omitempty"`
 
-	// When matchVariable is a collection, operator used to specify which elements in the collection this exclusion applies to.
+	// REQUIRED; When matchVariable is a collection, operator used to specify which elements in the collection this exclusion applies to.
 	Selector *string `json:"selector,omitempty"`
 
-	// When matchVariable is a collection, operate on the selector to specify which elements in the collection this exclusion applies to.
+	// REQUIRED; When matchVariable is a collection, operate on the selector to specify which elements in the collection this exclusion applies to.
 	SelectorMatchOperator *string `json:"selectorMatchOperator,omitempty"`
 }
 
 // ApplicationGatewayFirewallRule - A web application firewall rule.
 type ApplicationGatewayFirewallRule struct {
+	// REQUIRED; The identifier of the web application firewall rule.
+	RuleID *int32 `json:"ruleId,omitempty"`
+
 	// The description of the web application firewall rule.
 	Description *string `json:"description,omitempty"`
-
-	// The identifier of the web application firewall rule.
-	RuleID *int32 `json:"ruleId,omitempty"`
 }
 
 // ApplicationGatewayFirewallRuleGroup - A web application firewall rule group.
 type ApplicationGatewayFirewallRuleGroup struct {
-	// The description of the web application firewall rule group.
-	Description *string `json:"description,omitempty"`
-
-	// The name of the web application firewall rule group.
+	// REQUIRED; The name of the web application firewall rule group.
 	RuleGroupName *string `json:"ruleGroupName,omitempty"`
 
-	// The rules of the web application firewall rule group.
+	// REQUIRED; The rules of the web application firewall rule group.
 	Rules []*ApplicationGatewayFirewallRule `json:"rules,omitempty"`
+
+	// The description of the web application firewall rule group.
+	Description *string `json:"description,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ApplicationGatewayFirewallRuleGroup.
@@ -565,17 +565,17 @@ func (a ApplicationGatewayFirewallRuleSet) MarshalJSON() ([]byte, error) {
 
 // ApplicationGatewayFirewallRuleSetPropertiesFormat - Properties of the web application firewall rule set.
 type ApplicationGatewayFirewallRuleSetPropertiesFormat struct {
-	// READ-ONLY; The provisioning state of the web application firewall rule set.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
-	// The rule groups of the web application firewall rule set.
+	// REQUIRED; The rule groups of the web application firewall rule set.
 	RuleGroups []*ApplicationGatewayFirewallRuleGroup `json:"ruleGroups,omitempty"`
 
-	// The type of the web application firewall rule set.
+	// REQUIRED; The type of the web application firewall rule set.
 	RuleSetType *string `json:"ruleSetType,omitempty"`
 
-	// The version of the web application firewall rule set type.
+	// REQUIRED; The version of the web application firewall rule set type.
 	RuleSetVersion *string `json:"ruleSetVersion,omitempty"`
+
+	// READ-ONLY; The provisioning state of the web application firewall rule set.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ApplicationGatewayFirewallRuleSetPropertiesFormat.
@@ -591,14 +591,14 @@ func (a ApplicationGatewayFirewallRuleSetPropertiesFormat) MarshalJSON() ([]byte
 // ApplicationGatewayFrontendIPConfiguration - Frontend IP configuration of an application gateway.
 type ApplicationGatewayFrontendIPConfiguration struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Name of the frontend IP configuration that is unique within an Application Gateway.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of the application gateway frontend IP configuration.
 	Properties *ApplicationGatewayFrontendIPConfigurationPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 
 	// READ-ONLY; Type of the resource.
 	Type *string `json:"type,omitempty" azure:"ro"`
@@ -622,27 +622,27 @@ type ApplicationGatewayFrontendIPConfigurationPropertiesFormat struct {
 	// The private IP address allocation method.
 	PrivateIPAllocationMethod *IPAllocationMethod `json:"privateIPAllocationMethod,omitempty"`
 
-	// READ-ONLY; The provisioning state of the frontend IP configuration resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
 	// Reference to the PublicIP resource.
 	PublicIPAddress *SubResource `json:"publicIPAddress,omitempty"`
 
 	// Reference to the subnet resource.
 	Subnet *SubResource `json:"subnet,omitempty"`
+
+	// READ-ONLY; The provisioning state of the frontend IP configuration resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
 // ApplicationGatewayFrontendPort - Frontend port of an application gateway.
 type ApplicationGatewayFrontendPort struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Name of the frontend port that is unique within an Application Gateway.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of the application gateway frontend port.
 	Properties *ApplicationGatewayFrontendPortPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 
 	// READ-ONLY; Type of the resource.
 	Type *string `json:"type,omitempty" azure:"ro"`
@@ -670,14 +670,14 @@ type ApplicationGatewayFrontendPortPropertiesFormat struct {
 // ApplicationGatewayHTTPListener - Http listener of an application gateway.
 type ApplicationGatewayHTTPListener struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Name of the HTTP listener that is unique within an Application Gateway.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of the application gateway HTTP listener.
 	Properties *ApplicationGatewayHTTPListenerPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 
 	// READ-ONLY; Type of the resource.
 	Type *string `json:"type,omitempty" azure:"ro"`
@@ -716,14 +716,14 @@ type ApplicationGatewayHTTPListenerPropertiesFormat struct {
 	// Protocol of the HTTP listener.
 	Protocol *ApplicationGatewayProtocol `json:"protocol,omitempty"`
 
-	// READ-ONLY; The provisioning state of the HTTP listener resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
 	// Applicable only if protocol is https. Enables SNI for multi-hosting.
 	RequireServerNameIndication *bool `json:"requireServerNameIndication,omitempty"`
 
 	// SSL certificate resource of an application gateway.
 	SSLCertificate *SubResource `json:"sslCertificate,omitempty"`
+
+	// READ-ONLY; The provisioning state of the HTTP listener resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ApplicationGatewayHTTPListenerPropertiesFormat.
@@ -754,14 +754,14 @@ type ApplicationGatewayHeaderConfiguration struct {
 // ApplicationGatewayIPConfiguration - IP configuration of an application gateway. Currently 1 public and 1 private IP configuration is allowed.
 type ApplicationGatewayIPConfiguration struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Name of the IP configuration that is unique within an Application Gateway.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of the application gateway IP configuration.
 	Properties *ApplicationGatewayIPConfigurationPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 
 	// READ-ONLY; Type of the resource.
 	Type *string `json:"type,omitempty" azure:"ro"`
@@ -779,11 +779,11 @@ func (a ApplicationGatewayIPConfiguration) MarshalJSON() ([]byte, error) {
 
 // ApplicationGatewayIPConfigurationPropertiesFormat - Properties of IP configuration of an application gateway.
 type ApplicationGatewayIPConfigurationPropertiesFormat struct {
-	// READ-ONLY; The provisioning state of the application gateway IP configuration resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
 	// Reference to the subnet resource. A subnet from where application gateway gets its private address.
 	Subnet *SubResource `json:"subnet,omitempty"`
+
+	// READ-ONLY; The provisioning state of the application gateway IP configuration resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
 // ApplicationGatewayListResult - Response for ListApplicationGateways API service call.
@@ -843,14 +843,14 @@ type ApplicationGatewayOnDemandProbe struct {
 // ApplicationGatewayPathRule - Path rule of URL path map of an application gateway.
 type ApplicationGatewayPathRule struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Name of the path rule that is unique within an Application Gateway.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of the application gateway path rule.
 	Properties *ApplicationGatewayPathRulePropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 
 	// READ-ONLY; Type of the resource.
 	Type *string `json:"type,omitempty" azure:"ro"`
@@ -880,14 +880,14 @@ type ApplicationGatewayPathRulePropertiesFormat struct {
 	// Path rules of URL path map.
 	Paths []*string `json:"paths,omitempty"`
 
-	// READ-ONLY; The provisioning state of the path rule resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
 	// Redirect configuration resource of URL path map path rule.
 	RedirectConfiguration *SubResource `json:"redirectConfiguration,omitempty"`
 
 	// Rewrite rule set resource of URL path map path rule.
 	RewriteRuleSet *SubResource `json:"rewriteRuleSet,omitempty"`
+
+	// READ-ONLY; The provisioning state of the path rule resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ApplicationGatewayPathRulePropertiesFormat.
@@ -918,14 +918,14 @@ type ApplicationGatewayPollerResponse struct {
 // ApplicationGatewayProbe - Probe of the application gateway.
 type ApplicationGatewayProbe struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Name of the probe that is unique within an Application Gateway.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of the application gateway probe.
 	Properties *ApplicationGatewayProbePropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 
 	// READ-ONLY; Type of the resource.
 	Type *string `json:"type,omitempty" azure:"ro"`
@@ -986,9 +986,6 @@ type ApplicationGatewayProbePropertiesFormat struct {
 	// The protocol used for the probe.
 	Protocol *ApplicationGatewayProtocol `json:"protocol,omitempty"`
 
-	// READ-ONLY; The provisioning state of the probe resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
 	// The probe timeout in seconds. Probe marked as failed if valid response is not received with this timeout period. Acceptable values are from 1 second
 	// to 86400 seconds.
 	Timeout *int32 `json:"timeout,omitempty"`
@@ -996,6 +993,9 @@ type ApplicationGatewayProbePropertiesFormat struct {
 	// The probe retry count. Backend server is marked down after consecutive probe failure count reaches UnhealthyThreshold. Acceptable values are from 1 second
 	// to 20.
 	UnhealthyThreshold *int32 `json:"unhealthyThreshold,omitempty"`
+
+	// READ-ONLY; The provisioning state of the probe resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
 // ApplicationGatewayPropertiesFormat - Properties of the application gateway.
@@ -1043,14 +1043,8 @@ type ApplicationGatewayPropertiesFormat struct {
 	// Http listeners of the application gateway resource. For default limits, see Application Gateway limits [https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits].
 	HTTPListeners []*ApplicationGatewayHTTPListener `json:"httpListeners,omitempty"`
 
-	// READ-ONLY; Operational state of the application gateway resource.
-	OperationalState *ApplicationGatewayOperationalState `json:"operationalState,omitempty" azure:"ro"`
-
 	// Probes of the application gateway resource.
 	Probes []*ApplicationGatewayProbe `json:"probes,omitempty"`
-
-	// READ-ONLY; The provisioning state of the application gateway resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
 	// Redirect configurations of the application gateway resource. For default limits, see Application Gateway limits
 	// [https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits].
@@ -1058,9 +1052,6 @@ type ApplicationGatewayPropertiesFormat struct {
 
 	// Request routing rules of the application gateway resource.
 	RequestRoutingRules []*ApplicationGatewayRequestRoutingRule `json:"requestRoutingRules,omitempty"`
-
-	// READ-ONLY; The resource GUID property of the application gateway resource.
-	ResourceGUID *string `json:"resourceGuid,omitempty" azure:"ro"`
 
 	// Rewrite rules for the application gateway resource.
 	RewriteRuleSets []*ApplicationGatewayRewriteRuleSet `json:"rewriteRuleSets,omitempty"`
@@ -1084,6 +1075,15 @@ type ApplicationGatewayPropertiesFormat struct {
 
 	// Web application firewall configuration.
 	WebApplicationFirewallConfiguration *ApplicationGatewayWebApplicationFirewallConfiguration `json:"webApplicationFirewallConfiguration,omitempty"`
+
+	// READ-ONLY; Operational state of the application gateway resource.
+	OperationalState *ApplicationGatewayOperationalState `json:"operationalState,omitempty" azure:"ro"`
+
+	// READ-ONLY; The provisioning state of the application gateway resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
+
+	// READ-ONLY; The resource GUID property of the application gateway resource.
+	ResourceGUID *string `json:"resourceGuid,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ApplicationGatewayPropertiesFormat.
@@ -1121,14 +1121,14 @@ func (a ApplicationGatewayPropertiesFormat) MarshalJSON() ([]byte, error) {
 // ApplicationGatewayRedirectConfiguration - Redirect configuration of an application gateway.
 type ApplicationGatewayRedirectConfiguration struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Name of the redirect configuration that is unique within an Application Gateway.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of the application gateway redirect configuration.
 	Properties *ApplicationGatewayRedirectConfigurationPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 
 	// READ-ONLY; Type of the resource.
 	Type *string `json:"type,omitempty" azure:"ro"`
@@ -1188,14 +1188,14 @@ func (a ApplicationGatewayRedirectConfigurationPropertiesFormat) MarshalJSON() (
 // ApplicationGatewayRequestRoutingRule - Request routing rule of an application gateway.
 type ApplicationGatewayRequestRoutingRule struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Name of the request routing rule that is unique within an Application Gateway.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of the application gateway request routing rule.
 	Properties *ApplicationGatewayRequestRoutingRulePropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 
 	// READ-ONLY; Type of the resource.
 	Type *string `json:"type,omitempty" azure:"ro"`
@@ -1225,9 +1225,6 @@ type ApplicationGatewayRequestRoutingRulePropertiesFormat struct {
 	// Priority of the request routing rule.
 	Priority *int32 `json:"priority,omitempty"`
 
-	// READ-ONLY; The provisioning state of the request routing rule resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
 	// Redirect configuration resource of the application gateway.
 	RedirectConfiguration *SubResource `json:"redirectConfiguration,omitempty"`
 
@@ -1239,6 +1236,9 @@ type ApplicationGatewayRequestRoutingRulePropertiesFormat struct {
 
 	// URL path map resource of the application gateway.
 	URLPathMap *SubResource `json:"urlPathMap,omitempty"`
+
+	// READ-ONLY; The provisioning state of the request routing rule resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
 // ApplicationGatewayResponse is the response envelope for operations that return a ApplicationGateway type.
@@ -1314,14 +1314,14 @@ type ApplicationGatewayRewriteRuleCondition struct {
 // ApplicationGatewayRewriteRuleSet - Rewrite rule set of an application gateway.
 type ApplicationGatewayRewriteRuleSet struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Name of the rewrite rule set that is unique within an Application Gateway.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of the application gateway rewrite rule set.
 	Properties *ApplicationGatewayRewriteRuleSetPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ApplicationGatewayRewriteRuleSet.
@@ -1335,11 +1335,11 @@ func (a ApplicationGatewayRewriteRuleSet) MarshalJSON() ([]byte, error) {
 
 // ApplicationGatewayRewriteRuleSetPropertiesFormat - Properties of rewrite rule set of the application gateway.
 type ApplicationGatewayRewriteRuleSetPropertiesFormat struct {
-	// READ-ONLY; The provisioning state of the rewrite rule set resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
 	// Rewrite rules in the rewrite rule set.
 	RewriteRules []*ApplicationGatewayRewriteRule `json:"rewriteRules,omitempty"`
+
+	// READ-ONLY; The provisioning state of the rewrite rule set resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ApplicationGatewayRewriteRuleSetPropertiesFormat.
@@ -1365,14 +1365,14 @@ type ApplicationGatewaySKU struct {
 // ApplicationGatewaySSLCertificate - SSL certificates of an application gateway.
 type ApplicationGatewaySSLCertificate struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Name of the SSL certificate that is unique within an Application Gateway.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of the application gateway SSL certificate.
 	Properties *ApplicationGatewaySSLCertificatePropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 
 	// READ-ONLY; Type of the resource.
 	Type *string `json:"type,omitempty" azure:"ro"`
@@ -1482,14 +1482,14 @@ type ApplicationGatewaySSLPredefinedPolicyResponse struct {
 // ApplicationGatewayTrustedRootCertificate - Trusted Root certificates of an application gateway.
 type ApplicationGatewayTrustedRootCertificate struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Name of the trusted root certificate that is unique within an Application Gateway.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of the application gateway trusted root certificate.
 	Properties *ApplicationGatewayTrustedRootCertificatePropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 
 	// READ-ONLY; Type of the resource.
 	Type *string `json:"type,omitempty" azure:"ro"`
@@ -1532,14 +1532,14 @@ type ApplicationGatewayURLConfiguration struct {
 // ApplicationGatewayURLPathMap - UrlPathMaps give a url path to the backend mapping information for PathBasedRouting.
 type ApplicationGatewayURLPathMap struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Name of the URL path map that is unique within an Application Gateway.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of the application gateway URL path map.
 	Properties *ApplicationGatewayURLPathMapPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 
 	// READ-ONLY; Type of the resource.
 	Type *string `json:"type,omitempty" azure:"ro"`
@@ -1590,20 +1590,26 @@ func (a ApplicationGatewayURLPathMapPropertiesFormat) MarshalJSON() ([]byte, err
 
 // ApplicationGatewayWebApplicationFirewallConfiguration - Application gateway web application firewall configuration.
 type ApplicationGatewayWebApplicationFirewallConfiguration struct {
+	// REQUIRED; Whether the web application firewall is enabled or not.
+	Enabled *bool `json:"enabled,omitempty"`
+
+	// REQUIRED; Web application firewall mode.
+	FirewallMode *ApplicationGatewayFirewallMode `json:"firewallMode,omitempty"`
+
+	// REQUIRED; The type of the web application firewall rule set. Possible values are: 'OWASP'.
+	RuleSetType *string `json:"ruleSetType,omitempty"`
+
+	// REQUIRED; The version of the rule set type.
+	RuleSetVersion *string `json:"ruleSetVersion,omitempty"`
+
 	// The disabled rule groups.
 	DisabledRuleGroups []*ApplicationGatewayFirewallDisabledRuleGroup `json:"disabledRuleGroups,omitempty"`
-
-	// Whether the web application firewall is enabled or not.
-	Enabled *bool `json:"enabled,omitempty"`
 
 	// The exclusion list.
 	Exclusions []*ApplicationGatewayFirewallExclusion `json:"exclusions,omitempty"`
 
 	// Maximum file upload size in Mb for WAF.
 	FileUploadLimitInMb *int32 `json:"fileUploadLimitInMb,omitempty"`
-
-	// Web application firewall mode.
-	FirewallMode *ApplicationGatewayFirewallMode `json:"firewallMode,omitempty"`
 
 	// Maximum request body size for WAF.
 	MaxRequestBodySize *int32 `json:"maxRequestBodySize,omitempty"`
@@ -1613,12 +1619,6 @@ type ApplicationGatewayWebApplicationFirewallConfiguration struct {
 
 	// Whether allow WAF to check request Body.
 	RequestBodyCheck *bool `json:"requestBodyCheck,omitempty"`
-
-	// The type of the web application firewall rule set. Possible values are: 'OWASP'.
-	RuleSetType *string `json:"ruleSetType,omitempty"`
-
-	// The version of the rule set type.
-	RuleSetVersion *string `json:"ruleSetVersion,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ApplicationGatewayWebApplicationFirewallConfiguration.
@@ -1797,11 +1797,11 @@ func (a *ApplicationRuleCondition) UnmarshalJSON(data []byte) error {
 // ApplicationSecurityGroup - An application security group in a resource group.
 type ApplicationSecurityGroup struct {
 	Resource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Properties of the application security group.
 	Properties *ApplicationSecurityGroupPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ApplicationSecurityGroup.
@@ -1814,11 +1814,11 @@ func (a ApplicationSecurityGroup) MarshalJSON() ([]byte, error) {
 
 // ApplicationSecurityGroupListResult - A list of application security groups.
 type ApplicationSecurityGroupListResult struct {
-	// READ-ONLY; The URL to get the next set of results.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
-
 	// A list of application security groups.
 	Value []*ApplicationSecurityGroup `json:"value,omitempty"`
+
+	// READ-ONLY; The URL to get the next set of results.
+	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ApplicationSecurityGroupListResult.
@@ -1946,11 +1946,11 @@ type AutoApprovedPrivateLinkService struct {
 
 // AutoApprovedPrivateLinkServicesResult - An array of private link service id that can be linked to a private end point with auto approved.
 type AutoApprovedPrivateLinkServicesResult struct {
-	// READ-ONLY; The URL to get the next set of results.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
-
 	// An array of auto approved private link service.
 	Value []*AutoApprovedPrivateLinkService `json:"value,omitempty"`
+
+	// READ-ONLY; The URL to get the next set of results.
+	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type AutoApprovedPrivateLinkServicesResult.
@@ -2018,11 +2018,11 @@ type AvailableDelegationsListOptions struct {
 
 // AvailableDelegationsResult - An array of available delegations.
 type AvailableDelegationsResult struct {
-	// READ-ONLY; The URL to get the next set of results.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
-
 	// An array of available delegations.
 	Value []*AvailableDelegation `json:"value,omitempty"`
+
+	// READ-ONLY; The URL to get the next set of results.
+	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type AvailableDelegationsResult.
@@ -2074,11 +2074,11 @@ type AvailablePrivateEndpointTypesListOptions struct {
 
 // AvailablePrivateEndpointTypesResult - An array of available PrivateEndpoint types.
 type AvailablePrivateEndpointTypesResult struct {
-	// READ-ONLY; The URL to get the next set of results.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
-
 	// An array of available privateEndpoint type.
 	Value []*AvailablePrivateEndpointType `json:"value,omitempty"`
+
+	// READ-ONLY; The URL to get the next set of results.
+	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type AvailablePrivateEndpointTypesResult.
@@ -2100,7 +2100,7 @@ type AvailablePrivateEndpointTypesResultResponse struct {
 
 // AvailableProvidersList - List of available countries with details.
 type AvailableProvidersList struct {
-	// List of available countries.
+	// REQUIRED; List of available countries.
 	Countries []*AvailableProvidersListCountry `json:"countries,omitempty"`
 }
 
@@ -2248,11 +2248,11 @@ type AvailableServiceAliasesListOptions struct {
 
 // AvailableServiceAliasesResult - An array of available service aliases.
 type AvailableServiceAliasesResult struct {
-	// READ-ONLY; The URL to get the next set of results.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
-
 	// An array of available service aliases.
 	Value []*AvailableServiceAlias `json:"value,omitempty"`
+
+	// READ-ONLY; The URL to get the next set of results.
+	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type AvailableServiceAliasesResult.
@@ -2288,14 +2288,14 @@ type AzureAsyncOperationResult struct {
 // AzureFirewall - Azure Firewall resource.
 type AzureFirewall struct {
 	Resource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Properties of the azure firewall.
 	Properties *AzureFirewallPropertiesFormat `json:"properties,omitempty"`
 
 	// A list of availability zones denoting where the resource needs to come from.
 	Zones []*string `json:"zones,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type AzureFirewall.
@@ -2347,14 +2347,14 @@ func (a AzureFirewallApplicationRule) MarshalJSON() ([]byte, error) {
 // AzureFirewallApplicationRuleCollection - Application rule collection resource.
 type AzureFirewallApplicationRuleCollection struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// The name of the resource that is unique within the Azure firewall. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of the azure firewall application rule collection.
 	Properties *AzureFirewallApplicationRuleCollectionPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type AzureFirewallApplicationRuleCollection.
@@ -2374,11 +2374,11 @@ type AzureFirewallApplicationRuleCollectionPropertiesFormat struct {
 	// Priority of the application rule collection resource.
 	Priority *int32 `json:"priority,omitempty"`
 
-	// READ-ONLY; The provisioning state of the application rule collection resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
 	// Collection of rules used by a application rule collection.
 	Rules []*AzureFirewallApplicationRule `json:"rules,omitempty"`
+
+	// READ-ONLY; The provisioning state of the application rule collection resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type AzureFirewallApplicationRuleCollectionPropertiesFormat.
@@ -2403,11 +2403,11 @@ type AzureFirewallApplicationRuleProtocol struct {
 // AzureFirewallFqdnTag - Azure Firewall FQDN Tag Resource.
 type AzureFirewallFqdnTag struct {
 	Resource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Properties of the azure firewall FQDN tag.
 	Properties *AzureFirewallFqdnTagPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type AzureFirewallFqdnTag.
@@ -2461,14 +2461,14 @@ type AzureFirewallFqdnTagsListAllOptions struct {
 // AzureFirewallIPConfiguration - IP configuration of an Azure Firewall.
 type AzureFirewallIPConfiguration struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Name of the resource that is unique within a resource group. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of the azure firewall IP configuration.
 	Properties *AzureFirewallIPConfigurationPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 
 	// READ-ONLY; Type of the resource.
 	Type *string `json:"type,omitempty" azure:"ro"`
@@ -2486,17 +2486,17 @@ func (a AzureFirewallIPConfiguration) MarshalJSON() ([]byte, error) {
 
 // AzureFirewallIPConfigurationPropertiesFormat - Properties of IP configuration of an Azure Firewall.
 type AzureFirewallIPConfigurationPropertiesFormat struct {
-	// READ-ONLY; The Firewall Internal Load Balancer IP to be used as the next hop in User Defined Routes.
-	PrivateIPAddress *string `json:"privateIPAddress,omitempty" azure:"ro"`
-
-	// READ-ONLY; The provisioning state of the Azure firewall IP configuration resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
 	// Reference to the PublicIP resource. This field is a mandatory input if subnet is not null.
 	PublicIPAddress *SubResource `json:"publicIPAddress,omitempty"`
 
 	// Reference to the subnet resource. This resource must be named 'AzureFirewallSubnet' or 'AzureFirewallManagementSubnet'.
 	Subnet *SubResource `json:"subnet,omitempty"`
+
+	// READ-ONLY; The Firewall Internal Load Balancer IP to be used as the next hop in User Defined Routes.
+	PrivateIPAddress *string `json:"privateIPAddress,omitempty" azure:"ro"`
+
+	// READ-ONLY; The provisioning state of the Azure firewall IP configuration resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
 // AzureFirewallIPGroups - IpGroups associated with azure firewall.
@@ -2592,14 +2592,14 @@ func (a AzureFirewallNatRule) MarshalJSON() ([]byte, error) {
 // AzureFirewallNatRuleCollection - NAT rule collection resource.
 type AzureFirewallNatRuleCollection struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// The name of the resource that is unique within the Azure firewall. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of the azure firewall NAT rule collection.
 	Properties *AzureFirewallNatRuleCollectionProperties `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type AzureFirewallNatRuleCollection.
@@ -2619,11 +2619,11 @@ type AzureFirewallNatRuleCollectionProperties struct {
 	// Priority of the NAT rule collection resource.
 	Priority *int32 `json:"priority,omitempty"`
 
-	// READ-ONLY; The provisioning state of the NAT rule collection resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
 	// Collection of rules used by a NAT rule collection.
 	Rules []*AzureFirewallNatRule `json:"rules,omitempty"`
+
+	// READ-ONLY; The provisioning state of the NAT rule collection resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type AzureFirewallNatRuleCollectionProperties.
@@ -2684,14 +2684,14 @@ func (a AzureFirewallNetworkRule) MarshalJSON() ([]byte, error) {
 // AzureFirewallNetworkRuleCollection - Network rule collection resource.
 type AzureFirewallNetworkRuleCollection struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// The name of the resource that is unique within the Azure firewall. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of the azure firewall network rule collection.
 	Properties *AzureFirewallNetworkRuleCollectionPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type AzureFirewallNetworkRuleCollection.
@@ -2711,11 +2711,11 @@ type AzureFirewallNetworkRuleCollectionPropertiesFormat struct {
 	// Priority of the network rule collection resource.
 	Priority *int32 `json:"priority,omitempty"`
 
-	// READ-ONLY; The provisioning state of the network rule collection resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
 	// Collection of rules used by a network rule collection.
 	Rules []*AzureFirewallNetworkRule `json:"rules,omitempty"`
+
+	// READ-ONLY; The provisioning state of the network rule collection resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type AzureFirewallNetworkRuleCollectionPropertiesFormat.
@@ -2751,14 +2751,8 @@ type AzureFirewallPropertiesFormat struct {
 	// The firewallPolicy associated with this azure firewall.
 	FirewallPolicy *SubResource `json:"firewallPolicy,omitempty"`
 
-	// READ-ONLY; IP addresses associated with AzureFirewall.
-	HubIPAddresses *HubIPAddresses `json:"hubIpAddresses,omitempty" azure:"ro"`
-
 	// IP configuration of the Azure Firewall resource.
 	IPConfigurations []*AzureFirewallIPConfiguration `json:"ipConfigurations,omitempty"`
-
-	// READ-ONLY; IpGroups associated with AzureFirewall.
-	IPGroups []*AzureFirewallIPGroups `json:"ipGroups,omitempty" azure:"ro"`
 
 	// IP configuration of the Azure Firewall used for management traffic.
 	ManagementIPConfiguration *AzureFirewallIPConfiguration `json:"managementIpConfiguration,omitempty"`
@@ -2769,9 +2763,6 @@ type AzureFirewallPropertiesFormat struct {
 	// Collection of network rule collections used by Azure Firewall.
 	NetworkRuleCollections []*AzureFirewallNetworkRuleCollection `json:"networkRuleCollections,omitempty"`
 
-	// READ-ONLY; The provisioning state of the Azure firewall resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
 	// The Azure Firewall Resource SKU.
 	SKU *AzureFirewallSKU `json:"sku,omitempty"`
 
@@ -2780,6 +2771,15 @@ type AzureFirewallPropertiesFormat struct {
 
 	// The virtualHub to which the firewall belongs.
 	VirtualHub *SubResource `json:"virtualHub,omitempty"`
+
+	// READ-ONLY; IP addresses associated with AzureFirewall.
+	HubIPAddresses *HubIPAddresses `json:"hubIpAddresses,omitempty" azure:"ro"`
+
+	// READ-ONLY; IpGroups associated with AzureFirewall.
+	IPGroups []*AzureFirewallIPGroups `json:"ipGroups,omitempty" azure:"ro"`
+
+	// READ-ONLY; The provisioning state of the Azure firewall resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type AzureFirewallPropertiesFormat.
@@ -2863,13 +2863,13 @@ type AzureFirewallsListOptions struct {
 
 // AzureReachabilityReport - Azure reachability report details.
 type AzureReachabilityReport struct {
-	// The aggregation level of Azure reachability report. Can be Country, State or City.
+	// REQUIRED; The aggregation level of Azure reachability report. Can be Country, State or City.
 	AggregationLevel *string `json:"aggregationLevel,omitempty"`
 
-	// Parameters that define a geographic location.
+	// REQUIRED; Parameters that define a geographic location.
 	ProviderLocation *AzureReachabilityReportLocation `json:"providerLocation,omitempty"`
 
-	// List of Azure reachability report items.
+	// REQUIRED; List of Azure reachability report items.
 	ReachabilityReport []*AzureReachabilityReportItem `json:"reachabilityReport,omitempty"`
 }
 
@@ -2947,11 +2947,11 @@ func (a *AzureReachabilityReportLatencyInfo) UnmarshalJSON(data []byte) error {
 
 // AzureReachabilityReportLocation - Parameters that define a geographic location.
 type AzureReachabilityReportLocation struct {
+	// REQUIRED; The name of the country.
+	Country *string `json:"country,omitempty"`
+
 	// The name of the city or town.
 	City *string `json:"city,omitempty"`
-
-	// The name of the country.
-	Country *string `json:"country,omitempty"`
 
 	// The name of the state.
 	State *string `json:"state,omitempty"`
@@ -2959,20 +2959,20 @@ type AzureReachabilityReportLocation struct {
 
 // AzureReachabilityReportParameters - Geographic and time constraints for Azure reachability report.
 type AzureReachabilityReportParameters struct {
+	// REQUIRED; The end time for the Azure reachability report.
+	EndTime *time.Time `json:"endTime,omitempty"`
+
+	// REQUIRED; Parameters that define a geographic location.
+	ProviderLocation *AzureReachabilityReportLocation `json:"providerLocation,omitempty"`
+
+	// REQUIRED; The start time for the Azure reachability report.
+	StartTime *time.Time `json:"startTime,omitempty"`
+
 	// Optional Azure regions to scope the query to.
 	AzureLocations []*string `json:"azureLocations,omitempty"`
 
-	// The end time for the Azure reachability report.
-	EndTime *time.Time `json:"endTime,omitempty"`
-
-	// Parameters that define a geographic location.
-	ProviderLocation *AzureReachabilityReportLocation `json:"providerLocation,omitempty"`
-
 	// List of Internet service providers.
 	Providers []*string `json:"providers,omitempty"`
-
-	// The start time for the Azure reachability report.
-	StartTime *time.Time `json:"startTime,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type AzureReachabilityReportParameters.
@@ -3079,14 +3079,14 @@ func (b BGPCommunity) MarshalJSON() ([]byte, error) {
 // BackendAddressPool - Pool of backend IP addresses.
 type BackendAddressPool struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// The name of the resource that is unique within the set of backend address pools used by the load balancer. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of load balancer backend address pool.
 	Properties *BackendAddressPoolPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 
 	// READ-ONLY; Type of the resource.
 	Type *string `json:"type,omitempty" azure:"ro"`
@@ -3218,11 +3218,11 @@ type BastionActiveSessionListResultResponse struct {
 // BastionHost - Bastion Host resource.
 type BastionHost struct {
 	Resource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Represents the bastion host resource.
 	Properties *BastionHostPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type BastionHost.
@@ -3236,14 +3236,14 @@ func (b BastionHost) MarshalJSON() ([]byte, error) {
 // BastionHostIPConfiguration - IP configuration of an Bastion Host.
 type BastionHostIPConfiguration struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Name of the resource that is unique within a resource group. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
 	// Represents the ip configuration associated with the resource.
 	Properties *BastionHostIPConfigurationPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 
 	// READ-ONLY; Ip configuration type.
 	Type *string `json:"type,omitempty" azure:"ro"`
@@ -3261,17 +3261,17 @@ func (b BastionHostIPConfiguration) MarshalJSON() ([]byte, error) {
 
 // BastionHostIPConfigurationPropertiesFormat - Properties of IP configuration of an Bastion Host.
 type BastionHostIPConfigurationPropertiesFormat struct {
+	// REQUIRED; Reference of the PublicIP resource.
+	PublicIPAddress *SubResource `json:"publicIPAddress,omitempty"`
+
+	// REQUIRED; Reference of the subnet resource.
+	Subnet *SubResource `json:"subnet,omitempty"`
+
 	// Private IP allocation method.
 	PrivateIPAllocationMethod *IPAllocationMethod `json:"privateIPAllocationMethod,omitempty"`
 
 	// READ-ONLY; The provisioning state of the bastion host IP configuration resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
-	// Reference of the PublicIP resource.
-	PublicIPAddress *SubResource `json:"publicIPAddress,omitempty"`
-
-	// Reference of the subnet resource.
-	Subnet *SubResource `json:"subnet,omitempty"`
 }
 
 // BastionHostListResult - Response for ListBastionHosts API service call.
@@ -3407,6 +3407,9 @@ type BastionSessionState struct {
 
 // BastionShareableLink - Bastion Shareable Link.
 type BastionShareableLink struct {
+	// REQUIRED; Reference of the virtual machine resource.
+	VM *VM `json:"vm,omitempty"`
+
 	// READ-ONLY; The unique Bastion Shareable Link to the virtual machine.
 	Bsl *string `json:"bsl,omitempty" azure:"ro"`
 
@@ -3415,9 +3418,6 @@ type BastionShareableLink struct {
 
 	// READ-ONLY; Optional field indicating the warning or error message related to the vm in case of partial failure.
 	Message *string `json:"message,omitempty" azure:"ro"`
-
-	// Reference of the virtual machine resource.
-	VM *VM `json:"vm,omitempty"`
 }
 
 // BastionShareableLinkListRequest - Post request for all the Bastion Shareable Link endpoints.
@@ -3675,11 +3675,11 @@ type Components1Jq1T4ISchemasManagedserviceidentityPropertiesUserassignedidentit
 
 // ConnectionMonitor - Parameters that define the operation to create a connection monitor.
 type ConnectionMonitor struct {
+	// REQUIRED; Properties of the connection monitor.
+	Properties *ConnectionMonitorParameters `json:"properties,omitempty"`
+
 	// Connection monitor location.
 	Location *string `json:"location,omitempty"`
-
-	// Properties of the connection monitor.
-	Properties *ConnectionMonitorParameters `json:"properties,omitempty"`
 
 	// Connection monitor tags.
 	Tags map[string]*string `json:"tags,omitempty"`
@@ -3708,14 +3708,14 @@ type ConnectionMonitorDestination struct {
 
 // ConnectionMonitorEndpoint - Describes the connection monitor endpoint.
 type ConnectionMonitorEndpoint struct {
+	// REQUIRED; The name of the connection monitor endpoint.
+	Name *string `json:"name,omitempty"`
+
 	// Address of the connection monitor endpoint (IP or domain name).
 	Address *string `json:"address,omitempty"`
 
 	// Filter for sub-items within the endpoint.
 	Filter *ConnectionMonitorEndpointFilter `json:"filter,omitempty"`
-
-	// The name of the connection monitor endpoint.
-	Name *string `json:"name,omitempty"`
 
 	// Resource ID of the connection monitor endpoint.
 	ResourceID *string `json:"resourceId,omitempty"`
@@ -3955,23 +3955,23 @@ type ConnectionMonitorQueryResultResponse struct {
 
 // ConnectionMonitorResult - Information about the connection monitor.
 type ConnectionMonitorResult struct {
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
-	// READ-ONLY; ID of the connection monitor.
-	ID *string `json:"id,omitempty" azure:"ro"`
-
 	// Connection monitor location.
 	Location *string `json:"location,omitempty"`
-
-	// READ-ONLY; Name of the connection monitor.
-	Name *string `json:"name,omitempty" azure:"ro"`
 
 	// Properties of the connection monitor result.
 	Properties *ConnectionMonitorResultProperties `json:"properties,omitempty"`
 
 	// Connection monitor tags.
 	Tags map[string]*string `json:"tags,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
+
+	// READ-ONLY; ID of the connection monitor.
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// READ-ONLY; Name of the connection monitor.
+	Name *string `json:"name,omitempty" azure:"ro"`
 
 	// READ-ONLY; Connection monitor type.
 	Type *string `json:"type,omitempty" azure:"ro"`
@@ -4070,11 +4070,11 @@ type ConnectionMonitorResultResponse struct {
 
 // ConnectionMonitorSource - Describes the source of connection monitor.
 type ConnectionMonitorSource struct {
+	// REQUIRED; The ID of the resource used as the source by connection monitor.
+	ResourceID *string `json:"resourceId,omitempty"`
+
 	// The source port used by connection monitor.
 	Port *int32 `json:"port,omitempty"`
-
-	// The ID of the resource used as the source by connection monitor.
-	ResourceID *string `json:"resourceId,omitempty"`
 }
 
 // ConnectionMonitorSuccessThreshold - Describes the threshold for declaring a test successful.
@@ -4097,20 +4097,20 @@ type ConnectionMonitorTCPConfiguration struct {
 
 // ConnectionMonitorTestConfiguration - Describes a connection monitor test configuration.
 type ConnectionMonitorTestConfiguration struct {
+	// REQUIRED; The name of the connection monitor test configuration.
+	Name *string `json:"name,omitempty"`
+
+	// REQUIRED; The protocol to use in test evaluation.
+	Protocol *ConnectionMonitorTestConfigurationProtocol `json:"protocol,omitempty"`
+
 	// The parameters used to perform test evaluation over HTTP.
 	HTTPConfiguration *ConnectionMonitorHTTPConfiguration `json:"httpConfiguration,omitempty"`
 
 	// The parameters used to perform test evaluation over ICMP.
 	IcmpConfiguration *ConnectionMonitorIcmpConfiguration `json:"icmpConfiguration,omitempty"`
 
-	// The name of the connection monitor test configuration.
-	Name *string `json:"name,omitempty"`
-
 	// The preferred IP version to use in test evaluation. The connection monitor may choose to use a different version depending on other parameters.
 	PreferredIPVersion *PreferredIPVersion `json:"preferredIPVersion,omitempty"`
-
-	// The protocol to use in test evaluation.
-	Protocol *ConnectionMonitorTestConfigurationProtocol `json:"protocol,omitempty"`
 
 	// The threshold for declaring a test successful.
 	SuccessThreshold *ConnectionMonitorSuccessThreshold `json:"successThreshold,omitempty"`
@@ -4124,20 +4124,20 @@ type ConnectionMonitorTestConfiguration struct {
 
 // ConnectionMonitorTestGroup - Describes the connection monitor test group.
 type ConnectionMonitorTestGroup struct {
-	// List of destination endpoint names.
+	// REQUIRED; List of destination endpoint names.
 	Destinations []*string `json:"destinations,omitempty"`
+
+	// REQUIRED; The name of the connection monitor test group.
+	Name *string `json:"name,omitempty"`
+
+	// REQUIRED; List of source endpoint names.
+	Sources []*string `json:"sources,omitempty"`
+
+	// REQUIRED; List of test configuration names.
+	TestConfigurations []*string `json:"testConfigurations,omitempty"`
 
 	// Value indicating whether test group is disabled.
 	Disable *bool `json:"disable,omitempty"`
-
-	// The name of the connection monitor test group.
-	Name *string `json:"name,omitempty"`
-
-	// List of source endpoint names.
-	Sources []*string `json:"sources,omitempty"`
-
-	// List of test configuration names.
-	TestConfigurations []*string `json:"testConfigurations,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ConnectionMonitorTestGroup.
@@ -4199,7 +4199,7 @@ type ConnectionMonitorsUpdateTagsOptions struct {
 
 // ConnectionResetSharedKey - The virtual network connection reset shared key.
 type ConnectionResetSharedKey struct {
-	// The virtual network connection reset shared key length, should between 1 and 128.
+	// REQUIRED; The virtual network connection reset shared key length, should between 1 and 128.
 	KeyLength *int32 `json:"keyLength,omitempty"`
 }
 
@@ -4227,7 +4227,7 @@ type ConnectionResetSharedKeyResponse struct {
 // ConnectionSharedKey - Response for GetConnectionSharedKey API service call.
 type ConnectionSharedKey struct {
 	SubResource
-	// The virtual network connection shared key value.
+	// REQUIRED; The virtual network connection shared key value.
 	Value *string `json:"value,omitempty"`
 }
 
@@ -4273,9 +4273,6 @@ type ConnectionStateSnapshot struct {
 	// Connectivity analysis evaluation state.
 	EvaluationState *EvaluationState `json:"evaluationState,omitempty"`
 
-	// READ-ONLY; List of hops between the source and the destination.
-	Hops []*ConnectivityHop `json:"hops,omitempty" azure:"ro"`
-
 	// Maximum latency in ms.
 	MaxLatencyInMs *int32 `json:"maxLatencyInMs,omitempty"`
 
@@ -4290,6 +4287,9 @@ type ConnectionStateSnapshot struct {
 
 	// The start time of the connection snapshot.
 	StartTime *time.Time `json:"startTime,omitempty"`
+
+	// READ-ONLY; List of hops between the source and the destination.
+	Hops []*ConnectivityHop `json:"hops,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ConnectionStateSnapshot.
@@ -4489,8 +4489,11 @@ func (c ConnectivityIssue) MarshalJSON() ([]byte, error) {
 
 // ConnectivityParameters - Parameters that determine how the connectivity check will be performed.
 type ConnectivityParameters struct {
-	// The destination of connection.
+	// REQUIRED; The destination of connection.
 	Destination *ConnectivityDestination `json:"destination,omitempty"`
+
+	// REQUIRED; The source of the connection.
+	Source *ConnectivitySource `json:"source,omitempty"`
 
 	// Preferred IP version of the connection.
 	PreferredIPVersion *IPVersion `json:"preferredIPVersion,omitempty"`
@@ -4500,18 +4503,15 @@ type ConnectivityParameters struct {
 
 	// Configuration of the protocol.
 	ProtocolConfiguration *ProtocolConfiguration `json:"protocolConfiguration,omitempty"`
-
-	// The source of the connection.
-	Source *ConnectivitySource `json:"source,omitempty"`
 }
 
 // ConnectivitySource - Parameters that define the source of the connection.
 type ConnectivitySource struct {
+	// REQUIRED; The ID of the resource from which a connectivity check will be initiated.
+	ResourceID *string `json:"resourceId,omitempty"`
+
 	// The source port from which a connectivity check will be performed.
 	Port *int32 `json:"port,omitempty"`
-
-	// The ID of the resource from which a connectivity check will be initiated.
-	ResourceID *string `json:"resourceId,omitempty"`
 }
 
 // Container - Reference to container resource in remote resource provider.
@@ -4522,14 +4522,14 @@ type Container struct {
 // ContainerNetworkInterface - Container network interface child resource.
 type ContainerNetworkInterface struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// The name of the resource. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
 	// Container network interface properties.
 	Properties *ContainerNetworkInterfacePropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 
 	// READ-ONLY; Sub Resource type.
 	Type *string `json:"type,omitempty" azure:"ro"`
@@ -4548,14 +4548,14 @@ func (c ContainerNetworkInterface) MarshalJSON() ([]byte, error) {
 // ContainerNetworkInterfaceConfiguration - Container network interface configuration child resource.
 type ContainerNetworkInterfaceConfiguration struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// The name of the resource. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
 	// Container network interface configuration properties.
 	Properties *ContainerNetworkInterfaceConfigurationPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 
 	// READ-ONLY; Sub Resource type.
 	Type *string `json:"type,omitempty" azure:"ro"`
@@ -4594,14 +4594,14 @@ func (c ContainerNetworkInterfaceConfigurationPropertiesFormat) MarshalJSON() ([
 
 // ContainerNetworkInterfaceIPConfiguration - The ip configuration for a container network interface.
 type ContainerNetworkInterfaceIPConfiguration struct {
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// The name of the resource. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of the container network interface IP configuration.
 	Properties *ContainerNetworkInterfaceIPConfigurationPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 
 	// READ-ONLY; Sub Resource type.
 	Type *string `json:"type,omitempty" azure:"ro"`
@@ -4693,11 +4693,11 @@ type DdosCustomPoliciesUpdateTagsOptions struct {
 // DdosCustomPolicy - A DDoS custom policy in a resource group.
 type DdosCustomPolicy struct {
 	Resource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Properties of the DDoS custom policy.
 	Properties *DdosCustomPolicyPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type DdosCustomPolicy.
@@ -4757,23 +4757,23 @@ type DdosCustomPolicyResponse struct {
 
 // DdosProtectionPlan - A DDoS protection plan in a resource group.
 type DdosProtectionPlan struct {
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
-	// READ-ONLY; Resource ID.
-	ID *string `json:"id,omitempty" azure:"ro"`
-
 	// Resource location.
 	Location *string `json:"location,omitempty"`
-
-	// READ-ONLY; Resource name.
-	Name *string `json:"name,omitempty" azure:"ro"`
 
 	// Properties of the DDoS protection plan.
 	Properties *DdosProtectionPlanPropertiesFormat `json:"properties,omitempty"`
 
 	// Resource tags.
 	Tags map[string]*string `json:"tags,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource ID.
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name.
+	Name *string `json:"name,omitempty" azure:"ro"`
 
 	// READ-ONLY; Resource type.
 	Type *string `json:"type,omitempty" azure:"ro"`
@@ -4794,11 +4794,11 @@ func (d DdosProtectionPlan) MarshalJSON() ([]byte, error) {
 
 // DdosProtectionPlanListResult - A list of DDoS protection plans.
 type DdosProtectionPlanListResult struct {
-	// READ-ONLY; The URL to get the next set of results.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
-
 	// A list of DDoS protection plans.
 	Value []*DdosProtectionPlan `json:"value,omitempty"`
+
+	// READ-ONLY; The URL to get the next set of results.
+	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type DdosProtectionPlanListResult.
@@ -4916,14 +4916,14 @@ type DefaultSecurityRulesListOptions struct {
 // Delegation - Details the service to which the subnet is delegated.
 type Delegation struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// The name of the resource that is unique within a subnet. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of the subnet.
 	Properties *ServiceDelegationPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type Delegation.
@@ -5009,11 +5009,11 @@ type EffectiveNetworkSecurityGroupAssociation struct {
 
 // EffectiveNetworkSecurityGroupListResult - Response for list effective network security groups API service call.
 type EffectiveNetworkSecurityGroupListResult struct {
-	// READ-ONLY; The URL to get the next set of results.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
-
 	// A list of effective network security groups.
 	Value []*EffectiveNetworkSecurityGroup `json:"value,omitempty"`
+
+	// READ-ONLY; The URL to get the next set of results.
+	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type EffectiveNetworkSecurityGroupListResult.
@@ -5157,11 +5157,11 @@ func (e EffectiveRoute) MarshalJSON() ([]byte, error) {
 
 // EffectiveRouteListResult - Response for list effective route API service call.
 type EffectiveRouteListResult struct {
-	// READ-ONLY; The URL to get the next set of results.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
-
 	// A list of effective routes.
 	Value []*EffectiveRoute `json:"value,omitempty"`
+
+	// READ-ONLY; The URL to get the next set of results.
+	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type EffectiveRouteListResult.
@@ -5317,14 +5317,14 @@ func (e EvaluatedNetworkSecurityGroup) MarshalJSON() ([]byte, error) {
 // ExpressRouteCircuit resource.
 type ExpressRouteCircuit struct {
 	Resource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Properties of the express route circuit.
 	Properties *ExpressRouteCircuitPropertiesFormat `json:"properties,omitempty"`
 
 	// The SKU.
 	SKU *ExpressRouteCircuitSKU `json:"sku,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ExpressRouteCircuit.
@@ -5354,14 +5354,14 @@ type ExpressRouteCircuitArpTable struct {
 // ExpressRouteCircuitAuthorization - Authorization in an ExpressRouteCircuit resource.
 type ExpressRouteCircuitAuthorization struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// The name of the resource that is unique within a resource group. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of the express route circuit authorization.
 	Properties *AuthorizationPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 
 	// READ-ONLY; Type of the resource.
 	Type *string `json:"type,omitempty" azure:"ro"`
@@ -5423,14 +5423,14 @@ type ExpressRouteCircuitAuthorizationsListOptions struct {
 // ExpressRouteCircuitConnection - Express Route Circuit Connection in an ExpressRouteCircuitPeering resource.
 type ExpressRouteCircuitConnection struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// The name of the resource that is unique within a resource group. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of the express route circuit connection.
 	Properties *ExpressRouteCircuitConnectionPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 
 	// READ-ONLY; Type of the resource.
 	Type *string `json:"type,omitempty" azure:"ro"`
@@ -5493,9 +5493,6 @@ type ExpressRouteCircuitConnectionPropertiesFormat struct {
 	// The authorization key.
 	AuthorizationKey *string `json:"authorizationKey,omitempty"`
 
-	// READ-ONLY; Express Route Circuit connection state.
-	CircuitConnectionStatus *CircuitConnectionStatus `json:"circuitConnectionStatus,omitempty" azure:"ro"`
-
 	// Reference to Express Route Circuit Private Peering Resource of the circuit initiating connection.
 	ExpressRouteCircuitPeering *SubResource `json:"expressRouteCircuitPeering,omitempty"`
 
@@ -5504,6 +5501,9 @@ type ExpressRouteCircuitConnectionPropertiesFormat struct {
 
 	// Reference to Express Route Circuit Private Peering Resource of the peered circuit.
 	PeerExpressRouteCircuitPeering *SubResource `json:"peerExpressRouteCircuitPeering,omitempty"`
+
+	// READ-ONLY; Express Route Circuit connection state.
+	CircuitConnectionStatus *CircuitConnectionStatus `json:"circuitConnectionStatus,omitempty" azure:"ro"`
 
 	// READ-ONLY; The provisioning state of the express route circuit connection resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
@@ -5568,14 +5568,14 @@ type ExpressRouteCircuitListResultResponse struct {
 // ExpressRouteCircuitPeering - Peering in an ExpressRouteCircuit resource.
 type ExpressRouteCircuitPeering struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// The name of the resource that is unique within a resource group. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of the express route circuit peering.
 	Properties *ExpressRouteCircuitPeeringPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 
 	// READ-ONLY; Type of the resource.
 	Type *string `json:"type,omitempty" azure:"ro"`
@@ -5599,9 +5599,6 @@ type ExpressRouteCircuitPeeringConfig struct {
 	// The reference to AdvertisedPublicPrefixes.
 	AdvertisedPublicPrefixes []*string `json:"advertisedPublicPrefixes,omitempty"`
 
-	// READ-ONLY; The advertised public prefix state of the Peering resource.
-	AdvertisedPublicPrefixesState *ExpressRouteCircuitPeeringAdvertisedPublicPrefixState `json:"advertisedPublicPrefixesState,omitempty" azure:"ro"`
-
 	// The CustomerASN of the peering.
 	CustomerASN *int32 `json:"customerASN,omitempty"`
 
@@ -5610,6 +5607,9 @@ type ExpressRouteCircuitPeeringConfig struct {
 
 	// The RoutingRegistryName of the configuration.
 	RoutingRegistryName *string `json:"routingRegistryName,omitempty"`
+
+	// READ-ONLY; The advertised public prefix state of the Peering resource.
+	AdvertisedPublicPrefixesState *ExpressRouteCircuitPeeringAdvertisedPublicPrefixState `json:"advertisedPublicPrefixesState,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ExpressRouteCircuitPeeringConfig.
@@ -5685,17 +5685,11 @@ type ExpressRouteCircuitPeeringPropertiesFormat struct {
 	// The IPv6 peering configuration.
 	IPv6PeeringConfig *IPv6ExpressRouteCircuitPeeringConfig `json:"ipv6PeeringConfig,omitempty"`
 
-	// READ-ONLY; Who was the last to modify the peering.
-	LastModifiedBy *string `json:"lastModifiedBy,omitempty" azure:"ro"`
-
 	// The Microsoft peering configuration.
 	MicrosoftPeeringConfig *ExpressRouteCircuitPeeringConfig `json:"microsoftPeeringConfig,omitempty"`
 
 	// The peer ASN.
 	PeerASN *int64 `json:"peerASN,omitempty"`
-
-	// READ-ONLY; The list of peered circuit connections associated with Azure Private Peering for this circuit.
-	PeeredConnections []*PeerExpressRouteCircuitConnection `json:"peeredConnections,omitempty" azure:"ro"`
 
 	// The peering type.
 	PeeringType *ExpressRoutePeeringType `json:"peeringType,omitempty"`
@@ -5705,9 +5699,6 @@ type ExpressRouteCircuitPeeringPropertiesFormat struct {
 
 	// The primary address prefix.
 	PrimaryPeerAddressPrefix *string `json:"primaryPeerAddressPrefix,omitempty"`
-
-	// READ-ONLY; The provisioning state of the express route circuit peering resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
 	// The reference to the RouteFilter resource.
 	RouteFilter *SubResource `json:"routeFilter,omitempty"`
@@ -5729,6 +5720,15 @@ type ExpressRouteCircuitPeeringPropertiesFormat struct {
 
 	// The VLAN ID.
 	VlanID *int32 `json:"vlanId,omitempty"`
+
+	// READ-ONLY; Who was the last to modify the peering.
+	LastModifiedBy *string `json:"lastModifiedBy,omitempty" azure:"ro"`
+
+	// READ-ONLY; The list of peered circuit connections associated with Azure Private Peering for this circuit.
+	PeeredConnections []*PeerExpressRouteCircuitConnection `json:"peeredConnections,omitempty" azure:"ro"`
+
+	// READ-ONLY; The provisioning state of the express route circuit peering resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ExpressRouteCircuitPeeringPropertiesFormat.
@@ -5824,9 +5824,6 @@ type ExpressRouteCircuitPropertiesFormat struct {
 	// The list of peerings.
 	Peerings []*ExpressRouteCircuitPeering `json:"peerings,omitempty"`
 
-	// READ-ONLY; The provisioning state of the express route circuit resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
 	// The ServiceKey.
 	ServiceKey *string `json:"serviceKey,omitempty"`
 
@@ -5838,6 +5835,9 @@ type ExpressRouteCircuitPropertiesFormat struct {
 
 	// The ServiceProviderProvisioningState state of the resource.
 	ServiceProviderProvisioningState *ServiceProviderProvisioningState `json:"serviceProviderProvisioningState,omitempty"`
+
+	// READ-ONLY; The provisioning state of the express route circuit resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
 	// READ-ONLY; The identifier of the circuit traffic. Outer tag for QinQ encapsulation.
 	Stag *int32 `json:"stag,omitempty" azure:"ro"`
@@ -6138,7 +6138,7 @@ type ExpressRouteCircuitsUpdateTagsOptions struct {
 // ExpressRouteConnection resource.
 type ExpressRouteConnection struct {
 	SubResource
-	// The name of the resource.
+	// REQUIRED; The name of the resource.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of the express route connection.
@@ -6195,20 +6195,20 @@ type ExpressRouteConnectionPollerResponse struct {
 
 // ExpressRouteConnectionProperties - Properties of the ExpressRouteConnection subresource.
 type ExpressRouteConnectionProperties struct {
+	// REQUIRED; The ExpressRoute circuit peering.
+	ExpressRouteCircuitPeering *ExpressRouteCircuitPeeringID `json:"expressRouteCircuitPeering,omitempty"`
+
 	// Authorization key to establish the connection.
 	AuthorizationKey *string `json:"authorizationKey,omitempty"`
 
 	// Enable internet security.
 	EnableInternetSecurity *bool `json:"enableInternetSecurity,omitempty"`
 
-	// The ExpressRoute circuit peering.
-	ExpressRouteCircuitPeering *ExpressRouteCircuitPeeringID `json:"expressRouteCircuitPeering,omitempty"`
+	// The routing weight associated to the connection.
+	RoutingWeight *int32 `json:"routingWeight,omitempty"`
 
 	// READ-ONLY; The provisioning state of the express route connection resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
-	// The routing weight associated to the connection.
-	RoutingWeight *int32 `json:"routingWeight,omitempty"`
 }
 
 // ExpressRouteConnectionResponse is the response envelope for operations that return a ExpressRouteConnection type.
@@ -6243,11 +6243,11 @@ type ExpressRouteConnectionsListOptions struct {
 // ExpressRouteCrossConnection resource.
 type ExpressRouteCrossConnection struct {
 	Resource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Properties of the express route cross connection.
 	Properties *ExpressRouteCrossConnectionProperties `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ExpressRouteCrossConnection.
@@ -6260,11 +6260,11 @@ func (e ExpressRouteCrossConnection) MarshalJSON() ([]byte, error) {
 
 // ExpressRouteCrossConnectionListResult - Response for ListExpressRouteCrossConnection API service call.
 type ExpressRouteCrossConnectionListResult struct {
-	// READ-ONLY; The URL to get the next set of results.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
-
 	// A list of ExpressRouteCrossConnection resources.
 	Value []*ExpressRouteCrossConnection `json:"value,omitempty"`
+
+	// READ-ONLY; The URL to get the next set of results.
+	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ExpressRouteCrossConnectionListResult.
@@ -6287,14 +6287,14 @@ type ExpressRouteCrossConnectionListResultResponse struct {
 // ExpressRouteCrossConnectionPeering - Peering in an ExpressRoute Cross Connection resource.
 type ExpressRouteCrossConnectionPeering struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// The name of the resource that is unique within a resource group. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of the express route cross connection peering.
 	Properties *ExpressRouteCrossConnectionPeeringProperties `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ExpressRouteCrossConnectionPeering.
@@ -6308,11 +6308,11 @@ func (e ExpressRouteCrossConnectionPeering) MarshalJSON() ([]byte, error) {
 
 // ExpressRouteCrossConnectionPeeringList - Response for ListPeering API service call retrieves all peerings that belong to an ExpressRouteCrossConnection.
 type ExpressRouteCrossConnectionPeeringList struct {
-	// READ-ONLY; The URL to get the next set of results.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
-
 	// The peerings in an express route cross connection.
 	Value []*ExpressRouteCrossConnectionPeering `json:"value,omitempty"`
+
+	// READ-ONLY; The URL to get the next set of results.
+	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ExpressRouteCrossConnectionPeeringList.
@@ -6347,17 +6347,11 @@ type ExpressRouteCrossConnectionPeeringPollerResponse struct {
 
 // ExpressRouteCrossConnectionPeeringProperties - Properties of express route cross connection peering.
 type ExpressRouteCrossConnectionPeeringProperties struct {
-	// READ-ONLY; The Azure ASN.
-	AzureASN *int32 `json:"azureASN,omitempty" azure:"ro"`
-
 	// The GatewayManager Etag.
 	GatewayManagerEtag *string `json:"gatewayManagerEtag,omitempty"`
 
 	// The IPv6 peering configuration.
 	IPv6PeeringConfig *IPv6ExpressRouteCircuitPeeringConfig `json:"ipv6PeeringConfig,omitempty"`
-
-	// READ-ONLY; Who was the last to modify the peering.
-	LastModifiedBy *string `json:"lastModifiedBy,omitempty" azure:"ro"`
 
 	// The Microsoft peering configuration.
 	MicrosoftPeeringConfig *ExpressRouteCircuitPeeringConfig `json:"microsoftPeeringConfig,omitempty"`
@@ -6368,17 +6362,8 @@ type ExpressRouteCrossConnectionPeeringProperties struct {
 	// The peering type.
 	PeeringType *ExpressRoutePeeringType `json:"peeringType,omitempty"`
 
-	// READ-ONLY; The primary port.
-	PrimaryAzurePort *string `json:"primaryAzurePort,omitempty" azure:"ro"`
-
 	// The primary address prefix.
 	PrimaryPeerAddressPrefix *string `json:"primaryPeerAddressPrefix,omitempty"`
-
-	// READ-ONLY; The provisioning state of the express route cross connection peering resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
-	// READ-ONLY; The secondary port.
-	SecondaryAzurePort *string `json:"secondaryAzurePort,omitempty" azure:"ro"`
 
 	// The secondary address prefix.
 	SecondaryPeerAddressPrefix *string `json:"secondaryPeerAddressPrefix,omitempty"`
@@ -6391,6 +6376,21 @@ type ExpressRouteCrossConnectionPeeringProperties struct {
 
 	// The VLAN ID.
 	VlanID *int32 `json:"vlanId,omitempty"`
+
+	// READ-ONLY; The Azure ASN.
+	AzureASN *int32 `json:"azureASN,omitempty" azure:"ro"`
+
+	// READ-ONLY; Who was the last to modify the peering.
+	LastModifiedBy *string `json:"lastModifiedBy,omitempty" azure:"ro"`
+
+	// READ-ONLY; The primary port.
+	PrimaryAzurePort *string `json:"primaryAzurePort,omitempty" azure:"ro"`
+
+	// READ-ONLY; The provisioning state of the express route cross connection peering resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
+
+	// READ-ONLY; The secondary port.
+	SecondaryAzurePort *string `json:"secondaryAzurePort,omitempty" azure:"ro"`
 }
 
 // ExpressRouteCrossConnectionPeeringResponse is the response envelope for operations that return a ExpressRouteCrossConnectionPeering type.
@@ -6449,6 +6449,12 @@ type ExpressRouteCrossConnectionProperties struct {
 	// The list of peerings.
 	Peerings []*ExpressRouteCrossConnectionPeering `json:"peerings,omitempty"`
 
+	// Additional read only notes set by the connectivity provider.
+	ServiceProviderNotes *string `json:"serviceProviderNotes,omitempty"`
+
+	// The provisioning state of the circuit in the connectivity provider system.
+	ServiceProviderProvisioningState *ServiceProviderProvisioningState `json:"serviceProviderProvisioningState,omitempty"`
+
 	// READ-ONLY; The name of the primary port.
 	PrimaryAzurePort *string `json:"primaryAzurePort,omitempty" azure:"ro"`
 
@@ -6460,12 +6466,6 @@ type ExpressRouteCrossConnectionProperties struct {
 
 	// READ-ONLY; The name of the secondary port.
 	SecondaryAzurePort *string `json:"secondaryAzurePort,omitempty" azure:"ro"`
-
-	// Additional read only notes set by the connectivity provider.
-	ServiceProviderNotes *string `json:"serviceProviderNotes,omitempty"`
-
-	// The provisioning state of the circuit in the connectivity provider system.
-	ServiceProviderProvisioningState *ServiceProviderProvisioningState `json:"serviceProviderProvisioningState,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ExpressRouteCrossConnectionProperties.
@@ -6546,11 +6546,11 @@ type ExpressRouteCrossConnectionsListOptions struct {
 
 // ExpressRouteCrossConnectionsRoutesTableSummaryListResult - Response for ListRoutesTable associated with the Express Route Cross Connections.
 type ExpressRouteCrossConnectionsRoutesTableSummaryListResult struct {
-	// READ-ONLY; The URL to get the next set of results.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
-
 	// A list of the routes table.
 	Value []*ExpressRouteCrossConnectionRoutesTableSummary `json:"value,omitempty"`
+
+	// READ-ONLY; The URL to get the next set of results.
+	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ExpressRouteCrossConnectionsRoutesTableSummaryListResult.
@@ -6592,11 +6592,11 @@ type ExpressRouteCrossConnectionsUpdateTagsOptions struct {
 // ExpressRouteGateway - ExpressRoute gateway resource.
 type ExpressRouteGateway struct {
 	Resource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Properties of the express route gateway.
 	Properties *ExpressRouteGatewayProperties `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ExpressRouteGateway.
@@ -6643,6 +6643,9 @@ type ExpressRouteGatewayPollerResponse struct {
 
 // ExpressRouteGatewayProperties - ExpressRoute gateway resource properties.
 type ExpressRouteGatewayProperties struct {
+	// REQUIRED; The Virtual Hub where the ExpressRoute gateway is or will be deployed.
+	VirtualHub *VirtualHubID `json:"virtualHub,omitempty"`
+
 	// Configuration for auto scaling.
 	AutoScaleConfiguration *ExpressRouteGatewayPropertiesAutoScaleConfiguration `json:"autoScaleConfiguration,omitempty"`
 
@@ -6651,9 +6654,6 @@ type ExpressRouteGatewayProperties struct {
 
 	// READ-ONLY; The provisioning state of the express route gateway resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
-	// The Virtual Hub where the ExpressRoute gateway is or will be deployed.
-	VirtualHub *VirtualHubID `json:"virtualHub,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ExpressRouteGatewayProperties.
@@ -6718,14 +6718,14 @@ type ExpressRouteGatewaysListBySubscriptionOptions struct {
 // ExpressRouteLink child resource definition.
 type ExpressRouteLink struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Name of child port resource that is unique among child port resources of the parent.
 	Name *string `json:"name,omitempty"`
 
 	// ExpressRouteLink properties.
 	Properties *ExpressRouteLinkPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ExpressRouteLink.
@@ -6780,14 +6780,14 @@ type ExpressRouteLinkPropertiesFormat struct {
 	// Administrative state of the physical port.
 	AdminState *ExpressRouteLinkAdminState `json:"adminState,omitempty"`
 
+	// MacSec configuration.
+	MacSecConfig *ExpressRouteLinkMacSecConfig `json:"macSecConfig,omitempty"`
+
 	// READ-ONLY; Physical fiber port type.
 	ConnectorType *ExpressRouteLinkConnectorType `json:"connectorType,omitempty" azure:"ro"`
 
 	// READ-ONLY; Name of Azure router interface.
 	InterfaceName *string `json:"interfaceName,omitempty" azure:"ro"`
-
-	// MacSec configuration.
-	MacSecConfig *ExpressRouteLinkMacSecConfig `json:"macSecConfig,omitempty"`
 
 	// READ-ONLY; Mapping between physical port to patch panel port.
 	PatchPanelID *string `json:"patchPanelId,omitempty" azure:"ro"`
@@ -6824,14 +6824,14 @@ type ExpressRouteLinksListOptions struct {
 // ExpressRoutePort resource definition.
 type ExpressRoutePort struct {
 	Resource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// The identity of ExpressRoutePort, if configured.
 	Identity *ManagedServiceIdentity `json:"identity,omitempty"`
 
 	// ExpressRoutePort properties.
 	Properties *ExpressRoutePortPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ExpressRoutePort.
@@ -6883,29 +6883,29 @@ type ExpressRoutePortPollerResponse struct {
 
 // ExpressRoutePortPropertiesFormat - Properties specific to ExpressRoutePort resources.
 type ExpressRoutePortPropertiesFormat struct {
-	// READ-ONLY; Date of the physical port allocation to be used in Letter of Authorization.
-	AllocationDate *string `json:"allocationDate,omitempty" azure:"ro"`
-
 	// Bandwidth of procured ports in Gbps.
 	BandwidthInGbps *int32 `json:"bandwidthInGbps,omitempty"`
-
-	// READ-ONLY; Reference the ExpressRoute circuit(s) that are provisioned on this ExpressRoutePort resource.
-	Circuits []*SubResource `json:"circuits,omitempty" azure:"ro"`
 
 	// Encapsulation method on physical ports.
 	Encapsulation *ExpressRoutePortsEncapsulation `json:"encapsulation,omitempty"`
 
-	// READ-ONLY; Ether type of the physical port.
-	EtherType *string `json:"etherType,omitempty" azure:"ro"`
-
 	// The set of physical links of the ExpressRoutePort resource.
 	Links []*ExpressRouteLink `json:"links,omitempty"`
 
-	// READ-ONLY; Maximum transmission unit of the physical port pair(s).
-	Mtu *string `json:"mtu,omitempty" azure:"ro"`
-
 	// The name of the peering location that the ExpressRoutePort is mapped to physically.
 	PeeringLocation *string `json:"peeringLocation,omitempty"`
+
+	// READ-ONLY; Date of the physical port allocation to be used in Letter of Authorization.
+	AllocationDate *string `json:"allocationDate,omitempty" azure:"ro"`
+
+	// READ-ONLY; Reference the ExpressRoute circuit(s) that are provisioned on this ExpressRoutePort resource.
+	Circuits []*SubResource `json:"circuits,omitempty" azure:"ro"`
+
+	// READ-ONLY; Ether type of the physical port.
+	EtherType *string `json:"etherType,omitempty" azure:"ro"`
+
+	// READ-ONLY; Maximum transmission unit of the physical port pair(s).
+	Mtu *string `json:"mtu,omitempty" azure:"ro"`
 
 	// READ-ONLY; Aggregate Gbps of associated circuit bandwidths.
 	ProvisionedBandwidthInGbps *float32 `json:"provisionedBandwidthInGbps,omitempty" azure:"ro"`
@@ -7019,11 +7019,11 @@ type ExpressRoutePortsLocationListResultResponse struct {
 
 // ExpressRoutePortsLocationPropertiesFormat - Properties specific to ExpressRoutePorts peering location resources.
 type ExpressRoutePortsLocationPropertiesFormat struct {
-	// READ-ONLY; Address of peering location.
-	Address *string `json:"address,omitempty" azure:"ro"`
-
 	// The inventory of available ExpressRoutePort bandwidths.
 	AvailableBandwidths []*ExpressRoutePortsLocationBandwidths `json:"availableBandwidths,omitempty"`
+
+	// READ-ONLY; Address of peering location.
+	Address *string `json:"address,omitempty" azure:"ro"`
 
 	// READ-ONLY; Contact details of peering locations.
 	Contact *string `json:"contact,omitempty" azure:"ro"`
@@ -7170,11 +7170,11 @@ type FirewallPoliciesListOptions struct {
 // FirewallPolicy Resource.
 type FirewallPolicy struct {
 	Resource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Properties of the firewall policy.
 	Properties *FirewallPolicyPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type FirewallPolicy.
@@ -7336,6 +7336,9 @@ type FirewallPolicyPropertiesFormat struct {
 	// The parent firewall policy from which rules are inherited.
 	BasePolicy *SubResource `json:"basePolicy,omitempty"`
 
+	// The operation mode for Threat Intelligence.
+	ThreatIntelMode *AzureFirewallThreatIntelMode `json:"threatIntelMode,omitempty"`
+
 	// READ-ONLY; List of references to Child Firewall Policies.
 	ChildPolicies []*SubResource `json:"childPolicies,omitempty" azure:"ro"`
 
@@ -7347,9 +7350,6 @@ type FirewallPolicyPropertiesFormat struct {
 
 	// READ-ONLY; List of references to FirewallPolicyRuleGroups.
 	RuleGroups []*SubResource `json:"ruleGroups,omitempty" azure:"ro"`
-
-	// The operation mode for Threat Intelligence.
-	ThreatIntelMode *AzureFirewallThreatIntelMode `json:"threatIntelMode,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type FirewallPolicyPropertiesFormat.
@@ -7384,14 +7384,14 @@ type FirewallPolicyRuleClassification interface {
 
 // FirewallPolicyRule - Properties of the rule.
 type FirewallPolicyRule struct {
+	// REQUIRED; The type of the rule.
+	RuleType *FirewallPolicyRuleType `json:"ruleType,omitempty"`
+
 	// The name of the rule.
 	Name *string `json:"name,omitempty"`
 
 	// Priority of the Firewall Policy Rule resource.
 	Priority *int32 `json:"priority,omitempty"`
-
-	// The type of the rule.
-	RuleType *FirewallPolicyRuleType `json:"ruleType,omitempty"`
 }
 
 // GetFirewallPolicyRule implements the FirewallPolicyRuleClassification interface for type FirewallPolicyRule.
@@ -7447,14 +7447,14 @@ type FirewallPolicyRuleConditionClassification interface {
 
 // FirewallPolicyRuleCondition - Properties of a rule.
 type FirewallPolicyRuleCondition struct {
+	// REQUIRED; Rule Condition Type.
+	RuleConditionType *FirewallPolicyRuleConditionType `json:"ruleConditionType,omitempty"`
+
 	// Description of the rule condition.
 	Description *string `json:"description,omitempty"`
 
 	// Name of the rule condition.
 	Name *string `json:"name,omitempty"`
-
-	// Rule Condition Type.
-	RuleConditionType *FirewallPolicyRuleConditionType `json:"ruleConditionType,omitempty"`
 }
 
 // GetFirewallPolicyRuleCondition implements the FirewallPolicyRuleConditionClassification interface for type FirewallPolicyRuleCondition.
@@ -7513,14 +7513,14 @@ type FirewallPolicyRuleConditionApplicationProtocol struct {
 // FirewallPolicyRuleGroup - Rule Group resource.
 type FirewallPolicyRuleGroup struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// The name of the resource that is unique within a resource group. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
 	// The properties of the firewall policy rule group.
 	Properties *FirewallPolicyRuleGroupProperties `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 
 	// READ-ONLY; Rule Group type.
 	Type *string `json:"type,omitempty" azure:"ro"`
@@ -7579,11 +7579,11 @@ type FirewallPolicyRuleGroupProperties struct {
 	// Priority of the Firewall Policy Rule Group resource.
 	Priority *int32 `json:"priority,omitempty"`
 
-	// READ-ONLY; The provisioning state of the firewall policy rule group resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
 	// Group of Firewall Policy rules.
 	Rules []FirewallPolicyRuleClassification `json:"rules,omitempty"`
+
+	// READ-ONLY; The provisioning state of the firewall policy rule group resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type FirewallPolicyRuleGroupProperties.
@@ -7653,11 +7653,11 @@ type FirewallPolicyRuleGroupsListOptions struct {
 // FlowLog - A flow log resource.
 type FlowLog struct {
 	Resource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Properties of the flow log.
 	Properties *FlowLogPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type FlowLog.
@@ -7679,14 +7679,14 @@ type FlowLogFormatParameters struct {
 
 // FlowLogInformation - Information on the configuration of flow log and traffic analytics (optional) .
 type FlowLogInformation struct {
-	// Parameters that define the configuration of traffic analytics.
-	FlowAnalyticsConfiguration *TrafficAnalyticsProperties `json:"flowAnalyticsConfiguration,omitempty"`
-
-	// Properties of the flow log.
+	// REQUIRED; Properties of the flow log.
 	Properties *FlowLogProperties `json:"properties,omitempty"`
 
-	// The ID of the resource to configure for flow log and traffic analytics (optional) .
+	// REQUIRED; The ID of the resource to configure for flow log and traffic analytics (optional) .
 	TargetResourceID *string `json:"targetResourceId,omitempty"`
+
+	// Parameters that define the configuration of traffic analytics.
+	FlowAnalyticsConfiguration *TrafficAnalyticsProperties `json:"flowAnalyticsConfiguration,omitempty"`
 }
 
 // FlowLogInformationPollerResponse is the response envelope for operations that asynchronously return a FlowLogInformation type.
@@ -7712,11 +7712,11 @@ type FlowLogInformationResponse struct {
 
 // FlowLogListResult - List of flow logs.
 type FlowLogListResult struct {
-	// READ-ONLY; The URL to get the next set of results.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
-
 	// Information about flow log resource.
 	Value []*FlowLog `json:"value,omitempty"`
+
+	// READ-ONLY; The URL to get the next set of results.
+	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type FlowLogListResult.
@@ -7750,21 +7750,27 @@ type FlowLogPollerResponse struct {
 
 // FlowLogProperties - Parameters that define the configuration of flow log.
 type FlowLogProperties struct {
-	// Flag to enable/disable flow logging.
+	// REQUIRED; Flag to enable/disable flow logging.
 	Enabled *bool `json:"enabled,omitempty"`
+
+	// REQUIRED; ID of the storage account which is used to store the flow log.
+	StorageID *string `json:"storageId,omitempty"`
 
 	// Parameters that define the flow log format.
 	Format *FlowLogFormatParameters `json:"format,omitempty"`
 
 	// Parameters that define the retention policy for flow log.
 	RetentionPolicy *RetentionPolicyParameters `json:"retentionPolicy,omitempty"`
-
-	// ID of the storage account which is used to store the flow log.
-	StorageID *string `json:"storageId,omitempty"`
 }
 
 // FlowLogPropertiesFormat - Parameters that define the configuration of flow log.
 type FlowLogPropertiesFormat struct {
+	// REQUIRED; ID of the storage account which is used to store the flow log.
+	StorageID *string `json:"storageId,omitempty"`
+
+	// REQUIRED; ID of network security group to which flow log will be applied.
+	TargetResourceID *string `json:"targetResourceId,omitempty"`
+
 	// Flag to enable/disable flow logging.
 	Enabled *bool `json:"enabled,omitempty"`
 
@@ -7774,20 +7780,14 @@ type FlowLogPropertiesFormat struct {
 	// Parameters that define the flow log format.
 	Format *FlowLogFormatParameters `json:"format,omitempty"`
 
-	// READ-ONLY; The provisioning state of the flow log.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
 	// Parameters that define the retention policy for flow log.
 	RetentionPolicy *RetentionPolicyParameters `json:"retentionPolicy,omitempty"`
 
-	// ID of the storage account which is used to store the flow log.
-	StorageID *string `json:"storageId,omitempty"`
+	// READ-ONLY; The provisioning state of the flow log.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
 	// READ-ONLY; Guid of network security group to which flow log will be applied.
 	TargetResourceGUID *string `json:"targetResourceGuid,omitempty" azure:"ro"`
-
-	// ID of network security group to which flow log will be applied.
-	TargetResourceID *string `json:"targetResourceId,omitempty"`
 }
 
 // FlowLogResponse is the response envelope for operations that return a FlowLog type.
@@ -7801,7 +7801,7 @@ type FlowLogResponse struct {
 
 // FlowLogStatusParameters - Parameters that define a resource to query flow log and traffic analytics (optional) status.
 type FlowLogStatusParameters struct {
-	// The target resource where getting the flow log and traffic analytics (optional) status.
+	// REQUIRED; The target resource where getting the flow log and traffic analytics (optional) status.
 	TargetResourceID *string `json:"targetResourceId,omitempty"`
 }
 
@@ -7828,20 +7828,20 @@ type FlowLogsListOptions struct {
 // FrontendIPConfiguration - Frontend IP address of the load balancer.
 type FrontendIPConfiguration struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// The name of the resource that is unique within the set of frontend IP configurations used by the load balancer. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of the load balancer probe.
 	Properties *FrontendIPConfigurationPropertiesFormat `json:"properties,omitempty"`
 
-	// READ-ONLY; Type of the resource.
-	Type *string `json:"type,omitempty" azure:"ro"`
-
 	// A list of availability zones denoting the IP allocated for the resource needs to come from.
 	Zones []*string `json:"zones,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
+
+	// READ-ONLY; Type of the resource.
+	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type FrontendIPConfiguration.
@@ -7857,6 +7857,24 @@ func (f FrontendIPConfiguration) MarshalJSON() ([]byte, error) {
 
 // FrontendIPConfigurationPropertiesFormat - Properties of Frontend IP Configuration of the load balancer.
 type FrontendIPConfigurationPropertiesFormat struct {
+	// The private IP address of the IP configuration.
+	PrivateIPAddress *string `json:"privateIPAddress,omitempty"`
+
+	// Whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4.
+	PrivateIPAddressVersion *IPVersion `json:"privateIPAddressVersion,omitempty"`
+
+	// The Private IP allocation method.
+	PrivateIPAllocationMethod *IPAllocationMethod `json:"privateIPAllocationMethod,omitempty"`
+
+	// The reference to the Public IP resource.
+	PublicIPAddress *PublicIPAddress `json:"publicIPAddress,omitempty"`
+
+	// The reference to the Public IP Prefix resource.
+	PublicIPPrefix *SubResource `json:"publicIPPrefix,omitempty"`
+
+	// The reference to the subnet resource.
+	Subnet *Subnet `json:"subnet,omitempty"`
+
 	// READ-ONLY; An array of references to inbound pools that use this frontend IP.
 	InboundNatPools []*SubResource `json:"inboundNatPools,omitempty" azure:"ro"`
 
@@ -7869,26 +7887,8 @@ type FrontendIPConfigurationPropertiesFormat struct {
 	// READ-ONLY; An array of references to outbound rules that use this frontend IP.
 	OutboundRules []*SubResource `json:"outboundRules,omitempty" azure:"ro"`
 
-	// The private IP address of the IP configuration.
-	PrivateIPAddress *string `json:"privateIPAddress,omitempty"`
-
-	// Whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4.
-	PrivateIPAddressVersion *IPVersion `json:"privateIPAddressVersion,omitempty"`
-
-	// The Private IP allocation method.
-	PrivateIPAllocationMethod *IPAllocationMethod `json:"privateIPAllocationMethod,omitempty"`
-
 	// READ-ONLY; The provisioning state of the frontend IP configuration resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
-	// The reference to the Public IP resource.
-	PublicIPAddress *PublicIPAddress `json:"publicIPAddress,omitempty"`
-
-	// The reference to the Public IP Prefix resource.
-	PublicIPPrefix *SubResource `json:"publicIPPrefix,omitempty"`
-
-	// The reference to the subnet resource.
-	Subnet *Subnet `json:"subnet,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type FrontendIPConfigurationPropertiesFormat.
@@ -7977,7 +7977,7 @@ type GatewayRouteListResultResponse struct {
 
 // GetVPNSitesConfigurationRequest - List of Vpn-Sites.
 type GetVPNSitesConfigurationRequest struct {
-	// The sas-url to download the configurations for vpn-sites.
+	// REQUIRED; The sas-url to download the configurations for vpn-sites.
 	OutputBlobSasURL *string `json:"outputBlobSasUrl,omitempty"`
 
 	// List of resource-ids of the vpn-sites for which config is to be downloaded.
@@ -8054,14 +8054,14 @@ func (h HubIPAddresses) MarshalJSON() ([]byte, error) {
 // HubVirtualNetworkConnection Resource.
 type HubVirtualNetworkConnection struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// The name of the resource that is unique within a resource group. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of the hub virtual network connection.
 	Properties *HubVirtualNetworkConnectionProperties `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type HubVirtualNetworkConnection.
@@ -8084,11 +8084,11 @@ type HubVirtualNetworkConnectionProperties struct {
 	// Enable internet security.
 	EnableInternetSecurity *bool `json:"enableInternetSecurity,omitempty"`
 
-	// READ-ONLY; The provisioning state of the hub virtual network connection resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
 	// Reference to the remote virtual network.
 	RemoteVirtualNetwork *SubResource `json:"remoteVirtualNetwork,omitempty"`
+
+	// READ-ONLY; The provisioning state of the hub virtual network connection resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
 // HubVirtualNetworkConnectionResponse is the response envelope for operations that return a HubVirtualNetworkConnection type.
@@ -8139,11 +8139,11 @@ type IPAddressAvailabilityResultResponse struct {
 // IPAllocation - IpAllocation resource.
 type IPAllocation struct {
 	Resource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Properties of the IpAllocation.
 	Properties *IPAllocationPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type IPAllocation.
@@ -8209,11 +8209,11 @@ type IPAllocationPropertiesFormat struct {
 	// The address prefix Type for the IpAllocation.
 	PrefixType *IPVersion `json:"prefixType,omitempty"`
 
-	// READ-ONLY; The Subnet that using the prefix of this IpAllocation resource.
-	Subnet *SubResource `json:"subnet,omitempty" azure:"ro"`
-
 	// The type for the IpAllocation.
 	Type *IPAllocationType `json:"type,omitempty"`
+
+	// READ-ONLY; The Subnet that using the prefix of this IpAllocation resource.
+	Subnet *SubResource `json:"subnet,omitempty" azure:"ro"`
 
 	// READ-ONLY; The VirtualNetwork that using the prefix of this IpAllocation resource.
 	VirtualNetwork *SubResource `json:"virtualNetwork,omitempty" azure:"ro"`
@@ -8276,14 +8276,14 @@ type IPAllocationsUpdateTagsOptions struct {
 // IPConfiguration - IP configuration.
 type IPConfiguration struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// The name of the resource that is unique within a resource group. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of the IP configuration.
 	Properties *IPConfigurationPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type IPConfiguration.
@@ -8300,11 +8300,11 @@ type IPConfigurationBgpPeeringAddress struct {
 	// The list of custom BGP peering addresses which belong to IP configuration.
 	CustomBgpIPAddresses []*string `json:"customBgpIpAddresses,omitempty"`
 
-	// READ-ONLY; The list of default BGP peering addresses which belong to IP configuration.
-	DefaultBgpIPAddresses []*string `json:"defaultBgpIpAddresses,omitempty" azure:"ro"`
-
 	// The ID of IP configuration which belongs to gateway.
 	IPConfigurationID *string `json:"ipconfigurationId,omitempty"`
+
+	// READ-ONLY; The list of default BGP peering addresses which belong to IP configuration.
+	DefaultBgpIPAddresses []*string `json:"defaultBgpIpAddresses,omitempty" azure:"ro"`
 
 	// READ-ONLY; The list of tunnel public IP addresses which belong to IP configuration.
 	TunnelIPAddresses []*string `json:"tunnelIpAddresses,omitempty" azure:"ro"`
@@ -8323,14 +8323,14 @@ func (i IPConfigurationBgpPeeringAddress) MarshalJSON() ([]byte, error) {
 // IPConfigurationProfile - IP configuration profile child resource.
 type IPConfigurationProfile struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// The name of the resource. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of the IP configuration profile.
 	Properties *IPConfigurationProfilePropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 
 	// READ-ONLY; Sub Resource type.
 	Type *string `json:"type,omitempty" azure:"ro"`
@@ -8348,11 +8348,11 @@ func (i IPConfigurationProfile) MarshalJSON() ([]byte, error) {
 
 // IPConfigurationProfilePropertiesFormat - IP configuration profile properties.
 type IPConfigurationProfilePropertiesFormat struct {
-	// READ-ONLY; The provisioning state of the IP configuration profile resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
 	// The reference to the subnet resource to create a container network interface ip configuration.
 	Subnet *Subnet `json:"subnet,omitempty"`
+
+	// READ-ONLY; The provisioning state of the IP configuration profile resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
 // IPConfigurationPropertiesFormat - Properties of IP configuration.
@@ -8363,24 +8363,24 @@ type IPConfigurationPropertiesFormat struct {
 	// The private IP address allocation method.
 	PrivateIPAllocationMethod *IPAllocationMethod `json:"privateIPAllocationMethod,omitempty"`
 
-	// READ-ONLY; The provisioning state of the IP configuration resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
 	// The reference to the public IP resource.
 	PublicIPAddress *PublicIPAddress `json:"publicIPAddress,omitempty"`
 
 	// The reference to the subnet resource.
 	Subnet *Subnet `json:"subnet,omitempty"`
+
+	// READ-ONLY; The provisioning state of the IP configuration resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
 // IPGroup - The IpGroups resource information.
 type IPGroup struct {
 	Resource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Properties of the IpGroups.
 	Properties *IPGroupPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type IPGroup.
@@ -8431,11 +8431,11 @@ type IPGroupPollerResponse struct {
 
 // IPGroupPropertiesFormat - The IpGroups property information.
 type IPGroupPropertiesFormat struct {
-	// READ-ONLY; List of references to Azure resources that this IpGroups is associated with.
-	Firewalls []*SubResource `json:"firewalls,omitempty" azure:"ro"`
-
 	// IpAddresses/IpAddressPrefixes in the IpGroups resource.
 	IPAddresses []*string `json:"ipAddresses,omitempty"`
+
+	// READ-ONLY; List of references to Azure resources that this IpGroups is associated with.
+	Firewalls []*SubResource `json:"firewalls,omitempty" azure:"ro"`
 
 	// READ-ONLY; The provisioning state of the IpGroups resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
@@ -8492,28 +8492,28 @@ type IPGroupsUpdateGroupsOptions struct {
 
 // IPSecPolicy - An IPSec Policy configuration for a virtual network gateway connection.
 type IPSecPolicy struct {
-	// The DH Group used in IKE Phase 1 for initial SA.
+	// REQUIRED; The DH Group used in IKE Phase 1 for initial SA.
 	DhGroup *DhGroup `json:"dhGroup,omitempty"`
 
-	// The IPSec encryption algorithm (IKE phase 1).
+	// REQUIRED; The IPSec encryption algorithm (IKE phase 1).
 	IPSecEncryption *IPSecEncryption `json:"ipsecEncryption,omitempty"`
 
-	// The IPSec integrity algorithm (IKE phase 1).
+	// REQUIRED; The IPSec integrity algorithm (IKE phase 1).
 	IPSecIntegrity *IPSecIntegrity `json:"ipsecIntegrity,omitempty"`
 
-	// The IKE encryption algorithm (IKE phase 2).
+	// REQUIRED; The IKE encryption algorithm (IKE phase 2).
 	IkeEncryption *IkeEncryption `json:"ikeEncryption,omitempty"`
 
-	// The IKE integrity algorithm (IKE phase 2).
+	// REQUIRED; The IKE integrity algorithm (IKE phase 2).
 	IkeIntegrity *IkeIntegrity `json:"ikeIntegrity,omitempty"`
 
-	// The Pfs Group used in IKE Phase 2 for new child SA.
+	// REQUIRED; The Pfs Group used in IKE Phase 2 for new child SA.
 	PfsGroup *PfsGroup `json:"pfsGroup,omitempty"`
 
-	// The IPSec Security Association (also called Quick Mode or Phase 2 SA) payload size in KB for a site to site VPN tunnel.
+	// REQUIRED; The IPSec Security Association (also called Quick Mode or Phase 2 SA) payload size in KB for a site to site VPN tunnel.
 	SaDataSizeKilobytes *int32 `json:"saDataSizeKilobytes,omitempty"`
 
-	// The IPSec Security Association (also called Quick Mode or Phase 2 SA) lifetime in seconds for a site to site VPN tunnel.
+	// REQUIRED; The IPSec Security Association (also called Quick Mode or Phase 2 SA) lifetime in seconds for a site to site VPN tunnel.
 	SaLifeTimeSeconds *int32 `json:"saLifeTimeSeconds,omitempty"`
 }
 
@@ -8556,14 +8556,14 @@ type IPv6ExpressRouteCircuitPeeringConfig struct {
 // InboundNatPool - Inbound NAT pool of the load balancer.
 type InboundNatPool struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// The name of the resource that is unique within the set of inbound NAT pools used by the load balancer. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of load balancer inbound nat pool.
 	Properties *InboundNatPoolPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 
 	// READ-ONLY; Type of the resource.
 	Type *string `json:"type,omitempty" azure:"ro"`
@@ -8581,8 +8581,19 @@ func (i InboundNatPool) MarshalJSON() ([]byte, error) {
 
 // InboundNatPoolPropertiesFormat - Properties of Inbound NAT pool.
 type InboundNatPoolPropertiesFormat struct {
-	// The port used for internal connections on the endpoint. Acceptable values are between 1 and 65535.
+	// REQUIRED; The port used for internal connections on the endpoint. Acceptable values are between 1 and 65535.
 	BackendPort *int32 `json:"backendPort,omitempty"`
+
+	// REQUIRED; The last port number in the range of external ports that will be used to provide Inbound Nat to NICs associated with a load balancer. Acceptable
+	// values range between 1 and 65535.
+	FrontendPortRangeEnd *int32 `json:"frontendPortRangeEnd,omitempty"`
+
+	// REQUIRED; The first port number in the range of external ports that will be used to provide Inbound Nat to NICs associated with a load balancer. Acceptable
+	// values range between 1 and 65534.
+	FrontendPortRangeStart *int32 `json:"frontendPortRangeStart,omitempty"`
+
+	// REQUIRED; The reference to the transport protocol used by the inbound NAT pool.
+	Protocol *TransportProtocol `json:"protocol,omitempty"`
 
 	// Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability Group. This setting is required
 	// when using the SQL AlwaysOn Availability Groups
@@ -8596,20 +8607,9 @@ type InboundNatPoolPropertiesFormat struct {
 	// A reference to frontend IP addresses.
 	FrontendIPConfiguration *SubResource `json:"frontendIPConfiguration,omitempty"`
 
-	// The last port number in the range of external ports that will be used to provide Inbound Nat to NICs associated with a load balancer. Acceptable values
-	// range between 1 and 65535.
-	FrontendPortRangeEnd *int32 `json:"frontendPortRangeEnd,omitempty"`
-
-	// The first port number in the range of external ports that will be used to provide Inbound Nat to NICs associated with a load balancer. Acceptable values
-	// range between 1 and 65534.
-	FrontendPortRangeStart *int32 `json:"frontendPortRangeStart,omitempty"`
-
 	// The timeout for the TCP idle connection. The value can be set between 4 and 30 minutes. The default value is 4 minutes. This element is only used when
 	// the protocol is set to TCP.
 	IdleTimeoutInMinutes *int32 `json:"idleTimeoutInMinutes,omitempty"`
-
-	// The reference to the transport protocol used by the inbound NAT pool.
-	Protocol *TransportProtocol `json:"protocol,omitempty"`
 
 	// READ-ONLY; The provisioning state of the inbound NAT pool resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
@@ -8618,14 +8618,14 @@ type InboundNatPoolPropertiesFormat struct {
 // InboundNatRule - Inbound NAT rule of the load balancer.
 type InboundNatRule struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// The name of the resource that is unique within the set of inbound NAT rules used by the load balancer. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of load balancer inbound nat rule.
 	Properties *InboundNatRulePropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 
 	// READ-ONLY; Type of the resource.
 	Type *string `json:"type,omitempty" azure:"ro"`
@@ -8643,11 +8643,11 @@ func (i InboundNatRule) MarshalJSON() ([]byte, error) {
 
 // InboundNatRuleListResult - Response for ListInboundNatRule API service call.
 type InboundNatRuleListResult struct {
-	// READ-ONLY; The URL to get the next set of results.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
-
 	// A list of inbound nat rules in a load balancer.
 	Value []*InboundNatRule `json:"value,omitempty"`
+
+	// READ-ONLY; The URL to get the next set of results.
+	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type InboundNatRuleListResult.
@@ -8681,10 +8681,6 @@ type InboundNatRulePollerResponse struct {
 
 // InboundNatRulePropertiesFormat - Properties of the inbound NAT rule.
 type InboundNatRulePropertiesFormat struct {
-	// READ-ONLY; A reference to a private IP address defined on a network interface of a VM. Traffic sent to the frontend port of each of the frontend IP configurations
-	// is forwarded to the backend IP.
-	BackendIPConfiguration *NetworkInterfaceIPConfiguration `json:"backendIPConfiguration,omitempty" azure:"ro"`
-
 	// The port used for the internal endpoint. Acceptable values range from 1 to 65535.
 	BackendPort *int32 `json:"backendPort,omitempty"`
 
@@ -8709,6 +8705,10 @@ type InboundNatRulePropertiesFormat struct {
 
 	// The reference to the transport protocol used by the load balancing rule.
 	Protocol *TransportProtocol `json:"protocol,omitempty"`
+
+	// READ-ONLY; A reference to a private IP address defined on a network interface of a VM. Traffic sent to the frontend port of each of the frontend IP configurations
+	// is forwarded to the backend IP.
+	BackendIPConfiguration *NetworkInterfaceIPConfiguration `json:"backendIPConfiguration,omitempty" azure:"ro"`
 
 	// READ-ONLY; The provisioning state of the inbound NAT rule resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
@@ -9039,14 +9039,14 @@ type ListVirtualWANsResultResponse struct {
 // LoadBalancer resource.
 type LoadBalancer struct {
 	Resource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Properties of load balancer.
 	Properties *LoadBalancerPropertiesFormat `json:"properties,omitempty"`
 
 	// The load balancer SKU.
 	SKU *LoadBalancerSKU `json:"sku,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type LoadBalancer.
@@ -9060,11 +9060,11 @@ func (l LoadBalancer) MarshalJSON() ([]byte, error) {
 
 // LoadBalancerBackendAddressPoolListResult - Response for ListBackendAddressPool API service call.
 type LoadBalancerBackendAddressPoolListResult struct {
-	// READ-ONLY; The URL to get the next set of results.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
-
 	// A list of backend address pools in a load balancer.
 	Value []*BackendAddressPool `json:"value,omitempty"`
+
+	// READ-ONLY; The URL to get the next set of results.
+	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type LoadBalancerBackendAddressPoolListResult.
@@ -9096,11 +9096,11 @@ type LoadBalancerBackendAddressPoolsListOptions struct {
 
 // LoadBalancerFrontendIPConfigurationListResult - Response for ListFrontendIPConfiguration API service call.
 type LoadBalancerFrontendIPConfigurationListResult struct {
-	// READ-ONLY; The URL to get the next set of results.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
-
 	// A list of frontend IP configurations in a load balancer.
 	Value []*FrontendIPConfiguration `json:"value,omitempty"`
+
+	// READ-ONLY; The URL to get the next set of results.
+	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type LoadBalancerFrontendIPConfigurationListResult.
@@ -9133,11 +9133,11 @@ type LoadBalancerFrontendIPConfigurationsListOptions struct {
 
 // LoadBalancerListResult - Response for ListLoadBalancers API service call.
 type LoadBalancerListResult struct {
-	// READ-ONLY; The URL to get the next set of results.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
-
 	// A list of load balancers in a resource group.
 	Value []*LoadBalancer `json:"value,omitempty"`
+
+	// READ-ONLY; The URL to get the next set of results.
+	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type LoadBalancerListResult.
@@ -9159,11 +9159,11 @@ type LoadBalancerListResultResponse struct {
 
 // LoadBalancerLoadBalancingRuleListResult - Response for ListLoadBalancingRule API service call.
 type LoadBalancerLoadBalancingRuleListResult struct {
-	// READ-ONLY; The URL to get the next set of results.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
-
 	// A list of load balancing rules in a load balancer.
 	Value []*LoadBalancingRule `json:"value,omitempty"`
+
+	// READ-ONLY; The URL to get the next set of results.
+	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type LoadBalancerLoadBalancingRuleListResult.
@@ -9200,11 +9200,11 @@ type LoadBalancerNetworkInterfacesListOptions struct {
 
 // LoadBalancerOutboundRuleListResult - Response for ListOutboundRule API service call.
 type LoadBalancerOutboundRuleListResult struct {
-	// READ-ONLY; The URL to get the next set of results.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
-
 	// A list of outbound rules in a load balancer.
 	Value []*OutboundRule `json:"value,omitempty"`
+
+	// READ-ONLY; The URL to get the next set of results.
+	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type LoadBalancerOutboundRuleListResult.
@@ -9248,11 +9248,11 @@ type LoadBalancerPollerResponse struct {
 
 // LoadBalancerProbeListResult - Response for ListProbe API service call.
 type LoadBalancerProbeListResult struct {
-	// READ-ONLY; The URL to get the next set of results.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
-
 	// A list of probes in a load balancer.
 	Value []*Probe `json:"value,omitempty"`
+
+	// READ-ONLY; The URL to get the next set of results.
+	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type LoadBalancerProbeListResult.
@@ -9384,14 +9384,14 @@ type LoadBalancersUpdateTagsOptions struct {
 // LoadBalancingRule - A load balancing rule for a load balancer.
 type LoadBalancingRule struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// The name of the resource that is unique within the set of load balancing rules used by the load balancer. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of load balancer load balancing rule.
 	Properties *LoadBalancingRulePropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 
 	// READ-ONLY; Type of the resource.
 	Type *string `json:"type,omitempty" azure:"ro"`
@@ -9409,6 +9409,13 @@ func (l LoadBalancingRule) MarshalJSON() ([]byte, error) {
 
 // LoadBalancingRulePropertiesFormat - Properties of the load balancer.
 type LoadBalancingRulePropertiesFormat struct {
+	// REQUIRED; The port for the external endpoint. Port numbers for each rule must be unique within the Load Balancer. Acceptable values are between 0 and
+	// 65534. Note that value 0 enables "Any Port".
+	FrontendPort *int32 `json:"frontendPort,omitempty"`
+
+	// REQUIRED; The reference to the transport protocol used by the load balancing rule.
+	Protocol *TransportProtocol `json:"protocol,omitempty"`
+
 	// A reference to a pool of DIPs. Inbound traffic is randomly load balanced across IPs in the backend IPs.
 	BackendAddressPool *SubResource `json:"backendAddressPool,omitempty"`
 
@@ -9430,10 +9437,6 @@ type LoadBalancingRulePropertiesFormat struct {
 	// A reference to frontend IP addresses.
 	FrontendIPConfiguration *SubResource `json:"frontendIPConfiguration,omitempty"`
 
-	// The port for the external endpoint. Port numbers for each rule must be unique within the Load Balancer. Acceptable values are between 0 and 65534. Note
-	// that value 0 enables "Any Port".
-	FrontendPort *int32 `json:"frontendPort,omitempty"`
-
 	// The timeout for the TCP idle connection. The value can be set between 4 and 30 minutes. The default value is 4 minutes. This element is only used when
 	// the protocol is set to TCP.
 	IdleTimeoutInMinutes *int32 `json:"idleTimeoutInMinutes,omitempty"`
@@ -9443,9 +9446,6 @@ type LoadBalancingRulePropertiesFormat struct {
 
 	// The reference to the load balancer probe used by the load balancing rule.
 	Probe *SubResource `json:"probe,omitempty"`
-
-	// The reference to the transport protocol used by the load balancing rule.
-	Protocol *TransportProtocol `json:"protocol,omitempty"`
 
 	// READ-ONLY; The provisioning state of the load balancing rule resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
@@ -9463,11 +9463,11 @@ type LoadBalancingRuleResponse struct {
 // LocalNetworkGateway - A common class for general resource information.
 type LocalNetworkGateway struct {
 	Resource
+	// REQUIRED; Properties of the local network gateway.
+	Properties *LocalNetworkGatewayPropertiesFormat `json:"properties,omitempty"`
+
 	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
 	Etag *string `json:"etag,omitempty" azure:"ro"`
-
-	// Properties of the local network gateway.
-	Properties *LocalNetworkGatewayPropertiesFormat `json:"properties,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type LocalNetworkGateway.
@@ -9480,11 +9480,11 @@ func (l LocalNetworkGateway) MarshalJSON() ([]byte, error) {
 
 // LocalNetworkGatewayListResult - Response for ListLocalNetworkGateways API service call.
 type LocalNetworkGatewayListResult struct {
-	// READ-ONLY; The URL to get the next set of results.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
-
 	// A list of local network gateways that exists in a resource group.
 	Value []*LocalNetworkGateway `json:"value,omitempty"`
+
+	// READ-ONLY; The URL to get the next set of results.
+	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type LocalNetworkGatewayListResult.
@@ -9585,7 +9585,7 @@ type LogSpecification struct {
 
 // ManagedRuleGroupOverride - Defines a managed rule group override setting.
 type ManagedRuleGroupOverride struct {
-	// The managed rule group to override.
+	// REQUIRED; The managed rule group to override.
 	RuleGroupName *string `json:"ruleGroupName,omitempty"`
 
 	// List of rules that will be disabled. If none specified, all rules in the group will be disabled.
@@ -9602,7 +9602,7 @@ func (m ManagedRuleGroupOverride) MarshalJSON() ([]byte, error) {
 
 // ManagedRuleOverride - Defines a managed rule group override setting.
 type ManagedRuleOverride struct {
-	// Identifier for the managed rule.
+	// REQUIRED; Identifier for the managed rule.
 	RuleID *string `json:"ruleId,omitempty"`
 
 	// The state of the managed rule. Defaults to Disabled if not specified.
@@ -9611,14 +9611,14 @@ type ManagedRuleOverride struct {
 
 // ManagedRuleSet - Defines a managed rule set.
 type ManagedRuleSet struct {
-	// Defines the rule group overrides to apply to the rule set.
-	RuleGroupOverrides []*ManagedRuleGroupOverride `json:"ruleGroupOverrides,omitempty"`
-
-	// Defines the rule set type to use.
+	// REQUIRED; Defines the rule set type to use.
 	RuleSetType *string `json:"ruleSetType,omitempty"`
 
-	// Defines the version of the rule set to use.
+	// REQUIRED; Defines the version of the rule set to use.
 	RuleSetVersion *string `json:"ruleSetVersion,omitempty"`
+
+	// Defines the rule group overrides to apply to the rule set.
+	RuleGroupOverrides []*ManagedRuleGroupOverride `json:"ruleGroupOverrides,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ManagedRuleSet.
@@ -9632,11 +9632,11 @@ func (m ManagedRuleSet) MarshalJSON() ([]byte, error) {
 
 // ManagedRulesDefinition - Allow to exclude some variable satisfy the condition for the WAF check.
 type ManagedRulesDefinition struct {
+	// REQUIRED; The managed rule sets that are associated with the policy.
+	ManagedRuleSets []*ManagedRuleSet `json:"managedRuleSets,omitempty"`
+
 	// The Exclusions that are applied on the policy.
 	Exclusions []*OwaspCrsExclusionEntry `json:"exclusions,omitempty"`
-
-	// The managed rule sets that are associated with the policy.
-	ManagedRuleSets []*ManagedRuleSet `json:"managedRuleSets,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ManagedRulesDefinition.
@@ -9649,12 +9649,6 @@ func (m ManagedRulesDefinition) MarshalJSON() ([]byte, error) {
 
 // ManagedServiceIdentity - Identity for the resource.
 type ManagedServiceIdentity struct {
-	// READ-ONLY; The principal id of the system assigned identity. This property will only be provided for a system assigned identity.
-	PrincipalID *string `json:"principalId,omitempty" azure:"ro"`
-
-	// READ-ONLY; The tenant id of the system assigned identity. This property will only be provided for a system assigned identity.
-	TenantID *string `json:"tenantId,omitempty" azure:"ro"`
-
 	// The type of identity used for the resource. The type 'SystemAssigned, UserAssigned' includes both an implicitly created identity and a set of user assigned
 	// identities. The type 'None' will remove any
 	// identities from the virtual machine.
@@ -9663,6 +9657,12 @@ type ManagedServiceIdentity struct {
 	// The list of user identities associated with resource. The user identity dictionary key references will be ARM resource ids in the form:
 	// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
 	UserAssignedIdentities map[string]*Components1Jq1T4ISchemasManagedserviceidentityPropertiesUserassignedidentitiesAdditionalproperties `json:"userAssignedIdentities,omitempty"`
+
+	// READ-ONLY; The principal id of the system assigned identity. This property will only be provided for a system assigned identity.
+	PrincipalID *string `json:"principalId,omitempty" azure:"ro"`
+
+	// READ-ONLY; The tenant id of the system assigned identity. This property will only be provided for a system assigned identity.
+	TenantID *string `json:"tenantId,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ManagedServiceIdentity.
@@ -9677,17 +9677,17 @@ func (m ManagedServiceIdentity) MarshalJSON() ([]byte, error) {
 
 // MatchCondition - Define match conditions.
 type MatchCondition struct {
-	// Match value.
+	// REQUIRED; Match value.
 	MatchValues []*string `json:"matchValues,omitempty"`
 
-	// List of match variables.
+	// REQUIRED; List of match variables.
 	MatchVariables []*MatchVariable `json:"matchVariables,omitempty"`
+
+	// REQUIRED; The operator to be matched.
+	Operator *WebApplicationFirewallOperator `json:"operator,omitempty"`
 
 	// Whether this is negate condition or not.
 	NegationConditon *bool `json:"negationConditon,omitempty"`
-
-	// The operator to be matched.
-	Operator *WebApplicationFirewallOperator `json:"operator,omitempty"`
 
 	// List of transforms.
 	Transforms []*WebApplicationFirewallTransform `json:"transforms,omitempty"`
@@ -9706,11 +9706,11 @@ func (m MatchCondition) MarshalJSON() ([]byte, error) {
 
 // MatchVariable - Define match variables.
 type MatchVariable struct {
+	// REQUIRED; Match Variable.
+	VariableName *WebApplicationFirewallMatchVariable `json:"variableName,omitempty"`
+
 	// The selector of match variable.
 	Selector *string `json:"selector,omitempty"`
-
-	// Match Variable.
-	VariableName *WebApplicationFirewallMatchVariable `json:"variableName,omitempty"`
 }
 
 // MatchedRule - Matched rule.
@@ -9790,9 +9790,6 @@ func (m MetricSpecification) MarshalJSON() ([]byte, error) {
 // NatGateway - Nat Gateway resource.
 type NatGateway struct {
 	Resource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Nat Gateway properties.
 	Properties *NatGatewayPropertiesFormat `json:"properties,omitempty"`
 
@@ -9801,6 +9798,9 @@ type NatGateway struct {
 
 	// A list of availability zones denoting the zone in which Nat Gateway should be deployed.
 	Zones []*string `json:"zones,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type NatGateway.
@@ -9856,14 +9856,14 @@ type NatGatewayPropertiesFormat struct {
 	// The idle timeout of the nat gateway.
 	IdleTimeoutInMinutes *int32 `json:"idleTimeoutInMinutes,omitempty"`
 
-	// READ-ONLY; The provisioning state of the NAT gateway resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
 	// An array of public ip addresses associated with the nat gateway resource.
 	PublicIPAddresses []*SubResource `json:"publicIpAddresses,omitempty"`
 
 	// An array of public ip prefixes associated with the nat gateway resource.
 	PublicIPPrefixes []*SubResource `json:"publicIpPrefixes,omitempty"`
+
+	// READ-ONLY; The provisioning state of the NAT gateway resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
 	// READ-ONLY; The resource GUID property of the NAT gateway resource.
 	ResourceGUID *string `json:"resourceGuid,omitempty" azure:"ro"`
@@ -9994,11 +9994,11 @@ func (n *NatRuleCondition) UnmarshalJSON(data []byte) error {
 
 // NetworkConfigurationDiagnosticParameters - Parameters to get network configuration diagnostic.
 type NetworkConfigurationDiagnosticParameters struct {
-	// List of network configuration diagnostic profiles.
+	// REQUIRED; List of network configuration diagnostic profiles.
 	Profiles []*NetworkConfigurationDiagnosticProfile `json:"profiles,omitempty"`
 
-	// The ID of the target resource to perform network configuration diagnostic. Valid options are VM, NetworkInterface, VMSS/NetworkInterface and Application
-	// Gateway.
+	// REQUIRED; The ID of the target resource to perform network configuration diagnostic. Valid options are VM, NetworkInterface, VMSS/NetworkInterface and
+	// Application Gateway.
 	TargetResourceID *string `json:"targetResourceId,omitempty"`
 
 	// Verbosity level.
@@ -10016,19 +10016,19 @@ func (n NetworkConfigurationDiagnosticParameters) MarshalJSON() ([]byte, error) 
 
 // NetworkConfigurationDiagnosticProfile - Parameters to compare with network configuration.
 type NetworkConfigurationDiagnosticProfile struct {
-	// Traffic destination. Accepted values are: '*', IP Address/CIDR, Service Tag.
+	// REQUIRED; Traffic destination. Accepted values are: '*', IP Address/CIDR, Service Tag.
 	Destination *string `json:"destination,omitempty"`
 
-	// Traffic destination port. Accepted values are '*' and a single port in the range (0 - 65535).
+	// REQUIRED; Traffic destination port. Accepted values are '*' and a single port in the range (0 - 65535).
 	DestinationPort *string `json:"destinationPort,omitempty"`
 
-	// The direction of the traffic.
+	// REQUIRED; The direction of the traffic.
 	Direction *Direction `json:"direction,omitempty"`
 
-	// Protocol to be verified on. Accepted values are '*', TCP, UDP.
+	// REQUIRED; Protocol to be verified on. Accepted values are '*', TCP, UDP.
 	Protocol *string `json:"protocol,omitempty"`
 
-	// Traffic source. Accepted values are '*', IP Address/CIDR, Service Tag.
+	// REQUIRED; Traffic source. Accepted values are '*', IP Address/CIDR, Service Tag.
 	Source *string `json:"source,omitempty"`
 }
 
@@ -10102,11 +10102,11 @@ type NetworkIntentPolicyConfiguration struct {
 // NetworkInterface - A network interface in a resource group.
 type NetworkInterface struct {
 	Resource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Properties of the network interface.
 	Properties *NetworkInterfacePropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type NetworkInterface.
@@ -10119,11 +10119,11 @@ func (n NetworkInterface) MarshalJSON() ([]byte, error) {
 
 // NetworkInterfaceAssociation - Network interface and its custom security rules.
 type NetworkInterfaceAssociation struct {
-	// READ-ONLY; Network interface ID.
-	ID *string `json:"id,omitempty" azure:"ro"`
-
 	// Collection of custom security rules.
 	SecurityRules []*SecurityRule `json:"securityRules,omitempty"`
+
+	// READ-ONLY; Network interface ID.
+	ID *string `json:"id,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type NetworkInterfaceAssociation.
@@ -10136,11 +10136,6 @@ func (n NetworkInterfaceAssociation) MarshalJSON() ([]byte, error) {
 
 // NetworkInterfaceDNSSettings - DNS settings of a network interface.
 type NetworkInterfaceDNSSettings struct {
-	// READ-ONLY; If the VM that uses this NIC is part of an Availability Set, then this list will have the union of all DNS servers from all NICs that are
-	// part of the Availability Set. This property is what is
-	// configured on each of those VMs.
-	AppliedDNSServers []*string `json:"appliedDnsServers,omitempty" azure:"ro"`
-
 	// List of DNS servers IP addresses. Use 'AzureProvidedDNS' to switch to azure provided DNS resolution. 'AzureProvidedDNS' value cannot be combined with
 	// other IPs, it must be the only value in dnsServers
 	// collection.
@@ -10148,6 +10143,11 @@ type NetworkInterfaceDNSSettings struct {
 
 	// Relative DNS name for this NIC used for internal communications between VMs in the same virtual network.
 	InternalDNSNameLabel *string `json:"internalDnsNameLabel,omitempty"`
+
+	// READ-ONLY; If the VM that uses this NIC is part of an Availability Set, then this list will have the union of all DNS servers from all NICs that are
+	// part of the Availability Set. This property is what is
+	// configured on each of those VMs.
+	AppliedDNSServers []*string `json:"appliedDnsServers,omitempty" azure:"ro"`
 
 	// READ-ONLY; Even if internalDnsNameLabel is not specified, a DNS entry is created for the primary NIC of the VM. This DNS name can be constructed by concatenating
 	// the VM name with the value of
@@ -10172,14 +10172,14 @@ func (n NetworkInterfaceDNSSettings) MarshalJSON() ([]byte, error) {
 // NetworkInterfaceIPConfiguration - IPConfiguration in a network interface.
 type NetworkInterfaceIPConfiguration struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// The name of the resource that is unique within a resource group. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
 	// Network interface IP configuration properties.
 	Properties *NetworkInterfaceIPConfigurationPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type NetworkInterfaceIPConfiguration.
@@ -10193,11 +10193,11 @@ func (n NetworkInterfaceIPConfiguration) MarshalJSON() ([]byte, error) {
 
 // NetworkInterfaceIPConfigurationListResult - Response for list ip configurations API service call.
 type NetworkInterfaceIPConfigurationListResult struct {
-	// READ-ONLY; The URL to get the next set of results.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
-
 	// A list of ip configurations.
 	Value []*NetworkInterfaceIPConfiguration `json:"value,omitempty"`
+
+	// READ-ONLY; The URL to get the next set of results.
+	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type NetworkInterfaceIPConfigurationListResult.
@@ -10264,12 +10264,6 @@ type NetworkInterfaceIPConfigurationPropertiesFormat struct {
 	// The private IP address allocation method.
 	PrivateIPAllocationMethod *IPAllocationMethod `json:"privateIPAllocationMethod,omitempty"`
 
-	// READ-ONLY; PrivateLinkConnection properties for the network interface.
-	PrivateLinkConnectionProperties *NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties `json:"privateLinkConnectionProperties,omitempty" azure:"ro"`
-
-	// READ-ONLY; The provisioning state of the network interface IP configuration.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
 	// Public IP address bound to the IP configuration.
 	PublicIPAddress *PublicIPAddress `json:"publicIPAddress,omitempty"`
 
@@ -10278,6 +10272,12 @@ type NetworkInterfaceIPConfigurationPropertiesFormat struct {
 
 	// The reference to Virtual Network Taps.
 	VirtualNetworkTaps []*VirtualNetworkTap `json:"virtualNetworkTaps,omitempty"`
+
+	// READ-ONLY; PrivateLinkConnection properties for the network interface.
+	PrivateLinkConnectionProperties *NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties `json:"privateLinkConnectionProperties,omitempty" azure:"ro"`
+
+	// READ-ONLY; The provisioning state of the network interface IP configuration.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type NetworkInterfaceIPConfigurationPropertiesFormat.
@@ -10320,11 +10320,11 @@ type NetworkInterfaceIPConfigurationsListOptions struct {
 
 // NetworkInterfaceListResult - Response for the ListNetworkInterface API service call.
 type NetworkInterfaceListResult struct {
-	// READ-ONLY; The URL to get the next set of results.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
-
 	// A list of network interfaces in a resource group.
 	Value []*NetworkInterface `json:"value,omitempty"`
+
+	// READ-ONLY; The URL to get the next set of results.
+	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type NetworkInterfaceListResult.
@@ -10346,11 +10346,11 @@ type NetworkInterfaceListResultResponse struct {
 
 // NetworkInterfaceLoadBalancerListResult - Response for list ip configurations API service call.
 type NetworkInterfaceLoadBalancerListResult struct {
-	// READ-ONLY; The URL to get the next set of results.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
-
 	// A list of load balancers.
 	Value []*LoadBalancer `json:"value,omitempty"`
+
+	// READ-ONLY; The URL to get the next set of results.
+	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type NetworkInterfaceLoadBalancerListResult.
@@ -10398,17 +10398,17 @@ type NetworkInterfacePropertiesFormat struct {
 	// Indicates whether IP forwarding is enabled on this network interface.
 	EnableIPForwarding *bool `json:"enableIPForwarding,omitempty"`
 
-	// READ-ONLY; A list of references to linked BareMetal resources.
-	HostedWorkloads []*string `json:"hostedWorkloads,omitempty" azure:"ro"`
-
 	// A list of IPConfigurations of the network interface.
 	IPConfigurations []*NetworkInterfaceIPConfiguration `json:"ipConfigurations,omitempty"`
 
-	// READ-ONLY; The MAC address of the network interface.
-	MacAddress *string `json:"macAddress,omitempty" azure:"ro"`
-
 	// The reference to the NetworkSecurityGroup resource.
 	NetworkSecurityGroup *NetworkSecurityGroup `json:"networkSecurityGroup,omitempty"`
+
+	// READ-ONLY; A list of references to linked BareMetal resources.
+	HostedWorkloads []*string `json:"hostedWorkloads,omitempty" azure:"ro"`
+
+	// READ-ONLY; The MAC address of the network interface.
+	MacAddress *string `json:"macAddress,omitempty" azure:"ro"`
 
 	// READ-ONLY; Whether this is a primary network interface on a virtual machine.
 	Primary *bool `json:"primary,omitempty" azure:"ro"`
@@ -10460,14 +10460,14 @@ type NetworkInterfaceResponse struct {
 // NetworkInterfaceTapConfiguration - Tap configuration in a Network Interface.
 type NetworkInterfaceTapConfiguration struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// The name of the resource that is unique within a resource group. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of the Virtual Network Tap configuration.
 	Properties *NetworkInterfaceTapConfigurationPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 
 	// READ-ONLY; Sub Resource type.
 	Type *string `json:"type,omitempty" azure:"ro"`
@@ -10485,11 +10485,11 @@ func (n NetworkInterfaceTapConfiguration) MarshalJSON() ([]byte, error) {
 
 // NetworkInterfaceTapConfigurationListResult - Response for list tap configurations API service call.
 type NetworkInterfaceTapConfigurationListResult struct {
-	// READ-ONLY; The URL to get the next set of results.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
-
 	// A list of tap configurations.
 	Value []*NetworkInterfaceTapConfiguration `json:"value,omitempty"`
+
+	// READ-ONLY; The URL to get the next set of results.
+	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type NetworkInterfaceTapConfigurationListResult.
@@ -10524,11 +10524,11 @@ type NetworkInterfaceTapConfigurationPollerResponse struct {
 
 // NetworkInterfaceTapConfigurationPropertiesFormat - Properties of Virtual Network Tap configuration.
 type NetworkInterfaceTapConfigurationPropertiesFormat struct {
-	// READ-ONLY; The provisioning state of the network interface tap configuration resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
 	// The reference to the Virtual Network Tap resource.
 	VirtualNetworkTap *VirtualNetworkTap `json:"virtualNetworkTap,omitempty"`
+
+	// READ-ONLY; The provisioning state of the network interface tap configuration resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
 // NetworkInterfaceTapConfigurationResponse is the response envelope for operations that return a NetworkInterfaceTapConfiguration type.
@@ -10683,11 +10683,11 @@ type NetworkManagementClientSupportedSecurityProvidersOptions struct {
 // NetworkProfile - Network profile resource.
 type NetworkProfile struct {
 	Resource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Network profile properties.
 	Properties *NetworkProfilePropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type NetworkProfile.
@@ -10861,11 +10861,11 @@ func (n *NetworkRuleCondition) UnmarshalJSON(data []byte) error {
 // NetworkSecurityGroup resource.
 type NetworkSecurityGroup struct {
 	Resource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Properties of the network security group.
 	Properties *NetworkSecurityGroupPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type NetworkSecurityGroup.
@@ -10916,6 +10916,9 @@ type NetworkSecurityGroupPollerResponse struct {
 
 // NetworkSecurityGroupPropertiesFormat - Network Security Group resource.
 type NetworkSecurityGroupPropertiesFormat struct {
+	// A collection of security rules of the network security group.
+	SecurityRules []*SecurityRule `json:"securityRules,omitempty"`
+
 	// READ-ONLY; The default security rules of network security group.
 	DefaultSecurityRules []*SecurityRule `json:"defaultSecurityRules,omitempty" azure:"ro"`
 
@@ -10930,9 +10933,6 @@ type NetworkSecurityGroupPropertiesFormat struct {
 
 	// READ-ONLY; The resource GUID property of the network security group resource.
 	ResourceGUID *string `json:"resourceGuid,omitempty" azure:"ro"`
-
-	// A collection of security rules of the network security group.
-	SecurityRules []*SecurityRule `json:"securityRules,omitempty"`
 
 	// READ-ONLY; A collection of references to subnets.
 	Subnets []*Subnet `json:"subnets,omitempty" azure:"ro"`
@@ -10962,11 +10962,11 @@ type NetworkSecurityGroupResponse struct {
 
 // NetworkSecurityGroupResult - Network configuration diagnostic result corresponded provided traffic query.
 type NetworkSecurityGroupResult struct {
-	// READ-ONLY; List of results network security groups diagnostic.
-	EvaluatedNetworkSecurityGroups []*EvaluatedNetworkSecurityGroup `json:"evaluatedNetworkSecurityGroups,omitempty" azure:"ro"`
-
 	// The network traffic is allowed or denied.
 	SecurityRuleAccessResult *SecurityRuleAccess `json:"securityRuleAccessResult,omitempty"`
+
+	// READ-ONLY; List of results network security groups diagnostic.
+	EvaluatedNetworkSecurityGroups []*EvaluatedNetworkSecurityGroup `json:"evaluatedNetworkSecurityGroups,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type NetworkSecurityGroupResult.
@@ -11032,9 +11032,6 @@ type NetworkSecurityRulesEvaluationResult struct {
 // NetworkVirtualAppliance Resource.
 type NetworkVirtualAppliance struct {
 	Resource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// The service principal that has read access to cloud-init and config blob.
 	Identity *ManagedServiceIdentity `json:"identity,omitempty"`
 
@@ -11043,6 +11040,9 @@ type NetworkVirtualAppliance struct {
 
 	// Network Virtual Appliance SKU.
 	SKU *VirtualApplianceSKUProperties `json:"sku,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type NetworkVirtualAppliance.
@@ -11101,17 +11101,17 @@ type NetworkVirtualAppliancePropertiesFormat struct {
 	// CloudInitConfigurationBlob storage URLs.
 	CloudInitConfigurationBlob []*string `json:"cloudInitConfigurationBlob,omitempty"`
 
-	// READ-ONLY; The provisioning state of the resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
 	// VirtualAppliance ASN.
 	VirtualApplianceAsn *int64 `json:"virtualApplianceAsn,omitempty"`
 
-	// READ-ONLY; List of Virtual Appliance Network Interfaces.
-	VirtualApplianceNics []*VirtualApplianceNicProperties `json:"virtualApplianceNics,omitempty" azure:"ro"`
-
 	// The Virtual Hub where Network Virtual Appliance is being deployed.
 	VirtualHub *SubResource `json:"virtualHub,omitempty"`
+
+	// READ-ONLY; The provisioning state of the resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
+
+	// READ-ONLY; List of Virtual Appliance Network Interfaces.
+	VirtualApplianceNics []*VirtualApplianceNicProperties `json:"virtualApplianceNics,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type NetworkVirtualAppliancePropertiesFormat.
@@ -11169,11 +11169,11 @@ type NetworkVirtualAppliancesUpdateTagsOptions struct {
 // NetworkWatcher - Network watcher in a resource group.
 type NetworkWatcher struct {
 	Resource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Properties of the network watcher.
 	Properties *NetworkWatcherPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type NetworkWatcher.
@@ -11314,17 +11314,17 @@ type NetworkWatchersUpdateTagsOptions struct {
 
 // NextHopParameters - Parameters that define the source and destination endpoint.
 type NextHopParameters struct {
-	// The destination IP address.
+	// REQUIRED; The destination IP address.
 	DestinationIPAddress *string `json:"destinationIPAddress,omitempty"`
 
-	// The source IP address.
+	// REQUIRED; The source IP address.
 	SourceIPAddress *string `json:"sourceIPAddress,omitempty"`
+
+	// REQUIRED; The resource identifier of the target resource against which the action is to be performed.
+	TargetResourceID *string `json:"targetResourceId,omitempty"`
 
 	// The NIC ID. (If VM has multiple NICs and IP forwarding is enabled on any of the nics, then this parameter must be specified. Otherwise optional).
 	TargetNicResourceID *string `json:"targetNicResourceId,omitempty"`
-
-	// The resource identifier of the target resource against which the action is to be performed.
-	TargetResourceID *string `json:"targetResourceId,omitempty"`
 }
 
 // NextHopResult - The information about next hop from the specified VM.
@@ -11449,14 +11449,14 @@ type OperationsListOptions struct {
 // OutboundRule - Outbound rule of the load balancer.
 type OutboundRule struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// The name of the resource that is unique within the set of outbound rules used by the load balancer. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of load balancer outbound rule.
 	Properties *OutboundRulePropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 
 	// READ-ONLY; Type of the resource.
 	Type *string `json:"type,omitempty" azure:"ro"`
@@ -11474,24 +11474,24 @@ func (o OutboundRule) MarshalJSON() ([]byte, error) {
 
 // OutboundRulePropertiesFormat - Outbound rule of the load balancer.
 type OutboundRulePropertiesFormat struct {
+	// REQUIRED; A reference to a pool of DIPs. Outbound traffic is randomly load balanced across IPs in the backend IPs.
+	BackendAddressPool *SubResource `json:"backendAddressPool,omitempty"`
+
+	// REQUIRED; The Frontend IP addresses of the load balancer.
+	FrontendIPConfigurations []*SubResource `json:"frontendIPConfigurations,omitempty"`
+
+	// REQUIRED; The protocol for the outbound rule in load balancer.
+	Protocol *LoadBalancerOutboundRuleProtocol `json:"protocol,omitempty"`
+
 	// The number of outbound ports to be used for NAT.
 	AllocatedOutboundPorts *int32 `json:"allocatedOutboundPorts,omitempty"`
-
-	// A reference to a pool of DIPs. Outbound traffic is randomly load balanced across IPs in the backend IPs.
-	BackendAddressPool *SubResource `json:"backendAddressPool,omitempty"`
 
 	// Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to
 	// TCP.
 	EnableTCPReset *bool `json:"enableTcpReset,omitempty"`
 
-	// The Frontend IP addresses of the load balancer.
-	FrontendIPConfigurations []*SubResource `json:"frontendIPConfigurations,omitempty"`
-
 	// The timeout for the TCP idle connection.
 	IdleTimeoutInMinutes *int32 `json:"idleTimeoutInMinutes,omitempty"`
-
-	// The protocol for the outbound rule in load balancer.
-	Protocol *LoadBalancerOutboundRuleProtocol `json:"protocol,omitempty"`
 
 	// READ-ONLY; The provisioning state of the outbound rule resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
@@ -11521,27 +11521,27 @@ type OutboundRuleResponse struct {
 
 // OwaspCrsExclusionEntry - Allow to exclude some variable satisfy the condition for the WAF check.
 type OwaspCrsExclusionEntry struct {
-	// The variable to be excluded.
+	// REQUIRED; The variable to be excluded.
 	MatchVariable *OwaspCrsExclusionEntryMatchVariable `json:"matchVariable,omitempty"`
 
-	// When matchVariable is a collection, operator used to specify which elements in the collection this exclusion applies to.
+	// REQUIRED; When matchVariable is a collection, operator used to specify which elements in the collection this exclusion applies to.
 	Selector *string `json:"selector,omitempty"`
 
-	// When matchVariable is a collection, operate on the selector to specify which elements in the collection this exclusion applies to.
+	// REQUIRED; When matchVariable is a collection, operate on the selector to specify which elements in the collection this exclusion applies to.
 	SelectorMatchOperator *OwaspCrsExclusionEntrySelectorMatchOperator `json:"selectorMatchOperator,omitempty"`
 }
 
 // P2SConnectionConfiguration Resource.
 type P2SConnectionConfiguration struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// The name of the resource that is unique within a resource group. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of the P2S connection configuration.
 	Properties *P2SConnectionConfigurationProperties `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type P2SConnectionConfiguration.
@@ -11555,11 +11555,11 @@ func (p P2SConnectionConfiguration) MarshalJSON() ([]byte, error) {
 
 // P2SConnectionConfigurationProperties - Parameters for P2SConnectionConfiguration.
 type P2SConnectionConfigurationProperties struct {
-	// READ-ONLY; The provisioning state of the P2SConnectionConfiguration resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
 	// The reference to the address space resource which represents Address space for P2S VpnClient.
 	VPNClientAddressPool *AddressSpace `json:"vpnClientAddressPool,omitempty"`
+
+	// READ-ONLY; The provisioning state of the P2SConnectionConfiguration resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
 // P2SVPNConnectionHealth - P2S Vpn connection detailed health written to sas url.
@@ -11622,11 +11622,11 @@ func (p P2SVPNConnectionRequest) MarshalJSON() ([]byte, error) {
 // P2SVPNGateway - P2SVpnGateway Resource.
 type P2SVPNGateway struct {
 	Resource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Properties of the P2SVpnGateway.
 	Properties *P2SVPNGatewayProperties `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type P2SVPNGateway.
@@ -11654,12 +11654,6 @@ type P2SVPNGatewayProperties struct {
 	// List of all p2s connection configurations of the gateway.
 	P2SConnectionConfigurations []*P2SConnectionConfiguration `json:"p2SConnectionConfigurations,omitempty"`
 
-	// READ-ONLY; The provisioning state of the P2S VPN gateway resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
-	// READ-ONLY; All P2S VPN clients' connection health status.
-	VPNClientConnectionHealth *VPNClientConnectionHealth `json:"vpnClientConnectionHealth,omitempty" azure:"ro"`
-
 	// The scale unit for this p2s vpn gateway.
 	VPNGatewayScaleUnit *int32 `json:"vpnGatewayScaleUnit,omitempty"`
 
@@ -11668,6 +11662,12 @@ type P2SVPNGatewayProperties struct {
 
 	// The VirtualHub to which the gateway belongs.
 	VirtualHub *SubResource `json:"virtualHub,omitempty"`
+
+	// READ-ONLY; The provisioning state of the P2S VPN gateway resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
+
+	// READ-ONLY; All P2S VPN clients' connection health status.
+	VPNClientConnectionHealth *VPNClientConnectionHealth `json:"vpnClientConnectionHealth,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type P2SVPNGatewayProperties.
@@ -11750,7 +11750,7 @@ type P2SVPNProfileParameters struct {
 
 // PacketCapture - Parameters that define the create packet capture operation.
 type PacketCapture struct {
-	// Properties of the packet capture.
+	// REQUIRED; Properties of the packet capture.
 	Properties *PacketCaptureParameters `json:"properties,omitempty"`
 }
 
@@ -11804,17 +11804,17 @@ type PacketCaptureListResultResponse struct {
 
 // PacketCaptureParameters - Parameters that define the create packet capture operation.
 type PacketCaptureParameters struct {
+	// REQUIRED; The storage location for a packet capture session.
+	StorageLocation *PacketCaptureStorageLocation `json:"storageLocation,omitempty"`
+
+	// REQUIRED; The ID of the targeted resource, only VM is currently supported.
+	Target *string `json:"target,omitempty"`
+
 	// Number of bytes captured per packet, the remaining bytes are truncated.
 	BytesToCapturePerPacket *int32 `json:"bytesToCapturePerPacket,omitempty"`
 
 	// A list of packet capture filters.
 	Filters []*PacketCaptureFilter `json:"filters,omitempty"`
-
-	// The storage location for a packet capture session.
-	StorageLocation *PacketCaptureStorageLocation `json:"storageLocation,omitempty"`
-
-	// The ID of the targeted resource, only VM is currently supported.
-	Target *string `json:"target,omitempty"`
 
 	// Maximum duration of the capture session in seconds.
 	TimeLimitInSeconds *int32 `json:"timeLimitInSeconds,omitempty"`
@@ -11933,6 +11933,9 @@ type PacketCaptureQueryStatusResultResponse struct {
 
 // PacketCaptureResult - Information about packet capture session.
 type PacketCaptureResult struct {
+	// Properties of the packet capture result.
+	Properties *PacketCaptureResultProperties `json:"properties,omitempty"`
+
 	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
 	Etag *string `json:"etag,omitempty" azure:"ro"`
 
@@ -11941,9 +11944,6 @@ type PacketCaptureResult struct {
 
 	// READ-ONLY; Name of the packet capture session.
 	Name *string `json:"name,omitempty" azure:"ro"`
-
-	// Properties of the packet capture result.
-	Properties *PacketCaptureResultProperties `json:"properties,omitempty"`
 }
 
 // PacketCaptureResultPollerResponse is the response envelope for operations that asynchronously return a PacketCaptureResult type.
@@ -12028,17 +12028,17 @@ type PacketCapturesListOptions struct {
 // PatchRouteFilter - Route Filter Resource.
 type PatchRouteFilter struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
-	// READ-ONLY; The name of the resource that is unique within a resource group. This name can be used to access the resource.
-	Name *string `json:"name,omitempty" azure:"ro"`
-
 	// Properties of the route filter.
 	Properties *RouteFilterPropertiesFormat `json:"properties,omitempty"`
 
 	// Resource tags.
 	Tags map[string]*string `json:"tags,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
+
+	// READ-ONLY; The name of the resource that is unique within a resource group. This name can be used to access the resource.
+	Name *string `json:"name,omitempty" azure:"ro"`
 
 	// READ-ONLY; Resource type.
 	Type *string `json:"type,omitempty" azure:"ro"`
@@ -12058,14 +12058,14 @@ func (p PatchRouteFilter) MarshalJSON() ([]byte, error) {
 // PatchRouteFilterRule - Route Filter Rule Resource.
 type PatchRouteFilterRule struct {
 	SubResource
+	// Properties of the route filter rule.
+	Properties *RouteFilterRulePropertiesFormat `json:"properties,omitempty"`
+
 	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
 	Etag *string `json:"etag,omitempty" azure:"ro"`
 
 	// READ-ONLY; The name of the resource that is unique within a resource group. This name can be used to access the resource.
 	Name *string `json:"name,omitempty" azure:"ro"`
-
-	// Properties of the route filter rule.
-	Properties *RouteFilterRulePropertiesFormat `json:"properties,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type PatchRouteFilterRule.
@@ -12080,14 +12080,14 @@ func (p PatchRouteFilterRule) MarshalJSON() ([]byte, error) {
 // PeerExpressRouteCircuitConnection - Peer Express Route Circuit Connection in an ExpressRouteCircuitPeering resource.
 type PeerExpressRouteCircuitConnection struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// The name of the resource that is unique within a resource group. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of the peer express route circuit connection.
 	Properties *PeerExpressRouteCircuitConnectionPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 
 	// READ-ONLY; Type of the resource.
 	Type *string `json:"type,omitempty" azure:"ro"`
@@ -12139,9 +12139,6 @@ type PeerExpressRouteCircuitConnectionPropertiesFormat struct {
 	// The resource guid of the authorization used for the express route circuit connection.
 	AuthResourceGUID *string `json:"authResourceGuid,omitempty"`
 
-	// READ-ONLY; Express Route Circuit connection state.
-	CircuitConnectionStatus *CircuitConnectionStatus `json:"circuitConnectionStatus,omitempty" azure:"ro"`
-
 	// The name of the express route circuit connection resource.
 	ConnectionName *string `json:"connectionName,omitempty"`
 
@@ -12150,6 +12147,9 @@ type PeerExpressRouteCircuitConnectionPropertiesFormat struct {
 
 	// Reference to Express Route Circuit Private Peering Resource of the peered circuit.
 	PeerExpressRouteCircuitPeering *SubResource `json:"peerExpressRouteCircuitPeering,omitempty"`
+
+	// READ-ONLY; Express Route Circuit connection state.
+	CircuitConnectionStatus *CircuitConnectionStatus `json:"circuitConnectionStatus,omitempty" azure:"ro"`
 
 	// READ-ONLY; The provisioning state of the peer express route circuit connection resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
@@ -12221,14 +12221,14 @@ type PrivateDNSZoneConfig struct {
 // PrivateDNSZoneGroup - Private dns zone group resource.
 type PrivateDNSZoneGroup struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Name of the resource that is unique within a resource group. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of the private dns zone group.
 	Properties *PrivateDNSZoneGroupPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type PrivateDNSZoneGroup.
@@ -12242,11 +12242,11 @@ func (p PrivateDNSZoneGroup) MarshalJSON() ([]byte, error) {
 
 // PrivateDNSZoneGroupListResult - Response for the ListPrivateDnsZoneGroups API service call.
 type PrivateDNSZoneGroupListResult struct {
-	// READ-ONLY; The URL to get the next set of results.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
-
 	// A list of private dns zone group resources in a private endpoint.
 	Value []*PrivateDNSZoneGroup `json:"value,omitempty"`
+
+	// READ-ONLY; The URL to get the next set of results.
+	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type PrivateDNSZoneGroupListResult.
@@ -12344,11 +12344,11 @@ func (p PrivateDNSZonePropertiesFormat) MarshalJSON() ([]byte, error) {
 // PrivateEndpoint - Private endpoint resource.
 type PrivateEndpoint struct {
 	Resource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Properties of the private endpoint.
 	Properties *PrivateEndpointProperties `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type PrivateEndpoint.
@@ -12362,14 +12362,14 @@ func (p PrivateEndpoint) MarshalJSON() ([]byte, error) {
 // PrivateEndpointConnection resource.
 type PrivateEndpointConnection struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// The name of the resource that is unique within a resource group. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of the private end point connection.
 	Properties *PrivateEndpointConnectionProperties `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 
 	// READ-ONLY; The resource type.
 	Type *string `json:"type,omitempty" azure:"ro"`
@@ -12387,11 +12387,11 @@ func (p PrivateEndpointConnection) MarshalJSON() ([]byte, error) {
 
 // PrivateEndpointConnectionListResult - Response for the ListPrivateEndpointConnection API service call.
 type PrivateEndpointConnectionListResult struct {
-	// READ-ONLY; The URL to get the next set of results.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
-
 	// A list of PrivateEndpointConnection resources for a specific private link service.
 	Value []*PrivateEndpointConnection `json:"value,omitempty"`
+
+	// READ-ONLY; The URL to get the next set of results.
+	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type PrivateEndpointConnectionListResult.
@@ -12413,14 +12413,14 @@ type PrivateEndpointConnectionListResultResponse struct {
 
 // PrivateEndpointConnectionProperties - Properties of the PrivateEndpointConnectProperties.
 type PrivateEndpointConnectionProperties struct {
+	// A collection of information about the state of the connection between service consumer and provider.
+	PrivateLinkServiceConnectionState *PrivateLinkServiceConnectionState `json:"privateLinkServiceConnectionState,omitempty"`
+
 	// READ-ONLY; The consumer link id.
 	LinkIdentifier *string `json:"linkIdentifier,omitempty" azure:"ro"`
 
 	// READ-ONLY; The resource of private end point.
 	PrivateEndpoint *PrivateEndpoint `json:"privateEndpoint,omitempty" azure:"ro"`
-
-	// A collection of information about the state of the connection between service consumer and provider.
-	PrivateLinkServiceConnectionState *PrivateLinkServiceConnectionState `json:"privateLinkServiceConnectionState,omitempty"`
 
 	// READ-ONLY; The provisioning state of the private endpoint connection resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
@@ -12437,11 +12437,11 @@ type PrivateEndpointConnectionResponse struct {
 
 // PrivateEndpointListResult - Response for the ListPrivateEndpoints API service call.
 type PrivateEndpointListResult struct {
-	// READ-ONLY; The URL to get the next set of results.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
-
 	// A list of private endpoint resources in a resource group.
 	Value []*PrivateEndpoint `json:"value,omitempty"`
+
+	// READ-ONLY; The URL to get the next set of results.
+	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type PrivateEndpointListResult.
@@ -12482,17 +12482,17 @@ type PrivateEndpointProperties struct {
 	// remote resource.
 	ManualPrivateLinkServiceConnections []*PrivateLinkServiceConnection `json:"manualPrivateLinkServiceConnections,omitempty"`
 
-	// READ-ONLY; An array of references to the network interfaces created for this private endpoint.
-	NetworkInterfaces []*NetworkInterface `json:"networkInterfaces,omitempty" azure:"ro"`
-
 	// A grouping of information about the connection to the remote resource.
 	PrivateLinkServiceConnections []*PrivateLinkServiceConnection `json:"privateLinkServiceConnections,omitempty"`
 
-	// READ-ONLY; The provisioning state of the private endpoint resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
 	// The ID of the subnet from which the private IP will be allocated.
 	Subnet *Subnet `json:"subnet,omitempty"`
+
+	// READ-ONLY; An array of references to the network interfaces created for this private endpoint.
+	NetworkInterfaces []*NetworkInterface `json:"networkInterfaces,omitempty" azure:"ro"`
+
+	// READ-ONLY; The provisioning state of the private endpoint resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type PrivateEndpointProperties.
@@ -12545,11 +12545,11 @@ type PrivateEndpointsListOptions struct {
 // PrivateLinkService - Private link service resource.
 type PrivateLinkService struct {
 	Resource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Properties of the private link service.
 	Properties *PrivateLinkServiceProperties `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type PrivateLinkService.
@@ -12563,14 +12563,14 @@ func (p PrivateLinkService) MarshalJSON() ([]byte, error) {
 // PrivateLinkServiceConnection resource.
 type PrivateLinkServiceConnection struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// The name of the resource that is unique within a resource group. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of the private link service connection.
 	Properties *PrivateLinkServiceConnectionProperties `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 
 	// READ-ONLY; The resource type.
 	Type *string `json:"type,omitempty" azure:"ro"`
@@ -12597,11 +12597,11 @@ type PrivateLinkServiceConnectionProperties struct {
 	// The resource id of private link service.
 	PrivateLinkServiceID *string `json:"privateLinkServiceId,omitempty"`
 
-	// READ-ONLY; The provisioning state of the private link service connection resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
 	// A message passed to the owner of the remote resource with this connection request. Restricted to 140 chars.
 	RequestMessage *string `json:"requestMessage,omitempty"`
+
+	// READ-ONLY; The provisioning state of the private link service connection resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type PrivateLinkServiceConnectionProperties.
@@ -12630,14 +12630,14 @@ type PrivateLinkServiceConnectionState struct {
 // PrivateLinkServiceIPConfiguration - The private link service ip configuration.
 type PrivateLinkServiceIPConfiguration struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// The name of private link service ip configuration.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of the private link service ip configuration.
 	Properties *PrivateLinkServiceIPConfigurationProperties `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 
 	// READ-ONLY; The resource type.
 	Type *string `json:"type,omitempty" azure:"ro"`
@@ -12667,20 +12667,20 @@ type PrivateLinkServiceIPConfigurationProperties struct {
 	// The private IP address allocation method.
 	PrivateIPAllocationMethod *IPAllocationMethod `json:"privateIPAllocationMethod,omitempty"`
 
-	// READ-ONLY; The provisioning state of the private link service IP configuration resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
 	// The reference to the subnet resource.
 	Subnet *Subnet `json:"subnet,omitempty"`
+
+	// READ-ONLY; The provisioning state of the private link service IP configuration resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
 // PrivateLinkServiceListResult - Response for the ListPrivateLinkService API service call.
 type PrivateLinkServiceListResult struct {
-	// READ-ONLY; The URL to get the next set of results.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
-
 	// A list of PrivateLinkService resources in a resource group.
 	Value []*PrivateLinkService `json:"value,omitempty"`
+
+	// READ-ONLY; The URL to get the next set of results.
+	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type PrivateLinkServiceListResult.
@@ -12714,9 +12714,6 @@ type PrivateLinkServicePollerResponse struct {
 
 // PrivateLinkServiceProperties - Properties of the private link service.
 type PrivateLinkServiceProperties struct {
-	// READ-ONLY; The alias of the private link service.
-	Alias *string `json:"alias,omitempty" azure:"ro"`
-
 	// The auto-approval list of the private link service.
 	AutoApproval *PrivateLinkServicePropertiesAutoApproval `json:"autoApproval,omitempty"`
 
@@ -12732,6 +12729,12 @@ type PrivateLinkServiceProperties struct {
 	// An array of references to the load balancer IP configurations.
 	LoadBalancerFrontendIPConfigurations []*FrontendIPConfiguration `json:"loadBalancerFrontendIpConfigurations,omitempty"`
 
+	// The visibility list of the private link service.
+	Visibility *PrivateLinkServicePropertiesVisibility `json:"visibility,omitempty"`
+
+	// READ-ONLY; The alias of the private link service.
+	Alias *string `json:"alias,omitempty" azure:"ro"`
+
 	// READ-ONLY; An array of references to the network interfaces created for this private link service.
 	NetworkInterfaces []*NetworkInterface `json:"networkInterfaces,omitempty" azure:"ro"`
 
@@ -12740,9 +12743,6 @@ type PrivateLinkServiceProperties struct {
 
 	// READ-ONLY; The provisioning state of the private link service resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
-	// The visibility list of the private link service.
-	Visibility *PrivateLinkServicePropertiesVisibility `json:"visibility,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type PrivateLinkServiceProperties.
@@ -12884,14 +12884,14 @@ type PrivateLinkServicesUpdatePrivateEndpointConnectionOptions struct {
 // Probe - A load balancer probe.
 type Probe struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// The name of the resource that is unique within the set of probes used by the load balancer. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of load balancer probe.
 	Properties *ProbePropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 
 	// READ-ONLY; Type of the resource.
 	Type *string `json:"type,omitempty" azure:"ro"`
@@ -12909,33 +12909,33 @@ func (p Probe) MarshalJSON() ([]byte, error) {
 
 // ProbePropertiesFormat - Load balancer probe resource.
 type ProbePropertiesFormat struct {
+	// REQUIRED; The port for communicating the probe. Possible values range from 1 to 65535, inclusive.
+	Port *int32 `json:"port,omitempty"`
+
+	// REQUIRED; The protocol of the end point. If 'Tcp' is specified, a received ACK is required for the probe to be successful. If 'Http' or 'Https' is specified,
+	// a 200 OK response from the specifies URI is required
+	// for the probe to be successful.
+	Protocol *ProbeProtocol `json:"protocol,omitempty"`
+
 	// The interval, in seconds, for how frequently to probe the endpoint for health status. Typically, the interval is slightly less than half the allocated
 	// timeout period (in seconds) which allows two full
 	// probes before taking the instance out of rotation. The default value is 15, the minimum value is 5.
 	IntervalInSeconds *int32 `json:"intervalInSeconds,omitempty"`
-
-	// READ-ONLY; The load balancer rules that use this probe.
-	LoadBalancingRules []*SubResource `json:"loadBalancingRules,omitempty" azure:"ro"`
 
 	// The number of probes where if no response, will result in stopping further traffic from being delivered to the endpoint. This values allows endpoints
 	// to be taken out of rotation faster or slower than
 	// the typical times used in Azure.
 	NumberOfProbes *int32 `json:"numberOfProbes,omitempty"`
 
-	// The port for communicating the probe. Possible values range from 1 to 65535, inclusive.
-	Port *int32 `json:"port,omitempty"`
-
-	// The protocol of the end point. If 'Tcp' is specified, a received ACK is required for the probe to be successful. If 'Http' or 'Https' is specified, a
-	// 200 OK response from the specifies URI is required
-	// for the probe to be successful.
-	Protocol *ProbeProtocol `json:"protocol,omitempty"`
-
-	// READ-ONLY; The provisioning state of the probe resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
 	// The URI used for requesting health status from the VM. Path is required if a protocol is set to http. Otherwise, it is not allowed. There is no default
 	// value.
 	RequestPath *string `json:"requestPath,omitempty"`
+
+	// READ-ONLY; The load balancer rules that use this probe.
+	LoadBalancingRules []*SubResource `json:"loadBalancingRules,omitempty" azure:"ro"`
+
+	// READ-ONLY; The provisioning state of the probe resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ProbePropertiesFormat.
@@ -12986,9 +12986,6 @@ type ProtocolCustomSettingsFormat struct {
 // PublicIPAddress - Public IP address resource.
 type PublicIPAddress struct {
 	Resource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Public IP address properties.
 	Properties *PublicIPAddressPropertiesFormat `json:"properties,omitempty"`
 
@@ -12997,6 +12994,9 @@ type PublicIPAddress struct {
 
 	// A list of availability zones denoting the IP allocated for the resource needs to come from.
 	Zones []*string `json:"zones,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type PublicIPAddress.
@@ -13075,17 +13075,11 @@ type PublicIPAddressPropertiesFormat struct {
 	// The IP address associated with the public IP address resource.
 	IPAddress *string `json:"ipAddress,omitempty"`
 
-	// READ-ONLY; The IP configuration associated with the public IP address.
-	IPConfiguration *IPConfiguration `json:"ipConfiguration,omitempty" azure:"ro"`
-
 	// The list of tags associated with the public IP address.
 	IPTags []*IPTag `json:"ipTags,omitempty"`
 
 	// The idle timeout of the public IP address.
 	IdleTimeoutInMinutes *int32 `json:"idleTimeoutInMinutes,omitempty"`
-
-	// READ-ONLY; The provisioning state of the public IP address resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
 	// The public IP address version.
 	PublicIPAddressVersion *IPVersion `json:"publicIPAddressVersion,omitempty"`
@@ -13095,6 +13089,12 @@ type PublicIPAddressPropertiesFormat struct {
 
 	// The Public IP Prefix this Public IP Address should be allocated from.
 	PublicIPPrefix *SubResource `json:"publicIPPrefix,omitempty"`
+
+	// READ-ONLY; The IP configuration associated with the public IP address.
+	IPConfiguration *IPConfiguration `json:"ipConfiguration,omitempty" azure:"ro"`
+
+	// READ-ONLY; The provisioning state of the public IP address resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
 	// READ-ONLY; The resource GUID property of the public IP address resource.
 	ResourceGUID *string `json:"resourceGuid,omitempty" azure:"ro"`
@@ -13185,9 +13185,6 @@ type PublicIPAddressesUpdateTagsOptions struct {
 // PublicIPPrefix - Public IP prefix resource.
 type PublicIPPrefix struct {
 	Resource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Public IP prefix properties.
 	Properties *PublicIPPrefixPropertiesFormat `json:"properties,omitempty"`
 
@@ -13196,6 +13193,9 @@ type PublicIPPrefix struct {
 
 	// A list of availability zones denoting the IP allocated for the resource needs to come from.
 	Zones []*string `json:"zones,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type PublicIPPrefix.
@@ -13248,23 +13248,23 @@ type PublicIPPrefixPollerResponse struct {
 
 // PublicIPPrefixPropertiesFormat - Public IP prefix properties.
 type PublicIPPrefixPropertiesFormat struct {
-	// READ-ONLY; The allocated Prefix.
-	IPPrefix *string `json:"ipPrefix,omitempty" azure:"ro"`
-
 	// The list of tags associated with the public IP prefix.
 	IPTags []*IPTag `json:"ipTags,omitempty"`
-
-	// READ-ONLY; The reference to load balancer frontend IP configuration associated with the public IP prefix.
-	LoadBalancerFrontendIPConfiguration *SubResource `json:"loadBalancerFrontendIpConfiguration,omitempty" azure:"ro"`
 
 	// The Length of the Public IP Prefix.
 	PrefixLength *int32 `json:"prefixLength,omitempty"`
 
-	// READ-ONLY; The provisioning state of the public IP prefix resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
 	// The public IP address version.
 	PublicIPAddressVersion *IPVersion `json:"publicIPAddressVersion,omitempty"`
+
+	// READ-ONLY; The allocated Prefix.
+	IPPrefix *string `json:"ipPrefix,omitempty" azure:"ro"`
+
+	// READ-ONLY; The reference to load balancer frontend IP configuration associated with the public IP prefix.
+	LoadBalancerFrontendIPConfiguration *SubResource `json:"loadBalancerFrontendIpConfiguration,omitempty" azure:"ro"`
+
+	// READ-ONLY; The provisioning state of the public IP prefix resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
 	// READ-ONLY; The list of all referenced PublicIPAddresses.
 	PublicIPAddresses []*ReferencedPublicIPAddress `json:"publicIPAddresses,omitempty" azure:"ro"`
@@ -13335,13 +13335,13 @@ type PublicIPPrefixesUpdateTagsOptions struct {
 
 // QueryTroubleshootingParameters - Parameters that define the resource to query the troubleshooting result.
 type QueryTroubleshootingParameters struct {
-	// The target resource ID to query the troubleshooting result.
+	// REQUIRED; The target resource ID to query the troubleshooting result.
 	TargetResourceID *string `json:"targetResourceId,omitempty"`
 }
 
 // RadiusServer - Radius Server Settings.
 type RadiusServer struct {
-	// The address of this radius server.
+	// REQUIRED; The address of this radius server.
 	RadiusServerAddress *string `json:"radiusServerAddress,omitempty"`
 
 	// The initial score assigned to this radius server.
@@ -13359,9 +13359,6 @@ type RecordSet struct {
 	// The private ip address of the private endpoint.
 	IPAddresses []*string `json:"ipAddresses,omitempty"`
 
-	// READ-ONLY; The provisioning state of the recordset.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
 	// Recordset name.
 	RecordSetName *string `json:"recordSetName,omitempty"`
 
@@ -13370,6 +13367,9 @@ type RecordSet struct {
 
 	// Recordset time to live.
 	TTL *int32 `json:"ttl,omitempty"`
+
+	// READ-ONLY; The provisioning state of the recordset.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type RecordSet.
@@ -13398,11 +13398,11 @@ type Resource struct {
 	// Resource location.
 	Location *string `json:"location,omitempty"`
 
-	// READ-ONLY; Resource name.
-	Name *string `json:"name,omitempty" azure:"ro"`
-
 	// Resource tags.
 	Tags map[string]*string `json:"tags,omitempty"`
+
+	// READ-ONLY; Resource name.
+	Name *string `json:"name,omitempty" azure:"ro"`
 
 	// READ-ONLY; Resource type.
 	Type *string `json:"type,omitempty" azure:"ro"`
@@ -13427,14 +13427,14 @@ func (r Resource) marshalInternal() map[string]interface{} {
 // ResourceNavigationLink resource.
 type ResourceNavigationLink struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Name of the resource that is unique within a resource group. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
 	// Resource navigation link properties format.
 	Properties *ResourceNavigationLinkFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 
 	// READ-ONLY; Resource type.
 	Type *string `json:"type,omitempty" azure:"ro"`
@@ -13469,11 +13469,11 @@ type ResourceNavigationLinksListOptions struct {
 
 // ResourceNavigationLinksListResult - Response for ResourceNavigationLinks_List operation.
 type ResourceNavigationLinksListResult struct {
-	// READ-ONLY; The URL to get the next set of results.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
-
 	// The resource navigation links in a subnet.
 	Value []*ResourceNavigationLink `json:"value,omitempty"`
+
+	// READ-ONLY; The URL to get the next set of results.
+	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ResourceNavigationLinksListResult.
@@ -13523,14 +13523,14 @@ type RetentionPolicyParameters struct {
 // Route resource.
 type Route struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// The name of the resource that is unique within a resource group. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of the route.
 	Properties *RoutePropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type Route.
@@ -13545,11 +13545,11 @@ func (r Route) MarshalJSON() ([]byte, error) {
 // RouteFilter - Route Filter Resource.
 type RouteFilter struct {
 	Resource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Properties of the route filter.
 	Properties *RouteFilterPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type RouteFilter.
@@ -13600,6 +13600,9 @@ type RouteFilterPollerResponse struct {
 
 // RouteFilterPropertiesFormat - Route Filter Resource.
 type RouteFilterPropertiesFormat struct {
+	// Collection of RouteFilterRules contained within a route filter.
+	Rules []*RouteFilterRule `json:"rules,omitempty"`
+
 	// READ-ONLY; A collection of references to express route circuit ipv6 peerings.
 	IPv6Peerings []*ExpressRouteCircuitPeering `json:"ipv6Peerings,omitempty" azure:"ro"`
 
@@ -13608,9 +13611,6 @@ type RouteFilterPropertiesFormat struct {
 
 	// READ-ONLY; The provisioning state of the route filter resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
-	// Collection of RouteFilterRules contained within a route filter.
-	Rules []*RouteFilterRule `json:"rules,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type RouteFilterPropertiesFormat.
@@ -13635,9 +13635,6 @@ type RouteFilterResponse struct {
 // RouteFilterRule - Route Filter Rule Resource.
 type RouteFilterRule struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Resource location.
 	Location *string `json:"location,omitempty"`
 
@@ -13646,6 +13643,9 @@ type RouteFilterRule struct {
 
 	// Properties of the route filter rule.
 	Properties *RouteFilterRulePropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type RouteFilterRule.
@@ -13698,17 +13698,17 @@ type RouteFilterRulePollerResponse struct {
 
 // RouteFilterRulePropertiesFormat - Route Filter Rule Resource.
 type RouteFilterRulePropertiesFormat struct {
-	// The access type of the rule.
+	// REQUIRED; The access type of the rule.
 	Access *Access `json:"access,omitempty"`
 
-	// The collection for bgp community values to filter on. e.g. ['12076:5010','12076:5020'].
+	// REQUIRED; The collection for bgp community values to filter on. e.g. ['12076:5010','12076:5020'].
 	Communities []*string `json:"communities,omitempty"`
+
+	// REQUIRED; The rule type of the rule.
+	RouteFilterRuleType *RouteFilterRuleType `json:"routeFilterRuleType,omitempty"`
 
 	// READ-ONLY; The provisioning state of the route filter rule resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
-	// The rule type of the rule.
-	RouteFilterRuleType *RouteFilterRuleType `json:"routeFilterRuleType,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type RouteFilterRulePropertiesFormat.
@@ -13821,14 +13821,14 @@ type RoutePollerResponse struct {
 
 // RoutePropertiesFormat - Route resource.
 type RoutePropertiesFormat struct {
+	// REQUIRED; The type of Azure hop the packet should be sent to.
+	NextHopType *RouteNextHopType `json:"nextHopType,omitempty"`
+
 	// The destination CIDR to which the route applies.
 	AddressPrefix *string `json:"addressPrefix,omitempty"`
 
 	// The IP address packets should be forwarded to. Next hop values are only allowed in routes where the next hop type is VirtualAppliance.
 	NextHopIPAddress *string `json:"nextHopIpAddress,omitempty"`
-
-	// The type of Azure hop the packet should be sent to.
-	NextHopType *RouteNextHopType `json:"nextHopType,omitempty"`
 
 	// READ-ONLY; The provisioning state of the route resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
@@ -13846,11 +13846,11 @@ type RouteResponse struct {
 // RouteTable - Route table resource.
 type RouteTable struct {
 	Resource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Properties of the route table.
 	Properties *RouteTablePropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type RouteTable.
@@ -13904,11 +13904,11 @@ type RouteTablePropertiesFormat struct {
 	// Whether to disable the routes learned by BGP on that route table. True means disable.
 	DisableBgpRoutePropagation *bool `json:"disableBgpRoutePropagation,omitempty"`
 
-	// READ-ONLY; The provisioning state of the route table resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
 	// Collection of routes contained within a route table.
 	Routes []*Route `json:"routes,omitempty"`
+
+	// READ-ONLY; The provisioning state of the route table resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
 	// READ-ONLY; A collection of references to subnets.
 	Subnets []*Subnet `json:"subnets,omitempty" azure:"ro"`
@@ -13995,7 +13995,7 @@ type SecurityGroupNetworkInterface struct {
 
 // SecurityGroupViewParameters - Parameters that define the VM to check security groups for.
 type SecurityGroupViewParameters struct {
-	// ID of the target VM.
+	// REQUIRED; ID of the target VM.
 	TargetResourceID *string `json:"targetResourceId,omitempty"`
 }
 
@@ -14036,11 +14036,11 @@ type SecurityGroupViewResultResponse struct {
 // SecurityPartnerProvider - Security Partner Provider resource.
 type SecurityPartnerProvider struct {
 	Resource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Properties of the Security Partner Provider.
 	Properties *SecurityPartnerProviderPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type SecurityPartnerProvider.
@@ -14091,17 +14091,17 @@ type SecurityPartnerProviderPollerResponse struct {
 
 // SecurityPartnerProviderPropertiesFormat - Properties of the Security Partner Provider.
 type SecurityPartnerProviderPropertiesFormat struct {
-	// READ-ONLY; The connection status with the Security Partner Provider.
-	ConnectionStatus *SecurityPartnerProviderConnectionStatus `json:"connectionStatus,omitempty" azure:"ro"`
-
-	// READ-ONLY; The provisioning state of the Security Partner Provider resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
 	// The security provider name.
 	SecurityProviderName *SecurityProviderName `json:"securityProviderName,omitempty"`
 
 	// The virtualHub to which the Security Partner Provider belongs.
 	VirtualHub *SubResource `json:"virtualHub,omitempty"`
+
+	// READ-ONLY; The connection status with the Security Partner Provider.
+	ConnectionStatus *SecurityPartnerProviderConnectionStatus `json:"connectionStatus,omitempty" azure:"ro"`
+
+	// READ-ONLY; The provisioning state of the Security Partner Provider resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
 // SecurityPartnerProviderResponse is the response envelope for operations that return a SecurityPartnerProvider type.
@@ -14146,14 +14146,14 @@ type SecurityPartnerProvidersUpdateTagsOptions struct {
 // SecurityRule - Network security rule.
 type SecurityRule struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// The name of the resource that is unique within a resource group. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of the security rule.
 	Properties *SecurityRulePropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type SecurityRule.
@@ -14230,8 +14230,14 @@ type SecurityRulePollerResponse struct {
 
 // SecurityRulePropertiesFormat - Security rule resource.
 type SecurityRulePropertiesFormat struct {
-	// The network traffic is allowed or denied.
+	// REQUIRED; The network traffic is allowed or denied.
 	Access *SecurityRuleAccess `json:"access,omitempty"`
+
+	// REQUIRED; The direction of the rule. The direction specifies if rule will be evaluated on incoming or outgoing traffic.
+	Direction *SecurityRuleDirection `json:"direction,omitempty"`
+
+	// REQUIRED; Network protocol this rule applies to.
+	Protocol *SecurityRuleProtocol `json:"protocol,omitempty"`
 
 	// A description for this rule. Restricted to 140 chars.
 	Description *string `json:"description,omitempty"`
@@ -14253,18 +14259,9 @@ type SecurityRulePropertiesFormat struct {
 	// The destination port ranges.
 	DestinationPortRanges []*string `json:"destinationPortRanges,omitempty"`
 
-	// The direction of the rule. The direction specifies if rule will be evaluated on incoming or outgoing traffic.
-	Direction *SecurityRuleDirection `json:"direction,omitempty"`
-
 	// The priority of the rule. The value can be between 100 and 4096. The priority number must be unique for each rule in the collection. The lower the priority
 	// number, the higher the priority of the rule.
 	Priority *int32 `json:"priority,omitempty"`
-
-	// Network protocol this rule applies to.
-	Protocol *SecurityRuleProtocol `json:"protocol,omitempty"`
-
-	// READ-ONLY; The provisioning state of the security rule resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
 	// The CIDR or source IP range. Asterisk '*' can also be used to match all source IPs. Default tags such as 'VirtualNetwork', 'AzureLoadBalancer' and 'Internet'
 	// can also be used. If this is an ingress
@@ -14282,6 +14279,9 @@ type SecurityRulePropertiesFormat struct {
 
 	// The source port ranges.
 	SourcePortRanges []*string `json:"sourcePortRanges,omitempty"`
+
+	// READ-ONLY; The provisioning state of the security rule resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type SecurityRulePropertiesFormat.
@@ -14338,14 +14338,14 @@ type SecurityRulesListOptions struct {
 // ServiceAssociationLink resource.
 type ServiceAssociationLink struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Name of the resource that is unique within a resource group. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
 	// Resource navigation link properties format.
 	Properties *ServiceAssociationLinkPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 
 	// READ-ONLY; Resource type.
 	Type *string `json:"type,omitempty" azure:"ro"`
@@ -14397,11 +14397,11 @@ type ServiceAssociationLinksListOptions struct {
 
 // ServiceAssociationLinksListResult - Response for ServiceAssociationLinks_List operation.
 type ServiceAssociationLinksListResult struct {
-	// READ-ONLY; The URL to get the next set of results.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
-
 	// The service association links in a subnet.
 	Value []*ServiceAssociationLink `json:"value,omitempty"`
+
+	// READ-ONLY; The URL to get the next set of results.
+	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ServiceAssociationLinksListResult.
@@ -14423,14 +14423,14 @@ type ServiceAssociationLinksListResultResponse struct {
 
 // ServiceDelegationPropertiesFormat - Properties of a service delegation.
 type ServiceDelegationPropertiesFormat struct {
+	// The name of the service to whom the subnet should be delegated (e.g. Microsoft.Sql/servers).
+	ServiceName *string `json:"serviceName,omitempty"`
+
 	// READ-ONLY; The actions permitted to the service upon delegation.
 	Actions []*string `json:"actions,omitempty" azure:"ro"`
 
 	// READ-ONLY; The provisioning state of the service delegation resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
-	// The name of the service to whom the subnet should be delegated (e.g. Microsoft.Sql/servers).
-	ServiceName *string `json:"serviceName,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ServiceDelegationPropertiesFormat.
@@ -14476,11 +14476,11 @@ type ServiceEndpointPoliciesUpdateTagsOptions struct {
 // ServiceEndpointPolicy - Service End point policy resource.
 type ServiceEndpointPolicy struct {
 	Resource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Properties of the service end point policy.
 	Properties *ServiceEndpointPolicyPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ServiceEndpointPolicy.
@@ -14494,14 +14494,14 @@ func (s ServiceEndpointPolicy) MarshalJSON() ([]byte, error) {
 // ServiceEndpointPolicyDefinition - Service Endpoint policy definitions.
 type ServiceEndpointPolicyDefinition struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// The name of the resource that is unique within a resource group. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of the service endpoint policy definition.
 	Properties *ServiceEndpointPolicyDefinitionPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ServiceEndpointPolicyDefinition.
@@ -14558,14 +14558,14 @@ type ServiceEndpointPolicyDefinitionPropertiesFormat struct {
 	// A description for this rule. Restricted to 140 chars.
 	Description *string `json:"description,omitempty"`
 
-	// READ-ONLY; The provisioning state of the service endpoint policy definition resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
 	// Service endpoint name.
 	Service *string `json:"service,omitempty"`
 
 	// A list of service resources.
 	ServiceResources []*string `json:"serviceResources,omitempty"`
+
+	// READ-ONLY; The provisioning state of the service endpoint policy definition resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ServiceEndpointPolicyDefinitionPropertiesFormat.
@@ -14611,11 +14611,11 @@ type ServiceEndpointPolicyDefinitionsListByResourceGroupOptions struct {
 
 // ServiceEndpointPolicyListResult - Response for ListServiceEndpointPolicies API service call.
 type ServiceEndpointPolicyListResult struct {
-	// READ-ONLY; The URL to get the next set of results.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
-
 	// A list of ServiceEndpointPolicy resources.
 	Value []*ServiceEndpointPolicy `json:"value,omitempty"`
+
+	// READ-ONLY; The URL to get the next set of results.
+	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ServiceEndpointPolicyListResult.
@@ -14649,14 +14649,14 @@ type ServiceEndpointPolicyPollerResponse struct {
 
 // ServiceEndpointPolicyPropertiesFormat - Service Endpoint Policy resource.
 type ServiceEndpointPolicyPropertiesFormat struct {
+	// A collection of service endpoint policy definitions of the service endpoint policy.
+	ServiceEndpointPolicyDefinitions []*ServiceEndpointPolicyDefinition `json:"serviceEndpointPolicyDefinitions,omitempty"`
+
 	// READ-ONLY; The provisioning state of the service endpoint policy resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
 	// READ-ONLY; The resource GUID property of the service endpoint policy resource.
 	ResourceGUID *string `json:"resourceGuid,omitempty" azure:"ro"`
-
-	// A collection of service endpoint policy definitions of the service endpoint policy.
-	ServiceEndpointPolicyDefinitions []*ServiceEndpointPolicyDefinition `json:"serviceEndpointPolicyDefinitions,omitempty"`
 
 	// READ-ONLY; A collection of references to subnets.
 	Subnets []*Subnet `json:"subnets,omitempty" azure:"ro"`
@@ -14686,11 +14686,11 @@ type ServiceEndpointPropertiesFormat struct {
 	// A list of locations.
 	Locations []*string `json:"locations,omitempty"`
 
-	// READ-ONLY; The provisioning state of the service endpoint resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
 	// The type of the endpoint service.
 	Service *string `json:"service,omitempty"`
+
+	// READ-ONLY; The provisioning state of the service endpoint resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ServiceEndpointPropertiesFormat.
@@ -14848,14 +14848,14 @@ func (s SubResource) marshalInternal() map[string]interface{} {
 // Subnet in a virtual network resource.
 type Subnet struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// The name of the resource that is unique within a resource group. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of the subnet.
 	Properties *SubnetPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type Subnet.
@@ -14869,11 +14869,11 @@ func (s Subnet) MarshalJSON() ([]byte, error) {
 
 // SubnetAssociation - Subnet and it's custom security rules.
 type SubnetAssociation struct {
-	// READ-ONLY; Subnet ID.
-	ID *string `json:"id,omitempty" azure:"ro"`
-
 	// Collection of custom security rules.
 	SecurityRules []*SecurityRule `json:"securityRules,omitempty"`
+
+	// READ-ONLY; Subnet ID.
+	ID *string `json:"id,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type SubnetAssociation.
@@ -14936,12 +14936,6 @@ type SubnetPropertiesFormat struct {
 	// Array of IpAllocation which reference this subnet.
 	IPAllocations []*SubResource `json:"ipAllocations,omitempty"`
 
-	// READ-ONLY; Array of IP configuration profiles which reference this subnet.
-	IPConfigurationProfiles []*IPConfigurationProfile `json:"ipConfigurationProfiles,omitempty" azure:"ro"`
-
-	// READ-ONLY; An array of references to the network interface IP configurations using subnet.
-	IPConfigurations []*IPConfiguration `json:"ipConfigurations,omitempty" azure:"ro"`
-
 	// Nat gateway associated with this subnet.
 	NatGateway *SubResource `json:"natGateway,omitempty"`
 
@@ -14951,11 +14945,26 @@ type SubnetPropertiesFormat struct {
 	// Enable or Disable apply network policies on private end point in the subnet.
 	PrivateEndpointNetworkPolicies *string `json:"privateEndpointNetworkPolicies,omitempty"`
 
-	// READ-ONLY; An array of references to private endpoints.
-	PrivateEndpoints []*PrivateEndpoint `json:"privateEndpoints,omitempty" azure:"ro"`
-
 	// Enable or Disable apply network policies on private link service in the subnet.
 	PrivateLinkServiceNetworkPolicies *string `json:"privateLinkServiceNetworkPolicies,omitempty"`
+
+	// The reference to the RouteTable resource.
+	RouteTable *RouteTable `json:"routeTable,omitempty"`
+
+	// An array of service endpoint policies.
+	ServiceEndpointPolicies []*ServiceEndpointPolicy `json:"serviceEndpointPolicies,omitempty"`
+
+	// An array of service endpoints.
+	ServiceEndpoints []*ServiceEndpointPropertiesFormat `json:"serviceEndpoints,omitempty"`
+
+	// READ-ONLY; Array of IP configuration profiles which reference this subnet.
+	IPConfigurationProfiles []*IPConfigurationProfile `json:"ipConfigurationProfiles,omitempty" azure:"ro"`
+
+	// READ-ONLY; An array of references to the network interface IP configurations using subnet.
+	IPConfigurations []*IPConfiguration `json:"ipConfigurations,omitempty" azure:"ro"`
+
+	// READ-ONLY; An array of references to private endpoints.
+	PrivateEndpoints []*PrivateEndpoint `json:"privateEndpoints,omitempty" azure:"ro"`
 
 	// READ-ONLY; The provisioning state of the subnet resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
@@ -14966,17 +14975,8 @@ type SubnetPropertiesFormat struct {
 	// READ-ONLY; An array of references to the external resources using subnet.
 	ResourceNavigationLinks []*ResourceNavigationLink `json:"resourceNavigationLinks,omitempty" azure:"ro"`
 
-	// The reference to the RouteTable resource.
-	RouteTable *RouteTable `json:"routeTable,omitempty"`
-
 	// READ-ONLY; An array of references to services injecting into this subnet.
 	ServiceAssociationLinks []*ServiceAssociationLink `json:"serviceAssociationLinks,omitempty" azure:"ro"`
-
-	// An array of service endpoint policies.
-	ServiceEndpointPolicies []*ServiceEndpointPolicy `json:"serviceEndpointPolicies,omitempty"`
-
-	// An array of service endpoints.
-	ServiceEndpoints []*ServiceEndpointPropertiesFormat `json:"serviceEndpoints,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type SubnetPropertiesFormat.
@@ -15058,6 +15058,9 @@ func (t TagsObject) MarshalJSON() ([]byte, error) {
 
 // Topology of the specified resource group.
 type Topology struct {
+	// A list of topology resources.
+	Resources []*TopologyResource `json:"resources,omitempty"`
+
 	// READ-ONLY; The datetime when the topology was initially created for the resource group.
 	CreatedDateTime *time.Time `json:"createdDateTime,omitempty" azure:"ro"`
 
@@ -15066,9 +15069,6 @@ type Topology struct {
 
 	// READ-ONLY; The datetime when the topology was last modified.
 	LastModified *time.Time `json:"lastModified,omitempty" azure:"ro"`
-
-	// A list of topology resources.
-	Resources []*TopologyResource `json:"resources,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type Topology.
@@ -15198,10 +15198,10 @@ type TrafficAnalyticsProperties struct {
 
 // TrafficSelectorPolicy - An traffic selector policy for a virtual network gateway connection.
 type TrafficSelectorPolicy struct {
-	// A collection of local address spaces in CIDR format.
+	// REQUIRED; A collection of local address spaces in CIDR format.
 	LocalAddressRanges []*string `json:"localAddressRanges,omitempty"`
 
-	// A collection of remote address spaces in CIDR format.
+	// REQUIRED; A collection of remote address spaces in CIDR format.
 	RemoteAddressRanges []*string `json:"remoteAddressRanges,omitempty"`
 }
 
@@ -15244,19 +15244,19 @@ func (t TroubleshootingDetails) MarshalJSON() ([]byte, error) {
 
 // TroubleshootingParameters - Parameters that define the resource to troubleshoot.
 type TroubleshootingParameters struct {
-	// Properties of the troubleshooting resource.
+	// REQUIRED; Properties of the troubleshooting resource.
 	Properties *TroubleshootingProperties `json:"properties,omitempty"`
 
-	// The target resource to troubleshoot.
+	// REQUIRED; The target resource to troubleshoot.
 	TargetResourceID *string `json:"targetResourceId,omitempty"`
 }
 
 // TroubleshootingProperties - Storage location provided for troubleshoot.
 type TroubleshootingProperties struct {
-	// The ID for the storage account to save the troubleshoot result.
+	// REQUIRED; The ID for the storage account to save the troubleshoot result.
 	StorageID *string `json:"storageId,omitempty"`
 
-	// The path to the blob to save the troubleshoot result in.
+	// REQUIRED; The path to the blob to save the troubleshoot result in.
 	StoragePath *string `json:"storagePath,omitempty"`
 }
 
@@ -15380,20 +15380,20 @@ type UnprepareNetworkPoliciesRequest struct {
 
 // Usage - The network resource usage.
 type Usage struct {
-	// The current value of the usage.
+	// REQUIRED; The current value of the usage.
 	CurrentValue *int64 `json:"currentValue,omitempty"`
+
+	// REQUIRED; The limit of usage.
+	Limit *int64 `json:"limit,omitempty"`
+
+	// REQUIRED; The name of the type of usage.
+	Name *UsageName `json:"name,omitempty"`
+
+	// REQUIRED; An enum describing the unit of measurement.
+	Unit *UsageUnit `json:"unit,omitempty"`
 
 	// READ-ONLY; Resource identifier.
 	ID *string `json:"id,omitempty" azure:"ro"`
-
-	// The limit of usage.
-	Limit *int64 `json:"limit,omitempty"`
-
-	// The name of the type of usage.
-	Name *UsageName `json:"name,omitempty"`
-
-	// An enum describing the unit of measurement.
-	Unit *UsageUnit `json:"unit,omitempty"`
 }
 
 // UsageName - The usage names.
@@ -15499,14 +15499,14 @@ type VPNClientConnectionHealth struct {
 	// List of allocated ip addresses to the connected p2s vpn clients.
 	AllocatedIPAddresses []*string `json:"allocatedIpAddresses,omitempty"`
 
+	// The total of p2s vpn clients connected at this time to this P2SVpnGateway.
+	VPNClientConnectionsCount *int32 `json:"vpnClientConnectionsCount,omitempty"`
+
 	// READ-ONLY; Total of the Egress Bytes Transferred in this connection.
 	TotalEgressBytesTransferred *int64 `json:"totalEgressBytesTransferred,omitempty" azure:"ro"`
 
 	// READ-ONLY; Total of the Ingress Bytes Transferred in this P2S Vpn connection.
 	TotalIngressBytesTransferred *int64 `json:"totalIngressBytesTransferred,omitempty" azure:"ro"`
-
-	// The total of p2s vpn clients connected at this time to this P2SVpnGateway.
-	VPNClientConnectionsCount *int32 `json:"vpnClientConnectionsCount,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type VPNClientConnectionHealth.
@@ -15595,28 +15595,28 @@ type VPNClientConnectionHealthDetailListResultResponse struct {
 
 // VPNClientIPsecParameters - An IPSec parameters for a virtual network gateway P2S connection.
 type VPNClientIPsecParameters struct {
-	// The DH Group used in IKE Phase 1 for initial SA.
+	// REQUIRED; The DH Group used in IKE Phase 1 for initial SA.
 	DhGroup *DhGroup `json:"dhGroup,omitempty"`
 
-	// The IPSec encryption algorithm (IKE phase 1).
+	// REQUIRED; The IPSec encryption algorithm (IKE phase 1).
 	IPSecEncryption *IPSecEncryption `json:"ipsecEncryption,omitempty"`
 
-	// The IPSec integrity algorithm (IKE phase 1).
+	// REQUIRED; The IPSec integrity algorithm (IKE phase 1).
 	IPSecIntegrity *IPSecIntegrity `json:"ipsecIntegrity,omitempty"`
 
-	// The IKE encryption algorithm (IKE phase 2).
+	// REQUIRED; The IKE encryption algorithm (IKE phase 2).
 	IkeEncryption *IkeEncryption `json:"ikeEncryption,omitempty"`
 
-	// The IKE integrity algorithm (IKE phase 2).
+	// REQUIRED; The IKE integrity algorithm (IKE phase 2).
 	IkeIntegrity *IkeIntegrity `json:"ikeIntegrity,omitempty"`
 
-	// The Pfs Group used in IKE Phase 2 for new child SA.
+	// REQUIRED; The Pfs Group used in IKE Phase 2 for new child SA.
 	PfsGroup *PfsGroup `json:"pfsGroup,omitempty"`
 
-	// The IPSec Security Association (also called Quick Mode or Phase 2 SA) payload size in KB for P2S client..
+	// REQUIRED; The IPSec Security Association (also called Quick Mode or Phase 2 SA) payload size in KB for P2S client..
 	SaDataSizeKilobytes *int32 `json:"saDataSizeKilobytes,omitempty"`
 
-	// The IPSec Security Association (also called Quick Mode or Phase 2 SA) lifetime in seconds for P2S client.
+	// REQUIRED; The IPSec Security Association (also called Quick Mode or Phase 2 SA) lifetime in seconds for P2S client.
 	SaLifeTimeSeconds *int32 `json:"saLifeTimeSeconds,omitempty"`
 }
 
@@ -15672,14 +15672,14 @@ func (v VPNClientParameters) MarshalJSON() ([]byte, error) {
 // VPNClientRevokedCertificate - VPN client revoked certificate of virtual network gateway.
 type VPNClientRevokedCertificate struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// The name of the resource that is unique within a resource group. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of the vpn client revoked certificate.
 	Properties *VPNClientRevokedCertificatePropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type VPNClientRevokedCertificate.
@@ -15693,24 +15693,24 @@ func (v VPNClientRevokedCertificate) MarshalJSON() ([]byte, error) {
 
 // VPNClientRevokedCertificatePropertiesFormat - Properties of the revoked VPN client certificate of virtual network gateway.
 type VPNClientRevokedCertificatePropertiesFormat struct {
-	// READ-ONLY; The provisioning state of the VPN client revoked certificate resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
 	// The revoked VPN client certificate thumbprint.
 	Thumbprint *string `json:"thumbprint,omitempty"`
+
+	// READ-ONLY; The provisioning state of the VPN client revoked certificate resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
 // VPNClientRootCertificate - VPN client root certificate of virtual network gateway.
 type VPNClientRootCertificate struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
+	// REQUIRED; Properties of the vpn client root certificate.
+	Properties *VPNClientRootCertificatePropertiesFormat `json:"properties,omitempty"`
 
 	// The name of the resource that is unique within a resource group. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
-	// Properties of the vpn client root certificate.
-	Properties *VPNClientRootCertificatePropertiesFormat `json:"properties,omitempty"`
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type VPNClientRootCertificate.
@@ -15724,24 +15724,24 @@ func (v VPNClientRootCertificate) MarshalJSON() ([]byte, error) {
 
 // VPNClientRootCertificatePropertiesFormat - Properties of SSL certificates of application gateway.
 type VPNClientRootCertificatePropertiesFormat struct {
+	// REQUIRED; The certificate public data.
+	PublicCertData *string `json:"publicCertData,omitempty"`
+
 	// READ-ONLY; The provisioning state of the VPN client root certificate resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
-	// The certificate public data.
-	PublicCertData *string `json:"publicCertData,omitempty"`
 }
 
 // VPNConnection - VpnConnection Resource.
 type VPNConnection struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// The name of the resource that is unique within a resource group. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of the VPN connection.
 	Properties *VPNConnectionProperties `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type VPNConnection.
@@ -15770,14 +15770,8 @@ type VPNConnectionProperties struct {
 	// Expected bandwidth in MBPS.
 	ConnectionBandwidth *int32 `json:"connectionBandwidth,omitempty"`
 
-	// READ-ONLY; The connection status.
-	ConnectionStatus *VPNConnectionStatus `json:"connectionStatus,omitempty" azure:"ro"`
-
 	// The dead peer detection timeout for a vpn connection in seconds.
 	DpdTimeoutSeconds *int32 `json:"dpdTimeoutSeconds,omitempty"`
-
-	// READ-ONLY; Egress bytes transferred.
-	EgressBytesTransferred *int64 `json:"egressBytesTransferred,omitempty" azure:"ro"`
 
 	// EnableBgp flag.
 	EnableBgp *bool `json:"enableBgp,omitempty"`
@@ -15790,12 +15784,6 @@ type VPNConnectionProperties struct {
 
 	// The IPSec Policies to be considered by this connection.
 	IPSecPolicies []*IPSecPolicy `json:"ipsecPolicies,omitempty"`
-
-	// READ-ONLY; Ingress bytes transferred.
-	IngressBytesTransferred *int64 `json:"ingressBytesTransferred,omitempty" azure:"ro"`
-
-	// READ-ONLY; The provisioning state of the VPN connection resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
 	// Id of the connected vpn site.
 	RemoteVPNSite *SubResource `json:"remoteVpnSite,omitempty"`
@@ -15817,6 +15805,18 @@ type VPNConnectionProperties struct {
 
 	// List of all vpn site link connections to the gateway.
 	VPNLinkConnections []*VPNSiteLinkConnection `json:"vpnLinkConnections,omitempty"`
+
+	// READ-ONLY; The connection status.
+	ConnectionStatus *VPNConnectionStatus `json:"connectionStatus,omitempty" azure:"ro"`
+
+	// READ-ONLY; Egress bytes transferred.
+	EgressBytesTransferred *int64 `json:"egressBytesTransferred,omitempty" azure:"ro"`
+
+	// READ-ONLY; Ingress bytes transferred.
+	IngressBytesTransferred *int64 `json:"ingressBytesTransferred,omitempty" azure:"ro"`
+
+	// READ-ONLY; The provisioning state of the VPN connection resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type VPNConnectionProperties.
@@ -15886,11 +15886,11 @@ type VPNDeviceScriptParameters struct {
 // VPNGateway - VpnGateway Resource.
 type VPNGateway struct {
 	Resource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Properties of the VPN gateway.
 	Properties *VPNGatewayProperties `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type VPNGateway.
@@ -15921,14 +15921,14 @@ type VPNGatewayProperties struct {
 	// List of all vpn connections to the gateway.
 	Connections []*VPNConnection `json:"connections,omitempty"`
 
-	// READ-ONLY; The provisioning state of the VPN gateway resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
 	// The scale unit for this vpn gateway.
 	VPNGatewayScaleUnit *int32 `json:"vpnGatewayScaleUnit,omitempty"`
 
 	// The VirtualHub to which the gateway belongs.
 	VirtualHub *SubResource `json:"virtualHub,omitempty"`
+
+	// READ-ONLY; The provisioning state of the VPN gateway resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type VPNGatewayProperties.
@@ -16087,11 +16087,11 @@ type VPNServerConfigVPNClientRootCertificate struct {
 // VPNServerConfiguration - VpnServerConfiguration Resource.
 type VPNServerConfiguration struct {
 	Resource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Properties of the P2SVpnServer configuration.
 	Properties *VPNServerConfigurationProperties `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type VPNServerConfiguration.
@@ -16119,17 +16119,8 @@ type VPNServerConfigurationProperties struct {
 	// The set of aad vpn authentication parameters.
 	AADAuthenticationParameters *AADAuthenticationParameters `json:"aadAuthenticationParameters,omitempty"`
 
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// The name of the VpnServerConfiguration that is unique within a resource group.
 	Name *string `json:"name,omitempty"`
-
-	// READ-ONLY; List of references to P2SVpnGateways.
-	P2SVPNGateways []*P2SVPNGateway `json:"p2SVpnGateways,omitempty" azure:"ro"`
-
-	// READ-ONLY; The provisioning state of the VpnServerConfiguration resource. Possible values are: 'Updating', 'Deleting', and 'Failed'.
-	ProvisioningState *string `json:"provisioningState,omitempty" azure:"ro"`
 
 	// Radius client root certificate of VpnServerConfiguration.
 	RadiusClientRootCertificates []*VPNServerConfigRadiusClientRootCertificate `json:"radiusClientRootCertificates,omitempty"`
@@ -16160,6 +16151,15 @@ type VPNServerConfigurationProperties struct {
 
 	// VPN protocols for the VpnServerConfiguration.
 	VPNProtocols []*VPNGatewayTunnelingProtocol `json:"vpnProtocols,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
+
+	// READ-ONLY; List of references to P2SVpnGateways.
+	P2SVPNGateways []*P2SVPNGateway `json:"p2SVpnGateways,omitempty" azure:"ro"`
+
+	// READ-ONLY; The provisioning state of the VpnServerConfiguration resource. Possible values are: 'Updating', 'Deleting', and 'Failed'.
+	ProvisioningState *string `json:"provisioningState,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type VPNServerConfigurationProperties.
@@ -16265,11 +16265,11 @@ type VPNServerConfigurationsUpdateTagsOptions struct {
 // VPNSite - VpnSite Resource.
 type VPNSite struct {
 	Resource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Properties of the VPN site.
 	Properties *VPNSiteProperties `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type VPNSite.
@@ -16289,14 +16289,14 @@ type VPNSiteID struct {
 // VPNSiteLink - VpnSiteLink Resource.
 type VPNSiteLink struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// The name of the resource that is unique within a resource group. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of the VPN site link.
 	Properties *VPNSiteLinkProperties `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 
 	// READ-ONLY; Resource type.
 	Type *string `json:"type,omitempty" azure:"ro"`
@@ -16315,14 +16315,14 @@ func (v VPNSiteLink) MarshalJSON() ([]byte, error) {
 // VPNSiteLinkConnection - VpnSiteLinkConnection Resource.
 type VPNSiteLinkConnection struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// The name of the resource that is unique within a resource group. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of the VPN site link connection.
 	Properties *VPNSiteLinkConnectionProperties `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 
 	// READ-ONLY; Resource type.
 	Type *string `json:"type,omitempty" azure:"ro"`
@@ -16343,12 +16343,6 @@ type VPNSiteLinkConnectionProperties struct {
 	// Expected bandwidth in MBPS.
 	ConnectionBandwidth *int32 `json:"connectionBandwidth,omitempty"`
 
-	// READ-ONLY; The connection status.
-	ConnectionStatus *VPNConnectionStatus `json:"connectionStatus,omitempty" azure:"ro"`
-
-	// READ-ONLY; Egress bytes transferred.
-	EgressBytesTransferred *int64 `json:"egressBytesTransferred,omitempty" azure:"ro"`
-
 	// EnableBgp flag.
 	EnableBgp *bool `json:"enableBgp,omitempty"`
 
@@ -16357,12 +16351,6 @@ type VPNSiteLinkConnectionProperties struct {
 
 	// The IPSec Policies to be considered by this connection.
 	IPSecPolicies []*IPSecPolicy `json:"ipsecPolicies,omitempty"`
-
-	// READ-ONLY; Ingress bytes transferred.
-	IngressBytesTransferred *int64 `json:"ingressBytesTransferred,omitempty" azure:"ro"`
-
-	// READ-ONLY; The provisioning state of the VPN site link connection resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
 	// Routing weight for vpn connection.
 	RoutingWeight *int32 `json:"routingWeight,omitempty"`
@@ -16381,6 +16369,18 @@ type VPNSiteLinkConnectionProperties struct {
 
 	// Id of the connected vpn site link.
 	VPNSiteLink *SubResource `json:"vpnSiteLink,omitempty"`
+
+	// READ-ONLY; The connection status.
+	ConnectionStatus *VPNConnectionStatus `json:"connectionStatus,omitempty" azure:"ro"`
+
+	// READ-ONLY; Egress bytes transferred.
+	EgressBytesTransferred *int64 `json:"egressBytesTransferred,omitempty" azure:"ro"`
+
+	// READ-ONLY; Ingress bytes transferred.
+	IngressBytesTransferred *int64 `json:"ingressBytesTransferred,omitempty" azure:"ro"`
+
+	// READ-ONLY; The provisioning state of the VPN site link connection resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type VPNSiteLinkConnectionProperties.
@@ -16483,9 +16483,6 @@ type VPNSiteProperties struct {
 	// IsSecuritySite flag.
 	IsSecuritySite *bool `json:"isSecuritySite,omitempty"`
 
-	// READ-ONLY; The provisioning state of the VPN site resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
 	// The key for vpn-site that can be used for connections.
 	SiteKey *string `json:"siteKey,omitempty"`
 
@@ -16494,6 +16491,9 @@ type VPNSiteProperties struct {
 
 	// The VirtualWAN to which the vpnSite belongs.
 	VirtualWan *SubResource `json:"virtualWan,omitempty"`
+
+	// READ-ONLY; The provisioning state of the VPN site resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type VPNSiteProperties.
@@ -16557,29 +16557,29 @@ type VPNSitesUpdateTagsOptions struct {
 
 // VerificationIPFlowParameters - Parameters that define the IP flow to be verified.
 type VerificationIPFlowParameters struct {
-	// The direction of the packet represented as a 5-tuple.
+	// REQUIRED; The direction of the packet represented as a 5-tuple.
 	Direction *Direction `json:"direction,omitempty"`
 
-	// The local IP address. Acceptable values are valid IPv4 addresses.
+	// REQUIRED; The local IP address. Acceptable values are valid IPv4 addresses.
 	LocalIPAddress *string `json:"localIPAddress,omitempty"`
 
-	// The local port. Acceptable values are a single integer in the range (0-65535). Support for * for the source port, which depends on the direction.
+	// REQUIRED; The local port. Acceptable values are a single integer in the range (0-65535). Support for * for the source port, which depends on the direction.
 	LocalPort *string `json:"localPort,omitempty"`
 
-	// Protocol to be verified on.
+	// REQUIRED; Protocol to be verified on.
 	Protocol *IPFlowProtocol `json:"protocol,omitempty"`
 
-	// The remote IP address. Acceptable values are valid IPv4 addresses.
+	// REQUIRED; The remote IP address. Acceptable values are valid IPv4 addresses.
 	RemoteIPAddress *string `json:"remoteIPAddress,omitempty"`
 
-	// The remote port. Acceptable values are a single integer in the range (0-65535). Support for * for the source port, which depends on the direction.
+	// REQUIRED; The remote port. Acceptable values are a single integer in the range (0-65535). Support for * for the source port, which depends on the direction.
 	RemotePort *string `json:"remotePort,omitempty"`
+
+	// REQUIRED; The ID of the target resource to perform next-hop on.
+	TargetResourceID *string `json:"targetResourceId,omitempty"`
 
 	// The NIC ID. (If VM has multiple NICs and IP forwarding is enabled on any of them, then this parameter must be specified. Otherwise optional).
 	TargetNicResourceID *string `json:"targetNicResourceId,omitempty"`
-
-	// The ID of the target resource to perform next-hop on.
-	TargetResourceID *string `json:"targetResourceId,omitempty"`
 }
 
 // VerificationIPFlowResult - Results of IP flow verification on the target resource.
@@ -16639,11 +16639,11 @@ type VirtualApplianceSKUProperties struct {
 // VirtualHub Resource.
 type VirtualHub struct {
 	Resource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Properties of the virtual hub.
 	Properties *VirtualHubProperties `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type VirtualHub.
@@ -16687,9 +16687,6 @@ type VirtualHubProperties struct {
 	// The P2SVpnGateway associated with this VirtualHub.
 	P2SVPNGateway *SubResource `json:"p2SVpnGateway,omitempty"`
 
-	// READ-ONLY; The provisioning state of the virtual hub resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
 	// The routeTable associated with this virtual hub.
 	RouteTable *VirtualHubRouteTable `json:"routeTable,omitempty"`
 
@@ -16713,6 +16710,9 @@ type VirtualHubProperties struct {
 
 	// The VirtualWAN to which the VirtualHub belongs.
 	VirtualWan *SubResource `json:"virtualWan,omitempty"`
+
+	// READ-ONLY; The provisioning state of the virtual hub resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type VirtualHubProperties.
@@ -16776,14 +16776,14 @@ func (v VirtualHubRouteTable) MarshalJSON() ([]byte, error) {
 // VirtualHubRouteTableV2 Resource.
 type VirtualHubRouteTableV2 struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// The name of the resource that is unique within a resource group. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of the virtual hub route table v2.
 	Properties *VirtualHubRouteTableV2Properties `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type VirtualHubRouteTableV2.
@@ -16812,11 +16812,11 @@ type VirtualHubRouteTableV2Properties struct {
 	// List of all connections attached to this route table v2.
 	AttachedConnections []*string `json:"attachedConnections,omitempty"`
 
-	// READ-ONLY; The provisioning state of the virtual hub route table v2 resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
 	// List of all routes.
 	Routes []*VirtualHubRouteV2 `json:"routes,omitempty"`
+
+	// READ-ONLY; The provisioning state of the virtual hub route table v2 resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type VirtualHubRouteTableV2Properties.
@@ -16915,11 +16915,11 @@ type VirtualHubsUpdateTagsOptions struct {
 // VirtualNetwork - Virtual Network resource.
 type VirtualNetwork struct {
 	Resource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Properties of the virtual network.
 	Properties *VirtualNetworkPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type VirtualNetwork.
@@ -16932,27 +16932,27 @@ func (v VirtualNetwork) MarshalJSON() ([]byte, error) {
 
 // VirtualNetworkBgpCommunities - Bgp Communities sent over ExpressRoute with each route corresponding to a prefix in this VNET.
 type VirtualNetworkBgpCommunities struct {
+	// REQUIRED; The BGP community associated with the virtual network.
+	VirtualNetworkCommunity *string `json:"virtualNetworkCommunity,omitempty"`
+
 	// READ-ONLY; The BGP community associated with the region of the virtual network.
 	RegionalCommunity *string `json:"regionalCommunity,omitempty" azure:"ro"`
-
-	// The BGP community associated with the virtual network.
-	VirtualNetworkCommunity *string `json:"virtualNetworkCommunity,omitempty"`
 }
 
 // VirtualNetworkConnectionGatewayReference - A reference to VirtualNetworkGateway or LocalNetworkGateway resource.
 type VirtualNetworkConnectionGatewayReference struct {
-	// The ID of VirtualNetworkGateway or LocalNetworkGateway resource.
+	// REQUIRED; The ID of VirtualNetworkGateway or LocalNetworkGateway resource.
 	ID *string `json:"id,omitempty"`
 }
 
 // VirtualNetworkGateway - A common class for general resource information.
 type VirtualNetworkGateway struct {
 	Resource
+	// REQUIRED; Properties of the virtual network gateway.
+	Properties *VirtualNetworkGatewayPropertiesFormat `json:"properties,omitempty"`
+
 	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
 	Etag *string `json:"etag,omitempty" azure:"ro"`
-
-	// Properties of the virtual network gateway.
-	Properties *VirtualNetworkGatewayPropertiesFormat `json:"properties,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type VirtualNetworkGateway.
@@ -16966,11 +16966,11 @@ func (v VirtualNetworkGateway) MarshalJSON() ([]byte, error) {
 // VirtualNetworkGatewayConnection - A common class for general resource information.
 type VirtualNetworkGatewayConnection struct {
 	Resource
+	// REQUIRED; Properties of the virtual network gateway connection.
+	Properties *VirtualNetworkGatewayConnectionPropertiesFormat `json:"properties,omitempty"`
+
 	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
 	Etag *string `json:"etag,omitempty" azure:"ro"`
-
-	// Properties of the virtual network gateway connection.
-	Properties *VirtualNetworkGatewayConnectionPropertiesFormat `json:"properties,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type VirtualNetworkGatewayConnection.
@@ -16984,11 +16984,11 @@ func (v VirtualNetworkGatewayConnection) MarshalJSON() ([]byte, error) {
 // VirtualNetworkGatewayConnectionListEntity - A common class for general resource information.
 type VirtualNetworkGatewayConnectionListEntity struct {
 	Resource
+	// REQUIRED; Properties of the virtual network gateway connection.
+	Properties *VirtualNetworkGatewayConnectionListEntityPropertiesFormat `json:"properties,omitempty"`
+
 	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
 	Etag *string `json:"etag,omitempty" azure:"ro"`
-
-	// Properties of the virtual network gateway connection.
-	Properties *VirtualNetworkGatewayConnectionListEntityPropertiesFormat `json:"properties,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type VirtualNetworkGatewayConnectionListEntity.
@@ -17001,20 +17001,17 @@ func (v VirtualNetworkGatewayConnectionListEntity) MarshalJSON() ([]byte, error)
 
 // VirtualNetworkGatewayConnectionListEntityPropertiesFormat - VirtualNetworkGatewayConnection properties.
 type VirtualNetworkGatewayConnectionListEntityPropertiesFormat struct {
+	// REQUIRED; Gateway connection type.
+	ConnectionType *VirtualNetworkGatewayConnectionType `json:"connectionType,omitempty"`
+
+	// REQUIRED; The reference to virtual network gateway resource.
+	VirtualNetworkGateway1 *VirtualNetworkConnectionGatewayReference `json:"virtualNetworkGateway1,omitempty"`
+
 	// The authorizationKey.
 	AuthorizationKey *string `json:"authorizationKey,omitempty"`
 
 	// Connection protocol used for this connection.
 	ConnectionProtocol *VirtualNetworkGatewayConnectionProtocol `json:"connectionProtocol,omitempty"`
-
-	// READ-ONLY; Virtual Network Gateway connection status.
-	ConnectionStatus *VirtualNetworkGatewayConnectionStatus `json:"connectionStatus,omitempty" azure:"ro"`
-
-	// Gateway connection type.
-	ConnectionType *VirtualNetworkGatewayConnectionType `json:"connectionType,omitempty"`
-
-	// READ-ONLY; The egress bytes transferred in this connection.
-	EgressBytesTransferred *int64 `json:"egressBytesTransferred,omitempty" azure:"ro"`
 
 	// EnableBgp flag.
 	EnableBgp *bool `json:"enableBgp,omitempty"`
@@ -17025,20 +17022,11 @@ type VirtualNetworkGatewayConnectionListEntityPropertiesFormat struct {
 	// The IPSec Policies to be considered by this connection.
 	IPSecPolicies []*IPSecPolicy `json:"ipsecPolicies,omitempty"`
 
-	// READ-ONLY; The ingress bytes transferred in this connection.
-	IngressBytesTransferred *int64 `json:"ingressBytesTransferred,omitempty" azure:"ro"`
-
 	// The reference to local network gateway resource.
 	LocalNetworkGateway2 *VirtualNetworkConnectionGatewayReference `json:"localNetworkGateway2,omitempty"`
 
 	// The reference to peerings resource.
 	Peer *SubResource `json:"peer,omitempty"`
-
-	// READ-ONLY; The provisioning state of the virtual network gateway connection resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
-	// READ-ONLY; The resource GUID property of the virtual network gateway connection resource.
-	ResourceGUID *string `json:"resourceGuid,omitempty" azure:"ro"`
 
 	// The routing weight.
 	RoutingWeight *int32 `json:"routingWeight,omitempty"`
@@ -17049,17 +17037,29 @@ type VirtualNetworkGatewayConnectionListEntityPropertiesFormat struct {
 	// The Traffic Selector Policies to be considered by this connection.
 	TrafficSelectorPolicies []*TrafficSelectorPolicy `json:"trafficSelectorPolicies,omitempty"`
 
-	// READ-ONLY; Collection of all tunnels' connection health status.
-	TunnelConnectionStatus []*TunnelConnectionHealth `json:"tunnelConnectionStatus,omitempty" azure:"ro"`
-
 	// Enable policy-based traffic selectors.
 	UsePolicyBasedTrafficSelectors *bool `json:"usePolicyBasedTrafficSelectors,omitempty"`
 
 	// The reference to virtual network gateway resource.
-	VirtualNetworkGateway1 *VirtualNetworkConnectionGatewayReference `json:"virtualNetworkGateway1,omitempty"`
-
-	// The reference to virtual network gateway resource.
 	VirtualNetworkGateway2 *VirtualNetworkConnectionGatewayReference `json:"virtualNetworkGateway2,omitempty"`
+
+	// READ-ONLY; Virtual Network Gateway connection status.
+	ConnectionStatus *VirtualNetworkGatewayConnectionStatus `json:"connectionStatus,omitempty" azure:"ro"`
+
+	// READ-ONLY; The egress bytes transferred in this connection.
+	EgressBytesTransferred *int64 `json:"egressBytesTransferred,omitempty" azure:"ro"`
+
+	// READ-ONLY; The ingress bytes transferred in this connection.
+	IngressBytesTransferred *int64 `json:"ingressBytesTransferred,omitempty" azure:"ro"`
+
+	// READ-ONLY; The provisioning state of the virtual network gateway connection resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
+
+	// READ-ONLY; The resource GUID property of the virtual network gateway connection resource.
+	ResourceGUID *string `json:"resourceGuid,omitempty" azure:"ro"`
+
+	// READ-ONLY; Collection of all tunnels' connection health status.
+	TunnelConnectionStatus []*TunnelConnectionHealth `json:"tunnelConnectionStatus,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type VirtualNetworkGatewayConnectionListEntityPropertiesFormat.
@@ -17090,11 +17090,11 @@ func (v VirtualNetworkGatewayConnectionListEntityPropertiesFormat) MarshalJSON()
 
 // VirtualNetworkGatewayConnectionListResult - Response for the ListVirtualNetworkGatewayConnections API service call.
 type VirtualNetworkGatewayConnectionListResult struct {
-	// READ-ONLY; The URL to get the next set of results.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
-
 	// A list of VirtualNetworkGatewayConnection resources that exists in a resource group.
 	Value []*VirtualNetworkGatewayConnection `json:"value,omitempty"`
+
+	// READ-ONLY; The URL to get the next set of results.
+	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type VirtualNetworkGatewayConnectionListResult.
@@ -17128,23 +17128,20 @@ type VirtualNetworkGatewayConnectionPollerResponse struct {
 
 // VirtualNetworkGatewayConnectionPropertiesFormat - VirtualNetworkGatewayConnection properties.
 type VirtualNetworkGatewayConnectionPropertiesFormat struct {
+	// REQUIRED; Gateway connection type.
+	ConnectionType *VirtualNetworkGatewayConnectionType `json:"connectionType,omitempty"`
+
+	// REQUIRED; The reference to virtual network gateway resource.
+	VirtualNetworkGateway1 *VirtualNetworkGateway `json:"virtualNetworkGateway1,omitempty"`
+
 	// The authorizationKey.
 	AuthorizationKey *string `json:"authorizationKey,omitempty"`
 
 	// Connection protocol used for this connection.
 	ConnectionProtocol *VirtualNetworkGatewayConnectionProtocol `json:"connectionProtocol,omitempty"`
 
-	// READ-ONLY; Virtual Network Gateway connection status.
-	ConnectionStatus *VirtualNetworkGatewayConnectionStatus `json:"connectionStatus,omitempty" azure:"ro"`
-
-	// Gateway connection type.
-	ConnectionType *VirtualNetworkGatewayConnectionType `json:"connectionType,omitempty"`
-
 	// The dead peer detection timeout of this connection in seconds.
 	DpdTimeoutSeconds *int32 `json:"dpdTimeoutSeconds,omitempty"`
-
-	// READ-ONLY; The egress bytes transferred in this connection.
-	EgressBytesTransferred *int64 `json:"egressBytesTransferred,omitempty" azure:"ro"`
 
 	// EnableBgp flag.
 	EnableBgp *bool `json:"enableBgp,omitempty"`
@@ -17155,20 +17152,11 @@ type VirtualNetworkGatewayConnectionPropertiesFormat struct {
 	// The IPSec Policies to be considered by this connection.
 	IPSecPolicies []*IPSecPolicy `json:"ipsecPolicies,omitempty"`
 
-	// READ-ONLY; The ingress bytes transferred in this connection.
-	IngressBytesTransferred *int64 `json:"ingressBytesTransferred,omitempty" azure:"ro"`
-
 	// The reference to local network gateway resource.
 	LocalNetworkGateway2 *LocalNetworkGateway `json:"localNetworkGateway2,omitempty"`
 
 	// The reference to peerings resource.
 	Peer *SubResource `json:"peer,omitempty"`
-
-	// READ-ONLY; The provisioning state of the virtual network gateway connection resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
-	// READ-ONLY; The resource GUID property of the virtual network gateway connection resource.
-	ResourceGUID *string `json:"resourceGuid,omitempty" azure:"ro"`
 
 	// The routing weight.
 	RoutingWeight *int32 `json:"routingWeight,omitempty"`
@@ -17179,9 +17167,6 @@ type VirtualNetworkGatewayConnectionPropertiesFormat struct {
 	// The Traffic Selector Policies to be considered by this connection.
 	TrafficSelectorPolicies []*TrafficSelectorPolicy `json:"trafficSelectorPolicies,omitempty"`
 
-	// READ-ONLY; Collection of all tunnels' connection health status.
-	TunnelConnectionStatus []*TunnelConnectionHealth `json:"tunnelConnectionStatus,omitempty" azure:"ro"`
-
 	// Use private local Azure IP for the connection.
 	UseLocalAzureIPAddress *bool `json:"useLocalAzureIpAddress,omitempty"`
 
@@ -17189,10 +17174,25 @@ type VirtualNetworkGatewayConnectionPropertiesFormat struct {
 	UsePolicyBasedTrafficSelectors *bool `json:"usePolicyBasedTrafficSelectors,omitempty"`
 
 	// The reference to virtual network gateway resource.
-	VirtualNetworkGateway1 *VirtualNetworkGateway `json:"virtualNetworkGateway1,omitempty"`
-
-	// The reference to virtual network gateway resource.
 	VirtualNetworkGateway2 *VirtualNetworkGateway `json:"virtualNetworkGateway2,omitempty"`
+
+	// READ-ONLY; Virtual Network Gateway connection status.
+	ConnectionStatus *VirtualNetworkGatewayConnectionStatus `json:"connectionStatus,omitempty" azure:"ro"`
+
+	// READ-ONLY; The egress bytes transferred in this connection.
+	EgressBytesTransferred *int64 `json:"egressBytesTransferred,omitempty" azure:"ro"`
+
+	// READ-ONLY; The ingress bytes transferred in this connection.
+	IngressBytesTransferred *int64 `json:"ingressBytesTransferred,omitempty" azure:"ro"`
+
+	// READ-ONLY; The provisioning state of the virtual network gateway connection resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
+
+	// READ-ONLY; The resource GUID property of the virtual network gateway connection resource.
+	ResourceGUID *string `json:"resourceGuid,omitempty" azure:"ro"`
+
+	// READ-ONLY; Collection of all tunnels' connection health status.
+	TunnelConnectionStatus []*TunnelConnectionHealth `json:"tunnelConnectionStatus,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type VirtualNetworkGatewayConnectionPropertiesFormat.
@@ -17291,14 +17291,14 @@ type VirtualNetworkGatewayConnectionsListOptions struct {
 // VirtualNetworkGatewayIPConfiguration - IP configuration for virtual network gateway.
 type VirtualNetworkGatewayIPConfiguration struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// The name of the resource that is unique within a resource group. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of the virtual network gateway ip configuration.
 	Properties *VirtualNetworkGatewayIPConfigurationPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type VirtualNetworkGatewayIPConfiguration.
@@ -17312,29 +17312,29 @@ func (v VirtualNetworkGatewayIPConfiguration) MarshalJSON() ([]byte, error) {
 
 // VirtualNetworkGatewayIPConfigurationPropertiesFormat - Properties of VirtualNetworkGatewayIPConfiguration.
 type VirtualNetworkGatewayIPConfigurationPropertiesFormat struct {
-	// READ-ONLY; Private IP Address for this gateway.
-	PrivateIPAddress *string `json:"privateIPAddress,omitempty" azure:"ro"`
-
 	// The private IP address allocation method.
 	PrivateIPAllocationMethod *IPAllocationMethod `json:"privateIPAllocationMethod,omitempty"`
-
-	// READ-ONLY; The provisioning state of the virtual network gateway IP configuration resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 
 	// The reference to the public IP resource.
 	PublicIPAddress *SubResource `json:"publicIPAddress,omitempty"`
 
 	// The reference to the subnet resource.
 	Subnet *SubResource `json:"subnet,omitempty"`
+
+	// READ-ONLY; Private IP Address for this gateway.
+	PrivateIPAddress *string `json:"privateIPAddress,omitempty" azure:"ro"`
+
+	// READ-ONLY; The provisioning state of the virtual network gateway IP configuration resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
 // VirtualNetworkGatewayListConnectionsResult - Response for the VirtualNetworkGatewayListConnections API service call.
 type VirtualNetworkGatewayListConnectionsResult struct {
-	// READ-ONLY; The URL to get the next set of results.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
-
 	// A list of VirtualNetworkGatewayConnection resources that exists in a resource group.
 	Value []*VirtualNetworkGatewayConnectionListEntity `json:"value,omitempty"`
+
+	// READ-ONLY; The URL to get the next set of results.
+	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type VirtualNetworkGatewayListConnectionsResult.
@@ -17356,11 +17356,11 @@ type VirtualNetworkGatewayListConnectionsResultResponse struct {
 
 // VirtualNetworkGatewayListResult - Response for the ListVirtualNetworkGateways API service call.
 type VirtualNetworkGatewayListResult struct {
-	// READ-ONLY; The URL to get the next set of results.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
-
 	// A list of VirtualNetworkGateway resources that exists in a resource group.
 	Value []*VirtualNetworkGateway `json:"value,omitempty"`
+
+	// READ-ONLY; The URL to get the next set of results.
+	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type VirtualNetworkGatewayListResult.
@@ -17423,15 +17423,6 @@ type VirtualNetworkGatewayPropertiesFormat struct {
 	// IP configurations for virtual network gateway.
 	IPConfigurations []*VirtualNetworkGatewayIPConfiguration `json:"ipConfigurations,omitempty"`
 
-	// READ-ONLY; The IP address allocated by the gateway to which dns requests can be sent.
-	InboundDNSForwardingEndpoint *string `json:"inboundDnsForwardingEndpoint,omitempty" azure:"ro"`
-
-	// READ-ONLY; The provisioning state of the virtual network gateway resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
-	// READ-ONLY; The resource GUID property of the virtual network gateway resource.
-	ResourceGUID *string `json:"resourceGuid,omitempty" azure:"ro"`
-
 	// The reference to the VirtualNetworkGatewaySku resource which represents the SKU selected for Virtual network gateway.
 	SKU *VirtualNetworkGatewaySKU `json:"sku,omitempty"`
 
@@ -17443,6 +17434,15 @@ type VirtualNetworkGatewayPropertiesFormat struct {
 
 	// The type of this virtual network gateway.
 	VPNType *VPNType `json:"vpnType,omitempty"`
+
+	// READ-ONLY; The IP address allocated by the gateway to which dns requests can be sent.
+	InboundDNSForwardingEndpoint *string `json:"inboundDnsForwardingEndpoint,omitempty" azure:"ro"`
+
+	// READ-ONLY; The provisioning state of the virtual network gateway resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
+
+	// READ-ONLY; The resource GUID property of the virtual network gateway resource.
+	ResourceGUID *string `json:"resourceGuid,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type VirtualNetworkGatewayPropertiesFormat.
@@ -17478,14 +17478,14 @@ type VirtualNetworkGatewayResponse struct {
 
 // VirtualNetworkGatewaySKU - VirtualNetworkGatewaySku details.
 type VirtualNetworkGatewaySKU struct {
-	// READ-ONLY; The capacity.
-	Capacity *int32 `json:"capacity,omitempty" azure:"ro"`
-
 	// Gateway SKU name.
 	Name *VirtualNetworkGatewaySKUName `json:"name,omitempty"`
 
 	// Gateway SKU tier.
 	Tier *VirtualNetworkGatewaySKUTier `json:"tier,omitempty"`
+
+	// READ-ONLY; The capacity.
+	Capacity *int32 `json:"capacity,omitempty" azure:"ro"`
 }
 
 // VirtualNetworkGatewaysBeginCreateOrUpdateOptions contains the optional parameters for the VirtualNetworkGateways.BeginCreateOrUpdate method.
@@ -17664,14 +17664,14 @@ type VirtualNetworkListUsageResultResponse struct {
 // VirtualNetworkPeering - Peerings in a virtual network resource.
 type VirtualNetworkPeering struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// The name of the resource that is unique within a resource group. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
 	// Properties of the virtual network peering.
 	Properties *VirtualNetworkPeeringPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type VirtualNetworkPeering.
@@ -17735,9 +17735,6 @@ type VirtualNetworkPeeringPropertiesFormat struct {
 	// The status of the virtual network peering.
 	PeeringState *VirtualNetworkPeeringState `json:"peeringState,omitempty"`
 
-	// READ-ONLY; The provisioning state of the virtual network peering resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
 	// The reference to the remote virtual network address space.
 	RemoteAddressSpace *AddressSpace `json:"remoteAddressSpace,omitempty"`
 
@@ -17750,6 +17747,9 @@ type VirtualNetworkPeeringPropertiesFormat struct {
 	// will use gateways of remote virtual network
 	// for transit. Only one peering can have this flag set to true. This flag cannot be set if virtual network already has a gateway.
 	UseRemoteGateways *bool `json:"useRemoteGateways,omitempty"`
+
+	// READ-ONLY; The provisioning state of the virtual network peering resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
 // VirtualNetworkPeeringResponse is the response envelope for operations that return a VirtualNetworkPeering type.
@@ -17817,17 +17817,17 @@ type VirtualNetworkPropertiesFormat struct {
 	// Array of IpAllocation which reference this VNET.
 	IPAllocations []*SubResource `json:"ipAllocations,omitempty"`
 
-	// READ-ONLY; The provisioning state of the virtual network resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
-	// READ-ONLY; The resourceGuid property of the Virtual Network resource.
-	ResourceGUID *string `json:"resourceGuid,omitempty" azure:"ro"`
-
 	// A list of subnets in a Virtual Network.
 	Subnets []*Subnet `json:"subnets,omitempty"`
 
 	// A list of peerings in a Virtual Network.
 	VirtualNetworkPeerings []*VirtualNetworkPeering `json:"virtualNetworkPeerings,omitempty"`
+
+	// READ-ONLY; The provisioning state of the virtual network resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
+
+	// READ-ONLY; The resourceGuid property of the Virtual Network resource.
+	ResourceGUID *string `json:"resourceGuid,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type VirtualNetworkPropertiesFormat.
@@ -17859,11 +17859,11 @@ type VirtualNetworkResponse struct {
 // VirtualNetworkTap - Virtual Network Tap resource.
 type VirtualNetworkTap struct {
 	Resource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Virtual Network Tap Properties.
 	Properties *VirtualNetworkTapPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type VirtualNetworkTap.
@@ -18055,11 +18055,11 @@ type VirtualNetworksUpdateTagsOptions struct {
 // VirtualRouter Resource.
 type VirtualRouter struct {
 	Resource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Properties of the Virtual Router.
 	Properties *VirtualRouterPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type VirtualRouter.
@@ -18099,14 +18099,14 @@ type VirtualRouterListResultResponse struct {
 // VirtualRouterPeering - Virtual Router Peering resource.
 type VirtualRouterPeering struct {
 	SubResource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Name of the virtual router peering that is unique within a virtual router.
 	Name *string `json:"name,omitempty"`
 
 	// The properties of the Virtual Router Peering.
 	Properties *VirtualRouterPeeringProperties `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 
 	// READ-ONLY; Peering type.
 	Type *string `json:"type,omitempty" azure:"ro"`
@@ -18221,17 +18221,17 @@ type VirtualRouterPropertiesFormat struct {
 	// The Subnet on which VirtualRouter is hosted.
 	HostedSubnet *SubResource `json:"hostedSubnet,omitempty"`
 
-	// READ-ONLY; List of references to VirtualRouterPeerings.
-	Peerings []*SubResource `json:"peerings,omitempty" azure:"ro"`
-
-	// READ-ONLY; The provisioning state of the resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
 	// VirtualRouter ASN.
 	VirtualRouterAsn *int64 `json:"virtualRouterAsn,omitempty"`
 
 	// VirtualRouter IPs.
 	VirtualRouterIPs []*string `json:"virtualRouterIps,omitempty"`
+
+	// READ-ONLY; List of references to VirtualRouterPeerings.
+	Peerings []*SubResource `json:"peerings,omitempty" azure:"ro"`
+
+	// READ-ONLY; The provisioning state of the resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type VirtualRouterPropertiesFormat.
@@ -18284,11 +18284,11 @@ type VirtualRoutersListOptions struct {
 // VirtualWAN Resource.
 type VirtualWAN struct {
 	Resource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Properties of the virtual WAN.
 	Properties *VirtualWanProperties `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type VirtualWAN.
@@ -18331,14 +18331,14 @@ type VirtualWanProperties struct {
 	// Vpn encryption to be disabled or not.
 	DisableVPNEncryption *bool `json:"disableVpnEncryption,omitempty"`
 
+	// The type of the VirtualWAN.
+	Type *string `json:"type,omitempty"`
+
 	// READ-ONLY; The office local breakout category.
 	Office365LocalBreakoutCategory *OfficeTrafficCategory `json:"office365LocalBreakoutCategory,omitempty" azure:"ro"`
 
 	// READ-ONLY; The provisioning state of the virtual WAN resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
-	// The type of the VirtualWAN.
-	Type *string `json:"type,omitempty"`
 
 	// READ-ONLY; List of VpnSites in the VirtualWAN.
 	VPNSites []*SubResource `json:"vpnSites,omitempty" azure:"ro"`
@@ -18366,11 +18366,11 @@ type VirtualWanSecurityProvider struct {
 	// Name of the security provider.
 	Name *string `json:"name,omitempty"`
 
-	// READ-ONLY; Name of the security provider.
-	Type *VirtualWanSecurityProviderType `json:"type,omitempty" azure:"ro"`
-
 	// Url of the security provider.
 	URL *string `json:"url,omitempty"`
+
+	// READ-ONLY; Name of the security provider.
+	Type *VirtualWanSecurityProviderType `json:"type,omitempty" azure:"ro"`
 }
 
 // VirtualWanSecurityProviders - Collection of SecurityProviders.
@@ -18436,23 +18436,23 @@ type VirtualWansUpdateTagsOptions struct {
 
 // WebApplicationFirewallCustomRule - Defines contents of a web application rule.
 type WebApplicationFirewallCustomRule struct {
-	// Type of Actions.
+	// REQUIRED; Type of Actions.
 	Action *WebApplicationFirewallAction `json:"action,omitempty"`
 
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
-	// List of match conditions.
+	// REQUIRED; List of match conditions.
 	MatchConditions []*MatchCondition `json:"matchConditions,omitempty"`
+
+	// REQUIRED; Priority of the rule. Rules with a lower value will be evaluated before rules with a higher value.
+	Priority *int32 `json:"priority,omitempty"`
+
+	// REQUIRED; The rule type.
+	RuleType *WebApplicationFirewallRuleType `json:"ruleType,omitempty"`
 
 	// The name of the resource that is unique within a policy. This name can be used to access the resource.
 	Name *string `json:"name,omitempty"`
 
-	// Priority of the rule. Rules with a lower value will be evaluated before rules with a higher value.
-	Priority *int32 `json:"priority,omitempty"`
-
-	// The rule type.
-	RuleType *WebApplicationFirewallRuleType `json:"ruleType,omitempty"`
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type WebApplicationFirewallCustomRule.
@@ -18495,11 +18495,11 @@ type WebApplicationFirewallPoliciesListOptions struct {
 // WebApplicationFirewallPolicy - Defines web application firewall policy.
 type WebApplicationFirewallPolicy struct {
 	Resource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
 	// Properties of the web application firewall policy.
 	Properties *WebApplicationFirewallPolicyPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type WebApplicationFirewallPolicy.
@@ -18540,23 +18540,23 @@ type WebApplicationFirewallPolicyListResultResponse struct {
 
 // WebApplicationFirewallPolicyPropertiesFormat - Defines web application firewall policy properties.
 type WebApplicationFirewallPolicyPropertiesFormat struct {
-	// READ-ONLY; A collection of references to application gateways.
-	ApplicationGateways []*ApplicationGateway `json:"applicationGateways,omitempty" azure:"ro"`
+	// REQUIRED; Describes the managedRules structure.
+	ManagedRules *ManagedRulesDefinition `json:"managedRules,omitempty"`
 
 	// The custom rules inside the policy.
 	CustomRules []*WebApplicationFirewallCustomRule `json:"customRules,omitempty"`
 
+	// The PolicySettings for policy.
+	PolicySettings *PolicySettings `json:"policySettings,omitempty"`
+
+	// READ-ONLY; A collection of references to application gateways.
+	ApplicationGateways []*ApplicationGateway `json:"applicationGateways,omitempty" azure:"ro"`
+
 	// READ-ONLY; A collection of references to application gateway http listeners.
 	HTTPListeners []*SubResource `json:"httpListeners,omitempty" azure:"ro"`
 
-	// Describes the managedRules structure.
-	ManagedRules *ManagedRulesDefinition `json:"managedRules,omitempty"`
-
 	// READ-ONLY; A collection of references to application gateway path rules.
 	PathBasedRules []*SubResource `json:"pathBasedRules,omitempty" azure:"ro"`
-
-	// The PolicySettings for policy.
-	PolicySettings *PolicySettings `json:"policySettings,omitempty"`
 
 	// READ-ONLY; The provisioning state of the web application firewall policy resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`

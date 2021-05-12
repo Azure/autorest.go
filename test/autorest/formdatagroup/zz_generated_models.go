@@ -42,15 +42,15 @@ type FormdataUploadFilesOptions struct {
 }
 
 type Paths1MqqetpFormdataStreamUploadfilePostRequestbodyContentMultipartFormDataSchema struct {
-	// File to upload.
+	// REQUIRED; File to upload.
 	FileContent *azcore.ReadSeekCloser `json:"fileContent,omitempty"`
 
-	// File name to upload. Name has to be spelled exactly as written here.
+	// REQUIRED; File name to upload. Name has to be spelled exactly as written here.
 	FileName *string `json:"fileName,omitempty"`
 }
 
 type Paths1P3Stk3FormdataStreamUploadfilesPostRequestbodyContentMultipartFormDataSchema struct {
-	// Files to upload.
+	// REQUIRED; Files to upload.
 	FileContent []azcore.ReadSeekCloser `json:"fileContent,omitempty"`
 }
 

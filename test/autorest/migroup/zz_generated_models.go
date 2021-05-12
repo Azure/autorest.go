@@ -126,6 +126,7 @@ type MultipleInheritanceServiceClientPutPetOptions struct {
 }
 
 type Pet struct {
+	// REQUIRED
 	Name *string `json:"name,omitempty"`
 }
 

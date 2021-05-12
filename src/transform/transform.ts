@@ -88,14 +88,16 @@ async function process(session: Session<CodeModel>) {
       }
     }
     for (const prop of values(obj.properties)) {
-      if (prop.language.go!.description) {
-        prop.language.go!.description = parseComments(prop.language.go!.description);
-        if (prop.readOnly) {
-          prop.language.go!.description = 'READ-ONLY; ' + prop.language.go!.description;
-        }
-      } else if (prop.readOnly) {
-        prop.language.go!.description = prop.language.go!.name + ' - READ-ONLY';
+      const descriptionMods = new Array<string>();
+      if (prop.readOnly) {
+        descriptionMods.push('READ-ONLY');
+      } else if (prop.required) {
+        descriptionMods.push('REQUIRED');
       }
+      if (prop.language.go!.description) {
+        descriptionMods.push(parseComments(prop.language.go!.description));
+      }
+      prop.language.go!.description = descriptionMods.join('; ');
       const details = <Language>prop.schema.language.go;
       details.name = `${schemaTypeToGoType(session.model, prop.schema, true)}`;
       if (prop.schema.type === SchemaType.Any || (isObjectSchema(prop.schema) && prop.schema.discriminator)) {
@@ -127,7 +129,7 @@ async function process(session: Session<CodeModel>) {
     const addPropsSchema = hasAdditionalProperties(obj);
     if (addPropsSchema) {
       // add an 'AdditionalProperties' field to the type
-      const addProps = newProperty('AdditionalProperties', 'Contains additional key/value pairs not defined in the schema.', addPropsSchema);
+      const addProps = newProperty('AdditionalProperties', 'OPTIONAL; Contains additional key/value pairs not defined in the schema.', addPropsSchema);
       addProps.language.go!.isAdditionalProperties = true;
       addProps.language.go!.byValue = true;
       obj.properties?.push(addProps);

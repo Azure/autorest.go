@@ -384,6 +384,7 @@ type DotFishClassification interface {
 }
 
 type DotFish struct {
+	// REQUIRED
 	FishType *string `json:"fish.type,omitempty"`
 	Species  *string `json:"species,omitempty"`
 }
@@ -583,7 +584,10 @@ type FishClassification interface {
 }
 
 type Fish struct {
-	Fishtype *string              `json:"fishtype,omitempty"`
+	// REQUIRED
+	Fishtype *string `json:"fishtype,omitempty"`
+
+	// REQUIRED
 	Length   *float32             `json:"length,omitempty"`
 	Siblings []FishClassification `json:"siblings,omitempty"`
 	Species  *string              `json:"species,omitempty"`
@@ -759,8 +763,9 @@ type MyBaseTypeClassification interface {
 }
 
 type MyBaseType struct {
-	Helper *MyBaseHelperType `json:"helper,omitempty"`
+	// REQUIRED
 	Kind   *MyKind           `json:"kind,omitempty"`
+	Helper *MyBaseHelperType `json:"helper,omitempty"`
 	PropB1 *string           `json:"propB1,omitempty"`
 }
 
@@ -1040,9 +1045,10 @@ type PrimitivePutStringOptions struct {
 }
 
 type ReadonlyObj struct {
-	// ID - READ-ONLY
-	ID   *string `json:"id,omitempty" azure:"ro"`
-	Size *int32  `json:"size,omitempty"`
+	Size *int32 `json:"size,omitempty"`
+
+	// READ-ONLY
+	ID *string `json:"id,omitempty" azure:"ro"`
 }
 
 // ReadonlyObjResponse is the response envelope for operations that return a ReadonlyObj type.
@@ -1182,8 +1188,9 @@ type SharkClassification interface {
 
 type Shark struct {
 	Fish
-	Age      *int32     `json:"age,omitempty"`
+	// REQUIRED
 	Birthday *time.Time `json:"birthday,omitempty"`
+	Age      *int32     `json:"age,omitempty"`
 }
 
 // GetShark implements the SharkClassification interface for type Shark.
@@ -1252,7 +1259,7 @@ type SiameseResponse struct {
 
 type SmartSalmon struct {
 	Salmon
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 	CollegeDegree        *string `json:"college_degree,omitempty"`
 }

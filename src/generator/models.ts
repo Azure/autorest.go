@@ -132,6 +132,16 @@ class StructDef {
     if (this.Language.errorType) {
       text += '\traw string\n';
     }
+    // group fields by required/optional/read-only in that order
+    this.Properties?.sort((lhs: Property, rhs: Property): number => {
+      if ((lhs.required && !rhs.required) || (!lhs.readOnly && rhs.readOnly)) {
+        return -1;
+      } else if ((rhs.readOnly && !lhs.readOnly) || (!rhs.readOnly && lhs.readOnly)) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
     for (const prop of values(this.Properties)) {
       if (hasDescription(prop.language.go!)) {
         if (!first) {

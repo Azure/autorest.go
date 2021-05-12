@@ -44,6 +44,9 @@ type SparkBatchGetSparkBatchJobsOptions struct {
 }
 
 type SparkBatchJob struct {
+	// REQUIRED; The session Id.
+	ID *int32 `json:"id,omitempty"`
+
 	// The application id of this session
 	AppID *string `json:"appId,omitempty"`
 
@@ -55,9 +58,6 @@ type SparkBatchJob struct {
 
 	// The error information.
 	Errors []*SparkServiceError `json:"errorInfo,omitempty"`
-
-	// The session Id.
-	ID *int32 `json:"id,omitempty"`
 
 	// The job type.
 	JobType  *SparkJobType       `json:"jobType,omitempty"`
@@ -123,14 +123,14 @@ func (s SparkBatchJob) MarshalJSON() ([]byte, error) {
 
 // SparkBatchJobCollection - Response for batch list operation.
 type SparkBatchJobCollection struct {
-	// The start index of fetched sessions.
+	// REQUIRED; The start index of fetched sessions.
 	From *int32 `json:"from,omitempty"`
+
+	// REQUIRED; Number of sessions fetched.
+	Total *int32 `json:"total,omitempty"`
 
 	// Batch list
 	Sessions []*SparkBatchJob `json:"sessions,omitempty"`
-
-	// Number of sessions fetched.
-	Total *int32 `json:"total,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type SparkBatchJobCollection.
@@ -152,6 +152,11 @@ type SparkBatchJobCollectionResponse struct {
 }
 
 type SparkBatchJobOptions struct {
+	// REQUIRED
+	File *string `json:"file,omitempty"`
+
+	// REQUIRED
+	Name       *string   `json:"name,omitempty"`
 	Archives   []*string `json:"archives,omitempty"`
 	Arguments  []*string `json:"args,omitempty"`
 	ArtifactID *string   `json:"artifactId,omitempty"`
@@ -164,10 +169,8 @@ type SparkBatchJobOptions struct {
 	ExecutorCores  *int32             `json:"executorCores,omitempty"`
 	ExecutorCount  *int32             `json:"numExecutors,omitempty"`
 	ExecutorMemory *string            `json:"executorMemory,omitempty"`
-	File           *string            `json:"file,omitempty"`
 	Files          []*string          `json:"files,omitempty"`
 	Jars           []*string          `json:"jars,omitempty"`
-	Name           *string            `json:"name,omitempty"`
 	PythonFiles    []*string          `json:"pyFiles,omitempty"`
 
 	// Dictionary of
@@ -474,13 +477,14 @@ func (s *SparkServicePlugin) UnmarshalJSON(data []byte) error {
 }
 
 type SparkSession struct {
+	// REQUIRED
+	ID    *int32  `json:"id,omitempty"`
 	AppID *string `json:"appId,omitempty"`
 
 	// Dictionary of
 	AppInfo    map[string]*string   `json:"appInfo,omitempty"`
 	ArtifactID *string              `json:"artifactId,omitempty"`
 	Errors     []*SparkServiceError `json:"errorInfo,omitempty"`
-	ID         *int32               `json:"id,omitempty"`
 
 	// The job type.
 	JobType       *SparkJobType           `json:"jobType,omitempty"`
@@ -535,9 +539,12 @@ type SparkSessionCancelSparkStatementOptions struct {
 }
 
 type SparkSessionCollection struct {
-	From     *int32          `json:"from,omitempty"`
-	Sessions []*SparkSession `json:"sessions,omitempty"`
+	// REQUIRED
+	From *int32 `json:"from,omitempty"`
+
+	// REQUIRED
 	Total    *int32          `json:"total,omitempty"`
+	Sessions []*SparkSession `json:"sessions,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type SparkSessionCollection.
@@ -595,6 +602,8 @@ type SparkSessionGetSparkStatementsOptions struct {
 }
 
 type SparkSessionOptions struct {
+	// REQUIRED
+	Name       *string   `json:"name,omitempty"`
 	Archives   []*string `json:"archives,omitempty"`
 	Arguments  []*string `json:"args,omitempty"`
 	ArtifactID *string   `json:"artifactId,omitempty"`
@@ -610,7 +619,6 @@ type SparkSessionOptions struct {
 	File           *string            `json:"file,omitempty"`
 	Files          []*string          `json:"files,omitempty"`
 	Jars           []*string          `json:"jars,omitempty"`
-	Name           *string            `json:"name,omitempty"`
 	PythonFiles    []*string          `json:"pyFiles,omitempty"`
 
 	// Dictionary of
@@ -751,8 +759,9 @@ func (s *SparkSessionState) UnmarshalJSON(data []byte) error {
 }
 
 type SparkStatement struct {
-	Code   *string               `json:"code,omitempty"`
+	// REQUIRED
 	ID     *int32                `json:"id,omitempty"`
+	Code   *string               `json:"code,omitempty"`
 	Output *SparkStatementOutput `json:"output,omitempty"`
 	State  *string               `json:"state,omitempty"`
 }
@@ -770,8 +779,9 @@ type SparkStatementCancellationResultResponse struct {
 }
 
 type SparkStatementCollection struct {
-	Statements []*SparkStatement `json:"statements,omitempty"`
+	// REQUIRED
 	Total      *int32            `json:"total_statements,omitempty"`
+	Statements []*SparkStatement `json:"statements,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type SparkStatementCollection.
@@ -795,13 +805,15 @@ type SparkStatementOptions struct {
 }
 
 type SparkStatementOutput struct {
+	// REQUIRED
+	ExecutionCount *int32 `json:"execution_count,omitempty"`
+
 	// Any object
-	Data           interface{} `json:"data,omitempty"`
-	ErrorName      *string     `json:"ename,omitempty"`
-	ErrorValue     *string     `json:"evalue,omitempty"`
-	ExecutionCount *int32      `json:"execution_count,omitempty"`
-	Status         *string     `json:"status,omitempty"`
-	Traceback      []*string   `json:"traceback,omitempty"`
+	Data       interface{} `json:"data,omitempty"`
+	ErrorName  *string     `json:"ename,omitempty"`
+	ErrorValue *string     `json:"evalue,omitempty"`
+	Status     *string     `json:"status,omitempty"`
+	Traceback  []*string   `json:"traceback,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type SparkStatementOutput.
