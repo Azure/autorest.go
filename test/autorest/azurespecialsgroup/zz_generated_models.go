@@ -54,9 +54,13 @@ type APIVersionLocalGetSwaggerLocalValidOptions struct {
 type Error struct {
 	raw string
 	// ConstantID - REQUIRED
-	ConstantID *int32  `json:"constantId,omitempty"`
-	Message    *string `json:"message,omitempty"`
-	Status     *int32  `json:"status,omitempty"`
+	ConstantID *int32 `json:"constantId,omitempty"`
+
+	// Message - OPTIONAL
+	Message *string `json:"message,omitempty"`
+
+	// Status - OPTIONAL
+	Status *int32 `json:"status,omitempty"`
 }
 
 // Error implements the error interface for type Error.
@@ -117,7 +121,10 @@ type HeaderCustomNamedRequestIDResponse struct {
 }
 
 type OdataFilter struct {
-	ID   *int32  `json:"id,omitempty"`
+	// ID - OPTIONAL
+	ID *int32 `json:"id,omitempty"`
+
+	// Name - OPTIONAL
 	Name *string `json:"name,omitempty"`
 }
 

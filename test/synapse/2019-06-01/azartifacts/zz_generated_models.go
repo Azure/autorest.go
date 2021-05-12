@@ -34,22 +34,22 @@ type ActivityClassification interface {
 
 // Activity - A pipeline activity.
 type Activity struct {
-	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties map[string]interface{}
-
-	// Activity depends on condition.
-	DependsOn []*ActivityDependency `json:"dependsOn,omitempty"`
-
-	// Activity description.
-	Description *string `json:"description,omitempty"`
-
 	// REQUIRED; Activity name.
 	Name *string `json:"name,omitempty"`
 
 	// REQUIRED; Type of activity.
 	Type *string `json:"type,omitempty"`
 
-	// Activity user properties.
+	// Contains additional key/value pairs not defined in the schema.
+	AdditionalProperties map[string]interface{}
+
+	// OPTIONAL; Activity depends on condition.
+	DependsOn []*ActivityDependency `json:"dependsOn,omitempty"`
+
+	// OPTIONAL; Activity description.
+	Description *string `json:"description,omitempty"`
+
+	// OPTIONAL; Activity user properties.
 	UserProperties []*UserProperty `json:"userProperties,omitempty"`
 }
 
@@ -123,11 +123,11 @@ type ActivityDependency struct {
 	// REQUIRED; Activity name.
 	Activity *string `json:"activity,omitempty"`
 
-	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties map[string]interface{}
-
 	// REQUIRED; Match-Condition for the dependency.
 	DependencyConditions []*DependencyCondition `json:"dependencyConditions,omitempty"`
+
+	// Contains additional key/value pairs not defined in the schema.
+	AdditionalProperties map[string]interface{}
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ActivityDependency.
@@ -181,19 +181,20 @@ type ActivityPolicy struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
-	// Maximum ordinary retry attempts. Default is 0. Type: integer (or Expression with resultType integer), minimum: 0.
+	// OPTIONAL; Maximum ordinary retry attempts. Default is 0. Type: integer (or Expression with resultType integer), minimum: 0.
 	Retry interface{} `json:"retry,omitempty"`
 
-	// Interval between each retry attempt (in seconds). The default is 30 sec.
+	// OPTIONAL; Interval between each retry attempt (in seconds). The default is 30 sec.
 	RetryIntervalInSeconds *int32 `json:"retryIntervalInSeconds,omitempty"`
 
-	// When set to true, Input from activity is considered as secure and will not be logged to monitoring.
+	// OPTIONAL; When set to true, Input from activity is considered as secure and will not be logged to monitoring.
 	SecureInput *bool `json:"secureInput,omitempty"`
 
-	// When set to true, Output from activity is considered as secure and will not be logged to monitoring.
+	// OPTIONAL; When set to true, Output from activity is considered as secure and will not be logged to monitoring.
 	SecureOutput *bool `json:"secureOutput,omitempty"`
 
-	// Specifies the timeout for the activity to run. The default timeout is 7 days. Type: string (or Expression with resultType string), pattern: ((\d+).)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+	// OPTIONAL; Specifies the timeout for the activity to run. The default timeout is 7 days. Type: string (or Expression with resultType string), pattern:
+	// ((\d+).)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
 	Timeout interface{} `json:"timeout,omitempty"`
 }
 
@@ -257,6 +258,9 @@ func (a *ActivityPolicy) UnmarshalJSON(data []byte) error {
 
 // ActivityRun - Information about an activity run in a pipeline.
 type ActivityRun struct {
+	// Contains additional key/value pairs not defined in the schema.
+	AdditionalProperties map[string]interface{}
+
 	// READ-ONLY; The name of the activity.
 	ActivityName *string `json:"activityName,omitempty" azure:"ro"`
 
@@ -271,9 +275,6 @@ type ActivityRun struct {
 
 	// READ-ONLY; The type of the activity.
 	ActivityType *string `json:"activityType,omitempty" azure:"ro"`
-
-	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties map[string]interface{}
 
 	// READ-ONLY; The duration of the activity run.
 	DurationInMs *int32 `json:"durationInMs,omitempty" azure:"ro"`
@@ -396,11 +397,11 @@ func (a *ActivityRun) UnmarshalJSON(data []byte) error {
 
 // ActivityRunsQueryResponse - A list activity runs.
 type ActivityRunsQueryResponse struct {
-	// The continuation token for getting the next page of results, if any remaining results exist, null otherwise.
-	ContinuationToken *string `json:"continuationToken,omitempty"`
-
 	// REQUIRED; List of activity runs.
 	Value []*ActivityRun `json:"value,omitempty"`
+
+	// OPTIONAL; The continuation token for getting the next page of results, if any remaining results exist, null otherwise.
+	ContinuationToken *string `json:"continuationToken,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ActivityRunsQueryResponse.
@@ -422,7 +423,7 @@ type ActivityRunsQueryResponseResponse struct {
 
 // AddDataFlowToDebugSessionResponse - Response body structure for starting data flow debug session.
 type AddDataFlowToDebugSessionResponse struct {
-	// The ID of data flow debug job version.
+	// OPTIONAL; The ID of data flow debug job version.
 	JobVersion *string `json:"jobVersion,omitempty"`
 }
 
@@ -474,10 +475,6 @@ type AmazonMWSLinkedServiceTypeProperties struct {
 	// REQUIRED; The access key id used to access data.
 	AccessKeyID interface{} `json:"accessKeyId,omitempty"`
 
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
-
 	// REQUIRED; The endpoint of the Amazon MWS server, (i.e. mws.amazonservices.com)
 	Endpoint interface{} `json:"endpoint,omitempty"`
 
@@ -485,23 +482,27 @@ type AmazonMWSLinkedServiceTypeProperties struct {
 	// A2EUQ1WTGCTBG2)
 	MarketplaceID interface{} `json:"marketplaceID,omitempty"`
 
-	// The Amazon MWS authentication token.
-	MwsAuthToken SecretBaseClassification `json:"mwsAuthToken,omitempty"`
-
-	// The secret key used to access data.
-	SecretKey SecretBaseClassification `json:"secretKey,omitempty"`
-
 	// REQUIRED; The Amazon seller ID.
 	SellerID interface{} `json:"sellerID,omitempty"`
 
-	// Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true.
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
+
+	// OPTIONAL; The Amazon MWS authentication token.
+	MwsAuthToken SecretBaseClassification `json:"mwsAuthToken,omitempty"`
+
+	// OPTIONAL; The secret key used to access data.
+	SecretKey SecretBaseClassification `json:"secretKey,omitempty"`
+
+	// OPTIONAL; Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true.
 	UseEncryptedEndpoints interface{} `json:"useEncryptedEndpoints,omitempty"`
 
-	// Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value
-	// is true.
+	// OPTIONAL; Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default
+	// value is true.
 	UseHostVerification interface{} `json:"useHostVerification,omitempty"`
 
-	// Specifies whether to verify the identity of the server when connecting over SSL. The default value is true.
+	// OPTIONAL; Specifies whether to verify the identity of the server when connecting over SSL. The default value is true.
 	UsePeerVerification interface{} `json:"usePeerVerification,omitempty"`
 }
 
@@ -571,7 +572,7 @@ func (a *AmazonMWSLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error 
 // AmazonMWSObjectDataset - Amazon Marketplace Web Service dataset.
 type AmazonMWSObjectDataset struct {
 	Dataset
-	// Properties specific to this dataset type.
+	// OPTIONAL; Properties specific to this dataset type.
 	TypeProperties *GenericDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -605,7 +606,7 @@ func (a *AmazonMWSObjectDataset) UnmarshalJSON(data []byte) error {
 // AmazonMWSSource - A copy activity Amazon Marketplace Web Service source.
 type AmazonMWSSource struct {
 	TabularSource
-	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	// OPTIONAL; A query to retrieve data from source. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -675,21 +676,21 @@ type AmazonRedshiftLinkedServiceTypeProperties struct {
 	// REQUIRED; The database name of the Amazon Redshift source. Type: string (or Expression with resultType string).
 	Database interface{} `json:"database,omitempty"`
 
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
-
-	// The password of the Amazon Redshift source.
-	Password SecretBaseClassification `json:"password,omitempty"`
-
-	// The TCP port number that the Amazon Redshift server uses to listen for client connections. The default value is 5439. Type: integer (or Expression with
-	// resultType integer).
-	Port interface{} `json:"port,omitempty"`
-
 	// REQUIRED; The name of the Amazon Redshift server. Type: string (or Expression with resultType string).
 	Server interface{} `json:"server,omitempty"`
 
-	// The username of the Amazon Redshift source. Type: string (or Expression with resultType string).
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
+
+	// OPTIONAL; The password of the Amazon Redshift source.
+	Password SecretBaseClassification `json:"password,omitempty"`
+
+	// OPTIONAL; The TCP port number that the Amazon Redshift server uses to listen for client connections. The default value is 5439. Type: integer (or Expression
+	// with resultType integer).
+	Port interface{} `json:"port,omitempty"`
+
+	// OPTIONAL; The username of the Amazon Redshift source. Type: string (or Expression with resultType string).
 	Username interface{} `json:"username,omitempty"`
 }
 
@@ -743,11 +744,11 @@ func (a *AmazonRedshiftLinkedServiceTypeProperties) UnmarshalJSON(data []byte) e
 // AmazonRedshiftSource - A copy activity source for Amazon Redshift Source.
 type AmazonRedshiftSource struct {
 	TabularSource
-	// Database query. Type: string (or Expression with resultType string).
+	// OPTIONAL; Database query. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 
-	// The Amazon S3 settings needed for the interim Amazon S3 when copying from Amazon Redshift with unload. With this, data from Amazon Redshift source will
-	// be unloaded into S3 first and then copied into
+	// OPTIONAL; The Amazon S3 settings needed for the interim Amazon S3 when copying from Amazon Redshift with unload. With this, data from Amazon Redshift
+	// source will be unloaded into S3 first and then copied into
 	// the targeted sink from the interim S3.
 	RedshiftUnloadSettings *RedshiftUnloadSettings `json:"redshiftUnloadSettings,omitempty"`
 }
@@ -786,7 +787,7 @@ func (a *AmazonRedshiftSource) UnmarshalJSON(data []byte) error {
 // AmazonRedshiftTableDataset - The Amazon Redshift table dataset.
 type AmazonRedshiftTableDataset struct {
 	Dataset
-	// Amazon Redshift table dataset properties.
+	// OPTIONAL; Amazon Redshift table dataset properties.
 	TypeProperties *AmazonRedshiftTableDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -819,13 +820,13 @@ func (a *AmazonRedshiftTableDataset) UnmarshalJSON(data []byte) error {
 
 // AmazonRedshiftTableDatasetTypeProperties - Amazon Redshift table dataset properties.
 type AmazonRedshiftTableDatasetTypeProperties struct {
-	// The Amazon Redshift schema name. Type: string (or Expression with resultType string).
+	// OPTIONAL; The Amazon Redshift schema name. Type: string (or Expression with resultType string).
 	Schema interface{} `json:"schema,omitempty"`
 
-	// The Amazon Redshift table name. Type: string (or Expression with resultType string).
+	// OPTIONAL; The Amazon Redshift table name. Type: string (or Expression with resultType string).
 	Table interface{} `json:"table,omitempty"`
 
-	// This property will be retired. Please consider using schema + table properties instead.
+	// OPTIONAL; This property will be retired. Please consider using schema + table properties instead.
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
@@ -865,18 +866,18 @@ func (a *AmazonS3LinkedService) UnmarshalJSON(data []byte) error {
 
 // AmazonS3LinkedServiceTypeProperties - Amazon S3 linked service properties.
 type AmazonS3LinkedServiceTypeProperties struct {
-	// The access key identifier of the Amazon S3 Identity and Access Management (IAM) user. Type: string (or Expression with resultType string).
+	// OPTIONAL; The access key identifier of the Amazon S3 Identity and Access Management (IAM) user. Type: string (or Expression with resultType string).
 	AccessKeyID interface{} `json:"accessKeyId,omitempty"`
 
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
 	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
 
-	// The secret access key of the Amazon S3 Identity and Access Management (IAM) user.
+	// OPTIONAL; The secret access key of the Amazon S3 Identity and Access Management (IAM) user.
 	SecretAccessKey SecretBaseClassification `json:"secretAccessKey,omitempty"`
 
-	// This value specifies the endpoint to access with the S3 Connector. This is an optional property; change it only if you want to try a different service
-	// endpoint or want to switch between https and
+	// OPTIONAL; This value specifies the endpoint to access with the S3 Connector. This is an optional property; change it only if you want to try a different
+	// service endpoint or want to switch between https and
 	// http. Type: string (or Expression with resultType string).
 	ServiceURL interface{} `json:"serviceUrl,omitempty"`
 }
@@ -923,10 +924,10 @@ func (a *AmazonS3LinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 // AmazonS3Location - The location of amazon S3 dataset.
 type AmazonS3Location struct {
 	DatasetLocation
-	// Specify the bucketName of amazon S3. Type: string (or Expression with resultType string)
+	// OPTIONAL; Specify the bucketName of amazon S3. Type: string (or Expression with resultType string)
 	BucketName interface{} `json:"bucketName,omitempty"`
 
-	// Specify the version of amazon S3. Type: string (or Expression with resultType string).
+	// OPTIONAL; Specify the version of amazon S3. Type: string (or Expression with resultType string).
 	Version interface{} `json:"version,omitempty"`
 }
 
@@ -964,25 +965,25 @@ func (a *AmazonS3Location) UnmarshalJSON(data []byte) error {
 // AmazonS3ReadSettings - Azure data lake store read settings.
 type AmazonS3ReadSettings struct {
 	StoreReadSettings
-	// Indicates whether to enable partition discovery.
+	// OPTIONAL; Indicates whether to enable partition discovery.
 	EnablePartitionDiscovery *bool `json:"enablePartitionDiscovery,omitempty"`
 
-	// The end of file's modified datetime. Type: string (or Expression with resultType string).
+	// OPTIONAL; The end of file's modified datetime. Type: string (or Expression with resultType string).
 	ModifiedDatetimeEnd interface{} `json:"modifiedDatetimeEnd,omitempty"`
 
-	// The start of file's modified datetime. Type: string (or Expression with resultType string).
+	// OPTIONAL; The start of file's modified datetime. Type: string (or Expression with resultType string).
 	ModifiedDatetimeStart interface{} `json:"modifiedDatetimeStart,omitempty"`
 
-	// The prefix filter for the S3 object name. Type: string (or Expression with resultType string).
+	// OPTIONAL; The prefix filter for the S3 object name. Type: string (or Expression with resultType string).
 	Prefix interface{} `json:"prefix,omitempty"`
 
-	// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
+	// OPTIONAL; If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
 	Recursive interface{} `json:"recursive,omitempty"`
 
-	// AmazonS3 wildcardFileName. Type: string (or Expression with resultType string).
+	// OPTIONAL; AmazonS3 wildcardFileName. Type: string (or Expression with resultType string).
 	WildcardFileName interface{} `json:"wildcardFileName,omitempty"`
 
-	// AmazonS3 wildcardFolderPath. Type: string (or Expression with resultType string).
+	// OPTIONAL; AmazonS3 wildcardFolderPath. Type: string (or Expression with resultType string).
 	WildcardFolderPath interface{} `json:"wildcardFolderPath,omitempty"`
 }
 
@@ -1073,44 +1074,44 @@ func (a *AppendVariableActivity) UnmarshalJSON(data []byte) error {
 
 // AppendVariableActivityTypeProperties - AppendVariable activity properties.
 type AppendVariableActivityTypeProperties struct {
-	// Value to be appended. Could be a static value or Expression
+	// OPTIONAL; Value to be appended. Could be a static value or Expression
 	Value interface{} `json:"value,omitempty"`
 
-	// Name of the variable whose value needs to be appended to.
+	// OPTIONAL; Name of the variable whose value needs to be appended to.
 	VariableName *string `json:"variableName,omitempty"`
 }
 
 // ArtifactRenameRequest - Request body structure for rename artifact.
 type ArtifactRenameRequest struct {
-	// New name of the artifact.
+	// OPTIONAL; New name of the artifact.
 	NewName *string `json:"newName,omitempty"`
 }
 
 // AutoPauseProperties - Auto-pausing properties of a Big Data pool powered by Apache Spark
 type AutoPauseProperties struct {
-	// Number of minutes of idle time before the Big Data pool is automatically paused.
+	// OPTIONAL; Number of minutes of idle time before the Big Data pool is automatically paused.
 	DelayInMinutes *int32 `json:"delayInMinutes,omitempty"`
 
-	// Whether auto-pausing is enabled for the Big Data pool.
+	// OPTIONAL; Whether auto-pausing is enabled for the Big Data pool.
 	Enabled *bool `json:"enabled,omitempty"`
 }
 
 // AutoScaleProperties - Auto-scaling properties of a Big Data pool powered by Apache Spark
 type AutoScaleProperties struct {
-	// Whether automatic scaling is enabled for the Big Data pool.
+	// OPTIONAL; Whether automatic scaling is enabled for the Big Data pool.
 	Enabled *bool `json:"enabled,omitempty"`
 
-	// The maximum number of nodes the Big Data pool can support.
+	// OPTIONAL; The maximum number of nodes the Big Data pool can support.
 	MaxNodeCount *int32 `json:"maxNodeCount,omitempty"`
 
-	// The minimum number of nodes the Big Data pool can support.
+	// OPTIONAL; The minimum number of nodes the Big Data pool can support.
 	MinNodeCount *int32 `json:"minNodeCount,omitempty"`
 }
 
 // AvroDataset - Avro dataset.
 type AvroDataset struct {
 	Dataset
-	// Avro dataset properties.
+	// OPTIONAL; Avro dataset properties.
 	TypeProperties *AvroDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -1143,11 +1144,14 @@ func (a *AvroDataset) UnmarshalJSON(data []byte) error {
 
 // AvroDatasetTypeProperties - Avro dataset properties.
 type AvroDatasetTypeProperties struct {
-	AvroCompressionCodec *AvroCompressionCodec `json:"avroCompressionCodec,omitempty"`
-	AvroCompressionLevel *int32                `json:"avroCompressionLevel,omitempty"`
-
 	// REQUIRED; The location of the avro storage.
 	Location DatasetLocationClassification `json:"location,omitempty"`
+
+	// AvroCompressionCodec - OPTIONAL
+	AvroCompressionCodec *AvroCompressionCodec `json:"avroCompressionCodec,omitempty"`
+
+	// AvroCompressionLevel - OPTIONAL
+	AvroCompressionLevel *int32 `json:"avroCompressionLevel,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type AvroDatasetTypeProperties.
@@ -1199,10 +1203,10 @@ func (a AvroFormat) MarshalJSON() ([]byte, error) {
 // AvroSink - A copy activity Avro sink.
 type AvroSink struct {
 	CopySink
-	// Avro format settings.
+	// OPTIONAL; Avro format settings.
 	FormatSettings *AvroWriteSettings `json:"formatSettings,omitempty"`
 
-	// Avro store settings.
+	// OPTIONAL; Avro store settings.
 	StoreSettings StoreWriteSettingsClassification `json:"storeSettings,omitempty"`
 }
 
@@ -1240,7 +1244,7 @@ func (a *AvroSink) UnmarshalJSON(data []byte) error {
 // AvroSource - A copy activity Avro source.
 type AvroSource struct {
 	CopySource
-	// Avro store settings.
+	// OPTIONAL; Avro store settings.
 	StoreSettings StoreReadSettingsClassification `json:"storeSettings,omitempty"`
 }
 
@@ -1274,10 +1278,10 @@ func (a *AvroSource) UnmarshalJSON(data []byte) error {
 // AvroWriteSettings - Avro write settings.
 type AvroWriteSettings struct {
 	FormatWriteSettings
-	// Top level record name in write result, which is required in AVRO spec.
+	// OPTIONAL; Top level record name in write result, which is required in AVRO spec.
 	RecordName *string `json:"recordName,omitempty"`
 
-	// Record namespace in the write result.
+	// OPTIONAL; Record namespace in the write result.
 	RecordNamespace *string `json:"recordNamespace,omitempty"`
 }
 
@@ -1348,24 +1352,24 @@ func (a *AzureBatchLinkedService) UnmarshalJSON(data []byte) error {
 
 // AzureBatchLinkedServiceTypeProperties - Azure Batch linked service properties.
 type AzureBatchLinkedServiceTypeProperties struct {
-	// The Azure Batch account access key.
-	AccessKey SecretBaseClassification `json:"accessKey,omitempty"`
-
 	// REQUIRED; The Azure Batch account name. Type: string (or Expression with resultType string).
 	AccountName interface{} `json:"accountName,omitempty"`
 
 	// REQUIRED; The Azure Batch URI. Type: string (or Expression with resultType string).
 	BatchURI interface{} `json:"batchUri,omitempty"`
 
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
-
 	// REQUIRED; The Azure Storage linked service reference.
 	LinkedServiceName *LinkedServiceReference `json:"linkedServiceName,omitempty"`
 
 	// REQUIRED; The Azure Batch pool name. Type: string (or Expression with resultType string).
 	PoolName interface{} `json:"poolName,omitempty"`
+
+	// OPTIONAL; The Azure Batch account access key.
+	AccessKey SecretBaseClassification `json:"accessKey,omitempty"`
+
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type AzureBatchLinkedServiceTypeProperties.
@@ -1451,24 +1455,25 @@ func (a *AzureBlobFSLinkedService) UnmarshalJSON(data []byte) error {
 
 // AzureBlobFSLinkedServiceTypeProperties - Azure Data Lake Storage Gen2 linked service properties.
 type AzureBlobFSLinkedServiceTypeProperties struct {
-	// Account key for the Azure Data Lake Storage Gen2 service. Type: string (or Expression with resultType string).
-	AccountKey interface{} `json:"accountKey,omitempty"`
-
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
-
-	// The ID of the application used to authenticate against the Azure Data Lake Storage Gen2 account. Type: string (or Expression with resultType string).
-	ServicePrincipalID interface{} `json:"servicePrincipalId,omitempty"`
-
-	// The Key of the application used to authenticate against the Azure Data Lake Storage Gen2 account.
-	ServicePrincipalKey SecretBaseClassification `json:"servicePrincipalKey,omitempty"`
-
-	// The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string).
-	Tenant interface{} `json:"tenant,omitempty"`
-
 	// REQUIRED; Endpoint for the Azure Data Lake Storage Gen2 service. Type: string (or Expression with resultType string).
 	URL interface{} `json:"url,omitempty"`
+
+	// OPTIONAL; Account key for the Azure Data Lake Storage Gen2 service. Type: string (or Expression with resultType string).
+	AccountKey interface{} `json:"accountKey,omitempty"`
+
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
+
+	// OPTIONAL; The ID of the application used to authenticate against the Azure Data Lake Storage Gen2 account. Type: string (or Expression with resultType
+	// string).
+	ServicePrincipalID interface{} `json:"servicePrincipalId,omitempty"`
+
+	// OPTIONAL; The Key of the application used to authenticate against the Azure Data Lake Storage Gen2 account.
+	ServicePrincipalKey SecretBaseClassification `json:"servicePrincipalKey,omitempty"`
+
+	// OPTIONAL; The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string).
+	Tenant interface{} `json:"tenant,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type AzureBlobFSLinkedServiceTypeProperties.
@@ -1521,7 +1526,7 @@ func (a *AzureBlobFSLinkedServiceTypeProperties) UnmarshalJSON(data []byte) erro
 // AzureBlobFSLocation - The location of azure blobFS dataset.
 type AzureBlobFSLocation struct {
 	DatasetLocation
-	// Specify the fileSystem of azure blobFS. Type: string (or Expression with resultType string).
+	// OPTIONAL; Specify the fileSystem of azure blobFS. Type: string (or Expression with resultType string).
 	FileSystem interface{} `json:"fileSystem,omitempty"`
 }
 
@@ -1555,22 +1560,22 @@ func (a *AzureBlobFSLocation) UnmarshalJSON(data []byte) error {
 // AzureBlobFSReadSettings - Azure blobFS read settings.
 type AzureBlobFSReadSettings struct {
 	StoreReadSettings
-	// Indicates whether to enable partition discovery.
+	// OPTIONAL; Indicates whether to enable partition discovery.
 	EnablePartitionDiscovery *bool `json:"enablePartitionDiscovery,omitempty"`
 
-	// The end of file's modified datetime. Type: string (or Expression with resultType string).
+	// OPTIONAL; The end of file's modified datetime. Type: string (or Expression with resultType string).
 	ModifiedDatetimeEnd interface{} `json:"modifiedDatetimeEnd,omitempty"`
 
-	// The start of file's modified datetime. Type: string (or Expression with resultType string).
+	// OPTIONAL; The start of file's modified datetime. Type: string (or Expression with resultType string).
 	ModifiedDatetimeStart interface{} `json:"modifiedDatetimeStart,omitempty"`
 
-	// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
+	// OPTIONAL; If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
 	Recursive interface{} `json:"recursive,omitempty"`
 
-	// Azure blobFS wildcardFileName. Type: string (or Expression with resultType string).
+	// OPTIONAL; Azure blobFS wildcardFileName. Type: string (or Expression with resultType string).
 	WildcardFileName interface{} `json:"wildcardFileName,omitempty"`
 
-	// Azure blobFS wildcardFolderPath. Type: string (or Expression with resultType string).
+	// OPTIONAL; Azure blobFS wildcardFolderPath. Type: string (or Expression with resultType string).
 	WildcardFolderPath interface{} `json:"wildcardFolderPath,omitempty"`
 }
 
@@ -1624,7 +1629,7 @@ func (a *AzureBlobFSReadSettings) UnmarshalJSON(data []byte) error {
 // AzureBlobFSSink - A copy activity Azure Data Lake Storage Gen2 sink.
 type AzureBlobFSSink struct {
 	CopySink
-	// The type of copy behavior for copy sink.
+	// OPTIONAL; The type of copy behavior for copy sink.
 	CopyBehavior interface{} `json:"copyBehavior,omitempty"`
 }
 
@@ -1658,13 +1663,13 @@ func (a *AzureBlobFSSink) UnmarshalJSON(data []byte) error {
 // AzureBlobFSSource - A copy activity Azure BlobFS source.
 type AzureBlobFSSource struct {
 	CopySource
-	// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
+	// OPTIONAL; If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
 	Recursive interface{} `json:"recursive,omitempty"`
 
-	// Number of header lines to skip from each blob. Type: integer (or Expression with resultType integer).
+	// OPTIONAL; Number of header lines to skip from each blob. Type: integer (or Expression with resultType integer).
 	SkipHeaderLineCount interface{} `json:"skipHeaderLineCount,omitempty"`
 
-	// Treat empty as null. Type: boolean (or Expression with resultType boolean).
+	// OPTIONAL; Treat empty as null. Type: boolean (or Expression with resultType boolean).
 	TreatEmptyAsNull interface{} `json:"treatEmptyAsNull,omitempty"`
 }
 
@@ -1706,7 +1711,7 @@ func (a *AzureBlobFSSource) UnmarshalJSON(data []byte) error {
 // AzureBlobFSWriteSettings - Azure blobFS write settings.
 type AzureBlobFSWriteSettings struct {
 	StoreWriteSettings
-	// Indicates the block size(MB) when writing data to blob. Type: integer (or Expression with resultType integer).
+	// OPTIONAL; Indicates the block size(MB) when writing data to blob. Type: integer (or Expression with resultType integer).
 	BlockSizeInMB interface{} `json:"blockSizeInMB,omitempty"`
 }
 
@@ -1773,32 +1778,33 @@ func (a *AzureBlobStorageLinkedService) UnmarshalJSON(data []byte) error {
 
 // AzureBlobStorageLinkedServiceTypeProperties - Azure Blob Storage linked service properties.
 type AzureBlobStorageLinkedServiceTypeProperties struct {
-	// The Azure key vault secret reference of accountKey in connection string.
+	// OPTIONAL; The Azure key vault secret reference of accountKey in connection string.
 	AccountKey *AzureKeyVaultSecretReference `json:"accountKey,omitempty"`
 
-	// The connection string. It is mutually exclusive with sasUri, serviceEndpoint property. Type: string, SecureString or AzureKeyVaultSecretReference.
+	// OPTIONAL; The connection string. It is mutually exclusive with sasUri, serviceEndpoint property. Type: string, SecureString or AzureKeyVaultSecretReference.
 	ConnectionString interface{} `json:"connectionString,omitempty"`
 
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
 	EncryptedCredential *string `json:"encryptedCredential,omitempty"`
 
-	// The Azure key vault secret reference of sasToken in sas uri.
+	// OPTIONAL; The Azure key vault secret reference of sasToken in sas uri.
 	SasToken *AzureKeyVaultSecretReference `json:"sasToken,omitempty"`
 
-	// SAS URI of the Azure Blob Storage resource. It is mutually exclusive with connectionString, serviceEndpoint property. Type: string, SecureString or AzureKeyVaultSecretReference.
+	// OPTIONAL; SAS URI of the Azure Blob Storage resource. It is mutually exclusive with connectionString, serviceEndpoint property. Type: string, SecureString
+	// or AzureKeyVaultSecretReference.
 	SasURI interface{} `json:"sasUri,omitempty"`
 
-	// Blob service endpoint of the Azure Blob Storage resource. It is mutually exclusive with connectionString, sasUri property.
+	// OPTIONAL; Blob service endpoint of the Azure Blob Storage resource. It is mutually exclusive with connectionString, sasUri property.
 	ServiceEndpoint *string `json:"serviceEndpoint,omitempty"`
 
-	// The ID of the service principal used to authenticate against Azure SQL Data Warehouse. Type: string (or Expression with resultType string).
+	// OPTIONAL; The ID of the service principal used to authenticate against Azure SQL Data Warehouse. Type: string (or Expression with resultType string).
 	ServicePrincipalID interface{} `json:"servicePrincipalId,omitempty"`
 
-	// The key of the service principal used to authenticate against Azure SQL Data Warehouse.
+	// OPTIONAL; The key of the service principal used to authenticate against Azure SQL Data Warehouse.
 	ServicePrincipalKey SecretBaseClassification `json:"servicePrincipalKey,omitempty"`
 
-	// The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string).
+	// OPTIONAL; The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string).
 	Tenant interface{} `json:"tenant,omitempty"`
 }
 
@@ -1864,7 +1870,7 @@ func (a *AzureBlobStorageLinkedServiceTypeProperties) UnmarshalJSON(data []byte)
 // AzureBlobStorageLocation - The location of azure blob dataset.
 type AzureBlobStorageLocation struct {
 	DatasetLocation
-	// Specify the container of azure blob. Type: string (or Expression with resultType string).
+	// OPTIONAL; Specify the container of azure blob. Type: string (or Expression with resultType string).
 	Container interface{} `json:"container,omitempty"`
 }
 
@@ -1898,25 +1904,25 @@ func (a *AzureBlobStorageLocation) UnmarshalJSON(data []byte) error {
 // AzureBlobStorageReadSettings - Azure blob read settings.
 type AzureBlobStorageReadSettings struct {
 	StoreReadSettings
-	// Indicates whether to enable partition discovery.
+	// OPTIONAL; Indicates whether to enable partition discovery.
 	EnablePartitionDiscovery *bool `json:"enablePartitionDiscovery,omitempty"`
 
-	// The end of file's modified datetime. Type: string (or Expression with resultType string).
+	// OPTIONAL; The end of file's modified datetime. Type: string (or Expression with resultType string).
 	ModifiedDatetimeEnd interface{} `json:"modifiedDatetimeEnd,omitempty"`
 
-	// The start of file's modified datetime. Type: string (or Expression with resultType string).
+	// OPTIONAL; The start of file's modified datetime. Type: string (or Expression with resultType string).
 	ModifiedDatetimeStart interface{} `json:"modifiedDatetimeStart,omitempty"`
 
-	// The prefix filter for the Azure Blob name. Type: string (or Expression with resultType string).
+	// OPTIONAL; The prefix filter for the Azure Blob name. Type: string (or Expression with resultType string).
 	Prefix interface{} `json:"prefix,omitempty"`
 
-	// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
+	// OPTIONAL; If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
 	Recursive interface{} `json:"recursive,omitempty"`
 
-	// Azure blob wildcardFileName. Type: string (or Expression with resultType string).
+	// OPTIONAL; Azure blob wildcardFileName. Type: string (or Expression with resultType string).
 	WildcardFileName interface{} `json:"wildcardFileName,omitempty"`
 
-	// Azure blob wildcardFolderPath. Type: string (or Expression with resultType string).
+	// OPTIONAL; Azure blob wildcardFolderPath. Type: string (or Expression with resultType string).
 	WildcardFolderPath interface{} `json:"wildcardFolderPath,omitempty"`
 }
 
@@ -1974,7 +1980,7 @@ func (a *AzureBlobStorageReadSettings) UnmarshalJSON(data []byte) error {
 // AzureBlobStorageWriteSettings - Azure blob write settings.
 type AzureBlobStorageWriteSettings struct {
 	StoreWriteSettings
-	// Indicates the block size(MB) when writing data to blob. Type: integer (or Expression with resultType integer).
+	// OPTIONAL; Indicates the block size(MB) when writing data to blob. Type: integer (or Expression with resultType integer).
 	BlockSizeInMB interface{} `json:"blockSizeInMB,omitempty"`
 }
 
@@ -2044,13 +2050,13 @@ type AzureDataExplorerCommandActivityTypeProperties struct {
 	// REQUIRED; A control command, according to the Azure Data Explorer command syntax. Type: string (or Expression with resultType string).
 	Command interface{} `json:"command,omitempty"`
 
-	// Control command timeout. Type: string (or Expression with resultType string), pattern: ((\d+).)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9]))..)
+	// OPTIONAL; Control command timeout. Type: string (or Expression with resultType string), pattern: ((\d+).)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9]))..)
 	CommandTimeout interface{} `json:"commandTimeout,omitempty"`
 }
 
 // AzureDataExplorerDatasetTypeProperties - Azure Data Explorer (Kusto) dataset properties.
 type AzureDataExplorerDatasetTypeProperties struct {
-	// The table name of the Azure Data Explorer database. Type: string (or Expression with resultType string).
+	// OPTIONAL; The table name of the Azure Data Explorer database. Type: string (or Expression with resultType string).
 	Table interface{} `json:"table,omitempty"`
 }
 
@@ -2153,13 +2159,13 @@ func (a *AzureDataExplorerLinkedServiceTypeProperties) UnmarshalJSON(data []byte
 // AzureDataExplorerSink - A copy activity Azure Data Explorer sink.
 type AzureDataExplorerSink struct {
 	CopySink
-	// If set to true, any aggregation will be skipped. Default is false. Type: boolean.
+	// OPTIONAL; If set to true, any aggregation will be skipped. Default is false. Type: boolean.
 	FlushImmediately interface{} `json:"flushImmediately,omitempty"`
 
-	// An explicit column mapping description provided in a json format. Type: string.
+	// OPTIONAL; An explicit column mapping description provided in a json format. Type: string.
 	IngestionMappingAsJSON interface{} `json:"ingestionMappingAsJson,omitempty"`
 
-	// A name of a pre-created csv mapping that was defined on the target Kusto table. Type: string.
+	// OPTIONAL; A name of a pre-created csv mapping that was defined on the target Kusto table. Type: string.
 	IngestionMappingName interface{} `json:"ingestionMappingName,omitempty"`
 }
 
@@ -2201,13 +2207,13 @@ func (a *AzureDataExplorerSink) UnmarshalJSON(data []byte) error {
 // AzureDataExplorerSource - A copy activity Azure Data Explorer (Kusto) source.
 type AzureDataExplorerSource struct {
 	CopySource
-	// The name of the Boolean option that controls whether truncation is applied to result-sets that go beyond a certain row-count limit.
-	NoTruncation interface{} `json:"noTruncation,omitempty"`
-
 	// REQUIRED; Database query. Should be a Kusto Query Language (KQL) query. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 
-	// Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+).)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9]))..
+	// OPTIONAL; The name of the Boolean option that controls whether truncation is applied to result-sets that go beyond a certain row-count limit.
+	NoTruncation interface{} `json:"noTruncation,omitempty"`
+
+	// OPTIONAL; Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+).)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9]))..
 	QueryTimeout interface{} `json:"queryTimeout,omitempty"`
 }
 
@@ -2319,27 +2325,27 @@ type AzureDataLakeAnalyticsLinkedServiceTypeProperties struct {
 	// REQUIRED; The Azure Data Lake Analytics account name. Type: string (or Expression with resultType string).
 	AccountName interface{} `json:"accountName,omitempty"`
 
-	// Azure Data Lake Analytics URI Type: string (or Expression with resultType string).
-	DataLakeAnalyticsURI interface{} `json:"dataLakeAnalyticsUri,omitempty"`
-
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
-
-	// Data Lake Analytics account resource group name (if different from Data Factory account). Type: string (or Expression with resultType string).
-	ResourceGroupName interface{} `json:"resourceGroupName,omitempty"`
-
-	// The ID of the application used to authenticate against the Azure Data Lake Analytics account. Type: string (or Expression with resultType string).
-	ServicePrincipalID interface{} `json:"servicePrincipalId,omitempty"`
-
-	// The Key of the application used to authenticate against the Azure Data Lake Analytics account.
-	ServicePrincipalKey SecretBaseClassification `json:"servicePrincipalKey,omitempty"`
-
-	// Data Lake Analytics account subscription ID (if different from Data Factory account). Type: string (or Expression with resultType string).
-	SubscriptionID interface{} `json:"subscriptionId,omitempty"`
-
 	// REQUIRED; The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string).
 	Tenant interface{} `json:"tenant,omitempty"`
+
+	// OPTIONAL; Azure Data Lake Analytics URI Type: string (or Expression with resultType string).
+	DataLakeAnalyticsURI interface{} `json:"dataLakeAnalyticsUri,omitempty"`
+
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
+
+	// OPTIONAL; Data Lake Analytics account resource group name (if different from Data Factory account). Type: string (or Expression with resultType string).
+	ResourceGroupName interface{} `json:"resourceGroupName,omitempty"`
+
+	// OPTIONAL; The ID of the application used to authenticate against the Azure Data Lake Analytics account. Type: string (or Expression with resultType string).
+	ServicePrincipalID interface{} `json:"servicePrincipalId,omitempty"`
+
+	// OPTIONAL; The Key of the application used to authenticate against the Azure Data Lake Analytics account.
+	ServicePrincipalKey SecretBaseClassification `json:"servicePrincipalKey,omitempty"`
+
+	// OPTIONAL; Data Lake Analytics account subscription ID (if different from Data Factory account). Type: string (or Expression with resultType string).
+	SubscriptionID interface{} `json:"subscriptionId,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type AzureDataLakeAnalyticsLinkedServiceTypeProperties.
@@ -2433,29 +2439,29 @@ func (a *AzureDataLakeStoreLinkedService) UnmarshalJSON(data []byte) error {
 
 // AzureDataLakeStoreLinkedServiceTypeProperties - Azure Data Lake Store linked service properties.
 type AzureDataLakeStoreLinkedServiceTypeProperties struct {
-	// Data Lake Store account name. Type: string (or Expression with resultType string).
-	AccountName interface{} `json:"accountName,omitempty"`
-
 	// REQUIRED; Data Lake Store service URI. Type: string (or Expression with resultType string).
 	DataLakeStoreURI interface{} `json:"dataLakeStoreUri,omitempty"`
 
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
+	// OPTIONAL; Data Lake Store account name. Type: string (or Expression with resultType string).
+	AccountName interface{} `json:"accountName,omitempty"`
+
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
 	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
 
-	// Data Lake Store account resource group name (if different from Data Factory account). Type: string (or Expression with resultType string).
+	// OPTIONAL; Data Lake Store account resource group name (if different from Data Factory account). Type: string (or Expression with resultType string).
 	ResourceGroupName interface{} `json:"resourceGroupName,omitempty"`
 
-	// The ID of the application used to authenticate against the Azure Data Lake Store account. Type: string (or Expression with resultType string).
+	// OPTIONAL; The ID of the application used to authenticate against the Azure Data Lake Store account. Type: string (or Expression with resultType string).
 	ServicePrincipalID interface{} `json:"servicePrincipalId,omitempty"`
 
-	// The Key of the application used to authenticate against the Azure Data Lake Store account.
+	// OPTIONAL; The Key of the application used to authenticate against the Azure Data Lake Store account.
 	ServicePrincipalKey SecretBaseClassification `json:"servicePrincipalKey,omitempty"`
 
-	// Data Lake Store account subscription ID (if different from Data Factory account). Type: string (or Expression with resultType string).
+	// OPTIONAL; Data Lake Store account subscription ID (if different from Data Factory account). Type: string (or Expression with resultType string).
 	SubscriptionID interface{} `json:"subscriptionId,omitempty"`
 
-	// The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string).
+	// OPTIONAL; The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string).
 	Tenant interface{} `json:"tenant,omitempty"`
 }
 
@@ -2528,22 +2534,22 @@ func (a AzureDataLakeStoreLocation) MarshalJSON() ([]byte, error) {
 // AzureDataLakeStoreReadSettings - Azure data lake store read settings.
 type AzureDataLakeStoreReadSettings struct {
 	StoreReadSettings
-	// Indicates whether to enable partition discovery.
+	// OPTIONAL; Indicates whether to enable partition discovery.
 	EnablePartitionDiscovery *bool `json:"enablePartitionDiscovery,omitempty"`
 
-	// The end of file's modified datetime. Type: string (or Expression with resultType string).
+	// OPTIONAL; The end of file's modified datetime. Type: string (or Expression with resultType string).
 	ModifiedDatetimeEnd interface{} `json:"modifiedDatetimeEnd,omitempty"`
 
-	// The start of file's modified datetime. Type: string (or Expression with resultType string).
+	// OPTIONAL; The start of file's modified datetime. Type: string (or Expression with resultType string).
 	ModifiedDatetimeStart interface{} `json:"modifiedDatetimeStart,omitempty"`
 
-	// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
+	// OPTIONAL; If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
 	Recursive interface{} `json:"recursive,omitempty"`
 
-	// ADLS wildcardFileName. Type: string (or Expression with resultType string).
+	// OPTIONAL; ADLS wildcardFileName. Type: string (or Expression with resultType string).
 	WildcardFileName interface{} `json:"wildcardFileName,omitempty"`
 
-	// ADLS wildcardFolderPath. Type: string (or Expression with resultType string).
+	// OPTIONAL; ADLS wildcardFolderPath. Type: string (or Expression with resultType string).
 	WildcardFolderPath interface{} `json:"wildcardFolderPath,omitempty"`
 }
 
@@ -2597,10 +2603,10 @@ func (a *AzureDataLakeStoreReadSettings) UnmarshalJSON(data []byte) error {
 // AzureDataLakeStoreSink - A copy activity Azure Data Lake Store sink.
 type AzureDataLakeStoreSink struct {
 	CopySink
-	// The type of copy behavior for copy sink.
+	// OPTIONAL; The type of copy behavior for copy sink.
 	CopyBehavior interface{} `json:"copyBehavior,omitempty"`
 
-	// Single File Parallel.
+	// OPTIONAL; Single File Parallel.
 	EnableAdlsSingleFileParallel interface{} `json:"enableAdlsSingleFileParallel,omitempty"`
 }
 
@@ -2638,7 +2644,7 @@ func (a *AzureDataLakeStoreSink) UnmarshalJSON(data []byte) error {
 // AzureDataLakeStoreSource - A copy activity Azure Data Lake source.
 type AzureDataLakeStoreSource struct {
 	CopySource
-	// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
+	// OPTIONAL; If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
 	Recursive interface{} `json:"recursive,omitempty"`
 }
 
@@ -2723,50 +2729,51 @@ type AzureDatabricksLinkedServiceTypeProperties struct {
 	// REQUIRED; .azuredatabricks.net, domain name of your Databricks deployment. Type: string (or Expression with resultType string).
 	Domain interface{} `json:"domain,omitempty"`
 
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
 	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
 
-	// The id of an existing interactive cluster that will be used for all runs of this activity. Type: string (or Expression with resultType string).
+	// OPTIONAL; The id of an existing interactive cluster that will be used for all runs of this activity. Type: string (or Expression with resultType string).
 	ExistingClusterID interface{} `json:"existingClusterId,omitempty"`
 
-	// The id of an existing instance pool that will be used for all runs of this activity. Type: string (or Expression with resultType string).
+	// OPTIONAL; The id of an existing instance pool that will be used for all runs of this activity. Type: string (or Expression with resultType string).
 	InstancePoolID interface{} `json:"instancePoolId,omitempty"`
 
-	// Additional tags for cluster resources. This property is ignored in instance pool configurations.
+	// OPTIONAL; Additional tags for cluster resources. This property is ignored in instance pool configurations.
 	NewClusterCustomTags map[string]interface{} `json:"newClusterCustomTags,omitempty"`
 
-	// The driver node type for the new job cluster. This property is ignored in instance pool configurations. Type: string (or Expression with resultType string).
+	// OPTIONAL; The driver node type for the new job cluster. This property is ignored in instance pool configurations. Type: string (or Expression with resultType
+	// string).
 	NewClusterDriverNodeType interface{} `json:"newClusterDriverNodeType,omitempty"`
 
-	// Enable the elastic disk on the new cluster. This property is now ignored, and takes the default elastic disk behavior in Databricks (elastic disks are
-	// always enabled). Type: boolean (or Expression
+	// OPTIONAL; Enable the elastic disk on the new cluster. This property is now ignored, and takes the default elastic disk behavior in Databricks (elastic
+	// disks are always enabled). Type: boolean (or Expression
 	// with resultType boolean).
 	NewClusterEnableElasticDisk interface{} `json:"newClusterEnableElasticDisk,omitempty"`
 
-	// User-defined initialization scripts for the new cluster. Type: array of strings (or Expression with resultType array of strings).
+	// OPTIONAL; User-defined initialization scripts for the new cluster. Type: array of strings (or Expression with resultType array of strings).
 	NewClusterInitScripts interface{} `json:"newClusterInitScripts,omitempty"`
 
-	// The node type of the new job cluster. This property is required if newClusterVersion is specified and instancePoolId is not specified. If instancePoolId
+	// OPTIONAL; The node type of the new job cluster. This property is required if newClusterVersion is specified and instancePoolId is not specified. If instancePoolId
 	// is specified, this property is ignored. Type:
 	// string (or Expression with resultType string).
 	NewClusterNodeType interface{} `json:"newClusterNodeType,omitempty"`
 
-	// If not using an existing interactive cluster, this specifies the number of worker nodes to use for the new job cluster or instance pool. For new job
-	// clusters, this a string-formatted Int32, like '1'
+	// OPTIONAL; If not using an existing interactive cluster, this specifies the number of worker nodes to use for the new job cluster or instance pool. For
+	// new job clusters, this a string-formatted Int32, like '1'
 	// means numOfWorker is 1 or '1:10' means auto-scale from 1 (min) to 10 (max). For instance pools, this is a string-formatted Int32, and can only specify
 	// a fixed number of worker nodes, such as '2'.
 	// Required if newClusterVersion is specified. Type: string (or Expression with resultType string).
 	NewClusterNumOfWorker interface{} `json:"newClusterNumOfWorker,omitempty"`
 
-	// A set of optional, user-specified Spark configuration key-value pairs.
+	// OPTIONAL; A set of optional, user-specified Spark configuration key-value pairs.
 	NewClusterSparkConf map[string]interface{} `json:"newClusterSparkConf,omitempty"`
 
-	// A set of optional, user-specified Spark environment variables key-value pairs.
+	// OPTIONAL; A set of optional, user-specified Spark environment variables key-value pairs.
 	NewClusterSparkEnvVars map[string]interface{} `json:"newClusterSparkEnvVars,omitempty"`
 
-	// If not using an existing interactive cluster, this specifies the Spark version of a new job cluster or instance pool nodes created for each run of this
-	// activity. Required if instancePoolId is
+	// OPTIONAL; If not using an existing interactive cluster, this specifies the Spark version of a new job cluster or instance pool nodes created for each
+	// run of this activity. Required if instancePoolId is
 	// specified. Type: string (or Expression with resultType string).
 	NewClusterVersion interface{} `json:"newClusterVersion,omitempty"`
 }
@@ -2929,17 +2936,17 @@ func (a *AzureFileStorageLinkedService) UnmarshalJSON(data []byte) error {
 
 // AzureFileStorageLinkedServiceTypeProperties - Azure File Storage linked service properties.
 type AzureFileStorageLinkedServiceTypeProperties struct {
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
-
 	// REQUIRED; Host name of the server. Type: string (or Expression with resultType string).
 	Host interface{} `json:"host,omitempty"`
 
-	// Password to logon the server.
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
+
+	// OPTIONAL; Password to logon the server.
 	Password SecretBaseClassification `json:"password,omitempty"`
 
-	// User ID to logon the server. Type: string (or Expression with resultType string).
+	// OPTIONAL; User ID to logon the server. Type: string (or Expression with resultType string).
 	UserID interface{} `json:"userId,omitempty"`
 }
 
@@ -2996,22 +3003,22 @@ func (a AzureFileStorageLocation) MarshalJSON() ([]byte, error) {
 // AzureFileStorageReadSettings - Azure File Storage read settings.
 type AzureFileStorageReadSettings struct {
 	StoreReadSettings
-	// Indicates whether to enable partition discovery.
+	// OPTIONAL; Indicates whether to enable partition discovery.
 	EnablePartitionDiscovery *bool `json:"enablePartitionDiscovery,omitempty"`
 
-	// The end of file's modified datetime. Type: string (or Expression with resultType string).
+	// OPTIONAL; The end of file's modified datetime. Type: string (or Expression with resultType string).
 	ModifiedDatetimeEnd interface{} `json:"modifiedDatetimeEnd,omitempty"`
 
-	// The start of file's modified datetime. Type: string (or Expression with resultType string).
+	// OPTIONAL; The start of file's modified datetime. Type: string (or Expression with resultType string).
 	ModifiedDatetimeStart interface{} `json:"modifiedDatetimeStart,omitempty"`
 
-	// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
+	// OPTIONAL; If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
 	Recursive interface{} `json:"recursive,omitempty"`
 
-	// Azure File Storage wildcardFileName. Type: string (or Expression with resultType string).
+	// OPTIONAL; Azure File Storage wildcardFileName. Type: string (or Expression with resultType string).
 	WildcardFileName interface{} `json:"wildcardFileName,omitempty"`
 
-	// Azure File Storage wildcardFolderPath. Type: string (or Expression with resultType string).
+	// OPTIONAL; Azure File Storage wildcardFolderPath. Type: string (or Expression with resultType string).
 	WildcardFolderPath interface{} `json:"wildcardFolderPath,omitempty"`
 }
 
@@ -3098,20 +3105,20 @@ func (a *AzureFunctionActivity) UnmarshalJSON(data []byte) error {
 
 // AzureFunctionActivityTypeProperties - Azure Function activity type properties.
 type AzureFunctionActivityTypeProperties struct {
-	// Represents the payload that will be sent to the endpoint. Required for POST/PUT method, not allowed for GET method Type: string (or Expression with resultType
-	// string).
-	Body interface{} `json:"body,omitempty"`
-
 	// REQUIRED; Name of the Function that the Azure Function Activity will call. Type: string (or Expression with resultType string)
 	FunctionName interface{} `json:"functionName,omitempty"`
 
-	// Represents the headers that will be sent to the request. For example, to set the language and type on a request: "headers" : { "Accept-Language": "en-us",
-	// "Content-Type": "application/json" }. Type:
-	// string (or Expression with resultType string).
-	Headers interface{} `json:"headers,omitempty"`
-
 	// REQUIRED; Rest API method for target endpoint.
 	Method *AzureFunctionActivityMethod `json:"method,omitempty"`
+
+	// OPTIONAL; Represents the payload that will be sent to the endpoint. Required for POST/PUT method, not allowed for GET method Type: string (or Expression
+	// with resultType string).
+	Body interface{} `json:"body,omitempty"`
+
+	// OPTIONAL; Represents the headers that will be sent to the request. For example, to set the language and type on a request: "headers" : { "Accept-Language":
+	// "en-us", "Content-Type": "application/json" }. Type:
+	// string (or Expression with resultType string).
+	Headers interface{} `json:"headers,omitempty"`
 }
 
 // AzureFunctionLinkedService - Azure Function linked service.
@@ -3150,14 +3157,14 @@ func (a *AzureFunctionLinkedService) UnmarshalJSON(data []byte) error {
 
 // AzureFunctionLinkedServiceTypeProperties - Azure Function linked service properties.
 type AzureFunctionLinkedServiceTypeProperties struct {
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
-
 	// REQUIRED; The endpoint of the Azure Function App. URL will be in the format https://.azurewebsites.net.
 	FunctionAppURL interface{} `json:"functionAppUrl,omitempty"`
 
-	// Function or Host key for Azure Function App.
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
+
+	// OPTIONAL; Function or Host key for Azure Function App.
 	FunctionKey SecretBaseClassification `json:"functionKey,omitempty"`
 }
 
@@ -3242,11 +3249,12 @@ type AzureKeyVaultSecretReference struct {
 	// REQUIRED; The name of the secret in Azure Key Vault. Type: string (or Expression with resultType string).
 	SecretName interface{} `json:"secretName,omitempty"`
 
-	// The version of the secret in Azure Key Vault. The default value is the latest version of the secret. Type: string (or Expression with resultType string).
-	SecretVersion interface{} `json:"secretVersion,omitempty"`
-
 	// REQUIRED; The Azure Key Vault linked service reference.
 	Store *LinkedServiceReference `json:"store,omitempty"`
+
+	// OPTIONAL; The version of the secret in Azure Key Vault. The default value is the latest version of the secret. Type: string (or Expression with resultType
+	// string).
+	SecretVersion interface{} `json:"secretVersion,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type AzureKeyVaultSecretReference.
@@ -3320,17 +3328,17 @@ func (a *AzureMLBatchExecutionActivity) UnmarshalJSON(data []byte) error {
 
 // AzureMLBatchExecutionActivityTypeProperties - Azure ML Batch Execution activity properties.
 type AzureMLBatchExecutionActivityTypeProperties struct {
-	// Key,Value pairs to be passed to the Azure ML Batch Execution Service endpoint. Keys must match the names of web service parameters defined in the published
-	// Azure ML web service. Values will be passed
+	// OPTIONAL; Key,Value pairs to be passed to the Azure ML Batch Execution Service endpoint. Keys must match the names of web service parameters defined
+	// in the published Azure ML web service. Values will be passed
 	// in the GlobalParameters property of the Azure ML batch execution request.
 	GlobalParameters map[string]interface{} `json:"globalParameters,omitempty"`
 
-	// Key,Value pairs, mapping the names of Azure ML endpoint's Web Service Inputs to AzureMLWebServiceFile objects specifying the input Blob locations.. This
-	// information will be passed in the
+	// OPTIONAL; Key,Value pairs, mapping the names of Azure ML endpoint's Web Service Inputs to AzureMLWebServiceFile objects specifying the input Blob locations..
+	// This information will be passed in the
 	// WebServiceInputs property of the Azure ML batch execution request.
 	WebServiceInputs map[string]*AzureMLWebServiceFile `json:"webServiceInputs,omitempty"`
 
-	// Key,Value pairs, mapping the names of Azure ML endpoint's Web Service Outputs to AzureMLWebServiceFile objects specifying the output Blob locations.
+	// OPTIONAL; Key,Value pairs, mapping the names of Azure ML endpoint's Web Service Outputs to AzureMLWebServiceFile objects specifying the output Blob locations.
 	// This information will be passed in the
 	// WebServiceOutputs property of the Azure ML batch execution request.
 	WebServiceOutputs map[string]*AzureMLWebServiceFile `json:"webServiceOutputs,omitempty"`
@@ -3381,26 +3389,26 @@ func (a *AzureMLExecutePipelineActivity) UnmarshalJSON(data []byte) error {
 
 // AzureMLExecutePipelineActivityTypeProperties - Azure ML Execute Pipeline activity properties.
 type AzureMLExecutePipelineActivityTypeProperties struct {
-	// Whether to continue execution of other steps in the PipelineRun if a step fails. This information will be passed in the continueOnStepFailure property
-	// of the published pipeline execution request.
-	// Type: boolean (or Expression with resultType boolean).
-	ContinueOnStepFailure interface{} `json:"continueOnStepFailure,omitempty"`
-
-	// Run history experiment name of the pipeline run. This information will be passed in the ExperimentName property of the published pipeline execution request.
-	// Type: string (or Expression with resultType
-	// string).
-	ExperimentName interface{} `json:"experimentName,omitempty"`
-
-	// The parent Azure ML Service pipeline run id. This information will be passed in the ParentRunId property of the published pipeline execution request.
-	// Type: string (or Expression with resultType
-	// string).
-	MlParentRunID interface{} `json:"mlParentRunId,omitempty"`
-
 	// REQUIRED; ID of the published Azure ML pipeline. Type: string (or Expression with resultType string).
 	MlPipelineID interface{} `json:"mlPipelineId,omitempty"`
 
-	// Key,Value pairs to be passed to the published Azure ML pipeline endpoint. Keys must match the names of pipeline parameters defined in the published pipeline.
-	// Values will be passed in the
+	// OPTIONAL; Whether to continue execution of other steps in the PipelineRun if a step fails. This information will be passed in the continueOnStepFailure
+	// property of the published pipeline execution request.
+	// Type: boolean (or Expression with resultType boolean).
+	ContinueOnStepFailure interface{} `json:"continueOnStepFailure,omitempty"`
+
+	// OPTIONAL; Run history experiment name of the pipeline run. This information will be passed in the ExperimentName property of the published pipeline execution
+	// request. Type: string (or Expression with resultType
+	// string).
+	ExperimentName interface{} `json:"experimentName,omitempty"`
+
+	// OPTIONAL; The parent Azure ML Service pipeline run id. This information will be passed in the ParentRunId property of the published pipeline execution
+	// request. Type: string (or Expression with resultType
+	// string).
+	MlParentRunID interface{} `json:"mlParentRunId,omitempty"`
+
+	// OPTIONAL; Key,Value pairs to be passed to the published Azure ML pipeline endpoint. Keys must match the names of pipeline parameters defined in the published
+	// pipeline. Values will be passed in the
 	// ParameterAssignments property of the published pipeline execution request. Type: object with key value pairs (or Expression with resultType object).
 	MlPipelineParameters interface{} `json:"mlPipelineParameters,omitempty"`
 }
@@ -3444,24 +3452,24 @@ type AzureMLLinkedServiceTypeProperties struct {
 	// REQUIRED; The API key for accessing the Azure ML model endpoint.
 	APIKey SecretBaseClassification `json:"apiKey,omitempty"`
 
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
-
 	// REQUIRED; The Batch Execution REST URL for an Azure ML Studio Web Service endpoint. Type: string (or Expression with resultType string).
 	MlEndpoint interface{} `json:"mlEndpoint,omitempty"`
 
-	// The ID of the service principal used to authenticate against the ARM-based updateResourceEndpoint of an Azure ML Studio web service. Type: string (or
-	// Expression with resultType string).
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
+
+	// OPTIONAL; The ID of the service principal used to authenticate against the ARM-based updateResourceEndpoint of an Azure ML Studio web service. Type:
+	// string (or Expression with resultType string).
 	ServicePrincipalID interface{} `json:"servicePrincipalId,omitempty"`
 
-	// The key of the service principal used to authenticate against the ARM-based updateResourceEndpoint of an Azure ML Studio web service.
+	// OPTIONAL; The key of the service principal used to authenticate against the ARM-based updateResourceEndpoint of an Azure ML Studio web service.
 	ServicePrincipalKey SecretBaseClassification `json:"servicePrincipalKey,omitempty"`
 
-	// The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string).
+	// OPTIONAL; The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string).
 	Tenant interface{} `json:"tenant,omitempty"`
 
-	// The Update Resource REST URL for an Azure ML Studio Web Service endpoint. Type: string (or Expression with resultType string).
+	// OPTIONAL; The Update Resource REST URL for an Azure ML Studio Web Service endpoint. Type: string (or Expression with resultType string).
 	UpdateResourceEndpoint interface{} `json:"updateResourceEndpoint,omitempty"`
 }
 
@@ -3552,27 +3560,27 @@ func (a *AzureMLServiceLinkedService) UnmarshalJSON(data []byte) error {
 
 // AzureMLServiceLinkedServiceTypeProperties - Azure ML Service linked service properties.
 type AzureMLServiceLinkedServiceTypeProperties struct {
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
-
 	// REQUIRED; Azure ML Service workspace name. Type: string (or Expression with resultType string).
 	MlWorkspaceName interface{} `json:"mlWorkspaceName,omitempty"`
 
 	// REQUIRED; Azure ML Service workspace resource group name. Type: string (or Expression with resultType string).
 	ResourceGroupName interface{} `json:"resourceGroupName,omitempty"`
 
-	// The ID of the service principal used to authenticate against the endpoint of a published Azure ML Service pipeline. Type: string (or Expression with
-	// resultType string).
-	ServicePrincipalID interface{} `json:"servicePrincipalId,omitempty"`
-
-	// The key of the service principal used to authenticate against the endpoint of a published Azure ML Service pipeline.
-	ServicePrincipalKey SecretBaseClassification `json:"servicePrincipalKey,omitempty"`
-
 	// REQUIRED; Azure ML Service workspace subscription ID. Type: string (or Expression with resultType string).
 	SubscriptionID interface{} `json:"subscriptionId,omitempty"`
 
-	// The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string).
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
+
+	// OPTIONAL; The ID of the service principal used to authenticate against the endpoint of a published Azure ML Service pipeline. Type: string (or Expression
+	// with resultType string).
+	ServicePrincipalID interface{} `json:"servicePrincipalId,omitempty"`
+
+	// OPTIONAL; The key of the service principal used to authenticate against the endpoint of a published Azure ML Service pipeline.
+	ServicePrincipalKey SecretBaseClassification `json:"servicePrincipalKey,omitempty"`
+
+	// OPTIONAL; The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string).
 	Tenant interface{} `json:"tenant,omitempty"`
 }
 
@@ -3720,21 +3728,21 @@ func (a *AzureMariaDBLinkedService) UnmarshalJSON(data []byte) error {
 
 // AzureMariaDBLinkedServiceTypeProperties - Azure Database for MariaDB linked service properties.
 type AzureMariaDBLinkedServiceTypeProperties struct {
-	// An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
+	// OPTIONAL; An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
 	ConnectionString interface{} `json:"connectionString,omitempty"`
 
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
 	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
 
-	// The Azure key vault secret reference of password in connection string.
+	// OPTIONAL; The Azure key vault secret reference of password in connection string.
 	Pwd *AzureKeyVaultSecretReference `json:"pwd,omitempty"`
 }
 
 // AzureMariaDBSource - A copy activity Azure MariaDB source.
 type AzureMariaDBSource struct {
 	TabularSource
-	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	// OPTIONAL; A query to retrieve data from source. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -3768,7 +3776,7 @@ func (a *AzureMariaDBSource) UnmarshalJSON(data []byte) error {
 // AzureMariaDBTableDataset - Azure Database for MariaDB dataset.
 type AzureMariaDBTableDataset struct {
 	Dataset
-	// Properties specific to this dataset type.
+	// OPTIONAL; Properties specific to this dataset type.
 	TypeProperties *GenericDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -3838,18 +3846,18 @@ type AzureMySQLLinkedServiceTypeProperties struct {
 	// REQUIRED; The connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
 	ConnectionString interface{} `json:"connectionString,omitempty"`
 
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
 	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
 
-	// The Azure key vault secret reference of password in connection string.
+	// OPTIONAL; The Azure key vault secret reference of password in connection string.
 	Password *AzureKeyVaultSecretReference `json:"password,omitempty"`
 }
 
 // AzureMySQLSink - A copy activity Azure MySql sink.
 type AzureMySQLSink struct {
 	CopySink
-	// A query to execute before starting the copy. Type: string (or Expression with resultType string).
+	// OPTIONAL; A query to execute before starting the copy. Type: string (or Expression with resultType string).
 	PreCopyScript interface{} `json:"preCopyScript,omitempty"`
 }
 
@@ -3883,7 +3891,7 @@ func (a *AzureMySQLSink) UnmarshalJSON(data []byte) error {
 // AzureMySQLSource - A copy activity Azure MySQL source.
 type AzureMySQLSource struct {
 	TabularSource
-	// Database query. Type: string (or Expression with resultType string).
+	// OPTIONAL; Database query. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -3950,10 +3958,10 @@ func (a *AzureMySQLTableDataset) UnmarshalJSON(data []byte) error {
 
 // AzureMySQLTableDatasetTypeProperties - Azure MySQL database dataset properties.
 type AzureMySQLTableDatasetTypeProperties struct {
-	// The name of Azure MySQL database table. Type: string (or Expression with resultType string).
+	// OPTIONAL; The name of Azure MySQL database table. Type: string (or Expression with resultType string).
 	Table interface{} `json:"table,omitempty"`
 
-	// The Azure MySQL database table name. Type: string (or Expression with resultType string).
+	// OPTIONAL; The Azure MySQL database table name. Type: string (or Expression with resultType string).
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
@@ -3993,21 +4001,21 @@ func (a *AzurePostgreSQLLinkedService) UnmarshalJSON(data []byte) error {
 
 // AzurePostgreSQLLinkedServiceTypeProperties - Azure PostgreSQL linked service properties.
 type AzurePostgreSQLLinkedServiceTypeProperties struct {
-	// An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
+	// OPTIONAL; An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
 	ConnectionString interface{} `json:"connectionString,omitempty"`
 
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
 	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
 
-	// The Azure key vault secret reference of password in connection string.
+	// OPTIONAL; The Azure key vault secret reference of password in connection string.
 	Password *AzureKeyVaultSecretReference `json:"password,omitempty"`
 }
 
 // AzurePostgreSQLSink - A copy activity Azure PostgreSQL sink.
 type AzurePostgreSQLSink struct {
 	CopySink
-	// A query to execute before starting the copy. Type: string (or Expression with resultType string).
+	// OPTIONAL; A query to execute before starting the copy. Type: string (or Expression with resultType string).
 	PreCopyScript interface{} `json:"preCopyScript,omitempty"`
 }
 
@@ -4041,7 +4049,7 @@ func (a *AzurePostgreSQLSink) UnmarshalJSON(data []byte) error {
 // AzurePostgreSQLSource - A copy activity Azure PostgreSQL source.
 type AzurePostgreSQLSource struct {
 	TabularSource
-	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	// OPTIONAL; A query to retrieve data from source. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -4075,7 +4083,7 @@ func (a *AzurePostgreSQLSource) UnmarshalJSON(data []byte) error {
 // AzurePostgreSQLTableDataset - Azure PostgreSQL dataset.
 type AzurePostgreSQLTableDataset struct {
 	Dataset
-	// Properties specific to this dataset type.
+	// OPTIONAL; Properties specific to this dataset type.
 	TypeProperties *AzurePostgreSQLTableDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -4108,13 +4116,13 @@ func (a *AzurePostgreSQLTableDataset) UnmarshalJSON(data []byte) error {
 
 // AzurePostgreSQLTableDatasetTypeProperties - Azure PostgreSQL dataset properties.
 type AzurePostgreSQLTableDatasetTypeProperties struct {
-	// The schema name of the Azure PostgreSQL database. Type: string (or Expression with resultType string).
+	// OPTIONAL; The schema name of the Azure PostgreSQL database. Type: string (or Expression with resultType string).
 	Schema interface{} `json:"schema,omitempty"`
 
-	// The table name of the Azure PostgreSQL database. Type: string (or Expression with resultType string).
+	// OPTIONAL; The table name of the Azure PostgreSQL database. Type: string (or Expression with resultType string).
 	Table interface{} `json:"table,omitempty"`
 
-	// The table name of the Azure PostgreSQL database which includes both schema and table. Type: string (or Expression with resultType string).
+	// OPTIONAL; The table name of the Azure PostgreSQL database which includes both schema and table. Type: string (or Expression with resultType string).
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
@@ -4168,20 +4176,20 @@ type AzureSQLDWLinkedServiceTypeProperties struct {
 	// REQUIRED; The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference.
 	ConnectionString interface{} `json:"connectionString,omitempty"`
 
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
 	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
 
-	// The Azure key vault secret reference of password in connection string.
+	// OPTIONAL; The Azure key vault secret reference of password in connection string.
 	Password *AzureKeyVaultSecretReference `json:"password,omitempty"`
 
-	// The ID of the service principal used to authenticate against Azure SQL Data Warehouse. Type: string (or Expression with resultType string).
+	// OPTIONAL; The ID of the service principal used to authenticate against Azure SQL Data Warehouse. Type: string (or Expression with resultType string).
 	ServicePrincipalID interface{} `json:"servicePrincipalId,omitempty"`
 
-	// The key of the service principal used to authenticate against Azure SQL Data Warehouse.
+	// OPTIONAL; The key of the service principal used to authenticate against Azure SQL Data Warehouse.
 	ServicePrincipalKey SecretBaseClassification `json:"servicePrincipalKey,omitempty"`
 
-	// The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string).
+	// OPTIONAL; The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string).
 	Tenant interface{} `json:"tenant,omitempty"`
 }
 
@@ -4235,7 +4243,7 @@ func (a *AzureSQLDWLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error
 // AzureSQLDWTableDataset - The Azure SQL Data Warehouse dataset.
 type AzureSQLDWTableDataset struct {
 	Dataset
-	// Azure SQL Data Warehouse dataset properties.
+	// OPTIONAL; Azure SQL Data Warehouse dataset properties.
 	TypeProperties *AzureSQLDWTableDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -4268,13 +4276,13 @@ func (a *AzureSQLDWTableDataset) UnmarshalJSON(data []byte) error {
 
 // AzureSQLDWTableDatasetTypeProperties - Azure SQL Data Warehouse dataset properties.
 type AzureSQLDWTableDatasetTypeProperties struct {
-	// The schema name of the Azure SQL Data Warehouse. Type: string (or Expression with resultType string).
+	// OPTIONAL; The schema name of the Azure SQL Data Warehouse. Type: string (or Expression with resultType string).
 	Schema interface{} `json:"schema,omitempty"`
 
-	// The table name of the Azure SQL Data Warehouse. Type: string (or Expression with resultType string).
+	// OPTIONAL; The table name of the Azure SQL Data Warehouse. Type: string (or Expression with resultType string).
 	Table interface{} `json:"table,omitempty"`
 
-	// This property will be retired. Please consider using schema + table properties instead.
+	// OPTIONAL; This property will be retired. Please consider using schema + table properties instead.
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
@@ -4317,20 +4325,20 @@ type AzureSQLDatabaseLinkedServiceTypeProperties struct {
 	// REQUIRED; The connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
 	ConnectionString interface{} `json:"connectionString,omitempty"`
 
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
 	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
 
-	// The Azure key vault secret reference of password in connection string.
+	// OPTIONAL; The Azure key vault secret reference of password in connection string.
 	Password *AzureKeyVaultSecretReference `json:"password,omitempty"`
 
-	// The ID of the service principal used to authenticate against Azure SQL Database. Type: string (or Expression with resultType string).
+	// OPTIONAL; The ID of the service principal used to authenticate against Azure SQL Database. Type: string (or Expression with resultType string).
 	ServicePrincipalID interface{} `json:"servicePrincipalId,omitempty"`
 
-	// The key of the service principal used to authenticate against Azure SQL Database.
+	// OPTIONAL; The key of the service principal used to authenticate against Azure SQL Database.
 	ServicePrincipalKey SecretBaseClassification `json:"servicePrincipalKey,omitempty"`
 
-	// The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string).
+	// OPTIONAL; The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string).
 	Tenant interface{} `json:"tenant,omitempty"`
 }
 
@@ -4420,20 +4428,20 @@ type AzureSQLMILinkedServiceTypeProperties struct {
 	// REQUIRED; The connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
 	ConnectionString interface{} `json:"connectionString,omitempty"`
 
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
 	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
 
-	// The Azure key vault secret reference of password in connection string.
+	// OPTIONAL; The Azure key vault secret reference of password in connection string.
 	Password *AzureKeyVaultSecretReference `json:"password,omitempty"`
 
-	// The ID of the service principal used to authenticate against Azure SQL Managed Instance. Type: string (or Expression with resultType string).
+	// OPTIONAL; The ID of the service principal used to authenticate against Azure SQL Managed Instance. Type: string (or Expression with resultType string).
 	ServicePrincipalID interface{} `json:"servicePrincipalId,omitempty"`
 
-	// The key of the service principal used to authenticate against Azure SQL Managed Instance.
+	// OPTIONAL; The key of the service principal used to authenticate against Azure SQL Managed Instance.
 	ServicePrincipalKey SecretBaseClassification `json:"servicePrincipalKey,omitempty"`
 
-	// The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string).
+	// OPTIONAL; The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string).
 	Tenant interface{} `json:"tenant,omitempty"`
 }
 
@@ -4487,7 +4495,7 @@ func (a *AzureSQLMILinkedServiceTypeProperties) UnmarshalJSON(data []byte) error
 // AzureSQLMITableDataset - The Azure SQL Managed Instance dataset.
 type AzureSQLMITableDataset struct {
 	Dataset
-	// Azure SQL Managed Instance dataset properties.
+	// OPTIONAL; Azure SQL Managed Instance dataset properties.
 	TypeProperties *AzureSQLMITableDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -4520,35 +4528,36 @@ func (a *AzureSQLMITableDataset) UnmarshalJSON(data []byte) error {
 
 // AzureSQLMITableDatasetTypeProperties - Azure SQL Managed Instance dataset properties.
 type AzureSQLMITableDatasetTypeProperties struct {
-	// The schema name of the Azure SQL Managed Instance. Type: string (or Expression with resultType string).
+	// OPTIONAL; The schema name of the Azure SQL Managed Instance. Type: string (or Expression with resultType string).
 	Schema interface{} `json:"schema,omitempty"`
 
-	// The table name of the Azure SQL Managed Instance dataset. Type: string (or Expression with resultType string).
+	// OPTIONAL; The table name of the Azure SQL Managed Instance dataset. Type: string (or Expression with resultType string).
 	Table interface{} `json:"table,omitempty"`
 
-	// This property will be retired. Please consider using schema + table properties instead.
+	// OPTIONAL; This property will be retired. Please consider using schema + table properties instead.
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
 // AzureSQLSink - A copy activity Azure SQL sink.
 type AzureSQLSink struct {
 	CopySink
-	// SQL pre-copy script. Type: string (or Expression with resultType string).
+	// OPTIONAL; SQL pre-copy script. Type: string (or Expression with resultType string).
 	PreCopyScript interface{} `json:"preCopyScript,omitempty"`
 
-	// SQL writer stored procedure name. Type: string (or Expression with resultType string).
+	// OPTIONAL; SQL writer stored procedure name. Type: string (or Expression with resultType string).
 	SQLWriterStoredProcedureName interface{} `json:"sqlWriterStoredProcedureName,omitempty"`
 
-	// SQL writer table type. Type: string (or Expression with resultType string).
+	// OPTIONAL; SQL writer table type. Type: string (or Expression with resultType string).
 	SQLWriterTableType interface{} `json:"sqlWriterTableType,omitempty"`
 
-	// SQL stored procedure parameters.
+	// OPTIONAL; SQL stored procedure parameters.
 	StoredProcedureParameters map[string]*StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
 
-	// The stored procedure parameter name of the table type. Type: string (or Expression with resultType string).
+	// OPTIONAL; The stored procedure parameter name of the table type. Type: string (or Expression with resultType string).
 	StoredProcedureTableTypeParameterName interface{} `json:"storedProcedureTableTypeParameterName,omitempty"`
 
-	// The option to handle sink table, such as autoCreate. For now only 'autoCreate' value is supported. Type: string (or Expression with resultType string).
+	// OPTIONAL; The option to handle sink table, such as autoCreate. For now only 'autoCreate' value is supported. Type: string (or Expression with resultType
+	// string).
 	TableOption interface{} `json:"tableOption,omitempty"`
 }
 
@@ -4602,17 +4611,17 @@ func (a *AzureSQLSink) UnmarshalJSON(data []byte) error {
 // AzureSQLSource - A copy activity Azure SQL source.
 type AzureSQLSource struct {
 	TabularSource
-	// Which additional types to produce.
+	// OPTIONAL; Which additional types to produce.
 	ProduceAdditionalTypes interface{} `json:"produceAdditionalTypes,omitempty"`
 
-	// SQL reader query. Type: string (or Expression with resultType string).
+	// OPTIONAL; SQL reader query. Type: string (or Expression with resultType string).
 	SQLReaderQuery interface{} `json:"sqlReaderQuery,omitempty"`
 
-	// Name of the stored procedure for a SQL Database source. This cannot be used at the same time as SqlReaderQuery. Type: string (or Expression with resultType
-	// string).
+	// OPTIONAL; Name of the stored procedure for a SQL Database source. This cannot be used at the same time as SqlReaderQuery. Type: string (or Expression
+	// with resultType string).
 	SQLReaderStoredProcedureName interface{} `json:"sqlReaderStoredProcedureName,omitempty"`
 
-	// Value and type setting for stored procedure parameters. Example: "{Parameter1: {value: "1", type: "int"}}".
+	// OPTIONAL; Value and type setting for stored procedure parameters. Example: "{Parameter1: {value: "1", type: "int"}}".
 	StoredProcedureParameters map[string]*StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
 }
 
@@ -4658,7 +4667,7 @@ func (a *AzureSQLSource) UnmarshalJSON(data []byte) error {
 // AzureSQLTableDataset - The Azure SQL Server database dataset.
 type AzureSQLTableDataset struct {
 	Dataset
-	// Azure SQL dataset properties.
+	// OPTIONAL; Azure SQL dataset properties.
 	TypeProperties *AzureSQLTableDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -4691,13 +4700,13 @@ func (a *AzureSQLTableDataset) UnmarshalJSON(data []byte) error {
 
 // AzureSQLTableDatasetTypeProperties - Azure SQL dataset properties.
 type AzureSQLTableDatasetTypeProperties struct {
-	// The schema name of the Azure SQL database. Type: string (or Expression with resultType string).
+	// OPTIONAL; The schema name of the Azure SQL database. Type: string (or Expression with resultType string).
 	Schema interface{} `json:"schema,omitempty"`
 
-	// The table name of the Azure SQL database. Type: string (or Expression with resultType string).
+	// OPTIONAL; The table name of the Azure SQL database. Type: string (or Expression with resultType string).
 	Table interface{} `json:"table,omitempty"`
 
-	// This property will be retired. Please consider using schema + table properties instead.
+	// OPTIONAL; This property will be retired. Please consider using schema + table properties instead.
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
@@ -4744,7 +4753,7 @@ type AzureSearchIndexDatasetTypeProperties struct {
 // AzureSearchIndexSink - A copy activity Azure Search Index sink.
 type AzureSearchIndexSink struct {
 	CopySink
-	// Specify the write behavior when upserting documents into Azure Search Index.
+	// OPTIONAL; Specify the write behavior when upserting documents into Azure Search Index.
 	WriteBehavior *AzureSearchIndexWriteBehaviorType `json:"writeBehavior,omitempty"`
 }
 
@@ -4811,15 +4820,15 @@ func (a *AzureSearchLinkedService) UnmarshalJSON(data []byte) error {
 
 // AzureSearchLinkedServiceTypeProperties - Windows Azure Search Service linked service properties.
 type AzureSearchLinkedServiceTypeProperties struct {
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
-
-	// Admin Key for Azure Search service
-	Key SecretBaseClassification `json:"key,omitempty"`
-
 	// REQUIRED; URL for Azure Search service. Type: string (or Expression with resultType string).
 	URL interface{} `json:"url,omitempty"`
+
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
+
+	// OPTIONAL; Admin Key for Azure Search service
+	Key SecretBaseClassification `json:"key,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type AzureSearchLinkedServiceTypeProperties.
@@ -4893,20 +4902,20 @@ func (a *AzureStorageLinkedService) UnmarshalJSON(data []byte) error {
 
 // AzureStorageLinkedServiceTypeProperties - Azure Storage linked service properties.
 type AzureStorageLinkedServiceTypeProperties struct {
-	// The Azure key vault secret reference of accountKey in connection string.
+	// OPTIONAL; The Azure key vault secret reference of accountKey in connection string.
 	AccountKey *AzureKeyVaultSecretReference `json:"accountKey,omitempty"`
 
-	// The connection string. It is mutually exclusive with sasUri property. Type: string, SecureString or AzureKeyVaultSecretReference.
+	// OPTIONAL; The connection string. It is mutually exclusive with sasUri property. Type: string, SecureString or AzureKeyVaultSecretReference.
 	ConnectionString interface{} `json:"connectionString,omitempty"`
 
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
 	EncryptedCredential *string `json:"encryptedCredential,omitempty"`
 
-	// The Azure key vault secret reference of sasToken in sas uri.
+	// OPTIONAL; The Azure key vault secret reference of sasToken in sas uri.
 	SasToken *AzureKeyVaultSecretReference `json:"sasToken,omitempty"`
 
-	// SAS URI of the Azure Storage resource. It is mutually exclusive with connectionString property. Type: string, SecureString or AzureKeyVaultSecretReference.
+	// OPTIONAL; SAS URI of the Azure Storage resource. It is mutually exclusive with connectionString property. Type: string, SecureString or AzureKeyVaultSecretReference.
 	SasURI interface{} `json:"sasUri,omitempty"`
 }
 
@@ -4953,16 +4962,16 @@ type AzureTableDatasetTypeProperties struct {
 // AzureTableSink - A copy activity Azure Table sink.
 type AzureTableSink struct {
 	CopySink
-	// Azure Table default partition key value. Type: string (or Expression with resultType string).
+	// OPTIONAL; Azure Table default partition key value. Type: string (or Expression with resultType string).
 	AzureTableDefaultPartitionKeyValue interface{} `json:"azureTableDefaultPartitionKeyValue,omitempty"`
 
-	// Azure Table insert type. Type: string (or Expression with resultType string).
+	// OPTIONAL; Azure Table insert type. Type: string (or Expression with resultType string).
 	AzureTableInsertType interface{} `json:"azureTableInsertType,omitempty"`
 
-	// Azure Table partition key name. Type: string (or Expression with resultType string).
+	// OPTIONAL; Azure Table partition key name. Type: string (or Expression with resultType string).
 	AzureTablePartitionKeyName interface{} `json:"azureTablePartitionKeyName,omitempty"`
 
-	// Azure Table row key name. Type: string (or Expression with resultType string).
+	// OPTIONAL; Azure Table row key name. Type: string (or Expression with resultType string).
 	AzureTableRowKeyName interface{} `json:"azureTableRowKeyName,omitempty"`
 }
 
@@ -5008,10 +5017,10 @@ func (a *AzureTableSink) UnmarshalJSON(data []byte) error {
 // AzureTableSource - A copy activity Azure Table source.
 type AzureTableSource struct {
 	TabularSource
-	// Azure Table source ignore table not found. Type: boolean (or Expression with resultType boolean).
+	// OPTIONAL; Azure Table source ignore table not found. Type: boolean (or Expression with resultType boolean).
 	AzureTableSourceIgnoreTableNotFound interface{} `json:"azureTableSourceIgnoreTableNotFound,omitempty"`
 
-	// Azure Table source query. Type: string (or Expression with resultType string).
+	// OPTIONAL; Azure Table source query. Type: string (or Expression with resultType string).
 	AzureTableSourceQuery interface{} `json:"azureTableSourceQuery,omitempty"`
 }
 
@@ -5092,7 +5101,7 @@ type BigDataPoolReference struct {
 // BigDataPoolResourceInfo - A Big Data pool
 type BigDataPoolResourceInfo struct {
 	TrackedResource
-	// Big Data pool properties
+	// OPTIONAL; Big Data pool properties
 	Properties *BigDataPoolResourceProperties `json:"properties,omitempty"`
 }
 
@@ -5105,10 +5114,10 @@ func (b BigDataPoolResourceInfo) MarshalJSON() ([]byte, error) {
 
 // BigDataPoolResourceInfoListResult - Collection of Big Data pool information
 type BigDataPoolResourceInfoListResult struct {
-	// Link to the next page of results
+	// OPTIONAL; Link to the next page of results
 	NextLink *string `json:"nextLink,omitempty"`
 
-	// List of Big Data pools
+	// OPTIONAL; List of Big Data pools
 	Value []*BigDataPoolResourceInfo `json:"value,omitempty"`
 }
 
@@ -5140,59 +5149,59 @@ type BigDataPoolResourceInfoResponse struct {
 
 // BigDataPoolResourceProperties - Properties of a Big Data pool powered by Apache Spark
 type BigDataPoolResourceProperties struct {
-	// Auto-pausing properties
+	// OPTIONAL; Auto-pausing properties
 	AutoPause *AutoPauseProperties `json:"autoPause,omitempty"`
 
-	// Auto-scaling properties
+	// OPTIONAL; Auto-scaling properties
 	AutoScale *AutoScaleProperties `json:"autoScale,omitempty"`
 
-	// The cache size
+	// OPTIONAL; The cache size
 	CacheSize *int32 `json:"cacheSize,omitempty"`
 
-	// The time when the Big Data pool was created.
+	// OPTIONAL; The time when the Big Data pool was created.
 	CreationDate *time.Time `json:"creationDate,omitempty"`
 
-	// List of custom libraries/packages associated with the spark pool.
+	// OPTIONAL; List of custom libraries/packages associated with the spark pool.
 	CustomLibraries []*LibraryInfo `json:"customLibraries,omitempty"`
 
-	// The default folder where Spark logs will be written.
+	// OPTIONAL; The default folder where Spark logs will be written.
 	DefaultSparkLogFolder *string `json:"defaultSparkLogFolder,omitempty"`
 
-	// Dynamic Executor Allocation
+	// OPTIONAL; Dynamic Executor Allocation
 	DynamicExecutorAllocation *DynamicExecutorAllocation `json:"dynamicExecutorAllocation,omitempty"`
 
-	// Whether compute isolation is required or not.
+	// OPTIONAL; Whether compute isolation is required or not.
 	IsComputeIsolationEnabled *bool `json:"isComputeIsolationEnabled,omitempty"`
+
+	// OPTIONAL; Library version requirements
+	LibraryRequirements *LibraryRequirements `json:"libraryRequirements,omitempty"`
+
+	// OPTIONAL; The number of nodes in the Big Data pool.
+	NodeCount *int32 `json:"nodeCount,omitempty"`
+
+	// OPTIONAL; The level of compute power that each node in the Big Data pool has.
+	NodeSize *NodeSize `json:"nodeSize,omitempty"`
+
+	// OPTIONAL; The kind of nodes that the Big Data pool provides.
+	NodeSizeFamily *NodeSizeFamily `json:"nodeSizeFamily,omitempty"`
+
+	// OPTIONAL; The state of the Big Data pool.
+	ProvisioningState *string `json:"provisioningState,omitempty"`
+
+	// OPTIONAL; Whether session level packages enabled.
+	SessionLevelPackagesEnabled *bool `json:"sessionLevelPackagesEnabled,omitempty"`
+
+	// OPTIONAL; Spark configuration file to specify additional properties
+	SparkConfigProperties *LibraryRequirements `json:"sparkConfigProperties,omitempty"`
+
+	// OPTIONAL; The Spark events folder
+	SparkEventsFolder *string `json:"sparkEventsFolder,omitempty"`
+
+	// OPTIONAL; The Apache Spark version.
+	SparkVersion *string `json:"sparkVersion,omitempty"`
 
 	// READ-ONLY; The time when the Big Data pool was updated successfully.
 	LastSucceededTimestamp *time.Time `json:"lastSucceededTimestamp,omitempty" azure:"ro"`
-
-	// Library version requirements
-	LibraryRequirements *LibraryRequirements `json:"libraryRequirements,omitempty"`
-
-	// The number of nodes in the Big Data pool.
-	NodeCount *int32 `json:"nodeCount,omitempty"`
-
-	// The level of compute power that each node in the Big Data pool has.
-	NodeSize *NodeSize `json:"nodeSize,omitempty"`
-
-	// The kind of nodes that the Big Data pool provides.
-	NodeSizeFamily *NodeSizeFamily `json:"nodeSizeFamily,omitempty"`
-
-	// The state of the Big Data pool.
-	ProvisioningState *string `json:"provisioningState,omitempty"`
-
-	// Whether session level packages enabled.
-	SessionLevelPackagesEnabled *bool `json:"sessionLevelPackagesEnabled,omitempty"`
-
-	// Spark configuration file to specify additional properties
-	SparkConfigProperties *LibraryRequirements `json:"sparkConfigProperties,omitempty"`
-
-	// The Spark events folder
-	SparkEventsFolder *string `json:"sparkEventsFolder,omitempty"`
-
-	// The Apache Spark version.
-	SparkVersion *string `json:"sparkVersion,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type BigDataPoolResourceProperties.
@@ -5307,7 +5316,7 @@ type BigDataPoolsListOptions struct {
 // BinaryDataset - Binary dataset.
 type BinaryDataset struct {
 	Dataset
-	// Binary dataset properties.
+	// OPTIONAL; Binary dataset properties.
 	TypeProperties *BinaryDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -5340,11 +5349,11 @@ func (b *BinaryDataset) UnmarshalJSON(data []byte) error {
 
 // BinaryDatasetTypeProperties - Binary dataset properties.
 type BinaryDatasetTypeProperties struct {
-	// The data compression method used for the binary dataset.
-	Compression DatasetCompressionClassification `json:"compression,omitempty"`
-
 	// REQUIRED; The location of the Binary storage.
 	Location DatasetLocationClassification `json:"location,omitempty"`
+
+	// OPTIONAL; The data compression method used for the binary dataset.
+	Compression DatasetCompressionClassification `json:"compression,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type BinaryDatasetTypeProperties.
@@ -5381,7 +5390,7 @@ func (b *BinaryDatasetTypeProperties) UnmarshalJSON(data []byte) error {
 // BinarySink - A copy activity Binary sink.
 type BinarySink struct {
 	CopySink
-	// Binary store settings.
+	// OPTIONAL; Binary store settings.
 	StoreSettings StoreWriteSettingsClassification `json:"storeSettings,omitempty"`
 }
 
@@ -5415,7 +5424,7 @@ func (b *BinarySink) UnmarshalJSON(data []byte) error {
 // BinarySource - A copy activity Binary source.
 type BinarySource struct {
 	CopySource
-	// Binary store settings.
+	// OPTIONAL; Binary store settings.
 	StoreSettings StoreReadSettingsClassification `json:"storeSettings,omitempty"`
 }
 
@@ -5482,24 +5491,24 @@ func (b *BlobEventsTrigger) UnmarshalJSON(data []byte) error {
 
 // BlobEventsTriggerTypeProperties - Blob Events Trigger properties.
 type BlobEventsTriggerTypeProperties struct {
-	// The blob path must begin with the pattern provided for trigger to fire. For example, '/records/blobs/december/' will only fire the trigger for blobs
-	// in the december folder under the records container.
-	// At least one of these must be provided: blobPathBeginsWith, blobPathEndsWith.
-	BlobPathBeginsWith *string `json:"blobPathBeginsWith,omitempty"`
-
-	// The blob path must end with the pattern provided for trigger to fire. For example, 'december/boxes.csv' will only fire the trigger for blobs named boxes
-	// in a december folder. At least one of these
-	// must be provided: blobPathBeginsWith, blobPathEndsWith.
-	BlobPathEndsWith *string `json:"blobPathEndsWith,omitempty"`
-
 	// REQUIRED; The type of events that cause this trigger to fire.
 	Events []*BlobEventType `json:"events,omitempty"`
 
-	// If set to true, blobs with zero bytes will be ignored.
-	IgnoreEmptyBlobs *bool `json:"ignoreEmptyBlobs,omitempty"`
-
 	// REQUIRED; The ARM resource ID of the Storage Account.
 	Scope *string `json:"scope,omitempty"`
+
+	// OPTIONAL; The blob path must begin with the pattern provided for trigger to fire. For example, '/records/blobs/december/' will only fire the trigger
+	// for blobs in the december folder under the records container.
+	// At least one of these must be provided: blobPathBeginsWith, blobPathEndsWith.
+	BlobPathBeginsWith *string `json:"blobPathBeginsWith,omitempty"`
+
+	// OPTIONAL; The blob path must end with the pattern provided for trigger to fire. For example, 'december/boxes.csv' will only fire the trigger for blobs
+	// named boxes in a december folder. At least one of these
+	// must be provided: blobPathBeginsWith, blobPathEndsWith.
+	BlobPathEndsWith *string `json:"blobPathEndsWith,omitempty"`
+
+	// OPTIONAL; If set to true, blobs with zero bytes will be ignored.
+	IgnoreEmptyBlobs *bool `json:"ignoreEmptyBlobs,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type BlobEventsTriggerTypeProperties.
@@ -5516,16 +5525,16 @@ func (b BlobEventsTriggerTypeProperties) MarshalJSON() ([]byte, error) {
 // BlobSink - A copy activity Azure Blob sink.
 type BlobSink struct {
 	CopySink
-	// Blob writer add header. Type: boolean (or Expression with resultType boolean).
+	// OPTIONAL; Blob writer add header. Type: boolean (or Expression with resultType boolean).
 	BlobWriterAddHeader interface{} `json:"blobWriterAddHeader,omitempty"`
 
-	// Blob writer date time format. Type: string (or Expression with resultType string).
+	// OPTIONAL; Blob writer date time format. Type: string (or Expression with resultType string).
 	BlobWriterDateTimeFormat interface{} `json:"blobWriterDateTimeFormat,omitempty"`
 
-	// Blob writer overwrite files. Type: boolean (or Expression with resultType boolean).
+	// OPTIONAL; Blob writer overwrite files. Type: boolean (or Expression with resultType boolean).
 	BlobWriterOverwriteFiles interface{} `json:"blobWriterOverwriteFiles,omitempty"`
 
-	// The type of copy behavior for copy sink.
+	// OPTIONAL; The type of copy behavior for copy sink.
 	CopyBehavior interface{} `json:"copyBehavior,omitempty"`
 }
 
@@ -5571,13 +5580,13 @@ func (b *BlobSink) UnmarshalJSON(data []byte) error {
 // BlobSource - A copy activity Azure Blob source.
 type BlobSource struct {
 	CopySource
-	// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
+	// OPTIONAL; If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
 	Recursive interface{} `json:"recursive,omitempty"`
 
-	// Number of header lines to skip from each blob. Type: integer (or Expression with resultType integer).
+	// OPTIONAL; Number of header lines to skip from each blob. Type: integer (or Expression with resultType integer).
 	SkipHeaderLineCount interface{} `json:"skipHeaderLineCount,omitempty"`
 
-	// Treat empty as null. Type: boolean (or Expression with resultType boolean).
+	// OPTIONAL; Treat empty as null. Type: boolean (or Expression with resultType boolean).
 	TreatEmptyAsNull interface{} `json:"treatEmptyAsNull,omitempty"`
 }
 
@@ -5698,23 +5707,23 @@ func (c *CassandraLinkedService) UnmarshalJSON(data []byte) error {
 
 // CassandraLinkedServiceTypeProperties - Cassandra linked service properties.
 type CassandraLinkedServiceTypeProperties struct {
-	// AuthenticationType to be used for connection. Type: string (or Expression with resultType string).
-	AuthenticationType interface{} `json:"authenticationType,omitempty"`
-
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
-
 	// REQUIRED; Host name for connection. Type: string (or Expression with resultType string).
 	Host interface{} `json:"host,omitempty"`
 
-	// Password for authentication.
+	// OPTIONAL; AuthenticationType to be used for connection. Type: string (or Expression with resultType string).
+	AuthenticationType interface{} `json:"authenticationType,omitempty"`
+
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
+
+	// OPTIONAL; Password for authentication.
 	Password SecretBaseClassification `json:"password,omitempty"`
 
-	// The port for the connection. Type: integer (or Expression with resultType integer).
+	// OPTIONAL; The port for the connection. Type: integer (or Expression with resultType integer).
 	Port interface{} `json:"port,omitempty"`
 
-	// Username for authentication. Type: string (or Expression with resultType string).
+	// OPTIONAL; Username for authentication. Type: string (or Expression with resultType string).
 	Username interface{} `json:"username,omitempty"`
 }
 
@@ -5768,12 +5777,13 @@ func (c *CassandraLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error 
 // CassandraSource - A copy activity source for a Cassandra database.
 type CassandraSource struct {
 	TabularSource
-	// The consistency level specifies how many Cassandra servers must respond to a read request before returning data to the client application. Cassandra
-	// checks the specified number of Cassandra servers
+	// OPTIONAL; The consistency level specifies how many Cassandra servers must respond to a read request before returning data to the client application.
+	// Cassandra checks the specified number of Cassandra servers
 	// for data to satisfy the read request. Must be one of cassandraSourceReadConsistencyLevels. The default value is 'ONE'. It is case-insensitive.
 	ConsistencyLevel *CassandraSourceReadConsistencyLevels `json:"consistencyLevel,omitempty"`
 
-	// Database query. Should be a SQL-92 query expression or Cassandra Query Language (CQL) command. Type: string (or Expression with resultType string).
+	// OPTIONAL; Database query. Should be a SQL-92 query expression or Cassandra Query Language (CQL) command. Type: string (or Expression with resultType
+	// string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -5811,7 +5821,7 @@ func (c *CassandraSource) UnmarshalJSON(data []byte) error {
 // CassandraTableDataset - The Cassandra database dataset.
 type CassandraTableDataset struct {
 	Dataset
-	// Cassandra dataset properties.
+	// OPTIONAL; Cassandra dataset properties.
 	TypeProperties *CassandraTableDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -5844,10 +5854,10 @@ func (c *CassandraTableDataset) UnmarshalJSON(data []byte) error {
 
 // CassandraTableDatasetTypeProperties - Cassandra dataset properties.
 type CassandraTableDatasetTypeProperties struct {
-	// The keyspace of the Cassandra database. Type: string (or Expression with resultType string).
+	// OPTIONAL; The keyspace of the Cassandra database. Type: string (or Expression with resultType string).
 	Keyspace interface{} `json:"keyspace,omitempty"`
 
-	// The table name of the Cassandra database. Type: string (or Expression with resultType string).
+	// OPTIONAL; The table name of the Cassandra database. Type: string (or Expression with resultType string).
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
@@ -5945,13 +5955,13 @@ type CloudErrorBody struct {
 	// REQUIRED; Error code.
 	Code *string `json:"code,omitempty"`
 
-	// Array with additional error details.
-	Details []*CloudError `json:"details,omitempty"`
-
 	// REQUIRED; Error message.
 	Message *string `json:"message,omitempty"`
 
-	// Property name/path in request associated with error.
+	// OPTIONAL; Array with additional error details.
+	Details []*CloudError `json:"details,omitempty"`
+
+	// OPTIONAL; Property name/path in request associated with error.
 	Target *string `json:"target,omitempty"`
 }
 
@@ -5970,13 +5980,13 @@ type CloudErrorBodyAutoGenerated struct {
 	// REQUIRED; Error code.
 	Code *string `json:"code,omitempty"`
 
-	// Array with additional error details.
-	Details []*CloudErrorAutoGenerated `json:"details,omitempty"`
-
 	// REQUIRED; Error message.
 	Message *string `json:"message,omitempty"`
 
-	// Property name/path in request associated with error.
+	// OPTIONAL; Array with additional error details.
+	Details []*CloudErrorAutoGenerated `json:"details,omitempty"`
+
+	// OPTIONAL; Property name/path in request associated with error.
 	Target *string `json:"target,omitempty"`
 }
 
@@ -5993,7 +6003,7 @@ func (c CloudErrorBodyAutoGenerated) MarshalJSON() ([]byte, error) {
 // CommonDataServiceForAppsEntityDataset - The Common Data Service for Apps entity dataset.
 type CommonDataServiceForAppsEntityDataset struct {
 	Dataset
-	// Common Data Service for Apps entity dataset properties.
+	// OPTIONAL; Common Data Service for Apps entity dataset properties.
 	TypeProperties *CommonDataServiceForAppsEntityDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -6026,7 +6036,7 @@ func (c *CommonDataServiceForAppsEntityDataset) UnmarshalJSON(data []byte) error
 
 // CommonDataServiceForAppsEntityDatasetTypeProperties - Common Data Service for Apps entity dataset properties.
 type CommonDataServiceForAppsEntityDatasetTypeProperties struct {
-	// The logical name of the entity. Type: string (or Expression with resultType string).
+	// OPTIONAL; The logical name of the entity. Type: string (or Expression with resultType string).
 	EntityName interface{} `json:"entityName,omitempty"`
 }
 
@@ -6076,45 +6086,46 @@ type CommonDataServiceForAppsLinkedServiceTypeProperties struct {
 	// string (or Expression with resultType string).
 	DeploymentType *DynamicsDeploymentType `json:"deploymentType,omitempty"`
 
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
 	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
 
-	// The host name of the on-premises Common Data Service for Apps server. The property is required for on-prem and not allowed for online. Type: string (or
-	// Expression with resultType string).
+	// OPTIONAL; The host name of the on-premises Common Data Service for Apps server. The property is required for on-prem and not allowed for online. Type:
+	// string (or Expression with resultType string).
 	HostName interface{} `json:"hostName,omitempty"`
 
-	// The organization name of the Common Data Service for Apps instance. The property is required for on-prem and required for online when there are more
-	// than one Common Data Service for Apps instances
+	// OPTIONAL; The organization name of the Common Data Service for Apps instance. The property is required for on-prem and required for online when there
+	// are more than one Common Data Service for Apps instances
 	// associated with the user. Type: string (or Expression with resultType string).
 	OrganizationName interface{} `json:"organizationName,omitempty"`
 
-	// Password to access the Common Data Service for Apps instance.
+	// OPTIONAL; Password to access the Common Data Service for Apps instance.
 	Password SecretBaseClassification `json:"password,omitempty"`
 
-	// The port of on-premises Common Data Service for Apps server. The property is required for on-prem and not allowed for online. Default is 443. Type: integer
-	// (or Expression with resultType integer),
+	// OPTIONAL; The port of on-premises Common Data Service for Apps server. The property is required for on-prem and not allowed for online. Default is 443.
+	// Type: integer (or Expression with resultType integer),
 	// minimum: 0.
 	Port interface{} `json:"port,omitempty"`
 
-	// The credential of the service principal object in Azure Active Directory. If servicePrincipalCredentialType is 'ServicePrincipalKey', servicePrincipalCredential
+	// OPTIONAL; The credential of the service principal object in Azure Active Directory. If servicePrincipalCredentialType is 'ServicePrincipalKey', servicePrincipalCredential
 	// can be SecureString or
 	// AzureKeyVaultSecretReference. If servicePrincipalCredentialType is 'ServicePrincipalCert', servicePrincipalCredential can only be AzureKeyVaultSecretReference.
 	ServicePrincipalCredential SecretBaseClassification `json:"servicePrincipalCredential,omitempty"`
 
-	// The service principal credential type to use in Server-To-Server authentication. 'ServicePrincipalKey' for key/secret, 'ServicePrincipalCert' for certificate.
-	// Type: string (or Expression with
+	// OPTIONAL; The service principal credential type to use in Server-To-Server authentication. 'ServicePrincipalKey' for key/secret, 'ServicePrincipalCert'
+	// for certificate. Type: string (or Expression with
 	// resultType string).
 	ServicePrincipalCredentialType *DynamicsServicePrincipalCredentialType `json:"servicePrincipalCredentialType,omitempty"`
 
-	// The client ID of the application in Azure Active Directory used for Server-To-Server authentication. Type: string (or Expression with resultType string).
+	// OPTIONAL; The client ID of the application in Azure Active Directory used for Server-To-Server authentication. Type: string (or Expression with resultType
+	// string).
 	ServicePrincipalID interface{} `json:"servicePrincipalId,omitempty"`
 
-	// The URL to the Microsoft Common Data Service for Apps server. The property is required for on-line and not allowed for on-prem. Type: string (or Expression
-	// with resultType string).
+	// OPTIONAL; The URL to the Microsoft Common Data Service for Apps server. The property is required for on-line and not allowed for on-prem. Type: string
+	// (or Expression with resultType string).
 	ServiceURI interface{} `json:"serviceUri,omitempty"`
 
-	// User name to access the Common Data Service for Apps instance. Type: string (or Expression with resultType string).
+	// OPTIONAL; User name to access the Common Data Service for Apps instance. Type: string (or Expression with resultType string).
 	Username interface{} `json:"username,omitempty"`
 }
 
@@ -6192,15 +6203,15 @@ func (c *CommonDataServiceForAppsLinkedServiceTypeProperties) UnmarshalJSON(data
 // CommonDataServiceForAppsSink - A copy activity Common Data Service for Apps sink.
 type CommonDataServiceForAppsSink struct {
 	CopySink
-	// The logical name of the alternate key which will be used when upserting records. Type: string (or Expression with resultType string).
-	AlternateKeyName interface{} `json:"alternateKeyName,omitempty"`
-
-	// The flag indicating whether to ignore null values from input dataset (except key fields) during write operation. Default is false. Type: boolean (or
-	// Expression with resultType boolean).
-	IgnoreNullValues interface{} `json:"ignoreNullValues,omitempty"`
-
 	// REQUIRED; The write behavior for the operation.
 	WriteBehavior *DynamicsSinkWriteBehavior `json:"writeBehavior,omitempty"`
+
+	// OPTIONAL; The logical name of the alternate key which will be used when upserting records. Type: string (or Expression with resultType string).
+	AlternateKeyName interface{} `json:"alternateKeyName,omitempty"`
+
+	// OPTIONAL; The flag indicating whether to ignore null values from input dataset (except key fields) during write operation. Default is false. Type: boolean
+	// (or Expression with resultType boolean).
+	IgnoreNullValues interface{} `json:"ignoreNullValues,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type CommonDataServiceForAppsSink.
@@ -6241,8 +6252,8 @@ func (c *CommonDataServiceForAppsSink) UnmarshalJSON(data []byte) error {
 // CommonDataServiceForAppsSource - A copy activity Common Data Service for Apps source.
 type CommonDataServiceForAppsSource struct {
 	CopySource
-	// FetchXML is a proprietary query language that is used in Microsoft Common Data Service for Apps (online & on-premises). Type: string (or Expression with
-	// resultType string).
+	// OPTIONAL; FetchXML is a proprietary query language that is used in Microsoft Common Data Service for Apps (online & on-premises). Type: string (or Expression
+	// with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -6312,25 +6323,25 @@ type ConcurLinkedServiceTypeProperties struct {
 	// REQUIRED; Application client_id supplied by Concur App Management.
 	ClientID interface{} `json:"clientId,omitempty"`
 
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
-
-	// The password corresponding to the user name that you provided in the username field.
-	Password SecretBaseClassification `json:"password,omitempty"`
-
-	// Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true.
-	UseEncryptedEndpoints interface{} `json:"useEncryptedEndpoints,omitempty"`
-
-	// Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value
-	// is true.
-	UseHostVerification interface{} `json:"useHostVerification,omitempty"`
-
-	// Specifies whether to verify the identity of the server when connecting over SSL. The default value is true.
-	UsePeerVerification interface{} `json:"usePeerVerification,omitempty"`
-
 	// REQUIRED; The user name that you use to access Concur Service.
 	Username interface{} `json:"username,omitempty"`
+
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
+
+	// OPTIONAL; The password corresponding to the user name that you provided in the username field.
+	Password SecretBaseClassification `json:"password,omitempty"`
+
+	// OPTIONAL; Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true.
+	UseEncryptedEndpoints interface{} `json:"useEncryptedEndpoints,omitempty"`
+
+	// OPTIONAL; Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default
+	// value is true.
+	UseHostVerification interface{} `json:"useHostVerification,omitempty"`
+
+	// OPTIONAL; Specifies whether to verify the identity of the server when connecting over SSL. The default value is true.
+	UsePeerVerification interface{} `json:"usePeerVerification,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ConcurLinkedServiceTypeProperties.
@@ -6387,7 +6398,7 @@ func (c *ConcurLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 // ConcurObjectDataset - Concur Service dataset.
 type ConcurObjectDataset struct {
 	Dataset
-	// Properties specific to this dataset type.
+	// OPTIONAL; Properties specific to this dataset type.
 	TypeProperties *GenericDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -6421,7 +6432,7 @@ func (c *ConcurObjectDataset) UnmarshalJSON(data []byte) error {
 // ConcurSource - A copy activity Concur Service source.
 type ConcurSource struct {
 	TabularSource
-	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	// OPTIONAL; A query to retrieve data from source. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -6489,14 +6500,14 @@ func (c *ControlActivity) unmarshalInternal(rawMsg map[string]json.RawMessage) e
 // CopyActivity - Copy activity.
 type CopyActivity struct {
 	ExecutionActivity
-	// List of inputs for the activity.
-	Inputs []*DatasetReference `json:"inputs,omitempty"`
-
-	// List of outputs for the activity.
-	Outputs []*DatasetReference `json:"outputs,omitempty"`
-
 	// REQUIRED; Copy activity properties.
 	TypeProperties *CopyActivityTypeProperties `json:"typeProperties,omitempty"`
+
+	// OPTIONAL; List of inputs for the activity.
+	Inputs []*DatasetReference `json:"inputs,omitempty"`
+
+	// OPTIONAL; List of outputs for the activity.
+	Outputs []*DatasetReference `json:"outputs,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type CopyActivity.
@@ -6536,39 +6547,39 @@ func (c *CopyActivity) UnmarshalJSON(data []byte) error {
 
 // CopyActivityTypeProperties - Copy activity properties.
 type CopyActivityTypeProperties struct {
-	// Maximum number of data integration units that can be used to perform this data movement. Type: integer (or Expression with resultType integer), minimum:
-	// 0.
-	DataIntegrationUnits interface{} `json:"dataIntegrationUnits,omitempty"`
-
-	// Whether to skip incompatible row. Default value is false. Type: boolean (or Expression with resultType boolean).
-	EnableSkipIncompatibleRow interface{} `json:"enableSkipIncompatibleRow,omitempty"`
-
-	// Specifies whether to copy data via an interim staging. Default value is false. Type: boolean (or Expression with resultType boolean).
-	EnableStaging interface{} `json:"enableStaging,omitempty"`
-
-	// Maximum number of concurrent sessions opened on the source or sink to avoid overloading the data store. Type: integer (or Expression with resultType
-	// integer), minimum: 0.
-	ParallelCopies interface{} `json:"parallelCopies,omitempty"`
-
-	// Preserve rules.
-	Preserve []interface{} `json:"preserve,omitempty"`
-
-	// Preserve Rules.
-	PreserveRules []interface{} `json:"preserveRules,omitempty"`
-
-	// Redirect incompatible row settings when EnableSkipIncompatibleRow is true.
-	RedirectIncompatibleRowSettings *RedirectIncompatibleRowSettings `json:"redirectIncompatibleRowSettings,omitempty"`
-
 	// REQUIRED; Copy activity sink.
 	Sink CopySinkClassification `json:"sink,omitempty"`
 
 	// REQUIRED; Copy activity source.
 	Source CopySourceClassification `json:"source,omitempty"`
 
-	// Specifies interim staging settings when EnableStaging is true.
+	// OPTIONAL; Maximum number of data integration units that can be used to perform this data movement. Type: integer (or Expression with resultType integer),
+	// minimum: 0.
+	DataIntegrationUnits interface{} `json:"dataIntegrationUnits,omitempty"`
+
+	// OPTIONAL; Whether to skip incompatible row. Default value is false. Type: boolean (or Expression with resultType boolean).
+	EnableSkipIncompatibleRow interface{} `json:"enableSkipIncompatibleRow,omitempty"`
+
+	// OPTIONAL; Specifies whether to copy data via an interim staging. Default value is false. Type: boolean (or Expression with resultType boolean).
+	EnableStaging interface{} `json:"enableStaging,omitempty"`
+
+	// OPTIONAL; Maximum number of concurrent sessions opened on the source or sink to avoid overloading the data store. Type: integer (or Expression with resultType
+	// integer), minimum: 0.
+	ParallelCopies interface{} `json:"parallelCopies,omitempty"`
+
+	// OPTIONAL; Preserve rules.
+	Preserve []interface{} `json:"preserve,omitempty"`
+
+	// OPTIONAL; Preserve Rules.
+	PreserveRules []interface{} `json:"preserveRules,omitempty"`
+
+	// OPTIONAL; Redirect incompatible row settings when EnableSkipIncompatibleRow is true.
+	RedirectIncompatibleRowSettings *RedirectIncompatibleRowSettings `json:"redirectIncompatibleRowSettings,omitempty"`
+
+	// OPTIONAL; Specifies interim staging settings when EnableStaging is true.
 	StagingSettings *StagingSettings `json:"stagingSettings,omitempty"`
 
-	// Copy activity translator. If not specified, tabular translator is used.
+	// OPTIONAL; Copy activity translator. If not specified, tabular translator is used.
 	Translator interface{} `json:"translator,omitempty"`
 }
 
@@ -6654,25 +6665,25 @@ type CopySinkClassification interface {
 
 // CopySink - A copy activity sink.
 type CopySink struct {
-	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties map[string]interface{}
-
-	// The maximum concurrent connection count for the sink data store. Type: integer (or Expression with resultType integer).
-	MaxConcurrentConnections interface{} `json:"maxConcurrentConnections,omitempty"`
-
-	// Sink retry count. Type: integer (or Expression with resultType integer).
-	SinkRetryCount interface{} `json:"sinkRetryCount,omitempty"`
-
-	// Sink retry wait. Type: string (or Expression with resultType string), pattern: ((\d+).)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
-	SinkRetryWait interface{} `json:"sinkRetryWait,omitempty"`
-
 	// REQUIRED; Copy sink type.
 	Type *string `json:"type,omitempty"`
 
-	// Write batch size. Type: integer (or Expression with resultType integer), minimum: 0.
+	// Contains additional key/value pairs not defined in the schema.
+	AdditionalProperties map[string]interface{}
+
+	// OPTIONAL; The maximum concurrent connection count for the sink data store. Type: integer (or Expression with resultType integer).
+	MaxConcurrentConnections interface{} `json:"maxConcurrentConnections,omitempty"`
+
+	// OPTIONAL; Sink retry count. Type: integer (or Expression with resultType integer).
+	SinkRetryCount interface{} `json:"sinkRetryCount,omitempty"`
+
+	// OPTIONAL; Sink retry wait. Type: string (or Expression with resultType string), pattern: ((\d+).)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+	SinkRetryWait interface{} `json:"sinkRetryWait,omitempty"`
+
+	// OPTIONAL; Write batch size. Type: integer (or Expression with resultType integer), minimum: 0.
 	WriteBatchSize interface{} `json:"writeBatchSize,omitempty"`
 
-	// Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+).)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+	// OPTIONAL; Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+).)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
 	WriteBatchTimeout interface{} `json:"writeBatchTimeout,omitempty"`
 }
 
@@ -6768,20 +6779,20 @@ type CopySourceClassification interface {
 
 // CopySource - A copy activity source.
 type CopySource struct {
+	// REQUIRED; Copy source type.
+	Type *string `json:"type,omitempty"`
+
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
-	// The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer).
+	// OPTIONAL; The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer).
 	MaxConcurrentConnections interface{} `json:"maxConcurrentConnections,omitempty"`
 
-	// Source retry count. Type: integer (or Expression with resultType integer).
+	// OPTIONAL; Source retry count. Type: integer (or Expression with resultType integer).
 	SourceRetryCount interface{} `json:"sourceRetryCount,omitempty"`
 
-	// Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+).)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+	// OPTIONAL; Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+).)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
 	SourceRetryWait interface{} `json:"sourceRetryWait,omitempty"`
-
-	// REQUIRED; Copy source type.
-	Type *string `json:"type,omitempty"`
 }
 
 // GetCopySource implements the CopySourceClassification interface for type CopySource.
@@ -6856,11 +6867,11 @@ type CopyTranslatorClassification interface {
 
 // CopyTranslator - A copy activity translator.
 type CopyTranslator struct {
-	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties map[string]interface{}
-
 	// REQUIRED; Copy translator type.
 	Type *string `json:"type,omitempty"`
+
+	// Contains additional key/value pairs not defined in the schema.
+	AdditionalProperties map[string]interface{}
 }
 
 // GetCopyTranslator implements the CopyTranslatorClassification interface for type CopyTranslator.
@@ -6948,20 +6959,20 @@ func (c *CosmosDbLinkedService) UnmarshalJSON(data []byte) error {
 
 // CosmosDbLinkedServiceTypeProperties - CosmosDB linked service properties.
 type CosmosDbLinkedServiceTypeProperties struct {
-	// The endpoint of the Azure CosmosDB account. Type: string (or Expression with resultType string)
+	// OPTIONAL; The endpoint of the Azure CosmosDB account. Type: string (or Expression with resultType string)
 	AccountEndpoint interface{} `json:"accountEndpoint,omitempty"`
 
-	// The account key of the Azure CosmosDB account. Type: SecureString or AzureKeyVaultSecretReference.
+	// OPTIONAL; The account key of the Azure CosmosDB account. Type: SecureString or AzureKeyVaultSecretReference.
 	AccountKey SecretBaseClassification `json:"accountKey,omitempty"`
 
-	// The connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
+	// OPTIONAL; The connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
 	ConnectionString interface{} `json:"connectionString,omitempty"`
 
-	// The name of the database. Type: string (or Expression with resultType string)
+	// OPTIONAL; The name of the database. Type: string (or Expression with resultType string)
 	Database interface{} `json:"database,omitempty"`
 
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
 	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
 }
 
@@ -7094,8 +7105,8 @@ type CosmosDbMongoDbAPILinkedServiceTypeProperties struct {
 // CosmosDbMongoDbAPISink - A copy activity sink for a CosmosDB (MongoDB API) database.
 type CosmosDbMongoDbAPISink struct {
 	CopySink
-	// Specifies whether the document with same key to be overwritten (upsert) rather than throw exception (insert). The default value is "insert". Type: string
-	// (or Expression with resultType string). Type:
+	// OPTIONAL; Specifies whether the document with same key to be overwritten (upsert) rather than throw exception (insert). The default value is "insert".
+	// Type: string (or Expression with resultType string). Type:
 	// string (or Expression with resultType string).
 	WriteBehavior interface{} `json:"writeBehavior,omitempty"`
 }
@@ -7130,19 +7141,19 @@ func (c *CosmosDbMongoDbAPISink) UnmarshalJSON(data []byte) error {
 // CosmosDbMongoDbAPISource - A copy activity source for a CosmosDB (MongoDB API) database.
 type CosmosDbMongoDbAPISource struct {
 	CopySource
-	// Specifies the number of documents to return in each batch of the response from MongoDB instance. In most cases, modifying the batch size will not affect
-	// the user or the application. This property's
+	// OPTIONAL; Specifies the number of documents to return in each batch of the response from MongoDB instance. In most cases, modifying the batch size will
+	// not affect the user or the application. This property's
 	// main purpose is to avoid hit the limitation of response size. Type: integer (or Expression with resultType integer).
 	BatchSize interface{} `json:"batchSize,omitempty"`
 
-	// Cursor methods for Mongodb query.
+	// OPTIONAL; Cursor methods for Mongodb query.
 	CursorMethods *MongoDbCursorMethodsProperties `json:"cursorMethods,omitempty"`
 
-	// Specifies selection filter using query operators. To return all documents in a collection, omit this parameter or pass an empty document ({}). Type:
-	// string (or Expression with resultType string).
+	// OPTIONAL; Specifies selection filter using query operators. To return all documents in a collection, omit this parameter or pass an empty document ({}).
+	// Type: string (or Expression with resultType string).
 	Filter interface{} `json:"filter,omitempty"`
 
-	// Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+).)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+	// OPTIONAL; Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+).)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
 	QueryTimeout interface{} `json:"queryTimeout,omitempty"`
 }
 
@@ -7228,7 +7239,7 @@ type CosmosDbSQLAPICollectionDatasetTypeProperties struct {
 // CosmosDbSQLAPISink - A copy activity Azure CosmosDB (SQL API) Collection sink.
 type CosmosDbSQLAPISink struct {
 	CopySink
-	// Describes how to write data to Azure Cosmos DB. Type: string (or Expression with resultType string). Allowed values: insert and upsert.
+	// OPTIONAL; Describes how to write data to Azure Cosmos DB. Type: string (or Expression with resultType string). Allowed values: insert and upsert.
 	WriteBehavior interface{} `json:"writeBehavior,omitempty"`
 }
 
@@ -7262,13 +7273,13 @@ func (c *CosmosDbSQLAPISink) UnmarshalJSON(data []byte) error {
 // CosmosDbSQLAPISource - A copy activity Azure CosmosDB (SQL API) Collection source.
 type CosmosDbSQLAPISource struct {
 	CopySource
-	// Page size of the result. Type: integer (or Expression with resultType integer).
+	// OPTIONAL; Page size of the result. Type: integer (or Expression with resultType integer).
 	PageSize interface{} `json:"pageSize,omitempty"`
 
-	// Preferred regions. Type: array of strings (or Expression with resultType array of strings).
+	// OPTIONAL; Preferred regions. Type: array of strings (or Expression with resultType array of strings).
 	PreferredRegions interface{} `json:"preferredRegions,omitempty"`
 
-	// SQL API query. Type: string (or Expression with resultType string).
+	// OPTIONAL; SQL API query. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -7343,21 +7354,21 @@ func (c *CouchbaseLinkedService) UnmarshalJSON(data []byte) error {
 
 // CouchbaseLinkedServiceTypeProperties - Couchbase server linked service properties.
 type CouchbaseLinkedServiceTypeProperties struct {
-	// An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
+	// OPTIONAL; An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
 	ConnectionString interface{} `json:"connectionString,omitempty"`
 
-	// The Azure key vault secret reference of credString in connection string.
+	// OPTIONAL; The Azure key vault secret reference of credString in connection string.
 	CredString *AzureKeyVaultSecretReference `json:"credString,omitempty"`
 
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
 	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
 }
 
 // CouchbaseSource - A copy activity Couchbase server source.
 type CouchbaseSource struct {
 	TabularSource
-	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	// OPTIONAL; A query to retrieve data from source. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -7391,7 +7402,7 @@ func (c *CouchbaseSource) UnmarshalJSON(data []byte) error {
 // CouchbaseTableDataset - Couchbase server dataset.
 type CouchbaseTableDataset struct {
 	Dataset
-	// Properties specific to this dataset type.
+	// OPTIONAL; Properties specific to this dataset type.
 	TypeProperties *GenericDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -7424,28 +7435,28 @@ func (c *CouchbaseTableDataset) UnmarshalJSON(data []byte) error {
 
 // CreateDataFlowDebugSessionRequest - Request body structure for creating data flow debug session.
 type CreateDataFlowDebugSessionRequest struct {
-	// Timeout setting for Databricks cluster.
+	// OPTIONAL; Timeout setting for Databricks cluster.
 	ClusterTimeout *int32 `json:"clusterTimeout,omitempty"`
 
-	// Data bricks linked service.
+	// OPTIONAL; Data bricks linked service.
 	DataBricksLinkedService *LinkedServiceResource `json:"dataBricksLinkedService,omitempty"`
 
-	// The name of the data flow.
+	// OPTIONAL; The name of the data flow.
 	DataFlowName *string `json:"dataFlowName,omitempty"`
 
-	// The ID of existing Databricks cluster.
+	// OPTIONAL; The ID of existing Databricks cluster.
 	ExistingClusterID *string `json:"existingClusterId,omitempty"`
 
-	// The name of new Databricks cluster.
+	// OPTIONAL; The name of new Databricks cluster.
 	NewClusterName *string `json:"newClusterName,omitempty"`
 
-	// The type of new Databricks cluster.
+	// OPTIONAL; The type of new Databricks cluster.
 	NewClusterNodeType *string `json:"newClusterNodeType,omitempty"`
 }
 
 // CreateDataFlowDebugSessionResponse - Response body structure for creating data flow debug session.
 type CreateDataFlowDebugSessionResponse struct {
-	// The ID of data flow debug session.
+	// OPTIONAL; The ID of data flow debug session.
 	SessionID *string `json:"sessionId,omitempty"`
 }
 
@@ -7522,10 +7533,10 @@ func (c *CustomActivity) UnmarshalJSON(data []byte) error {
 
 // CustomActivityReferenceObject - Reference objects for custom activity
 type CustomActivityReferenceObject struct {
-	// Dataset references.
+	// OPTIONAL; Dataset references.
 	Datasets []*DatasetReference `json:"datasets,omitempty"`
 
-	// Linked service references.
+	// OPTIONAL; Linked service references.
 	LinkedServices []*LinkedServiceReference `json:"linkedServices,omitempty"`
 }
 
@@ -7542,20 +7553,20 @@ type CustomActivityTypeProperties struct {
 	// REQUIRED; Command for custom activity Type: string (or Expression with resultType string).
 	Command interface{} `json:"command,omitempty"`
 
-	// User defined property bag. There is no restriction on the keys or values that can be used. The user specified custom activity has the full responsibility
-	// to consume and interpret the content defined.
+	// OPTIONAL; User defined property bag. There is no restriction on the keys or values that can be used. The user specified custom activity has the full
+	// responsibility to consume and interpret the content defined.
 	ExtendedProperties map[string]interface{} `json:"extendedProperties,omitempty"`
 
-	// Folder path for resource files Type: string (or Expression with resultType string).
+	// OPTIONAL; Folder path for resource files Type: string (or Expression with resultType string).
 	FolderPath interface{} `json:"folderPath,omitempty"`
 
-	// Reference objects
+	// OPTIONAL; Reference objects
 	ReferenceObjects *CustomActivityReferenceObject `json:"referenceObjects,omitempty"`
 
-	// Resource linked service reference.
+	// OPTIONAL; Resource linked service reference.
 	ResourceLinkedService *LinkedServiceReference `json:"resourceLinkedService,omitempty"`
 
-	// The retention time for the files submitted for custom activity. Type: double (or Expression with resultType double).
+	// OPTIONAL; The retention time for the files submitted for custom activity. Type: double (or Expression with resultType double).
 	RetentionTimeInDays interface{} `json:"retentionTimeInDays,omitempty"`
 }
 
@@ -7608,7 +7619,7 @@ func (c *CustomDataSourceLinkedService) UnmarshalJSON(data []byte) error {
 // CustomDataset - The custom dataset.
 type CustomDataset struct {
 	Dataset
-	// Custom dataset properties.
+	// OPTIONAL; Custom dataset properties.
 	TypeProperties interface{} `json:"typeProperties,omitempty"`
 }
 
@@ -7659,7 +7670,7 @@ func (c *CustomSetupBase) GetCustomSetupBase() *CustomSetupBase { return c }
 
 // CustomerManagedKeyDetails - Details of the customer managed key associated with the workspace
 type CustomerManagedKeyDetails struct {
-	// The key object of the workspace
+	// OPTIONAL; The key object of the workspace
 	Key *WorkspaceKeyDetails `json:"key,omitempty"`
 
 	// READ-ONLY; The customer managed key status on the workspace
@@ -7668,22 +7679,22 @@ type CustomerManagedKeyDetails struct {
 
 // DWCopyCommandDefaultValue - Default value.
 type DWCopyCommandDefaultValue struct {
-	// Column name. Type: object (or Expression with resultType string).
+	// OPTIONAL; Column name. Type: object (or Expression with resultType string).
 	ColumnName interface{} `json:"columnName,omitempty"`
 
-	// The default value of the column. Type: object (or Expression with resultType string).
+	// OPTIONAL; The default value of the column. Type: object (or Expression with resultType string).
 	DefaultValue interface{} `json:"defaultValue,omitempty"`
 }
 
 // DWCopyCommandSettings - DW Copy Command settings.
 type DWCopyCommandSettings struct {
-	// Additional options directly passed to SQL DW in Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object).
-	// Example: "additionalOptions": { "MAXERRORS":
+	// OPTIONAL; Additional options directly passed to SQL DW in Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType
+	// object). Example: "additionalOptions": { "MAXERRORS":
 	// "1000", "DATEFORMAT": "'ymd'" }
 	AdditionalOptions map[string]*string `json:"additionalOptions,omitempty"`
 
-	// Specifies the default values for each target column in SQL DW. The default values in the property overwrite the DEFAULT constraint set in the DB, and
-	// identity column cannot have a default value. Type:
+	// OPTIONAL; Specifies the default values for each target column in SQL DW. The default values in the property overwrite the DEFAULT constraint set in the
+	// DB, and identity column cannot have a default value. Type:
 	// array of objects (or Expression with resultType array of objects).
 	DefaultValues []*DWCopyCommandDefaultValue `json:"defaultValues,omitempty"`
 }
@@ -7707,17 +7718,17 @@ type DataFlowClassification interface {
 
 // DataFlow - Azure Synapse nested object which contains a flow with data movements and transformations.
 type DataFlow struct {
-	// List of tags that can be used for describing the data flow.
-	Annotations []interface{} `json:"annotations,omitempty"`
-
-	// The description of the data flow.
-	Description *string `json:"description,omitempty"`
-
-	// The folder that this data flow is in. If not specified, Data flow will appear at the root level.
-	Folder *DataFlowFolder `json:"folder,omitempty"`
-
 	// REQUIRED; Type of data flow.
 	Type *string `json:"type,omitempty"`
+
+	// OPTIONAL; List of tags that can be used for describing the data flow.
+	Annotations []interface{} `json:"annotations,omitempty"`
+
+	// OPTIONAL; The description of the data flow.
+	Description *string `json:"description,omitempty"`
+
+	// OPTIONAL; The folder that this data flow is in. If not specified, Data flow will appear at the root level.
+	Folder *DataFlowFolder `json:"folder,omitempty"`
 }
 
 // GetDataFlow implements the DataFlowClassification interface for type DataFlow.
@@ -7784,25 +7795,25 @@ type DataFlowBeginRenameDataFlowOptions struct {
 
 // DataFlowDebugCommandRequest - Request body structure for data flow expression preview.
 type DataFlowDebugCommandRequest struct {
-	// The command name.
-	CommandName *string `json:"commandName,omitempty"`
-
 	// REQUIRED; The command payload object.
 	CommandPayload interface{} `json:"commandPayload,omitempty"`
 
-	// The data flow which contains the debug session.
-	DataFlowName *string `json:"dataFlowName,omitempty"`
-
 	// REQUIRED; The ID of data flow debug session.
 	SessionID *string `json:"sessionId,omitempty"`
+
+	// OPTIONAL; The command name.
+	CommandName *string `json:"commandName,omitempty"`
+
+	// OPTIONAL; The data flow which contains the debug session.
+	DataFlowName *string `json:"dataFlowName,omitempty"`
 }
 
 // DataFlowDebugCommandResponse - Response body structure of data flow result for data preview, statistics or expression preview.
 type DataFlowDebugCommandResponse struct {
-	// The result data of data preview, statistics or expression preview.
+	// OPTIONAL; The result data of data preview, statistics or expression preview.
 	Data *string `json:"data,omitempty"`
 
-	// The run status of data preview, statistics or expression preview.
+	// OPTIONAL; The run status of data preview, statistics or expression preview.
 	Status *string `json:"status,omitempty"`
 }
 
@@ -7832,22 +7843,22 @@ type DataFlowDebugPackage struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
-	// Data flow instance.
+	// OPTIONAL; Data flow instance.
 	DataFlow *DataFlowDebugResource `json:"dataFlow,omitempty"`
 
-	// List of datasets.
+	// OPTIONAL; List of datasets.
 	Datasets []*DatasetDebugResource `json:"datasets,omitempty"`
 
-	// Data flow debug settings.
+	// OPTIONAL; Data flow debug settings.
 	DebugSettings *DataFlowDebugPackageDebugSettings `json:"debugSettings,omitempty"`
 
-	// List of linked services.
+	// OPTIONAL; List of linked services.
 	LinkedServices []*LinkedServiceDebugResource `json:"linkedServices,omitempty"`
 
-	// The ID of data flow debug session.
+	// OPTIONAL; The ID of data flow debug session.
 	SessionID *string `json:"sessionId,omitempty"`
 
-	// Staging info for debug session.
+	// OPTIONAL; Staging info for debug session.
 	Staging *DataFlowStagingInfo `json:"staging,omitempty"`
 }
 
@@ -7915,13 +7926,13 @@ func (d *DataFlowDebugPackage) UnmarshalJSON(data []byte) error {
 
 // DataFlowDebugPackageDebugSettings - Data flow debug settings.
 type DataFlowDebugPackageDebugSettings struct {
-	// Parameters for dataset.
+	// OPTIONAL; Parameters for dataset.
 	DatasetParameters interface{} `json:"datasetParameters,omitempty"`
 
-	// Data flow parameters.
+	// OPTIONAL; Data flow parameters.
 	Parameters map[string]interface{} `json:"parameters,omitempty"`
 
-	// Source setting for data flow debug.
+	// OPTIONAL; Source setting for data flow debug.
 	SourceSettings []*DataFlowSourceSetting `json:"sourceSettings,omitempty"`
 }
 
@@ -7936,22 +7947,22 @@ func (d DataFlowDebugPackageDebugSettings) MarshalJSON() ([]byte, error) {
 
 // DataFlowDebugPreviewDataRequest - Request body structure for data flow preview data.
 type DataFlowDebugPreviewDataRequest struct {
-	// The data flow which contains the debug session.
+	// OPTIONAL; The data flow which contains the debug session.
 	DataFlowName *string `json:"dataFlowName,omitempty"`
 
-	// The row limit for preview request.
+	// OPTIONAL; The row limit for preview request.
 	RowLimits *int32 `json:"rowLimits,omitempty"`
 
-	// The ID of data flow debug session.
+	// OPTIONAL; The ID of data flow debug session.
 	SessionID *string `json:"sessionId,omitempty"`
 
-	// The output stream name.
+	// OPTIONAL; The output stream name.
 	StreamName *string `json:"streamName,omitempty"`
 }
 
 // DataFlowDebugQueryResponse - Response body structure of data flow query for data preview, statistics or expression preview.
 type DataFlowDebugQueryResponse struct {
-	// The run ID of data flow debug session.
+	// OPTIONAL; The run ID of data flow debug session.
 	RunID *string `json:"runId,omitempty"`
 }
 
@@ -7991,10 +8002,10 @@ func (d *DataFlowDebugResource) UnmarshalJSON(data []byte) error {
 
 // DataFlowDebugResultResponse - Response body structure of data flow result for data preview, statistics or expression preview.
 type DataFlowDebugResultResponse struct {
-	// The result data of data preview, statistics or expression preview.
+	// OPTIONAL; The result data of data preview, statistics or expression preview.
 	Data *string `json:"data,omitempty"`
 
-	// The run status of data preview, statistics or expression preview.
+	// OPTIONAL; The run status of data preview, statistics or expression preview.
 	Status *string `json:"status,omitempty"`
 }
 
@@ -8024,31 +8035,31 @@ type DataFlowDebugSessionInfo struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
-	// Compute type of the cluster.
+	// OPTIONAL; Compute type of the cluster.
 	ComputeType *string `json:"computeType,omitempty"`
 
-	// Core count of the cluster.
+	// OPTIONAL; Core count of the cluster.
 	CoreCount *int32 `json:"coreCount,omitempty"`
 
-	// The name of the data flow.
+	// OPTIONAL; The name of the data flow.
 	DataFlowName *string `json:"dataFlowName,omitempty"`
 
-	// Attached integration runtime name of data flow debug session.
+	// OPTIONAL; Attached integration runtime name of data flow debug session.
 	IntegrationRuntimeName *string `json:"integrationRuntimeName,omitempty"`
 
-	// Last activity time of data flow debug session.
+	// OPTIONAL; Last activity time of data flow debug session.
 	LastActivityTime *string `json:"lastActivityTime,omitempty"`
 
-	// Node count of the cluster. (deprecated property)
+	// OPTIONAL; Node count of the cluster. (deprecated property)
 	NodeCount *int32 `json:"nodeCount,omitempty"`
 
-	// The ID of data flow debug session.
+	// OPTIONAL; The ID of data flow debug session.
 	SessionID *string `json:"sessionId,omitempty"`
 
-	// Start time of data flow debug session.
+	// OPTIONAL; Start time of data flow debug session.
 	StartTime *string `json:"startTime,omitempty"`
 
-	// Compute type of the cluster.
+	// OPTIONAL; Compute type of the cluster.
 	TimeToLiveInMinutes *int32 `json:"timeToLiveInMinutes,omitempty"`
 }
 
@@ -8134,16 +8145,16 @@ type DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspaceOptions struct {
 
 // DataFlowDebugStatisticsRequest - Request body structure for data flow statistics.
 type DataFlowDebugStatisticsRequest struct {
-	// List of column names.
+	// OPTIONAL; List of column names.
 	Columns []*string `json:"columns,omitempty"`
 
-	// The data flow which contains the debug session.
+	// OPTIONAL; The data flow which contains the debug session.
 	DataFlowName *string `json:"dataFlowName,omitempty"`
 
-	// The ID of data flow debug session.
+	// OPTIONAL; The ID of data flow debug session.
 	SessionID *string `json:"sessionId,omitempty"`
 
-	// The output stream name.
+	// OPTIONAL; The output stream name.
 	StreamName *string `json:"streamName,omitempty"`
 }
 
@@ -8159,7 +8170,7 @@ func (d DataFlowDebugStatisticsRequest) MarshalJSON() ([]byte, error) {
 
 // DataFlowFolder - The folder that this data flow is in. If not specified, Data flow will appear at the root level.
 type DataFlowFolder struct {
-	// The name of the folder that this data flow is in.
+	// OPTIONAL; The name of the folder that this data flow is in.
 	Name *string `json:"name,omitempty"`
 }
 
@@ -8177,11 +8188,11 @@ type DataFlowGetDataFlowsByWorkspaceOptions struct {
 
 // DataFlowListResponse - A list of data flow resources.
 type DataFlowListResponse struct {
-	// The link to the next page of results, if any remaining results exist.
-	NextLink *string `json:"nextLink,omitempty"`
-
 	// REQUIRED; List of data flows.
 	Value []*DataFlowResource `json:"value,omitempty"`
+
+	// OPTIONAL; The link to the next page of results, if any remaining results exist.
+	NextLink *string `json:"nextLink,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type DataFlowListResponse.
@@ -8203,17 +8214,17 @@ type DataFlowListResponseResponse struct {
 
 // DataFlowReference - Data flow reference type.
 type DataFlowReference struct {
-	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties map[string]interface{}
-
-	// Reference data flow parameters from dataset.
-	DatasetParameters interface{} `json:"datasetParameters,omitempty"`
-
 	// REQUIRED; Reference data flow name.
 	ReferenceName *string `json:"referenceName,omitempty"`
 
 	// REQUIRED; Data flow reference type.
 	Type *DataFlowReferenceType `json:"type,omitempty"`
+
+	// Contains additional key/value pairs not defined in the schema.
+	AdditionalProperties map[string]interface{}
+
+	// OPTIONAL; Reference data flow parameters from dataset.
+	DatasetParameters interface{} `json:"datasetParameters,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type DataFlowReference.
@@ -8324,14 +8335,14 @@ type DataFlowResourceResponse struct {
 // DataFlowSink - Transformation for data flow sink.
 type DataFlowSink struct {
 	Transformation
-	// Dataset reference.
+	// OPTIONAL; Dataset reference.
 	Dataset *DatasetReference `json:"dataset,omitempty"`
 }
 
 // DataFlowSource - Transformation for data flow source.
 type DataFlowSource struct {
 	Transformation
-	// Dataset reference.
+	// OPTIONAL; Dataset reference.
 	Dataset *DatasetReference `json:"dataset,omitempty"`
 }
 
@@ -8340,10 +8351,10 @@ type DataFlowSourceSetting struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
-	// Defines the row limit of data flow source in debug.
+	// OPTIONAL; Defines the row limit of data flow source in debug.
 	RowLimit *int32 `json:"rowLimit,omitempty"`
 
-	// The data flow source name.
+	// OPTIONAL; The data flow source name.
 	SourceName *string `json:"sourceName,omitempty"`
 }
 
@@ -8395,10 +8406,10 @@ func (d *DataFlowSourceSetting) UnmarshalJSON(data []byte) error {
 
 // DataFlowStagingInfo - Staging info for execute data flow activity.
 type DataFlowStagingInfo struct {
-	// Folder path for staging blob.
+	// OPTIONAL; Folder path for staging blob.
 	FolderPath *string `json:"folderPath,omitempty"`
 
-	// Staging linked service reference.
+	// OPTIONAL; Staging linked service reference.
 	LinkedService *LinkedServiceReference `json:"linkedService,omitempty"`
 }
 
@@ -8438,28 +8449,29 @@ func (d *DataLakeAnalyticsUSQLActivity) UnmarshalJSON(data []byte) error {
 
 // DataLakeAnalyticsUSQLActivityTypeProperties - DataLakeAnalyticsU-SQL activity properties.
 type DataLakeAnalyticsUSQLActivityTypeProperties struct {
-	// Compilation mode of U-SQL. Must be one of these values : Semantic, Full and SingleBox. Type: string (or Expression with resultType string).
-	CompilationMode interface{} `json:"compilationMode,omitempty"`
-
-	// The maximum number of nodes simultaneously used to run the job. Default value is 1. Type: integer (or Expression with resultType integer), minimum: 1.
-	DegreeOfParallelism interface{} `json:"degreeOfParallelism,omitempty"`
-
-	// Parameters for U-SQL job request.
-	Parameters map[string]interface{} `json:"parameters,omitempty"`
-
-	// Determines which jobs out of all that are queued should be selected to run first. The lower the number, the higher the priority. Default value is 1000.
-	// Type: integer (or Expression with resultType
-	// integer), minimum: 1.
-	Priority interface{} `json:"priority,omitempty"`
-
-	// Runtime version of the U-SQL engine to use. Type: string (or Expression with resultType string).
-	RuntimeVersion interface{} `json:"runtimeVersion,omitempty"`
-
 	// REQUIRED; Script linked service reference.
 	ScriptLinkedService *LinkedServiceReference `json:"scriptLinkedService,omitempty"`
 
 	// REQUIRED; Case-sensitive path to folder that contains the U-SQL script. Type: string (or Expression with resultType string).
 	ScriptPath interface{} `json:"scriptPath,omitempty"`
+
+	// OPTIONAL; Compilation mode of U-SQL. Must be one of these values : Semantic, Full and SingleBox. Type: string (or Expression with resultType string).
+	CompilationMode interface{} `json:"compilationMode,omitempty"`
+
+	// OPTIONAL; The maximum number of nodes simultaneously used to run the job. Default value is 1. Type: integer (or Expression with resultType integer),
+	// minimum: 1.
+	DegreeOfParallelism interface{} `json:"degreeOfParallelism,omitempty"`
+
+	// OPTIONAL; Parameters for U-SQL job request.
+	Parameters map[string]interface{} `json:"parameters,omitempty"`
+
+	// OPTIONAL; Determines which jobs out of all that are queued should be selected to run first. The lower the number, the higher the priority. Default value
+	// is 1000. Type: integer (or Expression with resultType
+	// integer), minimum: 1.
+	Priority interface{} `json:"priority,omitempty"`
+
+	// OPTIONAL; Runtime version of the U-SQL engine to use. Type: string (or Expression with resultType string).
+	RuntimeVersion interface{} `json:"runtimeVersion,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type DataLakeAnalyticsUSQLActivityTypeProperties.
@@ -8477,10 +8489,10 @@ func (d DataLakeAnalyticsUSQLActivityTypeProperties) MarshalJSON() ([]byte, erro
 
 // DataLakeStorageAccountDetails - Details of the data lake storage account associated with the workspace
 type DataLakeStorageAccountDetails struct {
-	// Account URL
+	// OPTIONAL; Account URL
 	AccountURL *string `json:"accountUrl,omitempty"`
 
-	// Filesystem name
+	// OPTIONAL; Filesystem name
 	Filesystem *string `json:"filesystem,omitempty"`
 }
 
@@ -8520,16 +8532,16 @@ func (d *DatabricksNotebookActivity) UnmarshalJSON(data []byte) error {
 
 // DatabricksNotebookActivityTypeProperties - Databricks notebook activity properties.
 type DatabricksNotebookActivityTypeProperties struct {
-	// Base parameters to be used for each run of this job.If the notebook takes a parameter that is not specified, the default value from the notebook will
-	// be used.
-	BaseParameters map[string]interface{} `json:"baseParameters,omitempty"`
-
-	// A list of libraries to be installed on the cluster that will execute the job.
-	Libraries []map[string]interface{} `json:"libraries,omitempty"`
-
 	// REQUIRED; The absolute path of the notebook to be run in the Databricks Workspace. This path must begin with a slash. Type: string (or Expression with
 	// resultType string).
 	NotebookPath interface{} `json:"notebookPath,omitempty"`
+
+	// OPTIONAL; Base parameters to be used for each run of this job.If the notebook takes a parameter that is not specified, the default value from the notebook
+	// will be used.
+	BaseParameters map[string]interface{} `json:"baseParameters,omitempty"`
+
+	// OPTIONAL; A list of libraries to be installed on the cluster that will execute the job.
+	Libraries []map[string]interface{} `json:"libraries,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type DatabricksNotebookActivityTypeProperties.
@@ -8577,14 +8589,14 @@ func (d *DatabricksSparkJarActivity) UnmarshalJSON(data []byte) error {
 
 // DatabricksSparkJarActivityTypeProperties - Databricks SparkJar activity properties.
 type DatabricksSparkJarActivityTypeProperties struct {
-	// A list of libraries to be installed on the cluster that will execute the job.
-	Libraries []map[string]interface{} `json:"libraries,omitempty"`
-
 	// REQUIRED; The full name of the class containing the main method to be executed. This class must be contained in a JAR provided as a library. Type: string
 	// (or Expression with resultType string).
 	MainClassName interface{} `json:"mainClassName,omitempty"`
 
-	// Parameters that will be passed to the main method.
+	// OPTIONAL; A list of libraries to be installed on the cluster that will execute the job.
+	Libraries []map[string]interface{} `json:"libraries,omitempty"`
+
+	// OPTIONAL; Parameters that will be passed to the main method.
 	Parameters []interface{} `json:"parameters,omitempty"`
 }
 
@@ -8633,14 +8645,14 @@ func (d *DatabricksSparkPythonActivity) UnmarshalJSON(data []byte) error {
 
 // DatabricksSparkPythonActivityTypeProperties - Databricks SparkPython activity properties.
 type DatabricksSparkPythonActivityTypeProperties struct {
-	// A list of libraries to be installed on the cluster that will execute the job.
-	Libraries []map[string]interface{} `json:"libraries,omitempty"`
-
-	// Command line parameters that will be passed to the Python file.
-	Parameters []interface{} `json:"parameters,omitempty"`
-
 	// REQUIRED; The URI of the Python file to be executed. DBFS paths are supported. Type: string (or Expression with resultType string).
 	PythonFile interface{} `json:"pythonFile,omitempty"`
+
+	// OPTIONAL; A list of libraries to be installed on the cluster that will execute the job.
+	Libraries []map[string]interface{} `json:"libraries,omitempty"`
+
+	// OPTIONAL; Command line parameters that will be passed to the Python file.
+	Parameters []interface{} `json:"parameters,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type DatabricksSparkPythonActivityTypeProperties.
@@ -8678,32 +8690,32 @@ type DatasetClassification interface {
 
 // Dataset - The Azure Data Factory nested object which identifies data within different data stores, such as tables, files, folders, and documents.
 type Dataset struct {
-	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties map[string]interface{}
-
-	// List of tags that can be used for describing the Dataset.
-	Annotations []interface{} `json:"annotations,omitempty"`
-
-	// Dataset description.
-	Description *string `json:"description,omitempty"`
-
-	// The folder that this Dataset is in. If not specified, Dataset will appear at the root level.
-	Folder *DatasetFolder `json:"folder,omitempty"`
-
 	// REQUIRED; Linked service reference.
 	LinkedServiceName *LinkedServiceReference `json:"linkedServiceName,omitempty"`
 
-	// Parameters for dataset.
-	Parameters map[string]*ParameterSpecification `json:"parameters,omitempty"`
-
-	// Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement.
-	Schema interface{} `json:"schema,omitempty"`
-
-	// Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement.
-	Structure interface{} `json:"structure,omitempty"`
-
 	// REQUIRED; Type of dataset.
 	Type *string `json:"type,omitempty"`
+
+	// Contains additional key/value pairs not defined in the schema.
+	AdditionalProperties map[string]interface{}
+
+	// OPTIONAL; List of tags that can be used for describing the Dataset.
+	Annotations []interface{} `json:"annotations,omitempty"`
+
+	// OPTIONAL; Dataset description.
+	Description *string `json:"description,omitempty"`
+
+	// OPTIONAL; The folder that this Dataset is in. If not specified, Dataset will appear at the root level.
+	Folder *DatasetFolder `json:"folder,omitempty"`
+
+	// OPTIONAL; Parameters for dataset.
+	Parameters map[string]*ParameterSpecification `json:"parameters,omitempty"`
+
+	// OPTIONAL; Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement.
+	Schema interface{} `json:"schema,omitempty"`
+
+	// OPTIONAL; Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement.
+	Structure interface{} `json:"structure,omitempty"`
 }
 
 // GetDataset implements the DatasetClassification interface for type Dataset.
@@ -8821,11 +8833,11 @@ type DatasetCompressionClassification interface {
 
 // DatasetCompression - The compression method used on a dataset.
 type DatasetCompression struct {
-	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties map[string]interface{}
-
 	// REQUIRED; Type of dataset compression.
 	Type *string `json:"type,omitempty"`
+
+	// Contains additional key/value pairs not defined in the schema.
+	AdditionalProperties map[string]interface{}
 }
 
 // GetDatasetCompression implements the DatasetCompressionClassification interface for type DatasetCompression.
@@ -8879,10 +8891,10 @@ func (d *DatasetCompression) unmarshalInternal(rawMsg map[string]json.RawMessage
 
 // DatasetDataElement - Columns that define the structure of the dataset.
 type DatasetDataElement struct {
-	// Name of the column. Type: string (or Expression with resultType string).
+	// OPTIONAL; Name of the column. Type: string (or Expression with resultType string).
 	Name interface{} `json:"name,omitempty"`
 
-	// Type of the column. Type: string (or Expression with resultType string).
+	// OPTIONAL; Type of the column. Type: string (or Expression with resultType string).
 	Type interface{} `json:"type,omitempty"`
 }
 
@@ -8923,7 +8935,7 @@ func (d *DatasetDebugResource) UnmarshalJSON(data []byte) error {
 // DatasetDeflateCompression - The Deflate compression method used on a dataset.
 type DatasetDeflateCompression struct {
 	DatasetCompression
-	// The Deflate compression level.
+	// OPTIONAL; The Deflate compression level.
 	Level *DatasetCompressionLevel `json:"level,omitempty"`
 }
 
@@ -8956,14 +8968,14 @@ func (d *DatasetDeflateCompression) UnmarshalJSON(data []byte) error {
 
 // DatasetFolder - The folder that this Dataset is in. If not specified, Dataset will appear at the root level.
 type DatasetFolder struct {
-	// The name of the folder that this Dataset is in.
+	// OPTIONAL; The name of the folder that this Dataset is in.
 	Name *string `json:"name,omitempty"`
 }
 
 // DatasetGZipCompression - The GZip compression method used on a dataset.
 type DatasetGZipCompression struct {
 	DatasetCompression
-	// The GZip compression level.
+	// OPTIONAL; The GZip compression level.
 	Level *DatasetCompressionLevel `json:"level,omitempty"`
 }
 
@@ -9008,11 +9020,11 @@ type DatasetGetDatasetsByWorkspaceOptions struct {
 
 // DatasetListResponse - A list of dataset resources.
 type DatasetListResponse struct {
-	// The link to the next page of results, if any remaining results exist.
-	NextLink *string `json:"nextLink,omitempty"`
-
 	// REQUIRED; List of datasets.
 	Value []*DatasetResource `json:"value,omitempty"`
+
+	// OPTIONAL; The link to the next page of results, if any remaining results exist.
+	NextLink *string `json:"nextLink,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type DatasetListResponse.
@@ -9045,17 +9057,17 @@ type DatasetLocationClassification interface {
 
 // DatasetLocation - Dataset location.
 type DatasetLocation struct {
+	// REQUIRED; Type of dataset storage location.
+	Type *string `json:"type,omitempty"`
+
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
-	// Specify the file name of dataset. Type: string (or Expression with resultType string).
+	// OPTIONAL; Specify the file name of dataset. Type: string (or Expression with resultType string).
 	FileName interface{} `json:"fileName,omitempty"`
 
-	// Specify the folder path of dataset. Type: string (or Expression with resultType string)
+	// OPTIONAL; Specify the folder path of dataset. Type: string (or Expression with resultType string)
 	FolderPath interface{} `json:"folderPath,omitempty"`
-
-	// REQUIRED; Type of dataset storage location.
-	Type *string `json:"type,omitempty"`
 }
 
 // GetDatasetLocation implements the DatasetLocationClassification interface for type DatasetLocation.
@@ -9117,14 +9129,14 @@ func (d *DatasetLocation) unmarshalInternal(rawMsg map[string]json.RawMessage) e
 
 // DatasetReference - Dataset reference type.
 type DatasetReference struct {
-	// Arguments for dataset.
-	Parameters map[string]interface{} `json:"parameters,omitempty"`
-
 	// REQUIRED; Reference dataset name.
 	ReferenceName *string `json:"referenceName,omitempty"`
 
 	// REQUIRED; Dataset reference type.
 	Type *DatasetReferenceType `json:"type,omitempty"`
+
+	// OPTIONAL; Arguments for dataset.
+	Parameters map[string]interface{} `json:"parameters,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type DatasetReference.
@@ -9196,10 +9208,10 @@ type DatasetSchemaDataElement struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
-	// Name of the schema column. Type: string (or Expression with resultType string).
+	// OPTIONAL; Name of the schema column. Type: string (or Expression with resultType string).
 	Name interface{} `json:"name,omitempty"`
 
-	// Type of the schema column. Type: string (or Expression with resultType string).
+	// OPTIONAL; Type of the schema column. Type: string (or Expression with resultType string).
 	Type interface{} `json:"type,omitempty"`
 }
 
@@ -9260,17 +9272,17 @@ type DatasetStorageFormatClassification interface {
 
 // DatasetStorageFormat - The format definition of a storage.
 type DatasetStorageFormat struct {
+	// REQUIRED; Type of dataset storage format.
+	Type *string `json:"type,omitempty"`
+
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
-	// Deserializer. Type: string (or Expression with resultType string).
+	// OPTIONAL; Deserializer. Type: string (or Expression with resultType string).
 	Deserializer interface{} `json:"deserializer,omitempty"`
 
-	// Serializer. Type: string (or Expression with resultType string).
+	// OPTIONAL; Serializer. Type: string (or Expression with resultType string).
 	Serializer interface{} `json:"serializer,omitempty"`
-
-	// REQUIRED; Type of dataset storage format.
-	Type *string `json:"type,omitempty"`
 }
 
 // GetDatasetStorageFormat implements the DatasetStorageFormatClassification interface for type DatasetStorageFormat.
@@ -9333,7 +9345,7 @@ func (d *DatasetStorageFormat) unmarshalInternal(rawMsg map[string]json.RawMessa
 // DatasetZipDeflateCompression - The ZipDeflate compression method used on a dataset.
 type DatasetZipDeflateCompression struct {
 	DatasetCompression
-	// The ZipDeflate compression level.
+	// OPTIONAL; The ZipDeflate compression level.
 	Level *DatasetCompressionLevel `json:"level,omitempty"`
 }
 
@@ -9400,29 +9412,29 @@ func (d *Db2LinkedService) UnmarshalJSON(data []byte) error {
 
 // Db2LinkedServiceTypeProperties - DB2 linked service properties.
 type Db2LinkedServiceTypeProperties struct {
-	// AuthenticationType to be used for connection.
-	AuthenticationType *Db2AuthenticationType `json:"authenticationType,omitempty"`
-
-	// Certificate Common Name when TLS is enabled. Type: string (or Expression with resultType string).
-	CertificateCommonName interface{} `json:"certificateCommonName,omitempty"`
-
 	// REQUIRED; Database name for connection. Type: string (or Expression with resultType string).
 	Database interface{} `json:"database,omitempty"`
-
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
-
-	// Under where packages are created when querying database. Type: string (or Expression with resultType string).
-	PackageCollection interface{} `json:"packageCollection,omitempty"`
-
-	// Password for authentication.
-	Password SecretBaseClassification `json:"password,omitempty"`
 
 	// REQUIRED; Server name for connection. Type: string (or Expression with resultType string).
 	Server interface{} `json:"server,omitempty"`
 
-	// Username for authentication. Type: string (or Expression with resultType string).
+	// OPTIONAL; AuthenticationType to be used for connection.
+	AuthenticationType *Db2AuthenticationType `json:"authenticationType,omitempty"`
+
+	// OPTIONAL; Certificate Common Name when TLS is enabled. Type: string (or Expression with resultType string).
+	CertificateCommonName interface{} `json:"certificateCommonName,omitempty"`
+
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
+
+	// OPTIONAL; Under where packages are created when querying database. Type: string (or Expression with resultType string).
+	PackageCollection interface{} `json:"packageCollection,omitempty"`
+
+	// OPTIONAL; Password for authentication.
+	Password SecretBaseClassification `json:"password,omitempty"`
+
+	// OPTIONAL; Username for authentication. Type: string (or Expression with resultType string).
 	Username interface{} `json:"username,omitempty"`
 }
 
@@ -9484,7 +9496,7 @@ func (d *Db2LinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 // Db2Source - A copy activity source for Db2 databases.
 type Db2Source struct {
 	TabularSource
-	// Database query. Type: string (or Expression with resultType string).
+	// OPTIONAL; Database query. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -9518,7 +9530,7 @@ func (d *Db2Source) UnmarshalJSON(data []byte) error {
 // Db2TableDataset - The Db2 table dataset.
 type Db2TableDataset struct {
 	Dataset
-	// Db2 table dataset properties.
+	// OPTIONAL; Db2 table dataset properties.
 	TypeProperties *Db2TableDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -9551,13 +9563,13 @@ func (d *Db2TableDataset) UnmarshalJSON(data []byte) error {
 
 // Db2TableDatasetTypeProperties - Db2 table dataset properties.
 type Db2TableDatasetTypeProperties struct {
-	// The Db2 schema name. Type: string (or Expression with resultType string).
+	// OPTIONAL; The Db2 schema name. Type: string (or Expression with resultType string).
 	Schema interface{} `json:"schema,omitempty"`
 
-	// The Db2 table name. Type: string (or Expression with resultType string).
+	// OPTIONAL; The Db2 table name. Type: string (or Expression with resultType string).
 	Table interface{} `json:"table,omitempty"`
 
-	// This property will be retired. Please consider using schema + table properties instead.
+	// OPTIONAL; This property will be retired. Please consider using schema + table properties instead.
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
@@ -9600,32 +9612,33 @@ type DeleteActivityTypeProperties struct {
 	// REQUIRED; Delete activity dataset reference.
 	Dataset *DatasetReference `json:"dataset,omitempty"`
 
-	// Whether to record detailed logs of delete-activity execution. Default value is false. Type: boolean (or Expression with resultType boolean).
+	// OPTIONAL; Whether to record detailed logs of delete-activity execution. Default value is false. Type: boolean (or Expression with resultType boolean).
 	EnableLogging interface{} `json:"enableLogging,omitempty"`
 
-	// Log storage settings customer need to provide when enableLogging is true.
+	// OPTIONAL; Log storage settings customer need to provide when enableLogging is true.
 	LogStorageSettings *LogStorageSettings `json:"logStorageSettings,omitempty"`
 
-	// The max concurrent connections to connect data source at the same time.
+	// OPTIONAL; The max concurrent connections to connect data source at the same time.
 	MaxConcurrentConnections *int32 `json:"maxConcurrentConnections,omitempty"`
 
-	// If true, files or sub-folders under current folder path will be deleted recursively. Default is false. Type: boolean (or Expression with resultType boolean).
+	// OPTIONAL; If true, files or sub-folders under current folder path will be deleted recursively. Default is false. Type: boolean (or Expression with resultType
+	// boolean).
 	Recursive interface{} `json:"recursive,omitempty"`
 }
 
 // DeleteDataFlowDebugSessionRequest - Request body structure for deleting data flow debug session.
 type DeleteDataFlowDebugSessionRequest struct {
-	// The data flow which contains the debug session.
+	// OPTIONAL; The data flow which contains the debug session.
 	DataFlowName *string `json:"dataFlowName,omitempty"`
 
-	// The ID of data flow debug session.
+	// OPTIONAL; The ID of data flow debug session.
 	SessionID *string `json:"sessionId,omitempty"`
 }
 
 // DelimitedTextDataset - Delimited text dataset.
 type DelimitedTextDataset struct {
 	Dataset
-	// Delimited text dataset properties.
+	// OPTIONAL; Delimited text dataset properties.
 	TypeProperties *DelimitedTextDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -9658,36 +9671,38 @@ func (d *DelimitedTextDataset) UnmarshalJSON(data []byte) error {
 
 // DelimitedTextDatasetTypeProperties - DelimitedText dataset properties.
 type DelimitedTextDatasetTypeProperties struct {
-	// The column delimiter. Type: string (or Expression with resultType string).
-	ColumnDelimiter  interface{}                    `json:"columnDelimiter,omitempty"`
-	CompressionCodec *DelimitedTextCompressionCodec `json:"compressionCodec,omitempty"`
-
-	// The data compression method used for DelimitedText.
-	CompressionLevel *DatasetCompressionLevel `json:"compressionLevel,omitempty"`
-
-	// The code page name of the preferred encoding. If miss, the default value is UTF-8, unless BOM denotes another Unicode encoding. Refer to the name column
-	// of the table in the following link to set
-	// supported values: https://msdn.microsoft.com/library/system.text.encoding.aspx. Type: string (or Expression with resultType string).
-	EncodingName interface{} `json:"encodingName,omitempty"`
-
-	// The escape character. Type: string (or Expression with resultType string).
-	EscapeChar interface{} `json:"escapeChar,omitempty"`
-
-	// When used as input, treat the first row of data as headers. When used as output,write the headers into the output as the first row of data. The default
-	// value is false. Type: boolean (or Expression
-	// with resultType boolean).
-	FirstRowAsHeader interface{} `json:"firstRowAsHeader,omitempty"`
-
 	// REQUIRED; The location of the delimited text storage.
 	Location DatasetLocationClassification `json:"location,omitempty"`
 
-	// The null value string. Type: string (or Expression with resultType string).
+	// OPTIONAL; The column delimiter. Type: string (or Expression with resultType string).
+	ColumnDelimiter interface{} `json:"columnDelimiter,omitempty"`
+
+	// CompressionCodec - OPTIONAL
+	CompressionCodec *DelimitedTextCompressionCodec `json:"compressionCodec,omitempty"`
+
+	// OPTIONAL; The data compression method used for DelimitedText.
+	CompressionLevel *DatasetCompressionLevel `json:"compressionLevel,omitempty"`
+
+	// OPTIONAL; The code page name of the preferred encoding. If miss, the default value is UTF-8, unless BOM denotes another Unicode encoding. Refer to the
+	// name column of the table in the following link to set
+	// supported values: https://msdn.microsoft.com/library/system.text.encoding.aspx. Type: string (or Expression with resultType string).
+	EncodingName interface{} `json:"encodingName,omitempty"`
+
+	// OPTIONAL; The escape character. Type: string (or Expression with resultType string).
+	EscapeChar interface{} `json:"escapeChar,omitempty"`
+
+	// OPTIONAL; When used as input, treat the first row of data as headers. When used as output,write the headers into the output as the first row of data.
+	// The default value is false. Type: boolean (or Expression
+	// with resultType boolean).
+	FirstRowAsHeader interface{} `json:"firstRowAsHeader,omitempty"`
+
+	// OPTIONAL; The null value string. Type: string (or Expression with resultType string).
 	NullValue interface{} `json:"nullValue,omitempty"`
 
-	// The quote character. Type: string (or Expression with resultType string).
+	// OPTIONAL; The quote character. Type: string (or Expression with resultType string).
 	QuoteChar interface{} `json:"quoteChar,omitempty"`
 
-	// The row delimiter. Type: string (or Expression with resultType string).
+	// OPTIONAL; The row delimiter. Type: string (or Expression with resultType string).
 	RowDelimiter interface{} `json:"rowDelimiter,omitempty"`
 }
 
@@ -9757,7 +9772,7 @@ func (d *DelimitedTextDatasetTypeProperties) UnmarshalJSON(data []byte) error {
 // DelimitedTextReadSettings - Delimited text read settings.
 type DelimitedTextReadSettings struct {
 	FormatReadSettings
-	// Indicates the number of non-empty rows to skip when reading data from input files. Type: integer (or Expression with resultType integer).
+	// OPTIONAL; Indicates the number of non-empty rows to skip when reading data from input files. Type: integer (or Expression with resultType integer).
 	SkipLineCount interface{} `json:"skipLineCount,omitempty"`
 }
 
@@ -9791,10 +9806,10 @@ func (d *DelimitedTextReadSettings) UnmarshalJSON(data []byte) error {
 // DelimitedTextSink - A copy activity DelimitedText sink.
 type DelimitedTextSink struct {
 	CopySink
-	// DelimitedText format settings.
+	// OPTIONAL; DelimitedText format settings.
 	FormatSettings *DelimitedTextWriteSettings `json:"formatSettings,omitempty"`
 
-	// DelimitedText store settings.
+	// OPTIONAL; DelimitedText store settings.
 	StoreSettings StoreWriteSettingsClassification `json:"storeSettings,omitempty"`
 }
 
@@ -9832,10 +9847,10 @@ func (d *DelimitedTextSink) UnmarshalJSON(data []byte) error {
 // DelimitedTextSource - A copy activity DelimitedText source.
 type DelimitedTextSource struct {
 	CopySource
-	// DelimitedText format settings.
+	// OPTIONAL; DelimitedText format settings.
 	FormatSettings *DelimitedTextReadSettings `json:"formatSettings,omitempty"`
 
-	// DelimitedText store settings.
+	// OPTIONAL; DelimitedText store settings.
 	StoreSettings StoreReadSettingsClassification `json:"storeSettings,omitempty"`
 }
 
@@ -9876,7 +9891,7 @@ type DelimitedTextWriteSettings struct {
 	// REQUIRED; The file extension used to create the files. Type: string (or Expression with resultType string).
 	FileExtension interface{} `json:"fileExtension,omitempty"`
 
-	// Indicates whether string values should always be enclosed with quotes. Type: boolean (or Expression with resultType boolean).
+	// OPTIONAL; Indicates whether string values should always be enclosed with quotes. Type: boolean (or Expression with resultType boolean).
 	QuoteAllText interface{} `json:"quoteAllText,omitempty"`
 }
 
@@ -9962,9 +9977,6 @@ func (d *DependencyReference) unmarshalInternal(rawMsg map[string]json.RawMessag
 
 // DistcpSettings - Distcp settings.
 type DistcpSettings struct {
-	// Specifies the Distcp options. Type: string (or Expression with resultType string).
-	DistcpOptions interface{} `json:"distcpOptions,omitempty"`
-
 	// REQUIRED; Specifies the Yarn ResourceManager endpoint. Type: string (or Expression with resultType string).
 	ResourceManagerEndpoint interface{} `json:"resourceManagerEndpoint,omitempty"`
 
@@ -9972,6 +9984,9 @@ type DistcpSettings struct {
 	// after Copy job finished. Type: string (or Expression
 	// with resultType string).
 	TempScriptPath interface{} `json:"tempScriptPath,omitempty"`
+
+	// OPTIONAL; Specifies the Distcp options. Type: string (or Expression with resultType string).
+	DistcpOptions interface{} `json:"distcpOptions,omitempty"`
 }
 
 // DocumentDbCollectionDataset - Microsoft Azure Document Database Collection dataset.
@@ -10017,10 +10032,10 @@ type DocumentDbCollectionDatasetTypeProperties struct {
 // DocumentDbCollectionSink - A copy activity Document Database Collection sink.
 type DocumentDbCollectionSink struct {
 	CopySink
-	// Nested properties separator. Default is . (dot). Type: string (or Expression with resultType string).
+	// OPTIONAL; Nested properties separator. Default is . (dot). Type: string (or Expression with resultType string).
 	NestingSeparator interface{} `json:"nestingSeparator,omitempty"`
 
-	// Describes how to write data to Azure Cosmos DB. Type: string (or Expression with resultType string). Allowed values: insert and upsert.
+	// OPTIONAL; Describes how to write data to Azure Cosmos DB. Type: string (or Expression with resultType string). Allowed values: insert and upsert.
 	WriteBehavior interface{} `json:"writeBehavior,omitempty"`
 }
 
@@ -10058,13 +10073,13 @@ func (d *DocumentDbCollectionSink) UnmarshalJSON(data []byte) error {
 // DocumentDbCollectionSource - A copy activity Document Database Collection source.
 type DocumentDbCollectionSource struct {
 	CopySource
-	// Nested properties separator. Type: string (or Expression with resultType string).
+	// OPTIONAL; Nested properties separator. Type: string (or Expression with resultType string).
 	NestingSeparator interface{} `json:"nestingSeparator,omitempty"`
 
-	// Documents query. Type: string (or Expression with resultType string).
+	// OPTIONAL; Documents query. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 
-	// Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+).)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+	// OPTIONAL; Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+).)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
 	QueryTimeout interface{} `json:"queryTimeout,omitempty"`
 }
 
@@ -10105,13 +10120,13 @@ func (d *DocumentDbCollectionSource) UnmarshalJSON(data []byte) error {
 
 // DrillDatasetTypeProperties - Drill Dataset Properties
 type DrillDatasetTypeProperties struct {
-	// The schema name of the Drill. Type: string (or Expression with resultType string).
+	// OPTIONAL; The schema name of the Drill. Type: string (or Expression with resultType string).
 	Schema interface{} `json:"schema,omitempty"`
 
-	// The table name of the Drill. Type: string (or Expression with resultType string).
+	// OPTIONAL; The table name of the Drill. Type: string (or Expression with resultType string).
 	Table interface{} `json:"table,omitempty"`
 
-	// This property will be retired. Please consider using schema + table properties instead.
+	// OPTIONAL; This property will be retired. Please consider using schema + table properties instead.
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
@@ -10151,21 +10166,21 @@ func (d *DrillLinkedService) UnmarshalJSON(data []byte) error {
 
 // DrillLinkedServiceTypeProperties - Drill server linked service properties.
 type DrillLinkedServiceTypeProperties struct {
-	// An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
+	// OPTIONAL; An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
 	ConnectionString interface{} `json:"connectionString,omitempty"`
 
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
 	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
 
-	// The Azure key vault secret reference of password in connection string.
+	// OPTIONAL; The Azure key vault secret reference of password in connection string.
 	Pwd *AzureKeyVaultSecretReference `json:"pwd,omitempty"`
 }
 
 // DrillSource - A copy activity Drill server source.
 type DrillSource struct {
 	TabularSource
-	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	// OPTIONAL; A query to retrieve data from source. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -10199,7 +10214,7 @@ func (d *DrillSource) UnmarshalJSON(data []byte) error {
 // DrillTableDataset - Drill server dataset.
 type DrillTableDataset struct {
 	Dataset
-	// Properties specific to this dataset type.
+	// OPTIONAL; Properties specific to this dataset type.
 	TypeProperties *DrillDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -10232,7 +10247,7 @@ func (d *DrillTableDataset) UnmarshalJSON(data []byte) error {
 
 // DynamicExecutorAllocation - Dynamic Executor Allocation Properties
 type DynamicExecutorAllocation struct {
-	// Indicates whether Dynamic Executor Allocation is enabled or not.
+	// OPTIONAL; Indicates whether Dynamic Executor Allocation is enabled or not.
 	Enabled *bool `json:"enabled,omitempty"`
 }
 
@@ -10275,10 +10290,6 @@ type DynamicsAXLinkedServiceTypeProperties struct {
 	// REQUIRED; Specify the resource you are requesting authorization. Type: string (or Expression with resultType string).
 	AADResourceID interface{} `json:"aadResourceId,omitempty"`
 
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
-
 	// REQUIRED; Specify the application's client ID. Type: string (or Expression with resultType string).
 	ServicePrincipalID interface{} `json:"servicePrincipalId,omitempty"`
 
@@ -10294,6 +10305,10 @@ type DynamicsAXLinkedServiceTypeProperties struct {
 
 	// REQUIRED; The Dynamics AX (or Dynamics 365 Finance and Operations) instance OData endpoint.
 	URL interface{} `json:"url,omitempty"`
+
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type DynamicsAXLinkedServiceTypeProperties.
@@ -10386,7 +10401,7 @@ type DynamicsAXResourceDatasetTypeProperties struct {
 // DynamicsAXSource - A copy activity Dynamics AX source.
 type DynamicsAXSource struct {
 	TabularSource
-	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	// OPTIONAL; A query to retrieve data from source. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -10420,7 +10435,7 @@ func (d *DynamicsAXSource) UnmarshalJSON(data []byte) error {
 // DynamicsCrmEntityDataset - The Dynamics CRM entity dataset.
 type DynamicsCrmEntityDataset struct {
 	Dataset
-	// Dynamics CRM entity dataset properties.
+	// OPTIONAL; Dynamics CRM entity dataset properties.
 	TypeProperties *DynamicsCrmEntityDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -10453,7 +10468,7 @@ func (d *DynamicsCrmEntityDataset) UnmarshalJSON(data []byte) error {
 
 // DynamicsCrmEntityDatasetTypeProperties - Dynamics CRM entity dataset properties.
 type DynamicsCrmEntityDatasetTypeProperties struct {
-	// The logical name of the entity. Type: string (or Expression with resultType string).
+	// OPTIONAL; The logical name of the entity. Type: string (or Expression with resultType string).
 	EntityName interface{} `json:"entityName,omitempty"`
 }
 
@@ -10502,44 +10517,45 @@ type DynamicsCrmLinkedServiceTypeProperties struct {
 	// Ifd. Type: string (or Expression with resultType string).
 	DeploymentType *DynamicsDeploymentType `json:"deploymentType,omitempty"`
 
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
 	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
 
-	// The host name of the on-premises Dynamics CRM server. The property is required for on-prem and not allowed for online. Type: string (or Expression with
-	// resultType string).
+	// OPTIONAL; The host name of the on-premises Dynamics CRM server. The property is required for on-prem and not allowed for online. Type: string (or Expression
+	// with resultType string).
 	HostName interface{} `json:"hostName,omitempty"`
 
-	// The organization name of the Dynamics CRM instance. The property is required for on-prem and required for online when there are more than one Dynamics
-	// CRM instances associated with the user. Type:
+	// OPTIONAL; The organization name of the Dynamics CRM instance. The property is required for on-prem and required for online when there are more than one
+	// Dynamics CRM instances associated with the user. Type:
 	// string (or Expression with resultType string).
 	OrganizationName interface{} `json:"organizationName,omitempty"`
 
-	// Password to access the Dynamics CRM instance.
+	// OPTIONAL; Password to access the Dynamics CRM instance.
 	Password SecretBaseClassification `json:"password,omitempty"`
 
-	// The port of on-premises Dynamics CRM server. The property is required for on-prem and not allowed for online. Default is 443. Type: integer (or Expression
-	// with resultType integer), minimum: 0.
+	// OPTIONAL; The port of on-premises Dynamics CRM server. The property is required for on-prem and not allowed for online. Default is 443. Type: integer
+	// (or Expression with resultType integer), minimum: 0.
 	Port interface{} `json:"port,omitempty"`
 
-	// The credential of the service principal object in Azure Active Directory. If servicePrincipalCredentialType is 'ServicePrincipalKey', servicePrincipalCredential
+	// OPTIONAL; The credential of the service principal object in Azure Active Directory. If servicePrincipalCredentialType is 'ServicePrincipalKey', servicePrincipalCredential
 	// can be SecureString or
 	// AzureKeyVaultSecretReference. If servicePrincipalCredentialType is 'ServicePrincipalCert', servicePrincipalCredential can only be AzureKeyVaultSecretReference.
 	ServicePrincipalCredential SecretBaseClassification `json:"servicePrincipalCredential,omitempty"`
 
-	// The service principal credential type to use in Server-To-Server authentication. 'ServicePrincipalKey' for key/secret, 'ServicePrincipalCert' for certificate.
-	// Type: string (or Expression with
+	// OPTIONAL; The service principal credential type to use in Server-To-Server authentication. 'ServicePrincipalKey' for key/secret, 'ServicePrincipalCert'
+	// for certificate. Type: string (or Expression with
 	// resultType string).
 	ServicePrincipalCredentialType *DynamicsServicePrincipalCredentialType `json:"servicePrincipalCredentialType,omitempty"`
 
-	// The client ID of the application in Azure Active Directory used for Server-To-Server authentication. Type: string (or Expression with resultType string).
+	// OPTIONAL; The client ID of the application in Azure Active Directory used for Server-To-Server authentication. Type: string (or Expression with resultType
+	// string).
 	ServicePrincipalID interface{} `json:"servicePrincipalId,omitempty"`
 
-	// The URL to the Microsoft Dynamics CRM server. The property is required for on-line and not allowed for on-prem. Type: string (or Expression with resultType
-	// string).
+	// OPTIONAL; The URL to the Microsoft Dynamics CRM server. The property is required for on-line and not allowed for on-prem. Type: string (or Expression
+	// with resultType string).
 	ServiceURI interface{} `json:"serviceUri,omitempty"`
 
-	// User name to access the Dynamics CRM instance. Type: string (or Expression with resultType string).
+	// OPTIONAL; User name to access the Dynamics CRM instance. Type: string (or Expression with resultType string).
 	Username interface{} `json:"username,omitempty"`
 }
 
@@ -10617,15 +10633,15 @@ func (d *DynamicsCrmLinkedServiceTypeProperties) UnmarshalJSON(data []byte) erro
 // DynamicsCrmSink - A copy activity Dynamics CRM sink.
 type DynamicsCrmSink struct {
 	CopySink
-	// The logical name of the alternate key which will be used when upserting records. Type: string (or Expression with resultType string).
-	AlternateKeyName interface{} `json:"alternateKeyName,omitempty"`
-
-	// The flag indicating whether to ignore null values from input dataset (except key fields) during write operation. Default is false. Type: boolean (or
-	// Expression with resultType boolean).
-	IgnoreNullValues interface{} `json:"ignoreNullValues,omitempty"`
-
 	// REQUIRED; The write behavior for the operation.
 	WriteBehavior *DynamicsSinkWriteBehavior `json:"writeBehavior,omitempty"`
+
+	// OPTIONAL; The logical name of the alternate key which will be used when upserting records. Type: string (or Expression with resultType string).
+	AlternateKeyName interface{} `json:"alternateKeyName,omitempty"`
+
+	// OPTIONAL; The flag indicating whether to ignore null values from input dataset (except key fields) during write operation. Default is false. Type: boolean
+	// (or Expression with resultType boolean).
+	IgnoreNullValues interface{} `json:"ignoreNullValues,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type DynamicsCrmSink.
@@ -10666,7 +10682,8 @@ func (d *DynamicsCrmSink) UnmarshalJSON(data []byte) error {
 // DynamicsCrmSource - A copy activity Dynamics CRM source.
 type DynamicsCrmSource struct {
 	CopySource
-	// FetchXML is a proprietary query language that is used in Microsoft Dynamics CRM (online & on-premises). Type: string (or Expression with resultType string).
+	// OPTIONAL; FetchXML is a proprietary query language that is used in Microsoft Dynamics CRM (online & on-premises). Type: string (or Expression with resultType
+	// string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -10700,7 +10717,7 @@ func (d *DynamicsCrmSource) UnmarshalJSON(data []byte) error {
 // DynamicsEntityDataset - The Dynamics entity dataset.
 type DynamicsEntityDataset struct {
 	Dataset
-	// Dynamics entity dataset properties.
+	// OPTIONAL; Dynamics entity dataset properties.
 	TypeProperties *DynamicsEntityDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -10733,7 +10750,7 @@ func (d *DynamicsEntityDataset) UnmarshalJSON(data []byte) error {
 
 // DynamicsEntityDatasetTypeProperties - Dynamics entity dataset properties.
 type DynamicsEntityDatasetTypeProperties struct {
-	// The logical name of the entity. Type: string (or Expression with resultType string).
+	// OPTIONAL; The logical name of the entity. Type: string (or Expression with resultType string).
 	EntityName interface{} `json:"entityName,omitempty"`
 }
 
@@ -10782,44 +10799,45 @@ type DynamicsLinkedServiceTypeProperties struct {
 	// string (or Expression with resultType string).
 	DeploymentType *DynamicsDeploymentType `json:"deploymentType,omitempty"`
 
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
 	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
 
-	// The host name of the on-premises Dynamics server. The property is required for on-prem and not allowed for online. Type: string (or Expression with resultType
-	// string).
+	// OPTIONAL; The host name of the on-premises Dynamics server. The property is required for on-prem and not allowed for online. Type: string (or Expression
+	// with resultType string).
 	HostName *string `json:"hostName,omitempty"`
 
-	// The organization name of the Dynamics instance. The property is required for on-prem and required for online when there are more than one Dynamics instances
-	// associated with the user. Type: string (or
+	// OPTIONAL; The organization name of the Dynamics instance. The property is required for on-prem and required for online when there are more than one Dynamics
+	// instances associated with the user. Type: string (or
 	// Expression with resultType string).
 	OrganizationName *string `json:"organizationName,omitempty"`
 
-	// Password to access the Dynamics instance.
+	// OPTIONAL; Password to access the Dynamics instance.
 	Password SecretBaseClassification `json:"password,omitempty"`
 
-	// The port of on-premises Dynamics server. The property is required for on-prem and not allowed for online. Default is 443. Type: integer (or Expression
-	// with resultType integer), minimum: 0.
+	// OPTIONAL; The port of on-premises Dynamics server. The property is required for on-prem and not allowed for online. Default is 443. Type: integer (or
+	// Expression with resultType integer), minimum: 0.
 	Port *string `json:"port,omitempty"`
 
-	// The credential of the service principal object in Azure Active Directory. If servicePrincipalCredentialType is 'ServicePrincipalKey', servicePrincipalCredential
+	// OPTIONAL; The credential of the service principal object in Azure Active Directory. If servicePrincipalCredentialType is 'ServicePrincipalKey', servicePrincipalCredential
 	// can be SecureString or
 	// AzureKeyVaultSecretReference. If servicePrincipalCredentialType is 'ServicePrincipalCert', servicePrincipalCredential can only be AzureKeyVaultSecretReference.
 	ServicePrincipalCredential SecretBaseClassification `json:"servicePrincipalCredential,omitempty"`
 
-	// The service principal credential type to use in Server-To-Server authentication. 'ServicePrincipalKey' for key/secret, 'ServicePrincipalCert' for certificate.
-	// Type: string (or Expression with
+	// OPTIONAL; The service principal credential type to use in Server-To-Server authentication. 'ServicePrincipalKey' for key/secret, 'ServicePrincipalCert'
+	// for certificate. Type: string (or Expression with
 	// resultType string).
 	ServicePrincipalCredentialType *DynamicsServicePrincipalCredentialType `json:"servicePrincipalCredentialType,omitempty"`
 
-	// The client ID of the application in Azure Active Directory used for Server-To-Server authentication. Type: string (or Expression with resultType string).
+	// OPTIONAL; The client ID of the application in Azure Active Directory used for Server-To-Server authentication. Type: string (or Expression with resultType
+	// string).
 	ServicePrincipalID interface{} `json:"servicePrincipalId,omitempty"`
 
-	// The URL to the Microsoft Dynamics server. The property is required for on-line and not allowed for on-prem. Type: string (or Expression with resultType
-	// string).
+	// OPTIONAL; The URL to the Microsoft Dynamics server. The property is required for on-line and not allowed for on-prem. Type: string (or Expression with
+	// resultType string).
 	ServiceURI *string `json:"serviceUri,omitempty"`
 
-	// User name to access the Dynamics instance. Type: string (or Expression with resultType string).
+	// OPTIONAL; User name to access the Dynamics instance. Type: string (or Expression with resultType string).
 	Username interface{} `json:"username,omitempty"`
 }
 
@@ -10897,15 +10915,15 @@ func (d *DynamicsLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 // DynamicsSink - A copy activity Dynamics sink.
 type DynamicsSink struct {
 	CopySink
-	// The logical name of the alternate key which will be used when upserting records. Type: string (or Expression with resultType string).
-	AlternateKeyName interface{} `json:"alternateKeyName,omitempty"`
-
-	// The flag indicating whether ignore null values from input dataset (except key fields) during write operation. Default is false. Type: boolean (or Expression
-	// with resultType boolean).
-	IgnoreNullValues interface{} `json:"ignoreNullValues,omitempty"`
-
 	// REQUIRED; The write behavior for the operation.
 	WriteBehavior *DynamicsSinkWriteBehavior `json:"writeBehavior,omitempty"`
+
+	// OPTIONAL; The logical name of the alternate key which will be used when upserting records. Type: string (or Expression with resultType string).
+	AlternateKeyName interface{} `json:"alternateKeyName,omitempty"`
+
+	// OPTIONAL; The flag indicating whether ignore null values from input dataset (except key fields) during write operation. Default is false. Type: boolean
+	// (or Expression with resultType boolean).
+	IgnoreNullValues interface{} `json:"ignoreNullValues,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type DynamicsSink.
@@ -10946,7 +10964,8 @@ func (d *DynamicsSink) UnmarshalJSON(data []byte) error {
 // DynamicsSource - A copy activity Dynamics source.
 type DynamicsSource struct {
 	CopySource
-	// FetchXML is a proprietary query language that is used in Microsoft Dynamics (online & on-premises). Type: string (or Expression with resultType string).
+	// OPTIONAL; FetchXML is a proprietary query language that is used in Microsoft Dynamics (online & on-premises). Type: string (or Expression with resultType
+	// string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -11013,28 +11032,28 @@ func (e *EloquaLinkedService) UnmarshalJSON(data []byte) error {
 
 // EloquaLinkedServiceTypeProperties - Eloqua server linked service properties.
 type EloquaLinkedServiceTypeProperties struct {
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
-
 	// REQUIRED; The endpoint of the Eloqua server. (i.e. eloqua.example.com)
 	Endpoint interface{} `json:"endpoint,omitempty"`
 
-	// The password corresponding to the user name.
-	Password SecretBaseClassification `json:"password,omitempty"`
-
-	// Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true.
-	UseEncryptedEndpoints interface{} `json:"useEncryptedEndpoints,omitempty"`
-
-	// Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value
-	// is true.
-	UseHostVerification interface{} `json:"useHostVerification,omitempty"`
-
-	// Specifies whether to verify the identity of the server when connecting over SSL. The default value is true.
-	UsePeerVerification interface{} `json:"usePeerVerification,omitempty"`
-
 	// REQUIRED; The site name and user name of your Eloqua account in the form: sitename/username. (i.e. Eloqua/Alice)
 	Username interface{} `json:"username,omitempty"`
+
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
+
+	// OPTIONAL; The password corresponding to the user name.
+	Password SecretBaseClassification `json:"password,omitempty"`
+
+	// OPTIONAL; Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true.
+	UseEncryptedEndpoints interface{} `json:"useEncryptedEndpoints,omitempty"`
+
+	// OPTIONAL; Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default
+	// value is true.
+	UseHostVerification interface{} `json:"useHostVerification,omitempty"`
+
+	// OPTIONAL; Specifies whether to verify the identity of the server when connecting over SSL. The default value is true.
+	UsePeerVerification interface{} `json:"usePeerVerification,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type EloquaLinkedServiceTypeProperties.
@@ -11091,7 +11110,7 @@ func (e *EloquaLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 // EloquaObjectDataset - Eloqua server dataset.
 type EloquaObjectDataset struct {
 	Dataset
-	// Properties specific to this dataset type.
+	// OPTIONAL; Properties specific to this dataset type.
 	TypeProperties *GenericDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -11125,7 +11144,7 @@ func (e *EloquaObjectDataset) UnmarshalJSON(data []byte) error {
 // EloquaSource - A copy activity Eloqua server source.
 type EloquaSource struct {
 	TabularSource
-	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	// OPTIONAL; A query to retrieve data from source. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -11158,7 +11177,7 @@ func (e *EloquaSource) UnmarshalJSON(data []byte) error {
 
 // EncryptionDetails - Details of the encryption associated with the workspace
 type EncryptionDetails struct {
-	// Customer Managed Key Details
+	// OPTIONAL; Customer Managed Key Details
 	Cmk *CustomerManagedKeyDetails `json:"cmk,omitempty"`
 
 	// READ-ONLY; Double Encryption enabled
@@ -11167,10 +11186,10 @@ type EncryptionDetails struct {
 
 // EntityReference - The entity reference.
 type EntityReference struct {
-	// The name of this referenced entity.
+	// OPTIONAL; The name of this referenced entity.
 	ReferenceName *string `json:"referenceName,omitempty"`
 
-	// The type of this referenced entity.
+	// OPTIONAL; The type of this referenced entity.
 	Type *IntegrationRuntimeEntityReferenceType `json:"type,omitempty"`
 }
 
@@ -11187,7 +11206,7 @@ type ErrorAdditionalInfo struct {
 // Implements the error and azcore.HTTPResponse interfaces.
 type ErrorContract struct {
 	raw string
-	// The error details.
+	// OPTIONAL; The error details.
 	InnerError *ErrorResponse `json:"error,omitempty"`
 }
 
@@ -11229,19 +11248,19 @@ func (e ErrorResponse) MarshalJSON() ([]byte, error) {
 
 // EvaluateDataFlowExpressionRequest - Request body structure for data flow expression preview.
 type EvaluateDataFlowExpressionRequest struct {
-	// The data flow which contains the debug session.
+	// OPTIONAL; The data flow which contains the debug session.
 	DataFlowName *string `json:"dataFlowName,omitempty"`
 
-	// The expression for preview.
+	// OPTIONAL; The expression for preview.
 	Expression *string `json:"expression,omitempty"`
 
-	// The row limit for preview request.
+	// OPTIONAL; The row limit for preview request.
 	RowLimits *int32 `json:"rowLimits,omitempty"`
 
-	// The ID of data flow debug session.
+	// OPTIONAL; The ID of data flow debug session.
 	SessionID *string `json:"sessionId,omitempty"`
 
-	// The output stream name.
+	// OPTIONAL; The output stream name.
 	StreamName *string `json:"streamName,omitempty"`
 }
 
@@ -11281,25 +11300,25 @@ func (e *ExecuteDataFlowActivity) UnmarshalJSON(data []byte) error {
 
 // ExecuteDataFlowActivityTypeProperties - Execute data flow activity properties.
 type ExecuteDataFlowActivityTypeProperties struct {
-	// Compute properties for data flow activity.
-	Compute *ExecuteDataFlowActivityTypePropertiesCompute `json:"compute,omitempty"`
-
 	// REQUIRED; Data flow reference.
 	DataFlow *DataFlowReference `json:"dataFlow,omitempty"`
 
-	// The integration runtime reference.
+	// OPTIONAL; Compute properties for data flow activity.
+	Compute *ExecuteDataFlowActivityTypePropertiesCompute `json:"compute,omitempty"`
+
+	// OPTIONAL; The integration runtime reference.
 	IntegrationRuntime *IntegrationRuntimeReference `json:"integrationRuntime,omitempty"`
 
-	// Staging info for execute data flow activity.
+	// OPTIONAL; Staging info for execute data flow activity.
 	Staging *DataFlowStagingInfo `json:"staging,omitempty"`
 }
 
 // ExecuteDataFlowActivityTypePropertiesCompute - Compute properties for data flow activity.
 type ExecuteDataFlowActivityTypePropertiesCompute struct {
-	// Compute type of the cluster which will execute data flow job.
+	// OPTIONAL; Compute type of the cluster which will execute data flow job.
 	ComputeType *DataFlowComputeType `json:"computeType,omitempty"`
 
-	// Core count of the cluster which will execute data flow job. Supported values are: 8, 16, 32, 48, 80, 144 and 272.
+	// OPTIONAL; Core count of the cluster which will execute data flow job. Supported values are: 8, 16, 32, 48, 80, 144 and 272.
 	CoreCount *int32 `json:"coreCount,omitempty"`
 }
 
@@ -11339,13 +11358,13 @@ func (e *ExecutePipelineActivity) UnmarshalJSON(data []byte) error {
 
 // ExecutePipelineActivityTypeProperties - Execute pipeline activity properties.
 type ExecutePipelineActivityTypeProperties struct {
-	// Pipeline parameters.
-	Parameters map[string]interface{} `json:"parameters,omitempty"`
-
 	// REQUIRED; Pipeline reference.
 	Pipeline *PipelineReference `json:"pipeline,omitempty"`
 
-	// Defines whether activity execution will wait for the dependent pipeline execution to finish. Default is false.
+	// OPTIONAL; Pipeline parameters.
+	Parameters map[string]interface{} `json:"parameters,omitempty"`
+
+	// OPTIONAL; Defines whether activity execution will wait for the dependent pipeline execution to finish. Default is false.
 	WaitOnCompletion *bool `json:"waitOnCompletion,omitempty"`
 }
 
@@ -11397,37 +11416,37 @@ type ExecuteSSISPackageActivityTypeProperties struct {
 	// REQUIRED; The integration runtime reference.
 	ConnectVia *IntegrationRuntimeReference `json:"connectVia,omitempty"`
 
-	// The environment path to execute the SSIS package. Type: string (or Expression with resultType string).
-	EnvironmentPath interface{} `json:"environmentPath,omitempty"`
-
-	// The package execution credential.
-	ExecutionCredential *SSISExecutionCredential `json:"executionCredential,omitempty"`
-
-	// SSIS package execution log location.
-	LogLocation *SSISLogLocation `json:"logLocation,omitempty"`
-
-	// The logging level of SSIS package execution. Type: string (or Expression with resultType string).
-	LoggingLevel interface{} `json:"loggingLevel,omitempty"`
-
-	// The package level connection managers to execute the SSIS package.
-	PackageConnectionManagers map[string]map[string]*SSISExecutionParameter `json:"packageConnectionManagers,omitempty"`
-
 	// REQUIRED; SSIS package location.
 	PackageLocation *SSISPackageLocation `json:"packageLocation,omitempty"`
 
-	// The package level parameters to execute the SSIS package.
+	// OPTIONAL; The environment path to execute the SSIS package. Type: string (or Expression with resultType string).
+	EnvironmentPath interface{} `json:"environmentPath,omitempty"`
+
+	// OPTIONAL; The package execution credential.
+	ExecutionCredential *SSISExecutionCredential `json:"executionCredential,omitempty"`
+
+	// OPTIONAL; SSIS package execution log location.
+	LogLocation *SSISLogLocation `json:"logLocation,omitempty"`
+
+	// OPTIONAL; The logging level of SSIS package execution. Type: string (or Expression with resultType string).
+	LoggingLevel interface{} `json:"loggingLevel,omitempty"`
+
+	// OPTIONAL; The package level connection managers to execute the SSIS package.
+	PackageConnectionManagers map[string]map[string]*SSISExecutionParameter `json:"packageConnectionManagers,omitempty"`
+
+	// OPTIONAL; The package level parameters to execute the SSIS package.
 	PackageParameters map[string]*SSISExecutionParameter `json:"packageParameters,omitempty"`
 
-	// The project level connection managers to execute the SSIS package.
+	// OPTIONAL; The project level connection managers to execute the SSIS package.
 	ProjectConnectionManagers map[string]map[string]*SSISExecutionParameter `json:"projectConnectionManagers,omitempty"`
 
-	// The project level parameters to execute the SSIS package.
+	// OPTIONAL; The project level parameters to execute the SSIS package.
 	ProjectParameters map[string]*SSISExecutionParameter `json:"projectParameters,omitempty"`
 
-	// The property overrides to execute the SSIS package.
+	// OPTIONAL; The property overrides to execute the SSIS package.
 	PropertyOverrides map[string]*SSISPropertyOverride `json:"propertyOverrides,omitempty"`
 
-	// Specifies the runtime to execute SSIS package. The value should be "x86" or "x64". Type: string (or Expression with resultType string).
+	// OPTIONAL; Specifies the runtime to execute SSIS package. The value should be "x86" or "x64". Type: string (or Expression with resultType string).
 	Runtime interface{} `json:"runtime,omitempty"`
 }
 
@@ -11467,10 +11486,10 @@ type ExecutionActivityClassification interface {
 // ExecutionActivity - Base class for all execution activities.
 type ExecutionActivity struct {
 	Activity
-	// Linked service reference.
+	// OPTIONAL; Linked service reference.
 	LinkedServiceName *LinkedServiceReference `json:"linkedServiceName,omitempty"`
 
-	// Activity policy.
+	// OPTIONAL; Activity policy.
 	Policy *ActivityPolicy `json:"policy,omitempty"`
 }
 
@@ -11519,10 +11538,10 @@ func (e *ExecutionActivity) unmarshalInternal(rawMsg map[string]json.RawMessage)
 
 // ExposureControlRequest - The exposure control request.
 type ExposureControlRequest struct {
-	// The feature name.
+	// OPTIONAL; The feature name.
 	FeatureName *string `json:"featureName,omitempty"`
 
-	// The feature type.
+	// OPTIONAL; The feature type.
 	FeatureType *string `json:"featureType,omitempty"`
 }
 
@@ -11580,17 +11599,17 @@ func (f *FileServerLinkedService) UnmarshalJSON(data []byte) error {
 
 // FileServerLinkedServiceTypeProperties - File system linked service properties.
 type FileServerLinkedServiceTypeProperties struct {
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
-
 	// REQUIRED; Host name of the server. Type: string (or Expression with resultType string).
 	Host interface{} `json:"host,omitempty"`
 
-	// Password to logon the server.
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
+
+	// OPTIONAL; Password to logon the server.
 	Password SecretBaseClassification `json:"password,omitempty"`
 
-	// User ID to logon the server. Type: string (or Expression with resultType string).
+	// OPTIONAL; User ID to logon the server. Type: string (or Expression with resultType string).
 	UserID interface{} `json:"userId,omitempty"`
 }
 
@@ -11647,22 +11666,22 @@ func (f FileServerLocation) MarshalJSON() ([]byte, error) {
 // FileServerReadSettings - File server read settings.
 type FileServerReadSettings struct {
 	StoreReadSettings
-	// Indicates whether to enable partition discovery.
+	// OPTIONAL; Indicates whether to enable partition discovery.
 	EnablePartitionDiscovery *bool `json:"enablePartitionDiscovery,omitempty"`
 
-	// The end of file's modified datetime. Type: string (or Expression with resultType string).
+	// OPTIONAL; The end of file's modified datetime. Type: string (or Expression with resultType string).
 	ModifiedDatetimeEnd interface{} `json:"modifiedDatetimeEnd,omitempty"`
 
-	// The start of file's modified datetime. Type: string (or Expression with resultType string).
+	// OPTIONAL; The start of file's modified datetime. Type: string (or Expression with resultType string).
 	ModifiedDatetimeStart interface{} `json:"modifiedDatetimeStart,omitempty"`
 
-	// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
+	// OPTIONAL; If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
 	Recursive interface{} `json:"recursive,omitempty"`
 
-	// FileServer wildcardFileName. Type: string (or Expression with resultType string).
+	// OPTIONAL; FileServer wildcardFileName. Type: string (or Expression with resultType string).
 	WildcardFileName interface{} `json:"wildcardFileName,omitempty"`
 
-	// FileServer wildcardFolderPath. Type: string (or Expression with resultType string).
+	// OPTIONAL; FileServer wildcardFolderPath. Type: string (or Expression with resultType string).
 	WildcardFolderPath interface{} `json:"wildcardFolderPath,omitempty"`
 }
 
@@ -11727,7 +11746,7 @@ func (f FileServerWriteSettings) MarshalJSON() ([]byte, error) {
 // FileSystemSink - A copy activity file system sink.
 type FileSystemSink struct {
 	CopySink
-	// The type of copy behavior for copy sink.
+	// OPTIONAL; The type of copy behavior for copy sink.
 	CopyBehavior interface{} `json:"copyBehavior,omitempty"`
 }
 
@@ -11761,7 +11780,7 @@ func (f *FileSystemSink) UnmarshalJSON(data []byte) error {
 // FileSystemSource - A copy activity file system source.
 type FileSystemSource struct {
 	CopySource
-	// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
+	// OPTIONAL; If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
 	Recursive interface{} `json:"recursive,omitempty"`
 }
 
@@ -11874,14 +11893,14 @@ type ForEachActivityTypeProperties struct {
 	// REQUIRED; List of activities to execute .
 	Activities []ActivityClassification `json:"activities,omitempty"`
 
-	// Batch count to be used for controlling the number of parallel execution (when isSequential is set to false).
-	BatchCount *int32 `json:"batchCount,omitempty"`
-
-	// Should the loop be executed in sequence or in parallel (max 50)
-	IsSequential *bool `json:"isSequential,omitempty"`
-
 	// REQUIRED; Collection to iterate.
 	Items *Expression `json:"items,omitempty"`
+
+	// OPTIONAL; Batch count to be used for controlling the number of parallel execution (when isSequential is set to false).
+	BatchCount *int32 `json:"batchCount,omitempty"`
+
+	// OPTIONAL; Should the loop be executed in sequence or in parallel (max 50)
+	IsSequential *bool `json:"isSequential,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ForEachActivityTypeProperties.
@@ -11934,11 +11953,11 @@ type FormatReadSettingsClassification interface {
 
 // FormatReadSettings - Format read settings.
 type FormatReadSettings struct {
-	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties map[string]interface{}
-
 	// REQUIRED; The read setting type.
 	Type *string `json:"type,omitempty"`
+
+	// Contains additional key/value pairs not defined in the schema.
+	AdditionalProperties map[string]interface{}
 }
 
 // GetFormatReadSettings implements the FormatReadSettingsClassification interface for type FormatReadSettings.
@@ -12001,11 +12020,11 @@ type FormatWriteSettingsClassification interface {
 
 // FormatWriteSettings - Format write settings.
 type FormatWriteSettings struct {
-	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties map[string]interface{}
-
 	// REQUIRED; The write setting type.
 	Type *string `json:"type,omitempty"`
+
+	// Contains additional key/value pairs not defined in the schema.
+	AdditionalProperties map[string]interface{}
 }
 
 // GetFormatWriteSettings implements the FormatWriteSettingsClassification interface for type FormatWriteSettings.
@@ -12060,16 +12079,16 @@ func (f *FormatWriteSettings) unmarshalInternal(rawMsg map[string]json.RawMessag
 // FtpReadSettings - Ftp read settings.
 type FtpReadSettings struct {
 	StoreReadSettings
-	// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
+	// OPTIONAL; If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
 	Recursive interface{} `json:"recursive,omitempty"`
 
-	// Specify whether to use binary transfer mode for FTP stores.
+	// OPTIONAL; Specify whether to use binary transfer mode for FTP stores.
 	UseBinaryTransfer *bool `json:"useBinaryTransfer,omitempty"`
 
-	// Ftp wildcardFileName. Type: string (or Expression with resultType string).
+	// OPTIONAL; Ftp wildcardFileName. Type: string (or Expression with resultType string).
 	WildcardFileName interface{} `json:"wildcardFileName,omitempty"`
 
-	// Ftp wildcardFolderPath. Type: string (or Expression with resultType string).
+	// OPTIONAL; Ftp wildcardFolderPath. Type: string (or Expression with resultType string).
 	WildcardFolderPath interface{} `json:"wildcardFolderPath,omitempty"`
 }
 
@@ -12148,31 +12167,31 @@ func (f *FtpServerLinkedService) UnmarshalJSON(data []byte) error {
 
 // FtpServerLinkedServiceTypeProperties - Properties specific to this linked service type.
 type FtpServerLinkedServiceTypeProperties struct {
-	// The authentication type to be used to connect to the FTP server.
-	AuthenticationType *FtpAuthenticationType `json:"authenticationType,omitempty"`
-
-	// If true, connect to the FTP server over SSL/TLS channel. Default value is true. Type: boolean (or Expression with resultType boolean).
-	EnableSSL interface{} `json:"enableSsl,omitempty"`
-
-	// If true, validate the FTP server SSL certificate when connect over SSL/TLS channel. Default value is true. Type: boolean (or Expression with resultType
-	// boolean).
-	EnableServerCertificateValidation interface{} `json:"enableServerCertificateValidation,omitempty"`
-
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
-
 	// REQUIRED; Host name of the FTP server. Type: string (or Expression with resultType string).
 	Host interface{} `json:"host,omitempty"`
 
-	// Password to logon the FTP server.
+	// OPTIONAL; The authentication type to be used to connect to the FTP server.
+	AuthenticationType *FtpAuthenticationType `json:"authenticationType,omitempty"`
+
+	// OPTIONAL; If true, connect to the FTP server over SSL/TLS channel. Default value is true. Type: boolean (or Expression with resultType boolean).
+	EnableSSL interface{} `json:"enableSsl,omitempty"`
+
+	// OPTIONAL; If true, validate the FTP server SSL certificate when connect over SSL/TLS channel. Default value is true. Type: boolean (or Expression with
+	// resultType boolean).
+	EnableServerCertificateValidation interface{} `json:"enableServerCertificateValidation,omitempty"`
+
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
+
+	// OPTIONAL; Password to logon the FTP server.
 	Password SecretBaseClassification `json:"password,omitempty"`
 
-	// The TCP port number that the FTP server uses to listen for client connections. Default value is 21. Type: integer (or Expression with resultType integer),
-	// minimum: 0.
+	// OPTIONAL; The TCP port number that the FTP server uses to listen for client connections. Default value is 21. Type: integer (or Expression with resultType
+	// integer), minimum: 0.
 	Port interface{} `json:"port,omitempty"`
 
-	// Username to logon the FTP server. Type: string (or Expression with resultType string).
+	// OPTIONAL; Username to logon the FTP server. Type: string (or Expression with resultType string).
 	UserName interface{} `json:"userName,omitempty"`
 }
 
@@ -12244,7 +12263,7 @@ func (f FtpServerLocation) MarshalJSON() ([]byte, error) {
 
 // GenericDatasetTypeProperties - Properties specific to this dataset type.
 type GenericDatasetTypeProperties struct {
-	// The table name. Type: string (or Expression with resultType string).
+	// OPTIONAL; The table name. Type: string (or Expression with resultType string).
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
@@ -12287,7 +12306,7 @@ type GetMetadataActivityTypeProperties struct {
 	// REQUIRED; GetMetadata activity dataset reference.
 	Dataset *DatasetReference `json:"dataset,omitempty"`
 
-	// Fields of metadata to get from dataset.
+	// OPTIONAL; Fields of metadata to get from dataset.
 	FieldList []interface{} `json:"fieldList,omitempty"`
 }
 
@@ -12301,7 +12320,7 @@ func (g GetMetadataActivityTypeProperties) MarshalJSON() ([]byte, error) {
 
 // GetSsisObjectMetadataRequest - The request payload of get SSIS object metadata.
 type GetSsisObjectMetadataRequest struct {
-	// Metadata path.
+	// OPTIONAL; Metadata path.
 	MetadataPath *string `json:"metadataPath,omitempty"`
 }
 
@@ -12317,6 +12336,7 @@ type GitHubAccessTokenRequest struct {
 }
 
 type GitHubAccessTokenResponse struct {
+	// GitHubAccessToken - OPTIONAL
 	GitHubAccessToken *string `json:"gitHubAccessToken,omitempty"`
 }
 
@@ -12370,34 +12390,34 @@ type GoogleAdWordsLinkedServiceTypeProperties struct {
 	// REQUIRED; The Client customer ID of the AdWords account that you want to fetch report data for.
 	ClientCustomerID interface{} `json:"clientCustomerID,omitempty"`
 
-	// The client id of the google application used to acquire the refresh token. Type: string (or Expression with resultType string).
-	ClientID interface{} `json:"clientId,omitempty"`
-
-	// The client secret of the google application used to acquire the refresh token.
-	ClientSecret SecretBaseClassification `json:"clientSecret,omitempty"`
-
 	// REQUIRED; The developer token associated with the manager account that you use to grant access to the AdWords API.
 	DeveloperToken SecretBaseClassification `json:"developerToken,omitempty"`
 
-	// The service account email ID that is used for ServiceAuthentication and can only be used on self-hosted IR.
+	// OPTIONAL; The client id of the google application used to acquire the refresh token. Type: string (or Expression with resultType string).
+	ClientID interface{} `json:"clientId,omitempty"`
+
+	// OPTIONAL; The client secret of the google application used to acquire the refresh token.
+	ClientSecret SecretBaseClassification `json:"clientSecret,omitempty"`
+
+	// OPTIONAL; The service account email ID that is used for ServiceAuthentication and can only be used on self-hosted IR.
 	Email interface{} `json:"email,omitempty"`
 
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
 	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
 
-	// The full path to the .p12 key file that is used to authenticate the service account email address and can only be used on self-hosted IR.
+	// OPTIONAL; The full path to the .p12 key file that is used to authenticate the service account email address and can only be used on self-hosted IR.
 	KeyFilePath interface{} `json:"keyFilePath,omitempty"`
 
-	// The refresh token obtained from Google for authorizing access to AdWords for UserAuthentication.
+	// OPTIONAL; The refresh token obtained from Google for authorizing access to AdWords for UserAuthentication.
 	RefreshToken SecretBaseClassification `json:"refreshToken,omitempty"`
 
-	// The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when
-	// using SSL on self-hosted IR. The default value
+	// OPTIONAL; The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only
+	// be set when using SSL on self-hosted IR. The default value
 	// is the cacerts.pem file installed with the IR.
 	TrustedCertPath interface{} `json:"trustedCertPath,omitempty"`
 
-	// Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false.
+	// OPTIONAL; Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false.
 	UseSystemTrustStore interface{} `json:"useSystemTrustStore,omitempty"`
 }
 
@@ -12471,7 +12491,7 @@ func (g *GoogleAdWordsLinkedServiceTypeProperties) UnmarshalJSON(data []byte) er
 // GoogleAdWordsObjectDataset - Google AdWords service dataset.
 type GoogleAdWordsObjectDataset struct {
 	Dataset
-	// Properties specific to this dataset type.
+	// OPTIONAL; Properties specific to this dataset type.
 	TypeProperties *GenericDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -12505,7 +12525,7 @@ func (g *GoogleAdWordsObjectDataset) UnmarshalJSON(data []byte) error {
 // GoogleAdWordsSource - A copy activity Google AdWords service source.
 type GoogleAdWordsSource struct {
 	TabularSource
-	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	// OPTIONAL; A query to retrieve data from source. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -12538,13 +12558,13 @@ func (g *GoogleAdWordsSource) UnmarshalJSON(data []byte) error {
 
 // GoogleBigQueryDatasetTypeProperties - Google BigQuery Dataset Properties
 type GoogleBigQueryDatasetTypeProperties struct {
-	// The database name of the Google BigQuery. Type: string (or Expression with resultType string).
+	// OPTIONAL; The database name of the Google BigQuery. Type: string (or Expression with resultType string).
 	Dataset interface{} `json:"dataset,omitempty"`
 
-	// The table name of the Google BigQuery. Type: string (or Expression with resultType string).
+	// OPTIONAL; The table name of the Google BigQuery. Type: string (or Expression with resultType string).
 	Table interface{} `json:"table,omitempty"`
 
-	// This property will be retired. Please consider using database + table properties instead.
+	// OPTIONAL; This property will be retired. Please consider using database + table properties instead.
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
@@ -12584,44 +12604,44 @@ func (g *GoogleBigQueryLinkedService) UnmarshalJSON(data []byte) error {
 
 // GoogleBigQueryLinkedServiceTypeProperties - Google BigQuery service linked service properties.
 type GoogleBigQueryLinkedServiceTypeProperties struct {
-	// A comma-separated list of public BigQuery projects to access.
-	AdditionalProjects interface{} `json:"additionalProjects,omitempty"`
-
 	// REQUIRED; The OAuth 2.0 authentication mechanism used for authentication. ServiceAuthentication can only be used on self-hosted IR.
 	AuthenticationType *GoogleBigQueryAuthenticationType `json:"authenticationType,omitempty"`
-
-	// The client id of the google application used to acquire the refresh token. Type: string (or Expression with resultType string).
-	ClientID interface{} `json:"clientId,omitempty"`
-
-	// The client secret of the google application used to acquire the refresh token.
-	ClientSecret SecretBaseClassification `json:"clientSecret,omitempty"`
-
-	// The service account email ID that is used for ServiceAuthentication and can only be used on self-hosted IR.
-	Email interface{} `json:"email,omitempty"`
-
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
-
-	// The full path to the .p12 key file that is used to authenticate the service account email address and can only be used on self-hosted IR.
-	KeyFilePath interface{} `json:"keyFilePath,omitempty"`
 
 	// REQUIRED; The default BigQuery project to query against.
 	Project interface{} `json:"project,omitempty"`
 
-	// The refresh token obtained from Google for authorizing access to BigQuery for UserAuthentication.
+	// OPTIONAL; A comma-separated list of public BigQuery projects to access.
+	AdditionalProjects interface{} `json:"additionalProjects,omitempty"`
+
+	// OPTIONAL; The client id of the google application used to acquire the refresh token. Type: string (or Expression with resultType string).
+	ClientID interface{} `json:"clientId,omitempty"`
+
+	// OPTIONAL; The client secret of the google application used to acquire the refresh token.
+	ClientSecret SecretBaseClassification `json:"clientSecret,omitempty"`
+
+	// OPTIONAL; The service account email ID that is used for ServiceAuthentication and can only be used on self-hosted IR.
+	Email interface{} `json:"email,omitempty"`
+
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
+
+	// OPTIONAL; The full path to the .p12 key file that is used to authenticate the service account email address and can only be used on self-hosted IR.
+	KeyFilePath interface{} `json:"keyFilePath,omitempty"`
+
+	// OPTIONAL; The refresh token obtained from Google for authorizing access to BigQuery for UserAuthentication.
 	RefreshToken SecretBaseClassification `json:"refreshToken,omitempty"`
 
-	// Whether to request access to Google Drive. Allowing Google Drive access enables support for federated tables that combine BigQuery data with data from
-	// Google Drive. The default value is false.
+	// OPTIONAL; Whether to request access to Google Drive. Allowing Google Drive access enables support for federated tables that combine BigQuery data with
+	// data from Google Drive. The default value is false.
 	RequestGoogleDriveScope interface{} `json:"requestGoogleDriveScope,omitempty"`
 
-	// The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when
-	// using SSL on self-hosted IR. The default value
+	// OPTIONAL; The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only
+	// be set when using SSL on self-hosted IR. The default value
 	// is the cacerts.pem file installed with the IR.
 	TrustedCertPath interface{} `json:"trustedCertPath,omitempty"`
 
-	// Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false.
+	// OPTIONAL; Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false.
 	UseSystemTrustStore interface{} `json:"useSystemTrustStore,omitempty"`
 }
 
@@ -12699,7 +12719,7 @@ func (g *GoogleBigQueryLinkedServiceTypeProperties) UnmarshalJSON(data []byte) e
 // GoogleBigQueryObjectDataset - Google BigQuery service dataset.
 type GoogleBigQueryObjectDataset struct {
 	Dataset
-	// Properties specific to this dataset type.
+	// OPTIONAL; Properties specific to this dataset type.
 	TypeProperties *GoogleBigQueryDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -12733,7 +12753,7 @@ func (g *GoogleBigQueryObjectDataset) UnmarshalJSON(data []byte) error {
 // GoogleBigQuerySource - A copy activity Google BigQuery service source.
 type GoogleBigQuerySource struct {
 	TabularSource
-	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	// OPTIONAL; A query to retrieve data from source. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -12800,18 +12820,19 @@ func (g *GoogleCloudStorageLinkedService) UnmarshalJSON(data []byte) error {
 
 // GoogleCloudStorageLinkedServiceTypeProperties - Google Cloud Storage linked service properties.
 type GoogleCloudStorageLinkedServiceTypeProperties struct {
-	// The access key identifier of the Google Cloud Storage Identity and Access Management (IAM) user. Type: string (or Expression with resultType string).
+	// OPTIONAL; The access key identifier of the Google Cloud Storage Identity and Access Management (IAM) user. Type: string (or Expression with resultType
+	// string).
 	AccessKeyID interface{} `json:"accessKeyId,omitempty"`
 
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
 	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
 
-	// The secret access key of the Google Cloud Storage Identity and Access Management (IAM) user.
+	// OPTIONAL; The secret access key of the Google Cloud Storage Identity and Access Management (IAM) user.
 	SecretAccessKey SecretBaseClassification `json:"secretAccessKey,omitempty"`
 
-	// This value specifies the endpoint to access with the Google Cloud Storage Connector. This is an optional property; change it only if you want to try
-	// a different service endpoint or want to switch
+	// OPTIONAL; This value specifies the endpoint to access with the Google Cloud Storage Connector. This is an optional property; change it only if you want
+	// to try a different service endpoint or want to switch
 	// between https and http. Type: string (or Expression with resultType string).
 	ServiceURL interface{} `json:"serviceUrl,omitempty"`
 }
@@ -12858,10 +12879,10 @@ func (g *GoogleCloudStorageLinkedServiceTypeProperties) UnmarshalJSON(data []byt
 // GoogleCloudStorageLocation - The location of Google Cloud Storage dataset.
 type GoogleCloudStorageLocation struct {
 	DatasetLocation
-	// Specify the bucketName of Google Cloud Storage. Type: string (or Expression with resultType string)
+	// OPTIONAL; Specify the bucketName of Google Cloud Storage. Type: string (or Expression with resultType string)
 	BucketName interface{} `json:"bucketName,omitempty"`
 
-	// Specify the version of Google Cloud Storage. Type: string (or Expression with resultType string).
+	// OPTIONAL; Specify the version of Google Cloud Storage. Type: string (or Expression with resultType string).
 	Version interface{} `json:"version,omitempty"`
 }
 
@@ -12899,25 +12920,25 @@ func (g *GoogleCloudStorageLocation) UnmarshalJSON(data []byte) error {
 // GoogleCloudStorageReadSettings - Google Cloud Storage read settings.
 type GoogleCloudStorageReadSettings struct {
 	StoreReadSettings
-	// Indicates whether to enable partition discovery.
+	// OPTIONAL; Indicates whether to enable partition discovery.
 	EnablePartitionDiscovery *bool `json:"enablePartitionDiscovery,omitempty"`
 
-	// The end of file's modified datetime. Type: string (or Expression with resultType string).
+	// OPTIONAL; The end of file's modified datetime. Type: string (or Expression with resultType string).
 	ModifiedDatetimeEnd interface{} `json:"modifiedDatetimeEnd,omitempty"`
 
-	// The start of file's modified datetime. Type: string (or Expression with resultType string).
+	// OPTIONAL; The start of file's modified datetime. Type: string (or Expression with resultType string).
 	ModifiedDatetimeStart interface{} `json:"modifiedDatetimeStart,omitempty"`
 
-	// The prefix filter for the Google Cloud Storage object name. Type: string (or Expression with resultType string).
+	// OPTIONAL; The prefix filter for the Google Cloud Storage object name. Type: string (or Expression with resultType string).
 	Prefix interface{} `json:"prefix,omitempty"`
 
-	// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
+	// OPTIONAL; If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
 	Recursive interface{} `json:"recursive,omitempty"`
 
-	// Google Cloud Storage wildcardFileName. Type: string (or Expression with resultType string).
+	// OPTIONAL; Google Cloud Storage wildcardFileName. Type: string (or Expression with resultType string).
 	WildcardFileName interface{} `json:"wildcardFileName,omitempty"`
 
-	// Google Cloud Storage wildcardFolderPath. Type: string (or Expression with resultType string).
+	// OPTIONAL; Google Cloud Storage wildcardFolderPath. Type: string (or Expression with resultType string).
 	WildcardFolderPath interface{} `json:"wildcardFolderPath,omitempty"`
 }
 
@@ -12974,13 +12995,13 @@ func (g *GoogleCloudStorageReadSettings) UnmarshalJSON(data []byte) error {
 
 // GreenplumDatasetTypeProperties - Greenplum Dataset Properties
 type GreenplumDatasetTypeProperties struct {
-	// The schema name of Greenplum. Type: string (or Expression with resultType string).
+	// OPTIONAL; The schema name of Greenplum. Type: string (or Expression with resultType string).
 	Schema interface{} `json:"schema,omitempty"`
 
-	// The table name of Greenplum. Type: string (or Expression with resultType string).
+	// OPTIONAL; The table name of Greenplum. Type: string (or Expression with resultType string).
 	Table interface{} `json:"table,omitempty"`
 
-	// This property will be retired. Please consider using schema + table properties instead.
+	// OPTIONAL; This property will be retired. Please consider using schema + table properties instead.
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
@@ -13020,21 +13041,21 @@ func (g *GreenplumLinkedService) UnmarshalJSON(data []byte) error {
 
 // GreenplumLinkedServiceTypeProperties - Greenplum Database linked service properties.
 type GreenplumLinkedServiceTypeProperties struct {
-	// An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
+	// OPTIONAL; An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
 	ConnectionString interface{} `json:"connectionString,omitempty"`
 
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
 	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
 
-	// The Azure key vault secret reference of password in connection string.
+	// OPTIONAL; The Azure key vault secret reference of password in connection string.
 	Pwd *AzureKeyVaultSecretReference `json:"pwd,omitempty"`
 }
 
 // GreenplumSource - A copy activity Greenplum Database source.
 type GreenplumSource struct {
 	TabularSource
-	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	// OPTIONAL; A query to retrieve data from source. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -13068,7 +13089,7 @@ func (g *GreenplumSource) UnmarshalJSON(data []byte) error {
 // GreenplumTableDataset - Greenplum Database dataset.
 type GreenplumTableDataset struct {
 	Dataset
-	// Properties specific to this dataset type.
+	// OPTIONAL; Properties specific to this dataset type.
 	TypeProperties *GreenplumDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -13135,40 +13156,41 @@ func (h *HBaseLinkedService) UnmarshalJSON(data []byte) error {
 
 // HBaseLinkedServiceTypeProperties - HBase server linked service properties.
 type HBaseLinkedServiceTypeProperties struct {
-	// Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value is false.
-	AllowHostNameCNMismatch interface{} `json:"allowHostNameCNMismatch,omitempty"`
-
-	// Specifies whether to allow self-signed certificates from the server. The default value is false.
-	AllowSelfSignedServerCert interface{} `json:"allowSelfSignedServerCert,omitempty"`
-
 	// REQUIRED; The authentication mechanism to use to connect to the HBase server.
 	AuthenticationType *HBaseAuthenticationType `json:"authenticationType,omitempty"`
-
-	// Specifies whether the connections to the server are encrypted using SSL. The default value is false.
-	EnableSSL interface{} `json:"enableSsl,omitempty"`
-
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
-
-	// The partial URL corresponding to the HBase server. (i.e. /gateway/sandbox/hbase/version)
-	HTTPPath interface{} `json:"httpPath,omitempty"`
 
 	// REQUIRED; The IP address or host name of the HBase server. (i.e. 192.168.222.160)
 	Host interface{} `json:"host,omitempty"`
 
-	// The password corresponding to the user name.
+	// OPTIONAL; Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value
+	// is false.
+	AllowHostNameCNMismatch interface{} `json:"allowHostNameCNMismatch,omitempty"`
+
+	// OPTIONAL; Specifies whether to allow self-signed certificates from the server. The default value is false.
+	AllowSelfSignedServerCert interface{} `json:"allowSelfSignedServerCert,omitempty"`
+
+	// OPTIONAL; Specifies whether the connections to the server are encrypted using SSL. The default value is false.
+	EnableSSL interface{} `json:"enableSsl,omitempty"`
+
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
+
+	// OPTIONAL; The partial URL corresponding to the HBase server. (i.e. /gateway/sandbox/hbase/version)
+	HTTPPath interface{} `json:"httpPath,omitempty"`
+
+	// OPTIONAL; The password corresponding to the user name.
 	Password SecretBaseClassification `json:"password,omitempty"`
 
-	// The TCP port that the HBase instance uses to listen for client connections. The default value is 9090.
+	// OPTIONAL; The TCP port that the HBase instance uses to listen for client connections. The default value is 9090.
 	Port interface{} `json:"port,omitempty"`
 
-	// The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when
-	// using SSL on self-hosted IR. The default value
+	// OPTIONAL; The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only
+	// be set when using SSL on self-hosted IR. The default value
 	// is the cacerts.pem file installed with the IR.
 	TrustedCertPath interface{} `json:"trustedCertPath,omitempty"`
 
-	// The user name used to connect to the HBase instance.
+	// OPTIONAL; The user name used to connect to the HBase instance.
 	Username interface{} `json:"username,omitempty"`
 }
 
@@ -13242,7 +13264,7 @@ func (h *HBaseLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 // HBaseObjectDataset - HBase server dataset.
 type HBaseObjectDataset struct {
 	Dataset
-	// Properties specific to this dataset type.
+	// OPTIONAL; Properties specific to this dataset type.
 	TypeProperties *GenericDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -13276,7 +13298,7 @@ func (h *HBaseObjectDataset) UnmarshalJSON(data []byte) error {
 // HBaseSource - A copy activity HBase server source.
 type HBaseSource struct {
 	TabularSource
-	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	// OPTIONAL; A query to retrieve data from source. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -13343,28 +13365,28 @@ func (h *HDInsightHiveActivity) UnmarshalJSON(data []byte) error {
 
 // HDInsightHiveActivityTypeProperties - HDInsight Hive activity properties.
 type HDInsightHiveActivityTypeProperties struct {
-	// User specified arguments to HDInsightActivity.
+	// OPTIONAL; User specified arguments to HDInsightActivity.
 	Arguments []interface{} `json:"arguments,omitempty"`
 
-	// Allows user to specify defines for Hive job request.
+	// OPTIONAL; Allows user to specify defines for Hive job request.
 	Defines map[string]interface{} `json:"defines,omitempty"`
 
-	// Debug info option.
+	// OPTIONAL; Debug info option.
 	GetDebugInfo *HDInsightActivityDebugInfoOption `json:"getDebugInfo,omitempty"`
 
-	// Query timeout value (in minutes). Effective when the HDInsight cluster is with ESP (Enterprise Security Package)
+	// OPTIONAL; Query timeout value (in minutes). Effective when the HDInsight cluster is with ESP (Enterprise Security Package)
 	QueryTimeout *int32 `json:"queryTimeout,omitempty"`
 
-	// Script linked service reference.
+	// OPTIONAL; Script linked service reference.
 	ScriptLinkedService *LinkedServiceReference `json:"scriptLinkedService,omitempty"`
 
-	// Script path. Type: string (or Expression with resultType string).
+	// OPTIONAL; Script path. Type: string (or Expression with resultType string).
 	ScriptPath interface{} `json:"scriptPath,omitempty"`
 
-	// Storage linked service references.
+	// OPTIONAL; Storage linked service references.
 	StorageLinkedServices []*LinkedServiceReference `json:"storageLinkedServices,omitempty"`
 
-	// User specified arguments under hivevar namespace.
+	// OPTIONAL; User specified arguments under hivevar namespace.
 	Variables []interface{} `json:"variables,omitempty"`
 }
 
@@ -13421,26 +13443,26 @@ type HDInsightLinkedServiceTypeProperties struct {
 	// REQUIRED; HDInsight cluster URI. Type: string (or Expression with resultType string).
 	ClusterURI interface{} `json:"clusterUri,omitempty"`
 
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
 	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
 
-	// Specify the FileSystem if the main storage for the HDInsight is ADLS Gen2. Type: string (or Expression with resultType string).
+	// OPTIONAL; Specify the FileSystem if the main storage for the HDInsight is ADLS Gen2. Type: string (or Expression with resultType string).
 	FileSystem interface{} `json:"fileSystem,omitempty"`
 
-	// A reference to the Azure SQL linked service that points to the HCatalog database.
+	// OPTIONAL; A reference to the Azure SQL linked service that points to the HCatalog database.
 	HcatalogLinkedServiceName *LinkedServiceReference `json:"hcatalogLinkedServiceName,omitempty"`
 
-	// Specify if the HDInsight is created with ESP (Enterprise Security Package). Type: Boolean.
+	// OPTIONAL; Specify if the HDInsight is created with ESP (Enterprise Security Package). Type: Boolean.
 	IsEspEnabled interface{} `json:"isEspEnabled,omitempty"`
 
-	// The Azure Storage linked service reference.
+	// OPTIONAL; The Azure Storage linked service reference.
 	LinkedServiceName *LinkedServiceReference `json:"linkedServiceName,omitempty"`
 
-	// HDInsight cluster password.
+	// OPTIONAL; HDInsight cluster password.
 	Password SecretBaseClassification `json:"password,omitempty"`
 
-	// HDInsight cluster user name. Type: string (or Expression with resultType string).
+	// OPTIONAL; HDInsight cluster user name. Type: string (or Expression with resultType string).
 	UserName interface{} `json:"userName,omitempty"`
 }
 
@@ -13535,28 +13557,28 @@ func (h *HDInsightMapReduceActivity) UnmarshalJSON(data []byte) error {
 
 // HDInsightMapReduceActivityTypeProperties - HDInsight MapReduce activity properties.
 type HDInsightMapReduceActivityTypeProperties struct {
-	// User specified arguments to HDInsightActivity.
-	Arguments []interface{} `json:"arguments,omitempty"`
-
 	// REQUIRED; Class name. Type: string (or Expression with resultType string).
 	ClassName interface{} `json:"className,omitempty"`
-
-	// Allows user to specify defines for the MapReduce job request.
-	Defines map[string]interface{} `json:"defines,omitempty"`
-
-	// Debug info option.
-	GetDebugInfo *HDInsightActivityDebugInfoOption `json:"getDebugInfo,omitempty"`
 
 	// REQUIRED; Jar path. Type: string (or Expression with resultType string).
 	JarFilePath interface{} `json:"jarFilePath,omitempty"`
 
-	// Jar libs.
+	// OPTIONAL; User specified arguments to HDInsightActivity.
+	Arguments []interface{} `json:"arguments,omitempty"`
+
+	// OPTIONAL; Allows user to specify defines for the MapReduce job request.
+	Defines map[string]interface{} `json:"defines,omitempty"`
+
+	// OPTIONAL; Debug info option.
+	GetDebugInfo *HDInsightActivityDebugInfoOption `json:"getDebugInfo,omitempty"`
+
+	// OPTIONAL; Jar libs.
 	JarLibs []interface{} `json:"jarLibs,omitempty"`
 
-	// Jar linked service reference.
+	// OPTIONAL; Jar linked service reference.
 	JarLinkedService *LinkedServiceReference `json:"jarLinkedService,omitempty"`
 
-	// Storage linked service references.
+	// OPTIONAL; Storage linked service references.
 	StorageLinkedServices []*LinkedServiceReference `json:"storageLinkedServices,omitempty"`
 }
 
@@ -13610,90 +13632,17 @@ func (h *HDInsightOnDemandLinkedService) UnmarshalJSON(data []byte) error {
 
 // HDInsightOnDemandLinkedServiceTypeProperties - HDInsight ondemand linked service properties.
 type HDInsightOnDemandLinkedServiceTypeProperties struct {
-	// Specifies additional storage accounts for the HDInsight linked service so that the Data Factory service can register them on your behalf.
-	AdditionalLinkedServiceNames []*LinkedServiceReference `json:"additionalLinkedServiceNames,omitempty"`
-
-	// The prefix of cluster name, postfix will be distinct with timestamp. Type: string (or Expression with resultType string).
-	ClusterNamePrefix interface{} `json:"clusterNamePrefix,omitempty"`
-
-	// The password to access the cluster.
-	ClusterPassword SecretBaseClassification `json:"clusterPassword,omitempty"`
-
 	// REQUIRED; The resource group where the cluster belongs. Type: string (or Expression with resultType string).
 	ClusterResourceGroup interface{} `json:"clusterResourceGroup,omitempty"`
 
-	// The password to SSH remotely connect cluster’s node (for Linux).
-	ClusterSSHPassword SecretBaseClassification `json:"clusterSshPassword,omitempty"`
-
-	// The username to SSH remotely connect to cluster’s node (for Linux). Type: string (or Expression with resultType string).
-	ClusterSSHUserName interface{} `json:"clusterSshUserName,omitempty"`
-
 	// REQUIRED; Number of worker/data nodes in the cluster. Suggestion value: 4. Type: string (or Expression with resultType string).
 	ClusterSize interface{} `json:"clusterSize,omitempty"`
-
-	// The cluster type. Type: string (or Expression with resultType string).
-	ClusterType interface{} `json:"clusterType,omitempty"`
-
-	// The username to access the cluster. Type: string (or Expression with resultType string).
-	ClusterUserName interface{} `json:"clusterUserName,omitempty"`
-
-	// Specifies the core configuration parameters (as in core-site.xml) for the HDInsight cluster to be created.
-	CoreConfiguration interface{} `json:"coreConfiguration,omitempty"`
-
-	// Specifies the size of the data node for the HDInsight cluster.
-	DataNodeSize interface{} `json:"dataNodeSize,omitempty"`
-
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
-
-	// Specifies the HBase configuration parameters (hbase-site.xml) for the HDInsight cluster.
-	HBaseConfiguration interface{} `json:"hBaseConfiguration,omitempty"`
-
-	// The name of Azure SQL linked service that point to the HCatalog database. The on-demand HDInsight cluster is created by using the Azure SQL database
-	// as the metastore.
-	HcatalogLinkedServiceName *LinkedServiceReference `json:"hcatalogLinkedServiceName,omitempty"`
-
-	// Specifies the HDFS configuration parameters (hdfs-site.xml) for the HDInsight cluster.
-	HdfsConfiguration interface{} `json:"hdfsConfiguration,omitempty"`
-
-	// Specifies the size of the head node for the HDInsight cluster.
-	HeadNodeSize interface{} `json:"headNodeSize,omitempty"`
-
-	// Specifies the hive configuration parameters (hive-site.xml) for the HDInsight cluster.
-	HiveConfiguration interface{} `json:"hiveConfiguration,omitempty"`
 
 	// REQUIRED; The customer’s subscription to host the cluster. Type: string (or Expression with resultType string).
 	HostSubscriptionID interface{} `json:"hostSubscriptionId,omitempty"`
 
 	// REQUIRED; Azure Storage linked service to be used by the on-demand cluster for storing and processing data.
 	LinkedServiceName *LinkedServiceReference `json:"linkedServiceName,omitempty"`
-
-	// Specifies the MapReduce configuration parameters (mapred-site.xml) for the HDInsight cluster.
-	MapReduceConfiguration interface{} `json:"mapReduceConfiguration,omitempty"`
-
-	// Specifies the Oozie configuration parameters (oozie-site.xml) for the HDInsight cluster.
-	OozieConfiguration interface{} `json:"oozieConfiguration,omitempty"`
-
-	// Custom script actions to run on HDI ondemand cluster once it's up. Please refer to
-	// https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-hadoop-customize-cluster-linux?toc=%2Fen-us%2Fazure%2Fhdinsight%2Fr-server%2FTOC.json&bc=%2Fen-us%2Fazure%2Fbread%2Ftoc.json#understanding-script-actions.
-	ScriptActions []*ScriptAction `json:"scriptActions,omitempty"`
-
-	// The service principal id for the hostSubscriptionId. Type: string (or Expression with resultType string).
-	ServicePrincipalID interface{} `json:"servicePrincipalId,omitempty"`
-
-	// The key for the service principal id.
-	ServicePrincipalKey SecretBaseClassification `json:"servicePrincipalKey,omitempty"`
-
-	// The version of spark if the cluster type is 'spark'. Type: string (or Expression with resultType string).
-	SparkVersion interface{} `json:"sparkVersion,omitempty"`
-
-	// Specifies the Storm configuration parameters (storm-site.xml) for the HDInsight cluster.
-	StormConfiguration interface{} `json:"stormConfiguration,omitempty"`
-
-	// The ARM resource ID for the subnet in the vNet. If virtualNetworkId was specified, then this property is required. Type: string (or Expression with resultType
-	// string).
-	SubnetName interface{} `json:"subnetName,omitempty"`
 
 	// REQUIRED; The Tenant id/name to which the service principal belongs. Type: string (or Expression with resultType string).
 	Tenant interface{} `json:"tenant,omitempty"`
@@ -13706,13 +13655,86 @@ type HDInsightOnDemandLinkedServiceTypeProperties struct {
 	// REQUIRED; Version of the HDInsight cluster. Type: string (or Expression with resultType string).
 	Version interface{} `json:"version,omitempty"`
 
-	// The ARM resource ID for the vNet to which the cluster should be joined after creation. Type: string (or Expression with resultType string).
+	// OPTIONAL; Specifies additional storage accounts for the HDInsight linked service so that the Data Factory service can register them on your behalf.
+	AdditionalLinkedServiceNames []*LinkedServiceReference `json:"additionalLinkedServiceNames,omitempty"`
+
+	// OPTIONAL; The prefix of cluster name, postfix will be distinct with timestamp. Type: string (or Expression with resultType string).
+	ClusterNamePrefix interface{} `json:"clusterNamePrefix,omitempty"`
+
+	// OPTIONAL; The password to access the cluster.
+	ClusterPassword SecretBaseClassification `json:"clusterPassword,omitempty"`
+
+	// OPTIONAL; The password to SSH remotely connect cluster’s node (for Linux).
+	ClusterSSHPassword SecretBaseClassification `json:"clusterSshPassword,omitempty"`
+
+	// OPTIONAL; The username to SSH remotely connect to cluster’s node (for Linux). Type: string (or Expression with resultType string).
+	ClusterSSHUserName interface{} `json:"clusterSshUserName,omitempty"`
+
+	// OPTIONAL; The cluster type. Type: string (or Expression with resultType string).
+	ClusterType interface{} `json:"clusterType,omitempty"`
+
+	// OPTIONAL; The username to access the cluster. Type: string (or Expression with resultType string).
+	ClusterUserName interface{} `json:"clusterUserName,omitempty"`
+
+	// OPTIONAL; Specifies the core configuration parameters (as in core-site.xml) for the HDInsight cluster to be created.
+	CoreConfiguration interface{} `json:"coreConfiguration,omitempty"`
+
+	// OPTIONAL; Specifies the size of the data node for the HDInsight cluster.
+	DataNodeSize interface{} `json:"dataNodeSize,omitempty"`
+
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
+
+	// OPTIONAL; Specifies the HBase configuration parameters (hbase-site.xml) for the HDInsight cluster.
+	HBaseConfiguration interface{} `json:"hBaseConfiguration,omitempty"`
+
+	// OPTIONAL; The name of Azure SQL linked service that point to the HCatalog database. The on-demand HDInsight cluster is created by using the Azure SQL
+	// database as the metastore.
+	HcatalogLinkedServiceName *LinkedServiceReference `json:"hcatalogLinkedServiceName,omitempty"`
+
+	// OPTIONAL; Specifies the HDFS configuration parameters (hdfs-site.xml) for the HDInsight cluster.
+	HdfsConfiguration interface{} `json:"hdfsConfiguration,omitempty"`
+
+	// OPTIONAL; Specifies the size of the head node for the HDInsight cluster.
+	HeadNodeSize interface{} `json:"headNodeSize,omitempty"`
+
+	// OPTIONAL; Specifies the hive configuration parameters (hive-site.xml) for the HDInsight cluster.
+	HiveConfiguration interface{} `json:"hiveConfiguration,omitempty"`
+
+	// OPTIONAL; Specifies the MapReduce configuration parameters (mapred-site.xml) for the HDInsight cluster.
+	MapReduceConfiguration interface{} `json:"mapReduceConfiguration,omitempty"`
+
+	// OPTIONAL; Specifies the Oozie configuration parameters (oozie-site.xml) for the HDInsight cluster.
+	OozieConfiguration interface{} `json:"oozieConfiguration,omitempty"`
+
+	// OPTIONAL; Custom script actions to run on HDI ondemand cluster once it's up. Please refer to
+	// https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-hadoop-customize-cluster-linux?toc=%2Fen-us%2Fazure%2Fhdinsight%2Fr-server%2FTOC.json&bc=%2Fen-us%2Fazure%2Fbread%2Ftoc.json#understanding-script-actions.
+	ScriptActions []*ScriptAction `json:"scriptActions,omitempty"`
+
+	// OPTIONAL; The service principal id for the hostSubscriptionId. Type: string (or Expression with resultType string).
+	ServicePrincipalID interface{} `json:"servicePrincipalId,omitempty"`
+
+	// OPTIONAL; The key for the service principal id.
+	ServicePrincipalKey SecretBaseClassification `json:"servicePrincipalKey,omitempty"`
+
+	// OPTIONAL; The version of spark if the cluster type is 'spark'. Type: string (or Expression with resultType string).
+	SparkVersion interface{} `json:"sparkVersion,omitempty"`
+
+	// OPTIONAL; Specifies the Storm configuration parameters (storm-site.xml) for the HDInsight cluster.
+	StormConfiguration interface{} `json:"stormConfiguration,omitempty"`
+
+	// OPTIONAL; The ARM resource ID for the subnet in the vNet. If virtualNetworkId was specified, then this property is required. Type: string (or Expression
+	// with resultType string).
+	SubnetName interface{} `json:"subnetName,omitempty"`
+
+	// OPTIONAL; The ARM resource ID for the vNet to which the cluster should be joined after creation. Type: string (or Expression with resultType string).
 	VirtualNetworkID interface{} `json:"virtualNetworkId,omitempty"`
 
-	// Specifies the Yarn configuration parameters (yarn-site.xml) for the HDInsight cluster.
+	// OPTIONAL; Specifies the Yarn configuration parameters (yarn-site.xml) for the HDInsight cluster.
 	YarnConfiguration interface{} `json:"yarnConfiguration,omitempty"`
 
-	// Specifies the size of the Zoo Keeper node for the HDInsight cluster.
+	// OPTIONAL; Specifies the size of the Zoo Keeper node for the HDInsight cluster.
 	ZookeeperNodeSize interface{} `json:"zookeeperNodeSize,omitempty"`
 }
 
@@ -13907,22 +13929,22 @@ func (h *HDInsightPigActivity) UnmarshalJSON(data []byte) error {
 
 // HDInsightPigActivityTypeProperties - HDInsight Pig activity properties.
 type HDInsightPigActivityTypeProperties struct {
-	// User specified arguments to HDInsightActivity. Type: array (or Expression with resultType array).
+	// OPTIONAL; User specified arguments to HDInsightActivity. Type: array (or Expression with resultType array).
 	Arguments interface{} `json:"arguments,omitempty"`
 
-	// Allows user to specify defines for Pig job request.
+	// OPTIONAL; Allows user to specify defines for Pig job request.
 	Defines map[string]interface{} `json:"defines,omitempty"`
 
-	// Debug info option.
+	// OPTIONAL; Debug info option.
 	GetDebugInfo *HDInsightActivityDebugInfoOption `json:"getDebugInfo,omitempty"`
 
-	// Script linked service reference.
+	// OPTIONAL; Script linked service reference.
 	ScriptLinkedService *LinkedServiceReference `json:"scriptLinkedService,omitempty"`
 
-	// Script path. Type: string (or Expression with resultType string).
+	// OPTIONAL; Script path. Type: string (or Expression with resultType string).
 	ScriptPath interface{} `json:"scriptPath,omitempty"`
 
-	// Storage linked service references.
+	// OPTIONAL; Storage linked service references.
 	StorageLinkedServices []*LinkedServiceReference `json:"storageLinkedServices,omitempty"`
 }
 
@@ -13974,28 +13996,28 @@ func (h *HDInsightSparkActivity) UnmarshalJSON(data []byte) error {
 
 // HDInsightSparkActivityTypeProperties - HDInsight spark activity properties.
 type HDInsightSparkActivityTypeProperties struct {
-	// The user-specified arguments to HDInsightSparkActivity.
-	Arguments []interface{} `json:"arguments,omitempty"`
-
-	// The application's Java/Spark main class.
-	ClassName *string `json:"className,omitempty"`
-
 	// REQUIRED; The relative path to the root folder of the code/package to be executed. Type: string (or Expression with resultType string).
 	EntryFilePath interface{} `json:"entryFilePath,omitempty"`
-
-	// Debug info option.
-	GetDebugInfo *HDInsightActivityDebugInfoOption `json:"getDebugInfo,omitempty"`
-
-	// The user to impersonate that will execute the job. Type: string (or Expression with resultType string).
-	ProxyUser interface{} `json:"proxyUser,omitempty"`
 
 	// REQUIRED; The root path in 'sparkJobLinkedService' for all the job’s files. Type: string (or Expression with resultType string).
 	RootPath interface{} `json:"rootPath,omitempty"`
 
-	// Spark configuration property.
+	// OPTIONAL; The user-specified arguments to HDInsightSparkActivity.
+	Arguments []interface{} `json:"arguments,omitempty"`
+
+	// OPTIONAL; The application's Java/Spark main class.
+	ClassName *string `json:"className,omitempty"`
+
+	// OPTIONAL; Debug info option.
+	GetDebugInfo *HDInsightActivityDebugInfoOption `json:"getDebugInfo,omitempty"`
+
+	// OPTIONAL; The user to impersonate that will execute the job. Type: string (or Expression with resultType string).
+	ProxyUser interface{} `json:"proxyUser,omitempty"`
+
+	// OPTIONAL; Spark configuration property.
 	SparkConfig map[string]interface{} `json:"sparkConfig,omitempty"`
 
-	// The storage linked service for uploading the entry file and dependencies, and for receiving logs.
+	// OPTIONAL; The storage linked service for uploading the entry file and dependencies, and for receiving logs.
 	SparkJobLinkedService *LinkedServiceReference `json:"sparkJobLinkedService,omitempty"`
 }
 
@@ -14049,26 +14071,8 @@ func (h *HDInsightStreamingActivity) UnmarshalJSON(data []byte) error {
 
 // HDInsightStreamingActivityTypeProperties - HDInsight streaming activity properties.
 type HDInsightStreamingActivityTypeProperties struct {
-	// User specified arguments to HDInsightActivity.
-	Arguments []interface{} `json:"arguments,omitempty"`
-
-	// Combiner executable name. Type: string (or Expression with resultType string).
-	Combiner interface{} `json:"combiner,omitempty"`
-
-	// Command line environment values.
-	CommandEnvironment []interface{} `json:"commandEnvironment,omitempty"`
-
-	// Allows user to specify defines for streaming job request.
-	Defines map[string]interface{} `json:"defines,omitempty"`
-
-	// Linked service reference where the files are located.
-	FileLinkedService *LinkedServiceReference `json:"fileLinkedService,omitempty"`
-
 	// REQUIRED; Paths to streaming job files. Can be directories.
 	FilePaths []interface{} `json:"filePaths,omitempty"`
-
-	// Debug info option.
-	GetDebugInfo *HDInsightActivityDebugInfoOption `json:"getDebugInfo,omitempty"`
 
 	// REQUIRED; Input blob path. Type: string (or Expression with resultType string).
 	Input interface{} `json:"input,omitempty"`
@@ -14082,7 +14086,25 @@ type HDInsightStreamingActivityTypeProperties struct {
 	// REQUIRED; Reducer executable name. Type: string (or Expression with resultType string).
 	Reducer interface{} `json:"reducer,omitempty"`
 
-	// Storage linked service references.
+	// OPTIONAL; User specified arguments to HDInsightActivity.
+	Arguments []interface{} `json:"arguments,omitempty"`
+
+	// OPTIONAL; Combiner executable name. Type: string (or Expression with resultType string).
+	Combiner interface{} `json:"combiner,omitempty"`
+
+	// OPTIONAL; Command line environment values.
+	CommandEnvironment []interface{} `json:"commandEnvironment,omitempty"`
+
+	// OPTIONAL; Allows user to specify defines for streaming job request.
+	Defines map[string]interface{} `json:"defines,omitempty"`
+
+	// OPTIONAL; Linked service reference where the files are located.
+	FileLinkedService *LinkedServiceReference `json:"fileLinkedService,omitempty"`
+
+	// OPTIONAL; Debug info option.
+	GetDebugInfo *HDInsightActivityDebugInfoOption `json:"getDebugInfo,omitempty"`
+
+	// OPTIONAL; Storage linked service references.
 	StorageLinkedServices []*LinkedServiceReference `json:"storageLinkedServices,omitempty"`
 }
 
@@ -14140,33 +14162,33 @@ func (h *HTTPLinkedService) UnmarshalJSON(data []byte) error {
 
 // HTTPLinkedServiceTypeProperties - Properties specific to this linked service type.
 type HTTPLinkedServiceTypeProperties struct {
-	// The authentication type to be used to connect to the HTTP server.
+	// REQUIRED; The base URL of the HTTP endpoint, e.g. http://www.microsoft.com. Type: string (or Expression with resultType string).
+	URL interface{} `json:"url,omitempty"`
+
+	// OPTIONAL; The authentication type to be used to connect to the HTTP server.
 	AuthenticationType *HTTPAuthenticationType `json:"authenticationType,omitempty"`
 
-	// Thumbprint of certificate for ClientCertificate authentication. Only valid for on-premises copy. For on-premises copy with ClientCertificate authentication,
-	// either CertThumbprint or
+	// OPTIONAL; Thumbprint of certificate for ClientCertificate authentication. Only valid for on-premises copy. For on-premises copy with ClientCertificate
+	// authentication, either CertThumbprint or
 	// EmbeddedCertData/Password should be specified. Type: string (or Expression with resultType string).
 	CertThumbprint interface{} `json:"certThumbprint,omitempty"`
 
-	// Base64 encoded certificate data for ClientCertificate authentication. For on-premises copy with ClientCertificate authentication, either CertThumbprint
+	// OPTIONAL; Base64 encoded certificate data for ClientCertificate authentication. For on-premises copy with ClientCertificate authentication, either CertThumbprint
 	// or EmbeddedCertData/Password should be
 	// specified. Type: string (or Expression with resultType string).
 	EmbeddedCertData interface{} `json:"embeddedCertData,omitempty"`
 
-	// If true, validate the HTTPS server SSL certificate. Default value is true. Type: boolean (or Expression with resultType boolean).
+	// OPTIONAL; If true, validate the HTTPS server SSL certificate. Default value is true. Type: boolean (or Expression with resultType boolean).
 	EnableServerCertificateValidation interface{} `json:"enableServerCertificateValidation,omitempty"`
 
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
 	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
 
-	// Password for Basic, Digest, Windows, or ClientCertificate with EmbeddedCertData authentication.
+	// OPTIONAL; Password for Basic, Digest, Windows, or ClientCertificate with EmbeddedCertData authentication.
 	Password SecretBaseClassification `json:"password,omitempty"`
 
-	// REQUIRED; The base URL of the HTTP endpoint, e.g. http://www.microsoft.com. Type: string (or Expression with resultType string).
-	URL interface{} `json:"url,omitempty"`
-
-	// User name for Basic, Digest, or Windows authentication. Type: string (or Expression with resultType string).
+	// OPTIONAL; User name for Basic, Digest, or Windows authentication. Type: string (or Expression with resultType string).
 	UserName interface{} `json:"userName,omitempty"`
 }
 
@@ -14240,16 +14262,16 @@ type HTTPPollerResponse struct {
 // HTTPReadSettings - Sftp read settings.
 type HTTPReadSettings struct {
 	StoreReadSettings
-	// The additional HTTP headers in the request to the RESTful API. Type: string (or Expression with resultType string).
+	// OPTIONAL; The additional HTTP headers in the request to the RESTful API. Type: string (or Expression with resultType string).
 	AdditionalHeaders interface{} `json:"additionalHeaders,omitempty"`
 
-	// The HTTP request body to the RESTful API if requestMethod is POST. Type: string (or Expression with resultType string).
+	// OPTIONAL; The HTTP request body to the RESTful API if requestMethod is POST. Type: string (or Expression with resultType string).
 	RequestBody interface{} `json:"requestBody,omitempty"`
 
-	// The HTTP method used to call the RESTful API. The default is GET. Type: string (or Expression with resultType string).
+	// OPTIONAL; The HTTP method used to call the RESTful API. The default is GET. Type: string (or Expression with resultType string).
 	RequestMethod interface{} `json:"requestMethod,omitempty"`
 
-	// Specifies the timeout for a HTTP client to get HTTP response from HTTP server.
+	// OPTIONAL; Specifies the timeout for a HTTP client to get HTTP response from HTTP server.
 	RequestTimeout interface{} `json:"requestTimeout,omitempty"`
 }
 
@@ -14295,7 +14317,7 @@ func (h *HTTPReadSettings) UnmarshalJSON(data []byte) error {
 // HTTPServerLocation - The location of http server.
 type HTTPServerLocation struct {
 	DatasetLocation
-	// Specify the relativeUrl of http server. Type: string (or Expression with resultType string)
+	// OPTIONAL; Specify the relativeUrl of http server. Type: string (or Expression with resultType string)
 	RelativeURL interface{} `json:"relativeUrl,omitempty"`
 }
 
@@ -14329,7 +14351,7 @@ func (h *HTTPServerLocation) UnmarshalJSON(data []byte) error {
 // HTTPSource - A copy activity source for an HTTP file.
 type HTTPSource struct {
 	CopySource
-	// Specifies the timeout for a HTTP client to get HTTP response from HTTP server. The default value is equivalent to System.Net.HttpWebRequest.Timeout.
+	// OPTIONAL; Specifies the timeout for a HTTP client to get HTTP response from HTTP server. The default value is equivalent to System.Net.HttpWebRequest.Timeout.
 	// Type: string (or Expression with resultType
 	// string), pattern: ((\d+).)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
 	HTTPRequestTimeout interface{} `json:"httpRequestTimeout,omitempty"`
@@ -14398,20 +14420,21 @@ func (h *HdfsLinkedService) UnmarshalJSON(data []byte) error {
 
 // HdfsLinkedServiceTypeProperties - HDFS linked service properties.
 type HdfsLinkedServiceTypeProperties struct {
-	// Type of authentication used to connect to the HDFS. Possible values are: Anonymous and Windows. Type: string (or Expression with resultType string).
-	AuthenticationType interface{} `json:"authenticationType,omitempty"`
-
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
-
-	// Password for Windows authentication.
-	Password SecretBaseClassification `json:"password,omitempty"`
-
 	// REQUIRED; The URL of the HDFS service endpoint, e.g. http://myhostname:50070/webhdfs/v1 . Type: string (or Expression with resultType string).
 	URL interface{} `json:"url,omitempty"`
 
-	// User name for Windows authentication. Type: string (or Expression with resultType string).
+	// OPTIONAL; Type of authentication used to connect to the HDFS. Possible values are: Anonymous and Windows. Type: string (or Expression with resultType
+	// string).
+	AuthenticationType interface{} `json:"authenticationType,omitempty"`
+
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
+
+	// OPTIONAL; Password for Windows authentication.
+	Password SecretBaseClassification `json:"password,omitempty"`
+
+	// OPTIONAL; User name for Windows authentication. Type: string (or Expression with resultType string).
 	UserName interface{} `json:"userName,omitempty"`
 }
 
@@ -14472,25 +14495,25 @@ func (h HdfsLocation) MarshalJSON() ([]byte, error) {
 // HdfsReadSettings - HDFS read settings.
 type HdfsReadSettings struct {
 	StoreReadSettings
-	// Specifies Distcp-related settings.
+	// OPTIONAL; Specifies Distcp-related settings.
 	DistcpSettings *DistcpSettings `json:"distcpSettings,omitempty"`
 
-	// Indicates whether to enable partition discovery.
+	// OPTIONAL; Indicates whether to enable partition discovery.
 	EnablePartitionDiscovery *bool `json:"enablePartitionDiscovery,omitempty"`
 
-	// The end of file's modified datetime. Type: string (or Expression with resultType string).
+	// OPTIONAL; The end of file's modified datetime. Type: string (or Expression with resultType string).
 	ModifiedDatetimeEnd interface{} `json:"modifiedDatetimeEnd,omitempty"`
 
-	// The start of file's modified datetime. Type: string (or Expression with resultType string).
+	// OPTIONAL; The start of file's modified datetime. Type: string (or Expression with resultType string).
 	ModifiedDatetimeStart interface{} `json:"modifiedDatetimeStart,omitempty"`
 
-	// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
+	// OPTIONAL; If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
 	Recursive interface{} `json:"recursive,omitempty"`
 
-	// HDFS wildcardFileName. Type: string (or Expression with resultType string).
+	// OPTIONAL; HDFS wildcardFileName. Type: string (or Expression with resultType string).
 	WildcardFileName interface{} `json:"wildcardFileName,omitempty"`
 
-	// HDFS wildcardFolderPath. Type: string (or Expression with resultType string).
+	// OPTIONAL; HDFS wildcardFolderPath. Type: string (or Expression with resultType string).
 	WildcardFolderPath interface{} `json:"wildcardFolderPath,omitempty"`
 }
 
@@ -14548,10 +14571,10 @@ func (h *HdfsReadSettings) UnmarshalJSON(data []byte) error {
 // HdfsSource - A copy activity HDFS source.
 type HdfsSource struct {
 	CopySource
-	// Specifies Distcp-related settings.
+	// OPTIONAL; Specifies Distcp-related settings.
 	DistcpSettings *DistcpSettings `json:"distcpSettings,omitempty"`
 
-	// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
+	// OPTIONAL; If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
 	Recursive interface{} `json:"recursive,omitempty"`
 }
 
@@ -14588,13 +14611,13 @@ func (h *HdfsSource) UnmarshalJSON(data []byte) error {
 
 // HiveDatasetTypeProperties - Hive Properties
 type HiveDatasetTypeProperties struct {
-	// The schema name of the Hive. Type: string (or Expression with resultType string).
+	// OPTIONAL; The schema name of the Hive. Type: string (or Expression with resultType string).
 	Schema interface{} `json:"schema,omitempty"`
 
-	// The table name of the Hive. Type: string (or Expression with resultType string).
+	// OPTIONAL; The table name of the Hive. Type: string (or Expression with resultType string).
 	Table interface{} `json:"table,omitempty"`
 
-	// This property will be retired. Please consider using schema + table properties instead.
+	// OPTIONAL; This property will be retired. Please consider using schema + table properties instead.
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
@@ -14634,58 +14657,59 @@ func (h *HiveLinkedService) UnmarshalJSON(data []byte) error {
 
 // HiveLinkedServiceTypeProperties - Hive Server linked service properties.
 type HiveLinkedServiceTypeProperties struct {
-	// Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value is false.
-	AllowHostNameCNMismatch interface{} `json:"allowHostNameCNMismatch,omitempty"`
-
-	// Specifies whether to allow self-signed certificates from the server. The default value is false.
-	AllowSelfSignedServerCert interface{} `json:"allowSelfSignedServerCert,omitempty"`
-
 	// REQUIRED; The authentication method used to access the Hive server.
 	AuthenticationType *HiveAuthenticationType `json:"authenticationType,omitempty"`
-
-	// Specifies whether the connections to the server are encrypted using SSL. The default value is false.
-	EnableSSL interface{} `json:"enableSsl,omitempty"`
-
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
-
-	// The partial URL corresponding to the Hive server.
-	HTTPPath interface{} `json:"httpPath,omitempty"`
 
 	// REQUIRED; IP address or host name of the Hive server, separated by ';' for multiple hosts (only when serviceDiscoveryMode is enable).
 	Host interface{} `json:"host,omitempty"`
 
-	// The password corresponding to the user name that you provided in the Username field
+	// OPTIONAL; Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value
+	// is false.
+	AllowHostNameCNMismatch interface{} `json:"allowHostNameCNMismatch,omitempty"`
+
+	// OPTIONAL; Specifies whether to allow self-signed certificates from the server. The default value is false.
+	AllowSelfSignedServerCert interface{} `json:"allowSelfSignedServerCert,omitempty"`
+
+	// OPTIONAL; Specifies whether the connections to the server are encrypted using SSL. The default value is false.
+	EnableSSL interface{} `json:"enableSsl,omitempty"`
+
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
+
+	// OPTIONAL; The partial URL corresponding to the Hive server.
+	HTTPPath interface{} `json:"httpPath,omitempty"`
+
+	// OPTIONAL; The password corresponding to the user name that you provided in the Username field
 	Password SecretBaseClassification `json:"password,omitempty"`
 
-	// The TCP port that the Hive server uses to listen for client connections.
+	// OPTIONAL; The TCP port that the Hive server uses to listen for client connections.
 	Port interface{} `json:"port,omitempty"`
 
-	// The type of Hive server.
+	// OPTIONAL; The type of Hive server.
 	ServerType *HiveServerType `json:"serverType,omitempty"`
 
-	// true to indicate using the ZooKeeper service, false not.
+	// OPTIONAL; true to indicate using the ZooKeeper service, false not.
 	ServiceDiscoveryMode interface{} `json:"serviceDiscoveryMode,omitempty"`
 
-	// The transport protocol to use in the Thrift layer.
+	// OPTIONAL; The transport protocol to use in the Thrift layer.
 	ThriftTransportProtocol *HiveThriftTransportProtocol `json:"thriftTransportProtocol,omitempty"`
 
-	// The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when
-	// using SSL on self-hosted IR. The default value
+	// OPTIONAL; The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only
+	// be set when using SSL on self-hosted IR. The default value
 	// is the cacerts.pem file installed with the IR.
 	TrustedCertPath interface{} `json:"trustedCertPath,omitempty"`
 
-	// Specifies whether the driver uses native HiveQL queries,or converts them into an equivalent form in HiveQL.
+	// OPTIONAL; Specifies whether the driver uses native HiveQL queries,or converts them into an equivalent form in HiveQL.
 	UseNativeQuery interface{} `json:"useNativeQuery,omitempty"`
 
-	// Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false.
+	// OPTIONAL; Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false.
 	UseSystemTrustStore interface{} `json:"useSystemTrustStore,omitempty"`
 
-	// The user name that you use to access Hive Server.
+	// OPTIONAL; The user name that you use to access Hive Server.
 	Username interface{} `json:"username,omitempty"`
 
-	// The namespace on ZooKeeper under which Hive Server 2 nodes are added.
+	// OPTIONAL; The namespace on ZooKeeper under which Hive Server 2 nodes are added.
 	ZooKeeperNameSpace interface{} `json:"zooKeeperNameSpace,omitempty"`
 }
 
@@ -14783,7 +14807,7 @@ func (h *HiveLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 // HiveObjectDataset - Hive Server dataset.
 type HiveObjectDataset struct {
 	Dataset
-	// Properties specific to this dataset type.
+	// OPTIONAL; Properties specific to this dataset type.
 	TypeProperties *HiveDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -14817,7 +14841,7 @@ func (h *HiveObjectDataset) UnmarshalJSON(data []byte) error {
 // HiveSource - A copy activity Hive Server source.
 type HiveSource struct {
 	TabularSource
-	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	// OPTIONAL; A query to retrieve data from source. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -14884,30 +14908,30 @@ func (h *HubspotLinkedService) UnmarshalJSON(data []byte) error {
 
 // HubspotLinkedServiceTypeProperties - Hubspot Service linked service properties.
 type HubspotLinkedServiceTypeProperties struct {
-	// The access token obtained when initially authenticating your OAuth integration.
-	AccessToken SecretBaseClassification `json:"accessToken,omitempty"`
-
 	// REQUIRED; The client ID associated with your Hubspot application.
 	ClientID interface{} `json:"clientId,omitempty"`
 
-	// The client secret associated with your Hubspot application.
+	// OPTIONAL; The access token obtained when initially authenticating your OAuth integration.
+	AccessToken SecretBaseClassification `json:"accessToken,omitempty"`
+
+	// OPTIONAL; The client secret associated with your Hubspot application.
 	ClientSecret SecretBaseClassification `json:"clientSecret,omitempty"`
 
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
 	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
 
-	// The refresh token obtained when initially authenticating your OAuth integration.
+	// OPTIONAL; The refresh token obtained when initially authenticating your OAuth integration.
 	RefreshToken SecretBaseClassification `json:"refreshToken,omitempty"`
 
-	// Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true.
+	// OPTIONAL; Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true.
 	UseEncryptedEndpoints interface{} `json:"useEncryptedEndpoints,omitempty"`
 
-	// Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value
-	// is true.
+	// OPTIONAL; Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default
+	// value is true.
 	UseHostVerification interface{} `json:"useHostVerification,omitempty"`
 
-	// Specifies whether to verify the identity of the server when connecting over SSL. The default value is true.
+	// OPTIONAL; Specifies whether to verify the identity of the server when connecting over SSL. The default value is true.
 	UsePeerVerification interface{} `json:"usePeerVerification,omitempty"`
 }
 
@@ -14969,7 +14993,7 @@ func (h *HubspotLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 // HubspotObjectDataset - Hubspot Service dataset.
 type HubspotObjectDataset struct {
 	Dataset
-	// Properties specific to this dataset type.
+	// OPTIONAL; Properties specific to this dataset type.
 	TypeProperties *GenericDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -15003,7 +15027,7 @@ func (h *HubspotObjectDataset) UnmarshalJSON(data []byte) error {
 // HubspotSource - A copy activity Hubspot Service source.
 type HubspotSource struct {
 	TabularSource
-	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	// OPTIONAL; A query to retrieve data from source. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -15075,12 +15099,12 @@ type IfConditionActivityTypeProperties struct {
 	// will be executed.
 	Expression *Expression `json:"expression,omitempty"`
 
-	// List of activities to execute if expression is evaluated to false. This is an optional property and if not provided, the activity will exit without any
-	// action.
+	// OPTIONAL; List of activities to execute if expression is evaluated to false. This is an optional property and if not provided, the activity will exit
+	// without any action.
 	IfFalseActivities []ActivityClassification `json:"ifFalseActivities,omitempty"`
 
-	// List of activities to execute if expression is evaluated to true. This is an optional property and if not provided, the activity will exit without any
-	// action.
+	// OPTIONAL; List of activities to execute if expression is evaluated to true. This is an optional property and if not provided, the activity will exit
+	// without any action.
 	IfTrueActivities []ActivityClassification `json:"ifTrueActivities,omitempty"`
 }
 
@@ -15121,13 +15145,13 @@ func (i *IfConditionActivityTypeProperties) UnmarshalJSON(data []byte) error {
 
 // ImpalaDatasetTypeProperties - Impala Dataset Properties
 type ImpalaDatasetTypeProperties struct {
-	// The schema name of the Impala. Type: string (or Expression with resultType string).
+	// OPTIONAL; The schema name of the Impala. Type: string (or Expression with resultType string).
 	Schema interface{} `json:"schema,omitempty"`
 
-	// The table name of the Impala. Type: string (or Expression with resultType string).
+	// OPTIONAL; The table name of the Impala. Type: string (or Expression with resultType string).
 	Table interface{} `json:"table,omitempty"`
 
-	// This property will be retired. Please consider using schema + table properties instead.
+	// OPTIONAL; This property will be retired. Please consider using schema + table properties instead.
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
@@ -15167,40 +15191,41 @@ func (i *ImpalaLinkedService) UnmarshalJSON(data []byte) error {
 
 // ImpalaLinkedServiceTypeProperties - Impala server linked service properties.
 type ImpalaLinkedServiceTypeProperties struct {
-	// Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value is false.
-	AllowHostNameCNMismatch interface{} `json:"allowHostNameCNMismatch,omitempty"`
-
-	// Specifies whether to allow self-signed certificates from the server. The default value is false.
-	AllowSelfSignedServerCert interface{} `json:"allowSelfSignedServerCert,omitempty"`
-
 	// REQUIRED; The authentication type to use.
 	AuthenticationType *ImpalaAuthenticationType `json:"authenticationType,omitempty"`
-
-	// Specifies whether the connections to the server are encrypted using SSL. The default value is false.
-	EnableSSL interface{} `json:"enableSsl,omitempty"`
-
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
 
 	// REQUIRED; The IP address or host name of the Impala server. (i.e. 192.168.222.160)
 	Host interface{} `json:"host,omitempty"`
 
-	// The password corresponding to the user name when using UsernameAndPassword.
+	// OPTIONAL; Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value
+	// is false.
+	AllowHostNameCNMismatch interface{} `json:"allowHostNameCNMismatch,omitempty"`
+
+	// OPTIONAL; Specifies whether to allow self-signed certificates from the server. The default value is false.
+	AllowSelfSignedServerCert interface{} `json:"allowSelfSignedServerCert,omitempty"`
+
+	// OPTIONAL; Specifies whether the connections to the server are encrypted using SSL. The default value is false.
+	EnableSSL interface{} `json:"enableSsl,omitempty"`
+
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
+
+	// OPTIONAL; The password corresponding to the user name when using UsernameAndPassword.
 	Password SecretBaseClassification `json:"password,omitempty"`
 
-	// The TCP port that the Impala server uses to listen for client connections. The default value is 21050.
+	// OPTIONAL; The TCP port that the Impala server uses to listen for client connections. The default value is 21050.
 	Port interface{} `json:"port,omitempty"`
 
-	// The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when
-	// using SSL on self-hosted IR. The default value
+	// OPTIONAL; The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only
+	// be set when using SSL on self-hosted IR. The default value
 	// is the cacerts.pem file installed with the IR.
 	TrustedCertPath interface{} `json:"trustedCertPath,omitempty"`
 
-	// Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false.
+	// OPTIONAL; Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false.
 	UseSystemTrustStore interface{} `json:"useSystemTrustStore,omitempty"`
 
-	// The user name used to access the Impala server. The default value is anonymous when using SASLUsername.
+	// OPTIONAL; The user name used to access the Impala server. The default value is anonymous when using SASLUsername.
 	Username interface{} `json:"username,omitempty"`
 }
 
@@ -15274,7 +15299,7 @@ func (i *ImpalaLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 // ImpalaObjectDataset - Impala server dataset.
 type ImpalaObjectDataset struct {
 	Dataset
-	// Properties specific to this dataset type.
+	// OPTIONAL; Properties specific to this dataset type.
 	TypeProperties *ImpalaDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -15308,7 +15333,7 @@ func (i *ImpalaObjectDataset) UnmarshalJSON(data []byte) error {
 // ImpalaSource - A copy activity Impala server source.
 type ImpalaSource struct {
 	TabularSource
-	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	// OPTIONAL; A query to retrieve data from source. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -15375,24 +15400,24 @@ func (i *InformixLinkedService) UnmarshalJSON(data []byte) error {
 
 // InformixLinkedServiceTypeProperties - Informix linked service properties.
 type InformixLinkedServiceTypeProperties struct {
-	// Type of authentication used to connect to the Informix as ODBC data store. Possible values are: Anonymous and Basic. Type: string (or Expression with
-	// resultType string).
-	AuthenticationType interface{} `json:"authenticationType,omitempty"`
-
 	// REQUIRED; The non-access credential portion of the connection string as well as an optional encrypted credential. Type: string, SecureString or AzureKeyVaultSecretReference.
 	ConnectionString interface{} `json:"connectionString,omitempty"`
 
-	// The access credential portion of the connection string specified in driver-specific property-value format.
+	// OPTIONAL; Type of authentication used to connect to the Informix as ODBC data store. Possible values are: Anonymous and Basic. Type: string (or Expression
+	// with resultType string).
+	AuthenticationType interface{} `json:"authenticationType,omitempty"`
+
+	// OPTIONAL; The access credential portion of the connection string specified in driver-specific property-value format.
 	Credential SecretBaseClassification `json:"credential,omitempty"`
 
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
 	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
 
-	// Password for Basic authentication.
+	// OPTIONAL; Password for Basic authentication.
 	Password SecretBaseClassification `json:"password,omitempty"`
 
-	// User name for Basic authentication. Type: string (or Expression with resultType string).
+	// OPTIONAL; User name for Basic authentication. Type: string (or Expression with resultType string).
 	UserName interface{} `json:"userName,omitempty"`
 }
 
@@ -15446,7 +15471,7 @@ func (i *InformixLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 // InformixSink - A copy activity Informix sink.
 type InformixSink struct {
 	CopySink
-	// A query to execute before starting the copy. Type: string (or Expression with resultType string).
+	// OPTIONAL; A query to execute before starting the copy. Type: string (or Expression with resultType string).
 	PreCopyScript interface{} `json:"preCopyScript,omitempty"`
 }
 
@@ -15480,7 +15505,7 @@ func (i *InformixSink) UnmarshalJSON(data []byte) error {
 // InformixSource - A copy activity source for Informix.
 type InformixSource struct {
 	TabularSource
-	// Database query. Type: string (or Expression with resultType string).
+	// OPTIONAL; Database query. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -15514,7 +15539,7 @@ func (i *InformixSource) UnmarshalJSON(data []byte) error {
 // InformixTableDataset - The Informix table dataset.
 type InformixTableDataset struct {
 	Dataset
-	// Informix table dataset properties.
+	// OPTIONAL; Informix table dataset properties.
 	TypeProperties *InformixTableDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -15547,7 +15572,7 @@ func (i *InformixTableDataset) UnmarshalJSON(data []byte) error {
 
 // InformixTableDatasetTypeProperties - Informix table dataset properties.
 type InformixTableDatasetTypeProperties struct {
-	// The Informix table name. Type: string (or Expression with resultType string).
+	// OPTIONAL; The Informix table name. Type: string (or Expression with resultType string).
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
@@ -15562,14 +15587,14 @@ type IntegrationRuntimeClassification interface {
 
 // IntegrationRuntime - Azure Synapse nested object which serves as a compute resource for activities.
 type IntegrationRuntime struct {
+	// REQUIRED; Type of integration runtime.
+	Type *IntegrationRuntimeType `json:"type,omitempty"`
+
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
-	// Integration runtime description.
+	// OPTIONAL; Integration runtime description.
 	Description *string `json:"description,omitempty"`
-
-	// REQUIRED; Type of integration runtime.
-	Type *IntegrationRuntimeType `json:"type,omitempty"`
 }
 
 // GetIntegrationRuntime implements the IntegrationRuntimeClassification interface for type IntegrationRuntime.
@@ -15630,22 +15655,22 @@ type IntegrationRuntimeComputeProperties struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
-	// Data flow properties for managed integration runtime.
+	// OPTIONAL; Data flow properties for managed integration runtime.
 	DataFlowProperties *IntegrationRuntimeDataFlowProperties `json:"dataFlowProperties,omitempty"`
 
-	// The location for managed integration runtime. The supported regions could be found on https://docs.microsoft.com/en-us/azure/data-factory/data-factory-data-movement-activities
+	// OPTIONAL; The location for managed integration runtime. The supported regions could be found on https://docs.microsoft.com/en-us/azure/data-factory/data-factory-data-movement-activities
 	Location *string `json:"location,omitempty"`
 
-	// Maximum parallel executions count per node for managed integration runtime.
+	// OPTIONAL; Maximum parallel executions count per node for managed integration runtime.
 	MaxParallelExecutionsPerNode *int32 `json:"maxParallelExecutionsPerNode,omitempty"`
 
-	// The node size requirement to managed integration runtime.
+	// OPTIONAL; The node size requirement to managed integration runtime.
 	NodeSize *string `json:"nodeSize,omitempty"`
 
-	// The required number of nodes for managed integration runtime.
+	// OPTIONAL; The required number of nodes for managed integration runtime.
 	NumberOfNodes *int32 `json:"numberOfNodes,omitempty"`
 
-	// VNet properties for managed integration runtime.
+	// OPTIONAL; VNet properties for managed integration runtime.
 	VNetProperties *IntegrationRuntimeVNetProperties `json:"vNetProperties,omitempty"`
 }
 
@@ -15713,10 +15738,10 @@ func (i *IntegrationRuntimeComputeProperties) UnmarshalJSON(data []byte) error {
 
 // IntegrationRuntimeCustomSetupScriptProperties - Custom setup script properties for a managed dedicated integration runtime.
 type IntegrationRuntimeCustomSetupScriptProperties struct {
-	// The URI of the Azure blob container that contains the custom setup script.
+	// OPTIONAL; The URI of the Azure blob container that contains the custom setup script.
 	BlobContainerURI *string `json:"blobContainerUri,omitempty"`
 
-	// The SAS token of the Azure blob container.
+	// OPTIONAL; The SAS token of the Azure blob container.
 	SasToken *SecureString `json:"sasToken,omitempty"`
 }
 
@@ -15725,13 +15750,13 @@ type IntegrationRuntimeDataFlowProperties struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
-	// Compute type of the cluster which will execute data flow job.
+	// OPTIONAL; Compute type of the cluster which will execute data flow job.
 	ComputeType *DataFlowComputeType `json:"computeType,omitempty"`
 
-	// Core count of the cluster which will execute data flow job. Supported values are: 8, 16, 32, 48, 80, 144 and 272.
+	// OPTIONAL; Core count of the cluster which will execute data flow job. Supported values are: 8, 16, 32, 48, 80, 144 and 272.
 	CoreCount *int32 `json:"coreCount,omitempty"`
 
-	// Time to live (in minutes) setting of the cluster which will execute data flow job.
+	// OPTIONAL; Time to live (in minutes) setting of the cluster which will execute data flow job.
 	TimeToLive *int32 `json:"timeToLive,omitempty"`
 }
 
@@ -15787,23 +15812,23 @@ func (i *IntegrationRuntimeDataFlowProperties) UnmarshalJSON(data []byte) error 
 
 // IntegrationRuntimeDataProxyProperties - Data proxy properties for a managed dedicated integration runtime.
 type IntegrationRuntimeDataProxyProperties struct {
-	// The self-hosted integration runtime reference.
+	// OPTIONAL; The self-hosted integration runtime reference.
 	ConnectVia *EntityReference `json:"connectVia,omitempty"`
 
-	// The path to contain the staged data in the Blob storage.
+	// OPTIONAL; The path to contain the staged data in the Blob storage.
 	Path *string `json:"path,omitempty"`
 
-	// The staging linked service reference.
+	// OPTIONAL; The staging linked service reference.
 	StagingLinkedService *EntityReference `json:"stagingLinkedService,omitempty"`
 }
 
 // IntegrationRuntimeListResponse - A list of integration runtime resources.
 type IntegrationRuntimeListResponse struct {
-	// The link to the next page of results, if any remaining results exist.
-	NextLink *string `json:"nextLink,omitempty"`
-
 	// REQUIRED; List of integration runtimes.
 	Value []*IntegrationRuntimeResource `json:"value,omitempty"`
+
+	// OPTIONAL; The link to the next page of results, if any remaining results exist.
+	NextLink *string `json:"nextLink,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type IntegrationRuntimeListResponse.
@@ -15825,14 +15850,14 @@ type IntegrationRuntimeListResponseResponse struct {
 
 // IntegrationRuntimeReference - Integration runtime reference type.
 type IntegrationRuntimeReference struct {
-	// Arguments for integration runtime.
-	Parameters map[string]interface{} `json:"parameters,omitempty"`
-
 	// REQUIRED; Reference integration runtime name.
 	ReferenceName *string `json:"referenceName,omitempty"`
 
 	// REQUIRED; Type of integration runtime.
 	Type *IntegrationRuntimeReferenceType `json:"type,omitempty"`
+
+	// OPTIONAL; Arguments for integration runtime.
+	Parameters map[string]interface{} `json:"parameters,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type IntegrationRuntimeReference.
@@ -15892,16 +15917,16 @@ type IntegrationRuntimeSsisCatalogInfo struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
-	// The password of the administrator user account of the catalog database.
+	// OPTIONAL; The password of the administrator user account of the catalog database.
 	CatalogAdminPassword *SecureString `json:"catalogAdminPassword,omitempty"`
 
-	// The administrator user name of catalog database.
+	// OPTIONAL; The administrator user name of catalog database.
 	CatalogAdminUserName *string `json:"catalogAdminUserName,omitempty"`
 
-	// The pricing tier for the catalog database. The valid values could be found in https://azure.microsoft.com/en-us/pricing/details/sql-database/
+	// OPTIONAL; The pricing tier for the catalog database. The valid values could be found in https://azure.microsoft.com/en-us/pricing/details/sql-database/
 	CatalogPricingTier *IntegrationRuntimeSsisCatalogPricingTier `json:"catalogPricingTier,omitempty"`
 
-	// The catalog database server URL.
+	// OPTIONAL; The catalog database server URL.
 	CatalogServerEndpoint *string `json:"catalogServerEndpoint,omitempty"`
 }
 
@@ -15964,22 +15989,22 @@ type IntegrationRuntimeSsisProperties struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
-	// Catalog information for managed dedicated integration runtime.
+	// OPTIONAL; Catalog information for managed dedicated integration runtime.
 	CatalogInfo *IntegrationRuntimeSsisCatalogInfo `json:"catalogInfo,omitempty"`
 
-	// Custom setup script properties for a managed dedicated integration runtime.
+	// OPTIONAL; Custom setup script properties for a managed dedicated integration runtime.
 	CustomSetupScriptProperties *IntegrationRuntimeCustomSetupScriptProperties `json:"customSetupScriptProperties,omitempty"`
 
-	// Data proxy properties for a managed dedicated integration runtime.
+	// OPTIONAL; Data proxy properties for a managed dedicated integration runtime.
 	DataProxyProperties *IntegrationRuntimeDataProxyProperties `json:"dataProxyProperties,omitempty"`
 
-	// The edition for the SSIS Integration Runtime
+	// OPTIONAL; The edition for the SSIS Integration Runtime
 	Edition *IntegrationRuntimeEdition `json:"edition,omitempty"`
 
-	// Custom setup without script properties for a SSIS integration runtime.
+	// OPTIONAL; Custom setup without script properties for a SSIS integration runtime.
 	ExpressCustomSetupProperties []CustomSetupBaseClassification `json:"expressCustomSetupProperties,omitempty"`
 
-	// License type for bringing your own license scenario.
+	// OPTIONAL; License type for bringing your own license scenario.
 	LicenseType *IntegrationRuntimeLicenseType `json:"licenseType,omitempty"`
 }
 
@@ -16050,13 +16075,13 @@ type IntegrationRuntimeVNetProperties struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
-	// Resource IDs of the public IP addresses that this integration runtime will use.
+	// OPTIONAL; Resource IDs of the public IP addresses that this integration runtime will use.
 	PublicIPs []*string `json:"publicIPs,omitempty"`
 
-	// The name of the subnet this integration runtime will join.
+	// OPTIONAL; The name of the subnet this integration runtime will join.
 	Subnet *string `json:"subnet,omitempty"`
 
-	// The ID of the VNet that this integration runtime will join.
+	// OPTIONAL; The ID of the VNet that this integration runtime will join.
 	VNetID *string `json:"vNetId,omitempty"`
 }
 
@@ -16123,7 +16148,7 @@ type IntegrationRuntimesListOptions struct {
 // JSONDataset - Json dataset.
 type JSONDataset struct {
 	Dataset
-	// Json dataset properties.
+	// OPTIONAL; Json dataset properties.
 	TypeProperties *JSONDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -16156,16 +16181,16 @@ func (j *JSONDataset) UnmarshalJSON(data []byte) error {
 
 // JSONDatasetTypeProperties - Json dataset properties.
 type JSONDatasetTypeProperties struct {
-	// The data compression method used for the json dataset.
-	Compression DatasetCompressionClassification `json:"compression,omitempty"`
-
-	// The code page name of the preferred encoding. If not specified, the default value is UTF-8, unless BOM denotes another Unicode encoding. Refer to the
-	// name column of the table in the following link to
-	// set supported values: https://msdn.microsoft.com/library/system.text.encoding.aspx. Type: string (or Expression with resultType string).
-	EncodingName interface{} `json:"encodingName,omitempty"`
-
 	// REQUIRED; The location of the json data storage.
 	Location DatasetLocationClassification `json:"location,omitempty"`
+
+	// OPTIONAL; The data compression method used for the json dataset.
+	Compression DatasetCompressionClassification `json:"compression,omitempty"`
+
+	// OPTIONAL; The code page name of the preferred encoding. If not specified, the default value is UTF-8, unless BOM denotes another Unicode encoding. Refer
+	// to the name column of the table in the following link to
+	// set supported values: https://msdn.microsoft.com/library/system.text.encoding.aspx. Type: string (or Expression with resultType string).
+	EncodingName interface{} `json:"encodingName,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type JSONDatasetTypeProperties.
@@ -16206,25 +16231,25 @@ func (j *JSONDatasetTypeProperties) UnmarshalJSON(data []byte) error {
 // JSONFormat - The data stored in JSON format.
 type JSONFormat struct {
 	DatasetStorageFormat
-	// The code page name of the preferred encoding. If not provided, the default value is 'utf-8', unless the byte order mark (BOM) denotes another Unicode
-	// encoding. The full list of supported values can be
+	// OPTIONAL; The code page name of the preferred encoding. If not provided, the default value is 'utf-8', unless the byte order mark (BOM) denotes another
+	// Unicode encoding. The full list of supported values can be
 	// found in the 'Name' column of the table of encodings in the following reference: https://go.microsoft.com/fwlink/?linkid=861078. Type: string (or Expression
 	// with resultType string).
 	EncodingName interface{} `json:"encodingName,omitempty"`
 
-	// File pattern of JSON. To be more specific, the way of separating a collection of JSON objects. The default value is 'setOfObjects'. It is case-sensitive.
+	// OPTIONAL; File pattern of JSON. To be more specific, the way of separating a collection of JSON objects. The default value is 'setOfObjects'. It is case-sensitive.
 	FilePattern *JSONFormatFilePattern `json:"filePattern,omitempty"`
 
-	// The JSONPath of the JSON array element to be flattened. Example: "$.ArrayPath". Type: string (or Expression with resultType string).
+	// OPTIONAL; The JSONPath of the JSON array element to be flattened. Example: "$.ArrayPath". Type: string (or Expression with resultType string).
 	JSONNodeReference interface{} `json:"jsonNodeReference,omitempty"`
 
-	// The JSONPath definition for each column mapping with a customized column name to extract data from JSON file. For fields under root object, start with
-	// "$"; for fields inside the array chosen by
+	// OPTIONAL; The JSONPath definition for each column mapping with a customized column name to extract data from JSON file. For fields under root object,
+	// start with "$"; for fields inside the array chosen by
 	// jsonNodeReference property, start from the array element. Example: {"Column1": "$.Column1Path", "Column2": "Column2PathInArray"}. Type: object (or Expression
 	// with resultType object).
 	JSONPathDefinition interface{} `json:"jsonPathDefinition,omitempty"`
 
-	// The character used to separate nesting levels. Default value is '.' (dot). Type: string (or Expression with resultType string).
+	// OPTIONAL; The character used to separate nesting levels. Default value is '.' (dot). Type: string (or Expression with resultType string).
 	NestingSeparator interface{} `json:"nestingSeparator,omitempty"`
 }
 
@@ -16274,10 +16299,10 @@ func (j *JSONFormat) UnmarshalJSON(data []byte) error {
 // JSONSink - A copy activity Json sink.
 type JSONSink struct {
 	CopySink
-	// Json format settings.
+	// OPTIONAL; Json format settings.
 	FormatSettings *JSONWriteSettings `json:"formatSettings,omitempty"`
 
-	// Json store settings.
+	// OPTIONAL; Json store settings.
 	StoreSettings StoreWriteSettingsClassification `json:"storeSettings,omitempty"`
 }
 
@@ -16315,7 +16340,7 @@ func (j *JSONSink) UnmarshalJSON(data []byte) error {
 // JSONSource - A copy activity Json source.
 type JSONSource struct {
 	CopySource
-	// Json store settings.
+	// OPTIONAL; Json store settings.
 	StoreSettings StoreReadSettingsClassification `json:"storeSettings,omitempty"`
 }
 
@@ -16349,7 +16374,8 @@ func (j *JSONSource) UnmarshalJSON(data []byte) error {
 // JSONWriteSettings - Json write settings.
 type JSONWriteSettings struct {
 	FormatWriteSettings
-	// File pattern of JSON. This setting controls the way a collection of JSON objects will be treated. The default value is 'setOfObjects'. It is case-sensitive.
+	// OPTIONAL; File pattern of JSON. This setting controls the way a collection of JSON objects will be treated. The default value is 'setOfObjects'. It is
+	// case-sensitive.
 	FilePattern *JSONWriteFilePattern `json:"filePattern,omitempty"`
 }
 
@@ -16416,32 +16442,32 @@ func (j *JiraLinkedService) UnmarshalJSON(data []byte) error {
 
 // JiraLinkedServiceTypeProperties - Jira Service linked service properties.
 type JiraLinkedServiceTypeProperties struct {
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
-
 	// REQUIRED; The IP address or host name of the Jira service. (e.g. jira.example.com)
 	Host interface{} `json:"host,omitempty"`
 
-	// The password corresponding to the user name that you provided in the username field.
+	// REQUIRED; The user name that you use to access Jira Service.
+	Username interface{} `json:"username,omitempty"`
+
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
+
+	// OPTIONAL; The password corresponding to the user name that you provided in the username field.
 	Password SecretBaseClassification `json:"password,omitempty"`
 
-	// The TCP port that the Jira server uses to listen for client connections. The default value is 443 if connecting through HTTPS, or 8080 if connecting
+	// OPTIONAL; The TCP port that the Jira server uses to listen for client connections. The default value is 443 if connecting through HTTPS, or 8080 if connecting
 	// through HTTP.
 	Port interface{} `json:"port,omitempty"`
 
-	// Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true.
+	// OPTIONAL; Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true.
 	UseEncryptedEndpoints interface{} `json:"useEncryptedEndpoints,omitempty"`
 
-	// Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value
-	// is true.
+	// OPTIONAL; Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default
+	// value is true.
 	UseHostVerification interface{} `json:"useHostVerification,omitempty"`
 
-	// Specifies whether to verify the identity of the server when connecting over SSL. The default value is true.
+	// OPTIONAL; Specifies whether to verify the identity of the server when connecting over SSL. The default value is true.
 	UsePeerVerification interface{} `json:"usePeerVerification,omitempty"`
-
-	// REQUIRED; The user name that you use to access Jira Service.
-	Username interface{} `json:"username,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type JiraLinkedServiceTypeProperties.
@@ -16502,7 +16528,7 @@ func (j *JiraLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 // JiraObjectDataset - Jira Service dataset.
 type JiraObjectDataset struct {
 	Dataset
-	// Properties specific to this dataset type.
+	// OPTIONAL; Properties specific to this dataset type.
 	TypeProperties *GenericDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -16536,7 +16562,7 @@ func (j *JiraObjectDataset) UnmarshalJSON(data []byte) error {
 // JiraSource - A copy activity Jira Service source.
 type JiraSource struct {
 	TabularSource
-	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	// OPTIONAL; A query to retrieve data from source. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -16601,23 +16627,23 @@ type LibraryGetOptions struct {
 
 // LibraryInfo - Library/package information of a Big Data pool powered by Apache Spark
 type LibraryInfo struct {
-	// Storage blob container name.
+	// OPTIONAL; Storage blob container name.
 	ContainerName *string `json:"containerName,omitempty"`
+
+	// OPTIONAL; Name of the library.
+	Name *string `json:"name,omitempty"`
+
+	// OPTIONAL; Storage blob path of library.
+	Path *string `json:"path,omitempty"`
+
+	// OPTIONAL; Type of the library.
+	Type *string `json:"type,omitempty"`
 
 	// READ-ONLY; Creator Id of the library/package.
 	CreatorID *string `json:"creatorId,omitempty" azure:"ro"`
 
-	// Name of the library.
-	Name *string `json:"name,omitempty"`
-
-	// Storage blob path of library.
-	Path *string `json:"path,omitempty"`
-
 	// READ-ONLY; Provisioning status of the library/package.
 	ProvisioningStatus *string `json:"provisioningStatus,omitempty" azure:"ro"`
-
-	// Type of the library.
-	Type *string `json:"type,omitempty"`
 
 	// READ-ONLY; The last update time of the library.
 	UploadedTimestamp *time.Time `json:"uploadedTimestamp,omitempty" azure:"ro"`
@@ -16683,11 +16709,11 @@ type LibraryListOptions struct {
 
 // LibraryListResponse - A list of Library resources.
 type LibraryListResponse struct {
-	// The link to the next page of results, if any remaining results exist.
-	NextLink *string `json:"nextLink,omitempty"`
-
 	// REQUIRED; List of Library.
 	Value []*LibraryResource `json:"value,omitempty"`
+
+	// OPTIONAL; The link to the next page of results, if any remaining results exist.
+	NextLink *string `json:"nextLink,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type LibraryListResponse.
@@ -16709,10 +16735,10 @@ type LibraryListResponseResponse struct {
 
 // LibraryRequirements - Library requirements for a Big Data pool powered by Apache Spark
 type LibraryRequirements struct {
-	// The library requirements.
+	// OPTIONAL; The library requirements.
 	Content *string `json:"content,omitempty"`
 
-	// The filename of the library requirements file.
+	// OPTIONAL; The filename of the library requirements file.
 	Filename *string `json:"filename,omitempty"`
 
 	// READ-ONLY; The last update time of the library requirements file.
@@ -17023,23 +17049,23 @@ type LinkedServiceClassification interface {
 // LinkedService - The Azure Synapse nested object which contains the information and credential which can be used to connect with related store or compute
 // resource.
 type LinkedService struct {
+	// REQUIRED; Type of linked service.
+	Type *string `json:"type,omitempty"`
+
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
-	// List of tags that can be used for describing the linked service.
+	// OPTIONAL; List of tags that can be used for describing the linked service.
 	Annotations []interface{} `json:"annotations,omitempty"`
 
-	// The integration runtime reference.
+	// OPTIONAL; The integration runtime reference.
 	ConnectVia *IntegrationRuntimeReference `json:"connectVia,omitempty"`
 
-	// Linked service description.
+	// OPTIONAL; Linked service description.
 	Description *string `json:"description,omitempty"`
 
-	// Parameters for linked service.
+	// OPTIONAL; Parameters for linked service.
 	Parameters map[string]*ParameterSpecification `json:"parameters,omitempty"`
-
-	// REQUIRED; Type of linked service.
-	Type *string `json:"type,omitempty"`
 }
 
 // GetLinkedService implements the LinkedServiceClassification interface for type LinkedService.
@@ -17171,11 +17197,11 @@ type LinkedServiceGetLinkedServicesByWorkspaceOptions struct {
 
 // LinkedServiceListResponse - A list of linked service resources.
 type LinkedServiceListResponse struct {
-	// The link to the next page of results, if any remaining results exist.
-	NextLink *string `json:"nextLink,omitempty"`
-
 	// REQUIRED; List of linked services.
 	Value []*LinkedServiceResource `json:"value,omitempty"`
+
+	// OPTIONAL; The link to the next page of results, if any remaining results exist.
+	NextLink *string `json:"nextLink,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type LinkedServiceListResponse.
@@ -17197,14 +17223,14 @@ type LinkedServiceListResponseResponse struct {
 
 // LinkedServiceReference - Linked service reference type.
 type LinkedServiceReference struct {
-	// Arguments for LinkedService.
-	Parameters map[string]interface{} `json:"parameters,omitempty"`
-
 	// REQUIRED; Reference LinkedService name.
 	ReferenceName *string `json:"referenceName,omitempty"`
 
 	// REQUIRED; Linked service reference type.
 	Type *Type `json:"type,omitempty"`
+
+	// OPTIONAL; Arguments for LinkedService.
+	Parameters map[string]interface{} `json:"parameters,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type LinkedServiceReference.
@@ -17273,13 +17299,13 @@ type LinkedServiceResourceResponse struct {
 
 // LogStorageSettings - Log storage settings.
 type LogStorageSettings struct {
-	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties map[string]interface{}
-
 	// REQUIRED; Log storage linked service reference.
 	LinkedServiceName *LinkedServiceReference `json:"linkedServiceName,omitempty"`
 
-	// The path to storage for storing detailed logs of activity execution. Type: string (or Expression with resultType string).
+	// Contains additional key/value pairs not defined in the schema.
+	AdditionalProperties map[string]interface{}
+
+	// OPTIONAL; The path to storage for storing detailed logs of activity execution. Type: string (or Expression with resultType string).
 	Path interface{} `json:"path,omitempty"`
 }
 
@@ -17368,11 +17394,11 @@ type LookupActivityTypeProperties struct {
 	// REQUIRED; Lookup activity dataset reference.
 	Dataset *DatasetReference `json:"dataset,omitempty"`
 
-	// Whether to return first row or all rows. Default value is true. Type: boolean (or Expression with resultType boolean).
-	FirstRowOnly interface{} `json:"firstRowOnly,omitempty"`
-
 	// REQUIRED; Dataset-specific source properties, same as copy activity source.
 	Source CopySourceClassification `json:"source,omitempty"`
+
+	// OPTIONAL; Whether to return first row or all rows. Default value is true. Type: boolean (or Expression with resultType boolean).
+	FirstRowOnly interface{} `json:"firstRowOnly,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type LookupActivityTypeProperties.
@@ -17446,24 +17472,24 @@ func (m *MagentoLinkedService) UnmarshalJSON(data []byte) error {
 
 // MagentoLinkedServiceTypeProperties - Magento server linked service properties.
 type MagentoLinkedServiceTypeProperties struct {
-	// The access token from Magento.
-	AccessToken SecretBaseClassification `json:"accessToken,omitempty"`
-
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
-
 	// REQUIRED; The URL of the Magento instance. (i.e. 192.168.222.110/magento3)
 	Host interface{} `json:"host,omitempty"`
 
-	// Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true.
+	// OPTIONAL; The access token from Magento.
+	AccessToken SecretBaseClassification `json:"accessToken,omitempty"`
+
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
+
+	// OPTIONAL; Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true.
 	UseEncryptedEndpoints interface{} `json:"useEncryptedEndpoints,omitempty"`
 
-	// Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value
-	// is true.
+	// OPTIONAL; Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default
+	// value is true.
 	UseHostVerification interface{} `json:"useHostVerification,omitempty"`
 
-	// Specifies whether to verify the identity of the server when connecting over SSL. The default value is true.
+	// OPTIONAL; Specifies whether to verify the identity of the server when connecting over SSL. The default value is true.
 	UsePeerVerification interface{} `json:"usePeerVerification,omitempty"`
 }
 
@@ -17517,7 +17543,7 @@ func (m *MagentoLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 // MagentoObjectDataset - Magento server dataset.
 type MagentoObjectDataset struct {
 	Dataset
-	// Properties specific to this dataset type.
+	// OPTIONAL; Properties specific to this dataset type.
 	TypeProperties *GenericDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -17551,7 +17577,7 @@ func (m *MagentoObjectDataset) UnmarshalJSON(data []byte) error {
 // MagentoSource - A copy activity Magento server source.
 type MagentoSource struct {
 	TabularSource
-	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	// OPTIONAL; A query to retrieve data from source. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -17584,24 +17610,24 @@ func (m *MagentoSource) UnmarshalJSON(data []byte) error {
 
 // ManagedIdentity - The workspace managed identity
 type ManagedIdentity struct {
+	// OPTIONAL; The type of managed identity for the workspace
+	Type *ResourceIdentityType `json:"type,omitempty"`
+
 	// READ-ONLY; The principal ID of the workspace managed identity
 	PrincipalID *string `json:"principalId,omitempty" azure:"ro"`
 
 	// READ-ONLY; The tenant ID of the workspace managed identity
 	TenantID *string `json:"tenantId,omitempty" azure:"ro"`
-
-	// The type of managed identity for the workspace
-	Type *ResourceIdentityType `json:"type,omitempty"`
 }
 
 // ManagedIntegrationRuntime - Managed integration runtime, including managed elastic and managed dedicated integration runtimes.
 type ManagedIntegrationRuntime struct {
 	IntegrationRuntime
-	// READ-ONLY; Integration runtime state, only valid for managed dedicated integration runtime.
-	State *IntegrationRuntimeState `json:"state,omitempty" azure:"ro"`
-
 	// REQUIRED; Managed integration runtime properties.
 	TypeProperties *ManagedIntegrationRuntimeTypeProperties `json:"typeProperties,omitempty"`
+
+	// READ-ONLY; Integration runtime state, only valid for managed dedicated integration runtime.
+	State *IntegrationRuntimeState `json:"state,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ManagedIntegrationRuntime.
@@ -17637,22 +17663,22 @@ func (m *ManagedIntegrationRuntime) UnmarshalJSON(data []byte) error {
 
 // ManagedIntegrationRuntimeTypeProperties - Managed integration runtime type properties.
 type ManagedIntegrationRuntimeTypeProperties struct {
-	// The compute resource for managed integration runtime.
+	// OPTIONAL; The compute resource for managed integration runtime.
 	ComputeProperties *IntegrationRuntimeComputeProperties `json:"computeProperties,omitempty"`
 
-	// SSIS properties for managed integration runtime.
+	// OPTIONAL; SSIS properties for managed integration runtime.
 	SsisProperties *IntegrationRuntimeSsisProperties `json:"ssisProperties,omitempty"`
 }
 
 // ManagedVirtualNetworkSettings - Managed Virtual Network Settings
 type ManagedVirtualNetworkSettings struct {
-	// Allowed Aad Tenant Ids For Linking
+	// OPTIONAL; Allowed Aad Tenant Ids For Linking
 	AllowedAADTenantIDsForLinking []*string `json:"allowedAadTenantIdsForLinking,omitempty"`
 
-	// Linked Access Check On Target Resource
+	// OPTIONAL; Linked Access Check On Target Resource
 	LinkedAccessCheckOnTargetResource *bool `json:"linkedAccessCheckOnTargetResource,omitempty"`
 
-	// Prevent Data Exfiltration
+	// OPTIONAL; Prevent Data Exfiltration
 	PreventDataExfiltration *bool `json:"preventDataExfiltration,omitempty"`
 }
 
@@ -17668,7 +17694,7 @@ func (m ManagedVirtualNetworkSettings) MarshalJSON() ([]byte, error) {
 // MappingDataFlow - Mapping data flow.
 type MappingDataFlow struct {
 	DataFlow
-	// Mapping data flow type properties.
+	// OPTIONAL; Mapping data flow type properties.
 	TypeProperties *MappingDataFlowTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -17701,16 +17727,16 @@ func (m *MappingDataFlow) UnmarshalJSON(data []byte) error {
 
 // MappingDataFlowTypeProperties - Mapping data flow type properties.
 type MappingDataFlowTypeProperties struct {
-	// DataFlow script.
+	// OPTIONAL; DataFlow script.
 	Script *string `json:"script,omitempty"`
 
-	// List of sinks in data flow.
+	// OPTIONAL; List of sinks in data flow.
 	Sinks []*DataFlowSink `json:"sinks,omitempty"`
 
-	// List of sources in data flow.
+	// OPTIONAL; List of sources in data flow.
 	Sources []*DataFlowSource `json:"sources,omitempty"`
 
-	// List of transformations in data flow.
+	// OPTIONAL; List of transformations in data flow.
 	Transformations []*Transformation `json:"transformations,omitempty"`
 }
 
@@ -17760,21 +17786,21 @@ func (m *MariaDBLinkedService) UnmarshalJSON(data []byte) error {
 
 // MariaDBLinkedServiceTypeProperties - MariaDB server linked service properties.
 type MariaDBLinkedServiceTypeProperties struct {
-	// An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
+	// OPTIONAL; An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
 	ConnectionString interface{} `json:"connectionString,omitempty"`
 
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
 	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
 
-	// The Azure key vault secret reference of password in connection string.
+	// OPTIONAL; The Azure key vault secret reference of password in connection string.
 	Pwd *AzureKeyVaultSecretReference `json:"pwd,omitempty"`
 }
 
 // MariaDBSource - A copy activity MariaDB server source.
 type MariaDBSource struct {
 	TabularSource
-	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	// OPTIONAL; A query to retrieve data from source. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -17808,7 +17834,7 @@ func (m *MariaDBSource) UnmarshalJSON(data []byte) error {
 // MariaDBTableDataset - MariaDB server dataset.
 type MariaDBTableDataset struct {
 	Dataset
-	// Properties specific to this dataset type.
+	// OPTIONAL; Properties specific to this dataset type.
 	TypeProperties *GenericDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -17878,24 +17904,24 @@ type MarketoLinkedServiceTypeProperties struct {
 	// REQUIRED; The client Id of your Marketo service.
 	ClientID interface{} `json:"clientId,omitempty"`
 
-	// The client secret of your Marketo service.
-	ClientSecret SecretBaseClassification `json:"clientSecret,omitempty"`
-
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
-
 	// REQUIRED; The endpoint of the Marketo server. (i.e. 123-ABC-321.mktorest.com)
 	Endpoint interface{} `json:"endpoint,omitempty"`
 
-	// Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true.
+	// OPTIONAL; The client secret of your Marketo service.
+	ClientSecret SecretBaseClassification `json:"clientSecret,omitempty"`
+
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
+
+	// OPTIONAL; Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true.
 	UseEncryptedEndpoints interface{} `json:"useEncryptedEndpoints,omitempty"`
 
-	// Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value
-	// is true.
+	// OPTIONAL; Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default
+	// value is true.
 	UseHostVerification interface{} `json:"useHostVerification,omitempty"`
 
-	// Specifies whether to verify the identity of the server when connecting over SSL. The default value is true.
+	// OPTIONAL; Specifies whether to verify the identity of the server when connecting over SSL. The default value is true.
 	UsePeerVerification interface{} `json:"usePeerVerification,omitempty"`
 }
 
@@ -17953,7 +17979,7 @@ func (m *MarketoLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 // MarketoObjectDataset - Marketo server dataset.
 type MarketoObjectDataset struct {
 	Dataset
-	// Properties specific to this dataset type.
+	// OPTIONAL; Properties specific to this dataset type.
 	TypeProperties *GenericDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -17987,7 +18013,7 @@ func (m *MarketoObjectDataset) UnmarshalJSON(data []byte) error {
 // MarketoSource - A copy activity Marketo server source.
 type MarketoSource struct {
 	TabularSource
-	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	// OPTIONAL; A query to retrieve data from source. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -18054,24 +18080,24 @@ func (m *MicrosoftAccessLinkedService) UnmarshalJSON(data []byte) error {
 
 // MicrosoftAccessLinkedServiceTypeProperties - Microsoft Access linked service properties.
 type MicrosoftAccessLinkedServiceTypeProperties struct {
-	// Type of authentication used to connect to the Microsoft Access as ODBC data store. Possible values are: Anonymous and Basic. Type: string (or Expression
-	// with resultType string).
-	AuthenticationType interface{} `json:"authenticationType,omitempty"`
-
 	// REQUIRED; The non-access credential portion of the connection string as well as an optional encrypted credential. Type: string, SecureString or AzureKeyVaultSecretReference.
 	ConnectionString interface{} `json:"connectionString,omitempty"`
 
-	// The access credential portion of the connection string specified in driver-specific property-value format.
+	// OPTIONAL; Type of authentication used to connect to the Microsoft Access as ODBC data store. Possible values are: Anonymous and Basic. Type: string (or
+	// Expression with resultType string).
+	AuthenticationType interface{} `json:"authenticationType,omitempty"`
+
+	// OPTIONAL; The access credential portion of the connection string specified in driver-specific property-value format.
 	Credential SecretBaseClassification `json:"credential,omitempty"`
 
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
 	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
 
-	// Password for Basic authentication.
+	// OPTIONAL; Password for Basic authentication.
 	Password SecretBaseClassification `json:"password,omitempty"`
 
-	// User name for Basic authentication. Type: string (or Expression with resultType string).
+	// OPTIONAL; User name for Basic authentication. Type: string (or Expression with resultType string).
 	UserName interface{} `json:"userName,omitempty"`
 }
 
@@ -18125,7 +18151,7 @@ func (m *MicrosoftAccessLinkedServiceTypeProperties) UnmarshalJSON(data []byte) 
 // MicrosoftAccessSink - A copy activity Microsoft Access sink.
 type MicrosoftAccessSink struct {
 	CopySink
-	// A query to execute before starting the copy. Type: string (or Expression with resultType string).
+	// OPTIONAL; A query to execute before starting the copy. Type: string (or Expression with resultType string).
 	PreCopyScript interface{} `json:"preCopyScript,omitempty"`
 }
 
@@ -18159,7 +18185,7 @@ func (m *MicrosoftAccessSink) UnmarshalJSON(data []byte) error {
 // MicrosoftAccessSource - A copy activity source for Microsoft Access.
 type MicrosoftAccessSource struct {
 	CopySource
-	// Database query. Type: string (or Expression with resultType string).
+	// OPTIONAL; Database query. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -18193,7 +18219,7 @@ func (m *MicrosoftAccessSource) UnmarshalJSON(data []byte) error {
 // MicrosoftAccessTableDataset - The Microsoft Access table dataset.
 type MicrosoftAccessTableDataset struct {
 	Dataset
-	// Microsoft Access table dataset properties.
+	// OPTIONAL; Microsoft Access table dataset properties.
 	TypeProperties *MicrosoftAccessTableDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -18226,7 +18252,7 @@ func (m *MicrosoftAccessTableDataset) UnmarshalJSON(data []byte) error {
 
 // MicrosoftAccessTableDatasetTypeProperties - Microsoft Access table dataset properties.
 type MicrosoftAccessTableDatasetTypeProperties struct {
-	// The Microsoft Access table name. Type: string (or Expression with resultType string).
+	// OPTIONAL; The Microsoft Access table name. Type: string (or Expression with resultType string).
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
@@ -18275,21 +18301,21 @@ type MongoDbCursorMethodsProperties struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
-	// Specifies the maximum number of documents the server returns. limit() is analogous to the LIMIT statement in a SQL database. Type: integer (or Expression
-	// with resultType integer).
+	// OPTIONAL; Specifies the maximum number of documents the server returns. limit() is analogous to the LIMIT statement in a SQL database. Type: integer
+	// (or Expression with resultType integer).
 	Limit interface{} `json:"limit,omitempty"`
 
-	// Specifies the fields to return in the documents that match the query filter. To return all fields in the matching documents, omit this parameter. Type:
-	// string (or Expression with resultType string).
+	// OPTIONAL; Specifies the fields to return in the documents that match the query filter. To return all fields in the matching documents, omit this parameter.
+	// Type: string (or Expression with resultType string).
 	Project interface{} `json:"project,omitempty"`
 
-	// Specifies the how many documents skipped and where MongoDB begins returning results. This approach may be useful in implementing paginated results. Type:
-	// integer (or Expression with resultType
+	// OPTIONAL; Specifies the how many documents skipped and where MongoDB begins returning results. This approach may be useful in implementing paginated
+	// results. Type: integer (or Expression with resultType
 	// integer).
 	Skip interface{} `json:"skip,omitempty"`
 
-	// Specifies the order in which the query returns matching documents. Type: string (or Expression with resultType string). Type: string (or Expression with
-	// resultType string).
+	// OPTIONAL; Specifies the order in which the query returns matching documents. Type: string (or Expression with resultType string). Type: string (or Expression
+	// with resultType string).
 	Sort interface{} `json:"sort,omitempty"`
 }
 
@@ -18383,36 +18409,38 @@ func (m *MongoDbLinkedService) UnmarshalJSON(data []byte) error {
 
 // MongoDbLinkedServiceTypeProperties - MongoDB linked service properties.
 type MongoDbLinkedServiceTypeProperties struct {
-	// Specifies whether to allow self-signed certificates from the server. The default value is false. Type: boolean (or Expression with resultType boolean).
-	AllowSelfSignedServerCert interface{} `json:"allowSelfSignedServerCert,omitempty"`
-
-	// Database to verify the username and password. Type: string (or Expression with resultType string).
-	AuthSource interface{} `json:"authSource,omitempty"`
-
-	// The authentication type to be used to connect to the MongoDB database.
-	AuthenticationType *MongoDbAuthenticationType `json:"authenticationType,omitempty"`
-
 	// REQUIRED; The name of the MongoDB database that you want to access. Type: string (or Expression with resultType string).
 	DatabaseName interface{} `json:"databaseName,omitempty"`
-
-	// Specifies whether the connections to the server are encrypted using SSL. The default value is false. Type: boolean (or Expression with resultType boolean).
-	EnableSSL interface{} `json:"enableSsl,omitempty"`
-
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
-
-	// Password for authentication.
-	Password SecretBaseClassification `json:"password,omitempty"`
-
-	// The TCP port number that the MongoDB server uses to listen for client connections. The default value is 27017. Type: integer (or Expression with resultType
-	// integer), minimum: 0.
-	Port interface{} `json:"port,omitempty"`
 
 	// REQUIRED; The IP address or server name of the MongoDB server. Type: string (or Expression with resultType string).
 	Server interface{} `json:"server,omitempty"`
 
-	// Username for authentication. Type: string (or Expression with resultType string).
+	// OPTIONAL; Specifies whether to allow self-signed certificates from the server. The default value is false. Type: boolean (or Expression with resultType
+	// boolean).
+	AllowSelfSignedServerCert interface{} `json:"allowSelfSignedServerCert,omitempty"`
+
+	// OPTIONAL; Database to verify the username and password. Type: string (or Expression with resultType string).
+	AuthSource interface{} `json:"authSource,omitempty"`
+
+	// OPTIONAL; The authentication type to be used to connect to the MongoDB database.
+	AuthenticationType *MongoDbAuthenticationType `json:"authenticationType,omitempty"`
+
+	// OPTIONAL; Specifies whether the connections to the server are encrypted using SSL. The default value is false. Type: boolean (or Expression with resultType
+	// boolean).
+	EnableSSL interface{} `json:"enableSsl,omitempty"`
+
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
+
+	// OPTIONAL; Password for authentication.
+	Password SecretBaseClassification `json:"password,omitempty"`
+
+	// OPTIONAL; The TCP port number that the MongoDB server uses to listen for client connections. The default value is 27017. Type: integer (or Expression
+	// with resultType integer), minimum: 0.
+	Port interface{} `json:"port,omitempty"`
+
+	// OPTIONAL; Username for authentication. Type: string (or Expression with resultType string).
 	Username interface{} `json:"username,omitempty"`
 }
 
@@ -18482,7 +18510,7 @@ func (m *MongoDbLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 // MongoDbSource - A copy activity source for a MongoDB database.
 type MongoDbSource struct {
 	CopySource
-	// Database query. Should be a SQL-92 query expression. Type: string (or Expression with resultType string).
+	// OPTIONAL; Database query. Should be a SQL-92 query expression. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -18599,19 +18627,19 @@ type MongoDbV2LinkedServiceTypeProperties struct {
 // MongoDbV2Source - A copy activity source for a MongoDB database.
 type MongoDbV2Source struct {
 	CopySource
-	// Specifies the number of documents to return in each batch of the response from MongoDB instance. In most cases, modifying the batch size will not affect
-	// the user or the application. This property's
+	// OPTIONAL; Specifies the number of documents to return in each batch of the response from MongoDB instance. In most cases, modifying the batch size will
+	// not affect the user or the application. This property's
 	// main purpose is to avoid hit the limitation of response size. Type: integer (or Expression with resultType integer).
 	BatchSize interface{} `json:"batchSize,omitempty"`
 
-	// Cursor methods for Mongodb query
+	// OPTIONAL; Cursor methods for Mongodb query
 	CursorMethods *MongoDbCursorMethodsProperties `json:"cursorMethods,omitempty"`
 
-	// Specifies selection filter using query operators. To return all documents in a collection, omit this parameter or pass an empty document ({}). Type:
-	// string (or Expression with resultType string).
+	// OPTIONAL; Specifies selection filter using query operators. To return all documents in a collection, omit this parameter or pass an empty document ({}).
+	// Type: string (or Expression with resultType string).
 	Filter interface{} `json:"filter,omitempty"`
 
-	// Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+).)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+	// OPTIONAL; Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+).)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
 	QueryTimeout interface{} `json:"queryTimeout,omitempty"`
 }
 
@@ -18667,7 +18695,7 @@ type MultiplePipelineTriggerClassification interface {
 // MultiplePipelineTrigger - Base class for all triggers that support one to many model for trigger to pipeline.
 type MultiplePipelineTrigger struct {
 	Trigger
-	// Pipelines that need to be started.
+	// OPTIONAL; Pipelines that need to be started.
 	Pipelines []*TriggerPipelineReference `json:"pipelines,omitempty"`
 }
 
@@ -18749,18 +18777,18 @@ type MySQLLinkedServiceTypeProperties struct {
 	// REQUIRED; The connection string.
 	ConnectionString interface{} `json:"connectionString,omitempty"`
 
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
 	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
 
-	// The Azure key vault secret reference of password in connection string.
+	// OPTIONAL; The Azure key vault secret reference of password in connection string.
 	Password *AzureKeyVaultSecretReference `json:"password,omitempty"`
 }
 
 // MySQLSource - A copy activity source for MySQL databases.
 type MySQLSource struct {
 	TabularSource
-	// Database query. Type: string (or Expression with resultType string).
+	// OPTIONAL; Database query. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -18794,7 +18822,7 @@ func (m *MySQLSource) UnmarshalJSON(data []byte) error {
 // MySQLTableDataset - The MySQL table dataset.
 type MySQLTableDataset struct {
 	Dataset
-	// MySQL table dataset properties.
+	// OPTIONAL; MySQL table dataset properties.
 	TypeProperties *MySQLTableDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -18827,7 +18855,7 @@ func (m *MySQLTableDataset) UnmarshalJSON(data []byte) error {
 
 // MySQLTableDatasetTypeProperties - MySql table dataset properties.
 type MySQLTableDatasetTypeProperties struct {
-	// The MySQL table name. Type: string (or Expression with resultType string).
+	// OPTIONAL; The MySQL table name. Type: string (or Expression with resultType string).
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
@@ -18867,41 +18895,41 @@ func (n *NetezzaLinkedService) UnmarshalJSON(data []byte) error {
 
 // NetezzaLinkedServiceTypeProperties - Netezza linked service properties.
 type NetezzaLinkedServiceTypeProperties struct {
-	// An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
+	// OPTIONAL; An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
 	ConnectionString interface{} `json:"connectionString,omitempty"`
 
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
 	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
 
-	// The Azure key vault secret reference of password in connection string.
+	// OPTIONAL; The Azure key vault secret reference of password in connection string.
 	Pwd *AzureKeyVaultSecretReference `json:"pwd,omitempty"`
 }
 
 // NetezzaPartitionSettings - The settings that will be leveraged for Netezza source partitioning.
 type NetezzaPartitionSettings struct {
-	// The name of the column in integer type that will be used for proceeding range partitioning. Type: string (or Expression with resultType string).
+	// OPTIONAL; The name of the column in integer type that will be used for proceeding range partitioning. Type: string (or Expression with resultType string).
 	PartitionColumnName interface{} `json:"partitionColumnName,omitempty"`
 
-	// The minimum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType
-	// string).
+	// OPTIONAL; The minimum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression
+	// with resultType string).
 	PartitionLowerBound interface{} `json:"partitionLowerBound,omitempty"`
 
-	// The maximum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType
-	// string).
+	// OPTIONAL; The maximum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression
+	// with resultType string).
 	PartitionUpperBound interface{} `json:"partitionUpperBound,omitempty"`
 }
 
 // NetezzaSource - A copy activity Netezza source.
 type NetezzaSource struct {
 	TabularSource
-	// The partition mechanism that will be used for Netezza read in parallel.
+	// OPTIONAL; The partition mechanism that will be used for Netezza read in parallel.
 	PartitionOption *NetezzaPartitionOption `json:"partitionOption,omitempty"`
 
-	// The settings that will be leveraged for Netezza source partitioning.
+	// OPTIONAL; The settings that will be leveraged for Netezza source partitioning.
 	PartitionSettings *NetezzaPartitionSettings `json:"partitionSettings,omitempty"`
 
-	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	// OPTIONAL; A query to retrieve data from source. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -18943,7 +18971,7 @@ func (n *NetezzaSource) UnmarshalJSON(data []byte) error {
 // NetezzaTableDataset - Netezza dataset.
 type NetezzaTableDataset struct {
 	Dataset
-	// Properties specific to this dataset type.
+	// OPTIONAL; Properties specific to this dataset type.
 	TypeProperties *NetezzaTableDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -18976,29 +19004,20 @@ func (n *NetezzaTableDataset) UnmarshalJSON(data []byte) error {
 
 // NetezzaTableDatasetTypeProperties - Netezza dataset properties.
 type NetezzaTableDatasetTypeProperties struct {
-	// The schema name of the Netezza. Type: string (or Expression with resultType string).
+	// OPTIONAL; The schema name of the Netezza. Type: string (or Expression with resultType string).
 	Schema interface{} `json:"schema,omitempty"`
 
-	// The table name of the Netezza. Type: string (or Expression with resultType string).
+	// OPTIONAL; The table name of the Netezza. Type: string (or Expression with resultType string).
 	Table interface{} `json:"table,omitempty"`
 
-	// This property will be retired. Please consider using schema + table properties instead.
+	// OPTIONAL; This property will be retired. Please consider using schema + table properties instead.
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
 // Notebook.
 type Notebook struct {
-	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties map[string]interface{}
-
-	// Big data pool reference.
-	BigDataPool *BigDataPoolReference `json:"bigDataPool,omitempty"`
-
 	// REQUIRED; Array of cells of the current notebook.
 	Cells []*NotebookCell `json:"cells,omitempty"`
-
-	// The description of the notebook.
-	Description *string `json:"description,omitempty"`
 
 	// REQUIRED; Notebook root-level metadata.
 	Metadata *NotebookMetadata `json:"metadata,omitempty"`
@@ -19009,7 +19028,16 @@ type Notebook struct {
 	// REQUIRED; Notebook format (minor number). Incremented for backward compatible changes to the notebook format.
 	NbformatMinor *int32 `json:"nbformat_minor,omitempty"`
 
-	// Session properties.
+	// Contains additional key/value pairs not defined in the schema.
+	AdditionalProperties map[string]interface{}
+
+	// OPTIONAL; Big data pool reference.
+	BigDataPool *BigDataPoolReference `json:"bigDataPool,omitempty"`
+
+	// OPTIONAL; The description of the notebook.
+	Description *string `json:"description,omitempty"`
+
+	// OPTIONAL; Session properties.
 	SessionProperties *NotebookSessionProperties `json:"sessionProperties,omitempty"`
 }
 
@@ -19097,23 +19125,23 @@ type NotebookBeginRenameNotebookOptions struct {
 
 // NotebookCell - Notebook cell.
 type NotebookCell struct {
-	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties map[string]interface{}
-
-	// Attachments associated with the cell.
-	Attachments interface{} `json:"attachments,omitempty"`
-
 	// REQUIRED; String identifying the type of cell.
 	CellType *string `json:"cell_type,omitempty"`
 
 	// REQUIRED; Cell-level metadata.
 	Metadata interface{} `json:"metadata,omitempty"`
 
-	// Cell-level output items.
-	Outputs []*NotebookCellOutputItem `json:"outputs,omitempty"`
-
 	// REQUIRED; Contents of the cell, represented as an array of lines.
 	Source []*string `json:"source,omitempty"`
+
+	// Contains additional key/value pairs not defined in the schema.
+	AdditionalProperties map[string]interface{}
+
+	// OPTIONAL; Attachments associated with the cell.
+	Attachments interface{} `json:"attachments,omitempty"`
+
+	// OPTIONAL; Cell-level output items.
+	Outputs []*NotebookCellOutputItem `json:"outputs,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type NotebookCell.
@@ -19176,22 +19204,22 @@ func (n *NotebookCell) UnmarshalJSON(data []byte) error {
 
 // NotebookCellOutputItem - An item of the notebook cell execution output.
 type NotebookCellOutputItem struct {
-	// Output data. Use MIME type as key, and content as value.
-	Data interface{} `json:"data,omitempty"`
-
-	// Execution sequence number.
-	ExecutionCount *int32 `json:"execution_count,omitempty"`
-
-	// Metadata for the output item.
-	Metadata interface{} `json:"metadata,omitempty"`
-
-	// For output_type=stream, determines the name of stream (stdout / stderr).
-	Name *string `json:"name,omitempty"`
-
 	// REQUIRED; Execution, display, or stream outputs.
 	OutputType *CellOutputType `json:"output_type,omitempty"`
 
-	// For output_type=stream, the stream's text output, represented as a string or an array of strings.
+	// OPTIONAL; Output data. Use MIME type as key, and content as value.
+	Data interface{} `json:"data,omitempty"`
+
+	// OPTIONAL; Execution sequence number.
+	ExecutionCount *int32 `json:"execution_count,omitempty"`
+
+	// OPTIONAL; Metadata for the output item.
+	Metadata interface{} `json:"metadata,omitempty"`
+
+	// OPTIONAL; For output_type=stream, determines the name of stream (stdout / stderr).
+	Name *string `json:"name,omitempty"`
+
+	// OPTIONAL; For output_type=stream, the stream's text output, represented as a string or an array of strings.
 	Text interface{} `json:"text,omitempty"`
 }
 
@@ -19214,14 +19242,14 @@ type NotebookGetNotebooksByWorkspaceOptions struct {
 
 // NotebookKernelSpec - Kernel information.
 type NotebookKernelSpec struct {
-	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties map[string]interface{}
-
 	// REQUIRED; Name to display in UI.
 	DisplayName *string `json:"display_name,omitempty"`
 
 	// REQUIRED; Name of the kernel specification.
 	Name *string `json:"name,omitempty"`
+
+	// Contains additional key/value pairs not defined in the schema.
+	AdditionalProperties map[string]interface{}
 }
 
 // MarshalJSON implements the json.Marshaller interface for type NotebookKernelSpec.
@@ -19272,14 +19300,14 @@ func (n *NotebookKernelSpec) UnmarshalJSON(data []byte) error {
 
 // NotebookLanguageInfo - Language info.
 type NotebookLanguageInfo struct {
+	// REQUIRED; The programming language which this kernel runs.
+	Name *string `json:"name,omitempty"`
+
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
-	// The codemirror mode to use for code in this language.
+	// OPTIONAL; The codemirror mode to use for code in this language.
 	CodemirrorMode *string `json:"codemirror_mode,omitempty"`
-
-	// REQUIRED; The programming language which this kernel runs.
-	Name *string `json:"name,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type NotebookLanguageInfo.
@@ -19330,11 +19358,11 @@ func (n *NotebookLanguageInfo) UnmarshalJSON(data []byte) error {
 
 // NotebookListResponse - A list of Notebook resources.
 type NotebookListResponse struct {
-	// The link to the next page of results, if any remaining results exist.
-	NextLink *string `json:"nextLink,omitempty"`
-
 	// REQUIRED; List of Notebooks.
 	Value []*NotebookResource `json:"value,omitempty"`
+
+	// OPTIONAL; The link to the next page of results, if any remaining results exist.
+	NextLink *string `json:"nextLink,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type NotebookListResponse.
@@ -19359,10 +19387,10 @@ type NotebookMetadata struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
-	// Kernel information.
+	// OPTIONAL; Kernel information.
 	Kernelspec *NotebookKernelSpec `json:"kernelspec,omitempty"`
 
-	// Language info.
+	// OPTIONAL; Language info.
 	LanguageInfo *NotebookLanguageInfo `json:"language_info,omitempty"`
 }
 
@@ -19414,17 +19442,17 @@ func (n *NotebookMetadata) UnmarshalJSON(data []byte) error {
 
 // NotebookResource - Notebook resource type.
 type NotebookResource struct {
-	// READ-ONLY; Resource Etag.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
-	// READ-ONLY; Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
-	ID *string `json:"id,omitempty" azure:"ro"`
-
 	// REQUIRED; The name of the resource
 	Name *string `json:"name,omitempty"`
 
 	// REQUIRED; Properties of Notebook.
 	Properties *Notebook `json:"properties,omitempty"`
+
+	// READ-ONLY; Resource Etag.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
+
+	// READ-ONLY; Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	ID *string `json:"id,omitempty" azure:"ro"`
 
 	// READ-ONLY; The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
 	Type *string `json:"type,omitempty" azure:"ro"`
@@ -19505,42 +19533,44 @@ func (o *ODataLinkedService) UnmarshalJSON(data []byte) error {
 
 // ODataLinkedServiceTypeProperties - OData linked service properties.
 type ODataLinkedServiceTypeProperties struct {
-	// Specify the resource you are requesting authorization to use Directory. Type: string (or Expression with resultType string).
-	AADResourceID interface{} `json:"aadResourceId,omitempty"`
-
-	// Specify the credential type (key or cert) is used for service principal.
-	AADServicePrincipalCredentialType *ODataAADServicePrincipalCredentialType `json:"aadServicePrincipalCredentialType,omitempty"`
-
-	// Type of authentication used to connect to the OData service.
-	AuthenticationType *ODataAuthenticationType `json:"authenticationType,omitempty"`
-
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
-
-	// Password of the OData service.
-	Password SecretBaseClassification `json:"password,omitempty"`
-
-	// Specify the base64 encoded certificate of your application registered in Azure Active Directory. Type: string (or Expression with resultType string).
-	ServicePrincipalEmbeddedCert SecretBaseClassification `json:"servicePrincipalEmbeddedCert,omitempty"`
-
-	// Specify the password of your certificate if your certificate has a password and you are using AadServicePrincipal authentication. Type: string (or Expression
-	// with resultType string).
-	ServicePrincipalEmbeddedCertPassword SecretBaseClassification `json:"servicePrincipalEmbeddedCertPassword,omitempty"`
-
-	// Specify the application id of your application registered in Azure Active Directory. Type: string (or Expression with resultType string).
-	ServicePrincipalID interface{} `json:"servicePrincipalId,omitempty"`
-
-	// Specify the secret of your application registered in Azure Active Directory. Type: string (or Expression with resultType string).
-	ServicePrincipalKey SecretBaseClassification `json:"servicePrincipalKey,omitempty"`
-
-	// Specify the tenant information (domain name or tenant ID) under which your application resides. Type: string (or Expression with resultType string).
-	Tenant interface{} `json:"tenant,omitempty"`
-
 	// REQUIRED; The URL of the OData service endpoint. Type: string (or Expression with resultType string).
 	URL interface{} `json:"url,omitempty"`
 
-	// User name of the OData service. Type: string (or Expression with resultType string).
+	// OPTIONAL; Specify the resource you are requesting authorization to use Directory. Type: string (or Expression with resultType string).
+	AADResourceID interface{} `json:"aadResourceId,omitempty"`
+
+	// OPTIONAL; Specify the credential type (key or cert) is used for service principal.
+	AADServicePrincipalCredentialType *ODataAADServicePrincipalCredentialType `json:"aadServicePrincipalCredentialType,omitempty"`
+
+	// OPTIONAL; Type of authentication used to connect to the OData service.
+	AuthenticationType *ODataAuthenticationType `json:"authenticationType,omitempty"`
+
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
+
+	// OPTIONAL; Password of the OData service.
+	Password SecretBaseClassification `json:"password,omitempty"`
+
+	// OPTIONAL; Specify the base64 encoded certificate of your application registered in Azure Active Directory. Type: string (or Expression with resultType
+	// string).
+	ServicePrincipalEmbeddedCert SecretBaseClassification `json:"servicePrincipalEmbeddedCert,omitempty"`
+
+	// OPTIONAL; Specify the password of your certificate if your certificate has a password and you are using AadServicePrincipal authentication. Type: string
+	// (or Expression with resultType string).
+	ServicePrincipalEmbeddedCertPassword SecretBaseClassification `json:"servicePrincipalEmbeddedCertPassword,omitempty"`
+
+	// OPTIONAL; Specify the application id of your application registered in Azure Active Directory. Type: string (or Expression with resultType string).
+	ServicePrincipalID interface{} `json:"servicePrincipalId,omitempty"`
+
+	// OPTIONAL; Specify the secret of your application registered in Azure Active Directory. Type: string (or Expression with resultType string).
+	ServicePrincipalKey SecretBaseClassification `json:"servicePrincipalKey,omitempty"`
+
+	// OPTIONAL; Specify the tenant information (domain name or tenant ID) under which your application resides. Type: string (or Expression with resultType
+	// string).
+	Tenant interface{} `json:"tenant,omitempty"`
+
+	// OPTIONAL; User name of the OData service. Type: string (or Expression with resultType string).
 	UserName interface{} `json:"userName,omitempty"`
 }
 
@@ -19618,7 +19648,7 @@ func (o *ODataLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 // ODataResourceDataset - The Open Data Protocol (OData) resource dataset.
 type ODataResourceDataset struct {
 	Dataset
-	// OData dataset properties.
+	// OPTIONAL; OData dataset properties.
 	TypeProperties *ODataResourceDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -19651,14 +19681,14 @@ func (o *ODataResourceDataset) UnmarshalJSON(data []byte) error {
 
 // ODataResourceDatasetTypeProperties - OData dataset properties.
 type ODataResourceDatasetTypeProperties struct {
-	// The OData resource path. Type: string (or Expression with resultType string).
+	// OPTIONAL; The OData resource path. Type: string (or Expression with resultType string).
 	Path interface{} `json:"path,omitempty"`
 }
 
 // ODataSource - A copy activity source for OData source.
 type ODataSource struct {
 	CopySource
-	// OData query. For example, "$top=1". Type: string (or Expression with resultType string).
+	// OPTIONAL; OData query. For example, "$top=1". Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -19725,24 +19755,24 @@ func (o *OdbcLinkedService) UnmarshalJSON(data []byte) error {
 
 // OdbcLinkedServiceTypeProperties - ODBC linked service properties.
 type OdbcLinkedServiceTypeProperties struct {
-	// Type of authentication used to connect to the ODBC data store. Possible values are: Anonymous and Basic. Type: string (or Expression with resultType
-	// string).
-	AuthenticationType interface{} `json:"authenticationType,omitempty"`
-
 	// REQUIRED; The non-access credential portion of the connection string as well as an optional encrypted credential. Type: string, SecureString or AzureKeyVaultSecretReference.
 	ConnectionString interface{} `json:"connectionString,omitempty"`
 
-	// The access credential portion of the connection string specified in driver-specific property-value format.
+	// OPTIONAL; Type of authentication used to connect to the ODBC data store. Possible values are: Anonymous and Basic. Type: string (or Expression with resultType
+	// string).
+	AuthenticationType interface{} `json:"authenticationType,omitempty"`
+
+	// OPTIONAL; The access credential portion of the connection string specified in driver-specific property-value format.
 	Credential SecretBaseClassification `json:"credential,omitempty"`
 
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
 	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
 
-	// Password for Basic authentication.
+	// OPTIONAL; Password for Basic authentication.
 	Password SecretBaseClassification `json:"password,omitempty"`
 
-	// User name for Basic authentication. Type: string (or Expression with resultType string).
+	// OPTIONAL; User name for Basic authentication. Type: string (or Expression with resultType string).
 	UserName interface{} `json:"userName,omitempty"`
 }
 
@@ -19796,7 +19826,7 @@ func (o *OdbcLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 // OdbcSink - A copy activity ODBC sink.
 type OdbcSink struct {
 	CopySink
-	// A query to execute before starting the copy. Type: string (or Expression with resultType string).
+	// OPTIONAL; A query to execute before starting the copy. Type: string (or Expression with resultType string).
 	PreCopyScript interface{} `json:"preCopyScript,omitempty"`
 }
 
@@ -19830,7 +19860,7 @@ func (o *OdbcSink) UnmarshalJSON(data []byte) error {
 // OdbcSource - A copy activity source for ODBC databases.
 type OdbcSource struct {
 	TabularSource
-	// Database query. Type: string (or Expression with resultType string).
+	// OPTIONAL; Database query. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -19864,7 +19894,7 @@ func (o *OdbcSource) UnmarshalJSON(data []byte) error {
 // OdbcTableDataset - The ODBC table dataset.
 type OdbcTableDataset struct {
 	Dataset
-	// ODBC table dataset properties.
+	// OPTIONAL; ODBC table dataset properties.
 	TypeProperties *OdbcTableDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -19897,7 +19927,7 @@ func (o *OdbcTableDataset) UnmarshalJSON(data []byte) error {
 
 // OdbcTableDatasetTypeProperties - ODBC table dataset properties.
 type OdbcTableDatasetTypeProperties struct {
-	// The ODBC table name. Type: string (or Expression with resultType string).
+	// OPTIONAL; The ODBC table name. Type: string (or Expression with resultType string).
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
@@ -19937,11 +19967,12 @@ func (o *Office365Dataset) UnmarshalJSON(data []byte) error {
 
 // Office365DatasetTypeProperties - Office365 dataset properties.
 type Office365DatasetTypeProperties struct {
-	// A predicate expression that can be used to filter the specific rows to extract from Office 365. Type: string (or Expression with resultType string).
-	Predicate interface{} `json:"predicate,omitempty"`
-
 	// REQUIRED; Name of the dataset to extract from Office 365. Type: string (or Expression with resultType string).
 	TableName interface{} `json:"tableName,omitempty"`
+
+	// OPTIONAL; A predicate expression that can be used to filter the specific rows to extract from Office 365. Type: string (or Expression with resultType
+	// string).
+	Predicate interface{} `json:"predicate,omitempty"`
 }
 
 // Office365LinkedService - Office365 linked service.
@@ -19980,10 +20011,6 @@ func (o *Office365LinkedService) UnmarshalJSON(data []byte) error {
 
 // Office365LinkedServiceTypeProperties - Office365 linked service properties.
 type Office365LinkedServiceTypeProperties struct {
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
-
 	// REQUIRED; Azure tenant ID to which the Office 365 account belongs. Type: string (or Expression with resultType string).
 	Office365TenantID interface{} `json:"office365TenantId,omitempty"`
 
@@ -19995,6 +20022,10 @@ type Office365LinkedServiceTypeProperties struct {
 
 	// REQUIRED; Specify the tenant information under which your Azure AD web application resides. Type: string (or Expression with resultType string).
 	ServicePrincipalTenantID interface{} `json:"servicePrincipalTenantId,omitempty"`
+
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type Office365LinkedServiceTypeProperties.
@@ -20043,23 +20074,23 @@ func (o *Office365LinkedServiceTypeProperties) UnmarshalJSON(data []byte) error 
 // Office365Source - A copy activity source for an Office 365 service.
 type Office365Source struct {
 	CopySource
-	// The groups containing all the users. Type: array of strings (or Expression with resultType array of strings).
+	// OPTIONAL; The groups containing all the users. Type: array of strings (or Expression with resultType array of strings).
 	AllowedGroups interface{} `json:"allowedGroups,omitempty"`
 
-	// The Column to apply the and . Type: string (or Expression with resultType string).
+	// OPTIONAL; The Column to apply the and . Type: string (or Expression with resultType string).
 	DateFilterColumn interface{} `json:"dateFilterColumn,omitempty"`
 
-	// End time of the requested range for this dataset. Type: string (or Expression with resultType string).
+	// OPTIONAL; End time of the requested range for this dataset. Type: string (or Expression with resultType string).
 	EndTime interface{} `json:"endTime,omitempty"`
 
-	// The columns to be read out from the Office 365 table. Type: array of objects (or Expression with resultType array of objects). Example: [ { "name": "Id"
-	// }, { "name": "CreatedDateTime" } ]
+	// OPTIONAL; The columns to be read out from the Office 365 table. Type: array of objects (or Expression with resultType array of objects). Example: [ {
+	// "name": "Id" }, { "name": "CreatedDateTime" } ]
 	OutputColumns interface{} `json:"outputColumns,omitempty"`
 
-	// Start time of the requested range for this dataset. Type: string (or Expression with resultType string).
+	// OPTIONAL; Start time of the requested range for this dataset. Type: string (or Expression with resultType string).
 	StartTime interface{} `json:"startTime,omitempty"`
 
-	// The user scope uri. Type: string (or Expression with resultType string).
+	// OPTIONAL; The user scope uri. Type: string (or Expression with resultType string).
 	UserScopeFilterURI interface{} `json:"userScopeFilterUri,omitempty"`
 }
 
@@ -20112,7 +20143,7 @@ func (o *Office365Source) UnmarshalJSON(data []byte) error {
 
 // OperationResult - Operation status for the operation
 type OperationResult struct {
-	// Error data
+	// OPTIONAL; Error data
 	Error *CloudErrorBodyAutoGenerated `json:"error,omitempty"`
 
 	// READ-ONLY; Operation status
@@ -20167,28 +20198,28 @@ type OracleLinkedServiceTypeProperties struct {
 	// REQUIRED; The connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
 	ConnectionString interface{} `json:"connectionString,omitempty"`
 
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
 	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
 
-	// The Azure key vault secret reference of password in connection string.
+	// OPTIONAL; The Azure key vault secret reference of password in connection string.
 	Password *AzureKeyVaultSecretReference `json:"password,omitempty"`
 }
 
 // OraclePartitionSettings - The settings that will be leveraged for Oracle source partitioning.
 type OraclePartitionSettings struct {
-	// The name of the column in integer type that will be used for proceeding range partitioning. Type: string (or Expression with resultType string).
+	// OPTIONAL; The name of the column in integer type that will be used for proceeding range partitioning. Type: string (or Expression with resultType string).
 	PartitionColumnName interface{} `json:"partitionColumnName,omitempty"`
 
-	// The minimum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType
-	// string).
+	// OPTIONAL; The minimum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression
+	// with resultType string).
 	PartitionLowerBound interface{} `json:"partitionLowerBound,omitempty"`
 
-	// Names of the physical partitions of Oracle table.
+	// OPTIONAL; Names of the physical partitions of Oracle table.
 	PartitionNames interface{} `json:"partitionNames,omitempty"`
 
-	// The maximum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType
-	// string).
+	// OPTIONAL; The maximum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression
+	// with resultType string).
 	PartitionUpperBound interface{} `json:"partitionUpperBound,omitempty"`
 }
 
@@ -20228,30 +20259,31 @@ func (o *OracleServiceCloudLinkedService) UnmarshalJSON(data []byte) error {
 
 // OracleServiceCloudLinkedServiceTypeProperties - Oracle Service Cloud linked service properties.
 type OracleServiceCloudLinkedServiceTypeProperties struct {
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
-
 	// REQUIRED; The URL of the Oracle Service Cloud instance.
 	Host interface{} `json:"host,omitempty"`
 
 	// REQUIRED; The password corresponding to the user name that you provided in the username key.
 	Password SecretBaseClassification `json:"password,omitempty"`
 
-	// Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. Type: boolean (or Expression with resultType boolean).
+	// REQUIRED; The user name that you use to access Oracle Service Cloud server.
+	Username interface{} `json:"username,omitempty"`
+
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
+
+	// OPTIONAL; Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. Type: boolean (or Expression with resultType
+	// boolean).
 	UseEncryptedEndpoints interface{} `json:"useEncryptedEndpoints,omitempty"`
 
-	// Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value
-	// is true. Type: boolean (or Expression with
+	// OPTIONAL; Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default
+	// value is true. Type: boolean (or Expression with
 	// resultType boolean).
 	UseHostVerification interface{} `json:"useHostVerification,omitempty"`
 
-	// Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. Type: boolean (or Expression with resultType
-	// boolean).
+	// OPTIONAL; Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. Type: boolean (or Expression with
+	// resultType boolean).
 	UsePeerVerification interface{} `json:"usePeerVerification,omitempty"`
-
-	// REQUIRED; The user name that you use to access Oracle Service Cloud server.
-	Username interface{} `json:"username,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type OracleServiceCloudLinkedServiceTypeProperties.
@@ -20308,7 +20340,7 @@ func (o *OracleServiceCloudLinkedServiceTypeProperties) UnmarshalJSON(data []byt
 // OracleServiceCloudObjectDataset - Oracle Service Cloud dataset.
 type OracleServiceCloudObjectDataset struct {
 	Dataset
-	// Properties specific to this dataset type.
+	// OPTIONAL; Properties specific to this dataset type.
 	TypeProperties *GenericDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -20342,7 +20374,7 @@ func (o *OracleServiceCloudObjectDataset) UnmarshalJSON(data []byte) error {
 // OracleServiceCloudSource - A copy activity Oracle Service Cloud source.
 type OracleServiceCloudSource struct {
 	TabularSource
-	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	// OPTIONAL; A query to retrieve data from source. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -20376,7 +20408,7 @@ func (o *OracleServiceCloudSource) UnmarshalJSON(data []byte) error {
 // OracleSink - A copy activity Oracle sink.
 type OracleSink struct {
 	CopySink
-	// SQL pre-copy script. Type: string (or Expression with resultType string).
+	// OPTIONAL; SQL pre-copy script. Type: string (or Expression with resultType string).
 	PreCopyScript interface{} `json:"preCopyScript,omitempty"`
 }
 
@@ -20410,16 +20442,16 @@ func (o *OracleSink) UnmarshalJSON(data []byte) error {
 // OracleSource - A copy activity Oracle source.
 type OracleSource struct {
 	CopySource
-	// Oracle reader query. Type: string (or Expression with resultType string).
+	// OPTIONAL; Oracle reader query. Type: string (or Expression with resultType string).
 	OracleReaderQuery interface{} `json:"oracleReaderQuery,omitempty"`
 
-	// The partition mechanism that will be used for Oracle read in parallel.
+	// OPTIONAL; The partition mechanism that will be used for Oracle read in parallel.
 	PartitionOption *OraclePartitionOption `json:"partitionOption,omitempty"`
 
-	// The settings that will be leveraged for Oracle source partitioning.
+	// OPTIONAL; The settings that will be leveraged for Oracle source partitioning.
 	PartitionSettings *OraclePartitionSettings `json:"partitionSettings,omitempty"`
 
-	// Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+).)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+	// OPTIONAL; Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+).)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
 	QueryTimeout interface{} `json:"queryTimeout,omitempty"`
 }
 
@@ -20465,7 +20497,7 @@ func (o *OracleSource) UnmarshalJSON(data []byte) error {
 // OracleTableDataset - The on-premises Oracle database dataset.
 type OracleTableDataset struct {
 	Dataset
-	// On-premises Oracle dataset properties.
+	// OPTIONAL; On-premises Oracle dataset properties.
 	TypeProperties *OracleTableDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -20498,20 +20530,20 @@ func (o *OracleTableDataset) UnmarshalJSON(data []byte) error {
 
 // OracleTableDatasetTypeProperties - On-premises Oracle dataset properties.
 type OracleTableDatasetTypeProperties struct {
-	// The schema name of the on-premises Oracle database. Type: string (or Expression with resultType string).
+	// OPTIONAL; The schema name of the on-premises Oracle database. Type: string (or Expression with resultType string).
 	Schema interface{} `json:"schema,omitempty"`
 
-	// The table name of the on-premises Oracle database. Type: string (or Expression with resultType string).
+	// OPTIONAL; The table name of the on-premises Oracle database. Type: string (or Expression with resultType string).
 	Table interface{} `json:"table,omitempty"`
 
-	// This property will be retired. Please consider using schema + table properties instead.
+	// OPTIONAL; This property will be retired. Please consider using schema + table properties instead.
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
 // OrcDataset - ORC dataset.
 type OrcDataset struct {
 	Dataset
-	// ORC dataset properties.
+	// OPTIONAL; ORC dataset properties.
 	TypeProperties *OrcDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -20545,8 +20577,10 @@ func (o *OrcDataset) UnmarshalJSON(data []byte) error {
 // OrcDatasetTypeProperties - ORC dataset properties.
 type OrcDatasetTypeProperties struct {
 	// REQUIRED; The location of the ORC data storage.
-	Location            DatasetLocationClassification `json:"location,omitempty"`
-	OrcCompressionCodec *OrcCompressionCodec          `json:"orcCompressionCodec,omitempty"`
+	Location DatasetLocationClassification `json:"location,omitempty"`
+
+	// OrcCompressionCodec - OPTIONAL
+	OrcCompressionCodec *OrcCompressionCodec `json:"orcCompressionCodec,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type OrcDatasetTypeProperties.
@@ -20594,7 +20628,7 @@ func (o OrcFormat) MarshalJSON() ([]byte, error) {
 // OrcSink - A copy activity ORC sink.
 type OrcSink struct {
 	CopySink
-	// ORC store settings.
+	// OPTIONAL; ORC store settings.
 	StoreSettings StoreWriteSettingsClassification `json:"storeSettings,omitempty"`
 }
 
@@ -20628,7 +20662,7 @@ func (o *OrcSink) UnmarshalJSON(data []byte) error {
 // OrcSource - A copy activity ORC source.
 type OrcSource struct {
 	CopySource
-	// ORC store settings.
+	// OPTIONAL; ORC store settings.
 	StoreSettings StoreReadSettingsClassification `json:"storeSettings,omitempty"`
 }
 
@@ -20661,17 +20695,17 @@ func (o *OrcSource) UnmarshalJSON(data []byte) error {
 
 // ParameterSpecification - Definition of a single parameter for an entity.
 type ParameterSpecification struct {
-	// Default value of parameter.
-	DefaultValue interface{} `json:"defaultValue,omitempty"`
-
 	// REQUIRED; Parameter type.
 	Type *ParameterType `json:"type,omitempty"`
+
+	// OPTIONAL; Default value of parameter.
+	DefaultValue interface{} `json:"defaultValue,omitempty"`
 }
 
 // ParquetDataset - Parquet dataset.
 type ParquetDataset struct {
 	Dataset
-	// Parquet dataset properties.
+	// OPTIONAL; Parquet dataset properties.
 	TypeProperties *ParquetDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -20704,10 +20738,11 @@ func (p *ParquetDataset) UnmarshalJSON(data []byte) error {
 
 // ParquetDatasetTypeProperties - Parquet dataset properties.
 type ParquetDatasetTypeProperties struct {
-	CompressionCodec *ParquetCompressionCodec `json:"compressionCodec,omitempty"`
-
 	// REQUIRED; The location of the parquet storage.
 	Location DatasetLocationClassification `json:"location,omitempty"`
+
+	// CompressionCodec - OPTIONAL
+	CompressionCodec *ParquetCompressionCodec `json:"compressionCodec,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ParquetDatasetTypeProperties.
@@ -20755,7 +20790,7 @@ func (p ParquetFormat) MarshalJSON() ([]byte, error) {
 // ParquetSink - A copy activity Parquet sink.
 type ParquetSink struct {
 	CopySink
-	// Parquet store settings.
+	// OPTIONAL; Parquet store settings.
 	StoreSettings StoreWriteSettingsClassification `json:"storeSettings,omitempty"`
 }
 
@@ -20789,7 +20824,7 @@ func (p *ParquetSink) UnmarshalJSON(data []byte) error {
 // ParquetSource - A copy activity Parquet source.
 type ParquetSource struct {
 	CopySource
-	// Parquet store settings.
+	// OPTIONAL; Parquet store settings.
 	StoreSettings StoreReadSettingsClassification `json:"storeSettings,omitempty"`
 }
 
@@ -20859,24 +20894,24 @@ type PaypalLinkedServiceTypeProperties struct {
 	// REQUIRED; The client ID associated with your PayPal application.
 	ClientID interface{} `json:"clientId,omitempty"`
 
-	// The client secret associated with your PayPal application.
-	ClientSecret SecretBaseClassification `json:"clientSecret,omitempty"`
-
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
-
 	// REQUIRED; The URL of the PayPal instance. (i.e. api.sandbox.paypal.com)
 	Host interface{} `json:"host,omitempty"`
 
-	// Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true.
+	// OPTIONAL; The client secret associated with your PayPal application.
+	ClientSecret SecretBaseClassification `json:"clientSecret,omitempty"`
+
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
+
+	// OPTIONAL; Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true.
 	UseEncryptedEndpoints interface{} `json:"useEncryptedEndpoints,omitempty"`
 
-	// Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value
-	// is true.
+	// OPTIONAL; Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default
+	// value is true.
 	UseHostVerification interface{} `json:"useHostVerification,omitempty"`
 
-	// Specifies whether to verify the identity of the server when connecting over SSL. The default value is true.
+	// OPTIONAL; Specifies whether to verify the identity of the server when connecting over SSL. The default value is true.
 	UsePeerVerification interface{} `json:"usePeerVerification,omitempty"`
 }
 
@@ -20934,7 +20969,7 @@ func (p *PaypalLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 // PaypalObjectDataset - Paypal Service dataset.
 type PaypalObjectDataset struct {
 	Dataset
-	// Properties specific to this dataset type.
+	// OPTIONAL; Properties specific to this dataset type.
 	TypeProperties *GenericDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -20968,7 +21003,7 @@ func (p *PaypalObjectDataset) UnmarshalJSON(data []byte) error {
 // PaypalSource - A copy activity Paypal Service source.
 type PaypalSource struct {
 	TabularSource
-	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	// OPTIONAL; A query to retrieve data from source. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -21001,13 +21036,13 @@ func (p *PaypalSource) UnmarshalJSON(data []byte) error {
 
 // PhoenixDatasetTypeProperties - Phoenix Dataset Properties
 type PhoenixDatasetTypeProperties struct {
-	// The schema name of the Phoenix. Type: string (or Expression with resultType string).
+	// OPTIONAL; The schema name of the Phoenix. Type: string (or Expression with resultType string).
 	Schema interface{} `json:"schema,omitempty"`
 
-	// The table name of the Phoenix. Type: string (or Expression with resultType string).
+	// OPTIONAL; The table name of the Phoenix. Type: string (or Expression with resultType string).
 	Table interface{} `json:"table,omitempty"`
 
-	// This property will be retired. Please consider using schema + table properties instead.
+	// OPTIONAL; This property will be retired. Please consider using schema + table properties instead.
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
@@ -21047,43 +21082,44 @@ func (p *PhoenixLinkedService) UnmarshalJSON(data []byte) error {
 
 // PhoenixLinkedServiceTypeProperties - Phoenix server linked service properties.
 type PhoenixLinkedServiceTypeProperties struct {
-	// Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value is false.
-	AllowHostNameCNMismatch interface{} `json:"allowHostNameCNMismatch,omitempty"`
-
-	// Specifies whether to allow self-signed certificates from the server. The default value is false.
-	AllowSelfSignedServerCert interface{} `json:"allowSelfSignedServerCert,omitempty"`
-
 	// REQUIRED; The authentication mechanism used to connect to the Phoenix server.
 	AuthenticationType *PhoenixAuthenticationType `json:"authenticationType,omitempty"`
-
-	// Specifies whether the connections to the server are encrypted using SSL. The default value is false.
-	EnableSSL interface{} `json:"enableSsl,omitempty"`
-
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
-
-	// The partial URL corresponding to the Phoenix server. (i.e. /gateway/sandbox/phoenix/version). The default value is hbasephoenix if using WindowsAzureHDInsightService.
-	HTTPPath interface{} `json:"httpPath,omitempty"`
 
 	// REQUIRED; The IP address or host name of the Phoenix server. (i.e. 192.168.222.160)
 	Host interface{} `json:"host,omitempty"`
 
-	// The password corresponding to the user name.
+	// OPTIONAL; Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value
+	// is false.
+	AllowHostNameCNMismatch interface{} `json:"allowHostNameCNMismatch,omitempty"`
+
+	// OPTIONAL; Specifies whether to allow self-signed certificates from the server. The default value is false.
+	AllowSelfSignedServerCert interface{} `json:"allowSelfSignedServerCert,omitempty"`
+
+	// OPTIONAL; Specifies whether the connections to the server are encrypted using SSL. The default value is false.
+	EnableSSL interface{} `json:"enableSsl,omitempty"`
+
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
+
+	// OPTIONAL; The partial URL corresponding to the Phoenix server. (i.e. /gateway/sandbox/phoenix/version). The default value is hbasephoenix if using WindowsAzureHDInsightService.
+	HTTPPath interface{} `json:"httpPath,omitempty"`
+
+	// OPTIONAL; The password corresponding to the user name.
 	Password SecretBaseClassification `json:"password,omitempty"`
 
-	// The TCP port that the Phoenix server uses to listen for client connections. The default value is 8765.
+	// OPTIONAL; The TCP port that the Phoenix server uses to listen for client connections. The default value is 8765.
 	Port interface{} `json:"port,omitempty"`
 
-	// The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when
-	// using SSL on self-hosted IR. The default value
+	// OPTIONAL; The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only
+	// be set when using SSL on self-hosted IR. The default value
 	// is the cacerts.pem file installed with the IR.
 	TrustedCertPath interface{} `json:"trustedCertPath,omitempty"`
 
-	// Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false.
+	// OPTIONAL; Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false.
 	UseSystemTrustStore interface{} `json:"useSystemTrustStore,omitempty"`
 
-	// The user name used to connect to the Phoenix server.
+	// OPTIONAL; The user name used to connect to the Phoenix server.
 	Username interface{} `json:"username,omitempty"`
 }
 
@@ -21161,7 +21197,7 @@ func (p *PhoenixLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 // PhoenixObjectDataset - Phoenix server dataset.
 type PhoenixObjectDataset struct {
 	Dataset
-	// Properties specific to this dataset type.
+	// OPTIONAL; Properties specific to this dataset type.
 	TypeProperties *PhoenixDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -21195,7 +21231,7 @@ func (p *PhoenixObjectDataset) UnmarshalJSON(data []byte) error {
 // PhoenixSource - A copy activity Phoenix server source.
 type PhoenixSource struct {
 	TabularSource
-	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	// OPTIONAL; A query to retrieve data from source. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -21228,28 +21264,28 @@ func (p *PhoenixSource) UnmarshalJSON(data []byte) error {
 
 // Pipeline - A workspace pipeline.
 type Pipeline struct {
-	// List of activities in pipeline.
+	// OPTIONAL; List of activities in pipeline.
 	Activities []ActivityClassification `json:"activities,omitempty"`
 
-	// List of tags that can be used for describing the Pipeline.
+	// OPTIONAL; List of tags that can be used for describing the Pipeline.
 	Annotations []interface{} `json:"annotations,omitempty"`
 
-	// The max number of concurrent runs for the pipeline.
+	// OPTIONAL; The max number of concurrent runs for the pipeline.
 	Concurrency *int32 `json:"concurrency,omitempty"`
 
-	// The description of the pipeline.
+	// OPTIONAL; The description of the pipeline.
 	Description *string `json:"description,omitempty"`
 
-	// The folder that this Pipeline is in. If not specified, Pipeline will appear at the root level.
+	// OPTIONAL; The folder that this Pipeline is in. If not specified, Pipeline will appear at the root level.
 	Folder *PipelineFolder `json:"folder,omitempty"`
 
-	// List of parameters for pipeline.
+	// OPTIONAL; List of parameters for pipeline.
 	Parameters map[string]*ParameterSpecification `json:"parameters,omitempty"`
 
-	// Dimensions emitted by Pipeline.
+	// OPTIONAL; Dimensions emitted by Pipeline.
 	RunDimensions map[string]interface{} `json:"runDimensions,omitempty"`
 
-	// List of variables for pipeline.
+	// OPTIONAL; List of variables for pipeline.
 	Variables map[string]*VariableSpecification `json:"variables,omitempty"`
 }
 
@@ -21338,7 +21374,7 @@ type PipelineCreatePipelineRunOptions struct {
 
 // PipelineFolder - The folder that this Pipeline is in. If not specified, Pipeline will appear at the root level.
 type PipelineFolder struct {
-	// The name of the folder that this Pipeline is in.
+	// OPTIONAL; The name of the folder that this Pipeline is in.
 	Name *string `json:"name,omitempty"`
 }
 
@@ -21356,11 +21392,11 @@ type PipelineGetPipelinesByWorkspaceOptions struct {
 
 // PipelineListResponse - A list of pipeline resources.
 type PipelineListResponse struct {
-	// The link to the next page of results, if any remaining results exist.
-	NextLink *string `json:"nextLink,omitempty"`
-
 	// REQUIRED; List of pipelines.
 	Value []*PipelineResource `json:"value,omitempty"`
+
+	// OPTIONAL; The link to the next page of results, if any remaining results exist.
+	NextLink *string `json:"nextLink,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type PipelineListResponse.
@@ -21382,24 +21418,24 @@ type PipelineListResponseResponse struct {
 
 // PipelineReference - Pipeline reference type.
 type PipelineReference struct {
-	// Reference name.
-	Name *string `json:"name,omitempty"`
-
 	// REQUIRED; Reference pipeline name.
 	ReferenceName *string `json:"referenceName,omitempty"`
 
 	// REQUIRED; Pipeline reference type.
 	Type *PipelineReferenceType `json:"type,omitempty"`
+
+	// OPTIONAL; Reference name.
+	Name *string `json:"name,omitempty"`
 }
 
 // PipelineResource - Pipeline resource type.
 type PipelineResource struct {
 	SubResource
-	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties map[string]interface{}
-
 	// REQUIRED; Properties of the pipeline.
 	Properties *Pipeline `json:"properties,omitempty"`
+
+	// Contains additional key/value pairs not defined in the schema.
+	AdditionalProperties map[string]interface{}
 }
 
 // MarshalJSON implements the json.Marshaller interface for type PipelineResource.
@@ -21651,11 +21687,11 @@ type PipelineRunResponse struct {
 
 // PipelineRunsQueryResponse - A list pipeline runs.
 type PipelineRunsQueryResponse struct {
-	// The continuation token for getting the next page of results, if any remaining results exist, null otherwise.
-	ContinuationToken *string `json:"continuationToken,omitempty"`
-
 	// REQUIRED; List of pipeline runs.
 	Value []*PipelineRun `json:"value,omitempty"`
+
+	// OPTIONAL; The continuation token for getting the next page of results, if any remaining results exist, null otherwise.
+	ContinuationToken *string `json:"continuationToken,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type PipelineRunsQueryResponse.
@@ -21680,19 +21716,19 @@ type PolybaseSettings struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
-	// Determines the number of rows to attempt to retrieve before the PolyBase recalculates the percentage of rejected rows. Type: integer (or Expression with
-	// resultType integer), minimum: 0.
+	// OPTIONAL; Determines the number of rows to attempt to retrieve before the PolyBase recalculates the percentage of rejected rows. Type: integer (or Expression
+	// with resultType integer), minimum: 0.
 	RejectSampleValue interface{} `json:"rejectSampleValue,omitempty"`
 
-	// Reject type.
+	// OPTIONAL; Reject type.
 	RejectType *PolybaseSettingsRejectType `json:"rejectType,omitempty"`
 
-	// Specifies the value or the percentage of rows that can be rejected before the query fails. Type: number (or Expression with resultType number), minimum:
-	// 0.
+	// OPTIONAL; Specifies the value or the percentage of rows that can be rejected before the query fails. Type: number (or Expression with resultType number),
+	// minimum: 0.
 	RejectValue interface{} `json:"rejectValue,omitempty"`
 
-	// Specifies how to handle missing values in delimited text files when PolyBase retrieves data from the text file. Type: boolean (or Expression with resultType
-	// boolean).
+	// OPTIONAL; Specifies how to handle missing values in delimited text files when PolyBase retrieves data from the text file. Type: boolean (or Expression
+	// with resultType boolean).
 	UseTypeDefault interface{} `json:"useTypeDefault,omitempty"`
 }
 
@@ -21789,18 +21825,18 @@ type PostgreSQLLinkedServiceTypeProperties struct {
 	// REQUIRED; The connection string.
 	ConnectionString interface{} `json:"connectionString,omitempty"`
 
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
 	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
 
-	// The Azure key vault secret reference of password in connection string.
+	// OPTIONAL; The Azure key vault secret reference of password in connection string.
 	Password *AzureKeyVaultSecretReference `json:"password,omitempty"`
 }
 
 // PostgreSQLSource - A copy activity source for PostgreSQL databases.
 type PostgreSQLSource struct {
 	TabularSource
-	// Database query. Type: string (or Expression with resultType string).
+	// OPTIONAL; Database query. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -21834,7 +21870,7 @@ func (p *PostgreSQLSource) UnmarshalJSON(data []byte) error {
 // PostgreSQLTableDataset - The PostgreSQL table dataset.
 type PostgreSQLTableDataset struct {
 	Dataset
-	// PostgreSQL table dataset properties.
+	// OPTIONAL; PostgreSQL table dataset properties.
 	TypeProperties *PostgreSQLTableDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -21867,25 +21903,25 @@ func (p *PostgreSQLTableDataset) UnmarshalJSON(data []byte) error {
 
 // PostgreSQLTableDatasetTypeProperties - PostgreSQL table dataset properties.
 type PostgreSQLTableDatasetTypeProperties struct {
-	// The PostgreSQL schema name. Type: string (or Expression with resultType string).
+	// OPTIONAL; The PostgreSQL schema name. Type: string (or Expression with resultType string).
 	Schema interface{} `json:"schema,omitempty"`
 
-	// The PostgreSQL table name. Type: string (or Expression with resultType string).
+	// OPTIONAL; The PostgreSQL table name. Type: string (or Expression with resultType string).
 	Table interface{} `json:"table,omitempty"`
 
-	// This property will be retired. Please consider using schema + table properties instead.
+	// OPTIONAL; This property will be retired. Please consider using schema + table properties instead.
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
 // PrestoDatasetTypeProperties - Presto Dataset Properties
 type PrestoDatasetTypeProperties struct {
-	// The schema name of the Presto. Type: string (or Expression with resultType string).
+	// OPTIONAL; The schema name of the Presto. Type: string (or Expression with resultType string).
 	Schema interface{} `json:"schema,omitempty"`
 
-	// The table name of the Presto. Type: string (or Expression with resultType string).
+	// OPTIONAL; The table name of the Presto. Type: string (or Expression with resultType string).
 	Table interface{} `json:"table,omitempty"`
 
-	// This property will be retired. Please consider using schema + table properties instead.
+	// OPTIONAL; This property will be retired. Please consider using schema + table properties instead.
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
@@ -21925,50 +21961,51 @@ func (p *PrestoLinkedService) UnmarshalJSON(data []byte) error {
 
 // PrestoLinkedServiceTypeProperties - Presto server linked service properties.
 type PrestoLinkedServiceTypeProperties struct {
-	// Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value is false.
-	AllowHostNameCNMismatch interface{} `json:"allowHostNameCNMismatch,omitempty"`
-
-	// Specifies whether to allow self-signed certificates from the server. The default value is false.
-	AllowSelfSignedServerCert interface{} `json:"allowSelfSignedServerCert,omitempty"`
-
 	// REQUIRED; The authentication mechanism used to connect to the Presto server.
 	AuthenticationType *PrestoAuthenticationType `json:"authenticationType,omitempty"`
 
 	// REQUIRED; The catalog context for all request against the server.
 	Catalog interface{} `json:"catalog,omitempty"`
 
-	// Specifies whether the connections to the server are encrypted using SSL. The default value is false.
-	EnableSSL interface{} `json:"enableSsl,omitempty"`
-
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
-
 	// REQUIRED; The IP address or host name of the Presto server. (i.e. 192.168.222.160)
 	Host interface{} `json:"host,omitempty"`
-
-	// The password corresponding to the user name.
-	Password SecretBaseClassification `json:"password,omitempty"`
-
-	// The TCP port that the Presto server uses to listen for client connections. The default value is 8080.
-	Port interface{} `json:"port,omitempty"`
 
 	// REQUIRED; The version of the Presto server. (i.e. 0.148-t)
 	ServerVersion interface{} `json:"serverVersion,omitempty"`
 
-	// The local time zone used by the connection. Valid values for this option are specified in the IANA Time Zone Database. The default value is the system
-	// time zone.
+	// OPTIONAL; Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value
+	// is false.
+	AllowHostNameCNMismatch interface{} `json:"allowHostNameCNMismatch,omitempty"`
+
+	// OPTIONAL; Specifies whether to allow self-signed certificates from the server. The default value is false.
+	AllowSelfSignedServerCert interface{} `json:"allowSelfSignedServerCert,omitempty"`
+
+	// OPTIONAL; Specifies whether the connections to the server are encrypted using SSL. The default value is false.
+	EnableSSL interface{} `json:"enableSsl,omitempty"`
+
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
+
+	// OPTIONAL; The password corresponding to the user name.
+	Password SecretBaseClassification `json:"password,omitempty"`
+
+	// OPTIONAL; The TCP port that the Presto server uses to listen for client connections. The default value is 8080.
+	Port interface{} `json:"port,omitempty"`
+
+	// OPTIONAL; The local time zone used by the connection. Valid values for this option are specified in the IANA Time Zone Database. The default value is
+	// the system time zone.
 	TimeZoneID interface{} `json:"timeZoneID,omitempty"`
 
-	// The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when
-	// using SSL on self-hosted IR. The default value
+	// OPTIONAL; The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only
+	// be set when using SSL on self-hosted IR. The default value
 	// is the cacerts.pem file installed with the IR.
 	TrustedCertPath interface{} `json:"trustedCertPath,omitempty"`
 
-	// Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false.
+	// OPTIONAL; Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false.
 	UseSystemTrustStore interface{} `json:"useSystemTrustStore,omitempty"`
 
-	// The user name used to connect to the Presto server.
+	// OPTIONAL; The user name used to connect to the Presto server.
 	Username interface{} `json:"username,omitempty"`
 }
 
@@ -22054,7 +22091,7 @@ func (p *PrestoLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 // PrestoObjectDataset - Presto server dataset.
 type PrestoObjectDataset struct {
 	Dataset
-	// Properties specific to this dataset type.
+	// OPTIONAL; Properties specific to this dataset type.
 	TypeProperties *PrestoDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -22088,7 +22125,7 @@ func (p *PrestoObjectDataset) UnmarshalJSON(data []byte) error {
 // PrestoSource - A copy activity Presto server source.
 type PrestoSource struct {
 	TabularSource
-	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	// OPTIONAL; A query to retrieve data from source. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -22128,7 +22165,7 @@ type PrivateEndpoint struct {
 // PrivateEndpointConnection - A private endpoint connection
 type PrivateEndpointConnection struct {
 	ProxyResource
-	// Private endpoint connection properties.
+	// OPTIONAL; Private endpoint connection properties.
 	Properties *PrivateEndpointConnectionProperties `json:"properties,omitempty"`
 }
 
@@ -22141,10 +22178,10 @@ func (p PrivateEndpointConnection) MarshalJSON() ([]byte, error) {
 
 // PrivateEndpointConnectionProperties - Properties of a private endpoint connection.
 type PrivateEndpointConnectionProperties struct {
-	// The private endpoint which the connection belongs to.
+	// OPTIONAL; The private endpoint which the connection belongs to.
 	PrivateEndpoint *PrivateEndpoint `json:"privateEndpoint,omitempty"`
 
-	// Connection state of the private endpoint connection.
+	// OPTIONAL; Connection state of the private endpoint connection.
 	PrivateLinkServiceConnectionState *PrivateLinkServiceConnectionState `json:"privateLinkServiceConnectionState,omitempty"`
 
 	// READ-ONLY; Provisioning state of the private endpoint connection.
@@ -22153,14 +22190,14 @@ type PrivateEndpointConnectionProperties struct {
 
 // PrivateLinkServiceConnectionState - Connection state details of the private endpoint
 type PrivateLinkServiceConnectionState struct {
-	// READ-ONLY; The actions required for private link service connection.
-	ActionsRequired *string `json:"actionsRequired,omitempty" azure:"ro"`
-
-	// The private link service connection description.
+	// OPTIONAL; The private link service connection description.
 	Description *string `json:"description,omitempty"`
 
-	// The private link service connection status.
+	// OPTIONAL; The private link service connection status.
 	Status *string `json:"status,omitempty"`
+
+	// READ-ONLY; The actions required for private link service connection.
+	ActionsRequired *string `json:"actionsRequired,omitempty" azure:"ro"`
 }
 
 // ProxyResource - The resource model definition for a Azure Resource Manager proxy resource. It will not have tags and a location
@@ -22175,16 +22212,16 @@ func (p ProxyResource) marshalInternal() map[string]interface{} {
 
 // PurviewConfiguration - Purview Configuration
 type PurviewConfiguration struct {
-	// Purview Resource ID
+	// OPTIONAL; Purview Resource ID
 	PurviewResourceID *string `json:"purviewResourceId,omitempty"`
 }
 
 // QueryDataFlowDebugSessionsResponse - A list of active debug sessions.
 type QueryDataFlowDebugSessionsResponse struct {
-	// The link to the next page of results, if any remaining results exist.
+	// OPTIONAL; The link to the next page of results, if any remaining results exist.
 	NextLink *string `json:"nextLink,omitempty"`
 
-	// Array with all active debug sessions.
+	// OPTIONAL; Array with all active debug sessions.
 	Value []*DataFlowDebugSessionInfo `json:"value,omitempty"`
 }
 
@@ -22256,14 +22293,14 @@ type QuickBooksLinkedServiceTypeProperties struct {
 	// REQUIRED; The consumer secret for OAuth 1.0 authentication.
 	ConsumerSecret SecretBaseClassification `json:"consumerSecret,omitempty"`
 
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
-
 	// REQUIRED; The endpoint of the QuickBooks server. (i.e. quickbooks.api.intuit.com)
 	Endpoint interface{} `json:"endpoint,omitempty"`
 
-	// Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true.
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
+
+	// OPTIONAL; Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true.
 	UseEncryptedEndpoints interface{} `json:"useEncryptedEndpoints,omitempty"`
 }
 
@@ -22325,7 +22362,7 @@ func (q *QuickBooksLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error
 // QuickBooksObjectDataset - QuickBooks server dataset.
 type QuickBooksObjectDataset struct {
 	Dataset
-	// Properties specific to this dataset type.
+	// OPTIONAL; Properties specific to this dataset type.
 	TypeProperties *GenericDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -22359,7 +22396,7 @@ func (q *QuickBooksObjectDataset) UnmarshalJSON(data []byte) error {
 // QuickBooksSource - A copy activity QuickBooks server source.
 type QuickBooksSource struct {
 	TabularSource
-	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	// OPTIONAL; A query to retrieve data from source. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -22395,19 +22432,19 @@ type RecurrenceSchedule struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
-	// The hours.
+	// OPTIONAL; The hours.
 	Hours []*int32 `json:"hours,omitempty"`
 
-	// The minutes.
+	// OPTIONAL; The minutes.
 	Minutes []*int32 `json:"minutes,omitempty"`
 
-	// The month days.
+	// OPTIONAL; The month days.
 	MonthDays []*int32 `json:"monthDays,omitempty"`
 
-	// The monthly occurrences.
+	// OPTIONAL; The monthly occurrences.
 	MonthlyOccurrences []*RecurrenceScheduleOccurrence `json:"monthlyOccurrences,omitempty"`
 
-	// The days of the week.
+	// OPTIONAL; The days of the week.
 	WeekDays []*DayOfWeek `json:"weekDays,omitempty"`
 }
 
@@ -22474,10 +22511,10 @@ type RecurrenceScheduleOccurrence struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
-	// The day of the week.
+	// OPTIONAL; The day of the week.
 	Day *DayOfWeek `json:"day,omitempty"`
 
-	// The occurrence.
+	// OPTIONAL; The occurrence.
 	Occurrence *int32 `json:"occurrence,omitempty"`
 }
 
@@ -22529,15 +22566,15 @@ func (r *RecurrenceScheduleOccurrence) UnmarshalJSON(data []byte) error {
 
 // RedirectIncompatibleRowSettings - Redirect incompatible row settings
 type RedirectIncompatibleRowSettings struct {
-	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties map[string]interface{}
-
 	// REQUIRED; Name of the Azure Storage, Storage SAS, or Azure Data Lake Store linked service used for redirecting incompatible row. Must be specified if
 	// redirectIncompatibleRowSettings is specified. Type: string
 	// (or Expression with resultType string).
 	LinkedServiceName interface{} `json:"linkedServiceName,omitempty"`
 
-	// The path for storing the redirect incompatible row data. Type: string (or Expression with resultType string).
+	// Contains additional key/value pairs not defined in the schema.
+	AdditionalProperties map[string]interface{}
+
+	// OPTIONAL; The path for storing the redirect incompatible row data. Type: string (or Expression with resultType string).
 	Path interface{} `json:"path,omitempty"`
 }
 
@@ -22603,7 +22640,7 @@ type RedshiftUnloadSettings struct {
 // RelationalSource - A copy activity source for various relational databases.
 type RelationalSource struct {
 	CopySource
-	// Database query. Type: string (or Expression with resultType string).
+	// OPTIONAL; Database query. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -22637,7 +22674,7 @@ func (r *RelationalSource) UnmarshalJSON(data []byte) error {
 // RelationalTableDataset - The relational table dataset.
 type RelationalTableDataset struct {
 	Dataset
-	// Relational table dataset properties.
+	// OPTIONAL; Relational table dataset properties.
 	TypeProperties *RelationalTableDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -22670,17 +22707,17 @@ func (r *RelationalTableDataset) UnmarshalJSON(data []byte) error {
 
 // RelationalTableDatasetTypeProperties - Relational table dataset properties.
 type RelationalTableDatasetTypeProperties struct {
-	// The relational table name. Type: string (or Expression with resultType string).
+	// OPTIONAL; The relational table name. Type: string (or Expression with resultType string).
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
 // RerunTriggerListResponse - A list of rerun triggers.
 type RerunTriggerListResponse struct {
-	// READ-ONLY; The continuation token for getting the next page of results, if any remaining results exist, null otherwise.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
-
 	// REQUIRED; List of rerun triggers.
 	Value []*RerunTriggerResource `json:"value,omitempty"`
+
+	// READ-ONLY; The continuation token for getting the next page of results, if any remaining results exist, null otherwise.
+	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type RerunTriggerListResponse.
@@ -22816,14 +22853,14 @@ type RerunTumblingWindowTriggerTypeProperties struct {
 	// REQUIRED; The max number of parallel time windows (ready for execution) for which a rerun is triggered.
 	MaxConcurrency *int32 `json:"maxConcurrency,omitempty"`
 
-	// The parent trigger reference.
-	ParentTrigger interface{} `json:"parentTrigger,omitempty"`
-
 	// REQUIRED; The end time for the time period for which restatement is initiated. Only UTC time is currently supported.
 	RequestedEndTime *time.Time `json:"requestedEndTime,omitempty"`
 
 	// REQUIRED; The start time for the time period for which restatement is initiated. Only UTC time is currently supported.
 	RequestedStartTime *time.Time `json:"requestedStartTime,omitempty"`
+
+	// OPTIONAL; The parent trigger reference.
+	ParentTrigger interface{} `json:"parentTrigger,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type RerunTumblingWindowTriggerTypeProperties.
@@ -22964,26 +23001,27 @@ type ResponsysLinkedServiceTypeProperties struct {
 	// REQUIRED; The client ID associated with the Responsys application. Type: string (or Expression with resultType string).
 	ClientID interface{} `json:"clientId,omitempty"`
 
-	// The client secret associated with the Responsys application. Type: string (or Expression with resultType string).
-	ClientSecret SecretBaseClassification `json:"clientSecret,omitempty"`
-
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
-
 	// REQUIRED; The endpoint of the Responsys server.
 	Endpoint interface{} `json:"endpoint,omitempty"`
 
-	// Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. Type: boolean (or Expression with resultType boolean).
+	// OPTIONAL; The client secret associated with the Responsys application. Type: string (or Expression with resultType string).
+	ClientSecret SecretBaseClassification `json:"clientSecret,omitempty"`
+
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
+
+	// OPTIONAL; Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. Type: boolean (or Expression with resultType
+	// boolean).
 	UseEncryptedEndpoints interface{} `json:"useEncryptedEndpoints,omitempty"`
 
-	// Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value
-	// is true. Type: boolean (or Expression with
+	// OPTIONAL; Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default
+	// value is true. Type: boolean (or Expression with
 	// resultType boolean).
 	UseHostVerification interface{} `json:"useHostVerification,omitempty"`
 
-	// Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. Type: boolean (or Expression with resultType
-	// boolean).
+	// OPTIONAL; Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. Type: boolean (or Expression with
+	// resultType boolean).
 	UsePeerVerification interface{} `json:"usePeerVerification,omitempty"`
 }
 
@@ -23041,7 +23079,7 @@ func (r *ResponsysLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error 
 // ResponsysObjectDataset - Responsys dataset.
 type ResponsysObjectDataset struct {
 	Dataset
-	// Properties specific to this dataset type.
+	// OPTIONAL; Properties specific to this dataset type.
 	TypeProperties *GenericDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -23075,7 +23113,7 @@ func (r *ResponsysObjectDataset) UnmarshalJSON(data []byte) error {
 // ResponsysSource - A copy activity Responsys source.
 type ResponsysSource struct {
 	TabularSource
-	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	// OPTIONAL; A query to retrieve data from source. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -23109,7 +23147,7 @@ func (r *ResponsysSource) UnmarshalJSON(data []byte) error {
 // RestResourceDataset - A Rest service dataset.
 type RestResourceDataset struct {
 	Dataset
-	// Properties specific to this dataset type.
+	// OPTIONAL; Properties specific to this dataset type.
 	TypeProperties *RestResourceDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -23142,19 +23180,19 @@ func (r *RestResourceDataset) UnmarshalJSON(data []byte) error {
 
 // RestResourceDatasetTypeProperties - Properties specific to this dataset type.
 type RestResourceDatasetTypeProperties struct {
-	// The additional HTTP headers in the request to the RESTful API. Type: string (or Expression with resultType string).
+	// OPTIONAL; The additional HTTP headers in the request to the RESTful API. Type: string (or Expression with resultType string).
 	AdditionalHeaders interface{} `json:"additionalHeaders,omitempty"`
 
-	// The pagination rules to compose next page requests. Type: string (or Expression with resultType string).
+	// OPTIONAL; The pagination rules to compose next page requests. Type: string (or Expression with resultType string).
 	PaginationRules interface{} `json:"paginationRules,omitempty"`
 
-	// The relative URL to the resource that the RESTful API provides. Type: string (or Expression with resultType string).
+	// OPTIONAL; The relative URL to the resource that the RESTful API provides. Type: string (or Expression with resultType string).
 	RelativeURL interface{} `json:"relativeUrl,omitempty"`
 
-	// The HTTP request body to the RESTful API if requestMethod is POST. Type: string (or Expression with resultType string).
+	// OPTIONAL; The HTTP request body to the RESTful API if requestMethod is POST. Type: string (or Expression with resultType string).
 	RequestBody interface{} `json:"requestBody,omitempty"`
 
-	// The HTTP method used to call the RESTful API. The default is GET. Type: string (or Expression with resultType string).
+	// OPTIONAL; The HTTP method used to call the RESTful API. The default is GET. Type: string (or Expression with resultType string).
 	RequestMethod interface{} `json:"requestMethod,omitempty"`
 }
 
@@ -23194,36 +23232,36 @@ func (r *RestServiceLinkedService) UnmarshalJSON(data []byte) error {
 
 // RestServiceLinkedServiceTypeProperties - Rest Service linked service properties.
 type RestServiceLinkedServiceTypeProperties struct {
-	// The resource you are requesting authorization to use.
-	AADResourceID interface{} `json:"aadResourceId,omitempty"`
-
 	// REQUIRED; Type of authentication used to connect to the REST service.
 	AuthenticationType *RestServiceAuthenticationType `json:"authenticationType,omitempty"`
-
-	// Whether to validate server side SSL certificate when connecting to the endpoint.The default value is true. Type: boolean (or Expression with resultType
-	// boolean).
-	EnableServerCertificateValidation interface{} `json:"enableServerCertificateValidation,omitempty"`
-
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
-
-	// The password used in Basic authentication type.
-	Password SecretBaseClassification `json:"password,omitempty"`
-
-	// The application's client ID used in AadServicePrincipal authentication type.
-	ServicePrincipalID interface{} `json:"servicePrincipalId,omitempty"`
-
-	// The application's key used in AadServicePrincipal authentication type.
-	ServicePrincipalKey SecretBaseClassification `json:"servicePrincipalKey,omitempty"`
-
-	// The tenant information (domain name or tenant ID) used in AadServicePrincipal authentication type under which your application resides.
-	Tenant interface{} `json:"tenant,omitempty"`
 
 	// REQUIRED; The base URL of the REST service.
 	URL interface{} `json:"url,omitempty"`
 
-	// The user name used in Basic authentication type.
+	// OPTIONAL; The resource you are requesting authorization to use.
+	AADResourceID interface{} `json:"aadResourceId,omitempty"`
+
+	// OPTIONAL; Whether to validate server side SSL certificate when connecting to the endpoint.The default value is true. Type: boolean (or Expression with
+	// resultType boolean).
+	EnableServerCertificateValidation interface{} `json:"enableServerCertificateValidation,omitempty"`
+
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
+
+	// OPTIONAL; The password used in Basic authentication type.
+	Password SecretBaseClassification `json:"password,omitempty"`
+
+	// OPTIONAL; The application's client ID used in AadServicePrincipal authentication type.
+	ServicePrincipalID interface{} `json:"servicePrincipalId,omitempty"`
+
+	// OPTIONAL; The application's key used in AadServicePrincipal authentication type.
+	ServicePrincipalKey SecretBaseClassification `json:"servicePrincipalKey,omitempty"`
+
+	// OPTIONAL; The tenant information (domain name or tenant ID) used in AadServicePrincipal authentication type under which your application resides.
+	Tenant interface{} `json:"tenant,omitempty"`
+
+	// OPTIONAL; The user name used in Basic authentication type.
 	UserName interface{} `json:"userName,omitempty"`
 }
 
@@ -23293,24 +23331,24 @@ func (r *RestServiceLinkedServiceTypeProperties) UnmarshalJSON(data []byte) erro
 // RestSource - A copy activity Rest service source.
 type RestSource struct {
 	CopySource
-	// The additional HTTP headers in the request to the RESTful API. Type: string (or Expression with resultType string).
+	// OPTIONAL; The additional HTTP headers in the request to the RESTful API. Type: string (or Expression with resultType string).
 	AdditionalHeaders interface{} `json:"additionalHeaders,omitempty"`
 
-	// The timeout (TimeSpan) to get an HTTP response. It is the timeout to get a response, not the timeout to read response data. Default value: 00:01:40.
-	// Type: string (or Expression with resultType
+	// OPTIONAL; The timeout (TimeSpan) to get an HTTP response. It is the timeout to get a response, not the timeout to read response data. Default value:
+	// 00:01:40. Type: string (or Expression with resultType
 	// string), pattern: ((\d+).)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
 	HTTPRequestTimeout interface{} `json:"httpRequestTimeout,omitempty"`
 
-	// The pagination rules to compose next page requests. Type: string (or Expression with resultType string).
+	// OPTIONAL; The pagination rules to compose next page requests. Type: string (or Expression with resultType string).
 	PaginationRules interface{} `json:"paginationRules,omitempty"`
 
-	// The HTTP request body to the RESTful API if requestMethod is POST. Type: string (or Expression with resultType string).
+	// OPTIONAL; The HTTP request body to the RESTful API if requestMethod is POST. Type: string (or Expression with resultType string).
 	RequestBody interface{} `json:"requestBody,omitempty"`
 
-	// The time to await before sending next page request.
+	// OPTIONAL; The time to await before sending next page request.
 	RequestInterval interface{} `json:"requestInterval,omitempty"`
 
-	// The HTTP method used to call the RESTful API. The default is GET. Type: string (or Expression with resultType string).
+	// OPTIONAL; The HTTP method used to call the RESTful API. The default is GET. Type: string (or Expression with resultType string).
 	RequestMethod interface{} `json:"requestMethod,omitempty"`
 }
 
@@ -23363,28 +23401,28 @@ func (r *RestSource) UnmarshalJSON(data []byte) error {
 
 // RetryPolicy - Execution policy for an activity.
 type RetryPolicy struct {
-	// Maximum ordinary retry attempts. Default is 0. Type: integer (or Expression with resultType integer), minimum: 0.
+	// OPTIONAL; Maximum ordinary retry attempts. Default is 0. Type: integer (or Expression with resultType integer), minimum: 0.
 	Count interface{} `json:"count,omitempty"`
 
-	// Interval between retries in seconds. Default is 30.
+	// OPTIONAL; Interval between retries in seconds. Default is 30.
 	IntervalInSeconds *int32 `json:"intervalInSeconds,omitempty"`
 }
 
 // RunFilterParameters - Query parameters for listing runs.
 type RunFilterParameters struct {
-	// The continuation token for getting the next page of results. Null for first page.
-	ContinuationToken *string `json:"continuationToken,omitempty"`
-
-	// List of filters.
-	Filters []*RunQueryFilter `json:"filters,omitempty"`
-
 	// REQUIRED; The time at or after which the run event was updated in 'ISO 8601' format.
 	LastUpdatedAfter *time.Time `json:"lastUpdatedAfter,omitempty"`
 
 	// REQUIRED; The time at or before which the run event was updated in 'ISO 8601' format.
 	LastUpdatedBefore *time.Time `json:"lastUpdatedBefore,omitempty"`
 
-	// List of OrderBy option.
+	// OPTIONAL; The continuation token for getting the next page of results. Null for first page.
+	ContinuationToken *string `json:"continuationToken,omitempty"`
+
+	// OPTIONAL; List of filters.
+	Filters []*RunQueryFilter `json:"filters,omitempty"`
+
+	// OPTIONAL; List of OrderBy option.
 	OrderBy []*RunQueryOrderBy `json:"orderBy,omitempty"`
 }
 
@@ -23471,26 +23509,27 @@ type RunQueryOrderBy struct {
 
 // SKU - SQL pool SKU
 type SKU struct {
-	// If the SKU supports scale out/in then the capacity integer should be included. If scale out/in is not possible for the resource this may be omitted.
+	// OPTIONAL; If the SKU supports scale out/in then the capacity integer should be included. If scale out/in is not possible for the resource this may be
+	// omitted.
 	Capacity *int32 `json:"capacity,omitempty"`
 
-	// The SKU name
+	// OPTIONAL; The SKU name
 	Name *string `json:"name,omitempty"`
 
-	// The service tier
+	// OPTIONAL; The service tier
 	Tier *string `json:"tier,omitempty"`
 }
 
 // SQLConnection - The connection used to execute the SQL script.
 type SQLConnection struct {
-	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties map[string]interface{}
-
 	// REQUIRED; The identifier of the connection.
 	Name *string `json:"name,omitempty"`
 
 	// REQUIRED; The type of the connection.
 	Type *SQLConnectionType `json:"type,omitempty"`
+
+	// Contains additional key/value pairs not defined in the schema.
+	AdditionalProperties map[string]interface{}
 }
 
 // MarshalJSON implements the json.Marshaller interface for type SQLConnection.
@@ -23542,22 +23581,23 @@ func (s *SQLConnection) UnmarshalJSON(data []byte) error {
 // SQLDWSink - A copy activity SQL Data Warehouse sink.
 type SQLDWSink struct {
 	CopySink
-	// Indicates to use Copy Command to copy data into SQL Data Warehouse. Type: boolean (or Expression with resultType boolean).
+	// OPTIONAL; Indicates to use Copy Command to copy data into SQL Data Warehouse. Type: boolean (or Expression with resultType boolean).
 	AllowCopyCommand interface{} `json:"allowCopyCommand,omitempty"`
 
-	// Indicates to use PolyBase to copy data into SQL Data Warehouse when applicable. Type: boolean (or Expression with resultType boolean).
+	// OPTIONAL; Indicates to use PolyBase to copy data into SQL Data Warehouse when applicable. Type: boolean (or Expression with resultType boolean).
 	AllowPolyBase interface{} `json:"allowPolyBase,omitempty"`
 
-	// Specifies Copy Command related settings when allowCopyCommand is true.
+	// OPTIONAL; Specifies Copy Command related settings when allowCopyCommand is true.
 	CopyCommandSettings *DWCopyCommandSettings `json:"copyCommandSettings,omitempty"`
 
-	// Specifies PolyBase-related settings when allowPolyBase is true.
+	// OPTIONAL; Specifies PolyBase-related settings when allowPolyBase is true.
 	PolyBaseSettings *PolybaseSettings `json:"polyBaseSettings,omitempty"`
 
-	// SQL pre-copy script. Type: string (or Expression with resultType string).
+	// OPTIONAL; SQL pre-copy script. Type: string (or Expression with resultType string).
 	PreCopyScript interface{} `json:"preCopyScript,omitempty"`
 
-	// The option to handle sink table, such as autoCreate. For now only 'autoCreate' value is supported. Type: string (or Expression with resultType string).
+	// OPTIONAL; The option to handle sink table, such as autoCreate. For now only 'autoCreate' value is supported. Type: string (or Expression with resultType
+	// string).
 	TableOption interface{} `json:"tableOption,omitempty"`
 }
 
@@ -23611,15 +23651,15 @@ func (s *SQLDWSink) UnmarshalJSON(data []byte) error {
 // SQLDWSource - A copy activity SQL Data Warehouse source.
 type SQLDWSource struct {
 	TabularSource
-	// SQL Data Warehouse reader query. Type: string (or Expression with resultType string).
+	// OPTIONAL; SQL Data Warehouse reader query. Type: string (or Expression with resultType string).
 	SQLReaderQuery interface{} `json:"sqlReaderQuery,omitempty"`
 
-	// Name of the stored procedure for a SQL Data Warehouse source. This cannot be used at the same time as SqlReaderQuery. Type: string (or Expression with
-	// resultType string).
+	// OPTIONAL; Name of the stored procedure for a SQL Data Warehouse source. This cannot be used at the same time as SqlReaderQuery. Type: string (or Expression
+	// with resultType string).
 	SQLReaderStoredProcedureName interface{} `json:"sqlReaderStoredProcedureName,omitempty"`
 
-	// Value and type setting for stored procedure parameters. Example: "{Parameter1: {value: "1", type: "int"}}". Type: object (or Expression with resultType
-	// object), itemType: StoredProcedureParameter.
+	// OPTIONAL; Value and type setting for stored procedure parameters. Example: "{Parameter1: {value: "1", type: "int"}}". Type: object (or Expression with
+	// resultType object), itemType: StoredProcedureParameter.
 	StoredProcedureParameters interface{} `json:"storedProcedureParameters,omitempty"`
 }
 
@@ -23661,22 +23701,23 @@ func (s *SQLDWSource) UnmarshalJSON(data []byte) error {
 // SQLMISink - A copy activity Azure SQL Managed Instance sink.
 type SQLMISink struct {
 	CopySink
-	// SQL pre-copy script. Type: string (or Expression with resultType string).
+	// OPTIONAL; SQL pre-copy script. Type: string (or Expression with resultType string).
 	PreCopyScript interface{} `json:"preCopyScript,omitempty"`
 
-	// SQL writer stored procedure name. Type: string (or Expression with resultType string).
+	// OPTIONAL; SQL writer stored procedure name. Type: string (or Expression with resultType string).
 	SQLWriterStoredProcedureName interface{} `json:"sqlWriterStoredProcedureName,omitempty"`
 
-	// SQL writer table type. Type: string (or Expression with resultType string).
+	// OPTIONAL; SQL writer table type. Type: string (or Expression with resultType string).
 	SQLWriterTableType interface{} `json:"sqlWriterTableType,omitempty"`
 
-	// SQL stored procedure parameters.
+	// OPTIONAL; SQL stored procedure parameters.
 	StoredProcedureParameters map[string]*StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
 
-	// The stored procedure parameter name of the table type. Type: string (or Expression with resultType string).
+	// OPTIONAL; The stored procedure parameter name of the table type. Type: string (or Expression with resultType string).
 	StoredProcedureTableTypeParameterName interface{} `json:"storedProcedureTableTypeParameterName,omitempty"`
 
-	// The option to handle sink table, such as autoCreate. For now only 'autoCreate' value is supported. Type: string (or Expression with resultType string).
+	// OPTIONAL; The option to handle sink table, such as autoCreate. For now only 'autoCreate' value is supported. Type: string (or Expression with resultType
+	// string).
 	TableOption interface{} `json:"tableOption,omitempty"`
 }
 
@@ -23730,17 +23771,17 @@ func (s *SQLMISink) UnmarshalJSON(data []byte) error {
 // SQLMISource - A copy activity Azure SQL Managed Instance source.
 type SQLMISource struct {
 	TabularSource
-	// Which additional types to produce.
+	// OPTIONAL; Which additional types to produce.
 	ProduceAdditionalTypes interface{} `json:"produceAdditionalTypes,omitempty"`
 
-	// SQL reader query. Type: string (or Expression with resultType string).
+	// OPTIONAL; SQL reader query. Type: string (or Expression with resultType string).
 	SQLReaderQuery interface{} `json:"sqlReaderQuery,omitempty"`
 
-	// Name of the stored procedure for a Azure SQL Managed Instance source. This cannot be used at the same time as SqlReaderQuery. Type: string (or Expression
-	// with resultType string).
+	// OPTIONAL; Name of the stored procedure for a Azure SQL Managed Instance source. This cannot be used at the same time as SqlReaderQuery. Type: string
+	// (or Expression with resultType string).
 	SQLReaderStoredProcedureName interface{} `json:"sqlReaderStoredProcedureName,omitempty"`
 
-	// Value and type setting for stored procedure parameters. Example: "{Parameter1: {value: "1", type: "int"}}".
+	// OPTIONAL; Value and type setting for stored procedure parameters. Example: "{Parameter1: {value: "1", type: "int"}}".
 	StoredProcedureParameters map[string]*StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
 }
 
@@ -23786,10 +23827,10 @@ func (s *SQLMISource) UnmarshalJSON(data []byte) error {
 // SQLPool - A SQL Analytics pool
 type SQLPool struct {
 	TrackedResource
-	// SQL pool properties
+	// OPTIONAL; SQL pool properties
 	Properties *SQLPoolResourceProperties `json:"properties,omitempty"`
 
-	// SQL pool SKU
+	// OPTIONAL; SQL pool SKU
 	SKU *SKU `json:"sku,omitempty"`
 }
 
@@ -23803,10 +23844,10 @@ func (s SQLPool) MarshalJSON() ([]byte, error) {
 
 // SQLPoolInfoListResult - List of SQL pools
 type SQLPoolInfoListResult struct {
-	// Link to the next page of results
+	// OPTIONAL; Link to the next page of results
 	NextLink *string `json:"nextLink,omitempty"`
 
-	// List of SQL pools
+	// OPTIONAL; List of SQL pools
 	Value []*SQLPool `json:"value,omitempty"`
 }
 
@@ -23838,31 +23879,31 @@ type SQLPoolReference struct {
 
 // SQLPoolResourceProperties - Properties of a SQL Analytics pool
 type SQLPoolResourceProperties struct {
-	// Collation mode
+	// OPTIONAL; Collation mode
 	Collation *string `json:"collation,omitempty"`
 
-	// What is this?
+	// OPTIONAL; What is this?
 	CreateMode *string `json:"createMode,omitempty"`
 
-	// Date the SQL pool was created
+	// OPTIONAL; Date the SQL pool was created
 	CreationDate *time.Time `json:"creationDate,omitempty"`
 
-	// Maximum size in bytes
+	// OPTIONAL; Maximum size in bytes
 	MaxSizeBytes *int64 `json:"maxSizeBytes,omitempty"`
 
-	// Resource state
+	// OPTIONAL; Resource state
 	ProvisioningState *string `json:"provisioningState,omitempty"`
 
-	// Backup database to restore from
+	// OPTIONAL; Backup database to restore from
 	RecoverableDatabaseID *string `json:"recoverableDatabaseId,omitempty"`
 
-	// Snapshot time to restore
+	// OPTIONAL; Snapshot time to restore
 	RestorePointInTime *string `json:"restorePointInTime,omitempty"`
 
-	// Source database to create from
+	// OPTIONAL; Source database to create from
 	SourceDatabaseID *string `json:"sourceDatabaseId,omitempty"`
 
-	// Resource status
+	// OPTIONAL; Resource status
 	Status *string `json:"status,omitempty"`
 }
 
@@ -23982,7 +24023,7 @@ type SQLPoolStoredProcedureActivityTypeProperties struct {
 	// REQUIRED; Stored procedure name. Type: string (or Expression with resultType string).
 	StoredProcedureName interface{} `json:"storedProcedureName,omitempty"`
 
-	// Value and type setting for stored procedure parameters. Example: "{Parameter1: {value: "1", type: "int"}}".
+	// OPTIONAL; Value and type setting for stored procedure parameters. Example: "{Parameter1: {value: "1", type: "int"}}".
 	StoredProcedureParameters map[string]*StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
 }
 
@@ -24006,16 +24047,16 @@ type SQLPoolsListOptions struct {
 
 // SQLScript - SQL script.
 type SQLScript struct {
-	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties map[string]interface{}
-
 	// REQUIRED; The content of the SQL script.
 	Content *SQLScriptContent `json:"content,omitempty"`
 
-	// The description of the SQL script.
+	// Contains additional key/value pairs not defined in the schema.
+	AdditionalProperties map[string]interface{}
+
+	// OPTIONAL; The description of the SQL script.
 	Description *string `json:"description,omitempty"`
 
-	// The type of the SQL script.
+	// OPTIONAL; The type of the SQL script.
 	Type *SQLScriptType `json:"type,omitempty"`
 }
 
@@ -24087,17 +24128,17 @@ type SQLScriptBeginRenameSQLScriptOptions struct {
 
 // SQLScriptContent - The content of the SQL script.
 type SQLScriptContent struct {
-	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties map[string]interface{}
-
 	// REQUIRED; The connection used to execute the SQL script.
 	CurrentConnection *SQLConnection `json:"currentConnection,omitempty"`
 
-	// The metadata of the SQL script.
-	Metadata *SQLScriptMetadata `json:"metadata,omitempty"`
-
 	// REQUIRED; SQL query to execute.
 	Query *string `json:"query,omitempty"`
+
+	// Contains additional key/value pairs not defined in the schema.
+	AdditionalProperties map[string]interface{}
+
+	// OPTIONAL; The metadata of the SQL script.
+	Metadata *SQLScriptMetadata `json:"metadata,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type SQLScriptContent.
@@ -24167,7 +24208,7 @@ type SQLScriptMetadata struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
-	// The language of the SQL script.
+	// OPTIONAL; The language of the SQL script.
 	Language *string `json:"language,omitempty"`
 }
 
@@ -24215,17 +24256,17 @@ func (s *SQLScriptMetadata) UnmarshalJSON(data []byte) error {
 
 // SQLScriptResource - Sql Script resource type.
 type SQLScriptResource struct {
-	// READ-ONLY; Resource Etag.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
-	// READ-ONLY; Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
-	ID *string `json:"id,omitempty" azure:"ro"`
-
 	// REQUIRED; The name of the resource
 	Name *string `json:"name,omitempty"`
 
 	// REQUIRED; Properties of sql script.
 	Properties *SQLScript `json:"properties,omitempty"`
+
+	// READ-ONLY; Resource Etag.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
+
+	// READ-ONLY; Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+	ID *string `json:"id,omitempty" azure:"ro"`
 
 	// READ-ONLY; The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
 	Type *string `json:"type,omitempty" azure:"ro"`
@@ -24254,11 +24295,11 @@ type SQLScriptResourceResponse struct {
 
 // SQLScriptsListResponse - A list of sql scripts resources.
 type SQLScriptsListResponse struct {
-	// The link to the next page of results, if any remaining results exist.
-	NextLink *string `json:"nextLink,omitempty"`
-
 	// REQUIRED; List of sql scripts.
 	Value []*SQLScriptResource `json:"value,omitempty"`
+
+	// OPTIONAL; The link to the next page of results, if any remaining results exist.
+	NextLink *string `json:"nextLink,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type SQLScriptsListResponse.
@@ -24317,14 +24358,14 @@ type SQLServerLinkedServiceTypeProperties struct {
 	// REQUIRED; The connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
 	ConnectionString interface{} `json:"connectionString,omitempty"`
 
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
 	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
 
-	// The on-premises Windows authentication password.
+	// OPTIONAL; The on-premises Windows authentication password.
 	Password SecretBaseClassification `json:"password,omitempty"`
 
-	// The on-premises Windows authentication user name. Type: string (or Expression with resultType string).
+	// OPTIONAL; The on-premises Windows authentication user name. Type: string (or Expression with resultType string).
 	UserName interface{} `json:"userName,omitempty"`
 }
 
@@ -24370,22 +24411,23 @@ func (s *SQLServerLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error 
 // SQLServerSink - A copy activity SQL server sink.
 type SQLServerSink struct {
 	CopySink
-	// SQL pre-copy script. Type: string (or Expression with resultType string).
+	// OPTIONAL; SQL pre-copy script. Type: string (or Expression with resultType string).
 	PreCopyScript interface{} `json:"preCopyScript,omitempty"`
 
-	// SQL writer stored procedure name. Type: string (or Expression with resultType string).
+	// OPTIONAL; SQL writer stored procedure name. Type: string (or Expression with resultType string).
 	SQLWriterStoredProcedureName interface{} `json:"sqlWriterStoredProcedureName,omitempty"`
 
-	// SQL writer table type. Type: string (or Expression with resultType string).
+	// OPTIONAL; SQL writer table type. Type: string (or Expression with resultType string).
 	SQLWriterTableType interface{} `json:"sqlWriterTableType,omitempty"`
 
-	// SQL stored procedure parameters.
+	// OPTIONAL; SQL stored procedure parameters.
 	StoredProcedureParameters map[string]*StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
 
-	// The stored procedure parameter name of the table type. Type: string (or Expression with resultType string).
+	// OPTIONAL; The stored procedure parameter name of the table type. Type: string (or Expression with resultType string).
 	StoredProcedureTableTypeParameterName interface{} `json:"storedProcedureTableTypeParameterName,omitempty"`
 
-	// The option to handle sink table, such as autoCreate. For now only 'autoCreate' value is supported. Type: string (or Expression with resultType string).
+	// OPTIONAL; The option to handle sink table, such as autoCreate. For now only 'autoCreate' value is supported. Type: string (or Expression with resultType
+	// string).
 	TableOption interface{} `json:"tableOption,omitempty"`
 }
 
@@ -24439,17 +24481,17 @@ func (s *SQLServerSink) UnmarshalJSON(data []byte) error {
 // SQLServerSource - A copy activity SQL server source.
 type SQLServerSource struct {
 	TabularSource
-	// Which additional types to produce.
+	// OPTIONAL; Which additional types to produce.
 	ProduceAdditionalTypes interface{} `json:"produceAdditionalTypes,omitempty"`
 
-	// SQL reader query. Type: string (or Expression with resultType string).
+	// OPTIONAL; SQL reader query. Type: string (or Expression with resultType string).
 	SQLReaderQuery interface{} `json:"sqlReaderQuery,omitempty"`
 
-	// Name of the stored procedure for a SQL Database source. This cannot be used at the same time as SqlReaderQuery. Type: string (or Expression with resultType
-	// string).
+	// OPTIONAL; Name of the stored procedure for a SQL Database source. This cannot be used at the same time as SqlReaderQuery. Type: string (or Expression
+	// with resultType string).
 	SQLReaderStoredProcedureName interface{} `json:"sqlReaderStoredProcedureName,omitempty"`
 
-	// Value and type setting for stored procedure parameters. Example: "{Parameter1: {value: "1", type: "int"}}".
+	// OPTIONAL; Value and type setting for stored procedure parameters. Example: "{Parameter1: {value: "1", type: "int"}}".
 	StoredProcedureParameters map[string]*StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
 }
 
@@ -24531,7 +24573,7 @@ type SQLServerStoredProcedureActivityTypeProperties struct {
 	// REQUIRED; Stored procedure name. Type: string (or Expression with resultType string).
 	StoredProcedureName interface{} `json:"storedProcedureName,omitempty"`
 
-	// Value and type setting for stored procedure parameters. Example: "{Parameter1: {value: "1", type: "int"}}".
+	// OPTIONAL; Value and type setting for stored procedure parameters. Example: "{Parameter1: {value: "1", type: "int"}}".
 	StoredProcedureParameters map[string]*StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
 }
 
@@ -24546,7 +24588,7 @@ func (s SQLServerStoredProcedureActivityTypeProperties) MarshalJSON() ([]byte, e
 // SQLServerTableDataset - The on-premises SQL Server dataset.
 type SQLServerTableDataset struct {
 	Dataset
-	// On-premises SQL Server dataset properties.
+	// OPTIONAL; On-premises SQL Server dataset properties.
 	TypeProperties *SQLServerTableDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -24579,35 +24621,36 @@ func (s *SQLServerTableDataset) UnmarshalJSON(data []byte) error {
 
 // SQLServerTableDatasetTypeProperties - On-premises SQL Server dataset properties.
 type SQLServerTableDatasetTypeProperties struct {
-	// The schema name of the SQL Server dataset. Type: string (or Expression with resultType string).
+	// OPTIONAL; The schema name of the SQL Server dataset. Type: string (or Expression with resultType string).
 	Schema interface{} `json:"schema,omitempty"`
 
-	// The table name of the SQL Server dataset. Type: string (or Expression with resultType string).
+	// OPTIONAL; The table name of the SQL Server dataset. Type: string (or Expression with resultType string).
 	Table interface{} `json:"table,omitempty"`
 
-	// This property will be retired. Please consider using schema + table properties instead.
+	// OPTIONAL; This property will be retired. Please consider using schema + table properties instead.
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
 // SQLSink - A copy activity SQL sink.
 type SQLSink struct {
 	CopySink
-	// SQL pre-copy script. Type: string (or Expression with resultType string).
+	// OPTIONAL; SQL pre-copy script. Type: string (or Expression with resultType string).
 	PreCopyScript interface{} `json:"preCopyScript,omitempty"`
 
-	// SQL writer stored procedure name. Type: string (or Expression with resultType string).
+	// OPTIONAL; SQL writer stored procedure name. Type: string (or Expression with resultType string).
 	SQLWriterStoredProcedureName interface{} `json:"sqlWriterStoredProcedureName,omitempty"`
 
-	// SQL writer table type. Type: string (or Expression with resultType string).
+	// OPTIONAL; SQL writer table type. Type: string (or Expression with resultType string).
 	SQLWriterTableType interface{} `json:"sqlWriterTableType,omitempty"`
 
-	// SQL stored procedure parameters.
+	// OPTIONAL; SQL stored procedure parameters.
 	StoredProcedureParameters map[string]*StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
 
-	// The stored procedure parameter name of the table type. Type: string (or Expression with resultType string).
+	// OPTIONAL; The stored procedure parameter name of the table type. Type: string (or Expression with resultType string).
 	StoredProcedureTableTypeParameterName interface{} `json:"storedProcedureTableTypeParameterName,omitempty"`
 
-	// The option to handle sink table, such as autoCreate. For now only 'autoCreate' value is supported. Type: string (or Expression with resultType string).
+	// OPTIONAL; The option to handle sink table, such as autoCreate. For now only 'autoCreate' value is supported. Type: string (or Expression with resultType
+	// string).
 	TableOption interface{} `json:"tableOption,omitempty"`
 }
 
@@ -24661,14 +24704,14 @@ func (s *SQLSink) UnmarshalJSON(data []byte) error {
 // SQLSource - A copy activity SQL source.
 type SQLSource struct {
 	TabularSource
-	// SQL reader query. Type: string (or Expression with resultType string).
+	// OPTIONAL; SQL reader query. Type: string (or Expression with resultType string).
 	SQLReaderQuery interface{} `json:"sqlReaderQuery,omitempty"`
 
-	// Name of the stored procedure for a SQL Database source. This cannot be used at the same time as SqlReaderQuery. Type: string (or Expression with resultType
-	// string).
+	// OPTIONAL; Name of the stored procedure for a SQL Database source. This cannot be used at the same time as SqlReaderQuery. Type: string (or Expression
+	// with resultType string).
 	SQLReaderStoredProcedureName interface{} `json:"sqlReaderStoredProcedureName,omitempty"`
 
-	// Value and type setting for stored procedure parameters. Example: "{Parameter1: {value: "1", type: "int"}}".
+	// OPTIONAL; Value and type setting for stored procedure parameters. Example: "{Parameter1: {value: "1", type: "int"}}".
 	StoredProcedureParameters map[string]*StoredProcedureParameter `json:"storedProcedureParameters,omitempty"`
 }
 
@@ -24759,14 +24802,14 @@ type SSISChildPackage struct {
 	// REQUIRED; Content for embedded child package. Type: string (or Expression with resultType string).
 	PackageContent interface{} `json:"packageContent,omitempty"`
 
-	// Last modified date for embedded child package.
-	PackageLastModifiedDate *string `json:"packageLastModifiedDate,omitempty"`
-
-	// Name for embedded child package.
-	PackageName *string `json:"packageName,omitempty"`
-
 	// REQUIRED; Path for embedded child package. Type: string (or Expression with resultType string).
 	PackagePath interface{} `json:"packagePath,omitempty"`
+
+	// OPTIONAL; Last modified date for embedded child package.
+	PackageLastModifiedDate *string `json:"packageLastModifiedDate,omitempty"`
+
+	// OPTIONAL; Name for embedded child package.
+	PackageName *string `json:"packageName,omitempty"`
 }
 
 // SSISExecutionCredential - SSIS package execution credential.
@@ -24801,46 +24844,46 @@ type SSISLogLocation struct {
 
 // SSISLogLocationTypeProperties - SSIS package execution log location properties.
 type SSISLogLocationTypeProperties struct {
-	// The package execution log access credential.
+	// OPTIONAL; The package execution log access credential.
 	AccessCredential *SSISAccessCredential `json:"accessCredential,omitempty"`
 
-	// Specifies the interval to refresh log. The default interval is 5 minutes. Type: string (or Expression with resultType string), pattern: ((\d+).)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+	// OPTIONAL; Specifies the interval to refresh log. The default interval is 5 minutes. Type: string (or Expression with resultType string), pattern: ((\d+).)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
 	LogRefreshInterval interface{} `json:"logRefreshInterval,omitempty"`
 }
 
 // SSISPackageLocation - SSIS package location.
 type SSISPackageLocation struct {
-	// The SSIS package path. Type: string (or Expression with resultType string).
+	// OPTIONAL; The SSIS package path. Type: string (or Expression with resultType string).
 	PackagePath interface{} `json:"packagePath,omitempty"`
 
-	// The type of SSIS package location.
+	// OPTIONAL; The type of SSIS package location.
 	Type *SsisPackageLocationType `json:"type,omitempty"`
 
-	// SSIS package location properties.
+	// OPTIONAL; SSIS package location properties.
 	TypeProperties *SSISPackageLocationTypeProperties `json:"typeProperties,omitempty"`
 }
 
 // SSISPackageLocationTypeProperties - SSIS package location properties.
 type SSISPackageLocationTypeProperties struct {
-	// The package access credential.
+	// OPTIONAL; The package access credential.
 	AccessCredential *SSISAccessCredential `json:"accessCredential,omitempty"`
 
-	// The embedded child package list.
+	// OPTIONAL; The embedded child package list.
 	ChildPackages []*SSISChildPackage `json:"childPackages,omitempty"`
 
-	// The configuration file of the package execution. Type: string (or Expression with resultType string).
+	// OPTIONAL; The configuration file of the package execution. Type: string (or Expression with resultType string).
 	ConfigurationPath interface{} `json:"configurationPath,omitempty"`
 
-	// The embedded package content. Type: string (or Expression with resultType string).
+	// OPTIONAL; The embedded package content. Type: string (or Expression with resultType string).
 	PackageContent interface{} `json:"packageContent,omitempty"`
 
-	// The embedded package last modified date.
+	// OPTIONAL; The embedded package last modified date.
 	PackageLastModifiedDate *string `json:"packageLastModifiedDate,omitempty"`
 
-	// The package name.
+	// OPTIONAL; The package name.
 	PackageName *string `json:"packageName,omitempty"`
 
-	// Password of the package.
+	// OPTIONAL; Password of the package.
 	PackagePassword SecretBaseClassification `json:"packagePassword,omitempty"`
 }
 
@@ -24897,11 +24940,11 @@ func (s *SSISPackageLocationTypeProperties) UnmarshalJSON(data []byte) error {
 
 // SSISPropertyOverride - SSIS property override.
 type SSISPropertyOverride struct {
-	// Whether SSIS package property override value is sensitive data. Value will be encrypted in SSISDB if it is true
-	IsSensitive *bool `json:"isSensitive,omitempty"`
-
 	// REQUIRED; SSIS package property override value. Type: string (or Expression with resultType string).
 	Value interface{} `json:"value,omitempty"`
+
+	// OPTIONAL; Whether SSIS package property override value is sensitive data. Value will be encrypted in SSISDB if it is true
+	IsSensitive *bool `json:"isSensitive,omitempty"`
 }
 
 // SalesforceLinkedService - Linked service for Salesforce.
@@ -24940,22 +24983,22 @@ func (s *SalesforceLinkedService) UnmarshalJSON(data []byte) error {
 
 // SalesforceLinkedServiceTypeProperties - Salesforce linked service properties.
 type SalesforceLinkedServiceTypeProperties struct {
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
 	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
 
-	// The URL of Salesforce instance. Default is 'https://login.salesforce.com'. To copy data from sandbox, specify 'https://test.salesforce.com'. To copy
-	// data from custom domain, specify, for example,
+	// OPTIONAL; The URL of Salesforce instance. Default is 'https://login.salesforce.com'. To copy data from sandbox, specify 'https://test.salesforce.com'.
+	// To copy data from custom domain, specify, for example,
 	// 'https://[domain].my.salesforce.com'. Type: string (or Expression with resultType string).
 	EnvironmentURL interface{} `json:"environmentUrl,omitempty"`
 
-	// The password for Basic authentication of the Salesforce instance.
+	// OPTIONAL; The password for Basic authentication of the Salesforce instance.
 	Password SecretBaseClassification `json:"password,omitempty"`
 
-	// The security token is required to remotely access Salesforce instance.
+	// OPTIONAL; The security token is required to remotely access Salesforce instance.
 	SecurityToken SecretBaseClassification `json:"securityToken,omitempty"`
 
-	// The username for Basic authentication of the Salesforce instance. Type: string (or Expression with resultType string).
+	// OPTIONAL; The username for Basic authentication of the Salesforce instance. Type: string (or Expression with resultType string).
 	Username interface{} `json:"username,omitempty"`
 }
 
@@ -25041,23 +25084,24 @@ type SalesforceMarketingCloudLinkedServiceTypeProperties struct {
 	// REQUIRED; The client ID associated with the Salesforce Marketing Cloud application. Type: string (or Expression with resultType string).
 	ClientID interface{} `json:"clientId,omitempty"`
 
-	// The client secret associated with the Salesforce Marketing Cloud application. Type: string (or Expression with resultType string).
+	// OPTIONAL; The client secret associated with the Salesforce Marketing Cloud application. Type: string (or Expression with resultType string).
 	ClientSecret SecretBaseClassification `json:"clientSecret,omitempty"`
 
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
 	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
 
-	// Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. Type: boolean (or Expression with resultType boolean).
+	// OPTIONAL; Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. Type: boolean (or Expression with resultType
+	// boolean).
 	UseEncryptedEndpoints interface{} `json:"useEncryptedEndpoints,omitempty"`
 
-	// Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value
-	// is true. Type: boolean (or Expression with
+	// OPTIONAL; Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default
+	// value is true. Type: boolean (or Expression with
 	// resultType boolean).
 	UseHostVerification interface{} `json:"useHostVerification,omitempty"`
 
-	// Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. Type: boolean (or Expression with resultType
-	// boolean).
+	// OPTIONAL; Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. Type: boolean (or Expression with
+	// resultType boolean).
 	UsePeerVerification interface{} `json:"usePeerVerification,omitempty"`
 }
 
@@ -25111,7 +25155,7 @@ func (s *SalesforceMarketingCloudLinkedServiceTypeProperties) UnmarshalJSON(data
 // SalesforceMarketingCloudObjectDataset - Salesforce Marketing Cloud dataset.
 type SalesforceMarketingCloudObjectDataset struct {
 	Dataset
-	// Properties specific to this dataset type.
+	// OPTIONAL; Properties specific to this dataset type.
 	TypeProperties *GenericDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -25145,7 +25189,7 @@ func (s *SalesforceMarketingCloudObjectDataset) UnmarshalJSON(data []byte) error
 // SalesforceMarketingCloudSource - A copy activity Salesforce Marketing Cloud source.
 type SalesforceMarketingCloudSource struct {
 	TabularSource
-	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	// OPTIONAL; A query to retrieve data from source. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -25179,7 +25223,7 @@ func (s *SalesforceMarketingCloudSource) UnmarshalJSON(data []byte) error {
 // SalesforceObjectDataset - The Salesforce object dataset.
 type SalesforceObjectDataset struct {
 	Dataset
-	// Salesforce object dataset properties.
+	// OPTIONAL; Salesforce object dataset properties.
 	TypeProperties *SalesforceObjectDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -25212,7 +25256,7 @@ func (s *SalesforceObjectDataset) UnmarshalJSON(data []byte) error {
 
 // SalesforceObjectDatasetTypeProperties - Salesforce object dataset properties.
 type SalesforceObjectDatasetTypeProperties struct {
-	// The Salesforce object API name. Type: string (or Expression with resultType string).
+	// OPTIONAL; The Salesforce object API name. Type: string (or Expression with resultType string).
 	ObjectAPIName interface{} `json:"objectApiName,omitempty"`
 }
 
@@ -25252,25 +25296,25 @@ func (s *SalesforceServiceCloudLinkedService) UnmarshalJSON(data []byte) error {
 
 // SalesforceServiceCloudLinkedServiceTypeProperties - Salesforce Service Cloud linked service properties.
 type SalesforceServiceCloudLinkedServiceTypeProperties struct {
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
 	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
 
-	// The URL of Salesforce Service Cloud instance. Default is 'https://login.salesforce.com'. To copy data from sandbox, specify 'https://test.salesforce.com'.
+	// OPTIONAL; The URL of Salesforce Service Cloud instance. Default is 'https://login.salesforce.com'. To copy data from sandbox, specify 'https://test.salesforce.com'.
 	// To copy data from custom domain, specify, for
 	// example, 'https://[domain].my.salesforce.com'. Type: string (or Expression with resultType string).
 	EnvironmentURL interface{} `json:"environmentUrl,omitempty"`
 
-	// Extended properties appended to the connection string. Type: string (or Expression with resultType string).
+	// OPTIONAL; Extended properties appended to the connection string. Type: string (or Expression with resultType string).
 	ExtendedProperties interface{} `json:"extendedProperties,omitempty"`
 
-	// The password for Basic authentication of the Salesforce instance.
+	// OPTIONAL; The password for Basic authentication of the Salesforce instance.
 	Password SecretBaseClassification `json:"password,omitempty"`
 
-	// The security token is required to remotely access Salesforce instance.
+	// OPTIONAL; The security token is required to remotely access Salesforce instance.
 	SecurityToken SecretBaseClassification `json:"securityToken,omitempty"`
 
-	// The username for Basic authentication of the Salesforce instance. Type: string (or Expression with resultType string).
+	// OPTIONAL; The username for Basic authentication of the Salesforce instance. Type: string (or Expression with resultType string).
 	Username interface{} `json:"username,omitempty"`
 }
 
@@ -25324,7 +25368,7 @@ func (s *SalesforceServiceCloudLinkedServiceTypeProperties) UnmarshalJSON(data [
 // SalesforceServiceCloudObjectDataset - The Salesforce Service Cloud object dataset.
 type SalesforceServiceCloudObjectDataset struct {
 	Dataset
-	// Salesforce Service Cloud object dataset properties.
+	// OPTIONAL; Salesforce Service Cloud object dataset properties.
 	TypeProperties *SalesforceServiceCloudObjectDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -25357,24 +25401,24 @@ func (s *SalesforceServiceCloudObjectDataset) UnmarshalJSON(data []byte) error {
 
 // SalesforceServiceCloudObjectDatasetTypeProperties - Salesforce Service Cloud object dataset properties.
 type SalesforceServiceCloudObjectDatasetTypeProperties struct {
-	// The Salesforce Service Cloud object API name. Type: string (or Expression with resultType string).
+	// OPTIONAL; The Salesforce Service Cloud object API name. Type: string (or Expression with resultType string).
 	ObjectAPIName interface{} `json:"objectApiName,omitempty"`
 }
 
 // SalesforceServiceCloudSink - A copy activity Salesforce Service Cloud sink.
 type SalesforceServiceCloudSink struct {
 	CopySink
-	// The name of the external ID field for upsert operation. Default value is 'Id' column. Type: string (or Expression with resultType string).
+	// OPTIONAL; The name of the external ID field for upsert operation. Default value is 'Id' column. Type: string (or Expression with resultType string).
 	ExternalIDFieldName interface{} `json:"externalIdFieldName,omitempty"`
 
-	// The flag indicating whether or not to ignore null values from input dataset (except key fields) during write operation. Default value is false. If set
-	// it to true, it means ADF will leave the data in
+	// OPTIONAL; The flag indicating whether or not to ignore null values from input dataset (except key fields) during write operation. Default value is false.
+	// If set it to true, it means ADF will leave the data in
 	// the destination object unchanged when doing upsert/update operation and insert defined default value when doing insert operation, versus ADF will update
 	// the data in the destination object to NULL when
 	// doing upsert/update operation and insert NULL value when doing insert operation. Type: boolean (or Expression with resultType boolean).
 	IgnoreNullValues interface{} `json:"ignoreNullValues,omitempty"`
 
-	// The write behavior for the operation. Default is Insert.
+	// OPTIONAL; The write behavior for the operation. Default is Insert.
 	WriteBehavior *SalesforceSinkWriteBehavior `json:"writeBehavior,omitempty"`
 }
 
@@ -25416,10 +25460,10 @@ func (s *SalesforceServiceCloudSink) UnmarshalJSON(data []byte) error {
 // SalesforceServiceCloudSource - A copy activity Salesforce Service Cloud source.
 type SalesforceServiceCloudSource struct {
 	CopySource
-	// Database query. Type: string (or Expression with resultType string).
+	// OPTIONAL; Database query. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 
-	// The read behavior for the operation. Default is Query.
+	// OPTIONAL; The read behavior for the operation. Default is Query.
 	ReadBehavior *SalesforceSourceReadBehavior `json:"readBehavior,omitempty"`
 }
 
@@ -25457,17 +25501,17 @@ func (s *SalesforceServiceCloudSource) UnmarshalJSON(data []byte) error {
 // SalesforceSink - A copy activity Salesforce sink.
 type SalesforceSink struct {
 	CopySink
-	// The name of the external ID field for upsert operation. Default value is 'Id' column. Type: string (or Expression with resultType string).
+	// OPTIONAL; The name of the external ID field for upsert operation. Default value is 'Id' column. Type: string (or Expression with resultType string).
 	ExternalIDFieldName interface{} `json:"externalIdFieldName,omitempty"`
 
-	// The flag indicating whether or not to ignore null values from input dataset (except key fields) during write operation. Default value is false. If set
-	// it to true, it means ADF will leave the data in
+	// OPTIONAL; The flag indicating whether or not to ignore null values from input dataset (except key fields) during write operation. Default value is false.
+	// If set it to true, it means ADF will leave the data in
 	// the destination object unchanged when doing upsert/update operation and insert defined default value when doing insert operation, versus ADF will update
 	// the data in the destination object to NULL when
 	// doing upsert/update operation and insert NULL value when doing insert operation. Type: boolean (or Expression with resultType boolean).
 	IgnoreNullValues interface{} `json:"ignoreNullValues,omitempty"`
 
-	// The write behavior for the operation. Default is Insert.
+	// OPTIONAL; The write behavior for the operation. Default is Insert.
 	WriteBehavior *SalesforceSinkWriteBehavior `json:"writeBehavior,omitempty"`
 }
 
@@ -25509,10 +25553,10 @@ func (s *SalesforceSink) UnmarshalJSON(data []byte) error {
 // SalesforceSource - A copy activity Salesforce source.
 type SalesforceSource struct {
 	TabularSource
-	// Database query. Type: string (or Expression with resultType string).
+	// OPTIONAL; Database query. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 
-	// The read behavior for the operation. Default is Query.
+	// OPTIONAL; The read behavior for the operation. Default is Query.
 	ReadBehavior *SalesforceSourceReadBehavior `json:"readBehavior,omitempty"`
 }
 
@@ -25587,20 +25631,20 @@ type SapBWLinkedServiceTypeProperties struct {
 	// string).
 	ClientID interface{} `json:"clientId,omitempty"`
 
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
-
-	// Password to access the SAP BW server.
-	Password SecretBaseClassification `json:"password,omitempty"`
-
 	// REQUIRED; Host name of the SAP BW instance. Type: string (or Expression with resultType string).
 	Server interface{} `json:"server,omitempty"`
 
 	// REQUIRED; System number of the BW system. (Usually a two-digit decimal number represented as a string.) Type: string (or Expression with resultType string).
 	SystemNumber interface{} `json:"systemNumber,omitempty"`
 
-	// Username to access the SAP BW server. Type: string (or Expression with resultType string).
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
+
+	// OPTIONAL; Password to access the SAP BW server.
+	Password SecretBaseClassification `json:"password,omitempty"`
+
+	// OPTIONAL; Username to access the SAP BW server. Type: string (or Expression with resultType string).
 	UserName interface{} `json:"userName,omitempty"`
 }
 
@@ -25665,7 +25709,7 @@ func (s SapBwCubeDataset) MarshalJSON() ([]byte, error) {
 // SapBwSource - A copy activity source for SapBW server via MDX.
 type SapBwSource struct {
 	TabularSource
-	// MDX query. Type: string (or Expression with resultType string).
+	// OPTIONAL; MDX query. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -25732,19 +25776,19 @@ func (s *SapCloudForCustomerLinkedService) UnmarshalJSON(data []byte) error {
 
 // SapCloudForCustomerLinkedServiceTypeProperties - SAP Cloud for Customer linked service properties.
 type SapCloudForCustomerLinkedServiceTypeProperties struct {
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Either encryptedCredential
-	// or username/password must be provided. Type:
-	// string (or Expression with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
-
-	// The password for Basic authentication.
-	Password SecretBaseClassification `json:"password,omitempty"`
-
 	// REQUIRED; The URL of SAP Cloud for Customer OData API. For example, '[https://[tenantname].crm.ondemand.com/sap/c4c/odata/v1]'. Type: string (or Expression
 	// with resultType string).
 	URL interface{} `json:"url,omitempty"`
 
-	// The username for Basic authentication. Type: string (or Expression with resultType string).
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Either encryptedCredential
+	// or username/password must be provided. Type:
+	// string (or Expression with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
+
+	// OPTIONAL; The password for Basic authentication.
+	Password SecretBaseClassification `json:"password,omitempty"`
+
+	// OPTIONAL; The username for Basic authentication. Type: string (or Expression with resultType string).
 	Username interface{} `json:"username,omitempty"`
 }
 
@@ -25830,7 +25874,7 @@ type SapCloudForCustomerResourceDatasetTypeProperties struct {
 // SapCloudForCustomerSink - A copy activity SAP Cloud for Customer sink.
 type SapCloudForCustomerSink struct {
 	CopySink
-	// The write behavior for the operation. Default is 'Insert'.
+	// OPTIONAL; The write behavior for the operation. Default is 'Insert'.
 	WriteBehavior *SapCloudForCustomerSinkWriteBehavior `json:"writeBehavior,omitempty"`
 }
 
@@ -25864,7 +25908,7 @@ func (s *SapCloudForCustomerSink) UnmarshalJSON(data []byte) error {
 // SapCloudForCustomerSource - A copy activity source for SAP Cloud for Customer source.
 type SapCloudForCustomerSource struct {
 	TabularSource
-	// SAP Cloud for Customer OData query. For example, "$top=1". Type: string (or Expression with resultType string).
+	// OPTIONAL; SAP Cloud for Customer OData query. For example, "$top=1". Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -25931,19 +25975,19 @@ func (s *SapEccLinkedService) UnmarshalJSON(data []byte) error {
 
 // SapEccLinkedServiceTypeProperties - SAP ECC linked service properties.
 type SapEccLinkedServiceTypeProperties struct {
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Either encryptedCredential
-	// or username/password must be provided. Type:
-	// string (or Expression with resultType string).
-	EncryptedCredential *string `json:"encryptedCredential,omitempty"`
-
-	// The password for Basic authentication.
-	Password SecretBaseClassification `json:"password,omitempty"`
-
 	// REQUIRED; The URL of SAP ECC OData API. For example, '[https://hostname:port/sap/opu/odata/sap/servicename/]'. Type: string (or Expression with resultType
 	// string).
 	URL *string `json:"url,omitempty"`
 
-	// The username for Basic authentication. Type: string (or Expression with resultType string).
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Either encryptedCredential
+	// or username/password must be provided. Type:
+	// string (or Expression with resultType string).
+	EncryptedCredential *string `json:"encryptedCredential,omitempty"`
+
+	// OPTIONAL; The password for Basic authentication.
+	Password SecretBaseClassification `json:"password,omitempty"`
+
+	// OPTIONAL; The username for Basic authentication. Type: string (or Expression with resultType string).
 	Username *string `json:"username,omitempty"`
 }
 
@@ -26029,7 +26073,7 @@ type SapEccResourceDatasetTypeProperties struct {
 // SapEccSource - A copy activity source for SAP ECC source.
 type SapEccSource struct {
 	TabularSource
-	// SAP ECC OData query. For example, "$top=1". Type: string (or Expression with resultType string).
+	// OPTIONAL; SAP ECC OData query. For example, "$top=1". Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -26096,23 +26140,23 @@ func (s *SapHanaLinkedService) UnmarshalJSON(data []byte) error {
 
 // SapHanaLinkedServiceProperties - Properties specific to this linked service type.
 type SapHanaLinkedServiceProperties struct {
-	// The authentication type to be used to connect to the SAP HANA server.
-	AuthenticationType *SapHanaAuthenticationType `json:"authenticationType,omitempty"`
-
-	// SAP HANA ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
-	ConnectionString interface{} `json:"connectionString,omitempty"`
-
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
-
-	// Password to access the SAP HANA server.
-	Password SecretBaseClassification `json:"password,omitempty"`
-
 	// REQUIRED; Host name of the SAP HANA server. Type: string (or Expression with resultType string).
 	Server interface{} `json:"server,omitempty"`
 
-	// Username to access the SAP HANA server. Type: string (or Expression with resultType string).
+	// OPTIONAL; The authentication type to be used to connect to the SAP HANA server.
+	AuthenticationType *SapHanaAuthenticationType `json:"authenticationType,omitempty"`
+
+	// OPTIONAL; SAP HANA ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
+	ConnectionString interface{} `json:"connectionString,omitempty"`
+
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
+
+	// OPTIONAL; Password to access the SAP HANA server.
+	Password SecretBaseClassification `json:"password,omitempty"`
+
+	// OPTIONAL; Username to access the SAP HANA server. Type: string (or Expression with resultType string).
 	UserName interface{} `json:"userName,omitempty"`
 }
 
@@ -26165,23 +26209,23 @@ func (s *SapHanaLinkedServiceProperties) UnmarshalJSON(data []byte) error {
 
 // SapHanaPartitionSettings - The settings that will be leveraged for SAP HANA source partitioning.
 type SapHanaPartitionSettings struct {
-	// The name of the column that will be used for proceeding range partitioning. Type: string (or Expression with resultType string).
+	// OPTIONAL; The name of the column that will be used for proceeding range partitioning. Type: string (or Expression with resultType string).
 	PartitionColumnName interface{} `json:"partitionColumnName,omitempty"`
 }
 
 // SapHanaSource - A copy activity source for SAP HANA source.
 type SapHanaSource struct {
 	TabularSource
-	// The packet size of data read from SAP HANA. Type: integer(or Expression with resultType integer).
+	// OPTIONAL; The packet size of data read from SAP HANA. Type: integer(or Expression with resultType integer).
 	PacketSize interface{} `json:"packetSize,omitempty"`
 
-	// The partition mechanism that will be used for SAP HANA read in parallel.
+	// OPTIONAL; The partition mechanism that will be used for SAP HANA read in parallel.
 	PartitionOption *SapHanaPartitionOption `json:"partitionOption,omitempty"`
 
-	// The settings that will be leveraged for SAP HANA source partitioning.
+	// OPTIONAL; The settings that will be leveraged for SAP HANA source partitioning.
 	PartitionSettings *SapHanaPartitionSettings `json:"partitionSettings,omitempty"`
 
-	// SAP HANA Sql query. Type: string (or Expression with resultType string).
+	// OPTIONAL; SAP HANA Sql query. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -26227,7 +26271,7 @@ func (s *SapHanaSource) UnmarshalJSON(data []byte) error {
 // SapHanaTableDataset - SAP HANA Table properties.
 type SapHanaTableDataset struct {
 	Dataset
-	// SAP HANA Table properties.
+	// OPTIONAL; SAP HANA Table properties.
 	TypeProperties *SapHanaTableDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -26260,10 +26304,10 @@ func (s *SapHanaTableDataset) UnmarshalJSON(data []byte) error {
 
 // SapHanaTableDatasetTypeProperties - SAP HANA Table properties.
 type SapHanaTableDatasetTypeProperties struct {
-	// The schema name of SAP HANA. Type: string (or Expression with resultType string).
+	// OPTIONAL; The schema name of SAP HANA. Type: string (or Expression with resultType string).
 	Schema interface{} `json:"schema,omitempty"`
 
-	// The table name of SAP HANA. Type: string (or Expression with resultType string).
+	// OPTIONAL; The table name of SAP HANA. Type: string (or Expression with resultType string).
 	Table interface{} `json:"table,omitempty"`
 }
 
@@ -26307,16 +26351,6 @@ type SapOpenHubLinkedServiceTypeProperties struct {
 	// string) Type: string (or Expression with resultType string).
 	ClientID interface{} `json:"clientId,omitempty"`
 
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
-
-	// Language of the BW system where the open hub destination is located. The default value is EN. Type: string (or Expression with resultType string).
-	Language interface{} `json:"language,omitempty"`
-
-	// Password to access the SAP BW server where the open hub destination is located.
-	Password SecretBaseClassification `json:"password,omitempty"`
-
 	// REQUIRED; Host name of the SAP BW instance where the open hub destination is located. Type: string (or Expression with resultType string).
 	Server interface{} `json:"server,omitempty"`
 
@@ -26324,7 +26358,17 @@ type SapOpenHubLinkedServiceTypeProperties struct {
 	// string (or Expression with resultType string).
 	SystemNumber interface{} `json:"systemNumber,omitempty"`
 
-	// Username to access the SAP BW server where the open hub destination is located. Type: string (or Expression with resultType string).
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
+
+	// OPTIONAL; Language of the BW system where the open hub destination is located. The default value is EN. Type: string (or Expression with resultType string).
+	Language interface{} `json:"language,omitempty"`
+
+	// OPTIONAL; Password to access the SAP BW server where the open hub destination is located.
+	Password SecretBaseClassification `json:"password,omitempty"`
+
+	// OPTIONAL; Username to access the SAP BW server where the open hub destination is located. Type: string (or Expression with resultType string).
 	UserName interface{} `json:"userName,omitempty"`
 }
 
@@ -26382,12 +26426,12 @@ func (s *SapOpenHubLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error
 // SapOpenHubSource - A copy activity source for SAP Business Warehouse Open Hub Destination source.
 type SapOpenHubSource struct {
 	TabularSource
-	// The ID of request for delta loading. Once it is set, only data with requestId larger than the value of this property will be retrieved. The default value
-	// is 0. Type: integer (or Expression with
+	// OPTIONAL; The ID of request for delta loading. Once it is set, only data with requestId larger than the value of this property will be retrieved. The
+	// default value is 0. Type: integer (or Expression with
 	// resultType integer ).
 	BaseRequestID interface{} `json:"baseRequestId,omitempty"`
 
-	// Whether to exclude the records of the last request. The default value is true. Type: boolean (or Expression with resultType boolean).
+	// OPTIONAL; Whether to exclude the records of the last request. The default value is true. Type: boolean (or Expression with resultType boolean).
 	ExcludeLastRequest interface{} `json:"excludeLastRequest,omitempty"`
 }
 
@@ -26458,16 +26502,16 @@ func (s *SapOpenHubTableDataset) UnmarshalJSON(data []byte) error {
 
 // SapOpenHubTableDatasetTypeProperties - Sap Business Warehouse Open Hub Destination Table properties.
 type SapOpenHubTableDatasetTypeProperties struct {
-	// The ID of request for delta loading. Once it is set, only data with requestId larger than the value of this property will be retrieved. The default value
-	// is 0. Type: integer (or Expression with
+	// REQUIRED; The name of the Open Hub Destination with destination type as Database Table. Type: string (or Expression with resultType string).
+	OpenHubDestinationName interface{} `json:"openHubDestinationName,omitempty"`
+
+	// OPTIONAL; The ID of request for delta loading. Once it is set, only data with requestId larger than the value of this property will be retrieved. The
+	// default value is 0. Type: integer (or Expression with
 	// resultType integer ).
 	BaseRequestID interface{} `json:"baseRequestId,omitempty"`
 
-	// Whether to exclude the records of the last request. The default value is true. Type: boolean (or Expression with resultType boolean).
+	// OPTIONAL; Whether to exclude the records of the last request. The default value is true. Type: boolean (or Expression with resultType boolean).
 	ExcludeLastRequest interface{} `json:"excludeLastRequest,omitempty"`
-
-	// REQUIRED; The name of the Open Hub Destination with destination type as Database Table. Type: string (or Expression with resultType string).
-	OpenHubDestinationName interface{} `json:"openHubDestinationName,omitempty"`
 }
 
 // SapTableLinkedService - SAP Table Linked Service.
@@ -26506,56 +26550,56 @@ func (s *SapTableLinkedService) UnmarshalJSON(data []byte) error {
 
 // SapTableLinkedServiceTypeProperties - Properties specific to this linked service type.
 type SapTableLinkedServiceTypeProperties struct {
-	// Client ID of the client on the SAP system where the table is located. (Usually a three-digit decimal number represented as a string) Type: string (or
-	// Expression with resultType string).
+	// OPTIONAL; Client ID of the client on the SAP system where the table is located. (Usually a three-digit decimal number represented as a string) Type:
+	// string (or Expression with resultType string).
 	ClientID interface{} `json:"clientId,omitempty"`
 
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
 	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
 
-	// Language of the SAP system where the table is located. The default value is EN. Type: string (or Expression with resultType string).
+	// OPTIONAL; Language of the SAP system where the table is located. The default value is EN. Type: string (or Expression with resultType string).
 	Language interface{} `json:"language,omitempty"`
 
-	// The Logon Group for the SAP System. Type: string (or Expression with resultType string).
+	// OPTIONAL; The Logon Group for the SAP System. Type: string (or Expression with resultType string).
 	LogonGroup interface{} `json:"logonGroup,omitempty"`
 
-	// The hostname of the SAP Message Server. Type: string (or Expression with resultType string).
+	// OPTIONAL; The hostname of the SAP Message Server. Type: string (or Expression with resultType string).
 	MessageServer interface{} `json:"messageServer,omitempty"`
 
-	// The service name or port number of the Message Server. Type: string (or Expression with resultType string).
+	// OPTIONAL; The service name or port number of the Message Server. Type: string (or Expression with resultType string).
 	MessageServerService interface{} `json:"messageServerService,omitempty"`
 
-	// Password to access the SAP server where the table is located.
+	// OPTIONAL; Password to access the SAP server where the table is located.
 	Password SecretBaseClassification `json:"password,omitempty"`
 
-	// Host name of the SAP instance where the table is located. Type: string (or Expression with resultType string).
+	// OPTIONAL; Host name of the SAP instance where the table is located. Type: string (or Expression with resultType string).
 	Server interface{} `json:"server,omitempty"`
 
-	// External security product's library to access the SAP server where the table is located. Type: string (or Expression with resultType string).
+	// OPTIONAL; External security product's library to access the SAP server where the table is located. Type: string (or Expression with resultType string).
 	SncLibraryPath interface{} `json:"sncLibraryPath,omitempty"`
 
-	// SNC activation indicator to access the SAP server where the table is located. Must be either 0 (off) or 1 (on). Type: string (or Expression with resultType
-	// string).
+	// OPTIONAL; SNC activation indicator to access the SAP server where the table is located. Must be either 0 (off) or 1 (on). Type: string (or Expression
+	// with resultType string).
 	SncMode interface{} `json:"sncMode,omitempty"`
 
-	// Initiator's SNC name to access the SAP server where the table is located. Type: string (or Expression with resultType string).
+	// OPTIONAL; Initiator's SNC name to access the SAP server where the table is located. Type: string (or Expression with resultType string).
 	SncMyName interface{} `json:"sncMyName,omitempty"`
 
-	// Communication partner's SNC name to access the SAP server where the table is located. Type: string (or Expression with resultType string).
+	// OPTIONAL; Communication partner's SNC name to access the SAP server where the table is located. Type: string (or Expression with resultType string).
 	SncPartnerName interface{} `json:"sncPartnerName,omitempty"`
 
-	// SNC Quality of Protection. Allowed value include: 1, 2, 3, 8, 9. Type: string (or Expression with resultType string).
+	// OPTIONAL; SNC Quality of Protection. Allowed value include: 1, 2, 3, 8, 9. Type: string (or Expression with resultType string).
 	SncQop interface{} `json:"sncQop,omitempty"`
 
-	// SystemID of the SAP system where the table is located. Type: string (or Expression with resultType string).
+	// OPTIONAL; SystemID of the SAP system where the table is located. Type: string (or Expression with resultType string).
 	SystemID interface{} `json:"systemId,omitempty"`
 
-	// System number of the SAP system where the table is located. (Usually a two-digit decimal number represented as a string.) Type: string (or Expression
-	// with resultType string).
+	// OPTIONAL; System number of the SAP system where the table is located. (Usually a two-digit decimal number represented as a string.) Type: string (or
+	// Expression with resultType string).
 	SystemNumber interface{} `json:"systemNumber,omitempty"`
 
-	// Username to access the SAP server where the table is located. Type: string (or Expression with resultType string).
+	// OPTIONAL; Username to access the SAP server where the table is located. Type: string (or Expression with resultType string).
 	UserName interface{} `json:"userName,omitempty"`
 }
 
@@ -26648,18 +26692,18 @@ func (s *SapTableLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 
 // SapTablePartitionSettings - The settings that will be leveraged for SAP table source partitioning.
 type SapTablePartitionSettings struct {
-	// The maximum value of partitions the table will be split into. Type: integer (or Expression with resultType string).
+	// OPTIONAL; The maximum value of partitions the table will be split into. Type: integer (or Expression with resultType string).
 	MaxPartitionsNumber interface{} `json:"maxPartitionsNumber,omitempty"`
 
-	// The name of the column that will be used for proceeding range partitioning. Type: string (or Expression with resultType string).
+	// OPTIONAL; The name of the column that will be used for proceeding range partitioning. Type: string (or Expression with resultType string).
 	PartitionColumnName interface{} `json:"partitionColumnName,omitempty"`
 
-	// The minimum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType
-	// string).
+	// OPTIONAL; The minimum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression
+	// with resultType string).
 	PartitionLowerBound interface{} `json:"partitionLowerBound,omitempty"`
 
-	// The maximum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType
-	// string).
+	// OPTIONAL; The maximum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression
+	// with resultType string).
 	PartitionUpperBound interface{} `json:"partitionUpperBound,omitempty"`
 }
 
@@ -26706,29 +26750,29 @@ type SapTableResourceDatasetTypeProperties struct {
 // SapTableSource - A copy activity source for SAP Table source.
 type SapTableSource struct {
 	TabularSource
-	// Specifies the maximum number of rows that will be retrieved at a time when retrieving data from SAP Table. Type: integer (or Expression with resultType
-	// integer).
+	// OPTIONAL; Specifies the maximum number of rows that will be retrieved at a time when retrieving data from SAP Table. Type: integer (or Expression with
+	// resultType integer).
 	BatchSize interface{} `json:"batchSize,omitempty"`
 
-	// Specifies the custom RFC function module that will be used to read data from SAP Table. Type: string (or Expression with resultType string).
+	// OPTIONAL; Specifies the custom RFC function module that will be used to read data from SAP Table. Type: string (or Expression with resultType string).
 	CustomRFCReadTableFunctionModule interface{} `json:"customRfcReadTableFunctionModule,omitempty"`
 
-	// The partition mechanism that will be used for SAP table read in parallel.
+	// OPTIONAL; The partition mechanism that will be used for SAP table read in parallel.
 	PartitionOption *SapTablePartitionOption `json:"partitionOption,omitempty"`
 
-	// The settings that will be leveraged for SAP table source partitioning.
+	// OPTIONAL; The settings that will be leveraged for SAP table source partitioning.
 	PartitionSettings *SapTablePartitionSettings `json:"partitionSettings,omitempty"`
 
-	// The fields of the SAP table that will be retrieved. For example, column0, column1. Type: string (or Expression with resultType string).
+	// OPTIONAL; The fields of the SAP table that will be retrieved. For example, column0, column1. Type: string (or Expression with resultType string).
 	RFCTableFields interface{} `json:"rfcTableFields,omitempty"`
 
-	// The options for the filtering of the SAP Table. For example, COLUMN0 EQ SOME VALUE. Type: string (or Expression with resultType string).
+	// OPTIONAL; The options for the filtering of the SAP Table. For example, COLUMN0 EQ SOME VALUE. Type: string (or Expression with resultType string).
 	RFCTableOptions interface{} `json:"rfcTableOptions,omitempty"`
 
-	// The number of rows to be retrieved. Type: integer(or Expression with resultType integer).
+	// OPTIONAL; The number of rows to be retrieved. Type: integer(or Expression with resultType integer).
 	RowCount interface{} `json:"rowCount,omitempty"`
 
-	// The number of rows that will be skipped. Type: integer (or Expression with resultType integer).
+	// OPTIONAL; The number of rows that will be skipped. Type: integer (or Expression with resultType integer).
 	RowSkips interface{} `json:"rowSkips,omitempty"`
 }
 
@@ -26826,22 +26870,22 @@ type ScheduleTriggerRecurrence struct {
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
-	// The end time.
+	// OPTIONAL; The end time.
 	EndTime *time.Time `json:"endTime,omitempty"`
 
-	// The frequency.
+	// OPTIONAL; The frequency.
 	Frequency *RecurrenceFrequency `json:"frequency,omitempty"`
 
-	// The interval.
+	// OPTIONAL; The interval.
 	Interval *int32 `json:"interval,omitempty"`
 
-	// The recurrence schedule.
+	// OPTIONAL; The recurrence schedule.
 	Schedule *RecurrenceSchedule `json:"schedule,omitempty"`
 
-	// The start time.
+	// OPTIONAL; The start time.
 	StartTime *time.Time `json:"startTime,omitempty"`
 
-	// The time zone.
+	// OPTIONAL; The time zone.
 	TimeZone *string `json:"timeZone,omitempty"`
 }
 
@@ -26922,14 +26966,14 @@ type ScriptAction struct {
 	// REQUIRED; The user provided name of the script action.
 	Name *string `json:"name,omitempty"`
 
-	// The parameters for the script action.
-	Parameters *string `json:"parameters,omitempty"`
-
 	// REQUIRED; The node types on which the script action should be executed.
 	Roles *HdiNodeTypes `json:"roles,omitempty"`
 
 	// REQUIRED; The URI for the script action.
 	URI *string `json:"uri,omitempty"`
+
+	// OPTIONAL; The parameters for the script action.
+	Parameters *string `json:"parameters,omitempty"`
 }
 
 // SecretBaseClassification provides polymorphic access to related types.
@@ -27021,7 +27065,7 @@ type SelfDependencyTumblingWindowTriggerReference struct {
 	// REQUIRED; Timespan applied to the start time of a tumbling window when evaluating dependency.
 	Offset *string `json:"offset,omitempty"`
 
-	// The size of the window when evaluating the dependency. If undefined the frequency of the tumbling window will be used.
+	// OPTIONAL; The size of the window when evaluating the dependency. If undefined the frequency of the tumbling window will be used.
 	Size *string `json:"size,omitempty"`
 }
 
@@ -27059,7 +27103,7 @@ func (s *SelfDependencyTumblingWindowTriggerReference) UnmarshalJSON(data []byte
 // SelfHostedIntegrationRuntime - Self-hosted integration runtime.
 type SelfHostedIntegrationRuntime struct {
 	IntegrationRuntime
-	// When this property is not null, means this is a linked integration runtime. The property is used to access original integration runtime.
+	// OPTIONAL; When this property is not null, means this is a linked integration runtime. The property is used to access original integration runtime.
 	TypeProperties *SelfHostedIntegrationRuntimeTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -27092,7 +27136,7 @@ func (s *SelfHostedIntegrationRuntime) UnmarshalJSON(data []byte) error {
 
 // SelfHostedIntegrationRuntimeTypeProperties - The self-hosted integration runtime properties.
 type SelfHostedIntegrationRuntimeTypeProperties struct {
-	// Linked integration runtime type from data factory
+	// OPTIONAL; Linked integration runtime type from data factory
 	LinkedInfo LinkedIntegrationRuntimeTypeClassification `json:"linkedInfo,omitempty"`
 }
 
@@ -27162,33 +27206,33 @@ type ServiceNowLinkedServiceTypeProperties struct {
 	// REQUIRED; The authentication type to use.
 	AuthenticationType *ServiceNowAuthenticationType `json:"authenticationType,omitempty"`
 
-	// The client id for OAuth2 authentication.
-	ClientID interface{} `json:"clientId,omitempty"`
-
-	// The client secret for OAuth2 authentication.
-	ClientSecret SecretBaseClassification `json:"clientSecret,omitempty"`
-
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
-
 	// REQUIRED; The endpoint of the ServiceNow server. (i.e. .service-now.com)
 	Endpoint interface{} `json:"endpoint,omitempty"`
 
-	// The password corresponding to the user name for Basic and OAuth2 authentication.
+	// OPTIONAL; The client id for OAuth2 authentication.
+	ClientID interface{} `json:"clientId,omitempty"`
+
+	// OPTIONAL; The client secret for OAuth2 authentication.
+	ClientSecret SecretBaseClassification `json:"clientSecret,omitempty"`
+
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
+
+	// OPTIONAL; The password corresponding to the user name for Basic and OAuth2 authentication.
 	Password SecretBaseClassification `json:"password,omitempty"`
 
-	// Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true.
+	// OPTIONAL; Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true.
 	UseEncryptedEndpoints interface{} `json:"useEncryptedEndpoints,omitempty"`
 
-	// Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value
-	// is true.
+	// OPTIONAL; Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default
+	// value is true.
 	UseHostVerification interface{} `json:"useHostVerification,omitempty"`
 
-	// Specifies whether to verify the identity of the server when connecting over SSL. The default value is true.
+	// OPTIONAL; Specifies whether to verify the identity of the server when connecting over SSL. The default value is true.
 	UsePeerVerification interface{} `json:"usePeerVerification,omitempty"`
 
-	// The user name used to connect to the ServiceNow server for Basic and OAuth2 authentication.
+	// OPTIONAL; The user name used to connect to the ServiceNow server for Basic and OAuth2 authentication.
 	Username interface{} `json:"username,omitempty"`
 }
 
@@ -27258,7 +27302,7 @@ func (s *ServiceNowLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error
 // ServiceNowObjectDataset - ServiceNow server dataset.
 type ServiceNowObjectDataset struct {
 	Dataset
-	// Properties specific to this dataset type.
+	// OPTIONAL; Properties specific to this dataset type.
 	TypeProperties *GenericDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -27292,7 +27336,7 @@ func (s *ServiceNowObjectDataset) UnmarshalJSON(data []byte) error {
 // ServiceNowSource - A copy activity ServiceNow server source.
 type ServiceNowSource struct {
 	TabularSource
-	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	// OPTIONAL; A query to retrieve data from source. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -27359,10 +27403,10 @@ func (s *SetVariableActivity) UnmarshalJSON(data []byte) error {
 
 // SetVariableActivityTypeProperties - SetVariable activity properties.
 type SetVariableActivityTypeProperties struct {
-	// Value to be set. Could be a static value or Expression
+	// OPTIONAL; Value to be set. Could be a static value or Expression
 	Value interface{} `json:"value,omitempty"`
 
-	// Name of the variable whose value needs to be set.
+	// OPTIONAL; Name of the variable whose value needs to be set.
 	VariableName *string `json:"variableName,omitempty"`
 }
 
@@ -27380,19 +27424,19 @@ func (s SftpLocation) MarshalJSON() ([]byte, error) {
 // SftpReadSettings - Sftp read settings.
 type SftpReadSettings struct {
 	StoreReadSettings
-	// The end of file's modified datetime. Type: string (or Expression with resultType string).
+	// OPTIONAL; The end of file's modified datetime. Type: string (or Expression with resultType string).
 	ModifiedDatetimeEnd interface{} `json:"modifiedDatetimeEnd,omitempty"`
 
-	// The start of file's modified datetime. Type: string (or Expression with resultType string).
+	// OPTIONAL; The start of file's modified datetime. Type: string (or Expression with resultType string).
 	ModifiedDatetimeStart interface{} `json:"modifiedDatetimeStart,omitempty"`
 
-	// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
+	// OPTIONAL; If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
 	Recursive interface{} `json:"recursive,omitempty"`
 
-	// Sftp wildcardFileName. Type: string (or Expression with resultType string).
+	// OPTIONAL; Sftp wildcardFileName. Type: string (or Expression with resultType string).
 	WildcardFileName interface{} `json:"wildcardFileName,omitempty"`
 
-	// Sftp wildcardFolderPath. Type: string (or Expression with resultType string).
+	// OPTIONAL; Sftp wildcardFolderPath. Type: string (or Expression with resultType string).
 	WildcardFolderPath interface{} `json:"wildcardFolderPath,omitempty"`
 }
 
@@ -27475,44 +27519,44 @@ func (s *SftpServerLinkedService) UnmarshalJSON(data []byte) error {
 
 // SftpServerLinkedServiceTypeProperties - Properties specific to this linked service type.
 type SftpServerLinkedServiceTypeProperties struct {
-	// The authentication type to be used to connect to the FTP server.
-	AuthenticationType *SftpAuthenticationType `json:"authenticationType,omitempty"`
-
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
-
 	// REQUIRED; The SFTP server host name. Type: string (or Expression with resultType string).
 	Host interface{} `json:"host,omitempty"`
 
-	// The host key finger-print of the SFTP server. When SkipHostKeyValidation is false, HostKeyFingerprint should be specified. Type: string (or Expression
-	// with resultType string).
+	// OPTIONAL; The authentication type to be used to connect to the FTP server.
+	AuthenticationType *SftpAuthenticationType `json:"authenticationType,omitempty"`
+
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
+
+	// OPTIONAL; The host key finger-print of the SFTP server. When SkipHostKeyValidation is false, HostKeyFingerprint should be specified. Type: string (or
+	// Expression with resultType string).
 	HostKeyFingerprint interface{} `json:"hostKeyFingerprint,omitempty"`
 
-	// The password to decrypt the SSH private key if the SSH private key is encrypted.
+	// OPTIONAL; The password to decrypt the SSH private key if the SSH private key is encrypted.
 	PassPhrase SecretBaseClassification `json:"passPhrase,omitempty"`
 
-	// Password to logon the SFTP server for Basic authentication.
+	// OPTIONAL; Password to logon the SFTP server for Basic authentication.
 	Password SecretBaseClassification `json:"password,omitempty"`
 
-	// The TCP port number that the SFTP server uses to listen for client connections. Default value is 22. Type: integer (or Expression with resultType integer),
-	// minimum: 0.
+	// OPTIONAL; The TCP port number that the SFTP server uses to listen for client connections. Default value is 22. Type: integer (or Expression with resultType
+	// integer), minimum: 0.
 	Port interface{} `json:"port,omitempty"`
 
-	// Base64 encoded SSH private key content for SshPublicKey authentication. For on-premises copy with SshPublicKey authentication, either PrivateKeyPath
+	// OPTIONAL; Base64 encoded SSH private key content for SshPublicKey authentication. For on-premises copy with SshPublicKey authentication, either PrivateKeyPath
 	// or PrivateKeyContent should be specified. SSH
 	// private key should be OpenSSH format.
 	PrivateKeyContent SecretBaseClassification `json:"privateKeyContent,omitempty"`
 
-	// The SSH private key file path for SshPublicKey authentication. Only valid for on-premises copy. For on-premises copy with SshPublicKey authentication,
+	// OPTIONAL; The SSH private key file path for SshPublicKey authentication. Only valid for on-premises copy. For on-premises copy with SshPublicKey authentication,
 	// either PrivateKeyPath or PrivateKeyContent should
 	// be specified. SSH private key should be OpenSSH format. Type: string (or Expression with resultType string).
 	PrivateKeyPath interface{} `json:"privateKeyPath,omitempty"`
 
-	// If true, skip the SSH host key validation. Default value is false. Type: boolean (or Expression with resultType boolean).
+	// OPTIONAL; If true, skip the SSH host key validation. Default value is false. Type: boolean (or Expression with resultType boolean).
 	SkipHostKeyValidation interface{} `json:"skipHostKeyValidation,omitempty"`
 
-	// The username used to log on to the SFTP server. Type: string (or Expression with resultType string).
+	// OPTIONAL; The username used to log on to the SFTP server. Type: string (or Expression with resultType string).
 	UserName interface{} `json:"userName,omitempty"`
 }
 
@@ -27586,7 +27630,8 @@ func (s *SftpServerLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error
 // SftpWriteSettings - Sftp write settings.
 type SftpWriteSettings struct {
 	StoreWriteSettings
-	// Specifies the timeout for writing each chunk to SFTP server. Default value: 01:00:00 (one hour). Type: string (or Expression with resultType string).
+	// OPTIONAL; Specifies the timeout for writing each chunk to SFTP server. Default value: 01:00:00 (one hour). Type: string (or Expression with resultType
+	// string).
 	OperationTimeout interface{} `json:"operationTimeout,omitempty"`
 }
 
@@ -27653,24 +27698,24 @@ func (s *ShopifyLinkedService) UnmarshalJSON(data []byte) error {
 
 // ShopifyLinkedServiceTypeProperties - Shopify Service linked service properties.
 type ShopifyLinkedServiceTypeProperties struct {
-	// The API access token that can be used to access Shopify’s data. The token won't expire if it is offline mode.
-	AccessToken SecretBaseClassification `json:"accessToken,omitempty"`
-
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
-
 	// REQUIRED; The endpoint of the Shopify server. (i.e. mystore.myshopify.com)
 	Host interface{} `json:"host,omitempty"`
 
-	// Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true.
+	// OPTIONAL; The API access token that can be used to access Shopify’s data. The token won't expire if it is offline mode.
+	AccessToken SecretBaseClassification `json:"accessToken,omitempty"`
+
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
+
+	// OPTIONAL; Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true.
 	UseEncryptedEndpoints interface{} `json:"useEncryptedEndpoints,omitempty"`
 
-	// Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value
-	// is true.
+	// OPTIONAL; Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default
+	// value is true.
 	UseHostVerification interface{} `json:"useHostVerification,omitempty"`
 
-	// Specifies whether to verify the identity of the server when connecting over SSL. The default value is true.
+	// OPTIONAL; Specifies whether to verify the identity of the server when connecting over SSL. The default value is true.
 	UsePeerVerification interface{} `json:"usePeerVerification,omitempty"`
 }
 
@@ -27724,7 +27769,7 @@ func (s *ShopifyLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 // ShopifyObjectDataset - Shopify Service dataset.
 type ShopifyObjectDataset struct {
 	Dataset
-	// Properties specific to this dataset type.
+	// OPTIONAL; Properties specific to this dataset type.
 	TypeProperties *GenericDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -27758,7 +27803,7 @@ func (s *ShopifyObjectDataset) UnmarshalJSON(data []byte) error {
 // ShopifySource - A copy activity Shopify Service source.
 type ShopifySource struct {
 	TabularSource
-	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	// OPTIONAL; A query to retrieve data from source. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -27790,56 +27835,58 @@ func (s *ShopifySource) UnmarshalJSON(data []byte) error {
 }
 
 type SparkBatchJob struct {
-	// The application id of this session
-	AppID *string `json:"appId,omitempty"`
-
-	// The detailed application info.
-	AppInfo map[string]*string `json:"appInfo,omitempty"`
-
-	// The artifact identifier.
-	ArtifactID *string `json:"artifactId,omitempty"`
-
-	// The error information.
-	Errors []*SparkServiceError `json:"errorInfo,omitempty"`
-
 	// REQUIRED; The session Id.
 	ID *int32 `json:"id,omitempty"`
 
-	// The job type.
-	JobType  *SparkJobType       `json:"jobType,omitempty"`
+	// OPTIONAL; The application id of this session
+	AppID *string `json:"appId,omitempty"`
+
+	// OPTIONAL; The detailed application info.
+	AppInfo map[string]*string `json:"appInfo,omitempty"`
+
+	// OPTIONAL; The artifact identifier.
+	ArtifactID *string `json:"artifactId,omitempty"`
+
+	// OPTIONAL; The error information.
+	Errors []*SparkServiceError `json:"errorInfo,omitempty"`
+
+	// OPTIONAL; The job type.
+	JobType *SparkJobType `json:"jobType,omitempty"`
+
+	// LivyInfo - OPTIONAL
 	LivyInfo *SparkBatchJobState `json:"livyInfo,omitempty"`
 
-	// The log lines.
+	// OPTIONAL; The log lines.
 	LogLines []*string `json:"log,omitempty"`
 
-	// The batch name.
+	// OPTIONAL; The batch name.
 	Name *string `json:"name,omitempty"`
 
-	// The plugin information.
+	// OPTIONAL; The plugin information.
 	Plugin *SparkServicePlugin `json:"pluginInfo,omitempty"`
 
-	// The Spark batch job result.
+	// OPTIONAL; The Spark batch job result.
 	Result *SparkBatchJobResultType `json:"result,omitempty"`
 
-	// The scheduler information.
+	// OPTIONAL; The scheduler information.
 	Scheduler *SparkScheduler `json:"schedulerInfo,omitempty"`
 
-	// The Spark pool name.
+	// OPTIONAL; The Spark pool name.
 	SparkPoolName *string `json:"sparkPoolName,omitempty"`
 
-	// The batch state
+	// OPTIONAL; The batch state
 	State *string `json:"state,omitempty"`
 
-	// The submitter identifier.
+	// OPTIONAL; The submitter identifier.
 	SubmitterID *string `json:"submitterId,omitempty"`
 
-	// The submitter name.
+	// OPTIONAL; The submitter name.
 	SubmitterName *string `json:"submitterName,omitempty"`
 
-	// The tags.
+	// OPTIONAL; The tags.
 	Tags map[string]*string `json:"tags,omitempty"`
 
-	// The workspace name.
+	// OPTIONAL; The workspace name.
 	WorkspaceName *string `json:"workspaceName,omitempty"`
 }
 
@@ -27887,29 +27934,31 @@ type SparkBatchJobResponse struct {
 }
 
 type SparkBatchJobState struct {
-	// the Spark job state.
+	// OPTIONAL; the Spark job state.
 	CurrentState *string `json:"currentState,omitempty"`
 
-	// time that at which "dead" livy state was first seen.
-	DeadAt             *time.Time    `json:"deadAt,omitempty"`
+	// OPTIONAL; time that at which "dead" livy state was first seen.
+	DeadAt *time.Time `json:"deadAt,omitempty"`
+
+	// JobCreationRequest - OPTIONAL
 	JobCreationRequest *SparkRequest `json:"jobCreationRequest,omitempty"`
 
-	// the time that at which "not_started" livy state was first seen.
+	// OPTIONAL; the time that at which "not_started" livy state was first seen.
 	NotStartedAt *time.Time `json:"notStartedAt,omitempty"`
 
-	// the time that at which "recovering" livy state was first seen.
+	// OPTIONAL; the time that at which "recovering" livy state was first seen.
 	RecoveringAt *time.Time `json:"recoveringAt,omitempty"`
 
-	// the time that at which "running" livy state was first seen.
+	// OPTIONAL; the time that at which "running" livy state was first seen.
 	RunningAt *time.Time `json:"runningAt,omitempty"`
 
-	// the time that at which "starting" livy state was first seen.
+	// OPTIONAL; the time that at which "starting" livy state was first seen.
 	StartingAt *time.Time `json:"startingAt,omitempty"`
 
-	// the time that at which "success" livy state was first seen.
+	// OPTIONAL; the time that at which "success" livy state was first seen.
 	SuccessAt *time.Time `json:"successAt,omitempty"`
 
-	// the time that at which "killed" livy state was first seen.
+	// OPTIONAL; the time that at which "killed" livy state was first seen.
 	TerminatedAt *time.Time `json:"killedAt,omitempty"`
 }
 
@@ -27988,35 +28037,35 @@ func (s *SparkBatchJobState) UnmarshalJSON(data []byte) error {
 
 // SparkDatasetTypeProperties - Spark Properties
 type SparkDatasetTypeProperties struct {
-	// The schema name of the Spark. Type: string (or Expression with resultType string).
+	// OPTIONAL; The schema name of the Spark. Type: string (or Expression with resultType string).
 	Schema interface{} `json:"schema,omitempty"`
 
-	// The table name of the Spark. Type: string (or Expression with resultType string).
+	// OPTIONAL; The table name of the Spark. Type: string (or Expression with resultType string).
 	Table interface{} `json:"table,omitempty"`
 
-	// This property will be retired. Please consider using schema + table properties instead.
+	// OPTIONAL; This property will be retired. Please consider using schema + table properties instead.
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
 // SparkJobDefinition - Spark job definition.
 type SparkJobDefinition struct {
-	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties map[string]interface{}
-
-	// The description of the Spark job definition.
-	Description *string `json:"description,omitempty"`
-
 	// REQUIRED; The properties of the Spark job.
 	JobProperties *SparkJobProperties `json:"jobProperties,omitempty"`
 
-	// The language of the Spark application.
-	Language *string `json:"language,omitempty"`
-
-	// The required Spark version of the application.
-	RequiredSparkVersion *string `json:"requiredSparkVersion,omitempty"`
-
 	// REQUIRED; Big data pool reference.
 	TargetBigDataPool *BigDataPoolReference `json:"targetBigDataPool,omitempty"`
+
+	// Contains additional key/value pairs not defined in the schema.
+	AdditionalProperties map[string]interface{}
+
+	// OPTIONAL; The description of the Spark job definition.
+	Description *string `json:"description,omitempty"`
+
+	// OPTIONAL; The language of the Spark application.
+	Language *string `json:"language,omitempty"`
+
+	// OPTIONAL; The required Spark version of the application.
+	RequiredSparkVersion *string `json:"requiredSparkVersion,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type SparkJobDefinition.
@@ -28175,11 +28224,11 @@ type SparkJobDefinitionResourceResponse struct {
 
 // SparkJobDefinitionsListResponse - A list of spark job definitions resources.
 type SparkJobDefinitionsListResponse struct {
-	// The link to the next page of results, if any remaining results exist.
-	NextLink *string `json:"nextLink,omitempty"`
-
 	// REQUIRED; List of spark job definitions.
 	Value []*SparkJobDefinitionResource `json:"value,omitempty"`
+
+	// OPTIONAL; The link to the next page of results, if any remaining results exist.
+	NextLink *string `json:"nextLink,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type SparkJobDefinitionsListResponse.
@@ -28201,21 +28250,6 @@ type SparkJobDefinitionsListResponseResponse struct {
 
 // SparkJobProperties - The properties of the Spark job.
 type SparkJobProperties struct {
-	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties map[string]interface{}
-
-	// Archives to be used in this job.
-	Archives []*string `json:"archives,omitempty"`
-
-	// Command line arguments for the application.
-	Args []*string `json:"args,omitempty"`
-
-	// Main class for Java/Scala application.
-	ClassName *string `json:"className,omitempty"`
-
-	// Spark configuration properties.
-	Conf interface{} `json:"conf,omitempty"`
-
 	// REQUIRED; Number of cores to use for the driver.
 	DriverCores *int32 `json:"driverCores,omitempty"`
 
@@ -28231,17 +28265,32 @@ type SparkJobProperties struct {
 	// REQUIRED; File containing the application to execute.
 	File *string `json:"file,omitempty"`
 
-	// files to be used in this job.
-	Files []*string `json:"files,omitempty"`
-
-	// Jars to be used in this job.
-	Jars []*string `json:"jars,omitempty"`
-
-	// The name of the job.
-	Name *string `json:"name,omitempty"`
-
 	// REQUIRED; Number of executors to launch for this job.
 	NumExecutors *int32 `json:"numExecutors,omitempty"`
+
+	// Contains additional key/value pairs not defined in the schema.
+	AdditionalProperties map[string]interface{}
+
+	// OPTIONAL; Archives to be used in this job.
+	Archives []*string `json:"archives,omitempty"`
+
+	// OPTIONAL; Command line arguments for the application.
+	Args []*string `json:"args,omitempty"`
+
+	// OPTIONAL; Main class for Java/Scala application.
+	ClassName *string `json:"className,omitempty"`
+
+	// OPTIONAL; Spark configuration properties.
+	Conf interface{} `json:"conf,omitempty"`
+
+	// OPTIONAL; files to be used in this job.
+	Files []*string `json:"files,omitempty"`
+
+	// OPTIONAL; Jars to be used in this job.
+	Jars []*string `json:"jars,omitempty"`
+
+	// OPTIONAL; The name of the job.
+	Name *string `json:"name,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type SparkJobProperties.
@@ -28370,49 +28419,50 @@ func (s *SparkLinkedService) UnmarshalJSON(data []byte) error {
 
 // SparkLinkedServiceTypeProperties - Spark Server linked service properties.
 type SparkLinkedServiceTypeProperties struct {
-	// Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value is false.
-	AllowHostNameCNMismatch interface{} `json:"allowHostNameCNMismatch,omitempty"`
-
-	// Specifies whether to allow self-signed certificates from the server. The default value is false.
-	AllowSelfSignedServerCert interface{} `json:"allowSelfSignedServerCert,omitempty"`
-
 	// REQUIRED; The authentication method used to access the Spark server.
 	AuthenticationType *SparkAuthenticationType `json:"authenticationType,omitempty"`
-
-	// Specifies whether the connections to the server are encrypted using SSL. The default value is false.
-	EnableSSL interface{} `json:"enableSsl,omitempty"`
-
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
-
-	// The partial URL corresponding to the Spark server.
-	HTTPPath interface{} `json:"httpPath,omitempty"`
 
 	// REQUIRED; IP address or host name of the Spark server
 	Host interface{} `json:"host,omitempty"`
 
-	// The password corresponding to the user name that you provided in the Username field
-	Password SecretBaseClassification `json:"password,omitempty"`
-
 	// REQUIRED; The TCP port that the Spark server uses to listen for client connections.
 	Port interface{} `json:"port,omitempty"`
 
-	// The type of Spark server.
+	// OPTIONAL; Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value
+	// is false.
+	AllowHostNameCNMismatch interface{} `json:"allowHostNameCNMismatch,omitempty"`
+
+	// OPTIONAL; Specifies whether to allow self-signed certificates from the server. The default value is false.
+	AllowSelfSignedServerCert interface{} `json:"allowSelfSignedServerCert,omitempty"`
+
+	// OPTIONAL; Specifies whether the connections to the server are encrypted using SSL. The default value is false.
+	EnableSSL interface{} `json:"enableSsl,omitempty"`
+
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
+
+	// OPTIONAL; The partial URL corresponding to the Spark server.
+	HTTPPath interface{} `json:"httpPath,omitempty"`
+
+	// OPTIONAL; The password corresponding to the user name that you provided in the Username field
+	Password SecretBaseClassification `json:"password,omitempty"`
+
+	// OPTIONAL; The type of Spark server.
 	ServerType *SparkServerType `json:"serverType,omitempty"`
 
-	// The transport protocol to use in the Thrift layer.
+	// OPTIONAL; The transport protocol to use in the Thrift layer.
 	ThriftTransportProtocol *SparkThriftTransportProtocol `json:"thriftTransportProtocol,omitempty"`
 
-	// The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when
-	// using SSL on self-hosted IR. The default value
+	// OPTIONAL; The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only
+	// be set when using SSL on self-hosted IR. The default value
 	// is the cacerts.pem file installed with the IR.
 	TrustedCertPath interface{} `json:"trustedCertPath,omitempty"`
 
-	// Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false.
+	// OPTIONAL; Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false.
 	UseSystemTrustStore interface{} `json:"useSystemTrustStore,omitempty"`
 
-	// The user name that you use to access Spark Server.
+	// OPTIONAL; The user name that you use to access Spark Server.
 	Username interface{} `json:"username,omitempty"`
 }
 
@@ -28498,7 +28548,7 @@ func (s *SparkLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 // SparkObjectDataset - Spark Server dataset.
 type SparkObjectDataset struct {
 	Dataset
-	// Properties specific to this dataset type.
+	// OPTIONAL; Properties specific to this dataset type.
 	TypeProperties *SparkDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -28530,22 +28580,47 @@ func (s *SparkObjectDataset) UnmarshalJSON(data []byte) error {
 }
 
 type SparkRequest struct {
-	Archives  []*string `json:"archives,omitempty"`
-	Arguments []*string `json:"args,omitempty"`
-	ClassName *string   `json:"className,omitempty"`
+	// Archives - OPTIONAL
+	Archives []*string `json:"archives,omitempty"`
 
-	// Dictionary of
-	Configuration  map[string]*string `json:"conf,omitempty"`
-	DriverCores    *int32             `json:"driverCores,omitempty"`
-	DriverMemory   *string            `json:"driverMemory,omitempty"`
-	ExecutorCores  *int32             `json:"executorCores,omitempty"`
-	ExecutorCount  *int32             `json:"numExecutors,omitempty"`
-	ExecutorMemory *string            `json:"executorMemory,omitempty"`
-	File           *string            `json:"file,omitempty"`
-	Files          []*string          `json:"files,omitempty"`
-	Jars           []*string          `json:"jars,omitempty"`
-	Name           *string            `json:"name,omitempty"`
-	PythonFiles    []*string          `json:"pyFiles,omitempty"`
+	// Arguments - OPTIONAL
+	Arguments []*string `json:"args,omitempty"`
+
+	// ClassName - OPTIONAL
+	ClassName *string `json:"className,omitempty"`
+
+	// OPTIONAL; Dictionary of
+	Configuration map[string]*string `json:"conf,omitempty"`
+
+	// DriverCores - OPTIONAL
+	DriverCores *int32 `json:"driverCores,omitempty"`
+
+	// DriverMemory - OPTIONAL
+	DriverMemory *string `json:"driverMemory,omitempty"`
+
+	// ExecutorCores - OPTIONAL
+	ExecutorCores *int32 `json:"executorCores,omitempty"`
+
+	// ExecutorCount - OPTIONAL
+	ExecutorCount *int32 `json:"numExecutors,omitempty"`
+
+	// ExecutorMemory - OPTIONAL
+	ExecutorMemory *string `json:"executorMemory,omitempty"`
+
+	// File - OPTIONAL
+	File *string `json:"file,omitempty"`
+
+	// Files - OPTIONAL
+	Files []*string `json:"files,omitempty"`
+
+	// Jars - OPTIONAL
+	Jars []*string `json:"jars,omitempty"`
+
+	// Name - OPTIONAL
+	Name *string `json:"name,omitempty"`
+
+	// PythonFiles - OPTIONAL
+	PythonFiles []*string `json:"pyFiles,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type SparkRequest.
@@ -28569,11 +28644,20 @@ func (s SparkRequest) MarshalJSON() ([]byte, error) {
 }
 
 type SparkScheduler struct {
-	CancellationRequestedAt *time.Time             `json:"cancellationRequestedAt,omitempty"`
-	CurrentState            *SchedulerCurrentState `json:"currentState,omitempty"`
-	EndedAt                 *time.Time             `json:"endedAt,omitempty"`
-	ScheduledAt             *time.Time             `json:"scheduledAt,omitempty"`
-	SubmittedAt             *time.Time             `json:"submittedAt,omitempty"`
+	// CancellationRequestedAt - OPTIONAL
+	CancellationRequestedAt *time.Time `json:"cancellationRequestedAt,omitempty"`
+
+	// CurrentState - OPTIONAL
+	CurrentState *SchedulerCurrentState `json:"currentState,omitempty"`
+
+	// EndedAt - OPTIONAL
+	EndedAt *time.Time `json:"endedAt,omitempty"`
+
+	// ScheduledAt - OPTIONAL
+	ScheduledAt *time.Time `json:"scheduledAt,omitempty"`
+
+	// SubmittedAt - OPTIONAL
+	SubmittedAt *time.Time `json:"submittedAt,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type SparkScheduler.
@@ -28628,18 +28712,34 @@ func (s *SparkScheduler) UnmarshalJSON(data []byte) error {
 }
 
 type SparkServiceError struct {
-	ErrorCode *string           `json:"errorCode,omitempty"`
-	Message   *string           `json:"message,omitempty"`
-	Source    *SparkErrorSource `json:"source,omitempty"`
+	// ErrorCode - OPTIONAL
+	ErrorCode *string `json:"errorCode,omitempty"`
+
+	// Message - OPTIONAL
+	Message *string `json:"message,omitempty"`
+
+	// Source - OPTIONAL
+	Source *SparkErrorSource `json:"source,omitempty"`
 }
 
 type SparkServicePlugin struct {
-	CleanupStartedAt             *time.Time          `json:"cleanupStartedAt,omitempty"`
-	CurrentState                 *PluginCurrentState `json:"currentState,omitempty"`
-	MonitoringStartedAt          *time.Time          `json:"monitoringStartedAt,omitempty"`
-	PreparationStartedAt         *time.Time          `json:"preparationStartedAt,omitempty"`
-	ResourceAcquisitionStartedAt *time.Time          `json:"resourceAcquisitionStartedAt,omitempty"`
-	SubmissionStartedAt          *time.Time          `json:"submissionStartedAt,omitempty"`
+	// CleanupStartedAt - OPTIONAL
+	CleanupStartedAt *time.Time `json:"cleanupStartedAt,omitempty"`
+
+	// CurrentState - OPTIONAL
+	CurrentState *PluginCurrentState `json:"currentState,omitempty"`
+
+	// MonitoringStartedAt - OPTIONAL
+	MonitoringStartedAt *time.Time `json:"monitoringStartedAt,omitempty"`
+
+	// PreparationStartedAt - OPTIONAL
+	PreparationStartedAt *time.Time `json:"preparationStartedAt,omitempty"`
+
+	// ResourceAcquisitionStartedAt - OPTIONAL
+	ResourceAcquisitionStartedAt *time.Time `json:"resourceAcquisitionStartedAt,omitempty"`
+
+	// SubmissionStartedAt - OPTIONAL
+	SubmissionStartedAt *time.Time `json:"submissionStartedAt,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type SparkServicePlugin.
@@ -28702,7 +28802,7 @@ func (s *SparkServicePlugin) UnmarshalJSON(data []byte) error {
 // SparkSource - A copy activity Spark Server source.
 type SparkSource struct {
 	TabularSource
-	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	// OPTIONAL; A query to retrieve data from source. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -28772,27 +28872,27 @@ type SquareLinkedServiceTypeProperties struct {
 	// REQUIRED; The client ID associated with your Square application.
 	ClientID interface{} `json:"clientId,omitempty"`
 
-	// The client secret associated with your Square application.
-	ClientSecret SecretBaseClassification `json:"clientSecret,omitempty"`
-
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
-
 	// REQUIRED; The URL of the Square instance. (i.e. mystore.mysquare.com)
 	Host interface{} `json:"host,omitempty"`
 
 	// REQUIRED; The redirect URL assigned in the Square application dashboard. (i.e. http://localhost:2500)
 	RedirectURI interface{} `json:"redirectUri,omitempty"`
 
-	// Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true.
+	// OPTIONAL; The client secret associated with your Square application.
+	ClientSecret SecretBaseClassification `json:"clientSecret,omitempty"`
+
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
+
+	// OPTIONAL; Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true.
 	UseEncryptedEndpoints interface{} `json:"useEncryptedEndpoints,omitempty"`
 
-	// Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value
-	// is true.
+	// OPTIONAL; Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default
+	// value is true.
 	UseHostVerification interface{} `json:"useHostVerification,omitempty"`
 
-	// Specifies whether to verify the identity of the server when connecting over SSL. The default value is true.
+	// OPTIONAL; Specifies whether to verify the identity of the server when connecting over SSL. The default value is true.
 	UsePeerVerification interface{} `json:"usePeerVerification,omitempty"`
 }
 
@@ -28854,7 +28954,7 @@ func (s *SquareLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 // SquareObjectDataset - Square Service dataset.
 type SquareObjectDataset struct {
 	Dataset
-	// Properties specific to this dataset type.
+	// OPTIONAL; Properties specific to this dataset type.
 	TypeProperties *GenericDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -28888,7 +28988,7 @@ func (s *SquareObjectDataset) UnmarshalJSON(data []byte) error {
 // SquareSource - A copy activity Square Service source.
 type SquareSource struct {
 	TabularSource
-	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	// OPTIONAL; A query to retrieve data from source. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -28921,31 +29021,32 @@ func (s *SquareSource) UnmarshalJSON(data []byte) error {
 
 // SsisObjectMetadataStatusResponse - The status of the operation.
 type SsisObjectMetadataStatusResponse struct {
-	// The operation error message.
+	// OPTIONAL; The operation error message.
 	Error *string `json:"error,omitempty"`
 
-	// The operation name.
+	// OPTIONAL; The operation name.
 	Name *string `json:"name,omitempty"`
 
-	// The operation properties.
+	// OPTIONAL; The operation properties.
 	Properties *string `json:"properties,omitempty"`
 
-	// The status of the operation.
+	// OPTIONAL; The status of the operation.
 	Status *string `json:"status,omitempty"`
 }
 
 // StagingSettings - Staging settings.
 type StagingSettings struct {
-	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties map[string]interface{}
-
-	// Specifies whether to use compression when copying data via an interim staging. Default value is false. Type: boolean (or Expression with resultType boolean).
-	EnableCompression interface{} `json:"enableCompression,omitempty"`
-
 	// REQUIRED; Staging linked service reference.
 	LinkedServiceName *LinkedServiceReference `json:"linkedServiceName,omitempty"`
 
-	// The path to storage for storing the interim data. Type: string (or Expression with resultType string).
+	// Contains additional key/value pairs not defined in the schema.
+	AdditionalProperties map[string]interface{}
+
+	// OPTIONAL; Specifies whether to use compression when copying data via an interim staging. Default value is false. Type: boolean (or Expression with resultType
+	// boolean).
+	EnableCompression interface{} `json:"enableCompression,omitempty"`
+
+	// OPTIONAL; The path to storage for storing the interim data. Type: string (or Expression with resultType string).
 	Path interface{} `json:"path,omitempty"`
 }
 
@@ -29001,25 +29102,25 @@ func (s *StagingSettings) UnmarshalJSON(data []byte) error {
 
 // StartDataFlowDebugSessionRequest - Request body structure for starting data flow debug session.
 type StartDataFlowDebugSessionRequest struct {
-	// Data flow instance.
+	// OPTIONAL; Data flow instance.
 	DataFlow *DataFlowResource `json:"dataFlow,omitempty"`
 
-	// List of datasets.
+	// OPTIONAL; List of datasets.
 	Datasets []*DatasetResource `json:"datasets,omitempty"`
 
-	// Data flow debug settings.
+	// OPTIONAL; Data flow debug settings.
 	DebugSettings interface{} `json:"debugSettings,omitempty"`
 
-	// The type of new Databricks cluster.
+	// OPTIONAL; The type of new Databricks cluster.
 	IncrementalDebug *bool `json:"incrementalDebug,omitempty"`
 
-	// List of linked services.
+	// OPTIONAL; List of linked services.
 	LinkedServices []*LinkedServiceResource `json:"linkedServices,omitempty"`
 
-	// The ID of data flow debug session.
+	// OPTIONAL; The ID of data flow debug session.
 	SessionID *string `json:"sessionId,omitempty"`
 
-	// Staging info for debug session.
+	// OPTIONAL; Staging info for debug session.
 	Staging interface{} `json:"staging,omitempty"`
 }
 
@@ -29038,7 +29139,7 @@ func (s StartDataFlowDebugSessionRequest) MarshalJSON() ([]byte, error) {
 
 // StartDataFlowDebugSessionResponse - Response body structure for starting data flow debug session.
 type StartDataFlowDebugSessionResponse struct {
-	// The ID of data flow debug job version.
+	// OPTIONAL; The ID of data flow debug job version.
 	JobVersion *string `json:"jobVersion,omitempty"`
 }
 
@@ -29055,14 +29156,14 @@ type StoreReadSettingsClassification interface {
 
 // StoreReadSettings - Connector read setting.
 type StoreReadSettings struct {
+	// REQUIRED; The read setting type.
+	Type *string `json:"type,omitempty"`
+
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
-	// The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer).
+	// OPTIONAL; The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer).
 	MaxConcurrentConnections interface{} `json:"maxConcurrentConnections,omitempty"`
-
-	// REQUIRED; The read setting type.
-	Type *string `json:"type,omitempty"`
 }
 
 // GetStoreReadSettings implements the StoreReadSettingsClassification interface for type StoreReadSettings.
@@ -29130,17 +29231,17 @@ type StoreWriteSettingsClassification interface {
 
 // StoreWriteSettings - Connector write settings.
 type StoreWriteSettings struct {
+	// REQUIRED; The write setting type.
+	Type *string `json:"type,omitempty"`
+
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
-	// The type of copy behavior for copy sink.
+	// OPTIONAL; The type of copy behavior for copy sink.
 	CopyBehavior interface{} `json:"copyBehavior,omitempty"`
 
-	// The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer).
+	// OPTIONAL; The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer).
 	MaxConcurrentConnections interface{} `json:"maxConcurrentConnections,omitempty"`
-
-	// REQUIRED; The write setting type.
-	Type *string `json:"type,omitempty"`
 }
 
 // GetStoreWriteSettings implements the StoreWriteSettingsClassification interface for type StoreWriteSettings.
@@ -29202,10 +29303,10 @@ func (s *StoreWriteSettings) unmarshalInternal(rawMsg map[string]json.RawMessage
 
 // StoredProcedureParameter - SQL stored procedure parameter.
 type StoredProcedureParameter struct {
-	// Stored procedure parameter type.
+	// OPTIONAL; Stored procedure parameter type.
 	Type *StoredProcedureParameterType `json:"type,omitempty"`
 
-	// Stored procedure parameter value. Type: string (or Expression with resultType string).
+	// OPTIONAL; Stored procedure parameter value. Type: string (or Expression with resultType string).
 	Value interface{} `json:"value,omitempty"`
 }
 
@@ -29225,7 +29326,7 @@ func (s *SubResource) unmarshalInternal(rawMsg map[string]json.RawMessage) error
 
 // SubResourceDebugResource - Azure Synapse nested debug resource.
 type SubResourceDebugResource struct {
-	// The resource name.
+	// OPTIONAL; The resource name.
 	Name *string `json:"name,omitempty"`
 }
 
@@ -29302,16 +29403,16 @@ func (s *SwitchActivity) UnmarshalJSON(data []byte) error {
 
 // SwitchActivityTypeProperties - Switch activity properties.
 type SwitchActivityTypeProperties struct {
-	// List of cases that correspond to expected values of the 'on' property. This is an optional property and if not provided, the activity will execute activities
-	// provided in defaultActivities.
-	Cases []*SwitchCase `json:"cases,omitempty"`
-
-	// List of activities to execute if no case condition is satisfied. This is an optional property and if not provided, the activity will exit without any
-	// action.
-	DefaultActivities []ActivityClassification `json:"defaultActivities,omitempty"`
-
 	// REQUIRED; An expression that would evaluate to a string or integer. This is used to determine the block of activities in cases that will be executed.
 	On *Expression `json:"on,omitempty"`
+
+	// OPTIONAL; List of cases that correspond to expected values of the 'on' property. This is an optional property and if not provided, the activity will
+	// execute activities provided in defaultActivities.
+	Cases []*SwitchCase `json:"cases,omitempty"`
+
+	// OPTIONAL; List of activities to execute if no case condition is satisfied. This is an optional property and if not provided, the activity will exit without
+	// any action.
+	DefaultActivities []ActivityClassification `json:"defaultActivities,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type SwitchActivityTypeProperties.
@@ -29351,10 +29452,10 @@ func (s *SwitchActivityTypeProperties) UnmarshalJSON(data []byte) error {
 
 // SwitchCase - Switch cases with have a value and corresponding activities.
 type SwitchCase struct {
-	// List of activities to execute for satisfied case condition.
+	// OPTIONAL; List of activities to execute for satisfied case condition.
 	Activities []ActivityClassification `json:"activities,omitempty"`
 
-	// Expected value that satisfies the expression result of the 'on' property.
+	// OPTIONAL; Expected value that satisfies the expression result of the 'on' property.
 	Value *string `json:"value,omitempty"`
 }
 
@@ -29425,26 +29526,26 @@ func (s *SybaseLinkedService) UnmarshalJSON(data []byte) error {
 
 // SybaseLinkedServiceTypeProperties - Sybase linked service properties.
 type SybaseLinkedServiceTypeProperties struct {
-	// AuthenticationType to be used for connection.
-	AuthenticationType *SybaseAuthenticationType `json:"authenticationType,omitempty"`
-
 	// REQUIRED; Database name for connection. Type: string (or Expression with resultType string).
 	Database interface{} `json:"database,omitempty"`
-
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
-
-	// Password for authentication.
-	Password SecretBaseClassification `json:"password,omitempty"`
-
-	// Schema name for connection. Type: string (or Expression with resultType string).
-	Schema interface{} `json:"schema,omitempty"`
 
 	// REQUIRED; Server name for connection. Type: string (or Expression with resultType string).
 	Server interface{} `json:"server,omitempty"`
 
-	// Username for authentication. Type: string (or Expression with resultType string).
+	// OPTIONAL; AuthenticationType to be used for connection.
+	AuthenticationType *SybaseAuthenticationType `json:"authenticationType,omitempty"`
+
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
+
+	// OPTIONAL; Password for authentication.
+	Password SecretBaseClassification `json:"password,omitempty"`
+
+	// OPTIONAL; Schema name for connection. Type: string (or Expression with resultType string).
+	Schema interface{} `json:"schema,omitempty"`
+
+	// OPTIONAL; Username for authentication. Type: string (or Expression with resultType string).
 	Username interface{} `json:"username,omitempty"`
 }
 
@@ -29502,7 +29603,7 @@ func (s *SybaseLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 // SybaseSource - A copy activity source for Sybase databases.
 type SybaseSource struct {
 	TabularSource
-	// Database query. Type: string (or Expression with resultType string).
+	// OPTIONAL; Database query. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -29536,7 +29637,7 @@ func (s *SybaseSource) UnmarshalJSON(data []byte) error {
 // SybaseTableDataset - The Sybase table dataset.
 type SybaseTableDataset struct {
 	Dataset
-	// Sybase table dataset properties.
+	// OPTIONAL; Sybase table dataset properties.
 	TypeProperties *SybaseTableDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -29569,7 +29670,7 @@ func (s *SybaseTableDataset) UnmarshalJSON(data []byte) error {
 
 // SybaseTableDatasetTypeProperties - Sybase table dataset properties.
 type SybaseTableDatasetTypeProperties struct {
-	// The Sybase table name. Type: string (or Expression with resultType string).
+	// OPTIONAL; The Sybase table name. Type: string (or Expression with resultType string).
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
@@ -29612,7 +29713,7 @@ type SynapseNotebookActivityTypeProperties struct {
 	// REQUIRED; Synapse notebook reference.
 	Notebook *SynapseNotebookReference `json:"notebook,omitempty"`
 
-	// Notebook parameters.
+	// OPTIONAL; Notebook parameters.
 	Parameters map[string]interface{} `json:"parameters,omitempty"`
 }
 
@@ -29702,7 +29803,7 @@ type TabularSourceClassification interface {
 // TabularSource - Copy activity sources of tabular type.
 type TabularSource struct {
 	CopySource
-	// Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+).)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+	// OPTIONAL; Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+).)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
 	QueryTimeout interface{} `json:"queryTimeout,omitempty"`
 }
 
@@ -29748,24 +29849,24 @@ func (t *TabularSource) unmarshalInternal(rawMsg map[string]json.RawMessage) err
 // TabularTranslator - A copy activity tabular translator.
 type TabularTranslator struct {
 	CopyTranslator
-	// The JSON Path of the Nested Array that is going to do cross-apply. Type: object (or Expression with resultType object).
+	// OPTIONAL; The JSON Path of the Nested Array that is going to do cross-apply. Type: object (or Expression with resultType object).
 	CollectionReference interface{} `json:"collectionReference,omitempty"`
 
-	// Column mappings. Example: "UserId: MyUserId, Group: MyGroup, Name: MyName" Type: string (or Expression with resultType string). This property will be
-	// retired. Please use mappings property.
+	// OPTIONAL; Column mappings. Example: "UserId: MyUserId, Group: MyGroup, Name: MyName" Type: string (or Expression with resultType string). This property
+	// will be retired. Please use mappings property.
 	ColumnMappings interface{} `json:"columnMappings,omitempty"`
 
-	// Whether to map complex (array and object) values to simple strings in json format. Type: boolean (or Expression with resultType boolean).
+	// OPTIONAL; Whether to map complex (array and object) values to simple strings in json format. Type: boolean (or Expression with resultType boolean).
 	MapComplexValuesToString interface{} `json:"mapComplexValuesToString,omitempty"`
 
-	// Column mappings with logical types. Tabular->tabular example:
+	// OPTIONAL; Column mappings with logical types. Tabular->tabular example:
 	// [{"source":{"name":"CustomerName","type":"String"},"sink":{"name":"ClientName","type":"String"}},{"source":{"name":"CustomerAddress","type":"String"},"sink":{"name":"ClientAddress","type":"String"}}].
 	// Hierarchical->tabular example:
 	// [{"source":{"path":"$.CustomerName","type":"String"},"sink":{"name":"ClientName","type":"String"}},{"source":{"path":"$.CustomerAddress","type":"String"},"sink":{"name":"ClientAddress","type":"String"}}].
 	// Type: object (or Expression with resultType object).
 	Mappings interface{} `json:"mappings,omitempty"`
 
-	// The schema mapping to map between tabular data and hierarchical data. Example: {"Column1": "$.Column1", "Column2": "$.Column2.Property1", "Column3":
+	// OPTIONAL; The schema mapping to map between tabular data and hierarchical data. Example: {"Column1": "$.Column1", "Column2": "$.Column2.Property1", "Column3":
 	// "$.Column2.Property2"}. Type: object (or Expression
 	// with resultType object). This property will be retired. Please use mappings property.
 	SchemaMapping interface{} `json:"schemaMapping,omitempty"`
@@ -29850,23 +29951,23 @@ func (t *TeradataLinkedService) UnmarshalJSON(data []byte) error {
 
 // TeradataLinkedServiceTypeProperties - Teradata linked service properties.
 type TeradataLinkedServiceTypeProperties struct {
-	// AuthenticationType to be used for connection.
+	// OPTIONAL; AuthenticationType to be used for connection.
 	AuthenticationType *TeradataAuthenticationType `json:"authenticationType,omitempty"`
 
-	// Teradata ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
+	// OPTIONAL; Teradata ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
 	ConnectionString interface{} `json:"connectionString,omitempty"`
 
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
 	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
 
-	// Password for authentication.
+	// OPTIONAL; Password for authentication.
 	Password SecretBaseClassification `json:"password,omitempty"`
 
-	// Server name for connection. Type: string (or Expression with resultType string).
+	// OPTIONAL; Server name for connection. Type: string (or Expression with resultType string).
 	Server interface{} `json:"server,omitempty"`
 
-	// Username for authentication. Type: string (or Expression with resultType string).
+	// OPTIONAL; Username for authentication. Type: string (or Expression with resultType string).
 	Username interface{} `json:"username,omitempty"`
 }
 
@@ -29919,28 +30020,28 @@ func (t *TeradataLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 
 // TeradataPartitionSettings - The settings that will be leveraged for teradata source partitioning.
 type TeradataPartitionSettings struct {
-	// The name of the column that will be used for proceeding range or hash partitioning. Type: string (or Expression with resultType string).
+	// OPTIONAL; The name of the column that will be used for proceeding range or hash partitioning. Type: string (or Expression with resultType string).
 	PartitionColumnName interface{} `json:"partitionColumnName,omitempty"`
 
-	// The minimum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType
-	// string).
+	// OPTIONAL; The minimum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression
+	// with resultType string).
 	PartitionLowerBound interface{} `json:"partitionLowerBound,omitempty"`
 
-	// The maximum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType
-	// string).
+	// OPTIONAL; The maximum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression
+	// with resultType string).
 	PartitionUpperBound interface{} `json:"partitionUpperBound,omitempty"`
 }
 
 // TeradataSource - A copy activity Teradata source.
 type TeradataSource struct {
 	TabularSource
-	// The partition mechanism that will be used for teradata read in parallel.
+	// OPTIONAL; The partition mechanism that will be used for teradata read in parallel.
 	PartitionOption *TeradataPartitionOption `json:"partitionOption,omitempty"`
 
-	// The settings that will be leveraged for teradata source partitioning.
+	// OPTIONAL; The settings that will be leveraged for teradata source partitioning.
 	PartitionSettings *TeradataPartitionSettings `json:"partitionSettings,omitempty"`
 
-	// Teradata query. Type: string (or Expression with resultType string).
+	// OPTIONAL; Teradata query. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -29982,7 +30083,7 @@ func (t *TeradataSource) UnmarshalJSON(data []byte) error {
 // TeradataTableDataset - The Teradata database dataset.
 type TeradataTableDataset struct {
 	Dataset
-	// Teradata dataset properties.
+	// OPTIONAL; Teradata dataset properties.
 	TypeProperties *TeradataTableDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -30015,45 +30116,45 @@ func (t *TeradataTableDataset) UnmarshalJSON(data []byte) error {
 
 // TeradataTableDatasetTypeProperties - Teradata dataset properties.
 type TeradataTableDatasetTypeProperties struct {
-	// The database name of Teradata. Type: string (or Expression with resultType string).
+	// OPTIONAL; The database name of Teradata. Type: string (or Expression with resultType string).
 	Database interface{} `json:"database,omitempty"`
 
-	// The table name of Teradata. Type: string (or Expression with resultType string).
+	// OPTIONAL; The table name of Teradata. Type: string (or Expression with resultType string).
 	Table interface{} `json:"table,omitempty"`
 }
 
 // TextFormat - The data stored in text format.
 type TextFormat struct {
 	DatasetStorageFormat
-	// The column delimiter. Type: string (or Expression with resultType string).
+	// OPTIONAL; The column delimiter. Type: string (or Expression with resultType string).
 	ColumnDelimiter interface{} `json:"columnDelimiter,omitempty"`
 
-	// The code page name of the preferred encoding. If miss, the default value is ΓÇ£utf-8ΓÇ¥, unless BOM denotes another Unicode encoding. Refer to the ΓÇ£NameΓÇ¥
-	// column of the table in the following link
+	// OPTIONAL; The code page name of the preferred encoding. If miss, the default value is ΓÇ£utf-8ΓÇ¥, unless BOM denotes another Unicode encoding. Refer
+	// to the ΓÇ£NameΓÇ¥ column of the table in the following link
 	// to set supported values: https://msdn.microsoft.com/library/system.text.encoding.aspx. Type: string (or Expression with resultType string).
 	EncodingName interface{} `json:"encodingName,omitempty"`
 
-	// The escape character. Type: string (or Expression with resultType string).
+	// OPTIONAL; The escape character. Type: string (or Expression with resultType string).
 	EscapeChar interface{} `json:"escapeChar,omitempty"`
 
-	// When used as input, treat the first row of data as headers. When used as output,write the headers into the output as the first row of data. The default
-	// value is false. Type: boolean (or Expression
+	// OPTIONAL; When used as input, treat the first row of data as headers. When used as output,write the headers into the output as the first row of data.
+	// The default value is false. Type: boolean (or Expression
 	// with resultType boolean).
 	FirstRowAsHeader interface{} `json:"firstRowAsHeader,omitempty"`
 
-	// The null value string. Type: string (or Expression with resultType string).
+	// OPTIONAL; The null value string. Type: string (or Expression with resultType string).
 	NullValue interface{} `json:"nullValue,omitempty"`
 
-	// The quote character. Type: string (or Expression with resultType string).
+	// OPTIONAL; The quote character. Type: string (or Expression with resultType string).
 	QuoteChar interface{} `json:"quoteChar,omitempty"`
 
-	// The row delimiter. Type: string (or Expression with resultType string).
+	// OPTIONAL; The row delimiter. Type: string (or Expression with resultType string).
 	RowDelimiter interface{} `json:"rowDelimiter,omitempty"`
 
-	// The number of lines/rows to be skipped when parsing text files. The default value is 0. Type: integer (or Expression with resultType integer).
+	// OPTIONAL; The number of lines/rows to be skipped when parsing text files. The default value is 0. Type: integer (or Expression with resultType integer).
 	SkipLineCount interface{} `json:"skipLineCount,omitempty"`
 
-	// Treat empty column values in the text file as null. The default value is true. Type: boolean (or Expression with resultType boolean).
+	// OPTIONAL; Treat empty column values in the text file as null. The default value is true. Type: boolean (or Expression with resultType boolean).
 	TreatEmptyAsNull interface{} `json:"treatEmptyAsNull,omitempty"`
 }
 
@@ -30122,7 +30223,7 @@ type TrackedResource struct {
 	// REQUIRED; The geo-location where the resource lives
 	Location *string `json:"location,omitempty"`
 
-	// Resource tags.
+	// OPTIONAL; Resource tags.
 	Tags map[string]*string `json:"tags,omitempty"`
 }
 
@@ -30141,11 +30242,11 @@ func (t TrackedResource) marshalInternal() map[string]interface{} {
 
 // Transformation - A data flow transformation.
 type Transformation struct {
-	// Transformation description.
-	Description *string `json:"description,omitempty"`
-
 	// REQUIRED; Transformation name.
 	Name *string `json:"name,omitempty"`
+
+	// OPTIONAL; Transformation description.
+	Description *string `json:"description,omitempty"`
 }
 
 // TriggerClassification provides polymorphic access to related types.
@@ -30160,20 +30261,20 @@ type TriggerClassification interface {
 
 // Trigger - Azure Synapse nested object which contains information about creating pipeline run
 type Trigger struct {
+	// REQUIRED; Trigger type.
+	Type *string `json:"type,omitempty"`
+
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
-	// List of tags that can be used for describing the trigger.
+	// OPTIONAL; List of tags that can be used for describing the trigger.
 	Annotations []interface{} `json:"annotations,omitempty"`
 
-	// Trigger description.
+	// OPTIONAL; Trigger description.
 	Description *string `json:"description,omitempty"`
 
 	// READ-ONLY; Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger.
 	RuntimeState *TriggerRuntimeState `json:"runtimeState,omitempty" azure:"ro"`
-
-	// REQUIRED; Trigger type.
-	Type *string `json:"type,omitempty"`
 }
 
 // GetTrigger implements the TriggerClassification interface for type Trigger.
@@ -30354,11 +30455,11 @@ type TriggerGetTriggersByWorkspaceOptions struct {
 
 // TriggerListResponse - A list of trigger resources.
 type TriggerListResponse struct {
-	// The link to the next page of results, if any remaining results exist.
-	NextLink *string `json:"nextLink,omitempty"`
-
 	// REQUIRED; List of triggers.
 	Value []*TriggerResource `json:"value,omitempty"`
+
+	// OPTIONAL; The link to the next page of results, if any remaining results exist.
+	NextLink *string `json:"nextLink,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type TriggerListResponse.
@@ -30380,10 +30481,10 @@ type TriggerListResponseResponse struct {
 
 // TriggerPipelineReference - Pipeline that needs to be triggered with the given parameters.
 type TriggerPipelineReference struct {
-	// Pipeline parameters.
+	// OPTIONAL; Pipeline parameters.
 	Parameters map[string]interface{} `json:"parameters,omitempty"`
 
-	// Pipeline reference.
+	// OPTIONAL; Pipeline reference.
 	PipelineReference *PipelineReference `json:"pipelineReference,omitempty"`
 }
 
@@ -30578,11 +30679,11 @@ type TriggerRunRerunTriggerInstanceOptions struct {
 
 // TriggerRunsQueryResponse - A list of trigger runs.
 type TriggerRunsQueryResponse struct {
-	// The continuation token for getting the next page of results, if any remaining results exist, null otherwise.
-	ContinuationToken *string `json:"continuationToken,omitempty"`
-
 	// REQUIRED; List of trigger runs.
 	Value []*TriggerRun `json:"value,omitempty"`
+
+	// OPTIONAL; The continuation token for getting the next page of results, if any remaining results exist, null otherwise.
+	ContinuationToken *string `json:"continuationToken,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type TriggerRunsQueryResponse.
@@ -30678,10 +30779,10 @@ func (t *TumblingWindowTrigger) UnmarshalJSON(data []byte) error {
 // TumblingWindowTriggerDependencyReference - Referenced tumbling window trigger dependency.
 type TumblingWindowTriggerDependencyReference struct {
 	TriggerDependencyReference
-	// Timespan applied to the start time of a tumbling window when evaluating dependency.
+	// OPTIONAL; Timespan applied to the start time of a tumbling window when evaluating dependency.
 	Offset *string `json:"offset,omitempty"`
 
-	// The size of the window when evaluating the dependency. If undefined the frequency of the tumbling window will be used.
+	// OPTIONAL; The size of the window when evaluating the dependency. If undefined the frequency of the tumbling window will be used.
 	Size *string `json:"size,omitempty"`
 }
 
@@ -30718,17 +30819,6 @@ func (t *TumblingWindowTriggerDependencyReference) UnmarshalJSON(data []byte) er
 
 // TumblingWindowTriggerTypeProperties - Tumbling Window Trigger properties.
 type TumblingWindowTriggerTypeProperties struct {
-	// Specifies how long the trigger waits past due time before triggering new run. It doesn't alter window start and end time. The default is 0. Type: string
-	// (or Expression with resultType string),
-	// pattern: ((\d+).)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
-	Delay interface{} `json:"delay,omitempty"`
-
-	// Triggers that this trigger depends on. Only tumbling window triggers are supported.
-	DependsOn []DependencyReferenceClassification `json:"dependsOn,omitempty"`
-
-	// The end time for the time period for the trigger during which events are fired for windows that are ready. Only UTC time is currently supported.
-	EndTime *time.Time `json:"endTime,omitempty"`
-
 	// REQUIRED; The frequency of the time windows.
 	Frequency *TumblingWindowFrequency `json:"frequency,omitempty"`
 
@@ -30738,11 +30828,22 @@ type TumblingWindowTriggerTypeProperties struct {
 	// REQUIRED; The max number of parallel time windows (ready for execution) for which a new run is triggered.
 	MaxConcurrency *int32 `json:"maxConcurrency,omitempty"`
 
-	// Retry policy that will be applied for failed pipeline runs.
-	RetryPolicy *RetryPolicy `json:"retryPolicy,omitempty"`
-
 	// REQUIRED; The start time for the time period for the trigger during which events are fired for windows that are ready. Only UTC time is currently supported.
 	StartTime *time.Time `json:"startTime,omitempty"`
+
+	// OPTIONAL; Specifies how long the trigger waits past due time before triggering new run. It doesn't alter window start and end time. The default is 0.
+	// Type: string (or Expression with resultType string),
+	// pattern: ((\d+).)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+	Delay interface{} `json:"delay,omitempty"`
+
+	// OPTIONAL; Triggers that this trigger depends on. Only tumbling window triggers are supported.
+	DependsOn []DependencyReferenceClassification `json:"dependsOn,omitempty"`
+
+	// OPTIONAL; The end time for the time period for the trigger during which events are fired for windows that are ready. Only UTC time is currently supported.
+	EndTime *time.Time `json:"endTime,omitempty"`
+
+	// OPTIONAL; Retry policy that will be applied for failed pipeline runs.
+	RetryPolicy *RetryPolicy `json:"retryPolicy,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type TumblingWindowTriggerTypeProperties.
@@ -30846,8 +30947,8 @@ type UntilActivityTypeProperties struct {
 	// REQUIRED; An expression that would evaluate to Boolean. The loop will continue until this expression evaluates to true
 	Expression *Expression `json:"expression,omitempty"`
 
-	// Specifies the timeout for the activity to run. If there is no value specified, it takes the value of TimeSpan.FromDays(7) which is 1 week as default.
-	// Type: string (or Expression with resultType
+	// OPTIONAL; Specifies the timeout for the activity to run. If there is no value specified, it takes the value of TimeSpan.FromDays(7) which is 1 week as
+	// default. Type: string (or Expression with resultType
 	// string), pattern: ((\d+).)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). Type: string (or Expression with resultType string), pattern: ((\d+).)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
 	Timeout interface{} `json:"timeout,omitempty"`
 }
@@ -30932,45 +31033,45 @@ func (v *ValidationActivity) UnmarshalJSON(data []byte) error {
 
 // ValidationActivityTypeProperties - Validation activity properties.
 type ValidationActivityTypeProperties struct {
-	// Can be used if dataset points to a folder. If set to true, the folder must have at least one file. If set to false, the folder must be empty. Type: boolean
-	// (or Expression with resultType boolean).
-	ChildItems interface{} `json:"childItems,omitempty"`
-
 	// REQUIRED; Validation activity dataset reference.
 	Dataset *DatasetReference `json:"dataset,omitempty"`
 
-	// Can be used if dataset points to a file. The file must be greater than or equal in size to the value specified. Type: integer (or Expression with resultType
-	// integer).
+	// OPTIONAL; Can be used if dataset points to a folder. If set to true, the folder must have at least one file. If set to false, the folder must be empty.
+	// Type: boolean (or Expression with resultType boolean).
+	ChildItems interface{} `json:"childItems,omitempty"`
+
+	// OPTIONAL; Can be used if dataset points to a file. The file must be greater than or equal in size to the value specified. Type: integer (or Expression
+	// with resultType integer).
 	MinimumSize interface{} `json:"minimumSize,omitempty"`
 
-	// A delay in seconds between validation attempts. If no value is specified, 10 seconds will be used as the default. Type: integer (or Expression with resultType
-	// integer).
+	// OPTIONAL; A delay in seconds between validation attempts. If no value is specified, 10 seconds will be used as the default. Type: integer (or Expression
+	// with resultType integer).
 	Sleep interface{} `json:"sleep,omitempty"`
 
-	// Specifies the timeout for the activity to run. If there is no value specified, it takes the value of TimeSpan.FromDays(7) which is 1 week as default.
-	// Type: string (or Expression with resultType
+	// OPTIONAL; Specifies the timeout for the activity to run. If there is no value specified, it takes the value of TimeSpan.FromDays(7) which is 1 week as
+	// default. Type: string (or Expression with resultType
 	// string), pattern: ((\d+).)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
 	Timeout interface{} `json:"timeout,omitempty"`
 }
 
 // VariableSpecification - Definition of a single variable for a Pipeline.
 type VariableSpecification struct {
-	// Default value of variable.
-	DefaultValue interface{} `json:"defaultValue,omitempty"`
-
 	// REQUIRED; Variable type.
 	Type *VariableType `json:"type,omitempty"`
+
+	// OPTIONAL; Default value of variable.
+	DefaultValue interface{} `json:"defaultValue,omitempty"`
 }
 
 // VerticaDatasetTypeProperties - Vertica Properties
 type VerticaDatasetTypeProperties struct {
-	// The schema name of the Vertica. Type: string (or Expression with resultType string).
+	// OPTIONAL; The schema name of the Vertica. Type: string (or Expression with resultType string).
 	Schema interface{} `json:"schema,omitempty"`
 
-	// The table name of the Vertica. Type: string (or Expression with resultType string).
+	// OPTIONAL; The table name of the Vertica. Type: string (or Expression with resultType string).
 	Table interface{} `json:"table,omitempty"`
 
-	// This property will be retired. Please consider using schema + table properties instead.
+	// OPTIONAL; This property will be retired. Please consider using schema + table properties instead.
 	TableName interface{} `json:"tableName,omitempty"`
 }
 
@@ -31010,21 +31111,21 @@ func (v *VerticaLinkedService) UnmarshalJSON(data []byte) error {
 
 // VerticaLinkedServiceTypeProperties - Vertica linked service properties.
 type VerticaLinkedServiceTypeProperties struct {
-	// An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
+	// OPTIONAL; An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
 	ConnectionString interface{} `json:"connectionString,omitempty"`
 
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
 	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
 
-	// The Azure key vault secret reference of password in connection string.
+	// OPTIONAL; The Azure key vault secret reference of password in connection string.
 	Pwd *AzureKeyVaultSecretReference `json:"pwd,omitempty"`
 }
 
 // VerticaSource - A copy activity Vertica source.
 type VerticaSource struct {
 	TabularSource
-	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	// OPTIONAL; A query to retrieve data from source. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -31058,7 +31159,7 @@ func (v *VerticaSource) UnmarshalJSON(data []byte) error {
 // VerticaTableDataset - Vertica dataset.
 type VerticaTableDataset struct {
 	Dataset
-	// Properties specific to this dataset type.
+	// OPTIONAL; Properties specific to this dataset type.
 	TypeProperties *VerticaDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -31091,7 +31192,7 @@ func (v *VerticaTableDataset) UnmarshalJSON(data []byte) error {
 
 // VirtualNetworkProfile - Virtual Network Profile
 type VirtualNetworkProfile struct {
-	// Subnet ID used for computes in workspace
+	// OPTIONAL; Subnet ID used for computes in workspace
 	ComputeSubnetID *string `json:"computeSubnetId,omitempty"`
 }
 
@@ -31171,19 +31272,19 @@ func (w *WebActivity) UnmarshalJSON(data []byte) error {
 
 // WebActivityAuthentication - Web activity authentication properties.
 type WebActivityAuthentication struct {
-	// Password for the PFX file or basic authentication.
-	Password SecretBaseClassification `json:"password,omitempty"`
-
-	// Base64-encoded contents of a PFX file.
-	Pfx SecretBaseClassification `json:"pfx,omitempty"`
-
-	// Resource for which Azure Auth token will be requested when using MSI Authentication.
-	Resource *string `json:"resource,omitempty"`
-
 	// REQUIRED; Web activity authentication (Basic/ClientCertificate/MSI)
 	Type *string `json:"type,omitempty"`
 
-	// Web activity authentication user name for basic authentication.
+	// OPTIONAL; Password for the PFX file or basic authentication.
+	Password SecretBaseClassification `json:"password,omitempty"`
+
+	// OPTIONAL; Base64-encoded contents of a PFX file.
+	Pfx SecretBaseClassification `json:"pfx,omitempty"`
+
+	// OPTIONAL; Resource for which Azure Auth token will be requested when using MSI Authentication.
+	Resource *string `json:"resource,omitempty"`
+
+	// OPTIONAL; Web activity authentication user name for basic authentication.
 	Username *string `json:"username,omitempty"`
 }
 
@@ -31232,32 +31333,32 @@ func (w *WebActivityAuthentication) UnmarshalJSON(data []byte) error {
 
 // WebActivityTypeProperties - Web activity type properties.
 type WebActivityTypeProperties struct {
-	// Authentication method used for calling the endpoint.
-	Authentication *WebActivityAuthentication `json:"authentication,omitempty"`
-
-	// Represents the payload that will be sent to the endpoint. Required for POST/PUT method, not allowed for GET method Type: string (or Expression with resultType
-	// string).
-	Body interface{} `json:"body,omitempty"`
-
-	// The integration runtime reference.
-	ConnectVia *IntegrationRuntimeReference `json:"connectVia,omitempty"`
-
-	// List of datasets passed to web endpoint.
-	Datasets []*DatasetReference `json:"datasets,omitempty"`
-
-	// Represents the headers that will be sent to the request. For example, to set the language and type on a request: "headers" : { "Accept-Language": "en-us",
-	// "Content-Type": "application/json" }. Type:
-	// string (or Expression with resultType string).
-	Headers interface{} `json:"headers,omitempty"`
-
-	// List of linked services passed to web endpoint.
-	LinkedServices []*LinkedServiceReference `json:"linkedServices,omitempty"`
-
 	// REQUIRED; Rest API method for target endpoint.
 	Method *WebActivityMethod `json:"method,omitempty"`
 
 	// REQUIRED; Web activity target endpoint and path. Type: string (or Expression with resultType string).
 	URL interface{} `json:"url,omitempty"`
+
+	// OPTIONAL; Authentication method used for calling the endpoint.
+	Authentication *WebActivityAuthentication `json:"authentication,omitempty"`
+
+	// OPTIONAL; Represents the payload that will be sent to the endpoint. Required for POST/PUT method, not allowed for GET method Type: string (or Expression
+	// with resultType string).
+	Body interface{} `json:"body,omitempty"`
+
+	// OPTIONAL; The integration runtime reference.
+	ConnectVia *IntegrationRuntimeReference `json:"connectVia,omitempty"`
+
+	// OPTIONAL; List of datasets passed to web endpoint.
+	Datasets []*DatasetReference `json:"datasets,omitempty"`
+
+	// OPTIONAL; Represents the headers that will be sent to the request. For example, to set the language and type on a request: "headers" : { "Accept-Language":
+	// "en-us", "Content-Type": "application/json" }. Type:
+	// string (or Expression with resultType string).
+	Headers interface{} `json:"headers,omitempty"`
+
+	// OPTIONAL; List of linked services passed to web endpoint.
+	LinkedServices []*LinkedServiceReference `json:"linkedServices,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type WebActivityTypeProperties.
@@ -31405,31 +31506,32 @@ func (w *WebHookActivity) UnmarshalJSON(data []byte) error {
 
 // WebHookActivityTypeProperties - WebHook activity type properties.
 type WebHookActivityTypeProperties struct {
-	// Authentication method used for calling the endpoint.
-	Authentication *WebActivityAuthentication `json:"authentication,omitempty"`
-
-	// Represents the payload that will be sent to the endpoint. Required for POST/PUT method, not allowed for GET method Type: string (or Expression with resultType
-	// string).
-	Body interface{} `json:"body,omitempty"`
-
-	// Represents the headers that will be sent to the request. For example, to set the language and type on a request: "headers" : { "Accept-Language": "en-us",
-	// "Content-Type": "application/json" }. Type:
-	// string (or Expression with resultType string).
-	Headers interface{} `json:"headers,omitempty"`
-
 	// REQUIRED; Rest API method for target endpoint.
 	Method *WebHookActivityMethod `json:"method,omitempty"`
 
-	// When set to true, statusCode, output and error in callback request body will be consumed by activity. The activity can be marked as failed by setting
-	// statusCode >= 400 in callback request. Default is
+	// REQUIRED; WebHook activity target endpoint and path. Type: string (or Expression with resultType string).
+	URL interface{} `json:"url,omitempty"`
+
+	// OPTIONAL; Authentication method used for calling the endpoint.
+	Authentication *WebActivityAuthentication `json:"authentication,omitempty"`
+
+	// OPTIONAL; Represents the payload that will be sent to the endpoint. Required for POST/PUT method, not allowed for GET method Type: string (or Expression
+	// with resultType string).
+	Body interface{} `json:"body,omitempty"`
+
+	// OPTIONAL; Represents the headers that will be sent to the request. For example, to set the language and type on a request: "headers" : { "Accept-Language":
+	// "en-us", "Content-Type": "application/json" }. Type:
+	// string (or Expression with resultType string).
+	Headers interface{} `json:"headers,omitempty"`
+
+	// OPTIONAL; When set to true, statusCode, output and error in callback request body will be consumed by activity. The activity can be marked as failed
+	// by setting statusCode >= 400 in callback request. Default is
 	// false. Type: boolean (or Expression with resultType boolean).
 	ReportStatusOnCallBack interface{} `json:"reportStatusOnCallBack,omitempty"`
 
-	// The timeout within which the webhook should be called back. If there is no value specified, it defaults to 10 minutes. Type: string. Pattern: ((\d+).)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+	// OPTIONAL; The timeout within which the webhook should be called back. If there is no value specified, it defaults to 10 minutes. Type: string. Pattern:
+	// ((\d+).)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
 	Timeout *string `json:"timeout,omitempty"`
-
-	// REQUIRED; WebHook activity target endpoint and path. Type: string (or Expression with resultType string).
-	URL interface{} `json:"url,omitempty"`
 }
 
 // WebLinkedService - Web linked service.
@@ -31575,17 +31677,17 @@ type WebTableDatasetTypeProperties struct {
 	// REQUIRED; The zero-based index of the table in the web page. Type: integer (or Expression with resultType integer), minimum: 0.
 	Index interface{} `json:"index,omitempty"`
 
-	// The relative URL to the web page from the linked service URL. Type: string (or Expression with resultType string).
+	// OPTIONAL; The relative URL to the web page from the linked service URL. Type: string (or Expression with resultType string).
 	Path interface{} `json:"path,omitempty"`
 }
 
 // Workspace - A workspace
 type Workspace struct {
 	TrackedResource
-	// Identity of the workspace
+	// OPTIONAL; Identity of the workspace
 	Identity *ManagedIdentity `json:"identity,omitempty"`
 
-	// Workspace resource properties
+	// OPTIONAL; Workspace resource properties
 	Properties *WorkspaceProperties `json:"properties,omitempty"`
 }
 
@@ -31610,73 +31712,73 @@ type WorkspaceGitRepoManagementGetGitHubAccessTokenOptions struct {
 
 // WorkspaceIdentity - Identity properties of the workspace resource.
 type WorkspaceIdentity struct {
+	// REQUIRED; The identity type. Currently the only supported type is 'SystemAssigned'.
+	Type *string `json:"type,omitempty"`
+
 	// READ-ONLY; The principal id of the identity.
 	PrincipalID *string `json:"principalId,omitempty" azure:"ro"`
 
 	// READ-ONLY; The client tenant id of the identity.
 	TenantID *string `json:"tenantId,omitempty" azure:"ro"`
-
-	// REQUIRED; The identity type. Currently the only supported type is 'SystemAssigned'.
-	Type *string `json:"type,omitempty"`
 }
 
 // WorkspaceKeyDetails - Details of the customer managed key associated with the workspace
 type WorkspaceKeyDetails struct {
-	// Workspace Key sub-resource key vault url
+	// OPTIONAL; Workspace Key sub-resource key vault url
 	KeyVaultURL *string `json:"keyVaultUrl,omitempty"`
 
-	// Workspace Key sub-resource name
+	// OPTIONAL; Workspace Key sub-resource name
 	Name *string `json:"name,omitempty"`
 }
 
 // WorkspaceProperties - Workspace properties
 type WorkspaceProperties struct {
-	// READ-ONLY; The ADLA resource ID.
-	AdlaResourceID *string `json:"adlaResourceId,omitempty" azure:"ro"`
-
-	// Connectivity endpoints
+	// OPTIONAL; Connectivity endpoints
 	ConnectivityEndpoints map[string]*string `json:"connectivityEndpoints,omitempty"`
 
-	// Workspace default data lake storage account details
+	// OPTIONAL; Workspace default data lake storage account details
 	DefaultDataLakeStorage *DataLakeStorageAccountDetails `json:"defaultDataLakeStorage,omitempty"`
 
-	// The encryption details of the workspace
+	// OPTIONAL; The encryption details of the workspace
 	Encryption *EncryptionDetails `json:"encryption,omitempty"`
+
+	// OPTIONAL; Workspace managed resource group. The resource group name uniquely identifies the resource group within the user subscriptionId. The resource
+	// group name must be no longer than 90 characters long, and
+	// must be alphanumeric characters (Char.IsLetterOrDigit()) and '-', '_', '(', ')' and'.'. Note that the name cannot end with '.'
+	ManagedResourceGroupName *string `json:"managedResourceGroupName,omitempty"`
+
+	// OPTIONAL; Setting this to 'default' will ensure that all compute for this workspace is in a virtual network managed on behalf of the user.
+	ManagedVirtualNetwork *string `json:"managedVirtualNetwork,omitempty"`
+
+	// OPTIONAL; Managed Virtual Network Settings
+	ManagedVirtualNetworkSettings *ManagedVirtualNetworkSettings `json:"managedVirtualNetworkSettings,omitempty"`
+
+	// OPTIONAL; Private endpoint connections to the workspace
+	PrivateEndpointConnections []*PrivateEndpointConnection `json:"privateEndpointConnections,omitempty"`
+
+	// OPTIONAL; Purview Configuration
+	PurviewConfiguration *PurviewConfiguration `json:"purviewConfiguration,omitempty"`
+
+	// OPTIONAL; Login for workspace SQL active directory administrator
+	SQLAdministratorLogin *string `json:"sqlAdministratorLogin,omitempty"`
+
+	// OPTIONAL; SQL administrator login password
+	SQLAdministratorLoginPassword *string `json:"sqlAdministratorLoginPassword,omitempty"`
+
+	// OPTIONAL; Virtual Network profile
+	VirtualNetworkProfile *VirtualNetworkProfile `json:"virtualNetworkProfile,omitempty"`
+
+	// OPTIONAL; Git integration settings
+	WorkspaceRepositoryConfiguration *WorkspaceRepositoryConfiguration `json:"workspaceRepositoryConfiguration,omitempty"`
+
+	// READ-ONLY; The ADLA resource ID.
+	AdlaResourceID *string `json:"adlaResourceId,omitempty" azure:"ro"`
 
 	// READ-ONLY; Workspace level configs and feature flags
 	ExtraProperties map[string]interface{} `json:"extraProperties,omitempty" azure:"ro"`
 
-	// Workspace managed resource group. The resource group name uniquely identifies the resource group within the user subscriptionId. The resource group name
-	// must be no longer than 90 characters long, and
-	// must be alphanumeric characters (Char.IsLetterOrDigit()) and '-', '_', '(', ')' and'.'. Note that the name cannot end with '.'
-	ManagedResourceGroupName *string `json:"managedResourceGroupName,omitempty"`
-
-	// Setting this to 'default' will ensure that all compute for this workspace is in a virtual network managed on behalf of the user.
-	ManagedVirtualNetwork *string `json:"managedVirtualNetwork,omitempty"`
-
-	// Managed Virtual Network Settings
-	ManagedVirtualNetworkSettings *ManagedVirtualNetworkSettings `json:"managedVirtualNetworkSettings,omitempty"`
-
-	// Private endpoint connections to the workspace
-	PrivateEndpointConnections []*PrivateEndpointConnection `json:"privateEndpointConnections,omitempty"`
-
 	// READ-ONLY; Resource provisioning state
 	ProvisioningState *string `json:"provisioningState,omitempty" azure:"ro"`
-
-	// Purview Configuration
-	PurviewConfiguration *PurviewConfiguration `json:"purviewConfiguration,omitempty"`
-
-	// Login for workspace SQL active directory administrator
-	SQLAdministratorLogin *string `json:"sqlAdministratorLogin,omitempty"`
-
-	// SQL administrator login password
-	SQLAdministratorLoginPassword *string `json:"sqlAdministratorLoginPassword,omitempty"`
-
-	// Virtual Network profile
-	VirtualNetworkProfile *VirtualNetworkProfile `json:"virtualNetworkProfile,omitempty"`
-
-	// Git integration settings
-	WorkspaceRepositoryConfiguration *WorkspaceRepositoryConfiguration `json:"workspaceRepositoryConfiguration,omitempty"`
 
 	// READ-ONLY; The workspace unique identifier
 	WorkspaceUID *string `json:"workspaceUID,omitempty" azure:"ro"`
@@ -31706,31 +31808,31 @@ func (w WorkspaceProperties) MarshalJSON() ([]byte, error) {
 
 // WorkspaceRepositoryConfiguration - Git integration settings
 type WorkspaceRepositoryConfiguration struct {
-	// Account name
+	// OPTIONAL; Account name
 	AccountName *string `json:"accountName,omitempty"`
 
-	// Collaboration branch
+	// OPTIONAL; Collaboration branch
 	CollaborationBranch *string `json:"collaborationBranch,omitempty"`
 
-	// GitHub Enterprise host name. For example: https://github.mydomain.com
+	// OPTIONAL; GitHub Enterprise host name. For example: https://github.mydomain.com
 	HostName *string `json:"hostName,omitempty"`
 
-	// The last commit ID
+	// OPTIONAL; The last commit ID
 	LastCommitID *string `json:"lastCommitId,omitempty"`
 
-	// VSTS project name
+	// OPTIONAL; VSTS project name
 	ProjectName *string `json:"projectName,omitempty"`
 
-	// Repository name
+	// OPTIONAL; Repository name
 	RepositoryName *string `json:"repositoryName,omitempty"`
 
-	// Root folder to use in the repository
+	// OPTIONAL; Root folder to use in the repository
 	RootFolder *string `json:"rootFolder,omitempty"`
 
-	// The VSTS tenant ID
+	// OPTIONAL; The VSTS tenant ID
 	TenantID *string `json:"tenantId,omitempty"`
 
-	// Type of workspace repositoryID configuration. Example WorkspaceVSTSConfiguration, WorkspaceGitHubConfiguration
+	// OPTIONAL; Type of workspace repositoryID configuration. Example WorkspaceVSTSConfiguration, WorkspaceGitHubConfiguration
 	Type *string `json:"type,omitempty"`
 }
 
@@ -31745,10 +31847,10 @@ type WorkspaceResponse struct {
 
 // WorkspaceUpdateParameters - Parameters for updating a workspace resource.
 type WorkspaceUpdateParameters struct {
-	// Managed service identity of the workspace.
+	// OPTIONAL; Managed service identity of the workspace.
 	Identity *WorkspaceIdentity `json:"identity,omitempty"`
 
-	// The resource tags.
+	// OPTIONAL; The resource tags.
 	Tags map[string]*string `json:"tags,omitempty"`
 }
 
@@ -31796,28 +31898,28 @@ func (x *XeroLinkedService) UnmarshalJSON(data []byte) error {
 
 // XeroLinkedServiceTypeProperties - Xero Service linked service properties.
 type XeroLinkedServiceTypeProperties struct {
-	// The consumer key associated with the Xero application.
-	ConsumerKey SecretBaseClassification `json:"consumerKey,omitempty"`
-
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
-
 	// REQUIRED; The endpoint of the Xero server. (i.e. api.xero.com)
 	Host interface{} `json:"host,omitempty"`
 
-	// The private key from the .pem file that was generated for your Xero private application. You must include all the text from the .pem file, including
-	// the Unix line endings( ).
+	// OPTIONAL; The consumer key associated with the Xero application.
+	ConsumerKey SecretBaseClassification `json:"consumerKey,omitempty"`
+
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
+
+	// OPTIONAL; The private key from the .pem file that was generated for your Xero private application. You must include all the text from the .pem file,
+	// including the Unix line endings( ).
 	PrivateKey SecretBaseClassification `json:"privateKey,omitempty"`
 
-	// Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true.
+	// OPTIONAL; Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true.
 	UseEncryptedEndpoints interface{} `json:"useEncryptedEndpoints,omitempty"`
 
-	// Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value
-	// is true.
+	// OPTIONAL; Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default
+	// value is true.
 	UseHostVerification interface{} `json:"useHostVerification,omitempty"`
 
-	// Specifies whether to verify the identity of the server when connecting over SSL. The default value is true.
+	// OPTIONAL; Specifies whether to verify the identity of the server when connecting over SSL. The default value is true.
 	UsePeerVerification interface{} `json:"usePeerVerification,omitempty"`
 }
 
@@ -31875,7 +31977,7 @@ func (x *XeroLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 // XeroObjectDataset - Xero Service dataset.
 type XeroObjectDataset struct {
 	Dataset
-	// Properties specific to this dataset type.
+	// OPTIONAL; Properties specific to this dataset type.
 	TypeProperties *GenericDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -31909,7 +32011,7 @@ func (x *XeroObjectDataset) UnmarshalJSON(data []byte) error {
 // XeroSource - A copy activity Xero Service source.
 type XeroSource struct {
 	TabularSource
-	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	// OPTIONAL; A query to retrieve data from source. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 
@@ -31976,24 +32078,24 @@ func (z *ZohoLinkedService) UnmarshalJSON(data []byte) error {
 
 // ZohoLinkedServiceTypeProperties - Zoho server linked service properties.
 type ZohoLinkedServiceTypeProperties struct {
-	// The access token for Zoho authentication.
-	AccessToken SecretBaseClassification `json:"accessToken,omitempty"`
-
-	// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression
-	// with resultType string).
-	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
-
 	// REQUIRED; The endpoint of the Zoho server. (i.e. crm.zoho.com/crm/private)
 	Endpoint interface{} `json:"endpoint,omitempty"`
 
-	// Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true.
+	// OPTIONAL; The access token for Zoho authentication.
+	AccessToken SecretBaseClassification `json:"accessToken,omitempty"`
+
+	// OPTIONAL; The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string
+	// (or Expression with resultType string).
+	EncryptedCredential interface{} `json:"encryptedCredential,omitempty"`
+
+	// OPTIONAL; Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true.
 	UseEncryptedEndpoints interface{} `json:"useEncryptedEndpoints,omitempty"`
 
-	// Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value
-	// is true.
+	// OPTIONAL; Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default
+	// value is true.
 	UseHostVerification interface{} `json:"useHostVerification,omitempty"`
 
-	// Specifies whether to verify the identity of the server when connecting over SSL. The default value is true.
+	// OPTIONAL; Specifies whether to verify the identity of the server when connecting over SSL. The default value is true.
 	UsePeerVerification interface{} `json:"usePeerVerification,omitempty"`
 }
 
@@ -32047,7 +32149,7 @@ func (z *ZohoLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 // ZohoObjectDataset - Zoho server dataset.
 type ZohoObjectDataset struct {
 	Dataset
-	// Properties specific to this dataset type.
+	// OPTIONAL; Properties specific to this dataset type.
 	TypeProperties *GenericDatasetTypeProperties `json:"typeProperties,omitempty"`
 }
 
@@ -32081,7 +32183,7 @@ func (z *ZohoObjectDataset) UnmarshalJSON(data []byte) error {
 // ZohoSource - A copy activity Zoho server source.
 type ZohoSource struct {
 	TabularSource
-	// A query to retrieve data from source. Type: string (or Expression with resultType string).
+	// OPTIONAL; A query to retrieve data from source. Type: string (or Expression with resultType string).
 	Query interface{} `json:"query,omitempty"`
 }
 

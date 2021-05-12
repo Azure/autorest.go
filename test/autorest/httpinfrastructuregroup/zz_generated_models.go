@@ -11,6 +11,7 @@ import "net/http"
 
 type B struct {
 	MyException
+	// TextStatusCode - OPTIONAL
 	TextStatusCode *string `json:"textStatusCode,omitempty"`
 }
 
@@ -41,6 +42,7 @@ type BooleanResponse struct {
 }
 
 type C struct {
+	// HTTPCode - OPTIONAL
 	HTTPCode *string `json:"httpCode,omitempty"`
 }
 
@@ -53,6 +55,7 @@ type CResponse struct {
 }
 
 type D struct {
+	// HTTPStatusCode - OPTIONAL
 	HTTPStatusCode *string `json:"httpStatusCode,omitempty"`
 }
 
@@ -66,9 +69,12 @@ type DResponse struct {
 
 // Implements the error and azcore.HTTPResponse interfaces.
 type Error struct {
-	raw     string
+	raw string
+	// Message - OPTIONAL
 	Message *string `json:"message,omitempty"`
-	Status  *int32  `json:"status,omitempty"`
+
+	// Status - OPTIONAL
+	Status *int32 `json:"status,omitempty"`
 }
 
 // Error implements the error interface for type Error.
@@ -701,7 +707,8 @@ type MultipleResponsesGetDefaultNone400NoneOptions struct {
 
 // Implements the error and azcore.HTTPResponse interfaces.
 type MyException struct {
-	raw        string
+	raw string
+	// StatusCode - OPTIONAL
 	StatusCode *string `json:"statusCode,omitempty"`
 }
 

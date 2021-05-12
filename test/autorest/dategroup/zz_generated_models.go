@@ -54,9 +54,12 @@ type DatePutMinDateOptions struct {
 
 // Implements the error and azcore.HTTPResponse interfaces.
 type Error struct {
-	raw     string
+	raw string
+	// Message - OPTIONAL
 	Message *string `json:"message,omitempty"`
-	Status  *int32  `json:"status,omitempty"`
+
+	// Status - OPTIONAL
+	Status *int32 `json:"status,omitempty"`
 }
 
 // Error implements the error interface for type Error.

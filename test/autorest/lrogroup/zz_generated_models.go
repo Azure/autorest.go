@@ -18,8 +18,11 @@ import (
 
 // Implements the error and azcore.HTTPResponse interfaces.
 type CloudError struct {
-	raw     string
-	Code    *int32  `json:"code,omitempty"`
+	raw string
+	// Code - OPTIONAL
+	Code *int32 `json:"code,omitempty"`
+
+	// Message - OPTIONAL
 	Message *string `json:"message,omitempty"`
 }
 
@@ -491,22 +494,24 @@ type LROsCustomHeaderBeginPutAsyncRetrySucceededOptions struct {
 }
 
 type OperationResult struct {
+	// Error - OPTIONAL
 	Error *OperationResultError `json:"error,omitempty"`
 
-	// The status of the request
+	// OPTIONAL; The status of the request
 	Status *OperationResultStatus `json:"status,omitempty"`
 }
 
 type OperationResultError struct {
-	// The error code for an operation failure
+	// OPTIONAL; The error code for an operation failure
 	Code *int32 `json:"code,omitempty"`
 
-	// The detailed arror message
+	// OPTIONAL; The detailed arror message
 	Message *string `json:"message,omitempty"`
 }
 
 type Product struct {
 	Resource
+	// Properties - OPTIONAL
 	Properties *ProductProperties `json:"properties,omitempty"`
 }
 
@@ -551,6 +556,7 @@ type ProductPollerResponse struct {
 }
 
 type ProductProperties struct {
+	// ProvisioningState - OPTIONAL
 	ProvisioningState *string `json:"provisioningState,omitempty"`
 
 	// ProvisioningStateValues - READ-ONLY
@@ -566,17 +572,17 @@ type ProductResponse struct {
 }
 
 type Resource struct {
+	// OPTIONAL; Resource Location
+	Location *string `json:"location,omitempty"`
+
+	// OPTIONAL; Dictionary of
+	Tags map[string]*string `json:"tags,omitempty"`
+
 	// READ-ONLY; Resource Id
 	ID *string `json:"id,omitempty" azure:"ro"`
 
-	// Resource Location
-	Location *string `json:"location,omitempty"`
-
 	// READ-ONLY; Resource Name
 	Name *string `json:"name,omitempty" azure:"ro"`
-
-	// Dictionary of
-	Tags map[string]*string `json:"tags,omitempty"`
 
 	// READ-ONLY; Resource Type
 	Type *string `json:"type,omitempty" azure:"ro"`
@@ -599,7 +605,10 @@ func (r Resource) marshalInternal() map[string]interface{} {
 }
 
 type SKU struct {
-	ID   *string `json:"id,omitempty"`
+	// ID - OPTIONAL
+	ID *string `json:"id,omitempty"`
+
+	// Name - OPTIONAL
 	Name *string `json:"name,omitempty"`
 }
 
@@ -624,6 +633,7 @@ type SKUResponse struct {
 
 type SubProduct struct {
 	SubResource
+	// Properties - OPTIONAL
 	Properties *SubProductProperties `json:"properties,omitempty"`
 }
 
@@ -640,6 +650,7 @@ type SubProductPollerResponse struct {
 }
 
 type SubProductProperties struct {
+	// ProvisioningState - OPTIONAL
 	ProvisioningState *string `json:"provisioningState,omitempty"`
 
 	// ProvisioningStateValues - READ-ONLY

@@ -41,6 +41,7 @@ type ArrayPutValidOptions struct {
 }
 
 type ArrayWrapper struct {
+	// Array - OPTIONAL
 	Array []*string `json:"array,omitempty"`
 }
 
@@ -60,12 +61,13 @@ type ArrayWrapperResponse struct {
 }
 
 type Basic struct {
+	// Color - OPTIONAL
 	Color *CMYKColors `json:"color,omitempty"`
 
-	// Basic Id
+	// OPTIONAL; Basic Id
 	ID *int32 `json:"id,omitempty"`
 
-	// Name property with a very long description that does not fit on a single line and a line break.
+	// OPTIONAL; Name property with a very long description that does not fit on a single line and a line break.
 	Name *string `json:"name,omitempty"`
 }
 
@@ -108,8 +110,11 @@ type BasicResponse struct {
 }
 
 type BooleanWrapper struct {
+	// FieldFalse - OPTIONAL
 	FieldFalse *bool `json:"field_false,omitempty"`
-	FieldTrue  *bool `json:"field_true,omitempty"`
+
+	// FieldTrue - OPTIONAL
+	FieldTrue *bool `json:"field_true,omitempty"`
 }
 
 // BooleanWrapperResponse is the response envelope for operations that return a BooleanWrapper type.
@@ -121,6 +126,7 @@ type BooleanWrapperResponse struct {
 }
 
 type ByteWrapper struct {
+	// Field - OPTIONAL
 	Field []byte `json:"field,omitempty"`
 }
 
@@ -141,8 +147,11 @@ type ByteWrapperResponse struct {
 
 type Cat struct {
 	Pet
+	// Color - OPTIONAL
 	Color *string `json:"color,omitempty"`
-	Hates []*Dog  `json:"hates,omitempty"`
+
+	// Hates - OPTIONAL
+	Hates []*Dog `json:"hates,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type Cat.
@@ -169,8 +178,11 @@ func (c Cookiecuttershark) MarshalJSON() ([]byte, error) {
 }
 
 type DateWrapper struct {
+	// Field - OPTIONAL
 	Field *time.Time `json:"field,omitempty"`
-	Leap  *time.Time `json:"leap,omitempty"`
+
+	// Leap - OPTIONAL
+	Leap *time.Time `json:"leap,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type DateWrapper.
@@ -217,8 +229,11 @@ type DateWrapperResponse struct {
 }
 
 type DatetimeWrapper struct {
+	// Field - OPTIONAL
 	Field *time.Time `json:"field,omitempty"`
-	Now   *time.Time `json:"now,omitempty"`
+
+	// Now - OPTIONAL
+	Now *time.Time `json:"now,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type DatetimeWrapper.
@@ -265,8 +280,11 @@ type DatetimeWrapperResponse struct {
 }
 
 type Datetimerfc1123Wrapper struct {
+	// Field - OPTIONAL
 	Field *time.Time `json:"field,omitempty"`
-	Now   *time.Time `json:"now,omitempty"`
+
+	// Now - OPTIONAL
+	Now *time.Time `json:"now,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type Datetimerfc1123Wrapper.
@@ -343,7 +361,7 @@ type DictionaryPutValidOptions struct {
 }
 
 type DictionaryWrapper struct {
-	// Dictionary of
+	// OPTIONAL; Dictionary of
 	DefaultProgram map[string]*string `json:"defaultProgram,omitempty"`
 }
 
@@ -364,6 +382,7 @@ type DictionaryWrapperResponse struct {
 
 type Dog struct {
 	Pet
+	// Food - OPTIONAL
 	Food *string `json:"food,omitempty"`
 }
 
@@ -386,7 +405,9 @@ type DotFishClassification interface {
 type DotFish struct {
 	// FishType - REQUIRED
 	FishType *string `json:"fish.type,omitempty"`
-	Species  *string `json:"species,omitempty"`
+
+	// Species - OPTIONAL
+	Species *string `json:"species,omitempty"`
 }
 
 // GetDotFish implements the DotFishClassification interface for type DotFish.
@@ -428,10 +449,17 @@ func (d *DotFish) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 }
 
 type DotFishMarket struct {
-	Fishes       []DotFishClassification `json:"fishes,omitempty"`
-	Salmons      []*DotSalmon            `json:"salmons,omitempty"`
-	SampleFish   DotFishClassification   `json:"sampleFish,omitempty"`
-	SampleSalmon *DotSalmon              `json:"sampleSalmon,omitempty"`
+	// Fishes - OPTIONAL
+	Fishes []DotFishClassification `json:"fishes,omitempty"`
+
+	// Salmons - OPTIONAL
+	Salmons []*DotSalmon `json:"salmons,omitempty"`
+
+	// SampleFish - OPTIONAL
+	SampleFish DotFishClassification `json:"sampleFish,omitempty"`
+
+	// SampleSalmon - OPTIONAL
+	SampleSalmon *DotSalmon `json:"sampleSalmon,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type DotFishMarket.
@@ -501,7 +529,10 @@ func (d *DotFishResponse) UnmarshalJSON(data []byte) error {
 
 type DotSalmon struct {
 	DotFish
-	Iswild   *bool   `json:"iswild,omitempty"`
+	// Iswild - OPTIONAL
+	Iswild *bool `json:"iswild,omitempty"`
+
+	// Location - OPTIONAL
 	Location *string `json:"location,omitempty"`
 }
 
@@ -537,7 +568,10 @@ func (d *DotSalmon) UnmarshalJSON(data []byte) error {
 }
 
 type DoubleWrapper struct {
-	Field1                                                                          *float64 `json:"field1,omitempty"`
+	// Field1 - OPTIONAL
+	Field1 *float64 `json:"field1,omitempty"`
+
+	// Field56ZerosAfterTheDotAndNegativeZeroBeforeDotAndThisIsALongFieldNameOnPurpose - OPTIONAL
 	Field56ZerosAfterTheDotAndNegativeZeroBeforeDotAndThisIsALongFieldNameOnPurpose *float64 `json:"field_56_zeros_after_the_dot_and_negative_zero_before_dot_and_this_is_a_long_field_name_on_purpose,omitempty"`
 }
 
@@ -550,6 +584,7 @@ type DoubleWrapperResponse struct {
 }
 
 type DurationWrapper struct {
+	// Field - OPTIONAL
 	Field *string `json:"field,omitempty"`
 }
 
@@ -563,9 +598,12 @@ type DurationWrapperResponse struct {
 
 // Implements the error and azcore.HTTPResponse interfaces.
 type Error struct {
-	raw     string
+	raw string
+	// Message - OPTIONAL
 	Message *string `json:"message,omitempty"`
-	Status  *int32  `json:"status,omitempty"`
+
+	// Status - OPTIONAL
+	Status *int32 `json:"status,omitempty"`
 }
 
 // Error implements the error interface for type Error.
@@ -588,9 +626,13 @@ type Fish struct {
 	Fishtype *string `json:"fishtype,omitempty"`
 
 	// Length - REQUIRED
-	Length   *float32             `json:"length,omitempty"`
+	Length *float32 `json:"length,omitempty"`
+
+	// Siblings - OPTIONAL
 	Siblings []FishClassification `json:"siblings,omitempty"`
-	Species  *string              `json:"species,omitempty"`
+
+	// Species - OPTIONAL
+	Species *string `json:"species,omitempty"`
 }
 
 // GetFish implements the FishClassification interface for type Fish.
@@ -663,7 +705,10 @@ type FlattencomplexGetValidOptions struct {
 }
 
 type FloatWrapper struct {
+	// Field1 - OPTIONAL
 	Field1 *float32 `json:"field1,omitempty"`
+
+	// Field2 - OPTIONAL
 	Field2 *float32 `json:"field2,omitempty"`
 }
 
@@ -677,9 +722,11 @@ type FloatWrapperResponse struct {
 
 type Goblinshark struct {
 	Shark
-	// Colors possible
-	Color   *GoblinSharkColor `json:"color,omitempty"`
-	Jawsize *int32            `json:"jawsize,omitempty"`
+	// OPTIONAL; Colors possible
+	Color *GoblinSharkColor `json:"color,omitempty"`
+
+	// Jawsize - OPTIONAL
+	Jawsize *int32 `json:"jawsize,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type Goblinshark.
@@ -724,7 +771,10 @@ type InheritancePutValidOptions struct {
 }
 
 type IntWrapper struct {
+	// Field1 - OPTIONAL
 	Field1 *int32 `json:"field1,omitempty"`
+
+	// Field2 - OPTIONAL
 	Field2 *int32 `json:"field2,omitempty"`
 }
 
@@ -737,7 +787,10 @@ type IntWrapperResponse struct {
 }
 
 type LongWrapper struct {
+	// Field1 - OPTIONAL
 	Field1 *int64 `json:"field1,omitempty"`
+
+	// Field2 - OPTIONAL
 	Field2 *int64 `json:"field2,omitempty"`
 }
 
@@ -750,6 +803,7 @@ type LongWrapperResponse struct {
 }
 
 type MyBaseHelperType struct {
+	// PropBH1 - OPTIONAL
 	PropBH1 *string `json:"propBH1,omitempty"`
 }
 
@@ -763,10 +817,13 @@ type MyBaseTypeClassification interface {
 }
 
 type MyBaseType struct {
+	// Kind - REQUIRED
+	Kind *MyKind `json:"kind,omitempty"`
+
+	// Helper - OPTIONAL
 	Helper *MyBaseHelperType `json:"helper,omitempty"`
 
-	// Kind - REQUIRED
-	Kind   *MyKind `json:"kind,omitempty"`
+	// PropB1 - OPTIONAL
 	PropB1 *string `json:"propB1,omitempty"`
 }
 
@@ -832,6 +889,7 @@ func (m *MyBaseTypeResponse) UnmarshalJSON(data []byte) error {
 
 type MyDerivedType struct {
 	MyBaseType
+	// PropD1 - OPTIONAL
 	PropD1 *string `json:"propD1,omitempty"`
 }
 
@@ -863,7 +921,10 @@ func (m *MyDerivedType) UnmarshalJSON(data []byte) error {
 }
 
 type Pet struct {
-	ID   *int32  `json:"id,omitempty"`
+	// ID - OPTIONAL
+	ID *int32 `json:"id,omitempty"`
+
+	// Name - OPTIONAL
 	Name *string `json:"name,omitempty"`
 }
 
@@ -1046,9 +1107,11 @@ type PrimitivePutStringOptions struct {
 }
 
 type ReadonlyObj struct {
+	// Size - OPTIONAL
+	Size *int32 `json:"size,omitempty"`
+
 	// ID - READ-ONLY
-	ID   *string `json:"id,omitempty" azure:"ro"`
-	Size *int32  `json:"size,omitempty"`
+	ID *string `json:"id,omitempty" azure:"ro"`
 }
 
 // ReadonlyObjResponse is the response envelope for operations that return a ReadonlyObj type.
@@ -1080,7 +1143,10 @@ type SalmonClassification interface {
 
 type Salmon struct {
 	Fish
-	Iswild   *bool   `json:"iswild,omitempty"`
+	// Iswild - OPTIONAL
+	Iswild *bool `json:"iswild,omitempty"`
+
+	// Location - OPTIONAL
 	Location *string `json:"location,omitempty"`
 }
 
@@ -1146,6 +1212,7 @@ func (s *SalmonResponse) UnmarshalJSON(data []byte) error {
 
 type Sawshark struct {
 	Shark
+	// Picture - OPTIONAL
 	Picture []byte `json:"picture,omitempty"`
 }
 
@@ -1188,10 +1255,11 @@ type SharkClassification interface {
 
 type Shark struct {
 	Fish
-	Age *int32 `json:"age,omitempty"`
-
 	// Birthday - REQUIRED
 	Birthday *time.Time `json:"birthday,omitempty"`
+
+	// Age - OPTIONAL
+	Age *int32 `json:"age,omitempty"`
 }
 
 // GetShark implements the SharkClassification interface for type Shark.
@@ -1241,6 +1309,7 @@ func (s *Shark) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 
 type Siamese struct {
 	Cat
+	// Breed - OPTIONAL
 	Breed *string `json:"breed,omitempty"`
 }
 
@@ -1262,7 +1331,9 @@ type SmartSalmon struct {
 	Salmon
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
-	CollegeDegree        *string `json:"college_degree,omitempty"`
+
+	// CollegeDegree - OPTIONAL
+	CollegeDegree *string `json:"college_degree,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type SmartSalmon.
@@ -1316,9 +1387,14 @@ func (s *SmartSalmon) UnmarshalJSON(data []byte) error {
 }
 
 type StringWrapper struct {
+	// Empty - OPTIONAL
 	Empty *string `json:"empty,omitempty"`
+
+	// Field - OPTIONAL
 	Field *string `json:"field,omitempty"`
-	Null  *string `json:"null,omitempty"`
+
+	// Null - OPTIONAL
+	Null *string `json:"null,omitempty"`
 }
 
 // StringWrapperResponse is the response envelope for operations that return a StringWrapper type.

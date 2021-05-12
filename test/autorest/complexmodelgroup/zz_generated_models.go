@@ -15,7 +15,7 @@ import (
 )
 
 type CatalogArray struct {
-	// Array of products
+	// OPTIONAL; Array of products
 	ProductArray []*Product `json:"productArray,omitempty"`
 }
 
@@ -27,7 +27,7 @@ func (c CatalogArray) MarshalJSON() ([]byte, error) {
 }
 
 type CatalogArrayOfDictionary struct {
-	// Array of dictionary of products
+	// OPTIONAL; Array of dictionary of products
 	ProductArrayOfDictionary []map[string]*Product `json:"productArrayOfDictionary,omitempty"`
 }
 
@@ -47,7 +47,7 @@ type CatalogArrayResponse struct {
 }
 
 type CatalogDictionary struct {
-	// Dictionary of products
+	// OPTIONAL; Dictionary of products
 	ProductDictionary map[string]*Product `json:"productDictionary,omitempty"`
 }
 
@@ -59,7 +59,7 @@ func (c CatalogDictionary) MarshalJSON() ([]byte, error) {
 }
 
 type CatalogDictionaryOfArray struct {
-	// Dictionary of Array of product
+	// OPTIONAL; Dictionary of Array of product
 	ProductDictionaryOfArray map[string][]*Product `json:"productDictionaryOfArray,omitempty"`
 }
 
@@ -95,9 +95,12 @@ type ComplexModelClientUpdateOptions struct {
 
 // Implements the error and azcore.HTTPResponse interfaces.
 type Error struct {
-	raw     string
+	raw string
+	// Message - OPTIONAL
 	Message *string `json:"message,omitempty"`
-	Status  *int32  `json:"status,omitempty"`
+
+	// Status - OPTIONAL
+	Status *int32 `json:"status,omitempty"`
 }
 
 // Error implements the error interface for type Error.
@@ -108,20 +111,20 @@ func (e Error) Error() string {
 
 // Product - The product documentation.
 type Product struct {
-	// Capacity of product. For example, 4 people.
+	// OPTIONAL; Capacity of product. For example, 4 people.
 	Capacity *string `json:"capacity,omitempty"`
 
-	// Description of product.
+	// OPTIONAL; Description of product.
 	Description *string `json:"description,omitempty"`
 
-	// Display name of product.
+	// OPTIONAL; Display name of product.
 	DisplayName *string `json:"display_name,omitempty"`
 
-	// Image URL representing the product.
+	// OPTIONAL; Image URL representing the product.
 	Image *string `json:"image,omitempty"`
 
-	// Unique identifier representing a specific product for a given latitude & longitude. For example, uberX in San Francisco will have a different product_id
-	// than uberX in Los Angeles.
+	// OPTIONAL; Unique identifier representing a specific product for a given latitude & longitude. For example, uberX in San Francisco will have a different
+	// product_id than uberX in Los Angeles.
 	ProductID *string `json:"product_id,omitempty"`
 }
 

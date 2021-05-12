@@ -16,6 +16,7 @@ import (
 
 type CatAPTrue struct {
 	PetAPTrue
+	// Friendly - OPTIONAL
 	Friendly *bool `json:"friendly,omitempty"`
 }
 
@@ -56,9 +57,12 @@ type CatAPTrueResponse struct {
 
 // Implements the error and azcore.HTTPResponse interfaces.
 type Error struct {
-	raw     string
+	raw string
+	// Message - OPTIONAL
 	Message *string `json:"message,omitempty"`
-	Status  *int32  `json:"status,omitempty"`
+
+	// Status - OPTIONAL
+	Status *int32 `json:"status,omitempty"`
 }
 
 // Error implements the error interface for type Error.
@@ -68,11 +72,13 @@ func (e Error) Error() string {
 }
 
 type PetAPInProperties struct {
-	// Dictionary of
+	// ID - REQUIRED
+	ID *int32 `json:"id,omitempty"`
+
+	// OPTIONAL; Dictionary of
 	AdditionalProperties map[string]*float32 `json:"additionalProperties,omitempty"`
 
-	// ID - REQUIRED
-	ID   *int32  `json:"id,omitempty"`
+	// Name - OPTIONAL
 	Name *string `json:"name,omitempty"`
 
 	// Status - READ-ONLY
@@ -98,18 +104,20 @@ type PetAPInPropertiesResponse struct {
 }
 
 type PetAPInPropertiesWithAPString struct {
-	// Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties map[string]*string
-
-	// Dictionary of
-	AdditionalProperties1 map[string]*float32 `json:"additionalProperties,omitempty"`
-
 	// ID - REQUIRED
-	ID   *int32  `json:"id,omitempty"`
-	Name *string `json:"name,omitempty"`
+	ID *int32 `json:"id,omitempty"`
 
 	// OdataLocation - REQUIRED
 	OdataLocation *string `json:"@odata.location,omitempty"`
+
+	// Contains additional key/value pairs not defined in the schema.
+	AdditionalProperties map[string]*string
+
+	// OPTIONAL; Dictionary of
+	AdditionalProperties1 map[string]*float32 `json:"additionalProperties,omitempty"`
+
+	// Name - OPTIONAL
+	Name *string `json:"name,omitempty"`
 
 	// Status - READ-ONLY
 	Status *bool `json:"status,omitempty" azure:"ro"`
@@ -182,11 +190,13 @@ type PetAPInPropertiesWithAPStringResponse struct {
 }
 
 type PetAPObject struct {
+	// ID - REQUIRED
+	ID *int32 `json:"id,omitempty"`
+
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
-	// ID - REQUIRED
-	ID   *int32  `json:"id,omitempty"`
+	// Name - OPTIONAL
 	Name *string `json:"name,omitempty"`
 
 	// Status - READ-ONLY
@@ -252,11 +262,13 @@ type PetAPObjectResponse struct {
 }
 
 type PetAPString struct {
+	// ID - REQUIRED
+	ID *int32 `json:"id,omitempty"`
+
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]*string
 
-	// ID - REQUIRED
-	ID   *int32  `json:"id,omitempty"`
+	// Name - OPTIONAL
 	Name *string `json:"name,omitempty"`
 
 	// Status - READ-ONLY
@@ -322,11 +334,13 @@ type PetAPStringResponse struct {
 }
 
 type PetAPTrue struct {
+	// ID - REQUIRED
+	ID *int32 `json:"id,omitempty"`
+
 	// Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
-	// ID - REQUIRED
-	ID   *int32  `json:"id,omitempty"`
+	// Name - OPTIONAL
 	Name *string `json:"name,omitempty"`
 
 	// Status - READ-ONLY

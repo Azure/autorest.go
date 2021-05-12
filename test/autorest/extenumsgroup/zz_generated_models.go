@@ -10,13 +10,13 @@ package extenumsgroup
 import "net/http"
 
 type Pet struct {
-	// Type of Pet
-	DaysOfWeek *DaysOfWeekExtensibleEnum `json:"DaysOfWeek,omitempty"`
-
 	// IntEnum - REQUIRED
 	IntEnum *IntEnum `json:"IntEnum,omitempty"`
 
-	// name
+	// OPTIONAL; Type of Pet
+	DaysOfWeek *DaysOfWeekExtensibleEnum `json:"DaysOfWeek,omitempty"`
+
+	// OPTIONAL; name
 	Name *string `json:"name,omitempty"`
 }
 

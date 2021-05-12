@@ -182,13 +182,13 @@ type Metrics struct {
 	// REQUIRED; Indicates whether metrics are enabled for the Table service.
 	Enabled *bool `xml:"Enabled"`
 
-	// Indicates whether metrics should generate summary statistics for called API operations.
+	// OPTIONAL; Indicates whether metrics should generate summary statistics for called API operations.
 	IncludeAPIs *bool `xml:"IncludeAPIs"`
 
-	// The retention policy.
+	// OPTIONAL; The retention policy.
 	RetentionPolicy *RetentionPolicy `xml:"RetentionPolicy"`
 
-	// The version of Analytics to configure.
+	// OPTIONAL; The version of Analytics to configure.
 	Version *string `xml:"Version"`
 }
 
@@ -206,11 +206,11 @@ type QueryOptions struct {
 
 // RetentionPolicy - The retention policy.
 type RetentionPolicy struct {
-	// Indicates the number of days that metrics or logging or soft-deleted data should be retained. All data older than this value will be deleted.
-	Days *int32 `xml:"Days"`
-
 	// REQUIRED; Indicates whether a retention policy is enabled for the service.
 	Enabled *bool `xml:"Enabled"`
+
+	// OPTIONAL; Indicates the number of days that metrics or logging or soft-deleted data should be retained. All data older than this value will be deleted.
+	Days *int32 `xml:"Days"`
 }
 
 // ServiceGetPropertiesOptions contains the optional parameters for the Service.GetProperties method.
@@ -363,10 +363,10 @@ type TableDeleteResponse struct {
 
 // TableEntityQueryResponse - The properties for the table entity query response.
 type TableEntityQueryResponse struct {
-	// The metadata response of the table.
+	// OPTIONAL; The metadata response of the table.
 	OdataMetadata *string `json:"odata.metadata,omitempty"`
 
-	// List of table entities.
+	// OPTIONAL; List of table entities.
 	Value []map[string]interface{} `json:"value,omitempty"`
 }
 
@@ -489,7 +489,7 @@ type TableMergeEntityResponse struct {
 
 // TableProperties - The properties for creating a table.
 type TableProperties struct {
-	// The name of the table to create.
+	// OPTIONAL; The name of the table to create.
 	TableName *string `json:"TableName,omitempty"`
 }
 
@@ -523,10 +523,10 @@ type TableQueryOptions struct {
 
 // TableQueryResponse - The properties for the table query response.
 type TableQueryResponse struct {
-	// The metadata response of the table.
+	// OPTIONAL; The metadata response of the table.
 	OdataMetadata *string `json:"odata.metadata,omitempty"`
 
-	// List of tables.
+	// OPTIONAL; List of tables.
 	Value []*TableResponseProperties `json:"value,omitempty"`
 }
 
@@ -565,22 +565,22 @@ type TableQueryResponseResponse struct {
 // TableResponse - The response for a single table.
 type TableResponse struct {
 	TableResponseProperties
-	// The metadata response of the table.
+	// OPTIONAL; The metadata response of the table.
 	OdataMetadata *string `json:"odata.metadata,omitempty"`
 }
 
 // TableResponseProperties - The properties for the table response.
 type TableResponseProperties struct {
-	// The edit link of the table.
+	// OPTIONAL; The edit link of the table.
 	OdataEditLink *string `json:"odata.editLink,omitempty"`
 
-	// The id of the table.
+	// OPTIONAL; The id of the table.
 	OdataID *string `json:"odata.id,omitempty"`
 
-	// The odata type of the table.
+	// OPTIONAL; The odata type of the table.
 	OdataType *string `json:"odata.type,omitempty"`
 
-	// The name of the table.
+	// OPTIONAL; The name of the table.
 	TableName *string `json:"TableName,omitempty"`
 }
 
@@ -612,7 +612,7 @@ type TableResponseResponse struct {
 // Implements the error and azcore.HTTPResponse interfaces.
 type TableServiceError struct {
 	raw string
-	// The error message.
+	// OPTIONAL; The error message.
 	Message *string `json:"Message,omitempty"`
 }
 
@@ -624,16 +624,16 @@ func (e TableServiceError) Error() string {
 
 // TableServiceProperties - Table Service Properties.
 type TableServiceProperties struct {
-	// The set of CORS rules.
+	// OPTIONAL; The set of CORS rules.
 	Cors []*CorsRule `xml:"Cors>CorsRule"`
 
-	// A summary of request statistics grouped by API in hourly aggregates for tables.
+	// OPTIONAL; A summary of request statistics grouped by API in hourly aggregates for tables.
 	HourMetrics *Metrics `xml:"HourMetrics"`
 
-	// Azure Analytics Logging settings.
+	// OPTIONAL; Azure Analytics Logging settings.
 	Logging *Logging `xml:"Logging"`
 
-	// A summary of request statistics grouped by API in minute aggregates for tables.
+	// OPTIONAL; A summary of request statistics grouped by API in minute aggregates for tables.
 	MinuteMetrics *Metrics `xml:"MinuteMetrics"`
 }
 
@@ -673,7 +673,7 @@ type TableServicePropertiesResponse struct {
 
 // TableServiceStats - Stats for the service.
 type TableServiceStats struct {
-	// Geo-Replication information for the Secondary Storage Service.
+	// OPTIONAL; Geo-Replication information for the Secondary Storage Service.
 	GeoReplication *GeoReplication `xml:"GeoReplication"`
 }
 

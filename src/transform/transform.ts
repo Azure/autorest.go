@@ -91,8 +91,7 @@ async function process(session: Session<CodeModel>) {
       const descriptionMods = new Array<string>();
       if (prop.readOnly) {
         descriptionMods.push('READ-ONLY');
-      }
-      if (prop.required) {
+      } else if (prop.required) {
         descriptionMods.push('REQUIRED');
       } else {
         descriptionMods.push('OPTIONAL');
