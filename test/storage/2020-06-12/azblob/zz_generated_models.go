@@ -1174,7 +1174,7 @@ func (b *BlobItemInternal) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 }
 
 type BlobMetadata struct {
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]*string
 
 	// Encrypted - OPTIONAL

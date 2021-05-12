@@ -1329,7 +1329,7 @@ type SiameseResponse struct {
 
 type SmartSalmon struct {
 	Salmon
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
 	// CollegeDegree - OPTIONAL

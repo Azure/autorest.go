@@ -40,7 +40,7 @@ type Activity struct {
 	// REQUIRED; Type of activity.
 	Type *string `json:"type,omitempty"`
 
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
 	// OPTIONAL; Activity depends on condition.
@@ -126,7 +126,7 @@ type ActivityDependency struct {
 	// REQUIRED; Match-Condition for the dependency.
 	DependencyConditions []*DependencyCondition `json:"dependencyConditions,omitempty"`
 
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 }
 
@@ -178,7 +178,7 @@ func (a *ActivityDependency) UnmarshalJSON(data []byte) error {
 
 // ActivityPolicy - Execution policy for an activity.
 type ActivityPolicy struct {
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
 	// OPTIONAL; Maximum ordinary retry attempts. Default is 0. Type: integer (or Expression with resultType integer), minimum: 0.
@@ -258,7 +258,7 @@ func (a *ActivityPolicy) UnmarshalJSON(data []byte) error {
 
 // ActivityRun - Information about an activity run in a pipeline.
 type ActivityRun struct {
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
 	// READ-ONLY; The name of the activity.
@@ -6668,7 +6668,7 @@ type CopySink struct {
 	// REQUIRED; Copy sink type.
 	Type *string `json:"type,omitempty"`
 
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
 	// OPTIONAL; The maximum concurrent connection count for the sink data store. Type: integer (or Expression with resultType integer).
@@ -6782,7 +6782,7 @@ type CopySource struct {
 	// REQUIRED; Copy source type.
 	Type *string `json:"type,omitempty"`
 
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
 	// OPTIONAL; The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer).
@@ -6870,7 +6870,7 @@ type CopyTranslator struct {
 	// REQUIRED; Copy translator type.
 	Type *string `json:"type,omitempty"`
 
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 }
 
@@ -7840,7 +7840,7 @@ type DataFlowDebugCommandResponseResponse struct {
 
 // DataFlowDebugPackage - Request body structure for starting data flow debug session.
 type DataFlowDebugPackage struct {
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
 	// OPTIONAL; Data flow instance.
@@ -8032,7 +8032,7 @@ type DataFlowDebugSessionDeleteDataFlowDebugSessionOptions struct {
 
 // DataFlowDebugSessionInfo - Data flow debug session info.
 type DataFlowDebugSessionInfo struct {
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
 	// OPTIONAL; Compute type of the cluster.
@@ -8220,7 +8220,7 @@ type DataFlowReference struct {
 	// REQUIRED; Data flow reference type.
 	Type *DataFlowReferenceType `json:"type,omitempty"`
 
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
 	// OPTIONAL; Reference data flow parameters from dataset.
@@ -8348,7 +8348,7 @@ type DataFlowSource struct {
 
 // DataFlowSourceSetting - Definition of data flow source setting for debug.
 type DataFlowSourceSetting struct {
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
 	// OPTIONAL; Defines the row limit of data flow source in debug.
@@ -8696,7 +8696,7 @@ type Dataset struct {
 	// REQUIRED; Type of dataset.
 	Type *string `json:"type,omitempty"`
 
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
 	// OPTIONAL; List of tags that can be used for describing the Dataset.
@@ -8836,7 +8836,7 @@ type DatasetCompression struct {
 	// REQUIRED; Type of dataset compression.
 	Type *string `json:"type,omitempty"`
 
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 }
 
@@ -9060,7 +9060,7 @@ type DatasetLocation struct {
 	// REQUIRED; Type of dataset storage location.
 	Type *string `json:"type,omitempty"`
 
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
 	// OPTIONAL; Specify the file name of dataset. Type: string (or Expression with resultType string).
@@ -9205,7 +9205,7 @@ type DatasetResourceResponse struct {
 
 // DatasetSchemaDataElement - Columns that define the physical type schema of the dataset.
 type DatasetSchemaDataElement struct {
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
 	// OPTIONAL; Name of the schema column. Type: string (or Expression with resultType string).
@@ -9275,7 +9275,7 @@ type DatasetStorageFormat struct {
 	// REQUIRED; Type of dataset storage format.
 	Type *string `json:"type,omitempty"`
 
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
 	// OPTIONAL; Deserializer. Type: string (or Expression with resultType string).
@@ -11956,7 +11956,7 @@ type FormatReadSettings struct {
 	// REQUIRED; The read setting type.
 	Type *string `json:"type,omitempty"`
 
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 }
 
@@ -12023,7 +12023,7 @@ type FormatWriteSettings struct {
 	// REQUIRED; The write setting type.
 	Type *string `json:"type,omitempty"`
 
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 }
 
@@ -15590,7 +15590,7 @@ type IntegrationRuntime struct {
 	// REQUIRED; Type of integration runtime.
 	Type *IntegrationRuntimeType `json:"type,omitempty"`
 
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
 	// OPTIONAL; Integration runtime description.
@@ -15652,7 +15652,7 @@ func (i *IntegrationRuntime) unmarshalInternal(rawMsg map[string]json.RawMessage
 
 // IntegrationRuntimeComputeProperties - The compute resource properties for managed integration runtime.
 type IntegrationRuntimeComputeProperties struct {
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
 	// OPTIONAL; Data flow properties for managed integration runtime.
@@ -15747,7 +15747,7 @@ type IntegrationRuntimeCustomSetupScriptProperties struct {
 
 // IntegrationRuntimeDataFlowProperties - Data flow properties for managed integration runtime.
 type IntegrationRuntimeDataFlowProperties struct {
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
 	// OPTIONAL; Compute type of the cluster which will execute data flow job.
@@ -15914,7 +15914,7 @@ type IntegrationRuntimeResourceResponse struct {
 
 // IntegrationRuntimeSsisCatalogInfo - Catalog information for managed dedicated integration runtime.
 type IntegrationRuntimeSsisCatalogInfo struct {
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
 	// OPTIONAL; The password of the administrator user account of the catalog database.
@@ -15986,7 +15986,7 @@ func (i *IntegrationRuntimeSsisCatalogInfo) UnmarshalJSON(data []byte) error {
 
 // IntegrationRuntimeSsisProperties - SSIS properties for managed integration runtime.
 type IntegrationRuntimeSsisProperties struct {
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
 	// OPTIONAL; Catalog information for managed dedicated integration runtime.
@@ -16072,7 +16072,7 @@ func (i *IntegrationRuntimeSsisProperties) UnmarshalJSON(data []byte) error {
 
 // IntegrationRuntimeVNetProperties - VNet properties for managed integration runtime.
 type IntegrationRuntimeVNetProperties struct {
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
 	// OPTIONAL; Resource IDs of the public IP addresses that this integration runtime will use.
@@ -17052,7 +17052,7 @@ type LinkedService struct {
 	// REQUIRED; Type of linked service.
 	Type *string `json:"type,omitempty"`
 
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
 	// OPTIONAL; List of tags that can be used for describing the linked service.
@@ -17302,7 +17302,7 @@ type LogStorageSettings struct {
 	// REQUIRED; Log storage linked service reference.
 	LinkedServiceName *LinkedServiceReference `json:"linkedServiceName,omitempty"`
 
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
 	// OPTIONAL; The path to storage for storing detailed logs of activity execution. Type: string (or Expression with resultType string).
@@ -18298,7 +18298,7 @@ type MongoDbCollectionDatasetTypeProperties struct {
 
 // MongoDbCursorMethodsProperties - Cursor methods for Mongodb query
 type MongoDbCursorMethodsProperties struct {
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
 	// OPTIONAL; Specifies the maximum number of documents the server returns. limit() is analogous to the LIMIT statement in a SQL database. Type: integer
@@ -19028,7 +19028,7 @@ type Notebook struct {
 	// REQUIRED; Notebook format (minor number). Incremented for backward compatible changes to the notebook format.
 	NbformatMinor *int32 `json:"nbformat_minor,omitempty"`
 
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
 	// OPTIONAL; Big data pool reference.
@@ -19134,7 +19134,7 @@ type NotebookCell struct {
 	// REQUIRED; Contents of the cell, represented as an array of lines.
 	Source []*string `json:"source,omitempty"`
 
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
 	// OPTIONAL; Attachments associated with the cell.
@@ -19248,7 +19248,7 @@ type NotebookKernelSpec struct {
 	// REQUIRED; Name of the kernel specification.
 	Name *string `json:"name,omitempty"`
 
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 }
 
@@ -19303,7 +19303,7 @@ type NotebookLanguageInfo struct {
 	// REQUIRED; The programming language which this kernel runs.
 	Name *string `json:"name,omitempty"`
 
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
 	// OPTIONAL; The codemirror mode to use for code in this language.
@@ -19384,7 +19384,7 @@ type NotebookListResponseResponse struct {
 
 // NotebookMetadata - Notebook root-level metadata.
 type NotebookMetadata struct {
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
 	// OPTIONAL; Kernel information.
@@ -21434,7 +21434,7 @@ type PipelineResource struct {
 	// REQUIRED; Properties of the pipeline.
 	Properties *Pipeline `json:"properties,omitempty"`
 
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 }
 
@@ -21511,7 +21511,7 @@ type PipelineResourceResponse struct {
 
 // PipelineRun - Information about a pipeline run.
 type PipelineRun struct {
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
 	// READ-ONLY; The duration of a pipeline run.
@@ -21713,7 +21713,7 @@ type PipelineRunsQueryResponseResponse struct {
 
 // PolybaseSettings - PolyBase settings.
 type PolybaseSettings struct {
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
 	// OPTIONAL; Determines the number of rows to attempt to retrieve before the PolyBase recalculates the percentage of rejected rows. Type: integer (or Expression
@@ -22429,7 +22429,7 @@ func (q *QuickBooksSource) UnmarshalJSON(data []byte) error {
 
 // RecurrenceSchedule - The recurrence schedule.
 type RecurrenceSchedule struct {
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
 	// OPTIONAL; The hours.
@@ -22508,7 +22508,7 @@ func (r *RecurrenceSchedule) UnmarshalJSON(data []byte) error {
 
 // RecurrenceScheduleOccurrence - The recurrence schedule occurrence.
 type RecurrenceScheduleOccurrence struct {
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
 	// OPTIONAL; The day of the week.
@@ -22571,7 +22571,7 @@ type RedirectIncompatibleRowSettings struct {
 	// (or Expression with resultType string).
 	LinkedServiceName interface{} `json:"linkedServiceName,omitempty"`
 
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
 	// OPTIONAL; The path for storing the redirect incompatible row data. Type: string (or Expression with resultType string).
@@ -23528,7 +23528,7 @@ type SQLConnection struct {
 	// REQUIRED; The type of the connection.
 	Type *SQLConnectionType `json:"type,omitempty"`
 
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 }
 
@@ -24050,7 +24050,7 @@ type SQLScript struct {
 	// REQUIRED; The content of the SQL script.
 	Content *SQLScriptContent `json:"content,omitempty"`
 
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
 	// OPTIONAL; The description of the SQL script.
@@ -24134,7 +24134,7 @@ type SQLScriptContent struct {
 	// REQUIRED; SQL query to execute.
 	Query *string `json:"query,omitempty"`
 
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
 	// OPTIONAL; The metadata of the SQL script.
@@ -24205,7 +24205,7 @@ type SQLScriptGetSQLScriptsByWorkspaceOptions struct {
 
 // SQLScriptMetadata - The metadata of the SQL script.
 type SQLScriptMetadata struct {
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
 	// OPTIONAL; The language of the SQL script.
@@ -26867,7 +26867,7 @@ func (s *ScheduleTrigger) UnmarshalJSON(data []byte) error {
 
 // ScheduleTriggerRecurrence - The workflow trigger recurrence.
 type ScheduleTriggerRecurrence struct {
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
 	// OPTIONAL; The end time.
@@ -28055,7 +28055,7 @@ type SparkJobDefinition struct {
 	// REQUIRED; Big data pool reference.
 	TargetBigDataPool *BigDataPoolReference `json:"targetBigDataPool,omitempty"`
 
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
 	// OPTIONAL; The description of the Spark job definition.
@@ -28268,7 +28268,7 @@ type SparkJobProperties struct {
 	// REQUIRED; Number of executors to launch for this job.
 	NumExecutors *int32 `json:"numExecutors,omitempty"`
 
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
 	// OPTIONAL; Archives to be used in this job.
@@ -29039,7 +29039,7 @@ type StagingSettings struct {
 	// REQUIRED; Staging linked service reference.
 	LinkedServiceName *LinkedServiceReference `json:"linkedServiceName,omitempty"`
 
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
 	// OPTIONAL; Specifies whether to use compression when copying data via an interim staging. Default value is false. Type: boolean (or Expression with resultType
@@ -29159,7 +29159,7 @@ type StoreReadSettings struct {
 	// REQUIRED; The read setting type.
 	Type *string `json:"type,omitempty"`
 
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
 	// OPTIONAL; The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer).
@@ -29234,7 +29234,7 @@ type StoreWriteSettings struct {
 	// REQUIRED; The write setting type.
 	Type *string `json:"type,omitempty"`
 
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
 	// OPTIONAL; The type of copy behavior for copy sink.
@@ -30264,7 +30264,7 @@ type Trigger struct {
 	// REQUIRED; Trigger type.
 	Type *string `json:"type,omitempty"`
 
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
 	// OPTIONAL; List of tags that can be used for describing the trigger.
@@ -30562,7 +30562,7 @@ type TriggerResourceResponse struct {
 
 // TriggerRun - Trigger runs.
 type TriggerRun struct {
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
 	// READ-ONLY; Trigger error message.

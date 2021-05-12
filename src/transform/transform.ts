@@ -133,7 +133,7 @@ async function process(session: Session<CodeModel>) {
     const addPropsSchema = hasAdditionalProperties(obj);
     if (addPropsSchema) {
       // add an 'AdditionalProperties' field to the type
-      const addProps = newProperty('AdditionalProperties', 'Contains additional key/value pairs not defined in the schema.', addPropsSchema);
+      const addProps = newProperty('AdditionalProperties', 'OPTIONAL; Contains additional key/value pairs not defined in the schema.', addPropsSchema);
       addProps.language.go!.isAdditionalProperties = true;
       addProps.language.go!.byValue = true;
       obj.properties?.push(addProps);

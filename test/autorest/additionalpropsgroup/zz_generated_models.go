@@ -110,7 +110,7 @@ type PetAPInPropertiesWithAPString struct {
 	// OdataLocation - REQUIRED
 	OdataLocation *string `json:"@odata.location,omitempty"`
 
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]*string
 
 	// OPTIONAL; Dictionary of
@@ -193,7 +193,7 @@ type PetAPObject struct {
 	// ID - REQUIRED
 	ID *int32 `json:"id,omitempty"`
 
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
 	// Name - OPTIONAL
@@ -265,7 +265,7 @@ type PetAPString struct {
 	// ID - REQUIRED
 	ID *int32 `json:"id,omitempty"`
 
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]*string
 
 	// Name - OPTIONAL
@@ -337,7 +337,7 @@ type PetAPTrue struct {
 	// ID - REQUIRED
 	ID *int32 `json:"id,omitempty"`
 
-	// Contains additional key/value pairs not defined in the schema.
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
 
 	// Name - OPTIONAL
