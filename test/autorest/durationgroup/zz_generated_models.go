@@ -7,8 +7,6 @@
 
 package durationgroup
 
-import "net/http"
-
 // DurationGetInvalidOptions contains the optional parameters for the Duration.GetInvalid method.
 type DurationGetInvalidOptions struct {
 	// placeholder for future optional parameters
@@ -40,11 +38,4 @@ type Error struct {
 // The contents of the error text are not contractual and subject to change.
 func (e Error) Error() string {
 	return e.raw
-}
-
-// StringResponse is the response envelope for operations that return a string type.
-type StringResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *string
 }

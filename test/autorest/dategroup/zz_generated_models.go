@@ -7,11 +7,6 @@
 
 package dategroup
 
-import (
-	"net/http"
-	"time"
-)
-
 // DateGetInvalidDateOptions contains the optional parameters for the Date.GetInvalidDate method.
 type DateGetInvalidDateOptions struct {
 	// placeholder for future optional parameters
@@ -63,11 +58,4 @@ type Error struct {
 // The contents of the error text are not contractual and subject to change.
 func (e Error) Error() string {
 	return e.raw
-}
-
-// TimeResponse is the response envelope for operations that return a time.Time type.
-type TimeResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *time.Time
 }

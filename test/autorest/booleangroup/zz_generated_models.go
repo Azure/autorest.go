@@ -7,8 +7,6 @@
 
 package booleangroup
 
-import "net/http"
-
 // BoolGetFalseOptions contains the optional parameters for the Bool.GetFalse method.
 type BoolGetFalseOptions struct {
 	// placeholder for future optional parameters
@@ -37,15 +35,6 @@ type BoolPutFalseOptions struct {
 // BoolPutTrueOptions contains the optional parameters for the Bool.PutTrue method.
 type BoolPutTrueOptions struct {
 	// placeholder for future optional parameters
-}
-
-// BoolResponse is the response envelope for operations that return a bool type.
-type BoolResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// simple boolean
-	Value *bool
 }
 
 // Implements the error and azcore.HTTPResponse interfaces.

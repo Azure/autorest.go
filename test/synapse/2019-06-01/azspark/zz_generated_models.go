@@ -10,7 +10,6 @@ package azspark
 import (
 	"encoding/json"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"net/http"
 	"reflect"
 	"time"
 )
@@ -142,15 +141,6 @@ func (s SparkBatchJobCollection) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// SparkBatchJobCollectionResponse is the response envelope for operations that return a SparkBatchJobCollection type.
-type SparkBatchJobCollectionResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Response for batch list operation.
-	SparkBatchJobCollection *SparkBatchJobCollection
-}
-
 type SparkBatchJobOptions struct {
 	// REQUIRED
 	File *string `json:"file,omitempty"`
@@ -197,13 +187,6 @@ func (s SparkBatchJobOptions) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "pyFiles", s.PythonFiles)
 	populate(objectMap, "tags", s.Tags)
 	return json.Marshal(objectMap)
-}
-
-// SparkBatchJobResponse is the response envelope for operations that return a SparkBatchJob type.
-type SparkBatchJobResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse   *http.Response
-	SparkBatchJob *SparkBatchJob
 }
 
 type SparkBatchJobState struct {
@@ -556,13 +539,6 @@ func (s SparkSessionCollection) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// SparkSessionCollectionResponse is the response envelope for operations that return a SparkSessionCollection type.
-type SparkSessionCollectionResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse            *http.Response
-	SparkSessionCollection *SparkSessionCollection
-}
-
 // SparkSessionCreateSparkSessionOptions contains the optional parameters for the SparkSession.CreateSparkSession method.
 type SparkSessionCreateSparkSessionOptions struct {
 	// Optional query param specifying whether detailed response is returned beyond plain livy.
@@ -650,13 +626,6 @@ func (s SparkSessionOptions) MarshalJSON() ([]byte, error) {
 // SparkSessionResetSparkSessionTimeoutOptions contains the optional parameters for the SparkSession.ResetSparkSessionTimeout method.
 type SparkSessionResetSparkSessionTimeoutOptions struct {
 	// placeholder for future optional parameters
-}
-
-// SparkSessionResponse is the response envelope for operations that return a SparkSession type.
-type SparkSessionResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse  *http.Response
-	SparkSession *SparkSession
 }
 
 type SparkSessionState struct {
@@ -771,13 +740,6 @@ type SparkStatementCancellationResult struct {
 	Message *string `json:"msg,omitempty"`
 }
 
-// SparkStatementCancellationResultResponse is the response envelope for operations that return a SparkStatementCancellationResult type.
-type SparkStatementCancellationResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse                      *http.Response
-	SparkStatementCancellationResult *SparkStatementCancellationResult
-}
-
 type SparkStatementCollection struct {
 	// REQUIRED
 	Total      *int32            `json:"total_statements,omitempty"`
@@ -790,13 +752,6 @@ func (s SparkStatementCollection) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "statements", s.Statements)
 	populate(objectMap, "total_statements", s.Total)
 	return json.Marshal(objectMap)
-}
-
-// SparkStatementCollectionResponse is the response envelope for operations that return a SparkStatementCollection type.
-type SparkStatementCollectionResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse              *http.Response
-	SparkStatementCollection *SparkStatementCollection
 }
 
 type SparkStatementOptions struct {
@@ -826,13 +781,6 @@ func (s SparkStatementOutput) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "status", s.Status)
 	populate(objectMap, "traceback", s.Traceback)
 	return json.Marshal(objectMap)
-}
-
-// SparkStatementResponse is the response envelope for operations that return a SparkStatement type.
-type SparkStatementResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse    *http.Response
-	SparkStatement *SparkStatement
 }
 
 func populate(m map[string]interface{}, k string, v interface{}) {

@@ -7,11 +7,6 @@
 
 package integergroup
 
-import (
-	"net/http"
-	"time"
-)
-
 // Implements the error and azcore.HTTPResponse interfaces.
 type Error struct {
 	raw     string
@@ -23,20 +18,6 @@ type Error struct {
 // The contents of the error text are not contractual and subject to change.
 func (e Error) Error() string {
 	return e.raw
-}
-
-// Int32Response is the response envelope for operations that return a int32 type.
-type Int32Response struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *int32
-}
-
-// Int64Response is the response envelope for operations that return a int64 type.
-type Int64Response struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *int64
 }
 
 // IntGetInvalidOptions contains the optional parameters for the Int.GetInvalid method.
@@ -107,13 +88,4 @@ type IntPutMin64Options struct {
 // IntPutUnixTimeDateOptions contains the optional parameters for the Int.PutUnixTimeDate method.
 type IntPutUnixTimeDateOptions struct {
 	// placeholder for future optional parameters
-}
-
-// TimeResponse is the response envelope for operations that return a time.Time type.
-type TimeResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// date in seconds since 1970-01-01T00:00:00Z.
-	Value *time.Time
 }

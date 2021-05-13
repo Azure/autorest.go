@@ -7,11 +7,6 @@
 
 package datetimerfc1123group
 
-import (
-	"net/http"
-	"time"
-)
-
 // Datetimerfc1123GetInvalidOptions contains the optional parameters for the Datetimerfc1123.GetInvalid method.
 type Datetimerfc1123GetInvalidOptions struct {
 	// placeholder for future optional parameters
@@ -68,11 +63,4 @@ type Error struct {
 // The contents of the error text are not contractual and subject to change.
 func (e Error) Error() string {
 	return e.raw
-}
-
-// TimeResponse is the response envelope for operations that return a time.Time type.
-type TimeResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *time.Time
 }

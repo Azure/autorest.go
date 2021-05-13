@@ -10,7 +10,6 @@ package complexgroup
 import (
 	"encoding/json"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"net/http"
 	"reflect"
 	"time"
 )
@@ -49,14 +48,6 @@ func (a ArrayWrapper) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "array", a.Array)
 	return json.Marshal(objectMap)
-}
-
-// ArrayWrapperResponse is the response envelope for operations that return a ArrayWrapper type.
-type ArrayWrapperResponse struct {
-	ArrayWrapper *ArrayWrapper
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 type Basic struct {
@@ -99,25 +90,9 @@ type BasicPutValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// BasicResponse is the response envelope for operations that return a Basic type.
-type BasicResponse struct {
-	Basic *Basic
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 type BooleanWrapper struct {
 	FieldFalse *bool `json:"field_false,omitempty"`
 	FieldTrue  *bool `json:"field_true,omitempty"`
-}
-
-// BooleanWrapperResponse is the response envelope for operations that return a BooleanWrapper type.
-type BooleanWrapperResponse struct {
-	BooleanWrapper *BooleanWrapper
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 type ByteWrapper struct {
@@ -129,14 +104,6 @@ func (b ByteWrapper) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "field", b.Field)
 	return json.Marshal(objectMap)
-}
-
-// ByteWrapperResponse is the response envelope for operations that return a ByteWrapper type.
-type ByteWrapperResponse struct {
-	ByteWrapper *ByteWrapper
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 type Cat struct {
@@ -208,14 +175,6 @@ func (d *DateWrapper) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// DateWrapperResponse is the response envelope for operations that return a DateWrapper type.
-type DateWrapperResponse struct {
-	DateWrapper *DateWrapper
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 type DatetimeWrapper struct {
 	Field *time.Time `json:"field,omitempty"`
 	Now   *time.Time `json:"now,omitempty"`
@@ -254,14 +213,6 @@ func (d *DatetimeWrapper) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return nil
-}
-
-// DatetimeWrapperResponse is the response envelope for operations that return a DatetimeWrapper type.
-type DatetimeWrapperResponse struct {
-	DatetimeWrapper *DatetimeWrapper
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 type Datetimerfc1123Wrapper struct {
@@ -304,14 +255,6 @@ func (d *Datetimerfc1123Wrapper) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Datetimerfc1123WrapperResponse is the response envelope for operations that return a Datetimerfc1123Wrapper type.
-type Datetimerfc1123WrapperResponse struct {
-	Datetimerfc1123Wrapper *Datetimerfc1123Wrapper
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // DictionaryGetEmptyOptions contains the optional parameters for the Dictionary.GetEmpty method.
 type DictionaryGetEmptyOptions struct {
 	// placeholder for future optional parameters
@@ -352,14 +295,6 @@ func (d DictionaryWrapper) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "defaultProgram", d.DefaultProgram)
 	return json.Marshal(objectMap)
-}
-
-// DictionaryWrapperResponse is the response envelope for operations that return a DictionaryWrapper type.
-type DictionaryWrapperResponse struct {
-	DictionaryWrapper *DictionaryWrapper
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 type Dog struct {
@@ -473,32 +408,6 @@ func (d *DotFishMarket) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// DotFishMarketResponse is the response envelope for operations that return a DotFishMarket type.
-type DotFishMarketResponse struct {
-	DotFishMarket *DotFishMarket
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// DotFishResponse is the response envelope for operations that return a DotFish type.
-type DotFishResponse struct {
-	DotFish DotFishClassification
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type DotFishResponse.
-func (d *DotFishResponse) UnmarshalJSON(data []byte) error {
-	res, err := unmarshalDotFishClassification(data)
-	if err != nil {
-		return err
-	}
-	d.DotFish = res
-	return nil
-}
-
 type DotSalmon struct {
 	DotFish
 	Iswild   *bool   `json:"iswild,omitempty"`
@@ -541,24 +450,8 @@ type DoubleWrapper struct {
 	Field56ZerosAfterTheDotAndNegativeZeroBeforeDotAndThisIsALongFieldNameOnPurpose *float64 `json:"field_56_zeros_after_the_dot_and_negative_zero_before_dot_and_this_is_a_long_field_name_on_purpose,omitempty"`
 }
 
-// DoubleWrapperResponse is the response envelope for operations that return a DoubleWrapper type.
-type DoubleWrapperResponse struct {
-	DoubleWrapper *DoubleWrapper
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 type DurationWrapper struct {
 	Field *string `json:"field,omitempty"`
-}
-
-// DurationWrapperResponse is the response envelope for operations that return a DurationWrapper type.
-type DurationWrapperResponse struct {
-	DurationWrapper *DurationWrapper
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // Implements the error and azcore.HTTPResponse interfaces.
@@ -639,24 +532,6 @@ func (f *Fish) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	return nil
 }
 
-// FishResponse is the response envelope for operations that return a Fish type.
-type FishResponse struct {
-	Fish FishClassification
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type FishResponse.
-func (f *FishResponse) UnmarshalJSON(data []byte) error {
-	res, err := unmarshalFishClassification(data)
-	if err != nil {
-		return err
-	}
-	f.Fish = res
-	return nil
-}
-
 // FlattencomplexGetValidOptions contains the optional parameters for the Flattencomplex.GetValid method.
 type FlattencomplexGetValidOptions struct {
 	// placeholder for future optional parameters
@@ -665,14 +540,6 @@ type FlattencomplexGetValidOptions struct {
 type FloatWrapper struct {
 	Field1 *float32 `json:"field1,omitempty"`
 	Field2 *float32 `json:"field2,omitempty"`
-}
-
-// FloatWrapperResponse is the response envelope for operations that return a FloatWrapper type.
-type FloatWrapperResponse struct {
-	FloatWrapper *FloatWrapper
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 type Goblinshark struct {
@@ -728,25 +595,9 @@ type IntWrapper struct {
 	Field2 *int32 `json:"field2,omitempty"`
 }
 
-// IntWrapperResponse is the response envelope for operations that return a IntWrapper type.
-type IntWrapperResponse struct {
-	IntWrapper *IntWrapper
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 type LongWrapper struct {
 	Field1 *int64 `json:"field1,omitempty"`
 	Field2 *int64 `json:"field2,omitempty"`
-}
-
-// LongWrapperResponse is the response envelope for operations that return a LongWrapper type.
-type LongWrapperResponse struct {
-	LongWrapper *LongWrapper
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 type MyBaseHelperType struct {
@@ -808,24 +659,6 @@ func (m *MyBaseType) unmarshalInternal(rawMsg map[string]json.RawMessage) error 
 			return err
 		}
 	}
-	return nil
-}
-
-// MyBaseTypeResponse is the response envelope for operations that return a MyBaseType type.
-type MyBaseTypeResponse struct {
-	MyBaseType MyBaseTypeClassification
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type MyBaseTypeResponse.
-func (m *MyBaseTypeResponse) UnmarshalJSON(data []byte) error {
-	res, err := unmarshalMyBaseTypeClassification(data)
-	if err != nil {
-		return err
-	}
-	m.MyBaseType = res
 	return nil
 }
 
@@ -1051,13 +884,6 @@ type ReadonlyObj struct {
 	ID *string `json:"id,omitempty" azure:"ro"`
 }
 
-// ReadonlyObjResponse is the response envelope for operations that return a ReadonlyObj type.
-type ReadonlyObjResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	ReadonlyObj *ReadonlyObj
-}
-
 // ReadonlypropertyGetValidOptions contains the optional parameters for the Readonlyproperty.GetValid method.
 type ReadonlypropertyGetValidOptions struct {
 	// placeholder for future optional parameters
@@ -1125,23 +951,6 @@ func (s *Salmon) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 		}
 	}
 	return s.Fish.unmarshalInternal(rawMsg)
-}
-
-// SalmonResponse is the response envelope for operations that return a Salmon type.
-type SalmonResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Salmon      SalmonClassification
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type SalmonResponse.
-func (s *SalmonResponse) UnmarshalJSON(data []byte) error {
-	res, err := unmarshalSalmonClassification(data)
-	if err != nil {
-		return err
-	}
-	s.Salmon = res
-	return nil
 }
 
 type Sawshark struct {
@@ -1250,13 +1059,6 @@ func (s Siamese) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// SiameseResponse is the response envelope for operations that return a Siamese type.
-type SiameseResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Siamese     *Siamese
-}
-
 type SmartSalmon struct {
 	Salmon
 	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
@@ -1318,13 +1120,6 @@ type StringWrapper struct {
 	Empty *string `json:"empty,omitempty"`
 	Field *string `json:"field,omitempty"`
 	Null  *string `json:"null,omitempty"`
-}
-
-// StringWrapperResponse is the response envelope for operations that return a StringWrapper type.
-type StringWrapperResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse   *http.Response
-	StringWrapper *StringWrapper
 }
 
 func populate(m map[string]interface{}, k string, v interface{}) {

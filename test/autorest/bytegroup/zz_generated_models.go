@@ -7,17 +7,6 @@
 
 package bytegroup
 
-import "net/http"
-
-// ByteArrayResponse is the response envelope for operations that return a []byte type.
-type ByteArrayResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// The null byte value
-	Value []byte
-}
-
 // ByteGetEmptyOptions contains the optional parameters for the Byte.GetEmpty method.
 type ByteGetEmptyOptions struct {
 	// placeholder for future optional parameters

@@ -10,7 +10,6 @@ package errorsgroup
 import (
 	"encoding/json"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"net/http"
 	"reflect"
 )
 
@@ -222,14 +221,6 @@ func (p *PetActionError) unmarshalInternal(rawMsg map[string]json.RawMessage) er
 	return nil
 }
 
-// PetActionResponse is the response envelope for operations that return a PetAction type.
-type PetActionResponse struct {
-	PetAction *PetAction
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // PetDoSomethingOptions contains the optional parameters for the Pet.DoSomething method.
 type PetDoSomethingOptions struct {
 	// placeholder for future optional parameters
@@ -265,14 +256,6 @@ func (p *PetHungryOrThirstyError) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return p.PetSadError.unmarshalInternal(rawMsg)
-}
-
-// PetResponse is the response envelope for operations that return a Pet type.
-type PetResponse struct {
-	Pet *Pet
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PetSadErrorClassification provides polymorphic access to related types.

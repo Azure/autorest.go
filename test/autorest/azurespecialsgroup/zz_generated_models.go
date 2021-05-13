@@ -7,8 +7,6 @@
 
 package azurespecialsgroup
 
-import "net/http"
-
 // APIVersionDefaultGetMethodGlobalNotProvidedValidOptions contains the optional parameters for the APIVersionDefault.GetMethodGlobalNotProvidedValid method.
 type APIVersionDefaultGetMethodGlobalNotProvidedValidOptions struct {
 	// placeholder for future optional parameters
@@ -70,18 +68,6 @@ type HeaderCustomNamedRequestIDHeadOptions struct {
 	// placeholder for future optional parameters
 }
 
-// HeaderCustomNamedRequestIDHeadResponse contains the response from method Header.CustomNamedRequestIDHead.
-type HeaderCustomNamedRequestIDHeadResponse struct {
-	// FooRequestID contains the information returned from the foo-request-id header response.
-	FooRequestID *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Success indicates if the operation succeeded or failed.
-	Success bool
-}
-
 // HeaderCustomNamedRequestIDOptions contains the optional parameters for the Header.CustomNamedRequestID method.
 type HeaderCustomNamedRequestIDOptions struct {
 	// placeholder for future optional parameters
@@ -96,24 +82,6 @@ type HeaderCustomNamedRequestIDParamGroupingOptions struct {
 type HeaderCustomNamedRequestIDParamGroupingParameters struct {
 	// The fooRequestId
 	FooClientRequestID string
-}
-
-// HeaderCustomNamedRequestIDParamGroupingResponse contains the response from method Header.CustomNamedRequestIDParamGrouping.
-type HeaderCustomNamedRequestIDParamGroupingResponse struct {
-	// FooRequestID contains the information returned from the foo-request-id header response.
-	FooRequestID *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// HeaderCustomNamedRequestIDResponse contains the response from method Header.CustomNamedRequestID.
-type HeaderCustomNamedRequestIDResponse struct {
-	// FooRequestID contains the information returned from the foo-request-id header response.
-	FooRequestID *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 type OdataFilter struct {

@@ -8,12 +8,9 @@
 package lrogroup
 
 import (
-	"context"
 	"encoding/json"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"net/http"
 	"reflect"
-	"time"
 )
 
 // Implements the error and azcore.HTTPResponse interfaces.
@@ -27,18 +24,6 @@ type CloudError struct {
 // The contents of the error text are not contractual and subject to change.
 func (e CloudError) Error() string {
 	return e.raw
-}
-
-// HTTPPollerResponse contains the asynchronous HTTP response from the call to the service endpoint.
-type HTTPPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (*http.Response, error)
-
-	// Poller contains an initialized poller.
-	Poller HTTPPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // LRORetrysBeginDelete202Retry200Options contains the optional parameters for the LRORetrys.BeginDelete202Retry200 method.
@@ -517,52 +502,11 @@ func (p Product) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// ProductArrayPollerResponse is the response envelope for operations that asynchronously return a []*Product type.
-type ProductArrayPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ProductArrayResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller ProductArrayPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ProductArrayResponse is the response envelope for operations that return a []*Product type.
-type ProductArrayResponse struct {
-	// Array of Product
-	ProductArray []*Product
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ProductPollerResponse is the response envelope for operations that asynchronously return a Product type.
-type ProductPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ProductResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller ProductPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 type ProductProperties struct {
 	ProvisioningState *string `json:"provisioningState,omitempty"`
 
 	// READ-ONLY
 	ProvisioningStateValues *ProductPropertiesProvisioningStateValues `json:"provisioningStateValues,omitempty" azure:"ro"`
-}
-
-// ProductResponse is the response envelope for operations that return a Product type.
-type ProductResponse struct {
-	Product *Product
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 type Resource struct {
@@ -603,40 +547,9 @@ type SKU struct {
 	Name *string `json:"name,omitempty"`
 }
 
-// SKUPollerResponse is the response envelope for operations that asynchronously return a SKU type.
-type SKUPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (SKUResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller SKUPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// SKUResponse is the response envelope for operations that return a SKU type.
-type SKUResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	SKU         *SKU
-}
-
 type SubProduct struct {
 	SubResource
 	Properties *SubProductProperties `json:"properties,omitempty"`
-}
-
-// SubProductPollerResponse is the response envelope for operations that asynchronously return a SubProduct type.
-type SubProductPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (SubProductResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller SubProductPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 type SubProductProperties struct {
@@ -644,13 +557,6 @@ type SubProductProperties struct {
 
 	// READ-ONLY
 	ProvisioningStateValues *SubProductPropertiesProvisioningStateValues `json:"provisioningStateValues,omitempty" azure:"ro"`
-}
-
-// SubProductResponse is the response envelope for operations that return a SubProduct type.
-type SubProductResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	SubProduct  *SubProduct
 }
 
 type SubResource struct {

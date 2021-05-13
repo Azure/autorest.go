@@ -5,11 +5,12 @@
 
 import { Session } from '@autorest/extension-base';
 import { comment } from '@azure-tools/codegen';
-import { CodeModel, ComplexSchema, ConstantSchema, DictionarySchema, GroupProperty, ImplementationLocation, ObjectSchema, Language, Schema, SchemaType, Parameter, Property } from '@autorest/codemodel';
+import { CodeModel, ComplexSchema, DictionarySchema, GroupProperty, ObjectSchema, Language, SchemaType, Parameter, Property } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
 import { isArraySchema, isObjectSchema, hasAdditionalProperties, hasPolymorphicField, commentLength } from '../common/helpers';
-import { contentPreamble, elementByValueForParam, hasDescription, sortAscending, substituteDiscriminator } from './helpers';
+import { contentPreamble, sortAscending } from './helpers';
 import { ImportManager } from './imports';
+import { generateStruct, getXMLSerialization, StructDef, StructMethod } from './structs';
 
 // Creates the content in models.go
 export async function generateModels(session: Session<CodeModel>): Promise<string> {
@@ -19,12 +20,6 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
 
   // we do model generation first as it can add imports to the imports list
   const structs = generateStructs(imports, session.model.schemas.objects);
-  const responseEnvelopes = <Array<Schema>>session.model.language.go!.responseEnvelopes;
-  for (const respEnv of values(responseEnvelopes)) {
-    const respType = generateStruct(imports, respEnv.language.go!.responseType, respEnv.language.go!.properties);
-    generateUnmarshallerForResponseEnvelope(respType);
-    structs.push(respType);
-  }
   const paramGroups = <Array<GroupProperty>>session.model.language.go!.parameterGroups;
   for (const paramGroup of values(paramGroups)) {
     structs.push(generateParamGroupStruct(imports, paramGroup.schema.language.go!, paramGroup.originalParameter));
@@ -76,205 +71,6 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
     text += '}\n\n';
   }
   return text;
-}
-
-interface StructMethod {
-  name: string;
-  desc: string;
-  text: string;
-}
-
-// represents a struct definition
-class StructDef {
-  readonly Language: Language;
-  readonly Properties?: Property[];
-  readonly Parameters?: Parameter[];
-  readonly Methods: StructMethod[];
-  readonly ComposedOf: ObjectSchema[];
-  HasJSONMarshaller: boolean;
-  HasJSONUnmarshaller: boolean;
-
-  constructor(language: Language, props?: Property[], params?: Parameter[]) {
-    this.Language = language;
-    this.Properties = props;
-    this.Parameters = params;
-    if (this.Properties) {
-      this.Properties.sort((a: Property, b: Property) => { return sortAscending(a.language.go!.name, b.language.go!.name); });
-    }
-    if (this.Parameters) {
-      this.Parameters.sort((a: Parameter, b: Parameter) => { return sortAscending(a.language.go!.name, b.language.go!.name); });
-    }
-    this.Methods = new Array<StructMethod>();
-    this.ComposedOf = new Array<ObjectSchema>();
-    this.HasJSONMarshaller = false;
-    this.HasJSONUnmarshaller = false;
-  }
-
-  text(): string {
-    let text = '';
-    if (hasDescription(this.Language)) {
-      text += `${comment(this.Language.description, '// ', undefined, commentLength)}\n`;
-    }
-    if (this.Language.errorType) {
-      text += '// Implements the error and azcore.HTTPResponse interfaces.\n';
-    }
-    text += `type ${this.Language.name} struct {\n`;
-    // any composed types go first
-    for (const comp of values(this.ComposedOf)) {
-      text += `\t${comp.language.go!.name}\n`;
-    }
-    // used to track when to add an extra \n between fields that have comments
-    let first = true;
-    if (this.Properties === undefined && this.Parameters?.length === 0) {
-      // this is an optional params placeholder struct
-      text += '\t// placeholder for future optional parameters\n';
-    }
-    if (this.Language.errorType) {
-      text += '\traw string\n';
-    }
-    // group fields by required/optional/read-only in that order
-    this.Properties?.sort((lhs: Property, rhs: Property): number => {
-      if ((lhs.required && !rhs.required) || (!lhs.readOnly && rhs.readOnly)) {
-        return -1;
-      } else if ((rhs.readOnly && !lhs.readOnly) || (!rhs.readOnly && lhs.readOnly)) {
-        return 1;
-      } else {
-        return 0;
-      }
-    });
-    for (const prop of values(this.Properties)) {
-      if (hasDescription(prop.language.go!)) {
-        if (!first) {
-          // add an extra new-line between fields IFF the field
-          // has a comment and it's not the very first one.
-          text += '\n';
-        }
-        text += `\t${comment(prop.language.go!.description, '// ', undefined, commentLength)}\n`;
-      }
-      let elemByVal = false;
-      if (prop.schema.type === SchemaType.Dictionary && prop.extensions?.['x-ms-header-collection-prefix']) {
-        elemByVal = true;
-      }
-      let typeName = substituteDiscriminator(prop.schema, elemByVal);
-      if (prop.schema.type === SchemaType.Constant) {
-        // for constants we use the underlying type name
-        typeName = (<ConstantSchema>prop.schema).valueType.language.go!.name;
-      }
-      let serialization = prop.serializedName;
-      if (this.Language.marshallingFormat === 'json') {
-        serialization += ',omitempty';
-      } else if (this.Language.marshallingFormat === 'xml') {
-        serialization = getXMLSerialization(prop, this.Language);
-      }
-      let readOnly = '';
-      if (prop.readOnly) {
-        readOnly = ` azure:"ro"`;
-      }
-      let tag = ` \`${this.Language.marshallingFormat}:"${serialization}"${readOnly}\``;
-      // if this is a response type then omit the tag IFF the marshalling format is
-      // JSON, it's a header or is the RawResponse field.  XML marshalling needs a tag.
-      // also omit the tag for additionalProperties
-      if ((this.Language.responseType === true && (this.Language.marshallingFormat !== 'xml' || prop.language.go!.name === 'RawResponse')) || prop.language.go!.isAdditionalProperties) {
-        tag = '';
-      }
-      let pointer = '*';
-      if (prop.language.go!.byValue === true) {
-        pointer = '';
-      }
-      text += `\t${prop.language.go!.name} ${pointer}${typeName}${tag}\n`;
-      first = false;
-    }
-    for (const param of values(this.Parameters)) {
-      // if Parameters is set this is a param group struct
-      // none of its fields need to participate in marshalling
-      if (param.implementation === ImplementationLocation.Client) {
-        // don't add globals to the per-method options struct
-        continue;
-      }
-      if (hasDescription(param.language.go!)) {
-        text += `\t${comment(param.language.go!.description, '// ', undefined, commentLength)}\n`;
-      }
-      let pointer = '*';
-      if (param.required || param.language.go!.byValue === true) {
-        pointer = '';
-      }
-      const typeName = substituteDiscriminator(param.schema, elementByValueForParam(param));
-      text += `\t${(<string>param.language.go!.name).capitalize()} ${pointer}${typeName}\n`;
-    }
-    text += '}\n\n';
-    return text;
-  }
-
-  discriminator(): string {
-    if (!this.Language.discriminatorInterface) {
-      return '';
-    }
-    const methodName = `Get${this.Language.name}`;
-    let text = `// ${this.Language.discriminatorInterface} provides polymorphic access to related types.\n`;
-    text += `// Call the interface's ${methodName}() method to access the common type.\n`;
-    text += `// Use a type switch to determine the concrete type.  The possible types are:\n`;
-    text += comment((<Array<string>>this.Language.discriminatorTypes).join(', '), '// - ');
-    text += `\ntype ${this.Language.discriminatorInterface} interface {\n`;
-    if (this.Language.discriminatorParent) {
-      text += `\t${this.Language.discriminatorParent}\n`;
-    }
-    text += `\t// ${methodName} returns the ${this.Language.name} content of the underlying type.\n`;
-    text += `\t${methodName}() *${this.Language.name}\n`;
-    text += '}\n\n';
-    return text;
-  }
-
-  receiverName(): string {
-    const typeName = this.Language.name;
-    return typeName[0].toLowerCase();
-  }
-}
-
-function getXMLSerialization(prop: Property, lang: Language): string {
-  let serialization = prop.serializedName;
-  // default to using the serialization name
-  if (prop.schema.serialization?.xml?.name) {
-    // xml can specifiy its own name, prefer that if available
-    serialization = prop.schema.serialization.xml.name;
-  }
-  if (prop.schema.serialization?.xml?.attribute) {
-    // value comes from an xml attribute
-    serialization += ',attr';
-  } else if (isArraySchema(prop.schema)) {
-    // start with the serialized name of the element, preferring xml name if available
-    let inner = prop.schema.elementType.language.go!.name;
-    if (prop.schema.elementType.serialization?.xml?.name) {
-      inner = prop.schema.elementType.serialization.xml.name;
-    }
-    // arrays can be wrapped or unwrapped.  here's a wrapped example
-    // note how the array of apple objects is "wrapped" in GoodApples
-    // <AppleBarrel>
-    //   <GoodApples>
-    //     <Apple>Fuji</Apple>
-    //     <Apple>Gala</Apple>
-    //   </GoodApples>
-    // </AppleBarrel>
-
-    // here's an unwrapped example, the array of slide objects
-    // is embedded directly in the object (no "wrapping")
-    // <slideshow>
-    //   <slide>
-    //     <title>Wake up to WonderWidgets!</title>
-    //   </slide>
-    //   <slide>
-    //     <title>Overview</title>
-    //   </slide>
-    // </slideshow>
-
-    // arrays in the response type are handled slightly different as we
-    // unmarshal directly into them so no need to add the unwrapping.
-    if (prop.schema.serialization?.xml?.wrapped && lang.responseType !== true) {
-      serialization += `>${inner}`;
-    } else {
-      serialization = inner;
-    }
-  }
-  return serialization;
 }
 
 function generateStructs(imports: ImportManager, objects?: ObjectSchema[]): StructDef[] {
@@ -491,68 +287,12 @@ function needsXMLArrayMarshalling(obj: ObjectSchema): boolean {
   return false;
 }
 
-function generateStruct(imports: ImportManager, lang: Language, props?: Property[]): StructDef {
-  if (lang.responseType) {
-    imports.add('net/http');
-  }
-  if (lang.isLRO) {
-    imports.add('time');
-    imports.add('context');
-  }
-  if (lang.needsDateTimeMarshalling) {
-    imports.add('encoding/' + lang.marshallingFormat);
-  }
-  const st = new StructDef(lang, props);
-  for (const prop of values(props)) {
-    imports.addImportForSchemaType(prop.schema);
-  }
-  return st;
-}
-
 function generateParamGroupStruct(imports: ImportManager, lang: Language, params: Parameter[]): StructDef {
   const st = new StructDef(lang, undefined, params);
   for (const param of values(params)) {
     imports.addImportForSchemaType(param.schema);
   }
   return st;
-}
-
-function generateUnmarshallerForResponseEnvelope(structDef: StructDef) {
-  // if the response envelope contains a discriminated type we need an unmarshaller
-  let found = false;
-  for (const prop of values(structDef.Properties)) {
-    if (prop.isDiscriminator) {
-      found = true;
-      break;
-    }
-  }
-  if (!found) {
-    return;
-  }
-  const receiver = structDef.receiverName();
-  let unmarshaller = `func (${receiver} *${structDef.Language.name}) UnmarshalJSON(data []byte) error {\n`;
-  // add a custom unmarshaller to the response envelope
-  // find the discriminated type field
-  let field = '';
-  let type = '';
-  for (const prop of values(structDef.Properties)) {
-    if (prop.isDiscriminator) {
-      field = prop.language.go!.name;
-      type = prop.schema.language.go!.discriminatorInterface;
-      break;
-    }
-  }
-  if (field === '' || type === '') {
-    throw new Error(`failed to the discriminated type field for response envelope ${structDef.Language.name}`);
-  }
-  unmarshaller += `\tres, err := unmarshal${type}(data)\n`;
-  unmarshaller += '\tif err != nil {\n';
-  unmarshaller += '\t\treturn err\n';
-  unmarshaller += '\t}\n';
-  unmarshaller += `\t${receiver}.${field} = res\n`;
-  unmarshaller += '\treturn nil\n';
-  unmarshaller += '}\n\n';
-  structDef.Methods.push({ name: 'UnmarshalJSON', desc: `UnmarshalJSON implements the json.Unmarshaller interface for type ${structDef.Language.name}.`, text: unmarshaller });
 }
 
 // generates discriminator marker method, internal marshaller and internal unmarshaller

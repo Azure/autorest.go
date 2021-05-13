@@ -9,7 +9,6 @@ package xmlgroup
 
 import (
 	"encoding/xml"
-	"net/http"
 	"time"
 )
 
@@ -83,15 +82,6 @@ func (a AppleBarrel) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	return e.EncodeElement(aux, start)
 }
 
-// AppleBarrelResponse is the response envelope for operations that return a AppleBarrel type.
-type AppleBarrelResponse struct {
-	// A barrel of apples.
-	AppleBarrel *AppleBarrel `xml:"AppleBarrel"`
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // Banana - A banana.
 type Banana struct {
 	// The time at which you should reconsider eating this banana
@@ -128,24 +118,6 @@ func (b *Banana) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	}
 	b.Expiration = (*time.Time)(aux.Expiration)
 	return nil
-}
-
-// BananaArrayResponse is the response envelope for operations that return a []*Banana type.
-type BananaArrayResponse struct {
-	// Array of Banana
-	Bananas []*Banana `xml:"banana"`
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// BananaResponse is the response envelope for operations that return a Banana type.
-type BananaResponse struct {
-	// A banana.
-	Banana *Banana `xml:"banana"`
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // Blob - An Azure Storage blob
@@ -412,14 +384,6 @@ type JSONOutput struct {
 	ID *int32 `json:"id,omitempty"`
 }
 
-// JSONOutputResponse is the response envelope for operations that return a JSONOutput type.
-type JSONOutputResponse struct {
-	JSONOutput *JSONOutput
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // ListBlobsResponse - An enumeration of blobs
 type ListBlobsResponse struct {
 	// REQUIRED
@@ -443,15 +407,6 @@ type ListBlobsResponse struct {
 	// REQUIRED
 	Prefix          *string `xml:"Prefix"`
 	ServiceEndpoint *string `xml:"ServiceEndpoint,attr"`
-}
-
-// ListBlobsResponseResponse is the response envelope for operations that return a ListBlobsResponse type.
-type ListBlobsResponseResponse struct {
-	// An enumeration of blobs
-	EnumerationResults *ListBlobsResponse `xml:"EnumerationResults"`
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ListContainersResponse - An enumeration of containers
@@ -484,15 +439,6 @@ func (l ListContainersResponse) MarshalXML(e *xml.Encoder, start xml.StartElemen
 		aux.Containers = &l.Containers
 	}
 	return e.EncodeElement(aux, start)
-}
-
-// ListContainersResponseResponse is the response envelope for operations that return a ListContainersResponse type.
-type ListContainersResponseResponse struct {
-	// An enumeration of containers
-	EnumerationResults *ListContainersResponse `xml:"EnumerationResults"`
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // Logging - Azure Analytics Logging settings.
@@ -536,15 +482,6 @@ type ObjectWithXMsTextProperty struct {
 	Language *string `xml:"language,attr"`
 }
 
-// ObjectWithXMsTextPropertyResponse is the response envelope for operations that return a ObjectWithXMsTextProperty type.
-type ObjectWithXMsTextPropertyResponse struct {
-	// Contans property
-	Data *ObjectWithXMsTextProperty `xml:"Data"`
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // RetentionPolicy - the retention policy
 type RetentionPolicy struct {
 	// REQUIRED; Indicates whether a retention policy is enabled for the storage service
@@ -563,15 +500,6 @@ type RootWithRefAndMeta struct {
 	Something *string `xml:"Something"`
 }
 
-// RootWithRefAndMetaResponse is the response envelope for operations that return a RootWithRefAndMeta type.
-type RootWithRefAndMetaResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// I am root, and I ref a model WITH meta
-	RootWithRefAndMeta *RootWithRefAndMeta `xml:"RootWithRefAndMeta"`
-}
-
 // RootWithRefAndNoMeta - I am root, and I ref a model with no meta
 type RootWithRefAndNoMeta struct {
 	// XML will use RefToModel
@@ -581,15 +509,6 @@ type RootWithRefAndNoMeta struct {
 	Something *string `xml:"Something"`
 }
 
-// RootWithRefAndNoMetaResponse is the response envelope for operations that return a RootWithRefAndNoMeta type.
-type RootWithRefAndNoMetaResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// I am root, and I ref a model with no meta
-	RootWithRefAndNoMeta *RootWithRefAndNoMeta `xml:"RootWithRefAndNoMeta"`
-}
-
 // SignedIdentifier - signed identifier
 type SignedIdentifier struct {
 	// REQUIRED; The access policy
@@ -597,15 +516,6 @@ type SignedIdentifier struct {
 
 	// REQUIRED; a unique id
 	ID *string `xml:"Id"`
-}
-
-// SignedIdentifierArrayResponse is the response envelope for operations that return a []*SignedIdentifier type.
-type SignedIdentifierArrayResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// a collection of signed identifiers
-	SignedIdentifiers []*SignedIdentifier `xml:"SignedIdentifier"`
 }
 
 // Slide - A slide in a slideshow
@@ -654,15 +564,6 @@ func (s Slideshow) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	return e.EncodeElement(aux, start)
 }
 
-// SlideshowResponse is the response envelope for operations that return a Slideshow type.
-type SlideshowResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Data about a slideshow
-	Slideshow *Slideshow `xml:"slideshow"`
-}
-
 // StorageServiceProperties - Storage Service Properties.
 type StorageServiceProperties struct {
 	// The set of CORS rules.
@@ -698,15 +599,6 @@ func (s StorageServiceProperties) MarshalXML(e *xml.Encoder, start xml.StartElem
 		aux.Cors = &s.Cors
 	}
 	return e.EncodeElement(aux, start)
-}
-
-// StorageServicePropertiesResponse is the response envelope for operations that return a StorageServiceProperties type.
-type StorageServicePropertiesResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Storage Service Properties.
-	StorageServiceProperties *StorageServiceProperties `xml:"StorageServiceProperties"`
 }
 
 // XMLGetACLsOptions contains the optional parameters for the XML.GetACLs method.
@@ -747,15 +639,6 @@ type XMLGetEmptyWrappedListsOptions struct {
 // XMLGetHeadersOptions contains the optional parameters for the XML.GetHeaders method.
 type XMLGetHeadersOptions struct {
 	// placeholder for future optional parameters
-}
-
-// XMLGetHeadersResponse contains the response from method XML.GetHeaders.
-type XMLGetHeadersResponse struct {
-	// CustomHeader contains the information returned from the Custom-Header header response.
-	CustomHeader *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // XMLGetRootListOptions contains the optional parameters for the XML.GetRootList method.

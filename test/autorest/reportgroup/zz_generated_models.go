@@ -7,8 +7,6 @@
 
 package reportgroup
 
-import "net/http"
-
 // AutoRestReportServiceGetOptionalReportOptions contains the optional parameters for the AutoRestReportService.GetOptionalReport method.
 type AutoRestReportServiceGetOptionalReportOptions struct {
 	// If specified, qualifies the generated report further (e.g. '2.7' vs '3.5' in for Python). The only effect is, that generators that run all tests several
@@ -34,13 +32,4 @@ type Error struct {
 // The contents of the error text are not contractual and subject to change.
 func (e Error) Error() string {
 	return e.raw
-}
-
-// MapOfInt32Response is the response envelope for operations that return a map[string]*int32 type.
-type MapOfInt32Response struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Dictionary of <integer>
-	Value map[string]*int32
 }

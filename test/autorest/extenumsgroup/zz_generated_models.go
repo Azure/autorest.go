@@ -7,8 +7,6 @@
 
 package extenumsgroup
 
-import "net/http"
-
 type Pet struct {
 	// REQUIRED
 	IntEnum *IntEnum `json:"IntEnum,omitempty"`
@@ -29,12 +27,4 @@ type PetAddPetOptions struct {
 // PetGetByPetIDOptions contains the optional parameters for the Pet.GetByPetID method.
 type PetGetByPetIDOptions struct {
 	// placeholder for future optional parameters
-}
-
-// PetResponse is the response envelope for operations that return a Pet type.
-type PetResponse struct {
-	Pet *Pet
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
