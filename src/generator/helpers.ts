@@ -179,14 +179,14 @@ export function getMethodParameters(op: Operation): Parameter[] {
 // returns the fully-qualified parameter name.  this is usually just the name
 // but will include the client or optional param group name prefix as required.
 // dereference: pass true to dereference an optional param
-export function getParamName(param: Parameter, dereference: boolean): string {
+export function getParamName(param: Parameter): string {
   let paramName = param.language.go!.name;
   if (param.implementation === ImplementationLocation.Client) {
     paramName = `client.${paramName}`;
   } else if (param.language.go!.paramGroup) {
     paramName = `${(<string>param.language.go!.paramGroup.language.go!.name).uncapitalize()}.${paramName.capitalize()}`;
   }
-  if (param.required !== true && dereference) {
+  if (param.required !== true && !param.language.go!.byValue) {
     paramName = `*${paramName}`;
   }
   return paramName;
@@ -205,7 +205,7 @@ export function formatParamValue(param: Parameter, imports: ImportManager): stri
       separator = '\\t';
       break;
   }
-  let paramName = getParamName(param, true);
+  let paramName = getParamName(param);
   switch (param.schema.type) {
     case SchemaType.Array:
       const arraySchema = <ArraySchema>param.schema;

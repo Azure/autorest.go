@@ -157,3 +157,16 @@ export function getResponse(op: Operation): SchemaResponse | undefined {
   // TODO: log warning
   return with200;
 }
+
+// returns true if the type is implicitly passed by value (map, slice, etc)
+export function isTypePassedByValue(schema: Schema): boolean {
+  if (schema.type === SchemaType.Any ||
+    schema.type === SchemaType.Array ||
+    schema.type === SchemaType.ByteArray ||
+    schema.type === SchemaType.Binary ||
+    schema.type === SchemaType.Dictionary ||
+    (isObjectSchema(schema) && schema.discriminator)) {
+    return true;
+  }
+  return false;
+}

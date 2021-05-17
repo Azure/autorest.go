@@ -52,7 +52,7 @@ func (client *QueriesClient) arrayStringMultiEmptyCreateRequest(ctx context.Cont
 	req.Telemetry(telemetryInfo)
 	reqQP := req.URL.Query()
 	if options != nil && options.ArrayQuery != nil {
-		for _, qv := range *options.ArrayQuery {
+		for _, qv := range options.ArrayQuery {
 			reqQP.Add("arrayQuery", qv)
 		}
 	}
@@ -101,7 +101,7 @@ func (client *QueriesClient) arrayStringMultiNullCreateRequest(ctx context.Conte
 	req.Telemetry(telemetryInfo)
 	reqQP := req.URL.Query()
 	if options != nil && options.ArrayQuery != nil {
-		for _, qv := range *options.ArrayQuery {
+		for _, qv := range options.ArrayQuery {
 			reqQP.Add("arrayQuery", qv)
 		}
 	}
@@ -150,7 +150,7 @@ func (client *QueriesClient) arrayStringMultiValidCreateRequest(ctx context.Cont
 	req.Telemetry(telemetryInfo)
 	reqQP := req.URL.Query()
 	if options != nil && options.ArrayQuery != nil {
-		for _, qv := range *options.ArrayQuery {
+		for _, qv := range options.ArrayQuery {
 			reqQP.Add("arrayQuery", qv)
 		}
 	}

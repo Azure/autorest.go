@@ -322,13 +322,13 @@ func (client *pageBlobClient) createCreateRequest(ctx context.Context, contentLe
 		req.Header.Set("x-ms-blob-content-language", *blobHTTPHeaders.BlobContentLanguage)
 	}
 	if blobHTTPHeaders != nil && blobHTTPHeaders.BlobContentMD5 != nil {
-		req.Header.Set("x-ms-blob-content-md5", base64.StdEncoding.EncodeToString(*blobHTTPHeaders.BlobContentMD5))
+		req.Header.Set("x-ms-blob-content-md5", base64.StdEncoding.EncodeToString(blobHTTPHeaders.BlobContentMD5))
 	}
 	if blobHTTPHeaders != nil && blobHTTPHeaders.BlobCacheControl != nil {
 		req.Header.Set("x-ms-blob-cache-control", *blobHTTPHeaders.BlobCacheControl)
 	}
 	if pageBlobCreateOptions != nil && pageBlobCreateOptions.Metadata != nil {
-		for k, v := range *pageBlobCreateOptions.Metadata {
+		for k, v := range pageBlobCreateOptions.Metadata {
 			req.Header.Set("x-ms-meta-"+k, v)
 		}
 	}
@@ -966,10 +966,10 @@ func (client *pageBlobClient) uploadPagesCreateRequest(ctx context.Context, cont
 	req.Header.Set("x-ms-page-write", "update")
 	req.Header.Set("Content-Length", strconv.FormatInt(contentLength, 10))
 	if pageBlobUploadPagesOptions != nil && pageBlobUploadPagesOptions.TransactionalContentMD5 != nil {
-		req.Header.Set("Content-MD5", base64.StdEncoding.EncodeToString(*pageBlobUploadPagesOptions.TransactionalContentMD5))
+		req.Header.Set("Content-MD5", base64.StdEncoding.EncodeToString(pageBlobUploadPagesOptions.TransactionalContentMD5))
 	}
 	if pageBlobUploadPagesOptions != nil && pageBlobUploadPagesOptions.TransactionalContentCRC64 != nil {
-		req.Header.Set("x-ms-content-crc64", base64.StdEncoding.EncodeToString(*pageBlobUploadPagesOptions.TransactionalContentCRC64))
+		req.Header.Set("x-ms-content-crc64", base64.StdEncoding.EncodeToString(pageBlobUploadPagesOptions.TransactionalContentCRC64))
 	}
 	if pageBlobUploadPagesOptions != nil && pageBlobUploadPagesOptions.Range != nil {
 		req.Header.Set("x-ms-range", *pageBlobUploadPagesOptions.Range)
@@ -1134,10 +1134,10 @@ func (client *pageBlobClient) uploadPagesFromURLCreateRequest(ctx context.Contex
 	req.Header.Set("x-ms-copy-source", sourceURL)
 	req.Header.Set("x-ms-source-range", sourceRange)
 	if pageBlobUploadPagesFromURLOptions != nil && pageBlobUploadPagesFromURLOptions.SourceContentMD5 != nil {
-		req.Header.Set("x-ms-source-content-md5", base64.StdEncoding.EncodeToString(*pageBlobUploadPagesFromURLOptions.SourceContentMD5))
+		req.Header.Set("x-ms-source-content-md5", base64.StdEncoding.EncodeToString(pageBlobUploadPagesFromURLOptions.SourceContentMD5))
 	}
 	if pageBlobUploadPagesFromURLOptions != nil && pageBlobUploadPagesFromURLOptions.SourceContentcrc64 != nil {
-		req.Header.Set("x-ms-source-content-crc64", base64.StdEncoding.EncodeToString(*pageBlobUploadPagesFromURLOptions.SourceContentcrc64))
+		req.Header.Set("x-ms-source-content-crc64", base64.StdEncoding.EncodeToString(pageBlobUploadPagesFromURLOptions.SourceContentcrc64))
 	}
 	req.Header.Set("Content-Length", strconv.FormatInt(contentLength, 10))
 	req.Header.Set("x-ms-range", rangeParam)

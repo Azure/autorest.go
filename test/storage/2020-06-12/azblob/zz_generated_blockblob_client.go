@@ -70,16 +70,16 @@ func (client *blockBlobClient) commitBlockListCreateRequest(ctx context.Context,
 		req.Header.Set("x-ms-blob-content-language", *blobHTTPHeaders.BlobContentLanguage)
 	}
 	if blobHTTPHeaders != nil && blobHTTPHeaders.BlobContentMD5 != nil {
-		req.Header.Set("x-ms-blob-content-md5", base64.StdEncoding.EncodeToString(*blobHTTPHeaders.BlobContentMD5))
+		req.Header.Set("x-ms-blob-content-md5", base64.StdEncoding.EncodeToString(blobHTTPHeaders.BlobContentMD5))
 	}
 	if blockBlobCommitBlockListOptions != nil && blockBlobCommitBlockListOptions.TransactionalContentMD5 != nil {
-		req.Header.Set("Content-MD5", base64.StdEncoding.EncodeToString(*blockBlobCommitBlockListOptions.TransactionalContentMD5))
+		req.Header.Set("Content-MD5", base64.StdEncoding.EncodeToString(blockBlobCommitBlockListOptions.TransactionalContentMD5))
 	}
 	if blockBlobCommitBlockListOptions != nil && blockBlobCommitBlockListOptions.TransactionalContentCRC64 != nil {
-		req.Header.Set("x-ms-content-crc64", base64.StdEncoding.EncodeToString(*blockBlobCommitBlockListOptions.TransactionalContentCRC64))
+		req.Header.Set("x-ms-content-crc64", base64.StdEncoding.EncodeToString(blockBlobCommitBlockListOptions.TransactionalContentCRC64))
 	}
 	if blockBlobCommitBlockListOptions != nil && blockBlobCommitBlockListOptions.Metadata != nil {
-		for k, v := range *blockBlobCommitBlockListOptions.Metadata {
+		for k, v := range blockBlobCommitBlockListOptions.Metadata {
 			req.Header.Set("x-ms-meta-"+k, v)
 		}
 	}
@@ -356,7 +356,7 @@ func (client *blockBlobClient) putBlobFromURLCreateRequest(ctx context.Context, 
 	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("x-ms-blob-type", "BlockBlob")
 	if blockBlobPutBlobFromURLOptions != nil && blockBlobPutBlobFromURLOptions.TransactionalContentMD5 != nil {
-		req.Header.Set("Content-MD5", base64.StdEncoding.EncodeToString(*blockBlobPutBlobFromURLOptions.TransactionalContentMD5))
+		req.Header.Set("Content-MD5", base64.StdEncoding.EncodeToString(blockBlobPutBlobFromURLOptions.TransactionalContentMD5))
 	}
 	req.Header.Set("Content-Length", strconv.FormatInt(contentLength, 10))
 	if blobHTTPHeaders != nil && blobHTTPHeaders.BlobContentType != nil {
@@ -369,13 +369,13 @@ func (client *blockBlobClient) putBlobFromURLCreateRequest(ctx context.Context, 
 		req.Header.Set("x-ms-blob-content-language", *blobHTTPHeaders.BlobContentLanguage)
 	}
 	if blobHTTPHeaders != nil && blobHTTPHeaders.BlobContentMD5 != nil {
-		req.Header.Set("x-ms-blob-content-md5", base64.StdEncoding.EncodeToString(*blobHTTPHeaders.BlobContentMD5))
+		req.Header.Set("x-ms-blob-content-md5", base64.StdEncoding.EncodeToString(blobHTTPHeaders.BlobContentMD5))
 	}
 	if blobHTTPHeaders != nil && blobHTTPHeaders.BlobCacheControl != nil {
 		req.Header.Set("x-ms-blob-cache-control", *blobHTTPHeaders.BlobCacheControl)
 	}
 	if blockBlobPutBlobFromURLOptions != nil && blockBlobPutBlobFromURLOptions.Metadata != nil {
-		for k, v := range *blockBlobPutBlobFromURLOptions.Metadata {
+		for k, v := range blockBlobPutBlobFromURLOptions.Metadata {
 			req.Header.Set("x-ms-meta-"+k, v)
 		}
 	}
@@ -435,7 +435,7 @@ func (client *blockBlobClient) putBlobFromURLCreateRequest(ctx context.Context, 
 		req.Header.Set("x-ms-client-request-id", *blockBlobPutBlobFromURLOptions.RequestID)
 	}
 	if blockBlobPutBlobFromURLOptions != nil && blockBlobPutBlobFromURLOptions.SourceContentMD5 != nil {
-		req.Header.Set("x-ms-source-content-md5", base64.StdEncoding.EncodeToString(*blockBlobPutBlobFromURLOptions.SourceContentMD5))
+		req.Header.Set("x-ms-source-content-md5", base64.StdEncoding.EncodeToString(blockBlobPutBlobFromURLOptions.SourceContentMD5))
 	}
 	if blockBlobPutBlobFromURLOptions != nil && blockBlobPutBlobFromURLOptions.BlobTagsString != nil {
 		req.Header.Set("x-ms-tags", *blockBlobPutBlobFromURLOptions.BlobTagsString)
@@ -549,10 +549,10 @@ func (client *blockBlobClient) stageBlockCreateRequest(ctx context.Context, bloc
 	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Content-Length", strconv.FormatInt(contentLength, 10))
 	if blockBlobStageBlockOptions != nil && blockBlobStageBlockOptions.TransactionalContentMD5 != nil {
-		req.Header.Set("Content-MD5", base64.StdEncoding.EncodeToString(*blockBlobStageBlockOptions.TransactionalContentMD5))
+		req.Header.Set("Content-MD5", base64.StdEncoding.EncodeToString(blockBlobStageBlockOptions.TransactionalContentMD5))
 	}
 	if blockBlobStageBlockOptions != nil && blockBlobStageBlockOptions.TransactionalContentCRC64 != nil {
-		req.Header.Set("x-ms-content-crc64", base64.StdEncoding.EncodeToString(*blockBlobStageBlockOptions.TransactionalContentCRC64))
+		req.Header.Set("x-ms-content-crc64", base64.StdEncoding.EncodeToString(blockBlobStageBlockOptions.TransactionalContentCRC64))
 	}
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
 		req.Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseID)
@@ -676,10 +676,10 @@ func (client *blockBlobClient) stageBlockFromURLCreateRequest(ctx context.Contex
 		req.Header.Set("x-ms-source-range", *blockBlobStageBlockFromURLOptions.SourceRange)
 	}
 	if blockBlobStageBlockFromURLOptions != nil && blockBlobStageBlockFromURLOptions.SourceContentMD5 != nil {
-		req.Header.Set("x-ms-source-content-md5", base64.StdEncoding.EncodeToString(*blockBlobStageBlockFromURLOptions.SourceContentMD5))
+		req.Header.Set("x-ms-source-content-md5", base64.StdEncoding.EncodeToString(blockBlobStageBlockFromURLOptions.SourceContentMD5))
 	}
 	if blockBlobStageBlockFromURLOptions != nil && blockBlobStageBlockFromURLOptions.SourceContentcrc64 != nil {
-		req.Header.Set("x-ms-source-content-crc64", base64.StdEncoding.EncodeToString(*blockBlobStageBlockFromURLOptions.SourceContentcrc64))
+		req.Header.Set("x-ms-source-content-crc64", base64.StdEncoding.EncodeToString(blockBlobStageBlockFromURLOptions.SourceContentcrc64))
 	}
 	if cpkInfo != nil && cpkInfo.EncryptionKey != nil {
 		req.Header.Set("x-ms-encryption-key", *cpkInfo.EncryptionKey)
@@ -812,7 +812,7 @@ func (client *blockBlobClient) uploadCreateRequest(ctx context.Context, contentL
 	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("x-ms-blob-type", "BlockBlob")
 	if blockBlobUploadOptions != nil && blockBlobUploadOptions.TransactionalContentMD5 != nil {
-		req.Header.Set("Content-MD5", base64.StdEncoding.EncodeToString(*blockBlobUploadOptions.TransactionalContentMD5))
+		req.Header.Set("Content-MD5", base64.StdEncoding.EncodeToString(blockBlobUploadOptions.TransactionalContentMD5))
 	}
 	req.Header.Set("Content-Length", strconv.FormatInt(contentLength, 10))
 	if blobHTTPHeaders != nil && blobHTTPHeaders.BlobContentType != nil {
@@ -825,13 +825,13 @@ func (client *blockBlobClient) uploadCreateRequest(ctx context.Context, contentL
 		req.Header.Set("x-ms-blob-content-language", *blobHTTPHeaders.BlobContentLanguage)
 	}
 	if blobHTTPHeaders != nil && blobHTTPHeaders.BlobContentMD5 != nil {
-		req.Header.Set("x-ms-blob-content-md5", base64.StdEncoding.EncodeToString(*blobHTTPHeaders.BlobContentMD5))
+		req.Header.Set("x-ms-blob-content-md5", base64.StdEncoding.EncodeToString(blobHTTPHeaders.BlobContentMD5))
 	}
 	if blobHTTPHeaders != nil && blobHTTPHeaders.BlobCacheControl != nil {
 		req.Header.Set("x-ms-blob-cache-control", *blobHTTPHeaders.BlobCacheControl)
 	}
 	if blockBlobUploadOptions != nil && blockBlobUploadOptions.Metadata != nil {
-		for k, v := range *blockBlobUploadOptions.Metadata {
+		for k, v := range blockBlobUploadOptions.Metadata {
 			req.Header.Set("x-ms-meta-"+k, v)
 		}
 	}

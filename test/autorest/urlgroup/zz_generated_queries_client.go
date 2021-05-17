@@ -56,7 +56,7 @@ func (client *QueriesClient) arrayStringCSVEmptyCreateRequest(ctx context.Contex
 	req.Telemetry(telemetryInfo)
 	reqQP := req.URL.Query()
 	if options != nil && options.ArrayQuery != nil {
-		reqQP.Set("arrayQuery", strings.Join(*options.ArrayQuery, ","))
+		reqQP.Set("arrayQuery", strings.Join(options.ArrayQuery, ","))
 	}
 	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
@@ -103,7 +103,7 @@ func (client *QueriesClient) arrayStringCSVNullCreateRequest(ctx context.Context
 	req.Telemetry(telemetryInfo)
 	reqQP := req.URL.Query()
 	if options != nil && options.ArrayQuery != nil {
-		reqQP.Set("arrayQuery", strings.Join(*options.ArrayQuery, ","))
+		reqQP.Set("arrayQuery", strings.Join(options.ArrayQuery, ","))
 	}
 	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
@@ -150,7 +150,7 @@ func (client *QueriesClient) arrayStringCSVValidCreateRequest(ctx context.Contex
 	req.Telemetry(telemetryInfo)
 	reqQP := req.URL.Query()
 	if options != nil && options.ArrayQuery != nil {
-		reqQP.Set("arrayQuery", strings.Join(*options.ArrayQuery, ","))
+		reqQP.Set("arrayQuery", strings.Join(options.ArrayQuery, ","))
 	}
 	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
@@ -198,7 +198,7 @@ func (client *QueriesClient) arrayStringNoCollectionFormatEmptyCreateRequest(ctx
 	req.Telemetry(telemetryInfo)
 	reqQP := req.URL.Query()
 	if options != nil && options.ArrayQuery != nil {
-		reqQP.Set("arrayQuery", strings.Join(*options.ArrayQuery, ","))
+		reqQP.Set("arrayQuery", strings.Join(options.ArrayQuery, ","))
 	}
 	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
@@ -245,7 +245,7 @@ func (client *QueriesClient) arrayStringPipesValidCreateRequest(ctx context.Cont
 	req.Telemetry(telemetryInfo)
 	reqQP := req.URL.Query()
 	if options != nil && options.ArrayQuery != nil {
-		reqQP.Set("arrayQuery", strings.Join(*options.ArrayQuery, "|"))
+		reqQP.Set("arrayQuery", strings.Join(options.ArrayQuery, "|"))
 	}
 	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
@@ -292,7 +292,7 @@ func (client *QueriesClient) arrayStringSsvValidCreateRequest(ctx context.Contex
 	req.Telemetry(telemetryInfo)
 	reqQP := req.URL.Query()
 	if options != nil && options.ArrayQuery != nil {
-		reqQP.Set("arrayQuery", strings.Join(*options.ArrayQuery, " "))
+		reqQP.Set("arrayQuery", strings.Join(options.ArrayQuery, " "))
 	}
 	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
@@ -339,7 +339,7 @@ func (client *QueriesClient) arrayStringTsvValidCreateRequest(ctx context.Contex
 	req.Telemetry(telemetryInfo)
 	reqQP := req.URL.Query()
 	if options != nil && options.ArrayQuery != nil {
-		reqQP.Set("arrayQuery", strings.Join(*options.ArrayQuery, "\t"))
+		reqQP.Set("arrayQuery", strings.Join(options.ArrayQuery, "\t"))
 	}
 	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
@@ -431,7 +431,7 @@ func (client *QueriesClient) byteMultiByteCreateRequest(ctx context.Context, opt
 	req.Telemetry(telemetryInfo)
 	reqQP := req.URL.Query()
 	if options != nil && options.ByteQuery != nil {
-		reqQP.Set("byteQuery", base64.StdEncoding.EncodeToString(*options.ByteQuery))
+		reqQP.Set("byteQuery", base64.StdEncoding.EncodeToString(options.ByteQuery))
 	}
 	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
@@ -478,7 +478,7 @@ func (client *QueriesClient) byteNullCreateRequest(ctx context.Context, options 
 	req.Telemetry(telemetryInfo)
 	reqQP := req.URL.Query()
 	if options != nil && options.ByteQuery != nil {
-		reqQP.Set("byteQuery", base64.StdEncoding.EncodeToString(*options.ByteQuery))
+		reqQP.Set("byteQuery", base64.StdEncoding.EncodeToString(options.ByteQuery))
 	}
 	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")

@@ -17,7 +17,7 @@ func newQueriesClient() *QueriesClient {
 func TestArrayStringCSVEmpty(t *testing.T) {
 	client := newQueriesClient()
 	result, err := client.ArrayStringCSVEmpty(context.Background(), &QueriesArrayStringCSVEmptyOptions{
-		ArrayQuery: &[]string{},
+		ArrayQuery: []string{},
 	})
 	if err != nil {
 		t.Fatal(err)
@@ -43,7 +43,7 @@ func TestArrayStringCSVNull(t *testing.T) {
 func TestArrayStringCsvValid(t *testing.T) {
 	client := newQueriesClient()
 	result, err := client.ArrayStringCSVValid(context.Background(), &QueriesArrayStringCSVValidOptions{
-		ArrayQuery: &[]string{"ArrayQuery1", "begin!*'();:@ &=+$,/?#[]end", "", ""},
+		ArrayQuery: []string{"ArrayQuery1", "begin!*'();:@ &=+$,/?#[]end", "", ""},
 	})
 	if err != nil {
 		t.Fatal(err)
@@ -57,7 +57,7 @@ func TestArrayStringCsvValid(t *testing.T) {
 func TestArrayStringPipesValid(t *testing.T) {
 	client := newQueriesClient()
 	result, err := client.ArrayStringPipesValid(context.Background(), &QueriesArrayStringPipesValidOptions{
-		ArrayQuery: &[]string{"ArrayQuery1", "begin!*'();:@ &=+$,/?#[]end", "", ""},
+		ArrayQuery: []string{"ArrayQuery1", "begin!*'();:@ &=+$,/?#[]end", "", ""},
 	})
 	if err != nil {
 		t.Fatal(err)
@@ -71,7 +71,7 @@ func TestArrayStringPipesValid(t *testing.T) {
 func TestArrayStringSsvValid(t *testing.T) {
 	client := newQueriesClient()
 	result, err := client.ArrayStringSsvValid(context.Background(), &QueriesArrayStringSsvValidOptions{
-		ArrayQuery: &[]string{"ArrayQuery1", "begin!*'();:@ &=+$,/?#[]end", "", ""},
+		ArrayQuery: []string{"ArrayQuery1", "begin!*'();:@ &=+$,/?#[]end", "", ""},
 	})
 	if err != nil {
 		t.Fatal(err)
@@ -85,7 +85,7 @@ func TestArrayStringSsvValid(t *testing.T) {
 func TestArrayStringTsvValid(t *testing.T) {
 	client := newQueriesClient()
 	result, err := client.ArrayStringTsvValid(context.Background(), &QueriesArrayStringTsvValidOptions{
-		ArrayQuery: &[]string{"ArrayQuery1", "begin!*'();:@ &=+$,/?#[]end", "", ""},
+		ArrayQuery: []string{"ArrayQuery1", "begin!*'();:@ &=+$,/?#[]end", "", ""},
 	})
 	if err != nil {
 		t.Fatal(err)
@@ -111,7 +111,7 @@ func TestByteEmpty(t *testing.T) {
 func TestByteMultiByte(t *testing.T) {
 	client := newQueriesClient()
 	result, err := client.ByteMultiByte(context.Background(), &QueriesByteMultiByteOptions{
-		ByteQuery: toByteSlicePtr([]byte("啊齄丂狛狜隣郎隣兀﨩")),
+		ByteQuery: []byte("啊齄丂狛狜隣郎隣兀﨩"),
 	})
 	if err != nil {
 		t.Fatal(err)
@@ -433,8 +433,4 @@ func TestStringUnicode(t *testing.T) {
 	if s := result.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
-}
-
-func toByteSlicePtr(v []byte) *[]byte {
-	return &v
 }

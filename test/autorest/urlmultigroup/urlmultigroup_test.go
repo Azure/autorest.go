@@ -17,7 +17,7 @@ func newQueriesClient() *QueriesClient {
 func TestURLMultiArrayStringMultiEmpty(t *testing.T) {
 	client := newQueriesClient()
 	result, err := client.ArrayStringMultiEmpty(context.Background(), &QueriesArrayStringMultiEmptyOptions{
-		ArrayQuery: &[]string{},
+		ArrayQuery: []string{},
 	})
 	if err != nil {
 		t.Fatalf("ArrayStringMultiEmpty: %v", err)
@@ -44,7 +44,7 @@ func TestURLMultiArrayStringMultiValid(t *testing.T) {
 	t.Skip("Cannot set nil for string value in string slice")
 	client := newQueriesClient()
 	result, err := client.ArrayStringMultiValid(context.Background(), &QueriesArrayStringMultiValidOptions{
-		ArrayQuery: &[]string{
+		ArrayQuery: []string{
 			"ArrayQuery1",
 			url.QueryEscape("begin!*'();:@ &=+$,/?#[]end"),
 			"",

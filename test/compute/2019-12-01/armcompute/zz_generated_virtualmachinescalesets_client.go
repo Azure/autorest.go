@@ -296,7 +296,7 @@ func (client *VirtualMachineScaleSetsClient) deallocateCreateRequest(ctx context
 	reqQP.Set("api-version", "2019-12-01")
 	req.URL.RawQuery = reqQP.Encode()
 	if options != nil && options.VMInstanceIDs != nil {
-		return req, req.MarshalAsJSON(options.VMInstanceIDs)
+		return req, req.MarshalAsJSON(*options.VMInstanceIDs)
 	}
 	return req, nil
 }
@@ -1065,7 +1065,7 @@ func (client *VirtualMachineScaleSetsClient) performMaintenanceCreateRequest(ctx
 	reqQP.Set("api-version", "2019-12-01")
 	req.URL.RawQuery = reqQP.Encode()
 	if options != nil && options.VMInstanceIDs != nil {
-		return req, req.MarshalAsJSON(options.VMInstanceIDs)
+		return req, req.MarshalAsJSON(*options.VMInstanceIDs)
 	}
 	return req, nil
 }
@@ -1180,7 +1180,7 @@ func (client *VirtualMachineScaleSetsClient) powerOffCreateRequest(ctx context.C
 	reqQP.Set("api-version", "2019-12-01")
 	req.URL.RawQuery = reqQP.Encode()
 	if options != nil && options.VMInstanceIDs != nil {
-		return req, req.MarshalAsJSON(options.VMInstanceIDs)
+		return req, req.MarshalAsJSON(*options.VMInstanceIDs)
 	}
 	return req, nil
 }
@@ -1288,7 +1288,7 @@ func (client *VirtualMachineScaleSetsClient) redeployCreateRequest(ctx context.C
 	reqQP.Set("api-version", "2019-12-01")
 	req.URL.RawQuery = reqQP.Encode()
 	if options != nil && options.VMInstanceIDs != nil {
-		return req, req.MarshalAsJSON(options.VMInstanceIDs)
+		return req, req.MarshalAsJSON(*options.VMInstanceIDs)
 	}
 	return req, nil
 }
@@ -1400,7 +1400,7 @@ func (client *VirtualMachineScaleSetsClient) reimageCreateRequest(ctx context.Co
 	reqQP.Set("api-version", "2019-12-01")
 	req.URL.RawQuery = reqQP.Encode()
 	if options != nil && options.VMScaleSetReimageInput != nil {
-		return req, req.MarshalAsJSON(options.VMScaleSetReimageInput)
+		return req, req.MarshalAsJSON(*options.VMScaleSetReimageInput)
 	}
 	return req, nil
 }
@@ -1510,7 +1510,7 @@ func (client *VirtualMachineScaleSetsClient) reimageAllCreateRequest(ctx context
 	reqQP.Set("api-version", "2019-12-01")
 	req.URL.RawQuery = reqQP.Encode()
 	if options != nil && options.VMInstanceIDs != nil {
-		return req, req.MarshalAsJSON(options.VMInstanceIDs)
+		return req, req.MarshalAsJSON(*options.VMInstanceIDs)
 	}
 	return req, nil
 }
@@ -1618,7 +1618,7 @@ func (client *VirtualMachineScaleSetsClient) restartCreateRequest(ctx context.Co
 	reqQP.Set("api-version", "2019-12-01")
 	req.URL.RawQuery = reqQP.Encode()
 	if options != nil && options.VMInstanceIDs != nil {
-		return req, req.MarshalAsJSON(options.VMInstanceIDs)
+		return req, req.MarshalAsJSON(*options.VMInstanceIDs)
 	}
 	return req, nil
 }
@@ -1831,7 +1831,7 @@ func (client *VirtualMachineScaleSetsClient) startCreateRequest(ctx context.Cont
 	reqQP.Set("api-version", "2019-12-01")
 	req.URL.RawQuery = reqQP.Encode()
 	if options != nil && options.VMInstanceIDs != nil {
-		return req, req.MarshalAsJSON(options.VMInstanceIDs)
+		return req, req.MarshalAsJSON(*options.VMInstanceIDs)
 	}
 	return req, nil
 }
