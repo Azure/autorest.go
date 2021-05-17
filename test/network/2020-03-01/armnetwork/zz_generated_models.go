@@ -8,10 +8,8 @@
 package armnetwork
 
 import (
-	"context"
 	"encoding/json"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"net/http"
 	"reflect"
 	"time"
 )
@@ -150,15 +148,6 @@ func (a ApplicationGatewayAvailableSSLOptionsPropertiesFormat) MarshalJSON() ([]
 	return json.Marshal(objectMap)
 }
 
-// ApplicationGatewayAvailableSSLOptionsResponse is the response envelope for operations that return a ApplicationGatewayAvailableSSLOptions type.
-type ApplicationGatewayAvailableSSLOptionsResponse struct {
-	// Response for ApplicationGatewayAvailableSslOptions API service call.
-	ApplicationGatewayAvailableSSLOptions *ApplicationGatewayAvailableSSLOptions
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // ApplicationGatewayAvailableSSLPredefinedPolicies - Response for ApplicationGatewayAvailableSslOptions API service call.
 type ApplicationGatewayAvailableSSLPredefinedPolicies struct {
 	// URL to get the next set of results.
@@ -176,16 +165,6 @@ func (a ApplicationGatewayAvailableSSLPredefinedPolicies) MarshalJSON() ([]byte,
 	return json.Marshal(objectMap)
 }
 
-// ApplicationGatewayAvailableSSLPredefinedPoliciesResponse is the response envelope for operations that return a ApplicationGatewayAvailableSSLPredefinedPolicies
-// type.
-type ApplicationGatewayAvailableSSLPredefinedPoliciesResponse struct {
-	// Response for ApplicationGatewayAvailableSslOptions API service call.
-	ApplicationGatewayAvailableSSLPredefinedPolicies *ApplicationGatewayAvailableSSLPredefinedPolicies
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // ApplicationGatewayAvailableWafRuleSetsResult - Response for ApplicationGatewayAvailableWafRuleSets API service call.
 type ApplicationGatewayAvailableWafRuleSetsResult struct {
 	// The list of application gateway rule sets.
@@ -197,16 +176,6 @@ func (a ApplicationGatewayAvailableWafRuleSetsResult) MarshalJSON() ([]byte, err
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "value", a.Value)
 	return json.Marshal(objectMap)
-}
-
-// ApplicationGatewayAvailableWafRuleSetsResultResponse is the response envelope for operations that return a ApplicationGatewayAvailableWafRuleSetsResult
-// type.
-type ApplicationGatewayAvailableWafRuleSetsResultResponse struct {
-	// Response for ApplicationGatewayAvailableWafRuleSets API service call.
-	ApplicationGatewayAvailableWafRuleSetsResult *ApplicationGatewayAvailableWafRuleSetsResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ApplicationGatewayBackendAddress - Backend address of an application gateway.
@@ -396,40 +365,6 @@ type ApplicationGatewayBackendHealthOnDemand struct {
 	BackendHealthHTTPSettings *ApplicationGatewayBackendHealthHTTPSettings `json:"backendHealthHttpSettings,omitempty"`
 }
 
-// ApplicationGatewayBackendHealthOnDemandPollerResponse is the response envelope for operations that asynchronously return a ApplicationGatewayBackendHealthOnDemand
-// type.
-type ApplicationGatewayBackendHealthOnDemandPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ApplicationGatewayBackendHealthOnDemandResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller ApplicationGatewayBackendHealthOnDemandPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ApplicationGatewayBackendHealthOnDemandResponse is the response envelope for operations that return a ApplicationGatewayBackendHealthOnDemand type.
-type ApplicationGatewayBackendHealthOnDemandResponse struct {
-	// Result of on demand test probe.
-	ApplicationGatewayBackendHealthOnDemand *ApplicationGatewayBackendHealthOnDemand
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ApplicationGatewayBackendHealthPollerResponse is the response envelope for operations that asynchronously return a ApplicationGatewayBackendHealth type.
-type ApplicationGatewayBackendHealthPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ApplicationGatewayBackendHealthResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller ApplicationGatewayBackendHealthPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // ApplicationGatewayBackendHealthPool - Application gateway BackendHealth pool.
 type ApplicationGatewayBackendHealthPool struct {
 	// Reference to an ApplicationGatewayBackendAddressPool resource.
@@ -445,15 +380,6 @@ func (a ApplicationGatewayBackendHealthPool) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "backendAddressPool", a.BackendAddressPool)
 	populate(objectMap, "backendHttpSettingsCollection", a.BackendHTTPSettingsCollection)
 	return json.Marshal(objectMap)
-}
-
-// ApplicationGatewayBackendHealthResponse is the response envelope for operations that return a ApplicationGatewayBackendHealth type.
-type ApplicationGatewayBackendHealthResponse struct {
-	// Response for ApplicationGatewayBackendHealth API service call.
-	ApplicationGatewayBackendHealth *ApplicationGatewayBackendHealth
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ApplicationGatewayBackendHealthServer - Application gateway backendhealth http settings.
@@ -803,15 +729,6 @@ func (a ApplicationGatewayListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// ApplicationGatewayListResultResponse is the response envelope for operations that return a ApplicationGatewayListResult type.
-type ApplicationGatewayListResultResponse struct {
-	// Response for ListApplicationGateways API service call.
-	ApplicationGatewayListResult *ApplicationGatewayListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // ApplicationGatewayOnDemandProbe - Details of on demand test probe request.
 type ApplicationGatewayOnDemandProbe struct {
 	// Reference to backend pool of application gateway to which probe request will be sent.
@@ -901,18 +818,6 @@ func (a ApplicationGatewayPathRulePropertiesFormat) MarshalJSON() ([]byte, error
 	populate(objectMap, "redirectConfiguration", a.RedirectConfiguration)
 	populate(objectMap, "rewriteRuleSet", a.RewriteRuleSet)
 	return json.Marshal(objectMap)
-}
-
-// ApplicationGatewayPollerResponse is the response envelope for operations that asynchronously return a ApplicationGateway type.
-type ApplicationGatewayPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ApplicationGatewayResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller ApplicationGatewayPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ApplicationGatewayProbe - Probe of the application gateway.
@@ -1241,15 +1146,6 @@ type ApplicationGatewayRequestRoutingRulePropertiesFormat struct {
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
-// ApplicationGatewayResponse is the response envelope for operations that return a ApplicationGateway type.
-type ApplicationGatewayResponse struct {
-	// Application gateway resource.
-	ApplicationGateway *ApplicationGateway
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // ApplicationGatewayRewriteRule - Rewrite rule of an application gateway.
 type ApplicationGatewayRewriteRule struct {
 	// Set of actions to be done as part of the rewrite Rule.
@@ -1468,15 +1364,6 @@ func (a ApplicationGatewaySSLPredefinedPolicyPropertiesFormat) MarshalJSON() ([]
 	populate(objectMap, "cipherSuites", a.CipherSuites)
 	populate(objectMap, "minProtocolVersion", a.MinProtocolVersion)
 	return json.Marshal(objectMap)
-}
-
-// ApplicationGatewaySSLPredefinedPolicyResponse is the response envelope for operations that return a ApplicationGatewaySSLPredefinedPolicy type.
-type ApplicationGatewaySSLPredefinedPolicyResponse struct {
-	// An Ssl predefined policy.
-	ApplicationGatewaySSLPredefinedPolicy *ApplicationGatewaySSLPredefinedPolicy
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ApplicationGatewayTrustedRootCertificate - Trusted Root certificates of an application gateway.
@@ -1829,27 +1716,6 @@ func (a ApplicationSecurityGroupListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// ApplicationSecurityGroupListResultResponse is the response envelope for operations that return a ApplicationSecurityGroupListResult type.
-type ApplicationSecurityGroupListResultResponse struct {
-	// A list of application security groups.
-	ApplicationSecurityGroupListResult *ApplicationSecurityGroupListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ApplicationSecurityGroupPollerResponse is the response envelope for operations that asynchronously return a ApplicationSecurityGroup type.
-type ApplicationSecurityGroupPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ApplicationSecurityGroupResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller ApplicationSecurityGroupPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // ApplicationSecurityGroupPropertiesFormat - Application security group properties.
 type ApplicationSecurityGroupPropertiesFormat struct {
 	// READ-ONLY; The provisioning state of the application security group resource.
@@ -1859,15 +1725,6 @@ type ApplicationSecurityGroupPropertiesFormat struct {
 	// or migrate the resource across subscriptions or resource
 	// groups.
 	ResourceGUID *string `json:"resourceGuid,omitempty" azure:"ro"`
-}
-
-// ApplicationSecurityGroupResponse is the response envelope for operations that return a ApplicationSecurityGroup type.
-type ApplicationSecurityGroupResponse struct {
-	// An application security group in a resource group.
-	ApplicationSecurityGroup *ApplicationSecurityGroup
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ApplicationSecurityGroupsBeginCreateOrUpdateOptions contains the optional parameters for the ApplicationSecurityGroups.BeginCreateOrUpdate method.
@@ -1917,15 +1774,6 @@ func (a AuthorizationListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// AuthorizationListResultResponse is the response envelope for operations that return a AuthorizationListResult type.
-type AuthorizationListResultResponse struct {
-	// Response for ListAuthorizations API service call retrieves all authorizations that belongs to an ExpressRouteCircuit.
-	AuthorizationListResult *AuthorizationListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // AuthorizationPropertiesFormat - Properties of ExpressRouteCircuitAuthorization.
 type AuthorizationPropertiesFormat struct {
 	// The authorization key.
@@ -1959,15 +1807,6 @@ func (a AutoApprovedPrivateLinkServicesResult) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "nextLink", a.NextLink)
 	populate(objectMap, "value", a.Value)
 	return json.Marshal(objectMap)
-}
-
-// AutoApprovedPrivateLinkServicesResultResponse is the response envelope for operations that return a AutoApprovedPrivateLinkServicesResult type.
-type AutoApprovedPrivateLinkServicesResultResponse struct {
-	// An array of private link service id that can be linked to a private end point with auto approved.
-	AutoApprovedPrivateLinkServicesResult *AutoApprovedPrivateLinkServicesResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // Availability of the metric.
@@ -2033,15 +1872,6 @@ func (a AvailableDelegationsResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// AvailableDelegationsResultResponse is the response envelope for operations that return a AvailableDelegationsResult type.
-type AvailableDelegationsResultResponse struct {
-	// An array of available delegations.
-	AvailableDelegationsResult *AvailableDelegationsResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // AvailableEndpointServicesListOptions contains the optional parameters for the AvailableEndpointServices.List method.
 type AvailableEndpointServicesListOptions struct {
 	// placeholder for future optional parameters
@@ -2087,15 +1917,6 @@ func (a AvailablePrivateEndpointTypesResult) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "nextLink", a.NextLink)
 	populate(objectMap, "value", a.Value)
 	return json.Marshal(objectMap)
-}
-
-// AvailablePrivateEndpointTypesResultResponse is the response envelope for operations that return a AvailablePrivateEndpointTypesResult type.
-type AvailablePrivateEndpointTypesResultResponse struct {
-	// An array of available PrivateEndpoint types.
-	AvailablePrivateEndpointTypesResult *AvailablePrivateEndpointTypesResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // AvailableProvidersList - List of available countries with details.
@@ -2174,27 +1995,6 @@ func (a AvailableProvidersListParameters) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// AvailableProvidersListPollerResponse is the response envelope for operations that asynchronously return a AvailableProvidersList type.
-type AvailableProvidersListPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (AvailableProvidersListResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller AvailableProvidersListPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// AvailableProvidersListResponse is the response envelope for operations that return a AvailableProvidersList type.
-type AvailableProvidersListResponse struct {
-	// List of available countries with details.
-	AvailableProvidersList *AvailableProvidersList
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // AvailableProvidersListState - State details.
 type AvailableProvidersListState struct {
 	// List of available cities or towns in the state.
@@ -2261,15 +2061,6 @@ func (a AvailableServiceAliasesResult) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "nextLink", a.NextLink)
 	populate(objectMap, "value", a.Value)
 	return json.Marshal(objectMap)
-}
-
-// AvailableServiceAliasesResultResponse is the response envelope for operations that return a AvailableServiceAliasesResult type.
-type AvailableServiceAliasesResultResponse struct {
-	// An array of available service aliases.
-	AvailableServiceAliasesResult *AvailableServiceAliasesResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // AzureAsyncOperationResult - The response body contains the status of the specified asynchronous operation, indicating whether it has succeeded, is in
@@ -2435,15 +2226,6 @@ func (a AzureFirewallFqdnTagListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// AzureFirewallFqdnTagListResultResponse is the response envelope for operations that return a AzureFirewallFqdnTagListResult type.
-type AzureFirewallFqdnTagListResultResponse struct {
-	// Response for ListAzureFirewallFqdnTags API service call.
-	AzureFirewallFqdnTagListResult *AzureFirewallFqdnTagListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // AzureFirewallFqdnTagPropertiesFormat - Azure Firewall FQDN Tag Properties.
 type AzureFirewallFqdnTagPropertiesFormat struct {
 	// READ-ONLY; The name of this FQDN Tag.
@@ -2523,15 +2305,6 @@ func (a AzureFirewallListResult) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "nextLink", a.NextLink)
 	populate(objectMap, "value", a.Value)
 	return json.Marshal(objectMap)
-}
-
-// AzureFirewallListResultResponse is the response envelope for operations that return a AzureFirewallListResult type.
-type AzureFirewallListResultResponse struct {
-	// Response for ListAzureFirewalls API service call.
-	AzureFirewallListResult *AzureFirewallListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // AzureFirewallNatRCAction - AzureFirewall NAT Rule Collection Action.
@@ -2728,18 +2501,6 @@ func (a AzureFirewallNetworkRuleCollectionPropertiesFormat) MarshalJSON() ([]byt
 	return json.Marshal(objectMap)
 }
 
-// AzureFirewallPollerResponse is the response envelope for operations that asynchronously return a AzureFirewall type.
-type AzureFirewallPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (AzureFirewallResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller AzureFirewallPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // AzureFirewallPropertiesFormat - Properties of the Azure Firewall.
 type AzureFirewallPropertiesFormat struct {
 	// The additional properties used to further config this azure firewall.
@@ -2811,15 +2572,6 @@ type AzureFirewallPublicIPAddress struct {
 type AzureFirewallRCAction struct {
 	// The type of action.
 	Type *AzureFirewallRCActionType `json:"type,omitempty"`
-}
-
-// AzureFirewallResponse is the response envelope for operations that return a AzureFirewall type.
-type AzureFirewallResponse struct {
-	// Azure Firewall resource.
-	AzureFirewall *AzureFirewall
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // AzureFirewallSKU - SKU of an Azure Firewall.
@@ -3022,27 +2774,6 @@ func (a *AzureReachabilityReportParameters) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// AzureReachabilityReportPollerResponse is the response envelope for operations that asynchronously return a AzureReachabilityReport type.
-type AzureReachabilityReportPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (AzureReachabilityReportResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller AzureReachabilityReportPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// AzureReachabilityReportResponse is the response envelope for operations that return a AzureReachabilityReport type.
-type AzureReachabilityReportResponse struct {
-	// Azure reachability report details.
-	AzureReachabilityReport *AzureReachabilityReport
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // BGPCommunity - Contains bgp community information offered in Service Community resources.
 type BGPCommunity struct {
 	// The name of the bgp community. e.g. Skype.
@@ -3131,15 +2862,6 @@ func (b BackendAddressPoolPropertiesFormat) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// BackendAddressPoolResponse is the response envelope for operations that return a BackendAddressPool type.
-type BackendAddressPoolResponse struct {
-	// Pool of backend IP addresses.
-	BackendAddressPool *BackendAddressPool
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // BastionActiveSession - The session detail for a target.
 type BastionActiveSession struct {
 	// READ-ONLY; The protocol used to connect to the target.
@@ -3191,28 +2913,6 @@ func (b BastionActiveSessionListResult) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "nextLink", b.NextLink)
 	populate(objectMap, "value", b.Value)
 	return json.Marshal(objectMap)
-}
-
-// BastionActiveSessionListResultPagerPollerResponse is the response envelope for operations that asynchronously return a BastionActiveSessionListResultPager
-// type.
-type BastionActiveSessionListResultPagerPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (BastionActiveSessionListResultPager, error)
-
-	// Poller contains an initialized poller.
-	Poller BastionActiveSessionListResultPagerPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// BastionActiveSessionListResultResponse is the response envelope for operations that return a BastionActiveSessionListResult type.
-type BastionActiveSessionListResultResponse struct {
-	// Response for GetActiveSessions.
-	BastionActiveSessionListResult *BastionActiveSessionListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // BastionHost - Bastion Host resource.
@@ -3291,27 +2991,6 @@ func (b BastionHostListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// BastionHostListResultResponse is the response envelope for operations that return a BastionHostListResult type.
-type BastionHostListResultResponse struct {
-	// Response for ListBastionHosts API service call.
-	BastionHostListResult *BastionHostListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// BastionHostPollerResponse is the response envelope for operations that asynchronously return a BastionHost type.
-type BastionHostPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (BastionHostResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller BastionHostPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // BastionHostPropertiesFormat - Properties of the Bastion Host.
 type BastionHostPropertiesFormat struct {
 	// FQDN for the endpoint on which bastion host is accessible.
@@ -3331,15 +3010,6 @@ func (b BastionHostPropertiesFormat) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "ipConfigurations", b.IPConfigurations)
 	populate(objectMap, "provisioningState", b.ProvisioningState)
 	return json.Marshal(objectMap)
-}
-
-// BastionHostResponse is the response envelope for operations that return a BastionHost type.
-type BastionHostResponse struct {
-	// Bastion Host resource.
-	BastionHost *BastionHost
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // BastionHostsBeginCreateOrUpdateOptions contains the optional parameters for the BastionHosts.BeginCreateOrUpdate method.
@@ -3382,15 +3052,6 @@ func (b BastionSessionDeleteResult) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "nextLink", b.NextLink)
 	populate(objectMap, "value", b.Value)
 	return json.Marshal(objectMap)
-}
-
-// BastionSessionDeleteResultResponse is the response envelope for operations that return a BastionSessionDeleteResult type.
-type BastionSessionDeleteResultResponse struct {
-	// Response for DisconnectActiveSessions.
-	BastionSessionDeleteResult *BastionSessionDeleteResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // BastionSessionState - The session state detail for a target.
@@ -3450,28 +3111,6 @@ func (b BastionShareableLinkListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// BastionShareableLinkListResultPagerPollerResponse is the response envelope for operations that asynchronously return a BastionShareableLinkListResultPager
-// type.
-type BastionShareableLinkListResultPagerPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (BastionShareableLinkListResultPager, error)
-
-	// Poller contains an initialized poller.
-	Poller BastionShareableLinkListResultPagerPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// BastionShareableLinkListResultResponse is the response envelope for operations that return a BastionShareableLinkListResult type.
-type BastionShareableLinkListResultResponse struct {
-	// Response for all the Bastion Shareable Link endpoints.
-	BastionShareableLinkListResult *BastionShareableLinkListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // BgpPeerStatus - BGP peer status details.
 type BgpPeerStatus struct {
 	// READ-ONLY; The autonomous system number of the remote BGP peer.
@@ -3512,27 +3151,6 @@ func (b BgpPeerStatusListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// BgpPeerStatusListResultPollerResponse is the response envelope for operations that asynchronously return a BgpPeerStatusListResult type.
-type BgpPeerStatusListResultPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (BgpPeerStatusListResultResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller BgpPeerStatusListResultPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// BgpPeerStatusListResultResponse is the response envelope for operations that return a BgpPeerStatusListResult type.
-type BgpPeerStatusListResultResponse struct {
-	// Response for list BGP peer status API service call.
-	BgpPeerStatusListResult *BgpPeerStatusListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // BgpServiceCommunitiesListOptions contains the optional parameters for the BgpServiceCommunities.List method.
 type BgpServiceCommunitiesListOptions struct {
 	// placeholder for future optional parameters
@@ -3567,15 +3185,6 @@ func (b BgpServiceCommunityListResult) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "nextLink", b.NextLink)
 	populate(objectMap, "value", b.Value)
 	return json.Marshal(objectMap)
-}
-
-// BgpServiceCommunityListResultResponse is the response envelope for operations that return a BgpServiceCommunityListResult type.
-type BgpServiceCommunityListResultResponse struct {
-	// Response for the ListServiceCommunity API service call.
-	BgpServiceCommunityListResult *BgpServiceCommunityListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // BgpServiceCommunityPropertiesFormat - Properties of Service Community.
@@ -3799,15 +3408,6 @@ func (c ConnectionMonitorListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// ConnectionMonitorListResultResponse is the response envelope for operations that return a ConnectionMonitorListResult type.
-type ConnectionMonitorListResultResponse struct {
-	// List of connection monitors.
-	ConnectionMonitorListResult *ConnectionMonitorListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // ConnectionMonitorOutput - Describes a connection monitor output destination.
 type ConnectionMonitorOutput struct {
 	// Connection monitor output destination type. Currently, only "Workspace" is supported.
@@ -3932,27 +3532,6 @@ func (c ConnectionMonitorQueryResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// ConnectionMonitorQueryResultPollerResponse is the response envelope for operations that asynchronously return a ConnectionMonitorQueryResult type.
-type ConnectionMonitorQueryResultPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ConnectionMonitorQueryResultResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller ConnectionMonitorQueryResultPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ConnectionMonitorQueryResultResponse is the response envelope for operations that return a ConnectionMonitorQueryResult type.
-type ConnectionMonitorQueryResultResponse struct {
-	// List of connection states snapshots.
-	ConnectionMonitorQueryResult *ConnectionMonitorQueryResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // ConnectionMonitorResult - Information about the connection monitor.
 type ConnectionMonitorResult struct {
 	// Connection monitor location.
@@ -3988,18 +3567,6 @@ func (c ConnectionMonitorResult) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "tags", c.Tags)
 	populate(objectMap, "type", c.Type)
 	return json.Marshal(objectMap)
-}
-
-// ConnectionMonitorResultPollerResponse is the response envelope for operations that asynchronously return a ConnectionMonitorResult type.
-type ConnectionMonitorResultPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ConnectionMonitorResultResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller ConnectionMonitorResultPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ConnectionMonitorResultProperties - Describes the properties of a connection monitor.
@@ -4057,15 +3624,6 @@ func (c *ConnectionMonitorResultProperties) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return c.ConnectionMonitorParameters.unmarshalInternal(rawMsg)
-}
-
-// ConnectionMonitorResultResponse is the response envelope for operations that return a ConnectionMonitorResult type.
-type ConnectionMonitorResultResponse struct {
-	// Information about the connection monitor.
-	ConnectionMonitorResult *ConnectionMonitorResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ConnectionMonitorSource - Describes the source of connection monitor.
@@ -4203,27 +3761,6 @@ type ConnectionResetSharedKey struct {
 	KeyLength *int32 `json:"keyLength,omitempty"`
 }
 
-// ConnectionResetSharedKeyPollerResponse is the response envelope for operations that asynchronously return a ConnectionResetSharedKey type.
-type ConnectionResetSharedKeyPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ConnectionResetSharedKeyResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller ConnectionResetSharedKeyPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ConnectionResetSharedKeyResponse is the response envelope for operations that return a ConnectionResetSharedKey type.
-type ConnectionResetSharedKeyResponse struct {
-	// The virtual network connection reset shared key.
-	ConnectionResetSharedKey *ConnectionResetSharedKey
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // ConnectionSharedKey - Response for GetConnectionSharedKey API service call.
 type ConnectionSharedKey struct {
 	SubResource
@@ -4236,27 +3773,6 @@ func (c ConnectionSharedKey) MarshalJSON() ([]byte, error) {
 	objectMap := c.SubResource.marshalInternal()
 	populate(objectMap, "value", c.Value)
 	return json.Marshal(objectMap)
-}
-
-// ConnectionSharedKeyPollerResponse is the response envelope for operations that asynchronously return a ConnectionSharedKey type.
-type ConnectionSharedKeyPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ConnectionSharedKeyResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller ConnectionSharedKeyPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ConnectionSharedKeyResponse is the response envelope for operations that return a ConnectionSharedKey type.
-type ConnectionSharedKeyResponse struct {
-	// Response for GetConnectionSharedKey API service call.
-	ConnectionSharedKey *ConnectionSharedKey
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ConnectionStateSnapshot - Connection state snapshot.
@@ -4439,27 +3955,6 @@ func (c ConnectivityInformation) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "probesFailed", c.ProbesFailed)
 	populate(objectMap, "probesSent", c.ProbesSent)
 	return json.Marshal(objectMap)
-}
-
-// ConnectivityInformationPollerResponse is the response envelope for operations that asynchronously return a ConnectivityInformation type.
-type ConnectivityInformationPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ConnectivityInformationResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller ConnectivityInformationPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ConnectivityInformationResponse is the response envelope for operations that return a ConnectivityInformation type.
-type ConnectivityInformationResponse struct {
-	// Information on the connectivity status.
-	ConnectivityInformation *ConnectivityInformation
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ConnectivityIssue - Information about an issue encountered in the process of checking for connectivity.
@@ -4661,15 +4156,6 @@ type DNSNameAvailabilityResult struct {
 	Available *bool `json:"available,omitempty"`
 }
 
-// DNSNameAvailabilityResultResponse is the response envelope for operations that return a DNSNameAvailabilityResult type.
-type DNSNameAvailabilityResultResponse struct {
-	// Response for the CheckDnsNameAvailability API service call.
-	DNSNameAvailabilityResult *DNSNameAvailabilityResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // DdosCustomPoliciesBeginCreateOrUpdateOptions contains the optional parameters for the DdosCustomPolicies.BeginCreateOrUpdate method.
 type DdosCustomPoliciesBeginCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
@@ -4708,18 +4194,6 @@ func (d DdosCustomPolicy) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// DdosCustomPolicyPollerResponse is the response envelope for operations that asynchronously return a DdosCustomPolicy type.
-type DdosCustomPolicyPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (DdosCustomPolicyResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller DdosCustomPolicyPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // DdosCustomPolicyPropertiesFormat - DDoS custom policy properties.
 type DdosCustomPolicyPropertiesFormat struct {
 	// The protocol-specific DDoS policy customization parameters.
@@ -4744,15 +4218,6 @@ func (d DdosCustomPolicyPropertiesFormat) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "publicIPAddresses", d.PublicIPAddresses)
 	populate(objectMap, "resourceGuid", d.ResourceGUID)
 	return json.Marshal(objectMap)
-}
-
-// DdosCustomPolicyResponse is the response envelope for operations that return a DdosCustomPolicy type.
-type DdosCustomPolicyResponse struct {
-	// A DDoS custom policy in a resource group.
-	DdosCustomPolicy *DdosCustomPolicy
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // DdosProtectionPlan - A DDoS protection plan in a resource group.
@@ -4809,27 +4274,6 @@ func (d DdosProtectionPlanListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// DdosProtectionPlanListResultResponse is the response envelope for operations that return a DdosProtectionPlanListResult type.
-type DdosProtectionPlanListResultResponse struct {
-	// A list of DDoS protection plans.
-	DdosProtectionPlanListResult *DdosProtectionPlanListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// DdosProtectionPlanPollerResponse is the response envelope for operations that asynchronously return a DdosProtectionPlan type.
-type DdosProtectionPlanPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (DdosProtectionPlanResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller DdosProtectionPlanPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // DdosProtectionPlanPropertiesFormat - DDoS protection plan properties.
 type DdosProtectionPlanPropertiesFormat struct {
 	// READ-ONLY; The provisioning state of the DDoS protection plan resource.
@@ -4850,15 +4294,6 @@ func (d DdosProtectionPlanPropertiesFormat) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "resourceGuid", d.ResourceGUID)
 	populate(objectMap, "virtualNetworks", d.VirtualNetworks)
 	return json.Marshal(objectMap)
-}
-
-// DdosProtectionPlanResponse is the response envelope for operations that return a DdosProtectionPlan type.
-type DdosProtectionPlanResponse struct {
-	// A DDoS protection plan in a resource group.
-	DdosProtectionPlan *DdosProtectionPlan
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // DdosProtectionPlansBeginCreateOrUpdateOptions contains the optional parameters for the DdosProtectionPlans.BeginCreateOrUpdate method.
@@ -5024,28 +4459,6 @@ func (e EffectiveNetworkSecurityGroupListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// EffectiveNetworkSecurityGroupListResultPollerResponse is the response envelope for operations that asynchronously return a EffectiveNetworkSecurityGroupListResult
-// type.
-type EffectiveNetworkSecurityGroupListResultPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (EffectiveNetworkSecurityGroupListResultResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller EffectiveNetworkSecurityGroupListResultPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// EffectiveNetworkSecurityGroupListResultResponse is the response envelope for operations that return a EffectiveNetworkSecurityGroupListResult type.
-type EffectiveNetworkSecurityGroupListResultResponse struct {
-	// Response for list effective network security groups API service call.
-	EffectiveNetworkSecurityGroupListResult *EffectiveNetworkSecurityGroupListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // EffectiveNetworkSecurityRule - Effective network security rules.
 type EffectiveNetworkSecurityRule struct {
 	// Whether network traffic is allowed or denied.
@@ -5172,27 +4585,6 @@ func (e EffectiveRouteListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// EffectiveRouteListResultPollerResponse is the response envelope for operations that asynchronously return a EffectiveRouteListResult type.
-type EffectiveRouteListResultPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (EffectiveRouteListResultResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller EffectiveRouteListResultPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// EffectiveRouteListResultResponse is the response envelope for operations that return a EffectiveRouteListResult type.
-type EffectiveRouteListResultResponse struct {
-	// Response for list effective route API service call.
-	EffectiveRouteListResult *EffectiveRouteListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // EndpointServiceResult - Endpoint service.
 type EndpointServiceResult struct {
 	SubResource
@@ -5226,15 +4618,6 @@ func (e EndpointServicesListResult) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "nextLink", e.NextLink)
 	populate(objectMap, "value", e.Value)
 	return json.Marshal(objectMap)
-}
-
-// EndpointServicesListResultResponse is the response envelope for operations that return a EndpointServicesListResult type.
-type EndpointServicesListResultResponse struct {
-	// Response for the ListAvailableEndpointServices API service call.
-	EndpointServicesListResult *EndpointServicesListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // Error - Common error representation.
@@ -5377,28 +4760,6 @@ func (e ExpressRouteCircuitAuthorization) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// ExpressRouteCircuitAuthorizationPollerResponse is the response envelope for operations that asynchronously return a ExpressRouteCircuitAuthorization
-// type.
-type ExpressRouteCircuitAuthorizationPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitAuthorizationResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller ExpressRouteCircuitAuthorizationPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ExpressRouteCircuitAuthorizationResponse is the response envelope for operations that return a ExpressRouteCircuitAuthorization type.
-type ExpressRouteCircuitAuthorizationResponse struct {
-	// Authorization in an ExpressRouteCircuit resource.
-	ExpressRouteCircuitAuthorization *ExpressRouteCircuitAuthorization
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // ExpressRouteCircuitAuthorizationsBeginCreateOrUpdateOptions contains the optional parameters for the ExpressRouteCircuitAuthorizations.BeginCreateOrUpdate
 // method.
 type ExpressRouteCircuitAuthorizationsBeginCreateOrUpdateOptions struct {
@@ -5464,27 +4825,6 @@ func (e ExpressRouteCircuitConnectionListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// ExpressRouteCircuitConnectionListResultResponse is the response envelope for operations that return a ExpressRouteCircuitConnectionListResult type.
-type ExpressRouteCircuitConnectionListResultResponse struct {
-	// Response for ListConnections API service call retrieves all global reach connections that belongs to a Private Peering for an ExpressRouteCircuit.
-	ExpressRouteCircuitConnectionListResult *ExpressRouteCircuitConnectionListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ExpressRouteCircuitConnectionPollerResponse is the response envelope for operations that asynchronously return a ExpressRouteCircuitConnection type.
-type ExpressRouteCircuitConnectionPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitConnectionResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller ExpressRouteCircuitConnectionPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // ExpressRouteCircuitConnectionPropertiesFormat - Properties of the express route circuit connection.
 type ExpressRouteCircuitConnectionPropertiesFormat struct {
 	// /29 IP address space to carve out Customer addresses for tunnels.
@@ -5507,15 +4847,6 @@ type ExpressRouteCircuitConnectionPropertiesFormat struct {
 
 	// READ-ONLY; The provisioning state of the express route circuit connection resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-}
-
-// ExpressRouteCircuitConnectionResponse is the response envelope for operations that return a ExpressRouteCircuitConnection type.
-type ExpressRouteCircuitConnectionResponse struct {
-	// Express Route Circuit Connection in an ExpressRouteCircuitPeering resource.
-	ExpressRouteCircuitConnection *ExpressRouteCircuitConnection
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ExpressRouteCircuitConnectionsBeginCreateOrUpdateOptions contains the optional parameters for the ExpressRouteCircuitConnections.BeginCreateOrUpdate
@@ -5554,15 +4885,6 @@ func (e ExpressRouteCircuitListResult) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "nextLink", e.NextLink)
 	populate(objectMap, "value", e.Value)
 	return json.Marshal(objectMap)
-}
-
-// ExpressRouteCircuitListResultResponse is the response envelope for operations that return a ExpressRouteCircuitListResult type.
-type ExpressRouteCircuitListResultResponse struct {
-	// Response for ListExpressRouteCircuit API service call.
-	ExpressRouteCircuitListResult *ExpressRouteCircuitListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ExpressRouteCircuitPeering - Peering in an ExpressRouteCircuit resource.
@@ -5645,27 +4967,6 @@ func (e ExpressRouteCircuitPeeringListResult) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "nextLink", e.NextLink)
 	populate(objectMap, "value", e.Value)
 	return json.Marshal(objectMap)
-}
-
-// ExpressRouteCircuitPeeringListResultResponse is the response envelope for operations that return a ExpressRouteCircuitPeeringListResult type.
-type ExpressRouteCircuitPeeringListResultResponse struct {
-	// Response for ListPeering API service call retrieves all peerings that belong to an ExpressRouteCircuit.
-	ExpressRouteCircuitPeeringListResult *ExpressRouteCircuitPeeringListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ExpressRouteCircuitPeeringPollerResponse is the response envelope for operations that asynchronously return a ExpressRouteCircuitPeering type.
-type ExpressRouteCircuitPeeringPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitPeeringResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller ExpressRouteCircuitPeeringPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ExpressRouteCircuitPeeringPropertiesFormat - Properties of the express route circuit peering.
@@ -5757,15 +5058,6 @@ func (e ExpressRouteCircuitPeeringPropertiesFormat) MarshalJSON() ([]byte, error
 	return json.Marshal(objectMap)
 }
 
-// ExpressRouteCircuitPeeringResponse is the response envelope for operations that return a ExpressRouteCircuitPeering type.
-type ExpressRouteCircuitPeeringResponse struct {
-	// Peering in an ExpressRouteCircuit resource.
-	ExpressRouteCircuitPeering *ExpressRouteCircuitPeering
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // ExpressRouteCircuitPeeringsBeginCreateOrUpdateOptions contains the optional parameters for the ExpressRouteCircuitPeerings.BeginCreateOrUpdate method.
 type ExpressRouteCircuitPeeringsBeginCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
@@ -5784,18 +5076,6 @@ type ExpressRouteCircuitPeeringsGetOptions struct {
 // ExpressRouteCircuitPeeringsListOptions contains the optional parameters for the ExpressRouteCircuitPeerings.List method.
 type ExpressRouteCircuitPeeringsListOptions struct {
 	// placeholder for future optional parameters
-}
-
-// ExpressRouteCircuitPollerResponse is the response envelope for operations that asynchronously return a ExpressRouteCircuit type.
-type ExpressRouteCircuitPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller ExpressRouteCircuitPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ExpressRouteCircuitPropertiesFormat - Properties of ExpressRouteCircuit.
@@ -5867,15 +5147,6 @@ func (e ExpressRouteCircuitPropertiesFormat) MarshalJSON() ([]byte, error) {
 type ExpressRouteCircuitReference struct {
 	// Corresponding Express Route Circuit Id.
 	ID *string `json:"id,omitempty"`
-}
-
-// ExpressRouteCircuitResponse is the response envelope for operations that return a ExpressRouteCircuit type.
-type ExpressRouteCircuitResponse struct {
-	// ExpressRouteCircuit resource.
-	ExpressRouteCircuit *ExpressRouteCircuit
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ExpressRouteCircuitRoutesTable - The routes table associated with the ExpressRouteCircuit.
@@ -5953,15 +5224,6 @@ type ExpressRouteCircuitStats struct {
 	SecondarybytesOut *int64 `json:"secondarybytesOut,omitempty"`
 }
 
-// ExpressRouteCircuitStatsResponse is the response envelope for operations that return a ExpressRouteCircuitStats type.
-type ExpressRouteCircuitStatsResponse struct {
-	// Contains stats associated with the peering.
-	ExpressRouteCircuitStats *ExpressRouteCircuitStats
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // ExpressRouteCircuitsArpTableListResult - Response for ListArpTable associated with the Express Route Circuits API.
 type ExpressRouteCircuitsArpTableListResult struct {
 	// The URL to get the next set of results.
@@ -5977,28 +5239,6 @@ func (e ExpressRouteCircuitsArpTableListResult) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "nextLink", e.NextLink)
 	populate(objectMap, "value", e.Value)
 	return json.Marshal(objectMap)
-}
-
-// ExpressRouteCircuitsArpTableListResultPollerResponse is the response envelope for operations that asynchronously return a ExpressRouteCircuitsArpTableListResult
-// type.
-type ExpressRouteCircuitsArpTableListResultPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitsArpTableListResultResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller ExpressRouteCircuitsArpTableListResultPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ExpressRouteCircuitsArpTableListResultResponse is the response envelope for operations that return a ExpressRouteCircuitsArpTableListResult type.
-type ExpressRouteCircuitsArpTableListResultResponse struct {
-	// Response for ListArpTable associated with the Express Route Circuits API.
-	ExpressRouteCircuitsArpTableListResult *ExpressRouteCircuitsArpTableListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ExpressRouteCircuitsBeginCreateOrUpdateOptions contains the optional parameters for the ExpressRouteCircuits.BeginCreateOrUpdate method.
@@ -6068,28 +5308,6 @@ func (e ExpressRouteCircuitsRoutesTableListResult) MarshalJSON() ([]byte, error)
 	return json.Marshal(objectMap)
 }
 
-// ExpressRouteCircuitsRoutesTableListResultPollerResponse is the response envelope for operations that asynchronously return a ExpressRouteCircuitsRoutesTableListResult
-// type.
-type ExpressRouteCircuitsRoutesTableListResultPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitsRoutesTableListResultResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller ExpressRouteCircuitsRoutesTableListResultPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ExpressRouteCircuitsRoutesTableListResultResponse is the response envelope for operations that return a ExpressRouteCircuitsRoutesTableListResult type.
-type ExpressRouteCircuitsRoutesTableListResultResponse struct {
-	// Response for ListRoutesTable associated with the Express Route Circuits API.
-	ExpressRouteCircuitsRoutesTableListResult *ExpressRouteCircuitsRoutesTableListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // ExpressRouteCircuitsRoutesTableSummaryListResult - Response for ListRoutesTable associated with the Express Route Circuits API.
 type ExpressRouteCircuitsRoutesTableSummaryListResult struct {
 	// The URL to get the next set of results.
@@ -6105,29 +5323,6 @@ func (e ExpressRouteCircuitsRoutesTableSummaryListResult) MarshalJSON() ([]byte,
 	populate(objectMap, "nextLink", e.NextLink)
 	populate(objectMap, "value", e.Value)
 	return json.Marshal(objectMap)
-}
-
-// ExpressRouteCircuitsRoutesTableSummaryListResultPollerResponse is the response envelope for operations that asynchronously return a ExpressRouteCircuitsRoutesTableSummaryListResult
-// type.
-type ExpressRouteCircuitsRoutesTableSummaryListResultPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitsRoutesTableSummaryListResultResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller ExpressRouteCircuitsRoutesTableSummaryListResultPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ExpressRouteCircuitsRoutesTableSummaryListResultResponse is the response envelope for operations that return a ExpressRouteCircuitsRoutesTableSummaryListResult
-// type.
-type ExpressRouteCircuitsRoutesTableSummaryListResultResponse struct {
-	// Response for ListRoutesTable associated with the Express Route Circuits API.
-	ExpressRouteCircuitsRoutesTableSummaryListResult *ExpressRouteCircuitsRoutesTableSummaryListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ExpressRouteCircuitsUpdateTagsOptions contains the optional parameters for the ExpressRouteCircuits.UpdateTags method.
@@ -6172,27 +5367,6 @@ func (e ExpressRouteConnectionList) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// ExpressRouteConnectionListResponse is the response envelope for operations that return a ExpressRouteConnectionList type.
-type ExpressRouteConnectionListResponse struct {
-	// ExpressRouteConnection list.
-	ExpressRouteConnectionList *ExpressRouteConnectionList
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ExpressRouteConnectionPollerResponse is the response envelope for operations that asynchronously return a ExpressRouteConnection type.
-type ExpressRouteConnectionPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteConnectionResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller ExpressRouteConnectionPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // ExpressRouteConnectionProperties - Properties of the ExpressRouteConnection subresource.
 type ExpressRouteConnectionProperties struct {
 	// REQUIRED; The ExpressRoute circuit peering.
@@ -6209,15 +5383,6 @@ type ExpressRouteConnectionProperties struct {
 
 	// READ-ONLY; The provisioning state of the express route connection resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-}
-
-// ExpressRouteConnectionResponse is the response envelope for operations that return a ExpressRouteConnection type.
-type ExpressRouteConnectionResponse struct {
-	// ExpressRouteConnection resource.
-	ExpressRouteConnection *ExpressRouteConnection
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ExpressRouteConnectionsBeginCreateOrUpdateOptions contains the optional parameters for the ExpressRouteConnections.BeginCreateOrUpdate method.
@@ -6275,15 +5440,6 @@ func (e ExpressRouteCrossConnectionListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// ExpressRouteCrossConnectionListResultResponse is the response envelope for operations that return a ExpressRouteCrossConnectionListResult type.
-type ExpressRouteCrossConnectionListResultResponse struct {
-	// Response for ListExpressRouteCrossConnection API service call.
-	ExpressRouteCrossConnectionListResult *ExpressRouteCrossConnectionListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // ExpressRouteCrossConnectionPeering - Peering in an ExpressRoute Cross Connection resource.
 type ExpressRouteCrossConnectionPeering struct {
 	SubResource
@@ -6321,28 +5477,6 @@ func (e ExpressRouteCrossConnectionPeeringList) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "nextLink", e.NextLink)
 	populate(objectMap, "value", e.Value)
 	return json.Marshal(objectMap)
-}
-
-// ExpressRouteCrossConnectionPeeringListResponse is the response envelope for operations that return a ExpressRouteCrossConnectionPeeringList type.
-type ExpressRouteCrossConnectionPeeringListResponse struct {
-	// Response for ListPeering API service call retrieves all peerings that belong to an ExpressRouteCrossConnection.
-	ExpressRouteCrossConnectionPeeringList *ExpressRouteCrossConnectionPeeringList
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ExpressRouteCrossConnectionPeeringPollerResponse is the response envelope for operations that asynchronously return a ExpressRouteCrossConnectionPeering
-// type.
-type ExpressRouteCrossConnectionPeeringPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCrossConnectionPeeringResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller ExpressRouteCrossConnectionPeeringPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ExpressRouteCrossConnectionPeeringProperties - Properties of express route cross connection peering.
@@ -6393,15 +5527,6 @@ type ExpressRouteCrossConnectionPeeringProperties struct {
 	SecondaryAzurePort *string `json:"secondaryAzurePort,omitempty" azure:"ro"`
 }
 
-// ExpressRouteCrossConnectionPeeringResponse is the response envelope for operations that return a ExpressRouteCrossConnectionPeering type.
-type ExpressRouteCrossConnectionPeeringResponse struct {
-	// Peering in an ExpressRoute Cross Connection resource.
-	ExpressRouteCrossConnectionPeering *ExpressRouteCrossConnectionPeering
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // ExpressRouteCrossConnectionPeeringsBeginCreateOrUpdateOptions contains the optional parameters for the ExpressRouteCrossConnectionPeerings.BeginCreateOrUpdate
 // method.
 type ExpressRouteCrossConnectionPeeringsBeginCreateOrUpdateOptions struct {
@@ -6421,18 +5546,6 @@ type ExpressRouteCrossConnectionPeeringsGetOptions struct {
 // ExpressRouteCrossConnectionPeeringsListOptions contains the optional parameters for the ExpressRouteCrossConnectionPeerings.List method.
 type ExpressRouteCrossConnectionPeeringsListOptions struct {
 	// placeholder for future optional parameters
-}
-
-// ExpressRouteCrossConnectionPollerResponse is the response envelope for operations that asynchronously return a ExpressRouteCrossConnection type.
-type ExpressRouteCrossConnectionPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCrossConnectionResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller ExpressRouteCrossConnectionPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ExpressRouteCrossConnectionProperties - Properties of ExpressRouteCrossConnection.
@@ -6482,15 +5595,6 @@ func (e ExpressRouteCrossConnectionProperties) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "serviceProviderNotes", e.ServiceProviderNotes)
 	populate(objectMap, "serviceProviderProvisioningState", e.ServiceProviderProvisioningState)
 	return json.Marshal(objectMap)
-}
-
-// ExpressRouteCrossConnectionResponse is the response envelope for operations that return a ExpressRouteCrossConnection type.
-type ExpressRouteCrossConnectionResponse struct {
-	// ExpressRouteCrossConnection resource.
-	ExpressRouteCrossConnection *ExpressRouteCrossConnection
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ExpressRouteCrossConnectionRoutesTableSummary - The routes table associated with the ExpressRouteCircuit.
@@ -6561,29 +5665,6 @@ func (e ExpressRouteCrossConnectionsRoutesTableSummaryListResult) MarshalJSON() 
 	return json.Marshal(objectMap)
 }
 
-// ExpressRouteCrossConnectionsRoutesTableSummaryListResultPollerResponse is the response envelope for operations that asynchronously return a ExpressRouteCrossConnectionsRoutesTableSummaryListResult
-// type.
-type ExpressRouteCrossConnectionsRoutesTableSummaryListResultPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCrossConnectionsRoutesTableSummaryListResultResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller ExpressRouteCrossConnectionsRoutesTableSummaryListResultPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ExpressRouteCrossConnectionsRoutesTableSummaryListResultResponse is the response envelope for operations that return a ExpressRouteCrossConnectionsRoutesTableSummaryListResult
-// type.
-type ExpressRouteCrossConnectionsRoutesTableSummaryListResultResponse struct {
-	// Response for ListRoutesTable associated with the Express Route Cross Connections.
-	ExpressRouteCrossConnectionsRoutesTableSummaryListResult *ExpressRouteCrossConnectionsRoutesTableSummaryListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // ExpressRouteCrossConnectionsUpdateTagsOptions contains the optional parameters for the ExpressRouteCrossConnections.UpdateTags method.
 type ExpressRouteCrossConnectionsUpdateTagsOptions struct {
 	// placeholder for future optional parameters
@@ -6618,27 +5699,6 @@ func (e ExpressRouteGatewayList) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "value", e.Value)
 	return json.Marshal(objectMap)
-}
-
-// ExpressRouteGatewayListResponse is the response envelope for operations that return a ExpressRouteGatewayList type.
-type ExpressRouteGatewayListResponse struct {
-	// List of ExpressRoute gateways.
-	ExpressRouteGatewayList *ExpressRouteGatewayList
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ExpressRouteGatewayPollerResponse is the response envelope for operations that asynchronously return a ExpressRouteGateway type.
-type ExpressRouteGatewayPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteGatewayResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller ExpressRouteGatewayPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ExpressRouteGatewayProperties - ExpressRoute gateway resource properties.
@@ -6679,15 +5739,6 @@ type ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds struct {
 
 	// Minimum number of scale units deployed for ExpressRoute gateway.
 	Min *int32 `json:"min,omitempty"`
-}
-
-// ExpressRouteGatewayResponse is the response envelope for operations that return a ExpressRouteGateway type.
-type ExpressRouteGatewayResponse struct {
-	// ExpressRoute gateway resource.
-	ExpressRouteGateway *ExpressRouteGateway
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ExpressRouteGatewaysBeginCreateOrUpdateOptions contains the optional parameters for the ExpressRouteGateways.BeginCreateOrUpdate method.
@@ -6754,15 +5805,6 @@ func (e ExpressRouteLinkListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// ExpressRouteLinkListResultResponse is the response envelope for operations that return a ExpressRouteLinkListResult type.
-type ExpressRouteLinkListResultResponse struct {
-	// Response for ListExpressRouteLinks API service call.
-	ExpressRouteLinkListResult *ExpressRouteLinkListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // ExpressRouteLinkMacSecConfig - ExpressRouteLink Mac Security Configuration.
 type ExpressRouteLinkMacSecConfig struct {
 	// Keyvault Secret Identifier URL containing Mac security CAK key.
@@ -6800,15 +5842,6 @@ type ExpressRouteLinkPropertiesFormat struct {
 
 	// READ-ONLY; Name of Azure router associated with physical port.
 	RouterName *string `json:"routerName,omitempty" azure:"ro"`
-}
-
-// ExpressRouteLinkResponse is the response envelope for operations that return a ExpressRouteLink type.
-type ExpressRouteLinkResponse struct {
-	// ExpressRouteLink child resource definition.
-	ExpressRouteLink *ExpressRouteLink
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ExpressRouteLinksGetOptions contains the optional parameters for the ExpressRouteLinks.Get method.
@@ -6858,27 +5891,6 @@ func (e ExpressRoutePortListResult) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "nextLink", e.NextLink)
 	populate(objectMap, "value", e.Value)
 	return json.Marshal(objectMap)
-}
-
-// ExpressRoutePortListResultResponse is the response envelope for operations that return a ExpressRoutePortListResult type.
-type ExpressRoutePortListResultResponse struct {
-	// Response for ListExpressRoutePorts API service call.
-	ExpressRoutePortListResult *ExpressRoutePortListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ExpressRoutePortPollerResponse is the response envelope for operations that asynchronously return a ExpressRoutePort type.
-type ExpressRoutePortPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRoutePortResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller ExpressRoutePortPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ExpressRoutePortPropertiesFormat - Properties specific to ExpressRoutePort resources.
@@ -6932,15 +5944,6 @@ func (e ExpressRoutePortPropertiesFormat) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "provisioningState", e.ProvisioningState)
 	populate(objectMap, "resourceGuid", e.ResourceGUID)
 	return json.Marshal(objectMap)
-}
-
-// ExpressRoutePortResponse is the response envelope for operations that return a ExpressRoutePort type.
-type ExpressRoutePortResponse struct {
-	// ExpressRoutePort resource definition.
-	ExpressRoutePort *ExpressRoutePort
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ExpressRoutePortsBeginCreateOrUpdateOptions contains the optional parameters for the ExpressRoutePorts.BeginCreateOrUpdate method.
@@ -7008,15 +6011,6 @@ func (e ExpressRoutePortsLocationListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// ExpressRoutePortsLocationListResultResponse is the response envelope for operations that return a ExpressRoutePortsLocationListResult type.
-type ExpressRoutePortsLocationListResultResponse struct {
-	// Response for ListExpressRoutePortsLocations API service call.
-	ExpressRoutePortsLocationListResult *ExpressRoutePortsLocationListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // ExpressRoutePortsLocationPropertiesFormat - Properties specific to ExpressRoutePorts peering location resources.
 type ExpressRoutePortsLocationPropertiesFormat struct {
 	// The inventory of available ExpressRoutePort bandwidths.
@@ -7040,15 +6034,6 @@ func (e ExpressRoutePortsLocationPropertiesFormat) MarshalJSON() ([]byte, error)
 	populate(objectMap, "contact", e.Contact)
 	populate(objectMap, "provisioningState", e.ProvisioningState)
 	return json.Marshal(objectMap)
-}
-
-// ExpressRoutePortsLocationResponse is the response envelope for operations that return a ExpressRoutePortsLocation type.
-type ExpressRoutePortsLocationResponse struct {
-	// Definition of the ExpressRoutePorts peering location resource.
-	ExpressRoutePortsLocation *ExpressRoutePortsLocation
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ExpressRoutePortsLocationsGetOptions contains the optional parameters for the ExpressRoutePortsLocations.Get method.
@@ -7104,15 +6089,6 @@ func (e ExpressRouteServiceProviderListResult) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "nextLink", e.NextLink)
 	populate(objectMap, "value", e.Value)
 	return json.Marshal(objectMap)
-}
-
-// ExpressRouteServiceProviderListResultResponse is the response envelope for operations that return a ExpressRouteServiceProviderListResult type.
-type ExpressRouteServiceProviderListResultResponse struct {
-	// Response for the ListExpressRouteServiceProvider API service call.
-	ExpressRouteServiceProviderListResult *ExpressRouteServiceProviderListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ExpressRouteServiceProviderPropertiesFormat - Properties of ExpressRouteServiceProvider.
@@ -7249,15 +6225,6 @@ func (f FirewallPolicyListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// FirewallPolicyListResultResponse is the response envelope for operations that return a FirewallPolicyListResult type.
-type FirewallPolicyListResultResponse struct {
-	// Response for ListFirewallPolicies API service call.
-	FirewallPolicyListResult *FirewallPolicyListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // FirewallPolicyNatRule - Firewall Policy NAT Rule.
 type FirewallPolicyNatRule struct {
 	FirewallPolicyRule
@@ -7319,18 +6286,6 @@ type FirewallPolicyNatRuleAction struct {
 	Type *FirewallPolicyNatRuleActionType `json:"type,omitempty"`
 }
 
-// FirewallPolicyPollerResponse is the response envelope for operations that asynchronously return a FirewallPolicy type.
-type FirewallPolicyPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (FirewallPolicyResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller FirewallPolicyPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // FirewallPolicyPropertiesFormat - Firewall Policy definition.
 type FirewallPolicyPropertiesFormat struct {
 	// The parent firewall policy from which rules are inherited.
@@ -7362,15 +6317,6 @@ func (f FirewallPolicyPropertiesFormat) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "ruleGroups", f.RuleGroups)
 	populate(objectMap, "threatIntelMode", f.ThreatIntelMode)
 	return json.Marshal(objectMap)
-}
-
-// FirewallPolicyResponse is the response envelope for operations that return a FirewallPolicy type.
-type FirewallPolicyResponse struct {
-	// FirewallPolicy Resource.
-	FirewallPolicy *FirewallPolicy
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // FirewallPolicyRuleClassification provides polymorphic access to related types.
@@ -7553,27 +6499,6 @@ func (f FirewallPolicyRuleGroupListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// FirewallPolicyRuleGroupListResultResponse is the response envelope for operations that return a FirewallPolicyRuleGroupListResult type.
-type FirewallPolicyRuleGroupListResultResponse struct {
-	// Response for ListFirewallPolicyRuleGroups API service call.
-	FirewallPolicyRuleGroupListResult *FirewallPolicyRuleGroupListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// FirewallPolicyRuleGroupPollerResponse is the response envelope for operations that asynchronously return a FirewallPolicyRuleGroup type.
-type FirewallPolicyRuleGroupPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (FirewallPolicyRuleGroupResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller FirewallPolicyRuleGroupPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // FirewallPolicyRuleGroupProperties - Properties of the rule group.
 type FirewallPolicyRuleGroupProperties struct {
 	// Priority of the Firewall Policy Rule Group resource.
@@ -7619,15 +6544,6 @@ func (f *FirewallPolicyRuleGroupProperties) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return nil
-}
-
-// FirewallPolicyRuleGroupResponse is the response envelope for operations that return a FirewallPolicyRuleGroup type.
-type FirewallPolicyRuleGroupResponse struct {
-	// Rule Group resource.
-	FirewallPolicyRuleGroup *FirewallPolicyRuleGroup
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // FirewallPolicyRuleGroupsBeginCreateOrUpdateOptions contains the optional parameters for the FirewallPolicyRuleGroups.BeginCreateOrUpdate method.
@@ -7689,27 +6605,6 @@ type FlowLogInformation struct {
 	FlowAnalyticsConfiguration *TrafficAnalyticsProperties `json:"flowAnalyticsConfiguration,omitempty"`
 }
 
-// FlowLogInformationPollerResponse is the response envelope for operations that asynchronously return a FlowLogInformation type.
-type FlowLogInformationPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (FlowLogInformationResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller FlowLogInformationPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// FlowLogInformationResponse is the response envelope for operations that return a FlowLogInformation type.
-type FlowLogInformationResponse struct {
-	// Information on the configuration of flow log and traffic analytics (optional) .
-	FlowLogInformation *FlowLogInformation
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // FlowLogListResult - List of flow logs.
 type FlowLogListResult struct {
 	// Information about flow log resource.
@@ -7725,27 +6620,6 @@ func (f FlowLogListResult) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "nextLink", f.NextLink)
 	populate(objectMap, "value", f.Value)
 	return json.Marshal(objectMap)
-}
-
-// FlowLogListResultResponse is the response envelope for operations that return a FlowLogListResult type.
-type FlowLogListResultResponse struct {
-	// List of flow logs.
-	FlowLogListResult *FlowLogListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// FlowLogPollerResponse is the response envelope for operations that asynchronously return a FlowLog type.
-type FlowLogPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (FlowLogResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller FlowLogPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // FlowLogProperties - Parameters that define the configuration of flow log.
@@ -7788,15 +6662,6 @@ type FlowLogPropertiesFormat struct {
 
 	// READ-ONLY; Guid of network security group to which flow log will be applied.
 	TargetResourceGUID *string `json:"targetResourceGuid,omitempty" azure:"ro"`
-}
-
-// FlowLogResponse is the response envelope for operations that return a FlowLog type.
-type FlowLogResponse struct {
-	// A flow log resource.
-	FlowLog *FlowLog
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // FlowLogStatusParameters - Parameters that define a resource to query flow log and traffic analytics (optional) status.
@@ -7908,15 +6773,6 @@ func (f FrontendIPConfigurationPropertiesFormat) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// FrontendIPConfigurationResponse is the response envelope for operations that return a FrontendIPConfiguration type.
-type FrontendIPConfigurationResponse struct {
-	// Frontend IP address of the load balancer.
-	FrontendIPConfiguration *FrontendIPConfiguration
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // GatewayRoute - Gateway routing details.
 type GatewayRoute struct {
 	// READ-ONLY; The route's AS path sequence.
@@ -7952,27 +6808,6 @@ func (g GatewayRouteListResult) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "value", g.Value)
 	return json.Marshal(objectMap)
-}
-
-// GatewayRouteListResultPollerResponse is the response envelope for operations that asynchronously return a GatewayRouteListResult type.
-type GatewayRouteListResultPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (GatewayRouteListResultResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller GatewayRouteListResultPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// GatewayRouteListResultResponse is the response envelope for operations that return a GatewayRouteListResult type.
-type GatewayRouteListResultResponse struct {
-	// List of virtual network gateway routes.
-	GatewayRouteListResult *GatewayRouteListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // GetVPNSitesConfigurationRequest - List of Vpn-Sites.
@@ -8020,18 +6855,6 @@ type HTTPHeader struct {
 
 	// The value in HTTP header.
 	Value *string `json:"value,omitempty"`
-}
-
-// HTTPPollerResponse contains the asynchronous HTTP response from the call to the service endpoint.
-type HTTPPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (*http.Response, error)
-
-	// Poller contains an initialized poller.
-	Poller HTTPPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // HubIPAddresses - IP addresses associated with azure firewall.
@@ -8091,15 +6914,6 @@ type HubVirtualNetworkConnectionProperties struct {
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
-// HubVirtualNetworkConnectionResponse is the response envelope for operations that return a HubVirtualNetworkConnection type.
-type HubVirtualNetworkConnectionResponse struct {
-	// HubVirtualNetworkConnection Resource.
-	HubVirtualNetworkConnection *HubVirtualNetworkConnection
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // HubVirtualNetworkConnectionsGetOptions contains the optional parameters for the HubVirtualNetworkConnections.Get method.
 type HubVirtualNetworkConnectionsGetOptions struct {
 	// placeholder for future optional parameters
@@ -8125,15 +6939,6 @@ func (i IPAddressAvailabilityResult) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "available", i.Available)
 	populate(objectMap, "availableIPAddresses", i.AvailableIPAddresses)
 	return json.Marshal(objectMap)
-}
-
-// IPAddressAvailabilityResultResponse is the response envelope for operations that return a IPAddressAvailabilityResult type.
-type IPAddressAvailabilityResultResponse struct {
-	// Response for CheckIPAddressAvailability API service call.
-	IPAddressAvailabilityResult *IPAddressAvailabilityResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // IPAllocation - IpAllocation resource.
@@ -8169,27 +6974,6 @@ func (i IPAllocationListResult) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "nextLink", i.NextLink)
 	populate(objectMap, "value", i.Value)
 	return json.Marshal(objectMap)
-}
-
-// IPAllocationListResultResponse is the response envelope for operations that return a IPAllocationListResult type.
-type IPAllocationListResultResponse struct {
-	// Response for the ListIpAllocations API service call.
-	IPAllocationListResult *IPAllocationListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// IPAllocationPollerResponse is the response envelope for operations that asynchronously return a IPAllocation type.
-type IPAllocationPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (IPAllocationResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller IPAllocationPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // IPAllocationPropertiesFormat - Properties of the IpAllocation.
@@ -8231,15 +7015,6 @@ func (i IPAllocationPropertiesFormat) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "type", i.Type)
 	populate(objectMap, "virtualNetwork", i.VirtualNetwork)
 	return json.Marshal(objectMap)
-}
-
-// IPAllocationResponse is the response envelope for operations that return a IPAllocation type.
-type IPAllocationResponse struct {
-	// IpAllocation resource.
-	IPAllocation *IPAllocation
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // IPAllocationsBeginCreateOrUpdateOptions contains the optional parameters for the IPAllocations.BeginCreateOrUpdate method.
@@ -8408,27 +7183,6 @@ func (i IPGroupListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// IPGroupListResultResponse is the response envelope for operations that return a IPGroupListResult type.
-type IPGroupListResultResponse struct {
-	// Response for the ListIpGroups API service call.
-	IPGroupListResult *IPGroupListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// IPGroupPollerResponse is the response envelope for operations that asynchronously return a IPGroup type.
-type IPGroupPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (IPGroupResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller IPGroupPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // IPGroupPropertiesFormat - The IpGroups property information.
 type IPGroupPropertiesFormat struct {
 	// IpAddresses/IpAddressPrefixes in the IpGroups resource.
@@ -8448,15 +7202,6 @@ func (i IPGroupPropertiesFormat) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "ipAddresses", i.IPAddresses)
 	populate(objectMap, "provisioningState", i.ProvisioningState)
 	return json.Marshal(objectMap)
-}
-
-// IPGroupResponse is the response envelope for operations that return a IPGroup type.
-type IPGroupResponse struct {
-	// The IpGroups resource information.
-	IPGroup *IPGroup
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // IPGroupsBeginCreateOrUpdateOptions contains the optional parameters for the IPGroups.BeginCreateOrUpdate method.
@@ -8658,27 +7403,6 @@ func (i InboundNatRuleListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// InboundNatRuleListResultResponse is the response envelope for operations that return a InboundNatRuleListResult type.
-type InboundNatRuleListResultResponse struct {
-	// Response for ListInboundNatRule API service call.
-	InboundNatRuleListResult *InboundNatRuleListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// InboundNatRulePollerResponse is the response envelope for operations that asynchronously return a InboundNatRule type.
-type InboundNatRulePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (InboundNatRuleResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller InboundNatRulePoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // InboundNatRulePropertiesFormat - Properties of the inbound NAT rule.
 type InboundNatRulePropertiesFormat struct {
 	// The port used for the internal endpoint. Acceptable values range from 1 to 65535.
@@ -8712,15 +7436,6 @@ type InboundNatRulePropertiesFormat struct {
 
 	// READ-ONLY; The provisioning state of the inbound NAT rule resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-}
-
-// InboundNatRuleResponse is the response envelope for operations that return a InboundNatRule type.
-type InboundNatRuleResponse struct {
-	// Inbound NAT rule of the load balancer.
-	InboundNatRule *InboundNatRule
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // InboundNatRulesBeginCreateOrUpdateOptions contains the optional parameters for the InboundNatRules.BeginCreateOrUpdate method.
@@ -8761,15 +7476,6 @@ func (l ListHubVirtualNetworkConnectionsResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// ListHubVirtualNetworkConnectionsResultResponse is the response envelope for operations that return a ListHubVirtualNetworkConnectionsResult type.
-type ListHubVirtualNetworkConnectionsResultResponse struct {
-	// List of HubVirtualNetworkConnections and a URL nextLink to get the next set of results.
-	ListHubVirtualNetworkConnectionsResult *ListHubVirtualNetworkConnectionsResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // ListP2SVPNGatewaysResult - Result of the request to list P2SVpnGateways. It contains a list of P2SVpnGateways and a URL nextLink to get the next set
 // of results.
 type ListP2SVPNGatewaysResult struct {
@@ -8786,15 +7492,6 @@ func (l ListP2SVPNGatewaysResult) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "nextLink", l.NextLink)
 	populate(objectMap, "value", l.Value)
 	return json.Marshal(objectMap)
-}
-
-// ListP2SVPNGatewaysResultResponse is the response envelope for operations that return a ListP2SVPNGatewaysResult type.
-type ListP2SVPNGatewaysResultResponse struct {
-	// Result of the request to list P2SVpnGateways. It contains a list of P2SVpnGateways and a URL nextLink to get the next set of results.
-	ListP2SVPNGatewaysResult *ListP2SVPNGatewaysResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ListVPNConnectionsResult - Result of the request to list all vpn connections to a virtual wan vpn gateway. It contains a list of Vpn Connections and
@@ -8815,16 +7512,6 @@ func (l ListVPNConnectionsResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// ListVPNConnectionsResultResponse is the response envelope for operations that return a ListVPNConnectionsResult type.
-type ListVPNConnectionsResultResponse struct {
-	// Result of the request to list all vpn connections to a virtual wan vpn gateway. It contains a list of Vpn Connections and a URL nextLink to get the next
-	// set of results.
-	ListVPNConnectionsResult *ListVPNConnectionsResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // ListVPNGatewaysResult - Result of the request to list VpnGateways. It contains a list of VpnGateways and a URL nextLink to get the next set of results.
 type ListVPNGatewaysResult struct {
 	// URL to get the next set of operation list results if there are any.
@@ -8840,15 +7527,6 @@ func (l ListVPNGatewaysResult) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "nextLink", l.NextLink)
 	populate(objectMap, "value", l.Value)
 	return json.Marshal(objectMap)
-}
-
-// ListVPNGatewaysResultResponse is the response envelope for operations that return a ListVPNGatewaysResult type.
-type ListVPNGatewaysResultResponse struct {
-	// Result of the request to list VpnGateways. It contains a list of VpnGateways and a URL nextLink to get the next set of results.
-	ListVPNGatewaysResult *ListVPNGatewaysResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ListVPNServerConfigurationsResult - Result of the request to list all VpnServerConfigurations. It contains a list of VpnServerConfigurations and a URL
@@ -8869,15 +7547,6 @@ func (l ListVPNServerConfigurationsResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// ListVPNServerConfigurationsResultResponse is the response envelope for operations that return a ListVPNServerConfigurationsResult type.
-type ListVPNServerConfigurationsResultResponse struct {
-	// Result of the request to list all VpnServerConfigurations. It contains a list of VpnServerConfigurations and a URL nextLink to get the next set of results.
-	ListVPNServerConfigurationsResult *ListVPNServerConfigurationsResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // ListVPNSiteLinkConnectionsResult - Result of the request to list all vpn connections to a virtual wan vpn gateway. It contains a list of Vpn Connections
 // and a URL nextLink to get the next set of results.
 type ListVPNSiteLinkConnectionsResult struct {
@@ -8894,16 +7563,6 @@ func (l ListVPNSiteLinkConnectionsResult) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "nextLink", l.NextLink)
 	populate(objectMap, "value", l.Value)
 	return json.Marshal(objectMap)
-}
-
-// ListVPNSiteLinkConnectionsResultResponse is the response envelope for operations that return a ListVPNSiteLinkConnectionsResult type.
-type ListVPNSiteLinkConnectionsResultResponse struct {
-	// Result of the request to list all vpn connections to a virtual wan vpn gateway. It contains a list of Vpn Connections and a URL nextLink to get the next
-	// set of results.
-	ListVPNSiteLinkConnectionsResult *ListVPNSiteLinkConnectionsResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ListVPNSiteLinksResult - Result of the request to list VpnSiteLinks. It contains a list of VpnSiteLinks and a URL nextLink to get the next set of results.
@@ -8923,15 +7582,6 @@ func (l ListVPNSiteLinksResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// ListVPNSiteLinksResultResponse is the response envelope for operations that return a ListVPNSiteLinksResult type.
-type ListVPNSiteLinksResultResponse struct {
-	// Result of the request to list VpnSiteLinks. It contains a list of VpnSiteLinks and a URL nextLink to get the next set of results.
-	ListVPNSiteLinksResult *ListVPNSiteLinksResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // ListVPNSitesResult - Result of the request to list VpnSites. It contains a list of VpnSites and a URL nextLink to get the next set of results.
 type ListVPNSitesResult struct {
 	// URL to get the next set of operation list results if there are any.
@@ -8947,15 +7597,6 @@ func (l ListVPNSitesResult) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "nextLink", l.NextLink)
 	populate(objectMap, "value", l.Value)
 	return json.Marshal(objectMap)
-}
-
-// ListVPNSitesResultResponse is the response envelope for operations that return a ListVPNSitesResult type.
-type ListVPNSitesResultResponse struct {
-	// Result of the request to list VpnSites. It contains a list of VpnSites and a URL nextLink to get the next set of results.
-	ListVPNSitesResult *ListVPNSitesResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ListVirtualHubRouteTableV2SResult - List of VirtualHubRouteTableV2s and a URL nextLink to get the next set of results.
@@ -8975,15 +7616,6 @@ func (l ListVirtualHubRouteTableV2SResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// ListVirtualHubRouteTableV2SResultResponse is the response envelope for operations that return a ListVirtualHubRouteTableV2SResult type.
-type ListVirtualHubRouteTableV2SResultResponse struct {
-	// List of VirtualHubRouteTableV2s and a URL nextLink to get the next set of results.
-	ListVirtualHubRouteTableV2SResult *ListVirtualHubRouteTableV2SResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // ListVirtualHubsResult - Result of the request to list VirtualHubs. It contains a list of VirtualHubs and a URL nextLink to get the next set of results.
 type ListVirtualHubsResult struct {
 	// URL to get the next set of operation list results if there are any.
@@ -9001,15 +7633,6 @@ func (l ListVirtualHubsResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// ListVirtualHubsResultResponse is the response envelope for operations that return a ListVirtualHubsResult type.
-type ListVirtualHubsResultResponse struct {
-	// Result of the request to list VirtualHubs. It contains a list of VirtualHubs and a URL nextLink to get the next set of results.
-	ListVirtualHubsResult *ListVirtualHubsResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // ListVirtualWANsResult - Result of the request to list VirtualWANs. It contains a list of VirtualWANs and a URL nextLink to get the next set of results.
 type ListVirtualWANsResult struct {
 	// URL to get the next set of operation list results if there are any.
@@ -9025,15 +7648,6 @@ func (l ListVirtualWANsResult) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "nextLink", l.NextLink)
 	populate(objectMap, "value", l.Value)
 	return json.Marshal(objectMap)
-}
-
-// ListVirtualWANsResultResponse is the response envelope for operations that return a ListVirtualWANsResult type.
-type ListVirtualWANsResultResponse struct {
-	// Result of the request to list VirtualWANs. It contains a list of VirtualWANs and a URL nextLink to get the next set of results.
-	ListVirtualWANsResult *ListVirtualWANsResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // LoadBalancer resource.
@@ -9075,15 +7689,6 @@ func (l LoadBalancerBackendAddressPoolListResult) MarshalJSON() ([]byte, error) 
 	return json.Marshal(objectMap)
 }
 
-// LoadBalancerBackendAddressPoolListResultResponse is the response envelope for operations that return a LoadBalancerBackendAddressPoolListResult type.
-type LoadBalancerBackendAddressPoolListResultResponse struct {
-	// Response for ListBackendAddressPool API service call.
-	LoadBalancerBackendAddressPoolListResult *LoadBalancerBackendAddressPoolListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // LoadBalancerBackendAddressPoolsGetOptions contains the optional parameters for the LoadBalancerBackendAddressPools.Get method.
 type LoadBalancerBackendAddressPoolsGetOptions struct {
 	// placeholder for future optional parameters
@@ -9109,16 +7714,6 @@ func (l LoadBalancerFrontendIPConfigurationListResult) MarshalJSON() ([]byte, er
 	populate(objectMap, "nextLink", l.NextLink)
 	populate(objectMap, "value", l.Value)
 	return json.Marshal(objectMap)
-}
-
-// LoadBalancerFrontendIPConfigurationListResultResponse is the response envelope for operations that return a LoadBalancerFrontendIPConfigurationListResult
-// type.
-type LoadBalancerFrontendIPConfigurationListResultResponse struct {
-	// Response for ListFrontendIPConfiguration API service call.
-	LoadBalancerFrontendIPConfigurationListResult *LoadBalancerFrontendIPConfigurationListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // LoadBalancerFrontendIPConfigurationsGetOptions contains the optional parameters for the LoadBalancerFrontendIPConfigurations.Get method.
@@ -9148,15 +7743,6 @@ func (l LoadBalancerListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// LoadBalancerListResultResponse is the response envelope for operations that return a LoadBalancerListResult type.
-type LoadBalancerListResultResponse struct {
-	// Response for ListLoadBalancers API service call.
-	LoadBalancerListResult *LoadBalancerListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // LoadBalancerLoadBalancingRuleListResult - Response for ListLoadBalancingRule API service call.
 type LoadBalancerLoadBalancingRuleListResult struct {
 	// A list of load balancing rules in a load balancer.
@@ -9172,15 +7758,6 @@ func (l LoadBalancerLoadBalancingRuleListResult) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "nextLink", l.NextLink)
 	populate(objectMap, "value", l.Value)
 	return json.Marshal(objectMap)
-}
-
-// LoadBalancerLoadBalancingRuleListResultResponse is the response envelope for operations that return a LoadBalancerLoadBalancingRuleListResult type.
-type LoadBalancerLoadBalancingRuleListResultResponse struct {
-	// Response for ListLoadBalancingRule API service call.
-	LoadBalancerLoadBalancingRuleListResult *LoadBalancerLoadBalancingRuleListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // LoadBalancerLoadBalancingRulesGetOptions contains the optional parameters for the LoadBalancerLoadBalancingRules.Get method.
@@ -9215,15 +7792,6 @@ func (l LoadBalancerOutboundRuleListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// LoadBalancerOutboundRuleListResultResponse is the response envelope for operations that return a LoadBalancerOutboundRuleListResult type.
-type LoadBalancerOutboundRuleListResultResponse struct {
-	// Response for ListOutboundRule API service call.
-	LoadBalancerOutboundRuleListResult *LoadBalancerOutboundRuleListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // LoadBalancerOutboundRulesGetOptions contains the optional parameters for the LoadBalancerOutboundRules.Get method.
 type LoadBalancerOutboundRulesGetOptions struct {
 	// placeholder for future optional parameters
@@ -9232,18 +7800,6 @@ type LoadBalancerOutboundRulesGetOptions struct {
 // LoadBalancerOutboundRulesListOptions contains the optional parameters for the LoadBalancerOutboundRules.List method.
 type LoadBalancerOutboundRulesListOptions struct {
 	// placeholder for future optional parameters
-}
-
-// LoadBalancerPollerResponse is the response envelope for operations that asynchronously return a LoadBalancer type.
-type LoadBalancerPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (LoadBalancerResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller LoadBalancerPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // LoadBalancerProbeListResult - Response for ListProbe API service call.
@@ -9261,15 +7817,6 @@ func (l LoadBalancerProbeListResult) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "nextLink", l.NextLink)
 	populate(objectMap, "value", l.Value)
 	return json.Marshal(objectMap)
-}
-
-// LoadBalancerProbeListResultResponse is the response envelope for operations that return a LoadBalancerProbeListResult type.
-type LoadBalancerProbeListResultResponse struct {
-	// Response for ListProbe API service call.
-	LoadBalancerProbeListResult *LoadBalancerProbeListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // LoadBalancerProbesGetOptions contains the optional parameters for the LoadBalancerProbes.Get method.
@@ -9333,15 +7880,6 @@ func (l LoadBalancerPropertiesFormat) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "provisioningState", l.ProvisioningState)
 	populate(objectMap, "resourceGuid", l.ResourceGUID)
 	return json.Marshal(objectMap)
-}
-
-// LoadBalancerResponse is the response envelope for operations that return a LoadBalancer type.
-type LoadBalancerResponse struct {
-	// LoadBalancer resource.
-	LoadBalancer *LoadBalancer
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // LoadBalancerSKU - SKU of a load balancer.
@@ -9451,15 +7989,6 @@ type LoadBalancingRulePropertiesFormat struct {
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
-// LoadBalancingRuleResponse is the response envelope for operations that return a LoadBalancingRule type.
-type LoadBalancingRuleResponse struct {
-	// A load balancing rule for a load balancer.
-	LoadBalancingRule *LoadBalancingRule
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // LocalNetworkGateway - A common class for general resource information.
 type LocalNetworkGateway struct {
 	Resource
@@ -9495,27 +8024,6 @@ func (l LocalNetworkGatewayListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// LocalNetworkGatewayListResultResponse is the response envelope for operations that return a LocalNetworkGatewayListResult type.
-type LocalNetworkGatewayListResultResponse struct {
-	// Response for ListLocalNetworkGateways API service call.
-	LocalNetworkGatewayListResult *LocalNetworkGatewayListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// LocalNetworkGatewayPollerResponse is the response envelope for operations that asynchronously return a LocalNetworkGateway type.
-type LocalNetworkGatewayPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (LocalNetworkGatewayResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller LocalNetworkGatewayPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // LocalNetworkGatewayPropertiesFormat - LocalNetworkGateway properties.
 type LocalNetworkGatewayPropertiesFormat struct {
 	// Local network gateway's BGP speaker settings.
@@ -9535,15 +8043,6 @@ type LocalNetworkGatewayPropertiesFormat struct {
 
 	// READ-ONLY; The resource GUID property of the local network gateway resource.
 	ResourceGUID *string `json:"resourceGuid,omitempty" azure:"ro"`
-}
-
-// LocalNetworkGatewayResponse is the response envelope for operations that return a LocalNetworkGateway type.
-type LocalNetworkGatewayResponse struct {
-	// A common class for general resource information.
-	LocalNetworkGateway *LocalNetworkGateway
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // LocalNetworkGatewaysBeginCreateOrUpdateOptions contains the optional parameters for the LocalNetworkGateways.BeginCreateOrUpdate method.
@@ -9830,27 +8329,6 @@ func (n NatGatewayListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// NatGatewayListResultResponse is the response envelope for operations that return a NatGatewayListResult type.
-type NatGatewayListResultResponse struct {
-	// Response for ListNatGateways API service call.
-	NatGatewayListResult *NatGatewayListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// NatGatewayPollerResponse is the response envelope for operations that asynchronously return a NatGateway type.
-type NatGatewayPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (NatGatewayResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller NatGatewayPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // NatGatewayPropertiesFormat - Nat Gateway properties.
 type NatGatewayPropertiesFormat struct {
 	// The idle timeout of the nat gateway.
@@ -9882,15 +8360,6 @@ func (n NatGatewayPropertiesFormat) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "resourceGuid", n.ResourceGUID)
 	populate(objectMap, "subnets", n.Subnets)
 	return json.Marshal(objectMap)
-}
-
-// NatGatewayResponse is the response envelope for operations that return a NatGateway type.
-type NatGatewayResponse struct {
-	// Nat Gateway resource.
-	NatGateway *NatGateway
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // NatGatewaySKU - SKU of nat gateway.
@@ -10045,28 +8514,6 @@ func (n NetworkConfigurationDiagnosticResponse) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// NetworkConfigurationDiagnosticResponsePollerResponse is the response envelope for operations that asynchronously return a NetworkConfigurationDiagnosticResponse
-// type.
-type NetworkConfigurationDiagnosticResponsePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkConfigurationDiagnosticResponseResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller NetworkConfigurationDiagnosticResponsePoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// NetworkConfigurationDiagnosticResponseResponse is the response envelope for operations that return a NetworkConfigurationDiagnosticResponse type.
-type NetworkConfigurationDiagnosticResponseResponse struct {
-	// Results of network configuration diagnostic on the target resource.
-	NetworkConfigurationDiagnosticResponse *NetworkConfigurationDiagnosticResponse
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // NetworkConfigurationDiagnosticResult - Network configuration diagnostic result corresponded to provided traffic query.
 type NetworkConfigurationDiagnosticResult struct {
 	// Network security group result.
@@ -10208,15 +8655,6 @@ func (n NetworkInterfaceIPConfigurationListResult) MarshalJSON() ([]byte, error)
 	return json.Marshal(objectMap)
 }
 
-// NetworkInterfaceIPConfigurationListResultResponse is the response envelope for operations that return a NetworkInterfaceIPConfigurationListResult type.
-type NetworkInterfaceIPConfigurationListResultResponse struct {
-	// Response for list ip configurations API service call.
-	NetworkInterfaceIPConfigurationListResult *NetworkInterfaceIPConfigurationListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties - PrivateLinkConnection properties for the network interface.
 type NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties struct {
 	// READ-ONLY; List of FQDNs for current private link connection.
@@ -10299,15 +8737,6 @@ func (n NetworkInterfaceIPConfigurationPropertiesFormat) MarshalJSON() ([]byte, 
 	return json.Marshal(objectMap)
 }
 
-// NetworkInterfaceIPConfigurationResponse is the response envelope for operations that return a NetworkInterfaceIPConfiguration type.
-type NetworkInterfaceIPConfigurationResponse struct {
-	// IPConfiguration in a network interface.
-	NetworkInterfaceIPConfiguration *NetworkInterfaceIPConfiguration
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // NetworkInterfaceIPConfigurationsGetOptions contains the optional parameters for the NetworkInterfaceIPConfigurations.Get method.
 type NetworkInterfaceIPConfigurationsGetOptions struct {
 	// placeholder for future optional parameters
@@ -10335,15 +8764,6 @@ func (n NetworkInterfaceListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// NetworkInterfaceListResultResponse is the response envelope for operations that return a NetworkInterfaceListResult type.
-type NetworkInterfaceListResultResponse struct {
-	// Response for the ListNetworkInterface API service call.
-	NetworkInterfaceListResult *NetworkInterfaceListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // NetworkInterfaceLoadBalancerListResult - Response for list ip configurations API service call.
 type NetworkInterfaceLoadBalancerListResult struct {
 	// A list of load balancers.
@@ -10361,30 +8781,9 @@ func (n NetworkInterfaceLoadBalancerListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// NetworkInterfaceLoadBalancerListResultResponse is the response envelope for operations that return a NetworkInterfaceLoadBalancerListResult type.
-type NetworkInterfaceLoadBalancerListResultResponse struct {
-	// Response for list ip configurations API service call.
-	NetworkInterfaceLoadBalancerListResult *NetworkInterfaceLoadBalancerListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // NetworkInterfaceLoadBalancersListOptions contains the optional parameters for the NetworkInterfaceLoadBalancers.List method.
 type NetworkInterfaceLoadBalancersListOptions struct {
 	// placeholder for future optional parameters
-}
-
-// NetworkInterfacePollerResponse is the response envelope for operations that asynchronously return a NetworkInterface type.
-type NetworkInterfacePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkInterfaceResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller NetworkInterfacePoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // NetworkInterfacePropertiesFormat - NetworkInterface properties.
@@ -10448,15 +8847,6 @@ func (n NetworkInterfacePropertiesFormat) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// NetworkInterfaceResponse is the response envelope for operations that return a NetworkInterface type.
-type NetworkInterfaceResponse struct {
-	// A network interface in a resource group.
-	NetworkInterface *NetworkInterface
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // NetworkInterfaceTapConfiguration - Tap configuration in a Network Interface.
 type NetworkInterfaceTapConfiguration struct {
 	SubResource
@@ -10500,28 +8890,6 @@ func (n NetworkInterfaceTapConfigurationListResult) MarshalJSON() ([]byte, error
 	return json.Marshal(objectMap)
 }
 
-// NetworkInterfaceTapConfigurationListResultResponse is the response envelope for operations that return a NetworkInterfaceTapConfigurationListResult type.
-type NetworkInterfaceTapConfigurationListResultResponse struct {
-	// Response for list tap configurations API service call.
-	NetworkInterfaceTapConfigurationListResult *NetworkInterfaceTapConfigurationListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// NetworkInterfaceTapConfigurationPollerResponse is the response envelope for operations that asynchronously return a NetworkInterfaceTapConfiguration
-// type.
-type NetworkInterfaceTapConfigurationPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkInterfaceTapConfigurationResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller NetworkInterfaceTapConfigurationPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // NetworkInterfaceTapConfigurationPropertiesFormat - Properties of Virtual Network Tap configuration.
 type NetworkInterfaceTapConfigurationPropertiesFormat struct {
 	// The reference to the Virtual Network Tap resource.
@@ -10529,15 +8897,6 @@ type NetworkInterfaceTapConfigurationPropertiesFormat struct {
 
 	// READ-ONLY; The provisioning state of the network interface tap configuration resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-}
-
-// NetworkInterfaceTapConfigurationResponse is the response envelope for operations that return a NetworkInterfaceTapConfiguration type.
-type NetworkInterfaceTapConfigurationResponse struct {
-	// Tap configuration in a Network Interface.
-	NetworkInterfaceTapConfiguration *NetworkInterfaceTapConfiguration
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // NetworkInterfaceTapConfigurationsBeginCreateOrUpdateOptions contains the optional parameters for the NetworkInterfaceTapConfigurations.BeginCreateOrUpdate
@@ -10715,15 +9074,6 @@ func (n NetworkProfileListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// NetworkProfileListResultResponse is the response envelope for operations that return a NetworkProfileListResult type.
-type NetworkProfileListResultResponse struct {
-	// Response for ListNetworkProfiles API service call.
-	NetworkProfileListResult *NetworkProfileListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // NetworkProfilePropertiesFormat - Network profile properties.
 type NetworkProfilePropertiesFormat struct {
 	// List of chid container network interface configurations.
@@ -10747,15 +9097,6 @@ func (n NetworkProfilePropertiesFormat) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "provisioningState", n.ProvisioningState)
 	populate(objectMap, "resourceGuid", n.ResourceGUID)
 	return json.Marshal(objectMap)
-}
-
-// NetworkProfileResponse is the response envelope for operations that return a NetworkProfile type.
-type NetworkProfileResponse struct {
-	// Network profile resource.
-	NetworkProfile *NetworkProfile
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // NetworkProfilesBeginDeleteOptions contains the optional parameters for the NetworkProfiles.BeginDelete method.
@@ -10893,27 +9234,6 @@ func (n NetworkSecurityGroupListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// NetworkSecurityGroupListResultResponse is the response envelope for operations that return a NetworkSecurityGroupListResult type.
-type NetworkSecurityGroupListResultResponse struct {
-	// Response for ListNetworkSecurityGroups API service call.
-	NetworkSecurityGroupListResult *NetworkSecurityGroupListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// NetworkSecurityGroupPollerResponse is the response envelope for operations that asynchronously return a NetworkSecurityGroup type.
-type NetworkSecurityGroupPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkSecurityGroupResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller NetworkSecurityGroupPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // NetworkSecurityGroupPropertiesFormat - Network Security Group resource.
 type NetworkSecurityGroupPropertiesFormat struct {
 	// A collection of security rules of the network security group.
@@ -10949,15 +9269,6 @@ func (n NetworkSecurityGroupPropertiesFormat) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "securityRules", n.SecurityRules)
 	populate(objectMap, "subnets", n.Subnets)
 	return json.Marshal(objectMap)
-}
-
-// NetworkSecurityGroupResponse is the response envelope for operations that return a NetworkSecurityGroup type.
-type NetworkSecurityGroupResponse struct {
-	// NetworkSecurityGroup resource.
-	NetworkSecurityGroup *NetworkSecurityGroup
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // NetworkSecurityGroupResult - Network configuration diagnostic result corresponded provided traffic query.
@@ -11072,27 +9383,6 @@ func (n NetworkVirtualApplianceListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// NetworkVirtualApplianceListResultResponse is the response envelope for operations that return a NetworkVirtualApplianceListResult type.
-type NetworkVirtualApplianceListResultResponse struct {
-	// Response for ListNetworkVirtualAppliances API service call.
-	NetworkVirtualApplianceListResult *NetworkVirtualApplianceListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// NetworkVirtualAppliancePollerResponse is the response envelope for operations that asynchronously return a NetworkVirtualAppliance type.
-type NetworkVirtualAppliancePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkVirtualApplianceResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller NetworkVirtualAppliancePoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // NetworkVirtualAppliancePropertiesFormat - Network Virtual Appliance definition.
 type NetworkVirtualAppliancePropertiesFormat struct {
 	// BootStrapConfigurationBlob storage URLs.
@@ -11124,15 +9414,6 @@ func (n NetworkVirtualAppliancePropertiesFormat) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "virtualApplianceNics", n.VirtualApplianceNics)
 	populate(objectMap, "virtualHub", n.VirtualHub)
 	return json.Marshal(objectMap)
-}
-
-// NetworkVirtualApplianceResponse is the response envelope for operations that return a NetworkVirtualAppliance type.
-type NetworkVirtualApplianceResponse struct {
-	// NetworkVirtualAppliance Resource.
-	NetworkVirtualAppliance *NetworkVirtualAppliance
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // NetworkVirtualAppliancesBeginCreateOrUpdateOptions contains the optional parameters for the NetworkVirtualAppliances.BeginCreateOrUpdate method.
@@ -11197,28 +9478,10 @@ func (n NetworkWatcherListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// NetworkWatcherListResultResponse is the response envelope for operations that return a NetworkWatcherListResult type.
-type NetworkWatcherListResultResponse struct {
-	// Response for ListNetworkWatchers API service call.
-	NetworkWatcherListResult *NetworkWatcherListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // NetworkWatcherPropertiesFormat - The network watcher properties.
 type NetworkWatcherPropertiesFormat struct {
 	// READ-ONLY; The provisioning state of the network watcher resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-}
-
-// NetworkWatcherResponse is the response envelope for operations that return a NetworkWatcher type.
-type NetworkWatcherResponse struct {
-	// Network watcher in a resource group.
-	NetworkWatcher *NetworkWatcher
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // NetworkWatchersBeginCheckConnectivityOptions contains the optional parameters for the NetworkWatchers.BeginCheckConnectivity method.
@@ -11341,27 +9604,6 @@ type NextHopResult struct {
 	RouteTableID *string `json:"routeTableId,omitempty"`
 }
 
-// NextHopResultPollerResponse is the response envelope for operations that asynchronously return a NextHopResult type.
-type NextHopResultPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (NextHopResultResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller NextHopResultPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// NextHopResultResponse is the response envelope for operations that return a NextHopResult type.
-type NextHopResultResponse struct {
-	// The information about next hop from the specified VM.
-	NextHopResult *NextHopResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // Operation - Network REST API operation definition.
 type Operation struct {
 	// Display metadata associated with the operation.
@@ -11407,15 +9649,6 @@ func (o OperationListResult) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "nextLink", o.NextLink)
 	populate(objectMap, "value", o.Value)
 	return json.Marshal(objectMap)
-}
-
-// OperationListResultResponse is the response envelope for operations that return a OperationListResult type.
-type OperationListResultResponse struct {
-	// Result of the request to list Network operations. It contains a list of operations and a URL link to get the next set of results.
-	OperationListResult *OperationListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // OperationPropertiesFormat - Description of operation properties format.
@@ -11510,15 +9743,6 @@ func (o OutboundRulePropertiesFormat) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// OutboundRuleResponse is the response envelope for operations that return a OutboundRule type.
-type OutboundRuleResponse struct {
-	// Outbound rule of the load balancer.
-	OutboundRule *OutboundRule
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // OwaspCrsExclusionEntry - Allow to exclude some variable satisfy the condition for the WAF check.
 type OwaspCrsExclusionEntry struct {
 	// REQUIRED; The variable to be excluded.
@@ -11568,18 +9792,6 @@ type P2SVPNConnectionHealth struct {
 	SasURL *string `json:"sasUrl,omitempty"`
 }
 
-// P2SVPNConnectionHealthPollerResponse is the response envelope for operations that asynchronously return a P2SVPNConnectionHealth type.
-type P2SVPNConnectionHealthPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (P2SVPNConnectionHealthResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller P2SVPNConnectionHealthPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // P2SVPNConnectionHealthRequest - List of P2S Vpn connection health request.
 type P2SVPNConnectionHealthRequest struct {
 	// The sas-url to download the P2S Vpn connection health detail.
@@ -11595,15 +9807,6 @@ func (p P2SVPNConnectionHealthRequest) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "outputBlobSasUrl", p.OutputBlobSasURL)
 	populate(objectMap, "vpnUserNamesFilter", p.VPNUserNamesFilter)
 	return json.Marshal(objectMap)
-}
-
-// P2SVPNConnectionHealthResponse is the response envelope for operations that return a P2SVPNConnectionHealth type.
-type P2SVPNConnectionHealthResponse struct {
-	// P2S Vpn connection detailed health written to sas url.
-	P2SVPNConnectionHealth *P2SVPNConnectionHealth
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // P2SVPNConnectionRequest - List of p2s vpn connections to be disconnected.
@@ -11637,18 +9840,6 @@ func (p P2SVPNGateway) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// P2SVPNGatewayPollerResponse is the response envelope for operations that asynchronously return a P2SVPNGateway type.
-type P2SVPNGatewayPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (P2SVPNGatewayResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller P2SVPNGatewayPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // P2SVPNGatewayProperties - Parameters for P2SVpnGateway.
 type P2SVPNGatewayProperties struct {
 	// List of all p2s connection configurations of the gateway.
@@ -11680,15 +9871,6 @@ func (p P2SVPNGatewayProperties) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "vpnServerConfiguration", p.VPNServerConfiguration)
 	populate(objectMap, "virtualHub", p.VirtualHub)
 	return json.Marshal(objectMap)
-}
-
-// P2SVPNGatewayResponse is the response envelope for operations that return a P2SVPNGateway type.
-type P2SVPNGatewayResponse struct {
-	// P2SVpnGateway Resource.
-	P2SVPNGateway *P2SVPNGateway
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // P2SVPNGatewaysBeginCreateOrUpdateOptions contains the optional parameters for the P2SVPNGateways.BeginCreateOrUpdate method.
@@ -11791,15 +9973,6 @@ func (p PacketCaptureListResult) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "value", p.Value)
 	return json.Marshal(objectMap)
-}
-
-// PacketCaptureListResultResponse is the response envelope for operations that return a PacketCaptureListResult type.
-type PacketCaptureListResultResponse struct {
-	// List of packet capture sessions.
-	PacketCaptureListResult *PacketCaptureListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PacketCaptureParameters - Parameters that define the create packet capture operation.
@@ -11910,27 +10083,6 @@ func (p *PacketCaptureQueryStatusResult) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// PacketCaptureQueryStatusResultPollerResponse is the response envelope for operations that asynchronously return a PacketCaptureQueryStatusResult type.
-type PacketCaptureQueryStatusResultPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (PacketCaptureQueryStatusResultResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller PacketCaptureQueryStatusResultPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PacketCaptureQueryStatusResultResponse is the response envelope for operations that return a PacketCaptureQueryStatusResult type.
-type PacketCaptureQueryStatusResultResponse struct {
-	// Status of packet capture session.
-	PacketCaptureQueryStatusResult *PacketCaptureQueryStatusResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // PacketCaptureResult - Information about packet capture session.
 type PacketCaptureResult struct {
 	// Properties of the packet capture result.
@@ -11946,18 +10098,6 @@ type PacketCaptureResult struct {
 	Name *string `json:"name,omitempty" azure:"ro"`
 }
 
-// PacketCaptureResultPollerResponse is the response envelope for operations that asynchronously return a PacketCaptureResult type.
-type PacketCaptureResultPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (PacketCaptureResultResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller PacketCaptureResultPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // PacketCaptureResultProperties - The properties of a packet capture session.
 type PacketCaptureResultProperties struct {
 	PacketCaptureParameters
@@ -11970,15 +10110,6 @@ func (p PacketCaptureResultProperties) MarshalJSON() ([]byte, error) {
 	objectMap := p.PacketCaptureParameters.marshalInternal()
 	populate(objectMap, "provisioningState", p.ProvisioningState)
 	return json.Marshal(objectMap)
-}
-
-// PacketCaptureResultResponse is the response envelope for operations that return a PacketCaptureResult type.
-type PacketCaptureResultResponse struct {
-	// Information about packet capture session.
-	PacketCaptureResult *PacketCaptureResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PacketCaptureStorageLocation - The storage location for a packet capture session.
@@ -12121,16 +10252,6 @@ func (p PeerExpressRouteCircuitConnectionListResult) MarshalJSON() ([]byte, erro
 	return json.Marshal(objectMap)
 }
 
-// PeerExpressRouteCircuitConnectionListResultResponse is the response envelope for operations that return a PeerExpressRouteCircuitConnectionListResult
-// type.
-type PeerExpressRouteCircuitConnectionListResultResponse struct {
-	// Response for ListPeeredConnections API service call retrieves all global reach peer circuit connections that belongs to a Private Peering for an ExpressRouteCircuit.
-	PeerExpressRouteCircuitConnectionListResult *PeerExpressRouteCircuitConnectionListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // PeerExpressRouteCircuitConnectionPropertiesFormat - Properties of the peer express route circuit connection.
 type PeerExpressRouteCircuitConnectionPropertiesFormat struct {
 	// /29 IP address space to carve out Customer addresses for tunnels.
@@ -12153,15 +10274,6 @@ type PeerExpressRouteCircuitConnectionPropertiesFormat struct {
 
 	// READ-ONLY; The provisioning state of the peer express route circuit connection resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-}
-
-// PeerExpressRouteCircuitConnectionResponse is the response envelope for operations that return a PeerExpressRouteCircuitConnection type.
-type PeerExpressRouteCircuitConnectionResponse struct {
-	// Peer Express Route Circuit Connection in an ExpressRouteCircuitPeering resource.
-	PeerExpressRouteCircuitConnection *PeerExpressRouteCircuitConnection
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PeerExpressRouteCircuitConnectionsGetOptions contains the optional parameters for the PeerExpressRouteCircuitConnections.Get method.
@@ -12257,27 +10369,6 @@ func (p PrivateDNSZoneGroupListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// PrivateDNSZoneGroupListResultResponse is the response envelope for operations that return a PrivateDNSZoneGroupListResult type.
-type PrivateDNSZoneGroupListResultResponse struct {
-	// Response for the ListPrivateDnsZoneGroups API service call.
-	PrivateDNSZoneGroupListResult *PrivateDNSZoneGroupListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PrivateDNSZoneGroupPollerResponse is the response envelope for operations that asynchronously return a PrivateDNSZoneGroup type.
-type PrivateDNSZoneGroupPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (PrivateDNSZoneGroupResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller PrivateDNSZoneGroupPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // PrivateDNSZoneGroupPropertiesFormat - Properties of the private dns zone group.
 type PrivateDNSZoneGroupPropertiesFormat struct {
 	// A collection of private dns zone configurations of the private dns zone group.
@@ -12293,15 +10384,6 @@ func (p PrivateDNSZoneGroupPropertiesFormat) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "privateDnsZoneConfigs", p.PrivateDNSZoneConfigs)
 	populate(objectMap, "provisioningState", p.ProvisioningState)
 	return json.Marshal(objectMap)
-}
-
-// PrivateDNSZoneGroupResponse is the response envelope for operations that return a PrivateDNSZoneGroup type.
-type PrivateDNSZoneGroupResponse struct {
-	// Private dns zone group resource.
-	PrivateDNSZoneGroup *PrivateDNSZoneGroup
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PrivateDNSZoneGroupsBeginCreateOrUpdateOptions contains the optional parameters for the PrivateDNSZoneGroups.BeginCreateOrUpdate method.
@@ -12402,15 +10484,6 @@ func (p PrivateEndpointConnectionListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// PrivateEndpointConnectionListResultResponse is the response envelope for operations that return a PrivateEndpointConnectionListResult type.
-type PrivateEndpointConnectionListResultResponse struct {
-	// Response for the ListPrivateEndpointConnection API service call.
-	PrivateEndpointConnectionListResult *PrivateEndpointConnectionListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // PrivateEndpointConnectionProperties - Properties of the PrivateEndpointConnectProperties.
 type PrivateEndpointConnectionProperties struct {
 	// A collection of information about the state of the connection between service consumer and provider.
@@ -12424,15 +10497,6 @@ type PrivateEndpointConnectionProperties struct {
 
 	// READ-ONLY; The provisioning state of the private endpoint connection resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-}
-
-// PrivateEndpointConnectionResponse is the response envelope for operations that return a PrivateEndpointConnection type.
-type PrivateEndpointConnectionResponse struct {
-	// PrivateEndpointConnection resource.
-	PrivateEndpointConnection *PrivateEndpointConnection
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PrivateEndpointListResult - Response for the ListPrivateEndpoints API service call.
@@ -12450,27 +10514,6 @@ func (p PrivateEndpointListResult) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "nextLink", p.NextLink)
 	populate(objectMap, "value", p.Value)
 	return json.Marshal(objectMap)
-}
-
-// PrivateEndpointListResultResponse is the response envelope for operations that return a PrivateEndpointListResult type.
-type PrivateEndpointListResultResponse struct {
-	// Response for the ListPrivateEndpoints API service call.
-	PrivateEndpointListResult *PrivateEndpointListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PrivateEndpointPollerResponse is the response envelope for operations that asynchronously return a PrivateEndpoint type.
-type PrivateEndpointPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (PrivateEndpointResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller PrivateEndpointPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PrivateEndpointProperties - Properties of the private endpoint.
@@ -12505,15 +10548,6 @@ func (p PrivateEndpointProperties) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "provisioningState", p.ProvisioningState)
 	populate(objectMap, "subnet", p.Subnet)
 	return json.Marshal(objectMap)
-}
-
-// PrivateEndpointResponse is the response envelope for operations that return a PrivateEndpoint type.
-type PrivateEndpointResponse struct {
-	// Private endpoint resource.
-	PrivateEndpoint *PrivateEndpoint
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PrivateEndpointsBeginCreateOrUpdateOptions contains the optional parameters for the PrivateEndpoints.BeginCreateOrUpdate method.
@@ -12691,27 +10725,6 @@ func (p PrivateLinkServiceListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// PrivateLinkServiceListResultResponse is the response envelope for operations that return a PrivateLinkServiceListResult type.
-type PrivateLinkServiceListResultResponse struct {
-	// Response for the ListPrivateLinkService API service call.
-	PrivateLinkServiceListResult *PrivateLinkServiceListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PrivateLinkServicePollerResponse is the response envelope for operations that asynchronously return a PrivateLinkService type.
-type PrivateLinkServicePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (PrivateLinkServiceResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller PrivateLinkServicePoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // PrivateLinkServiceProperties - Properties of the private link service.
 type PrivateLinkServiceProperties struct {
 	// The auto-approval list of the private link service.
@@ -12771,40 +10784,10 @@ type PrivateLinkServicePropertiesVisibility struct {
 	ResourceSet
 }
 
-// PrivateLinkServiceResponse is the response envelope for operations that return a PrivateLinkService type.
-type PrivateLinkServiceResponse struct {
-	// Private link service resource.
-	PrivateLinkService *PrivateLinkService
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // PrivateLinkServiceVisibility - Response for the CheckPrivateLinkServiceVisibility API service call.
 type PrivateLinkServiceVisibility struct {
 	// Private Link Service Visibility (True/False).
 	Visible *bool `json:"visible,omitempty"`
-}
-
-// PrivateLinkServiceVisibilityPollerResponse is the response envelope for operations that asynchronously return a PrivateLinkServiceVisibility type.
-type PrivateLinkServiceVisibilityPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (PrivateLinkServiceVisibilityResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller PrivateLinkServiceVisibilityPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PrivateLinkServiceVisibilityResponse is the response envelope for operations that return a PrivateLinkServiceVisibility type.
-type PrivateLinkServiceVisibilityResponse struct {
-	// Response for the CheckPrivateLinkServiceVisibility API service call.
-	PrivateLinkServiceVisibility *PrivateLinkServiceVisibility
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PrivateLinkServicesBeginCheckPrivateLinkServiceVisibilityByResourceGroupOptions contains the optional parameters for the PrivateLinkServices.BeginCheckPrivateLinkServiceVisibilityByResourceGroup
@@ -12951,15 +10934,6 @@ func (p ProbePropertiesFormat) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// ProbeResponse is the response envelope for operations that return a Probe type.
-type ProbeResponse struct {
-	// A load balancer probe.
-	Probe *Probe
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // ProtocolConfiguration - Configuration of the protocol.
 type ProtocolConfiguration struct {
 	// HTTP configuration of the connectivity check.
@@ -13043,27 +11017,6 @@ func (p PublicIPAddressListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// PublicIPAddressListResultResponse is the response envelope for operations that return a PublicIPAddressListResult type.
-type PublicIPAddressListResultResponse struct {
-	// Response for ListPublicIpAddresses API service call.
-	PublicIPAddressListResult *PublicIPAddressListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PublicIPAddressPollerResponse is the response envelope for operations that asynchronously return a PublicIPAddress type.
-type PublicIPAddressPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (PublicIPAddressResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller PublicIPAddressPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // PublicIPAddressPropertiesFormat - Public IP address properties.
 type PublicIPAddressPropertiesFormat struct {
 	// The FQDN of the DNS record associated with the public IP address.
@@ -13115,15 +11068,6 @@ func (p PublicIPAddressPropertiesFormat) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "publicIPPrefix", p.PublicIPPrefix)
 	populate(objectMap, "resourceGuid", p.ResourceGUID)
 	return json.Marshal(objectMap)
-}
-
-// PublicIPAddressResponse is the response envelope for operations that return a PublicIPAddress type.
-type PublicIPAddressResponse struct {
-	// Public IP address resource.
-	PublicIPAddress *PublicIPAddress
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PublicIPAddressSKU - SKU of a public IP address.
@@ -13225,27 +11169,6 @@ func (p PublicIPPrefixListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// PublicIPPrefixListResultResponse is the response envelope for operations that return a PublicIPPrefixListResult type.
-type PublicIPPrefixListResultResponse struct {
-	// Response for ListPublicIpPrefixes API service call.
-	PublicIPPrefixListResult *PublicIPPrefixListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PublicIPPrefixPollerResponse is the response envelope for operations that asynchronously return a PublicIPPrefix type.
-type PublicIPPrefixPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (PublicIPPrefixResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller PublicIPPrefixPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // PublicIPPrefixPropertiesFormat - Public IP prefix properties.
 type PublicIPPrefixPropertiesFormat struct {
 	// The list of tags associated with the public IP prefix.
@@ -13285,15 +11208,6 @@ func (p PublicIPPrefixPropertiesFormat) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "publicIPAddresses", p.PublicIPAddresses)
 	populate(objectMap, "resourceGuid", p.ResourceGUID)
 	return json.Marshal(objectMap)
-}
-
-// PublicIPPrefixResponse is the response envelope for operations that return a PublicIPPrefix type.
-type PublicIPPrefixResponse struct {
-	// Public IP prefix resource.
-	PublicIPPrefix *PublicIPPrefix
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PublicIPPrefixSKU - SKU of a public IP prefix.
@@ -13484,15 +11398,6 @@ func (r ResourceNavigationLinksListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// ResourceNavigationLinksListResultResponse is the response envelope for operations that return a ResourceNavigationLinksListResult type.
-type ResourceNavigationLinksListResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Response for ResourceNavigationLinks_List operation.
-	ResourceNavigationLinksListResult *ResourceNavigationLinksListResult
-}
-
 // ResourceSet - The base resource set for visibility and auto-approval.
 type ResourceSet struct {
 	// The list of subscriptions.
@@ -13577,27 +11482,6 @@ func (r RouteFilterListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// RouteFilterListResultResponse is the response envelope for operations that return a RouteFilterListResult type.
-type RouteFilterListResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Response for the ListRouteFilters API service call.
-	RouteFilterListResult *RouteFilterListResult
-}
-
-// RouteFilterPollerResponse is the response envelope for operations that asynchronously return a RouteFilter type.
-type RouteFilterPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (RouteFilterResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller RouteFilterPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // RouteFilterPropertiesFormat - Route Filter Resource.
 type RouteFilterPropertiesFormat struct {
 	// Collection of RouteFilterRules contained within a route filter.
@@ -13621,15 +11505,6 @@ func (r RouteFilterPropertiesFormat) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "provisioningState", r.ProvisioningState)
 	populate(objectMap, "rules", r.Rules)
 	return json.Marshal(objectMap)
-}
-
-// RouteFilterResponse is the response envelope for operations that return a RouteFilter type.
-type RouteFilterResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Route Filter Resource.
-	RouteFilter *RouteFilter
 }
 
 // RouteFilterRule - Route Filter Rule Resource.
@@ -13675,27 +11550,6 @@ func (r RouteFilterRuleListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// RouteFilterRuleListResultResponse is the response envelope for operations that return a RouteFilterRuleListResult type.
-type RouteFilterRuleListResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Response for the ListRouteFilterRules API service call.
-	RouteFilterRuleListResult *RouteFilterRuleListResult
-}
-
-// RouteFilterRulePollerResponse is the response envelope for operations that asynchronously return a RouteFilterRule type.
-type RouteFilterRulePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (RouteFilterRuleResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller RouteFilterRulePoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // RouteFilterRulePropertiesFormat - Route Filter Rule Resource.
 type RouteFilterRulePropertiesFormat struct {
 	// REQUIRED; The access type of the rule.
@@ -13719,15 +11573,6 @@ func (r RouteFilterRulePropertiesFormat) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "provisioningState", r.ProvisioningState)
 	populate(objectMap, "routeFilterRuleType", r.RouteFilterRuleType)
 	return json.Marshal(objectMap)
-}
-
-// RouteFilterRuleResponse is the response envelope for operations that return a RouteFilterRule type.
-type RouteFilterRuleResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Route Filter Rule Resource.
-	RouteFilterRule *RouteFilterRule
 }
 
 // RouteFilterRulesBeginCreateOrUpdateOptions contains the optional parameters for the RouteFilterRules.BeginCreateOrUpdate method.
@@ -13798,27 +11643,6 @@ func (r RouteListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// RouteListResultResponse is the response envelope for operations that return a RouteListResult type.
-type RouteListResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Response for the ListRoute API service call.
-	RouteListResult *RouteListResult
-}
-
-// RoutePollerResponse is the response envelope for operations that asynchronously return a Route type.
-type RoutePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (RouteResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller RoutePoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // RoutePropertiesFormat - Route resource.
 type RoutePropertiesFormat struct {
 	// REQUIRED; The type of Azure hop the packet should be sent to.
@@ -13832,15 +11656,6 @@ type RoutePropertiesFormat struct {
 
 	// READ-ONLY; The provisioning state of the route resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-}
-
-// RouteResponse is the response envelope for operations that return a Route type.
-type RouteResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Route resource.
-	Route *Route
 }
 
 // RouteTable - Route table resource.
@@ -13878,27 +11693,6 @@ func (r RouteTableListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// RouteTableListResultResponse is the response envelope for operations that return a RouteTableListResult type.
-type RouteTableListResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Response for the ListRouteTable API service call.
-	RouteTableListResult *RouteTableListResult
-}
-
-// RouteTablePollerResponse is the response envelope for operations that asynchronously return a RouteTable type.
-type RouteTablePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (RouteTableResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller RouteTablePoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // RouteTablePropertiesFormat - Route Table resource.
 type RouteTablePropertiesFormat struct {
 	// Whether to disable the routes learned by BGP on that route table. True means disable.
@@ -13922,15 +11716,6 @@ func (r RouteTablePropertiesFormat) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "routes", r.Routes)
 	populate(objectMap, "subnets", r.Subnets)
 	return json.Marshal(objectMap)
-}
-
-// RouteTableResponse is the response envelope for operations that return a RouteTable type.
-type RouteTableResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Route table resource.
-	RouteTable *RouteTable
 }
 
 // RouteTablesBeginCreateOrUpdateOptions contains the optional parameters for the RouteTables.BeginCreateOrUpdate method.
@@ -14012,27 +11797,6 @@ func (s SecurityGroupViewResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// SecurityGroupViewResultPollerResponse is the response envelope for operations that asynchronously return a SecurityGroupViewResult type.
-type SecurityGroupViewResultPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (SecurityGroupViewResultResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller SecurityGroupViewResultPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// SecurityGroupViewResultResponse is the response envelope for operations that return a SecurityGroupViewResult type.
-type SecurityGroupViewResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// The information about security rules applied to the specified VM.
-	SecurityGroupViewResult *SecurityGroupViewResult
-}
-
 // SecurityPartnerProvider - Security Partner Provider resource.
 type SecurityPartnerProvider struct {
 	Resource
@@ -14068,27 +11832,6 @@ func (s SecurityPartnerProviderListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// SecurityPartnerProviderListResultResponse is the response envelope for operations that return a SecurityPartnerProviderListResult type.
-type SecurityPartnerProviderListResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Response for ListSecurityPartnerProviders API service call.
-	SecurityPartnerProviderListResult *SecurityPartnerProviderListResult
-}
-
-// SecurityPartnerProviderPollerResponse is the response envelope for operations that asynchronously return a SecurityPartnerProvider type.
-type SecurityPartnerProviderPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (SecurityPartnerProviderResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller SecurityPartnerProviderPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // SecurityPartnerProviderPropertiesFormat - Properties of the Security Partner Provider.
 type SecurityPartnerProviderPropertiesFormat struct {
 	// The security provider name.
@@ -14102,15 +11845,6 @@ type SecurityPartnerProviderPropertiesFormat struct {
 
 	// READ-ONLY; The provisioning state of the Security Partner Provider resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-}
-
-// SecurityPartnerProviderResponse is the response envelope for operations that return a SecurityPartnerProvider type.
-type SecurityPartnerProviderResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Security Partner Provider resource.
-	SecurityPartnerProvider *SecurityPartnerProvider
 }
 
 // SecurityPartnerProvidersBeginCreateOrUpdateOptions contains the optional parameters for the SecurityPartnerProviders.BeginCreateOrUpdate method.
@@ -14207,27 +11941,6 @@ func (s SecurityRuleListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// SecurityRuleListResultResponse is the response envelope for operations that return a SecurityRuleListResult type.
-type SecurityRuleListResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Response for ListSecurityRule API service call. Retrieves all security rules that belongs to a network security group.
-	SecurityRuleListResult *SecurityRuleListResult
-}
-
-// SecurityRulePollerResponse is the response envelope for operations that asynchronously return a SecurityRule type.
-type SecurityRulePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (SecurityRuleResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller SecurityRulePoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // SecurityRulePropertiesFormat - Security rule resource.
 type SecurityRulePropertiesFormat struct {
 	// REQUIRED; The network traffic is allowed or denied.
@@ -14304,15 +12017,6 @@ func (s SecurityRulePropertiesFormat) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "sourcePortRange", s.SourcePortRange)
 	populate(objectMap, "sourcePortRanges", s.SourcePortRanges)
 	return json.Marshal(objectMap)
-}
-
-// SecurityRuleResponse is the response envelope for operations that return a SecurityRule type.
-type SecurityRuleResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Network security rule.
-	SecurityRule *SecurityRule
 }
 
 // SecurityRulesBeginCreateOrUpdateOptions contains the optional parameters for the SecurityRules.BeginCreateOrUpdate method.
@@ -14410,15 +12114,6 @@ func (s ServiceAssociationLinksListResult) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "nextLink", s.NextLink)
 	populate(objectMap, "value", s.Value)
 	return json.Marshal(objectMap)
-}
-
-// ServiceAssociationLinksListResultResponse is the response envelope for operations that return a ServiceAssociationLinksListResult type.
-type ServiceAssociationLinksListResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Response for ServiceAssociationLinks_List operation.
-	ServiceAssociationLinksListResult *ServiceAssociationLinksListResult
 }
 
 // ServiceDelegationPropertiesFormat - Properties of a service delegation.
@@ -14531,28 +12226,6 @@ func (s ServiceEndpointPolicyDefinitionListResult) MarshalJSON() ([]byte, error)
 	return json.Marshal(objectMap)
 }
 
-// ServiceEndpointPolicyDefinitionListResultResponse is the response envelope for operations that return a ServiceEndpointPolicyDefinitionListResult type.
-type ServiceEndpointPolicyDefinitionListResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Response for ListServiceEndpointPolicyDefinition API service call. Retrieves all service endpoint policy definition that belongs to a service endpoint
-	// policy.
-	ServiceEndpointPolicyDefinitionListResult *ServiceEndpointPolicyDefinitionListResult
-}
-
-// ServiceEndpointPolicyDefinitionPollerResponse is the response envelope for operations that asynchronously return a ServiceEndpointPolicyDefinition type.
-type ServiceEndpointPolicyDefinitionPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ServiceEndpointPolicyDefinitionResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller ServiceEndpointPolicyDefinitionPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // ServiceEndpointPolicyDefinitionPropertiesFormat - Service Endpoint policy definition resource.
 type ServiceEndpointPolicyDefinitionPropertiesFormat struct {
 	// A description for this rule. Restricted to 140 chars.
@@ -14576,15 +12249,6 @@ func (s ServiceEndpointPolicyDefinitionPropertiesFormat) MarshalJSON() ([]byte, 
 	populate(objectMap, "service", s.Service)
 	populate(objectMap, "serviceResources", s.ServiceResources)
 	return json.Marshal(objectMap)
-}
-
-// ServiceEndpointPolicyDefinitionResponse is the response envelope for operations that return a ServiceEndpointPolicyDefinition type.
-type ServiceEndpointPolicyDefinitionResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Service Endpoint policy definitions.
-	ServiceEndpointPolicyDefinition *ServiceEndpointPolicyDefinition
 }
 
 // ServiceEndpointPolicyDefinitionsBeginCreateOrUpdateOptions contains the optional parameters for the ServiceEndpointPolicyDefinitions.BeginCreateOrUpdate
@@ -14626,27 +12290,6 @@ func (s ServiceEndpointPolicyListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// ServiceEndpointPolicyListResultResponse is the response envelope for operations that return a ServiceEndpointPolicyListResult type.
-type ServiceEndpointPolicyListResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Response for ListServiceEndpointPolicies API service call.
-	ServiceEndpointPolicyListResult *ServiceEndpointPolicyListResult
-}
-
-// ServiceEndpointPolicyPollerResponse is the response envelope for operations that asynchronously return a ServiceEndpointPolicy type.
-type ServiceEndpointPolicyPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ServiceEndpointPolicyResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller ServiceEndpointPolicyPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // ServiceEndpointPolicyPropertiesFormat - Service Endpoint Policy resource.
 type ServiceEndpointPolicyPropertiesFormat struct {
 	// A collection of service endpoint policy definitions of the service endpoint policy.
@@ -14670,15 +12313,6 @@ func (s ServiceEndpointPolicyPropertiesFormat) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "serviceEndpointPolicyDefinitions", s.ServiceEndpointPolicyDefinitions)
 	populate(objectMap, "subnets", s.Subnets)
 	return json.Marshal(objectMap)
-}
-
-// ServiceEndpointPolicyResponse is the response envelope for operations that return a ServiceEndpointPolicy type.
-type ServiceEndpointPolicyResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Service End point policy resource.
-	ServiceEndpointPolicy *ServiceEndpointPolicy
 }
 
 // ServiceEndpointPropertiesFormat - The service endpoint properties.
@@ -14777,15 +12411,6 @@ func (s ServiceTagsListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// ServiceTagsListResultResponse is the response envelope for operations that return a ServiceTagsListResult type.
-type ServiceTagsListResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Response for the ListServiceTags API service call.
-	ServiceTagsListResult *ServiceTagsListResult
-}
-
 // SessionIDs - List of session IDs.
 type SessionIDs struct {
 	// List of session IDs.
@@ -14797,34 +12422,6 @@ func (s SessionIDs) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "sessionIds", s.SessionIDs)
 	return json.Marshal(objectMap)
-}
-
-// StringArrayResponse is the response envelope for operations that return a []*string type.
-type StringArrayResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Response for ApplicationGatewayAvailableServerVariables API service call.
-	StringArray []*string
-}
-
-// StringPollerResponse is the response envelope for operations that asynchronously return a string type.
-type StringPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (StringResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller StringPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// StringResponse is the response envelope for operations that return a string type.
-type StringResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *string
 }
 
 // SubResource - Reference to another subresource.
@@ -14899,27 +12496,6 @@ func (s SubnetListResult) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "nextLink", s.NextLink)
 	populate(objectMap, "value", s.Value)
 	return json.Marshal(objectMap)
-}
-
-// SubnetListResultResponse is the response envelope for operations that return a SubnetListResult type.
-type SubnetListResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Response for ListSubnets API service callRetrieves all subnet that belongs to a virtual network.
-	SubnetListResult *SubnetListResult
-}
-
-// SubnetPollerResponse is the response envelope for operations that asynchronously return a Subnet type.
-type SubnetPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (SubnetResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller SubnetPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // SubnetPropertiesFormat - Properties of the subnet.
@@ -15001,15 +12577,6 @@ func (s SubnetPropertiesFormat) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "serviceEndpointPolicies", s.ServiceEndpointPolicies)
 	populate(objectMap, "serviceEndpoints", s.ServiceEndpoints)
 	return json.Marshal(objectMap)
-}
-
-// SubnetResponse is the response envelope for operations that return a Subnet type.
-type SubnetResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Subnet in a virtual network resource.
-	Subnet *Subnet
 }
 
 // SubnetsBeginCreateOrUpdateOptions contains the optional parameters for the Subnets.BeginCreateOrUpdate method.
@@ -15161,15 +12728,6 @@ func (t TopologyResource) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "location", t.Location)
 	populate(objectMap, "name", t.Name)
 	return json.Marshal(objectMap)
-}
-
-// TopologyResponse is the response envelope for operations that return a Topology type.
-type TopologyResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Topology of the specified resource group.
-	Topology *Topology
 }
 
 // TrafficAnalyticsConfigurationProperties - Parameters that define the configuration of traffic analytics.
@@ -15333,27 +12891,6 @@ func (t *TroubleshootingResult) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// TroubleshootingResultPollerResponse is the response envelope for operations that asynchronously return a TroubleshootingResult type.
-type TroubleshootingResultPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (TroubleshootingResultResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller TroubleshootingResultPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// TroubleshootingResultResponse is the response envelope for operations that return a TroubleshootingResult type.
-type TroubleshootingResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Troubleshooting information gained from specified resource.
-	TroubleshootingResult *TroubleshootingResult
-}
-
 // TunnelConnectionHealth - VirtualNetworkGatewayConnection properties.
 type TunnelConnectionHealth struct {
 	// READ-ONLY; Virtual Network Gateway connection status.
@@ -15425,15 +12962,6 @@ func (u UsagesListResult) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "nextLink", u.NextLink)
 	populate(objectMap, "value", u.Value)
 	return json.Marshal(objectMap)
-}
-
-// UsagesListResultResponse is the response envelope for operations that return a UsagesListResult type.
-type UsagesListResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// The list usages operation response.
-	UsagesListResult *UsagesListResult
 }
 
 // VM - Describes a Virtual Machine.
@@ -15571,28 +13099,6 @@ func (v VPNClientConnectionHealthDetailListResult) MarshalJSON() ([]byte, error)
 	return json.Marshal(objectMap)
 }
 
-// VPNClientConnectionHealthDetailListResultPollerResponse is the response envelope for operations that asynchronously return a VPNClientConnectionHealthDetailListResult
-// type.
-type VPNClientConnectionHealthDetailListResultPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VPNClientConnectionHealthDetailListResultResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller VPNClientConnectionHealthDetailListResultPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// VPNClientConnectionHealthDetailListResultResponse is the response envelope for operations that return a VPNClientConnectionHealthDetailListResult type.
-type VPNClientConnectionHealthDetailListResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// List of virtual network gateway vpn client connection health.
-	VPNClientConnectionHealthDetailListResult *VPNClientConnectionHealthDetailListResult
-}
-
 // VPNClientIPsecParameters - An IPSec parameters for a virtual network gateway P2S connection.
 type VPNClientIPsecParameters struct {
 	// REQUIRED; The DH Group used in IKE Phase 1 for initial SA.
@@ -15618,27 +13124,6 @@ type VPNClientIPsecParameters struct {
 
 	// REQUIRED; The IPSec Security Association (also called Quick Mode or Phase 2 SA) lifetime in seconds for P2S client.
 	SaLifeTimeSeconds *int32 `json:"saLifeTimeSeconds,omitempty"`
-}
-
-// VPNClientIPsecParametersPollerResponse is the response envelope for operations that asynchronously return a VPNClientIPsecParameters type.
-type VPNClientIPsecParametersPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VPNClientIPsecParametersResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller VPNClientIPsecParametersPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// VPNClientIPsecParametersResponse is the response envelope for operations that return a VPNClientIPsecParameters type.
-type VPNClientIPsecParametersResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// An IPSec parameters for a virtual network gateway P2S connection.
-	VPNClientIPsecParameters *VPNClientIPsecParameters
 }
 
 // VPNClientParameters - Vpn Client Parameters for package generation.
@@ -15753,18 +13238,6 @@ func (v VPNConnection) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// VPNConnectionPollerResponse is the response envelope for operations that asynchronously return a VPNConnection type.
-type VPNConnectionPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VPNConnectionResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller VPNConnectionPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // VPNConnectionProperties - Parameters for VpnConnection.
 type VPNConnectionProperties struct {
 	// Expected bandwidth in MBPS.
@@ -15842,15 +13315,6 @@ func (v VPNConnectionProperties) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// VPNConnectionResponse is the response envelope for operations that return a VPNConnection type.
-type VPNConnectionResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// VpnConnection Resource.
-	VPNConnection *VPNConnection
-}
-
 // VPNConnectionsBeginCreateOrUpdateOptions contains the optional parameters for the VPNConnections.BeginCreateOrUpdate method.
 type VPNConnectionsBeginCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
@@ -15901,18 +13365,6 @@ func (v VPNGateway) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// VPNGatewayPollerResponse is the response envelope for operations that asynchronously return a VPNGateway type.
-type VPNGatewayPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VPNGatewayResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller VPNGatewayPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // VPNGatewayProperties - Parameters for VpnGateway.
 type VPNGatewayProperties struct {
 	// Local network gateway's BGP speaker settings.
@@ -15940,15 +13392,6 @@ func (v VPNGatewayProperties) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "vpnGatewayScaleUnit", v.VPNGatewayScaleUnit)
 	populate(objectMap, "virtualHub", v.VirtualHub)
 	return json.Marshal(objectMap)
-}
-
-// VPNGatewayResponse is the response envelope for operations that return a VPNGateway type.
-type VPNGatewayResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// VpnGateway Resource.
-	VPNGateway *VPNGateway
 }
 
 // VPNGatewaysBeginCreateOrUpdateOptions contains the optional parameters for the VPNGateways.BeginCreateOrUpdate method.
@@ -16027,27 +13470,6 @@ type VPNProfileResponse struct {
 	ProfileURL *string `json:"profileUrl,omitempty"`
 }
 
-// VPNProfileResponsePollerResponse is the response envelope for operations that asynchronously return a VPNProfileResponse type.
-type VPNProfileResponsePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VPNProfileResponseResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller VPNProfileResponsePoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// VPNProfileResponseResponse is the response envelope for operations that return a VPNProfileResponse type.
-type VPNProfileResponseResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Vpn Profile Response for package generation.
-	VPNProfileResponse *VPNProfileResponse
-}
-
 // VPNServerConfigRadiusClientRootCertificate - Properties of the Radius client root certificate of VpnServerConfiguration.
 type VPNServerConfigRadiusClientRootCertificate struct {
 	// The certificate name.
@@ -16100,18 +13522,6 @@ func (v VPNServerConfiguration) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "etag", v.Etag)
 	populate(objectMap, "properties", v.Properties)
 	return json.Marshal(objectMap)
-}
-
-// VPNServerConfigurationPollerResponse is the response envelope for operations that asynchronously return a VPNServerConfiguration type.
-type VPNServerConfigurationPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VPNServerConfigurationResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller VPNServerConfigurationPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // VPNServerConfigurationProperties - Parameters for VpnServerConfiguration.
@@ -16183,15 +13593,6 @@ func (v VPNServerConfigurationProperties) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// VPNServerConfigurationResponse is the response envelope for operations that return a VPNServerConfiguration type.
-type VPNServerConfigurationResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// VpnServerConfiguration Resource.
-	VPNServerConfiguration *VPNServerConfiguration
-}
-
 // VPNServerConfigurationsAssociatedWithVirtualWanBeginListOptions contains the optional parameters for the VPNServerConfigurationsAssociatedWithVirtualWan.BeginList
 // method.
 type VPNServerConfigurationsAssociatedWithVirtualWanBeginListOptions struct {
@@ -16234,27 +13635,6 @@ func (v VPNServerConfigurationsResponse) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "vpnServerConfigurationResourceIds", v.VPNServerConfigurationResourceIDs)
 	return json.Marshal(objectMap)
-}
-
-// VPNServerConfigurationsResponsePollerResponse is the response envelope for operations that asynchronously return a VPNServerConfigurationsResponse type.
-type VPNServerConfigurationsResponsePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VPNServerConfigurationsResponseResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller VPNServerConfigurationsResponsePoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// VPNServerConfigurationsResponseResponse is the response envelope for operations that return a VPNServerConfigurationsResponse type.
-type VPNServerConfigurationsResponseResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// VpnServerConfigurations list associated with VirtualWan Response.
-	VPNServerConfigurationsResponse *VPNServerConfigurationsResponse
 }
 
 // VPNServerConfigurationsUpdateTagsOptions contains the optional parameters for the VPNServerConfigurations.UpdateTags method.
@@ -16403,15 +13783,6 @@ func (v VPNSiteLinkConnectionProperties) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// VPNSiteLinkConnectionResponse is the response envelope for operations that return a VPNSiteLinkConnection type.
-type VPNSiteLinkConnectionResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// VpnSiteLinkConnection Resource.
-	VPNSiteLinkConnection *VPNSiteLinkConnection
-}
-
 // VPNSiteLinkConnectionsGetOptions contains the optional parameters for the VPNSiteLinkConnections.Get method.
 type VPNSiteLinkConnectionsGetOptions struct {
 	// placeholder for future optional parameters
@@ -16435,15 +13806,6 @@ type VPNSiteLinkProperties struct {
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
-// VPNSiteLinkResponse is the response envelope for operations that return a VPNSiteLink type.
-type VPNSiteLinkResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// VpnSiteLink Resource.
-	VPNSiteLink *VPNSiteLink
-}
-
 // VPNSiteLinksGetOptions contains the optional parameters for the VPNSiteLinks.Get method.
 type VPNSiteLinksGetOptions struct {
 	// placeholder for future optional parameters
@@ -16452,18 +13814,6 @@ type VPNSiteLinksGetOptions struct {
 // VPNSiteLinksListByVPNSiteOptions contains the optional parameters for the VPNSiteLinks.ListByVPNSite method.
 type VPNSiteLinksListByVPNSiteOptions struct {
 	// placeholder for future optional parameters
-}
-
-// VPNSitePollerResponse is the response envelope for operations that asynchronously return a VPNSite type.
-type VPNSitePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VPNSiteResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller VPNSitePoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // VPNSiteProperties - Parameters for VpnSite.
@@ -16509,15 +13859,6 @@ func (v VPNSiteProperties) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "vpnSiteLinks", v.VPNSiteLinks)
 	populate(objectMap, "virtualWan", v.VirtualWan)
 	return json.Marshal(objectMap)
-}
-
-// VPNSiteResponse is the response envelope for operations that return a VPNSite type.
-type VPNSiteResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// VpnSite Resource.
-	VPNSite *VPNSite
 }
 
 // VPNSitesBeginCreateOrUpdateOptions contains the optional parameters for the VPNSites.BeginCreateOrUpdate method.
@@ -16591,27 +13932,6 @@ type VerificationIPFlowResult struct {
 	RuleName *string `json:"ruleName,omitempty"`
 }
 
-// VerificationIPFlowResultPollerResponse is the response envelope for operations that asynchronously return a VerificationIPFlowResult type.
-type VerificationIPFlowResultPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VerificationIPFlowResultResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller VerificationIPFlowResultPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// VerificationIPFlowResultResponse is the response envelope for operations that return a VerificationIPFlowResult type.
-type VerificationIPFlowResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Results of IP flow verification on the target resource.
-	VerificationIPFlowResult *VerificationIPFlowResult
-}
-
 // VirtualApplianceNicProperties - Network Virtual Appliance NIC properties.
 type VirtualApplianceNicProperties struct {
 	// READ-ONLY; NIC name.
@@ -16659,18 +13979,6 @@ type VirtualHubID struct {
 	// The resource URI for the Virtual Hub where the ExpressRoute gateway is or will be deployed. The Virtual Hub resource and the ExpressRoute gateway resource
 	// reside in the same subscription.
 	ID *string `json:"id,omitempty"`
-}
-
-// VirtualHubPollerResponse is the response envelope for operations that asynchronously return a VirtualHub type.
-type VirtualHubPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualHubResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller VirtualHubPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // VirtualHubProperties - Parameters for VirtualHub.
@@ -16734,15 +14042,6 @@ func (v VirtualHubProperties) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// VirtualHubResponse is the response envelope for operations that return a VirtualHub type.
-type VirtualHubResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// VirtualHub Resource.
-	VirtualHub *VirtualHub
-}
-
 // VirtualHubRoute - VirtualHub route.
 type VirtualHubRoute struct {
 	// List of all addressPrefixes.
@@ -16795,18 +14094,6 @@ func (v VirtualHubRouteTableV2) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// VirtualHubRouteTableV2PollerResponse is the response envelope for operations that asynchronously return a VirtualHubRouteTableV2 type.
-type VirtualHubRouteTableV2PollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualHubRouteTableV2Response, error)
-
-	// Poller contains an initialized poller.
-	Poller VirtualHubRouteTableV2Poller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // VirtualHubRouteTableV2Properties - Parameters for VirtualHubRouteTableV2.
 type VirtualHubRouteTableV2Properties struct {
 	// List of all connections attached to this route table v2.
@@ -16826,15 +14113,6 @@ func (v VirtualHubRouteTableV2Properties) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "provisioningState", v.ProvisioningState)
 	populate(objectMap, "routes", v.Routes)
 	return json.Marshal(objectMap)
-}
-
-// VirtualHubRouteTableV2Response is the response envelope for operations that return a VirtualHubRouteTableV2 type.
-type VirtualHubRouteTableV2Response struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// VirtualHubRouteTableV2 Resource.
-	VirtualHubRouteTableV2 *VirtualHubRouteTableV2
 }
 
 // VirtualHubRouteTableV2SBeginCreateOrUpdateOptions contains the optional parameters for the VirtualHubRouteTableV2S.BeginCreateOrUpdate method.
@@ -17105,27 +14383,6 @@ func (v VirtualNetworkGatewayConnectionListResult) MarshalJSON() ([]byte, error)
 	return json.Marshal(objectMap)
 }
 
-// VirtualNetworkGatewayConnectionListResultResponse is the response envelope for operations that return a VirtualNetworkGatewayConnectionListResult type.
-type VirtualNetworkGatewayConnectionListResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Response for the ListVirtualNetworkGatewayConnections API service call.
-	VirtualNetworkGatewayConnectionListResult *VirtualNetworkGatewayConnectionListResult
-}
-
-// VirtualNetworkGatewayConnectionPollerResponse is the response envelope for operations that asynchronously return a VirtualNetworkGatewayConnection type.
-type VirtualNetworkGatewayConnectionPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewayConnectionResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller VirtualNetworkGatewayConnectionPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // VirtualNetworkGatewayConnectionPropertiesFormat - VirtualNetworkGatewayConnection properties.
 type VirtualNetworkGatewayConnectionPropertiesFormat struct {
 	// REQUIRED; Gateway connection type.
@@ -17221,15 +14478,6 @@ func (v VirtualNetworkGatewayConnectionPropertiesFormat) MarshalJSON() ([]byte, 
 	populate(objectMap, "virtualNetworkGateway1", v.VirtualNetworkGateway1)
 	populate(objectMap, "virtualNetworkGateway2", v.VirtualNetworkGateway2)
 	return json.Marshal(objectMap)
-}
-
-// VirtualNetworkGatewayConnectionResponse is the response envelope for operations that return a VirtualNetworkGatewayConnection type.
-type VirtualNetworkGatewayConnectionResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// A common class for general resource information.
-	VirtualNetworkGatewayConnection *VirtualNetworkGatewayConnection
 }
 
 // VirtualNetworkGatewayConnectionsBeginCreateOrUpdateOptions contains the optional parameters for the VirtualNetworkGatewayConnections.BeginCreateOrUpdate
@@ -17345,15 +14593,6 @@ func (v VirtualNetworkGatewayListConnectionsResult) MarshalJSON() ([]byte, error
 	return json.Marshal(objectMap)
 }
 
-// VirtualNetworkGatewayListConnectionsResultResponse is the response envelope for operations that return a VirtualNetworkGatewayListConnectionsResult type.
-type VirtualNetworkGatewayListConnectionsResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Response for the VirtualNetworkGatewayListConnections API service call.
-	VirtualNetworkGatewayListConnectionsResult *VirtualNetworkGatewayListConnectionsResult
-}
-
 // VirtualNetworkGatewayListResult - Response for the ListVirtualNetworkGateways API service call.
 type VirtualNetworkGatewayListResult struct {
 	// A list of VirtualNetworkGateway resources that exists in a resource group.
@@ -17369,27 +14608,6 @@ func (v VirtualNetworkGatewayListResult) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "nextLink", v.NextLink)
 	populate(objectMap, "value", v.Value)
 	return json.Marshal(objectMap)
-}
-
-// VirtualNetworkGatewayListResultResponse is the response envelope for operations that return a VirtualNetworkGatewayListResult type.
-type VirtualNetworkGatewayListResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Response for the ListVirtualNetworkGateways API service call.
-	VirtualNetworkGatewayListResult *VirtualNetworkGatewayListResult
-}
-
-// VirtualNetworkGatewayPollerResponse is the response envelope for operations that asynchronously return a VirtualNetworkGateway type.
-type VirtualNetworkGatewayPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewayResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller VirtualNetworkGatewayPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // VirtualNetworkGatewayPropertiesFormat - VirtualNetworkGateway properties.
@@ -17465,15 +14683,6 @@ func (v VirtualNetworkGatewayPropertiesFormat) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "vpnGatewayGeneration", v.VPNGatewayGeneration)
 	populate(objectMap, "vpnType", v.VPNType)
 	return json.Marshal(objectMap)
-}
-
-// VirtualNetworkGatewayResponse is the response envelope for operations that return a VirtualNetworkGateway type.
-type VirtualNetworkGatewayResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// A common class for general resource information.
-	VirtualNetworkGateway *VirtualNetworkGateway
 }
 
 // VirtualNetworkGatewaySKU - VirtualNetworkGatewaySku details.
@@ -17626,15 +14835,6 @@ func (v VirtualNetworkListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// VirtualNetworkListResultResponse is the response envelope for operations that return a VirtualNetworkListResult type.
-type VirtualNetworkListResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Response for the ListVirtualNetworks API service call.
-	VirtualNetworkListResult *VirtualNetworkListResult
-}
-
 // VirtualNetworkListUsageResult - Response for the virtual networks GetUsage API service call.
 type VirtualNetworkListUsageResult struct {
 	// The URL to get the next set of results.
@@ -17650,15 +14850,6 @@ func (v VirtualNetworkListUsageResult) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "nextLink", v.NextLink)
 	populate(objectMap, "value", v.Value)
 	return json.Marshal(objectMap)
-}
-
-// VirtualNetworkListUsageResultResponse is the response envelope for operations that return a VirtualNetworkListUsageResult type.
-type VirtualNetworkListUsageResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Response for the virtual networks GetUsage API service call.
-	VirtualNetworkListUsageResult *VirtualNetworkListUsageResult
 }
 
 // VirtualNetworkPeering - Peerings in a virtual network resource.
@@ -17700,27 +14891,6 @@ func (v VirtualNetworkPeeringListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// VirtualNetworkPeeringListResultResponse is the response envelope for operations that return a VirtualNetworkPeeringListResult type.
-type VirtualNetworkPeeringListResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Response for ListSubnets API service call. Retrieves all subnets that belong to a virtual network.
-	VirtualNetworkPeeringListResult *VirtualNetworkPeeringListResult
-}
-
-// VirtualNetworkPeeringPollerResponse is the response envelope for operations that asynchronously return a VirtualNetworkPeering type.
-type VirtualNetworkPeeringPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkPeeringResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller VirtualNetworkPeeringPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // VirtualNetworkPeeringPropertiesFormat - Properties of the virtual network peering.
 type VirtualNetworkPeeringPropertiesFormat struct {
 	// Whether the forwarded traffic from the VMs in the local virtual network will be allowed/disallowed in remote virtual network.
@@ -17752,15 +14922,6 @@ type VirtualNetworkPeeringPropertiesFormat struct {
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
-// VirtualNetworkPeeringResponse is the response envelope for operations that return a VirtualNetworkPeering type.
-type VirtualNetworkPeeringResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Peerings in a virtual network resource.
-	VirtualNetworkPeering *VirtualNetworkPeering
-}
-
 // VirtualNetworkPeeringsBeginCreateOrUpdateOptions contains the optional parameters for the VirtualNetworkPeerings.BeginCreateOrUpdate method.
 type VirtualNetworkPeeringsBeginCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
@@ -17779,18 +14940,6 @@ type VirtualNetworkPeeringsGetOptions struct {
 // VirtualNetworkPeeringsListOptions contains the optional parameters for the VirtualNetworkPeerings.List method.
 type VirtualNetworkPeeringsListOptions struct {
 	// placeholder for future optional parameters
-}
-
-// VirtualNetworkPollerResponse is the response envelope for operations that asynchronously return a VirtualNetwork type.
-type VirtualNetworkPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller VirtualNetworkPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // VirtualNetworkPropertiesFormat - Properties of the virtual network.
@@ -17847,15 +14996,6 @@ func (v VirtualNetworkPropertiesFormat) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// VirtualNetworkResponse is the response envelope for operations that return a VirtualNetwork type.
-type VirtualNetworkResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Virtual Network resource.
-	VirtualNetwork *VirtualNetwork
-}
-
 // VirtualNetworkTap - Virtual Network Tap resource.
 type VirtualNetworkTap struct {
 	Resource
@@ -17891,27 +15031,6 @@ func (v VirtualNetworkTapListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// VirtualNetworkTapListResultResponse is the response envelope for operations that return a VirtualNetworkTapListResult type.
-type VirtualNetworkTapListResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Response for ListVirtualNetworkTap API service call.
-	VirtualNetworkTapListResult *VirtualNetworkTapListResult
-}
-
-// VirtualNetworkTapPollerResponse is the response envelope for operations that asynchronously return a VirtualNetworkTap type.
-type VirtualNetworkTapPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkTapResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller VirtualNetworkTapPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // VirtualNetworkTapPropertiesFormat - Virtual Network Tap properties.
 type VirtualNetworkTapPropertiesFormat struct {
 	// The reference to the private IP address on the internal Load Balancer that will receive the tap.
@@ -17943,15 +15062,6 @@ func (v VirtualNetworkTapPropertiesFormat) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "provisioningState", v.ProvisioningState)
 	populate(objectMap, "resourceGuid", v.ResourceGUID)
 	return json.Marshal(objectMap)
-}
-
-// VirtualNetworkTapResponse is the response envelope for operations that return a VirtualNetworkTap type.
-type VirtualNetworkTapResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Virtual Network Tap resource.
-	VirtualNetworkTap *VirtualNetworkTap
 }
 
 // VirtualNetworkTapsBeginCreateOrUpdateOptions contains the optional parameters for the VirtualNetworkTaps.BeginCreateOrUpdate method.
@@ -18087,15 +15197,6 @@ func (v VirtualRouterListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// VirtualRouterListResultResponse is the response envelope for operations that return a VirtualRouterListResult type.
-type VirtualRouterListResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Response for ListVirtualRouters API service call.
-	VirtualRouterListResult *VirtualRouterListResult
-}
-
 // VirtualRouterPeering - Virtual Router Peering resource.
 type VirtualRouterPeering struct {
 	SubResource
@@ -18139,27 +15240,6 @@ func (v VirtualRouterPeeringListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// VirtualRouterPeeringListResultResponse is the response envelope for operations that return a VirtualRouterPeeringListResult type.
-type VirtualRouterPeeringListResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Response for ListVirtualRouterPeerings API service call.
-	VirtualRouterPeeringListResult *VirtualRouterPeeringListResult
-}
-
-// VirtualRouterPeeringPollerResponse is the response envelope for operations that asynchronously return a VirtualRouterPeering type.
-type VirtualRouterPeeringPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualRouterPeeringResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller VirtualRouterPeeringPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // VirtualRouterPeeringProperties - Properties of the rule group.
 type VirtualRouterPeeringProperties struct {
 	// Peer ASN.
@@ -18170,15 +15250,6 @@ type VirtualRouterPeeringProperties struct {
 
 	// READ-ONLY; The provisioning state of the resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-}
-
-// VirtualRouterPeeringResponse is the response envelope for operations that return a VirtualRouterPeering type.
-type VirtualRouterPeeringResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Virtual Router Peering resource.
-	VirtualRouterPeering *VirtualRouterPeering
 }
 
 // VirtualRouterPeeringsBeginCreateOrUpdateOptions contains the optional parameters for the VirtualRouterPeerings.BeginCreateOrUpdate method.
@@ -18199,18 +15270,6 @@ type VirtualRouterPeeringsGetOptions struct {
 // VirtualRouterPeeringsListOptions contains the optional parameters for the VirtualRouterPeerings.List method.
 type VirtualRouterPeeringsListOptions struct {
 	// placeholder for future optional parameters
-}
-
-// VirtualRouterPollerResponse is the response envelope for operations that asynchronously return a VirtualRouter type.
-type VirtualRouterPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualRouterResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller VirtualRouterPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // VirtualRouterPropertiesFormat - Virtual Router definition.
@@ -18244,15 +15303,6 @@ func (v VirtualRouterPropertiesFormat) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "virtualRouterAsn", v.VirtualRouterAsn)
 	populate(objectMap, "virtualRouterIps", v.VirtualRouterIPs)
 	return json.Marshal(objectMap)
-}
-
-// VirtualRouterResponse is the response envelope for operations that return a VirtualRouter type.
-type VirtualRouterResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// VirtualRouter Resource.
-	VirtualRouter *VirtualRouter
 }
 
 // VirtualRoutersBeginCreateOrUpdateOptions contains the optional parameters for the VirtualRouters.BeginCreateOrUpdate method.
@@ -18297,27 +15347,6 @@ func (v VirtualWAN) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "etag", v.Etag)
 	populate(objectMap, "properties", v.Properties)
 	return json.Marshal(objectMap)
-}
-
-// VirtualWANPollerResponse is the response envelope for operations that asynchronously return a VirtualWAN type.
-type VirtualWANPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualWANResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller VirtualWANPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// VirtualWANResponse is the response envelope for operations that return a VirtualWAN type.
-type VirtualWANResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// VirtualWAN Resource.
-	VirtualWAN *VirtualWAN
 }
 
 // VirtualWanProperties - Parameters for VirtualWAN.
@@ -18384,15 +15413,6 @@ func (v VirtualWanSecurityProviders) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "supportedProviders", v.SupportedProviders)
 	return json.Marshal(objectMap)
-}
-
-// VirtualWanSecurityProvidersResponse is the response envelope for operations that return a VirtualWanSecurityProviders type.
-type VirtualWanSecurityProvidersResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Collection of SecurityProviders.
-	VirtualWanSecurityProviders *VirtualWanSecurityProviders
 }
 
 // VirtualWanVPNProfileParameters - Virtual Wan Vpn profile parameters Vpn profile generation.
@@ -18528,16 +15548,6 @@ func (w WebApplicationFirewallPolicyListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// WebApplicationFirewallPolicyListResultResponse is the response envelope for operations that return a WebApplicationFirewallPolicyListResult type.
-type WebApplicationFirewallPolicyListResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Result of the request to list WebApplicationFirewallPolicies. It contains a list of WebApplicationFirewallPolicy objects and a URL link to get the next
-	// set of results.
-	WebApplicationFirewallPolicyListResult *WebApplicationFirewallPolicyListResult
-}
-
 // WebApplicationFirewallPolicyPropertiesFormat - Defines web application firewall policy properties.
 type WebApplicationFirewallPolicyPropertiesFormat struct {
 	// REQUIRED; Describes the managedRules structure.
@@ -18577,15 +15587,6 @@ func (w WebApplicationFirewallPolicyPropertiesFormat) MarshalJSON() ([]byte, err
 	populate(objectMap, "provisioningState", w.ProvisioningState)
 	populate(objectMap, "resourceState", w.ResourceState)
 	return json.Marshal(objectMap)
-}
-
-// WebApplicationFirewallPolicyResponse is the response envelope for operations that return a WebApplicationFirewallPolicy type.
-type WebApplicationFirewallPolicyResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Defines web application firewall policy.
-	WebApplicationFirewallPolicy *WebApplicationFirewallPolicy
 }
 
 func populate(m map[string]interface{}, k string, v interface{}) {

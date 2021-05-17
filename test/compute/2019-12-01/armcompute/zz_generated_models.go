@@ -8,10 +8,8 @@
 package armcompute
 
 import (
-	"context"
 	"encoding/json"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"net/http"
 	"reflect"
 	"time"
 )
@@ -67,27 +65,6 @@ type APIErrorBase struct {
 type AccessURI struct {
 	// READ-ONLY; A SAS uri for accessing a disk.
 	AccessSAS *string `json:"accessSAS,omitempty" azure:"ro"`
-}
-
-// AccessURIPollerResponse is the response envelope for operations that asynchronously return a AccessURI type.
-type AccessURIPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (AccessURIResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller AccessURIPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// AccessURIResponse is the response envelope for operations that return a AccessURI type.
-type AccessURIResponse struct {
-	// A disk access SAS uri.
-	AccessURI *AccessURI
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // AdditionalCapabilities - Enables or disables a capability on the virtual machine or virtual machine scale set.
@@ -192,15 +169,6 @@ func (a AvailabilitySetListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// AvailabilitySetListResultResponse is the response envelope for operations that return a AvailabilitySetListResult type.
-type AvailabilitySetListResultResponse struct {
-	// The List Availability Set operation response.
-	AvailabilitySetListResult *AvailabilitySetListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // AvailabilitySetProperties - The instance view of a resource.
 type AvailabilitySetProperties struct {
 	// Fault Domain count.
@@ -229,19 +197,6 @@ func (a AvailabilitySetProperties) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "statuses", a.Statuses)
 	populate(objectMap, "virtualMachines", a.VirtualMachines)
 	return json.Marshal(objectMap)
-}
-
-// AvailabilitySetResponse is the response envelope for operations that return a AvailabilitySet type.
-type AvailabilitySetResponse struct {
-	// Specifies information about the availability set that the virtual machine should be assigned to. Virtual machines specified in the same availability
-	// set are allocated to different nodes to maximize availability. For more information about availability sets, see [Manage the availability of virtual
-	// machines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-manage-availability?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json).
-	// <br><br> For more information on Azure planned maintenance, see [Planned maintenance for virtual machines in Azure](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-planned-maintenance?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json)
-	// <br><br> Currently, a VM can only be added to availability set at creation time. An existing VM cannot be added to an availability set.
-	AvailabilitySet *AvailabilitySet
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // AvailabilitySetUpdate - Specifies information about the availability set that the virtual machine should be assigned to. Only tags may be updated.
@@ -366,15 +321,6 @@ func (c ComputeOperationListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// ComputeOperationListResultResponse is the response envelope for operations that return a ComputeOperationListResult type.
-type ComputeOperationListResultResponse struct {
-	// The List Compute Operation operation response.
-	ComputeOperationListResult *ComputeOperationListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // ComputeOperationValue - Describes the properties of a Compute Operation value.
 type ComputeOperationValue struct {
 	// Describes the properties of a Compute Operation Value Display.
@@ -471,15 +417,6 @@ func (c ContainerServiceListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// ContainerServiceListResultResponse is the response envelope for operations that return a ContainerServiceListResult type.
-type ContainerServiceListResultResponse struct {
-	// The response from the List Container Services operation.
-	ContainerServiceListResult *ContainerServiceListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // ContainerServiceMasterProfile - Profile for the container service master.
 type ContainerServiceMasterProfile struct {
 	// REQUIRED; DNS prefix to be used to create the FQDN for master.
@@ -496,18 +433,6 @@ type ContainerServiceMasterProfile struct {
 type ContainerServiceOrchestratorProfile struct {
 	// REQUIRED; The orchestrator to use to manage container service cluster resources. Valid values are Swarm, DCOS, and Custom.
 	OrchestratorType *ContainerServiceOrchestratorTypes `json:"orchestratorType,omitempty"`
-}
-
-// ContainerServicePollerResponse is the response envelope for operations that asynchronously return a ContainerService type.
-type ContainerServicePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ContainerServiceResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller ContainerServicePoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ContainerServicePrincipalProfile - Information about a service principal identity for the cluster to use for manipulating Azure APIs.
@@ -562,15 +487,6 @@ func (c ContainerServiceProperties) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "servicePrincipalProfile", c.ServicePrincipalProfile)
 	populate(objectMap, "windowsProfile", c.WindowsProfile)
 	return json.Marshal(objectMap)
-}
-
-// ContainerServiceResponse is the response envelope for operations that return a ContainerService type.
-type ContainerServiceResponse struct {
-	// Container service.
-	ContainerService *ContainerService
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ContainerServiceSSHConfiguration - SSH configuration for Linux-based VMs running on Azure.
@@ -818,15 +734,6 @@ func (d DedicatedHostGroupListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// DedicatedHostGroupListResultResponse is the response envelope for operations that return a DedicatedHostGroupListResult type.
-type DedicatedHostGroupListResultResponse struct {
-	// The List Dedicated Host Group with resource group response.
-	DedicatedHostGroupListResult *DedicatedHostGroupListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // DedicatedHostGroupProperties - Dedicated Host Group Properties.
 type DedicatedHostGroupProperties struct {
 	// REQUIRED; Number of fault domains that the host group can span.
@@ -842,16 +749,6 @@ func (d DedicatedHostGroupProperties) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "hosts", d.Hosts)
 	populate(objectMap, "platformFaultDomainCount", d.PlatformFaultDomainCount)
 	return json.Marshal(objectMap)
-}
-
-// DedicatedHostGroupResponse is the response envelope for operations that return a DedicatedHostGroup type.
-type DedicatedHostGroupResponse struct {
-	// Specifies information about the dedicated host group that the dedicated hosts should be assigned to. <br><br> Currently, a dedicated host can only be
-	// added to a dedicated host group at creation time. An existing dedicated host cannot be added to another dedicated host group.
-	DedicatedHostGroup *DedicatedHostGroup
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // DedicatedHostGroupUpdate - Specifies information about the dedicated host group that the dedicated host should be assigned to. Only tags may be updated.
@@ -942,27 +839,6 @@ func (d DedicatedHostListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// DedicatedHostListResultResponse is the response envelope for operations that return a DedicatedHostListResult type.
-type DedicatedHostListResultResponse struct {
-	// The list dedicated host operation response.
-	DedicatedHostListResult *DedicatedHostListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// DedicatedHostPollerResponse is the response envelope for operations that asynchronously return a DedicatedHost type.
-type DedicatedHostPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (DedicatedHostResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller DedicatedHostPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // DedicatedHostProperties - Properties of the dedicated host.
 type DedicatedHostProperties struct {
 	// Specifies whether the dedicated host should be replaced automatically in case of a failure. The value is defaulted to 'true' when not provided.
@@ -1051,15 +927,6 @@ func (d *DedicatedHostProperties) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return nil
-}
-
-// DedicatedHostResponse is the response envelope for operations that return a DedicatedHost type.
-type DedicatedHostResponse struct {
-	// Specifies information about the Dedicated host.
-	DedicatedHost *DedicatedHost
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // DedicatedHostUpdate - Specifies information about the dedicated host. Only tags, autoReplaceOnFailure and licenseType may be updated.
@@ -1204,40 +1071,10 @@ func (d DiskEncryptionSetList) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// DiskEncryptionSetListResponse is the response envelope for operations that return a DiskEncryptionSetList type.
-type DiskEncryptionSetListResponse struct {
-	// The List disk encryption set operation response.
-	DiskEncryptionSetList *DiskEncryptionSetList
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // DiskEncryptionSetParameters - Describes the parameter of customer managed disk encryption set resource id that can be specified for disk.
 // NOTE: The disk encryption set resource id can only be specified for managed disk. Please refer https://aka.ms/mdssewithcmkoverview for more details.
 type DiskEncryptionSetParameters struct {
 	SubResource
-}
-
-// DiskEncryptionSetPollerResponse is the response envelope for operations that asynchronously return a DiskEncryptionSet type.
-type DiskEncryptionSetPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (DiskEncryptionSetResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller DiskEncryptionSetPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// DiskEncryptionSetResponse is the response envelope for operations that return a DiskEncryptionSet type.
-type DiskEncryptionSetResponse struct {
-	// disk encryption set resource.
-	DiskEncryptionSet *DiskEncryptionSet
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // DiskEncryptionSetUpdate - disk encryption set update resource.
@@ -1348,27 +1185,6 @@ func (d DiskList) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "nextLink", d.NextLink)
 	populate(objectMap, "value", d.Value)
 	return json.Marshal(objectMap)
-}
-
-// DiskListResponse is the response envelope for operations that return a DiskList type.
-type DiskListResponse struct {
-	// The List Disks operation response.
-	DiskList *DiskList
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// DiskPollerResponse is the response envelope for operations that asynchronously return a Disk type.
-type DiskPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (DiskResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller DiskPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // DiskProperties - Disk resource properties.
@@ -1522,15 +1338,6 @@ func (d *DiskProperties) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return nil
-}
-
-// DiskResponse is the response envelope for operations that return a Disk type.
-type DiskResponse struct {
-	// Disk resource.
-	Disk *Disk
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // DiskSKU - The disks sku name. Can be StandardLRS, PremiumLRS, StandardSSDLRS, or UltraSSDLRS.
@@ -1811,27 +1618,6 @@ func (g GalleryApplicationList) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// GalleryApplicationListResponse is the response envelope for operations that return a GalleryApplicationList type.
-type GalleryApplicationListResponse struct {
-	// The List Gallery Applications operation response.
-	GalleryApplicationList *GalleryApplicationList
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// GalleryApplicationPollerResponse is the response envelope for operations that asynchronously return a GalleryApplication type.
-type GalleryApplicationPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (GalleryApplicationResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller GalleryApplicationPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // GalleryApplicationProperties - Describes the properties of a gallery Application Definition.
 type GalleryApplicationProperties struct {
 	// REQUIRED; This property allows you to specify the supported type of the OS that application is built for.
@@ -1905,15 +1691,6 @@ func (g *GalleryApplicationProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// GalleryApplicationResponse is the response envelope for operations that return a GalleryApplication type.
-type GalleryApplicationResponse struct {
-	// Specifies information about the gallery Application Definition that you want to create or update.
-	GalleryApplication *GalleryApplication
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // GalleryApplicationUpdate - Specifies information about the gallery Application Definition that you want to update.
 type GalleryApplicationUpdate struct {
 	UpdateResourceDefinition
@@ -1957,27 +1734,6 @@ func (g GalleryApplicationVersionList) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "nextLink", g.NextLink)
 	populate(objectMap, "value", g.Value)
 	return json.Marshal(objectMap)
-}
-
-// GalleryApplicationVersionListResponse is the response envelope for operations that return a GalleryApplicationVersionList type.
-type GalleryApplicationVersionListResponse struct {
-	// The List Gallery Application version operation response.
-	GalleryApplicationVersionList *GalleryApplicationVersionList
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// GalleryApplicationVersionPollerResponse is the response envelope for operations that asynchronously return a GalleryApplicationVersion type.
-type GalleryApplicationVersionPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (GalleryApplicationVersionResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller GalleryApplicationVersionPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // GalleryApplicationVersionProperties - Describes the properties of a gallery Image Version.
@@ -2036,15 +1792,6 @@ func (g *GalleryApplicationVersionPublishingProfile) UnmarshalJSON(data []byte) 
 		}
 	}
 	return g.GalleryArtifactPublishingProfileBase.unmarshalInternal(rawMsg)
-}
-
-// GalleryApplicationVersionResponse is the response envelope for operations that return a GalleryApplicationVersion type.
-type GalleryApplicationVersionResponse struct {
-	// Specifies information about the gallery Application Version that you want to create or update.
-	GalleryApplicationVersion *GalleryApplicationVersion
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // GalleryApplicationVersionUpdate - Specifies information about the gallery Application Version that you want to update.
@@ -2277,27 +2024,6 @@ func (g GalleryImageList) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// GalleryImageListResponse is the response envelope for operations that return a GalleryImageList type.
-type GalleryImageListResponse struct {
-	// The List Gallery Images operation response.
-	GalleryImageList *GalleryImageList
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// GalleryImagePollerResponse is the response envelope for operations that asynchronously return a GalleryImage type.
-type GalleryImagePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (GalleryImageResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller GalleryImagePoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // GalleryImageProperties - Describes the properties of a gallery Image Definition.
 type GalleryImageProperties struct {
 	// REQUIRED; This is the gallery Image Definition identifier.
@@ -2420,15 +2146,6 @@ func (g *GalleryImageProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// GalleryImageResponse is the response envelope for operations that return a GalleryImage type.
-type GalleryImageResponse struct {
-	// Specifies information about the gallery Image Definition that you want to create or update.
-	GalleryImage *GalleryImage
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // GalleryImageUpdate - Specifies information about the gallery Image Definition that you want to update.
 type GalleryImageUpdate struct {
 	UpdateResourceDefinition
@@ -2474,27 +2191,6 @@ func (g GalleryImageVersionList) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// GalleryImageVersionListResponse is the response envelope for operations that return a GalleryImageVersionList type.
-type GalleryImageVersionListResponse struct {
-	// The List Gallery Image version operation response.
-	GalleryImageVersionList *GalleryImageVersionList
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// GalleryImageVersionPollerResponse is the response envelope for operations that asynchronously return a GalleryImageVersion type.
-type GalleryImageVersionPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (GalleryImageVersionResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller GalleryImageVersionPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // GalleryImageVersionProperties - Describes the properties of a gallery Image Version.
 type GalleryImageVersionProperties struct {
 	// REQUIRED; This is the storage profile of a Gallery Image Version.
@@ -2513,15 +2209,6 @@ type GalleryImageVersionProperties struct {
 // GalleryImageVersionPublishingProfile - The publishing profile of a gallery Image Version.
 type GalleryImageVersionPublishingProfile struct {
 	GalleryArtifactPublishingProfileBase
-}
-
-// GalleryImageVersionResponse is the response envelope for operations that return a GalleryImageVersion type.
-type GalleryImageVersionResponse struct {
-	// Specifies information about the gallery Image Version that you want to create or update.
-	GalleryImageVersion *GalleryImageVersion
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // GalleryImageVersionStorageProfile - This is the storage profile of a Gallery Image Version.
@@ -2627,30 +2314,9 @@ func (g GalleryList) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// GalleryListResponse is the response envelope for operations that return a GalleryList type.
-type GalleryListResponse struct {
-	// The List Galleries operation response.
-	GalleryList *GalleryList
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // GalleryOSDiskImage - This is the OS disk image.
 type GalleryOSDiskImage struct {
 	GalleryDiskImage
-}
-
-// GalleryPollerResponse is the response envelope for operations that asynchronously return a Gallery type.
-type GalleryPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (GalleryResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller GalleryPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // GalleryProperties - Describes the properties of a Shared Image Gallery.
@@ -2663,15 +2329,6 @@ type GalleryProperties struct {
 
 	// READ-ONLY; The provisioning state, which only appears in the response.
 	ProvisioningState *GalleryPropertiesProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-}
-
-// GalleryResponse is the response envelope for operations that return a Gallery type.
-type GalleryResponse struct {
-	// Specifies information about the Shared Image Gallery that you want to create or update.
-	Gallery *Gallery
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // GalleryUpdate - Specifies information about the Shared Image Gallery that you want to update.
@@ -2695,18 +2352,6 @@ type GrantAccessData struct {
 
 	// REQUIRED; Time duration in seconds until the SAS access expires.
 	DurationInSeconds *int32 `json:"durationInSeconds,omitempty"`
-}
-
-// HTTPPollerResponse contains the asynchronous HTTP response from the call to the service endpoint.
-type HTTPPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (*http.Response, error)
-
-	// Poller contains an initialized poller.
-	Poller HTTPPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // HardwareProfile - Specifies the hardware settings for the virtual machine.
@@ -2801,15 +2446,6 @@ func (i ImageListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// ImageListResultResponse is the response envelope for operations that return a ImageListResult type.
-type ImageListResultResponse struct {
-	// The List Image operation response.
-	ImageListResult *ImageListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // ImageOSDisk - Describes an Operating System disk.
 type ImageOSDisk struct {
 	ImageDisk
@@ -2821,18 +2457,6 @@ type ImageOSDisk struct {
 	// Windows
 	// Linux
 	OSType *OperatingSystemTypes `json:"osType,omitempty"`
-}
-
-// ImagePollerResponse is the response envelope for operations that asynchronously return a Image type.
-type ImagePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ImageResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller ImagePoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ImageProperties - Describes the properties of an Image.
@@ -2899,16 +2523,6 @@ func (i ImageReference) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "sku", i.SKU)
 	populate(objectMap, "version", i.Version)
 	return json.Marshal(objectMap)
-}
-
-// ImageResponse is the response envelope for operations that return a Image type.
-type ImageResponse struct {
-	// The source user image virtual hard disk. The virtual hard disk will be copied before being attached to the virtual machine. If SourceImage is provided,
-	// the destination virtual hard drive must not exist.
-	Image *Image
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ImageStorageProfile - Describes a storage profile.
@@ -3125,15 +2739,6 @@ func (l ListUsagesResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// ListUsagesResultResponse is the response envelope for operations that return a ListUsagesResult type.
-type ListUsagesResultResponse struct {
-	// The List Usages operation response.
-	ListUsagesResult *ListUsagesResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // LogAnalyticsBeginExportRequestRateByIntervalOptions contains the optional parameters for the LogAnalytics.BeginExportRequestRateByInterval method.
 type LogAnalyticsBeginExportRequestRateByIntervalOptions struct {
 	// placeholder for future optional parameters
@@ -3229,27 +2834,6 @@ func (l *LogAnalyticsInputBase) unmarshalInternal(rawMsg map[string]json.RawMess
 type LogAnalyticsOperationResult struct {
 	// READ-ONLY; LogAnalyticsOutput
 	Properties *LogAnalyticsOutput `json:"properties,omitempty" azure:"ro"`
-}
-
-// LogAnalyticsOperationResultPollerResponse is the response envelope for operations that asynchronously return a LogAnalyticsOperationResult type.
-type LogAnalyticsOperationResultPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (LogAnalyticsOperationResultResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller LogAnalyticsOperationResultPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// LogAnalyticsOperationResultResponse is the response envelope for operations that return a LogAnalyticsOperationResult type.
-type LogAnalyticsOperationResultResponse struct {
-	// LogAnalytics operation status response
-	LogAnalyticsOperationResult *LogAnalyticsOperationResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // LogAnalyticsOutput - LogAnalytics output properties
@@ -3625,15 +3209,6 @@ func (p ProximityPlacementGroupListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// ProximityPlacementGroupListResultResponse is the response envelope for operations that return a ProximityPlacementGroupListResult type.
-type ProximityPlacementGroupListResultResponse struct {
-	// The List Proximity Placement Group operation response.
-	ProximityPlacementGroupListResult *ProximityPlacementGroupListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // ProximityPlacementGroupProperties - Describes the properties of a Proximity Placement Group.
 type ProximityPlacementGroupProperties struct {
 	// Describes colocation status of the Proximity Placement Group.
@@ -3664,15 +3239,6 @@ func (p ProximityPlacementGroupProperties) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "virtualMachineScaleSets", p.VirtualMachineScaleSets)
 	populate(objectMap, "virtualMachines", p.VirtualMachines)
 	return json.Marshal(objectMap)
-}
-
-// ProximityPlacementGroupResponse is the response envelope for operations that return a ProximityPlacementGroup type.
-type ProximityPlacementGroupResponse struct {
-	// Specifies information about the proximity placement group.
-	ProximityPlacementGroup *ProximityPlacementGroup
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ProximityPlacementGroupUpdate - Specifies information about the proximity placement group.
@@ -3739,15 +3305,6 @@ type RecoveryWalkResponse struct {
 
 	// READ-ONLY; Whether the recovery walk was performed
 	WalkPerformed *bool `json:"walkPerformed,omitempty" azure:"ro"`
-}
-
-// RecoveryWalkResponseResponse is the response envelope for operations that return a RecoveryWalkResponse type.
-type RecoveryWalkResponseResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Response after calling a manual recovery walk
-	RecoveryWalkResponse *RecoveryWalkResponse
 }
 
 // RegionalReplicationStatus - This is the regional replication status.
@@ -4060,15 +3617,6 @@ func (r ResourceSKUsResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// ResourceSKUsResultResponse is the response envelope for operations that return a ResourceSKUsResult type.
-type ResourceSKUsResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// The List Resource Skus operation response.
-	ResourceSKUsResult *ResourceSKUsResult
-}
-
 // RollbackStatusInfo - Information about rollback on failed VM instances after a OS Upgrade operation.
 type RollbackStatusInfo struct {
 	// READ-ONLY; The number of instances which failed to rollback.
@@ -4207,15 +3755,6 @@ type RollingUpgradeStatusInfoProperties struct {
 	RunningStatus *RollingUpgradeRunningStatus `json:"runningStatus,omitempty" azure:"ro"`
 }
 
-// RollingUpgradeStatusInfoResponse is the response envelope for operations that return a RollingUpgradeStatusInfo type.
-type RollingUpgradeStatusInfoResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// The status of the latest virtual machine scale set rolling upgrade.
-	RollingUpgradeStatusInfo *RollingUpgradeStatusInfo
-}
-
 // RunCommandDocument - Describes the properties of a Run Command.
 type RunCommandDocument struct {
 	RunCommandDocumentBase
@@ -4268,15 +3807,6 @@ func (r RunCommandDocumentBase) marshalInternal() map[string]interface{} {
 	return objectMap
 }
 
-// RunCommandDocumentResponse is the response envelope for operations that return a RunCommandDocument type.
-type RunCommandDocumentResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Describes the properties of a Run Command.
-	RunCommandDocument *RunCommandDocument
-}
-
 // RunCommandInput - Capture Virtual Machine parameters.
 type RunCommandInput struct {
 	// REQUIRED; The run command id.
@@ -4324,15 +3854,6 @@ func (r RunCommandListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// RunCommandListResultResponse is the response envelope for operations that return a RunCommandListResult type.
-type RunCommandListResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// The List Virtual Machine operation response.
-	RunCommandListResult *RunCommandListResult
-}
-
 // RunCommandParameterDefinition - Describes the properties of a run command parameter.
 type RunCommandParameterDefinition struct {
 	// REQUIRED; The run command parameter name.
@@ -4358,25 +3879,6 @@ func (r RunCommandResult) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "value", r.Value)
 	return json.Marshal(objectMap)
-}
-
-// RunCommandResultPollerResponse is the response envelope for operations that asynchronously return a RunCommandResult type.
-type RunCommandResultPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (RunCommandResultResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller RunCommandResultPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// RunCommandResultResponse is the response envelope for operations that return a RunCommandResult type.
-type RunCommandResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse      *http.Response
-	RunCommandResult *RunCommandResult
 }
 
 // SKU - Describes a virtual machine scale set sku. NOTE: If the new VM SKU is not supported on the hardware the scale set is currently on, you need to
@@ -4434,15 +3936,6 @@ type SSHPublicKeyGenerateKeyPairResult struct {
 	PublicKey *string `json:"publicKey,omitempty"`
 }
 
-// SSHPublicKeyGenerateKeyPairResultResponse is the response envelope for operations that return a SSHPublicKeyGenerateKeyPairResult type.
-type SSHPublicKeyGenerateKeyPairResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Response from generation of an SSH key pair.
-	SSHPublicKeyGenerateKeyPairResult *SSHPublicKeyGenerateKeyPairResult
-}
-
 // SSHPublicKeyResource - Specifies information about the SSH public key.
 type SSHPublicKeyResource struct {
 	Resource
@@ -4464,15 +3957,6 @@ type SSHPublicKeyResourceProperties struct {
 	// generateKeyPair is called. If the public key is provided upon resource creation, the provided public key needs to be at least 2048-bit and in ssh-rsa
 	// format.
 	PublicKey *string `json:"publicKey,omitempty"`
-}
-
-// SSHPublicKeyResourceResponse is the response envelope for operations that return a SSHPublicKeyResource type.
-type SSHPublicKeyResourceResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Specifies information about the SSH public key.
-	SSHPublicKeyResource *SSHPublicKeyResource
 }
 
 // SSHPublicKeyUpdateResource - Specifies information about the SSH public key.
@@ -4524,15 +4008,6 @@ func (s SSHPublicKeysGroupListResult) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "nextLink", s.NextLink)
 	populate(objectMap, "value", s.Value)
 	return json.Marshal(objectMap)
-}
-
-// SSHPublicKeysGroupListResultResponse is the response envelope for operations that return a SSHPublicKeysGroupListResult type.
-type SSHPublicKeysGroupListResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// The list SSH public keys operation response.
-	SSHPublicKeysGroupListResult *SSHPublicKeysGroupListResult
 }
 
 // SSHPublicKeysListByResourceGroupOptions contains the optional parameters for the SSHPublicKeys.ListByResourceGroup method.
@@ -4620,27 +4095,6 @@ func (s SnapshotList) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "nextLink", s.NextLink)
 	populate(objectMap, "value", s.Value)
 	return json.Marshal(objectMap)
-}
-
-// SnapshotListResponse is the response envelope for operations that return a SnapshotList type.
-type SnapshotListResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// The List Snapshots operation response.
-	SnapshotList *SnapshotList
-}
-
-// SnapshotPollerResponse is the response envelope for operations that asynchronously return a Snapshot type.
-type SnapshotPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (SnapshotResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller SnapshotPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // SnapshotProperties - Snapshot resource properties.
@@ -4748,15 +4202,6 @@ func (s *SnapshotProperties) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return nil
-}
-
-// SnapshotResponse is the response envelope for operations that return a Snapshot type.
-type SnapshotResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Snapshot resource.
-	Snapshot *Snapshot
 }
 
 // SnapshotSKU - The snapshots sku name. Can be StandardLRS, PremiumLRS, or Standard_ZRS.
@@ -5306,27 +4751,6 @@ func (v VirtualMachineCaptureResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// VirtualMachineCaptureResultPollerResponse is the response envelope for operations that asynchronously return a VirtualMachineCaptureResult type.
-type VirtualMachineCaptureResultPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualMachineCaptureResultResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller VirtualMachineCaptureResultPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// VirtualMachineCaptureResultResponse is the response envelope for operations that return a VirtualMachineCaptureResult type.
-type VirtualMachineCaptureResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Output of virtual machine capture operation.
-	VirtualMachineCaptureResult *VirtualMachineCaptureResult
-}
-
 // VirtualMachineExtension - Describes a Virtual Machine Extension.
 type VirtualMachineExtension struct {
 	Resource
@@ -5367,15 +4791,6 @@ func (v VirtualMachineExtensionImage) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// VirtualMachineExtensionImageArrayResponse is the response envelope for operations that return a []*VirtualMachineExtensionImage type.
-type VirtualMachineExtensionImageArrayResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Array of VirtualMachineExtensionImage
-	VirtualMachineExtensionImageArray []*VirtualMachineExtensionImage
-}
-
 // VirtualMachineExtensionImageProperties - Describes the properties of a Virtual Machine Extension Image.
 type VirtualMachineExtensionImageProperties struct {
 	// REQUIRED; The type of role (IaaS or PaaS) this extension supports.
@@ -5394,15 +4809,6 @@ type VirtualMachineExtensionImageProperties struct {
 	// wants to explicitly indicate the extension is
 	// only enabled for CRP VMs but not VMSS.
 	VMScaleSetEnabled *bool `json:"vmScaleSetEnabled,omitempty"`
-}
-
-// VirtualMachineExtensionImageResponse is the response envelope for operations that return a VirtualMachineExtensionImage type.
-type VirtualMachineExtensionImageResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Describes a Virtual Machine Extension Image.
-	VirtualMachineExtensionImage *VirtualMachineExtensionImage
 }
 
 // VirtualMachineExtensionImagesGetOptions contains the optional parameters for the VirtualMachineExtensionImages.Get method.
@@ -5452,18 +4858,6 @@ func (v VirtualMachineExtensionInstanceView) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// VirtualMachineExtensionPollerResponse is the response envelope for operations that asynchronously return a VirtualMachineExtension type.
-type VirtualMachineExtensionPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualMachineExtensionResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller VirtualMachineExtensionPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // VirtualMachineExtensionProperties - Describes the properties of a Virtual Machine Extension.
 type VirtualMachineExtensionProperties struct {
 	// Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not
@@ -5494,15 +4888,6 @@ type VirtualMachineExtensionProperties struct {
 
 	// READ-ONLY; The provisioning state, which only appears in the response.
 	ProvisioningState *string `json:"provisioningState,omitempty" azure:"ro"`
-}
-
-// VirtualMachineExtensionResponse is the response envelope for operations that return a VirtualMachineExtension type.
-type VirtualMachineExtensionResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Describes a Virtual Machine Extension.
-	VirtualMachineExtension *VirtualMachineExtension
 }
 
 // VirtualMachineExtensionUpdate - Describes a Virtual Machine Extension.
@@ -5583,15 +4968,6 @@ func (v VirtualMachineExtensionsListResult) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "value", v.Value)
 	return json.Marshal(objectMap)
-}
-
-// VirtualMachineExtensionsListResultResponse is the response envelope for operations that return a VirtualMachineExtensionsListResult type.
-type VirtualMachineExtensionsListResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// The List Extension operation response
-	VirtualMachineExtensionsListResult *VirtualMachineExtensionsListResult
 }
 
 // VirtualMachineHealthStatus - The health status of the VM.
@@ -5697,24 +5073,6 @@ func (v VirtualMachineImageResource) marshalInternal() map[string]interface{} {
 	return objectMap
 }
 
-// VirtualMachineImageResourceArrayResponse is the response envelope for operations that return a []*VirtualMachineImageResource type.
-type VirtualMachineImageResourceArrayResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Array of VirtualMachineImageResource
-	VirtualMachineImageResourceArray []*VirtualMachineImageResource
-}
-
-// VirtualMachineImageResponse is the response envelope for operations that return a VirtualMachineImage type.
-type VirtualMachineImageResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Describes a Virtual Machine Image.
-	VirtualMachineImage *VirtualMachineImage
-}
-
 // VirtualMachineImagesGetOptions contains the optional parameters for the VirtualMachineImages.Get method.
 type VirtualMachineImagesGetOptions struct {
 	// placeholder for future optional parameters
@@ -5806,15 +5164,6 @@ func (v VirtualMachineInstanceView) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// VirtualMachineInstanceViewResponse is the response envelope for operations that return a VirtualMachineInstanceView type.
-type VirtualMachineInstanceViewResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// The instance view of a virtual machine.
-	VirtualMachineInstanceView *VirtualMachineInstanceView
-}
-
 // VirtualMachineListResult - The List Virtual Machine operation response.
 type VirtualMachineListResult struct {
 	// REQUIRED; The list of virtual machines.
@@ -5830,27 +5179,6 @@ func (v VirtualMachineListResult) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "nextLink", v.NextLink)
 	populate(objectMap, "value", v.Value)
 	return json.Marshal(objectMap)
-}
-
-// VirtualMachineListResultResponse is the response envelope for operations that return a VirtualMachineListResult type.
-type VirtualMachineListResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// The List Virtual Machine operation response.
-	VirtualMachineListResult *VirtualMachineListResult
-}
-
-// VirtualMachinePollerResponse is the response envelope for operations that asynchronously return a VirtualMachine type.
-type VirtualMachinePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualMachineResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller VirtualMachinePoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // VirtualMachineProperties - Describes the properties of a Virtual Machine.
@@ -5954,15 +5282,6 @@ func (v VirtualMachineReimageParameters) marshalInternal() map[string]interface{
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "tempDisk", v.TempDisk)
 	return objectMap
-}
-
-// VirtualMachineResponse is the response envelope for operations that return a VirtualMachine type.
-type VirtualMachineResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Describes a Virtual Machine.
-	VirtualMachine *VirtualMachine
 }
 
 // VirtualMachineRunCommandsGetOptions contains the optional parameters for the VirtualMachineRunCommands.Get method.
@@ -6087,27 +5406,6 @@ func (v VirtualMachineScaleSetExtensionListResult) MarshalJSON() ([]byte, error)
 	return json.Marshal(objectMap)
 }
 
-// VirtualMachineScaleSetExtensionListResultResponse is the response envelope for operations that return a VirtualMachineScaleSetExtensionListResult type.
-type VirtualMachineScaleSetExtensionListResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// The List VM scale set extension operation response.
-	VirtualMachineScaleSetExtensionListResult *VirtualMachineScaleSetExtensionListResult
-}
-
-// VirtualMachineScaleSetExtensionPollerResponse is the response envelope for operations that asynchronously return a VirtualMachineScaleSetExtension type.
-type VirtualMachineScaleSetExtensionPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetExtensionResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller VirtualMachineScaleSetExtensionPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // VirtualMachineScaleSetExtensionProfile - Describes a virtual machine scale set extension profile.
 type VirtualMachineScaleSetExtensionProfile struct {
 	// The virtual machine scale set child extension resources.
@@ -6167,15 +5465,6 @@ func (v VirtualMachineScaleSetExtensionProperties) MarshalJSON() ([]byte, error)
 	populate(objectMap, "type", v.Type)
 	populate(objectMap, "typeHandlerVersion", v.TypeHandlerVersion)
 	return json.Marshal(objectMap)
-}
-
-// VirtualMachineScaleSetExtensionResponse is the response envelope for operations that return a VirtualMachineScaleSetExtension type.
-type VirtualMachineScaleSetExtensionResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Describes a Virtual Machine Scale Set Extension.
-	VirtualMachineScaleSetExtension *VirtualMachineScaleSetExtension
 }
 
 // VirtualMachineScaleSetExtensionUpdate - Describes a Virtual Machine Scale Set Extension.
@@ -6364,15 +5653,6 @@ func (v VirtualMachineScaleSetInstanceView) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// VirtualMachineScaleSetInstanceViewResponse is the response envelope for operations that return a VirtualMachineScaleSetInstanceView type.
-type VirtualMachineScaleSetInstanceViewResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// The instance view of a virtual machine scale set.
-	VirtualMachineScaleSetInstanceView *VirtualMachineScaleSetInstanceView
-}
-
 // VirtualMachineScaleSetInstanceViewStatusesSummary - Instance view statuses summary for virtual machines of a virtual machine scale set.
 type VirtualMachineScaleSetInstanceViewStatusesSummary struct {
 	// READ-ONLY; The extensions information.
@@ -6403,15 +5683,6 @@ func (v VirtualMachineScaleSetListOSUpgradeHistory) MarshalJSON() ([]byte, error
 	return json.Marshal(objectMap)
 }
 
-// VirtualMachineScaleSetListOSUpgradeHistoryResponse is the response envelope for operations that return a VirtualMachineScaleSetListOSUpgradeHistory type.
-type VirtualMachineScaleSetListOSUpgradeHistoryResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// List of Virtual Machine Scale Set OS Upgrade History operation response.
-	VirtualMachineScaleSetListOSUpgradeHistory *VirtualMachineScaleSetListOSUpgradeHistory
-}
-
 // VirtualMachineScaleSetListResult - The List Virtual Machine operation response.
 type VirtualMachineScaleSetListResult struct {
 	// REQUIRED; The list of virtual machine scale sets.
@@ -6427,15 +5698,6 @@ func (v VirtualMachineScaleSetListResult) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "nextLink", v.NextLink)
 	populate(objectMap, "value", v.Value)
 	return json.Marshal(objectMap)
-}
-
-// VirtualMachineScaleSetListResultResponse is the response envelope for operations that return a VirtualMachineScaleSetListResult type.
-type VirtualMachineScaleSetListResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// The List Virtual Machine operation response.
-	VirtualMachineScaleSetListResult *VirtualMachineScaleSetListResult
 }
 
 // VirtualMachineScaleSetListSKUsResult - The Virtual Machine Scale Set List Skus operation response.
@@ -6455,15 +5717,6 @@ func (v VirtualMachineScaleSetListSKUsResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// VirtualMachineScaleSetListSKUsResultResponse is the response envelope for operations that return a VirtualMachineScaleSetListSKUsResult type.
-type VirtualMachineScaleSetListSKUsResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// The Virtual Machine Scale Set List Skus operation response.
-	VirtualMachineScaleSetListSKUsResult *VirtualMachineScaleSetListSKUsResult
-}
-
 // VirtualMachineScaleSetListWithLinkResult - The List Virtual Machine operation response.
 type VirtualMachineScaleSetListWithLinkResult struct {
 	// REQUIRED; The list of virtual machine scale sets.
@@ -6479,15 +5732,6 @@ func (v VirtualMachineScaleSetListWithLinkResult) MarshalJSON() ([]byte, error) 
 	populate(objectMap, "nextLink", v.NextLink)
 	populate(objectMap, "value", v.Value)
 	return json.Marshal(objectMap)
-}
-
-// VirtualMachineScaleSetListWithLinkResultResponse is the response envelope for operations that return a VirtualMachineScaleSetListWithLinkResult type.
-type VirtualMachineScaleSetListWithLinkResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// The List Virtual Machine operation response.
-	VirtualMachineScaleSetListWithLinkResult *VirtualMachineScaleSetListWithLinkResult
 }
 
 // VirtualMachineScaleSetManagedDiskParameters - Describes the parameters of a ScaleSet managed disk.
@@ -6712,18 +5956,6 @@ func (v VirtualMachineScaleSetOSProfile) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// VirtualMachineScaleSetPollerResponse is the response envelope for operations that asynchronously return a VirtualMachineScaleSet type.
-type VirtualMachineScaleSetPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller VirtualMachineScaleSetPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // VirtualMachineScaleSetProperties - Describes the properties of a Virtual Machine Scale Set.
 type VirtualMachineScaleSetProperties struct {
 	// Specifies additional capabilities enabled or disabled on the Virtual Machines in the Virtual Machine Scale Set. For instance: whether the Virtual Machines
@@ -6832,15 +6064,6 @@ func (v VirtualMachineScaleSetReimageParameters) MarshalJSON() ([]byte, error) {
 	objectMap := v.VirtualMachineScaleSetVMReimageParameters.marshalInternal()
 	populate(objectMap, "instanceIds", v.InstanceIDs)
 	return json.Marshal(objectMap)
-}
-
-// VirtualMachineScaleSetResponse is the response envelope for operations that return a VirtualMachineScaleSet type.
-type VirtualMachineScaleSetResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Describes a Virtual Machine Scale Set.
-	VirtualMachineScaleSet *VirtualMachineScaleSet
 }
 
 // VirtualMachineScaleSetRollingUpgradesBeginCancelOptions contains the optional parameters for the VirtualMachineScaleSetRollingUpgrades.BeginCancel method.
@@ -7408,15 +6631,6 @@ func (v VirtualMachineScaleSetVMInstanceView) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// VirtualMachineScaleSetVMInstanceViewResponse is the response envelope for operations that return a VirtualMachineScaleSetVMInstanceView type.
-type VirtualMachineScaleSetVMInstanceViewResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// The instance view of a virtual machine scale set VM.
-	VirtualMachineScaleSetVMInstanceView *VirtualMachineScaleSetVMInstanceView
-}
-
 // VirtualMachineScaleSetVMListResult - The List Virtual Machine Scale Set VMs operation response.
 type VirtualMachineScaleSetVMListResult struct {
 	// REQUIRED; The list of virtual machine scale sets VMs.
@@ -7434,15 +6648,6 @@ func (v VirtualMachineScaleSetVMListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// VirtualMachineScaleSetVMListResultResponse is the response envelope for operations that return a VirtualMachineScaleSetVMListResult type.
-type VirtualMachineScaleSetVMListResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// The List Virtual Machine Scale Set VMs operation response.
-	VirtualMachineScaleSetVMListResult *VirtualMachineScaleSetVMListResult
-}
-
 // VirtualMachineScaleSetVMNetworkProfileConfiguration - Describes a virtual machine scale set VM network profile.
 type VirtualMachineScaleSetVMNetworkProfileConfiguration struct {
 	// The list of network configurations.
@@ -7454,18 +6659,6 @@ func (v VirtualMachineScaleSetVMNetworkProfileConfiguration) MarshalJSON() ([]by
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "networkInterfaceConfigurations", v.NetworkInterfaceConfigurations)
 	return json.Marshal(objectMap)
-}
-
-// VirtualMachineScaleSetVMPollerResponse is the response envelope for operations that asynchronously return a VirtualMachineScaleSetVM type.
-type VirtualMachineScaleSetVMPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetVMResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller VirtualMachineScaleSetVMPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // VirtualMachineScaleSetVMProfile - Describes a virtual machine scale set virtual machine profile.
@@ -7598,15 +6791,6 @@ type VirtualMachineScaleSetVMReimageParameters struct {
 func (v VirtualMachineScaleSetVMReimageParameters) marshalInternal() map[string]interface{} {
 	objectMap := v.VirtualMachineReimageParameters.marshalInternal()
 	return objectMap
-}
-
-// VirtualMachineScaleSetVMResponse is the response envelope for operations that return a VirtualMachineScaleSetVM type.
-type VirtualMachineScaleSetVMResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Describes a virtual machine scale set virtual machine.
-	VirtualMachineScaleSetVM *VirtualMachineScaleSetVM
 }
 
 // VirtualMachineScaleSetVMsBeginDeallocateOptions contains the optional parameters for the VirtualMachineScaleSetVMs.BeginDeallocate method.
@@ -7850,15 +7034,6 @@ func (v VirtualMachineSizeListResult) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "value", v.Value)
 	return json.Marshal(objectMap)
-}
-
-// VirtualMachineSizeListResultResponse is the response envelope for operations that return a VirtualMachineSizeListResult type.
-type VirtualMachineSizeListResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// The List Virtual Machine operation response.
-	VirtualMachineSizeListResult *VirtualMachineSizeListResult
 }
 
 // VirtualMachineSizesListOptions contains the optional parameters for the VirtualMachineSizes.List method.

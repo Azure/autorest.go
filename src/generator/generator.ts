@@ -9,6 +9,7 @@ import { codeModelSchema, CodeModel } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
 import { generateOperations } from './operations';
 import { generateModels } from './models';
+import { generateResponses } from './responses';
 import { generateConstants } from './constants';
 import { generateConnection } from './connection';
 import { generateTimeHelpers } from './time';
@@ -47,6 +48,11 @@ export async function protocolGen(host: Host) {
 
     const models = await generateModels(session);
     host.WriteFile(`${filePrefix}models.go`, models, undefined, 'source-file-go');
+
+    const responses = await generateResponses(session);
+    if (responses.length > 0) {
+      host.WriteFile(`${filePrefix}response_types.go`, responses, undefined, 'source-file-go');
+    }
 
     const client = await generateConnection(session);
     host.WriteFile(`${filePrefix}connection.go`, client, undefined, 'source-file-go');

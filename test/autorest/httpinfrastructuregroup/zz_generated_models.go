@@ -7,61 +7,17 @@
 
 package httpinfrastructuregroup
 
-import "net/http"
-
 type B struct {
 	MyException
 	TextStatusCode *string `json:"textStatusCode,omitempty"`
-}
-
-// BResponse is the response envelope for operations that return a B type.
-type BResponse struct {
-	B *B
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// BoolResponse is the response envelope for operations that return a bool type.
-type BoolResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// simple boolean
-	Value *bool
-}
-
-// BooleanResponse contains a boolean response.
-type BooleanResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Success indicates if the operation succeeded or failed.
-	Success bool
 }
 
 type C struct {
 	HTTPCode *string `json:"httpCode,omitempty"`
 }
 
-// CResponse is the response envelope for operations that return a C type.
-type CResponse struct {
-	C *C
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 type D struct {
 	HTTPStatusCode *string `json:"httpStatusCode,omitempty"`
-}
-
-// DResponse is the response envelope for operations that return a D type.
-type DResponse struct {
-	D *D
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // Implements the error and azcore.HTTPResponse interfaces.
@@ -232,15 +188,6 @@ type HTTPRedirectsGet300Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPRedirectsGet300Response contains the response from method HTTPRedirects.Get300.
-type HTTPRedirectsGet300Response struct {
-	// Location contains the information returned from the Location header response.
-	Location *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // HTTPRedirectsGet301Options contains the optional parameters for the HTTPRedirects.Get301 method.
 type HTTPRedirectsGet301Options struct {
 	// placeholder for future optional parameters
@@ -259,18 +206,6 @@ type HTTPRedirectsGet307Options struct {
 // HTTPRedirectsHead300Options contains the optional parameters for the HTTPRedirects.Head300 method.
 type HTTPRedirectsHead300Options struct {
 	// placeholder for future optional parameters
-}
-
-// HTTPRedirectsHead300Response contains the response from method HTTPRedirects.Head300.
-type HTTPRedirectsHead300Response struct {
-	// Location contains the information returned from the Location header response.
-	Location *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Success indicates if the operation succeeded or failed.
-	Success bool
 }
 
 // HTTPRedirectsHead301Options contains the optional parameters for the HTTPRedirects.Head301 method.
@@ -298,15 +233,6 @@ type HTTPRedirectsPatch302Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPRedirectsPatch302Response contains the response from method HTTPRedirects.Patch302.
-type HTTPRedirectsPatch302Response struct {
-	// Location contains the information returned from the Location header response.
-	Location *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // HTTPRedirectsPatch307Options contains the optional parameters for the HTTPRedirects.Patch307 method.
 type HTTPRedirectsPatch307Options struct {
 	// placeholder for future optional parameters
@@ -317,15 +243,6 @@ type HTTPRedirectsPost303Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPRedirectsPost303Response contains the response from method HTTPRedirects.Post303.
-type HTTPRedirectsPost303Response struct {
-	// Location contains the information returned from the Location header response.
-	Location *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // HTTPRedirectsPost307Options contains the optional parameters for the HTTPRedirects.Post307 method.
 type HTTPRedirectsPost307Options struct {
 	// placeholder for future optional parameters
@@ -334,15 +251,6 @@ type HTTPRedirectsPost307Options struct {
 // HTTPRedirectsPut301Options contains the optional parameters for the HTTPRedirects.Put301 method.
 type HTTPRedirectsPut301Options struct {
 	// placeholder for future optional parameters
-}
-
-// HTTPRedirectsPut301Response contains the response from method HTTPRedirects.Put301.
-type HTTPRedirectsPut301Response struct {
-	// Location contains the information returned from the Location header response.
-	Location *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // HTTPRedirectsPut307Options contains the optional parameters for the HTTPRedirects.Put307 method.
@@ -709,24 +617,4 @@ type MyException struct {
 // The contents of the error text are not contractual and subject to change.
 func (e MyException) Error() string {
 	return e.raw
-}
-
-// MyExceptionResponse is the response envelope for operations that return a MyException type.
-type MyExceptionResponse struct {
-	MyException *MyException
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// StringArrayResponse is the response envelope for operations that return a []*string type.
-type StringArrayResponse struct {
-	// Location contains the information returned from the Location header response.
-	Location *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// A list of location options for the request ['/http/success/get/200']
-	StringArray []*string
 }

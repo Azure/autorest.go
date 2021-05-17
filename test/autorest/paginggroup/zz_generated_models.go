@@ -8,12 +8,9 @@
 package paginggroup
 
 import (
-	"context"
 	"encoding/json"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"net/http"
 	"reflect"
-	"time"
 )
 
 // CustomParameterGroup contains a group of parameters for the Paging.GetMultiplePagesFragmentWithGroupingNextLink method.
@@ -35,14 +32,6 @@ func (o OdataProductResult) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "odata.nextLink", o.OdataNextLink)
 	populate(objectMap, "values", o.Values)
 	return json.Marshal(objectMap)
-}
-
-// OdataProductResultResponse is the response envelope for operations that return a OdataProductResult type.
-type OdataProductResultResponse struct {
-	OdataProductResult *OdataProductResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 type OperationResult struct {
@@ -172,26 +161,6 @@ func (p ProductResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// ProductResultPagerPollerResponse is the response envelope for operations that asynchronously return a ProductResultPager type.
-type ProductResultPagerPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ProductResultPager, error)
-
-	// Poller contains an initialized poller.
-	Poller ProductResultPagerPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ProductResultResponse is the response envelope for operations that return a ProductResult type.
-type ProductResultResponse struct {
-	ProductResult *ProductResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 type ProductResultValue struct {
 	NextLink *string    `json:"nextLink,omitempty"`
 	Value    []*Product `json:"value,omitempty"`
@@ -205,14 +174,6 @@ func (p ProductResultValue) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// ProductResultValueResponse is the response envelope for operations that return a ProductResultValue type.
-type ProductResultValueResponse struct {
-	ProductResultValue *ProductResultValue
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 type ProductResultValueWithXMSClientName struct {
 	Indexes  []*Product `json:"values,omitempty"`
 	NextLink *string    `json:"nextLink,omitempty"`
@@ -224,14 +185,6 @@ func (p ProductResultValueWithXMSClientName) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "values", p.Indexes)
 	populate(objectMap, "nextLink", p.NextLink)
 	return json.Marshal(objectMap)
-}
-
-// ProductResultValueWithXMSClientNameResponse is the response envelope for operations that return a ProductResultValueWithXMSClientName type.
-type ProductResultValueWithXMSClientNameResponse struct {
-	ProductResultValueWithXMSClientName *ProductResultValueWithXMSClientName
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 func populate(m map[string]interface{}, k string, v interface{}) {

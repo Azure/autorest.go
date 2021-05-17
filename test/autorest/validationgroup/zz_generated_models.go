@@ -10,7 +10,6 @@ package validationgroup
 import (
 	"encoding/json"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"net/http"
 	"reflect"
 )
 
@@ -106,15 +105,6 @@ func (p Product) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "display_names", p.DisplayNames)
 	populate(objectMap, "image", p.Image)
 	return json.Marshal(objectMap)
-}
-
-// ProductResponse is the response envelope for operations that return a Product type.
-type ProductResponse struct {
-	// The product documentation.
-	Product *Product
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 func populate(m map[string]interface{}, k string, v interface{}) {

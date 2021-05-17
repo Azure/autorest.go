@@ -7,10 +7,7 @@
 
 package headergroup
 
-import (
-	"net/http"
-	"time"
-)
+import "time"
 
 // Implements the error and azcore.HTTPResponse interfaces.
 type Error struct {
@@ -108,41 +105,14 @@ type HeaderResponseBoolOptions struct {
 	// placeholder for future optional parameters
 }
 
-// HeaderResponseBoolResponse contains the response from method Header.ResponseBool.
-type HeaderResponseBoolResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Value contains the information returned from the value header response.
-	Value *bool
-}
-
 // HeaderResponseByteOptions contains the optional parameters for the Header.ResponseByte method.
 type HeaderResponseByteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// HeaderResponseByteResponse contains the response from method Header.ResponseByte.
-type HeaderResponseByteResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Value contains the information returned from the value header response.
-	Value []byte
-}
-
 // HeaderResponseDateOptions contains the optional parameters for the Header.ResponseDate method.
 type HeaderResponseDateOptions struct {
 	// placeholder for future optional parameters
-}
-
-// HeaderResponseDateResponse contains the response from method Header.ResponseDate.
-type HeaderResponseDateResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Value contains the information returned from the value header response.
-	Value *time.Time
 }
 
 // HeaderResponseDatetimeOptions contains the optional parameters for the Header.ResponseDatetime method.
@@ -155,36 +125,9 @@ type HeaderResponseDatetimeRFC1123Options struct {
 	// placeholder for future optional parameters
 }
 
-// HeaderResponseDatetimeRFC1123Response contains the response from method Header.ResponseDatetimeRFC1123.
-type HeaderResponseDatetimeRFC1123Response struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Value contains the information returned from the value header response.
-	Value *time.Time
-}
-
-// HeaderResponseDatetimeResponse contains the response from method Header.ResponseDatetime.
-type HeaderResponseDatetimeResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Value contains the information returned from the value header response.
-	Value *time.Time
-}
-
 // HeaderResponseDoubleOptions contains the optional parameters for the Header.ResponseDouble method.
 type HeaderResponseDoubleOptions struct {
 	// placeholder for future optional parameters
-}
-
-// HeaderResponseDoubleResponse contains the response from method Header.ResponseDouble.
-type HeaderResponseDoubleResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Value contains the information returned from the value header response.
-	Value *float64
 }
 
 // HeaderResponseDurationOptions contains the optional parameters for the Header.ResponseDuration method.
@@ -192,27 +135,9 @@ type HeaderResponseDurationOptions struct {
 	// placeholder for future optional parameters
 }
 
-// HeaderResponseDurationResponse contains the response from method Header.ResponseDuration.
-type HeaderResponseDurationResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Value contains the information returned from the value header response.
-	Value *string
-}
-
 // HeaderResponseEnumOptions contains the optional parameters for the Header.ResponseEnum method.
 type HeaderResponseEnumOptions struct {
 	// placeholder for future optional parameters
-}
-
-// HeaderResponseEnumResponse contains the response from method Header.ResponseEnum.
-type HeaderResponseEnumResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Value contains the information returned from the value header response.
-	Value *GreyscaleColors
 }
 
 // HeaderResponseExistingKeyOptions contains the optional parameters for the Header.ResponseExistingKey method.
@@ -220,27 +145,9 @@ type HeaderResponseExistingKeyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// HeaderResponseExistingKeyResponse contains the response from method Header.ResponseExistingKey.
-type HeaderResponseExistingKeyResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// UserAgent contains the information returned from the User-Agent header response.
-	UserAgent *string
-}
-
 // HeaderResponseFloatOptions contains the optional parameters for the Header.ResponseFloat method.
 type HeaderResponseFloatOptions struct {
 	// placeholder for future optional parameters
-}
-
-// HeaderResponseFloatResponse contains the response from method Header.ResponseFloat.
-type HeaderResponseFloatResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Value contains the information returned from the value header response.
-	Value *float32
 }
 
 // HeaderResponseIntegerOptions contains the optional parameters for the Header.ResponseInteger method.
@@ -248,27 +155,9 @@ type HeaderResponseIntegerOptions struct {
 	// placeholder for future optional parameters
 }
 
-// HeaderResponseIntegerResponse contains the response from method Header.ResponseInteger.
-type HeaderResponseIntegerResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Value contains the information returned from the value header response.
-	Value *int32
-}
-
 // HeaderResponseLongOptions contains the optional parameters for the Header.ResponseLong method.
 type HeaderResponseLongOptions struct {
 	// placeholder for future optional parameters
-}
-
-// HeaderResponseLongResponse contains the response from method Header.ResponseLong.
-type HeaderResponseLongResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Value contains the information returned from the value header response.
-	Value *int64
 }
 
 // HeaderResponseProtectedKeyOptions contains the optional parameters for the Header.ResponseProtectedKey method.
@@ -276,25 +165,7 @@ type HeaderResponseProtectedKeyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// HeaderResponseProtectedKeyResponse contains the response from method Header.ResponseProtectedKey.
-type HeaderResponseProtectedKeyResponse struct {
-	// ContentType contains the information returned from the Content-Type header response.
-	ContentType *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // HeaderResponseStringOptions contains the optional parameters for the Header.ResponseString method.
 type HeaderResponseStringOptions struct {
 	// placeholder for future optional parameters
-}
-
-// HeaderResponseStringResponse contains the response from method Header.ResponseString.
-type HeaderResponseStringResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Value contains the information returned from the value header response.
-	Value *string
 }

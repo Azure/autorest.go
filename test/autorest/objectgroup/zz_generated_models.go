@@ -7,17 +7,6 @@
 
 package objectgroup
 
-import "net/http"
-
-// InterfaceResponse is the response envelope for operations that return a interface{} type.
-type InterfaceResponse struct {
-	// Any object
-	Interface interface{}
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // ObjectTypeClientGetOptions contains the optional parameters for the ObjectTypeClient.Get method.
 type ObjectTypeClientGetOptions struct {
 	// placeholder for future optional parameters

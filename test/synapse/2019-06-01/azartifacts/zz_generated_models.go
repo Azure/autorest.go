@@ -8,10 +8,8 @@
 package azartifacts
 
 import (
-	"context"
 	"encoding/json"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"net/http"
 	"reflect"
 	"time"
 )
@@ -411,28 +409,10 @@ func (a ActivityRunsQueryResponse) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// ActivityRunsQueryResponseResponse is the response envelope for operations that return a ActivityRunsQueryResponse type.
-type ActivityRunsQueryResponseResponse struct {
-	// A list activity runs.
-	ActivityRunsQueryResponse *ActivityRunsQueryResponse
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // AddDataFlowToDebugSessionResponse - Response body structure for starting data flow debug session.
 type AddDataFlowToDebugSessionResponse struct {
 	// The ID of data flow debug job version.
 	JobVersion *string `json:"jobVersion,omitempty"`
-}
-
-// AddDataFlowToDebugSessionResponseResponse is the response envelope for operations that return a AddDataFlowToDebugSessionResponse type.
-type AddDataFlowToDebugSessionResponseResponse struct {
-	// Response body structure for starting data flow debug session.
-	AddDataFlowToDebugSessionResponse *AddDataFlowToDebugSessionResponse
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // AmazonMWSLinkedService - Amazon Marketplace Web Service linked service.
@@ -5119,24 +5099,6 @@ func (b BigDataPoolResourceInfoListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// BigDataPoolResourceInfoListResultResponse is the response envelope for operations that return a BigDataPoolResourceInfoListResult type.
-type BigDataPoolResourceInfoListResultResponse struct {
-	// Collection of Big Data pool information
-	BigDataPoolResourceInfoListResult *BigDataPoolResourceInfoListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// BigDataPoolResourceInfoResponse is the response envelope for operations that return a BigDataPoolResourceInfo type.
-type BigDataPoolResourceInfoResponse struct {
-	// A Big Data pool
-	BigDataPoolResourceInfo *BigDataPoolResourceInfo
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // BigDataPoolResourceProperties - Properties of a Big Data pool powered by Apache Spark
 type BigDataPoolResourceProperties struct {
 	// Auto-pausing properties
@@ -7448,41 +7410,10 @@ type CreateDataFlowDebugSessionResponse struct {
 	SessionID *string `json:"sessionId,omitempty"`
 }
 
-// CreateDataFlowDebugSessionResponsePollerResponse is the response envelope for operations that asynchronously return a CreateDataFlowDebugSessionResponse
-// type.
-type CreateDataFlowDebugSessionResponsePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (CreateDataFlowDebugSessionResponseResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller CreateDataFlowDebugSessionResponsePoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// CreateDataFlowDebugSessionResponseResponse is the response envelope for operations that return a CreateDataFlowDebugSessionResponse type.
-type CreateDataFlowDebugSessionResponseResponse struct {
-	// Response body structure for creating data flow debug session.
-	CreateDataFlowDebugSessionResponse *CreateDataFlowDebugSessionResponse
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // CreateRunResponse - Response body with a run identifier.
 type CreateRunResponse struct {
 	// REQUIRED; Identifier of a run.
 	RunID *string `json:"runId,omitempty"`
-}
-
-// CreateRunResponseResponse is the response envelope for operations that return a CreateRunResponse type.
-type CreateRunResponseResponse struct {
-	// Response body with a run identifier.
-	CreateRunResponse *CreateRunResponse
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // CustomActivity - Custom activity type.
@@ -7803,27 +7734,6 @@ type DataFlowDebugCommandResponse struct {
 
 	// The run status of data preview, statistics or expression preview.
 	Status *string `json:"status,omitempty"`
-}
-
-// DataFlowDebugCommandResponsePollerResponse is the response envelope for operations that asynchronously return a DataFlowDebugCommandResponse type.
-type DataFlowDebugCommandResponsePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (DataFlowDebugCommandResponseResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller DataFlowDebugCommandResponsePoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// DataFlowDebugCommandResponseResponse is the response envelope for operations that return a DataFlowDebugCommandResponse type.
-type DataFlowDebugCommandResponseResponse struct {
-	// Response body structure of data flow result for data preview, statistics or expression preview.
-	DataFlowDebugCommandResponse *DataFlowDebugCommandResponse
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // DataFlowDebugPackage - Request body structure for starting data flow debug session.
@@ -8191,15 +8101,6 @@ func (d DataFlowListResponse) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// DataFlowListResponseResponse is the response envelope for operations that return a DataFlowListResponse type.
-type DataFlowListResponseResponse struct {
-	// A list of data flow resources.
-	DataFlowListResponse *DataFlowListResponse
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // DataFlowReference - Data flow reference type.
 type DataFlowReference struct {
 	// REQUIRED; Reference data flow name.
@@ -8297,27 +8198,6 @@ func (d *DataFlowResource) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return d.SubResource.unmarshalInternal(rawMsg)
-}
-
-// DataFlowResourcePollerResponse is the response envelope for operations that asynchronously return a DataFlowResource type.
-type DataFlowResourcePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (DataFlowResourceResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller DataFlowResourcePoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// DataFlowResourceResponse is the response envelope for operations that return a DataFlowResource type.
-type DataFlowResourceResponse struct {
-	// Data flow resource type.
-	DataFlowResource *DataFlowResource
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // DataFlowSink - Transformation for data flow sink.
@@ -9022,15 +8902,6 @@ func (d DatasetListResponse) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// DatasetListResponseResponse is the response envelope for operations that return a DatasetListResponse type.
-type DatasetListResponseResponse struct {
-	// A list of dataset resources.
-	DatasetListResponse *DatasetListResponse
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // DatasetLocationClassification provides polymorphic access to related types.
 // Call the interface's GetDatasetLocation() method to access the common type.
 // Use a type switch to determine the concrete type.  The possible types are:
@@ -9167,27 +9038,6 @@ func (d *DatasetResource) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return d.SubResource.unmarshalInternal(rawMsg)
-}
-
-// DatasetResourcePollerResponse is the response envelope for operations that asynchronously return a DatasetResource type.
-type DatasetResourcePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (DatasetResourceResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller DatasetResourcePoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// DatasetResourceResponse is the response envelope for operations that return a DatasetResource type.
-type DatasetResourceResponse struct {
-	// Dataset resource type.
-	DatasetResource *DatasetResource
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // DatasetSchemaDataElement - Columns that define the physical type schema of the dataset.
@@ -12319,14 +12169,6 @@ type GitHubAccessTokenResponse struct {
 	GitHubAccessToken *string `json:"gitHubAccessToken,omitempty"`
 }
 
-// GitHubAccessTokenResponseResponse is the response envelope for operations that return a GitHubAccessTokenResponse type.
-type GitHubAccessTokenResponseResponse struct {
-	GitHubAccessTokenResponse *GitHubAccessTokenResponse
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // GoogleAdWordsLinkedService - Google AdWords service linked service.
 type GoogleAdWordsLinkedService struct {
 	LinkedService
@@ -14224,18 +14066,6 @@ func (h *HTTPLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// HTTPPollerResponse contains the asynchronous HTTP response from the call to the service endpoint.
-type HTTPPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (*http.Response, error)
-
-	// Poller contains an initialized poller.
-	Poller HTTPPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // HTTPReadSettings - Sftp read settings.
 type HTTPReadSettings struct {
 	StoreReadSettings
@@ -15813,15 +15643,6 @@ func (i IntegrationRuntimeListResponse) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// IntegrationRuntimeListResponseResponse is the response envelope for operations that return a IntegrationRuntimeListResponse type.
-type IntegrationRuntimeListResponseResponse struct {
-	// A list of integration runtime resources.
-	IntegrationRuntimeListResponse *IntegrationRuntimeListResponse
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // IntegrationRuntimeReference - Integration runtime reference type.
 type IntegrationRuntimeReference struct {
 	// REQUIRED; Reference integration runtime name.
@@ -15875,15 +15696,6 @@ func (i *IntegrationRuntimeResource) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return i.SubResource.unmarshalInternal(rawMsg)
-}
-
-// IntegrationRuntimeResourceResponse is the response envelope for operations that return a IntegrationRuntimeResource type.
-type IntegrationRuntimeResourceResponse struct {
-	// Integration runtime resource type.
-	IntegrationRuntimeResource *IntegrationRuntimeResource
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // IntegrationRuntimeSsisCatalogInfo - Catalog information for managed dedicated integration runtime.
@@ -16697,15 +16509,6 @@ func (l LibraryListResponse) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// LibraryListResponseResponse is the response envelope for operations that return a LibraryListResponse type.
-type LibraryListResponseResponse struct {
-	// A list of Library resources.
-	LibraryListResponse *LibraryListResponse
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // LibraryRequirements - Library requirements for a Big Data pool powered by Apache Spark
 type LibraryRequirements struct {
 	// The library requirements.
@@ -16819,27 +16622,6 @@ type LibraryResourceInfo struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
-// LibraryResourceInfoPollerResponse is the response envelope for operations that asynchronously return a LibraryResourceInfo type.
-type LibraryResourceInfoPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (LibraryResourceInfoResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller LibraryResourceInfoPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// LibraryResourceInfoResponse is the response envelope for operations that return a LibraryResourceInfo type.
-type LibraryResourceInfoResponse struct {
-	// Library resource info
-	LibraryResourceInfo *LibraryResourceInfo
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // LibraryResourceProperties - Library/package properties
 type LibraryResourceProperties struct {
 	// READ-ONLY; Container name of the library/package.
@@ -16862,15 +16644,6 @@ type LibraryResourceProperties struct {
 
 	// READ-ONLY; The last update time of the library/package.
 	UploadedTimestamp *string `json:"uploadedTimestamp,omitempty" azure:"ro"`
-}
-
-// LibraryResourceResponse is the response envelope for operations that return a LibraryResource type.
-type LibraryResourceResponse struct {
-	// Library response details
-	LibraryResource *LibraryResource
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // LinkedIntegrationRuntimeKeyAuthorization - The key authorization type integration runtime.
@@ -17185,15 +16958,6 @@ func (l LinkedServiceListResponse) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// LinkedServiceListResponseResponse is the response envelope for operations that return a LinkedServiceListResponse type.
-type LinkedServiceListResponseResponse struct {
-	// A list of linked service resources.
-	LinkedServiceListResponse *LinkedServiceListResponse
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // LinkedServiceReference - Linked service reference type.
 type LinkedServiceReference struct {
 	// REQUIRED; Reference LinkedService name.
@@ -17247,27 +17011,6 @@ func (l *LinkedServiceResource) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return l.SubResource.unmarshalInternal(rawMsg)
-}
-
-// LinkedServiceResourcePollerResponse is the response envelope for operations that asynchronously return a LinkedServiceResource type.
-type LinkedServiceResourcePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (LinkedServiceResourceResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller LinkedServiceResourcePoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// LinkedServiceResourceResponse is the response envelope for operations that return a LinkedServiceResource type.
-type LinkedServiceResourceResponse struct {
-	// Linked service resource type.
-	LinkedServiceResource *LinkedServiceResource
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // LogStorageSettings - Log storage settings.
@@ -19344,15 +19087,6 @@ func (n NotebookListResponse) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// NotebookListResponseResponse is the response envelope for operations that return a NotebookListResponse type.
-type NotebookListResponseResponse struct {
-	// A list of Notebook resources.
-	NotebookListResponse *NotebookListResponse
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // NotebookMetadata - Notebook root-level metadata.
 type NotebookMetadata struct {
 	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
@@ -19427,27 +19161,6 @@ type NotebookResource struct {
 
 	// READ-ONLY; The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
 	Type *string `json:"type,omitempty" azure:"ro"`
-}
-
-// NotebookResourcePollerResponse is the response envelope for operations that asynchronously return a NotebookResource type.
-type NotebookResourcePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (NotebookResourceResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller NotebookResourcePoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// NotebookResourceResponse is the response envelope for operations that return a NotebookResource type.
-type NotebookResourceResponse struct {
-	// Notebook resource type.
-	NotebookResource *NotebookResource
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // NotebookSessionProperties - Session properties.
@@ -20116,15 +19829,6 @@ type OperationResult struct {
 
 	// READ-ONLY; Operation status
 	Status *string `json:"status,omitempty" azure:"ro"`
-}
-
-// OperationResultResponse is the response envelope for operations that return a OperationResult type.
-type OperationResultResponse struct {
-	// Operation status for the operation
-	OperationResult *OperationResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // OracleLinkedService - Oracle database.
@@ -21369,15 +21073,6 @@ func (p PipelineListResponse) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// PipelineListResponseResponse is the response envelope for operations that return a PipelineListResponse type.
-type PipelineListResponseResponse struct {
-	// A list of pipeline resources.
-	PipelineListResponse *PipelineListResponse
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // PipelineReference - Pipeline reference type.
 type PipelineReference struct {
 	// REQUIRED; Reference pipeline name.
@@ -21448,27 +21143,6 @@ func (p *PipelineResource) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return nil
-}
-
-// PipelineResourcePollerResponse is the response envelope for operations that asynchronously return a PipelineResource type.
-type PipelineResourcePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (PipelineResourceResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller PipelineResourcePoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PipelineResourceResponse is the response envelope for operations that return a PipelineResource type.
-type PipelineResourceResponse struct {
-	// Pipeline resource type.
-	PipelineResource *PipelineResource
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PipelineRun - Information about a pipeline run.
@@ -21638,15 +21312,6 @@ type PipelineRunQueryPipelineRunsByWorkspaceOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PipelineRunResponse is the response envelope for operations that return a PipelineRun type.
-type PipelineRunResponse struct {
-	// Information about a pipeline run.
-	PipelineRun *PipelineRun
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // PipelineRunsQueryResponse - A list pipeline runs.
 type PipelineRunsQueryResponse struct {
 	// REQUIRED; List of pipeline runs.
@@ -21662,15 +21327,6 @@ func (p PipelineRunsQueryResponse) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "continuationToken", p.ContinuationToken)
 	populate(objectMap, "value", p.Value)
 	return json.Marshal(objectMap)
-}
-
-// PipelineRunsQueryResponseResponse is the response envelope for operations that return a PipelineRunsQueryResponse type.
-type PipelineRunsQueryResponseResponse struct {
-	// A list pipeline runs.
-	PipelineRunsQueryResponse *PipelineRunsQueryResponse
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PolybaseSettings - PolyBase settings.
@@ -22192,15 +21848,6 @@ func (q QueryDataFlowDebugSessionsResponse) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "nextLink", q.NextLink)
 	populate(objectMap, "value", q.Value)
 	return json.Marshal(objectMap)
-}
-
-// QueryDataFlowDebugSessionsResponseResponse is the response envelope for operations that return a QueryDataFlowDebugSessionsResponse type.
-type QueryDataFlowDebugSessionsResponseResponse struct {
-	// A list of active debug sessions.
-	QueryDataFlowDebugSessionsResponse *QueryDataFlowDebugSessionsResponse
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // QuickBooksLinkedService - QuickBooks server linked service.
@@ -23816,15 +23463,6 @@ func (s SQLPoolInfoListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// SQLPoolInfoListResultResponse is the response envelope for operations that return a SQLPoolInfoListResult type.
-type SQLPoolInfoListResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// List of SQL pools
-	SQLPoolInfoListResult *SQLPoolInfoListResult
-}
-
 // SQLPoolReference - SQL pool reference type.
 type SQLPoolReference struct {
 	// REQUIRED; Reference SQL pool name.
@@ -23923,15 +23561,6 @@ func (s *SQLPoolResourceProperties) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return nil
-}
-
-// SQLPoolResponse is the response envelope for operations that return a SQLPool type.
-type SQLPoolResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// A SQL Analytics pool
-	SQLPool *SQLPool
 }
 
 // SQLPoolStoredProcedureActivity - Execute SQL pool stored procedure activity.
@@ -24229,27 +23858,6 @@ type SQLScriptResource struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
-// SQLScriptResourcePollerResponse is the response envelope for operations that asynchronously return a SQLScriptResource type.
-type SQLScriptResourcePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (SQLScriptResourceResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller SQLScriptResourcePoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// SQLScriptResourceResponse is the response envelope for operations that return a SQLScriptResource type.
-type SQLScriptResourceResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Sql Script resource type.
-	SQLScriptResource *SQLScriptResource
-}
-
 // SQLScriptsListResponse - A list of sql scripts resources.
 type SQLScriptsListResponse struct {
 	// REQUIRED; List of sql scripts.
@@ -24265,15 +23873,6 @@ func (s SQLScriptsListResponse) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "nextLink", s.NextLink)
 	populate(objectMap, "value", s.Value)
 	return json.Marshal(objectMap)
-}
-
-// SQLScriptsListResponseResponse is the response envelope for operations that return a SQLScriptsListResponse type.
-type SQLScriptsListResponseResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// A list of sql scripts resources.
-	SQLScriptsListResponse *SQLScriptsListResponse
 }
 
 // SQLServerLinkedService - SQL Server linked service.
@@ -27865,25 +27464,6 @@ func (s SparkBatchJob) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// SparkBatchJobPollerResponse is the response envelope for operations that asynchronously return a SparkBatchJob type.
-type SparkBatchJobPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (SparkBatchJobResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller SparkBatchJobPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// SparkBatchJobResponse is the response envelope for operations that return a SparkBatchJob type.
-type SparkBatchJobResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse   *http.Response
-	SparkBatchJob *SparkBatchJob
-}
-
 type SparkBatchJobState struct {
 	// the Spark job state.
 	CurrentState *string `json:"currentState,omitempty"`
@@ -28150,27 +27730,6 @@ func (s *SparkJobDefinitionResource) UnmarshalJSON(data []byte) error {
 	return s.SubResource.unmarshalInternal(rawMsg)
 }
 
-// SparkJobDefinitionResourcePollerResponse is the response envelope for operations that asynchronously return a SparkJobDefinitionResource type.
-type SparkJobDefinitionResourcePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (SparkJobDefinitionResourceResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller SparkJobDefinitionResourcePoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// SparkJobDefinitionResourceResponse is the response envelope for operations that return a SparkJobDefinitionResource type.
-type SparkJobDefinitionResourceResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Spark job definition resource type.
-	SparkJobDefinitionResource *SparkJobDefinitionResource
-}
-
 // SparkJobDefinitionsListResponse - A list of spark job definitions resources.
 type SparkJobDefinitionsListResponse struct {
 	// REQUIRED; List of spark job definitions.
@@ -28186,15 +27745,6 @@ func (s SparkJobDefinitionsListResponse) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "nextLink", s.NextLink)
 	populate(objectMap, "value", s.Value)
 	return json.Marshal(objectMap)
-}
-
-// SparkJobDefinitionsListResponseResponse is the response envelope for operations that return a SparkJobDefinitionsListResponse type.
-type SparkJobDefinitionsListResponseResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// A list of spark job definitions resources.
-	SparkJobDefinitionsListResponse *SparkJobDefinitionsListResponse
 }
 
 // SparkJobProperties - The properties of the Spark job.
@@ -30367,15 +29917,6 @@ func (t TriggerListResponse) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// TriggerListResponseResponse is the response envelope for operations that return a TriggerListResponse type.
-type TriggerListResponseResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// A list of trigger resources.
-	TriggerListResponse *TriggerListResponse
-}
-
 // TriggerPipelineReference - Pipeline that needs to be triggered with the given parameters.
 type TriggerPipelineReference struct {
 	// Pipeline parameters.
@@ -30434,27 +29975,6 @@ func (t *TriggerResource) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return t.SubResource.unmarshalInternal(rawMsg)
-}
-
-// TriggerResourcePollerResponse is the response envelope for operations that asynchronously return a TriggerResource type.
-type TriggerResourcePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (TriggerResourceResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller TriggerResourcePoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// TriggerResourceResponse is the response envelope for operations that return a TriggerResource type.
-type TriggerResourceResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Trigger resource type.
-	TriggerResource *TriggerResource
 }
 
 // TriggerRun - Trigger runs.
@@ -30591,15 +30111,6 @@ func (t TriggerRunsQueryResponse) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// TriggerRunsQueryResponseResponse is the response envelope for operations that return a TriggerRunsQueryResponse type.
-type TriggerRunsQueryResponseResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// A list of trigger runs.
-	TriggerRunsQueryResponse *TriggerRunsQueryResponse
-}
-
 // TriggerSubscriptionOperationStatus - Defines the response of a trigger subscription operation.
 type TriggerSubscriptionOperationStatus struct {
 	// READ-ONLY; Event Subscription Status.
@@ -30607,28 +30118,6 @@ type TriggerSubscriptionOperationStatus struct {
 
 	// READ-ONLY; Trigger name.
 	TriggerName *string `json:"triggerName,omitempty" azure:"ro"`
-}
-
-// TriggerSubscriptionOperationStatusPollerResponse is the response envelope for operations that asynchronously return a TriggerSubscriptionOperationStatus
-// type.
-type TriggerSubscriptionOperationStatusPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (TriggerSubscriptionOperationStatusResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller TriggerSubscriptionOperationStatusPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// TriggerSubscriptionOperationStatusResponse is the response envelope for operations that return a TriggerSubscriptionOperationStatus type.
-type TriggerSubscriptionOperationStatusResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Defines the response of a trigger subscription operation.
-	TriggerSubscriptionOperationStatus *TriggerSubscriptionOperationStatus
 }
 
 // TumblingWindowTrigger - Trigger that schedules pipeline runs for all fixed time interval windows from a start time without gaps and also supports backfill
@@ -31730,15 +31219,6 @@ type WorkspaceRepositoryConfiguration struct {
 
 	// Type of workspace repositoryID configuration. Example WorkspaceVSTSConfiguration, WorkspaceGitHubConfiguration
 	Type *string `json:"type,omitempty"`
-}
-
-// WorkspaceResponse is the response envelope for operations that return a Workspace type.
-type WorkspaceResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// A workspace
-	Workspace *Workspace
 }
 
 // WorkspaceUpdateParameters - Parameters for updating a workspace resource.

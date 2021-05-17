@@ -7,17 +7,6 @@
 
 package headgroup
 
-import "net/http"
-
-// BooleanResponse contains a boolean response.
-type BooleanResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Success indicates if the operation succeeded or failed.
-	Success bool
-}
-
 // HTTPSuccessHead200Options contains the optional parameters for the HTTPSuccess.Head200 method.
 type HTTPSuccessHead200Options struct {
 	// placeholder for future optional parameters

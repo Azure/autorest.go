@@ -7,20 +7,10 @@
 
 package migroup
 
-import "net/http"
-
 type Cat struct {
 	Feline
 	Pet
 	LikesMilk *bool `json:"likesMilk,omitempty"`
-}
-
-// CatResponse is the response envelope for operations that return a Cat type.
-type CatResponse struct {
-	Cat *Cat
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // Implements the error and azcore.HTTPResponse interfaces.
@@ -41,38 +31,14 @@ type Feline struct {
 	Meows  *bool `json:"meows,omitempty"`
 }
 
-// FelineResponse is the response envelope for operations that return a Feline type.
-type FelineResponse struct {
-	Feline *Feline
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 type Horse struct {
 	Pet
 	IsAShowHorse *bool `json:"isAShowHorse,omitempty"`
 }
 
-// HorseResponse is the response envelope for operations that return a Horse type.
-type HorseResponse struct {
-	Horse *Horse
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 type Kitten struct {
 	Cat
 	EatsMiceYet *bool `json:"eatsMiceYet,omitempty"`
-}
-
-// KittenResponse is the response envelope for operations that return a Kitten type.
-type KittenResponse struct {
-	Kitten *Kitten
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // MultipleInheritanceServiceClientGetCatOptions contains the optional parameters for the MultipleInheritanceServiceClient.GetCat method.
@@ -128,19 +94,4 @@ type MultipleInheritanceServiceClientPutPetOptions struct {
 type Pet struct {
 	// REQUIRED
 	Name *string `json:"name,omitempty"`
-}
-
-// PetResponse is the response envelope for operations that return a Pet type.
-type PetResponse struct {
-	Pet *Pet
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// StringResponse is the response envelope for operations that return a string type.
-type StringResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *string
 }

@@ -10,7 +10,6 @@ package complexmodelgroup
 import (
 	"encoding/json"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"net/http"
 	"reflect"
 )
 
@@ -38,14 +37,6 @@ func (c CatalogArrayOfDictionary) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// CatalogArrayResponse is the response envelope for operations that return a CatalogArray type.
-type CatalogArrayResponse struct {
-	CatalogArray *CatalogArray
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 type CatalogDictionary struct {
 	// Dictionary of products
 	ProductDictionary map[string]*Product `json:"productDictionary,omitempty"`
@@ -68,14 +59,6 @@ func (c CatalogDictionaryOfArray) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "productDictionaryOfArray", c.ProductDictionaryOfArray)
 	return json.Marshal(objectMap)
-}
-
-// CatalogDictionaryResponse is the response envelope for operations that return a CatalogDictionary type.
-type CatalogDictionaryResponse struct {
-	CatalogDictionary *CatalogDictionary
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ComplexModelClientCreateOptions contains the optional parameters for the ComplexModelClient.Create method.

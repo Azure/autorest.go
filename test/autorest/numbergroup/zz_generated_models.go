@@ -7,8 +7,6 @@
 
 package numbergroup
 
-import "net/http"
-
 // Implements the error and azcore.HTTPResponse interfaces.
 type Error struct {
 	raw     string
@@ -20,20 +18,6 @@ type Error struct {
 // The contents of the error text are not contractual and subject to change.
 func (e Error) Error() string {
 	return e.raw
-}
-
-// Float32Response is the response envelope for operations that return a float32 type.
-type Float32Response struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *float32
-}
-
-// Float64Response is the response envelope for operations that return a float64 type.
-type Float64Response struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *float64
 }
 
 // NumberGetBigDecimalNegativeDecimalOptions contains the optional parameters for the Number.GetBigDecimalNegativeDecimal method.

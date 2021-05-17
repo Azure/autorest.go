@@ -7,17 +7,6 @@
 
 package nonstringenumgroup
 
-import "net/http"
-
-// FloatEnumResponse is the response envelope for operations that return a FloatEnum type.
-type FloatEnumResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// List of float enums
-	Value *FloatEnum
-}
-
 // FloatGetOptions contains the optional parameters for the Float.Get method.
 type FloatGetOptions struct {
 	// placeholder for future optional parameters
@@ -29,15 +18,6 @@ type FloatPutOptions struct {
 	Input *FloatEnum
 }
 
-// IntEnumResponse is the response envelope for operations that return a IntEnum type.
-type IntEnumResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// List of integer enums
-	Value *IntEnum
-}
-
 // IntGetOptions contains the optional parameters for the Int.Get method.
 type IntGetOptions struct {
 	// placeholder for future optional parameters
@@ -47,11 +27,4 @@ type IntGetOptions struct {
 type IntPutOptions struct {
 	// Input int enum.
 	Input *IntEnum
-}
-
-// StringResponse is the response envelope for operations that return a string type.
-type StringResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *string
 }

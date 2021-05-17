@@ -10,7 +10,6 @@ package additionalpropsgroup
 import (
 	"encoding/json"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"net/http"
 	"reflect"
 )
 
@@ -46,14 +45,6 @@ func (c *CatAPTrue) UnmarshalJSON(data []byte) error {
 	return c.PetAPTrue.unmarshalInternal(rawMsg)
 }
 
-// CatAPTrueResponse is the response envelope for operations that return a CatAPTrue type.
-type CatAPTrueResponse struct {
-	CatAPTrue *CatAPTrue
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // Implements the error and azcore.HTTPResponse interfaces.
 type Error struct {
 	raw     string
@@ -87,14 +78,6 @@ func (p PetAPInProperties) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "name", p.Name)
 	populate(objectMap, "status", p.Status)
 	return json.Marshal(objectMap)
-}
-
-// PetAPInPropertiesResponse is the response envelope for operations that return a PetAPInProperties type.
-type PetAPInPropertiesResponse struct {
-	PetAPInProperties *PetAPInProperties
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 type PetAPInPropertiesWithAPString struct {
@@ -173,14 +156,6 @@ func (p *PetAPInPropertiesWithAPString) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// PetAPInPropertiesWithAPStringResponse is the response envelope for operations that return a PetAPInPropertiesWithAPString type.
-type PetAPInPropertiesWithAPStringResponse struct {
-	PetAPInPropertiesWithAPString *PetAPInPropertiesWithAPString
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 type PetAPObject struct {
 	// REQUIRED
 	ID *int32 `json:"id,omitempty"`
@@ -243,14 +218,6 @@ func (p *PetAPObject) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// PetAPObjectResponse is the response envelope for operations that return a PetAPObject type.
-type PetAPObjectResponse struct {
-	PetAPObject *PetAPObject
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 type PetAPString struct {
 	// REQUIRED
 	ID *int32 `json:"id,omitempty"`
@@ -311,14 +278,6 @@ func (p *PetAPString) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return nil
-}
-
-// PetAPStringResponse is the response envelope for operations that return a PetAPString type.
-type PetAPStringResponse struct {
-	PetAPString *PetAPString
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 type PetAPTrue struct {
@@ -390,14 +349,6 @@ func (p *PetAPTrue) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 		}
 	}
 	return nil
-}
-
-// PetAPTrueResponse is the response envelope for operations that return a PetAPTrue type.
-type PetAPTrueResponse struct {
-	PetAPTrue *PetAPTrue
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PetsCreateAPInPropertiesOptions contains the optional parameters for the Pets.CreateAPInProperties method.

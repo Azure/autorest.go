@@ -7,10 +7,7 @@
 
 package mediatypesgroup
 
-import (
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"net/http"
-)
+import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
 
 // MediaTypesClientAnalyzeBodyOptions contains the optional parameters for the MediaTypesClient.AnalyzeBody method.
 type MediaTypesClientAnalyzeBodyOptions struct {
@@ -34,11 +31,4 @@ type MediaTypesClientContentTypeWithEncodingOptions struct {
 type SourcePath struct {
 	// File source path.
 	Source *string `json:"source,omitempty"`
-}
-
-// StringResponse is the response envelope for operations that return a string type.
-type StringResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *string
 }

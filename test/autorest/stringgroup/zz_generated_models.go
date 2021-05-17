@@ -7,24 +7,6 @@
 
 package stringgroup
 
-import "net/http"
-
-// ByteArrayResponse is the response envelope for operations that return a []byte type.
-type ByteArrayResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       []byte
-}
-
-// ColorsResponse is the response envelope for operations that return a Colors type.
-type ColorsResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Referenced Color Enum Description.
-	Value *Colors
-}
-
 // EnumGetNotExpandableOptions contains the optional parameters for the Enum.GetNotExpandable method.
 type EnumGetNotExpandableOptions struct {
 	// placeholder for future optional parameters
@@ -74,13 +56,6 @@ type RefColorConstant struct {
 
 	// Sample string.
 	Field1 *string `json:"field1,omitempty"`
-}
-
-// RefColorConstantResponse is the response envelope for operations that return a RefColorConstant type.
-type RefColorConstantResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse      *http.Response
-	RefColorConstant *RefColorConstant
 }
 
 // StringGetBase64EncodedOptions contains the optional parameters for the String.GetBase64Encoded method.
@@ -147,11 +122,4 @@ type StringPutNullOptions struct {
 // StringPutWhitespaceOptions contains the optional parameters for the String.PutWhitespace method.
 type StringPutWhitespaceOptions struct {
 	// placeholder for future optional parameters
-}
-
-// StringResponse is the response envelope for operations that return a string type.
-type StringResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *string
 }
