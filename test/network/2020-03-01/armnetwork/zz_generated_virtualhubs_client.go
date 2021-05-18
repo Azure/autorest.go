@@ -125,15 +125,6 @@ func (client *VirtualHubsClient) createOrUpdateCreateRequest(ctx context.Context
 	return req, req.MarshalAsJSON(virtualHubParameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *VirtualHubsClient) createOrUpdateHandleResponse(resp *azcore.Response) (VirtualHubResponse, error) {
-	var val *VirtualHub
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return VirtualHubResponse{}, err
-	}
-	return VirtualHubResponse{RawResponse: resp.Response, VirtualHub: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *VirtualHubsClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()

@@ -125,15 +125,6 @@ func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) listCreateR
 	return req, nil
 }
 
-// listHandleResponse handles the List response.
-func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) listHandleResponse(resp *azcore.Response) (VPNServerConfigurationsResponseResponse, error) {
-	var val *VPNServerConfigurationsResponse
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return VPNServerConfigurationsResponseResponse{}, err
-	}
-	return VPNServerConfigurationsResponseResponse{RawResponse: resp.Response, VPNServerConfigurationsResponse: val}, nil
-}
-
 // listHandleError handles the List error response.
 func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) listHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()

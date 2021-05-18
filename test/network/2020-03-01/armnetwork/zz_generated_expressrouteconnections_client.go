@@ -129,15 +129,6 @@ func (client *ExpressRouteConnectionsClient) createOrUpdateCreateRequest(ctx con
 	return req, req.MarshalAsJSON(putExpressRouteConnectionParameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *ExpressRouteConnectionsClient) createOrUpdateHandleResponse(resp *azcore.Response) (ExpressRouteConnectionResponse, error) {
-	var val *ExpressRouteConnection
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ExpressRouteConnectionResponse{}, err
-	}
-	return ExpressRouteConnectionResponse{RawResponse: resp.Response, ExpressRouteConnection: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *ExpressRouteConnectionsClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()

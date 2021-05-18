@@ -125,15 +125,6 @@ func (client *RouteTablesClient) createOrUpdateCreateRequest(ctx context.Context
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *RouteTablesClient) createOrUpdateHandleResponse(resp *azcore.Response) (RouteTableResponse, error) {
-	var val *RouteTable
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return RouteTableResponse{}, err
-	}
-	return RouteTableResponse{RawResponse: resp.Response, RouteTable: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *RouteTablesClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()

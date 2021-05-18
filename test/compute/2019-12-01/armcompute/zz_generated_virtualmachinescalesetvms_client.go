@@ -1234,15 +1234,6 @@ func (client *VirtualMachineScaleSetVMsClient) runCommandCreateRequest(ctx conte
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// runCommandHandleResponse handles the RunCommand response.
-func (client *VirtualMachineScaleSetVMsClient) runCommandHandleResponse(resp *azcore.Response) (RunCommandResultResponse, error) {
-	var val *RunCommandResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return RunCommandResultResponse{}, err
-	}
-	return RunCommandResultResponse{RawResponse: resp.Response, RunCommandResult: val}, nil
-}
-
 // runCommandHandleError handles the RunCommand error response.
 func (client *VirtualMachineScaleSetVMsClient) runCommandHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()
@@ -1520,15 +1511,6 @@ func (client *VirtualMachineScaleSetVMsClient) updateCreateRequest(ctx context.C
 	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
-}
-
-// updateHandleResponse handles the Update response.
-func (client *VirtualMachineScaleSetVMsClient) updateHandleResponse(resp *azcore.Response) (VirtualMachineScaleSetVMResponse, error) {
-	var val *VirtualMachineScaleSetVM
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return VirtualMachineScaleSetVMResponse{}, err
-	}
-	return VirtualMachineScaleSetVMResponse{RawResponse: resp.Response, VirtualMachineScaleSetVM: val}, nil
 }
 
 // updateHandleError handles the Update error response.

@@ -129,15 +129,6 @@ func (client *PacketCapturesClient) createCreateRequest(ctx context.Context, res
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// createHandleResponse handles the Create response.
-func (client *PacketCapturesClient) createHandleResponse(resp *azcore.Response) (PacketCaptureResultResponse, error) {
-	var val *PacketCaptureResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return PacketCaptureResultResponse{}, err
-	}
-	return PacketCaptureResultResponse{RawResponse: resp.Response, PacketCaptureResult: val}, nil
-}
-
 // createHandleError handles the Create error response.
 func (client *PacketCapturesClient) createHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()
@@ -428,15 +419,6 @@ func (client *PacketCapturesClient) getStatusCreateRequest(ctx context.Context, 
 	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// getStatusHandleResponse handles the GetStatus response.
-func (client *PacketCapturesClient) getStatusHandleResponse(resp *azcore.Response) (PacketCaptureQueryStatusResultResponse, error) {
-	var val *PacketCaptureQueryStatusResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return PacketCaptureQueryStatusResultResponse{}, err
-	}
-	return PacketCaptureQueryStatusResultResponse{RawResponse: resp.Response, PacketCaptureQueryStatusResult: val}, nil
 }
 
 // getStatusHandleError handles the GetStatus error response.

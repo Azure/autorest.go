@@ -125,15 +125,6 @@ func (client *VPNSitesClient) createOrUpdateCreateRequest(ctx context.Context, r
 	return req, req.MarshalAsJSON(vpnSiteParameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *VPNSitesClient) createOrUpdateHandleResponse(resp *azcore.Response) (VPNSiteResponse, error) {
-	var val *VPNSite
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return VPNSiteResponse{}, err
-	}
-	return VPNSiteResponse{RawResponse: resp.Response, VPNSite: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *VPNSitesClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()

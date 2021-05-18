@@ -125,15 +125,6 @@ func (client *ExpressRouteCrossConnectionsClient) createOrUpdateCreateRequest(ct
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *ExpressRouteCrossConnectionsClient) createOrUpdateHandleResponse(resp *azcore.Response) (ExpressRouteCrossConnectionResponse, error) {
-	var val *ExpressRouteCrossConnection
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ExpressRouteCrossConnectionResponse{}, err
-	}
-	return ExpressRouteCrossConnectionResponse{RawResponse: resp.Response, ExpressRouteCrossConnection: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *ExpressRouteCrossConnectionsClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()
@@ -373,15 +364,6 @@ func (client *ExpressRouteCrossConnectionsClient) listArpTableCreateRequest(ctx 
 	return req, nil
 }
 
-// listArpTableHandleResponse handles the ListArpTable response.
-func (client *ExpressRouteCrossConnectionsClient) listArpTableHandleResponse(resp *azcore.Response) (ExpressRouteCircuitsArpTableListResultResponse, error) {
-	var val *ExpressRouteCircuitsArpTableListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ExpressRouteCircuitsArpTableListResultResponse{}, err
-	}
-	return ExpressRouteCircuitsArpTableListResultResponse{RawResponse: resp.Response, ExpressRouteCircuitsArpTableListResult: val}, nil
-}
-
 // listArpTableHandleError handles the ListArpTable error response.
 func (client *ExpressRouteCrossConnectionsClient) listArpTableHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()
@@ -559,15 +541,6 @@ func (client *ExpressRouteCrossConnectionsClient) listRoutesTableCreateRequest(c
 	return req, nil
 }
 
-// listRoutesTableHandleResponse handles the ListRoutesTable response.
-func (client *ExpressRouteCrossConnectionsClient) listRoutesTableHandleResponse(resp *azcore.Response) (ExpressRouteCircuitsRoutesTableListResultResponse, error) {
-	var val *ExpressRouteCircuitsRoutesTableListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ExpressRouteCircuitsRoutesTableListResultResponse{}, err
-	}
-	return ExpressRouteCircuitsRoutesTableListResultResponse{RawResponse: resp.Response, ExpressRouteCircuitsRoutesTableListResult: val}, nil
-}
-
 // listRoutesTableHandleError handles the ListRoutesTable error response.
 func (client *ExpressRouteCrossConnectionsClient) listRoutesTableHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()
@@ -681,15 +654,6 @@ func (client *ExpressRouteCrossConnectionsClient) listRoutesTableSummaryCreateRe
 	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// listRoutesTableSummaryHandleResponse handles the ListRoutesTableSummary response.
-func (client *ExpressRouteCrossConnectionsClient) listRoutesTableSummaryHandleResponse(resp *azcore.Response) (ExpressRouteCrossConnectionsRoutesTableSummaryListResultResponse, error) {
-	var val *ExpressRouteCrossConnectionsRoutesTableSummaryListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ExpressRouteCrossConnectionsRoutesTableSummaryListResultResponse{}, err
-	}
-	return ExpressRouteCrossConnectionsRoutesTableSummaryListResultResponse{RawResponse: resp.Response, ExpressRouteCrossConnectionsRoutesTableSummaryListResult: val}, nil
 }
 
 // listRoutesTableSummaryHandleError handles the ListRoutesTableSummary error response.

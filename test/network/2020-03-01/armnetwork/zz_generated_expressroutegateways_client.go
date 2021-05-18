@@ -125,15 +125,6 @@ func (client *ExpressRouteGatewaysClient) createOrUpdateCreateRequest(ctx contex
 	return req, req.MarshalAsJSON(putExpressRouteGatewayParameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *ExpressRouteGatewaysClient) createOrUpdateHandleResponse(resp *azcore.Response) (ExpressRouteGatewayResponse, error) {
-	var val *ExpressRouteGateway
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ExpressRouteGatewayResponse{}, err
-	}
-	return ExpressRouteGatewayResponse{RawResponse: resp.Response, ExpressRouteGateway: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *ExpressRouteGatewaysClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()

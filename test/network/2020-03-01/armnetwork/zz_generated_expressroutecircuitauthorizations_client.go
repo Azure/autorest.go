@@ -129,15 +129,6 @@ func (client *ExpressRouteCircuitAuthorizationsClient) createOrUpdateCreateReque
 	return req, req.MarshalAsJSON(authorizationParameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *ExpressRouteCircuitAuthorizationsClient) createOrUpdateHandleResponse(resp *azcore.Response) (ExpressRouteCircuitAuthorizationResponse, error) {
-	var val *ExpressRouteCircuitAuthorization
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ExpressRouteCircuitAuthorizationResponse{}, err
-	}
-	return ExpressRouteCircuitAuthorizationResponse{RawResponse: resp.Response, ExpressRouteCircuitAuthorization: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *ExpressRouteCircuitAuthorizationsClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()

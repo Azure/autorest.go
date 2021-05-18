@@ -125,15 +125,6 @@ func (client *NetworkInterfacesClient) createOrUpdateCreateRequest(ctx context.C
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *NetworkInterfacesClient) createOrUpdateHandleResponse(resp *azcore.Response) (NetworkInterfaceResponse, error) {
-	var val *NetworkInterface
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return NetworkInterfaceResponse{}, err
-	}
-	return NetworkInterfaceResponse{RawResponse: resp.Response, NetworkInterface: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *NetworkInterfacesClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()
@@ -415,15 +406,6 @@ func (client *NetworkInterfacesClient) getEffectiveRouteTableCreateRequest(ctx c
 	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// getEffectiveRouteTableHandleResponse handles the GetEffectiveRouteTable response.
-func (client *NetworkInterfacesClient) getEffectiveRouteTableHandleResponse(resp *azcore.Response) (EffectiveRouteListResultResponse, error) {
-	var val *EffectiveRouteListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return EffectiveRouteListResultResponse{}, err
-	}
-	return EffectiveRouteListResultResponse{RawResponse: resp.Response, EffectiveRouteListResult: val}, nil
 }
 
 // getEffectiveRouteTableHandleError handles the GetEffectiveRouteTable error response.
@@ -809,15 +791,6 @@ func (client *NetworkInterfacesClient) listEffectiveNetworkSecurityGroupsCreateR
 	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// listEffectiveNetworkSecurityGroupsHandleResponse handles the ListEffectiveNetworkSecurityGroups response.
-func (client *NetworkInterfacesClient) listEffectiveNetworkSecurityGroupsHandleResponse(resp *azcore.Response) (EffectiveNetworkSecurityGroupListResultResponse, error) {
-	var val *EffectiveNetworkSecurityGroupListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return EffectiveNetworkSecurityGroupListResultResponse{}, err
-	}
-	return EffectiveNetworkSecurityGroupListResultResponse{RawResponse: resp.Response, EffectiveNetworkSecurityGroupListResult: val}, nil
 }
 
 // listEffectiveNetworkSecurityGroupsHandleError handles the ListEffectiveNetworkSecurityGroups error response.

@@ -133,15 +133,6 @@ func (client *ExpressRouteCircuitConnectionsClient) createOrUpdateCreateRequest(
 	return req, req.MarshalAsJSON(expressRouteCircuitConnectionParameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *ExpressRouteCircuitConnectionsClient) createOrUpdateHandleResponse(resp *azcore.Response) (ExpressRouteCircuitConnectionResponse, error) {
-	var val *ExpressRouteCircuitConnection
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ExpressRouteCircuitConnectionResponse{}, err
-	}
-	return ExpressRouteCircuitConnectionResponse{RawResponse: resp.Response, ExpressRouteCircuitConnection: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *ExpressRouteCircuitConnectionsClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()

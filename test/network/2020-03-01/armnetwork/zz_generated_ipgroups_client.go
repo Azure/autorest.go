@@ -125,15 +125,6 @@ func (client *IPGroupsClient) createOrUpdateCreateRequest(ctx context.Context, r
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *IPGroupsClient) createOrUpdateHandleResponse(resp *azcore.Response) (IPGroupResponse, error) {
-	var val *IPGroup
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return IPGroupResponse{}, err
-	}
-	return IPGroupResponse{RawResponse: resp.Response, IPGroup: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *IPGroupsClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()

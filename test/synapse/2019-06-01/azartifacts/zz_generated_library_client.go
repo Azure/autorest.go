@@ -160,15 +160,6 @@ func (client *libraryClient) createCreateRequest(ctx context.Context, libraryNam
 	return req, nil
 }
 
-// createHandleResponse handles the Create response.
-func (client *libraryClient) createHandleResponse(resp *azcore.Response) (LibraryResourceInfoResponse, error) {
-	var val *LibraryResourceInfo
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return LibraryResourceInfoResponse{}, err
-	}
-	return LibraryResourceInfoResponse{RawResponse: resp.Response, LibraryResourceInfo: val}, nil
-}
-
 // createHandleError handles the Create error response.
 func (client *libraryClient) createHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()
@@ -266,15 +257,6 @@ func (client *libraryClient) deleteCreateRequest(ctx context.Context, libraryNam
 	return req, nil
 }
 
-// deleteHandleResponse handles the Delete response.
-func (client *libraryClient) deleteHandleResponse(resp *azcore.Response) (LibraryResourceInfoResponse, error) {
-	var val *LibraryResourceInfo
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return LibraryResourceInfoResponse{}, err
-	}
-	return LibraryResourceInfoResponse{RawResponse: resp.Response, LibraryResourceInfo: val}, nil
-}
-
 // deleteHandleError handles the Delete error response.
 func (client *libraryClient) deleteHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()
@@ -370,15 +352,6 @@ func (client *libraryClient) flushCreateRequest(ctx context.Context, libraryName
 	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// flushHandleResponse handles the Flush response.
-func (client *libraryClient) flushHandleResponse(resp *azcore.Response) (LibraryResourceInfoResponse, error) {
-	var val *LibraryResourceInfo
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return LibraryResourceInfoResponse{}, err
-	}
-	return LibraryResourceInfoResponse{RawResponse: resp.Response, LibraryResourceInfo: val}, nil
 }
 
 // flushHandleError handles the Flush error response.

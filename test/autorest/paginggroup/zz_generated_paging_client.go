@@ -419,15 +419,6 @@ func (client *PagingClient) getMultiplePagesLROCreateRequest(ctx context.Context
 	return req, nil
 }
 
-// getMultiplePagesLROHandleResponse handles the GetMultiplePagesLRO response.
-func (client *PagingClient) getMultiplePagesLROHandleResponse(resp *azcore.Response) (ProductResultResponse, error) {
-	var val *ProductResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ProductResultResponse{}, err
-	}
-	return ProductResultResponse{RawResponse: resp.Response, ProductResult: val}, nil
-}
-
 // getMultiplePagesLROHandleError handles the GetMultiplePagesLRO error response.
 func (client *PagingClient) getMultiplePagesLROHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()

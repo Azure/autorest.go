@@ -129,15 +129,6 @@ func (client *ConnectionMonitorsClient) createOrUpdateCreateRequest(ctx context.
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *ConnectionMonitorsClient) createOrUpdateHandleResponse(resp *azcore.Response) (ConnectionMonitorResultResponse, error) {
-	var val *ConnectionMonitorResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ConnectionMonitorResultResponse{}, err
-	}
-	return ConnectionMonitorResultResponse{RawResponse: resp.Response, ConnectionMonitorResult: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *ConnectionMonitorsClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()
@@ -494,15 +485,6 @@ func (client *ConnectionMonitorsClient) queryCreateRequest(ctx context.Context, 
 	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// queryHandleResponse handles the Query response.
-func (client *ConnectionMonitorsClient) queryHandleResponse(resp *azcore.Response) (ConnectionMonitorQueryResultResponse, error) {
-	var val *ConnectionMonitorQueryResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ConnectionMonitorQueryResultResponse{}, err
-	}
-	return ConnectionMonitorQueryResultResponse{RawResponse: resp.Response, ConnectionMonitorQueryResult: val}, nil
 }
 
 // queryHandleError handles the Query error response.

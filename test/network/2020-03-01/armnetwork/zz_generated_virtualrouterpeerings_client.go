@@ -129,15 +129,6 @@ func (client *VirtualRouterPeeringsClient) createOrUpdateCreateRequest(ctx conte
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *VirtualRouterPeeringsClient) createOrUpdateHandleResponse(resp *azcore.Response) (VirtualRouterPeeringResponse, error) {
-	var val *VirtualRouterPeering
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return VirtualRouterPeeringResponse{}, err
-	}
-	return VirtualRouterPeeringResponse{RawResponse: resp.Response, VirtualRouterPeering: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *VirtualRouterPeeringsClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()

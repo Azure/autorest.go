@@ -125,15 +125,6 @@ func (client *SecurityPartnerProvidersClient) createOrUpdateCreateRequest(ctx co
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *SecurityPartnerProvidersClient) createOrUpdateHandleResponse(resp *azcore.Response) (SecurityPartnerProviderResponse, error) {
-	var val *SecurityPartnerProvider
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return SecurityPartnerProviderResponse{}, err
-	}
-	return SecurityPartnerProviderResponse{RawResponse: resp.Response, SecurityPartnerProvider: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *SecurityPartnerProvidersClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()

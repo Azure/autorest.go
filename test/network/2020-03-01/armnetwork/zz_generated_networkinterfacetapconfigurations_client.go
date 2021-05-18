@@ -129,15 +129,6 @@ func (client *NetworkInterfaceTapConfigurationsClient) createOrUpdateCreateReque
 	return req, req.MarshalAsJSON(tapConfigurationParameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *NetworkInterfaceTapConfigurationsClient) createOrUpdateHandleResponse(resp *azcore.Response) (NetworkInterfaceTapConfigurationResponse, error) {
-	var val *NetworkInterfaceTapConfiguration
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return NetworkInterfaceTapConfigurationResponse{}, err
-	}
-	return NetworkInterfaceTapConfigurationResponse{RawResponse: resp.Response, NetworkInterfaceTapConfiguration: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *NetworkInterfaceTapConfigurationsClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()

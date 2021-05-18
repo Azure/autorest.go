@@ -109,15 +109,6 @@ func (client *sqlScriptClient) createOrUpdateSQLScriptCreateRequest(ctx context.
 	return req, req.MarshalAsJSON(sqlScript)
 }
 
-// createOrUpdateSQLScriptHandleResponse handles the CreateOrUpdateSQLScript response.
-func (client *sqlScriptClient) createOrUpdateSQLScriptHandleResponse(resp *azcore.Response) (SQLScriptResourceResponse, error) {
-	var val *SQLScriptResource
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return SQLScriptResourceResponse{}, err
-	}
-	return SQLScriptResourceResponse{RawResponse: resp.Response, SQLScriptResource: val}, nil
-}
-
 // createOrUpdateSQLScriptHandleError handles the CreateOrUpdateSQLScript error response.
 func (client *sqlScriptClient) createOrUpdateSQLScriptHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()

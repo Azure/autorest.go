@@ -180,15 +180,6 @@ func (client *VirtualMachineScaleSetsClient) createOrUpdateCreateRequest(ctx con
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *VirtualMachineScaleSetsClient) createOrUpdateHandleResponse(resp *azcore.Response) (VirtualMachineScaleSetResponse, error) {
-	var val *VirtualMachineScaleSet
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return VirtualMachineScaleSetResponse{}, err
-	}
-	return VirtualMachineScaleSetResponse{RawResponse: resp.Response, VirtualMachineScaleSet: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *VirtualMachineScaleSetsClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()
@@ -1940,15 +1931,6 @@ func (client *VirtualMachineScaleSetsClient) updateCreateRequest(ctx context.Con
 	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
-}
-
-// updateHandleResponse handles the Update response.
-func (client *VirtualMachineScaleSetsClient) updateHandleResponse(resp *azcore.Response) (VirtualMachineScaleSetResponse, error) {
-	var val *VirtualMachineScaleSet
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return VirtualMachineScaleSetResponse{}, err
-	}
-	return VirtualMachineScaleSetResponse{RawResponse: resp.Response, VirtualMachineScaleSet: val}, nil
 }
 
 // updateHandleError handles the Update error response.

@@ -125,15 +125,6 @@ func (client *VirtualNetworkGatewayConnectionsClient) createOrUpdateCreateReques
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *VirtualNetworkGatewayConnectionsClient) createOrUpdateHandleResponse(resp *azcore.Response) (VirtualNetworkGatewayConnectionResponse, error) {
-	var val *VirtualNetworkGatewayConnection
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return VirtualNetworkGatewayConnectionResponse{}, err
-	}
-	return VirtualNetworkGatewayConnectionResponse{RawResponse: resp.Response, VirtualNetworkGatewayConnection: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *VirtualNetworkGatewayConnectionsClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()
@@ -547,15 +538,6 @@ func (client *VirtualNetworkGatewayConnectionsClient) resetSharedKeyCreateReques
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// resetSharedKeyHandleResponse handles the ResetSharedKey response.
-func (client *VirtualNetworkGatewayConnectionsClient) resetSharedKeyHandleResponse(resp *azcore.Response) (ConnectionResetSharedKeyResponse, error) {
-	var val *ConnectionResetSharedKey
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ConnectionResetSharedKeyResponse{}, err
-	}
-	return ConnectionResetSharedKeyResponse{RawResponse: resp.Response, ConnectionResetSharedKey: val}, nil
-}
-
 // resetSharedKeyHandleError handles the ResetSharedKey error response.
 func (client *VirtualNetworkGatewayConnectionsClient) resetSharedKeyHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()
@@ -665,15 +647,6 @@ func (client *VirtualNetworkGatewayConnectionsClient) setSharedKeyCreateRequest(
 	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
-}
-
-// setSharedKeyHandleResponse handles the SetSharedKey response.
-func (client *VirtualNetworkGatewayConnectionsClient) setSharedKeyHandleResponse(resp *azcore.Response) (ConnectionSharedKeyResponse, error) {
-	var val *ConnectionSharedKey
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ConnectionSharedKeyResponse{}, err
-	}
-	return ConnectionSharedKeyResponse{RawResponse: resp.Response, ConnectionSharedKey: val}, nil
 }
 
 // setSharedKeyHandleError handles the SetSharedKey error response.
@@ -786,15 +759,6 @@ func (client *VirtualNetworkGatewayConnectionsClient) startPacketCaptureCreateRe
 	return req, nil
 }
 
-// startPacketCaptureHandleResponse handles the StartPacketCapture response.
-func (client *VirtualNetworkGatewayConnectionsClient) startPacketCaptureHandleResponse(resp *azcore.Response) (StringResponse, error) {
-	var val *string
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return StringResponse{}, err
-	}
-	return StringResponse{RawResponse: resp.Response, Value: val}, nil
-}
-
 // startPacketCaptureHandleError handles the StartPacketCapture error response.
 func (client *VirtualNetworkGatewayConnectionsClient) startPacketCaptureHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()
@@ -902,15 +866,6 @@ func (client *VirtualNetworkGatewayConnectionsClient) stopPacketCaptureCreateReq
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// stopPacketCaptureHandleResponse handles the StopPacketCapture response.
-func (client *VirtualNetworkGatewayConnectionsClient) stopPacketCaptureHandleResponse(resp *azcore.Response) (StringResponse, error) {
-	var val *string
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return StringResponse{}, err
-	}
-	return StringResponse{RawResponse: resp.Response, Value: val}, nil
-}
-
 // stopPacketCaptureHandleError handles the StopPacketCapture error response.
 func (client *VirtualNetworkGatewayConnectionsClient) stopPacketCaptureHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()
@@ -1016,15 +971,6 @@ func (client *VirtualNetworkGatewayConnectionsClient) updateTagsCreateRequest(ct
 	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
-}
-
-// updateTagsHandleResponse handles the UpdateTags response.
-func (client *VirtualNetworkGatewayConnectionsClient) updateTagsHandleResponse(resp *azcore.Response) (VirtualNetworkGatewayConnectionResponse, error) {
-	var val *VirtualNetworkGatewayConnection
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return VirtualNetworkGatewayConnectionResponse{}, err
-	}
-	return VirtualNetworkGatewayConnectionResponse{RawResponse: resp.Response, VirtualNetworkGatewayConnection: val}, nil
 }
 
 // updateTagsHandleError handles the UpdateTags error response.

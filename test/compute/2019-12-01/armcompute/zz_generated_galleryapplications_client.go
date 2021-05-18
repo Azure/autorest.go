@@ -129,15 +129,6 @@ func (client *GalleryApplicationsClient) createOrUpdateCreateRequest(ctx context
 	return req, req.MarshalAsJSON(galleryApplication)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *GalleryApplicationsClient) createOrUpdateHandleResponse(resp *azcore.Response) (GalleryApplicationResponse, error) {
-	var val *GalleryApplication
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return GalleryApplicationResponse{}, err
-	}
-	return GalleryApplicationResponse{RawResponse: resp.Response, GalleryApplication: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *GalleryApplicationsClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()
@@ -494,15 +485,6 @@ func (client *GalleryApplicationsClient) updateCreateRequest(ctx context.Context
 	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(galleryApplication)
-}
-
-// updateHandleResponse handles the Update response.
-func (client *GalleryApplicationsClient) updateHandleResponse(resp *azcore.Response) (GalleryApplicationResponse, error) {
-	var val *GalleryApplication
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return GalleryApplicationResponse{}, err
-	}
-	return GalleryApplicationResponse{RawResponse: resp.Response, GalleryApplication: val}, nil
 }
 
 // updateHandleError handles the Update error response.

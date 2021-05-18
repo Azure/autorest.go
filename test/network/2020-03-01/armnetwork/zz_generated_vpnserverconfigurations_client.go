@@ -125,15 +125,6 @@ func (client *VPNServerConfigurationsClient) createOrUpdateCreateRequest(ctx con
 	return req, req.MarshalAsJSON(vpnServerConfigurationParameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *VPNServerConfigurationsClient) createOrUpdateHandleResponse(resp *azcore.Response) (VPNServerConfigurationResponse, error) {
-	var val *VPNServerConfiguration
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return VPNServerConfigurationResponse{}, err
-	}
-	return VPNServerConfigurationResponse{RawResponse: resp.Response, VPNServerConfiguration: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *VPNServerConfigurationsClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()

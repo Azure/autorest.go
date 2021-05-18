@@ -127,15 +127,6 @@ func (client *NetworkWatchersClient) checkConnectivityCreateRequest(ctx context.
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// checkConnectivityHandleResponse handles the CheckConnectivity response.
-func (client *NetworkWatchersClient) checkConnectivityHandleResponse(resp *azcore.Response) (ConnectivityInformationResponse, error) {
-	var val *ConnectivityInformation
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ConnectivityInformationResponse{}, err
-	}
-	return ConnectivityInformationResponse{RawResponse: resp.Response, ConnectivityInformation: val}, nil
-}
-
 // checkConnectivityHandleError handles the CheckConnectivity error response.
 func (client *NetworkWatchersClient) checkConnectivityHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()
@@ -484,15 +475,6 @@ func (client *NetworkWatchersClient) getAzureReachabilityReportCreateRequest(ctx
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// getAzureReachabilityReportHandleResponse handles the GetAzureReachabilityReport response.
-func (client *NetworkWatchersClient) getAzureReachabilityReportHandleResponse(resp *azcore.Response) (AzureReachabilityReportResponse, error) {
-	var val *AzureReachabilityReport
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return AzureReachabilityReportResponse{}, err
-	}
-	return AzureReachabilityReportResponse{RawResponse: resp.Response, AzureReachabilityReport: val}, nil
-}
-
 // getAzureReachabilityReportHandleError handles the GetAzureReachabilityReport error response.
 func (client *NetworkWatchersClient) getAzureReachabilityReportHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()
@@ -598,15 +580,6 @@ func (client *NetworkWatchersClient) getFlowLogStatusCreateRequest(ctx context.C
 	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
-}
-
-// getFlowLogStatusHandleResponse handles the GetFlowLogStatus response.
-func (client *NetworkWatchersClient) getFlowLogStatusHandleResponse(resp *azcore.Response) (FlowLogInformationResponse, error) {
-	var val *FlowLogInformation
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return FlowLogInformationResponse{}, err
-	}
-	return FlowLogInformationResponse{RawResponse: resp.Response, FlowLogInformation: val}, nil
 }
 
 // getFlowLogStatusHandleError handles the GetFlowLogStatus error response.
@@ -724,15 +697,6 @@ func (client *NetworkWatchersClient) getNetworkConfigurationDiagnosticCreateRequ
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// getNetworkConfigurationDiagnosticHandleResponse handles the GetNetworkConfigurationDiagnostic response.
-func (client *NetworkWatchersClient) getNetworkConfigurationDiagnosticHandleResponse(resp *azcore.Response) (NetworkConfigurationDiagnosticResponseResponse, error) {
-	var val *NetworkConfigurationDiagnosticResponse
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return NetworkConfigurationDiagnosticResponseResponse{}, err
-	}
-	return NetworkConfigurationDiagnosticResponseResponse{RawResponse: resp.Response, NetworkConfigurationDiagnosticResponse: val}, nil
-}
-
 // getNetworkConfigurationDiagnosticHandleError handles the GetNetworkConfigurationDiagnostic error response.
 func (client *NetworkWatchersClient) getNetworkConfigurationDiagnosticHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()
@@ -838,15 +802,6 @@ func (client *NetworkWatchersClient) getNextHopCreateRequest(ctx context.Context
 	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
-}
-
-// getNextHopHandleResponse handles the GetNextHop response.
-func (client *NetworkWatchersClient) getNextHopHandleResponse(resp *azcore.Response) (NextHopResultResponse, error) {
-	var val *NextHopResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return NextHopResultResponse{}, err
-	}
-	return NextHopResultResponse{RawResponse: resp.Response, NextHopResult: val}, nil
 }
 
 // getNextHopHandleError handles the GetNextHop error response.
@@ -1022,15 +977,6 @@ func (client *NetworkWatchersClient) getTroubleshootingCreateRequest(ctx context
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// getTroubleshootingHandleResponse handles the GetTroubleshooting response.
-func (client *NetworkWatchersClient) getTroubleshootingHandleResponse(resp *azcore.Response) (TroubleshootingResultResponse, error) {
-	var val *TroubleshootingResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return TroubleshootingResultResponse{}, err
-	}
-	return TroubleshootingResultResponse{RawResponse: resp.Response, TroubleshootingResult: val}, nil
-}
-
 // getTroubleshootingHandleError handles the GetTroubleshooting error response.
 func (client *NetworkWatchersClient) getTroubleshootingHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()
@@ -1138,15 +1084,6 @@ func (client *NetworkWatchersClient) getTroubleshootingResultCreateRequest(ctx c
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// getTroubleshootingResultHandleResponse handles the GetTroubleshootingResult response.
-func (client *NetworkWatchersClient) getTroubleshootingResultHandleResponse(resp *azcore.Response) (TroubleshootingResultResponse, error) {
-	var val *TroubleshootingResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return TroubleshootingResultResponse{}, err
-	}
-	return TroubleshootingResultResponse{RawResponse: resp.Response, TroubleshootingResult: val}, nil
-}
-
 // getTroubleshootingResultHandleError handles the GetTroubleshootingResult error response.
 func (client *NetworkWatchersClient) getTroubleshootingResultHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()
@@ -1252,15 +1189,6 @@ func (client *NetworkWatchersClient) getVMSecurityRulesCreateRequest(ctx context
 	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
-}
-
-// getVMSecurityRulesHandleResponse handles the GetVMSecurityRules response.
-func (client *NetworkWatchersClient) getVMSecurityRulesHandleResponse(resp *azcore.Response) (SecurityGroupViewResultResponse, error) {
-	var val *SecurityGroupViewResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return SecurityGroupViewResultResponse{}, err
-	}
-	return SecurityGroupViewResultResponse{RawResponse: resp.Response, SecurityGroupViewResult: val}, nil
 }
 
 // getVMSecurityRulesHandleError handles the GetVMSecurityRules error response.
@@ -1492,15 +1420,6 @@ func (client *NetworkWatchersClient) listAvailableProvidersCreateRequest(ctx con
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// listAvailableProvidersHandleResponse handles the ListAvailableProviders response.
-func (client *NetworkWatchersClient) listAvailableProvidersHandleResponse(resp *azcore.Response) (AvailableProvidersListResponse, error) {
-	var val *AvailableProvidersList
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return AvailableProvidersListResponse{}, err
-	}
-	return AvailableProvidersListResponse{RawResponse: resp.Response, AvailableProvidersList: val}, nil
-}
-
 // listAvailableProvidersHandleError handles the ListAvailableProviders error response.
 func (client *NetworkWatchersClient) listAvailableProvidersHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()
@@ -1606,15 +1525,6 @@ func (client *NetworkWatchersClient) setFlowLogConfigurationCreateRequest(ctx co
 	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
-}
-
-// setFlowLogConfigurationHandleResponse handles the SetFlowLogConfiguration response.
-func (client *NetworkWatchersClient) setFlowLogConfigurationHandleResponse(resp *azcore.Response) (FlowLogInformationResponse, error) {
-	var val *FlowLogInformation
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return FlowLogInformationResponse{}, err
-	}
-	return FlowLogInformationResponse{RawResponse: resp.Response, FlowLogInformation: val}, nil
 }
 
 // setFlowLogConfigurationHandleError handles the SetFlowLogConfiguration error response.
@@ -1788,15 +1698,6 @@ func (client *NetworkWatchersClient) verifyIPFlowCreateRequest(ctx context.Conte
 	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
-}
-
-// verifyIPFlowHandleResponse handles the VerifyIPFlow response.
-func (client *NetworkWatchersClient) verifyIPFlowHandleResponse(resp *azcore.Response) (VerificationIPFlowResultResponse, error) {
-	var val *VerificationIPFlowResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return VerificationIPFlowResultResponse{}, err
-	}
-	return VerificationIPFlowResultResponse{RawResponse: resp.Response, VerificationIPFlowResult: val}, nil
 }
 
 // verifyIPFlowHandleError handles the VerifyIPFlow error response.

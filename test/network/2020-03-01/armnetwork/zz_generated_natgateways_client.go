@@ -125,15 +125,6 @@ func (client *NatGatewaysClient) createOrUpdateCreateRequest(ctx context.Context
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *NatGatewaysClient) createOrUpdateHandleResponse(resp *azcore.Response) (NatGatewayResponse, error) {
-	var val *NatGateway
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return NatGatewayResponse{}, err
-	}
-	return NatGatewayResponse{RawResponse: resp.Response, NatGateway: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *NatGatewaysClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()

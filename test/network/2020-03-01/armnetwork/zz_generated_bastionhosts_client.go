@@ -125,15 +125,6 @@ func (client *BastionHostsClient) createOrUpdateCreateRequest(ctx context.Contex
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *BastionHostsClient) createOrUpdateHandleResponse(resp *azcore.Response) (BastionHostResponse, error) {
-	var val *BastionHost
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return BastionHostResponse{}, err
-	}
-	return BastionHostResponse{RawResponse: resp.Response, BastionHost: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *BastionHostsClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()

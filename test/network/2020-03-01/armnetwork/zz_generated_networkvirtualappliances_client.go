@@ -125,15 +125,6 @@ func (client *NetworkVirtualAppliancesClient) createOrUpdateCreateRequest(ctx co
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *NetworkVirtualAppliancesClient) createOrUpdateHandleResponse(resp *azcore.Response) (NetworkVirtualApplianceResponse, error) {
-	var val *NetworkVirtualAppliance
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return NetworkVirtualApplianceResponse{}, err
-	}
-	return NetworkVirtualApplianceResponse{RawResponse: resp.Response, NetworkVirtualAppliance: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *NetworkVirtualAppliancesClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()

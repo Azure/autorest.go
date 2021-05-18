@@ -125,15 +125,6 @@ func (client *ApplicationSecurityGroupsClient) createOrUpdateCreateRequest(ctx c
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *ApplicationSecurityGroupsClient) createOrUpdateHandleResponse(resp *azcore.Response) (ApplicationSecurityGroupResponse, error) {
-	var val *ApplicationSecurityGroup
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ApplicationSecurityGroupResponse{}, err
-	}
-	return ApplicationSecurityGroupResponse{RawResponse: resp.Response, ApplicationSecurityGroup: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *ApplicationSecurityGroupsClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()

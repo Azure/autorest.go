@@ -125,15 +125,6 @@ func (client *VirtualRoutersClient) createOrUpdateCreateRequest(ctx context.Cont
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *VirtualRoutersClient) createOrUpdateHandleResponse(resp *azcore.Response) (VirtualRouterResponse, error) {
-	var val *VirtualRouter
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return VirtualRouterResponse{}, err
-	}
-	return VirtualRouterResponse{RawResponse: resp.Response, VirtualRouter: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *VirtualRoutersClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()

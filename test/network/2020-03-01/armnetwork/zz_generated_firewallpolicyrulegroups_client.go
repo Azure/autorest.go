@@ -129,15 +129,6 @@ func (client *FirewallPolicyRuleGroupsClient) createOrUpdateCreateRequest(ctx co
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *FirewallPolicyRuleGroupsClient) createOrUpdateHandleResponse(resp *azcore.Response) (FirewallPolicyRuleGroupResponse, error) {
-	var val *FirewallPolicyRuleGroup
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return FirewallPolicyRuleGroupResponse{}, err
-	}
-	return FirewallPolicyRuleGroupResponse{RawResponse: resp.Response, FirewallPolicyRuleGroup: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *FirewallPolicyRuleGroupsClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()
