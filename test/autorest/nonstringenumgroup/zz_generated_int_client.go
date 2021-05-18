@@ -102,7 +102,7 @@ func (client *IntClient) putCreateRequest(ctx context.Context, options *IntPutOp
 	req.Telemetry(telemetryInfo)
 	req.Header.Set("Accept", "application/json")
 	if options != nil && options.Input != nil {
-		return req, req.MarshalAsJSON(options.Input)
+		return req, req.MarshalAsJSON(*options.Input)
 	}
 	return req, nil
 }

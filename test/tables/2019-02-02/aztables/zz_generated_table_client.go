@@ -981,7 +981,7 @@ func (client *TableClient) setAccessPolicyCreateRequest(ctx context.Context, tab
 		TableACL *[]*SignedIdentifier `xml:"SignedIdentifier"`
 	}
 	if options != nil && options.TableACL != nil {
-		return req, req.MarshalAsXML(wrapper{TableACL: options.TableACL})
+		return req, req.MarshalAsXML(wrapper{TableACL: &options.TableACL})
 	}
 	return req, nil
 }

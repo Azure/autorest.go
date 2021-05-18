@@ -7,7 +7,7 @@ import { comment, KnownMediaType, serialize } from '@azure-tools/codegen';
 import { Host, startSession, Session } from '@autorest/extension-base';
 import { ObjectSchema, ArraySchema, ChoiceValue, codeModelSchema, CodeModel, DateTimeSchema, GroupProperty, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema, ConstantSchema, Request } from '@autorest/codemodel';
 import { clone, items, values } from '@azure-tools/linq';
-import { aggregateParameters, getResponse, hasAdditionalProperties, isArraySchema, isDictionarySchema, isPageableOperation, isObjectSchema, isSchemaResponse, PagerInfo, isLROOperation, PollerInfo } from '../common/helpers';
+import { aggregateParameters, getResponse, hasAdditionalProperties, isPageableOperation, isObjectSchema, isSchemaResponse, isTypePassedByValue, PagerInfo, isLROOperation, PollerInfo } from '../common/helpers';
 import { namer, protocolMethods } from './namer';
 import { fromString } from 'html-to-text';
 import { Converter } from 'showdown';
@@ -42,7 +42,7 @@ async function process(session: Session<CodeModel>) {
   // schema type being an actual Go type.
   for (const dictionary of values(session.model.schemas.dictionaries)) {
     dictionary.elementType.language.go!.name = schemaTypeToGoType(session.model, dictionary.elementType, false);
-    dictionary.language.go!.elementIsPtr = isElementPointerToType(dictionary);
+    dictionary.language.go!.elementIsPtr = !isTypePassedByValue(dictionary.elementType);
     if (dictionary.language.go!.description) {
       dictionary.language.go!.description = parseComments(dictionary.language.go!.description);
     }
@@ -150,27 +150,13 @@ async function process(session: Session<CodeModel>) {
   }
 }
 
-// returns true if the element type should be pointer-to-type
-function isElementPointerToType(schema: ArraySchema | DictionarySchema): boolean {
-  // types that are implicitly nil should not be pointer-to-type
-  const elementType = schema.elementType;
-  if (isArraySchema(elementType) || isDictionarySchema(elementType) ||
-    elementType.type === SchemaType.Any || elementType.type === SchemaType.Binary || elementType.type === SchemaType.ByteArray) {
-    return false;
-  }
-  if (isObjectSchema(elementType) && elementType.discriminator) {
-    return false;
-  }
-  return true;
-}
-
 function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, inBody: boolean): string {
   switch (schema.type) {
     case SchemaType.Any:
       return 'interface{}';
     case SchemaType.Array:
       const arraySchema = <ArraySchema>schema;
-      arraySchema.language.go!.elementIsPtr = isElementPointerToType(arraySchema);
+      arraySchema.language.go!.elementIsPtr = !isTypePassedByValue(arraySchema.elementType);
       const arrayElem = <Schema>arraySchema.elementType;
       arrayElem.language.go!.name = schemaTypeToGoType(codeModel, arrayElem, inBody);
       if (<boolean>arraySchema.language.go!.elementIsPtr) {
@@ -212,7 +198,7 @@ function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, inBody: boolea
       return 'time.Time';
     case SchemaType.Dictionary:
       const dictSchema = <DictionarySchema>schema;
-      dictSchema.language.go!.elementIsPtr = isElementPointerToType(dictSchema);
+      dictSchema.language.go!.elementIsPtr = !isTypePassedByValue(dictSchema.elementType);
       const dictElem = <Schema>dictSchema.elementType;
       dictElem.language.go!.name = schemaTypeToGoType(codeModel, dictElem, inBody);
       if (<boolean>dictSchema.language.go!.elementIsPtr) {
@@ -360,7 +346,7 @@ function processOperationRequests(session: Session<CodeModel>) {
         }
         const inBody = param.protocol.http !== undefined && param.protocol.http!.in === 'body';
         param.schema.language.go!.name = schemaTypeToGoType(session.model, param.schema, inBody);
-        if (param.schema.type === SchemaType.Binary) {
+        if (isTypePassedByValue(param.schema)) {
           param.language.go!.byValue = true;
         }
         // check if this is a header collection
@@ -964,12 +950,7 @@ function newProperty(name: string, desc: string, schema: Schema): Property {
 
 function newRespProperty(name: string, desc: string, schema: Schema): Property {
   const prop = newProperty(name, desc, schema);
-  if (schema.type === SchemaType.Any ||
-    schema.type === SchemaType.Array ||
-    schema.type === SchemaType.ByteArray ||
-    schema.type === SchemaType.Binary ||
-    schema.type === SchemaType.Dictionary ||
-    (isObjectSchema(schema) && schema.discriminator)) {
+  if (isTypePassedByValue(schema)) {
     prop.language.go!.byValue = true;
   }
   return prop;

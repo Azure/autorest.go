@@ -7,7 +7,7 @@ import { Session } from '@autorest/extension-base';
 import { comment, KnownMediaType } from '@azure-tools/codegen';
 import { ArraySchema, ByteArraySchema, ChoiceSchema, CodeModel, ConstantSchema, DateTimeSchema, DictionarySchema, GroupProperty, ImplementationLocation, NumberSchema, Operation, Parameter, Property, Protocols, Response, Schema, SchemaResponse, SchemaType } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
-import { aggregateParameters, getResponse, internalPagerTypeName, internalPollerTypeName, isArraySchema, isPageableOperation, isSchemaResponse, PagerInfo, PollerInfo, isLROOperation, commentLength } from '../common/helpers';
+import { aggregateParameters, getResponse, internalPagerTypeName, internalPollerTypeName, isArraySchema, isPageableOperation, isSchemaResponse, isTypePassedByValue, PagerInfo, PollerInfo, isLROOperation, commentLength } from '../common/helpers';
 import { OperationNaming } from '../transform/namer';
 import { contentPreamble, formatParameterTypeName, formatStatusCodes, getStatusCodes, hasDescription, hasSchemaResponse, skipURLEncoding, sortAscending, getCreateRequestParameters, getCreateRequestParametersSig, getMethodParameters, getParamName, formatParamValue, dateFormat, datetimeRFC1123Format, datetimeRFC3339Format, sortParametersByRequired } from './helpers';
 import { ImportManager } from './imports';
@@ -394,7 +394,7 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
         return false;
       }
       if (pp.schema.type === SchemaType.String || choiceIsString(pp.schema)) {
-        const paramName = getParamName(pp, true);
+        const paramName = getParamName(pp);
         imports.add('errors');
         text += `\tif ${paramName} == "" {\n`;
         text += `\t\treturn nil, errors.New("parameter ${paramName} cannot be empty")\n`;
@@ -459,7 +459,7 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
       for (const qp of values(encodedParams)) {
         let setter: string;
         if (qp.protocol.http?.explode === true) {
-          setter = `\tfor _, qv := range ${getParamName(qp, true)} {\n`;
+          setter = `\tfor _, qv := range ${getParamName(qp)} {\n`;
           setter += `\t\treqQP.Add("${qp.language.go!.serializedName}", qv)\n`;
           setter += '\t}';
         } else {
@@ -480,7 +480,7 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
       for (const qp of values(unencodedParams)) {
         let setter: string;
         if (qp.protocol.http?.explode === true) {
-          setter = `\tfor _, qv := range ${getParamName(qp, true)} {\n`;
+          setter = `\tfor _, qv := range ${getParamName(qp)} {\n`;
           setter += `\t\tunencodedParams = append(unencodedParams, "${qp.language.go!.serializedName}="+qv)\n`;
           setter += '\t}';
         } else {
@@ -500,7 +500,7 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
   headerParam.forEach(header => {
     const emitHeaderSet = function (headerParam: Parameter, prefix: string): string {
       if (header.schema.language.go!.headerCollectionPrefix) {
-        let headerText = `${prefix}for k, v := range ${getParamName(headerParam, true)} {\n`;
+        let headerText = `${prefix}for k, v := range ${getParamName(headerParam)} {\n`;
         headerText += `${prefix}\treq.Header.Set("${header.schema.language.go!.headerCollectionPrefix}"+k, v)\n`;
         headerText += `${prefix}}\n`;
         return headerText;
@@ -520,7 +520,7 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
   if (mediaType === 'JSON' || mediaType === 'XML') {
     const bodyParam = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http!.in === 'body'; }).first();
     // default to the body param name
-    let body = getParamName(bodyParam!, false);
+    let body = getParamName(bodyParam!);
     if (bodyParam!.schema.type === SchemaType.Constant) {
       // if the value is constant, embed it directly
       body = formatConstantValue(<ConstantSchema>bodyParam!.schema);
@@ -544,7 +544,7 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
       }
       text += '\t}\n';
       let addr = '&';
-      if (!bodyParam?.required) {
+      if (bodyParam && (!bodyParam.required && !isTypePassedByValue(bodyParam.schema))) {
         addr = '';
       }
       body = `wrapper{${fieldName}: ${addr}${body}}`;
@@ -594,7 +594,7 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
       text += `\treturn req, req.SetBody(${bodyParam?.language.go!.name}, ${contentType})\n`;
     } else {
       text += emitParamGroupCheck(<GroupProperty>bodyParam!.language.go!.paramGroup, bodyParam!);
-      text += `\treturn req, req.SetBody(${getParamName(bodyParam!, false)}, ${contentType})\n`;
+      text += `\treturn req, req.SetBody(${getParamName(bodyParam!)}, ${contentType})\n`;
       text += '\t}\n';
       text += '\treturn req, nil\n';
     }
@@ -606,7 +606,7 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
       text += `\treturn req, req.SetBody(body, "text/plain; encoding=UTF-8")\n`;
     } else {
       text += emitParamGroupCheck(<GroupProperty>bodyParam!.language.go!.paramGroup, bodyParam!);
-      text += `\tbody := azcore.NopCloser(strings.NewReader(${getParamName(bodyParam!, true)}))\n`;
+      text += `\tbody := azcore.NopCloser(strings.NewReader(${getParamName(bodyParam!)}))\n`;
       text += `\treturn req, req.SetBody(body, "text/plain; encoding=UTF-8")\n`;
       text += '\t}\n';
       text += '\treturn req, nil\n';

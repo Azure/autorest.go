@@ -21031,7 +21031,7 @@ type PipelineCreatePipelineRunOptions struct {
 	// Recovery mode flag. If recovery mode is set to true, the specified referenced pipeline run and the new run will be grouped under the same groupId.
 	IsRecovery *bool
 	// Parameters of the pipeline run. These parameters will be used only if the runId is not specified.
-	Parameters *map[string]interface{}
+	Parameters map[string]interface{}
 	// The pipeline run identifier. If run ID is specified the parameters of the specified run will be used to create a new run.
 	ReferencePipelineRunID *string
 	// In recovery mode, the rerun will start from this activity. If not specified, all activities will run.

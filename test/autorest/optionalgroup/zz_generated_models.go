@@ -60,12 +60,12 @@ func (e Error) Error() string {
 
 // ExplicitPostOptionalArrayHeaderOptions contains the optional parameters for the Explicit.PostOptionalArrayHeader method.
 type ExplicitPostOptionalArrayHeaderOptions struct {
-	HeaderParameter *[]string
+	HeaderParameter []string
 }
 
 // ExplicitPostOptionalArrayParameterOptions contains the optional parameters for the Explicit.PostOptionalArrayParameter method.
 type ExplicitPostOptionalArrayParameterOptions struct {
-	BodyParameter *[]*string
+	BodyParameter []*string
 }
 
 // ExplicitPostOptionalArrayPropertyOptions contains the optional parameters for the Explicit.PostOptionalArrayProperty method.

@@ -192,43 +192,43 @@ type PathsUnixTimeURLOptions struct {
 // QueriesArrayStringCSVEmptyOptions contains the optional parameters for the Queries.ArrayStringCSVEmpty method.
 type QueriesArrayStringCSVEmptyOptions struct {
 	// an empty array [] of string using the csv-array format
-	ArrayQuery *[]string
+	ArrayQuery []string
 }
 
 // QueriesArrayStringCSVNullOptions contains the optional parameters for the Queries.ArrayStringCSVNull method.
 type QueriesArrayStringCSVNullOptions struct {
 	// a null array of string using the csv-array format
-	ArrayQuery *[]string
+	ArrayQuery []string
 }
 
 // QueriesArrayStringCSVValidOptions contains the optional parameters for the Queries.ArrayStringCSVValid method.
 type QueriesArrayStringCSVValidOptions struct {
 	// an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
-	ArrayQuery *[]string
+	ArrayQuery []string
 }
 
 // QueriesArrayStringNoCollectionFormatEmptyOptions contains the optional parameters for the Queries.ArrayStringNoCollectionFormatEmpty method.
 type QueriesArrayStringNoCollectionFormatEmptyOptions struct {
 	// Array-typed query parameter. Pass in ['hello', 'nihao', 'bonjour'].
-	ArrayQuery *[]string
+	ArrayQuery []string
 }
 
 // QueriesArrayStringPipesValidOptions contains the optional parameters for the Queries.ArrayStringPipesValid method.
 type QueriesArrayStringPipesValidOptions struct {
 	// an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the pipes-array format
-	ArrayQuery *[]string
+	ArrayQuery []string
 }
 
 // QueriesArrayStringSsvValidOptions contains the optional parameters for the Queries.ArrayStringSsvValid method.
 type QueriesArrayStringSsvValidOptions struct {
 	// an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the ssv-array format
-	ArrayQuery *[]string
+	ArrayQuery []string
 }
 
 // QueriesArrayStringTsvValidOptions contains the optional parameters for the Queries.ArrayStringTsvValid method.
 type QueriesArrayStringTsvValidOptions struct {
 	// an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the tsv-array format
-	ArrayQuery *[]string
+	ArrayQuery []string
 }
 
 // QueriesByteEmptyOptions contains the optional parameters for the Queries.ByteEmpty method.
@@ -239,13 +239,13 @@ type QueriesByteEmptyOptions struct {
 // QueriesByteMultiByteOptions contains the optional parameters for the Queries.ByteMultiByte method.
 type QueriesByteMultiByteOptions struct {
 	// '啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array
-	ByteQuery *[]byte
+	ByteQuery []byte
 }
 
 // QueriesByteNullOptions contains the optional parameters for the Queries.ByteNull method.
 type QueriesByteNullOptions struct {
 	// null as byte array (no query parameters in uri)
-	ByteQuery *[]byte
+	ByteQuery []byte
 }
 
 // QueriesDateNullOptions contains the optional parameters for the Queries.DateNull method.

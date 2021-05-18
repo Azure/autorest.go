@@ -23,17 +23,17 @@ func (e Error) Error() string {
 // QueriesArrayStringMultiEmptyOptions contains the optional parameters for the Queries.ArrayStringMultiEmpty method.
 type QueriesArrayStringMultiEmptyOptions struct {
 	// an empty array [] of string using the multi-array format
-	ArrayQuery *[]string
+	ArrayQuery []string
 }
 
 // QueriesArrayStringMultiNullOptions contains the optional parameters for the Queries.ArrayStringMultiNull method.
 type QueriesArrayStringMultiNullOptions struct {
 	// a null array of string using the multi-array format
-	ArrayQuery *[]string
+	ArrayQuery []string
 }
 
 // QueriesArrayStringMultiValidOptions contains the optional parameters for the Queries.ArrayStringMultiValid method.
 type QueriesArrayStringMultiValidOptions struct {
 	// an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the mult-array format
-	ArrayQuery *[]string
+	ArrayQuery []string
 }

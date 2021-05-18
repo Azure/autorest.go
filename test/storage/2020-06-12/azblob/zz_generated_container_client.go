@@ -351,7 +351,7 @@ func (client *containerClient) createCreateRequest(ctx context.Context, containe
 	}
 	req.URL.RawQuery = reqQP.Encode()
 	if containerCreateOptions != nil && containerCreateOptions.Metadata != nil {
-		for k, v := range *containerCreateOptions.Metadata {
+		for k, v := range containerCreateOptions.Metadata {
 			req.Header.Set("x-ms-meta-"+k, v)
 		}
 	}
@@ -841,7 +841,7 @@ func (client *containerClient) listBlobFlatSegmentCreateRequest(ctx context.Cont
 		reqQP.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
 	}
 	if options != nil && options.Include != nil {
-		reqQP.Set("include", strings.Join(strings.Fields(strings.Trim(fmt.Sprint(*options.Include), "[]")), ","))
+		reqQP.Set("include", strings.Join(strings.Fields(strings.Trim(fmt.Sprint(options.Include), "[]")), ","))
 	}
 	if options != nil && options.Timeout != nil {
 		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
@@ -935,7 +935,7 @@ func (client *containerClient) listBlobHierarchySegmentCreateRequest(ctx context
 		reqQP.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
 	}
 	if options != nil && options.Include != nil {
-		reqQP.Set("include", strings.Join(strings.Fields(strings.Trim(fmt.Sprint(*options.Include), "[]")), ","))
+		reqQP.Set("include", strings.Join(strings.Fields(strings.Trim(fmt.Sprint(options.Include), "[]")), ","))
 	}
 	if options != nil && options.Timeout != nil {
 		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
@@ -1389,7 +1389,7 @@ func (client *containerClient) setAccessPolicyCreateRequest(ctx context.Context,
 		ContainerACL *[]*SignedIdentifier `xml:"SignedIdentifier"`
 	}
 	if containerSetAccessPolicyOptions != nil && containerSetAccessPolicyOptions.ContainerACL != nil {
-		return req, req.MarshalAsXML(wrapper{ContainerACL: containerSetAccessPolicyOptions.ContainerACL})
+		return req, req.MarshalAsXML(wrapper{ContainerACL: &containerSetAccessPolicyOptions.ContainerACL})
 	}
 	return req, nil
 }
@@ -1474,7 +1474,7 @@ func (client *containerClient) setMetadataCreateRequest(ctx context.Context, con
 		req.Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseID)
 	}
 	if containerSetMetadataOptions != nil && containerSetMetadataOptions.Metadata != nil {
-		for k, v := range *containerSetMetadataOptions.Metadata {
+		for k, v := range containerSetMetadataOptions.Metadata {
 			req.Header.Set("x-ms-meta-"+k, v)
 		}
 	}

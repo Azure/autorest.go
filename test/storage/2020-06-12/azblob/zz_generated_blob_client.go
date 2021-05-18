@@ -455,7 +455,7 @@ func (client *blobClient) copyFromURLCreateRequest(ctx context.Context, copySour
 	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("x-ms-requires-sync", "true")
 	if blobCopyFromURLOptions != nil && blobCopyFromURLOptions.Metadata != nil {
-		for k, v := range *blobCopyFromURLOptions.Metadata {
+		for k, v := range blobCopyFromURLOptions.Metadata {
 			req.Header.Set("x-ms-meta-"+k, v)
 		}
 	}
@@ -498,7 +498,7 @@ func (client *blobClient) copyFromURLCreateRequest(ctx context.Context, copySour
 		req.Header.Set("x-ms-client-request-id", *blobCopyFromURLOptions.RequestID)
 	}
 	if blobCopyFromURLOptions != nil && blobCopyFromURLOptions.SourceContentMD5 != nil {
-		req.Header.Set("x-ms-source-content-md5", base64.StdEncoding.EncodeToString(*blobCopyFromURLOptions.SourceContentMD5))
+		req.Header.Set("x-ms-source-content-md5", base64.StdEncoding.EncodeToString(blobCopyFromURLOptions.SourceContentMD5))
 	}
 	if blobCopyFromURLOptions != nil && blobCopyFromURLOptions.BlobTagsString != nil {
 		req.Header.Set("x-ms-tags", *blobCopyFromURLOptions.BlobTagsString)
@@ -615,7 +615,7 @@ func (client *blobClient) createSnapshotCreateRequest(ctx context.Context, blobC
 	}
 	req.URL.RawQuery = reqQP.Encode()
 	if blobCreateSnapshotOptions != nil && blobCreateSnapshotOptions.Metadata != nil {
-		for k, v := range *blobCreateSnapshotOptions.Metadata {
+		for k, v := range blobCreateSnapshotOptions.Metadata {
 			req.Header.Set("x-ms-meta-"+k, v)
 		}
 	}
@@ -1868,7 +1868,7 @@ func (client *blobClient) queryCreateRequest(ctx context.Context, blobQueryOptio
 	}
 	req.Header.Set("Accept", "application/xml")
 	if blobQueryOptions != nil && blobQueryOptions.QueryRequest != nil {
-		return req, req.MarshalAsXML(blobQueryOptions.QueryRequest)
+		return req, req.MarshalAsXML(*blobQueryOptions.QueryRequest)
 	}
 	return req, nil
 }
@@ -2622,7 +2622,7 @@ func (client *blobClient) setHTTPHeadersCreateRequest(ctx context.Context, blobS
 		req.Header.Set("x-ms-blob-content-type", *blobHTTPHeaders.BlobContentType)
 	}
 	if blobHTTPHeaders != nil && blobHTTPHeaders.BlobContentMD5 != nil {
-		req.Header.Set("x-ms-blob-content-md5", base64.StdEncoding.EncodeToString(*blobHTTPHeaders.BlobContentMD5))
+		req.Header.Set("x-ms-blob-content-md5", base64.StdEncoding.EncodeToString(blobHTTPHeaders.BlobContentMD5))
 	}
 	if blobHTTPHeaders != nil && blobHTTPHeaders.BlobContentEncoding != nil {
 		req.Header.Set("x-ms-blob-content-encoding", *blobHTTPHeaders.BlobContentEncoding)
@@ -2915,7 +2915,7 @@ func (client *blobClient) setMetadataCreateRequest(ctx context.Context, blobSetM
 	}
 	req.URL.RawQuery = reqQP.Encode()
 	if blobSetMetadataOptions != nil && blobSetMetadataOptions.Metadata != nil {
-		for k, v := range *blobSetMetadataOptions.Metadata {
+		for k, v := range blobSetMetadataOptions.Metadata {
 			req.Header.Set("x-ms-meta-"+k, v)
 		}
 	}
@@ -3053,10 +3053,10 @@ func (client *blobClient) setTagsCreateRequest(ctx context.Context, blobSetTagsO
 	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("x-ms-version", "2020-06-12")
 	if blobSetTagsOptions != nil && blobSetTagsOptions.TransactionalContentMD5 != nil {
-		req.Header.Set("Content-MD5", base64.StdEncoding.EncodeToString(*blobSetTagsOptions.TransactionalContentMD5))
+		req.Header.Set("Content-MD5", base64.StdEncoding.EncodeToString(blobSetTagsOptions.TransactionalContentMD5))
 	}
 	if blobSetTagsOptions != nil && blobSetTagsOptions.TransactionalContentCRC64 != nil {
-		req.Header.Set("x-ms-content-crc64", base64.StdEncoding.EncodeToString(*blobSetTagsOptions.TransactionalContentCRC64))
+		req.Header.Set("x-ms-content-crc64", base64.StdEncoding.EncodeToString(blobSetTagsOptions.TransactionalContentCRC64))
 	}
 	if blobSetTagsOptions != nil && blobSetTagsOptions.RequestID != nil {
 		req.Header.Set("x-ms-client-request-id", *blobSetTagsOptions.RequestID)
@@ -3069,7 +3069,7 @@ func (client *blobClient) setTagsCreateRequest(ctx context.Context, blobSetTagsO
 	}
 	req.Header.Set("Accept", "application/xml")
 	if blobSetTagsOptions != nil && blobSetTagsOptions.Tags != nil {
-		return req, req.MarshalAsXML(blobSetTagsOptions.Tags)
+		return req, req.MarshalAsXML(*blobSetTagsOptions.Tags)
 	}
 	return req, nil
 }
@@ -3224,7 +3224,7 @@ func (client *blobClient) startCopyFromURLCreateRequest(ctx context.Context, cop
 	}
 	req.URL.RawQuery = reqQP.Encode()
 	if blobStartCopyFromURLOptions != nil && blobStartCopyFromURLOptions.Metadata != nil {
-		for k, v := range *blobStartCopyFromURLOptions.Metadata {
+		for k, v := range blobStartCopyFromURLOptions.Metadata {
 			req.Header.Set("x-ms-meta-"+k, v)
 		}
 	}
