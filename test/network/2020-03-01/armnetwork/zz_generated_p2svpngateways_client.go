@@ -125,15 +125,6 @@ func (client *P2SVPNGatewaysClient) createOrUpdateCreateRequest(ctx context.Cont
 	return req, req.MarshalAsJSON(p2SVPNGatewayParameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *P2SVPNGatewaysClient) createOrUpdateHandleResponse(resp *azcore.Response) (P2SVPNGatewayResponse, error) {
-	var val *P2SVPNGateway
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return P2SVPNGatewayResponse{}, err
-	}
-	return P2SVPNGatewayResponse{RawResponse: resp.Response, P2SVPNGateway: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *P2SVPNGatewaysClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()
@@ -455,15 +446,6 @@ func (client *P2SVPNGatewaysClient) generateVPNProfileCreateRequest(ctx context.
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// generateVPNProfileHandleResponse handles the GenerateVPNProfile response.
-func (client *P2SVPNGatewaysClient) generateVPNProfileHandleResponse(resp *azcore.Response) (VPNProfileResponseResponse, error) {
-	var val *VPNProfileResponse
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return VPNProfileResponseResponse{}, err
-	}
-	return VPNProfileResponseResponse{RawResponse: resp.Response, VPNProfileResponse: val}, nil
-}
-
 // generateVPNProfileHandleError handles the GenerateVPNProfile error response.
 func (client *P2SVPNGatewaysClient) generateVPNProfileHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()
@@ -637,15 +619,6 @@ func (client *P2SVPNGatewaysClient) getP2SVPNConnectionHealthCreateRequest(ctx c
 	return req, nil
 }
 
-// getP2SVPNConnectionHealthHandleResponse handles the GetP2SVPNConnectionHealth response.
-func (client *P2SVPNGatewaysClient) getP2SVPNConnectionHealthHandleResponse(resp *azcore.Response) (P2SVPNGatewayResponse, error) {
-	var val *P2SVPNGateway
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return P2SVPNGatewayResponse{}, err
-	}
-	return P2SVPNGatewayResponse{RawResponse: resp.Response, P2SVPNGateway: val}, nil
-}
-
 // getP2SVPNConnectionHealthHandleError handles the GetP2SVPNConnectionHealth error response.
 func (client *P2SVPNGatewaysClient) getP2SVPNConnectionHealthHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()
@@ -753,15 +726,6 @@ func (client *P2SVPNGatewaysClient) getP2SVPNConnectionHealthDetailedCreateReque
 	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(request)
-}
-
-// getP2SVPNConnectionHealthDetailedHandleResponse handles the GetP2SVPNConnectionHealthDetailed response.
-func (client *P2SVPNGatewaysClient) getP2SVPNConnectionHealthDetailedHandleResponse(resp *azcore.Response) (P2SVPNConnectionHealthResponse, error) {
-	var val *P2SVPNConnectionHealth
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return P2SVPNConnectionHealthResponse{}, err
-	}
-	return P2SVPNConnectionHealthResponse{RawResponse: resp.Response, P2SVPNConnectionHealth: val}, nil
 }
 
 // getP2SVPNConnectionHealthDetailedHandleError handles the GetP2SVPNConnectionHealthDetailed error response.

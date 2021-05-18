@@ -129,15 +129,6 @@ func (client *ExpressRouteCircuitPeeringsClient) createOrUpdateCreateRequest(ctx
 	return req, req.MarshalAsJSON(peeringParameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *ExpressRouteCircuitPeeringsClient) createOrUpdateHandleResponse(resp *azcore.Response) (ExpressRouteCircuitPeeringResponse, error) {
-	var val *ExpressRouteCircuitPeering
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ExpressRouteCircuitPeeringResponse{}, err
-	}
-	return ExpressRouteCircuitPeeringResponse{RawResponse: resp.Response, ExpressRouteCircuitPeering: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *ExpressRouteCircuitPeeringsClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()

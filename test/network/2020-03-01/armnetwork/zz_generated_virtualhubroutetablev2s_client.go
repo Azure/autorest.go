@@ -129,15 +129,6 @@ func (client *VirtualHubRouteTableV2SClient) createOrUpdateCreateRequest(ctx con
 	return req, req.MarshalAsJSON(virtualHubRouteTableV2Parameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *VirtualHubRouteTableV2SClient) createOrUpdateHandleResponse(resp *azcore.Response) (VirtualHubRouteTableV2Response, error) {
-	var val *VirtualHubRouteTableV2
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return VirtualHubRouteTableV2Response{}, err
-	}
-	return VirtualHubRouteTableV2Response{RawResponse: resp.Response, VirtualHubRouteTableV2: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *VirtualHubRouteTableV2SClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()

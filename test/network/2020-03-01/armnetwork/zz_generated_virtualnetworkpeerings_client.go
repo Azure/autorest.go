@@ -129,15 +129,6 @@ func (client *VirtualNetworkPeeringsClient) createOrUpdateCreateRequest(ctx cont
 	return req, req.MarshalAsJSON(virtualNetworkPeeringParameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *VirtualNetworkPeeringsClient) createOrUpdateHandleResponse(resp *azcore.Response) (VirtualNetworkPeeringResponse, error) {
-	var val *VirtualNetworkPeering
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return VirtualNetworkPeeringResponse{}, err
-	}
-	return VirtualNetworkPeeringResponse{RawResponse: resp.Response, VirtualNetworkPeering: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *VirtualNetworkPeeringsClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()

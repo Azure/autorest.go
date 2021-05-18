@@ -110,15 +110,6 @@ func (client *pipelineClient) createOrUpdatePipelineCreateRequest(ctx context.Co
 	return req, req.MarshalAsJSON(pipeline)
 }
 
-// createOrUpdatePipelineHandleResponse handles the CreateOrUpdatePipeline response.
-func (client *pipelineClient) createOrUpdatePipelineHandleResponse(resp *azcore.Response) (PipelineResourceResponse, error) {
-	var val *PipelineResource
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return PipelineResourceResponse{}, err
-	}
-	return PipelineResourceResponse{RawResponse: resp.Response, PipelineResource: val}, nil
-}
-
 // createOrUpdatePipelineHandleError handles the CreateOrUpdatePipeline error response.
 func (client *pipelineClient) createOrUpdatePipelineHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()

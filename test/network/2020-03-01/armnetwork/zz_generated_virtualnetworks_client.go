@@ -192,15 +192,6 @@ func (client *VirtualNetworksClient) createOrUpdateCreateRequest(ctx context.Con
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *VirtualNetworksClient) createOrUpdateHandleResponse(resp *azcore.Response) (VirtualNetworkResponse, error) {
-	var val *VirtualNetwork
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return VirtualNetworkResponse{}, err
-	}
-	return VirtualNetworkResponse{RawResponse: resp.Response, VirtualNetwork: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *VirtualNetworksClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()

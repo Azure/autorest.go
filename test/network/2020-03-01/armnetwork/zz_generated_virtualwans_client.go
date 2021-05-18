@@ -125,15 +125,6 @@ func (client *VirtualWansClient) createOrUpdateCreateRequest(ctx context.Context
 	return req, req.MarshalAsJSON(wanParameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *VirtualWansClient) createOrUpdateHandleResponse(resp *azcore.Response) (VirtualWANResponse, error) {
-	var val *VirtualWAN
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return VirtualWANResponse{}, err
-	}
-	return VirtualWANResponse{RawResponse: resp.Response, VirtualWAN: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *VirtualWansClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()

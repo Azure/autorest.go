@@ -363,15 +363,6 @@ func (client *NetworkManagementClient) generatevirtualwanvpnserverconfigurationv
 	return req, req.MarshalAsJSON(vpnClientParams)
 }
 
-// generatevirtualwanvpnserverconfigurationvpnprofileHandleResponse handles the Generatevirtualwanvpnserverconfigurationvpnprofile response.
-func (client *NetworkManagementClient) generatevirtualwanvpnserverconfigurationvpnprofileHandleResponse(resp *azcore.Response) (VPNProfileResponseResponse, error) {
-	var val *VPNProfileResponse
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return VPNProfileResponseResponse{}, err
-	}
-	return VPNProfileResponseResponse{RawResponse: resp.Response, VPNProfileResponse: val}, nil
-}
-
 // generatevirtualwanvpnserverconfigurationvpnprofileHandleError handles the Generatevirtualwanvpnserverconfigurationvpnprofile error response.
 func (client *NetworkManagementClient) generatevirtualwanvpnserverconfigurationvpnprofileHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()
@@ -505,15 +496,6 @@ func (client *NetworkManagementClient) getActiveSessionsCreateRequest(ctx contex
 	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// getActiveSessionsHandleResponse handles the GetActiveSessions response.
-func (client *NetworkManagementClient) getActiveSessionsHandleResponse(resp *azcore.Response) (BastionActiveSessionListResultResponse, error) {
-	var val *BastionActiveSessionListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return BastionActiveSessionListResultResponse{}, err
-	}
-	return BastionActiveSessionListResultResponse{RawResponse: resp.Response, BastionActiveSessionListResult: val}, nil
 }
 
 // getActiveSessionsHandleError handles the GetActiveSessions error response.
@@ -715,15 +697,6 @@ func (client *NetworkManagementClient) putBastionShareableLinkCreateRequest(ctx 
 	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(bslRequest)
-}
-
-// putBastionShareableLinkHandleResponse handles the PutBastionShareableLink response.
-func (client *NetworkManagementClient) putBastionShareableLinkHandleResponse(resp *azcore.Response) (BastionShareableLinkListResultResponse, error) {
-	var val *BastionShareableLinkListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return BastionShareableLinkListResultResponse{}, err
-	}
-	return BastionShareableLinkListResultResponse{RawResponse: resp.Response, BastionShareableLinkListResult: val}, nil
 }
 
 // putBastionShareableLinkHandleError handles the PutBastionShareableLink error response.

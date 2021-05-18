@@ -125,15 +125,6 @@ func (client *NetworkSecurityGroupsClient) createOrUpdateCreateRequest(ctx conte
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *NetworkSecurityGroupsClient) createOrUpdateHandleResponse(resp *azcore.Response) (NetworkSecurityGroupResponse, error) {
-	var val *NetworkSecurityGroup
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return NetworkSecurityGroupResponse{}, err
-	}
-	return NetworkSecurityGroupResponse{RawResponse: resp.Response, NetworkSecurityGroup: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *NetworkSecurityGroupsClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()

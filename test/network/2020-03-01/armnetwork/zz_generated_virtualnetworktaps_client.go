@@ -125,15 +125,6 @@ func (client *VirtualNetworkTapsClient) createOrUpdateCreateRequest(ctx context.
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *VirtualNetworkTapsClient) createOrUpdateHandleResponse(resp *azcore.Response) (VirtualNetworkTapResponse, error) {
-	var val *VirtualNetworkTap
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return VirtualNetworkTapResponse{}, err
-	}
-	return VirtualNetworkTapResponse{RawResponse: resp.Response, VirtualNetworkTap: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *VirtualNetworkTapsClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()

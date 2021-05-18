@@ -125,15 +125,6 @@ func (client *PublicIPAddressesClient) createOrUpdateCreateRequest(ctx context.C
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *PublicIPAddressesClient) createOrUpdateHandleResponse(resp *azcore.Response) (PublicIPAddressResponse, error) {
-	var val *PublicIPAddress
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return PublicIPAddressResponse{}, err
-	}
-	return PublicIPAddressResponse{RawResponse: resp.Response, PublicIPAddress: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *PublicIPAddressesClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()

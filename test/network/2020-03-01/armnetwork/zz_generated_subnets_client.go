@@ -129,15 +129,6 @@ func (client *SubnetsClient) createOrUpdateCreateRequest(ctx context.Context, re
 	return req, req.MarshalAsJSON(subnetParameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *SubnetsClient) createOrUpdateHandleResponse(resp *azcore.Response) (SubnetResponse, error) {
-	var val *Subnet
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return SubnetResponse{}, err
-	}
-	return SubnetResponse{RawResponse: resp.Response, Subnet: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *SubnetsClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()

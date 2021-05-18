@@ -126,15 +126,6 @@ func (client *VirtualMachinesClient) captureCreateRequest(ctx context.Context, r
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// captureHandleResponse handles the Capture response.
-func (client *VirtualMachinesClient) captureHandleResponse(resp *azcore.Response) (VirtualMachineCaptureResultResponse, error) {
-	var val *VirtualMachineCaptureResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return VirtualMachineCaptureResultResponse{}, err
-	}
-	return VirtualMachineCaptureResultResponse{RawResponse: resp.Response, VirtualMachineCaptureResult: val}, nil
-}
-
 // captureHandleError handles the Capture error response.
 func (client *VirtualMachinesClient) captureHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()
@@ -352,15 +343,6 @@ func (client *VirtualMachinesClient) createOrUpdateCreateRequest(ctx context.Con
 	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
-}
-
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *VirtualMachinesClient) createOrUpdateHandleResponse(resp *azcore.Response) (VirtualMachineResponse, error) {
-	var val *VirtualMachine
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return VirtualMachineResponse{}, err
-	}
-	return VirtualMachineResponse{RawResponse: resp.Response, VirtualMachine: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -1763,15 +1745,6 @@ func (client *VirtualMachinesClient) runCommandCreateRequest(ctx context.Context
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// runCommandHandleResponse handles the RunCommand response.
-func (client *VirtualMachinesClient) runCommandHandleResponse(resp *azcore.Response) (RunCommandResultResponse, error) {
-	var val *RunCommandResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return RunCommandResultResponse{}, err
-	}
-	return RunCommandResultResponse{RawResponse: resp.Response, RunCommandResult: val}, nil
-}
-
 // runCommandHandleError handles the RunCommand error response.
 func (client *VirtualMachinesClient) runCommandHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()
@@ -2036,15 +2009,6 @@ func (client *VirtualMachinesClient) updateCreateRequest(ctx context.Context, re
 	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
-}
-
-// updateHandleResponse handles the Update response.
-func (client *VirtualMachinesClient) updateHandleResponse(resp *azcore.Response) (VirtualMachineResponse, error) {
-	var val *VirtualMachine
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return VirtualMachineResponse{}, err
-	}
-	return VirtualMachineResponse{RawResponse: resp.Response, VirtualMachine: val}, nil
 }
 
 // updateHandleError handles the Update error response.

@@ -129,15 +129,6 @@ func (client *RouteFilterRulesClient) createOrUpdateCreateRequest(ctx context.Co
 	return req, req.MarshalAsJSON(routeFilterRuleParameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *RouteFilterRulesClient) createOrUpdateHandleResponse(resp *azcore.Response) (RouteFilterRuleResponse, error) {
-	var val *RouteFilterRule
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return RouteFilterRuleResponse{}, err
-	}
-	return RouteFilterRuleResponse{RawResponse: resp.Response, RouteFilterRule: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *RouteFilterRulesClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()

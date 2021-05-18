@@ -125,15 +125,6 @@ func (client *AzureFirewallsClient) createOrUpdateCreateRequest(ctx context.Cont
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *AzureFirewallsClient) createOrUpdateHandleResponse(resp *azcore.Response) (AzureFirewallResponse, error) {
-	var val *AzureFirewall
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return AzureFirewallResponse{}, err
-	}
-	return AzureFirewallResponse{RawResponse: resp.Response, AzureFirewall: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *AzureFirewallsClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()
@@ -532,15 +523,6 @@ func (client *AzureFirewallsClient) updateTagsCreateRequest(ctx context.Context,
 	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
-}
-
-// updateTagsHandleResponse handles the UpdateTags response.
-func (client *AzureFirewallsClient) updateTagsHandleResponse(resp *azcore.Response) (AzureFirewallResponse, error) {
-	var val *AzureFirewall
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return AzureFirewallResponse{}, err
-	}
-	return AzureFirewallResponse{RawResponse: resp.Response, AzureFirewall: val}, nil
 }
 
 // updateTagsHandleError handles the UpdateTags error response.

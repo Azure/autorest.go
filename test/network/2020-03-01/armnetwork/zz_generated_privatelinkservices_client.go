@@ -121,15 +121,6 @@ func (client *PrivateLinkServicesClient) checkPrivateLinkServiceVisibilityCreate
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// checkPrivateLinkServiceVisibilityHandleResponse handles the CheckPrivateLinkServiceVisibility response.
-func (client *PrivateLinkServicesClient) checkPrivateLinkServiceVisibilityHandleResponse(resp *azcore.Response) (PrivateLinkServiceVisibilityResponse, error) {
-	var val *PrivateLinkServiceVisibility
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return PrivateLinkServiceVisibilityResponse{}, err
-	}
-	return PrivateLinkServiceVisibilityResponse{RawResponse: resp.Response, PrivateLinkServiceVisibility: val}, nil
-}
-
 // checkPrivateLinkServiceVisibilityHandleError handles the CheckPrivateLinkServiceVisibility error response.
 func (client *PrivateLinkServicesClient) checkPrivateLinkServiceVisibilityHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()
@@ -238,15 +229,6 @@ func (client *PrivateLinkServicesClient) checkPrivateLinkServiceVisibilityByReso
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// checkPrivateLinkServiceVisibilityByResourceGroupHandleResponse handles the CheckPrivateLinkServiceVisibilityByResourceGroup response.
-func (client *PrivateLinkServicesClient) checkPrivateLinkServiceVisibilityByResourceGroupHandleResponse(resp *azcore.Response) (PrivateLinkServiceVisibilityResponse, error) {
-	var val *PrivateLinkServiceVisibility
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return PrivateLinkServiceVisibilityResponse{}, err
-	}
-	return PrivateLinkServiceVisibilityResponse{RawResponse: resp.Response, PrivateLinkServiceVisibility: val}, nil
-}
-
 // checkPrivateLinkServiceVisibilityByResourceGroupHandleError handles the CheckPrivateLinkServiceVisibilityByResourceGroup error response.
 func (client *PrivateLinkServicesClient) checkPrivateLinkServiceVisibilityByResourceGroupHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()
@@ -352,15 +334,6 @@ func (client *PrivateLinkServicesClient) createOrUpdateCreateRequest(ctx context
 	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
-}
-
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *PrivateLinkServicesClient) createOrUpdateHandleResponse(resp *azcore.Response) (PrivateLinkServiceResponse, error) {
-	var val *PrivateLinkService
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return PrivateLinkServiceResponse{}, err
-	}
-	return PrivateLinkServiceResponse{RawResponse: resp.Response, PrivateLinkService: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.

@@ -129,15 +129,6 @@ func (client *InboundNatRulesClient) createOrUpdateCreateRequest(ctx context.Con
 	return req, req.MarshalAsJSON(inboundNatRuleParameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *InboundNatRulesClient) createOrUpdateHandleResponse(resp *azcore.Response) (InboundNatRuleResponse, error) {
-	var val *InboundNatRule
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return InboundNatRuleResponse{}, err
-	}
-	return InboundNatRuleResponse{RawResponse: resp.Response, InboundNatRule: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *InboundNatRulesClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()

@@ -109,15 +109,6 @@ func (client *datasetClient) createOrUpdateDatasetCreateRequest(ctx context.Cont
 	return req, req.MarshalAsJSON(dataset)
 }
 
-// createOrUpdateDatasetHandleResponse handles the CreateOrUpdateDataset response.
-func (client *datasetClient) createOrUpdateDatasetHandleResponse(resp *azcore.Response) (DatasetResourceResponse, error) {
-	var val *DatasetResource
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return DatasetResourceResponse{}, err
-	}
-	return DatasetResourceResponse{RawResponse: resp.Response, DatasetResource: val}, nil
-}
-
 // createOrUpdateDatasetHandleError handles the CreateOrUpdateDataset error response.
 func (client *datasetClient) createOrUpdateDatasetHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()

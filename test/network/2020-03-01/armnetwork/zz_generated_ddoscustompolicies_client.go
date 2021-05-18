@@ -125,15 +125,6 @@ func (client *DdosCustomPoliciesClient) createOrUpdateCreateRequest(ctx context.
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *DdosCustomPoliciesClient) createOrUpdateHandleResponse(resp *azcore.Response) (DdosCustomPolicyResponse, error) {
-	var val *DdosCustomPolicy
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return DdosCustomPolicyResponse{}, err
-	}
-	return DdosCustomPolicyResponse{RawResponse: resp.Response, DdosCustomPolicy: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *DdosCustomPoliciesClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()

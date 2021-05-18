@@ -109,15 +109,6 @@ func (client *dataFlowClient) createOrUpdateDataFlowCreateRequest(ctx context.Co
 	return req, req.MarshalAsJSON(dataFlow)
 }
 
-// createOrUpdateDataFlowHandleResponse handles the CreateOrUpdateDataFlow response.
-func (client *dataFlowClient) createOrUpdateDataFlowHandleResponse(resp *azcore.Response) (DataFlowResourceResponse, error) {
-	var val *DataFlowResource
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return DataFlowResourceResponse{}, err
-	}
-	return DataFlowResourceResponse{RawResponse: resp.Response, DataFlowResource: val}, nil
-}
-
 // createOrUpdateDataFlowHandleError handles the CreateOrUpdateDataFlow error response.
 func (client *dataFlowClient) createOrUpdateDataFlowHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()

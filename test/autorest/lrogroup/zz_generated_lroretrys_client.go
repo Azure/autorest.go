@@ -298,15 +298,6 @@ func (client *LRORetrysClient) deleteProvisioning202Accepted200SucceededCreateRe
 	return req, nil
 }
 
-// deleteProvisioning202Accepted200SucceededHandleResponse handles the DeleteProvisioning202Accepted200Succeeded response.
-func (client *LRORetrysClient) deleteProvisioning202Accepted200SucceededHandleResponse(resp *azcore.Response) (ProductResponse, error) {
-	var val *Product
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ProductResponse{}, err
-	}
-	return ProductResponse{RawResponse: resp.Response, Product: val}, nil
-}
-
 // deleteProvisioning202Accepted200SucceededHandleError handles the DeleteProvisioning202Accepted200Succeeded error response.
 func (client *LRORetrysClient) deleteProvisioning202Accepted200SucceededHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()
@@ -602,15 +593,6 @@ func (client *LRORetrysClient) put201CreatingSucceeded200CreateRequest(ctx conte
 	return req, nil
 }
 
-// put201CreatingSucceeded200HandleResponse handles the Put201CreatingSucceeded200 response.
-func (client *LRORetrysClient) put201CreatingSucceeded200HandleResponse(resp *azcore.Response) (ProductResponse, error) {
-	var val *Product
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ProductResponse{}, err
-	}
-	return ProductResponse{RawResponse: resp.Response, Product: val}, nil
-}
-
 // put201CreatingSucceeded200HandleError handles the Put201CreatingSucceeded200 error response.
 func (client *LRORetrysClient) put201CreatingSucceeded200HandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()
@@ -708,15 +690,6 @@ func (client *LRORetrysClient) putAsyncRelativeRetrySucceededCreateRequest(ctx c
 		return req, req.MarshalAsJSON(options.Product)
 	}
 	return req, nil
-}
-
-// putAsyncRelativeRetrySucceededHandleResponse handles the PutAsyncRelativeRetrySucceeded response.
-func (client *LRORetrysClient) putAsyncRelativeRetrySucceededHandleResponse(resp *azcore.Response) (ProductResponse, error) {
-	var val *Product
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ProductResponse{}, err
-	}
-	return ProductResponse{RawResponse: resp.Response, Product: val}, nil
 }
 
 // putAsyncRelativeRetrySucceededHandleError handles the PutAsyncRelativeRetrySucceeded error response.

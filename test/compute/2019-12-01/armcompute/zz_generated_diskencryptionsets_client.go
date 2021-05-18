@@ -125,15 +125,6 @@ func (client *DiskEncryptionSetsClient) createOrUpdateCreateRequest(ctx context.
 	return req, req.MarshalAsJSON(diskEncryptionSet)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *DiskEncryptionSetsClient) createOrUpdateHandleResponse(resp *azcore.Response) (DiskEncryptionSetResponse, error) {
-	var val *DiskEncryptionSet
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return DiskEncryptionSetResponse{}, err
-	}
-	return DiskEncryptionSetResponse{RawResponse: resp.Response, DiskEncryptionSet: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *DiskEncryptionSetsClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()
@@ -532,15 +523,6 @@ func (client *DiskEncryptionSetsClient) updateCreateRequest(ctx context.Context,
 	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(diskEncryptionSet)
-}
-
-// updateHandleResponse handles the Update response.
-func (client *DiskEncryptionSetsClient) updateHandleResponse(resp *azcore.Response) (DiskEncryptionSetResponse, error) {
-	var val *DiskEncryptionSet
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return DiskEncryptionSetResponse{}, err
-	}
-	return DiskEncryptionSetResponse{RawResponse: resp.Response, DiskEncryptionSet: val}, nil
 }
 
 // updateHandleError handles the Update error response.

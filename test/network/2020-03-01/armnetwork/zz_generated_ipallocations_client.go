@@ -125,15 +125,6 @@ func (client *IPAllocationsClient) createOrUpdateCreateRequest(ctx context.Conte
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *IPAllocationsClient) createOrUpdateHandleResponse(resp *azcore.Response) (IPAllocationResponse, error) {
-	var val *IPAllocation
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return IPAllocationResponse{}, err
-	}
-	return IPAllocationResponse{RawResponse: resp.Response, IPAllocation: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *IPAllocationsClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()

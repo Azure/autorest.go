@@ -129,15 +129,6 @@ func (client *PrivateDNSZoneGroupsClient) createOrUpdateCreateRequest(ctx contex
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *PrivateDNSZoneGroupsClient) createOrUpdateHandleResponse(resp *azcore.Response) (PrivateDNSZoneGroupResponse, error) {
-	var val *PrivateDNSZoneGroup
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return PrivateDNSZoneGroupResponse{}, err
-	}
-	return PrivateDNSZoneGroupResponse{RawResponse: resp.Response, PrivateDNSZoneGroup: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *PrivateDNSZoneGroupsClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()

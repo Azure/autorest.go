@@ -129,15 +129,6 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) createOrUpdateCreateReq
 	return req, req.MarshalAsJSON(peeringParameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *ExpressRouteCrossConnectionPeeringsClient) createOrUpdateHandleResponse(resp *azcore.Response) (ExpressRouteCrossConnectionPeeringResponse, error) {
-	var val *ExpressRouteCrossConnectionPeering
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ExpressRouteCrossConnectionPeeringResponse{}, err
-	}
-	return ExpressRouteCrossConnectionPeeringResponse{RawResponse: resp.Response, ExpressRouteCrossConnectionPeering: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *ExpressRouteCrossConnectionPeeringsClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()

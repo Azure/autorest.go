@@ -125,15 +125,6 @@ func (client *LoadBalancersClient) createOrUpdateCreateRequest(ctx context.Conte
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *LoadBalancersClient) createOrUpdateHandleResponse(resp *azcore.Response) (LoadBalancerResponse, error) {
-	var val *LoadBalancer
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return LoadBalancerResponse{}, err
-	}
-	return LoadBalancerResponse{RawResponse: resp.Response, LoadBalancer: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *LoadBalancersClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()

@@ -124,15 +124,6 @@ func (client *SnapshotsClient) createOrUpdateCreateRequest(ctx context.Context, 
 	return req, req.MarshalAsJSON(snapshot)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *SnapshotsClient) createOrUpdateHandleResponse(resp *azcore.Response) (SnapshotResponse, error) {
-	var val *Snapshot
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return SnapshotResponse{}, err
-	}
-	return SnapshotResponse{RawResponse: resp.Response, Snapshot: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *SnapshotsClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()
@@ -407,15 +398,6 @@ func (client *SnapshotsClient) grantAccessCreateRequest(ctx context.Context, res
 	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(grantAccessData)
-}
-
-// grantAccessHandleResponse handles the GrantAccess response.
-func (client *SnapshotsClient) grantAccessHandleResponse(resp *azcore.Response) (AccessURIResponse, error) {
-	var val *AccessURI
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return AccessURIResponse{}, err
-	}
-	return AccessURIResponse{RawResponse: resp.Response, AccessURI: val}, nil
 }
 
 // grantAccessHandleError handles the GrantAccess error response.
@@ -745,15 +727,6 @@ func (client *SnapshotsClient) updateCreateRequest(ctx context.Context, resource
 	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(snapshot)
-}
-
-// updateHandleResponse handles the Update response.
-func (client *SnapshotsClient) updateHandleResponse(resp *azcore.Response) (SnapshotResponse, error) {
-	var val *Snapshot
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return SnapshotResponse{}, err
-	}
-	return SnapshotResponse{RawResponse: resp.Response, Snapshot: val}, nil
 }
 
 // updateHandleError handles the Update error response.

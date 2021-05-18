@@ -128,15 +128,6 @@ func (client *DedicatedHostsClient) createOrUpdateCreateRequest(ctx context.Cont
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *DedicatedHostsClient) createOrUpdateHandleResponse(resp *azcore.Response) (DedicatedHostResponse, error) {
-	var val *DedicatedHost
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return DedicatedHostResponse{}, err
-	}
-	return DedicatedHostResponse{RawResponse: resp.Response, DedicatedHost: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *DedicatedHostsClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()
@@ -492,15 +483,6 @@ func (client *DedicatedHostsClient) updateCreateRequest(ctx context.Context, res
 	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
-}
-
-// updateHandleResponse handles the Update response.
-func (client *DedicatedHostsClient) updateHandleResponse(resp *azcore.Response) (DedicatedHostResponse, error) {
-	var val *DedicatedHost
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return DedicatedHostResponse{}, err
-	}
-	return DedicatedHostResponse{RawResponse: resp.Response, DedicatedHost: val}, nil
 }
 
 // updateHandleError handles the Update error response.

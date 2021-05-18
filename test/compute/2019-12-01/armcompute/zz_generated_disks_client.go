@@ -124,15 +124,6 @@ func (client *DisksClient) createOrUpdateCreateRequest(ctx context.Context, reso
 	return req, req.MarshalAsJSON(disk)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *DisksClient) createOrUpdateHandleResponse(resp *azcore.Response) (DiskResponse, error) {
-	var val *Disk
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return DiskResponse{}, err
-	}
-	return DiskResponse{RawResponse: resp.Response, Disk: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *DisksClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()
@@ -407,15 +398,6 @@ func (client *DisksClient) grantAccessCreateRequest(ctx context.Context, resourc
 	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(grantAccessData)
-}
-
-// grantAccessHandleResponse handles the GrantAccess response.
-func (client *DisksClient) grantAccessHandleResponse(resp *azcore.Response) (AccessURIResponse, error) {
-	var val *AccessURI
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return AccessURIResponse{}, err
-	}
-	return AccessURIResponse{RawResponse: resp.Response, AccessURI: val}, nil
 }
 
 // grantAccessHandleError handles the GrantAccess error response.
@@ -745,15 +727,6 @@ func (client *DisksClient) updateCreateRequest(ctx context.Context, resourceGrou
 	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(disk)
-}
-
-// updateHandleResponse handles the Update response.
-func (client *DisksClient) updateHandleResponse(resp *azcore.Response) (DiskResponse, error) {
-	var val *Disk
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return DiskResponse{}, err
-	}
-	return DiskResponse{RawResponse: resp.Response, Disk: val}, nil
 }
 
 // updateHandleError handles the Update error response.

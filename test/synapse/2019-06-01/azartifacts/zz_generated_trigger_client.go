@@ -109,15 +109,6 @@ func (client *triggerClient) createOrUpdateTriggerCreateRequest(ctx context.Cont
 	return req, req.MarshalAsJSON(trigger)
 }
 
-// createOrUpdateTriggerHandleResponse handles the CreateOrUpdateTrigger response.
-func (client *triggerClient) createOrUpdateTriggerHandleResponse(resp *azcore.Response) (TriggerResourceResponse, error) {
-	var val *TriggerResource
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return TriggerResourceResponse{}, err
-	}
-	return TriggerResourceResponse{RawResponse: resp.Response, TriggerResource: val}, nil
-}
-
 // createOrUpdateTriggerHandleError handles the CreateOrUpdateTrigger error response.
 func (client *triggerClient) createOrUpdateTriggerHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()
@@ -679,15 +670,6 @@ func (client *triggerClient) subscribeTriggerToEventsCreateRequest(ctx context.C
 	return req, nil
 }
 
-// subscribeTriggerToEventsHandleResponse handles the SubscribeTriggerToEvents response.
-func (client *triggerClient) subscribeTriggerToEventsHandleResponse(resp *azcore.Response) (TriggerSubscriptionOperationStatusResponse, error) {
-	var val *TriggerSubscriptionOperationStatus
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return TriggerSubscriptionOperationStatusResponse{}, err
-	}
-	return TriggerSubscriptionOperationStatusResponse{RawResponse: resp.Response, TriggerSubscriptionOperationStatus: val}, nil
-}
-
 // subscribeTriggerToEventsHandleError handles the SubscribeTriggerToEvents error response.
 func (client *triggerClient) subscribeTriggerToEventsHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()
@@ -783,15 +765,6 @@ func (client *triggerClient) unsubscribeTriggerFromEventsCreateRequest(ctx conte
 	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// unsubscribeTriggerFromEventsHandleResponse handles the UnsubscribeTriggerFromEvents response.
-func (client *triggerClient) unsubscribeTriggerFromEventsHandleResponse(resp *azcore.Response) (TriggerSubscriptionOperationStatusResponse, error) {
-	var val *TriggerSubscriptionOperationStatus
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return TriggerSubscriptionOperationStatusResponse{}, err
-	}
-	return TriggerSubscriptionOperationStatusResponse{RawResponse: resp.Response, TriggerSubscriptionOperationStatus: val}, nil
 }
 
 // unsubscribeTriggerFromEventsHandleError handles the UnsubscribeTriggerFromEvents error response.

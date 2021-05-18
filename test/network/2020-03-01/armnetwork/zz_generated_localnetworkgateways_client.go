@@ -125,15 +125,6 @@ func (client *LocalNetworkGatewaysClient) createOrUpdateCreateRequest(ctx contex
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *LocalNetworkGatewaysClient) createOrUpdateHandleResponse(resp *azcore.Response) (LocalNetworkGatewayResponse, error) {
-	var val *LocalNetworkGateway
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return LocalNetworkGatewayResponse{}, err
-	}
-	return LocalNetworkGatewayResponse{RawResponse: resp.Response, LocalNetworkGateway: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *LocalNetworkGatewaysClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()

@@ -109,15 +109,6 @@ func (client *linkedServiceClient) createOrUpdateLinkedServiceCreateRequest(ctx 
 	return req, req.MarshalAsJSON(linkedService)
 }
 
-// createOrUpdateLinkedServiceHandleResponse handles the CreateOrUpdateLinkedService response.
-func (client *linkedServiceClient) createOrUpdateLinkedServiceHandleResponse(resp *azcore.Response) (LinkedServiceResourceResponse, error) {
-	var val *LinkedServiceResource
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return LinkedServiceResourceResponse{}, err
-	}
-	return LinkedServiceResourceResponse{RawResponse: resp.Response, LinkedServiceResource: val}, nil
-}
-
 // createOrUpdateLinkedServiceHandleError handles the CreateOrUpdateLinkedService error response.
 func (client *linkedServiceClient) createOrUpdateLinkedServiceHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()

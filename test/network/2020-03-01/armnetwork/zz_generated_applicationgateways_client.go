@@ -128,15 +128,6 @@ func (client *ApplicationGatewaysClient) backendHealthCreateRequest(ctx context.
 	return req, nil
 }
 
-// backendHealthHandleResponse handles the BackendHealth response.
-func (client *ApplicationGatewaysClient) backendHealthHandleResponse(resp *azcore.Response) (ApplicationGatewayBackendHealthResponse, error) {
-	var val *ApplicationGatewayBackendHealth
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ApplicationGatewayBackendHealthResponse{}, err
-	}
-	return ApplicationGatewayBackendHealthResponse{RawResponse: resp.Response, ApplicationGatewayBackendHealth: val}, nil
-}
-
 // backendHealthHandleError handles the BackendHealth error response.
 func (client *ApplicationGatewaysClient) backendHealthHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()
@@ -249,15 +240,6 @@ func (client *ApplicationGatewaysClient) backendHealthOnDemandCreateRequest(ctx 
 	return req, req.MarshalAsJSON(probeRequest)
 }
 
-// backendHealthOnDemandHandleResponse handles the BackendHealthOnDemand response.
-func (client *ApplicationGatewaysClient) backendHealthOnDemandHandleResponse(resp *azcore.Response) (ApplicationGatewayBackendHealthOnDemandResponse, error) {
-	var val *ApplicationGatewayBackendHealthOnDemand
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ApplicationGatewayBackendHealthOnDemandResponse{}, err
-	}
-	return ApplicationGatewayBackendHealthOnDemandResponse{RawResponse: resp.Response, ApplicationGatewayBackendHealthOnDemand: val}, nil
-}
-
 // backendHealthOnDemandHandleError handles the BackendHealthOnDemand error response.
 func (client *ApplicationGatewaysClient) backendHealthOnDemandHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()
@@ -363,15 +345,6 @@ func (client *ApplicationGatewaysClient) createOrUpdateCreateRequest(ctx context
 	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
-}
-
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *ApplicationGatewaysClient) createOrUpdateHandleResponse(resp *azcore.Response) (ApplicationGatewayResponse, error) {
-	var val *ApplicationGateway
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ApplicationGatewayResponse{}, err
-	}
-	return ApplicationGatewayResponse{RawResponse: resp.Response, ApplicationGateway: val}, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.

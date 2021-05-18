@@ -51,7 +51,10 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       }
       opText += generateOperation(op, imports);
       opText += createProtocolRequest(session.model, op, imports);
-      opText += createProtocolResponse(op, imports);
+      if (!isLROOperation(op)) {
+        // LRO responses are handled elsewhere
+        opText += createProtocolResponse(op, imports);
+      }
       opText += createProtocolErrHandler(op, imports);
     }
     // stitch it all together

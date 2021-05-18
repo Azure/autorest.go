@@ -125,15 +125,6 @@ func (client *PrivateEndpointsClient) createOrUpdateCreateRequest(ctx context.Co
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *PrivateEndpointsClient) createOrUpdateHandleResponse(resp *azcore.Response) (PrivateEndpointResponse, error) {
-	var val *PrivateEndpoint
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return PrivateEndpointResponse{}, err
-	}
-	return PrivateEndpointResponse{RawResponse: resp.Response, PrivateEndpoint: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *PrivateEndpointsClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()

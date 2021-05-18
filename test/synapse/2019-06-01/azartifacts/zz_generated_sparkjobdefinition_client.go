@@ -109,15 +109,6 @@ func (client *sparkJobDefinitionClient) createOrUpdateSparkJobDefinitionCreateRe
 	return req, req.MarshalAsJSON(sparkJobDefinition)
 }
 
-// createOrUpdateSparkJobDefinitionHandleResponse handles the CreateOrUpdateSparkJobDefinition response.
-func (client *sparkJobDefinitionClient) createOrUpdateSparkJobDefinitionHandleResponse(resp *azcore.Response) (SparkJobDefinitionResourceResponse, error) {
-	var val *SparkJobDefinitionResource
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return SparkJobDefinitionResourceResponse{}, err
-	}
-	return SparkJobDefinitionResourceResponse{RawResponse: resp.Response, SparkJobDefinitionResource: val}, nil
-}
-
 // createOrUpdateSparkJobDefinitionHandleError handles the CreateOrUpdateSparkJobDefinition error response.
 func (client *sparkJobDefinitionClient) createOrUpdateSparkJobDefinitionHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()
@@ -209,15 +200,6 @@ func (client *sparkJobDefinitionClient) debugSparkJobDefinitionCreateRequest(ctx
 	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(sparkJobDefinitionAzureResource)
-}
-
-// debugSparkJobDefinitionHandleResponse handles the DebugSparkJobDefinition response.
-func (client *sparkJobDefinitionClient) debugSparkJobDefinitionHandleResponse(resp *azcore.Response) (SparkBatchJobResponse, error) {
-	var val *SparkBatchJob
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return SparkBatchJobResponse{}, err
-	}
-	return SparkBatchJobResponse{RawResponse: resp.Response, SparkBatchJob: val}, nil
 }
 
 // debugSparkJobDefinitionHandleError handles the DebugSparkJobDefinition error response.
@@ -412,15 +394,6 @@ func (client *sparkJobDefinitionClient) executeSparkJobDefinitionCreateRequest(c
 	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// executeSparkJobDefinitionHandleResponse handles the ExecuteSparkJobDefinition response.
-func (client *sparkJobDefinitionClient) executeSparkJobDefinitionHandleResponse(resp *azcore.Response) (SparkBatchJobResponse, error) {
-	var val *SparkBatchJob
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return SparkBatchJobResponse{}, err
-	}
-	return SparkBatchJobResponse{RawResponse: resp.Response, SparkBatchJob: val}, nil
 }
 
 // executeSparkJobDefinitionHandleError handles the ExecuteSparkJobDefinition error response.

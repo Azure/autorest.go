@@ -129,15 +129,6 @@ func (client *ServiceEndpointPolicyDefinitionsClient) createOrUpdateCreateReques
 	return req, req.MarshalAsJSON(serviceEndpointPolicyDefinitions)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *ServiceEndpointPolicyDefinitionsClient) createOrUpdateHandleResponse(resp *azcore.Response) (ServiceEndpointPolicyDefinitionResponse, error) {
-	var val *ServiceEndpointPolicyDefinition
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ServiceEndpointPolicyDefinitionResponse{}, err
-	}
-	return ServiceEndpointPolicyDefinitionResponse{RawResponse: resp.Response, ServiceEndpointPolicyDefinition: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *ServiceEndpointPolicyDefinitionsClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()

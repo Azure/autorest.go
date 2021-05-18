@@ -120,15 +120,6 @@ func (client *LogAnalyticsClient) exportRequestRateByIntervalCreateRequest(ctx c
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// exportRequestRateByIntervalHandleResponse handles the ExportRequestRateByInterval response.
-func (client *LogAnalyticsClient) exportRequestRateByIntervalHandleResponse(resp *azcore.Response) (LogAnalyticsOperationResultResponse, error) {
-	var val *LogAnalyticsOperationResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return LogAnalyticsOperationResultResponse{}, err
-	}
-	return LogAnalyticsOperationResultResponse{RawResponse: resp.Response, LogAnalyticsOperationResult: val}, nil
-}
-
 // exportRequestRateByIntervalHandleError handles the ExportRequestRateByInterval error response.
 func (client *LogAnalyticsClient) exportRequestRateByIntervalHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()
@@ -229,15 +220,6 @@ func (client *LogAnalyticsClient) exportThrottledRequestsCreateRequest(ctx conte
 	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(parameters)
-}
-
-// exportThrottledRequestsHandleResponse handles the ExportThrottledRequests response.
-func (client *LogAnalyticsClient) exportThrottledRequestsHandleResponse(resp *azcore.Response) (LogAnalyticsOperationResultResponse, error) {
-	var val *LogAnalyticsOperationResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return LogAnalyticsOperationResultResponse{}, err
-	}
-	return LogAnalyticsOperationResultResponse{RawResponse: resp.Response, LogAnalyticsOperationResult: val}, nil
 }
 
 // exportThrottledRequestsHandleError handles the ExportThrottledRequests error response.

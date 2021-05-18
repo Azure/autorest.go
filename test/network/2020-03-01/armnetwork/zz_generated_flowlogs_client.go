@@ -129,15 +129,6 @@ func (client *FlowLogsClient) createOrUpdateCreateRequest(ctx context.Context, r
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *FlowLogsClient) createOrUpdateHandleResponse(resp *azcore.Response) (FlowLogResponse, error) {
-	var val *FlowLog
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return FlowLogResponse{}, err
-	}
-	return FlowLogResponse{RawResponse: resp.Response, FlowLog: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *FlowLogsClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()

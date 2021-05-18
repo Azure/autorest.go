@@ -125,15 +125,6 @@ func (client *VPNGatewaysClient) createOrUpdateCreateRequest(ctx context.Context
 	return req, req.MarshalAsJSON(vpnGatewayParameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *VPNGatewaysClient) createOrUpdateHandleResponse(resp *azcore.Response) (VPNGatewayResponse, error) {
-	var val *VPNGateway
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return VPNGatewayResponse{}, err
-	}
-	return VPNGatewayResponse{RawResponse: resp.Response, VPNGateway: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *VPNGatewaysClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()
@@ -532,15 +523,6 @@ func (client *VPNGatewaysClient) resetCreateRequest(ctx context.Context, resourc
 	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// resetHandleResponse handles the Reset response.
-func (client *VPNGatewaysClient) resetHandleResponse(resp *azcore.Response) (VPNGatewayResponse, error) {
-	var val *VPNGateway
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return VPNGatewayResponse{}, err
-	}
-	return VPNGatewayResponse{RawResponse: resp.Response, VPNGateway: val}, nil
 }
 
 // resetHandleError handles the Reset error response.

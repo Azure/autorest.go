@@ -124,15 +124,6 @@ func (client *ContainerServicesClient) createOrUpdateCreateRequest(ctx context.C
 	return req, req.MarshalAsJSON(parameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *ContainerServicesClient) createOrUpdateHandleResponse(resp *azcore.Response) (ContainerServiceResponse, error) {
-	var val *ContainerService
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ContainerServiceResponse{}, err
-	}
-	return ContainerServiceResponse{RawResponse: resp.Response, ContainerService: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *ContainerServicesClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()

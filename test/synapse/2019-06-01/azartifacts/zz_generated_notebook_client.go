@@ -109,15 +109,6 @@ func (client *notebookClient) createOrUpdateNotebookCreateRequest(ctx context.Co
 	return req, req.MarshalAsJSON(notebook)
 }
 
-// createOrUpdateNotebookHandleResponse handles the CreateOrUpdateNotebook response.
-func (client *notebookClient) createOrUpdateNotebookHandleResponse(resp *azcore.Response) (NotebookResourceResponse, error) {
-	var val *NotebookResource
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return NotebookResourceResponse{}, err
-	}
-	return NotebookResourceResponse{RawResponse: resp.Response, NotebookResource: val}, nil
-}
-
 // createOrUpdateNotebookHandleError handles the CreateOrUpdateNotebook error response.
 func (client *notebookClient) createOrUpdateNotebookHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()

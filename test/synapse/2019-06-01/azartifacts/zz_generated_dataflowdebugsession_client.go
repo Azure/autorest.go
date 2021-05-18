@@ -153,15 +153,6 @@ func (client *dataFlowDebugSessionClient) createDataFlowDebugSessionCreateReques
 	return req, req.MarshalAsJSON(request)
 }
 
-// createDataFlowDebugSessionHandleResponse handles the CreateDataFlowDebugSession response.
-func (client *dataFlowDebugSessionClient) createDataFlowDebugSessionHandleResponse(resp *azcore.Response) (CreateDataFlowDebugSessionResponseResponse, error) {
-	var val *CreateDataFlowDebugSessionResponse
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return CreateDataFlowDebugSessionResponseResponse{}, err
-	}
-	return CreateDataFlowDebugSessionResponseResponse{RawResponse: resp.Response, CreateDataFlowDebugSessionResponse: val}, nil
-}
-
 // createDataFlowDebugSessionHandleError handles the CreateDataFlowDebugSession error response.
 func (client *dataFlowDebugSessionClient) createDataFlowDebugSessionHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()
@@ -298,15 +289,6 @@ func (client *dataFlowDebugSessionClient) executeCommandCreateRequest(ctx contex
 	req.URL.RawQuery = reqQP.Encode()
 	req.Header.Set("Accept", "application/json")
 	return req, req.MarshalAsJSON(request)
-}
-
-// executeCommandHandleResponse handles the ExecuteCommand response.
-func (client *dataFlowDebugSessionClient) executeCommandHandleResponse(resp *azcore.Response) (DataFlowDebugCommandResponseResponse, error) {
-	var val *DataFlowDebugCommandResponse
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return DataFlowDebugCommandResponseResponse{}, err
-	}
-	return DataFlowDebugCommandResponseResponse{RawResponse: resp.Response, DataFlowDebugCommandResponse: val}, nil
 }
 
 // executeCommandHandleError handles the ExecuteCommand error response.

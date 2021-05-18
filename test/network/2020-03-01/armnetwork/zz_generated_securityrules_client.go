@@ -129,15 +129,6 @@ func (client *SecurityRulesClient) createOrUpdateCreateRequest(ctx context.Conte
 	return req, req.MarshalAsJSON(securityRuleParameters)
 }
 
-// createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *SecurityRulesClient) createOrUpdateHandleResponse(resp *azcore.Response) (SecurityRuleResponse, error) {
-	var val *SecurityRule
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return SecurityRuleResponse{}, err
-	}
-	return SecurityRuleResponse{RawResponse: resp.Response, SecurityRule: val}, nil
-}
-
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
 func (client *SecurityRulesClient) createOrUpdateHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()
