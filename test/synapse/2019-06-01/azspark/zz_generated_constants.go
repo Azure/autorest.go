@@ -7,6 +7,8 @@
 
 package azspark
 
+const telemetryInfo = "azsdk-go-azspark/<version>"
+
 type PluginCurrentState string
 
 const (

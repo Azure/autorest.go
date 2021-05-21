@@ -123,7 +123,7 @@ function pudFinalResp(op: 'pollUntilDone' | 'FinalResponse', poller: PollerInfo,
     if (isScalarType(poller.respType)) {
       text += `\trespType := ${poller.respEnv}{}\n`;
       reference = '&';
-    } else if (poller.respType.type === SchemaType.Any) {
+    } else if (poller.respType.type === SchemaType.Any || poller.respType.type === SchemaType.AnyObject) {
       text += `\trespType := ${poller.respEnv}{}\n`;
     } else {
       text += `\trespType := ${poller.respEnv}{${poller.respField}: ${respByRef}${poller.respType.language.go!.name}{}}\n`;

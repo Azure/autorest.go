@@ -7,6 +7,8 @@
 
 package lrogroup
 
+const telemetryInfo = "azsdk-go-lrogroup/<version>"
+
 // OperationResultStatus - The status of the request
 type OperationResultStatus string
 

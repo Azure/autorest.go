@@ -81,6 +81,57 @@ func (client *XMLClient) getACLsHandleError(resp *azcore.Response) error {
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
+// GetBytes - Get an XML document with binary property
+// If the operation fails it returns the *Error error type.
+func (client *XMLClient) GetBytes(ctx context.Context, options *XMLGetBytesOptions) (ModelWithBytePropertyResponse, error) {
+	req, err := client.getBytesCreateRequest(ctx, options)
+	if err != nil {
+		return ModelWithBytePropertyResponse{}, err
+	}
+	resp, err := client.con.Pipeline().Do(req)
+	if err != nil {
+		return ModelWithBytePropertyResponse{}, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return ModelWithBytePropertyResponse{}, client.getBytesHandleError(resp)
+	}
+	return client.getBytesHandleResponse(resp)
+}
+
+// getBytesCreateRequest creates the GetBytes request.
+func (client *XMLClient) getBytesCreateRequest(ctx context.Context, options *XMLGetBytesOptions) (*azcore.Request, error) {
+	urlPath := "/xml/bytes"
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Telemetry(telemetryInfo)
+	req.Header.Set("Accept", "application/xml")
+	return req, nil
+}
+
+// getBytesHandleResponse handles the GetBytes response.
+func (client *XMLClient) getBytesHandleResponse(resp *azcore.Response) (ModelWithBytePropertyResponse, error) {
+	var val *ModelWithByteProperty
+	if err := resp.UnmarshalAsXML(&val); err != nil {
+		return ModelWithBytePropertyResponse{}, err
+	}
+	return ModelWithBytePropertyResponse{RawResponse: resp.Response, ModelWithByteProperty: val}, nil
+}
+
+// getBytesHandleError handles the GetBytes error response.
+func (client *XMLClient) getBytesHandleError(resp *azcore.Response) error {
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
+	}
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
+}
+
 // GetComplexTypeRefNoMeta - Get a complex type that has a ref to a complex type with no XML node
 // If the operation fails it returns a generic error.
 func (client *XMLClient) GetComplexTypeRefNoMeta(ctx context.Context, options *XMLGetComplexTypeRefNoMetaOptions) (RootWithRefAndNoMetaResponse, error) {
@@ -635,6 +686,57 @@ func (client *XMLClient) getSimpleHandleError(resp *azcore.Response) error {
 	return azcore.NewResponseError(&errType, resp.Response)
 }
 
+// GetURI - Get an XML document with uri property
+// If the operation fails it returns the *Error error type.
+func (client *XMLClient) GetURI(ctx context.Context, options *XMLGetURIOptions) (ModelWithURLPropertyResponse, error) {
+	req, err := client.getURICreateRequest(ctx, options)
+	if err != nil {
+		return ModelWithURLPropertyResponse{}, err
+	}
+	resp, err := client.con.Pipeline().Do(req)
+	if err != nil {
+		return ModelWithURLPropertyResponse{}, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return ModelWithURLPropertyResponse{}, client.getURIHandleError(resp)
+	}
+	return client.getURIHandleResponse(resp)
+}
+
+// getURICreateRequest creates the GetURI request.
+func (client *XMLClient) getURICreateRequest(ctx context.Context, options *XMLGetURIOptions) (*azcore.Request, error) {
+	urlPath := "/xml/url"
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Telemetry(telemetryInfo)
+	req.Header.Set("Accept", "application/xml")
+	return req, nil
+}
+
+// getURIHandleResponse handles the GetURI response.
+func (client *XMLClient) getURIHandleResponse(resp *azcore.Response) (ModelWithURLPropertyResponse, error) {
+	var val *ModelWithURLProperty
+	if err := resp.UnmarshalAsXML(&val); err != nil {
+		return ModelWithURLPropertyResponse{}, err
+	}
+	return ModelWithURLPropertyResponse{RawResponse: resp.Response, ModelWithURLProperty: val}, nil
+}
+
+// getURIHandleError handles the GetURI error response.
+func (client *XMLClient) getURIHandleError(resp *azcore.Response) error {
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
+	}
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
+}
+
 // GetWrappedLists - Get an XML document with multiple wrapped lists
 // If the operation fails it returns a generic error.
 func (client *XMLClient) GetWrappedLists(ctx context.Context, options *XMLGetWrappedListsOptions) (AppleBarrelResponse, error) {
@@ -979,6 +1081,48 @@ func (client *XMLClient) putACLsHandleError(resp *azcore.Response) error {
 		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
 	}
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
+}
+
+// PutBinary - Put an XML document with binary property
+// If the operation fails it returns the *Error error type.
+func (client *XMLClient) PutBinary(ctx context.Context, slideshow ModelWithByteProperty, options *XMLPutBinaryOptions) (*http.Response, error) {
+	req, err := client.putBinaryCreateRequest(ctx, slideshow, options)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.con.Pipeline().Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusCreated) {
+		return nil, client.putBinaryHandleError(resp)
+	}
+	return resp.Response, nil
+}
+
+// putBinaryCreateRequest creates the PutBinary request.
+func (client *XMLClient) putBinaryCreateRequest(ctx context.Context, slideshow ModelWithByteProperty, options *XMLPutBinaryOptions) (*azcore.Request, error) {
+	urlPath := "/xml/bytes"
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Telemetry(telemetryInfo)
+	req.Header.Set("Accept", "application/xml")
+	return req, req.MarshalAsXML(slideshow)
+}
+
+// putBinaryHandleError handles the PutBinary error response.
+func (client *XMLClient) putBinaryHandleError(resp *azcore.Response) error {
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
+	}
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // PutComplexTypeRefNoMeta - Puts a complex type that has a ref to a complex type with no XML node
@@ -1388,6 +1532,48 @@ func (client *XMLClient) putSimpleCreateRequest(ctx context.Context, slideshow S
 
 // putSimpleHandleError handles the PutSimple error response.
 func (client *XMLClient) putSimpleHandleError(resp *azcore.Response) error {
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
+	}
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsXML(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
+}
+
+// PutURI - Put an XML document with uri property
+// If the operation fails it returns the *Error error type.
+func (client *XMLClient) PutURI(ctx context.Context, model ModelWithURLProperty, options *XMLPutURIOptions) (*http.Response, error) {
+	req, err := client.putURICreateRequest(ctx, model, options)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.con.Pipeline().Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusCreated) {
+		return nil, client.putURIHandleError(resp)
+	}
+	return resp.Response, nil
+}
+
+// putURICreateRequest creates the PutURI request.
+func (client *XMLClient) putURICreateRequest(ctx context.Context, model ModelWithURLProperty, options *XMLPutURIOptions) (*azcore.Request, error) {
+	urlPath := "/xml/url"
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Telemetry(telemetryInfo)
+	req.Header.Set("Accept", "application/xml")
+	return req, req.MarshalAsXML(model)
+}
+
+// putURIHandleError handles the PutURI error response.
+func (client *XMLClient) putURIHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()
 	if err != nil {
 		return azcore.NewResponseError(err, resp.Response)

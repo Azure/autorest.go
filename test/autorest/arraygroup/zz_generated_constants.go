@@ -7,6 +7,8 @@
 
 package arraygroup
 
+const telemetryInfo = "azsdk-go-arraygroup/<version>"
+
 type Enum0 string
 
 const (

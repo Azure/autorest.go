@@ -41,10 +41,8 @@ export async function protocolGen(host: Host) {
       host.WriteFile(`${filePrefix}${op.name.toLowerCase()}_client.go`, op.content, undefined, 'source-file-go');
     }
 
-    const enums = await generateConstants(session);
-    if (enums.length > 0) {
-      host.WriteFile(`${filePrefix}constants.go`, enums, undefined, 'source-file-go');
-    }
+    const constants = await generateConstants(session);
+    host.WriteFile(`${filePrefix}constants.go`, constants, undefined, 'source-file-go');
 
     const models = await generateModels(session);
     host.WriteFile(`${filePrefix}models.go`, models, undefined, 'source-file-go');
@@ -54,8 +52,10 @@ export async function protocolGen(host: Host) {
       host.WriteFile(`${filePrefix}response_types.go`, responses, undefined, 'source-file-go');
     }
 
-    const client = await generateConnection(session);
-    host.WriteFile(`${filePrefix}connection.go`, client, undefined, 'source-file-go');
+    const connection = await generateConnection(session);
+    if (connection.length > 0) {
+      host.WriteFile(`${filePrefix}connection.go`, connection, undefined, 'source-file-go');
+    }
 
     const timeHelpers = await generateTimeHelpers(session);
     for (const helper of values(timeHelpers)) {

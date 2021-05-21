@@ -45,6 +45,9 @@ func TestDoSomethingError1(t *testing.T) {
 	}
 	if r := cmp.Diff(sadErr, &PetSadError{
 		PetActionError: PetActionError{
+			PetAction: PetAction{
+				ActionResponse: to.StringPtr("grrrr"),
+			},
 			ErrorMessage: to.StringPtr("casper aint happy"),
 			ErrorType:    to.StringPtr("PetSadError"),
 		},
@@ -67,6 +70,9 @@ func TestDoSomethingError2(t *testing.T) {
 	if r := cmp.Diff(hungrErr, &PetHungryOrThirstyError{
 		PetSadError: PetSadError{
 			PetActionError: PetActionError{
+				PetAction: PetAction{
+					ActionResponse: to.StringPtr("howl"),
+				},
 				ErrorMessage: to.StringPtr("scooby is low"),
 				ErrorType:    to.StringPtr("PetHungryOrThirstyError"),
 			},

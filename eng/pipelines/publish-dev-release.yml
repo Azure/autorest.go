@@ -65,7 +65,7 @@ steps:
 
   - pwsh: |
       pushd ./src/node_modules/@microsoft.azure/autorest.testserver
-      npm start&
+      npm run start:prod&
       popd
       $testDirs = (./eng/scripts/get_test_dirs.ps1 -serviceDir $(goTestPath))
       foreach ($td in $testDirs) {

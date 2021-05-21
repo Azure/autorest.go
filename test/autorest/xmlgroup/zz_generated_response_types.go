@@ -62,6 +62,22 @@ type ListContainersResponseResponse struct {
 	RawResponse *http.Response
 }
 
+// ModelWithBytePropertyResponse is the response envelope for operations that return a ModelWithByteProperty type.
+type ModelWithBytePropertyResponse struct {
+	ModelWithByteProperty *ModelWithByteProperty `xml:"ModelWithByteProperty"`
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ModelWithURLPropertyResponse is the response envelope for operations that return a ModelWithURLProperty type.
+type ModelWithURLPropertyResponse struct {
+	ModelWithURLProperty *ModelWithURLProperty `xml:"ModelWithURLProperty"`
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
 // ObjectWithXMsTextPropertyResponse is the response envelope for operations that return a ObjectWithXMsTextProperty type.
 type ObjectWithXMsTextPropertyResponse struct {
 	// Contans property

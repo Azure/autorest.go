@@ -473,6 +473,29 @@ type Metrics struct {
 	Version *string `xml:"Version"`
 }
 
+type ModelWithByteProperty struct {
+	Bytes []byte `xml:"Bytes"`
+}
+
+// MarshalXML implements the xml.Marshaller interface for type ModelWithByteProperty.
+func (m ModelWithByteProperty) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	type alias ModelWithByteProperty
+	aux := &struct {
+		*alias
+		Bytes *[]byte `xml:"Bytes"`
+	}{
+		alias: (*alias)(&m),
+	}
+	if m.Bytes != nil {
+		aux.Bytes = &m.Bytes
+	}
+	return e.EncodeElement(aux, start)
+}
+
+type ModelWithURLProperty struct {
+	URL *string `xml:"Url"`
+}
+
 // ObjectWithXMsTextProperty - Contans property
 type ObjectWithXMsTextProperty struct {
 	// Returned value should be 'I am text'
@@ -606,6 +629,11 @@ type XMLGetACLsOptions struct {
 	// placeholder for future optional parameters
 }
 
+// XMLGetBytesOptions contains the optional parameters for the XML.GetBytes method.
+type XMLGetBytesOptions struct {
+	// placeholder for future optional parameters
+}
+
 // XMLGetComplexTypeRefNoMetaOptions contains the optional parameters for the XML.GetComplexTypeRefNoMeta method.
 type XMLGetComplexTypeRefNoMetaOptions struct {
 	// placeholder for future optional parameters
@@ -661,6 +689,11 @@ type XMLGetSimpleOptions struct {
 	// placeholder for future optional parameters
 }
 
+// XMLGetURIOptions contains the optional parameters for the XML.GetURI method.
+type XMLGetURIOptions struct {
+	// placeholder for future optional parameters
+}
+
 // XMLGetWrappedListsOptions contains the optional parameters for the XML.GetWrappedLists method.
 type XMLGetWrappedListsOptions struct {
 	// placeholder for future optional parameters
@@ -693,6 +726,11 @@ type XMLListContainersOptions struct {
 
 // XMLPutACLsOptions contains the optional parameters for the XML.PutACLs method.
 type XMLPutACLsOptions struct {
+	// placeholder for future optional parameters
+}
+
+// XMLPutBinaryOptions contains the optional parameters for the XML.PutBinary method.
+type XMLPutBinaryOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -743,6 +781,11 @@ type XMLPutServicePropertiesOptions struct {
 
 // XMLPutSimpleOptions contains the optional parameters for the XML.PutSimple method.
 type XMLPutSimpleOptions struct {
+	// placeholder for future optional parameters
+}
+
+// XMLPutURIOptions contains the optional parameters for the XML.PutURI method.
+type XMLPutURIOptions struct {
 	// placeholder for future optional parameters
 }
 

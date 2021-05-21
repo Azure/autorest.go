@@ -159,3 +159,51 @@ func (client *PetClient) getPetByIDHandleError(resp *azcore.Response) error {
 		return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 	}
 }
+
+// HasModelsParam - Ensure you can correctly deserialize the returned PetActionError and deserialization doesn't conflict with the input param name 'models'
+// If the operation fails it returns one of the following error types.
+// - *PetActionError, *PetHungryOrThirstyError, *PetSadError
+func (client *PetClient) HasModelsParam(ctx context.Context, options *PetHasModelsParamOptions) (*http.Response, error) {
+	req, err := client.hasModelsParamCreateRequest(ctx, options)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.con.Pipeline().Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.hasModelsParamHandleError(resp)
+	}
+	return resp.Response, nil
+}
+
+// hasModelsParamCreateRequest creates the HasModelsParam request.
+func (client *PetClient) hasModelsParamCreateRequest(ctx context.Context, options *PetHasModelsParamOptions) (*azcore.Request, error) {
+	urlPath := "/errorStatusCodes/Pets/hasModelsParam"
+	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Telemetry(telemetryInfo)
+	reqQP := req.URL.Query()
+	if options != nil && options.Models != nil {
+		reqQP.Set("models", *options.Models)
+	}
+	req.URL.RawQuery = reqQP.Encode()
+	req.Header.Set("Accept", "application/json")
+	return req, nil
+}
+
+// hasModelsParamHandleError handles the HasModelsParam error response.
+func (client *PetClient) hasModelsParamHandleError(resp *azcore.Response) error {
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
+	}
+	var errType petActionError
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(errType.wrapped, resp.Response)
+}

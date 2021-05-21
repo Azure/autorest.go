@@ -764,11 +764,11 @@ type SparkStatementOutput struct {
 	ExecutionCount *int32 `json:"execution_count,omitempty"`
 
 	// Any object
-	Data       interface{} `json:"data,omitempty"`
-	ErrorName  *string     `json:"ename,omitempty"`
-	ErrorValue *string     `json:"evalue,omitempty"`
-	Status     *string     `json:"status,omitempty"`
-	Traceback  []*string   `json:"traceback,omitempty"`
+	Data       map[string]interface{} `json:"data,omitempty"`
+	ErrorName  *string                `json:"ename,omitempty"`
+	ErrorValue *string                `json:"evalue,omitempty"`
+	Status     *string                `json:"status,omitempty"`
+	Traceback  []*string              `json:"traceback,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type SparkStatementOutput.

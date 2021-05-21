@@ -6,26 +6,17 @@ The Go plugin is used to generate Go source code.
 - Please don't edit this section unless you're re-configuring how the Go extension plugs in to AutoRest
 AutoRest needs the below config to pick this up as a plug-in - see https://github.com/Azure/autorest/blob/master/docs/developer/architecture/AutoRest-extension.md
 
-> if the modeler is loaded already, use that one, otherwise grab it.
-
-``` yaml !isLoaded('@autorest/remodeler') 
+# Pipeline Configuration
+``` yaml
+version: 3.4.3
 use-extension:
-  "@autorest/modelerfour" : "4.18.0"
+  "@autorest/modelerfour" : "4.19.2"
 
 modelerfour:
   resolve-schema-name-collisons: true
   naming:
     preserve-uppercase-max-length: 64
-```
 
-
-> Multi-Api Mode
-``` yaml
-pipeline-model: v3
-```
-
-# Pipeline Configuration
-``` yaml
 pipeline:
   go:
     pass-thru: true

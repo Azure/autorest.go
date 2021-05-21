@@ -7,6 +7,8 @@
 
 package extenumsgroup
 
+const telemetryInfo = "azsdk-go-extenumsgroup/<version>"
+
 // DaysOfWeekExtensibleEnum - Type of Pet
 type DaysOfWeekExtensibleEnum string
 
@@ -41,7 +43,8 @@ func (c DaysOfWeekExtensibleEnum) ToPtr() *DaysOfWeekExtensibleEnum {
 type IntEnum string
 
 const (
-	// IntEnumOne - one
+	// IntEnumOne - This is a really long comment to see what wrapping looks like. This comment is really long and it should wrap for readability. Please wrap.
+	// This should wrap.
 	IntEnumOne IntEnum = "1"
 	// IntEnumThree - three
 	IntEnumThree IntEnum = "3"

@@ -30,6 +30,57 @@ func NewPagingClient(con *Connection) *PagingClient {
 	return &PagingClient{con: con}
 }
 
+// FirstResponseEmpty - A paging operation whose first response's items list is empty, but still returns a next link. Second (and final) call, will give
+// you an items list of 1.
+// If the operation fails it returns a generic error.
+func (client *PagingClient) FirstResponseEmpty(options *PagingFirstResponseEmptyOptions) ProductResultValuePager {
+	return &productResultValuePager{
+		pipeline: client.con.Pipeline(),
+		requester: func(ctx context.Context) (*azcore.Request, error) {
+			return client.firstResponseEmptyCreateRequest(ctx, options)
+		},
+		responder: client.firstResponseEmptyHandleResponse,
+		errorer:   client.firstResponseEmptyHandleError,
+		advancer: func(ctx context.Context, resp ProductResultValueResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.ProductResultValue.NextLink)
+		},
+		statusCodes: []int{http.StatusOK},
+	}
+}
+
+// firstResponseEmptyCreateRequest creates the FirstResponseEmpty request.
+func (client *PagingClient) firstResponseEmptyCreateRequest(ctx context.Context, options *PagingFirstResponseEmptyOptions) (*azcore.Request, error) {
+	urlPath := "/paging/firstResponseEmpty/1"
+	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Telemetry(telemetryInfo)
+	req.Header.Set("Accept", "application/json")
+	return req, nil
+}
+
+// firstResponseEmptyHandleResponse handles the FirstResponseEmpty response.
+func (client *PagingClient) firstResponseEmptyHandleResponse(resp *azcore.Response) (ProductResultValueResponse, error) {
+	var val *ProductResultValue
+	if err := resp.UnmarshalAsJSON(&val); err != nil {
+		return ProductResultValueResponse{}, err
+	}
+	return ProductResultValueResponse{RawResponse: resp.Response, ProductResultValue: val}, nil
+}
+
+// firstResponseEmptyHandleError handles the FirstResponseEmpty error response.
+func (client *PagingClient) firstResponseEmptyHandleError(resp *azcore.Response) error {
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
+	}
+	if len(body) == 0 {
+		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
+	}
+	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
+}
+
 // GetMultiplePages - A paging operation that includes a nextLink that has 10 pages
 // If the operation fails it returns a generic error.
 func (client *PagingClient) GetMultiplePages(options *PagingGetMultiplePagesOptions) ProductResultPager {

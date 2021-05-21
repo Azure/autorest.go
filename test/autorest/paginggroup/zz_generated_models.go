@@ -48,6 +48,11 @@ type PagingBeginGetMultiplePagesLROOptions struct {
 	Timeout *int32
 }
 
+// PagingFirstResponseEmptyOptions contains the optional parameters for the Paging.FirstResponseEmpty method.
+type PagingFirstResponseEmptyOptions struct {
+	// placeholder for future optional parameters
+}
+
 // PagingGetMultiplePagesFailureOptions contains the optional parameters for the Paging.GetMultiplePagesFailure method.
 type PagingGetMultiplePagesFailureOptions struct {
 	// placeholder for future optional parameters

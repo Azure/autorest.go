@@ -21,7 +21,7 @@ func TestGet(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.Interface, map[string]interface{}{
+	if r := cmp.Diff(resp.Object, map[string]interface{}{
 		"message": "An object was successfully returned",
 	}); r != "" {
 		t.Fatal(r)
