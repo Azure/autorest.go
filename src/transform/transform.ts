@@ -100,7 +100,7 @@ async function process(session: Session<CodeModel>) {
       prop.language.go!.description = descriptionMods.join('; ');
       const details = <Language>prop.schema.language.go;
       details.name = `${schemaTypeToGoType(session.model, prop.schema, true)}`;
-      if (prop.schema.type === SchemaType.Any || (isObjectSchema(prop.schema) && prop.schema.discriminator)) {
+      if (prop.schema.type === SchemaType.Any || prop.schema.type === SchemaType.AnyObject || (isObjectSchema(prop.schema) && prop.schema.discriminator)) {
         prop.language.go!.byValue = true;
       } else if (prop.schema.type === SchemaType.DateTime) {
         obj.language.go!.needsDateTimeMarshalling = true;
@@ -154,6 +154,8 @@ function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, inBody: boolea
   switch (schema.type) {
     case SchemaType.Any:
       return 'interface{}';
+    case SchemaType.AnyObject:
+      return 'map[string]interface{}';
     case SchemaType.Array:
       const arraySchema = <ArraySchema>schema;
       arraySchema.language.go!.elementIsPtr = !isTypePassedByValue(arraySchema.elementType);
@@ -557,7 +559,7 @@ function processOperationResponses(session: Session<CodeModel>) {
           }
         } else {
           schemaError.language.go!.name = schemaTypeToGoType(session.model, schemaError, true);
-          if (schemaError.type === SchemaType.Any) {
+          if (schemaError.type === SchemaType.Any || schemaError.type === SchemaType.AnyObject) {
             ex.language.go!.genericError = true;
             continue;
           }
@@ -772,6 +774,8 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
         propName = recursiveTypeName(response.schema);
       } else if (response.schema.type === SchemaType.Any) {
         propName = 'Interface';
+      } else if (response.schema.type === SchemaType.AnyObject) {
+        propName = 'Object';
       }
       if (response.schema.serialization?.xml && response.schema.serialization.xml.name) {
         // always prefer the XML name
@@ -994,6 +998,8 @@ function recursiveTypeName(schema: Schema): string {
   switch (schema.type) {
     case SchemaType.Any:
       return 'Interface';
+    case SchemaType.AnyObject:
+      return 'Object';
     case SchemaType.Array:
       const arraySchema = <ArraySchema>schema;
       const arrayElem = <Schema>arraySchema.elementType;

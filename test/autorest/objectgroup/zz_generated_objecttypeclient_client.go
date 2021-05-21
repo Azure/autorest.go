@@ -27,17 +27,17 @@ func NewObjectTypeClient(con *Connection) *ObjectTypeClient {
 
 // Get - Basic get that returns an object. Returns object { 'message': 'An object was successfully returned' }
 // If the operation fails it returns a generic error.
-func (client *ObjectTypeClient) Get(ctx context.Context, options *ObjectTypeClientGetOptions) (InterfaceResponse, error) {
+func (client *ObjectTypeClient) Get(ctx context.Context, options *ObjectTypeClientGetOptions) (ObjectResponse, error) {
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
-		return InterfaceResponse{}, err
+		return ObjectResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return InterfaceResponse{}, err
+		return ObjectResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return InterfaceResponse{}, client.getHandleError(resp)
+		return ObjectResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -55,12 +55,12 @@ func (client *ObjectTypeClient) getCreateRequest(ctx context.Context, options *O
 }
 
 // getHandleResponse handles the Get response.
-func (client *ObjectTypeClient) getHandleResponse(resp *azcore.Response) (InterfaceResponse, error) {
-	var val interface{}
+func (client *ObjectTypeClient) getHandleResponse(resp *azcore.Response) (ObjectResponse, error) {
+	var val map[string]interface{}
 	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return InterfaceResponse{}, err
+		return ObjectResponse{}, err
 	}
-	return InterfaceResponse{RawResponse: resp.Response, Interface: val}, nil
+	return ObjectResponse{RawResponse: resp.Response, Object: val}, nil
 }
 
 // getHandleError handles the Get error response.
@@ -77,7 +77,7 @@ func (client *ObjectTypeClient) getHandleError(resp *azcore.Response) error {
 
 // Put - Basic put that puts an object. Pass in {'foo': 'bar'} to get a 200 and anything else to get an object error.
 // If the operation fails it returns a generic error.
-func (client *ObjectTypeClient) Put(ctx context.Context, putObject interface{}, options *ObjectTypeClientPutOptions) (*http.Response, error) {
+func (client *ObjectTypeClient) Put(ctx context.Context, putObject map[string]interface{}, options *ObjectTypeClientPutOptions) (*http.Response, error) {
 	req, err := client.putCreateRequest(ctx, putObject, options)
 	if err != nil {
 		return nil, err
@@ -93,7 +93,7 @@ func (client *ObjectTypeClient) Put(ctx context.Context, putObject interface{}, 
 }
 
 // putCreateRequest creates the Put request.
-func (client *ObjectTypeClient) putCreateRequest(ctx context.Context, putObject interface{}, options *ObjectTypeClientPutOptions) (*azcore.Request, error) {
+func (client *ObjectTypeClient) putCreateRequest(ctx context.Context, putObject map[string]interface{}, options *ObjectTypeClientPutOptions) (*azcore.Request, error) {
 	urlPath := "/objectType/put"
 	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {

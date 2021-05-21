@@ -7,6 +7,8 @@
 
 package xmlgroup
 
+const telemetryInfo = "azsdk-go-xmlgroup/<version>"
+
 type AccessTier string
 
 const (

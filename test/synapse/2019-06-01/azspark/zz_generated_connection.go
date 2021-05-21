@@ -13,7 +13,7 @@ import (
 	"strings"
 )
 
-const telemetryInfo = "azsdk-go-azspark/<version>"
+var scopes = []string{"https://dev.azuresynapse.net/.default"}
 
 // connectionOptions contains configuration settings for the connection's pipeline.
 // All zero-value fields will be initialized with their default values.
@@ -51,7 +51,7 @@ type connection struct {
 
 // newConnection creates an instance of the connection type with the specified endpoint.
 // Pass nil to accept the default options; this is the same as passing a zero-value options.
-func newConnection(endpoint string, livyAPIVersion *string, sparkPoolName string, options *connectionOptions) *connection {
+func newConnection(endpoint string, livyAPIVersion *string, sparkPoolName string, cred azcore.Credential, options *connectionOptions) *connection {
 	if options == nil {
 		options = &connectionOptions{}
 	}
@@ -61,6 +61,7 @@ func newConnection(endpoint string, livyAPIVersion *string, sparkPoolName string
 	policies = append(policies, options.PerCallPolicies...)
 	policies = append(policies, azcore.NewRetryPolicy(&options.Retry))
 	policies = append(policies, options.PerRetryPolicies...)
+	policies = append(policies, cred.AuthenticationPolicy(azcore.AuthenticationPolicyOptions{Options: azcore.TokenRequestOptions{Scopes: scopes}}))
 	policies = append(policies, azcore.NewLogPolicy(&options.Logging))
 	hostURL := "{endpoint}/livyApi/versions/{livyApiVersion}/sparkPools/{sparkPoolName}"
 	hostURL = strings.ReplaceAll(hostURL, "{endpoint}", endpoint)

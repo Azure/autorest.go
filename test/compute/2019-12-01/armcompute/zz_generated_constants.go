@@ -7,6 +7,8 @@
 
 package armcompute
 
+const telemetryInfo = "azsdk-go-armcompute/<version>"
+
 type AccessLevel string
 
 const (
@@ -101,6 +103,29 @@ func PossibleCachingTypesValues() []CachingTypes {
 
 // ToPtr returns a *CachingTypes pointing to the current value.
 func (c CachingTypes) ToPtr() *CachingTypes {
+	return &c
+}
+
+// ContainerServiceMasterProfileCount - Number of masters (VMs) in the container service cluster. Allowed values are 1, 3, and 5. The default value is 1.
+type ContainerServiceMasterProfileCount int32
+
+const (
+	ContainerServiceMasterProfileCountFive  ContainerServiceMasterProfileCount = 5
+	ContainerServiceMasterProfileCountOne   ContainerServiceMasterProfileCount = 1
+	ContainerServiceMasterProfileCountThree ContainerServiceMasterProfileCount = 3
+)
+
+// PossibleContainerServiceMasterProfileCountValues returns the possible values for the ContainerServiceMasterProfileCount const type.
+func PossibleContainerServiceMasterProfileCountValues() []ContainerServiceMasterProfileCount {
+	return []ContainerServiceMasterProfileCount{
+		ContainerServiceMasterProfileCountFive,
+		ContainerServiceMasterProfileCountOne,
+		ContainerServiceMasterProfileCountThree,
+	}
+}
+
+// ToPtr returns a *ContainerServiceMasterProfileCount pointing to the current value.
+func (c ContainerServiceMasterProfileCount) ToPtr() *ContainerServiceMasterProfileCount {
 	return &c
 }
 
@@ -482,29 +507,6 @@ func PossibleEncryptionTypeValues() []EncryptionType {
 
 // ToPtr returns a *EncryptionType pointing to the current value.
 func (c EncryptionType) ToPtr() *EncryptionType {
-	return &c
-}
-
-// Enum31 - Number of masters (VMs) in the container service cluster. Allowed values are 1, 3, and 5. The default value is 1.
-type Enum31 int32
-
-const (
-	Enum31Five  Enum31 = 5
-	Enum31One   Enum31 = 1
-	Enum31Three Enum31 = 3
-)
-
-// PossibleEnum31Values returns the possible values for the Enum31 const type.
-func PossibleEnum31Values() []Enum31 {
-	return []Enum31{
-		Enum31Five,
-		Enum31One,
-		Enum31Three,
-	}
-}
-
-// ToPtr returns a *Enum31 pointing to the current value.
-func (c Enum31) ToPtr() *Enum31 {
 	return &c
 }
 

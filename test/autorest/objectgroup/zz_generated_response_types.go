@@ -9,10 +9,10 @@ package objectgroup
 
 import "net/http"
 
-// InterfaceResponse is the response envelope for operations that return a interface{} type.
-type InterfaceResponse struct {
+// ObjectResponse is the response envelope for operations that return a map[string]interface{} type.
+type ObjectResponse struct {
 	// Any object
-	Interface interface{}
+	Object map[string]interface{}
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response

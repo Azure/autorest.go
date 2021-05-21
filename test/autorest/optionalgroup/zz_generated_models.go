@@ -168,6 +168,16 @@ type ExplicitPostRequiredStringPropertyOptions struct {
 	// placeholder for future optional parameters
 }
 
+// ExplicitPutOptionalBinaryBodyOptions contains the optional parameters for the Explicit.PutOptionalBinaryBody method.
+type ExplicitPutOptionalBinaryBodyOptions struct {
+	BodyParameter azcore.ReadSeekCloser
+}
+
+// ExplicitPutRequiredBinaryBodyOptions contains the optional parameters for the Explicit.PutRequiredBinaryBody method.
+type ExplicitPutRequiredBinaryBodyOptions struct {
+	// placeholder for future optional parameters
+}
+
 // ImplicitGetOptionalGlobalQueryOptions contains the optional parameters for the Implicit.GetOptionalGlobalQuery method.
 type ImplicitGetOptionalGlobalQueryOptions struct {
 }
@@ -185,6 +195,11 @@ type ImplicitGetRequiredGlobalQueryOptions struct {
 // ImplicitGetRequiredPathOptions contains the optional parameters for the Implicit.GetRequiredPath method.
 type ImplicitGetRequiredPathOptions struct {
 	// placeholder for future optional parameters
+}
+
+// ImplicitPutOptionalBinaryBodyOptions contains the optional parameters for the Implicit.PutOptionalBinaryBody method.
+type ImplicitPutOptionalBinaryBodyOptions struct {
+	BodyParameter azcore.ReadSeekCloser
 }
 
 // ImplicitPutOptionalBodyOptions contains the optional parameters for the Implicit.PutOptionalBody method.

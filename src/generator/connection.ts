@@ -4,46 +4,51 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Session } from '@autorest/extension-base';
-import { CodeModel, Parameter } from '@autorest/codemodel';
+import { AADTokenSecurityScheme, CodeModel, Parameter } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
 import { contentPreamble, formatParameterTypeName } from './helpers';
 import { ImportManager } from './imports';
 
 // generates content for connection.go
 export async function generateConnection(session: Session<CodeModel>): Promise<string> {
+  if (<boolean>session.model.language.go!.azureARM) {
+    // use the Connection type in armcore instead of generating one
+    return '';
+  }
   // the list of packages to import
   const imports = new ImportManager();
-  if (!<boolean>session.model.language.go!.azureARM) {
-    // add standard imports
-    imports.add('fmt');
-    imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
-  }
+  // add standard imports
+  imports.add('fmt');
+  imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
 
   let text = await contentPreamble(session);
   // content generation can add to the imports list, so execute it before emitting any text
   const content = generateContent(session, imports);
   text += imports.text();
-  if (session.model.security.authenticationRequired && !<boolean>session.model.language.go!.azureARM) {
-    const scope = await session.getValue('credential-scope');
-    text += `const scope = "${scope}"\n`;
+  if (session.model.security.authenticationRequired) {
+    // we only support AADToken scheme at present
+    const scheme = session.model.security.schemes[0];
+    if (scheme.type !== 'AADToken') {
+      throw new Error(`unsupported security scheme ${scheme.type}`);
+    }
+    const tokenScheme = <AADTokenSecurityScheme>scheme;
+    // enclose each scope in double-quotes
+    for (let i = 0; i < tokenScheme.scopes.length; ++i) {
+      tokenScheme.scopes[i] = `"${tokenScheme.scopes[i]}"`;
+    }
+    text += `var scopes = []string{${(<AADTokenSecurityScheme>scheme).scopes.join(', ')}}\n`;
   }
   text += content;
   return text;
 }
 
 function generateContent(session: Session<CodeModel>, imports: ImportManager): string {
-  let text = `const telemetryInfo = "azsdk-go-${session.model.language.go!.packageName}/<version>"\n`;
-  if (<boolean>session.model.language.go!.azureARM) {
-    // use the Connection type in armcore instead of generating one
-    return text;
-  }
   const forceExports = <boolean>session.model.language.go!.exportClients;
-  const isARM = session.model.language.go!.openApiType === 'arm';
   let connectionOptions = 'ConnectionOptions';
-  if (!isARM && !forceExports) {
+  if (!forceExports) {
     connectionOptions = connectionOptions.uncapitalize();
   }
-  text += `// ${connectionOptions} contains configuration settings for the connection's pipeline.\n`;
+  let text = `// ${connectionOptions} contains configuration settings for the connection's pipeline.\n`;
   text += '// All zero-value fields will be initialized with their default values.\n';
   text += `type ${connectionOptions} struct {\n`;
   text += '\t// HTTPClient sets the transport for making HTTP requests.\n';
@@ -77,7 +82,7 @@ function generateContent(session: Session<CodeModel>, imports: ImportManager): s
   let defaultEndpoint = 'DefaultEndpoint';
   let newDefaultConnection = 'NewDefaultConnection';
   let newConnection = 'NewConnection';
-  if (!isARM && !forceExports) {
+  if (!forceExports) {
     connection = connection.uncapitalize();
     defaultEndpoint = defaultEndpoint.uncapitalize();
     newDefaultConnection = newDefaultConnection.uncapitalize();
@@ -156,7 +161,7 @@ function generateContent(session: Session<CodeModel>, imports: ImportManager): s
   text += '\tpolicies = append(policies, azcore.NewRetryPolicy(&options.Retry))\n';
   text += '\tpolicies = append(policies, options.PerRetryPolicies...)\n';
   if (session.model.security.authenticationRequired) {
-    text += `\t\tpolicies = append(policies, cred.AuthenticationPolicy(azcore.AuthenticationPolicyOptions{Options: azcore.TokenRequestOptions{Scopes: []string{scope}}}))\n`;
+    text += `\t\tpolicies = append(policies, cred.AuthenticationPolicy(azcore.AuthenticationPolicyOptions{Options: azcore.TokenRequestOptions{Scopes: scopes}}))\n`;
   }
   text += '\tpolicies = append(policies, azcore.NewLogPolicy(&options.Logging))\n';
   const pipeline = 'azcore.NewPipeline(options.HTTPClient, policies...)';

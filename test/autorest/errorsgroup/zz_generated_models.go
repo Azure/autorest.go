@@ -164,6 +164,30 @@ type PetAction struct {
 	ActionResponse *string `json:"actionResponse,omitempty"`
 }
 
+// UnmarshalJSON implements the json.Unmarshaller interface for type PetAction.
+func (p *PetAction) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	return p.unmarshalInternal(rawMsg)
+}
+
+func (p *PetAction) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "actionResponse":
+			err = unpopulate(val, &p.ActionResponse)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 // PetActionErrorClassification provides polymorphic access to related types.
 // Call the interface's GetPetActionError() method to access the common type.
 // Use a type switch to determine the concrete type.  The possible types are:
@@ -176,6 +200,7 @@ type PetActionErrorClassification interface {
 
 // Implements the error and azcore.HTTPResponse interfaces.
 type PetActionError struct {
+	PetAction
 	raw string
 	// REQUIRED
 	ErrorType *string `json:"errorType,omitempty"`
@@ -218,7 +243,7 @@ func (p *PetActionError) unmarshalInternal(rawMsg map[string]json.RawMessage) er
 			return err
 		}
 	}
-	return nil
+	return p.PetAction.unmarshalInternal(rawMsg)
 }
 
 // PetDoSomethingOptions contains the optional parameters for the Pet.DoSomething method.
@@ -229,6 +254,12 @@ type PetDoSomethingOptions struct {
 // PetGetPetByIDOptions contains the optional parameters for the Pet.GetPetByID method.
 type PetGetPetByIDOptions struct {
 	// placeholder for future optional parameters
+}
+
+// PetHasModelsParamOptions contains the optional parameters for the Pet.HasModelsParam method.
+type PetHasModelsParamOptions struct {
+	// Make sure model deserialization doesn't conflict with this param name, which has input name 'models'. Use client default value in call
+	Models *string
 }
 
 type PetHungryOrThirstyError struct {

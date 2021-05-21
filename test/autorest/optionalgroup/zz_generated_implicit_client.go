@@ -216,6 +216,51 @@ func (client *ImplicitClient) getRequiredPathHandleError(resp *azcore.Response) 
 	return azcore.NewResponseError(&errType, resp.Response)
 }
 
+// PutOptionalBinaryBody - Test implicitly optional body parameter
+// If the operation fails it returns the *Error error type.
+func (client *ImplicitClient) PutOptionalBinaryBody(ctx context.Context, options *ImplicitPutOptionalBinaryBodyOptions) (*http.Response, error) {
+	req, err := client.putOptionalBinaryBodyCreateRequest(ctx, options)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.con.Pipeline().Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		return nil, client.putOptionalBinaryBodyHandleError(resp)
+	}
+	return resp.Response, nil
+}
+
+// putOptionalBinaryBodyCreateRequest creates the PutOptionalBinaryBody request.
+func (client *ImplicitClient) putOptionalBinaryBodyCreateRequest(ctx context.Context, options *ImplicitPutOptionalBinaryBodyOptions) (*azcore.Request, error) {
+	urlPath := "/reqopt/implicit/optional/binary-body"
+	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Telemetry(telemetryInfo)
+	req.Header.Set("Accept", "application/json")
+	if options != nil && options.BodyParameter != nil {
+		return req, req.SetBody(options.BodyParameter, "application/octet-stream")
+	}
+	return req, nil
+}
+
+// putOptionalBinaryBodyHandleError handles the PutOptionalBinaryBody error response.
+func (client *ImplicitClient) putOptionalBinaryBodyHandleError(resp *azcore.Response) error {
+	body, err := resp.Payload()
+	if err != nil {
+		return azcore.NewResponseError(err, resp.Response)
+	}
+	errType := Error{raw: string(body)}
+	if err := resp.UnmarshalAsJSON(&errType); err != nil {
+		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	}
+	return azcore.NewResponseError(&errType, resp.Response)
+}
+
 // PutOptionalBody - Test implicitly optional body parameter
 // If the operation fails it returns the *Error error type.
 func (client *ImplicitClient) PutOptionalBody(ctx context.Context, options *ImplicitPutOptionalBodyOptions) (*http.Response, error) {

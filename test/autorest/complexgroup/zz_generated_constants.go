@@ -7,6 +7,8 @@
 
 package complexgroup
 
+const telemetryInfo = "azsdk-go-complexgroup/<version>"
+
 type CMYKColors string
 
 const (

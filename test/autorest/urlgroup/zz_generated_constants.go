@@ -7,6 +7,8 @@
 
 package urlgroup
 
+const telemetryInfo = "azsdk-go-urlgroup/<version>"
+
 type URIColor string
 
 const (
