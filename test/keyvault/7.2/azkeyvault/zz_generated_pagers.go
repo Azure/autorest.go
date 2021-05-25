@@ -17,7 +17,7 @@ import (
 type CertificateIssuerListResultPager interface {
 	azcore.Pager
 
-	// Page returns the current CertificateIssuerListResultResponse.
+	// PageResponse returns the current CertificateIssuerListResultResponse.
 	PageResponse() CertificateIssuerListResultResponse
 }
 
@@ -93,7 +93,7 @@ func (p *certificateIssuerListResultPager) PageResponse() CertificateIssuerListR
 type CertificateListResultPager interface {
 	azcore.Pager
 
-	// Page returns the current CertificateListResultResponse.
+	// PageResponse returns the current CertificateListResultResponse.
 	PageResponse() CertificateListResultResponse
 }
 
@@ -169,7 +169,7 @@ func (p *certificateListResultPager) PageResponse() CertificateListResultRespons
 type DeletedCertificateListResultPager interface {
 	azcore.Pager
 
-	// Page returns the current DeletedCertificateListResultResponse.
+	// PageResponse returns the current DeletedCertificateListResultResponse.
 	PageResponse() DeletedCertificateListResultResponse
 }
 
@@ -245,7 +245,7 @@ func (p *deletedCertificateListResultPager) PageResponse() DeletedCertificateLis
 type DeletedKeyListResultPager interface {
 	azcore.Pager
 
-	// Page returns the current DeletedKeyListResultResponse.
+	// PageResponse returns the current DeletedKeyListResultResponse.
 	PageResponse() DeletedKeyListResultResponse
 }
 
@@ -321,7 +321,7 @@ func (p *deletedKeyListResultPager) PageResponse() DeletedKeyListResultResponse 
 type DeletedSasDefinitionListResultPager interface {
 	azcore.Pager
 
-	// Page returns the current DeletedSasDefinitionListResultResponse.
+	// PageResponse returns the current DeletedSasDefinitionListResultResponse.
 	PageResponse() DeletedSasDefinitionListResultResponse
 }
 
@@ -397,7 +397,7 @@ func (p *deletedSasDefinitionListResultPager) PageResponse() DeletedSasDefinitio
 type DeletedSecretListResultPager interface {
 	azcore.Pager
 
-	// Page returns the current DeletedSecretListResultResponse.
+	// PageResponse returns the current DeletedSecretListResultResponse.
 	PageResponse() DeletedSecretListResultResponse
 }
 
@@ -473,7 +473,7 @@ func (p *deletedSecretListResultPager) PageResponse() DeletedSecretListResultRes
 type DeletedStorageListResultPager interface {
 	azcore.Pager
 
-	// Page returns the current DeletedStorageListResultResponse.
+	// PageResponse returns the current DeletedStorageListResultResponse.
 	PageResponse() DeletedStorageListResultResponse
 }
 
@@ -549,7 +549,7 @@ func (p *deletedStorageListResultPager) PageResponse() DeletedStorageListResultR
 type KeyListResultPager interface {
 	azcore.Pager
 
-	// Page returns the current KeyListResultResponse.
+	// PageResponse returns the current KeyListResultResponse.
 	PageResponse() KeyListResultResponse
 }
 
@@ -625,7 +625,7 @@ func (p *keyListResultPager) PageResponse() KeyListResultResponse {
 type RoleAssignmentListResultPager interface {
 	azcore.Pager
 
-	// Page returns the current RoleAssignmentListResultResponse.
+	// PageResponse returns the current RoleAssignmentListResultResponse.
 	PageResponse() RoleAssignmentListResultResponse
 }
 
@@ -701,7 +701,7 @@ func (p *roleAssignmentListResultPager) PageResponse() RoleAssignmentListResultR
 type RoleDefinitionListResultPager interface {
 	azcore.Pager
 
-	// Page returns the current RoleDefinitionListResultResponse.
+	// PageResponse returns the current RoleDefinitionListResultResponse.
 	PageResponse() RoleDefinitionListResultResponse
 }
 
@@ -777,7 +777,7 @@ func (p *roleDefinitionListResultPager) PageResponse() RoleDefinitionListResultR
 type SasDefinitionListResultPager interface {
 	azcore.Pager
 
-	// Page returns the current SasDefinitionListResultResponse.
+	// PageResponse returns the current SasDefinitionListResultResponse.
 	PageResponse() SasDefinitionListResultResponse
 }
 
@@ -853,7 +853,7 @@ func (p *sasDefinitionListResultPager) PageResponse() SasDefinitionListResultRes
 type SecretListResultPager interface {
 	azcore.Pager
 
-	// Page returns the current SecretListResultResponse.
+	// PageResponse returns the current SecretListResultResponse.
 	PageResponse() SecretListResultResponse
 }
 
@@ -929,7 +929,7 @@ func (p *secretListResultPager) PageResponse() SecretListResultResponse {
 type StorageListResultPager interface {
 	azcore.Pager
 
-	// Page returns the current StorageListResultResponse.
+	// PageResponse returns the current StorageListResultResponse.
 	PageResponse() StorageListResultResponse
 }
 
