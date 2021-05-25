@@ -17,7 +17,7 @@ import (
 type OdataProductResultPager interface {
 	azcore.Pager
 
-	// Page returns the current OdataProductResultResponse.
+	// PageResponse returns the current OdataProductResultResponse.
 	PageResponse() OdataProductResultResponse
 }
 
@@ -93,7 +93,7 @@ func (p *odataProductResultPager) PageResponse() OdataProductResultResponse {
 type ProductResultPager interface {
 	azcore.Pager
 
-	// Page returns the current ProductResultResponse.
+	// PageResponse returns the current ProductResultResponse.
 	PageResponse() ProductResultResponse
 }
 
@@ -176,7 +176,7 @@ func (p *productResultPager) PageResponse() ProductResultResponse {
 type ProductResultValuePager interface {
 	azcore.Pager
 
-	// Page returns the current ProductResultValueResponse.
+	// PageResponse returns the current ProductResultValueResponse.
 	PageResponse() ProductResultValueResponse
 }
 
@@ -252,7 +252,7 @@ func (p *productResultValuePager) PageResponse() ProductResultValueResponse {
 type ProductResultValueWithXMSClientNamePager interface {
 	azcore.Pager
 
-	// Page returns the current ProductResultValueWithXMSClientNameResponse.
+	// PageResponse returns the current ProductResultValueWithXMSClientNameResponse.
 	PageResponse() ProductResultValueWithXMSClientNameResponse
 }
 

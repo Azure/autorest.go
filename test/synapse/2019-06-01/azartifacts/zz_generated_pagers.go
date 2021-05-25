@@ -17,7 +17,7 @@ import (
 type DataFlowListResponsePager interface {
 	azcore.Pager
 
-	// Page returns the current DataFlowListResponseResponse.
+	// PageResponse returns the current DataFlowListResponseResponse.
 	PageResponse() DataFlowListResponseResponse
 }
 
@@ -93,7 +93,7 @@ func (p *dataFlowListResponsePager) PageResponse() DataFlowListResponseResponse 
 type DatasetListResponsePager interface {
 	azcore.Pager
 
-	// Page returns the current DatasetListResponseResponse.
+	// PageResponse returns the current DatasetListResponseResponse.
 	PageResponse() DatasetListResponseResponse
 }
 
@@ -169,7 +169,7 @@ func (p *datasetListResponsePager) PageResponse() DatasetListResponseResponse {
 type LibraryListResponsePager interface {
 	azcore.Pager
 
-	// Page returns the current LibraryListResponseResponse.
+	// PageResponse returns the current LibraryListResponseResponse.
 	PageResponse() LibraryListResponseResponse
 }
 
@@ -245,7 +245,7 @@ func (p *libraryListResponsePager) PageResponse() LibraryListResponseResponse {
 type LinkedServiceListResponsePager interface {
 	azcore.Pager
 
-	// Page returns the current LinkedServiceListResponseResponse.
+	// PageResponse returns the current LinkedServiceListResponseResponse.
 	PageResponse() LinkedServiceListResponseResponse
 }
 
@@ -321,7 +321,7 @@ func (p *linkedServiceListResponsePager) PageResponse() LinkedServiceListRespons
 type NotebookListResponsePager interface {
 	azcore.Pager
 
-	// Page returns the current NotebookListResponseResponse.
+	// PageResponse returns the current NotebookListResponseResponse.
 	PageResponse() NotebookListResponseResponse
 }
 
@@ -397,7 +397,7 @@ func (p *notebookListResponsePager) PageResponse() NotebookListResponseResponse 
 type PipelineListResponsePager interface {
 	azcore.Pager
 
-	// Page returns the current PipelineListResponseResponse.
+	// PageResponse returns the current PipelineListResponseResponse.
 	PageResponse() PipelineListResponseResponse
 }
 
@@ -473,7 +473,7 @@ func (p *pipelineListResponsePager) PageResponse() PipelineListResponseResponse 
 type QueryDataFlowDebugSessionsResponsePager interface {
 	azcore.Pager
 
-	// Page returns the current QueryDataFlowDebugSessionsResponseResponse.
+	// PageResponse returns the current QueryDataFlowDebugSessionsResponseResponse.
 	PageResponse() QueryDataFlowDebugSessionsResponseResponse
 }
 
@@ -549,7 +549,7 @@ func (p *queryDataFlowDebugSessionsResponsePager) PageResponse() QueryDataFlowDe
 type SQLScriptsListResponsePager interface {
 	azcore.Pager
 
-	// Page returns the current SQLScriptsListResponseResponse.
+	// PageResponse returns the current SQLScriptsListResponseResponse.
 	PageResponse() SQLScriptsListResponseResponse
 }
 
@@ -625,7 +625,7 @@ func (p *sqlScriptsListResponsePager) PageResponse() SQLScriptsListResponseRespo
 type SparkJobDefinitionsListResponsePager interface {
 	azcore.Pager
 
-	// Page returns the current SparkJobDefinitionsListResponseResponse.
+	// PageResponse returns the current SparkJobDefinitionsListResponseResponse.
 	PageResponse() SparkJobDefinitionsListResponseResponse
 }
 
@@ -701,7 +701,7 @@ func (p *sparkJobDefinitionsListResponsePager) PageResponse() SparkJobDefinition
 type TriggerListResponsePager interface {
 	azcore.Pager
 
-	// Page returns the current TriggerListResponseResponse.
+	// PageResponse returns the current TriggerListResponseResponse.
 	PageResponse() TriggerListResponseResponse
 }
 
