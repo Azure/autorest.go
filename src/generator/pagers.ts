@@ -53,7 +53,7 @@ export async function generatePagers(session: Session<CodeModel>): Promise<strin
 type ${pager.name} interface {
 	azcore.Pager
 
-	// Page returns the current ${pager.respEnv}.
+	// PageResponse returns the current ${pager.respEnv}.
 	PageResponse() ${pager.respEnv}
 }
 
