@@ -53,6 +53,66 @@ type Attributes struct {
 	Updated *time.Time `json:"updated,omitempty" azure:"ro"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type Attributes.
+func (a Attributes) MarshalJSON() ([]byte, error) {
+	objectMap := a.marshalInternal()
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type Attributes.
+func (a *Attributes) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	return a.unmarshalInternal(rawMsg)
+}
+
+func (a Attributes) marshalInternal() map[string]interface{} {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "created", (*timeUnix)(a.Created))
+	populate(objectMap, "enabled", a.Enabled)
+	populate(objectMap, "exp", (*timeUnix)(a.Expires))
+	populate(objectMap, "nbf", (*timeUnix)(a.NotBefore))
+	populate(objectMap, "updated", (*timeUnix)(a.Updated))
+	return objectMap
+}
+
+func (a *Attributes) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "created":
+			var aux timeUnix
+			err = unpopulate(val, &aux)
+			a.Created = (*time.Time)(&aux)
+			delete(rawMsg, key)
+		case "enabled":
+			err = unpopulate(val, &a.Enabled)
+			delete(rawMsg, key)
+		case "exp":
+			var aux timeUnix
+			err = unpopulate(val, &aux)
+			a.Expires = (*time.Time)(&aux)
+			delete(rawMsg, key)
+		case "nbf":
+			var aux timeUnix
+			err = unpopulate(val, &aux)
+			a.NotBefore = (*time.Time)(&aux)
+			delete(rawMsg, key)
+		case "updated":
+			var aux timeUnix
+			err = unpopulate(val, &aux)
+			a.Updated = (*time.Time)(&aux)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 // BackupCertificateResult - The backup certificate result, containing the backup blob.
 type BackupCertificateResult struct {
 	// READ-ONLY; The backup blob containing the backed up certificate.
@@ -117,6 +177,37 @@ type CertificateAttributes struct {
 	RecoveryLevel *DeletionRecoveryLevel `json:"recoveryLevel,omitempty" azure:"ro"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type CertificateAttributes.
+func (c CertificateAttributes) MarshalJSON() ([]byte, error) {
+	objectMap := c.Attributes.marshalInternal()
+	populate(objectMap, "recoverableDays", c.RecoverableDays)
+	populate(objectMap, "recoveryLevel", c.RecoveryLevel)
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type CertificateAttributes.
+func (c *CertificateAttributes) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "recoverableDays":
+			err = unpopulate(val, &c.RecoverableDays)
+			delete(rawMsg, key)
+		case "recoveryLevel":
+			err = unpopulate(val, &c.RecoveryLevel)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return c.Attributes.unmarshalInternal(rawMsg)
+}
+
 // CertificateBundle - A certificate bundle consists of a certificate (X509) plus its attributes.
 type CertificateBundle struct {
 	// The certificate attributes.
@@ -153,6 +244,15 @@ func (c CertificateBundle) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
+// UnmarshalJSON implements the json.Unmarshaller interface for type CertificateBundle.
+func (c *CertificateBundle) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	return c.unmarshalInternal(rawMsg)
+}
+
 func (c CertificateBundle) marshalInternal() map[string]interface{} {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "attributes", c.Attributes)
@@ -165,6 +265,45 @@ func (c CertificateBundle) marshalInternal() map[string]interface{} {
 	populate(objectMap, "tags", c.Tags)
 	populate(objectMap, "x5t", c.X509Thumbprint)
 	return objectMap
+}
+
+func (c *CertificateBundle) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "attributes":
+			err = unpopulate(val, &c.Attributes)
+			delete(rawMsg, key)
+		case "cer":
+			err = unpopulate(val, &c.Cer)
+			delete(rawMsg, key)
+		case "contentType":
+			err = unpopulate(val, &c.ContentType)
+			delete(rawMsg, key)
+		case "id":
+			err = unpopulate(val, &c.ID)
+			delete(rawMsg, key)
+		case "kid":
+			err = unpopulate(val, &c.Kid)
+			delete(rawMsg, key)
+		case "policy":
+			err = unpopulate(val, &c.Policy)
+			delete(rawMsg, key)
+		case "sid":
+			err = unpopulate(val, &c.Sid)
+			delete(rawMsg, key)
+		case "tags":
+			err = unpopulate(val, &c.Tags)
+			delete(rawMsg, key)
+		case "x5t":
+			err = unpopulate(val, &c.X509Thumbprint)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 // CertificateCreateParameters - The certificate create parameters.
@@ -320,6 +459,15 @@ func (c CertificateItem) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
+// UnmarshalJSON implements the json.Unmarshaller interface for type CertificateItem.
+func (c *CertificateItem) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	return c.unmarshalInternal(rawMsg)
+}
+
 func (c CertificateItem) marshalInternal() map[string]interface{} {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "attributes", c.Attributes)
@@ -327,6 +475,30 @@ func (c CertificateItem) marshalInternal() map[string]interface{} {
 	populate(objectMap, "tags", c.Tags)
 	populate(objectMap, "x5t", c.X509Thumbprint)
 	return objectMap
+}
+
+func (c *CertificateItem) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "attributes":
+			err = unpopulate(val, &c.Attributes)
+			delete(rawMsg, key)
+		case "id":
+			err = unpopulate(val, &c.ID)
+			delete(rawMsg, key)
+		case "tags":
+			err = unpopulate(val, &c.Tags)
+			delete(rawMsg, key)
+		case "x5t":
+			err = unpopulate(val, &c.X509Thumbprint)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 // CertificateListResult - The certificate list result.
@@ -547,6 +719,36 @@ func (d DeletedCertificateBundle) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
+// UnmarshalJSON implements the json.Unmarshaller interface for type DeletedCertificateBundle.
+func (d *DeletedCertificateBundle) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "deletedDate":
+			var aux timeUnix
+			err = unpopulate(val, &aux)
+			d.DeletedDate = (*time.Time)(&aux)
+			delete(rawMsg, key)
+		case "recoveryId":
+			err = unpopulate(val, &d.RecoveryID)
+			delete(rawMsg, key)
+		case "scheduledPurgeDate":
+			var aux timeUnix
+			err = unpopulate(val, &aux)
+			d.ScheduledPurgeDate = (*time.Time)(&aux)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return d.CertificateBundle.unmarshalInternal(rawMsg)
+}
+
 // DeletedCertificateItem - The deleted certificate item containing metadata about the deleted certificate.
 type DeletedCertificateItem struct {
 	CertificateItem
@@ -567,6 +769,36 @@ func (d DeletedCertificateItem) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "recoveryId", d.RecoveryID)
 	populate(objectMap, "scheduledPurgeDate", (*timeUnix)(d.ScheduledPurgeDate))
 	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type DeletedCertificateItem.
+func (d *DeletedCertificateItem) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "deletedDate":
+			var aux timeUnix
+			err = unpopulate(val, &aux)
+			d.DeletedDate = (*time.Time)(&aux)
+			delete(rawMsg, key)
+		case "recoveryId":
+			err = unpopulate(val, &d.RecoveryID)
+			delete(rawMsg, key)
+		case "scheduledPurgeDate":
+			var aux timeUnix
+			err = unpopulate(val, &aux)
+			d.ScheduledPurgeDate = (*time.Time)(&aux)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return d.CertificateItem.unmarshalInternal(rawMsg)
 }
 
 // DeletedCertificateListResult - A list of certificates that have been deleted in this vault.
@@ -608,6 +840,36 @@ func (d DeletedKeyBundle) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
+// UnmarshalJSON implements the json.Unmarshaller interface for type DeletedKeyBundle.
+func (d *DeletedKeyBundle) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "deletedDate":
+			var aux timeUnix
+			err = unpopulate(val, &aux)
+			d.DeletedDate = (*time.Time)(&aux)
+			delete(rawMsg, key)
+		case "recoveryId":
+			err = unpopulate(val, &d.RecoveryID)
+			delete(rawMsg, key)
+		case "scheduledPurgeDate":
+			var aux timeUnix
+			err = unpopulate(val, &aux)
+			d.ScheduledPurgeDate = (*time.Time)(&aux)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return d.KeyBundle.unmarshalInternal(rawMsg)
+}
+
 // DeletedKeyItem - The deleted key item containing the deleted key metadata and information about deletion.
 type DeletedKeyItem struct {
 	KeyItem
@@ -628,6 +890,36 @@ func (d DeletedKeyItem) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "recoveryId", d.RecoveryID)
 	populate(objectMap, "scheduledPurgeDate", (*timeUnix)(d.ScheduledPurgeDate))
 	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type DeletedKeyItem.
+func (d *DeletedKeyItem) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "deletedDate":
+			var aux timeUnix
+			err = unpopulate(val, &aux)
+			d.DeletedDate = (*time.Time)(&aux)
+			delete(rawMsg, key)
+		case "recoveryId":
+			err = unpopulate(val, &d.RecoveryID)
+			delete(rawMsg, key)
+		case "scheduledPurgeDate":
+			var aux timeUnix
+			err = unpopulate(val, &aux)
+			d.ScheduledPurgeDate = (*time.Time)(&aux)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return d.KeyItem.unmarshalInternal(rawMsg)
 }
 
 // DeletedKeyListResult - A list of keys that have been deleted in this vault.
@@ -670,6 +962,36 @@ func (d DeletedSasDefinitionBundle) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
+// UnmarshalJSON implements the json.Unmarshaller interface for type DeletedSasDefinitionBundle.
+func (d *DeletedSasDefinitionBundle) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "deletedDate":
+			var aux timeUnix
+			err = unpopulate(val, &aux)
+			d.DeletedDate = (*time.Time)(&aux)
+			delete(rawMsg, key)
+		case "recoveryId":
+			err = unpopulate(val, &d.RecoveryID)
+			delete(rawMsg, key)
+		case "scheduledPurgeDate":
+			var aux timeUnix
+			err = unpopulate(val, &aux)
+			d.ScheduledPurgeDate = (*time.Time)(&aux)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return d.SasDefinitionBundle.unmarshalInternal(rawMsg)
+}
+
 // DeletedSasDefinitionItem - The deleted SAS definition item containing metadata about the deleted SAS definition.
 type DeletedSasDefinitionItem struct {
 	SasDefinitionItem
@@ -690,6 +1012,36 @@ func (d DeletedSasDefinitionItem) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "recoveryId", d.RecoveryID)
 	populate(objectMap, "scheduledPurgeDate", (*timeUnix)(d.ScheduledPurgeDate))
 	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type DeletedSasDefinitionItem.
+func (d *DeletedSasDefinitionItem) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "deletedDate":
+			var aux timeUnix
+			err = unpopulate(val, &aux)
+			d.DeletedDate = (*time.Time)(&aux)
+			delete(rawMsg, key)
+		case "recoveryId":
+			err = unpopulate(val, &d.RecoveryID)
+			delete(rawMsg, key)
+		case "scheduledPurgeDate":
+			var aux timeUnix
+			err = unpopulate(val, &aux)
+			d.ScheduledPurgeDate = (*time.Time)(&aux)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return d.SasDefinitionItem.unmarshalInternal(rawMsg)
 }
 
 // DeletedSasDefinitionListResult - The deleted SAS definition list result
@@ -731,6 +1083,36 @@ func (d DeletedSecretBundle) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
+// UnmarshalJSON implements the json.Unmarshaller interface for type DeletedSecretBundle.
+func (d *DeletedSecretBundle) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "deletedDate":
+			var aux timeUnix
+			err = unpopulate(val, &aux)
+			d.DeletedDate = (*time.Time)(&aux)
+			delete(rawMsg, key)
+		case "recoveryId":
+			err = unpopulate(val, &d.RecoveryID)
+			delete(rawMsg, key)
+		case "scheduledPurgeDate":
+			var aux timeUnix
+			err = unpopulate(val, &aux)
+			d.ScheduledPurgeDate = (*time.Time)(&aux)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return d.SecretBundle.unmarshalInternal(rawMsg)
+}
+
 // DeletedSecretItem - The deleted secret item containing metadata about the deleted secret.
 type DeletedSecretItem struct {
 	SecretItem
@@ -751,6 +1133,36 @@ func (d DeletedSecretItem) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "recoveryId", d.RecoveryID)
 	populate(objectMap, "scheduledPurgeDate", (*timeUnix)(d.ScheduledPurgeDate))
 	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type DeletedSecretItem.
+func (d *DeletedSecretItem) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "deletedDate":
+			var aux timeUnix
+			err = unpopulate(val, &aux)
+			d.DeletedDate = (*time.Time)(&aux)
+			delete(rawMsg, key)
+		case "recoveryId":
+			err = unpopulate(val, &d.RecoveryID)
+			delete(rawMsg, key)
+		case "scheduledPurgeDate":
+			var aux timeUnix
+			err = unpopulate(val, &aux)
+			d.ScheduledPurgeDate = (*time.Time)(&aux)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return d.SecretItem.unmarshalInternal(rawMsg)
 }
 
 // DeletedSecretListResult - The deleted secret list result
@@ -792,6 +1204,36 @@ func (d DeletedStorageAccountItem) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
+// UnmarshalJSON implements the json.Unmarshaller interface for type DeletedStorageAccountItem.
+func (d *DeletedStorageAccountItem) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "deletedDate":
+			var aux timeUnix
+			err = unpopulate(val, &aux)
+			d.DeletedDate = (*time.Time)(&aux)
+			delete(rawMsg, key)
+		case "recoveryId":
+			err = unpopulate(val, &d.RecoveryID)
+			delete(rawMsg, key)
+		case "scheduledPurgeDate":
+			var aux timeUnix
+			err = unpopulate(val, &aux)
+			d.ScheduledPurgeDate = (*time.Time)(&aux)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return d.StorageAccountItem.unmarshalInternal(rawMsg)
+}
+
 // DeletedStorageBundle - A deleted storage account bundle consisting of its previous id, attributes and its tags, as well as information on when it will
 // be purged.
 type DeletedStorageBundle struct {
@@ -813,6 +1255,36 @@ func (d DeletedStorageBundle) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "recoveryId", d.RecoveryID)
 	populate(objectMap, "scheduledPurgeDate", (*timeUnix)(d.ScheduledPurgeDate))
 	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type DeletedStorageBundle.
+func (d *DeletedStorageBundle) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "deletedDate":
+			var aux timeUnix
+			err = unpopulate(val, &aux)
+			d.DeletedDate = (*time.Time)(&aux)
+			delete(rawMsg, key)
+		case "recoveryId":
+			err = unpopulate(val, &d.RecoveryID)
+			delete(rawMsg, key)
+		case "scheduledPurgeDate":
+			var aux timeUnix
+			err = unpopulate(val, &aux)
+			d.ScheduledPurgeDate = (*time.Time)(&aux)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return d.StorageBundle.unmarshalInternal(rawMsg)
 }
 
 // DeletedStorageListResult - The deleted storage account list result
@@ -868,6 +1340,61 @@ type FullBackupOperation struct {
 	StatusDetails *string `json:"statusDetails,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type FullBackupOperation.
+func (f FullBackupOperation) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "azureStorageBlobContainerUri", f.AzureStorageBlobContainerURI)
+	populate(objectMap, "endTime", (*timeUnix)(f.EndTime))
+	populate(objectMap, "error", f.Error)
+	populate(objectMap, "jobId", f.JobID)
+	populate(objectMap, "startTime", (*timeUnix)(f.StartTime))
+	populate(objectMap, "status", f.Status)
+	populate(objectMap, "statusDetails", f.StatusDetails)
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type FullBackupOperation.
+func (f *FullBackupOperation) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "azureStorageBlobContainerUri":
+			err = unpopulate(val, &f.AzureStorageBlobContainerURI)
+			delete(rawMsg, key)
+		case "endTime":
+			var aux timeUnix
+			err = unpopulate(val, &aux)
+			f.EndTime = (*time.Time)(&aux)
+			delete(rawMsg, key)
+		case "error":
+			err = unpopulate(val, &f.Error)
+			delete(rawMsg, key)
+		case "jobId":
+			err = unpopulate(val, &f.JobID)
+			delete(rawMsg, key)
+		case "startTime":
+			var aux timeUnix
+			err = unpopulate(val, &aux)
+			f.StartTime = (*time.Time)(&aux)
+			delete(rawMsg, key)
+		case "status":
+			err = unpopulate(val, &f.Status)
+			delete(rawMsg, key)
+		case "statusDetails":
+			err = unpopulate(val, &f.StatusDetails)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 // HSMSecurityDomainBeginDownloadOptions contains the optional parameters for the HSMSecurityDomain.BeginDownload method.
 type HSMSecurityDomainBeginDownloadOptions struct {
 	// placeholder for future optional parameters
@@ -903,6 +1430,45 @@ type IssuerAttributes struct {
 
 	// READ-ONLY; Last updated time in UTC.
 	Updated *time.Time `json:"updated,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type IssuerAttributes.
+func (i IssuerAttributes) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "created", (*timeUnix)(i.Created))
+	populate(objectMap, "enabled", i.Enabled)
+	populate(objectMap, "updated", (*timeUnix)(i.Updated))
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type IssuerAttributes.
+func (i *IssuerAttributes) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "created":
+			var aux timeUnix
+			err = unpopulate(val, &aux)
+			i.Created = (*time.Time)(&aux)
+			delete(rawMsg, key)
+		case "enabled":
+			err = unpopulate(val, &i.Enabled)
+			delete(rawMsg, key)
+		case "updated":
+			var aux timeUnix
+			err = unpopulate(val, &aux)
+			i.Updated = (*time.Time)(&aux)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 // IssuerBundle - The issuer for Key Vault certificate.
@@ -1027,6 +1593,37 @@ type KeyAttributes struct {
 	RecoveryLevel *DeletionRecoveryLevel `json:"recoveryLevel,omitempty" azure:"ro"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type KeyAttributes.
+func (k KeyAttributes) MarshalJSON() ([]byte, error) {
+	objectMap := k.Attributes.marshalInternal()
+	populate(objectMap, "recoverableDays", k.RecoverableDays)
+	populate(objectMap, "recoveryLevel", k.RecoveryLevel)
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type KeyAttributes.
+func (k *KeyAttributes) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "recoverableDays":
+			err = unpopulate(val, &k.RecoverableDays)
+			delete(rawMsg, key)
+		case "recoveryLevel":
+			err = unpopulate(val, &k.RecoveryLevel)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return k.Attributes.unmarshalInternal(rawMsg)
+}
+
 // KeyBundle - A KeyBundle consisting of a WebKey plus its attributes.
 type KeyBundle struct {
 	// The key management attributes.
@@ -1048,6 +1645,15 @@ func (k KeyBundle) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
+// UnmarshalJSON implements the json.Unmarshaller interface for type KeyBundle.
+func (k *KeyBundle) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	return k.unmarshalInternal(rawMsg)
+}
+
 func (k KeyBundle) marshalInternal() map[string]interface{} {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "attributes", k.Attributes)
@@ -1055,6 +1661,30 @@ func (k KeyBundle) marshalInternal() map[string]interface{} {
 	populate(objectMap, "managed", k.Managed)
 	populate(objectMap, "tags", k.Tags)
 	return objectMap
+}
+
+func (k *KeyBundle) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "attributes":
+			err = unpopulate(val, &k.Attributes)
+			delete(rawMsg, key)
+		case "key":
+			err = unpopulate(val, &k.Key)
+			delete(rawMsg, key)
+		case "managed":
+			err = unpopulate(val, &k.Managed)
+			delete(rawMsg, key)
+		case "tags":
+			err = unpopulate(val, &k.Tags)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 // KeyCreateParameters - The key create parameters.
@@ -1138,6 +1768,15 @@ func (k KeyItem) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
+// UnmarshalJSON implements the json.Unmarshaller interface for type KeyItem.
+func (k *KeyItem) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	return k.unmarshalInternal(rawMsg)
+}
+
 func (k KeyItem) marshalInternal() map[string]interface{} {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "attributes", k.Attributes)
@@ -1145,6 +1784,30 @@ func (k KeyItem) marshalInternal() map[string]interface{} {
 	populate(objectMap, "managed", k.Managed)
 	populate(objectMap, "tags", k.Tags)
 	return objectMap
+}
+
+func (k *KeyItem) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "attributes":
+			err = unpopulate(val, &k.Attributes)
+			delete(rawMsg, key)
+		case "kid":
+			err = unpopulate(val, &k.Kid)
+			delete(rawMsg, key)
+		case "managed":
+			err = unpopulate(val, &k.Managed)
+			delete(rawMsg, key)
+		case "tags":
+			err = unpopulate(val, &k.Tags)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 // KeyListResult - The key list result.
@@ -1847,6 +2510,57 @@ type RestoreOperation struct {
 	StatusDetails *string `json:"statusDetails,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type RestoreOperation.
+func (r RestoreOperation) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "endTime", (*timeUnix)(r.EndTime))
+	populate(objectMap, "error", r.Error)
+	populate(objectMap, "jobId", r.JobID)
+	populate(objectMap, "startTime", (*timeUnix)(r.StartTime))
+	populate(objectMap, "status", r.Status)
+	populate(objectMap, "statusDetails", r.StatusDetails)
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type RestoreOperation.
+func (r *RestoreOperation) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "endTime":
+			var aux timeUnix
+			err = unpopulate(val, &aux)
+			r.EndTime = (*time.Time)(&aux)
+			delete(rawMsg, key)
+		case "error":
+			err = unpopulate(val, &r.Error)
+			delete(rawMsg, key)
+		case "jobId":
+			err = unpopulate(val, &r.JobID)
+			delete(rawMsg, key)
+		case "startTime":
+			var aux timeUnix
+			err = unpopulate(val, &aux)
+			r.StartTime = (*time.Time)(&aux)
+			delete(rawMsg, key)
+		case "status":
+			err = unpopulate(val, &r.Status)
+			delete(rawMsg, key)
+		case "statusDetails":
+			err = unpopulate(val, &r.StatusDetails)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 type RestoreOperationParameters struct {
 	// REQUIRED; The Folder name of the blob where the previous successful full backup was stored
 	FolderToRestore *string `json:"folderToRestore,omitempty"`
@@ -2065,6 +2779,53 @@ type SasDefinitionAttributes struct {
 	Updated *time.Time `json:"updated,omitempty" azure:"ro"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type SasDefinitionAttributes.
+func (s SasDefinitionAttributes) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "created", (*timeUnix)(s.Created))
+	populate(objectMap, "enabled", s.Enabled)
+	populate(objectMap, "recoverableDays", s.RecoverableDays)
+	populate(objectMap, "recoveryLevel", s.RecoveryLevel)
+	populate(objectMap, "updated", (*timeUnix)(s.Updated))
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type SasDefinitionAttributes.
+func (s *SasDefinitionAttributes) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "created":
+			var aux timeUnix
+			err = unpopulate(val, &aux)
+			s.Created = (*time.Time)(&aux)
+			delete(rawMsg, key)
+		case "enabled":
+			err = unpopulate(val, &s.Enabled)
+			delete(rawMsg, key)
+		case "recoverableDays":
+			err = unpopulate(val, &s.RecoverableDays)
+			delete(rawMsg, key)
+		case "recoveryLevel":
+			err = unpopulate(val, &s.RecoveryLevel)
+			delete(rawMsg, key)
+		case "updated":
+			var aux timeUnix
+			err = unpopulate(val, &aux)
+			s.Updated = (*time.Time)(&aux)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 // SasDefinitionBundle - A SAS definition bundle consists of key vault SAS definition details plus its attributes.
 type SasDefinitionBundle struct {
 	// READ-ONLY; The SAS definition attributes.
@@ -2096,6 +2857,15 @@ func (s SasDefinitionBundle) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
+// UnmarshalJSON implements the json.Unmarshaller interface for type SasDefinitionBundle.
+func (s *SasDefinitionBundle) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	return s.unmarshalInternal(rawMsg)
+}
+
 func (s SasDefinitionBundle) marshalInternal() map[string]interface{} {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "attributes", s.Attributes)
@@ -2106,6 +2876,39 @@ func (s SasDefinitionBundle) marshalInternal() map[string]interface{} {
 	populate(objectMap, "templateUri", s.TemplateURI)
 	populate(objectMap, "validityPeriod", s.ValidityPeriod)
 	return objectMap
+}
+
+func (s *SasDefinitionBundle) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "attributes":
+			err = unpopulate(val, &s.Attributes)
+			delete(rawMsg, key)
+		case "id":
+			err = unpopulate(val, &s.ID)
+			delete(rawMsg, key)
+		case "sasType":
+			err = unpopulate(val, &s.SasType)
+			delete(rawMsg, key)
+		case "sid":
+			err = unpopulate(val, &s.SecretID)
+			delete(rawMsg, key)
+		case "tags":
+			err = unpopulate(val, &s.Tags)
+			delete(rawMsg, key)
+		case "templateUri":
+			err = unpopulate(val, &s.TemplateURI)
+			delete(rawMsg, key)
+		case "validityPeriod":
+			err = unpopulate(val, &s.ValidityPeriod)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 // SasDefinitionCreateParameters - The SAS definition create parameters.
@@ -2159,6 +2962,15 @@ func (s SasDefinitionItem) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
+// UnmarshalJSON implements the json.Unmarshaller interface for type SasDefinitionItem.
+func (s *SasDefinitionItem) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	return s.unmarshalInternal(rawMsg)
+}
+
 func (s SasDefinitionItem) marshalInternal() map[string]interface{} {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "attributes", s.Attributes)
@@ -2166,6 +2978,30 @@ func (s SasDefinitionItem) marshalInternal() map[string]interface{} {
 	populate(objectMap, "sid", s.SecretID)
 	populate(objectMap, "tags", s.Tags)
 	return objectMap
+}
+
+func (s *SasDefinitionItem) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "attributes":
+			err = unpopulate(val, &s.Attributes)
+			delete(rawMsg, key)
+		case "id":
+			err = unpopulate(val, &s.ID)
+			delete(rawMsg, key)
+		case "sid":
+			err = unpopulate(val, &s.SecretID)
+			delete(rawMsg, key)
+		case "tags":
+			err = unpopulate(val, &s.Tags)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 // SasDefinitionListResult - The storage account SAS definition list result.
@@ -2226,6 +3062,37 @@ type SecretAttributes struct {
 	RecoveryLevel *DeletionRecoveryLevel `json:"recoveryLevel,omitempty" azure:"ro"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type SecretAttributes.
+func (s SecretAttributes) MarshalJSON() ([]byte, error) {
+	objectMap := s.Attributes.marshalInternal()
+	populate(objectMap, "recoverableDays", s.RecoverableDays)
+	populate(objectMap, "recoveryLevel", s.RecoveryLevel)
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type SecretAttributes.
+func (s *SecretAttributes) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "recoverableDays":
+			err = unpopulate(val, &s.RecoverableDays)
+			delete(rawMsg, key)
+		case "recoveryLevel":
+			err = unpopulate(val, &s.RecoveryLevel)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return s.Attributes.unmarshalInternal(rawMsg)
+}
+
 // SecretBundle - A secret consisting of a value, id and its attributes.
 type SecretBundle struct {
 	// The secret management attributes.
@@ -2256,6 +3123,15 @@ func (s SecretBundle) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
+// UnmarshalJSON implements the json.Unmarshaller interface for type SecretBundle.
+func (s *SecretBundle) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	return s.unmarshalInternal(rawMsg)
+}
+
 func (s SecretBundle) marshalInternal() map[string]interface{} {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "attributes", s.Attributes)
@@ -2266,6 +3142,39 @@ func (s SecretBundle) marshalInternal() map[string]interface{} {
 	populate(objectMap, "tags", s.Tags)
 	populate(objectMap, "value", s.Value)
 	return objectMap
+}
+
+func (s *SecretBundle) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "attributes":
+			err = unpopulate(val, &s.Attributes)
+			delete(rawMsg, key)
+		case "contentType":
+			err = unpopulate(val, &s.ContentType)
+			delete(rawMsg, key)
+		case "id":
+			err = unpopulate(val, &s.ID)
+			delete(rawMsg, key)
+		case "kid":
+			err = unpopulate(val, &s.Kid)
+			delete(rawMsg, key)
+		case "managed":
+			err = unpopulate(val, &s.Managed)
+			delete(rawMsg, key)
+		case "tags":
+			err = unpopulate(val, &s.Tags)
+			delete(rawMsg, key)
+		case "value":
+			err = unpopulate(val, &s.Value)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 // SecretItem - The secret item containing secret metadata.
@@ -2292,6 +3201,15 @@ func (s SecretItem) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
+// UnmarshalJSON implements the json.Unmarshaller interface for type SecretItem.
+func (s *SecretItem) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	return s.unmarshalInternal(rawMsg)
+}
+
 func (s SecretItem) marshalInternal() map[string]interface{} {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "attributes", s.Attributes)
@@ -2300,6 +3218,33 @@ func (s SecretItem) marshalInternal() map[string]interface{} {
 	populate(objectMap, "managed", s.Managed)
 	populate(objectMap, "tags", s.Tags)
 	return objectMap
+}
+
+func (s *SecretItem) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "attributes":
+			err = unpopulate(val, &s.Attributes)
+			delete(rawMsg, key)
+		case "contentType":
+			err = unpopulate(val, &s.ContentType)
+			delete(rawMsg, key)
+		case "id":
+			err = unpopulate(val, &s.ID)
+			delete(rawMsg, key)
+		case "managed":
+			err = unpopulate(val, &s.Managed)
+			delete(rawMsg, key)
+		case "tags":
+			err = unpopulate(val, &s.Tags)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 // SecretListResult - The secret list result.
@@ -2471,6 +3416,57 @@ type SelectiveKeyRestoreOperation struct {
 	StatusDetails *string `json:"statusDetails,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaller interface for type SelectiveKeyRestoreOperation.
+func (s SelectiveKeyRestoreOperation) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "endTime", (*timeUnix)(s.EndTime))
+	populate(objectMap, "error", s.Error)
+	populate(objectMap, "jobId", s.JobID)
+	populate(objectMap, "startTime", (*timeUnix)(s.StartTime))
+	populate(objectMap, "status", s.Status)
+	populate(objectMap, "statusDetails", s.StatusDetails)
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type SelectiveKeyRestoreOperation.
+func (s *SelectiveKeyRestoreOperation) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "endTime":
+			var aux timeUnix
+			err = unpopulate(val, &aux)
+			s.EndTime = (*time.Time)(&aux)
+			delete(rawMsg, key)
+		case "error":
+			err = unpopulate(val, &s.Error)
+			delete(rawMsg, key)
+		case "jobId":
+			err = unpopulate(val, &s.JobID)
+			delete(rawMsg, key)
+		case "startTime":
+			var aux timeUnix
+			err = unpopulate(val, &aux)
+			s.StartTime = (*time.Time)(&aux)
+			delete(rawMsg, key)
+		case "status":
+			err = unpopulate(val, &s.Status)
+			delete(rawMsg, key)
+		case "statusDetails":
+			err = unpopulate(val, &s.StatusDetails)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 type SelectiveKeyRestoreOperationParameters struct {
 	// REQUIRED; The Folder name of the blob where the previous successful full backup was stored
 	Folder *string `json:"folder,omitempty"`
@@ -2497,6 +3493,53 @@ type StorageAccountAttributes struct {
 
 	// READ-ONLY; Last updated time in UTC.
 	Updated *time.Time `json:"updated,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type StorageAccountAttributes.
+func (s StorageAccountAttributes) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "created", (*timeUnix)(s.Created))
+	populate(objectMap, "enabled", s.Enabled)
+	populate(objectMap, "recoverableDays", s.RecoverableDays)
+	populate(objectMap, "recoveryLevel", s.RecoveryLevel)
+	populate(objectMap, "updated", (*timeUnix)(s.Updated))
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type StorageAccountAttributes.
+func (s *StorageAccountAttributes) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "created":
+			var aux timeUnix
+			err = unpopulate(val, &aux)
+			s.Created = (*time.Time)(&aux)
+			delete(rawMsg, key)
+		case "enabled":
+			err = unpopulate(val, &s.Enabled)
+			delete(rawMsg, key)
+		case "recoverableDays":
+			err = unpopulate(val, &s.RecoverableDays)
+			delete(rawMsg, key)
+		case "recoveryLevel":
+			err = unpopulate(val, &s.RecoveryLevel)
+			delete(rawMsg, key)
+		case "updated":
+			var aux timeUnix
+			err = unpopulate(val, &aux)
+			s.Updated = (*time.Time)(&aux)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 // StorageAccountCreateParameters - The storage account create parameters.
@@ -2553,6 +3596,15 @@ func (s StorageAccountItem) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
+// UnmarshalJSON implements the json.Unmarshaller interface for type StorageAccountItem.
+func (s *StorageAccountItem) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	return s.unmarshalInternal(rawMsg)
+}
+
 func (s StorageAccountItem) marshalInternal() map[string]interface{} {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "attributes", s.Attributes)
@@ -2560,6 +3612,30 @@ func (s StorageAccountItem) marshalInternal() map[string]interface{} {
 	populate(objectMap, "resourceId", s.ResourceID)
 	populate(objectMap, "tags", s.Tags)
 	return objectMap
+}
+
+func (s *StorageAccountItem) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "attributes":
+			err = unpopulate(val, &s.Attributes)
+			delete(rawMsg, key)
+		case "id":
+			err = unpopulate(val, &s.ID)
+			delete(rawMsg, key)
+		case "resourceId":
+			err = unpopulate(val, &s.ResourceID)
+			delete(rawMsg, key)
+		case "tags":
+			err = unpopulate(val, &s.Tags)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 // StorageAccountRegenerteKeyParameters - The storage account key regenerate parameters.
@@ -2627,6 +3703,15 @@ func (s StorageBundle) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
+// UnmarshalJSON implements the json.Unmarshaller interface for type StorageBundle.
+func (s *StorageBundle) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	return s.unmarshalInternal(rawMsg)
+}
+
 func (s StorageBundle) marshalInternal() map[string]interface{} {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "activeKeyName", s.ActiveKeyName)
@@ -2637,6 +3722,39 @@ func (s StorageBundle) marshalInternal() map[string]interface{} {
 	populate(objectMap, "resourceId", s.ResourceID)
 	populate(objectMap, "tags", s.Tags)
 	return objectMap
+}
+
+func (s *StorageBundle) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "activeKeyName":
+			err = unpopulate(val, &s.ActiveKeyName)
+			delete(rawMsg, key)
+		case "attributes":
+			err = unpopulate(val, &s.Attributes)
+			delete(rawMsg, key)
+		case "autoRegenerateKey":
+			err = unpopulate(val, &s.AutoRegenerateKey)
+			delete(rawMsg, key)
+		case "id":
+			err = unpopulate(val, &s.ID)
+			delete(rawMsg, key)
+		case "regenerationPeriod":
+			err = unpopulate(val, &s.RegenerationPeriod)
+			delete(rawMsg, key)
+		case "resourceId":
+			err = unpopulate(val, &s.ResourceID)
+			delete(rawMsg, key)
+		case "tags":
+			err = unpopulate(val, &s.Tags)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 // StorageListResult - The storage accounts list result.
@@ -2745,4 +3863,11 @@ func populate(m map[string]interface{}, k string, v interface{}) {
 	} else if !reflect.ValueOf(v).IsNil() {
 		m[k] = v
 	}
+}
+
+func unpopulate(data json.RawMessage, v interface{}) error {
+	if data == nil {
+		return nil
+	}
+	return json.Unmarshal(data, v)
 }

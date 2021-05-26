@@ -171,6 +171,7 @@ function determineMarshallersForObj(obj: ObjectSchema): Marshallers {
   // things that require custom marshalling and/or unmarshalling:
   //   needsDateTimeMarshalling M, U
   //   needsDateMarshalling     M, U
+  //   needsUnixTimeMarshalling M, U
   //   hasAdditionalProperties  M, U
   //   hasPolymorphicField      M, U
   //   discriminatorValue       M, U
@@ -180,6 +181,7 @@ function determineMarshallersForObj(obj: ObjectSchema): Marshallers {
   let needsM = false, needsU = false;
   if (obj.language.go!.needsDateTimeMarshalling ||
     obj.language.go!.needsDateMarshalling ||
+    obj.language.go!.needsUnixTimeMarshalling ||
     hasAdditionalProperties(obj) ||
     hasPolymorphicField(obj) ||
     obj.discriminatorValue) {
