@@ -76,7 +76,7 @@ const tables = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/228
 generateFromReadme(tables, 'package-2019-02', 'test/tables/2019-02-02/aztables', '--security=AADToken --security-scopes="https://tables.azure.com/.default" --module=aztables --openapi-type="data-plane" --export-clients --azure-validator=false');
 
 const keyvault = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/1e2c9f3ec93078da8078389941531359e274f32a/specification/keyvault/data-plane/readme.md';
-generateFromReadme(keyvault, 'package-7.2', 'test/keyvault/7.2/azkeyvault', '--security=AADToken --security-scopes="https://vault.azure.com/.default" --module=azkeyvault --openapi-type="data-plane" --export-clients');
+generateFromReadme(keyvault, 'package-7.2', 'test/keyvault/7.2/azkeyvault', '--security=AADToken --security-scopes="https://vault.azure.net/.default" --module=azkeyvault --openapi-type="data-plane" --export-clients');
 
 // helper to log the package being generated before invocation
 function generate(inputFile, outputDir, additionalArgs) {

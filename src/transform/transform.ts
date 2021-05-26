@@ -5,7 +5,7 @@
 
 import { comment, KnownMediaType, serialize } from '@azure-tools/codegen';
 import { Host, startSession, Session } from '@autorest/extension-base';
-import { ObjectSchema, ArraySchema, ChoiceValue, codeModelSchema, CodeModel, DateTimeSchema, GroupProperty, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema, ConstantSchema, Request } from '@autorest/codemodel';
+import { ObjectSchema, ArraySchema, ByteArraySchema, ChoiceValue, codeModelSchema, CodeModel, DateTimeSchema, GroupProperty, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema, ConstantSchema, Request } from '@autorest/codemodel';
 import { clone, items, values } from '@azure-tools/linq';
 import { aggregateParameters, getResponse, hasAdditionalProperties, isPageableOperation, isObjectSchema, isSchemaResponse, isTypePassedByValue, PagerInfo, isLROOperation, PollerInfo } from '../common/helpers';
 import { namer, protocolMethods } from './namer';
@@ -112,6 +112,8 @@ async function process(session: Session<CodeModel>) {
         // mark that we need custom XML unmarshalling for a dictionary
         prop.language.go!.needsXMLDictionaryUnmarshalling = true;
         session.model.language.go!.needsXMLDictionaryUnmarshalling = true;
+      } else if (prop.schema.type === SchemaType.ByteArray) {
+        obj.language.go!.byteArrayFormat = (<ByteArraySchema>prop.schema).format;
       }
       if (prop.schema.type === SchemaType.Array || prop.schema.type === SchemaType.ByteArray || prop.schema.type === SchemaType.Dictionary) {
         obj.language.go!.hasArrayMap = true;

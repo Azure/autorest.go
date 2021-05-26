@@ -12,7 +12,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 )
 
-var scopes = []string{"https://vault.azure.com/.default"}
+var scopes = []string{"https://vault.azure.net/.default"}
 
 // ConnectionOptions contains configuration settings for the connection's pipeline.
 // All zero-value fields will be initialized with their default values.

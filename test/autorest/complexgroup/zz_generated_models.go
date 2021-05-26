@@ -102,8 +102,28 @@ type ByteWrapper struct {
 // MarshalJSON implements the json.Marshaller interface for type ByteWrapper.
 func (b ByteWrapper) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	populate(objectMap, "field", b.Field)
+	populateByteArray(objectMap, "field", b.Field, azcore.Base64StdFormat)
 	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type ByteWrapper.
+func (b *ByteWrapper) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "field":
+			err = azcore.DecodeByteArray(string(val), &b.Field, azcore.Base64StdFormat)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 type Cat struct {
@@ -961,7 +981,7 @@ type Sawshark struct {
 // MarshalJSON implements the json.Marshaller interface for type Sawshark.
 func (s Sawshark) MarshalJSON() ([]byte, error) {
 	objectMap := s.Shark.marshalInternal("sawshark")
-	populate(objectMap, "picture", s.Picture)
+	populateByteArray(objectMap, "picture", s.Picture, azcore.Base64StdFormat)
 	return json.Marshal(objectMap)
 }
 
@@ -975,7 +995,7 @@ func (s *Sawshark) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "picture":
-			err = unpopulate(val, &s.Picture)
+			err = azcore.DecodeByteArray(string(val), &s.Picture, azcore.Base64StdFormat)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -1129,6 +1149,16 @@ func populate(m map[string]interface{}, k string, v interface{}) {
 		m[k] = nil
 	} else if !reflect.ValueOf(v).IsNil() {
 		m[k] = v
+	}
+}
+
+func populateByteArray(m map[string]interface{}, k string, b []byte, f azcore.Base64Encoding) {
+	if len(b) == 0 {
+		return
+	} else if azcore.IsNullValue(b) {
+		m[k] = nil
+	} else if !reflect.ValueOf(b).IsNil() {
+		m[k] = azcore.EncodeByteArray(b, f)
 	}
 }
 
