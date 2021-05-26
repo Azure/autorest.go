@@ -106,6 +106,8 @@ async function process(session: Session<CodeModel>) {
         obj.language.go!.needsDateTimeMarshalling = true;
       } else if (prop.schema.type === SchemaType.Date) {
         obj.language.go!.needsDateMarshalling = true;
+      } else if (prop.schema.type === SchemaType.UnixTime) {
+        obj.language.go!.needsUnixTimeMarshalling = true;
       } else if (prop.schema.type === SchemaType.Dictionary && obj.language.go!.marshallingFormat === 'xml') {
         // mark that we need custom XML unmarshalling for a dictionary
         prop.language.go!.needsXMLDictionaryUnmarshalling = true;

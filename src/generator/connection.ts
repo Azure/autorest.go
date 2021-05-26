@@ -100,7 +100,8 @@ function generateContent(session: Session<CodeModel>, imports: ImportManager): s
     for (const param of values(hostParams)) {
       text += `\t${param.language.go!.name} ${param.schema.language.go!.name}\n`;
     }
-  } else {
+  } else if (session.model.language.go!.hostParams || getHostParam(session.model.globalParameters)) {
+    // there's a client host param
     text += `\tu string\n`;
   }
   text += `\tp azcore.Pipeline\n`;
@@ -129,7 +130,7 @@ function generateContent(session: Session<CodeModel>, imports: ImportManager): s
   var ctorParamsSig: string;
   var ctorParams: string;
   if (session.model.language.go!.hostParams) {
-    // parameterized host
+    // client parameterized host
     const hostParams = <Array<Parameter>>session.model.language.go!.hostParams;
     const fullParams = new Array<string>();
     const params = new Array<string>();
@@ -138,19 +139,22 @@ function generateContent(session: Session<CodeModel>, imports: ImportManager): s
       fullParams.push(`${paramName} ${formatParameterTypeName(param)}`);
       params.push(paramName);
     }
-    ctorParamsSig = fullParams.join(', ');
+    ctorParamsSig = `${fullParams.join(', ')}, `;
     ctorParams = params.join(', ');
-  } else {
+  } else if (getHostParam(session.model.globalParameters)) {
     // swagger host
     const hostParam = getHostParam(session.model.globalParameters);
     const hostParamName = hostParam!.language.go!.name;
-    ctorParamsSig = `${hostParamName} ${hostParam!.schema.language.go!.name}`;
+    ctorParamsSig = `${hostParamName} ${hostParam!.schema.language.go!.name}, `;
     ctorParams = hostParamName;
+  } else {
+    // method parameterized host
+    ctorParamsSig = ctorParams = '';
   }
 
   text += `// ${newConnection} creates an instance of the ${connection} type with the specified endpoint.\n`;
   text += '// Pass nil to accept the default options; this is the same as passing a zero-value options.\n';
-  text += `func ${newConnection}(${ctorParamsSig}, ${credParam}options *${connectionOptions}) *${connection} {\n`;
+  text += `func ${newConnection}(${ctorParamsSig}${credParam}options *${connectionOptions}) *${connection} {\n`;
   text += '\tif options == nil {\n';
   text += `\t\toptions = &${connectionOptions}{}\n`;
   text += '\t}\n';
@@ -187,12 +191,15 @@ function generateContent(session: Session<CodeModel>, imports: ImportManager): s
         }
         text += `\thostURL = strings.ReplaceAll(hostURL, "{${hostParam.language.go!.serializedName}}", ${pointer}${hostParam.language.go!.name})\n`;
       }
-      hostURL = 'hostURL';
-    } else {
+      hostURL = 'u: hostURL, ';
+    } else if (ctorParams !== '') {
       // swagger host, the host URL is the only ctor param
-      hostURL = ctorParams;
+      hostURL = `u: ${ctorParams}, `;
+    } else {
+      // method parameterized host
+      hostURL = '';
     }
-    text += `\treturn &${connection}{u: ${hostURL}, p: ${pipeline}}\n`;
+    text += `\treturn &${connection}{${hostURL}p: ${pipeline}}\n`;
     text += '}\n\n';
     text += '// Endpoint returns the connection\'s endpoint.\n';
     text += `func (c *${connection}) Endpoint() string {\n`;
