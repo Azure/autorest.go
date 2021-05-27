@@ -5,10 +5,12 @@ package complexgroup
 
 import (
 	"context"
+	"encoding/json"
 	"net/http"
 	"testing"
 	"time"
 
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 	"github.com/google/go-cmp/cmp"
 )
@@ -152,6 +154,25 @@ func TestPrimitivePutBool(t *testing.T) {
 	}
 	if s := result.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
+	}
+}
+
+func TestByteWrapperJSONNull(t *testing.T) {
+	bw := ByteWrapper{}
+	b, err := json.Marshal(bw)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if string(b) != "{}" {
+		t.Fatalf("unexpected value %s", string(b))
+	}
+	bw.Field = azcore.NullValue([]byte{}).([]byte)
+	b, err = json.Marshal(bw)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if string(b) != `{"field":null}` {
+		t.Fatalf("unexpected value %s", string(b))
 	}
 }
 

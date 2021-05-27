@@ -5,7 +5,7 @@
 
 import { Session } from '@autorest/extension-base';
 import { comment } from '@azure-tools/codegen';
-import { CodeModel, ComplexSchema, DictionarySchema, GroupProperty, ObjectSchema, Language, SchemaType, Parameter, Property } from '@autorest/codemodel';
+import { ByteArraySchema, CodeModel, ComplexSchema, DictionarySchema, GroupProperty, ObjectSchema, Language, SchemaType, Parameter, Property } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
 import { isArraySchema, isObjectSchema, hasAdditionalProperties, hasPolymorphicField, commentLength } from '../common/helpers';
 import { contentPreamble, sortAscending } from './helpers';
@@ -33,6 +33,7 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
   // structs
   let needsJSONPopulate = false;
   let needsJSONUnpopulate = false;
+  let needsJSONPopulateByteArray = false;
   structs.sort((a: StructDef, b: StructDef) => { return sortAscending(a.Language.name, b.Language.name) });
   for (const struct of values(structs)) {
     text += struct.discriminator();
@@ -50,6 +51,9 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
     if (struct.HasJSONUnmarshaller) {
       needsJSONUnpopulate = true;
     }
+    if (struct.HasJSONByteArray) {
+      needsJSONPopulateByteArray = true;
+    }
   }
   if (needsJSONPopulate) {
     text += 'func populate(m map[string]interface{}, k string, v interface{}) {\n';
@@ -59,6 +63,17 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
     text += '\t\tm[k] = nil\n';
     text += '\t} else if !reflect.ValueOf(v).IsNil() {\n';
     text += '\t\tm[k] = v\n';
+    text += '\t}\n';
+    text += '}\n\n';
+  }
+  if (needsJSONPopulateByteArray) {
+    text += 'func populateByteArray(m map[string]interface{}, k string, b []byte, f azcore.Base64Encoding) {\n';
+    text += '\tif azcore.IsNullValue(b) {\n';
+    text += '\t\tm[k] = nil\n';
+    text += '\t} else if len(b) == 0 {\n';
+    text += '\t\treturn\n';
+    text += '\t} else {\n';
+    text += '\t\tm[k] = azcore.EncodeByteArray(b, f)\n';
     text += '\t}\n';
     text += '}\n\n';
   }
@@ -126,6 +141,9 @@ function generateStructs(imports: ImportManager, objects?: ObjectSchema[]): Stru
       imports.add('reflect');
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
       structDef.HasJSONMarshaller = true;
+      if (obj.language.go!.byteArrayFormat) {
+        structDef.HasJSONByteArray = true;
+      }
       generateJSONMarshaller(imports, obj, structDef, parentType);
     }
     if (needs.U) {
@@ -175,6 +193,7 @@ function determineMarshallersForObj(obj: ObjectSchema): Marshallers {
   //   hasAdditionalProperties  M, U
   //   hasPolymorphicField      M, U
   //   discriminatorValue       M, U
+  //   byteArrayFormat          M, U
   //   hasArrayMap              M
   //   needsPatchMarshaller     M
 
@@ -184,7 +203,8 @@ function determineMarshallersForObj(obj: ObjectSchema): Marshallers {
     obj.language.go!.needsUnixTimeMarshalling ||
     hasAdditionalProperties(obj) ||
     hasPolymorphicField(obj) ||
-    obj.discriminatorValue) {
+    obj.discriminatorValue ||
+    obj.language.go!.byteArrayFormat) {
     needsM = needsU = true;
   } else if (obj.language.go!.hasArrayMap ||
     obj.language.go!.needsPatchMarshaller) {
@@ -331,28 +351,7 @@ function generateInternalMarshaller(obj: ObjectSchema, structDef: StructDef, par
   } else {
     marshalInteral += '\tobjectMap := make(map[string]interface{})\n';
   }
-  for (const prop of values(structDef.Properties)) {
-    if (prop.language.go!.isAdditionalProperties) {
-      continue;
-    }
-    if (prop.isDiscriminator) {
-      marshalInteral += `\t${receiver}.${prop.language.go!.name} = &${paramName}\n`;
-      marshalInteral += `\tobjectMap["${prop.serializedName}"] = ${receiver}.${prop.language.go!.name}\n`;
-    } else {
-      let source = `${receiver}.${prop.language.go!.name}`;
-      if (prop.schema.language.go!.internalTimeType) {
-        source = `(*${prop.schema.language.go!.internalTimeType})(${receiver}.${prop.language.go!.name})`;
-      }
-      marshalInteral += `\tpopulate(objectMap, "${prop.serializedName}", ${source})\n`;
-    }
-  }
-  if (hasAdditionalProperties(obj)) {
-    marshalInteral += `\tif ${receiver}.AdditionalProperties != nil {\n`;
-    marshalInteral += `\t\tfor key, val := range ${receiver}.AdditionalProperties {\n`;
-    marshalInteral += '\t\t\tobjectMap[key] = val\n';
-    marshalInteral += '\t\t}\n';;
-    marshalInteral += '\t}\n';
-  }
+  marshalInteral += generateJSONMarshallerBody(obj, structDef);
   marshalInteral += '\treturn objectMap\n';
   marshalInteral += '}\n\n';
   structDef.Methods.push({ name: 'marshalInternal', desc: '', text: marshalInteral });
@@ -395,27 +394,45 @@ function generateJSONMarshaller(imports: ImportManager, obj: ObjectSchema, struc
     } else {
       marshaller += '\tobjectMap := make(map[string]interface{})\n';
     }
-    for (const prop of values(structDef.Properties)) {
-      if (prop.language.go!.isAdditionalProperties) {
-        continue;
+    marshaller += generateJSONMarshallerBody(obj, structDef);
+  }
+  marshaller += '\treturn json.Marshal(objectMap)\n';
+  marshaller += '}\n\n';
+  structDef.Methods.push({ name: 'MarshalJSON', desc: `MarshalJSON implements the json.Marshaller interface for type ${typeName}.`, text: marshaller });
+}
+
+function generateJSONMarshallerBody(obj: ObjectSchema, structDef: StructDef): string {
+  const receiver = structDef.receiverName();
+  let marshaller = '';
+  for (const prop of values(structDef.Properties)) {
+    if (prop.language.go!.isAdditionalProperties) {
+      continue;
+    }
+    if (prop.isDiscriminator) {
+      marshaller += `\t${receiver}.${prop.language.go!.name} = &discValue\n`;
+      marshaller += `\tobjectMap["${prop.serializedName}"] = ${receiver}.${prop.language.go!.name}\n`;
+    } else if (prop.schema.type === SchemaType.ByteArray) {
+      let base64Format = 'Std';
+      if ((<ByteArraySchema>prop.schema).format === 'base64url') {
+        base64Format = 'URL';
       }
+      marshaller += `\tpopulateByteArray(objectMap, "${prop.serializedName}", ${receiver}.${prop.language.go!.name}, azcore.Base64${base64Format}Format)\n`;
+    } else {
       let source = `${receiver}.${prop.language.go!.name}`;
       if (prop.schema.language.go!.internalTimeType) {
         source = `(*${prop.schema.language.go!.internalTimeType})(${receiver}.${prop.language.go!.name})`;
       }
       marshaller += `\tpopulate(objectMap, "${prop.serializedName}", ${source})\n`;
     }
-    if (hasAdditionalProperties(obj)) {
-      marshaller += `\tif ${receiver}.AdditionalProperties != nil {\n`;
-      marshaller += `\t\tfor key, val := range ${receiver}.AdditionalProperties {\n`;
-      marshaller += '\t\t\tobjectMap[key] = val\n';
-      marshaller += '\t\t}\n';;
-      marshaller += '\t}\n';
-    }
   }
-  marshaller += '\treturn json.Marshal(objectMap)\n';
-  marshaller += '}\n\n';
-  structDef.Methods.push({ name: 'MarshalJSON', desc: `MarshalJSON implements the json.Marshaller interface for type ${typeName}.`, text: marshaller });
+  if (hasAdditionalProperties(obj)) {
+    marshaller += `\tif ${receiver}.AdditionalProperties != nil {\n`;
+    marshaller += `\t\tfor key, val := range ${receiver}.AdditionalProperties {\n`;
+    marshaller += '\t\t\tobjectMap[key] = val\n';
+    marshaller += '\t\t}\n';;
+    marshaller += '\t}\n';
+  }
+  return marshaller;
 }
 
 function generateJSONUnmarshaller(imports: ImportManager, obj: ObjectSchema, structDef: StructDef, parentType?: ObjectSchema) {
@@ -486,6 +503,12 @@ function generateJSONUnmarshallerBody(obj: ObjectSchema, structDef: StructDef, p
         unmarshalBody += `\t\t\t\tvar aux ${prop.schema.language.go!.internalTimeType}\n`;
         unmarshalBody += '\t\t\t\terr = unpopulate(val, &aux)\n';
         unmarshalBody += `\t\t\t\t${receiver}.${prop.language.go!.name} = (*time.Time)(&aux)\n`;
+      } else if (prop.schema.type === SchemaType.ByteArray) {
+        let base64Format = 'Std';
+        if ((<ByteArraySchema>prop.schema).format === 'base64url') {
+          base64Format = 'URL';
+        }
+        unmarshalBody += `\t\t\terr = azcore.DecodeByteArray(string(val), &${receiver}.${prop.language.go!.name}, azcore.Base64${base64Format}Format)\n`;
       } else {
         unmarshalBody += `\t\t\t\terr = unpopulate(val, &${receiver}.${prop.language.go!.name})\n`;
       }

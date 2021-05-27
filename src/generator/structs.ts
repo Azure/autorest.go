@@ -26,6 +26,7 @@ export class StructDef {
   readonly ComposedOf: ObjectSchema[];
   HasJSONMarshaller: boolean;
   HasJSONUnmarshaller: boolean;
+  HasJSONByteArray: boolean;
 
   constructor(language: Language, props?: Property[], params?: Parameter[]) {
     this.Language = language;
@@ -41,6 +42,7 @@ export class StructDef {
     this.ComposedOf = new Array<ObjectSchema>();
     this.HasJSONMarshaller = false;
     this.HasJSONUnmarshaller = false;
+    this.HasJSONByteArray = false;
   }
 
   text(): string {
