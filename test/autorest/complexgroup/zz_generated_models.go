@@ -1153,11 +1153,11 @@ func populate(m map[string]interface{}, k string, v interface{}) {
 }
 
 func populateByteArray(m map[string]interface{}, k string, b []byte, f azcore.Base64Encoding) {
-	if len(b) == 0 {
-		return
-	} else if azcore.IsNullValue(b) {
+	if azcore.IsNullValue(b) {
 		m[k] = nil
-	} else if !reflect.ValueOf(b).IsNil() {
+	} else if len(b) == 0 {
+		return
+	} else {
 		m[k] = azcore.EncodeByteArray(b, f)
 	}
 }

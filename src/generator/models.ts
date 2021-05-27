@@ -68,11 +68,11 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
   }
   if (needsJSONPopulateByteArray) {
     text += 'func populateByteArray(m map[string]interface{}, k string, b []byte, f azcore.Base64Encoding) {\n';
-    text += '\tif len(b) == 0 {\n';
-    text += '\t\treturn\n';
-    text += '\t} else if azcore.IsNullValue(b) {\n';
+    text += '\tif azcore.IsNullValue(b) {\n';
     text += '\t\tm[k] = nil\n';
-    text += '\t} else if !reflect.ValueOf(b).IsNil() {\n';
+    text += '\t} else if len(b) == 0 {\n';
+    text += '\t\treturn\n';
+    text += '\t} else {\n';
     text += '\t\tm[k] = azcore.EncodeByteArray(b, f)\n';
     text += '\t}\n';
     text += '}\n\n';
