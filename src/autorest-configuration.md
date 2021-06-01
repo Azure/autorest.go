@@ -51,7 +51,6 @@ pipeline:
   #    - node -e "console.log('hi'); process.exit(0);"
 ```
 
-
 #### Help
 
 ```yaml
@@ -62,14 +61,11 @@ help-content:
     settings:
       - key: module
         type: string
-        description: The name of the module. This is the name your module will be published under.
+        description: The name of the Go module written to go.mod.  Omit to skip go.mod generation.
       - key: file-prefix
         type: string
-        description: Optional prefix to file names. For example, if you set your file prefix to "zzz", all generated code files will begin with "zzz".
-      - key: openapi-type
-        type: string
-        description: Specify if you want to generate `data-plane` code or `arm` code.
-      - key: armcore-connection
+        description: Optional prefix to file names. For example, if you set your file prefix to "zzz_", all generated code files will begin with "zzz_".
+      - key: export-clients
         type: boolean
-        description: If set to `true`, we output the code with the `Connection` type specified in [`armcore`][armcore_connection]. If not, we output a new `Connection` constructor with the generated code. Defaults to `false`
+        description: Indicates if generated clients are to be exported.  Default to true for ARM, false for data-plane.
 ```
