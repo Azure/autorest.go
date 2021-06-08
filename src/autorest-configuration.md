@@ -50,3 +50,22 @@ pipeline:
   #    - node -e "console.log('hi'); process.exit(1);"
   #    - node -e "console.log('hi'); process.exit(0);"
 ```
+
+#### Help
+
+```yaml
+help-content:
+  go: # type: Help as defined in autorest-core/help.ts
+    activationScope: go
+    categoryFriendlyName: Go Generator
+    settings:
+      - key: module
+        type: string
+        description: The name of the Go module written to go.mod.  Omit to skip go.mod generation.
+      - key: file-prefix
+        type: string
+        description: Optional prefix to file names. For example, if you set your file prefix to "zzz_", all generated code files will begin with "zzz_".
+      - key: export-clients
+        type: boolean
+        description: Indicates if generated clients are to be exported.  Default to true for ARM, false for data-plane.
+```
