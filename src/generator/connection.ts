@@ -26,17 +26,22 @@ export async function generateConnection(session: Session<CodeModel>): Promise<s
   const content = generateContent(session, imports);
   text += imports.text();
   if (session.model.security.authenticationRequired) {
-    // we only support AADToken scheme at present
-    const scheme = session.model.security.schemes[0];
-    if (scheme.type !== 'AADToken') {
-      throw new Error(`unsupported security scheme ${scheme.type}`);
+    let tokenScheme: AADTokenSecurityScheme | undefined;
+    for (const scheme of values(session.model.security.schemes)) {
+      // we only support AADToken scheme at present
+      if (scheme.type === 'AADToken') {
+        tokenScheme = <AADTokenSecurityScheme>scheme;
+        break;
+      }
     }
-    const tokenScheme = <AADTokenSecurityScheme>scheme;
+    if (!tokenScheme) {
+      throw new Error('missing or unsupported security definition scheme, the supported type is AADToken');
+    }
     // enclose each scope in double-quotes
     for (let i = 0; i < tokenScheme.scopes.length; ++i) {
       tokenScheme.scopes[i] = `"${tokenScheme.scopes[i]}"`;
     }
-    text += `var scopes = []string{${(<AADTokenSecurityScheme>scheme).scopes.join(', ')}}\n`;
+    text += `var scopes = []string{${tokenScheme.scopes.join(', ')}}\n`;
   }
   text += content;
   return text;
