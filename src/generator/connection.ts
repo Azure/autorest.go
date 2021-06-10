@@ -25,35 +25,33 @@ export async function generateConnection(session: Session<CodeModel>): Promise<s
   // content generation can add to the imports list, so execute it before emitting any text
   const content = generateContent(session, imports);
   text += imports.text();
-  if (session.model.security.authenticationRequired) {
-    let tokenScheme: AADTokenSecurityScheme | undefined;
-    for (const scheme of values(session.model.security.schemes)) {
-      // we only support AADToken scheme at present
-      if (scheme.type === 'AADToken') {
-        tokenScheme = <AADTokenSecurityScheme>scheme;
-        break;
-      }
-    }
-    if (!tokenScheme) {
-      throw new Error('missing or unsupported security definition scheme, the supported type is AADToken');
-    }
-    // enclose each scope in double-quotes
-    for (let i = 0; i < tokenScheme.scopes.length; ++i) {
-      tokenScheme.scopes[i] = `"${tokenScheme.scopes[i]}"`;
-    }
-    text += `var scopes = []string{${tokenScheme.scopes.join(', ')}}\n`;
-  }
   text += content;
   return text;
 }
 
 function generateContent(session: Session<CodeModel>, imports: ImportManager): string {
+  let text = '';
+  let usesScopes = false;
+  if (session.model.security.authenticationRequired) {
+    for (const scheme of values(session.model.security.schemes)) {
+      if (scheme.type === 'AADToken') {
+        const tokenScheme = <AADTokenSecurityScheme>scheme;
+        // enclose each scope in double-quotes
+        for (let i = 0; i < tokenScheme.scopes.length; ++i) {
+          tokenScheme.scopes[i] = `"${tokenScheme.scopes[i]}"`;
+        }
+        text += `var scopes = []string{${tokenScheme.scopes.join(', ')}}\n`;
+        usesScopes = true;
+        break;
+      }
+    }
+  }
   const forceExports = <boolean>session.model.language.go!.exportClients;
   let connectionOptions = 'ConnectionOptions';
   if (!forceExports) {
     connectionOptions = connectionOptions.uncapitalize();
   }
-  let text = `// ${connectionOptions} contains configuration settings for the connection's pipeline.\n`;
+  text += `// ${connectionOptions} contains configuration settings for the connection's pipeline.\n`;
   text += '// All zero-value fields will be initialized with their default values.\n';
   text += `type ${connectionOptions} struct {\n`;
   text += '\t// HTTPClient sets the transport for making HTTP requests.\n';
@@ -170,7 +168,11 @@ function generateContent(session: Session<CodeModel>, imports: ImportManager): s
   text += '\tpolicies = append(policies, azcore.NewRetryPolicy(&options.Retry))\n';
   text += '\tpolicies = append(policies, options.PerRetryPolicies...)\n';
   if (session.model.security.authenticationRequired) {
-    text += `\t\tpolicies = append(policies, cred.AuthenticationPolicy(azcore.AuthenticationPolicyOptions{Options: azcore.TokenRequestOptions{Scopes: scopes}}))\n`;
+    let scopes = '';
+    if (usesScopes) {
+      scopes = 'Scopes: scopes'
+    }
+    text += `\t\tpolicies = append(policies, cred.AuthenticationPolicy(azcore.AuthenticationPolicyOptions{Options: azcore.TokenRequestOptions{${scopes}}}))\n`;
   }
   text += '\tpolicies = append(policies, azcore.NewLogPolicy(&options.Logging))\n';
   const pipeline = 'azcore.NewPipeline(options.HTTPClient, policies...)';
