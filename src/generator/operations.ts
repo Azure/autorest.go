@@ -1083,21 +1083,21 @@ function generateLROBeginMethod(op: Operation, imports: ImportManager, isARM: bo
   }
   text += '\t\tRawResponse: resp.Response,\n';
   text += '\t}\n';
-  // LRO operation might have a special configuration set in x-ms-long-running-operation-options
-  // which indicates a specific url to perform the final Get operation on
-  let finalState = '';
-  if (op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via']) {
-    finalState = op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via'];
-  }
   if (isARM) {
-    text += `\tpt, err := armcore.NewPoller("${clientName}.${op.language.go!.name}", "${finalState}", resp, client.${info.protocolNaming.errorMethod})\n`;
+    // LRO operation might have a special configuration set in x-ms-long-running-operation-options
+    // which indicates a specific url to perform the final Get operation on
+    let finalState = '';
+    if (op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via']) {
+      finalState = op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via'];
+    }
+    text += `\tpt, err := armcore.NewLROPoller("${clientName}.${op.language.go!.name}", "${finalState}", resp, client.con.Pipeline(), client.${info.protocolNaming.errorMethod})\n`;
   } else {
     text += `\tpt, err := azcore.NewLROPoller("${clientName}.${op.language.go!.name}",resp, client.con.Pipeline(), client.${info.protocolNaming.errorMethod})\n`;
   }
   text += '\tif err != nil {\n';
   text += `\t\treturn ${zeroResp}, err\n`;
   text += '\t}\n';
-  text += emitPoller(op, imports, isARM);
+  text += emitPoller(op, imports);
   text += '\tresult.Poller = poller\n';
   // determine the poller response based on the name and whether is is a pageable operation
   let pollerResponse = '*http.Response';
@@ -1124,14 +1124,14 @@ function generateLROResumeMethod(op: Operation, imports: ImportManager, isARM: b
   text += `// token - The value must come from a previous call to ${op.language.go!.pollerType.name}.ResumeToken().\n`;
   text += `func (client *${clientName}) Resume${op.language.go!.name}(ctx context.Context, token string) (${returns.join(', ')}) {\n`;
   if (isARM) {
-    text += `\tpt, err := armcore.NewPollerFromResumeToken("${clientName}.${op.language.go!.name}", token, client.${info.protocolNaming.errorMethod})\n`;
+    text += `\tpt, err := armcore.NewLROPollerFromResumeToken("${clientName}.${op.language.go!.name}", token, client.con.Pipeline(), client.${info.protocolNaming.errorMethod})\n`;
   } else {
     text += `\tpt, err := azcore.NewLROPollerFromResumeToken("${clientName}.${op.language.go!.name}",token, client.con.Pipeline(), client.${info.protocolNaming.errorMethod})\n`;
   }
   text += '\tif err != nil {\n';
   text += `\t\treturn ${zeroResp}, err\n`;
   text += '\t}\n';
-  text += emitPoller(op, imports, isARM);
+  text += emitPoller(op, imports);
   text += '\tresp, err := poller.Poll(ctx)\n';
   text += '\tif err != nil {\n';
   text += `\t\treturn ${zeroResp}, err\n`;
@@ -1161,11 +1161,8 @@ function generateLROResumeMethod(op: Operation, imports: ImportManager, isARM: b
   return text;
 }
 
-function emitPoller(op: Operation, imports: ImportManager, isARM: boolean): string {
+function emitPoller(op: Operation, imports: ImportManager): string {
   let text = `\tpoller := &${internalPollerTypeName(<PollerInfo>op.language.go!.pollerType)}{\n`;
-  if (isARM) {
-    text += '\t\tpipeline: client.con.Pipeline(),\n';
-  }
   text += '\t\tpt: pt,\n';
   if (isPageableOperation(op)) {
     const statusCodes = getStatusCodes(op);

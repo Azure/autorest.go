@@ -40,13 +40,12 @@ func (client *ContainerServicesClient) BeginCreateOrUpdate(ctx context.Context, 
 	result := ContainerServicePollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("ContainerServicesClient.CreateOrUpdate", "", resp, client.createOrUpdateHandleError)
+	pt, err := armcore.NewLROPoller("ContainerServicesClient.CreateOrUpdate", "", resp, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
 		return ContainerServicePollerResponse{}, err
 	}
 	poller := &containerServicePoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ContainerServiceResponse, error) {
@@ -58,13 +57,12 @@ func (client *ContainerServicesClient) BeginCreateOrUpdate(ctx context.Context, 
 // ResumeCreateOrUpdate creates a new ContainerServicePoller from the specified resume token.
 // token - The value must come from a previous call to ContainerServicePoller.ResumeToken().
 func (client *ContainerServicesClient) ResumeCreateOrUpdate(ctx context.Context, token string) (ContainerServicePollerResponse, error) {
-	pt, err := armcore.NewPollerFromResumeToken("ContainerServicesClient.CreateOrUpdate", token, client.createOrUpdateHandleError)
+	pt, err := armcore.NewLROPollerFromResumeToken("ContainerServicesClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
 		return ContainerServicePollerResponse{}, err
 	}
 	poller := &containerServicePoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
@@ -149,13 +147,12 @@ func (client *ContainerServicesClient) BeginDelete(ctx context.Context, resource
 	result := HTTPPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("ContainerServicesClient.Delete", "", resp, client.deleteHandleError)
+	pt, err := armcore.NewLROPoller("ContainerServicesClient.Delete", "", resp, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -167,13 +164,12 @@ func (client *ContainerServicesClient) BeginDelete(ctx context.Context, resource
 // ResumeDelete creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
 func (client *ContainerServicesClient) ResumeDelete(ctx context.Context, token string) (HTTPPollerResponse, error) {
-	pt, err := armcore.NewPollerFromResumeToken("ContainerServicesClient.Delete", token, client.deleteHandleError)
+	pt, err := armcore.NewLROPollerFromResumeToken("ContainerServicesClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {

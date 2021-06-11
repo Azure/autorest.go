@@ -40,8 +40,7 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
     const pollerName = internalPollerTypeName(poller);
     bodyText += `type ${pollerName} struct {\n`;
     if (isARM) {
-      bodyText += '\tpipeline azcore.Pipeline\n';
-      bodyText += '\tpt armcore.Poller\n';
+      bodyText += '\tpt *armcore.LROPoller\n';
     } else {
       bodyText += '\tpt *azcore.LROPoller\n';
     }
@@ -53,14 +52,10 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
     bodyText += '}\n\n';
     // internal poller methods
     bodyText += `func (p *${pollerName}) Done() bool {\n\treturn p.pt.Done()\n}\n\n`;
-    let plParam = '';
-    if (isARM) {
-      plParam = ', p.pipeline';
-    }
-    bodyText += `func (p *${pollerName}) Poll(ctx context.Context) (*http.Response, error) {\n\treturn p.pt.Poll(ctx${plParam})\n}\n\n`;
-    bodyText += pudFinalResp('FinalResponse', poller, imports, isARM);
+    bodyText += `func (p *${pollerName}) Poll(ctx context.Context) (*http.Response, error) {\n\treturn p.pt.Poll(ctx)\n}\n\n`;
+    bodyText += pudFinalResp('FinalResponse', poller, imports);
     bodyText += `func (p *${pollerName}) ResumeToken() (string, error) {\n\treturn p.pt.ResumeToken()\n}\n\n`;
-    bodyText += pudFinalResp('pollUntilDone', poller, imports, isARM);
+    bodyText += pudFinalResp('pollUntilDone', poller, imports);
     if (poller.pager) {
       bodyText += pagerHandleResponse(poller);
     }
@@ -92,23 +87,19 @@ function finalResponseDecl(poller: PollerInfo): string {
 
 // generates the pollUntilDone and FinalResponse methods.
 // the implementations are almost identical, just a few different params.
-function pudFinalResp(op: 'pollUntilDone' | 'FinalResponse', poller: PollerInfo, imports: ImportManager, isARM: boolean): string {
+function pudFinalResp(op: 'pollUntilDone' | 'FinalResponse', poller: PollerInfo, imports: ImportManager): string {
   let durParam = '';
   let freqParam = '';
-  let plParam = '';
   if (op === 'pollUntilDone') {
     imports.add('time');
     durParam = ', freq time.Duration';
     freqParam = ', freq';
   }
-  if (isARM) {
-    plParam = ', p.pipeline';
-  }
   let text = `func (p *${internalPollerTypeName(poller)}) ${op}(ctx context.Context${durParam}) (${getResponseType(poller)}, error) {\n`;
   if (poller.pager) {
     // pager-pollers have a slightly different impl
     text += `\trespType := &${ensureNameCase(poller.pager.name, true)}{}\n`;
-    text += `\tresp, err := p.pt.${op.capitalize()}(ctx${freqParam}${plParam}, respType)\n`;
+    text += `\tresp, err := p.pt.${op.capitalize()}(ctx${freqParam}, respType)\n`;
     text += `\tif err != nil {\n\t\treturn nil, err\n\t}\n`;
     text += '\treturn p.handleResponse(&azcore.Response{Response: resp})\n';
   } else if (poller.respType) {
@@ -128,13 +119,13 @@ function pudFinalResp(op: 'pollUntilDone' | 'FinalResponse', poller: PollerInfo,
     } else {
       text += `\trespType := ${poller.respEnv}{${poller.respField}: ${respByRef}${poller.respType.language.go!.name}{}}\n`;
     }
-    text += `\tresp, err := p.pt.${op.capitalize()}(ctx${freqParam}${plParam}, ${reference}respType.${poller.respField})\n`;
+    text += `\tresp, err := p.pt.${op.capitalize()}(ctx${freqParam}, ${reference}respType.${poller.respField})\n`;
     text += `\tif err != nil {\n\t\treturn ${poller.respEnv}{}, err\n\t}\n`;
     text += '\trespType.RawResponse = resp\n';
     text += '\treturn respType, nil\n';
   } else {
     // poller doesn't return a type
-    text += `\treturn p.pt.${op.capitalize()}(ctx${freqParam}${plParam}, nil)\n`;
+    text += `\treturn p.pt.${op.capitalize()}(ctx${freqParam}, nil)\n`;
   }
   text += '}\n\n';
   return text;
@@ -143,7 +134,7 @@ function pudFinalResp(op: 'pollUntilDone' | 'FinalResponse', poller: PollerInfo,
 function pagerHandleResponse(poller: PollerInfo): string {
   let text = `func(p * ${internalPollerTypeName(poller)}) handleResponse(resp * azcore.Response)(${getResponseType(poller)}, error) {\n`;
   text += `\treturn &${internalPagerTypeName(poller.pager!)}{\n`;
-  text += `\t\tpipeline: p.pipeline,\n`;
+  text += `\t\tpipeline: p.pt.Pipeline,\n`;
   text += `\t\tresp: resp,\n`;
   text += '\t\terrorer: p.errHandler,\n';
   text += `\t\tresponder: p.respHandler,\n`;

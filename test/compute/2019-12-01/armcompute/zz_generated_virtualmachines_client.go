@@ -42,13 +42,12 @@ func (client *VirtualMachinesClient) BeginCapture(ctx context.Context, resourceG
 	result := VirtualMachineCaptureResultPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("VirtualMachinesClient.Capture", "location", resp, client.captureHandleError)
+	pt, err := armcore.NewLROPoller("VirtualMachinesClient.Capture", "location", resp, client.con.Pipeline(), client.captureHandleError)
 	if err != nil {
 		return VirtualMachineCaptureResultPollerResponse{}, err
 	}
 	poller := &virtualMachineCaptureResultPoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineCaptureResultResponse, error) {
@@ -60,13 +59,12 @@ func (client *VirtualMachinesClient) BeginCapture(ctx context.Context, resourceG
 // ResumeCapture creates a new VirtualMachineCaptureResultPoller from the specified resume token.
 // token - The value must come from a previous call to VirtualMachineCaptureResultPoller.ResumeToken().
 func (client *VirtualMachinesClient) ResumeCapture(ctx context.Context, token string) (VirtualMachineCaptureResultPollerResponse, error) {
-	pt, err := armcore.NewPollerFromResumeToken("VirtualMachinesClient.Capture", token, client.captureHandleError)
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachinesClient.Capture", token, client.con.Pipeline(), client.captureHandleError)
 	if err != nil {
 		return VirtualMachineCaptureResultPollerResponse{}, err
 	}
 	poller := &virtualMachineCaptureResultPoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
@@ -152,13 +150,12 @@ func (client *VirtualMachinesClient) BeginConvertToManagedDisks(ctx context.Cont
 	result := HTTPPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("VirtualMachinesClient.ConvertToManagedDisks", "", resp, client.convertToManagedDisksHandleError)
+	pt, err := armcore.NewLROPoller("VirtualMachinesClient.ConvertToManagedDisks", "", resp, client.con.Pipeline(), client.convertToManagedDisksHandleError)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -170,13 +167,12 @@ func (client *VirtualMachinesClient) BeginConvertToManagedDisks(ctx context.Cont
 // ResumeConvertToManagedDisks creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
 func (client *VirtualMachinesClient) ResumeConvertToManagedDisks(ctx context.Context, token string) (HTTPPollerResponse, error) {
-	pt, err := armcore.NewPollerFromResumeToken("VirtualMachinesClient.ConvertToManagedDisks", token, client.convertToManagedDisksHandleError)
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachinesClient.ConvertToManagedDisks", token, client.con.Pipeline(), client.convertToManagedDisksHandleError)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
@@ -261,13 +257,12 @@ func (client *VirtualMachinesClient) BeginCreateOrUpdate(ctx context.Context, re
 	result := VirtualMachinePollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("VirtualMachinesClient.CreateOrUpdate", "", resp, client.createOrUpdateHandleError)
+	pt, err := armcore.NewLROPoller("VirtualMachinesClient.CreateOrUpdate", "", resp, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
 		return VirtualMachinePollerResponse{}, err
 	}
 	poller := &virtualMachinePoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineResponse, error) {
@@ -279,13 +274,12 @@ func (client *VirtualMachinesClient) BeginCreateOrUpdate(ctx context.Context, re
 // ResumeCreateOrUpdate creates a new VirtualMachinePoller from the specified resume token.
 // token - The value must come from a previous call to VirtualMachinePoller.ResumeToken().
 func (client *VirtualMachinesClient) ResumeCreateOrUpdate(ctx context.Context, token string) (VirtualMachinePollerResponse, error) {
-	pt, err := armcore.NewPollerFromResumeToken("VirtualMachinesClient.CreateOrUpdate", token, client.createOrUpdateHandleError)
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachinesClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
 		return VirtualMachinePollerResponse{}, err
 	}
 	poller := &virtualMachinePoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
@@ -368,13 +362,12 @@ func (client *VirtualMachinesClient) BeginDeallocate(ctx context.Context, resour
 	result := HTTPPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("VirtualMachinesClient.Deallocate", "", resp, client.deallocateHandleError)
+	pt, err := armcore.NewLROPoller("VirtualMachinesClient.Deallocate", "", resp, client.con.Pipeline(), client.deallocateHandleError)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -386,13 +379,12 @@ func (client *VirtualMachinesClient) BeginDeallocate(ctx context.Context, resour
 // ResumeDeallocate creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
 func (client *VirtualMachinesClient) ResumeDeallocate(ctx context.Context, token string) (HTTPPollerResponse, error) {
-	pt, err := armcore.NewPollerFromResumeToken("VirtualMachinesClient.Deallocate", token, client.deallocateHandleError)
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachinesClient.Deallocate", token, client.con.Pipeline(), client.deallocateHandleError)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
@@ -474,13 +466,12 @@ func (client *VirtualMachinesClient) BeginDelete(ctx context.Context, resourceGr
 	result := HTTPPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("VirtualMachinesClient.Delete", "", resp, client.deleteHandleError)
+	pt, err := armcore.NewLROPoller("VirtualMachinesClient.Delete", "", resp, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -492,13 +483,12 @@ func (client *VirtualMachinesClient) BeginDelete(ctx context.Context, resourceGr
 // ResumeDelete creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
 func (client *VirtualMachinesClient) ResumeDelete(ctx context.Context, token string) (HTTPPollerResponse, error) {
-	pt, err := armcore.NewPollerFromResumeToken("VirtualMachinesClient.Delete", token, client.deleteHandleError)
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachinesClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
@@ -1020,13 +1010,12 @@ func (client *VirtualMachinesClient) BeginPerformMaintenance(ctx context.Context
 	result := HTTPPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("VirtualMachinesClient.PerformMaintenance", "", resp, client.performMaintenanceHandleError)
+	pt, err := armcore.NewLROPoller("VirtualMachinesClient.PerformMaintenance", "", resp, client.con.Pipeline(), client.performMaintenanceHandleError)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -1038,13 +1027,12 @@ func (client *VirtualMachinesClient) BeginPerformMaintenance(ctx context.Context
 // ResumePerformMaintenance creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
 func (client *VirtualMachinesClient) ResumePerformMaintenance(ctx context.Context, token string) (HTTPPollerResponse, error) {
-	pt, err := armcore.NewPollerFromResumeToken("VirtualMachinesClient.PerformMaintenance", token, client.performMaintenanceHandleError)
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachinesClient.PerformMaintenance", token, client.con.Pipeline(), client.performMaintenanceHandleError)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
@@ -1127,13 +1115,12 @@ func (client *VirtualMachinesClient) BeginPowerOff(ctx context.Context, resource
 	result := HTTPPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("VirtualMachinesClient.PowerOff", "", resp, client.powerOffHandleError)
+	pt, err := armcore.NewLROPoller("VirtualMachinesClient.PowerOff", "", resp, client.con.Pipeline(), client.powerOffHandleError)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -1145,13 +1132,12 @@ func (client *VirtualMachinesClient) BeginPowerOff(ctx context.Context, resource
 // ResumePowerOff creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
 func (client *VirtualMachinesClient) ResumePowerOff(ctx context.Context, token string) (HTTPPollerResponse, error) {
-	pt, err := armcore.NewPollerFromResumeToken("VirtualMachinesClient.PowerOff", token, client.powerOffHandleError)
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachinesClient.PowerOff", token, client.con.Pipeline(), client.powerOffHandleError)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
@@ -1236,13 +1222,12 @@ func (client *VirtualMachinesClient) BeginReapply(ctx context.Context, resourceG
 	result := HTTPPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("VirtualMachinesClient.Reapply", "", resp, client.reapplyHandleError)
+	pt, err := armcore.NewLROPoller("VirtualMachinesClient.Reapply", "", resp, client.con.Pipeline(), client.reapplyHandleError)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -1254,13 +1239,12 @@ func (client *VirtualMachinesClient) BeginReapply(ctx context.Context, resourceG
 // ResumeReapply creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
 func (client *VirtualMachinesClient) ResumeReapply(ctx context.Context, token string) (HTTPPollerResponse, error) {
-	pt, err := armcore.NewPollerFromResumeToken("VirtualMachinesClient.Reapply", token, client.reapplyHandleError)
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachinesClient.Reapply", token, client.con.Pipeline(), client.reapplyHandleError)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
@@ -1343,13 +1327,12 @@ func (client *VirtualMachinesClient) BeginRedeploy(ctx context.Context, resource
 	result := HTTPPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("VirtualMachinesClient.Redeploy", "", resp, client.redeployHandleError)
+	pt, err := armcore.NewLROPoller("VirtualMachinesClient.Redeploy", "", resp, client.con.Pipeline(), client.redeployHandleError)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -1361,13 +1344,12 @@ func (client *VirtualMachinesClient) BeginRedeploy(ctx context.Context, resource
 // ResumeRedeploy creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
 func (client *VirtualMachinesClient) ResumeRedeploy(ctx context.Context, token string) (HTTPPollerResponse, error) {
-	pt, err := armcore.NewPollerFromResumeToken("VirtualMachinesClient.Redeploy", token, client.redeployHandleError)
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachinesClient.Redeploy", token, client.con.Pipeline(), client.redeployHandleError)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
@@ -1448,13 +1430,12 @@ func (client *VirtualMachinesClient) BeginReimage(ctx context.Context, resourceG
 	result := HTTPPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("VirtualMachinesClient.Reimage", "", resp, client.reimageHandleError)
+	pt, err := armcore.NewLROPoller("VirtualMachinesClient.Reimage", "", resp, client.con.Pipeline(), client.reimageHandleError)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -1466,13 +1447,12 @@ func (client *VirtualMachinesClient) BeginReimage(ctx context.Context, resourceG
 // ResumeReimage creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
 func (client *VirtualMachinesClient) ResumeReimage(ctx context.Context, token string) (HTTPPollerResponse, error) {
-	pt, err := armcore.NewPollerFromResumeToken("VirtualMachinesClient.Reimage", token, client.reimageHandleError)
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachinesClient.Reimage", token, client.con.Pipeline(), client.reimageHandleError)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
@@ -1556,13 +1536,12 @@ func (client *VirtualMachinesClient) BeginRestart(ctx context.Context, resourceG
 	result := HTTPPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("VirtualMachinesClient.Restart", "", resp, client.restartHandleError)
+	pt, err := armcore.NewLROPoller("VirtualMachinesClient.Restart", "", resp, client.con.Pipeline(), client.restartHandleError)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -1574,13 +1553,12 @@ func (client *VirtualMachinesClient) BeginRestart(ctx context.Context, resourceG
 // ResumeRestart creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
 func (client *VirtualMachinesClient) ResumeRestart(ctx context.Context, token string) (HTTPPollerResponse, error) {
-	pt, err := armcore.NewPollerFromResumeToken("VirtualMachinesClient.Restart", token, client.restartHandleError)
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachinesClient.Restart", token, client.con.Pipeline(), client.restartHandleError)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
@@ -1661,13 +1639,12 @@ func (client *VirtualMachinesClient) BeginRunCommand(ctx context.Context, resour
 	result := RunCommandResultPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("VirtualMachinesClient.RunCommand", "location", resp, client.runCommandHandleError)
+	pt, err := armcore.NewLROPoller("VirtualMachinesClient.RunCommand", "location", resp, client.con.Pipeline(), client.runCommandHandleError)
 	if err != nil {
 		return RunCommandResultPollerResponse{}, err
 	}
 	poller := &runCommandResultPoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (RunCommandResultResponse, error) {
@@ -1679,13 +1656,12 @@ func (client *VirtualMachinesClient) BeginRunCommand(ctx context.Context, resour
 // ResumeRunCommand creates a new RunCommandResultPoller from the specified resume token.
 // token - The value must come from a previous call to RunCommandResultPoller.ResumeToken().
 func (client *VirtualMachinesClient) ResumeRunCommand(ctx context.Context, token string) (RunCommandResultPollerResponse, error) {
-	pt, err := armcore.NewPollerFromResumeToken("VirtualMachinesClient.RunCommand", token, client.runCommandHandleError)
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachinesClient.RunCommand", token, client.con.Pipeline(), client.runCommandHandleError)
 	if err != nil {
 		return RunCommandResultPollerResponse{}, err
 	}
 	poller := &runCommandResultPoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
@@ -1822,13 +1798,12 @@ func (client *VirtualMachinesClient) BeginStart(ctx context.Context, resourceGro
 	result := HTTPPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("VirtualMachinesClient.Start", "", resp, client.startHandleError)
+	pt, err := armcore.NewLROPoller("VirtualMachinesClient.Start", "", resp, client.con.Pipeline(), client.startHandleError)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -1840,13 +1815,12 @@ func (client *VirtualMachinesClient) BeginStart(ctx context.Context, resourceGro
 // ResumeStart creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
 func (client *VirtualMachinesClient) ResumeStart(ctx context.Context, token string) (HTTPPollerResponse, error) {
-	pt, err := armcore.NewPollerFromResumeToken("VirtualMachinesClient.Start", token, client.startHandleError)
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachinesClient.Start", token, client.con.Pipeline(), client.startHandleError)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
@@ -1927,13 +1901,12 @@ func (client *VirtualMachinesClient) BeginUpdate(ctx context.Context, resourceGr
 	result := VirtualMachinePollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("VirtualMachinesClient.Update", "", resp, client.updateHandleError)
+	pt, err := armcore.NewLROPoller("VirtualMachinesClient.Update", "", resp, client.con.Pipeline(), client.updateHandleError)
 	if err != nil {
 		return VirtualMachinePollerResponse{}, err
 	}
 	poller := &virtualMachinePoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineResponse, error) {
@@ -1945,13 +1918,12 @@ func (client *VirtualMachinesClient) BeginUpdate(ctx context.Context, resourceGr
 // ResumeUpdate creates a new VirtualMachinePoller from the specified resume token.
 // token - The value must come from a previous call to VirtualMachinePoller.ResumeToken().
 func (client *VirtualMachinesClient) ResumeUpdate(ctx context.Context, token string) (VirtualMachinePollerResponse, error) {
-	pt, err := armcore.NewPollerFromResumeToken("VirtualMachinesClient.Update", token, client.updateHandleError)
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachinesClient.Update", token, client.con.Pipeline(), client.updateHandleError)
 	if err != nil {
 		return VirtualMachinePollerResponse{}, err
 	}
 	poller := &virtualMachinePoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {

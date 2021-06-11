@@ -364,13 +364,12 @@ func (client *PagingClient) BeginGetMultiplePagesLRO(ctx context.Context, option
 	result := ProductResultPagerPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("PagingClient.GetMultiplePagesLRO", "", resp, client.getMultiplePagesLROHandleError)
+	pt, err := armcore.NewLROPoller("PagingClient.GetMultiplePagesLRO", "", resp, client.con.Pipeline(), client.getMultiplePagesLROHandleError)
 	if err != nil {
 		return ProductResultPagerPollerResponse{}, err
 	}
 	poller := &productResultPagerPoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 		errHandler: func(resp *azcore.Response) error {
 			if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 				return nil
@@ -396,13 +395,12 @@ func (client *PagingClient) BeginGetMultiplePagesLRO(ctx context.Context, option
 // ResumeGetMultiplePagesLRO creates a new ProductResultPagerPoller from the specified resume token.
 // token - The value must come from a previous call to ProductResultPagerPoller.ResumeToken().
 func (client *PagingClient) ResumeGetMultiplePagesLRO(ctx context.Context, token string) (ProductResultPagerPollerResponse, error) {
-	pt, err := armcore.NewPollerFromResumeToken("PagingClient.GetMultiplePagesLRO", token, client.getMultiplePagesLROHandleError)
+	pt, err := armcore.NewLROPollerFromResumeToken("PagingClient.GetMultiplePagesLRO", token, client.con.Pipeline(), client.getMultiplePagesLROHandleError)
 	if err != nil {
 		return ProductResultPagerPollerResponse{}, err
 	}
 	poller := &productResultPagerPoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 		errHandler: func(resp *azcore.Response) error {
 			if resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 				return nil
