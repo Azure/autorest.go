@@ -39,13 +39,12 @@ func (client *LROsCustomHeaderClient) BeginPost202Retry200(ctx context.Context, 
 	result := HTTPPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("LROsCustomHeaderClient.Post202Retry200", "", resp, client.post202Retry200HandleError)
+	pt, err := armcore.NewLROPoller("LROsCustomHeaderClient.Post202Retry200", "", resp, client.con.Pipeline(), client.post202Retry200HandleError)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -57,13 +56,12 @@ func (client *LROsCustomHeaderClient) BeginPost202Retry200(ctx context.Context, 
 // ResumePost202Retry200 creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
 func (client *LROsCustomHeaderClient) ResumePost202Retry200(ctx context.Context, token string) (HTTPPollerResponse, error) {
-	pt, err := armcore.NewPollerFromResumeToken("LROsCustomHeaderClient.Post202Retry200", token, client.post202Retry200HandleError)
+	pt, err := armcore.NewLROPollerFromResumeToken("LROsCustomHeaderClient.Post202Retry200", token, client.con.Pipeline(), client.post202Retry200HandleError)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
@@ -138,13 +136,12 @@ func (client *LROsCustomHeaderClient) BeginPostAsyncRetrySucceeded(ctx context.C
 	result := HTTPPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("LROsCustomHeaderClient.PostAsyncRetrySucceeded", "", resp, client.postAsyncRetrySucceededHandleError)
+	pt, err := armcore.NewLROPoller("LROsCustomHeaderClient.PostAsyncRetrySucceeded", "", resp, client.con.Pipeline(), client.postAsyncRetrySucceededHandleError)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -156,13 +153,12 @@ func (client *LROsCustomHeaderClient) BeginPostAsyncRetrySucceeded(ctx context.C
 // ResumePostAsyncRetrySucceeded creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
 func (client *LROsCustomHeaderClient) ResumePostAsyncRetrySucceeded(ctx context.Context, token string) (HTTPPollerResponse, error) {
-	pt, err := armcore.NewPollerFromResumeToken("LROsCustomHeaderClient.PostAsyncRetrySucceeded", token, client.postAsyncRetrySucceededHandleError)
+	pt, err := armcore.NewLROPollerFromResumeToken("LROsCustomHeaderClient.PostAsyncRetrySucceeded", token, client.con.Pipeline(), client.postAsyncRetrySucceededHandleError)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
@@ -237,13 +233,12 @@ func (client *LROsCustomHeaderClient) BeginPut201CreatingSucceeded200(ctx contex
 	result := ProductPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("LROsCustomHeaderClient.Put201CreatingSucceeded200", "", resp, client.put201CreatingSucceeded200HandleError)
+	pt, err := armcore.NewLROPoller("LROsCustomHeaderClient.Put201CreatingSucceeded200", "", resp, client.con.Pipeline(), client.put201CreatingSucceeded200HandleError)
 	if err != nil {
 		return ProductPollerResponse{}, err
 	}
 	poller := &productPoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
@@ -255,13 +250,12 @@ func (client *LROsCustomHeaderClient) BeginPut201CreatingSucceeded200(ctx contex
 // ResumePut201CreatingSucceeded200 creates a new ProductPoller from the specified resume token.
 // token - The value must come from a previous call to ProductPoller.ResumeToken().
 func (client *LROsCustomHeaderClient) ResumePut201CreatingSucceeded200(ctx context.Context, token string) (ProductPollerResponse, error) {
-	pt, err := armcore.NewPollerFromResumeToken("LROsCustomHeaderClient.Put201CreatingSucceeded200", token, client.put201CreatingSucceeded200HandleError)
+	pt, err := armcore.NewLROPollerFromResumeToken("LROsCustomHeaderClient.Put201CreatingSucceeded200", token, client.con.Pipeline(), client.put201CreatingSucceeded200HandleError)
 	if err != nil {
 		return ProductPollerResponse{}, err
 	}
 	poller := &productPoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
@@ -336,13 +330,12 @@ func (client *LROsCustomHeaderClient) BeginPutAsyncRetrySucceeded(ctx context.Co
 	result := ProductPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("LROsCustomHeaderClient.PutAsyncRetrySucceeded", "", resp, client.putAsyncRetrySucceededHandleError)
+	pt, err := armcore.NewLROPoller("LROsCustomHeaderClient.PutAsyncRetrySucceeded", "", resp, client.con.Pipeline(), client.putAsyncRetrySucceededHandleError)
 	if err != nil {
 		return ProductPollerResponse{}, err
 	}
 	poller := &productPoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
@@ -354,13 +347,12 @@ func (client *LROsCustomHeaderClient) BeginPutAsyncRetrySucceeded(ctx context.Co
 // ResumePutAsyncRetrySucceeded creates a new ProductPoller from the specified resume token.
 // token - The value must come from a previous call to ProductPoller.ResumeToken().
 func (client *LROsCustomHeaderClient) ResumePutAsyncRetrySucceeded(ctx context.Context, token string) (ProductPollerResponse, error) {
-	pt, err := armcore.NewPollerFromResumeToken("LROsCustomHeaderClient.PutAsyncRetrySucceeded", token, client.putAsyncRetrySucceededHandleError)
+	pt, err := armcore.NewLROPollerFromResumeToken("LROsCustomHeaderClient.PutAsyncRetrySucceeded", token, client.con.Pipeline(), client.putAsyncRetrySucceededHandleError)
 	if err != nil {
 		return ProductPollerResponse{}, err
 	}
 	poller := &productPoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {

@@ -25,8 +25,7 @@ type ProductResultPagerPoller interface {
 }
 
 type productResultPagerPoller struct {
-	pipeline    azcore.Pipeline
-	pt          armcore.Poller
+	pt          *armcore.LROPoller
 	errHandler  productResultHandleError
 	respHandler productResultHandleResponse
 	statusCodes []int
@@ -37,12 +36,12 @@ func (p *productResultPagerPoller) Done() bool {
 }
 
 func (p *productResultPagerPoller) Poll(ctx context.Context) (*http.Response, error) {
-	return p.pt.Poll(ctx, p.pipeline)
+	return p.pt.Poll(ctx)
 }
 
 func (p *productResultPagerPoller) FinalResponse(ctx context.Context) (ProductResultPager, error) {
 	respType := &productResultPager{}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType)
+	resp, err := p.pt.FinalResponse(ctx, respType)
 	if err != nil {
 		return nil, err
 	}
@@ -55,7 +54,7 @@ func (p *productResultPagerPoller) ResumeToken() (string, error) {
 
 func (p *productResultPagerPoller) pollUntilDone(ctx context.Context, freq time.Duration) (ProductResultPager, error) {
 	respType := &productResultPager{}
-	resp, err := p.pt.PollUntilDone(ctx, freq, p.pipeline, respType)
+	resp, err := p.pt.PollUntilDone(ctx, freq, respType)
 	if err != nil {
 		return nil, err
 	}
@@ -64,7 +63,7 @@ func (p *productResultPagerPoller) pollUntilDone(ctx context.Context, freq time.
 
 func (p *productResultPagerPoller) handleResponse(resp *azcore.Response) (ProductResultPager, error) {
 	return &productResultPager{
-		pipeline:  p.pipeline,
+		pipeline:  p.pt.Pipeline,
 		resp:      resp,
 		errorer:   p.errHandler,
 		responder: p.respHandler,

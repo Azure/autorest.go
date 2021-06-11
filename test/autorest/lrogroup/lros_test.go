@@ -676,7 +676,12 @@ func TestLROBeginPostDoubleHeadersFinalLocationGet(t *testing.T) {
 	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
-	if r := cmp.Diff(pollResp.Product, &Product{}); r != "" {
+	if r := cmp.Diff(pollResp.Product, &Product{
+		Resource: Resource{
+			ID:   to.StringPtr("100"),
+			Name: to.StringPtr("foo"),
+		},
+	}); r != "" {
 		t.Fatal(r)
 	}
 }

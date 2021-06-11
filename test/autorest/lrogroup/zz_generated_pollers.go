@@ -25,8 +25,7 @@ type HTTPPoller interface {
 }
 
 type httpPoller struct {
-	pipeline azcore.Pipeline
-	pt       armcore.Poller
+	pt *armcore.LROPoller
 }
 
 func (p *httpPoller) Done() bool {
@@ -34,11 +33,11 @@ func (p *httpPoller) Done() bool {
 }
 
 func (p *httpPoller) Poll(ctx context.Context) (*http.Response, error) {
-	return p.pt.Poll(ctx, p.pipeline)
+	return p.pt.Poll(ctx)
 }
 
 func (p *httpPoller) FinalResponse(ctx context.Context) (*http.Response, error) {
-	return p.pt.FinalResponse(ctx, p.pipeline, nil)
+	return p.pt.FinalResponse(ctx, nil)
 }
 
 func (p *httpPoller) ResumeToken() (string, error) {
@@ -46,7 +45,7 @@ func (p *httpPoller) ResumeToken() (string, error) {
 }
 
 func (p *httpPoller) pollUntilDone(ctx context.Context, freq time.Duration) (*http.Response, error) {
-	return p.pt.PollUntilDone(ctx, freq, p.pipeline, nil)
+	return p.pt.PollUntilDone(ctx, freq, nil)
 }
 
 // ProductArrayPoller provides polling facilities until the operation reaches a terminal state.
@@ -59,8 +58,7 @@ type ProductArrayPoller interface {
 }
 
 type productArrayPoller struct {
-	pipeline azcore.Pipeline
-	pt       armcore.Poller
+	pt *armcore.LROPoller
 }
 
 func (p *productArrayPoller) Done() bool {
@@ -68,12 +66,12 @@ func (p *productArrayPoller) Done() bool {
 }
 
 func (p *productArrayPoller) Poll(ctx context.Context) (*http.Response, error) {
-	return p.pt.Poll(ctx, p.pipeline)
+	return p.pt.Poll(ctx)
 }
 
 func (p *productArrayPoller) FinalResponse(ctx context.Context) (ProductArrayResponse, error) {
 	respType := ProductArrayResponse{ProductArray: []*Product{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, &respType.ProductArray)
+	resp, err := p.pt.FinalResponse(ctx, &respType.ProductArray)
 	if err != nil {
 		return ProductArrayResponse{}, err
 	}
@@ -87,7 +85,7 @@ func (p *productArrayPoller) ResumeToken() (string, error) {
 
 func (p *productArrayPoller) pollUntilDone(ctx context.Context, freq time.Duration) (ProductArrayResponse, error) {
 	respType := ProductArrayResponse{ProductArray: []*Product{}}
-	resp, err := p.pt.PollUntilDone(ctx, freq, p.pipeline, &respType.ProductArray)
+	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.ProductArray)
 	if err != nil {
 		return ProductArrayResponse{}, err
 	}
@@ -105,8 +103,7 @@ type ProductPoller interface {
 }
 
 type productPoller struct {
-	pipeline azcore.Pipeline
-	pt       armcore.Poller
+	pt *armcore.LROPoller
 }
 
 func (p *productPoller) Done() bool {
@@ -114,12 +111,12 @@ func (p *productPoller) Done() bool {
 }
 
 func (p *productPoller) Poll(ctx context.Context) (*http.Response, error) {
-	return p.pt.Poll(ctx, p.pipeline)
+	return p.pt.Poll(ctx)
 }
 
 func (p *productPoller) FinalResponse(ctx context.Context) (ProductResponse, error) {
 	respType := ProductResponse{Product: &Product{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.Product)
+	resp, err := p.pt.FinalResponse(ctx, respType.Product)
 	if err != nil {
 		return ProductResponse{}, err
 	}
@@ -133,7 +130,7 @@ func (p *productPoller) ResumeToken() (string, error) {
 
 func (p *productPoller) pollUntilDone(ctx context.Context, freq time.Duration) (ProductResponse, error) {
 	respType := ProductResponse{Product: &Product{}}
-	resp, err := p.pt.PollUntilDone(ctx, freq, p.pipeline, respType.Product)
+	resp, err := p.pt.PollUntilDone(ctx, freq, respType.Product)
 	if err != nil {
 		return ProductResponse{}, err
 	}
@@ -151,8 +148,7 @@ type SKUPoller interface {
 }
 
 type skuPoller struct {
-	pipeline azcore.Pipeline
-	pt       armcore.Poller
+	pt *armcore.LROPoller
 }
 
 func (p *skuPoller) Done() bool {
@@ -160,12 +156,12 @@ func (p *skuPoller) Done() bool {
 }
 
 func (p *skuPoller) Poll(ctx context.Context) (*http.Response, error) {
-	return p.pt.Poll(ctx, p.pipeline)
+	return p.pt.Poll(ctx)
 }
 
 func (p *skuPoller) FinalResponse(ctx context.Context) (SKUResponse, error) {
 	respType := SKUResponse{SKU: &SKU{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.SKU)
+	resp, err := p.pt.FinalResponse(ctx, respType.SKU)
 	if err != nil {
 		return SKUResponse{}, err
 	}
@@ -179,7 +175,7 @@ func (p *skuPoller) ResumeToken() (string, error) {
 
 func (p *skuPoller) pollUntilDone(ctx context.Context, freq time.Duration) (SKUResponse, error) {
 	respType := SKUResponse{SKU: &SKU{}}
-	resp, err := p.pt.PollUntilDone(ctx, freq, p.pipeline, respType.SKU)
+	resp, err := p.pt.PollUntilDone(ctx, freq, respType.SKU)
 	if err != nil {
 		return SKUResponse{}, err
 	}
@@ -197,8 +193,7 @@ type SubProductPoller interface {
 }
 
 type subProductPoller struct {
-	pipeline azcore.Pipeline
-	pt       armcore.Poller
+	pt *armcore.LROPoller
 }
 
 func (p *subProductPoller) Done() bool {
@@ -206,12 +201,12 @@ func (p *subProductPoller) Done() bool {
 }
 
 func (p *subProductPoller) Poll(ctx context.Context) (*http.Response, error) {
-	return p.pt.Poll(ctx, p.pipeline)
+	return p.pt.Poll(ctx)
 }
 
 func (p *subProductPoller) FinalResponse(ctx context.Context) (SubProductResponse, error) {
 	respType := SubProductResponse{SubProduct: &SubProduct{}}
-	resp, err := p.pt.FinalResponse(ctx, p.pipeline, respType.SubProduct)
+	resp, err := p.pt.FinalResponse(ctx, respType.SubProduct)
 	if err != nil {
 		return SubProductResponse{}, err
 	}
@@ -225,7 +220,7 @@ func (p *subProductPoller) ResumeToken() (string, error) {
 
 func (p *subProductPoller) pollUntilDone(ctx context.Context, freq time.Duration) (SubProductResponse, error) {
 	respType := SubProductResponse{SubProduct: &SubProduct{}}
-	resp, err := p.pt.PollUntilDone(ctx, freq, p.pipeline, respType.SubProduct)
+	resp, err := p.pt.PollUntilDone(ctx, freq, respType.SubProduct)
 	if err != nil {
 		return SubProductResponse{}, err
 	}

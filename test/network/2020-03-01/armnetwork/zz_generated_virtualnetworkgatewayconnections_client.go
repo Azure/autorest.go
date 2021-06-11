@@ -41,13 +41,12 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginCreateOrUpdate(ctx co
 	result := VirtualNetworkGatewayConnectionPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("VirtualNetworkGatewayConnectionsClient.CreateOrUpdate", "azure-async-operation", resp, client.createOrUpdateHandleError)
+	pt, err := armcore.NewLROPoller("VirtualNetworkGatewayConnectionsClient.CreateOrUpdate", "azure-async-operation", resp, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
 		return VirtualNetworkGatewayConnectionPollerResponse{}, err
 	}
 	poller := &virtualNetworkGatewayConnectionPoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewayConnectionResponse, error) {
@@ -59,13 +58,12 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginCreateOrUpdate(ctx co
 // ResumeCreateOrUpdate creates a new VirtualNetworkGatewayConnectionPoller from the specified resume token.
 // token - The value must come from a previous call to VirtualNetworkGatewayConnectionPoller.ResumeToken().
 func (client *VirtualNetworkGatewayConnectionsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (VirtualNetworkGatewayConnectionPollerResponse, error) {
-	pt, err := armcore.NewPollerFromResumeToken("VirtualNetworkGatewayConnectionsClient.CreateOrUpdate", token, client.createOrUpdateHandleError)
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworkGatewayConnectionsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
 		return VirtualNetworkGatewayConnectionPollerResponse{}, err
 	}
 	poller := &virtualNetworkGatewayConnectionPoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
@@ -148,13 +146,12 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginDelete(ctx context.Co
 	result := HTTPPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("VirtualNetworkGatewayConnectionsClient.Delete", "location", resp, client.deleteHandleError)
+	pt, err := armcore.NewLROPoller("VirtualNetworkGatewayConnectionsClient.Delete", "location", resp, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
@@ -166,13 +163,12 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginDelete(ctx context.Co
 // ResumeDelete creates a new HTTPPoller from the specified resume token.
 // token - The value must come from a previous call to HTTPPoller.ResumeToken().
 func (client *VirtualNetworkGatewayConnectionsClient) ResumeDelete(ctx context.Context, token string) (HTTPPollerResponse, error) {
-	pt, err := armcore.NewPollerFromResumeToken("VirtualNetworkGatewayConnectionsClient.Delete", token, client.deleteHandleError)
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworkGatewayConnectionsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
 		return HTTPPollerResponse{}, err
 	}
 	poller := &httpPoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
@@ -452,13 +448,12 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginResetSharedKey(ctx co
 	result := ConnectionResetSharedKeyPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("VirtualNetworkGatewayConnectionsClient.ResetSharedKey", "location", resp, client.resetSharedKeyHandleError)
+	pt, err := armcore.NewLROPoller("VirtualNetworkGatewayConnectionsClient.ResetSharedKey", "location", resp, client.con.Pipeline(), client.resetSharedKeyHandleError)
 	if err != nil {
 		return ConnectionResetSharedKeyPollerResponse{}, err
 	}
 	poller := &connectionResetSharedKeyPoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ConnectionResetSharedKeyResponse, error) {
@@ -470,13 +465,12 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginResetSharedKey(ctx co
 // ResumeResetSharedKey creates a new ConnectionResetSharedKeyPoller from the specified resume token.
 // token - The value must come from a previous call to ConnectionResetSharedKeyPoller.ResumeToken().
 func (client *VirtualNetworkGatewayConnectionsClient) ResumeResetSharedKey(ctx context.Context, token string) (ConnectionResetSharedKeyPollerResponse, error) {
-	pt, err := armcore.NewPollerFromResumeToken("VirtualNetworkGatewayConnectionsClient.ResetSharedKey", token, client.resetSharedKeyHandleError)
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworkGatewayConnectionsClient.ResetSharedKey", token, client.con.Pipeline(), client.resetSharedKeyHandleError)
 	if err != nil {
 		return ConnectionResetSharedKeyPollerResponse{}, err
 	}
 	poller := &connectionResetSharedKeyPoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
@@ -563,13 +557,12 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginSetSharedKey(ctx cont
 	result := ConnectionSharedKeyPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("VirtualNetworkGatewayConnectionsClient.SetSharedKey", "azure-async-operation", resp, client.setSharedKeyHandleError)
+	pt, err := armcore.NewLROPoller("VirtualNetworkGatewayConnectionsClient.SetSharedKey", "azure-async-operation", resp, client.con.Pipeline(), client.setSharedKeyHandleError)
 	if err != nil {
 		return ConnectionSharedKeyPollerResponse{}, err
 	}
 	poller := &connectionSharedKeyPoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ConnectionSharedKeyResponse, error) {
@@ -581,13 +574,12 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginSetSharedKey(ctx cont
 // ResumeSetSharedKey creates a new ConnectionSharedKeyPoller from the specified resume token.
 // token - The value must come from a previous call to ConnectionSharedKeyPoller.ResumeToken().
 func (client *VirtualNetworkGatewayConnectionsClient) ResumeSetSharedKey(ctx context.Context, token string) (ConnectionSharedKeyPollerResponse, error) {
-	pt, err := armcore.NewPollerFromResumeToken("VirtualNetworkGatewayConnectionsClient.SetSharedKey", token, client.setSharedKeyHandleError)
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworkGatewayConnectionsClient.SetSharedKey", token, client.con.Pipeline(), client.setSharedKeyHandleError)
 	if err != nil {
 		return ConnectionSharedKeyPollerResponse{}, err
 	}
 	poller := &connectionSharedKeyPoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
@@ -672,13 +664,12 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginStartPacketCapture(ct
 	result := StringPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("VirtualNetworkGatewayConnectionsClient.StartPacketCapture", "location", resp, client.startPacketCaptureHandleError)
+	pt, err := armcore.NewLROPoller("VirtualNetworkGatewayConnectionsClient.StartPacketCapture", "location", resp, client.con.Pipeline(), client.startPacketCaptureHandleError)
 	if err != nil {
 		return StringPollerResponse{}, err
 	}
 	poller := &stringPoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (StringResponse, error) {
@@ -690,13 +681,12 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginStartPacketCapture(ct
 // ResumeStartPacketCapture creates a new StringPoller from the specified resume token.
 // token - The value must come from a previous call to StringPoller.ResumeToken().
 func (client *VirtualNetworkGatewayConnectionsClient) ResumeStartPacketCapture(ctx context.Context, token string) (StringPollerResponse, error) {
-	pt, err := armcore.NewPollerFromResumeToken("VirtualNetworkGatewayConnectionsClient.StartPacketCapture", token, client.startPacketCaptureHandleError)
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworkGatewayConnectionsClient.StartPacketCapture", token, client.con.Pipeline(), client.startPacketCaptureHandleError)
 	if err != nil {
 		return StringPollerResponse{}, err
 	}
 	poller := &stringPoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
@@ -782,13 +772,12 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginStopPacketCapture(ctx
 	result := StringPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("VirtualNetworkGatewayConnectionsClient.StopPacketCapture", "location", resp, client.stopPacketCaptureHandleError)
+	pt, err := armcore.NewLROPoller("VirtualNetworkGatewayConnectionsClient.StopPacketCapture", "location", resp, client.con.Pipeline(), client.stopPacketCaptureHandleError)
 	if err != nil {
 		return StringPollerResponse{}, err
 	}
 	poller := &stringPoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (StringResponse, error) {
@@ -800,13 +789,12 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginStopPacketCapture(ctx
 // ResumeStopPacketCapture creates a new StringPoller from the specified resume token.
 // token - The value must come from a previous call to StringPoller.ResumeToken().
 func (client *VirtualNetworkGatewayConnectionsClient) ResumeStopPacketCapture(ctx context.Context, token string) (StringPollerResponse, error) {
-	pt, err := armcore.NewPollerFromResumeToken("VirtualNetworkGatewayConnectionsClient.StopPacketCapture", token, client.stopPacketCaptureHandleError)
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworkGatewayConnectionsClient.StopPacketCapture", token, client.con.Pipeline(), client.stopPacketCaptureHandleError)
 	if err != nil {
 		return StringPollerResponse{}, err
 	}
 	poller := &stringPoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
@@ -889,13 +877,12 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginUpdateTags(ctx contex
 	result := VirtualNetworkGatewayConnectionPollerResponse{
 		RawResponse: resp.Response,
 	}
-	pt, err := armcore.NewPoller("VirtualNetworkGatewayConnectionsClient.UpdateTags", "azure-async-operation", resp, client.updateTagsHandleError)
+	pt, err := armcore.NewLROPoller("VirtualNetworkGatewayConnectionsClient.UpdateTags", "azure-async-operation", resp, client.con.Pipeline(), client.updateTagsHandleError)
 	if err != nil {
 		return VirtualNetworkGatewayConnectionPollerResponse{}, err
 	}
 	poller := &virtualNetworkGatewayConnectionPoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	result.Poller = poller
 	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewayConnectionResponse, error) {
@@ -907,13 +894,12 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginUpdateTags(ctx contex
 // ResumeUpdateTags creates a new VirtualNetworkGatewayConnectionPoller from the specified resume token.
 // token - The value must come from a previous call to VirtualNetworkGatewayConnectionPoller.ResumeToken().
 func (client *VirtualNetworkGatewayConnectionsClient) ResumeUpdateTags(ctx context.Context, token string) (VirtualNetworkGatewayConnectionPollerResponse, error) {
-	pt, err := armcore.NewPollerFromResumeToken("VirtualNetworkGatewayConnectionsClient.UpdateTags", token, client.updateTagsHandleError)
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworkGatewayConnectionsClient.UpdateTags", token, client.con.Pipeline(), client.updateTagsHandleError)
 	if err != nil {
 		return VirtualNetworkGatewayConnectionPollerResponse{}, err
 	}
 	poller := &virtualNetworkGatewayConnectionPoller{
-		pipeline: client.con.Pipeline(),
-		pt:       pt,
+		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
