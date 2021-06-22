@@ -8,7 +8,6 @@ import { CodeModel, HttpHeader, Language } from '@autorest/codemodel';
 import { visitor, clone, values } from '@azure-tools/linq';
 import { CommonAcronyms, ReservedWords } from './mappings';
 import { aggregateParameters, hasAdditionalProperties } from '../common/helpers';
-import { sep } from 'path';
 
 const requestMethodSuffix = 'CreateRequest';
 const responseMethodSuffix = 'HandleResponse';
@@ -41,6 +40,17 @@ export class protocolMethods implements protocolNaming {
   }
 }
 
+// returns the leaf folder name from the provided folder
+function packageNameFromOutputFolder(folder: string): string {
+  for (let i = folder.length - 1; i > -1; --i) {
+    if (folder[i] === '/' || folder[i] === '\\') {
+      return folder.substr(i + 1);
+    }
+  }
+  // no path separator
+  return folder;
+}
+
 // The namer creates idiomatic Go names for types, properties, operations etc.
 export async function namer(session: Session<CodeModel>) {
   const model = session.model;
@@ -56,7 +66,7 @@ export async function namer(session: Session<CodeModel>) {
   cloneLanguageInfo(model);
   // default namespce to the output folder
   const outputFolder = await session.getValue<string>('output-folder');
-  model.language.go!.packageName = outputFolder.substr(outputFolder.lastIndexOf(sep) + 1);
+  model.language.go!.packageName = packageNameFromOutputFolder(outputFolder);
 
   const specType = await session.getValue('openapi-type');
   model.language.go!.openApiType = specType;
