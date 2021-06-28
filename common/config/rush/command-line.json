@@ -62,5 +62,13 @@
       "shellCommand": "node .scripts/modtidy.js"
     }
   ],
-  "parameters": []
+  "parameters": [
+    {
+      "parameterKind": "string",
+      "argumentName": "FILTER",
+      "longName": "--filter",
+      "description": "Filter of which projects regenerate",
+      "associatedCommands": ["regenerate"]
+    }
+  ]
 }
