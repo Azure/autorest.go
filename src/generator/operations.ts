@@ -32,7 +32,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
   for (const group of values(session.model.operationGroups)) {
     // the list of packages to import
     const imports = new ImportManager();
-    // add standard imorts
+    // add standard imports
     imports.add('net/http');
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
     if (<boolean>session.model.language.go!.azureARM) {
