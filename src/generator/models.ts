@@ -417,6 +417,13 @@ function generateJSONMarshallerBody(obj: ObjectSchema, structDef: StructDef): st
         base64Format = 'URL';
       }
       marshaller += `\tpopulateByteArray(objectMap, "${prop.serializedName}", ${receiver}.${prop.language.go!.name}, azcore.Base64${base64Format}Format)\n`;
+    } else if (isArraySchema(prop.schema) && prop.schema.elementType.language.go!.internalTimeType) {
+      const source = `${receiver}.${prop.language.go!.name}`;
+      marshaller += `\taux := make([]*${prop.schema.elementType.language.go!.internalTimeType}, len(${source}), len(${source}))\n`;
+      marshaller += `\tfor i := 0; i < len(${source}); i++ {\n`;
+      marshaller += `\t\taux[i] = (*${prop.schema.elementType.language.go!.internalTimeType})(${source}[i])\n`;
+      marshaller += '\t}\n';
+      marshaller += `\tpopulate(objectMap, "${prop.serializedName}", aux)\n`;
     } else {
       let source = `${receiver}.${prop.language.go!.name}`;
       if (prop.schema.language.go!.internalTimeType) {
@@ -425,10 +432,15 @@ function generateJSONMarshallerBody(obj: ObjectSchema, structDef: StructDef): st
       marshaller += `\tpopulate(objectMap, "${prop.serializedName}", ${source})\n`;
     }
   }
-  if (hasAdditionalProperties(obj)) {
+  const addlProps = hasAdditionalProperties(obj);
+  if (addlProps) {
     marshaller += `\tif ${receiver}.AdditionalProperties != nil {\n`;
     marshaller += `\t\tfor key, val := range ${receiver}.AdditionalProperties {\n`;
-    marshaller += '\t\t\tobjectMap[key] = val\n';
+    let assignment = 'val';
+    if (addlProps.elementType.language.go!.internalTimeType) {
+      assignment = `(*${addlProps.elementType.language.go!.internalTimeType})(val)`;
+    }
+    marshaller += `\t\t\tobjectMap[key] = ${assignment}\n`;
     marshaller += '\t\t}\n';;
     marshaller += '\t}\n';
   }
@@ -475,9 +487,15 @@ function generateJSONUnmarshallerBody(obj: ObjectSchema, structDef: StructDef, p
     addlPropsText += `${tab}\t\t\t${receiver}.AdditionalProperties = map[string]${ptr}${addlProps.elementType.language.go!.name}{}\n`;
     addlPropsText += `${tab}\t\t}\n`;
     addlPropsText += `${tab}\t\tif val != nil {\n`;
-    addlPropsText += `${tab}\t\t\tvar aux ${addlProps.elementType.language.go!.name}\n`;
+    let auxType = addlProps.elementType.language.go!.name;
+    let assignment = `${ref}aux`;
+    if (addlProps.elementType.language.go!.internalTimeType) {
+      auxType = addlProps.elementType.language.go!.internalTimeType;
+      assignment = `(*time.Time)(${assignment})`;
+    }
+    addlPropsText += `${tab}\t\t\tvar aux ${auxType}\n`;
     addlPropsText += `${tab}\t\t\terr = json.Unmarshal(val, &aux)\n`;
-    addlPropsText += `${tab}\t\t\t${receiver}.AdditionalProperties[key] = ${ref}aux\n`;
+    addlPropsText += `${tab}\t\t\t${receiver}.AdditionalProperties[key] = ${assignment}\n`;
     addlPropsText += `${tab}\t\t}\n`;
     addlPropsText += `${tab}\t\tdelete(rawMsg, key)\n`;
     return addlPropsText;
@@ -503,6 +521,12 @@ function generateJSONUnmarshallerBody(obj: ObjectSchema, structDef: StructDef, p
         unmarshalBody += `\t\t\t\tvar aux ${prop.schema.language.go!.internalTimeType}\n`;
         unmarshalBody += '\t\t\t\terr = unpopulate(val, &aux)\n';
         unmarshalBody += `\t\t\t\t${receiver}.${prop.language.go!.name} = (*time.Time)(&aux)\n`;
+      } else if (isArraySchema(prop.schema) && prop.schema.elementType.language.go!.internalTimeType) {
+        unmarshalBody += `\t\t\tvar aux []*${prop.schema.elementType.language.go!.internalTimeType}\n`;
+        unmarshalBody += '\t\t\terr = unpopulate(val, &aux)\n';
+        unmarshalBody += '\t\t\tfor _, au := range aux {\n';
+        unmarshalBody += `\t\t\t\t${receiver}.${prop.language.go!.name} = append(${receiver}.${prop.language.go!.name}, (*time.Time)(au))\n`;
+        unmarshalBody += '\t\t\t}\n';
       } else if (prop.schema.type === SchemaType.ByteArray) {
         let base64Format = 'Std';
         if ((<ByteArraySchema>prop.schema).format === 'base64url') {

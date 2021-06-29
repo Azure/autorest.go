@@ -41,7 +41,7 @@ async function process(session: Session<CodeModel>) {
   // this must happen before processing objects as we depend on the
   // schema type being an actual Go type.
   for (const dictionary of values(session.model.schemas.dictionaries)) {
-    dictionary.elementType.language.go!.name = schemaTypeToGoType(session.model, dictionary.elementType, false);
+    dictionary.elementType.language.go!.name = schemaTypeToGoType(session.model, dictionary.elementType, true);
     dictionary.language.go!.elementIsPtr = !isTypePassedByValue(dictionary.elementType);
     if (dictionary.language.go!.description) {
       dictionary.language.go!.description = parseComments(dictionary.language.go!.description);
