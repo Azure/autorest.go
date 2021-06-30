@@ -22,7 +22,6 @@ rush regenerate --filter TestName
 
 # Debugging
 
-?
 
 # Testing Against azure-sdk-for-go
 
