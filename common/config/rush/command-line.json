@@ -67,7 +67,22 @@
       "parameterKind": "string",
       "argumentName": "FILTER",
       "longName": "--filter",
+      "shortName": "-f",
       "description": "Filter of which projects regenerate",
+      "associatedCommands": ["regenerate"]
+    },
+    {
+      "parameterKind": "flag",
+      "longName": "--verbose",
+      "shortName": "-v",
+      "description": "Enables debug spew",
+      "associatedCommands": ["regenerate"]
+    },
+    {
+      "parameterKind": "flag",
+      "longName": "--debugger",
+      "shortName": "-d",
+      "description": "Starts the build and waits for the debugger to attach",
       "associatedCommands": ["regenerate"]
     }
   ]

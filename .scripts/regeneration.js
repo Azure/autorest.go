@@ -51,12 +51,22 @@ const goMappings = {
 };
 
 const args = process.argv.slice(2);
-var filter = undefined
+var filter = undefined;
+const switches = [];
 for (var i = 0 ; i < args.length; i += 1) {
     switch (args[i]) {
         case '--filter':
+        case '-f':
             filter = args[i + 1]
             i += 1
+            break;
+        case '--verbose':
+        case '-v':
+            switches.push('--debug');
+            break;
+        case '--debugger':
+        case '-d':
+            switches.push('--go.debugger');
             break;
         default:
             break;
@@ -111,7 +121,7 @@ function generate(name, inputFile, outputDir, additionalArgs) {
     sem.take(function() {
         console.log('generating ' + inputFile);
         cleanGeneratedFiles(outputDir);
-        exec('autorest --use=. --file-prefix="zz_generated_" --modelerfour.lenient-model-deduplication --license-header=MICROSOFT_MIT_NO_VERSION --input-file=' + inputFile + ' --output-folder=' + outputDir + ' ' + additionalArgs, autorestCallback(outputDir, inputFile));
+        exec('autorest --use=. --file-prefix="zz_generated_" --modelerfour.lenient-model-deduplication --license-header=MICROSOFT_MIT_NO_VERSION --input-file=' + inputFile + ' --output-folder=' + outputDir + ' ' + additionalArgs + ' ' + switches.join(' '), autorestCallback(outputDir, inputFile));
     });
 }
 
@@ -122,7 +132,7 @@ function generateFromReadme(name, readme, tag, outputDir, additionalArgs) {
     sem.take(function() {
         console.log('generating ' + readme);
         cleanGeneratedFiles(outputDir);
-        exec('autorest --use=. ' + readme + ' --tag=' + tag + ' --file-prefix="zz_generated_" --modelerfour.lenient-model-deduplication --license-header=MICROSOFT_MIT_NO_VERSION --output-folder=' + outputDir + ' ' + additionalArgs, autorestCallback(outputDir, readme));
+        exec('autorest --use=. ' + readme + ' --tag=' + tag + ' --file-prefix="zz_generated_" --modelerfour.lenient-model-deduplication --license-header=MICROSOFT_MIT_NO_VERSION --output-folder=' + outputDir + ' ' + additionalArgs + ' ' + switches.join(' '), autorestCallback(outputDir, readme));
     });
 }
 
