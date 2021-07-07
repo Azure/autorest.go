@@ -9,15 +9,6 @@ package azalias
 
 import "net/http"
 
-// AliasListItemResponse is the response envelope for operations that return a AliasListItem type.
-type AliasListItemResponse struct {
-	// Detailed information for the alias.
-	AliasListItem *AliasListItem
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
 // AliasListResponseResponse is the response envelope for operations that return a AliasListResponse type.
 type AliasListResponseResponse struct {
 	// The response model for the List API. Returns a list of all the previously created aliases.

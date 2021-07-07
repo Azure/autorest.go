@@ -13,25 +13,10 @@ import (
 	"reflect"
 )
 
-// AliasAssignOptions contains the optional parameters for the Alias.Assign method.
-type AliasAssignOptions struct {
-	// placeholder for future optional parameters
-}
-
 // AliasCreateOptions contains the optional parameters for the Alias.Create method.
 type AliasCreateOptions struct {
 	// The unique id that references a creator data item to be aliased.
 	CreatorDataItemID *string
-}
-
-// AliasDeleteOptions contains the optional parameters for the Alias.Delete method.
-type AliasDeleteOptions struct {
-	// placeholder for future optional parameters
-}
-
-// AliasGetDetailsOptions contains the optional parameters for the Alias.GetDetails method.
-type AliasGetDetailsOptions struct {
-	// placeholder for future optional parameters
 }
 
 // AliasListItem - Detailed information for the alias.
