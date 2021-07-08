@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Session } from '@autorest/extension-base';
-import { AADTokenSecurityScheme, CodeModel, Parameter } from '@autorest/codemodel';
+import { AADTokenSecurityScheme, ChoiceSchema, ChoiceValue, CodeModel, Parameter, SchemaType, SealedChoiceSchema } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
 import { contentPreamble, formatParameterTypeName } from './helpers';
 import { ImportManager } from './imports';
@@ -192,11 +192,23 @@ function generateContent(session: Session<CodeModel>, imports: ImportManager): s
         if (hostParam.clientDefaultValue) {
           pointer = '*';
           text += `\tif ${hostParam.language.go!.name} == nil {\n`;
-          text += `\t\tdefaultValue := "${hostParam.clientDefaultValue}"\n`;
+          text += `\t\tdefaultValue := ${getClientDefaultValue(hostParam)}\n`;
           text += `\t\t${hostParam.language.go!.name} = &defaultValue\n`;
           text += '\t}\n';
         }
-        text += `\thostURL = strings.ReplaceAll(hostURL, "{${hostParam.language.go!.serializedName}}", ${pointer}${hostParam.language.go!.name})\n`;
+        text += `\thostURL = strings.ReplaceAll(hostURL, "{${hostParam.language.go!.serializedName}}", `;
+        switch (hostParam.schema.type) {
+          case SchemaType.Choice:
+          case SchemaType.SealedChoice:
+            text += `string(${pointer}${hostParam.language.go!.name}))\n`;
+            break;
+          case SchemaType.String:
+            text += `${pointer}${hostParam.language.go!.name})\n`;
+            break;
+          default:
+            text += `fmt.Sprint(${pointer}${hostParam.language.go!.name}))\n`;
+            break;
+        }
       }
       hostURL = 'u: hostURL, ';
     } else if (ctorParams !== '') {
@@ -220,7 +232,7 @@ function generateContent(session: Session<CodeModel>, imports: ImportManager): s
     for (const hostParam of values(hostParams)) {
       let val = hostParam.language.go!.name;
       if (hostParam.clientDefaultValue) {
-        val = `"${hostParam.clientDefaultValue}"`;
+        val = getClientDefaultValue(hostParam);
       }
       text += `\t\t${hostParam.language.go!.name}: ${val},\n`;
     }
@@ -265,4 +277,29 @@ function getHostParam(params?: Parameter[]): Parameter | undefined {
     }
   }
   return undefined;
+}
+
+// returns the clientDefaultValue of the specified param.
+// this is usually the value in quotes (i.e. a string) however
+// it could also be a constant.
+function getClientDefaultValue(param: Parameter): string {
+  const getChoiceValue = function (choices: ChoiceValue[]): string {
+    // find the corresponding const type name
+    for (const choice of values(choices)) {
+      if (choice.value === param.clientDefaultValue) {
+        return choice.language.go!.name;
+      }
+    }
+    throw new Error(`failed to find matching constant for default value ${param.clientDefaultValue}`);
+  }
+  switch (param.schema.type) {
+    case SchemaType.Choice:
+      return getChoiceValue((<ChoiceSchema>param.schema).choices);
+    case SchemaType.SealedChoice:
+      return getChoiceValue((<SealedChoiceSchema>param.schema).choices);
+    case SchemaType.String:
+      return `"${param.clientDefaultValue}"`;
+    default:
+      return param.clientDefaultValue;
+  }
 }

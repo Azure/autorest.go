@@ -105,6 +105,8 @@ generateFromReadme("aztables", tables, 'package-2019-02', 'test/tables/2019-02-0
 const keyvault = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/1e2c9f3ec93078da8078389941531359e274f32a/specification/keyvault/data-plane/readme.md';
 generateFromReadme("azkeyvault", keyvault, 'package-7.2', 'test/keyvault/7.2/azkeyvault', '--security=AADToken --security-scopes="https://vault.azure.net/.default" --module=azkeyvault --openapi-type="data-plane" --export-clients');
 
+generate("azalias", 'test/swagger/alias.json', 'test/maps/azalias', '--security=AzureKey --module="azalias" --openapi-type="data-plane"');
+
 function should_generate(name) {
     if (filter !== undefined) {
         let re = new RegExp(filter);
