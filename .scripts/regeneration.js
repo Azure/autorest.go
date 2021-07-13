@@ -9,45 +9,45 @@ const sem = require('./semaphore')(8);
 const swaggerDir = 'src/node_modules/@microsoft.azure/autorest.testserver/swagger/';
 
 const goMappings = {
-    'additionalpropsgroup': 'additionalProperties.json',
-    'arraygroup': 'body-array.json',
-    'azurereportgroup': 'azure-report.json',
-    'azurespecialsgroup': 'azure-special-properties.json',
-    'booleangroup': 'body-boolean.json',
-    'bytegroup': 'body-byte.json',
-    'complexgroup': 'body-complex.json',
-    'complexmodelgroup': 'complex-model.json',
-    'custombaseurlgroup': 'custom-baseUrl.json',
-    'dategroup': 'body-date.json',
-    'datetimegroup': 'body-datetime.json',
-    'datetimerfc1123group': 'body-datetime-rfc1123.json',
-    'dictionarygroup': 'body-dictionary.json',
-    'durationgroup': 'body-duration.json',
-    'errorsgroup': 'xms-error-responses.json',
-    'extenumsgroup': 'extensible-enums-swagger.json',
-    'filegroup': 'body-file.json',
-    'formdatagroup': 'body-formdata.json',
-    'headergroup': 'header.json',
-    'headgroup': 'head.json',
-    'httpinfrastructuregroup': 'httpInfrastructure.json',
-    'integergroup': 'body-integer.json',
-    'lrogroup': 'lro.json',
-    'mediatypesgroup': 'media_types.json',
-    'migroup': 'multiple-inheritance.json',
-    //'modelflatteninggroup': 'model-flattening.json',
-    'morecustombaseurigroup': 'custom-baseUrl-more-options.json',
-    'nonstringenumgroup': 'non-string-enum.json',
-    'numbergroup': 'body-number.json',
-    'objectgroup': 'object-type.json',
-    'optionalgroup': 'required-optional.json',
-    'paginggroup': 'paging.json',
-    'paramgroupinggroup': 'azure-parameter-grouping.json',
-    'reportgroup': 'report.json',
-    'stringgroup': 'body-string.json',
-    'urlgroup': 'url.json',
-    'urlmultigroup': 'url-multi-collectionFormat.json',
-    'validationgroup': 'validation.json',
-    'xmlgroup': 'xml-service.json',
+    'additionalpropsgroup': ['additionalProperties.json'],
+    'arraygroup': ['body-array.json'],
+    'azurereportgroup': ['azure-report.json'],
+    'azurespecialsgroup': ['azure-special-properties.json', '--head-as-boolean'],
+    'booleangroup': ['body-boolean.json'],
+    'bytegroup': ['body-byte.json'],
+    'complexgroup': ['body-complex.json'],
+    'complexmodelgroup': ['complex-model.json'],
+    'custombaseurlgroup': ['custom-baseUrl.json'],
+    'dategroup': ['body-date.json'],
+    'datetimegroup': ['body-datetime.json'],
+    'datetimerfc1123group': ['body-datetime-rfc1123.json'],
+    'dictionarygroup': ['body-dictionary.json'],
+    'durationgroup': ['body-duration.json'],
+    'errorsgroup': ['xms-error-responses.json'],
+    'extenumsgroup': ['extensible-enums-swagger.json'],
+    'filegroup': ['body-file.json'],
+    'formdatagroup': ['body-formdata.json'],
+    'headergroup': ['header.json'],
+    'headgroup': ['head.json', '--head-as-boolean'],
+    'httpinfrastructuregroup': ['httpInfrastructure.json', '--head-as-boolean'],
+    'integergroup': ['body-integer.json'],
+    'lrogroup': ['lro.json'],
+    'mediatypesgroup': ['media_types.json'],
+    'migroup': ['multiple-inheritance.json'],
+    //'modelflatteninggroup': ['model-flattening.json'],
+    'morecustombaseurigroup': ['custom-baseUrl-more-options.json'],
+    'nonstringenumgroup': ['non-string-enum.json'],
+    'numbergroup': ['body-number.json'],
+    'objectgroup': ['object-type.json'],
+    'optionalgroup': ['required-optional.json'],
+    'paginggroup': ['paging.json'],
+    'paramgroupinggroup': ['azure-parameter-grouping.json'],
+    'reportgroup': ['report.json'],
+    'stringgroup': ['body-string.json'],
+    'urlgroup': ['url.json'],
+    'urlmultigroup': ['url-multi-collectionFormat.json'],
+    'validationgroup': ['validation.json'],
+    'xmlgroup': ['xml-service.json'],
 };
 
 const args = process.argv.slice(2);
@@ -80,8 +80,13 @@ if (filter !== undefined) {
 // loop through all of the namespaces in goMappings
 for (namespace in goMappings) {
     // for each swagger run the autorest command to generate code based on the swagger for the relevant namespace and output to the /generated directory
-    const inputFile = swaggerDir + goMappings[namespace];
-    generate(namespace, inputFile, 'test/autorest/' + namespace, '--export-clients');
+    const entry = goMappings[namespace];
+    const inputFile = swaggerDir + entry[0];
+    let extraParams = ['--export-clients'];
+    if (entry.length > 1) {
+        extraParams = extraParams.concat(entry.slice());
+    }
+    generate(namespace, inputFile, 'test/autorest/' + namespace, extraParams.join(' '));
 }
 
 const blobStorage = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/ee9bd6fe35eb7850ff0d1496c59259eb74f0d446/specification/storage/data-plane/Microsoft.BlobStorage/preview/2020-06-12/blob.json';

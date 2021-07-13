@@ -74,6 +74,8 @@ export async function namer(session: Session<CodeModel>) {
   model.language.go!.azureARM = azureARM;
   const exportClients = await session.getValue('export-clients', false);
   model.language.go!.exportClients = exportClients;
+  const headAsBoolean = await session.getValue('head-as-boolean', false);
+  model.language.go!.headAsBoolean = headAsBoolean;
 
   // pascal-case and capitzalize acronym names of objects and their fields
   for (const obj of values(model.schemas.objects)) {
@@ -122,8 +124,8 @@ export async function namer(session: Session<CodeModel>) {
     for (const op of values(group.operations)) {
       const details = <OperationNaming>op.language.go;
       // propagate these settings to each operation for ease of access
-      details.azureARM = model.language.go!.azureARM
-      details.openApiType = model.language.go!.openApiType
+      details.azureARM = model.language.go!.azureARM;
+      details.openApiType = model.language.go!.openApiType;
       details.name = ensureNameCase(details.name);
       // add the client name to the operation as it's needed all over the place
       details.clientName = groupDetails.clientName;
