@@ -65,7 +65,7 @@ help-content:
       - key: file-prefix
         type: string
         description: Optional prefix to file names. For example, if you set your file prefix to "zzz_", all generated code files will begin with "zzz_".
-      - key: export-clients
+      - key: public-clients
         type: boolean
         description: Indicates if generated clients are to be exported.  Default to true for ARM, false for data-plane.
 ```

@@ -72,7 +72,7 @@ export async function namer(session: Session<CodeModel>) {
   model.language.go!.openApiType = specType;
   const azureARM = await session.getValue('azure-arm', false);
   model.language.go!.azureARM = azureARM;
-  const exportClients = await session.getValue('export-clients', false);
+  const exportClients = await session.getValue('public-clients', false);
   model.language.go!.exportClients = exportClients;
   const headAsBoolean = await session.getValue('head-as-boolean', false);
   model.language.go!.headAsBoolean = headAsBoolean;
