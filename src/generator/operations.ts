@@ -966,7 +966,7 @@ function getAPIParametersSig(op: Operation, imports: ImportManager): string {
 //    op - for the operation
 // handler - for the response handler
 function generateReturnsInfo(op: Operation, apiType: 'api' | 'op' | 'handler'): string[] {
-  let returnType: string;
+  let returnType = getResponseEnvelopeName(op);
   if (isLROOperation(op)) {
     switch (apiType) {
       case 'handler':
@@ -978,26 +978,17 @@ function generateReturnsInfo(op: Operation, apiType: 'api' | 'op' | 'handler'): 
           throw new Error(`handler being generated for non-pageable LRO ${op.language.go!.name} which is unexpected`);
         }
         break;
-      case 'api':
-        returnType = getResponseEnvelopeName(op);
-        break;
       case 'op':
         returnType = '*azcore.Response';
         break;
     }
   } else if (isPageableOperation(op)) {
     switch (apiType) {
-      case 'handler':
-        // pageable operations always return a schema
-        returnType = getResponseEnvelopeName(op);
-        break;
       case 'api':
       case 'op':
         // pager operations don't return an error
         return [(<PagerInfo>op.language.go!.pageableType).name];
     }
-  } else {
-    returnType = getResponseEnvelopeName(op);
   }
   return [returnType, 'error'];
 }
