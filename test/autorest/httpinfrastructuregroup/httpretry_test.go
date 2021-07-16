@@ -59,8 +59,8 @@ func TestHTTPRetryHead408(t *testing.T) {
 	if err != nil {
 		t.Fatalf("unexpected error %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !result.Success {
+		t.Fatal("unexpected Success")
 	}
 }
 
