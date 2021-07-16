@@ -200,22 +200,14 @@ function formatHeaderResponseValue(propName: string, header: string, schema: Sch
 }
 
 function getZeroReturnValue(op: Operation, apiType: 'api' | 'op' | 'handler'): string {
-  let returnType = 'nil';
+  let returnType = `${getResponseEnvelopeName(op)}{}`;
   if (isLROOperation(op)) {
     if (apiType === 'op') {
       // the operation returns an *azcore.Response
       returnType = 'nil';
-    } else if (apiType === 'api') {
-      returnType = `${getResponseEnvelopeName(op)}{}`;
-    } else {
-      if (isPageableOperation(op)) {
-        returnType = `${getFinalResponseEnvelopeName(op)}{}`;
-      } else if (getSchemaResponse(op) !== undefined) {
-        returnType = `${getResponseEnvelopeName(op)}{}`;
-      }
+    } else if (apiType === 'handler' && isPageableOperation(op)) {
+      returnType = `${getFinalResponseEnvelopeName(op)}{}`;
     }
-  } else {
-    returnType = `${getResponseEnvelopeName(op)}{}`;
   }
   return returnType
 }

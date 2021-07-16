@@ -347,8 +347,8 @@ export function getStatusCodes(op: Operation): string[] {
   if (statusCodes.length === 0) {
     // if the operation defines no status codes (which is non-conformant)
     // then add 200, 201, 202, and 204 to the list.  this is to accomodate
-    // some quirky tests in the test server.  once they are fixed this
-    // should be removed.
+    // some quirky tests in the test server.
+    // TODO: fix test server and remove this.
     statusCodes = ['200', '201', '202', '204'];
   }
   return statusCodes;
