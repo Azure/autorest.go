@@ -20,17 +20,17 @@ type workspaceClient struct {
 
 // Get - Get Workspace
 // If the operation fails it returns the *ErrorContract error type.
-func (client *workspaceClient) Get(ctx context.Context, options *WorkspaceGetOptions) (WorkspaceResponse, error) {
+func (client *workspaceClient) Get(ctx context.Context, options *WorkspaceGetOptions) (WorkspaceGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
-		return WorkspaceResponse{}, err
+		return WorkspaceGetResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return WorkspaceResponse{}, err
+		return WorkspaceGetResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return WorkspaceResponse{}, client.getHandleError(resp)
+		return WorkspaceGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -51,12 +51,12 @@ func (client *workspaceClient) getCreateRequest(ctx context.Context, options *Wo
 }
 
 // getHandleResponse handles the Get response.
-func (client *workspaceClient) getHandleResponse(resp *azcore.Response) (WorkspaceResponse, error) {
-	var val *Workspace
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return WorkspaceResponse{}, err
+func (client *workspaceClient) getHandleResponse(resp *azcore.Response) (WorkspaceGetResponse, error) {
+	result := WorkspaceGetResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.Workspace); err != nil {
+		return WorkspaceGetResponse{}, err
 	}
-	return WorkspaceResponse{RawResponse: resp.Response, Workspace: val}, nil
+	return result, nil
 }
 
 // getHandleError handles the Get error response.

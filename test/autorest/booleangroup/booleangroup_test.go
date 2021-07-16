@@ -9,6 +9,7 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/Azure/azure-sdk-for-go/sdk/to"
 	"github.com/google/go-cmp/cmp"
 )
 
@@ -22,11 +23,10 @@ func TestGetTrue(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetTrue: %v", err)
 	}
-	val := true
 	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
-	if r := cmp.Diff(result.Value, &val); r != "" {
+	if r := cmp.Diff(result.Value, to.BoolPtr(true)); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -37,11 +37,10 @@ func TestGetFalse(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetFalse: %v", err)
 	}
-	val := false
 	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
-	if r := cmp.Diff(result.Value, &val); r != "" {
+	if r := cmp.Diff(result.Value, to.BoolPtr(false)); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -78,7 +77,7 @@ func TestPutTrue(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutTrue: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -89,7 +88,7 @@ func TestPutFalse(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutFalse: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }

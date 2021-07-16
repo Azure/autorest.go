@@ -63,8 +63,8 @@ func TestIntGetNullUnixTime(t *testing.T) {
 	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
-	if r := cmp.Diff(result.Value, (*time.Time)(nil)); r != "" {
-		t.Fatal(r)
+	if result.Value != nil {
+		t.Fatal("expected nil value")
 	}
 }
 
@@ -133,7 +133,7 @@ func TestIntPutMax32(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutMax32: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -144,7 +144,7 @@ func TestIntPutMax64(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutMax64: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -155,7 +155,7 @@ func TestIntPutMin32(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutMin32: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -166,7 +166,7 @@ func TestIntPutMin64(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutMin64: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -178,7 +178,7 @@ func TestIntPutUnixTimeDate(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutUnixTimeDate: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }

@@ -6,8 +6,8 @@
 import { Session } from '@autorest/extension-base';
 import { values } from '@azure-tools/linq';
 import { comment } from '@azure-tools/codegen';
-import { aggregateParameters, isSchemaResponse } from '../common/helpers';
-import { ArraySchema, CodeModel, DictionarySchema, Language, Parameter, Schema, SchemaType, Operation, GroupProperty, ImplementationLocation, SerializationStyle, ByteArraySchema, ConstantSchema, NumberSchema, DateTimeSchema } from '@autorest/codemodel';
+import { aggregateParameters, isLROOperation, isSchemaResponse, isMultiRespOperation } from '../common/helpers';
+import { ArraySchema, CodeModel, DictionarySchema, Language, Parameter, Schema, SchemaType, ObjectSchema, Operation, Property, GroupProperty, ImplementationLocation, SerializationStyle, ByteArraySchema, ConstantSchema, NumberSchema, DateTimeSchema } from '@autorest/codemodel';
 import { ImportManager } from './imports';
 
 export const dateFormat = '2006-01-02';
@@ -287,6 +287,55 @@ export function hasSchemaResponse(op: Operation): boolean {
   return false;
 }
 
+// returns the response envelope type name
+export function getResponseEnvelopeName(op: Operation): string {
+  return op.language.go!.responseEnv.language.go!.name;
+}
+
+// returns the final response envelope type name for LROs
+export function getFinalResponseEnvelopeName(op: Operation): string {
+  if (!isLROOperation(op)) {
+    throw new Error(`getFinalResponseEnvelopeName() called for ${op.language.go!.name} which isn't an LRO`);
+  }
+  return op.language.go!.finalResponseEnv.language.go!.name;
+}
+
+// returns the result envelope for the operation or undefined if it doesn't return a model
+export function hasResultEnvelope(op: Operation): Property | undefined {
+  const responseEnv = getResponseEnvelope(op);
+  if (responseEnv.language.go!.resultEnv) {
+    return responseEnv.language.go!.resultEnv;
+  }
+  return undefined;
+}
+
+export function getResponseEnvelope(op: Operation): ObjectSchema {
+  let responseEnv = op.language.go!.responseEnv;
+  if (isLROOperation(op)) {
+    // we need to consult the final response envelope for LROs
+    responseEnv = op.language.go!.finalResponseEnv;
+  }
+  return responseEnv;
+}
+
+// returns the name of the response field within the result envelope
+export function getResultFieldName(op: Operation): string {
+  if (isMultiRespOperation(op)) {
+    return 'Value';
+  }
+  let responseEnv = op.language.go!.responseEnv;
+  if (isLROOperation(op)) {
+    // we need to consult the final response envelope for LROs
+    responseEnv = op.language.go!.finalResponseEnv;
+  }
+  if (responseEnv.language.go!.resultEnv.language.go!.resultField.schema.serialization?.xml?.name) {
+    // here we use the schema name instead of the result field name as it's anonymously embedded in the result envelope.
+    // this is to handle XML cases that specify a custom XML name for the propery within the result field.
+    return responseEnv.language.go!.resultEnv.language.go!.resultField.schema.language.go!.name;
+  }
+  return responseEnv.language.go!.resultEnv.language.go!.resultField.language.go!.name;
+}
+
 export function getStatusCodes(op: Operation): string[] {
   // concat all status codes that return the same schema into one array.
   // this is to support operations that specify multiple response codes
@@ -294,6 +343,13 @@ export function getStatusCodes(op: Operation): string[] {
   let statusCodes = new Array<string>();
   for (const resp of values(op.responses)) {
     statusCodes = statusCodes.concat(resp.protocol.http?.statusCodes);
+  }
+  if (statusCodes.length === 0) {
+    // if the operation defines no status codes (which is non-conformant)
+    // then add 200, 201, 202, and 204 to the list.  this is to accomodate
+    // some quirky tests in the test server.  once they are fixed this
+    // should be removed.
+    statusCodes = ['200', '201', '202', '204'];
   }
   return statusCodes;
 }

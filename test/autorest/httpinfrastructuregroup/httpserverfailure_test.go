@@ -5,6 +5,7 @@ package httpinfrastructuregroup
 
 import (
 	"context"
+	"reflect"
 	"testing"
 )
 
@@ -18,7 +19,7 @@ func TestHTTPServerFailureDelete505(t *testing.T) {
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}
-	if result != nil {
+	if !reflect.ValueOf(result).IsZero() {
 		t.Fatalf("Expected a nil result")
 	}
 }
@@ -29,7 +30,7 @@ func TestHTTPServerFailureGet501(t *testing.T) {
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}
-	if result != nil {
+	if !reflect.ValueOf(result).IsZero() {
 		t.Fatalf("Expected a nil result")
 	}
 }
@@ -37,11 +38,11 @@ func TestHTTPServerFailureGet501(t *testing.T) {
 func TestHTTPServerFailureHead501(t *testing.T) {
 	client := newHTTPServerFailureClient()
 	result, err := client.Head501(context.Background(), nil)
-	if err == nil {
-		t.Fatalf("Expected an error but did not receive one")
+	if err != nil {
+		t.Fatal(err)
 	}
-	if result != nil {
-		t.Fatalf("Expected a nil result")
+	if result.Success {
+		t.Fatal("unexpected success")
 	}
 }
 
@@ -51,7 +52,7 @@ func TestHTTPServerFailurePost505(t *testing.T) {
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}
-	if result != nil {
+	if !reflect.ValueOf(result).IsZero() {
 		t.Fatalf("Expected a nil result")
 	}
 }

@@ -9,9 +9,44 @@ package durationgroup
 
 import "net/http"
 
-// StringResponse is the response envelope for operations that return a string type.
-type StringResponse struct {
+// DurationGetInvalidResponse contains the response from method Duration.GetInvalid.
+type DurationGetInvalidResponse struct {
+	DurationGetInvalidResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-	Value       *string
+}
+
+// DurationGetInvalidResult contains the result from method Duration.GetInvalid.
+type DurationGetInvalidResult struct {
+	Value *string
+}
+
+// DurationGetNullResponse contains the response from method Duration.GetNull.
+type DurationGetNullResponse struct {
+	DurationGetNullResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// DurationGetNullResult contains the result from method Duration.GetNull.
+type DurationGetNullResult struct {
+	Value *string
+}
+
+// DurationGetPositiveDurationResponse contains the response from method Duration.GetPositiveDuration.
+type DurationGetPositiveDurationResponse struct {
+	DurationGetPositiveDurationResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// DurationGetPositiveDurationResult contains the result from method Duration.GetPositiveDuration.
+type DurationGetPositiveDurationResult struct {
+	Value *string
+}
+
+// DurationPutPositiveDurationResponse contains the response from method Duration.PutPositiveDuration.
+type DurationPutPositiveDurationResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }

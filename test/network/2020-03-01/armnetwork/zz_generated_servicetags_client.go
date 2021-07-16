@@ -32,17 +32,17 @@ func NewServiceTagsClient(con *armcore.Connection, subscriptionID string) *Servi
 
 // List - Gets a list of service tag information resources.
 // If the operation fails it returns the *CloudError error type.
-func (client *ServiceTagsClient) List(ctx context.Context, location string, options *ServiceTagsListOptions) (ServiceTagsListResultResponse, error) {
+func (client *ServiceTagsClient) List(ctx context.Context, location string, options *ServiceTagsListOptions) (ServiceTagsListResponse, error) {
 	req, err := client.listCreateRequest(ctx, location, options)
 	if err != nil {
-		return ServiceTagsListResultResponse{}, err
+		return ServiceTagsListResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return ServiceTagsListResultResponse{}, err
+		return ServiceTagsListResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return ServiceTagsListResultResponse{}, client.listHandleError(resp)
+		return ServiceTagsListResponse{}, client.listHandleError(resp)
 	}
 	return client.listHandleResponse(resp)
 }
@@ -71,12 +71,12 @@ func (client *ServiceTagsClient) listCreateRequest(ctx context.Context, location
 }
 
 // listHandleResponse handles the List response.
-func (client *ServiceTagsClient) listHandleResponse(resp *azcore.Response) (ServiceTagsListResultResponse, error) {
-	var val *ServiceTagsListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ServiceTagsListResultResponse{}, err
+func (client *ServiceTagsClient) listHandleResponse(resp *azcore.Response) (ServiceTagsListResponse, error) {
+	result := ServiceTagsListResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.ServiceTagsListResult); err != nil {
+		return ServiceTagsListResponse{}, err
 	}
-	return ServiceTagsListResultResponse{RawResponse: resp.Response, ServiceTagsListResult: val}, nil
+	return result, nil
 }
 
 // listHandleError handles the List error response.

@@ -30,17 +30,17 @@ func NewRoleAssignmentsClient(con *Connection) *RoleAssignmentsClient {
 
 // Create - Creates a role assignment.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *RoleAssignmentsClient) Create(ctx context.Context, vaultBaseURL string, scope string, roleAssignmentName string, parameters RoleAssignmentCreateParameters, options *RoleAssignmentsCreateOptions) (RoleAssignmentResponse, error) {
+func (client *RoleAssignmentsClient) Create(ctx context.Context, vaultBaseURL string, scope string, roleAssignmentName string, parameters RoleAssignmentCreateParameters, options *RoleAssignmentsCreateOptions) (RoleAssignmentsCreateResponse, error) {
 	req, err := client.createCreateRequest(ctx, vaultBaseURL, scope, roleAssignmentName, parameters, options)
 	if err != nil {
-		return RoleAssignmentResponse{}, err
+		return RoleAssignmentsCreateResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return RoleAssignmentResponse{}, err
+		return RoleAssignmentsCreateResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusCreated) {
-		return RoleAssignmentResponse{}, client.createHandleError(resp)
+		return RoleAssignmentsCreateResponse{}, client.createHandleError(resp)
 	}
 	return client.createHandleResponse(resp)
 }
@@ -71,12 +71,12 @@ func (client *RoleAssignmentsClient) createCreateRequest(ctx context.Context, va
 }
 
 // createHandleResponse handles the Create response.
-func (client *RoleAssignmentsClient) createHandleResponse(resp *azcore.Response) (RoleAssignmentResponse, error) {
-	var val *RoleAssignment
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return RoleAssignmentResponse{}, err
+func (client *RoleAssignmentsClient) createHandleResponse(resp *azcore.Response) (RoleAssignmentsCreateResponse, error) {
+	result := RoleAssignmentsCreateResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.RoleAssignment); err != nil {
+		return RoleAssignmentsCreateResponse{}, err
 	}
-	return RoleAssignmentResponse{RawResponse: resp.Response, RoleAssignment: val}, nil
+	return result, nil
 }
 
 // createHandleError handles the Create error response.
@@ -94,17 +94,17 @@ func (client *RoleAssignmentsClient) createHandleError(resp *azcore.Response) er
 
 // Delete - Deletes a role assignment.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *RoleAssignmentsClient) Delete(ctx context.Context, vaultBaseURL string, scope string, roleAssignmentName string, options *RoleAssignmentsDeleteOptions) (RoleAssignmentResponse, error) {
+func (client *RoleAssignmentsClient) Delete(ctx context.Context, vaultBaseURL string, scope string, roleAssignmentName string, options *RoleAssignmentsDeleteOptions) (RoleAssignmentsDeleteResponse, error) {
 	req, err := client.deleteCreateRequest(ctx, vaultBaseURL, scope, roleAssignmentName, options)
 	if err != nil {
-		return RoleAssignmentResponse{}, err
+		return RoleAssignmentsDeleteResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return RoleAssignmentResponse{}, err
+		return RoleAssignmentsDeleteResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return RoleAssignmentResponse{}, client.deleteHandleError(resp)
+		return RoleAssignmentsDeleteResponse{}, client.deleteHandleError(resp)
 	}
 	return client.deleteHandleResponse(resp)
 }
@@ -135,12 +135,12 @@ func (client *RoleAssignmentsClient) deleteCreateRequest(ctx context.Context, va
 }
 
 // deleteHandleResponse handles the Delete response.
-func (client *RoleAssignmentsClient) deleteHandleResponse(resp *azcore.Response) (RoleAssignmentResponse, error) {
-	var val *RoleAssignment
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return RoleAssignmentResponse{}, err
+func (client *RoleAssignmentsClient) deleteHandleResponse(resp *azcore.Response) (RoleAssignmentsDeleteResponse, error) {
+	result := RoleAssignmentsDeleteResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.RoleAssignment); err != nil {
+		return RoleAssignmentsDeleteResponse{}, err
 	}
-	return RoleAssignmentResponse{RawResponse: resp.Response, RoleAssignment: val}, nil
+	return result, nil
 }
 
 // deleteHandleError handles the Delete error response.
@@ -158,17 +158,17 @@ func (client *RoleAssignmentsClient) deleteHandleError(resp *azcore.Response) er
 
 // Get - Get the specified role assignment.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *RoleAssignmentsClient) Get(ctx context.Context, vaultBaseURL string, scope string, roleAssignmentName string, options *RoleAssignmentsGetOptions) (RoleAssignmentResponse, error) {
+func (client *RoleAssignmentsClient) Get(ctx context.Context, vaultBaseURL string, scope string, roleAssignmentName string, options *RoleAssignmentsGetOptions) (RoleAssignmentsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, vaultBaseURL, scope, roleAssignmentName, options)
 	if err != nil {
-		return RoleAssignmentResponse{}, err
+		return RoleAssignmentsGetResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return RoleAssignmentResponse{}, err
+		return RoleAssignmentsGetResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return RoleAssignmentResponse{}, client.getHandleError(resp)
+		return RoleAssignmentsGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -199,12 +199,12 @@ func (client *RoleAssignmentsClient) getCreateRequest(ctx context.Context, vault
 }
 
 // getHandleResponse handles the Get response.
-func (client *RoleAssignmentsClient) getHandleResponse(resp *azcore.Response) (RoleAssignmentResponse, error) {
-	var val *RoleAssignment
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return RoleAssignmentResponse{}, err
+func (client *RoleAssignmentsClient) getHandleResponse(resp *azcore.Response) (RoleAssignmentsGetResponse, error) {
+	result := RoleAssignmentsGetResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.RoleAssignment); err != nil {
+		return RoleAssignmentsGetResponse{}, err
 	}
-	return RoleAssignmentResponse{RawResponse: resp.Response, RoleAssignment: val}, nil
+	return result, nil
 }
 
 // getHandleError handles the Get error response.
@@ -222,18 +222,15 @@ func (client *RoleAssignmentsClient) getHandleError(resp *azcore.Response) error
 
 // ListForScope - Gets role assignments for a scope.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *RoleAssignmentsClient) ListForScope(vaultBaseURL string, scope string, options *RoleAssignmentsListForScopeOptions) RoleAssignmentListResultPager {
-	return &roleAssignmentListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *RoleAssignmentsClient) ListForScope(vaultBaseURL string, scope string, options *RoleAssignmentsListForScopeOptions) RoleAssignmentsListForScopePager {
+	return &roleAssignmentsListForScopePager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listForScopeCreateRequest(ctx, vaultBaseURL, scope, options)
 		},
-		responder: client.listForScopeHandleResponse,
-		errorer:   client.listForScopeHandleError,
-		advancer: func(ctx context.Context, resp RoleAssignmentListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp RoleAssignmentsListForScopeResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.RoleAssignmentListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -262,12 +259,12 @@ func (client *RoleAssignmentsClient) listForScopeCreateRequest(ctx context.Conte
 }
 
 // listForScopeHandleResponse handles the ListForScope response.
-func (client *RoleAssignmentsClient) listForScopeHandleResponse(resp *azcore.Response) (RoleAssignmentListResultResponse, error) {
-	var val *RoleAssignmentListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return RoleAssignmentListResultResponse{}, err
+func (client *RoleAssignmentsClient) listForScopeHandleResponse(resp *azcore.Response) (RoleAssignmentsListForScopeResponse, error) {
+	result := RoleAssignmentsListForScopeResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.RoleAssignmentListResult); err != nil {
+		return RoleAssignmentsListForScopeResponse{}, err
 	}
-	return RoleAssignmentListResultResponse{RawResponse: resp.Response, RoleAssignmentListResult: val}, nil
+	return result, nil
 }
 
 // listForScopeHandleError handles the ListForScope error response.

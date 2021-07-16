@@ -33,47 +33,47 @@ func NewVirtualRouterPeeringsClient(con *armcore.Connection, subscriptionID stri
 
 // BeginCreateOrUpdate - Creates or updates the specified Virtual Router Peering.
 // If the operation fails it returns the *Error error type.
-func (client *VirtualRouterPeeringsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualRouterName string, peeringName string, parameters VirtualRouterPeering, options *VirtualRouterPeeringsBeginCreateOrUpdateOptions) (VirtualRouterPeeringPollerResponse, error) {
+func (client *VirtualRouterPeeringsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualRouterName string, peeringName string, parameters VirtualRouterPeering, options *VirtualRouterPeeringsBeginCreateOrUpdateOptions) (VirtualRouterPeeringsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualRouterName, peeringName, parameters, options)
 	if err != nil {
-		return VirtualRouterPeeringPollerResponse{}, err
+		return VirtualRouterPeeringsCreateOrUpdatePollerResponse{}, err
 	}
-	result := VirtualRouterPeeringPollerResponse{
+	result := VirtualRouterPeeringsCreateOrUpdatePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("VirtualRouterPeeringsClient.CreateOrUpdate", "azure-async-operation", resp, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return VirtualRouterPeeringPollerResponse{}, err
+		return VirtualRouterPeeringsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &virtualRouterPeeringPoller{
+	poller := &virtualRouterPeeringsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualRouterPeeringResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualRouterPeeringsCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new VirtualRouterPeeringPoller from the specified resume token.
-// token - The value must come from a previous call to VirtualRouterPeeringPoller.ResumeToken().
-func (client *VirtualRouterPeeringsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (VirtualRouterPeeringPollerResponse, error) {
+// ResumeCreateOrUpdate creates a new VirtualRouterPeeringsCreateOrUpdatePoller from the specified resume token.
+// token - The value must come from a previous call to VirtualRouterPeeringsCreateOrUpdatePoller.ResumeToken().
+func (client *VirtualRouterPeeringsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (VirtualRouterPeeringsCreateOrUpdatePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("VirtualRouterPeeringsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return VirtualRouterPeeringPollerResponse{}, err
+		return VirtualRouterPeeringsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &virtualRouterPeeringPoller{
+	poller := &virtualRouterPeeringsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return VirtualRouterPeeringPollerResponse{}, err
+		return VirtualRouterPeeringsCreateOrUpdatePollerResponse{}, err
 	}
-	result := VirtualRouterPeeringPollerResponse{
+	result := VirtualRouterPeeringsCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualRouterPeeringResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualRouterPeeringsCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -142,47 +142,47 @@ func (client *VirtualRouterPeeringsClient) createOrUpdateHandleError(resp *azcor
 
 // BeginDelete - Deletes the specified peering from a Virtual Router.
 // If the operation fails it returns the *Error error type.
-func (client *VirtualRouterPeeringsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualRouterName string, peeringName string, options *VirtualRouterPeeringsBeginDeleteOptions) (HTTPPollerResponse, error) {
+func (client *VirtualRouterPeeringsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualRouterName string, peeringName string, options *VirtualRouterPeeringsBeginDeleteOptions) (VirtualRouterPeeringsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, virtualRouterName, peeringName, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return VirtualRouterPeeringsDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := VirtualRouterPeeringsDeletePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("VirtualRouterPeeringsClient.Delete", "location", resp, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return VirtualRouterPeeringsDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &virtualRouterPeeringsDeletePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualRouterPeeringsDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeDelete creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *VirtualRouterPeeringsClient) ResumeDelete(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeDelete creates a new VirtualRouterPeeringsDeletePoller from the specified resume token.
+// token - The value must come from a previous call to VirtualRouterPeeringsDeletePoller.ResumeToken().
+func (client *VirtualRouterPeeringsClient) ResumeDelete(ctx context.Context, token string) (VirtualRouterPeeringsDeletePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("VirtualRouterPeeringsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return VirtualRouterPeeringsDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &virtualRouterPeeringsDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return VirtualRouterPeeringsDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := VirtualRouterPeeringsDeletePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualRouterPeeringsDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -251,17 +251,17 @@ func (client *VirtualRouterPeeringsClient) deleteHandleError(resp *azcore.Respon
 
 // Get - Gets the specified Virtual Router Peering.
 // If the operation fails it returns the *Error error type.
-func (client *VirtualRouterPeeringsClient) Get(ctx context.Context, resourceGroupName string, virtualRouterName string, peeringName string, options *VirtualRouterPeeringsGetOptions) (VirtualRouterPeeringResponse, error) {
+func (client *VirtualRouterPeeringsClient) Get(ctx context.Context, resourceGroupName string, virtualRouterName string, peeringName string, options *VirtualRouterPeeringsGetOptions) (VirtualRouterPeeringsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, virtualRouterName, peeringName, options)
 	if err != nil {
-		return VirtualRouterPeeringResponse{}, err
+		return VirtualRouterPeeringsGetResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return VirtualRouterPeeringResponse{}, err
+		return VirtualRouterPeeringsGetResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return VirtualRouterPeeringResponse{}, client.getHandleError(resp)
+		return VirtualRouterPeeringsGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -298,12 +298,12 @@ func (client *VirtualRouterPeeringsClient) getCreateRequest(ctx context.Context,
 }
 
 // getHandleResponse handles the Get response.
-func (client *VirtualRouterPeeringsClient) getHandleResponse(resp *azcore.Response) (VirtualRouterPeeringResponse, error) {
-	var val *VirtualRouterPeering
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return VirtualRouterPeeringResponse{}, err
+func (client *VirtualRouterPeeringsClient) getHandleResponse(resp *azcore.Response) (VirtualRouterPeeringsGetResponse, error) {
+	result := VirtualRouterPeeringsGetResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.VirtualRouterPeering); err != nil {
+		return VirtualRouterPeeringsGetResponse{}, err
 	}
-	return VirtualRouterPeeringResponse{RawResponse: resp.Response, VirtualRouterPeering: val}, nil
+	return result, nil
 }
 
 // getHandleError handles the Get error response.
@@ -321,18 +321,15 @@ func (client *VirtualRouterPeeringsClient) getHandleError(resp *azcore.Response)
 
 // List - Lists all Virtual Router Peerings in a Virtual Router resource.
 // If the operation fails it returns the *Error error type.
-func (client *VirtualRouterPeeringsClient) List(resourceGroupName string, virtualRouterName string, options *VirtualRouterPeeringsListOptions) VirtualRouterPeeringListResultPager {
-	return &virtualRouterPeeringListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *VirtualRouterPeeringsClient) List(resourceGroupName string, virtualRouterName string, options *VirtualRouterPeeringsListOptions) VirtualRouterPeeringsListPager {
+	return &virtualRouterPeeringsListPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, virtualRouterName, options)
 		},
-		responder: client.listHandleResponse,
-		errorer:   client.listHandleError,
-		advancer: func(ctx context.Context, resp VirtualRouterPeeringListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp VirtualRouterPeeringsListResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.VirtualRouterPeeringListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -364,12 +361,12 @@ func (client *VirtualRouterPeeringsClient) listCreateRequest(ctx context.Context
 }
 
 // listHandleResponse handles the List response.
-func (client *VirtualRouterPeeringsClient) listHandleResponse(resp *azcore.Response) (VirtualRouterPeeringListResultResponse, error) {
-	var val *VirtualRouterPeeringListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return VirtualRouterPeeringListResultResponse{}, err
+func (client *VirtualRouterPeeringsClient) listHandleResponse(resp *azcore.Response) (VirtualRouterPeeringsListResponse, error) {
+	result := VirtualRouterPeeringsListResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.VirtualRouterPeeringListResult); err != nil {
+		return VirtualRouterPeeringsListResponse{}, err
 	}
-	return VirtualRouterPeeringListResultResponse{RawResponse: resp.Response, VirtualRouterPeeringListResult: val}, nil
+	return result, nil
 }
 
 // listHandleError handles the List error response.

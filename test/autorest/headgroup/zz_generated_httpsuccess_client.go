@@ -9,7 +9,6 @@ package headgroup
 
 import (
 	"context"
-	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 )
@@ -27,22 +26,20 @@ func NewHTTPSuccessClient(con *Connection) *HTTPSuccessClient {
 
 // Head200 - Return 200 status code if successful
 // If the operation fails it returns a generic error.
-func (client *HTTPSuccessClient) Head200(ctx context.Context, options *HTTPSuccessHead200Options) (BooleanResponse, error) {
+func (client *HTTPSuccessClient) Head200(ctx context.Context, options *HTTPSuccessHead200Options) (HTTPSuccessHead200Response, error) {
 	req, err := client.head200CreateRequest(ctx, options)
 	if err != nil {
-		return BooleanResponse{}, err
+		return HTTPSuccessHead200Response{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return BooleanResponse{}, err
+		return HTTPSuccessHead200Response{}, err
 	}
+	result := HTTPSuccessHead200Response{RawResponse: resp.Response}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
-		return BooleanResponse{RawResponse: resp.Response, Success: true}, nil
-	} else if resp.StatusCode >= 400 && resp.StatusCode < 500 {
-		return BooleanResponse{RawResponse: resp.Response, Success: false}, nil
-	} else {
-		return BooleanResponse{}, client.head200HandleError(resp)
+		result.Success = true
 	}
+	return result, nil
 }
 
 // head200CreateRequest creates the Head200 request.
@@ -56,36 +53,22 @@ func (client *HTTPSuccessClient) head200CreateRequest(ctx context.Context, optio
 	return req, nil
 }
 
-// head200HandleError handles the Head200 error response.
-func (client *HTTPSuccessClient) head200HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
-	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
-	}
-	if len(body) == 0 {
-		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
-	}
-	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
-}
-
 // Head204 - Return 204 status code if successful
 // If the operation fails it returns a generic error.
-func (client *HTTPSuccessClient) Head204(ctx context.Context, options *HTTPSuccessHead204Options) (BooleanResponse, error) {
+func (client *HTTPSuccessClient) Head204(ctx context.Context, options *HTTPSuccessHead204Options) (HTTPSuccessHead204Response, error) {
 	req, err := client.head204CreateRequest(ctx, options)
 	if err != nil {
-		return BooleanResponse{}, err
+		return HTTPSuccessHead204Response{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return BooleanResponse{}, err
+		return HTTPSuccessHead204Response{}, err
 	}
+	result := HTTPSuccessHead204Response{RawResponse: resp.Response}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
-		return BooleanResponse{RawResponse: resp.Response, Success: true}, nil
-	} else if resp.StatusCode >= 400 && resp.StatusCode < 500 {
-		return BooleanResponse{RawResponse: resp.Response, Success: false}, nil
-	} else {
-		return BooleanResponse{}, client.head204HandleError(resp)
+		result.Success = true
 	}
+	return result, nil
 }
 
 // head204CreateRequest creates the Head204 request.
@@ -99,36 +82,22 @@ func (client *HTTPSuccessClient) head204CreateRequest(ctx context.Context, optio
 	return req, nil
 }
 
-// head204HandleError handles the Head204 error response.
-func (client *HTTPSuccessClient) head204HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
-	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
-	}
-	if len(body) == 0 {
-		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
-	}
-	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
-}
-
 // Head404 - Return 404 status code if successful
 // If the operation fails it returns a generic error.
-func (client *HTTPSuccessClient) Head404(ctx context.Context, options *HTTPSuccessHead404Options) (BooleanResponse, error) {
+func (client *HTTPSuccessClient) Head404(ctx context.Context, options *HTTPSuccessHead404Options) (HTTPSuccessHead404Response, error) {
 	req, err := client.head404CreateRequest(ctx, options)
 	if err != nil {
-		return BooleanResponse{}, err
+		return HTTPSuccessHead404Response{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return BooleanResponse{}, err
+		return HTTPSuccessHead404Response{}, err
 	}
+	result := HTTPSuccessHead404Response{RawResponse: resp.Response}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
-		return BooleanResponse{RawResponse: resp.Response, Success: true}, nil
-	} else if resp.StatusCode >= 400 && resp.StatusCode < 500 {
-		return BooleanResponse{RawResponse: resp.Response, Success: false}, nil
-	} else {
-		return BooleanResponse{}, client.head404HandleError(resp)
+		result.Success = true
 	}
+	return result, nil
 }
 
 // head404CreateRequest creates the Head404 request.
@@ -140,16 +109,4 @@ func (client *HTTPSuccessClient) head404CreateRequest(ctx context.Context, optio
 	}
 	req.Telemetry(telemetryInfo)
 	return req, nil
-}
-
-// head404HandleError handles the Head404 error response.
-func (client *HTTPSuccessClient) head404HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
-	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
-	}
-	if len(body) == 0 {
-		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
-	}
-	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }

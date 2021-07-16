@@ -31,19 +31,19 @@ func NewSubscriptionInMethodClient(con *Connection) *SubscriptionInMethodClient 
 // PostMethodLocalNull - POST method with subscriptionId modeled in the method. pass in subscription id = null, client-side validation should prevent you
 // from making this call
 // If the operation fails it returns the *Error error type.
-func (client *SubscriptionInMethodClient) PostMethodLocalNull(ctx context.Context, subscriptionID string, options *SubscriptionInMethodPostMethodLocalNullOptions) (*http.Response, error) {
+func (client *SubscriptionInMethodClient) PostMethodLocalNull(ctx context.Context, subscriptionID string, options *SubscriptionInMethodPostMethodLocalNullOptions) (SubscriptionInMethodPostMethodLocalNullResponse, error) {
 	req, err := client.postMethodLocalNullCreateRequest(ctx, subscriptionID, options)
 	if err != nil {
-		return nil, err
+		return SubscriptionInMethodPostMethodLocalNullResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return SubscriptionInMethodPostMethodLocalNullResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.postMethodLocalNullHandleError(resp)
+		return SubscriptionInMethodPostMethodLocalNullResponse{}, client.postMethodLocalNullHandleError(resp)
 	}
-	return resp.Response, nil
+	return SubscriptionInMethodPostMethodLocalNullResponse{RawResponse: resp.Response}, nil
 }
 
 // postMethodLocalNullCreateRequest creates the PostMethodLocalNull request.
@@ -77,19 +77,19 @@ func (client *SubscriptionInMethodClient) postMethodLocalNullHandleError(resp *a
 
 // PostMethodLocalValid - POST method with subscriptionId modeled in the method. pass in subscription id = '1234-5678-9012-3456' to succeed
 // If the operation fails it returns the *Error error type.
-func (client *SubscriptionInMethodClient) PostMethodLocalValid(ctx context.Context, subscriptionID string, options *SubscriptionInMethodPostMethodLocalValidOptions) (*http.Response, error) {
+func (client *SubscriptionInMethodClient) PostMethodLocalValid(ctx context.Context, subscriptionID string, options *SubscriptionInMethodPostMethodLocalValidOptions) (SubscriptionInMethodPostMethodLocalValidResponse, error) {
 	req, err := client.postMethodLocalValidCreateRequest(ctx, subscriptionID, options)
 	if err != nil {
-		return nil, err
+		return SubscriptionInMethodPostMethodLocalValidResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return SubscriptionInMethodPostMethodLocalValidResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.postMethodLocalValidHandleError(resp)
+		return SubscriptionInMethodPostMethodLocalValidResponse{}, client.postMethodLocalValidHandleError(resp)
 	}
-	return resp.Response, nil
+	return SubscriptionInMethodPostMethodLocalValidResponse{RawResponse: resp.Response}, nil
 }
 
 // postMethodLocalValidCreateRequest creates the PostMethodLocalValid request.
@@ -123,19 +123,19 @@ func (client *SubscriptionInMethodClient) postMethodLocalValidHandleError(resp *
 
 // PostPathLocalValid - POST method with subscriptionId modeled in the method. pass in subscription id = '1234-5678-9012-3456' to succeed
 // If the operation fails it returns the *Error error type.
-func (client *SubscriptionInMethodClient) PostPathLocalValid(ctx context.Context, subscriptionID string, options *SubscriptionInMethodPostPathLocalValidOptions) (*http.Response, error) {
+func (client *SubscriptionInMethodClient) PostPathLocalValid(ctx context.Context, subscriptionID string, options *SubscriptionInMethodPostPathLocalValidOptions) (SubscriptionInMethodPostPathLocalValidResponse, error) {
 	req, err := client.postPathLocalValidCreateRequest(ctx, subscriptionID, options)
 	if err != nil {
-		return nil, err
+		return SubscriptionInMethodPostPathLocalValidResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return SubscriptionInMethodPostPathLocalValidResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.postPathLocalValidHandleError(resp)
+		return SubscriptionInMethodPostPathLocalValidResponse{}, client.postPathLocalValidHandleError(resp)
 	}
-	return resp.Response, nil
+	return SubscriptionInMethodPostPathLocalValidResponse{RawResponse: resp.Response}, nil
 }
 
 // postPathLocalValidCreateRequest creates the PostPathLocalValid request.
@@ -169,19 +169,19 @@ func (client *SubscriptionInMethodClient) postPathLocalValidHandleError(resp *az
 
 // PostSwaggerLocalValid - POST method with subscriptionId modeled in the method. pass in subscription id = '1234-5678-9012-3456' to succeed
 // If the operation fails it returns the *Error error type.
-func (client *SubscriptionInMethodClient) PostSwaggerLocalValid(ctx context.Context, subscriptionID string, options *SubscriptionInMethodPostSwaggerLocalValidOptions) (*http.Response, error) {
+func (client *SubscriptionInMethodClient) PostSwaggerLocalValid(ctx context.Context, subscriptionID string, options *SubscriptionInMethodPostSwaggerLocalValidOptions) (SubscriptionInMethodPostSwaggerLocalValidResponse, error) {
 	req, err := client.postSwaggerLocalValidCreateRequest(ctx, subscriptionID, options)
 	if err != nil {
-		return nil, err
+		return SubscriptionInMethodPostSwaggerLocalValidResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return SubscriptionInMethodPostSwaggerLocalValidResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.postSwaggerLocalValidHandleError(resp)
+		return SubscriptionInMethodPostSwaggerLocalValidResponse{}, client.postSwaggerLocalValidHandleError(resp)
 	}
-	return resp.Response, nil
+	return SubscriptionInMethodPostSwaggerLocalValidResponse{RawResponse: resp.Response}, nil
 }
 
 // postSwaggerLocalValidCreateRequest creates the PostSwaggerLocalValid request.

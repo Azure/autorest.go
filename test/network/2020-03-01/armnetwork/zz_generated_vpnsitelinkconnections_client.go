@@ -32,17 +32,17 @@ func NewVPNSiteLinkConnectionsClient(con *armcore.Connection, subscriptionID str
 
 // Get - Retrieves the details of a vpn site link connection.
 // If the operation fails it returns the *CloudError error type.
-func (client *VPNSiteLinkConnectionsClient) Get(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, linkConnectionName string, options *VPNSiteLinkConnectionsGetOptions) (VPNSiteLinkConnectionResponse, error) {
+func (client *VPNSiteLinkConnectionsClient) Get(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, linkConnectionName string, options *VPNSiteLinkConnectionsGetOptions) (VPNSiteLinkConnectionsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, gatewayName, connectionName, linkConnectionName, options)
 	if err != nil {
-		return VPNSiteLinkConnectionResponse{}, err
+		return VPNSiteLinkConnectionsGetResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return VPNSiteLinkConnectionResponse{}, err
+		return VPNSiteLinkConnectionsGetResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return VPNSiteLinkConnectionResponse{}, client.getHandleError(resp)
+		return VPNSiteLinkConnectionsGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -83,12 +83,12 @@ func (client *VPNSiteLinkConnectionsClient) getCreateRequest(ctx context.Context
 }
 
 // getHandleResponse handles the Get response.
-func (client *VPNSiteLinkConnectionsClient) getHandleResponse(resp *azcore.Response) (VPNSiteLinkConnectionResponse, error) {
-	var val *VPNSiteLinkConnection
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return VPNSiteLinkConnectionResponse{}, err
+func (client *VPNSiteLinkConnectionsClient) getHandleResponse(resp *azcore.Response) (VPNSiteLinkConnectionsGetResponse, error) {
+	result := VPNSiteLinkConnectionsGetResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.VPNSiteLinkConnection); err != nil {
+		return VPNSiteLinkConnectionsGetResponse{}, err
 	}
-	return VPNSiteLinkConnectionResponse{RawResponse: resp.Response, VPNSiteLinkConnection: val}, nil
+	return result, nil
 }
 
 // getHandleError handles the Get error response.

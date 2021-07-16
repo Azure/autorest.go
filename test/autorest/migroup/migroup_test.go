@@ -22,7 +22,7 @@ func TestGetCat(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(result.Cat, &Cat{
+	if r := cmp.Diff(result.Cat, Cat{
 		Feline: Feline{
 			Hisses: to.BoolPtr(true),
 			Meows:  to.BoolPtr(true),
@@ -43,7 +43,7 @@ func TestGetFeline(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(result.Feline, &Feline{
+	if r := cmp.Diff(result.Feline, Feline{
 		Hisses: to.BoolPtr(true),
 		Meows:  to.BoolPtr(true),
 	}); r != "" {
@@ -58,7 +58,7 @@ func TestGetHorse(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(result.Horse, &Horse{
+	if r := cmp.Diff(result.Horse, Horse{
 		Pet: Pet{
 			Name: to.StringPtr("Fred"),
 		},
@@ -75,7 +75,7 @@ func TestGetKitten(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(result.Kitten, &Kitten{
+	if r := cmp.Diff(result.Kitten, Kitten{
 		Cat: Cat{
 			Feline: Feline{
 				Hisses: to.BoolPtr(true),
@@ -99,7 +99,7 @@ func TestGetPet(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(result.Pet, &Pet{
+	if r := cmp.Diff(result.Pet, Pet{
 		Name: to.StringPtr("Peanut"),
 	}); r != "" {
 		t.Fatal(r)

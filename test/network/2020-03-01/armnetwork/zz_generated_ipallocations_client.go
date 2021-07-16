@@ -33,47 +33,47 @@ func NewIPAllocationsClient(con *armcore.Connection, subscriptionID string) *IPA
 
 // BeginCreateOrUpdate - Creates or updates an IpAllocation in the specified resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *IPAllocationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ipAllocationName string, parameters IPAllocation, options *IPAllocationsBeginCreateOrUpdateOptions) (IPAllocationPollerResponse, error) {
+func (client *IPAllocationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ipAllocationName string, parameters IPAllocation, options *IPAllocationsBeginCreateOrUpdateOptions) (IPAllocationsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, ipAllocationName, parameters, options)
 	if err != nil {
-		return IPAllocationPollerResponse{}, err
+		return IPAllocationsCreateOrUpdatePollerResponse{}, err
 	}
-	result := IPAllocationPollerResponse{
+	result := IPAllocationsCreateOrUpdatePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("IPAllocationsClient.CreateOrUpdate", "azure-async-operation", resp, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return IPAllocationPollerResponse{}, err
+		return IPAllocationsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &ipAllocationPoller{
+	poller := &ipAllocationsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (IPAllocationResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (IPAllocationsCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new IPAllocationPoller from the specified resume token.
-// token - The value must come from a previous call to IPAllocationPoller.ResumeToken().
-func (client *IPAllocationsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (IPAllocationPollerResponse, error) {
+// ResumeCreateOrUpdate creates a new IPAllocationsCreateOrUpdatePoller from the specified resume token.
+// token - The value must come from a previous call to IPAllocationsCreateOrUpdatePoller.ResumeToken().
+func (client *IPAllocationsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (IPAllocationsCreateOrUpdatePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("IPAllocationsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return IPAllocationPollerResponse{}, err
+		return IPAllocationsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &ipAllocationPoller{
+	poller := &ipAllocationsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return IPAllocationPollerResponse{}, err
+		return IPAllocationsCreateOrUpdatePollerResponse{}, err
 	}
-	result := IPAllocationPollerResponse{
+	result := IPAllocationsCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (IPAllocationResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (IPAllocationsCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -138,47 +138,47 @@ func (client *IPAllocationsClient) createOrUpdateHandleError(resp *azcore.Respon
 
 // BeginDelete - Deletes the specified IpAllocation.
 // If the operation fails it returns the *CloudError error type.
-func (client *IPAllocationsClient) BeginDelete(ctx context.Context, resourceGroupName string, ipAllocationName string, options *IPAllocationsBeginDeleteOptions) (HTTPPollerResponse, error) {
+func (client *IPAllocationsClient) BeginDelete(ctx context.Context, resourceGroupName string, ipAllocationName string, options *IPAllocationsBeginDeleteOptions) (IPAllocationsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, ipAllocationName, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return IPAllocationsDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := IPAllocationsDeletePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("IPAllocationsClient.Delete", "location", resp, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return IPAllocationsDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &ipAllocationsDeletePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (IPAllocationsDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeDelete creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *IPAllocationsClient) ResumeDelete(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeDelete creates a new IPAllocationsDeletePoller from the specified resume token.
+// token - The value must come from a previous call to IPAllocationsDeletePoller.ResumeToken().
+func (client *IPAllocationsClient) ResumeDelete(ctx context.Context, token string) (IPAllocationsDeletePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("IPAllocationsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return IPAllocationsDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &ipAllocationsDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return IPAllocationsDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := IPAllocationsDeletePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (IPAllocationsDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -243,17 +243,17 @@ func (client *IPAllocationsClient) deleteHandleError(resp *azcore.Response) erro
 
 // Get - Gets the specified IpAllocation by resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *IPAllocationsClient) Get(ctx context.Context, resourceGroupName string, ipAllocationName string, options *IPAllocationsGetOptions) (IPAllocationResponse, error) {
+func (client *IPAllocationsClient) Get(ctx context.Context, resourceGroupName string, ipAllocationName string, options *IPAllocationsGetOptions) (IPAllocationsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, ipAllocationName, options)
 	if err != nil {
-		return IPAllocationResponse{}, err
+		return IPAllocationsGetResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return IPAllocationResponse{}, err
+		return IPAllocationsGetResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return IPAllocationResponse{}, client.getHandleError(resp)
+		return IPAllocationsGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -289,12 +289,12 @@ func (client *IPAllocationsClient) getCreateRequest(ctx context.Context, resourc
 }
 
 // getHandleResponse handles the Get response.
-func (client *IPAllocationsClient) getHandleResponse(resp *azcore.Response) (IPAllocationResponse, error) {
-	var val *IPAllocation
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return IPAllocationResponse{}, err
+func (client *IPAllocationsClient) getHandleResponse(resp *azcore.Response) (IPAllocationsGetResponse, error) {
+	result := IPAllocationsGetResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.IPAllocation); err != nil {
+		return IPAllocationsGetResponse{}, err
 	}
-	return IPAllocationResponse{RawResponse: resp.Response, IPAllocation: val}, nil
+	return result, nil
 }
 
 // getHandleError handles the Get error response.
@@ -312,18 +312,15 @@ func (client *IPAllocationsClient) getHandleError(resp *azcore.Response) error {
 
 // List - Gets all IpAllocations in a subscription.
 // If the operation fails it returns the *CloudError error type.
-func (client *IPAllocationsClient) List(options *IPAllocationsListOptions) IPAllocationListResultPager {
-	return &ipAllocationListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *IPAllocationsClient) List(options *IPAllocationsListOptions) IPAllocationsListPager {
+	return &ipAllocationsListPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, options)
 		},
-		responder: client.listHandleResponse,
-		errorer:   client.listHandleError,
-		advancer: func(ctx context.Context, resp IPAllocationListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp IPAllocationsListResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.IPAllocationListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -347,12 +344,12 @@ func (client *IPAllocationsClient) listCreateRequest(ctx context.Context, option
 }
 
 // listHandleResponse handles the List response.
-func (client *IPAllocationsClient) listHandleResponse(resp *azcore.Response) (IPAllocationListResultResponse, error) {
-	var val *IPAllocationListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return IPAllocationListResultResponse{}, err
+func (client *IPAllocationsClient) listHandleResponse(resp *azcore.Response) (IPAllocationsListResponse, error) {
+	result := IPAllocationsListResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.IPAllocationListResult); err != nil {
+		return IPAllocationsListResponse{}, err
 	}
-	return IPAllocationListResultResponse{RawResponse: resp.Response, IPAllocationListResult: val}, nil
+	return result, nil
 }
 
 // listHandleError handles the List error response.
@@ -370,18 +367,15 @@ func (client *IPAllocationsClient) listHandleError(resp *azcore.Response) error 
 
 // ListByResourceGroup - Gets all IpAllocations in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *IPAllocationsClient) ListByResourceGroup(resourceGroupName string, options *IPAllocationsListByResourceGroupOptions) IPAllocationListResultPager {
-	return &ipAllocationListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *IPAllocationsClient) ListByResourceGroup(resourceGroupName string, options *IPAllocationsListByResourceGroupOptions) IPAllocationsListByResourceGroupPager {
+	return &ipAllocationsListByResourceGroupPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
 		},
-		responder: client.listByResourceGroupHandleResponse,
-		errorer:   client.listByResourceGroupHandleError,
-		advancer: func(ctx context.Context, resp IPAllocationListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp IPAllocationsListByResourceGroupResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.IPAllocationListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -409,12 +403,12 @@ func (client *IPAllocationsClient) listByResourceGroupCreateRequest(ctx context.
 }
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
-func (client *IPAllocationsClient) listByResourceGroupHandleResponse(resp *azcore.Response) (IPAllocationListResultResponse, error) {
-	var val *IPAllocationListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return IPAllocationListResultResponse{}, err
+func (client *IPAllocationsClient) listByResourceGroupHandleResponse(resp *azcore.Response) (IPAllocationsListByResourceGroupResponse, error) {
+	result := IPAllocationsListByResourceGroupResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.IPAllocationListResult); err != nil {
+		return IPAllocationsListByResourceGroupResponse{}, err
 	}
-	return IPAllocationListResultResponse{RawResponse: resp.Response, IPAllocationListResult: val}, nil
+	return result, nil
 }
 
 // listByResourceGroupHandleError handles the ListByResourceGroup error response.
@@ -432,17 +426,17 @@ func (client *IPAllocationsClient) listByResourceGroupHandleError(resp *azcore.R
 
 // UpdateTags - Updates a IpAllocation tags.
 // If the operation fails it returns the *CloudError error type.
-func (client *IPAllocationsClient) UpdateTags(ctx context.Context, resourceGroupName string, ipAllocationName string, parameters TagsObject, options *IPAllocationsUpdateTagsOptions) (IPAllocationResponse, error) {
+func (client *IPAllocationsClient) UpdateTags(ctx context.Context, resourceGroupName string, ipAllocationName string, parameters TagsObject, options *IPAllocationsUpdateTagsOptions) (IPAllocationsUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, ipAllocationName, parameters, options)
 	if err != nil {
-		return IPAllocationResponse{}, err
+		return IPAllocationsUpdateTagsResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return IPAllocationResponse{}, err
+		return IPAllocationsUpdateTagsResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return IPAllocationResponse{}, client.updateTagsHandleError(resp)
+		return IPAllocationsUpdateTagsResponse{}, client.updateTagsHandleError(resp)
 	}
 	return client.updateTagsHandleResponse(resp)
 }
@@ -475,12 +469,12 @@ func (client *IPAllocationsClient) updateTagsCreateRequest(ctx context.Context, 
 }
 
 // updateTagsHandleResponse handles the UpdateTags response.
-func (client *IPAllocationsClient) updateTagsHandleResponse(resp *azcore.Response) (IPAllocationResponse, error) {
-	var val *IPAllocation
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return IPAllocationResponse{}, err
+func (client *IPAllocationsClient) updateTagsHandleResponse(resp *azcore.Response) (IPAllocationsUpdateTagsResponse, error) {
+	result := IPAllocationsUpdateTagsResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.IPAllocation); err != nil {
+		return IPAllocationsUpdateTagsResponse{}, err
 	}
-	return IPAllocationResponse{RawResponse: resp.Response, IPAllocation: val}, nil
+	return result, nil
 }
 
 // updateTagsHandleError handles the UpdateTags error response.

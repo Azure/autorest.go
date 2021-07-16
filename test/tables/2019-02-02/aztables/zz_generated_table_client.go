@@ -33,18 +33,17 @@ func NewTableClient(con *Connection) *TableClient {
 
 // Create - Creates a new table under the given account.
 // If the operation fails it returns the *TableServiceError error type.
-// Possible return types are *TableResponseResponse, *TableCreateResponse
-func (client *TableClient) Create(ctx context.Context, tableProperties TableProperties, tableCreateOptions *TableCreateOptions, queryOptions *QueryOptions) (interface{}, error) {
+func (client *TableClient) Create(ctx context.Context, tableProperties TableProperties, tableCreateOptions *TableCreateOptions, queryOptions *QueryOptions) (TableCreateResponse, error) {
 	req, err := client.createCreateRequest(ctx, tableProperties, tableCreateOptions, queryOptions)
 	if err != nil {
-		return nil, err
+		return TableCreateResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return TableCreateResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusCreated, http.StatusNoContent) {
-		return nil, client.createHandleError(resp)
+		return TableCreateResponse{}, client.createHandleError(resp)
 	}
 	return client.createHandleResponse(resp)
 }
@@ -75,59 +74,31 @@ func (client *TableClient) createCreateRequest(ctx context.Context, tablePropert
 }
 
 // createHandleResponse handles the Create response.
-func (client *TableClient) createHandleResponse(resp *azcore.Response) (interface{}, error) {
-	switch resp.StatusCode {
-	case http.StatusCreated:
-		var val *TableResponse
-		if err := resp.UnmarshalAsJSON(&val); err != nil {
-			return nil, err
-		}
-		result := TableResponseResponse{RawResponse: resp.Response, TableResponse: val}
-		if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-			result.ClientRequestID = &val
-		}
-		if val := resp.Header.Get("x-ms-request-id"); val != "" {
-			result.RequestID = &val
-		}
-		if val := resp.Header.Get("x-ms-version"); val != "" {
-			result.Version = &val
-		}
-		if val := resp.Header.Get("Date"); val != "" {
-			date, err := time.Parse(time.RFC1123, val)
-			if err != nil {
-				return TableResponseResponse{}, err
-			}
-			result.Date = &date
-		}
-		if val := resp.Header.Get("Preference-Applied"); val != "" {
-			result.PreferenceApplied = &val
-		}
-		return result, nil
-	case http.StatusNoContent:
-		result := TableCreateResponse{RawResponse: resp.Response}
-		if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-			result.ClientRequestID = &val
-		}
-		if val := resp.Header.Get("x-ms-request-id"); val != "" {
-			result.RequestID = &val
-		}
-		if val := resp.Header.Get("x-ms-version"); val != "" {
-			result.Version = &val
-		}
-		if val := resp.Header.Get("Date"); val != "" {
-			date, err := time.Parse(time.RFC1123, val)
-			if err != nil {
-				return TableCreateResponse{}, err
-			}
-			result.Date = &date
-		}
-		if val := resp.Header.Get("Preference-Applied"); val != "" {
-			result.PreferenceApplied = &val
-		}
-		return result, nil
-	default:
-		return nil, fmt.Errorf("unhandled HTTP status code %d", resp.StatusCode)
+func (client *TableClient) createHandleResponse(resp *azcore.Response) (TableCreateResponse, error) {
+	result := TableCreateResponse{RawResponse: resp.Response}
+	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
+		result.ClientRequestID = &val
 	}
+	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+		result.RequestID = &val
+	}
+	if val := resp.Header.Get("x-ms-version"); val != "" {
+		result.Version = &val
+	}
+	if val := resp.Header.Get("Date"); val != "" {
+		date, err := time.Parse(time.RFC1123, val)
+		if err != nil {
+			return TableCreateResponse{}, err
+		}
+		result.Date = &date
+	}
+	if val := resp.Header.Get("Preference-Applied"); val != "" {
+		result.PreferenceApplied = &val
+	}
+	if err := resp.UnmarshalAsJSON(&result.TableResponse); err != nil {
+		return TableCreateResponse{}, err
+	}
+	return result, nil
 }
 
 // createHandleError handles the Create error response.
@@ -307,17 +278,17 @@ func (client *TableClient) deleteEntityHandleError(resp *azcore.Response) error 
 
 // GetAccessPolicy - Retrieves details about any stored access policies specified on the table that may be used with Shared Access Signatures.
 // If the operation fails it returns the *TableServiceError error type.
-func (client *TableClient) GetAccessPolicy(ctx context.Context, table string, options *TableGetAccessPolicyOptions) (SignedIdentifierArrayResponse, error) {
+func (client *TableClient) GetAccessPolicy(ctx context.Context, table string, options *TableGetAccessPolicyOptions) (TableGetAccessPolicyResponse, error) {
 	req, err := client.getAccessPolicyCreateRequest(ctx, table, options)
 	if err != nil {
-		return SignedIdentifierArrayResponse{}, err
+		return TableGetAccessPolicyResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return SignedIdentifierArrayResponse{}, err
+		return TableGetAccessPolicyResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return SignedIdentifierArrayResponse{}, client.getAccessPolicyHandleError(resp)
+		return TableGetAccessPolicyResponse{}, client.getAccessPolicyHandleError(resp)
 	}
 	return client.getAccessPolicyHandleResponse(resp)
 }
@@ -349,11 +320,8 @@ func (client *TableClient) getAccessPolicyCreateRequest(ctx context.Context, tab
 }
 
 // getAccessPolicyHandleResponse handles the GetAccessPolicy response.
-func (client *TableClient) getAccessPolicyHandleResponse(resp *azcore.Response) (SignedIdentifierArrayResponse, error) {
-	result := SignedIdentifierArrayResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsXML(&result); err != nil {
-		return SignedIdentifierArrayResponse{}, err
-	}
+func (client *TableClient) getAccessPolicyHandleResponse(resp *azcore.Response) (TableGetAccessPolicyResponse, error) {
+	result := TableGetAccessPolicyResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -366,9 +334,12 @@ func (client *TableClient) getAccessPolicyHandleResponse(resp *azcore.Response) 
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return SignedIdentifierArrayResponse{}, err
+			return TableGetAccessPolicyResponse{}, err
 		}
 		result.Date = &date
+	}
+	if err := resp.UnmarshalAsXML(&result); err != nil {
+		return TableGetAccessPolicyResponse{}, err
 	}
 	return result, nil
 }
@@ -388,18 +359,17 @@ func (client *TableClient) getAccessPolicyHandleError(resp *azcore.Response) err
 
 // InsertEntity - Insert entity in a table.
 // If the operation fails it returns the *TableServiceError error type.
-// Possible return types are *MapOfInterfaceResponse, *TableInsertEntityResponse
-func (client *TableClient) InsertEntity(ctx context.Context, table string, tableInsertEntityOptions *TableInsertEntityOptions, queryOptions *QueryOptions) (interface{}, error) {
+func (client *TableClient) InsertEntity(ctx context.Context, table string, tableInsertEntityOptions *TableInsertEntityOptions, queryOptions *QueryOptions) (TableInsertEntityResponse, error) {
 	req, err := client.insertEntityCreateRequest(ctx, table, tableInsertEntityOptions, queryOptions)
 	if err != nil {
-		return nil, err
+		return TableInsertEntityResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return TableInsertEntityResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusCreated, http.StatusNoContent) {
-		return nil, client.insertEntityHandleError(resp)
+		return TableInsertEntityResponse{}, client.insertEntityHandleError(resp)
 	}
 	return client.insertEntityHandleResponse(resp)
 }
@@ -440,77 +410,37 @@ func (client *TableClient) insertEntityCreateRequest(ctx context.Context, table 
 }
 
 // insertEntityHandleResponse handles the InsertEntity response.
-func (client *TableClient) insertEntityHandleResponse(resp *azcore.Response) (interface{}, error) {
-	switch resp.StatusCode {
-	case http.StatusCreated:
-		var val map[string]interface{}
-		if err := resp.UnmarshalAsJSON(&val); err != nil {
-			return nil, err
-		}
-		result := MapOfInterfaceResponse{RawResponse: resp.Response, Value: val}
-		if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-			result.ClientRequestID = &val
-		}
-		if val := resp.Header.Get("x-ms-request-id"); val != "" {
-			result.RequestID = &val
-		}
-		if val := resp.Header.Get("x-ms-version"); val != "" {
-			result.Version = &val
-		}
-		if val := resp.Header.Get("Date"); val != "" {
-			date, err := time.Parse(time.RFC1123, val)
-			if err != nil {
-				return MapOfInterfaceResponse{}, err
-			}
-			result.Date = &date
-		}
-		if val := resp.Header.Get("ETag"); val != "" {
-			result.ETag = &val
-		}
-		if val := resp.Header.Get("x-ms-continuation-NextPartitionKey"); val != "" {
-			result.XMSContinuationNextPartitionKey = &val
-		}
-		if val := resp.Header.Get("x-ms-continuation-NextRowKey"); val != "" {
-			result.XMSContinuationNextRowKey = &val
-		}
-		if val := resp.Header.Get("Preference-Applied"); val != "" {
-			result.PreferenceApplied = &val
-		}
-		if val := resp.Header.Get("Content-Type"); val != "" {
-			result.ContentType = &val
-		}
-		return result, nil
-	case http.StatusNoContent:
-		result := TableInsertEntityResponse{RawResponse: resp.Response}
-		if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-			result.ClientRequestID = &val
-		}
-		if val := resp.Header.Get("x-ms-request-id"); val != "" {
-			result.RequestID = &val
-		}
-		if val := resp.Header.Get("x-ms-version"); val != "" {
-			result.Version = &val
-		}
-		if val := resp.Header.Get("Date"); val != "" {
-			date, err := time.Parse(time.RFC1123, val)
-			if err != nil {
-				return TableInsertEntityResponse{}, err
-			}
-			result.Date = &date
-		}
-		if val := resp.Header.Get("ETag"); val != "" {
-			result.ETag = &val
-		}
-		if val := resp.Header.Get("Preference-Applied"); val != "" {
-			result.PreferenceApplied = &val
-		}
-		if val := resp.Header.Get("Content-Type"); val != "" {
-			result.ContentType = &val
-		}
-		return result, nil
-	default:
-		return nil, fmt.Errorf("unhandled HTTP status code %d", resp.StatusCode)
+func (client *TableClient) insertEntityHandleResponse(resp *azcore.Response) (TableInsertEntityResponse, error) {
+	result := TableInsertEntityResponse{RawResponse: resp.Response}
+	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
+		result.ClientRequestID = &val
 	}
+	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+		result.RequestID = &val
+	}
+	if val := resp.Header.Get("x-ms-version"); val != "" {
+		result.Version = &val
+	}
+	if val := resp.Header.Get("Date"); val != "" {
+		date, err := time.Parse(time.RFC1123, val)
+		if err != nil {
+			return TableInsertEntityResponse{}, err
+		}
+		result.Date = &date
+	}
+	if val := resp.Header.Get("ETag"); val != "" {
+		result.ETag = &val
+	}
+	if val := resp.Header.Get("Preference-Applied"); val != "" {
+		result.PreferenceApplied = &val
+	}
+	if val := resp.Header.Get("Content-Type"); val != "" {
+		result.ContentType = &val
+	}
+	if err := resp.UnmarshalAsJSON(&result.Value); err != nil {
+		return TableInsertEntityResponse{}, err
+	}
+	return result, nil
 }
 
 // insertEntityHandleError handles the InsertEntity error response.
@@ -626,17 +556,17 @@ func (client *TableClient) mergeEntityHandleError(resp *azcore.Response) error {
 
 // Query - Queries tables under the given account.
 // If the operation fails it returns a generic error.
-func (client *TableClient) Query(ctx context.Context, tableQueryOptions *TableQueryOptions, queryOptions *QueryOptions) (TableQueryResponseResponse, error) {
+func (client *TableClient) Query(ctx context.Context, tableQueryOptions *TableQueryOptions, queryOptions *QueryOptions) (TableQueryResponseEnvelope, error) {
 	req, err := client.queryCreateRequest(ctx, tableQueryOptions, queryOptions)
 	if err != nil {
-		return TableQueryResponseResponse{}, err
+		return TableQueryResponseEnvelope{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return TableQueryResponseResponse{}, err
+		return TableQueryResponseEnvelope{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return TableQueryResponseResponse{}, client.queryHandleError(resp)
+		return TableQueryResponseEnvelope{}, client.queryHandleError(resp)
 	}
 	return client.queryHandleResponse(resp)
 }
@@ -676,12 +606,8 @@ func (client *TableClient) queryCreateRequest(ctx context.Context, tableQueryOpt
 }
 
 // queryHandleResponse handles the Query response.
-func (client *TableClient) queryHandleResponse(resp *azcore.Response) (TableQueryResponseResponse, error) {
-	var val *TableQueryResponse
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return TableQueryResponseResponse{}, err
-	}
-	result := TableQueryResponseResponse{RawResponse: resp.Response, TableQueryResponse: val}
+func (client *TableClient) queryHandleResponse(resp *azcore.Response) (TableQueryResponseEnvelope, error) {
+	result := TableQueryResponseEnvelope{RawResponse: resp.Response}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -694,12 +620,15 @@ func (client *TableClient) queryHandleResponse(resp *azcore.Response) (TableQuer
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return TableQueryResponseResponse{}, err
+			return TableQueryResponseEnvelope{}, err
 		}
 		result.Date = &date
 	}
 	if val := resp.Header.Get("x-ms-continuation-NextTableName"); val != "" {
 		result.XMSContinuationNextTableName = &val
+	}
+	if err := resp.UnmarshalAsJSON(&result.TableQueryResponse); err != nil {
+		return TableQueryResponseEnvelope{}, err
 	}
 	return result, nil
 }
@@ -718,17 +647,17 @@ func (client *TableClient) queryHandleError(resp *azcore.Response) error {
 
 // QueryEntities - Queries entities in a table.
 // If the operation fails it returns the *TableServiceError error type.
-func (client *TableClient) QueryEntities(ctx context.Context, table string, tableQueryEntitiesOptions *TableQueryEntitiesOptions, queryOptions *QueryOptions) (TableEntityQueryResponseResponse, error) {
+func (client *TableClient) QueryEntities(ctx context.Context, table string, tableQueryEntitiesOptions *TableQueryEntitiesOptions, queryOptions *QueryOptions) (TableQueryEntitiesResponse, error) {
 	req, err := client.queryEntitiesCreateRequest(ctx, table, tableQueryEntitiesOptions, queryOptions)
 	if err != nil {
-		return TableEntityQueryResponseResponse{}, err
+		return TableQueryEntitiesResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return TableEntityQueryResponseResponse{}, err
+		return TableQueryEntitiesResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return TableEntityQueryResponseResponse{}, client.queryEntitiesHandleError(resp)
+		return TableQueryEntitiesResponse{}, client.queryEntitiesHandleError(resp)
 	}
 	return client.queryEntitiesHandleResponse(resp)
 }
@@ -778,12 +707,8 @@ func (client *TableClient) queryEntitiesCreateRequest(ctx context.Context, table
 }
 
 // queryEntitiesHandleResponse handles the QueryEntities response.
-func (client *TableClient) queryEntitiesHandleResponse(resp *azcore.Response) (TableEntityQueryResponseResponse, error) {
-	var val *TableEntityQueryResponse
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return TableEntityQueryResponseResponse{}, err
-	}
-	result := TableEntityQueryResponseResponse{RawResponse: resp.Response, TableEntityQueryResponse: val}
+func (client *TableClient) queryEntitiesHandleResponse(resp *azcore.Response) (TableQueryEntitiesResponse, error) {
+	result := TableQueryEntitiesResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -796,7 +721,7 @@ func (client *TableClient) queryEntitiesHandleResponse(resp *azcore.Response) (T
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return TableEntityQueryResponseResponse{}, err
+			return TableQueryEntitiesResponse{}, err
 		}
 		result.Date = &date
 	}
@@ -805,6 +730,9 @@ func (client *TableClient) queryEntitiesHandleResponse(resp *azcore.Response) (T
 	}
 	if val := resp.Header.Get("x-ms-continuation-NextRowKey"); val != "" {
 		result.XMSContinuationNextRowKey = &val
+	}
+	if err := resp.UnmarshalAsJSON(&result.TableEntityQueryResponse); err != nil {
+		return TableQueryEntitiesResponse{}, err
 	}
 	return result, nil
 }
@@ -824,17 +752,17 @@ func (client *TableClient) queryEntitiesHandleError(resp *azcore.Response) error
 
 // QueryEntityWithPartitionAndRowKey - Queries a single entity in a table.
 // If the operation fails it returns the *TableServiceError error type.
-func (client *TableClient) QueryEntityWithPartitionAndRowKey(ctx context.Context, table string, partitionKey string, rowKey string, tableQueryEntityWithPartitionAndRowKeyOptions *TableQueryEntityWithPartitionAndRowKeyOptions, queryOptions *QueryOptions) (MapOfInterfaceResponse, error) {
+func (client *TableClient) QueryEntityWithPartitionAndRowKey(ctx context.Context, table string, partitionKey string, rowKey string, tableQueryEntityWithPartitionAndRowKeyOptions *TableQueryEntityWithPartitionAndRowKeyOptions, queryOptions *QueryOptions) (TableQueryEntityWithPartitionAndRowKeyResponse, error) {
 	req, err := client.queryEntityWithPartitionAndRowKeyCreateRequest(ctx, table, partitionKey, rowKey, tableQueryEntityWithPartitionAndRowKeyOptions, queryOptions)
 	if err != nil {
-		return MapOfInterfaceResponse{}, err
+		return TableQueryEntityWithPartitionAndRowKeyResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return MapOfInterfaceResponse{}, err
+		return TableQueryEntityWithPartitionAndRowKeyResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return MapOfInterfaceResponse{}, client.queryEntityWithPartitionAndRowKeyHandleError(resp)
+		return TableQueryEntityWithPartitionAndRowKeyResponse{}, client.queryEntityWithPartitionAndRowKeyHandleError(resp)
 	}
 	return client.queryEntityWithPartitionAndRowKeyHandleResponse(resp)
 }
@@ -883,12 +811,8 @@ func (client *TableClient) queryEntityWithPartitionAndRowKeyCreateRequest(ctx co
 }
 
 // queryEntityWithPartitionAndRowKeyHandleResponse handles the QueryEntityWithPartitionAndRowKey response.
-func (client *TableClient) queryEntityWithPartitionAndRowKeyHandleResponse(resp *azcore.Response) (MapOfInterfaceResponse, error) {
-	var val map[string]interface{}
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return MapOfInterfaceResponse{}, err
-	}
-	result := MapOfInterfaceResponse{RawResponse: resp.Response, Value: val}
+func (client *TableClient) queryEntityWithPartitionAndRowKeyHandleResponse(resp *azcore.Response) (TableQueryEntityWithPartitionAndRowKeyResponse, error) {
+	result := TableQueryEntityWithPartitionAndRowKeyResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -901,7 +825,7 @@ func (client *TableClient) queryEntityWithPartitionAndRowKeyHandleResponse(resp 
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return MapOfInterfaceResponse{}, err
+			return TableQueryEntityWithPartitionAndRowKeyResponse{}, err
 		}
 		result.Date = &date
 	}
@@ -914,11 +838,8 @@ func (client *TableClient) queryEntityWithPartitionAndRowKeyHandleResponse(resp 
 	if val := resp.Header.Get("x-ms-continuation-NextRowKey"); val != "" {
 		result.XMSContinuationNextRowKey = &val
 	}
-	if val := resp.Header.Get("Preference-Applied"); val != "" {
-		result.PreferenceApplied = &val
-	}
-	if val := resp.Header.Get("Content-Type"); val != "" {
-		result.ContentType = &val
+	if err := resp.UnmarshalAsJSON(&result.Value); err != nil {
+		return TableQueryEntityWithPartitionAndRowKeyResponse{}, err
 	}
 	return result, nil
 }

@@ -33,17 +33,17 @@ func NewKeyVaultClient(con *Connection) *KeyVaultClient {
 // BackupCertificate - Requests that a backup of the specified certificate be downloaded to the client. All versions of the certificate will be downloaded.
 // This operation requires the certificates/backup permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) BackupCertificate(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientBackupCertificateOptions) (BackupCertificateResultResponse, error) {
+func (client *KeyVaultClient) BackupCertificate(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientBackupCertificateOptions) (KeyVaultClientBackupCertificateResponse, error) {
 	req, err := client.backupCertificateCreateRequest(ctx, vaultBaseURL, certificateName, options)
 	if err != nil {
-		return BackupCertificateResultResponse{}, err
+		return KeyVaultClientBackupCertificateResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return BackupCertificateResultResponse{}, err
+		return KeyVaultClientBackupCertificateResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return BackupCertificateResultResponse{}, client.backupCertificateHandleError(resp)
+		return KeyVaultClientBackupCertificateResponse{}, client.backupCertificateHandleError(resp)
 	}
 	return client.backupCertificateHandleResponse(resp)
 }
@@ -70,12 +70,12 @@ func (client *KeyVaultClient) backupCertificateCreateRequest(ctx context.Context
 }
 
 // backupCertificateHandleResponse handles the BackupCertificate response.
-func (client *KeyVaultClient) backupCertificateHandleResponse(resp *azcore.Response) (BackupCertificateResultResponse, error) {
-	var val *BackupCertificateResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return BackupCertificateResultResponse{}, err
+func (client *KeyVaultClient) backupCertificateHandleResponse(resp *azcore.Response) (KeyVaultClientBackupCertificateResponse, error) {
+	result := KeyVaultClientBackupCertificateResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.BackupCertificateResult); err != nil {
+		return KeyVaultClientBackupCertificateResponse{}, err
 	}
-	return BackupCertificateResultResponse{RawResponse: resp.Response, BackupCertificateResult: val}, nil
+	return result, nil
 }
 
 // backupCertificateHandleError handles the BackupCertificate error response.
@@ -102,17 +102,17 @@ func (client *KeyVaultClient) backupCertificateHandleError(resp *azcore.Response
 // geographical area. For example, a backup from the US geographical area cannot be restored in an EU geographical area. This operation requires the key/backup
 // permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) BackupKey(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientBackupKeyOptions) (BackupKeyResultResponse, error) {
+func (client *KeyVaultClient) BackupKey(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientBackupKeyOptions) (KeyVaultClientBackupKeyResponse, error) {
 	req, err := client.backupKeyCreateRequest(ctx, vaultBaseURL, keyName, options)
 	if err != nil {
-		return BackupKeyResultResponse{}, err
+		return KeyVaultClientBackupKeyResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return BackupKeyResultResponse{}, err
+		return KeyVaultClientBackupKeyResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return BackupKeyResultResponse{}, client.backupKeyHandleError(resp)
+		return KeyVaultClientBackupKeyResponse{}, client.backupKeyHandleError(resp)
 	}
 	return client.backupKeyHandleResponse(resp)
 }
@@ -139,12 +139,12 @@ func (client *KeyVaultClient) backupKeyCreateRequest(ctx context.Context, vaultB
 }
 
 // backupKeyHandleResponse handles the BackupKey response.
-func (client *KeyVaultClient) backupKeyHandleResponse(resp *azcore.Response) (BackupKeyResultResponse, error) {
-	var val *BackupKeyResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return BackupKeyResultResponse{}, err
+func (client *KeyVaultClient) backupKeyHandleResponse(resp *azcore.Response) (KeyVaultClientBackupKeyResponse, error) {
+	result := KeyVaultClientBackupKeyResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.BackupKeyResult); err != nil {
+		return KeyVaultClientBackupKeyResponse{}, err
 	}
-	return BackupKeyResultResponse{RawResponse: resp.Response, BackupKeyResult: val}, nil
+	return result, nil
 }
 
 // backupKeyHandleError handles the BackupKey error response.
@@ -163,17 +163,17 @@ func (client *KeyVaultClient) backupKeyHandleError(resp *azcore.Response) error 
 // BackupSecret - Requests that a backup of the specified secret be downloaded to the client. All versions of the secret will be downloaded. This operation
 // requires the secrets/backup permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) BackupSecret(ctx context.Context, vaultBaseURL string, secretName string, options *KeyVaultClientBackupSecretOptions) (BackupSecretResultResponse, error) {
+func (client *KeyVaultClient) BackupSecret(ctx context.Context, vaultBaseURL string, secretName string, options *KeyVaultClientBackupSecretOptions) (KeyVaultClientBackupSecretResponse, error) {
 	req, err := client.backupSecretCreateRequest(ctx, vaultBaseURL, secretName, options)
 	if err != nil {
-		return BackupSecretResultResponse{}, err
+		return KeyVaultClientBackupSecretResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return BackupSecretResultResponse{}, err
+		return KeyVaultClientBackupSecretResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return BackupSecretResultResponse{}, client.backupSecretHandleError(resp)
+		return KeyVaultClientBackupSecretResponse{}, client.backupSecretHandleError(resp)
 	}
 	return client.backupSecretHandleResponse(resp)
 }
@@ -200,12 +200,12 @@ func (client *KeyVaultClient) backupSecretCreateRequest(ctx context.Context, vau
 }
 
 // backupSecretHandleResponse handles the BackupSecret response.
-func (client *KeyVaultClient) backupSecretHandleResponse(resp *azcore.Response) (BackupSecretResultResponse, error) {
-	var val *BackupSecretResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return BackupSecretResultResponse{}, err
+func (client *KeyVaultClient) backupSecretHandleResponse(resp *azcore.Response) (KeyVaultClientBackupSecretResponse, error) {
+	result := KeyVaultClientBackupSecretResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.BackupSecretResult); err != nil {
+		return KeyVaultClientBackupSecretResponse{}, err
 	}
-	return BackupSecretResultResponse{RawResponse: resp.Response, BackupSecretResult: val}, nil
+	return result, nil
 }
 
 // backupSecretHandleError handles the BackupSecret error response.
@@ -224,17 +224,17 @@ func (client *KeyVaultClient) backupSecretHandleError(resp *azcore.Response) err
 // BackupStorageAccount - Requests that a backup of the specified storage account be downloaded to the client. This operation requires the storage/backup
 // permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) BackupStorageAccount(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientBackupStorageAccountOptions) (BackupStorageResultResponse, error) {
+func (client *KeyVaultClient) BackupStorageAccount(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientBackupStorageAccountOptions) (KeyVaultClientBackupStorageAccountResponse, error) {
 	req, err := client.backupStorageAccountCreateRequest(ctx, vaultBaseURL, storageAccountName, options)
 	if err != nil {
-		return BackupStorageResultResponse{}, err
+		return KeyVaultClientBackupStorageAccountResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return BackupStorageResultResponse{}, err
+		return KeyVaultClientBackupStorageAccountResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return BackupStorageResultResponse{}, client.backupStorageAccountHandleError(resp)
+		return KeyVaultClientBackupStorageAccountResponse{}, client.backupStorageAccountHandleError(resp)
 	}
 	return client.backupStorageAccountHandleResponse(resp)
 }
@@ -261,12 +261,12 @@ func (client *KeyVaultClient) backupStorageAccountCreateRequest(ctx context.Cont
 }
 
 // backupStorageAccountHandleResponse handles the BackupStorageAccount response.
-func (client *KeyVaultClient) backupStorageAccountHandleResponse(resp *azcore.Response) (BackupStorageResultResponse, error) {
-	var val *BackupStorageResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return BackupStorageResultResponse{}, err
+func (client *KeyVaultClient) backupStorageAccountHandleResponse(resp *azcore.Response) (KeyVaultClientBackupStorageAccountResponse, error) {
+	result := KeyVaultClientBackupStorageAccountResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.BackupStorageResult); err != nil {
+		return KeyVaultClientBackupStorageAccountResponse{}, err
 	}
-	return BackupStorageResultResponse{RawResponse: resp.Response, BackupStorageResult: val}, nil
+	return result, nil
 }
 
 // backupStorageAccountHandleError handles the BackupStorageAccount error response.
@@ -284,17 +284,17 @@ func (client *KeyVaultClient) backupStorageAccountHandleError(resp *azcore.Respo
 
 // CreateCertificate - If this is the first version, the certificate resource is created. This operation requires the certificates/create permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) CreateCertificate(ctx context.Context, vaultBaseURL string, certificateName string, parameters CertificateCreateParameters, options *KeyVaultClientCreateCertificateOptions) (CertificateOperationResponse, error) {
+func (client *KeyVaultClient) CreateCertificate(ctx context.Context, vaultBaseURL string, certificateName string, parameters CertificateCreateParameters, options *KeyVaultClientCreateCertificateOptions) (KeyVaultClientCreateCertificateResponse, error) {
 	req, err := client.createCertificateCreateRequest(ctx, vaultBaseURL, certificateName, parameters, options)
 	if err != nil {
-		return CertificateOperationResponse{}, err
+		return KeyVaultClientCreateCertificateResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return CertificateOperationResponse{}, err
+		return KeyVaultClientCreateCertificateResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusAccepted) {
-		return CertificateOperationResponse{}, client.createCertificateHandleError(resp)
+		return KeyVaultClientCreateCertificateResponse{}, client.createCertificateHandleError(resp)
 	}
 	return client.createCertificateHandleResponse(resp)
 }
@@ -321,12 +321,12 @@ func (client *KeyVaultClient) createCertificateCreateRequest(ctx context.Context
 }
 
 // createCertificateHandleResponse handles the CreateCertificate response.
-func (client *KeyVaultClient) createCertificateHandleResponse(resp *azcore.Response) (CertificateOperationResponse, error) {
-	var val *CertificateOperation
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return CertificateOperationResponse{}, err
+func (client *KeyVaultClient) createCertificateHandleResponse(resp *azcore.Response) (KeyVaultClientCreateCertificateResponse, error) {
+	result := KeyVaultClientCreateCertificateResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.CertificateOperation); err != nil {
+		return KeyVaultClientCreateCertificateResponse{}, err
 	}
-	return CertificateOperationResponse{RawResponse: resp.Response, CertificateOperation: val}, nil
+	return result, nil
 }
 
 // createCertificateHandleError handles the CreateCertificate error response.
@@ -346,17 +346,17 @@ func (client *KeyVaultClient) createCertificateHandleError(resp *azcore.Response
 // a new version of the key. It requires the keys/create
 // permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) CreateKey(ctx context.Context, vaultBaseURL string, keyName string, parameters KeyCreateParameters, options *KeyVaultClientCreateKeyOptions) (KeyBundleResponse, error) {
+func (client *KeyVaultClient) CreateKey(ctx context.Context, vaultBaseURL string, keyName string, parameters KeyCreateParameters, options *KeyVaultClientCreateKeyOptions) (KeyVaultClientCreateKeyResponse, error) {
 	req, err := client.createKeyCreateRequest(ctx, vaultBaseURL, keyName, parameters, options)
 	if err != nil {
-		return KeyBundleResponse{}, err
+		return KeyVaultClientCreateKeyResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return KeyBundleResponse{}, err
+		return KeyVaultClientCreateKeyResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return KeyBundleResponse{}, client.createKeyHandleError(resp)
+		return KeyVaultClientCreateKeyResponse{}, client.createKeyHandleError(resp)
 	}
 	return client.createKeyHandleResponse(resp)
 }
@@ -383,12 +383,12 @@ func (client *KeyVaultClient) createKeyCreateRequest(ctx context.Context, vaultB
 }
 
 // createKeyHandleResponse handles the CreateKey response.
-func (client *KeyVaultClient) createKeyHandleResponse(resp *azcore.Response) (KeyBundleResponse, error) {
-	var val *KeyBundle
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return KeyBundleResponse{}, err
+func (client *KeyVaultClient) createKeyHandleResponse(resp *azcore.Response) (KeyVaultClientCreateKeyResponse, error) {
+	result := KeyVaultClientCreateKeyResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.KeyBundle); err != nil {
+		return KeyVaultClientCreateKeyResponse{}, err
 	}
-	return KeyBundleResponse{RawResponse: resp.Response, KeyBundle: val}, nil
+	return result, nil
 }
 
 // createKeyHandleError handles the CreateKey error response.
@@ -410,17 +410,17 @@ func (client *KeyVaultClient) createKeyHandleError(resp *azcore.Response) error 
 // and symmetric keys stored in Azure Key Vault
 // since it uses the private portion of the key. This operation requires the keys/decrypt permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) Decrypt(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyOperationsParameters, options *KeyVaultClientDecryptOptions) (KeyOperationResultResponse, error) {
+func (client *KeyVaultClient) Decrypt(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyOperationsParameters, options *KeyVaultClientDecryptOptions) (KeyVaultClientDecryptResponse, error) {
 	req, err := client.decryptCreateRequest(ctx, vaultBaseURL, keyName, keyVersion, parameters, options)
 	if err != nil {
-		return KeyOperationResultResponse{}, err
+		return KeyVaultClientDecryptResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return KeyOperationResultResponse{}, err
+		return KeyVaultClientDecryptResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return KeyOperationResultResponse{}, client.decryptHandleError(resp)
+		return KeyVaultClientDecryptResponse{}, client.decryptHandleError(resp)
 	}
 	return client.decryptHandleResponse(resp)
 }
@@ -451,12 +451,12 @@ func (client *KeyVaultClient) decryptCreateRequest(ctx context.Context, vaultBas
 }
 
 // decryptHandleResponse handles the Decrypt response.
-func (client *KeyVaultClient) decryptHandleResponse(resp *azcore.Response) (KeyOperationResultResponse, error) {
-	var val *KeyOperationResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return KeyOperationResultResponse{}, err
+func (client *KeyVaultClient) decryptHandleResponse(resp *azcore.Response) (KeyVaultClientDecryptResponse, error) {
+	result := KeyVaultClientDecryptResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.KeyOperationResult); err != nil {
+		return KeyVaultClientDecryptResponse{}, err
 	}
-	return KeyOperationResultResponse{RawResponse: resp.Response, KeyOperationResult: val}, nil
+	return result, nil
 }
 
 // decryptHandleError handles the Decrypt error response.
@@ -476,17 +476,17 @@ func (client *KeyVaultClient) decryptHandleError(resp *azcore.Response) error {
 // versions of a certificate object. This operation requires the
 // certificates/delete permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) DeleteCertificate(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientDeleteCertificateOptions) (DeletedCertificateBundleResponse, error) {
+func (client *KeyVaultClient) DeleteCertificate(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientDeleteCertificateOptions) (KeyVaultClientDeleteCertificateResponse, error) {
 	req, err := client.deleteCertificateCreateRequest(ctx, vaultBaseURL, certificateName, options)
 	if err != nil {
-		return DeletedCertificateBundleResponse{}, err
+		return KeyVaultClientDeleteCertificateResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return DeletedCertificateBundleResponse{}, err
+		return KeyVaultClientDeleteCertificateResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return DeletedCertificateBundleResponse{}, client.deleteCertificateHandleError(resp)
+		return KeyVaultClientDeleteCertificateResponse{}, client.deleteCertificateHandleError(resp)
 	}
 	return client.deleteCertificateHandleResponse(resp)
 }
@@ -513,12 +513,12 @@ func (client *KeyVaultClient) deleteCertificateCreateRequest(ctx context.Context
 }
 
 // deleteCertificateHandleResponse handles the DeleteCertificate response.
-func (client *KeyVaultClient) deleteCertificateHandleResponse(resp *azcore.Response) (DeletedCertificateBundleResponse, error) {
-	var val *DeletedCertificateBundle
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return DeletedCertificateBundleResponse{}, err
+func (client *KeyVaultClient) deleteCertificateHandleResponse(resp *azcore.Response) (KeyVaultClientDeleteCertificateResponse, error) {
+	result := KeyVaultClientDeleteCertificateResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.DeletedCertificateBundle); err != nil {
+		return KeyVaultClientDeleteCertificateResponse{}, err
 	}
-	return DeletedCertificateBundleResponse{RawResponse: resp.Response, DeletedCertificateBundle: val}, nil
+	return result, nil
 }
 
 // deleteCertificateHandleError handles the DeleteCertificate error response.
@@ -537,17 +537,17 @@ func (client *KeyVaultClient) deleteCertificateHandleError(resp *azcore.Response
 // DeleteCertificateContacts - Deletes the certificate contacts for a specified key vault certificate. This operation requires the certificates/managecontacts
 // permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) DeleteCertificateContacts(ctx context.Context, vaultBaseURL string, options *KeyVaultClientDeleteCertificateContactsOptions) (ContactsResponse, error) {
+func (client *KeyVaultClient) DeleteCertificateContacts(ctx context.Context, vaultBaseURL string, options *KeyVaultClientDeleteCertificateContactsOptions) (KeyVaultClientDeleteCertificateContactsResponse, error) {
 	req, err := client.deleteCertificateContactsCreateRequest(ctx, vaultBaseURL, options)
 	if err != nil {
-		return ContactsResponse{}, err
+		return KeyVaultClientDeleteCertificateContactsResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return ContactsResponse{}, err
+		return KeyVaultClientDeleteCertificateContactsResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return ContactsResponse{}, client.deleteCertificateContactsHandleError(resp)
+		return KeyVaultClientDeleteCertificateContactsResponse{}, client.deleteCertificateContactsHandleError(resp)
 	}
 	return client.deleteCertificateContactsHandleResponse(resp)
 }
@@ -570,12 +570,12 @@ func (client *KeyVaultClient) deleteCertificateContactsCreateRequest(ctx context
 }
 
 // deleteCertificateContactsHandleResponse handles the DeleteCertificateContacts response.
-func (client *KeyVaultClient) deleteCertificateContactsHandleResponse(resp *azcore.Response) (ContactsResponse, error) {
-	var val *Contacts
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ContactsResponse{}, err
+func (client *KeyVaultClient) deleteCertificateContactsHandleResponse(resp *azcore.Response) (KeyVaultClientDeleteCertificateContactsResponse, error) {
+	result := KeyVaultClientDeleteCertificateContactsResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.Contacts); err != nil {
+		return KeyVaultClientDeleteCertificateContactsResponse{}, err
 	}
-	return ContactsResponse{RawResponse: resp.Response, Contacts: val}, nil
+	return result, nil
 }
 
 // deleteCertificateContactsHandleError handles the DeleteCertificateContacts error response.
@@ -594,17 +594,17 @@ func (client *KeyVaultClient) deleteCertificateContactsHandleError(resp *azcore.
 // DeleteCertificateIssuer - The DeleteCertificateIssuer operation permanently removes the specified certificate issuer from the vault. This operation requires
 // the certificates/manageissuers/deleteissuers permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) DeleteCertificateIssuer(ctx context.Context, vaultBaseURL string, issuerName string, options *KeyVaultClientDeleteCertificateIssuerOptions) (IssuerBundleResponse, error) {
+func (client *KeyVaultClient) DeleteCertificateIssuer(ctx context.Context, vaultBaseURL string, issuerName string, options *KeyVaultClientDeleteCertificateIssuerOptions) (KeyVaultClientDeleteCertificateIssuerResponse, error) {
 	req, err := client.deleteCertificateIssuerCreateRequest(ctx, vaultBaseURL, issuerName, options)
 	if err != nil {
-		return IssuerBundleResponse{}, err
+		return KeyVaultClientDeleteCertificateIssuerResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return IssuerBundleResponse{}, err
+		return KeyVaultClientDeleteCertificateIssuerResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return IssuerBundleResponse{}, client.deleteCertificateIssuerHandleError(resp)
+		return KeyVaultClientDeleteCertificateIssuerResponse{}, client.deleteCertificateIssuerHandleError(resp)
 	}
 	return client.deleteCertificateIssuerHandleResponse(resp)
 }
@@ -631,12 +631,12 @@ func (client *KeyVaultClient) deleteCertificateIssuerCreateRequest(ctx context.C
 }
 
 // deleteCertificateIssuerHandleResponse handles the DeleteCertificateIssuer response.
-func (client *KeyVaultClient) deleteCertificateIssuerHandleResponse(resp *azcore.Response) (IssuerBundleResponse, error) {
-	var val *IssuerBundle
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return IssuerBundleResponse{}, err
+func (client *KeyVaultClient) deleteCertificateIssuerHandleResponse(resp *azcore.Response) (KeyVaultClientDeleteCertificateIssuerResponse, error) {
+	result := KeyVaultClientDeleteCertificateIssuerResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.IssuerBundle); err != nil {
+		return KeyVaultClientDeleteCertificateIssuerResponse{}, err
 	}
-	return IssuerBundleResponse{RawResponse: resp.Response, IssuerBundle: val}, nil
+	return result, nil
 }
 
 // deleteCertificateIssuerHandleError handles the DeleteCertificateIssuer error response.
@@ -655,17 +655,17 @@ func (client *KeyVaultClient) deleteCertificateIssuerHandleError(resp *azcore.Re
 // DeleteCertificateOperation - Deletes the creation operation for a specified certificate that is in the process of being created. The certificate is no
 // longer created. This operation requires the certificates/update permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) DeleteCertificateOperation(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientDeleteCertificateOperationOptions) (CertificateOperationResponse, error) {
+func (client *KeyVaultClient) DeleteCertificateOperation(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientDeleteCertificateOperationOptions) (KeyVaultClientDeleteCertificateOperationResponse, error) {
 	req, err := client.deleteCertificateOperationCreateRequest(ctx, vaultBaseURL, certificateName, options)
 	if err != nil {
-		return CertificateOperationResponse{}, err
+		return KeyVaultClientDeleteCertificateOperationResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return CertificateOperationResponse{}, err
+		return KeyVaultClientDeleteCertificateOperationResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return CertificateOperationResponse{}, client.deleteCertificateOperationHandleError(resp)
+		return KeyVaultClientDeleteCertificateOperationResponse{}, client.deleteCertificateOperationHandleError(resp)
 	}
 	return client.deleteCertificateOperationHandleResponse(resp)
 }
@@ -692,12 +692,12 @@ func (client *KeyVaultClient) deleteCertificateOperationCreateRequest(ctx contex
 }
 
 // deleteCertificateOperationHandleResponse handles the DeleteCertificateOperation response.
-func (client *KeyVaultClient) deleteCertificateOperationHandleResponse(resp *azcore.Response) (CertificateOperationResponse, error) {
-	var val *CertificateOperation
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return CertificateOperationResponse{}, err
+func (client *KeyVaultClient) deleteCertificateOperationHandleResponse(resp *azcore.Response) (KeyVaultClientDeleteCertificateOperationResponse, error) {
+	result := KeyVaultClientDeleteCertificateOperationResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.CertificateOperation); err != nil {
+		return KeyVaultClientDeleteCertificateOperationResponse{}, err
 	}
-	return CertificateOperationResponse{RawResponse: resp.Response, CertificateOperation: val}, nil
+	return result, nil
 }
 
 // deleteCertificateOperationHandleError handles the DeleteCertificateOperation error response.
@@ -717,17 +717,17 @@ func (client *KeyVaultClient) deleteCertificateOperationHandleError(resp *azcore
 // with the key, which means the key is not usable for
 // Sign/Verify, Wrap/Unwrap or Encrypt/Decrypt operations. This operation requires the keys/delete permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) DeleteKey(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientDeleteKeyOptions) (DeletedKeyBundleResponse, error) {
+func (client *KeyVaultClient) DeleteKey(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientDeleteKeyOptions) (KeyVaultClientDeleteKeyResponse, error) {
 	req, err := client.deleteKeyCreateRequest(ctx, vaultBaseURL, keyName, options)
 	if err != nil {
-		return DeletedKeyBundleResponse{}, err
+		return KeyVaultClientDeleteKeyResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return DeletedKeyBundleResponse{}, err
+		return KeyVaultClientDeleteKeyResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return DeletedKeyBundleResponse{}, client.deleteKeyHandleError(resp)
+		return KeyVaultClientDeleteKeyResponse{}, client.deleteKeyHandleError(resp)
 	}
 	return client.deleteKeyHandleResponse(resp)
 }
@@ -754,12 +754,12 @@ func (client *KeyVaultClient) deleteKeyCreateRequest(ctx context.Context, vaultB
 }
 
 // deleteKeyHandleResponse handles the DeleteKey response.
-func (client *KeyVaultClient) deleteKeyHandleResponse(resp *azcore.Response) (DeletedKeyBundleResponse, error) {
-	var val *DeletedKeyBundle
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return DeletedKeyBundleResponse{}, err
+func (client *KeyVaultClient) deleteKeyHandleResponse(resp *azcore.Response) (KeyVaultClientDeleteKeyResponse, error) {
+	result := KeyVaultClientDeleteKeyResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.DeletedKeyBundle); err != nil {
+		return KeyVaultClientDeleteKeyResponse{}, err
 	}
-	return DeletedKeyBundleResponse{RawResponse: resp.Response, DeletedKeyBundle: val}, nil
+	return result, nil
 }
 
 // deleteKeyHandleError handles the DeleteKey error response.
@@ -777,17 +777,17 @@ func (client *KeyVaultClient) deleteKeyHandleError(resp *azcore.Response) error 
 
 // DeleteSasDefinition - Deletes a SAS definition from a specified storage account. This operation requires the storage/deletesas permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) DeleteSasDefinition(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, options *KeyVaultClientDeleteSasDefinitionOptions) (DeletedSasDefinitionBundleResponse, error) {
+func (client *KeyVaultClient) DeleteSasDefinition(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, options *KeyVaultClientDeleteSasDefinitionOptions) (KeyVaultClientDeleteSasDefinitionResponse, error) {
 	req, err := client.deleteSasDefinitionCreateRequest(ctx, vaultBaseURL, storageAccountName, sasDefinitionName, options)
 	if err != nil {
-		return DeletedSasDefinitionBundleResponse{}, err
+		return KeyVaultClientDeleteSasDefinitionResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return DeletedSasDefinitionBundleResponse{}, err
+		return KeyVaultClientDeleteSasDefinitionResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return DeletedSasDefinitionBundleResponse{}, client.deleteSasDefinitionHandleError(resp)
+		return KeyVaultClientDeleteSasDefinitionResponse{}, client.deleteSasDefinitionHandleError(resp)
 	}
 	return client.deleteSasDefinitionHandleResponse(resp)
 }
@@ -818,12 +818,12 @@ func (client *KeyVaultClient) deleteSasDefinitionCreateRequest(ctx context.Conte
 }
 
 // deleteSasDefinitionHandleResponse handles the DeleteSasDefinition response.
-func (client *KeyVaultClient) deleteSasDefinitionHandleResponse(resp *azcore.Response) (DeletedSasDefinitionBundleResponse, error) {
-	var val *DeletedSasDefinitionBundle
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return DeletedSasDefinitionBundleResponse{}, err
+func (client *KeyVaultClient) deleteSasDefinitionHandleResponse(resp *azcore.Response) (KeyVaultClientDeleteSasDefinitionResponse, error) {
+	result := KeyVaultClientDeleteSasDefinitionResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.DeletedSasDefinitionBundle); err != nil {
+		return KeyVaultClientDeleteSasDefinitionResponse{}, err
 	}
-	return DeletedSasDefinitionBundleResponse{RawResponse: resp.Response, DeletedSasDefinitionBundle: val}, nil
+	return result, nil
 }
 
 // deleteSasDefinitionHandleError handles the DeleteSasDefinition error response.
@@ -842,17 +842,17 @@ func (client *KeyVaultClient) deleteSasDefinitionHandleError(resp *azcore.Respon
 // DeleteSecret - The DELETE operation applies to any secret stored in Azure Key Vault. DELETE cannot be applied to an individual version of a secret. This
 // operation requires the secrets/delete permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) DeleteSecret(ctx context.Context, vaultBaseURL string, secretName string, options *KeyVaultClientDeleteSecretOptions) (DeletedSecretBundleResponse, error) {
+func (client *KeyVaultClient) DeleteSecret(ctx context.Context, vaultBaseURL string, secretName string, options *KeyVaultClientDeleteSecretOptions) (KeyVaultClientDeleteSecretResponse, error) {
 	req, err := client.deleteSecretCreateRequest(ctx, vaultBaseURL, secretName, options)
 	if err != nil {
-		return DeletedSecretBundleResponse{}, err
+		return KeyVaultClientDeleteSecretResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return DeletedSecretBundleResponse{}, err
+		return KeyVaultClientDeleteSecretResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return DeletedSecretBundleResponse{}, client.deleteSecretHandleError(resp)
+		return KeyVaultClientDeleteSecretResponse{}, client.deleteSecretHandleError(resp)
 	}
 	return client.deleteSecretHandleResponse(resp)
 }
@@ -879,12 +879,12 @@ func (client *KeyVaultClient) deleteSecretCreateRequest(ctx context.Context, vau
 }
 
 // deleteSecretHandleResponse handles the DeleteSecret response.
-func (client *KeyVaultClient) deleteSecretHandleResponse(resp *azcore.Response) (DeletedSecretBundleResponse, error) {
-	var val *DeletedSecretBundle
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return DeletedSecretBundleResponse{}, err
+func (client *KeyVaultClient) deleteSecretHandleResponse(resp *azcore.Response) (KeyVaultClientDeleteSecretResponse, error) {
+	result := KeyVaultClientDeleteSecretResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.DeletedSecretBundle); err != nil {
+		return KeyVaultClientDeleteSecretResponse{}, err
 	}
-	return DeletedSecretBundleResponse{RawResponse: resp.Response, DeletedSecretBundle: val}, nil
+	return result, nil
 }
 
 // deleteSecretHandleError handles the DeleteSecret error response.
@@ -902,17 +902,17 @@ func (client *KeyVaultClient) deleteSecretHandleError(resp *azcore.Response) err
 
 // DeleteStorageAccount - Deletes a storage account. This operation requires the storage/delete permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) DeleteStorageAccount(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientDeleteStorageAccountOptions) (DeletedStorageBundleResponse, error) {
+func (client *KeyVaultClient) DeleteStorageAccount(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientDeleteStorageAccountOptions) (KeyVaultClientDeleteStorageAccountResponse, error) {
 	req, err := client.deleteStorageAccountCreateRequest(ctx, vaultBaseURL, storageAccountName, options)
 	if err != nil {
-		return DeletedStorageBundleResponse{}, err
+		return KeyVaultClientDeleteStorageAccountResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return DeletedStorageBundleResponse{}, err
+		return KeyVaultClientDeleteStorageAccountResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return DeletedStorageBundleResponse{}, client.deleteStorageAccountHandleError(resp)
+		return KeyVaultClientDeleteStorageAccountResponse{}, client.deleteStorageAccountHandleError(resp)
 	}
 	return client.deleteStorageAccountHandleResponse(resp)
 }
@@ -939,12 +939,12 @@ func (client *KeyVaultClient) deleteStorageAccountCreateRequest(ctx context.Cont
 }
 
 // deleteStorageAccountHandleResponse handles the DeleteStorageAccount response.
-func (client *KeyVaultClient) deleteStorageAccountHandleResponse(resp *azcore.Response) (DeletedStorageBundleResponse, error) {
-	var val *DeletedStorageBundle
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return DeletedStorageBundleResponse{}, err
+func (client *KeyVaultClient) deleteStorageAccountHandleResponse(resp *azcore.Response) (KeyVaultClientDeleteStorageAccountResponse, error) {
+	result := KeyVaultClientDeleteStorageAccountResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.DeletedStorageBundle); err != nil {
+		return KeyVaultClientDeleteStorageAccountResponse{}, err
 	}
-	return DeletedStorageBundleResponse{RawResponse: resp.Response, DeletedStorageBundle: val}, nil
+	return result, nil
 }
 
 // deleteStorageAccountHandleError handles the DeleteStorageAccount error response.
@@ -968,17 +968,17 @@ func (client *KeyVaultClient) deleteStorageAccountHandleError(resp *azcore.Respo
 // a key-reference but do not have access to the
 // public key material. This operation requires the keys/encrypt permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) Encrypt(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyOperationsParameters, options *KeyVaultClientEncryptOptions) (KeyOperationResultResponse, error) {
+func (client *KeyVaultClient) Encrypt(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyOperationsParameters, options *KeyVaultClientEncryptOptions) (KeyVaultClientEncryptResponse, error) {
 	req, err := client.encryptCreateRequest(ctx, vaultBaseURL, keyName, keyVersion, parameters, options)
 	if err != nil {
-		return KeyOperationResultResponse{}, err
+		return KeyVaultClientEncryptResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return KeyOperationResultResponse{}, err
+		return KeyVaultClientEncryptResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return KeyOperationResultResponse{}, client.encryptHandleError(resp)
+		return KeyVaultClientEncryptResponse{}, client.encryptHandleError(resp)
 	}
 	return client.encryptHandleResponse(resp)
 }
@@ -1009,12 +1009,12 @@ func (client *KeyVaultClient) encryptCreateRequest(ctx context.Context, vaultBas
 }
 
 // encryptHandleResponse handles the Encrypt response.
-func (client *KeyVaultClient) encryptHandleResponse(resp *azcore.Response) (KeyOperationResultResponse, error) {
-	var val *KeyOperationResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return KeyOperationResultResponse{}, err
+func (client *KeyVaultClient) encryptHandleResponse(resp *azcore.Response) (KeyVaultClientEncryptResponse, error) {
+	result := KeyVaultClientEncryptResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.KeyOperationResult); err != nil {
+		return KeyVaultClientEncryptResponse{}, err
 	}
-	return KeyOperationResultResponse{RawResponse: resp.Response, KeyOperationResult: val}, nil
+	return result, nil
 }
 
 // encryptHandleError handles the Encrypt error response.
@@ -1032,47 +1032,47 @@ func (client *KeyVaultClient) encryptHandleError(resp *azcore.Response) error {
 
 // BeginFullBackup - Creates a full backup using a user-provided SAS token to an Azure blob storage container.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) BeginFullBackup(ctx context.Context, vaultBaseURL string, options *KeyVaultClientBeginFullBackupOptions) (FullBackupOperationPollerResponse, error) {
+func (client *KeyVaultClient) BeginFullBackup(ctx context.Context, vaultBaseURL string, options *KeyVaultClientBeginFullBackupOptions) (KeyVaultClientFullBackupPollerResponse, error) {
 	resp, err := client.fullBackup(ctx, vaultBaseURL, options)
 	if err != nil {
-		return FullBackupOperationPollerResponse{}, err
+		return KeyVaultClientFullBackupPollerResponse{}, err
 	}
-	result := FullBackupOperationPollerResponse{
+	result := KeyVaultClientFullBackupPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := azcore.NewLROPoller("KeyVaultClient.FullBackup", resp, client.con.Pipeline(), client.fullBackupHandleError)
 	if err != nil {
-		return FullBackupOperationPollerResponse{}, err
+		return KeyVaultClientFullBackupPollerResponse{}, err
 	}
-	poller := &fullBackupOperationPoller{
+	poller := &keyVaultClientFullBackupPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (FullBackupOperationResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (KeyVaultClientFullBackupResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeFullBackup creates a new FullBackupOperationPoller from the specified resume token.
-// token - The value must come from a previous call to FullBackupOperationPoller.ResumeToken().
-func (client *KeyVaultClient) ResumeFullBackup(ctx context.Context, token string) (FullBackupOperationPollerResponse, error) {
+// ResumeFullBackup creates a new KeyVaultClientFullBackupPoller from the specified resume token.
+// token - The value must come from a previous call to KeyVaultClientFullBackupPoller.ResumeToken().
+func (client *KeyVaultClient) ResumeFullBackup(ctx context.Context, token string) (KeyVaultClientFullBackupPollerResponse, error) {
 	pt, err := azcore.NewLROPollerFromResumeToken("KeyVaultClient.FullBackup", token, client.con.Pipeline(), client.fullBackupHandleError)
 	if err != nil {
-		return FullBackupOperationPollerResponse{}, err
+		return KeyVaultClientFullBackupPollerResponse{}, err
 	}
-	poller := &fullBackupOperationPoller{
+	poller := &keyVaultClientFullBackupPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return FullBackupOperationPollerResponse{}, err
+		return KeyVaultClientFullBackupPollerResponse{}, err
 	}
-	result := FullBackupOperationPollerResponse{
+	result := KeyVaultClientFullBackupPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (FullBackupOperationResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (KeyVaultClientFullBackupResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -1130,17 +1130,17 @@ func (client *KeyVaultClient) fullBackupHandleError(resp *azcore.Response) error
 
 // FullBackupStatus - Returns the status of full backup operation
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) FullBackupStatus(ctx context.Context, vaultBaseURL string, jobID string, options *KeyVaultClientFullBackupStatusOptions) (FullBackupOperationResponse, error) {
+func (client *KeyVaultClient) FullBackupStatus(ctx context.Context, vaultBaseURL string, jobID string, options *KeyVaultClientFullBackupStatusOptions) (KeyVaultClientFullBackupStatusResponse, error) {
 	req, err := client.fullBackupStatusCreateRequest(ctx, vaultBaseURL, jobID, options)
 	if err != nil {
-		return FullBackupOperationResponse{}, err
+		return KeyVaultClientFullBackupStatusResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return FullBackupOperationResponse{}, err
+		return KeyVaultClientFullBackupStatusResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return FullBackupOperationResponse{}, client.fullBackupStatusHandleError(resp)
+		return KeyVaultClientFullBackupStatusResponse{}, client.fullBackupStatusHandleError(resp)
 	}
 	return client.fullBackupStatusHandleResponse(resp)
 }
@@ -1167,12 +1167,12 @@ func (client *KeyVaultClient) fullBackupStatusCreateRequest(ctx context.Context,
 }
 
 // fullBackupStatusHandleResponse handles the FullBackupStatus response.
-func (client *KeyVaultClient) fullBackupStatusHandleResponse(resp *azcore.Response) (FullBackupOperationResponse, error) {
-	var val *FullBackupOperation
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return FullBackupOperationResponse{}, err
+func (client *KeyVaultClient) fullBackupStatusHandleResponse(resp *azcore.Response) (KeyVaultClientFullBackupStatusResponse, error) {
+	result := KeyVaultClientFullBackupStatusResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.FullBackupOperation); err != nil {
+		return KeyVaultClientFullBackupStatusResponse{}, err
 	}
-	return FullBackupOperationResponse{RawResponse: resp.Response, FullBackupOperation: val}, nil
+	return result, nil
 }
 
 // fullBackupStatusHandleError handles the FullBackupStatus error response.
@@ -1190,47 +1190,47 @@ func (client *KeyVaultClient) fullBackupStatusHandleError(resp *azcore.Response)
 
 // BeginFullRestoreOperation - Restores all key materials using the SAS token pointing to a previously stored Azure Blob storage backup folder
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) BeginFullRestoreOperation(ctx context.Context, vaultBaseURL string, options *KeyVaultClientBeginFullRestoreOperationOptions) (RestoreOperationPollerResponse, error) {
+func (client *KeyVaultClient) BeginFullRestoreOperation(ctx context.Context, vaultBaseURL string, options *KeyVaultClientBeginFullRestoreOperationOptions) (KeyVaultClientFullRestoreOperationPollerResponse, error) {
 	resp, err := client.fullRestoreOperation(ctx, vaultBaseURL, options)
 	if err != nil {
-		return RestoreOperationPollerResponse{}, err
+		return KeyVaultClientFullRestoreOperationPollerResponse{}, err
 	}
-	result := RestoreOperationPollerResponse{
+	result := KeyVaultClientFullRestoreOperationPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := azcore.NewLROPoller("KeyVaultClient.FullRestoreOperation", resp, client.con.Pipeline(), client.fullRestoreOperationHandleError)
 	if err != nil {
-		return RestoreOperationPollerResponse{}, err
+		return KeyVaultClientFullRestoreOperationPollerResponse{}, err
 	}
-	poller := &restoreOperationPoller{
+	poller := &keyVaultClientFullRestoreOperationPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (RestoreOperationResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (KeyVaultClientFullRestoreOperationResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeFullRestoreOperation creates a new RestoreOperationPoller from the specified resume token.
-// token - The value must come from a previous call to RestoreOperationPoller.ResumeToken().
-func (client *KeyVaultClient) ResumeFullRestoreOperation(ctx context.Context, token string) (RestoreOperationPollerResponse, error) {
+// ResumeFullRestoreOperation creates a new KeyVaultClientFullRestoreOperationPoller from the specified resume token.
+// token - The value must come from a previous call to KeyVaultClientFullRestoreOperationPoller.ResumeToken().
+func (client *KeyVaultClient) ResumeFullRestoreOperation(ctx context.Context, token string) (KeyVaultClientFullRestoreOperationPollerResponse, error) {
 	pt, err := azcore.NewLROPollerFromResumeToken("KeyVaultClient.FullRestoreOperation", token, client.con.Pipeline(), client.fullRestoreOperationHandleError)
 	if err != nil {
-		return RestoreOperationPollerResponse{}, err
+		return KeyVaultClientFullRestoreOperationPollerResponse{}, err
 	}
-	poller := &restoreOperationPoller{
+	poller := &keyVaultClientFullRestoreOperationPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return RestoreOperationPollerResponse{}, err
+		return KeyVaultClientFullRestoreOperationPollerResponse{}, err
 	}
-	result := RestoreOperationPollerResponse{
+	result := KeyVaultClientFullRestoreOperationPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (RestoreOperationResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (KeyVaultClientFullRestoreOperationResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -1288,17 +1288,17 @@ func (client *KeyVaultClient) fullRestoreOperationHandleError(resp *azcore.Respo
 
 // GetCertificate - Gets information about a specific certificate. This operation requires the certificates/get permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetCertificate(ctx context.Context, vaultBaseURL string, certificateName string, certificateVersion string, options *KeyVaultClientGetCertificateOptions) (CertificateBundleResponse, error) {
+func (client *KeyVaultClient) GetCertificate(ctx context.Context, vaultBaseURL string, certificateName string, certificateVersion string, options *KeyVaultClientGetCertificateOptions) (KeyVaultClientGetCertificateResponse, error) {
 	req, err := client.getCertificateCreateRequest(ctx, vaultBaseURL, certificateName, certificateVersion, options)
 	if err != nil {
-		return CertificateBundleResponse{}, err
+		return KeyVaultClientGetCertificateResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return CertificateBundleResponse{}, err
+		return KeyVaultClientGetCertificateResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return CertificateBundleResponse{}, client.getCertificateHandleError(resp)
+		return KeyVaultClientGetCertificateResponse{}, client.getCertificateHandleError(resp)
 	}
 	return client.getCertificateHandleResponse(resp)
 }
@@ -1329,12 +1329,12 @@ func (client *KeyVaultClient) getCertificateCreateRequest(ctx context.Context, v
 }
 
 // getCertificateHandleResponse handles the GetCertificate response.
-func (client *KeyVaultClient) getCertificateHandleResponse(resp *azcore.Response) (CertificateBundleResponse, error) {
-	var val *CertificateBundle
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return CertificateBundleResponse{}, err
+func (client *KeyVaultClient) getCertificateHandleResponse(resp *azcore.Response) (KeyVaultClientGetCertificateResponse, error) {
+	result := KeyVaultClientGetCertificateResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.CertificateBundle); err != nil {
+		return KeyVaultClientGetCertificateResponse{}, err
 	}
-	return CertificateBundleResponse{RawResponse: resp.Response, CertificateBundle: val}, nil
+	return result, nil
 }
 
 // getCertificateHandleError handles the GetCertificate error response.
@@ -1353,17 +1353,17 @@ func (client *KeyVaultClient) getCertificateHandleError(resp *azcore.Response) e
 // GetCertificateContacts - The GetCertificateContacts operation returns the set of certificate contact resources in the specified key vault. This operation
 // requires the certificates/managecontacts permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetCertificateContacts(ctx context.Context, vaultBaseURL string, options *KeyVaultClientGetCertificateContactsOptions) (ContactsResponse, error) {
+func (client *KeyVaultClient) GetCertificateContacts(ctx context.Context, vaultBaseURL string, options *KeyVaultClientGetCertificateContactsOptions) (KeyVaultClientGetCertificateContactsResponse, error) {
 	req, err := client.getCertificateContactsCreateRequest(ctx, vaultBaseURL, options)
 	if err != nil {
-		return ContactsResponse{}, err
+		return KeyVaultClientGetCertificateContactsResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return ContactsResponse{}, err
+		return KeyVaultClientGetCertificateContactsResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return ContactsResponse{}, client.getCertificateContactsHandleError(resp)
+		return KeyVaultClientGetCertificateContactsResponse{}, client.getCertificateContactsHandleError(resp)
 	}
 	return client.getCertificateContactsHandleResponse(resp)
 }
@@ -1386,12 +1386,12 @@ func (client *KeyVaultClient) getCertificateContactsCreateRequest(ctx context.Co
 }
 
 // getCertificateContactsHandleResponse handles the GetCertificateContacts response.
-func (client *KeyVaultClient) getCertificateContactsHandleResponse(resp *azcore.Response) (ContactsResponse, error) {
-	var val *Contacts
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ContactsResponse{}, err
+func (client *KeyVaultClient) getCertificateContactsHandleResponse(resp *azcore.Response) (KeyVaultClientGetCertificateContactsResponse, error) {
+	result := KeyVaultClientGetCertificateContactsResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.Contacts); err != nil {
+		return KeyVaultClientGetCertificateContactsResponse{}, err
 	}
-	return ContactsResponse{RawResponse: resp.Response, Contacts: val}, nil
+	return result, nil
 }
 
 // getCertificateContactsHandleError handles the GetCertificateContacts error response.
@@ -1410,17 +1410,17 @@ func (client *KeyVaultClient) getCertificateContactsHandleError(resp *azcore.Res
 // GetCertificateIssuer - The GetCertificateIssuer operation returns the specified certificate issuer resources in the specified key vault. This operation
 // requires the certificates/manageissuers/getissuers permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetCertificateIssuer(ctx context.Context, vaultBaseURL string, issuerName string, options *KeyVaultClientGetCertificateIssuerOptions) (IssuerBundleResponse, error) {
+func (client *KeyVaultClient) GetCertificateIssuer(ctx context.Context, vaultBaseURL string, issuerName string, options *KeyVaultClientGetCertificateIssuerOptions) (KeyVaultClientGetCertificateIssuerResponse, error) {
 	req, err := client.getCertificateIssuerCreateRequest(ctx, vaultBaseURL, issuerName, options)
 	if err != nil {
-		return IssuerBundleResponse{}, err
+		return KeyVaultClientGetCertificateIssuerResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return IssuerBundleResponse{}, err
+		return KeyVaultClientGetCertificateIssuerResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return IssuerBundleResponse{}, client.getCertificateIssuerHandleError(resp)
+		return KeyVaultClientGetCertificateIssuerResponse{}, client.getCertificateIssuerHandleError(resp)
 	}
 	return client.getCertificateIssuerHandleResponse(resp)
 }
@@ -1447,12 +1447,12 @@ func (client *KeyVaultClient) getCertificateIssuerCreateRequest(ctx context.Cont
 }
 
 // getCertificateIssuerHandleResponse handles the GetCertificateIssuer response.
-func (client *KeyVaultClient) getCertificateIssuerHandleResponse(resp *azcore.Response) (IssuerBundleResponse, error) {
-	var val *IssuerBundle
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return IssuerBundleResponse{}, err
+func (client *KeyVaultClient) getCertificateIssuerHandleResponse(resp *azcore.Response) (KeyVaultClientGetCertificateIssuerResponse, error) {
+	result := KeyVaultClientGetCertificateIssuerResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.IssuerBundle); err != nil {
+		return KeyVaultClientGetCertificateIssuerResponse{}, err
 	}
-	return IssuerBundleResponse{RawResponse: resp.Response, IssuerBundle: val}, nil
+	return result, nil
 }
 
 // getCertificateIssuerHandleError handles the GetCertificateIssuer error response.
@@ -1471,18 +1471,15 @@ func (client *KeyVaultClient) getCertificateIssuerHandleError(resp *azcore.Respo
 // GetCertificateIssuers - The GetCertificateIssuers operation returns the set of certificate issuer resources in the specified key vault. This operation
 // requires the certificates/manageissuers/getissuers permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetCertificateIssuers(vaultBaseURL string, options *KeyVaultClientGetCertificateIssuersOptions) CertificateIssuerListResultPager {
-	return &certificateIssuerListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *KeyVaultClient) GetCertificateIssuers(vaultBaseURL string, options *KeyVaultClientGetCertificateIssuersOptions) KeyVaultClientGetCertificateIssuersPager {
+	return &keyVaultClientGetCertificateIssuersPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.getCertificateIssuersCreateRequest(ctx, vaultBaseURL, options)
 		},
-		responder: client.getCertificateIssuersHandleResponse,
-		errorer:   client.getCertificateIssuersHandleError,
-		advancer: func(ctx context.Context, resp CertificateIssuerListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp KeyVaultClientGetCertificateIssuersResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.CertificateIssuerListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -1507,12 +1504,12 @@ func (client *KeyVaultClient) getCertificateIssuersCreateRequest(ctx context.Con
 }
 
 // getCertificateIssuersHandleResponse handles the GetCertificateIssuers response.
-func (client *KeyVaultClient) getCertificateIssuersHandleResponse(resp *azcore.Response) (CertificateIssuerListResultResponse, error) {
-	var val *CertificateIssuerListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return CertificateIssuerListResultResponse{}, err
+func (client *KeyVaultClient) getCertificateIssuersHandleResponse(resp *azcore.Response) (KeyVaultClientGetCertificateIssuersResponse, error) {
+	result := KeyVaultClientGetCertificateIssuersResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.CertificateIssuerListResult); err != nil {
+		return KeyVaultClientGetCertificateIssuersResponse{}, err
 	}
-	return CertificateIssuerListResultResponse{RawResponse: resp.Response, CertificateIssuerListResult: val}, nil
+	return result, nil
 }
 
 // getCertificateIssuersHandleError handles the GetCertificateIssuers error response.
@@ -1530,17 +1527,17 @@ func (client *KeyVaultClient) getCertificateIssuersHandleError(resp *azcore.Resp
 
 // GetCertificateOperation - Gets the creation operation associated with a specified certificate. This operation requires the certificates/get permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetCertificateOperation(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientGetCertificateOperationOptions) (CertificateOperationResponse, error) {
+func (client *KeyVaultClient) GetCertificateOperation(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientGetCertificateOperationOptions) (KeyVaultClientGetCertificateOperationResponse, error) {
 	req, err := client.getCertificateOperationCreateRequest(ctx, vaultBaseURL, certificateName, options)
 	if err != nil {
-		return CertificateOperationResponse{}, err
+		return KeyVaultClientGetCertificateOperationResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return CertificateOperationResponse{}, err
+		return KeyVaultClientGetCertificateOperationResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return CertificateOperationResponse{}, client.getCertificateOperationHandleError(resp)
+		return KeyVaultClientGetCertificateOperationResponse{}, client.getCertificateOperationHandleError(resp)
 	}
 	return client.getCertificateOperationHandleResponse(resp)
 }
@@ -1567,12 +1564,12 @@ func (client *KeyVaultClient) getCertificateOperationCreateRequest(ctx context.C
 }
 
 // getCertificateOperationHandleResponse handles the GetCertificateOperation response.
-func (client *KeyVaultClient) getCertificateOperationHandleResponse(resp *azcore.Response) (CertificateOperationResponse, error) {
-	var val *CertificateOperation
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return CertificateOperationResponse{}, err
+func (client *KeyVaultClient) getCertificateOperationHandleResponse(resp *azcore.Response) (KeyVaultClientGetCertificateOperationResponse, error) {
+	result := KeyVaultClientGetCertificateOperationResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.CertificateOperation); err != nil {
+		return KeyVaultClientGetCertificateOperationResponse{}, err
 	}
-	return CertificateOperationResponse{RawResponse: resp.Response, CertificateOperation: val}, nil
+	return result, nil
 }
 
 // getCertificateOperationHandleError handles the GetCertificateOperation error response.
@@ -1591,17 +1588,17 @@ func (client *KeyVaultClient) getCertificateOperationHandleError(resp *azcore.Re
 // GetCertificatePolicy - The GetCertificatePolicy operation returns the specified certificate policy resources in the specified key vault. This operation
 // requires the certificates/get permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetCertificatePolicy(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientGetCertificatePolicyOptions) (CertificatePolicyResponse, error) {
+func (client *KeyVaultClient) GetCertificatePolicy(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientGetCertificatePolicyOptions) (KeyVaultClientGetCertificatePolicyResponse, error) {
 	req, err := client.getCertificatePolicyCreateRequest(ctx, vaultBaseURL, certificateName, options)
 	if err != nil {
-		return CertificatePolicyResponse{}, err
+		return KeyVaultClientGetCertificatePolicyResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return CertificatePolicyResponse{}, err
+		return KeyVaultClientGetCertificatePolicyResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return CertificatePolicyResponse{}, client.getCertificatePolicyHandleError(resp)
+		return KeyVaultClientGetCertificatePolicyResponse{}, client.getCertificatePolicyHandleError(resp)
 	}
 	return client.getCertificatePolicyHandleResponse(resp)
 }
@@ -1628,12 +1625,12 @@ func (client *KeyVaultClient) getCertificatePolicyCreateRequest(ctx context.Cont
 }
 
 // getCertificatePolicyHandleResponse handles the GetCertificatePolicy response.
-func (client *KeyVaultClient) getCertificatePolicyHandleResponse(resp *azcore.Response) (CertificatePolicyResponse, error) {
-	var val *CertificatePolicy
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return CertificatePolicyResponse{}, err
+func (client *KeyVaultClient) getCertificatePolicyHandleResponse(resp *azcore.Response) (KeyVaultClientGetCertificatePolicyResponse, error) {
+	result := KeyVaultClientGetCertificatePolicyResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.CertificatePolicy); err != nil {
+		return KeyVaultClientGetCertificatePolicyResponse{}, err
 	}
-	return CertificatePolicyResponse{RawResponse: resp.Response, CertificatePolicy: val}, nil
+	return result, nil
 }
 
 // getCertificatePolicyHandleError handles the GetCertificatePolicy error response.
@@ -1652,18 +1649,15 @@ func (client *KeyVaultClient) getCertificatePolicyHandleError(resp *azcore.Respo
 // GetCertificateVersions - The GetCertificateVersions operation returns the versions of a certificate in the specified key vault. This operation requires
 // the certificates/list permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetCertificateVersions(vaultBaseURL string, certificateName string, options *KeyVaultClientGetCertificateVersionsOptions) CertificateListResultPager {
-	return &certificateListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *KeyVaultClient) GetCertificateVersions(vaultBaseURL string, certificateName string, options *KeyVaultClientGetCertificateVersionsOptions) KeyVaultClientGetCertificateVersionsPager {
+	return &keyVaultClientGetCertificateVersionsPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.getCertificateVersionsCreateRequest(ctx, vaultBaseURL, certificateName, options)
 		},
-		responder: client.getCertificateVersionsHandleResponse,
-		errorer:   client.getCertificateVersionsHandleError,
-		advancer: func(ctx context.Context, resp CertificateListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp KeyVaultClientGetCertificateVersionsResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.CertificateListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -1692,12 +1686,12 @@ func (client *KeyVaultClient) getCertificateVersionsCreateRequest(ctx context.Co
 }
 
 // getCertificateVersionsHandleResponse handles the GetCertificateVersions response.
-func (client *KeyVaultClient) getCertificateVersionsHandleResponse(resp *azcore.Response) (CertificateListResultResponse, error) {
-	var val *CertificateListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return CertificateListResultResponse{}, err
+func (client *KeyVaultClient) getCertificateVersionsHandleResponse(resp *azcore.Response) (KeyVaultClientGetCertificateVersionsResponse, error) {
+	result := KeyVaultClientGetCertificateVersionsResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.CertificateListResult); err != nil {
+		return KeyVaultClientGetCertificateVersionsResponse{}, err
 	}
-	return CertificateListResultResponse{RawResponse: resp.Response, CertificateListResult: val}, nil
+	return result, nil
 }
 
 // getCertificateVersionsHandleError handles the GetCertificateVersions error response.
@@ -1716,18 +1710,15 @@ func (client *KeyVaultClient) getCertificateVersionsHandleError(resp *azcore.Res
 // GetCertificates - The GetCertificates operation returns the set of certificates resources in the specified key vault. This operation requires the certificates/list
 // permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetCertificates(vaultBaseURL string, options *KeyVaultClientGetCertificatesOptions) CertificateListResultPager {
-	return &certificateListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *KeyVaultClient) GetCertificates(vaultBaseURL string, options *KeyVaultClientGetCertificatesOptions) KeyVaultClientGetCertificatesPager {
+	return &keyVaultClientGetCertificatesPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.getCertificatesCreateRequest(ctx, vaultBaseURL, options)
 		},
-		responder: client.getCertificatesHandleResponse,
-		errorer:   client.getCertificatesHandleError,
-		advancer: func(ctx context.Context, resp CertificateListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp KeyVaultClientGetCertificatesResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.CertificateListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -1755,12 +1746,12 @@ func (client *KeyVaultClient) getCertificatesCreateRequest(ctx context.Context, 
 }
 
 // getCertificatesHandleResponse handles the GetCertificates response.
-func (client *KeyVaultClient) getCertificatesHandleResponse(resp *azcore.Response) (CertificateListResultResponse, error) {
-	var val *CertificateListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return CertificateListResultResponse{}, err
+func (client *KeyVaultClient) getCertificatesHandleResponse(resp *azcore.Response) (KeyVaultClientGetCertificatesResponse, error) {
+	result := KeyVaultClientGetCertificatesResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.CertificateListResult); err != nil {
+		return KeyVaultClientGetCertificatesResponse{}, err
 	}
-	return CertificateListResultResponse{RawResponse: resp.Response, CertificateListResult: val}, nil
+	return result, nil
 }
 
 // getCertificatesHandleError handles the GetCertificates error response.
@@ -1780,17 +1771,17 @@ func (client *KeyVaultClient) getCertificatesHandleError(resp *azcore.Response) 
 // scheduled permanent deletion and the current deletion recovery level.
 // This operation requires the certificates/get permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetDeletedCertificate(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientGetDeletedCertificateOptions) (DeletedCertificateBundleResponse, error) {
+func (client *KeyVaultClient) GetDeletedCertificate(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientGetDeletedCertificateOptions) (KeyVaultClientGetDeletedCertificateResponse, error) {
 	req, err := client.getDeletedCertificateCreateRequest(ctx, vaultBaseURL, certificateName, options)
 	if err != nil {
-		return DeletedCertificateBundleResponse{}, err
+		return KeyVaultClientGetDeletedCertificateResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return DeletedCertificateBundleResponse{}, err
+		return KeyVaultClientGetDeletedCertificateResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return DeletedCertificateBundleResponse{}, client.getDeletedCertificateHandleError(resp)
+		return KeyVaultClientGetDeletedCertificateResponse{}, client.getDeletedCertificateHandleError(resp)
 	}
 	return client.getDeletedCertificateHandleResponse(resp)
 }
@@ -1817,12 +1808,12 @@ func (client *KeyVaultClient) getDeletedCertificateCreateRequest(ctx context.Con
 }
 
 // getDeletedCertificateHandleResponse handles the GetDeletedCertificate response.
-func (client *KeyVaultClient) getDeletedCertificateHandleResponse(resp *azcore.Response) (DeletedCertificateBundleResponse, error) {
-	var val *DeletedCertificateBundle
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return DeletedCertificateBundleResponse{}, err
+func (client *KeyVaultClient) getDeletedCertificateHandleResponse(resp *azcore.Response) (KeyVaultClientGetDeletedCertificateResponse, error) {
+	result := KeyVaultClientGetDeletedCertificateResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.DeletedCertificateBundle); err != nil {
+		return KeyVaultClientGetDeletedCertificateResponse{}, err
 	}
-	return DeletedCertificateBundleResponse{RawResponse: resp.Response, DeletedCertificateBundle: val}, nil
+	return result, nil
 }
 
 // getDeletedCertificateHandleError handles the GetDeletedCertificate error response.
@@ -1842,18 +1833,15 @@ func (client *KeyVaultClient) getDeletedCertificateHandleError(resp *azcore.Resp
 // for recovery or purging. This operation includes deletion-specific
 // information. This operation requires the certificates/get/list permission. This operation can only be enabled on soft-delete enabled vaults.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetDeletedCertificates(vaultBaseURL string, options *KeyVaultClientGetDeletedCertificatesOptions) DeletedCertificateListResultPager {
-	return &deletedCertificateListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *KeyVaultClient) GetDeletedCertificates(vaultBaseURL string, options *KeyVaultClientGetDeletedCertificatesOptions) KeyVaultClientGetDeletedCertificatesPager {
+	return &keyVaultClientGetDeletedCertificatesPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.getDeletedCertificatesCreateRequest(ctx, vaultBaseURL, options)
 		},
-		responder: client.getDeletedCertificatesHandleResponse,
-		errorer:   client.getDeletedCertificatesHandleError,
-		advancer: func(ctx context.Context, resp DeletedCertificateListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp KeyVaultClientGetDeletedCertificatesResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.DeletedCertificateListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -1881,12 +1869,12 @@ func (client *KeyVaultClient) getDeletedCertificatesCreateRequest(ctx context.Co
 }
 
 // getDeletedCertificatesHandleResponse handles the GetDeletedCertificates response.
-func (client *KeyVaultClient) getDeletedCertificatesHandleResponse(resp *azcore.Response) (DeletedCertificateListResultResponse, error) {
-	var val *DeletedCertificateListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return DeletedCertificateListResultResponse{}, err
+func (client *KeyVaultClient) getDeletedCertificatesHandleResponse(resp *azcore.Response) (KeyVaultClientGetDeletedCertificatesResponse, error) {
+	result := KeyVaultClientGetDeletedCertificatesResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.DeletedCertificateListResult); err != nil {
+		return KeyVaultClientGetDeletedCertificatesResponse{}, err
 	}
-	return DeletedCertificateListResultResponse{RawResponse: resp.Response, DeletedCertificateListResult: val}, nil
+	return result, nil
 }
 
 // getDeletedCertificatesHandleError handles the GetDeletedCertificates error response.
@@ -1906,17 +1894,17 @@ func (client *KeyVaultClient) getDeletedCertificatesHandleError(resp *azcore.Res
 // return an error if invoked on a non soft-delete enabled vault. This
 // operation requires the keys/get permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetDeletedKey(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientGetDeletedKeyOptions) (DeletedKeyBundleResponse, error) {
+func (client *KeyVaultClient) GetDeletedKey(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientGetDeletedKeyOptions) (KeyVaultClientGetDeletedKeyResponse, error) {
 	req, err := client.getDeletedKeyCreateRequest(ctx, vaultBaseURL, keyName, options)
 	if err != nil {
-		return DeletedKeyBundleResponse{}, err
+		return KeyVaultClientGetDeletedKeyResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return DeletedKeyBundleResponse{}, err
+		return KeyVaultClientGetDeletedKeyResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return DeletedKeyBundleResponse{}, client.getDeletedKeyHandleError(resp)
+		return KeyVaultClientGetDeletedKeyResponse{}, client.getDeletedKeyHandleError(resp)
 	}
 	return client.getDeletedKeyHandleResponse(resp)
 }
@@ -1943,12 +1931,12 @@ func (client *KeyVaultClient) getDeletedKeyCreateRequest(ctx context.Context, va
 }
 
 // getDeletedKeyHandleResponse handles the GetDeletedKey response.
-func (client *KeyVaultClient) getDeletedKeyHandleResponse(resp *azcore.Response) (DeletedKeyBundleResponse, error) {
-	var val *DeletedKeyBundle
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return DeletedKeyBundleResponse{}, err
+func (client *KeyVaultClient) getDeletedKeyHandleResponse(resp *azcore.Response) (KeyVaultClientGetDeletedKeyResponse, error) {
+	result := KeyVaultClientGetDeletedKeyResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.DeletedKeyBundle); err != nil {
+		return KeyVaultClientGetDeletedKeyResponse{}, err
 	}
-	return DeletedKeyBundleResponse{RawResponse: resp.Response, DeletedKeyBundle: val}, nil
+	return result, nil
 }
 
 // getDeletedKeyHandleError handles the GetDeletedKey error response.
@@ -1970,18 +1958,15 @@ func (client *KeyVaultClient) getDeletedKeyHandleError(resp *azcore.Response) er
 // non soft-delete enabled vault. This operation
 // requires the keys/list permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetDeletedKeys(vaultBaseURL string, options *KeyVaultClientGetDeletedKeysOptions) DeletedKeyListResultPager {
-	return &deletedKeyListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *KeyVaultClient) GetDeletedKeys(vaultBaseURL string, options *KeyVaultClientGetDeletedKeysOptions) KeyVaultClientGetDeletedKeysPager {
+	return &keyVaultClientGetDeletedKeysPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.getDeletedKeysCreateRequest(ctx, vaultBaseURL, options)
 		},
-		responder: client.getDeletedKeysHandleResponse,
-		errorer:   client.getDeletedKeysHandleError,
-		advancer: func(ctx context.Context, resp DeletedKeyListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp KeyVaultClientGetDeletedKeysResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.DeletedKeyListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -2006,12 +1991,12 @@ func (client *KeyVaultClient) getDeletedKeysCreateRequest(ctx context.Context, v
 }
 
 // getDeletedKeysHandleResponse handles the GetDeletedKeys response.
-func (client *KeyVaultClient) getDeletedKeysHandleResponse(resp *azcore.Response) (DeletedKeyListResultResponse, error) {
-	var val *DeletedKeyListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return DeletedKeyListResultResponse{}, err
+func (client *KeyVaultClient) getDeletedKeysHandleResponse(resp *azcore.Response) (KeyVaultClientGetDeletedKeysResponse, error) {
+	result := KeyVaultClientGetDeletedKeysResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.DeletedKeyListResult); err != nil {
+		return KeyVaultClientGetDeletedKeysResponse{}, err
 	}
-	return DeletedKeyListResultResponse{RawResponse: resp.Response, DeletedKeyListResult: val}, nil
+	return result, nil
 }
 
 // getDeletedKeysHandleError handles the GetDeletedKeys error response.
@@ -2030,17 +2015,17 @@ func (client *KeyVaultClient) getDeletedKeysHandleError(resp *azcore.Response) e
 // GetDeletedSasDefinition - The Get Deleted SAS Definition operation returns the specified deleted SAS definition along with its attributes. This operation
 // requires the storage/getsas permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetDeletedSasDefinition(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, options *KeyVaultClientGetDeletedSasDefinitionOptions) (DeletedSasDefinitionBundleResponse, error) {
+func (client *KeyVaultClient) GetDeletedSasDefinition(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, options *KeyVaultClientGetDeletedSasDefinitionOptions) (KeyVaultClientGetDeletedSasDefinitionResponse, error) {
 	req, err := client.getDeletedSasDefinitionCreateRequest(ctx, vaultBaseURL, storageAccountName, sasDefinitionName, options)
 	if err != nil {
-		return DeletedSasDefinitionBundleResponse{}, err
+		return KeyVaultClientGetDeletedSasDefinitionResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return DeletedSasDefinitionBundleResponse{}, err
+		return KeyVaultClientGetDeletedSasDefinitionResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return DeletedSasDefinitionBundleResponse{}, client.getDeletedSasDefinitionHandleError(resp)
+		return KeyVaultClientGetDeletedSasDefinitionResponse{}, client.getDeletedSasDefinitionHandleError(resp)
 	}
 	return client.getDeletedSasDefinitionHandleResponse(resp)
 }
@@ -2071,12 +2056,12 @@ func (client *KeyVaultClient) getDeletedSasDefinitionCreateRequest(ctx context.C
 }
 
 // getDeletedSasDefinitionHandleResponse handles the GetDeletedSasDefinition response.
-func (client *KeyVaultClient) getDeletedSasDefinitionHandleResponse(resp *azcore.Response) (DeletedSasDefinitionBundleResponse, error) {
-	var val *DeletedSasDefinitionBundle
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return DeletedSasDefinitionBundleResponse{}, err
+func (client *KeyVaultClient) getDeletedSasDefinitionHandleResponse(resp *azcore.Response) (KeyVaultClientGetDeletedSasDefinitionResponse, error) {
+	result := KeyVaultClientGetDeletedSasDefinitionResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.DeletedSasDefinitionBundle); err != nil {
+		return KeyVaultClientGetDeletedSasDefinitionResponse{}, err
 	}
-	return DeletedSasDefinitionBundleResponse{RawResponse: resp.Response, DeletedSasDefinitionBundle: val}, nil
+	return result, nil
 }
 
 // getDeletedSasDefinitionHandleError handles the GetDeletedSasDefinition error response.
@@ -2095,18 +2080,15 @@ func (client *KeyVaultClient) getDeletedSasDefinitionHandleError(resp *azcore.Re
 // GetDeletedSasDefinitions - The Get Deleted Sas Definitions operation returns the SAS definitions that have been deleted for a vault enabled for soft-delete.
 // This operation requires the storage/listsas permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetDeletedSasDefinitions(vaultBaseURL string, storageAccountName string, options *KeyVaultClientGetDeletedSasDefinitionsOptions) DeletedSasDefinitionListResultPager {
-	return &deletedSasDefinitionListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *KeyVaultClient) GetDeletedSasDefinitions(vaultBaseURL string, storageAccountName string, options *KeyVaultClientGetDeletedSasDefinitionsOptions) KeyVaultClientGetDeletedSasDefinitionsPager {
+	return &keyVaultClientGetDeletedSasDefinitionsPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.getDeletedSasDefinitionsCreateRequest(ctx, vaultBaseURL, storageAccountName, options)
 		},
-		responder: client.getDeletedSasDefinitionsHandleResponse,
-		errorer:   client.getDeletedSasDefinitionsHandleError,
-		advancer: func(ctx context.Context, resp DeletedSasDefinitionListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp KeyVaultClientGetDeletedSasDefinitionsResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.DeletedSasDefinitionListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -2135,12 +2117,12 @@ func (client *KeyVaultClient) getDeletedSasDefinitionsCreateRequest(ctx context.
 }
 
 // getDeletedSasDefinitionsHandleResponse handles the GetDeletedSasDefinitions response.
-func (client *KeyVaultClient) getDeletedSasDefinitionsHandleResponse(resp *azcore.Response) (DeletedSasDefinitionListResultResponse, error) {
-	var val *DeletedSasDefinitionListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return DeletedSasDefinitionListResultResponse{}, err
+func (client *KeyVaultClient) getDeletedSasDefinitionsHandleResponse(resp *azcore.Response) (KeyVaultClientGetDeletedSasDefinitionsResponse, error) {
+	result := KeyVaultClientGetDeletedSasDefinitionsResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.DeletedSasDefinitionListResult); err != nil {
+		return KeyVaultClientGetDeletedSasDefinitionsResponse{}, err
 	}
-	return DeletedSasDefinitionListResultResponse{RawResponse: resp.Response, DeletedSasDefinitionListResult: val}, nil
+	return result, nil
 }
 
 // getDeletedSasDefinitionsHandleError handles the GetDeletedSasDefinitions error response.
@@ -2159,17 +2141,17 @@ func (client *KeyVaultClient) getDeletedSasDefinitionsHandleError(resp *azcore.R
 // GetDeletedSecret - The Get Deleted Secret operation returns the specified deleted secret along with its attributes. This operation requires the secrets/get
 // permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetDeletedSecret(ctx context.Context, vaultBaseURL string, secretName string, options *KeyVaultClientGetDeletedSecretOptions) (DeletedSecretBundleResponse, error) {
+func (client *KeyVaultClient) GetDeletedSecret(ctx context.Context, vaultBaseURL string, secretName string, options *KeyVaultClientGetDeletedSecretOptions) (KeyVaultClientGetDeletedSecretResponse, error) {
 	req, err := client.getDeletedSecretCreateRequest(ctx, vaultBaseURL, secretName, options)
 	if err != nil {
-		return DeletedSecretBundleResponse{}, err
+		return KeyVaultClientGetDeletedSecretResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return DeletedSecretBundleResponse{}, err
+		return KeyVaultClientGetDeletedSecretResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return DeletedSecretBundleResponse{}, client.getDeletedSecretHandleError(resp)
+		return KeyVaultClientGetDeletedSecretResponse{}, client.getDeletedSecretHandleError(resp)
 	}
 	return client.getDeletedSecretHandleResponse(resp)
 }
@@ -2196,12 +2178,12 @@ func (client *KeyVaultClient) getDeletedSecretCreateRequest(ctx context.Context,
 }
 
 // getDeletedSecretHandleResponse handles the GetDeletedSecret response.
-func (client *KeyVaultClient) getDeletedSecretHandleResponse(resp *azcore.Response) (DeletedSecretBundleResponse, error) {
-	var val *DeletedSecretBundle
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return DeletedSecretBundleResponse{}, err
+func (client *KeyVaultClient) getDeletedSecretHandleResponse(resp *azcore.Response) (KeyVaultClientGetDeletedSecretResponse, error) {
+	result := KeyVaultClientGetDeletedSecretResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.DeletedSecretBundle); err != nil {
+		return KeyVaultClientGetDeletedSecretResponse{}, err
 	}
-	return DeletedSecretBundleResponse{RawResponse: resp.Response, DeletedSecretBundle: val}, nil
+	return result, nil
 }
 
 // getDeletedSecretHandleError handles the GetDeletedSecret error response.
@@ -2220,18 +2202,15 @@ func (client *KeyVaultClient) getDeletedSecretHandleError(resp *azcore.Response)
 // GetDeletedSecrets - The Get Deleted Secrets operation returns the secrets that have been deleted for a vault enabled for soft-delete. This operation
 // requires the secrets/list permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetDeletedSecrets(vaultBaseURL string, options *KeyVaultClientGetDeletedSecretsOptions) DeletedSecretListResultPager {
-	return &deletedSecretListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *KeyVaultClient) GetDeletedSecrets(vaultBaseURL string, options *KeyVaultClientGetDeletedSecretsOptions) KeyVaultClientGetDeletedSecretsPager {
+	return &keyVaultClientGetDeletedSecretsPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.getDeletedSecretsCreateRequest(ctx, vaultBaseURL, options)
 		},
-		responder: client.getDeletedSecretsHandleResponse,
-		errorer:   client.getDeletedSecretsHandleError,
-		advancer: func(ctx context.Context, resp DeletedSecretListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp KeyVaultClientGetDeletedSecretsResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.DeletedSecretListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -2256,12 +2235,12 @@ func (client *KeyVaultClient) getDeletedSecretsCreateRequest(ctx context.Context
 }
 
 // getDeletedSecretsHandleResponse handles the GetDeletedSecrets response.
-func (client *KeyVaultClient) getDeletedSecretsHandleResponse(resp *azcore.Response) (DeletedSecretListResultResponse, error) {
-	var val *DeletedSecretListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return DeletedSecretListResultResponse{}, err
+func (client *KeyVaultClient) getDeletedSecretsHandleResponse(resp *azcore.Response) (KeyVaultClientGetDeletedSecretsResponse, error) {
+	result := KeyVaultClientGetDeletedSecretsResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.DeletedSecretListResult); err != nil {
+		return KeyVaultClientGetDeletedSecretsResponse{}, err
 	}
-	return DeletedSecretListResultResponse{RawResponse: resp.Response, DeletedSecretListResult: val}, nil
+	return result, nil
 }
 
 // getDeletedSecretsHandleError handles the GetDeletedSecrets error response.
@@ -2280,17 +2259,17 @@ func (client *KeyVaultClient) getDeletedSecretsHandleError(resp *azcore.Response
 // GetDeletedStorageAccount - The Get Deleted Storage Account operation returns the specified deleted storage account along with its attributes. This operation
 // requires the storage/get permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetDeletedStorageAccount(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientGetDeletedStorageAccountOptions) (DeletedStorageBundleResponse, error) {
+func (client *KeyVaultClient) GetDeletedStorageAccount(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientGetDeletedStorageAccountOptions) (KeyVaultClientGetDeletedStorageAccountResponse, error) {
 	req, err := client.getDeletedStorageAccountCreateRequest(ctx, vaultBaseURL, storageAccountName, options)
 	if err != nil {
-		return DeletedStorageBundleResponse{}, err
+		return KeyVaultClientGetDeletedStorageAccountResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return DeletedStorageBundleResponse{}, err
+		return KeyVaultClientGetDeletedStorageAccountResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return DeletedStorageBundleResponse{}, client.getDeletedStorageAccountHandleError(resp)
+		return KeyVaultClientGetDeletedStorageAccountResponse{}, client.getDeletedStorageAccountHandleError(resp)
 	}
 	return client.getDeletedStorageAccountHandleResponse(resp)
 }
@@ -2317,12 +2296,12 @@ func (client *KeyVaultClient) getDeletedStorageAccountCreateRequest(ctx context.
 }
 
 // getDeletedStorageAccountHandleResponse handles the GetDeletedStorageAccount response.
-func (client *KeyVaultClient) getDeletedStorageAccountHandleResponse(resp *azcore.Response) (DeletedStorageBundleResponse, error) {
-	var val *DeletedStorageBundle
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return DeletedStorageBundleResponse{}, err
+func (client *KeyVaultClient) getDeletedStorageAccountHandleResponse(resp *azcore.Response) (KeyVaultClientGetDeletedStorageAccountResponse, error) {
+	result := KeyVaultClientGetDeletedStorageAccountResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.DeletedStorageBundle); err != nil {
+		return KeyVaultClientGetDeletedStorageAccountResponse{}, err
 	}
-	return DeletedStorageBundleResponse{RawResponse: resp.Response, DeletedStorageBundle: val}, nil
+	return result, nil
 }
 
 // getDeletedStorageAccountHandleError handles the GetDeletedStorageAccount error response.
@@ -2341,18 +2320,15 @@ func (client *KeyVaultClient) getDeletedStorageAccountHandleError(resp *azcore.R
 // GetDeletedStorageAccounts - The Get Deleted Storage Accounts operation returns the storage accounts that have been deleted for a vault enabled for soft-delete.
 // This operation requires the storage/list permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetDeletedStorageAccounts(vaultBaseURL string, options *KeyVaultClientGetDeletedStorageAccountsOptions) DeletedStorageListResultPager {
-	return &deletedStorageListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *KeyVaultClient) GetDeletedStorageAccounts(vaultBaseURL string, options *KeyVaultClientGetDeletedStorageAccountsOptions) KeyVaultClientGetDeletedStorageAccountsPager {
+	return &keyVaultClientGetDeletedStorageAccountsPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.getDeletedStorageAccountsCreateRequest(ctx, vaultBaseURL, options)
 		},
-		responder: client.getDeletedStorageAccountsHandleResponse,
-		errorer:   client.getDeletedStorageAccountsHandleError,
-		advancer: func(ctx context.Context, resp DeletedStorageListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp KeyVaultClientGetDeletedStorageAccountsResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.DeletedStorageListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -2377,12 +2353,12 @@ func (client *KeyVaultClient) getDeletedStorageAccountsCreateRequest(ctx context
 }
 
 // getDeletedStorageAccountsHandleResponse handles the GetDeletedStorageAccounts response.
-func (client *KeyVaultClient) getDeletedStorageAccountsHandleResponse(resp *azcore.Response) (DeletedStorageListResultResponse, error) {
-	var val *DeletedStorageListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return DeletedStorageListResultResponse{}, err
+func (client *KeyVaultClient) getDeletedStorageAccountsHandleResponse(resp *azcore.Response) (KeyVaultClientGetDeletedStorageAccountsResponse, error) {
+	result := KeyVaultClientGetDeletedStorageAccountsResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.DeletedStorageListResult); err != nil {
+		return KeyVaultClientGetDeletedStorageAccountsResponse{}, err
 	}
-	return DeletedStorageListResultResponse{RawResponse: resp.Response, DeletedStorageListResult: val}, nil
+	return result, nil
 }
 
 // getDeletedStorageAccountsHandleError handles the GetDeletedStorageAccounts error response.
@@ -2401,17 +2377,17 @@ func (client *KeyVaultClient) getDeletedStorageAccountsHandleError(resp *azcore.
 // GetKey - The get key operation is applicable to all key types. If the requested key is symmetric, then no key material is released in the response. This
 // operation requires the keys/get permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetKey(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, options *KeyVaultClientGetKeyOptions) (KeyBundleResponse, error) {
+func (client *KeyVaultClient) GetKey(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, options *KeyVaultClientGetKeyOptions) (KeyVaultClientGetKeyResponse, error) {
 	req, err := client.getKeyCreateRequest(ctx, vaultBaseURL, keyName, keyVersion, options)
 	if err != nil {
-		return KeyBundleResponse{}, err
+		return KeyVaultClientGetKeyResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return KeyBundleResponse{}, err
+		return KeyVaultClientGetKeyResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return KeyBundleResponse{}, client.getKeyHandleError(resp)
+		return KeyVaultClientGetKeyResponse{}, client.getKeyHandleError(resp)
 	}
 	return client.getKeyHandleResponse(resp)
 }
@@ -2442,12 +2418,12 @@ func (client *KeyVaultClient) getKeyCreateRequest(ctx context.Context, vaultBase
 }
 
 // getKeyHandleResponse handles the GetKey response.
-func (client *KeyVaultClient) getKeyHandleResponse(resp *azcore.Response) (KeyBundleResponse, error) {
-	var val *KeyBundle
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return KeyBundleResponse{}, err
+func (client *KeyVaultClient) getKeyHandleResponse(resp *azcore.Response) (KeyVaultClientGetKeyResponse, error) {
+	result := KeyVaultClientGetKeyResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.KeyBundle); err != nil {
+		return KeyVaultClientGetKeyResponse{}, err
 	}
-	return KeyBundleResponse{RawResponse: resp.Response, KeyBundle: val}, nil
+	return result, nil
 }
 
 // getKeyHandleError handles the GetKey error response.
@@ -2465,18 +2441,15 @@ func (client *KeyVaultClient) getKeyHandleError(resp *azcore.Response) error {
 
 // GetKeyVersions - The full key identifier, attributes, and tags are provided in the response. This operation requires the keys/list permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetKeyVersions(vaultBaseURL string, keyName string, options *KeyVaultClientGetKeyVersionsOptions) KeyListResultPager {
-	return &keyListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *KeyVaultClient) GetKeyVersions(vaultBaseURL string, keyName string, options *KeyVaultClientGetKeyVersionsOptions) KeyVaultClientGetKeyVersionsPager {
+	return &keyVaultClientGetKeyVersionsPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.getKeyVersionsCreateRequest(ctx, vaultBaseURL, keyName, options)
 		},
-		responder: client.getKeyVersionsHandleResponse,
-		errorer:   client.getKeyVersionsHandleError,
-		advancer: func(ctx context.Context, resp KeyListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp KeyVaultClientGetKeyVersionsResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.KeyListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -2505,12 +2478,12 @@ func (client *KeyVaultClient) getKeyVersionsCreateRequest(ctx context.Context, v
 }
 
 // getKeyVersionsHandleResponse handles the GetKeyVersions response.
-func (client *KeyVaultClient) getKeyVersionsHandleResponse(resp *azcore.Response) (KeyListResultResponse, error) {
-	var val *KeyListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return KeyListResultResponse{}, err
+func (client *KeyVaultClient) getKeyVersionsHandleResponse(resp *azcore.Response) (KeyVaultClientGetKeyVersionsResponse, error) {
+	result := KeyVaultClientGetKeyVersionsResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.KeyListResult); err != nil {
+		return KeyVaultClientGetKeyVersionsResponse{}, err
 	}
-	return KeyListResultResponse{RawResponse: resp.Response, KeyListResult: val}, nil
+	return result, nil
 }
 
 // getKeyVersionsHandleError handles the GetKeyVersions error response.
@@ -2531,18 +2504,15 @@ func (client *KeyVaultClient) getKeyVersionsHandleError(resp *azcore.Response) e
 // identifier, attributes, and tags are provided in the response. Individual versions of a key are not listed in the response. This operation requires the
 // keys/list permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetKeys(vaultBaseURL string, options *KeyVaultClientGetKeysOptions) KeyListResultPager {
-	return &keyListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *KeyVaultClient) GetKeys(vaultBaseURL string, options *KeyVaultClientGetKeysOptions) KeyVaultClientGetKeysPager {
+	return &keyVaultClientGetKeysPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.getKeysCreateRequest(ctx, vaultBaseURL, options)
 		},
-		responder: client.getKeysHandleResponse,
-		errorer:   client.getKeysHandleError,
-		advancer: func(ctx context.Context, resp KeyListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp KeyVaultClientGetKeysResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.KeyListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -2567,12 +2537,12 @@ func (client *KeyVaultClient) getKeysCreateRequest(ctx context.Context, vaultBas
 }
 
 // getKeysHandleResponse handles the GetKeys response.
-func (client *KeyVaultClient) getKeysHandleResponse(resp *azcore.Response) (KeyListResultResponse, error) {
-	var val *KeyListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return KeyListResultResponse{}, err
+func (client *KeyVaultClient) getKeysHandleResponse(resp *azcore.Response) (KeyVaultClientGetKeysResponse, error) {
+	result := KeyVaultClientGetKeysResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.KeyListResult); err != nil {
+		return KeyVaultClientGetKeysResponse{}, err
 	}
-	return KeyListResultResponse{RawResponse: resp.Response, KeyListResult: val}, nil
+	return result, nil
 }
 
 // getKeysHandleError handles the GetKeys error response.
@@ -2590,17 +2560,17 @@ func (client *KeyVaultClient) getKeysHandleError(resp *azcore.Response) error {
 
 // GetSasDefinition - Gets information about a SAS definition for the specified storage account. This operation requires the storage/getsas permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetSasDefinition(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, options *KeyVaultClientGetSasDefinitionOptions) (SasDefinitionBundleResponse, error) {
+func (client *KeyVaultClient) GetSasDefinition(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, options *KeyVaultClientGetSasDefinitionOptions) (KeyVaultClientGetSasDefinitionResponse, error) {
 	req, err := client.getSasDefinitionCreateRequest(ctx, vaultBaseURL, storageAccountName, sasDefinitionName, options)
 	if err != nil {
-		return SasDefinitionBundleResponse{}, err
+		return KeyVaultClientGetSasDefinitionResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return SasDefinitionBundleResponse{}, err
+		return KeyVaultClientGetSasDefinitionResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return SasDefinitionBundleResponse{}, client.getSasDefinitionHandleError(resp)
+		return KeyVaultClientGetSasDefinitionResponse{}, client.getSasDefinitionHandleError(resp)
 	}
 	return client.getSasDefinitionHandleResponse(resp)
 }
@@ -2631,12 +2601,12 @@ func (client *KeyVaultClient) getSasDefinitionCreateRequest(ctx context.Context,
 }
 
 // getSasDefinitionHandleResponse handles the GetSasDefinition response.
-func (client *KeyVaultClient) getSasDefinitionHandleResponse(resp *azcore.Response) (SasDefinitionBundleResponse, error) {
-	var val *SasDefinitionBundle
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return SasDefinitionBundleResponse{}, err
+func (client *KeyVaultClient) getSasDefinitionHandleResponse(resp *azcore.Response) (KeyVaultClientGetSasDefinitionResponse, error) {
+	result := KeyVaultClientGetSasDefinitionResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.SasDefinitionBundle); err != nil {
+		return KeyVaultClientGetSasDefinitionResponse{}, err
 	}
-	return SasDefinitionBundleResponse{RawResponse: resp.Response, SasDefinitionBundle: val}, nil
+	return result, nil
 }
 
 // getSasDefinitionHandleError handles the GetSasDefinition error response.
@@ -2654,18 +2624,15 @@ func (client *KeyVaultClient) getSasDefinitionHandleError(resp *azcore.Response)
 
 // GetSasDefinitions - List storage SAS definitions for the given storage account. This operation requires the storage/listsas permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetSasDefinitions(vaultBaseURL string, storageAccountName string, options *KeyVaultClientGetSasDefinitionsOptions) SasDefinitionListResultPager {
-	return &sasDefinitionListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *KeyVaultClient) GetSasDefinitions(vaultBaseURL string, storageAccountName string, options *KeyVaultClientGetSasDefinitionsOptions) KeyVaultClientGetSasDefinitionsPager {
+	return &keyVaultClientGetSasDefinitionsPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.getSasDefinitionsCreateRequest(ctx, vaultBaseURL, storageAccountName, options)
 		},
-		responder: client.getSasDefinitionsHandleResponse,
-		errorer:   client.getSasDefinitionsHandleError,
-		advancer: func(ctx context.Context, resp SasDefinitionListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp KeyVaultClientGetSasDefinitionsResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.SasDefinitionListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -2694,12 +2661,12 @@ func (client *KeyVaultClient) getSasDefinitionsCreateRequest(ctx context.Context
 }
 
 // getSasDefinitionsHandleResponse handles the GetSasDefinitions response.
-func (client *KeyVaultClient) getSasDefinitionsHandleResponse(resp *azcore.Response) (SasDefinitionListResultResponse, error) {
-	var val *SasDefinitionListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return SasDefinitionListResultResponse{}, err
+func (client *KeyVaultClient) getSasDefinitionsHandleResponse(resp *azcore.Response) (KeyVaultClientGetSasDefinitionsResponse, error) {
+	result := KeyVaultClientGetSasDefinitionsResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.SasDefinitionListResult); err != nil {
+		return KeyVaultClientGetSasDefinitionsResponse{}, err
 	}
-	return SasDefinitionListResultResponse{RawResponse: resp.Response, SasDefinitionListResult: val}, nil
+	return result, nil
 }
 
 // getSasDefinitionsHandleError handles the GetSasDefinitions error response.
@@ -2717,17 +2684,17 @@ func (client *KeyVaultClient) getSasDefinitionsHandleError(resp *azcore.Response
 
 // GetSecret - The GET operation is applicable to any secret stored in Azure Key Vault. This operation requires the secrets/get permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetSecret(ctx context.Context, vaultBaseURL string, secretName string, secretVersion string, options *KeyVaultClientGetSecretOptions) (SecretBundleResponse, error) {
+func (client *KeyVaultClient) GetSecret(ctx context.Context, vaultBaseURL string, secretName string, secretVersion string, options *KeyVaultClientGetSecretOptions) (KeyVaultClientGetSecretResponse, error) {
 	req, err := client.getSecretCreateRequest(ctx, vaultBaseURL, secretName, secretVersion, options)
 	if err != nil {
-		return SecretBundleResponse{}, err
+		return KeyVaultClientGetSecretResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return SecretBundleResponse{}, err
+		return KeyVaultClientGetSecretResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return SecretBundleResponse{}, client.getSecretHandleError(resp)
+		return KeyVaultClientGetSecretResponse{}, client.getSecretHandleError(resp)
 	}
 	return client.getSecretHandleResponse(resp)
 }
@@ -2758,12 +2725,12 @@ func (client *KeyVaultClient) getSecretCreateRequest(ctx context.Context, vaultB
 }
 
 // getSecretHandleResponse handles the GetSecret response.
-func (client *KeyVaultClient) getSecretHandleResponse(resp *azcore.Response) (SecretBundleResponse, error) {
-	var val *SecretBundle
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return SecretBundleResponse{}, err
+func (client *KeyVaultClient) getSecretHandleResponse(resp *azcore.Response) (KeyVaultClientGetSecretResponse, error) {
+	result := KeyVaultClientGetSecretResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.SecretBundle); err != nil {
+		return KeyVaultClientGetSecretResponse{}, err
 	}
-	return SecretBundleResponse{RawResponse: resp.Response, SecretBundle: val}, nil
+	return result, nil
 }
 
 // getSecretHandleError handles the GetSecret error response.
@@ -2782,18 +2749,15 @@ func (client *KeyVaultClient) getSecretHandleError(resp *azcore.Response) error 
 // GetSecretVersions - The full secret identifier and attributes are provided in the response. No values are returned for the secrets. This operations requires
 // the secrets/list permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetSecretVersions(vaultBaseURL string, secretName string, options *KeyVaultClientGetSecretVersionsOptions) SecretListResultPager {
-	return &secretListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *KeyVaultClient) GetSecretVersions(vaultBaseURL string, secretName string, options *KeyVaultClientGetSecretVersionsOptions) KeyVaultClientGetSecretVersionsPager {
+	return &keyVaultClientGetSecretVersionsPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.getSecretVersionsCreateRequest(ctx, vaultBaseURL, secretName, options)
 		},
-		responder: client.getSecretVersionsHandleResponse,
-		errorer:   client.getSecretVersionsHandleError,
-		advancer: func(ctx context.Context, resp SecretListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp KeyVaultClientGetSecretVersionsResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.SecretListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -2822,12 +2786,12 @@ func (client *KeyVaultClient) getSecretVersionsCreateRequest(ctx context.Context
 }
 
 // getSecretVersionsHandleResponse handles the GetSecretVersions response.
-func (client *KeyVaultClient) getSecretVersionsHandleResponse(resp *azcore.Response) (SecretListResultResponse, error) {
-	var val *SecretListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return SecretListResultResponse{}, err
+func (client *KeyVaultClient) getSecretVersionsHandleResponse(resp *azcore.Response) (KeyVaultClientGetSecretVersionsResponse, error) {
+	result := KeyVaultClientGetSecretVersionsResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.SecretListResult); err != nil {
+		return KeyVaultClientGetSecretVersionsResponse{}, err
 	}
-	return SecretListResultResponse{RawResponse: resp.Response, SecretListResult: val}, nil
+	return result, nil
 }
 
 // getSecretVersionsHandleError handles the GetSecretVersions error response.
@@ -2847,18 +2811,15 @@ func (client *KeyVaultClient) getSecretVersionsHandleError(resp *azcore.Response
 // the response. Individual secret versions are not listed in the
 // response. This operation requires the secrets/list permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetSecrets(vaultBaseURL string, options *KeyVaultClientGetSecretsOptions) SecretListResultPager {
-	return &secretListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *KeyVaultClient) GetSecrets(vaultBaseURL string, options *KeyVaultClientGetSecretsOptions) KeyVaultClientGetSecretsPager {
+	return &keyVaultClientGetSecretsPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.getSecretsCreateRequest(ctx, vaultBaseURL, options)
 		},
-		responder: client.getSecretsHandleResponse,
-		errorer:   client.getSecretsHandleError,
-		advancer: func(ctx context.Context, resp SecretListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp KeyVaultClientGetSecretsResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.SecretListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -2883,12 +2844,12 @@ func (client *KeyVaultClient) getSecretsCreateRequest(ctx context.Context, vault
 }
 
 // getSecretsHandleResponse handles the GetSecrets response.
-func (client *KeyVaultClient) getSecretsHandleResponse(resp *azcore.Response) (SecretListResultResponse, error) {
-	var val *SecretListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return SecretListResultResponse{}, err
+func (client *KeyVaultClient) getSecretsHandleResponse(resp *azcore.Response) (KeyVaultClientGetSecretsResponse, error) {
+	result := KeyVaultClientGetSecretsResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.SecretListResult); err != nil {
+		return KeyVaultClientGetSecretsResponse{}, err
 	}
-	return SecretListResultResponse{RawResponse: resp.Response, SecretListResult: val}, nil
+	return result, nil
 }
 
 // getSecretsHandleError handles the GetSecrets error response.
@@ -2906,17 +2867,17 @@ func (client *KeyVaultClient) getSecretsHandleError(resp *azcore.Response) error
 
 // GetStorageAccount - Gets information about a specified storage account. This operation requires the storage/get permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetStorageAccount(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientGetStorageAccountOptions) (StorageBundleResponse, error) {
+func (client *KeyVaultClient) GetStorageAccount(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientGetStorageAccountOptions) (KeyVaultClientGetStorageAccountResponse, error) {
 	req, err := client.getStorageAccountCreateRequest(ctx, vaultBaseURL, storageAccountName, options)
 	if err != nil {
-		return StorageBundleResponse{}, err
+		return KeyVaultClientGetStorageAccountResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return StorageBundleResponse{}, err
+		return KeyVaultClientGetStorageAccountResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return StorageBundleResponse{}, client.getStorageAccountHandleError(resp)
+		return KeyVaultClientGetStorageAccountResponse{}, client.getStorageAccountHandleError(resp)
 	}
 	return client.getStorageAccountHandleResponse(resp)
 }
@@ -2943,12 +2904,12 @@ func (client *KeyVaultClient) getStorageAccountCreateRequest(ctx context.Context
 }
 
 // getStorageAccountHandleResponse handles the GetStorageAccount response.
-func (client *KeyVaultClient) getStorageAccountHandleResponse(resp *azcore.Response) (StorageBundleResponse, error) {
-	var val *StorageBundle
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return StorageBundleResponse{}, err
+func (client *KeyVaultClient) getStorageAccountHandleResponse(resp *azcore.Response) (KeyVaultClientGetStorageAccountResponse, error) {
+	result := KeyVaultClientGetStorageAccountResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.StorageBundle); err != nil {
+		return KeyVaultClientGetStorageAccountResponse{}, err
 	}
-	return StorageBundleResponse{RawResponse: resp.Response, StorageBundle: val}, nil
+	return result, nil
 }
 
 // getStorageAccountHandleError handles the GetStorageAccount error response.
@@ -2966,18 +2927,15 @@ func (client *KeyVaultClient) getStorageAccountHandleError(resp *azcore.Response
 
 // GetStorageAccounts - List storage accounts managed by the specified key vault. This operation requires the storage/list permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetStorageAccounts(vaultBaseURL string, options *KeyVaultClientGetStorageAccountsOptions) StorageListResultPager {
-	return &storageListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *KeyVaultClient) GetStorageAccounts(vaultBaseURL string, options *KeyVaultClientGetStorageAccountsOptions) KeyVaultClientGetStorageAccountsPager {
+	return &keyVaultClientGetStorageAccountsPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.getStorageAccountsCreateRequest(ctx, vaultBaseURL, options)
 		},
-		responder: client.getStorageAccountsHandleResponse,
-		errorer:   client.getStorageAccountsHandleError,
-		advancer: func(ctx context.Context, resp StorageListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp KeyVaultClientGetStorageAccountsResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.StorageListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -3002,12 +2960,12 @@ func (client *KeyVaultClient) getStorageAccountsCreateRequest(ctx context.Contex
 }
 
 // getStorageAccountsHandleResponse handles the GetStorageAccounts response.
-func (client *KeyVaultClient) getStorageAccountsHandleResponse(resp *azcore.Response) (StorageListResultResponse, error) {
-	var val *StorageListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return StorageListResultResponse{}, err
+func (client *KeyVaultClient) getStorageAccountsHandleResponse(resp *azcore.Response) (KeyVaultClientGetStorageAccountsResponse, error) {
+	result := KeyVaultClientGetStorageAccountsResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.StorageListResult); err != nil {
+		return KeyVaultClientGetStorageAccountsResponse{}, err
 	}
-	return StorageListResultResponse{RawResponse: resp.Response, StorageListResult: val}, nil
+	return result, nil
 }
 
 // getStorageAccountsHandleError handles the GetStorageAccounts error response.
@@ -3027,17 +2985,17 @@ func (client *KeyVaultClient) getStorageAccountsHandleError(resp *azcore.Respons
 // PFX or PEM format. If the certificate is in PEM format the PEM
 // file must contain the key as well as x509 certificates. This operation requires the certificates/import permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) ImportCertificate(ctx context.Context, vaultBaseURL string, certificateName string, parameters CertificateImportParameters, options *KeyVaultClientImportCertificateOptions) (CertificateBundleResponse, error) {
+func (client *KeyVaultClient) ImportCertificate(ctx context.Context, vaultBaseURL string, certificateName string, parameters CertificateImportParameters, options *KeyVaultClientImportCertificateOptions) (KeyVaultClientImportCertificateResponse, error) {
 	req, err := client.importCertificateCreateRequest(ctx, vaultBaseURL, certificateName, parameters, options)
 	if err != nil {
-		return CertificateBundleResponse{}, err
+		return KeyVaultClientImportCertificateResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return CertificateBundleResponse{}, err
+		return KeyVaultClientImportCertificateResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return CertificateBundleResponse{}, client.importCertificateHandleError(resp)
+		return KeyVaultClientImportCertificateResponse{}, client.importCertificateHandleError(resp)
 	}
 	return client.importCertificateHandleResponse(resp)
 }
@@ -3064,12 +3022,12 @@ func (client *KeyVaultClient) importCertificateCreateRequest(ctx context.Context
 }
 
 // importCertificateHandleResponse handles the ImportCertificate response.
-func (client *KeyVaultClient) importCertificateHandleResponse(resp *azcore.Response) (CertificateBundleResponse, error) {
-	var val *CertificateBundle
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return CertificateBundleResponse{}, err
+func (client *KeyVaultClient) importCertificateHandleResponse(resp *azcore.Response) (KeyVaultClientImportCertificateResponse, error) {
+	result := KeyVaultClientImportCertificateResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.CertificateBundle); err != nil {
+		return KeyVaultClientImportCertificateResponse{}, err
 	}
-	return CertificateBundleResponse{RawResponse: resp.Response, CertificateBundle: val}, nil
+	return result, nil
 }
 
 // importCertificateHandleError handles the ImportCertificate error response.
@@ -3089,17 +3047,17 @@ func (client *KeyVaultClient) importCertificateHandleError(resp *azcore.Response
 // a new version of the key. This operation requires the
 // keys/import permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) ImportKey(ctx context.Context, vaultBaseURL string, keyName string, parameters KeyImportParameters, options *KeyVaultClientImportKeyOptions) (KeyBundleResponse, error) {
+func (client *KeyVaultClient) ImportKey(ctx context.Context, vaultBaseURL string, keyName string, parameters KeyImportParameters, options *KeyVaultClientImportKeyOptions) (KeyVaultClientImportKeyResponse, error) {
 	req, err := client.importKeyCreateRequest(ctx, vaultBaseURL, keyName, parameters, options)
 	if err != nil {
-		return KeyBundleResponse{}, err
+		return KeyVaultClientImportKeyResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return KeyBundleResponse{}, err
+		return KeyVaultClientImportKeyResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return KeyBundleResponse{}, client.importKeyHandleError(resp)
+		return KeyVaultClientImportKeyResponse{}, client.importKeyHandleError(resp)
 	}
 	return client.importKeyHandleResponse(resp)
 }
@@ -3126,12 +3084,12 @@ func (client *KeyVaultClient) importKeyCreateRequest(ctx context.Context, vaultB
 }
 
 // importKeyHandleResponse handles the ImportKey response.
-func (client *KeyVaultClient) importKeyHandleResponse(resp *azcore.Response) (KeyBundleResponse, error) {
-	var val *KeyBundle
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return KeyBundleResponse{}, err
+func (client *KeyVaultClient) importKeyHandleResponse(resp *azcore.Response) (KeyVaultClientImportKeyResponse, error) {
+	result := KeyVaultClientImportKeyResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.KeyBundle); err != nil {
+		return KeyVaultClientImportKeyResponse{}, err
 	}
-	return KeyBundleResponse{RawResponse: resp.Response, KeyBundle: val}, nil
+	return result, nil
 }
 
 // importKeyHandleError handles the ImportKey error response.
@@ -3151,17 +3109,17 @@ func (client *KeyVaultClient) importKeyHandleError(resp *azcore.Response) error 
 // service. This operation requires the certificates/create
 // permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) MergeCertificate(ctx context.Context, vaultBaseURL string, certificateName string, parameters CertificateMergeParameters, options *KeyVaultClientMergeCertificateOptions) (CertificateBundleResponse, error) {
+func (client *KeyVaultClient) MergeCertificate(ctx context.Context, vaultBaseURL string, certificateName string, parameters CertificateMergeParameters, options *KeyVaultClientMergeCertificateOptions) (KeyVaultClientMergeCertificateResponse, error) {
 	req, err := client.mergeCertificateCreateRequest(ctx, vaultBaseURL, certificateName, parameters, options)
 	if err != nil {
-		return CertificateBundleResponse{}, err
+		return KeyVaultClientMergeCertificateResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return CertificateBundleResponse{}, err
+		return KeyVaultClientMergeCertificateResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusCreated) {
-		return CertificateBundleResponse{}, client.mergeCertificateHandleError(resp)
+		return KeyVaultClientMergeCertificateResponse{}, client.mergeCertificateHandleError(resp)
 	}
 	return client.mergeCertificateHandleResponse(resp)
 }
@@ -3188,12 +3146,12 @@ func (client *KeyVaultClient) mergeCertificateCreateRequest(ctx context.Context,
 }
 
 // mergeCertificateHandleResponse handles the MergeCertificate response.
-func (client *KeyVaultClient) mergeCertificateHandleResponse(resp *azcore.Response) (CertificateBundleResponse, error) {
-	var val *CertificateBundle
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return CertificateBundleResponse{}, err
+func (client *KeyVaultClient) mergeCertificateHandleResponse(resp *azcore.Response) (KeyVaultClientMergeCertificateResponse, error) {
+	result := KeyVaultClientMergeCertificateResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.CertificateBundle); err != nil {
+		return KeyVaultClientMergeCertificateResponse{}, err
 	}
-	return CertificateBundleResponse{RawResponse: resp.Response, CertificateBundle: val}, nil
+	return result, nil
 }
 
 // mergeCertificateHandleError handles the MergeCertificate error response.
@@ -3213,19 +3171,19 @@ func (client *KeyVaultClient) mergeCertificateHandleError(resp *azcore.Response)
 // recovery. The operation is not available if the recovery level does not
 // specify 'Purgeable'. This operation requires the certificate/purge permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) PurgeDeletedCertificate(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientPurgeDeletedCertificateOptions) (*http.Response, error) {
+func (client *KeyVaultClient) PurgeDeletedCertificate(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientPurgeDeletedCertificateOptions) (KeyVaultClientPurgeDeletedCertificateResponse, error) {
 	req, err := client.purgeDeletedCertificateCreateRequest(ctx, vaultBaseURL, certificateName, options)
 	if err != nil {
-		return nil, err
+		return KeyVaultClientPurgeDeletedCertificateResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return KeyVaultClientPurgeDeletedCertificateResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusNoContent) {
-		return nil, client.purgeDeletedCertificateHandleError(resp)
+		return KeyVaultClientPurgeDeletedCertificateResponse{}, client.purgeDeletedCertificateHandleError(resp)
 	}
-	return resp.Response, nil
+	return KeyVaultClientPurgeDeletedCertificateResponse{RawResponse: resp.Response}, nil
 }
 
 // purgeDeletedCertificateCreateRequest creates the PurgeDeletedCertificate request.
@@ -3266,19 +3224,19 @@ func (client *KeyVaultClient) purgeDeletedCertificateHandleError(resp *azcore.Re
 // return an error if invoked on a non soft-delete enabled vault.
 // This operation requires the keys/purge permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) PurgeDeletedKey(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientPurgeDeletedKeyOptions) (*http.Response, error) {
+func (client *KeyVaultClient) PurgeDeletedKey(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientPurgeDeletedKeyOptions) (KeyVaultClientPurgeDeletedKeyResponse, error) {
 	req, err := client.purgeDeletedKeyCreateRequest(ctx, vaultBaseURL, keyName, options)
 	if err != nil {
-		return nil, err
+		return KeyVaultClientPurgeDeletedKeyResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return KeyVaultClientPurgeDeletedKeyResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusNoContent) {
-		return nil, client.purgeDeletedKeyHandleError(resp)
+		return KeyVaultClientPurgeDeletedKeyResponse{}, client.purgeDeletedKeyHandleError(resp)
 	}
-	return resp.Response, nil
+	return KeyVaultClientPurgeDeletedKeyResponse{RawResponse: resp.Response}, nil
 }
 
 // purgeDeletedKeyCreateRequest creates the PurgeDeletedKey request.
@@ -3319,19 +3277,19 @@ func (client *KeyVaultClient) purgeDeletedKeyHandleError(resp *azcore.Response) 
 // be enabled on a soft-delete enabled vault. This operation requires the
 // secrets/purge permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) PurgeDeletedSecret(ctx context.Context, vaultBaseURL string, secretName string, options *KeyVaultClientPurgeDeletedSecretOptions) (*http.Response, error) {
+func (client *KeyVaultClient) PurgeDeletedSecret(ctx context.Context, vaultBaseURL string, secretName string, options *KeyVaultClientPurgeDeletedSecretOptions) (KeyVaultClientPurgeDeletedSecretResponse, error) {
 	req, err := client.purgeDeletedSecretCreateRequest(ctx, vaultBaseURL, secretName, options)
 	if err != nil {
-		return nil, err
+		return KeyVaultClientPurgeDeletedSecretResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return KeyVaultClientPurgeDeletedSecretResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusNoContent) {
-		return nil, client.purgeDeletedSecretHandleError(resp)
+		return KeyVaultClientPurgeDeletedSecretResponse{}, client.purgeDeletedSecretHandleError(resp)
 	}
-	return resp.Response, nil
+	return KeyVaultClientPurgeDeletedSecretResponse{RawResponse: resp.Response}, nil
 }
 
 // purgeDeletedSecretCreateRequest creates the PurgeDeletedSecret request.
@@ -3372,19 +3330,19 @@ func (client *KeyVaultClient) purgeDeletedSecretHandleError(resp *azcore.Respons
 // can only be performed on a soft-delete enabled vault. This operation
 // requires the storage/purge permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) PurgeDeletedStorageAccount(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientPurgeDeletedStorageAccountOptions) (*http.Response, error) {
+func (client *KeyVaultClient) PurgeDeletedStorageAccount(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientPurgeDeletedStorageAccountOptions) (KeyVaultClientPurgeDeletedStorageAccountResponse, error) {
 	req, err := client.purgeDeletedStorageAccountCreateRequest(ctx, vaultBaseURL, storageAccountName, options)
 	if err != nil {
-		return nil, err
+		return KeyVaultClientPurgeDeletedStorageAccountResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return KeyVaultClientPurgeDeletedStorageAccountResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusNoContent) {
-		return nil, client.purgeDeletedStorageAccountHandleError(resp)
+		return KeyVaultClientPurgeDeletedStorageAccountResponse{}, client.purgeDeletedStorageAccountHandleError(resp)
 	}
-	return resp.Response, nil
+	return KeyVaultClientPurgeDeletedStorageAccountResponse{RawResponse: resp.Response}, nil
 }
 
 // purgeDeletedStorageAccountCreateRequest creates the PurgeDeletedStorageAccount request.
@@ -3425,17 +3383,17 @@ func (client *KeyVaultClient) purgeDeletedStorageAccountHandleError(resp *azcore
 // enabled for soft-delete, and must be issued during the retention interval
 // (available in the deleted certificate's attributes). This operation requires the certificates/recover permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) RecoverDeletedCertificate(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientRecoverDeletedCertificateOptions) (CertificateBundleResponse, error) {
+func (client *KeyVaultClient) RecoverDeletedCertificate(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientRecoverDeletedCertificateOptions) (KeyVaultClientRecoverDeletedCertificateResponse, error) {
 	req, err := client.recoverDeletedCertificateCreateRequest(ctx, vaultBaseURL, certificateName, options)
 	if err != nil {
-		return CertificateBundleResponse{}, err
+		return KeyVaultClientRecoverDeletedCertificateResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return CertificateBundleResponse{}, err
+		return KeyVaultClientRecoverDeletedCertificateResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return CertificateBundleResponse{}, client.recoverDeletedCertificateHandleError(resp)
+		return KeyVaultClientRecoverDeletedCertificateResponse{}, client.recoverDeletedCertificateHandleError(resp)
 	}
 	return client.recoverDeletedCertificateHandleResponse(resp)
 }
@@ -3462,12 +3420,12 @@ func (client *KeyVaultClient) recoverDeletedCertificateCreateRequest(ctx context
 }
 
 // recoverDeletedCertificateHandleResponse handles the RecoverDeletedCertificate response.
-func (client *KeyVaultClient) recoverDeletedCertificateHandleResponse(resp *azcore.Response) (CertificateBundleResponse, error) {
-	var val *CertificateBundle
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return CertificateBundleResponse{}, err
+func (client *KeyVaultClient) recoverDeletedCertificateHandleResponse(resp *azcore.Response) (KeyVaultClientRecoverDeletedCertificateResponse, error) {
+	result := KeyVaultClientRecoverDeletedCertificateResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.CertificateBundle); err != nil {
+		return KeyVaultClientRecoverDeletedCertificateResponse{}, err
 	}
-	return CertificateBundleResponse{RawResponse: resp.Response, CertificateBundle: val}, nil
+	return result, nil
 }
 
 // recoverDeletedCertificateHandleError handles the RecoverDeletedCertificate error response.
@@ -3487,17 +3445,17 @@ func (client *KeyVaultClient) recoverDeletedCertificateHandleError(resp *azcore.
 // to its latest version under /keys. An attempt to recover an non-deleted
 // key will return an error. Consider this the inverse of the delete operation on soft-delete enabled vaults. This operation requires the keys/recover permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) RecoverDeletedKey(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientRecoverDeletedKeyOptions) (KeyBundleResponse, error) {
+func (client *KeyVaultClient) RecoverDeletedKey(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientRecoverDeletedKeyOptions) (KeyVaultClientRecoverDeletedKeyResponse, error) {
 	req, err := client.recoverDeletedKeyCreateRequest(ctx, vaultBaseURL, keyName, options)
 	if err != nil {
-		return KeyBundleResponse{}, err
+		return KeyVaultClientRecoverDeletedKeyResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return KeyBundleResponse{}, err
+		return KeyVaultClientRecoverDeletedKeyResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return KeyBundleResponse{}, client.recoverDeletedKeyHandleError(resp)
+		return KeyVaultClientRecoverDeletedKeyResponse{}, client.recoverDeletedKeyHandleError(resp)
 	}
 	return client.recoverDeletedKeyHandleResponse(resp)
 }
@@ -3524,12 +3482,12 @@ func (client *KeyVaultClient) recoverDeletedKeyCreateRequest(ctx context.Context
 }
 
 // recoverDeletedKeyHandleResponse handles the RecoverDeletedKey response.
-func (client *KeyVaultClient) recoverDeletedKeyHandleResponse(resp *azcore.Response) (KeyBundleResponse, error) {
-	var val *KeyBundle
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return KeyBundleResponse{}, err
+func (client *KeyVaultClient) recoverDeletedKeyHandleResponse(resp *azcore.Response) (KeyVaultClientRecoverDeletedKeyResponse, error) {
+	result := KeyVaultClientRecoverDeletedKeyResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.KeyBundle); err != nil {
+		return KeyVaultClientRecoverDeletedKeyResponse{}, err
 	}
-	return KeyBundleResponse{RawResponse: resp.Response, KeyBundle: val}, nil
+	return result, nil
 }
 
 // recoverDeletedKeyHandleError handles the RecoverDeletedKey error response.
@@ -3548,17 +3506,17 @@ func (client *KeyVaultClient) recoverDeletedKeyHandleError(resp *azcore.Response
 // RecoverDeletedSasDefinition - Recovers the deleted SAS definition for the specified storage account. This operation can only be performed on a soft-delete
 // enabled vault. This operation requires the storage/recover permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) RecoverDeletedSasDefinition(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, options *KeyVaultClientRecoverDeletedSasDefinitionOptions) (SasDefinitionBundleResponse, error) {
+func (client *KeyVaultClient) RecoverDeletedSasDefinition(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, options *KeyVaultClientRecoverDeletedSasDefinitionOptions) (KeyVaultClientRecoverDeletedSasDefinitionResponse, error) {
 	req, err := client.recoverDeletedSasDefinitionCreateRequest(ctx, vaultBaseURL, storageAccountName, sasDefinitionName, options)
 	if err != nil {
-		return SasDefinitionBundleResponse{}, err
+		return KeyVaultClientRecoverDeletedSasDefinitionResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return SasDefinitionBundleResponse{}, err
+		return KeyVaultClientRecoverDeletedSasDefinitionResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return SasDefinitionBundleResponse{}, client.recoverDeletedSasDefinitionHandleError(resp)
+		return KeyVaultClientRecoverDeletedSasDefinitionResponse{}, client.recoverDeletedSasDefinitionHandleError(resp)
 	}
 	return client.recoverDeletedSasDefinitionHandleResponse(resp)
 }
@@ -3589,12 +3547,12 @@ func (client *KeyVaultClient) recoverDeletedSasDefinitionCreateRequest(ctx conte
 }
 
 // recoverDeletedSasDefinitionHandleResponse handles the RecoverDeletedSasDefinition response.
-func (client *KeyVaultClient) recoverDeletedSasDefinitionHandleResponse(resp *azcore.Response) (SasDefinitionBundleResponse, error) {
-	var val *SasDefinitionBundle
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return SasDefinitionBundleResponse{}, err
+func (client *KeyVaultClient) recoverDeletedSasDefinitionHandleResponse(resp *azcore.Response) (KeyVaultClientRecoverDeletedSasDefinitionResponse, error) {
+	result := KeyVaultClientRecoverDeletedSasDefinitionResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.SasDefinitionBundle); err != nil {
+		return KeyVaultClientRecoverDeletedSasDefinitionResponse{}, err
 	}
-	return SasDefinitionBundleResponse{RawResponse: resp.Response, SasDefinitionBundle: val}, nil
+	return result, nil
 }
 
 // recoverDeletedSasDefinitionHandleError handles the RecoverDeletedSasDefinition error response.
@@ -3613,17 +3571,17 @@ func (client *KeyVaultClient) recoverDeletedSasDefinitionHandleError(resp *azcor
 // RecoverDeletedSecret - Recovers the deleted secret in the specified vault. This operation can only be performed on a soft-delete enabled vault. This
 // operation requires the secrets/recover permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) RecoverDeletedSecret(ctx context.Context, vaultBaseURL string, secretName string, options *KeyVaultClientRecoverDeletedSecretOptions) (SecretBundleResponse, error) {
+func (client *KeyVaultClient) RecoverDeletedSecret(ctx context.Context, vaultBaseURL string, secretName string, options *KeyVaultClientRecoverDeletedSecretOptions) (KeyVaultClientRecoverDeletedSecretResponse, error) {
 	req, err := client.recoverDeletedSecretCreateRequest(ctx, vaultBaseURL, secretName, options)
 	if err != nil {
-		return SecretBundleResponse{}, err
+		return KeyVaultClientRecoverDeletedSecretResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return SecretBundleResponse{}, err
+		return KeyVaultClientRecoverDeletedSecretResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return SecretBundleResponse{}, client.recoverDeletedSecretHandleError(resp)
+		return KeyVaultClientRecoverDeletedSecretResponse{}, client.recoverDeletedSecretHandleError(resp)
 	}
 	return client.recoverDeletedSecretHandleResponse(resp)
 }
@@ -3650,12 +3608,12 @@ func (client *KeyVaultClient) recoverDeletedSecretCreateRequest(ctx context.Cont
 }
 
 // recoverDeletedSecretHandleResponse handles the RecoverDeletedSecret response.
-func (client *KeyVaultClient) recoverDeletedSecretHandleResponse(resp *azcore.Response) (SecretBundleResponse, error) {
-	var val *SecretBundle
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return SecretBundleResponse{}, err
+func (client *KeyVaultClient) recoverDeletedSecretHandleResponse(resp *azcore.Response) (KeyVaultClientRecoverDeletedSecretResponse, error) {
+	result := KeyVaultClientRecoverDeletedSecretResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.SecretBundle); err != nil {
+		return KeyVaultClientRecoverDeletedSecretResponse{}, err
 	}
-	return SecretBundleResponse{RawResponse: resp.Response, SecretBundle: val}, nil
+	return result, nil
 }
 
 // recoverDeletedSecretHandleError handles the RecoverDeletedSecret error response.
@@ -3674,17 +3632,17 @@ func (client *KeyVaultClient) recoverDeletedSecretHandleError(resp *azcore.Respo
 // RecoverDeletedStorageAccount - Recovers the deleted storage account in the specified vault. This operation can only be performed on a soft-delete enabled
 // vault. This operation requires the storage/recover permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) RecoverDeletedStorageAccount(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientRecoverDeletedStorageAccountOptions) (StorageBundleResponse, error) {
+func (client *KeyVaultClient) RecoverDeletedStorageAccount(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientRecoverDeletedStorageAccountOptions) (KeyVaultClientRecoverDeletedStorageAccountResponse, error) {
 	req, err := client.recoverDeletedStorageAccountCreateRequest(ctx, vaultBaseURL, storageAccountName, options)
 	if err != nil {
-		return StorageBundleResponse{}, err
+		return KeyVaultClientRecoverDeletedStorageAccountResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return StorageBundleResponse{}, err
+		return KeyVaultClientRecoverDeletedStorageAccountResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return StorageBundleResponse{}, client.recoverDeletedStorageAccountHandleError(resp)
+		return KeyVaultClientRecoverDeletedStorageAccountResponse{}, client.recoverDeletedStorageAccountHandleError(resp)
 	}
 	return client.recoverDeletedStorageAccountHandleResponse(resp)
 }
@@ -3711,12 +3669,12 @@ func (client *KeyVaultClient) recoverDeletedStorageAccountCreateRequest(ctx cont
 }
 
 // recoverDeletedStorageAccountHandleResponse handles the RecoverDeletedStorageAccount response.
-func (client *KeyVaultClient) recoverDeletedStorageAccountHandleResponse(resp *azcore.Response) (StorageBundleResponse, error) {
-	var val *StorageBundle
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return StorageBundleResponse{}, err
+func (client *KeyVaultClient) recoverDeletedStorageAccountHandleResponse(resp *azcore.Response) (KeyVaultClientRecoverDeletedStorageAccountResponse, error) {
+	result := KeyVaultClientRecoverDeletedStorageAccountResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.StorageBundle); err != nil {
+		return KeyVaultClientRecoverDeletedStorageAccountResponse{}, err
 	}
-	return StorageBundleResponse{RawResponse: resp.Response, StorageBundle: val}, nil
+	return result, nil
 }
 
 // recoverDeletedStorageAccountHandleError handles the RecoverDeletedStorageAccount error response.
@@ -3734,17 +3692,17 @@ func (client *KeyVaultClient) recoverDeletedStorageAccountHandleError(resp *azco
 
 // RegenerateStorageAccountKey - Regenerates the specified key value for the given storage account. This operation requires the storage/regeneratekey permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) RegenerateStorageAccountKey(ctx context.Context, vaultBaseURL string, storageAccountName string, parameters StorageAccountRegenerteKeyParameters, options *KeyVaultClientRegenerateStorageAccountKeyOptions) (StorageBundleResponse, error) {
+func (client *KeyVaultClient) RegenerateStorageAccountKey(ctx context.Context, vaultBaseURL string, storageAccountName string, parameters StorageAccountRegenerteKeyParameters, options *KeyVaultClientRegenerateStorageAccountKeyOptions) (KeyVaultClientRegenerateStorageAccountKeyResponse, error) {
 	req, err := client.regenerateStorageAccountKeyCreateRequest(ctx, vaultBaseURL, storageAccountName, parameters, options)
 	if err != nil {
-		return StorageBundleResponse{}, err
+		return KeyVaultClientRegenerateStorageAccountKeyResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return StorageBundleResponse{}, err
+		return KeyVaultClientRegenerateStorageAccountKeyResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return StorageBundleResponse{}, client.regenerateStorageAccountKeyHandleError(resp)
+		return KeyVaultClientRegenerateStorageAccountKeyResponse{}, client.regenerateStorageAccountKeyHandleError(resp)
 	}
 	return client.regenerateStorageAccountKeyHandleResponse(resp)
 }
@@ -3771,12 +3729,12 @@ func (client *KeyVaultClient) regenerateStorageAccountKeyCreateRequest(ctx conte
 }
 
 // regenerateStorageAccountKeyHandleResponse handles the RegenerateStorageAccountKey response.
-func (client *KeyVaultClient) regenerateStorageAccountKeyHandleResponse(resp *azcore.Response) (StorageBundleResponse, error) {
-	var val *StorageBundle
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return StorageBundleResponse{}, err
+func (client *KeyVaultClient) regenerateStorageAccountKeyHandleResponse(resp *azcore.Response) (KeyVaultClientRegenerateStorageAccountKeyResponse, error) {
+	result := KeyVaultClientRegenerateStorageAccountKeyResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.StorageBundle); err != nil {
+		return KeyVaultClientRegenerateStorageAccountKeyResponse{}, err
 	}
-	return StorageBundleResponse{RawResponse: resp.Response, StorageBundle: val}, nil
+	return result, nil
 }
 
 // regenerateStorageAccountKeyHandleError handles the RegenerateStorageAccountKey error response.
@@ -3794,17 +3752,17 @@ func (client *KeyVaultClient) regenerateStorageAccountKeyHandleError(resp *azcor
 
 // RestoreCertificate - Restores a backed up certificate, and all its versions, to a vault. This operation requires the certificates/restore permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) RestoreCertificate(ctx context.Context, vaultBaseURL string, parameters CertificateRestoreParameters, options *KeyVaultClientRestoreCertificateOptions) (CertificateBundleResponse, error) {
+func (client *KeyVaultClient) RestoreCertificate(ctx context.Context, vaultBaseURL string, parameters CertificateRestoreParameters, options *KeyVaultClientRestoreCertificateOptions) (KeyVaultClientRestoreCertificateResponse, error) {
 	req, err := client.restoreCertificateCreateRequest(ctx, vaultBaseURL, parameters, options)
 	if err != nil {
-		return CertificateBundleResponse{}, err
+		return KeyVaultClientRestoreCertificateResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return CertificateBundleResponse{}, err
+		return KeyVaultClientRestoreCertificateResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return CertificateBundleResponse{}, client.restoreCertificateHandleError(resp)
+		return KeyVaultClientRestoreCertificateResponse{}, client.restoreCertificateHandleError(resp)
 	}
 	return client.restoreCertificateHandleResponse(resp)
 }
@@ -3827,12 +3785,12 @@ func (client *KeyVaultClient) restoreCertificateCreateRequest(ctx context.Contex
 }
 
 // restoreCertificateHandleResponse handles the RestoreCertificate response.
-func (client *KeyVaultClient) restoreCertificateHandleResponse(resp *azcore.Response) (CertificateBundleResponse, error) {
-	var val *CertificateBundle
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return CertificateBundleResponse{}, err
+func (client *KeyVaultClient) restoreCertificateHandleResponse(resp *azcore.Response) (KeyVaultClientRestoreCertificateResponse, error) {
+	result := KeyVaultClientRestoreCertificateResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.CertificateBundle); err != nil {
+		return KeyVaultClientRestoreCertificateResponse{}, err
 	}
-	return CertificateBundleResponse{RawResponse: resp.Response, CertificateBundle: val}, nil
+	return result, nil
 }
 
 // restoreCertificateHandleError handles the RestoreCertificate error response.
@@ -3858,17 +3816,17 @@ func (client *KeyVaultClient) restoreCertificateHandleError(resp *azcore.Respons
 // Azure Subscription as the source Key Vault
 // The user must have RESTORE permission in the target Key Vault. This operation requires the keys/restore permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) RestoreKey(ctx context.Context, vaultBaseURL string, parameters KeyRestoreParameters, options *KeyVaultClientRestoreKeyOptions) (KeyBundleResponse, error) {
+func (client *KeyVaultClient) RestoreKey(ctx context.Context, vaultBaseURL string, parameters KeyRestoreParameters, options *KeyVaultClientRestoreKeyOptions) (KeyVaultClientRestoreKeyResponse, error) {
 	req, err := client.restoreKeyCreateRequest(ctx, vaultBaseURL, parameters, options)
 	if err != nil {
-		return KeyBundleResponse{}, err
+		return KeyVaultClientRestoreKeyResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return KeyBundleResponse{}, err
+		return KeyVaultClientRestoreKeyResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return KeyBundleResponse{}, client.restoreKeyHandleError(resp)
+		return KeyVaultClientRestoreKeyResponse{}, client.restoreKeyHandleError(resp)
 	}
 	return client.restoreKeyHandleResponse(resp)
 }
@@ -3891,12 +3849,12 @@ func (client *KeyVaultClient) restoreKeyCreateRequest(ctx context.Context, vault
 }
 
 // restoreKeyHandleResponse handles the RestoreKey response.
-func (client *KeyVaultClient) restoreKeyHandleResponse(resp *azcore.Response) (KeyBundleResponse, error) {
-	var val *KeyBundle
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return KeyBundleResponse{}, err
+func (client *KeyVaultClient) restoreKeyHandleResponse(resp *azcore.Response) (KeyVaultClientRestoreKeyResponse, error) {
+	result := KeyVaultClientRestoreKeyResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.KeyBundle); err != nil {
+		return KeyVaultClientRestoreKeyResponse{}, err
 	}
-	return KeyBundleResponse{RawResponse: resp.Response, KeyBundle: val}, nil
+	return result, nil
 }
 
 // restoreKeyHandleError handles the RestoreKey error response.
@@ -3914,17 +3872,17 @@ func (client *KeyVaultClient) restoreKeyHandleError(resp *azcore.Response) error
 
 // RestoreSecret - Restores a backed up secret, and all its versions, to a vault. This operation requires the secrets/restore permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) RestoreSecret(ctx context.Context, vaultBaseURL string, parameters SecretRestoreParameters, options *KeyVaultClientRestoreSecretOptions) (SecretBundleResponse, error) {
+func (client *KeyVaultClient) RestoreSecret(ctx context.Context, vaultBaseURL string, parameters SecretRestoreParameters, options *KeyVaultClientRestoreSecretOptions) (KeyVaultClientRestoreSecretResponse, error) {
 	req, err := client.restoreSecretCreateRequest(ctx, vaultBaseURL, parameters, options)
 	if err != nil {
-		return SecretBundleResponse{}, err
+		return KeyVaultClientRestoreSecretResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return SecretBundleResponse{}, err
+		return KeyVaultClientRestoreSecretResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return SecretBundleResponse{}, client.restoreSecretHandleError(resp)
+		return KeyVaultClientRestoreSecretResponse{}, client.restoreSecretHandleError(resp)
 	}
 	return client.restoreSecretHandleResponse(resp)
 }
@@ -3947,12 +3905,12 @@ func (client *KeyVaultClient) restoreSecretCreateRequest(ctx context.Context, va
 }
 
 // restoreSecretHandleResponse handles the RestoreSecret response.
-func (client *KeyVaultClient) restoreSecretHandleResponse(resp *azcore.Response) (SecretBundleResponse, error) {
-	var val *SecretBundle
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return SecretBundleResponse{}, err
+func (client *KeyVaultClient) restoreSecretHandleResponse(resp *azcore.Response) (KeyVaultClientRestoreSecretResponse, error) {
+	result := KeyVaultClientRestoreSecretResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.SecretBundle); err != nil {
+		return KeyVaultClientRestoreSecretResponse{}, err
 	}
-	return SecretBundleResponse{RawResponse: resp.Response, SecretBundle: val}, nil
+	return result, nil
 }
 
 // restoreSecretHandleError handles the RestoreSecret error response.
@@ -3970,17 +3928,17 @@ func (client *KeyVaultClient) restoreSecretHandleError(resp *azcore.Response) er
 
 // RestoreStatus - Returns the status of restore operation
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) RestoreStatus(ctx context.Context, vaultBaseURL string, jobID string, options *KeyVaultClientRestoreStatusOptions) (RestoreOperationResponse, error) {
+func (client *KeyVaultClient) RestoreStatus(ctx context.Context, vaultBaseURL string, jobID string, options *KeyVaultClientRestoreStatusOptions) (KeyVaultClientRestoreStatusResponse, error) {
 	req, err := client.restoreStatusCreateRequest(ctx, vaultBaseURL, jobID, options)
 	if err != nil {
-		return RestoreOperationResponse{}, err
+		return KeyVaultClientRestoreStatusResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return RestoreOperationResponse{}, err
+		return KeyVaultClientRestoreStatusResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return RestoreOperationResponse{}, client.restoreStatusHandleError(resp)
+		return KeyVaultClientRestoreStatusResponse{}, client.restoreStatusHandleError(resp)
 	}
 	return client.restoreStatusHandleResponse(resp)
 }
@@ -4007,12 +3965,12 @@ func (client *KeyVaultClient) restoreStatusCreateRequest(ctx context.Context, va
 }
 
 // restoreStatusHandleResponse handles the RestoreStatus response.
-func (client *KeyVaultClient) restoreStatusHandleResponse(resp *azcore.Response) (RestoreOperationResponse, error) {
-	var val *RestoreOperation
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return RestoreOperationResponse{}, err
+func (client *KeyVaultClient) restoreStatusHandleResponse(resp *azcore.Response) (KeyVaultClientRestoreStatusResponse, error) {
+	result := KeyVaultClientRestoreStatusResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.RestoreOperation); err != nil {
+		return KeyVaultClientRestoreStatusResponse{}, err
 	}
-	return RestoreOperationResponse{RawResponse: resp.Response, RestoreOperation: val}, nil
+	return result, nil
 }
 
 // restoreStatusHandleError handles the RestoreStatus error response.
@@ -4030,17 +3988,17 @@ func (client *KeyVaultClient) restoreStatusHandleError(resp *azcore.Response) er
 
 // RestoreStorageAccount - Restores a backed up storage account to a vault. This operation requires the storage/restore permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) RestoreStorageAccount(ctx context.Context, vaultBaseURL string, parameters StorageRestoreParameters, options *KeyVaultClientRestoreStorageAccountOptions) (StorageBundleResponse, error) {
+func (client *KeyVaultClient) RestoreStorageAccount(ctx context.Context, vaultBaseURL string, parameters StorageRestoreParameters, options *KeyVaultClientRestoreStorageAccountOptions) (KeyVaultClientRestoreStorageAccountResponse, error) {
 	req, err := client.restoreStorageAccountCreateRequest(ctx, vaultBaseURL, parameters, options)
 	if err != nil {
-		return StorageBundleResponse{}, err
+		return KeyVaultClientRestoreStorageAccountResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return StorageBundleResponse{}, err
+		return KeyVaultClientRestoreStorageAccountResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return StorageBundleResponse{}, client.restoreStorageAccountHandleError(resp)
+		return KeyVaultClientRestoreStorageAccountResponse{}, client.restoreStorageAccountHandleError(resp)
 	}
 	return client.restoreStorageAccountHandleResponse(resp)
 }
@@ -4063,12 +4021,12 @@ func (client *KeyVaultClient) restoreStorageAccountCreateRequest(ctx context.Con
 }
 
 // restoreStorageAccountHandleResponse handles the RestoreStorageAccount response.
-func (client *KeyVaultClient) restoreStorageAccountHandleResponse(resp *azcore.Response) (StorageBundleResponse, error) {
-	var val *StorageBundle
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return StorageBundleResponse{}, err
+func (client *KeyVaultClient) restoreStorageAccountHandleResponse(resp *azcore.Response) (KeyVaultClientRestoreStorageAccountResponse, error) {
+	result := KeyVaultClientRestoreStorageAccountResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.StorageBundle); err != nil {
+		return KeyVaultClientRestoreStorageAccountResponse{}, err
 	}
-	return StorageBundleResponse{RawResponse: resp.Response, StorageBundle: val}, nil
+	return result, nil
 }
 
 // restoreStorageAccountHandleError handles the RestoreStorageAccount error response.
@@ -4087,47 +4045,47 @@ func (client *KeyVaultClient) restoreStorageAccountHandleError(resp *azcore.Resp
 // BeginSelectiveKeyRestoreOperation - Restores all key versions of a given key using user supplied SAS token pointing to a previously stored Azure Blob
 // storage backup folder
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) BeginSelectiveKeyRestoreOperation(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientBeginSelectiveKeyRestoreOperationOptions) (SelectiveKeyRestoreOperationPollerResponse, error) {
+func (client *KeyVaultClient) BeginSelectiveKeyRestoreOperation(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientBeginSelectiveKeyRestoreOperationOptions) (KeyVaultClientSelectiveKeyRestoreOperationPollerResponse, error) {
 	resp, err := client.selectiveKeyRestoreOperation(ctx, vaultBaseURL, keyName, options)
 	if err != nil {
-		return SelectiveKeyRestoreOperationPollerResponse{}, err
+		return KeyVaultClientSelectiveKeyRestoreOperationPollerResponse{}, err
 	}
-	result := SelectiveKeyRestoreOperationPollerResponse{
+	result := KeyVaultClientSelectiveKeyRestoreOperationPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := azcore.NewLROPoller("KeyVaultClient.SelectiveKeyRestoreOperation", resp, client.con.Pipeline(), client.selectiveKeyRestoreOperationHandleError)
 	if err != nil {
-		return SelectiveKeyRestoreOperationPollerResponse{}, err
+		return KeyVaultClientSelectiveKeyRestoreOperationPollerResponse{}, err
 	}
-	poller := &selectiveKeyRestoreOperationPoller{
+	poller := &keyVaultClientSelectiveKeyRestoreOperationPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SelectiveKeyRestoreOperationResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (KeyVaultClientSelectiveKeyRestoreOperationResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeSelectiveKeyRestoreOperation creates a new SelectiveKeyRestoreOperationPoller from the specified resume token.
-// token - The value must come from a previous call to SelectiveKeyRestoreOperationPoller.ResumeToken().
-func (client *KeyVaultClient) ResumeSelectiveKeyRestoreOperation(ctx context.Context, token string) (SelectiveKeyRestoreOperationPollerResponse, error) {
+// ResumeSelectiveKeyRestoreOperation creates a new KeyVaultClientSelectiveKeyRestoreOperationPoller from the specified resume token.
+// token - The value must come from a previous call to KeyVaultClientSelectiveKeyRestoreOperationPoller.ResumeToken().
+func (client *KeyVaultClient) ResumeSelectiveKeyRestoreOperation(ctx context.Context, token string) (KeyVaultClientSelectiveKeyRestoreOperationPollerResponse, error) {
 	pt, err := azcore.NewLROPollerFromResumeToken("KeyVaultClient.SelectiveKeyRestoreOperation", token, client.con.Pipeline(), client.selectiveKeyRestoreOperationHandleError)
 	if err != nil {
-		return SelectiveKeyRestoreOperationPollerResponse{}, err
+		return KeyVaultClientSelectiveKeyRestoreOperationPollerResponse{}, err
 	}
-	poller := &selectiveKeyRestoreOperationPoller{
+	poller := &keyVaultClientSelectiveKeyRestoreOperationPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return SelectiveKeyRestoreOperationPollerResponse{}, err
+		return KeyVaultClientSelectiveKeyRestoreOperationPollerResponse{}, err
 	}
-	result := SelectiveKeyRestoreOperationPollerResponse{
+	result := KeyVaultClientSelectiveKeyRestoreOperationPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SelectiveKeyRestoreOperationResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (KeyVaultClientSelectiveKeyRestoreOperationResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -4190,17 +4148,17 @@ func (client *KeyVaultClient) selectiveKeyRestoreOperationHandleError(resp *azco
 
 // SetCertificateContacts - Sets the certificate contacts for the specified key vault. This operation requires the certificates/managecontacts permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) SetCertificateContacts(ctx context.Context, vaultBaseURL string, contacts Contacts, options *KeyVaultClientSetCertificateContactsOptions) (ContactsResponse, error) {
+func (client *KeyVaultClient) SetCertificateContacts(ctx context.Context, vaultBaseURL string, contacts Contacts, options *KeyVaultClientSetCertificateContactsOptions) (KeyVaultClientSetCertificateContactsResponse, error) {
 	req, err := client.setCertificateContactsCreateRequest(ctx, vaultBaseURL, contacts, options)
 	if err != nil {
-		return ContactsResponse{}, err
+		return KeyVaultClientSetCertificateContactsResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return ContactsResponse{}, err
+		return KeyVaultClientSetCertificateContactsResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return ContactsResponse{}, client.setCertificateContactsHandleError(resp)
+		return KeyVaultClientSetCertificateContactsResponse{}, client.setCertificateContactsHandleError(resp)
 	}
 	return client.setCertificateContactsHandleResponse(resp)
 }
@@ -4223,12 +4181,12 @@ func (client *KeyVaultClient) setCertificateContactsCreateRequest(ctx context.Co
 }
 
 // setCertificateContactsHandleResponse handles the SetCertificateContacts response.
-func (client *KeyVaultClient) setCertificateContactsHandleResponse(resp *azcore.Response) (ContactsResponse, error) {
-	var val *Contacts
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ContactsResponse{}, err
+func (client *KeyVaultClient) setCertificateContactsHandleResponse(resp *azcore.Response) (KeyVaultClientSetCertificateContactsResponse, error) {
+	result := KeyVaultClientSetCertificateContactsResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.Contacts); err != nil {
+		return KeyVaultClientSetCertificateContactsResponse{}, err
 	}
-	return ContactsResponse{RawResponse: resp.Response, Contacts: val}, nil
+	return result, nil
 }
 
 // setCertificateContactsHandleError handles the SetCertificateContacts error response.
@@ -4247,17 +4205,17 @@ func (client *KeyVaultClient) setCertificateContactsHandleError(resp *azcore.Res
 // SetCertificateIssuer - The SetCertificateIssuer operation adds or updates the specified certificate issuer. This operation requires the certificates/setissuers
 // permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) SetCertificateIssuer(ctx context.Context, vaultBaseURL string, issuerName string, parameter CertificateIssuerSetParameters, options *KeyVaultClientSetCertificateIssuerOptions) (IssuerBundleResponse, error) {
+func (client *KeyVaultClient) SetCertificateIssuer(ctx context.Context, vaultBaseURL string, issuerName string, parameter CertificateIssuerSetParameters, options *KeyVaultClientSetCertificateIssuerOptions) (KeyVaultClientSetCertificateIssuerResponse, error) {
 	req, err := client.setCertificateIssuerCreateRequest(ctx, vaultBaseURL, issuerName, parameter, options)
 	if err != nil {
-		return IssuerBundleResponse{}, err
+		return KeyVaultClientSetCertificateIssuerResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return IssuerBundleResponse{}, err
+		return KeyVaultClientSetCertificateIssuerResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return IssuerBundleResponse{}, client.setCertificateIssuerHandleError(resp)
+		return KeyVaultClientSetCertificateIssuerResponse{}, client.setCertificateIssuerHandleError(resp)
 	}
 	return client.setCertificateIssuerHandleResponse(resp)
 }
@@ -4284,12 +4242,12 @@ func (client *KeyVaultClient) setCertificateIssuerCreateRequest(ctx context.Cont
 }
 
 // setCertificateIssuerHandleResponse handles the SetCertificateIssuer response.
-func (client *KeyVaultClient) setCertificateIssuerHandleResponse(resp *azcore.Response) (IssuerBundleResponse, error) {
-	var val *IssuerBundle
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return IssuerBundleResponse{}, err
+func (client *KeyVaultClient) setCertificateIssuerHandleResponse(resp *azcore.Response) (KeyVaultClientSetCertificateIssuerResponse, error) {
+	result := KeyVaultClientSetCertificateIssuerResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.IssuerBundle); err != nil {
+		return KeyVaultClientSetCertificateIssuerResponse{}, err
 	}
-	return IssuerBundleResponse{RawResponse: resp.Response, IssuerBundle: val}, nil
+	return result, nil
 }
 
 // setCertificateIssuerHandleError handles the SetCertificateIssuer error response.
@@ -4307,17 +4265,17 @@ func (client *KeyVaultClient) setCertificateIssuerHandleError(resp *azcore.Respo
 
 // SetSasDefinition - Creates or updates a new SAS definition for the specified storage account. This operation requires the storage/setsas permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) SetSasDefinition(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, parameters SasDefinitionCreateParameters, options *KeyVaultClientSetSasDefinitionOptions) (SasDefinitionBundleResponse, error) {
+func (client *KeyVaultClient) SetSasDefinition(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, parameters SasDefinitionCreateParameters, options *KeyVaultClientSetSasDefinitionOptions) (KeyVaultClientSetSasDefinitionResponse, error) {
 	req, err := client.setSasDefinitionCreateRequest(ctx, vaultBaseURL, storageAccountName, sasDefinitionName, parameters, options)
 	if err != nil {
-		return SasDefinitionBundleResponse{}, err
+		return KeyVaultClientSetSasDefinitionResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return SasDefinitionBundleResponse{}, err
+		return KeyVaultClientSetSasDefinitionResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return SasDefinitionBundleResponse{}, client.setSasDefinitionHandleError(resp)
+		return KeyVaultClientSetSasDefinitionResponse{}, client.setSasDefinitionHandleError(resp)
 	}
 	return client.setSasDefinitionHandleResponse(resp)
 }
@@ -4348,12 +4306,12 @@ func (client *KeyVaultClient) setSasDefinitionCreateRequest(ctx context.Context,
 }
 
 // setSasDefinitionHandleResponse handles the SetSasDefinition response.
-func (client *KeyVaultClient) setSasDefinitionHandleResponse(resp *azcore.Response) (SasDefinitionBundleResponse, error) {
-	var val *SasDefinitionBundle
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return SasDefinitionBundleResponse{}, err
+func (client *KeyVaultClient) setSasDefinitionHandleResponse(resp *azcore.Response) (KeyVaultClientSetSasDefinitionResponse, error) {
+	result := KeyVaultClientSetSasDefinitionResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.SasDefinitionBundle); err != nil {
+		return KeyVaultClientSetSasDefinitionResponse{}, err
 	}
-	return SasDefinitionBundleResponse{RawResponse: resp.Response, SasDefinitionBundle: val}, nil
+	return result, nil
 }
 
 // setSasDefinitionHandleError handles the SetSasDefinition error response.
@@ -4372,17 +4330,17 @@ func (client *KeyVaultClient) setSasDefinitionHandleError(resp *azcore.Response)
 // SetSecret - The SET operation adds a secret to the Azure Key Vault. If the named secret already exists, Azure Key Vault creates a new version of that
 // secret. This operation requires the secrets/set permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) SetSecret(ctx context.Context, vaultBaseURL string, secretName string, parameters SecretSetParameters, options *KeyVaultClientSetSecretOptions) (SecretBundleResponse, error) {
+func (client *KeyVaultClient) SetSecret(ctx context.Context, vaultBaseURL string, secretName string, parameters SecretSetParameters, options *KeyVaultClientSetSecretOptions) (KeyVaultClientSetSecretResponse, error) {
 	req, err := client.setSecretCreateRequest(ctx, vaultBaseURL, secretName, parameters, options)
 	if err != nil {
-		return SecretBundleResponse{}, err
+		return KeyVaultClientSetSecretResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return SecretBundleResponse{}, err
+		return KeyVaultClientSetSecretResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return SecretBundleResponse{}, client.setSecretHandleError(resp)
+		return KeyVaultClientSetSecretResponse{}, client.setSecretHandleError(resp)
 	}
 	return client.setSecretHandleResponse(resp)
 }
@@ -4409,12 +4367,12 @@ func (client *KeyVaultClient) setSecretCreateRequest(ctx context.Context, vaultB
 }
 
 // setSecretHandleResponse handles the SetSecret response.
-func (client *KeyVaultClient) setSecretHandleResponse(resp *azcore.Response) (SecretBundleResponse, error) {
-	var val *SecretBundle
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return SecretBundleResponse{}, err
+func (client *KeyVaultClient) setSecretHandleResponse(resp *azcore.Response) (KeyVaultClientSetSecretResponse, error) {
+	result := KeyVaultClientSetSecretResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.SecretBundle); err != nil {
+		return KeyVaultClientSetSecretResponse{}, err
 	}
-	return SecretBundleResponse{RawResponse: resp.Response, SecretBundle: val}, nil
+	return result, nil
 }
 
 // setSecretHandleError handles the SetSecret error response.
@@ -4432,17 +4390,17 @@ func (client *KeyVaultClient) setSecretHandleError(resp *azcore.Response) error 
 
 // SetStorageAccount - Creates or updates a new storage account. This operation requires the storage/set permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) SetStorageAccount(ctx context.Context, vaultBaseURL string, storageAccountName string, parameters StorageAccountCreateParameters, options *KeyVaultClientSetStorageAccountOptions) (StorageBundleResponse, error) {
+func (client *KeyVaultClient) SetStorageAccount(ctx context.Context, vaultBaseURL string, storageAccountName string, parameters StorageAccountCreateParameters, options *KeyVaultClientSetStorageAccountOptions) (KeyVaultClientSetStorageAccountResponse, error) {
 	req, err := client.setStorageAccountCreateRequest(ctx, vaultBaseURL, storageAccountName, parameters, options)
 	if err != nil {
-		return StorageBundleResponse{}, err
+		return KeyVaultClientSetStorageAccountResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return StorageBundleResponse{}, err
+		return KeyVaultClientSetStorageAccountResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return StorageBundleResponse{}, client.setStorageAccountHandleError(resp)
+		return KeyVaultClientSetStorageAccountResponse{}, client.setStorageAccountHandleError(resp)
 	}
 	return client.setStorageAccountHandleResponse(resp)
 }
@@ -4469,12 +4427,12 @@ func (client *KeyVaultClient) setStorageAccountCreateRequest(ctx context.Context
 }
 
 // setStorageAccountHandleResponse handles the SetStorageAccount response.
-func (client *KeyVaultClient) setStorageAccountHandleResponse(resp *azcore.Response) (StorageBundleResponse, error) {
-	var val *StorageBundle
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return StorageBundleResponse{}, err
+func (client *KeyVaultClient) setStorageAccountHandleResponse(resp *azcore.Response) (KeyVaultClientSetStorageAccountResponse, error) {
+	result := KeyVaultClientSetStorageAccountResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.StorageBundle); err != nil {
+		return KeyVaultClientSetStorageAccountResponse{}, err
 	}
-	return StorageBundleResponse{RawResponse: resp.Response, StorageBundle: val}, nil
+	return result, nil
 }
 
 // setStorageAccountHandleError handles the SetStorageAccount error response.
@@ -4493,17 +4451,17 @@ func (client *KeyVaultClient) setStorageAccountHandleError(resp *azcore.Response
 // Sign - The SIGN operation is applicable to asymmetric and symmetric keys stored in Azure Key Vault since this operation uses the private portion of the
 // key. This operation requires the keys/sign permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) Sign(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeySignParameters, options *KeyVaultClientSignOptions) (KeyOperationResultResponse, error) {
+func (client *KeyVaultClient) Sign(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeySignParameters, options *KeyVaultClientSignOptions) (KeyVaultClientSignResponse, error) {
 	req, err := client.signCreateRequest(ctx, vaultBaseURL, keyName, keyVersion, parameters, options)
 	if err != nil {
-		return KeyOperationResultResponse{}, err
+		return KeyVaultClientSignResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return KeyOperationResultResponse{}, err
+		return KeyVaultClientSignResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return KeyOperationResultResponse{}, client.signHandleError(resp)
+		return KeyVaultClientSignResponse{}, client.signHandleError(resp)
 	}
 	return client.signHandleResponse(resp)
 }
@@ -4534,12 +4492,12 @@ func (client *KeyVaultClient) signCreateRequest(ctx context.Context, vaultBaseUR
 }
 
 // signHandleResponse handles the Sign response.
-func (client *KeyVaultClient) signHandleResponse(resp *azcore.Response) (KeyOperationResultResponse, error) {
-	var val *KeyOperationResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return KeyOperationResultResponse{}, err
+func (client *KeyVaultClient) signHandleResponse(resp *azcore.Response) (KeyVaultClientSignResponse, error) {
+	result := KeyVaultClientSignResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.KeyOperationResult); err != nil {
+		return KeyVaultClientSignResponse{}, err
 	}
-	return KeyOperationResultResponse{RawResponse: resp.Response, KeyOperationResult: val}, nil
+	return result, nil
 }
 
 // signHandleError handles the Sign error response.
@@ -4559,17 +4517,17 @@ func (client *KeyVaultClient) signHandleError(resp *azcore.Response) error {
 // operation. The UNWRAP operation applies to asymmetric and
 // symmetric keys stored in Azure Key Vault since it uses the private portion of the key. This operation requires the keys/unwrapKey permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) UnwrapKey(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyOperationsParameters, options *KeyVaultClientUnwrapKeyOptions) (KeyOperationResultResponse, error) {
+func (client *KeyVaultClient) UnwrapKey(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyOperationsParameters, options *KeyVaultClientUnwrapKeyOptions) (KeyVaultClientUnwrapKeyResponse, error) {
 	req, err := client.unwrapKeyCreateRequest(ctx, vaultBaseURL, keyName, keyVersion, parameters, options)
 	if err != nil {
-		return KeyOperationResultResponse{}, err
+		return KeyVaultClientUnwrapKeyResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return KeyOperationResultResponse{}, err
+		return KeyVaultClientUnwrapKeyResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return KeyOperationResultResponse{}, client.unwrapKeyHandleError(resp)
+		return KeyVaultClientUnwrapKeyResponse{}, client.unwrapKeyHandleError(resp)
 	}
 	return client.unwrapKeyHandleResponse(resp)
 }
@@ -4600,12 +4558,12 @@ func (client *KeyVaultClient) unwrapKeyCreateRequest(ctx context.Context, vaultB
 }
 
 // unwrapKeyHandleResponse handles the UnwrapKey response.
-func (client *KeyVaultClient) unwrapKeyHandleResponse(resp *azcore.Response) (KeyOperationResultResponse, error) {
-	var val *KeyOperationResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return KeyOperationResultResponse{}, err
+func (client *KeyVaultClient) unwrapKeyHandleResponse(resp *azcore.Response) (KeyVaultClientUnwrapKeyResponse, error) {
+	result := KeyVaultClientUnwrapKeyResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.KeyOperationResult); err != nil {
+		return KeyVaultClientUnwrapKeyResponse{}, err
 	}
-	return KeyOperationResultResponse{RawResponse: resp.Response, KeyOperationResult: val}, nil
+	return result, nil
 }
 
 // unwrapKeyHandleError handles the UnwrapKey error response.
@@ -4625,17 +4583,17 @@ func (client *KeyVaultClient) unwrapKeyHandleError(resp *azcore.Response) error 
 // attributes. This operation requires the certificates/update
 // permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) UpdateCertificate(ctx context.Context, vaultBaseURL string, certificateName string, certificateVersion string, parameters CertificateUpdateParameters, options *KeyVaultClientUpdateCertificateOptions) (CertificateBundleResponse, error) {
+func (client *KeyVaultClient) UpdateCertificate(ctx context.Context, vaultBaseURL string, certificateName string, certificateVersion string, parameters CertificateUpdateParameters, options *KeyVaultClientUpdateCertificateOptions) (KeyVaultClientUpdateCertificateResponse, error) {
 	req, err := client.updateCertificateCreateRequest(ctx, vaultBaseURL, certificateName, certificateVersion, parameters, options)
 	if err != nil {
-		return CertificateBundleResponse{}, err
+		return KeyVaultClientUpdateCertificateResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return CertificateBundleResponse{}, err
+		return KeyVaultClientUpdateCertificateResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return CertificateBundleResponse{}, client.updateCertificateHandleError(resp)
+		return KeyVaultClientUpdateCertificateResponse{}, client.updateCertificateHandleError(resp)
 	}
 	return client.updateCertificateHandleResponse(resp)
 }
@@ -4666,12 +4624,12 @@ func (client *KeyVaultClient) updateCertificateCreateRequest(ctx context.Context
 }
 
 // updateCertificateHandleResponse handles the UpdateCertificate response.
-func (client *KeyVaultClient) updateCertificateHandleResponse(resp *azcore.Response) (CertificateBundleResponse, error) {
-	var val *CertificateBundle
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return CertificateBundleResponse{}, err
+func (client *KeyVaultClient) updateCertificateHandleResponse(resp *azcore.Response) (KeyVaultClientUpdateCertificateResponse, error) {
+	result := KeyVaultClientUpdateCertificateResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.CertificateBundle); err != nil {
+		return KeyVaultClientUpdateCertificateResponse{}, err
 	}
-	return CertificateBundleResponse{RawResponse: resp.Response, CertificateBundle: val}, nil
+	return result, nil
 }
 
 // updateCertificateHandleError handles the UpdateCertificate error response.
@@ -4690,17 +4648,17 @@ func (client *KeyVaultClient) updateCertificateHandleError(resp *azcore.Response
 // UpdateCertificateIssuer - The UpdateCertificateIssuer operation performs an update on the specified certificate issuer entity. This operation requires
 // the certificates/setissuers permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) UpdateCertificateIssuer(ctx context.Context, vaultBaseURL string, issuerName string, parameter CertificateIssuerUpdateParameters, options *KeyVaultClientUpdateCertificateIssuerOptions) (IssuerBundleResponse, error) {
+func (client *KeyVaultClient) UpdateCertificateIssuer(ctx context.Context, vaultBaseURL string, issuerName string, parameter CertificateIssuerUpdateParameters, options *KeyVaultClientUpdateCertificateIssuerOptions) (KeyVaultClientUpdateCertificateIssuerResponse, error) {
 	req, err := client.updateCertificateIssuerCreateRequest(ctx, vaultBaseURL, issuerName, parameter, options)
 	if err != nil {
-		return IssuerBundleResponse{}, err
+		return KeyVaultClientUpdateCertificateIssuerResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return IssuerBundleResponse{}, err
+		return KeyVaultClientUpdateCertificateIssuerResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return IssuerBundleResponse{}, client.updateCertificateIssuerHandleError(resp)
+		return KeyVaultClientUpdateCertificateIssuerResponse{}, client.updateCertificateIssuerHandleError(resp)
 	}
 	return client.updateCertificateIssuerHandleResponse(resp)
 }
@@ -4727,12 +4685,12 @@ func (client *KeyVaultClient) updateCertificateIssuerCreateRequest(ctx context.C
 }
 
 // updateCertificateIssuerHandleResponse handles the UpdateCertificateIssuer response.
-func (client *KeyVaultClient) updateCertificateIssuerHandleResponse(resp *azcore.Response) (IssuerBundleResponse, error) {
-	var val *IssuerBundle
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return IssuerBundleResponse{}, err
+func (client *KeyVaultClient) updateCertificateIssuerHandleResponse(resp *azcore.Response) (KeyVaultClientUpdateCertificateIssuerResponse, error) {
+	result := KeyVaultClientUpdateCertificateIssuerResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.IssuerBundle); err != nil {
+		return KeyVaultClientUpdateCertificateIssuerResponse{}, err
 	}
-	return IssuerBundleResponse{RawResponse: resp.Response, IssuerBundle: val}, nil
+	return result, nil
 }
 
 // updateCertificateIssuerHandleError handles the UpdateCertificateIssuer error response.
@@ -4750,17 +4708,17 @@ func (client *KeyVaultClient) updateCertificateIssuerHandleError(resp *azcore.Re
 
 // UpdateCertificateOperation - Updates a certificate creation operation that is already in progress. This operation requires the certificates/update permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) UpdateCertificateOperation(ctx context.Context, vaultBaseURL string, certificateName string, certificateOperation CertificateOperationUpdateParameter, options *KeyVaultClientUpdateCertificateOperationOptions) (CertificateOperationResponse, error) {
+func (client *KeyVaultClient) UpdateCertificateOperation(ctx context.Context, vaultBaseURL string, certificateName string, certificateOperation CertificateOperationUpdateParameter, options *KeyVaultClientUpdateCertificateOperationOptions) (KeyVaultClientUpdateCertificateOperationResponse, error) {
 	req, err := client.updateCertificateOperationCreateRequest(ctx, vaultBaseURL, certificateName, certificateOperation, options)
 	if err != nil {
-		return CertificateOperationResponse{}, err
+		return KeyVaultClientUpdateCertificateOperationResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return CertificateOperationResponse{}, err
+		return KeyVaultClientUpdateCertificateOperationResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return CertificateOperationResponse{}, client.updateCertificateOperationHandleError(resp)
+		return KeyVaultClientUpdateCertificateOperationResponse{}, client.updateCertificateOperationHandleError(resp)
 	}
 	return client.updateCertificateOperationHandleResponse(resp)
 }
@@ -4787,12 +4745,12 @@ func (client *KeyVaultClient) updateCertificateOperationCreateRequest(ctx contex
 }
 
 // updateCertificateOperationHandleResponse handles the UpdateCertificateOperation response.
-func (client *KeyVaultClient) updateCertificateOperationHandleResponse(resp *azcore.Response) (CertificateOperationResponse, error) {
-	var val *CertificateOperation
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return CertificateOperationResponse{}, err
+func (client *KeyVaultClient) updateCertificateOperationHandleResponse(resp *azcore.Response) (KeyVaultClientUpdateCertificateOperationResponse, error) {
+	result := KeyVaultClientUpdateCertificateOperationResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.CertificateOperation); err != nil {
+		return KeyVaultClientUpdateCertificateOperationResponse{}, err
 	}
-	return CertificateOperationResponse{RawResponse: resp.Response, CertificateOperation: val}, nil
+	return result, nil
 }
 
 // updateCertificateOperationHandleError handles the UpdateCertificateOperation error response.
@@ -4810,17 +4768,17 @@ func (client *KeyVaultClient) updateCertificateOperationHandleError(resp *azcore
 
 // UpdateCertificatePolicy - Set specified members in the certificate policy. Leave others as null. This operation requires the certificates/update permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) UpdateCertificatePolicy(ctx context.Context, vaultBaseURL string, certificateName string, certificatePolicy CertificatePolicy, options *KeyVaultClientUpdateCertificatePolicyOptions) (CertificatePolicyResponse, error) {
+func (client *KeyVaultClient) UpdateCertificatePolicy(ctx context.Context, vaultBaseURL string, certificateName string, certificatePolicy CertificatePolicy, options *KeyVaultClientUpdateCertificatePolicyOptions) (KeyVaultClientUpdateCertificatePolicyResponse, error) {
 	req, err := client.updateCertificatePolicyCreateRequest(ctx, vaultBaseURL, certificateName, certificatePolicy, options)
 	if err != nil {
-		return CertificatePolicyResponse{}, err
+		return KeyVaultClientUpdateCertificatePolicyResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return CertificatePolicyResponse{}, err
+		return KeyVaultClientUpdateCertificatePolicyResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return CertificatePolicyResponse{}, client.updateCertificatePolicyHandleError(resp)
+		return KeyVaultClientUpdateCertificatePolicyResponse{}, client.updateCertificatePolicyHandleError(resp)
 	}
 	return client.updateCertificatePolicyHandleResponse(resp)
 }
@@ -4847,12 +4805,12 @@ func (client *KeyVaultClient) updateCertificatePolicyCreateRequest(ctx context.C
 }
 
 // updateCertificatePolicyHandleResponse handles the UpdateCertificatePolicy response.
-func (client *KeyVaultClient) updateCertificatePolicyHandleResponse(resp *azcore.Response) (CertificatePolicyResponse, error) {
-	var val *CertificatePolicy
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return CertificatePolicyResponse{}, err
+func (client *KeyVaultClient) updateCertificatePolicyHandleResponse(resp *azcore.Response) (KeyVaultClientUpdateCertificatePolicyResponse, error) {
+	result := KeyVaultClientUpdateCertificatePolicyResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.CertificatePolicy); err != nil {
+		return KeyVaultClientUpdateCertificatePolicyResponse{}, err
 	}
-	return CertificatePolicyResponse{RawResponse: resp.Response, CertificatePolicy: val}, nil
+	return result, nil
 }
 
 // updateCertificatePolicyHandleError handles the UpdateCertificatePolicy error response.
@@ -4871,17 +4829,17 @@ func (client *KeyVaultClient) updateCertificatePolicyHandleError(resp *azcore.Re
 // UpdateKey - In order to perform this operation, the key must already exist in the Key Vault. Note: The cryptographic material of a key itself cannot
 // be changed. This operation requires the keys/update permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) UpdateKey(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyUpdateParameters, options *KeyVaultClientUpdateKeyOptions) (KeyBundleResponse, error) {
+func (client *KeyVaultClient) UpdateKey(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyUpdateParameters, options *KeyVaultClientUpdateKeyOptions) (KeyVaultClientUpdateKeyResponse, error) {
 	req, err := client.updateKeyCreateRequest(ctx, vaultBaseURL, keyName, keyVersion, parameters, options)
 	if err != nil {
-		return KeyBundleResponse{}, err
+		return KeyVaultClientUpdateKeyResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return KeyBundleResponse{}, err
+		return KeyVaultClientUpdateKeyResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return KeyBundleResponse{}, client.updateKeyHandleError(resp)
+		return KeyVaultClientUpdateKeyResponse{}, client.updateKeyHandleError(resp)
 	}
 	return client.updateKeyHandleResponse(resp)
 }
@@ -4912,12 +4870,12 @@ func (client *KeyVaultClient) updateKeyCreateRequest(ctx context.Context, vaultB
 }
 
 // updateKeyHandleResponse handles the UpdateKey response.
-func (client *KeyVaultClient) updateKeyHandleResponse(resp *azcore.Response) (KeyBundleResponse, error) {
-	var val *KeyBundle
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return KeyBundleResponse{}, err
+func (client *KeyVaultClient) updateKeyHandleResponse(resp *azcore.Response) (KeyVaultClientUpdateKeyResponse, error) {
+	result := KeyVaultClientUpdateKeyResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.KeyBundle); err != nil {
+		return KeyVaultClientUpdateKeyResponse{}, err
 	}
-	return KeyBundleResponse{RawResponse: resp.Response, KeyBundle: val}, nil
+	return result, nil
 }
 
 // updateKeyHandleError handles the UpdateKey error response.
@@ -4935,17 +4893,17 @@ func (client *KeyVaultClient) updateKeyHandleError(resp *azcore.Response) error 
 
 // UpdateSasDefinition - Updates the specified attributes associated with the given SAS definition. This operation requires the storage/setsas permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) UpdateSasDefinition(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, parameters SasDefinitionUpdateParameters, options *KeyVaultClientUpdateSasDefinitionOptions) (SasDefinitionBundleResponse, error) {
+func (client *KeyVaultClient) UpdateSasDefinition(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, parameters SasDefinitionUpdateParameters, options *KeyVaultClientUpdateSasDefinitionOptions) (KeyVaultClientUpdateSasDefinitionResponse, error) {
 	req, err := client.updateSasDefinitionCreateRequest(ctx, vaultBaseURL, storageAccountName, sasDefinitionName, parameters, options)
 	if err != nil {
-		return SasDefinitionBundleResponse{}, err
+		return KeyVaultClientUpdateSasDefinitionResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return SasDefinitionBundleResponse{}, err
+		return KeyVaultClientUpdateSasDefinitionResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return SasDefinitionBundleResponse{}, client.updateSasDefinitionHandleError(resp)
+		return KeyVaultClientUpdateSasDefinitionResponse{}, client.updateSasDefinitionHandleError(resp)
 	}
 	return client.updateSasDefinitionHandleResponse(resp)
 }
@@ -4976,12 +4934,12 @@ func (client *KeyVaultClient) updateSasDefinitionCreateRequest(ctx context.Conte
 }
 
 // updateSasDefinitionHandleResponse handles the UpdateSasDefinition response.
-func (client *KeyVaultClient) updateSasDefinitionHandleResponse(resp *azcore.Response) (SasDefinitionBundleResponse, error) {
-	var val *SasDefinitionBundle
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return SasDefinitionBundleResponse{}, err
+func (client *KeyVaultClient) updateSasDefinitionHandleResponse(resp *azcore.Response) (KeyVaultClientUpdateSasDefinitionResponse, error) {
+	result := KeyVaultClientUpdateSasDefinitionResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.SasDefinitionBundle); err != nil {
+		return KeyVaultClientUpdateSasDefinitionResponse{}, err
 	}
-	return SasDefinitionBundleResponse{RawResponse: resp.Response, SasDefinitionBundle: val}, nil
+	return result, nil
 }
 
 // updateSasDefinitionHandleError handles the UpdateSasDefinition error response.
@@ -5001,17 +4959,17 @@ func (client *KeyVaultClient) updateSasDefinitionHandleError(resp *azcore.Respon
 // unchanged. The value of a secret itself cannot be changed.
 // This operation requires the secrets/set permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) UpdateSecret(ctx context.Context, vaultBaseURL string, secretName string, secretVersion string, parameters SecretUpdateParameters, options *KeyVaultClientUpdateSecretOptions) (SecretBundleResponse, error) {
+func (client *KeyVaultClient) UpdateSecret(ctx context.Context, vaultBaseURL string, secretName string, secretVersion string, parameters SecretUpdateParameters, options *KeyVaultClientUpdateSecretOptions) (KeyVaultClientUpdateSecretResponse, error) {
 	req, err := client.updateSecretCreateRequest(ctx, vaultBaseURL, secretName, secretVersion, parameters, options)
 	if err != nil {
-		return SecretBundleResponse{}, err
+		return KeyVaultClientUpdateSecretResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return SecretBundleResponse{}, err
+		return KeyVaultClientUpdateSecretResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return SecretBundleResponse{}, client.updateSecretHandleError(resp)
+		return KeyVaultClientUpdateSecretResponse{}, client.updateSecretHandleError(resp)
 	}
 	return client.updateSecretHandleResponse(resp)
 }
@@ -5042,12 +5000,12 @@ func (client *KeyVaultClient) updateSecretCreateRequest(ctx context.Context, vau
 }
 
 // updateSecretHandleResponse handles the UpdateSecret response.
-func (client *KeyVaultClient) updateSecretHandleResponse(resp *azcore.Response) (SecretBundleResponse, error) {
-	var val *SecretBundle
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return SecretBundleResponse{}, err
+func (client *KeyVaultClient) updateSecretHandleResponse(resp *azcore.Response) (KeyVaultClientUpdateSecretResponse, error) {
+	result := KeyVaultClientUpdateSecretResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.SecretBundle); err != nil {
+		return KeyVaultClientUpdateSecretResponse{}, err
 	}
-	return SecretBundleResponse{RawResponse: resp.Response, SecretBundle: val}, nil
+	return result, nil
 }
 
 // updateSecretHandleError handles the UpdateSecret error response.
@@ -5065,17 +5023,17 @@ func (client *KeyVaultClient) updateSecretHandleError(resp *azcore.Response) err
 
 // UpdateStorageAccount - Updates the specified attributes associated with the given storage account. This operation requires the storage/set/update permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) UpdateStorageAccount(ctx context.Context, vaultBaseURL string, storageAccountName string, parameters StorageAccountUpdateParameters, options *KeyVaultClientUpdateStorageAccountOptions) (StorageBundleResponse, error) {
+func (client *KeyVaultClient) UpdateStorageAccount(ctx context.Context, vaultBaseURL string, storageAccountName string, parameters StorageAccountUpdateParameters, options *KeyVaultClientUpdateStorageAccountOptions) (KeyVaultClientUpdateStorageAccountResponse, error) {
 	req, err := client.updateStorageAccountCreateRequest(ctx, vaultBaseURL, storageAccountName, parameters, options)
 	if err != nil {
-		return StorageBundleResponse{}, err
+		return KeyVaultClientUpdateStorageAccountResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return StorageBundleResponse{}, err
+		return KeyVaultClientUpdateStorageAccountResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return StorageBundleResponse{}, client.updateStorageAccountHandleError(resp)
+		return KeyVaultClientUpdateStorageAccountResponse{}, client.updateStorageAccountHandleError(resp)
 	}
 	return client.updateStorageAccountHandleResponse(resp)
 }
@@ -5102,12 +5060,12 @@ func (client *KeyVaultClient) updateStorageAccountCreateRequest(ctx context.Cont
 }
 
 // updateStorageAccountHandleResponse handles the UpdateStorageAccount response.
-func (client *KeyVaultClient) updateStorageAccountHandleResponse(resp *azcore.Response) (StorageBundleResponse, error) {
-	var val *StorageBundle
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return StorageBundleResponse{}, err
+func (client *KeyVaultClient) updateStorageAccountHandleResponse(resp *azcore.Response) (KeyVaultClientUpdateStorageAccountResponse, error) {
+	result := KeyVaultClientUpdateStorageAccountResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.StorageBundle); err != nil {
+		return KeyVaultClientUpdateStorageAccountResponse{}, err
 	}
-	return StorageBundleResponse{RawResponse: resp.Response, StorageBundle: val}, nil
+	return result, nil
 }
 
 // updateStorageAccountHandleError handles the UpdateStorageAccount error response.
@@ -5129,17 +5087,17 @@ func (client *KeyVaultClient) updateStorageAccountHandleError(resp *azcore.Respo
 // public portion of the key. This operation requires
 // the keys/verify permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) Verify(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyVerifyParameters, options *KeyVaultClientVerifyOptions) (KeyVerifyResultResponse, error) {
+func (client *KeyVaultClient) Verify(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyVerifyParameters, options *KeyVaultClientVerifyOptions) (KeyVaultClientVerifyResponse, error) {
 	req, err := client.verifyCreateRequest(ctx, vaultBaseURL, keyName, keyVersion, parameters, options)
 	if err != nil {
-		return KeyVerifyResultResponse{}, err
+		return KeyVaultClientVerifyResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return KeyVerifyResultResponse{}, err
+		return KeyVaultClientVerifyResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return KeyVerifyResultResponse{}, client.verifyHandleError(resp)
+		return KeyVaultClientVerifyResponse{}, client.verifyHandleError(resp)
 	}
 	return client.verifyHandleResponse(resp)
 }
@@ -5170,12 +5128,12 @@ func (client *KeyVaultClient) verifyCreateRequest(ctx context.Context, vaultBase
 }
 
 // verifyHandleResponse handles the Verify response.
-func (client *KeyVaultClient) verifyHandleResponse(resp *azcore.Response) (KeyVerifyResultResponse, error) {
-	var val *KeyVerifyResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return KeyVerifyResultResponse{}, err
+func (client *KeyVaultClient) verifyHandleResponse(resp *azcore.Response) (KeyVaultClientVerifyResponse, error) {
+	result := KeyVaultClientVerifyResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.KeyVerifyResult); err != nil {
+		return KeyVaultClientVerifyResponse{}, err
 	}
-	return KeyVerifyResultResponse{RawResponse: resp.Response, KeyVerifyResult: val}, nil
+	return result, nil
 }
 
 // verifyHandleError handles the Verify error response.
@@ -5197,17 +5155,17 @@ func (client *KeyVaultClient) verifyHandleError(resp *azcore.Response) error {
 // for asymmetric keys as a convenience for
 // callers that have a key-reference but do not have access to the public key material. This operation requires the keys/wrapKey permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) WrapKey(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyOperationsParameters, options *KeyVaultClientWrapKeyOptions) (KeyOperationResultResponse, error) {
+func (client *KeyVaultClient) WrapKey(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyOperationsParameters, options *KeyVaultClientWrapKeyOptions) (KeyVaultClientWrapKeyResponse, error) {
 	req, err := client.wrapKeyCreateRequest(ctx, vaultBaseURL, keyName, keyVersion, parameters, options)
 	if err != nil {
-		return KeyOperationResultResponse{}, err
+		return KeyVaultClientWrapKeyResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return KeyOperationResultResponse{}, err
+		return KeyVaultClientWrapKeyResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return KeyOperationResultResponse{}, client.wrapKeyHandleError(resp)
+		return KeyVaultClientWrapKeyResponse{}, client.wrapKeyHandleError(resp)
 	}
 	return client.wrapKeyHandleResponse(resp)
 }
@@ -5238,12 +5196,12 @@ func (client *KeyVaultClient) wrapKeyCreateRequest(ctx context.Context, vaultBas
 }
 
 // wrapKeyHandleResponse handles the WrapKey response.
-func (client *KeyVaultClient) wrapKeyHandleResponse(resp *azcore.Response) (KeyOperationResultResponse, error) {
-	var val *KeyOperationResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return KeyOperationResultResponse{}, err
+func (client *KeyVaultClient) wrapKeyHandleResponse(resp *azcore.Response) (KeyVaultClientWrapKeyResponse, error) {
+	result := KeyVaultClientWrapKeyResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.KeyOperationResult); err != nil {
+		return KeyVaultClientWrapKeyResponse{}, err
 	}
-	return KeyOperationResultResponse{RawResponse: resp.Response, KeyOperationResult: val}, nil
+	return result, nil
 }
 
 // wrapKeyHandleError handles the WrapKey error response.

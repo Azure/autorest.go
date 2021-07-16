@@ -24,47 +24,47 @@ type dataFlowClient struct {
 
 // BeginCreateOrUpdateDataFlow - Creates or updates a data flow.
 // If the operation fails it returns the *CloudError error type.
-func (client *dataFlowClient) BeginCreateOrUpdateDataFlow(ctx context.Context, dataFlowName string, dataFlow DataFlowResource, options *DataFlowBeginCreateOrUpdateDataFlowOptions) (DataFlowResourcePollerResponse, error) {
+func (client *dataFlowClient) BeginCreateOrUpdateDataFlow(ctx context.Context, dataFlowName string, dataFlow DataFlowResource, options *DataFlowBeginCreateOrUpdateDataFlowOptions) (DataFlowCreateOrUpdateDataFlowPollerResponse, error) {
 	resp, err := client.createOrUpdateDataFlow(ctx, dataFlowName, dataFlow, options)
 	if err != nil {
-		return DataFlowResourcePollerResponse{}, err
+		return DataFlowCreateOrUpdateDataFlowPollerResponse{}, err
 	}
-	result := DataFlowResourcePollerResponse{
+	result := DataFlowCreateOrUpdateDataFlowPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := azcore.NewLROPoller("dataFlowClient.CreateOrUpdateDataFlow", resp, client.con.Pipeline(), client.createOrUpdateDataFlowHandleError)
 	if err != nil {
-		return DataFlowResourcePollerResponse{}, err
+		return DataFlowCreateOrUpdateDataFlowPollerResponse{}, err
 	}
-	poller := &dataFlowResourcePoller{
+	poller := &dataFlowCreateOrUpdateDataFlowPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DataFlowResourceResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DataFlowCreateOrUpdateDataFlowResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeCreateOrUpdateDataFlow creates a new DataFlowResourcePoller from the specified resume token.
-// token - The value must come from a previous call to DataFlowResourcePoller.ResumeToken().
-func (client *dataFlowClient) ResumeCreateOrUpdateDataFlow(ctx context.Context, token string) (DataFlowResourcePollerResponse, error) {
+// ResumeCreateOrUpdateDataFlow creates a new DataFlowCreateOrUpdateDataFlowPoller from the specified resume token.
+// token - The value must come from a previous call to DataFlowCreateOrUpdateDataFlowPoller.ResumeToken().
+func (client *dataFlowClient) ResumeCreateOrUpdateDataFlow(ctx context.Context, token string) (DataFlowCreateOrUpdateDataFlowPollerResponse, error) {
 	pt, err := azcore.NewLROPollerFromResumeToken("dataFlowClient.CreateOrUpdateDataFlow", token, client.con.Pipeline(), client.createOrUpdateDataFlowHandleError)
 	if err != nil {
-		return DataFlowResourcePollerResponse{}, err
+		return DataFlowCreateOrUpdateDataFlowPollerResponse{}, err
 	}
-	poller := &dataFlowResourcePoller{
+	poller := &dataFlowCreateOrUpdateDataFlowPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return DataFlowResourcePollerResponse{}, err
+		return DataFlowCreateOrUpdateDataFlowPollerResponse{}, err
 	}
-	result := DataFlowResourcePollerResponse{
+	result := DataFlowCreateOrUpdateDataFlowPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DataFlowResourceResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DataFlowCreateOrUpdateDataFlowResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -124,47 +124,47 @@ func (client *dataFlowClient) createOrUpdateDataFlowHandleError(resp *azcore.Res
 
 // BeginDeleteDataFlow - Deletes a data flow.
 // If the operation fails it returns the *CloudError error type.
-func (client *dataFlowClient) BeginDeleteDataFlow(ctx context.Context, dataFlowName string, options *DataFlowBeginDeleteDataFlowOptions) (HTTPPollerResponse, error) {
+func (client *dataFlowClient) BeginDeleteDataFlow(ctx context.Context, dataFlowName string, options *DataFlowBeginDeleteDataFlowOptions) (DataFlowDeleteDataFlowPollerResponse, error) {
 	resp, err := client.deleteDataFlow(ctx, dataFlowName, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return DataFlowDeleteDataFlowPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := DataFlowDeleteDataFlowPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := azcore.NewLROPoller("dataFlowClient.DeleteDataFlow", resp, client.con.Pipeline(), client.deleteDataFlowHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return DataFlowDeleteDataFlowPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &dataFlowDeleteDataFlowPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DataFlowDeleteDataFlowResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeDeleteDataFlow creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *dataFlowClient) ResumeDeleteDataFlow(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeDeleteDataFlow creates a new DataFlowDeleteDataFlowPoller from the specified resume token.
+// token - The value must come from a previous call to DataFlowDeleteDataFlowPoller.ResumeToken().
+func (client *dataFlowClient) ResumeDeleteDataFlow(ctx context.Context, token string) (DataFlowDeleteDataFlowPollerResponse, error) {
 	pt, err := azcore.NewLROPollerFromResumeToken("dataFlowClient.DeleteDataFlow", token, client.con.Pipeline(), client.deleteDataFlowHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return DataFlowDeleteDataFlowPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &dataFlowDeleteDataFlowPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return DataFlowDeleteDataFlowPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := DataFlowDeleteDataFlowPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DataFlowDeleteDataFlowResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -221,17 +221,17 @@ func (client *dataFlowClient) deleteDataFlowHandleError(resp *azcore.Response) e
 
 // GetDataFlow - Gets a data flow.
 // If the operation fails it returns the *CloudError error type.
-func (client *dataFlowClient) GetDataFlow(ctx context.Context, dataFlowName string, options *DataFlowGetDataFlowOptions) (DataFlowResourceResponse, error) {
+func (client *dataFlowClient) GetDataFlow(ctx context.Context, dataFlowName string, options *DataFlowGetDataFlowOptions) (DataFlowGetDataFlowResponse, error) {
 	req, err := client.getDataFlowCreateRequest(ctx, dataFlowName, options)
 	if err != nil {
-		return DataFlowResourceResponse{}, err
+		return DataFlowGetDataFlowResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return DataFlowResourceResponse{}, err
+		return DataFlowGetDataFlowResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return DataFlowResourceResponse{}, client.getDataFlowHandleError(resp)
+		return DataFlowGetDataFlowResponse{}, client.getDataFlowHandleError(resp)
 	}
 	return client.getDataFlowHandleResponse(resp)
 }
@@ -259,12 +259,12 @@ func (client *dataFlowClient) getDataFlowCreateRequest(ctx context.Context, data
 }
 
 // getDataFlowHandleResponse handles the GetDataFlow response.
-func (client *dataFlowClient) getDataFlowHandleResponse(resp *azcore.Response) (DataFlowResourceResponse, error) {
-	var val *DataFlowResource
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return DataFlowResourceResponse{}, err
+func (client *dataFlowClient) getDataFlowHandleResponse(resp *azcore.Response) (DataFlowGetDataFlowResponse, error) {
+	result := DataFlowGetDataFlowResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.DataFlowResource); err != nil {
+		return DataFlowGetDataFlowResponse{}, err
 	}
-	return DataFlowResourceResponse{RawResponse: resp.Response, DataFlowResource: val}, nil
+	return result, nil
 }
 
 // getDataFlowHandleError handles the GetDataFlow error response.
@@ -282,18 +282,15 @@ func (client *dataFlowClient) getDataFlowHandleError(resp *azcore.Response) erro
 
 // GetDataFlowsByWorkspace - Lists data flows.
 // If the operation fails it returns the *CloudError error type.
-func (client *dataFlowClient) GetDataFlowsByWorkspace(options *DataFlowGetDataFlowsByWorkspaceOptions) DataFlowListResponsePager {
-	return &dataFlowListResponsePager{
-		pipeline: client.con.Pipeline(),
+func (client *dataFlowClient) GetDataFlowsByWorkspace(options *DataFlowGetDataFlowsByWorkspaceOptions) DataFlowGetDataFlowsByWorkspacePager {
+	return &dataFlowGetDataFlowsByWorkspacePager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.getDataFlowsByWorkspaceCreateRequest(ctx, options)
 		},
-		responder: client.getDataFlowsByWorkspaceHandleResponse,
-		errorer:   client.getDataFlowsByWorkspaceHandleError,
-		advancer: func(ctx context.Context, resp DataFlowListResponseResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp DataFlowGetDataFlowsByWorkspaceResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.DataFlowListResponse.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -313,12 +310,12 @@ func (client *dataFlowClient) getDataFlowsByWorkspaceCreateRequest(ctx context.C
 }
 
 // getDataFlowsByWorkspaceHandleResponse handles the GetDataFlowsByWorkspace response.
-func (client *dataFlowClient) getDataFlowsByWorkspaceHandleResponse(resp *azcore.Response) (DataFlowListResponseResponse, error) {
-	var val *DataFlowListResponse
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return DataFlowListResponseResponse{}, err
+func (client *dataFlowClient) getDataFlowsByWorkspaceHandleResponse(resp *azcore.Response) (DataFlowGetDataFlowsByWorkspaceResponse, error) {
+	result := DataFlowGetDataFlowsByWorkspaceResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.DataFlowListResponse); err != nil {
+		return DataFlowGetDataFlowsByWorkspaceResponse{}, err
 	}
-	return DataFlowListResponseResponse{RawResponse: resp.Response, DataFlowListResponse: val}, nil
+	return result, nil
 }
 
 // getDataFlowsByWorkspaceHandleError handles the GetDataFlowsByWorkspace error response.
@@ -336,47 +333,47 @@ func (client *dataFlowClient) getDataFlowsByWorkspaceHandleError(resp *azcore.Re
 
 // BeginRenameDataFlow - Renames a dataflow.
 // If the operation fails it returns the *CloudError error type.
-func (client *dataFlowClient) BeginRenameDataFlow(ctx context.Context, dataFlowName string, request ArtifactRenameRequest, options *DataFlowBeginRenameDataFlowOptions) (HTTPPollerResponse, error) {
+func (client *dataFlowClient) BeginRenameDataFlow(ctx context.Context, dataFlowName string, request ArtifactRenameRequest, options *DataFlowBeginRenameDataFlowOptions) (DataFlowRenameDataFlowPollerResponse, error) {
 	resp, err := client.renameDataFlow(ctx, dataFlowName, request, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return DataFlowRenameDataFlowPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := DataFlowRenameDataFlowPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := azcore.NewLROPoller("dataFlowClient.RenameDataFlow", resp, client.con.Pipeline(), client.renameDataFlowHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return DataFlowRenameDataFlowPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &dataFlowRenameDataFlowPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DataFlowRenameDataFlowResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeRenameDataFlow creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *dataFlowClient) ResumeRenameDataFlow(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeRenameDataFlow creates a new DataFlowRenameDataFlowPoller from the specified resume token.
+// token - The value must come from a previous call to DataFlowRenameDataFlowPoller.ResumeToken().
+func (client *dataFlowClient) ResumeRenameDataFlow(ctx context.Context, token string) (DataFlowRenameDataFlowPollerResponse, error) {
 	pt, err := azcore.NewLROPollerFromResumeToken("dataFlowClient.RenameDataFlow", token, client.con.Pipeline(), client.renameDataFlowHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return DataFlowRenameDataFlowPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &dataFlowRenameDataFlowPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return DataFlowRenameDataFlowPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := DataFlowRenameDataFlowPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DataFlowRenameDataFlowResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil

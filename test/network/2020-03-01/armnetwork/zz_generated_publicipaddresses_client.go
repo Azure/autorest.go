@@ -33,47 +33,47 @@ func NewPublicIPAddressesClient(con *armcore.Connection, subscriptionID string) 
 
 // BeginCreateOrUpdate - Creates or updates a static or dynamic public IP address.
 // If the operation fails it returns the *CloudError error type.
-func (client *PublicIPAddressesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, publicIPAddressName string, parameters PublicIPAddress, options *PublicIPAddressesBeginCreateOrUpdateOptions) (PublicIPAddressPollerResponse, error) {
+func (client *PublicIPAddressesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, publicIPAddressName string, parameters PublicIPAddress, options *PublicIPAddressesBeginCreateOrUpdateOptions) (PublicIPAddressesCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, publicIPAddressName, parameters, options)
 	if err != nil {
-		return PublicIPAddressPollerResponse{}, err
+		return PublicIPAddressesCreateOrUpdatePollerResponse{}, err
 	}
-	result := PublicIPAddressPollerResponse{
+	result := PublicIPAddressesCreateOrUpdatePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("PublicIPAddressesClient.CreateOrUpdate", "azure-async-operation", resp, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return PublicIPAddressPollerResponse{}, err
+		return PublicIPAddressesCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &publicIPAddressPoller{
+	poller := &publicIPAddressesCreateOrUpdatePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PublicIPAddressResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PublicIPAddressesCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new PublicIPAddressPoller from the specified resume token.
-// token - The value must come from a previous call to PublicIPAddressPoller.ResumeToken().
-func (client *PublicIPAddressesClient) ResumeCreateOrUpdate(ctx context.Context, token string) (PublicIPAddressPollerResponse, error) {
+// ResumeCreateOrUpdate creates a new PublicIPAddressesCreateOrUpdatePoller from the specified resume token.
+// token - The value must come from a previous call to PublicIPAddressesCreateOrUpdatePoller.ResumeToken().
+func (client *PublicIPAddressesClient) ResumeCreateOrUpdate(ctx context.Context, token string) (PublicIPAddressesCreateOrUpdatePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("PublicIPAddressesClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return PublicIPAddressPollerResponse{}, err
+		return PublicIPAddressesCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &publicIPAddressPoller{
+	poller := &publicIPAddressesCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return PublicIPAddressPollerResponse{}, err
+		return PublicIPAddressesCreateOrUpdatePollerResponse{}, err
 	}
-	result := PublicIPAddressPollerResponse{
+	result := PublicIPAddressesCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PublicIPAddressResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PublicIPAddressesCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -138,47 +138,47 @@ func (client *PublicIPAddressesClient) createOrUpdateHandleError(resp *azcore.Re
 
 // BeginDelete - Deletes the specified public IP address.
 // If the operation fails it returns the *CloudError error type.
-func (client *PublicIPAddressesClient) BeginDelete(ctx context.Context, resourceGroupName string, publicIPAddressName string, options *PublicIPAddressesBeginDeleteOptions) (HTTPPollerResponse, error) {
+func (client *PublicIPAddressesClient) BeginDelete(ctx context.Context, resourceGroupName string, publicIPAddressName string, options *PublicIPAddressesBeginDeleteOptions) (PublicIPAddressesDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, publicIPAddressName, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return PublicIPAddressesDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := PublicIPAddressesDeletePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("PublicIPAddressesClient.Delete", "location", resp, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return PublicIPAddressesDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &publicIPAddressesDeletePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PublicIPAddressesDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeDelete creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *PublicIPAddressesClient) ResumeDelete(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeDelete creates a new PublicIPAddressesDeletePoller from the specified resume token.
+// token - The value must come from a previous call to PublicIPAddressesDeletePoller.ResumeToken().
+func (client *PublicIPAddressesClient) ResumeDelete(ctx context.Context, token string) (PublicIPAddressesDeletePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("PublicIPAddressesClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return PublicIPAddressesDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &publicIPAddressesDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return PublicIPAddressesDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := PublicIPAddressesDeletePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PublicIPAddressesDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -243,17 +243,17 @@ func (client *PublicIPAddressesClient) deleteHandleError(resp *azcore.Response) 
 
 // Get - Gets the specified public IP address in a specified resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *PublicIPAddressesClient) Get(ctx context.Context, resourceGroupName string, publicIPAddressName string, options *PublicIPAddressesGetOptions) (PublicIPAddressResponse, error) {
+func (client *PublicIPAddressesClient) Get(ctx context.Context, resourceGroupName string, publicIPAddressName string, options *PublicIPAddressesGetOptions) (PublicIPAddressesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, publicIPAddressName, options)
 	if err != nil {
-		return PublicIPAddressResponse{}, err
+		return PublicIPAddressesGetResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return PublicIPAddressResponse{}, err
+		return PublicIPAddressesGetResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return PublicIPAddressResponse{}, client.getHandleError(resp)
+		return PublicIPAddressesGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -289,12 +289,12 @@ func (client *PublicIPAddressesClient) getCreateRequest(ctx context.Context, res
 }
 
 // getHandleResponse handles the Get response.
-func (client *PublicIPAddressesClient) getHandleResponse(resp *azcore.Response) (PublicIPAddressResponse, error) {
-	var val *PublicIPAddress
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return PublicIPAddressResponse{}, err
+func (client *PublicIPAddressesClient) getHandleResponse(resp *azcore.Response) (PublicIPAddressesGetResponse, error) {
+	result := PublicIPAddressesGetResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.PublicIPAddress); err != nil {
+		return PublicIPAddressesGetResponse{}, err
 	}
-	return PublicIPAddressResponse{RawResponse: resp.Response, PublicIPAddress: val}, nil
+	return result, nil
 }
 
 // getHandleError handles the Get error response.
@@ -312,17 +312,17 @@ func (client *PublicIPAddressesClient) getHandleError(resp *azcore.Response) err
 
 // GetVirtualMachineScaleSetPublicIPAddress - Get the specified public IP address in a virtual machine scale set.
 // If the operation fails it returns the *CloudError error type.
-func (client *PublicIPAddressesClient) GetVirtualMachineScaleSetPublicIPAddress(ctx context.Context, resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, ipConfigurationName string, publicIPAddressName string, options *PublicIPAddressesGetVirtualMachineScaleSetPublicIPAddressOptions) (PublicIPAddressResponse, error) {
+func (client *PublicIPAddressesClient) GetVirtualMachineScaleSetPublicIPAddress(ctx context.Context, resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, ipConfigurationName string, publicIPAddressName string, options *PublicIPAddressesGetVirtualMachineScaleSetPublicIPAddressOptions) (PublicIPAddressesGetVirtualMachineScaleSetPublicIPAddressResponse, error) {
 	req, err := client.getVirtualMachineScaleSetPublicIPAddressCreateRequest(ctx, resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, ipConfigurationName, publicIPAddressName, options)
 	if err != nil {
-		return PublicIPAddressResponse{}, err
+		return PublicIPAddressesGetVirtualMachineScaleSetPublicIPAddressResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return PublicIPAddressResponse{}, err
+		return PublicIPAddressesGetVirtualMachineScaleSetPublicIPAddressResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return PublicIPAddressResponse{}, client.getVirtualMachineScaleSetPublicIPAddressHandleError(resp)
+		return PublicIPAddressesGetVirtualMachineScaleSetPublicIPAddressResponse{}, client.getVirtualMachineScaleSetPublicIPAddressHandleError(resp)
 	}
 	return client.getVirtualMachineScaleSetPublicIPAddressHandleResponse(resp)
 }
@@ -374,12 +374,12 @@ func (client *PublicIPAddressesClient) getVirtualMachineScaleSetPublicIPAddressC
 }
 
 // getVirtualMachineScaleSetPublicIPAddressHandleResponse handles the GetVirtualMachineScaleSetPublicIPAddress response.
-func (client *PublicIPAddressesClient) getVirtualMachineScaleSetPublicIPAddressHandleResponse(resp *azcore.Response) (PublicIPAddressResponse, error) {
-	var val *PublicIPAddress
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return PublicIPAddressResponse{}, err
+func (client *PublicIPAddressesClient) getVirtualMachineScaleSetPublicIPAddressHandleResponse(resp *azcore.Response) (PublicIPAddressesGetVirtualMachineScaleSetPublicIPAddressResponse, error) {
+	result := PublicIPAddressesGetVirtualMachineScaleSetPublicIPAddressResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.PublicIPAddress); err != nil {
+		return PublicIPAddressesGetVirtualMachineScaleSetPublicIPAddressResponse{}, err
 	}
-	return PublicIPAddressResponse{RawResponse: resp.Response, PublicIPAddress: val}, nil
+	return result, nil
 }
 
 // getVirtualMachineScaleSetPublicIPAddressHandleError handles the GetVirtualMachineScaleSetPublicIPAddress error response.
@@ -397,18 +397,15 @@ func (client *PublicIPAddressesClient) getVirtualMachineScaleSetPublicIPAddressH
 
 // List - Gets all public IP addresses in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *PublicIPAddressesClient) List(resourceGroupName string, options *PublicIPAddressesListOptions) PublicIPAddressListResultPager {
-	return &publicIPAddressListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *PublicIPAddressesClient) List(resourceGroupName string, options *PublicIPAddressesListOptions) PublicIPAddressesListPager {
+	return &publicIPAddressesListPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, options)
 		},
-		responder: client.listHandleResponse,
-		errorer:   client.listHandleError,
-		advancer: func(ctx context.Context, resp PublicIPAddressListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp PublicIPAddressesListResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.PublicIPAddressListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -436,12 +433,12 @@ func (client *PublicIPAddressesClient) listCreateRequest(ctx context.Context, re
 }
 
 // listHandleResponse handles the List response.
-func (client *PublicIPAddressesClient) listHandleResponse(resp *azcore.Response) (PublicIPAddressListResultResponse, error) {
-	var val *PublicIPAddressListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return PublicIPAddressListResultResponse{}, err
+func (client *PublicIPAddressesClient) listHandleResponse(resp *azcore.Response) (PublicIPAddressesListResponse, error) {
+	result := PublicIPAddressesListResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.PublicIPAddressListResult); err != nil {
+		return PublicIPAddressesListResponse{}, err
 	}
-	return PublicIPAddressListResultResponse{RawResponse: resp.Response, PublicIPAddressListResult: val}, nil
+	return result, nil
 }
 
 // listHandleError handles the List error response.
@@ -459,18 +456,15 @@ func (client *PublicIPAddressesClient) listHandleError(resp *azcore.Response) er
 
 // ListAll - Gets all the public IP addresses in a subscription.
 // If the operation fails it returns the *CloudError error type.
-func (client *PublicIPAddressesClient) ListAll(options *PublicIPAddressesListAllOptions) PublicIPAddressListResultPager {
-	return &publicIPAddressListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *PublicIPAddressesClient) ListAll(options *PublicIPAddressesListAllOptions) PublicIPAddressesListAllPager {
+	return &publicIPAddressesListAllPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listAllCreateRequest(ctx, options)
 		},
-		responder: client.listAllHandleResponse,
-		errorer:   client.listAllHandleError,
-		advancer: func(ctx context.Context, resp PublicIPAddressListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp PublicIPAddressesListAllResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.PublicIPAddressListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -494,12 +488,12 @@ func (client *PublicIPAddressesClient) listAllCreateRequest(ctx context.Context,
 }
 
 // listAllHandleResponse handles the ListAll response.
-func (client *PublicIPAddressesClient) listAllHandleResponse(resp *azcore.Response) (PublicIPAddressListResultResponse, error) {
-	var val *PublicIPAddressListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return PublicIPAddressListResultResponse{}, err
+func (client *PublicIPAddressesClient) listAllHandleResponse(resp *azcore.Response) (PublicIPAddressesListAllResponse, error) {
+	result := PublicIPAddressesListAllResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.PublicIPAddressListResult); err != nil {
+		return PublicIPAddressesListAllResponse{}, err
 	}
-	return PublicIPAddressListResultResponse{RawResponse: resp.Response, PublicIPAddressListResult: val}, nil
+	return result, nil
 }
 
 // listAllHandleError handles the ListAll error response.
@@ -517,18 +511,15 @@ func (client *PublicIPAddressesClient) listAllHandleError(resp *azcore.Response)
 
 // ListVirtualMachineScaleSetPublicIPAddresses - Gets information about all public IP addresses on a virtual machine scale set level.
 // If the operation fails it returns the *CloudError error type.
-func (client *PublicIPAddressesClient) ListVirtualMachineScaleSetPublicIPAddresses(resourceGroupName string, virtualMachineScaleSetName string, options *PublicIPAddressesListVirtualMachineScaleSetPublicIPAddressesOptions) PublicIPAddressListResultPager {
-	return &publicIPAddressListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *PublicIPAddressesClient) ListVirtualMachineScaleSetPublicIPAddresses(resourceGroupName string, virtualMachineScaleSetName string, options *PublicIPAddressesListVirtualMachineScaleSetPublicIPAddressesOptions) PublicIPAddressesListVirtualMachineScaleSetPublicIPAddressesPager {
+	return &publicIPAddressesListVirtualMachineScaleSetPublicIPAddressesPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listVirtualMachineScaleSetPublicIPAddressesCreateRequest(ctx, resourceGroupName, virtualMachineScaleSetName, options)
 		},
-		responder: client.listVirtualMachineScaleSetPublicIPAddressesHandleResponse,
-		errorer:   client.listVirtualMachineScaleSetPublicIPAddressesHandleError,
-		advancer: func(ctx context.Context, resp PublicIPAddressListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp PublicIPAddressesListVirtualMachineScaleSetPublicIPAddressesResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.PublicIPAddressListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -560,12 +551,12 @@ func (client *PublicIPAddressesClient) listVirtualMachineScaleSetPublicIPAddress
 }
 
 // listVirtualMachineScaleSetPublicIPAddressesHandleResponse handles the ListVirtualMachineScaleSetPublicIPAddresses response.
-func (client *PublicIPAddressesClient) listVirtualMachineScaleSetPublicIPAddressesHandleResponse(resp *azcore.Response) (PublicIPAddressListResultResponse, error) {
-	var val *PublicIPAddressListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return PublicIPAddressListResultResponse{}, err
+func (client *PublicIPAddressesClient) listVirtualMachineScaleSetPublicIPAddressesHandleResponse(resp *azcore.Response) (PublicIPAddressesListVirtualMachineScaleSetPublicIPAddressesResponse, error) {
+	result := PublicIPAddressesListVirtualMachineScaleSetPublicIPAddressesResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.PublicIPAddressListResult); err != nil {
+		return PublicIPAddressesListVirtualMachineScaleSetPublicIPAddressesResponse{}, err
 	}
-	return PublicIPAddressListResultResponse{RawResponse: resp.Response, PublicIPAddressListResult: val}, nil
+	return result, nil
 }
 
 // listVirtualMachineScaleSetPublicIPAddressesHandleError handles the ListVirtualMachineScaleSetPublicIPAddresses error response.
@@ -584,18 +575,15 @@ func (client *PublicIPAddressesClient) listVirtualMachineScaleSetPublicIPAddress
 // ListVirtualMachineScaleSetVMPublicIPAddresses - Gets information about all public IP addresses in a virtual machine IP configuration in a virtual machine
 // scale set.
 // If the operation fails it returns the *CloudError error type.
-func (client *PublicIPAddressesClient) ListVirtualMachineScaleSetVMPublicIPAddresses(resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, ipConfigurationName string, options *PublicIPAddressesListVirtualMachineScaleSetVMPublicIPAddressesOptions) PublicIPAddressListResultPager {
-	return &publicIPAddressListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *PublicIPAddressesClient) ListVirtualMachineScaleSetVMPublicIPAddresses(resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, ipConfigurationName string, options *PublicIPAddressesListVirtualMachineScaleSetVMPublicIPAddressesOptions) PublicIPAddressesListVirtualMachineScaleSetVMPublicIPAddressesPager {
+	return &publicIPAddressesListVirtualMachineScaleSetVMPublicIPAddressesPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listVirtualMachineScaleSetVMPublicIPAddressesCreateRequest(ctx, resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, ipConfigurationName, options)
 		},
-		responder: client.listVirtualMachineScaleSetVMPublicIPAddressesHandleResponse,
-		errorer:   client.listVirtualMachineScaleSetVMPublicIPAddressesHandleError,
-		advancer: func(ctx context.Context, resp PublicIPAddressListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp PublicIPAddressesListVirtualMachineScaleSetVMPublicIPAddressesResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.PublicIPAddressListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -639,12 +627,12 @@ func (client *PublicIPAddressesClient) listVirtualMachineScaleSetVMPublicIPAddre
 }
 
 // listVirtualMachineScaleSetVMPublicIPAddressesHandleResponse handles the ListVirtualMachineScaleSetVMPublicIPAddresses response.
-func (client *PublicIPAddressesClient) listVirtualMachineScaleSetVMPublicIPAddressesHandleResponse(resp *azcore.Response) (PublicIPAddressListResultResponse, error) {
-	var val *PublicIPAddressListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return PublicIPAddressListResultResponse{}, err
+func (client *PublicIPAddressesClient) listVirtualMachineScaleSetVMPublicIPAddressesHandleResponse(resp *azcore.Response) (PublicIPAddressesListVirtualMachineScaleSetVMPublicIPAddressesResponse, error) {
+	result := PublicIPAddressesListVirtualMachineScaleSetVMPublicIPAddressesResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.PublicIPAddressListResult); err != nil {
+		return PublicIPAddressesListVirtualMachineScaleSetVMPublicIPAddressesResponse{}, err
 	}
-	return PublicIPAddressListResultResponse{RawResponse: resp.Response, PublicIPAddressListResult: val}, nil
+	return result, nil
 }
 
 // listVirtualMachineScaleSetVMPublicIPAddressesHandleError handles the ListVirtualMachineScaleSetVMPublicIPAddresses error response.
@@ -662,17 +650,17 @@ func (client *PublicIPAddressesClient) listVirtualMachineScaleSetVMPublicIPAddre
 
 // UpdateTags - Updates public IP address tags.
 // If the operation fails it returns the *CloudError error type.
-func (client *PublicIPAddressesClient) UpdateTags(ctx context.Context, resourceGroupName string, publicIPAddressName string, parameters TagsObject, options *PublicIPAddressesUpdateTagsOptions) (PublicIPAddressResponse, error) {
+func (client *PublicIPAddressesClient) UpdateTags(ctx context.Context, resourceGroupName string, publicIPAddressName string, parameters TagsObject, options *PublicIPAddressesUpdateTagsOptions) (PublicIPAddressesUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, publicIPAddressName, parameters, options)
 	if err != nil {
-		return PublicIPAddressResponse{}, err
+		return PublicIPAddressesUpdateTagsResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return PublicIPAddressResponse{}, err
+		return PublicIPAddressesUpdateTagsResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return PublicIPAddressResponse{}, client.updateTagsHandleError(resp)
+		return PublicIPAddressesUpdateTagsResponse{}, client.updateTagsHandleError(resp)
 	}
 	return client.updateTagsHandleResponse(resp)
 }
@@ -705,12 +693,12 @@ func (client *PublicIPAddressesClient) updateTagsCreateRequest(ctx context.Conte
 }
 
 // updateTagsHandleResponse handles the UpdateTags response.
-func (client *PublicIPAddressesClient) updateTagsHandleResponse(resp *azcore.Response) (PublicIPAddressResponse, error) {
-	var val *PublicIPAddress
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return PublicIPAddressResponse{}, err
+func (client *PublicIPAddressesClient) updateTagsHandleResponse(resp *azcore.Response) (PublicIPAddressesUpdateTagsResponse, error) {
+	result := PublicIPAddressesUpdateTagsResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.PublicIPAddress); err != nil {
+		return PublicIPAddressesUpdateTagsResponse{}, err
 	}
-	return PublicIPAddressResponse{RawResponse: resp.Response, PublicIPAddress: val}, nil
+	return result, nil
 }
 
 // updateTagsHandleError handles the UpdateTags error response.

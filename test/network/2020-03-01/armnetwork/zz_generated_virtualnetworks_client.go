@@ -33,17 +33,17 @@ func NewVirtualNetworksClient(con *armcore.Connection, subscriptionID string) *V
 
 // CheckIPAddressAvailability - Checks whether a private IP address is available for use.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualNetworksClient) CheckIPAddressAvailability(ctx context.Context, resourceGroupName string, virtualNetworkName string, ipAddress string, options *VirtualNetworksCheckIPAddressAvailabilityOptions) (IPAddressAvailabilityResultResponse, error) {
+func (client *VirtualNetworksClient) CheckIPAddressAvailability(ctx context.Context, resourceGroupName string, virtualNetworkName string, ipAddress string, options *VirtualNetworksCheckIPAddressAvailabilityOptions) (VirtualNetworksCheckIPAddressAvailabilityResponse, error) {
 	req, err := client.checkIPAddressAvailabilityCreateRequest(ctx, resourceGroupName, virtualNetworkName, ipAddress, options)
 	if err != nil {
-		return IPAddressAvailabilityResultResponse{}, err
+		return VirtualNetworksCheckIPAddressAvailabilityResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return IPAddressAvailabilityResultResponse{}, err
+		return VirtualNetworksCheckIPAddressAvailabilityResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return IPAddressAvailabilityResultResponse{}, client.checkIPAddressAvailabilityHandleError(resp)
+		return VirtualNetworksCheckIPAddressAvailabilityResponse{}, client.checkIPAddressAvailabilityHandleError(resp)
 	}
 	return client.checkIPAddressAvailabilityHandleResponse(resp)
 }
@@ -77,12 +77,12 @@ func (client *VirtualNetworksClient) checkIPAddressAvailabilityCreateRequest(ctx
 }
 
 // checkIPAddressAvailabilityHandleResponse handles the CheckIPAddressAvailability response.
-func (client *VirtualNetworksClient) checkIPAddressAvailabilityHandleResponse(resp *azcore.Response) (IPAddressAvailabilityResultResponse, error) {
-	var val *IPAddressAvailabilityResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return IPAddressAvailabilityResultResponse{}, err
+func (client *VirtualNetworksClient) checkIPAddressAvailabilityHandleResponse(resp *azcore.Response) (VirtualNetworksCheckIPAddressAvailabilityResponse, error) {
+	result := VirtualNetworksCheckIPAddressAvailabilityResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.IPAddressAvailabilityResult); err != nil {
+		return VirtualNetworksCheckIPAddressAvailabilityResponse{}, err
 	}
-	return IPAddressAvailabilityResultResponse{RawResponse: resp.Response, IPAddressAvailabilityResult: val}, nil
+	return result, nil
 }
 
 // checkIPAddressAvailabilityHandleError handles the CheckIPAddressAvailability error response.
@@ -100,47 +100,47 @@ func (client *VirtualNetworksClient) checkIPAddressAvailabilityHandleError(resp 
 
 // BeginCreateOrUpdate - Creates or updates a virtual network in the specified resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualNetworksClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkName string, parameters VirtualNetwork, options *VirtualNetworksBeginCreateOrUpdateOptions) (VirtualNetworkPollerResponse, error) {
+func (client *VirtualNetworksClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkName string, parameters VirtualNetwork, options *VirtualNetworksBeginCreateOrUpdateOptions) (VirtualNetworksCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualNetworkName, parameters, options)
 	if err != nil {
-		return VirtualNetworkPollerResponse{}, err
+		return VirtualNetworksCreateOrUpdatePollerResponse{}, err
 	}
-	result := VirtualNetworkPollerResponse{
+	result := VirtualNetworksCreateOrUpdatePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("VirtualNetworksClient.CreateOrUpdate", "azure-async-operation", resp, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return VirtualNetworkPollerResponse{}, err
+		return VirtualNetworksCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &virtualNetworkPoller{
+	poller := &virtualNetworksCreateOrUpdatePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworksCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new VirtualNetworkPoller from the specified resume token.
-// token - The value must come from a previous call to VirtualNetworkPoller.ResumeToken().
-func (client *VirtualNetworksClient) ResumeCreateOrUpdate(ctx context.Context, token string) (VirtualNetworkPollerResponse, error) {
+// ResumeCreateOrUpdate creates a new VirtualNetworksCreateOrUpdatePoller from the specified resume token.
+// token - The value must come from a previous call to VirtualNetworksCreateOrUpdatePoller.ResumeToken().
+func (client *VirtualNetworksClient) ResumeCreateOrUpdate(ctx context.Context, token string) (VirtualNetworksCreateOrUpdatePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworksClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return VirtualNetworkPollerResponse{}, err
+		return VirtualNetworksCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &virtualNetworkPoller{
+	poller := &virtualNetworksCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return VirtualNetworkPollerResponse{}, err
+		return VirtualNetworksCreateOrUpdatePollerResponse{}, err
 	}
-	result := VirtualNetworkPollerResponse{
+	result := VirtualNetworksCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworksCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -205,47 +205,47 @@ func (client *VirtualNetworksClient) createOrUpdateHandleError(resp *azcore.Resp
 
 // BeginDelete - Deletes the specified virtual network.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualNetworksClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualNetworkName string, options *VirtualNetworksBeginDeleteOptions) (HTTPPollerResponse, error) {
+func (client *VirtualNetworksClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualNetworkName string, options *VirtualNetworksBeginDeleteOptions) (VirtualNetworksDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, virtualNetworkName, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return VirtualNetworksDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := VirtualNetworksDeletePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("VirtualNetworksClient.Delete", "location", resp, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return VirtualNetworksDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &virtualNetworksDeletePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworksDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeDelete creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *VirtualNetworksClient) ResumeDelete(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeDelete creates a new VirtualNetworksDeletePoller from the specified resume token.
+// token - The value must come from a previous call to VirtualNetworksDeletePoller.ResumeToken().
+func (client *VirtualNetworksClient) ResumeDelete(ctx context.Context, token string) (VirtualNetworksDeletePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworksClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return VirtualNetworksDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &virtualNetworksDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return VirtualNetworksDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := VirtualNetworksDeletePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworksDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -310,17 +310,17 @@ func (client *VirtualNetworksClient) deleteHandleError(resp *azcore.Response) er
 
 // Get - Gets the specified virtual network by resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualNetworksClient) Get(ctx context.Context, resourceGroupName string, virtualNetworkName string, options *VirtualNetworksGetOptions) (VirtualNetworkResponse, error) {
+func (client *VirtualNetworksClient) Get(ctx context.Context, resourceGroupName string, virtualNetworkName string, options *VirtualNetworksGetOptions) (VirtualNetworksGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, virtualNetworkName, options)
 	if err != nil {
-		return VirtualNetworkResponse{}, err
+		return VirtualNetworksGetResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return VirtualNetworkResponse{}, err
+		return VirtualNetworksGetResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return VirtualNetworkResponse{}, client.getHandleError(resp)
+		return VirtualNetworksGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -356,12 +356,12 @@ func (client *VirtualNetworksClient) getCreateRequest(ctx context.Context, resou
 }
 
 // getHandleResponse handles the Get response.
-func (client *VirtualNetworksClient) getHandleResponse(resp *azcore.Response) (VirtualNetworkResponse, error) {
-	var val *VirtualNetwork
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return VirtualNetworkResponse{}, err
+func (client *VirtualNetworksClient) getHandleResponse(resp *azcore.Response) (VirtualNetworksGetResponse, error) {
+	result := VirtualNetworksGetResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.VirtualNetwork); err != nil {
+		return VirtualNetworksGetResponse{}, err
 	}
-	return VirtualNetworkResponse{RawResponse: resp.Response, VirtualNetwork: val}, nil
+	return result, nil
 }
 
 // getHandleError handles the Get error response.
@@ -379,18 +379,15 @@ func (client *VirtualNetworksClient) getHandleError(resp *azcore.Response) error
 
 // List - Gets all virtual networks in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualNetworksClient) List(resourceGroupName string, options *VirtualNetworksListOptions) VirtualNetworkListResultPager {
-	return &virtualNetworkListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *VirtualNetworksClient) List(resourceGroupName string, options *VirtualNetworksListOptions) VirtualNetworksListPager {
+	return &virtualNetworksListPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, options)
 		},
-		responder: client.listHandleResponse,
-		errorer:   client.listHandleError,
-		advancer: func(ctx context.Context, resp VirtualNetworkListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp VirtualNetworksListResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.VirtualNetworkListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -418,12 +415,12 @@ func (client *VirtualNetworksClient) listCreateRequest(ctx context.Context, reso
 }
 
 // listHandleResponse handles the List response.
-func (client *VirtualNetworksClient) listHandleResponse(resp *azcore.Response) (VirtualNetworkListResultResponse, error) {
-	var val *VirtualNetworkListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return VirtualNetworkListResultResponse{}, err
+func (client *VirtualNetworksClient) listHandleResponse(resp *azcore.Response) (VirtualNetworksListResponse, error) {
+	result := VirtualNetworksListResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.VirtualNetworkListResult); err != nil {
+		return VirtualNetworksListResponse{}, err
 	}
-	return VirtualNetworkListResultResponse{RawResponse: resp.Response, VirtualNetworkListResult: val}, nil
+	return result, nil
 }
 
 // listHandleError handles the List error response.
@@ -441,18 +438,15 @@ func (client *VirtualNetworksClient) listHandleError(resp *azcore.Response) erro
 
 // ListAll - Gets all virtual networks in a subscription.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualNetworksClient) ListAll(options *VirtualNetworksListAllOptions) VirtualNetworkListResultPager {
-	return &virtualNetworkListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *VirtualNetworksClient) ListAll(options *VirtualNetworksListAllOptions) VirtualNetworksListAllPager {
+	return &virtualNetworksListAllPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listAllCreateRequest(ctx, options)
 		},
-		responder: client.listAllHandleResponse,
-		errorer:   client.listAllHandleError,
-		advancer: func(ctx context.Context, resp VirtualNetworkListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp VirtualNetworksListAllResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.VirtualNetworkListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -476,12 +470,12 @@ func (client *VirtualNetworksClient) listAllCreateRequest(ctx context.Context, o
 }
 
 // listAllHandleResponse handles the ListAll response.
-func (client *VirtualNetworksClient) listAllHandleResponse(resp *azcore.Response) (VirtualNetworkListResultResponse, error) {
-	var val *VirtualNetworkListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return VirtualNetworkListResultResponse{}, err
+func (client *VirtualNetworksClient) listAllHandleResponse(resp *azcore.Response) (VirtualNetworksListAllResponse, error) {
+	result := VirtualNetworksListAllResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.VirtualNetworkListResult); err != nil {
+		return VirtualNetworksListAllResponse{}, err
 	}
-	return VirtualNetworkListResultResponse{RawResponse: resp.Response, VirtualNetworkListResult: val}, nil
+	return result, nil
 }
 
 // listAllHandleError handles the ListAll error response.
@@ -499,18 +493,15 @@ func (client *VirtualNetworksClient) listAllHandleError(resp *azcore.Response) e
 
 // ListUsage - Lists usage stats.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualNetworksClient) ListUsage(resourceGroupName string, virtualNetworkName string, options *VirtualNetworksListUsageOptions) VirtualNetworkListUsageResultPager {
-	return &virtualNetworkListUsageResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *VirtualNetworksClient) ListUsage(resourceGroupName string, virtualNetworkName string, options *VirtualNetworksListUsageOptions) VirtualNetworksListUsagePager {
+	return &virtualNetworksListUsagePager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listUsageCreateRequest(ctx, resourceGroupName, virtualNetworkName, options)
 		},
-		responder: client.listUsageHandleResponse,
-		errorer:   client.listUsageHandleError,
-		advancer: func(ctx context.Context, resp VirtualNetworkListUsageResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp VirtualNetworksListUsageResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.VirtualNetworkListUsageResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -542,12 +533,12 @@ func (client *VirtualNetworksClient) listUsageCreateRequest(ctx context.Context,
 }
 
 // listUsageHandleResponse handles the ListUsage response.
-func (client *VirtualNetworksClient) listUsageHandleResponse(resp *azcore.Response) (VirtualNetworkListUsageResultResponse, error) {
-	var val *VirtualNetworkListUsageResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return VirtualNetworkListUsageResultResponse{}, err
+func (client *VirtualNetworksClient) listUsageHandleResponse(resp *azcore.Response) (VirtualNetworksListUsageResponse, error) {
+	result := VirtualNetworksListUsageResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.VirtualNetworkListUsageResult); err != nil {
+		return VirtualNetworksListUsageResponse{}, err
 	}
-	return VirtualNetworkListUsageResultResponse{RawResponse: resp.Response, VirtualNetworkListUsageResult: val}, nil
+	return result, nil
 }
 
 // listUsageHandleError handles the ListUsage error response.
@@ -565,17 +556,17 @@ func (client *VirtualNetworksClient) listUsageHandleError(resp *azcore.Response)
 
 // UpdateTags - Updates a virtual network tags.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualNetworksClient) UpdateTags(ctx context.Context, resourceGroupName string, virtualNetworkName string, parameters TagsObject, options *VirtualNetworksUpdateTagsOptions) (VirtualNetworkResponse, error) {
+func (client *VirtualNetworksClient) UpdateTags(ctx context.Context, resourceGroupName string, virtualNetworkName string, parameters TagsObject, options *VirtualNetworksUpdateTagsOptions) (VirtualNetworksUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, virtualNetworkName, parameters, options)
 	if err != nil {
-		return VirtualNetworkResponse{}, err
+		return VirtualNetworksUpdateTagsResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return VirtualNetworkResponse{}, err
+		return VirtualNetworksUpdateTagsResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return VirtualNetworkResponse{}, client.updateTagsHandleError(resp)
+		return VirtualNetworksUpdateTagsResponse{}, client.updateTagsHandleError(resp)
 	}
 	return client.updateTagsHandleResponse(resp)
 }
@@ -608,12 +599,12 @@ func (client *VirtualNetworksClient) updateTagsCreateRequest(ctx context.Context
 }
 
 // updateTagsHandleResponse handles the UpdateTags response.
-func (client *VirtualNetworksClient) updateTagsHandleResponse(resp *azcore.Response) (VirtualNetworkResponse, error) {
-	var val *VirtualNetwork
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return VirtualNetworkResponse{}, err
+func (client *VirtualNetworksClient) updateTagsHandleResponse(resp *azcore.Response) (VirtualNetworksUpdateTagsResponse, error) {
+	result := VirtualNetworksUpdateTagsResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.VirtualNetwork); err != nil {
+		return VirtualNetworksUpdateTagsResponse{}, err
 	}
-	return VirtualNetworkResponse{RawResponse: resp.Response, VirtualNetwork: val}, nil
+	return result, nil
 }
 
 // updateTagsHandleError handles the UpdateTags error response.

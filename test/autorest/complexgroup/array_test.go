@@ -22,7 +22,7 @@ func TestArrayGetEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetEmpty: %v", err)
 	}
-	if r := cmp.Diff(result.ArrayWrapper, &ArrayWrapper{
+	if r := cmp.Diff(result.ArrayWrapper, ArrayWrapper{
 		Array: []*string{},
 	}); r != "" {
 		t.Fatal(r)
@@ -35,7 +35,7 @@ func TestArrayGetNotProvided(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetNotProvided: %v", err)
 	}
-	if r := cmp.Diff(result.ArrayWrapper, &ArrayWrapper{}); r != "" {
+	if r := cmp.Diff(result.ArrayWrapper, ArrayWrapper{}); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -46,7 +46,7 @@ func TestArrayGetValid(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetValid: %v", err)
 	}
-	if r := cmp.Diff(result.ArrayWrapper, &ArrayWrapper{
+	if r := cmp.Diff(result.ArrayWrapper, ArrayWrapper{
 		Array: []*string{
 			to.StringPtr("1, 2, 3, 4"),
 			to.StringPtr(""),
@@ -65,7 +65,7 @@ func TestArrayPutEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutEmpty: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -82,7 +82,7 @@ func TestArrayPutValid(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutValid: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }

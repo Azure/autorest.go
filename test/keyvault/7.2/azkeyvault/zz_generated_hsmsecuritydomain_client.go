@@ -29,47 +29,47 @@ func NewHSMSecurityDomainClient(con *Connection) *HSMSecurityDomainClient {
 
 // BeginDownload - Retrieves the Security Domain from the managed HSM. Calling this endpoint can be used to activate a provisioned managed HSM resource.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *HSMSecurityDomainClient) BeginDownload(ctx context.Context, vaultBaseURL string, certificateInfoObject CertificateInfoObject, options *HSMSecurityDomainBeginDownloadOptions) (SecurityDomainObjectPollerResponse, error) {
+func (client *HSMSecurityDomainClient) BeginDownload(ctx context.Context, vaultBaseURL string, certificateInfoObject CertificateInfoObject, options *HSMSecurityDomainBeginDownloadOptions) (HSMSecurityDomainDownloadPollerResponse, error) {
 	resp, err := client.download(ctx, vaultBaseURL, certificateInfoObject, options)
 	if err != nil {
-		return SecurityDomainObjectPollerResponse{}, err
+		return HSMSecurityDomainDownloadPollerResponse{}, err
 	}
-	result := SecurityDomainObjectPollerResponse{
+	result := HSMSecurityDomainDownloadPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := azcore.NewLROPoller("HSMSecurityDomainClient.Download", resp, client.con.Pipeline(), client.downloadHandleError)
 	if err != nil {
-		return SecurityDomainObjectPollerResponse{}, err
+		return HSMSecurityDomainDownloadPollerResponse{}, err
 	}
-	poller := &securityDomainObjectPoller{
+	poller := &hsmSecurityDomainDownloadPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SecurityDomainObjectResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (HSMSecurityDomainDownloadResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeDownload creates a new SecurityDomainObjectPoller from the specified resume token.
-// token - The value must come from a previous call to SecurityDomainObjectPoller.ResumeToken().
-func (client *HSMSecurityDomainClient) ResumeDownload(ctx context.Context, token string) (SecurityDomainObjectPollerResponse, error) {
+// ResumeDownload creates a new HSMSecurityDomainDownloadPoller from the specified resume token.
+// token - The value must come from a previous call to HSMSecurityDomainDownloadPoller.ResumeToken().
+func (client *HSMSecurityDomainClient) ResumeDownload(ctx context.Context, token string) (HSMSecurityDomainDownloadPollerResponse, error) {
 	pt, err := azcore.NewLROPollerFromResumeToken("HSMSecurityDomainClient.Download", token, client.con.Pipeline(), client.downloadHandleError)
 	if err != nil {
-		return SecurityDomainObjectPollerResponse{}, err
+		return HSMSecurityDomainDownloadPollerResponse{}, err
 	}
-	poller := &securityDomainObjectPoller{
+	poller := &hsmSecurityDomainDownloadPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return SecurityDomainObjectPollerResponse{}, err
+		return HSMSecurityDomainDownloadPollerResponse{}, err
 	}
-	result := SecurityDomainObjectPollerResponse{
+	result := HSMSecurityDomainDownloadPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SecurityDomainObjectResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (HSMSecurityDomainDownloadResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -124,17 +124,17 @@ func (client *HSMSecurityDomainClient) downloadHandleError(resp *azcore.Response
 
 // DownloadPending - Retrieves the Security Domain download operation status
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *HSMSecurityDomainClient) DownloadPending(ctx context.Context, vaultBaseURL string, options *HSMSecurityDomainDownloadPendingOptions) (SecurityDomainOperationStatusResponse, error) {
+func (client *HSMSecurityDomainClient) DownloadPending(ctx context.Context, vaultBaseURL string, options *HSMSecurityDomainDownloadPendingOptions) (HSMSecurityDomainDownloadPendingResponse, error) {
 	req, err := client.downloadPendingCreateRequest(ctx, vaultBaseURL, options)
 	if err != nil {
-		return SecurityDomainOperationStatusResponse{}, err
+		return HSMSecurityDomainDownloadPendingResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return SecurityDomainOperationStatusResponse{}, err
+		return HSMSecurityDomainDownloadPendingResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return SecurityDomainOperationStatusResponse{}, client.downloadPendingHandleError(resp)
+		return HSMSecurityDomainDownloadPendingResponse{}, client.downloadPendingHandleError(resp)
 	}
 	return client.downloadPendingHandleResponse(resp)
 }
@@ -154,12 +154,12 @@ func (client *HSMSecurityDomainClient) downloadPendingCreateRequest(ctx context.
 }
 
 // downloadPendingHandleResponse handles the DownloadPending response.
-func (client *HSMSecurityDomainClient) downloadPendingHandleResponse(resp *azcore.Response) (SecurityDomainOperationStatusResponse, error) {
-	var val *SecurityDomainOperationStatus
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return SecurityDomainOperationStatusResponse{}, err
+func (client *HSMSecurityDomainClient) downloadPendingHandleResponse(resp *azcore.Response) (HSMSecurityDomainDownloadPendingResponse, error) {
+	result := HSMSecurityDomainDownloadPendingResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.SecurityDomainOperationStatus); err != nil {
+		return HSMSecurityDomainDownloadPendingResponse{}, err
 	}
-	return SecurityDomainOperationStatusResponse{RawResponse: resp.Response, SecurityDomainOperationStatus: val}, nil
+	return result, nil
 }
 
 // downloadPendingHandleError handles the DownloadPending error response.
@@ -177,17 +177,17 @@ func (client *HSMSecurityDomainClient) downloadPendingHandleError(resp *azcore.R
 
 // TransferKey - Retrieve Security Domain transfer key
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *HSMSecurityDomainClient) TransferKey(ctx context.Context, vaultBaseURL string, options *HSMSecurityDomainTransferKeyOptions) (TransferKeyResponse, error) {
+func (client *HSMSecurityDomainClient) TransferKey(ctx context.Context, vaultBaseURL string, options *HSMSecurityDomainTransferKeyOptions) (HSMSecurityDomainTransferKeyResponse, error) {
 	req, err := client.transferKeyCreateRequest(ctx, vaultBaseURL, options)
 	if err != nil {
-		return TransferKeyResponse{}, err
+		return HSMSecurityDomainTransferKeyResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return TransferKeyResponse{}, err
+		return HSMSecurityDomainTransferKeyResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return TransferKeyResponse{}, client.transferKeyHandleError(resp)
+		return HSMSecurityDomainTransferKeyResponse{}, client.transferKeyHandleError(resp)
 	}
 	return client.transferKeyHandleResponse(resp)
 }
@@ -210,12 +210,12 @@ func (client *HSMSecurityDomainClient) transferKeyCreateRequest(ctx context.Cont
 }
 
 // transferKeyHandleResponse handles the TransferKey response.
-func (client *HSMSecurityDomainClient) transferKeyHandleResponse(resp *azcore.Response) (TransferKeyResponse, error) {
-	var val *TransferKey
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return TransferKeyResponse{}, err
+func (client *HSMSecurityDomainClient) transferKeyHandleResponse(resp *azcore.Response) (HSMSecurityDomainTransferKeyResponse, error) {
+	result := HSMSecurityDomainTransferKeyResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.TransferKey); err != nil {
+		return HSMSecurityDomainTransferKeyResponse{}, err
 	}
-	return TransferKeyResponse{RawResponse: resp.Response, TransferKey: val}, nil
+	return result, nil
 }
 
 // transferKeyHandleError handles the TransferKey error response.
@@ -233,47 +233,47 @@ func (client *HSMSecurityDomainClient) transferKeyHandleError(resp *azcore.Respo
 
 // BeginUpload - Restore the provided Security Domain.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *HSMSecurityDomainClient) BeginUpload(ctx context.Context, vaultBaseURL string, securityDomain SecurityDomainObject, options *HSMSecurityDomainBeginUploadOptions) (SecurityDomainOperationStatusPollerResponse, error) {
+func (client *HSMSecurityDomainClient) BeginUpload(ctx context.Context, vaultBaseURL string, securityDomain SecurityDomainObject, options *HSMSecurityDomainBeginUploadOptions) (HSMSecurityDomainUploadPollerResponse, error) {
 	resp, err := client.upload(ctx, vaultBaseURL, securityDomain, options)
 	if err != nil {
-		return SecurityDomainOperationStatusPollerResponse{}, err
+		return HSMSecurityDomainUploadPollerResponse{}, err
 	}
-	result := SecurityDomainOperationStatusPollerResponse{
+	result := HSMSecurityDomainUploadPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := azcore.NewLROPoller("HSMSecurityDomainClient.Upload", resp, client.con.Pipeline(), client.uploadHandleError)
 	if err != nil {
-		return SecurityDomainOperationStatusPollerResponse{}, err
+		return HSMSecurityDomainUploadPollerResponse{}, err
 	}
-	poller := &securityDomainOperationStatusPoller{
+	poller := &hsmSecurityDomainUploadPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SecurityDomainOperationStatusResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (HSMSecurityDomainUploadResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeUpload creates a new SecurityDomainOperationStatusPoller from the specified resume token.
-// token - The value must come from a previous call to SecurityDomainOperationStatusPoller.ResumeToken().
-func (client *HSMSecurityDomainClient) ResumeUpload(ctx context.Context, token string) (SecurityDomainOperationStatusPollerResponse, error) {
+// ResumeUpload creates a new HSMSecurityDomainUploadPoller from the specified resume token.
+// token - The value must come from a previous call to HSMSecurityDomainUploadPoller.ResumeToken().
+func (client *HSMSecurityDomainClient) ResumeUpload(ctx context.Context, token string) (HSMSecurityDomainUploadPollerResponse, error) {
 	pt, err := azcore.NewLROPollerFromResumeToken("HSMSecurityDomainClient.Upload", token, client.con.Pipeline(), client.uploadHandleError)
 	if err != nil {
-		return SecurityDomainOperationStatusPollerResponse{}, err
+		return HSMSecurityDomainUploadPollerResponse{}, err
 	}
-	poller := &securityDomainOperationStatusPoller{
+	poller := &hsmSecurityDomainUploadPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return SecurityDomainOperationStatusPollerResponse{}, err
+		return HSMSecurityDomainUploadPollerResponse{}, err
 	}
-	result := SecurityDomainOperationStatusPollerResponse{
+	result := HSMSecurityDomainUploadPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SecurityDomainOperationStatusResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (HSMSecurityDomainUploadResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -325,17 +325,17 @@ func (client *HSMSecurityDomainClient) uploadHandleError(resp *azcore.Response) 
 
 // UploadPending - Get Security Domain upload operation status
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *HSMSecurityDomainClient) UploadPending(ctx context.Context, vaultBaseURL string, options *HSMSecurityDomainUploadPendingOptions) (SecurityDomainOperationStatusResponse, error) {
+func (client *HSMSecurityDomainClient) UploadPending(ctx context.Context, vaultBaseURL string, options *HSMSecurityDomainUploadPendingOptions) (HSMSecurityDomainUploadPendingResponse, error) {
 	req, err := client.uploadPendingCreateRequest(ctx, vaultBaseURL, options)
 	if err != nil {
-		return SecurityDomainOperationStatusResponse{}, err
+		return HSMSecurityDomainUploadPendingResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return SecurityDomainOperationStatusResponse{}, err
+		return HSMSecurityDomainUploadPendingResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return SecurityDomainOperationStatusResponse{}, client.uploadPendingHandleError(resp)
+		return HSMSecurityDomainUploadPendingResponse{}, client.uploadPendingHandleError(resp)
 	}
 	return client.uploadPendingHandleResponse(resp)
 }
@@ -355,12 +355,12 @@ func (client *HSMSecurityDomainClient) uploadPendingCreateRequest(ctx context.Co
 }
 
 // uploadPendingHandleResponse handles the UploadPending response.
-func (client *HSMSecurityDomainClient) uploadPendingHandleResponse(resp *azcore.Response) (SecurityDomainOperationStatusResponse, error) {
-	var val *SecurityDomainOperationStatus
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return SecurityDomainOperationStatusResponse{}, err
+func (client *HSMSecurityDomainClient) uploadPendingHandleResponse(resp *azcore.Response) (HSMSecurityDomainUploadPendingResponse, error) {
+	result := HSMSecurityDomainUploadPendingResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.SecurityDomainOperationStatus); err != nil {
+		return HSMSecurityDomainUploadPendingResponse{}, err
 	}
-	return SecurityDomainOperationStatusResponse{RawResponse: resp.Response, SecurityDomainOperationStatus: val}, nil
+	return result, nil
 }
 
 // uploadPendingHandleError handles the UploadPending error response.

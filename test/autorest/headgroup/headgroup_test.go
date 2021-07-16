@@ -5,6 +5,7 @@ package headgroup
 
 import (
 	"context"
+	"net/http"
 	"testing"
 )
 
@@ -19,8 +20,8 @@ func TestHead200(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if !resp.Success {
-		t.Fatal("expected success")
+	if s := resp.RawResponse.StatusCode; s != http.StatusOK {
+		t.Fatalf("expected status code %d", s)
 	}
 }
 
@@ -31,8 +32,8 @@ func TestHead204(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if !resp.Success {
-		t.Fatal("expected success")
+	if s := resp.RawResponse.StatusCode; s != http.StatusNoContent {
+		t.Fatalf("expected status code %d", s)
 	}
 }
 
@@ -43,7 +44,7 @@ func TestHead404(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if resp.Success {
-		t.Fatal("expected non-success")
+	if s := resp.RawResponse.StatusCode; s != http.StatusNotFound {
+		t.Fatalf("expected status code %d", s)
 	}
 }

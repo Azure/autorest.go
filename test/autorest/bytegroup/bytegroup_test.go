@@ -76,7 +76,7 @@ func TestPutNonASCII(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutNonASCII: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }

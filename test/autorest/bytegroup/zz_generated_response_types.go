@@ -9,11 +9,60 @@ package bytegroup
 
 import "net/http"
 
-// ByteArrayResponse is the response envelope for operations that return a []byte type.
-type ByteArrayResponse struct {
+// ByteGetEmptyResponse contains the response from method Byte.GetEmpty.
+type ByteGetEmptyResponse struct {
+	ByteGetEmptyResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
 
+// ByteGetEmptyResult contains the result from method Byte.GetEmpty.
+type ByteGetEmptyResult struct {
+	// The empty byte value ''
+	Value []byte
+}
+
+// ByteGetInvalidResponse contains the response from method Byte.GetInvalid.
+type ByteGetInvalidResponse struct {
+	ByteGetInvalidResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ByteGetInvalidResult contains the result from method Byte.GetInvalid.
+type ByteGetInvalidResult struct {
+	// The invalid byte value '::::SWAGGER::::'
+	Value []byte
+}
+
+// ByteGetNonASCIIResponse contains the response from method Byte.GetNonASCII.
+type ByteGetNonASCIIResponse struct {
+	ByteGetNonASCIIResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ByteGetNonASCIIResult contains the result from method Byte.GetNonASCII.
+type ByteGetNonASCIIResult struct {
+	// Non-ascii base-64 encoded byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)
+	Value []byte
+}
+
+// ByteGetNullResponse contains the response from method Byte.GetNull.
+type ByteGetNullResponse struct {
+	ByteGetNullResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ByteGetNullResult contains the result from method Byte.GetNull.
+type ByteGetNullResult struct {
 	// The null byte value
 	Value []byte
+}
+
+// BytePutNonASCIIResponse contains the response from method Byte.PutNonASCII.
+type BytePutNonASCIIResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }

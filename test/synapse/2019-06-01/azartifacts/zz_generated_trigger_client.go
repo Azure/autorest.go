@@ -24,47 +24,47 @@ type triggerClient struct {
 
 // BeginCreateOrUpdateTrigger - Creates or updates a trigger.
 // If the operation fails it returns the *CloudError error type.
-func (client *triggerClient) BeginCreateOrUpdateTrigger(ctx context.Context, triggerName string, trigger TriggerResource, options *TriggerBeginCreateOrUpdateTriggerOptions) (TriggerResourcePollerResponse, error) {
+func (client *triggerClient) BeginCreateOrUpdateTrigger(ctx context.Context, triggerName string, trigger TriggerResource, options *TriggerBeginCreateOrUpdateTriggerOptions) (TriggerCreateOrUpdateTriggerPollerResponse, error) {
 	resp, err := client.createOrUpdateTrigger(ctx, triggerName, trigger, options)
 	if err != nil {
-		return TriggerResourcePollerResponse{}, err
+		return TriggerCreateOrUpdateTriggerPollerResponse{}, err
 	}
-	result := TriggerResourcePollerResponse{
+	result := TriggerCreateOrUpdateTriggerPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := azcore.NewLROPoller("triggerClient.CreateOrUpdateTrigger", resp, client.con.Pipeline(), client.createOrUpdateTriggerHandleError)
 	if err != nil {
-		return TriggerResourcePollerResponse{}, err
+		return TriggerCreateOrUpdateTriggerPollerResponse{}, err
 	}
-	poller := &triggerResourcePoller{
+	poller := &triggerCreateOrUpdateTriggerPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (TriggerResourceResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (TriggerCreateOrUpdateTriggerResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeCreateOrUpdateTrigger creates a new TriggerResourcePoller from the specified resume token.
-// token - The value must come from a previous call to TriggerResourcePoller.ResumeToken().
-func (client *triggerClient) ResumeCreateOrUpdateTrigger(ctx context.Context, token string) (TriggerResourcePollerResponse, error) {
+// ResumeCreateOrUpdateTrigger creates a new TriggerCreateOrUpdateTriggerPoller from the specified resume token.
+// token - The value must come from a previous call to TriggerCreateOrUpdateTriggerPoller.ResumeToken().
+func (client *triggerClient) ResumeCreateOrUpdateTrigger(ctx context.Context, token string) (TriggerCreateOrUpdateTriggerPollerResponse, error) {
 	pt, err := azcore.NewLROPollerFromResumeToken("triggerClient.CreateOrUpdateTrigger", token, client.con.Pipeline(), client.createOrUpdateTriggerHandleError)
 	if err != nil {
-		return TriggerResourcePollerResponse{}, err
+		return TriggerCreateOrUpdateTriggerPollerResponse{}, err
 	}
-	poller := &triggerResourcePoller{
+	poller := &triggerCreateOrUpdateTriggerPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return TriggerResourcePollerResponse{}, err
+		return TriggerCreateOrUpdateTriggerPollerResponse{}, err
 	}
-	result := TriggerResourcePollerResponse{
+	result := TriggerCreateOrUpdateTriggerPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (TriggerResourceResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (TriggerCreateOrUpdateTriggerResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -124,47 +124,47 @@ func (client *triggerClient) createOrUpdateTriggerHandleError(resp *azcore.Respo
 
 // BeginDeleteTrigger - Deletes a trigger.
 // If the operation fails it returns the *CloudError error type.
-func (client *triggerClient) BeginDeleteTrigger(ctx context.Context, triggerName string, options *TriggerBeginDeleteTriggerOptions) (HTTPPollerResponse, error) {
+func (client *triggerClient) BeginDeleteTrigger(ctx context.Context, triggerName string, options *TriggerBeginDeleteTriggerOptions) (TriggerDeleteTriggerPollerResponse, error) {
 	resp, err := client.deleteTrigger(ctx, triggerName, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return TriggerDeleteTriggerPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := TriggerDeleteTriggerPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := azcore.NewLROPoller("triggerClient.DeleteTrigger", resp, client.con.Pipeline(), client.deleteTriggerHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return TriggerDeleteTriggerPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &triggerDeleteTriggerPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (TriggerDeleteTriggerResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeDeleteTrigger creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *triggerClient) ResumeDeleteTrigger(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeDeleteTrigger creates a new TriggerDeleteTriggerPoller from the specified resume token.
+// token - The value must come from a previous call to TriggerDeleteTriggerPoller.ResumeToken().
+func (client *triggerClient) ResumeDeleteTrigger(ctx context.Context, token string) (TriggerDeleteTriggerPollerResponse, error) {
 	pt, err := azcore.NewLROPollerFromResumeToken("triggerClient.DeleteTrigger", token, client.con.Pipeline(), client.deleteTriggerHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return TriggerDeleteTriggerPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &triggerDeleteTriggerPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return TriggerDeleteTriggerPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := TriggerDeleteTriggerPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (TriggerDeleteTriggerResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -221,17 +221,17 @@ func (client *triggerClient) deleteTriggerHandleError(resp *azcore.Response) err
 
 // GetEventSubscriptionStatus - Get a trigger's event subscription status.
 // If the operation fails it returns the *CloudError error type.
-func (client *triggerClient) GetEventSubscriptionStatus(ctx context.Context, triggerName string, options *TriggerGetEventSubscriptionStatusOptions) (TriggerSubscriptionOperationStatusResponse, error) {
+func (client *triggerClient) GetEventSubscriptionStatus(ctx context.Context, triggerName string, options *TriggerGetEventSubscriptionStatusOptions) (TriggerGetEventSubscriptionStatusResponse, error) {
 	req, err := client.getEventSubscriptionStatusCreateRequest(ctx, triggerName, options)
 	if err != nil {
-		return TriggerSubscriptionOperationStatusResponse{}, err
+		return TriggerGetEventSubscriptionStatusResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return TriggerSubscriptionOperationStatusResponse{}, err
+		return TriggerGetEventSubscriptionStatusResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return TriggerSubscriptionOperationStatusResponse{}, client.getEventSubscriptionStatusHandleError(resp)
+		return TriggerGetEventSubscriptionStatusResponse{}, client.getEventSubscriptionStatusHandleError(resp)
 	}
 	return client.getEventSubscriptionStatusHandleResponse(resp)
 }
@@ -256,12 +256,12 @@ func (client *triggerClient) getEventSubscriptionStatusCreateRequest(ctx context
 }
 
 // getEventSubscriptionStatusHandleResponse handles the GetEventSubscriptionStatus response.
-func (client *triggerClient) getEventSubscriptionStatusHandleResponse(resp *azcore.Response) (TriggerSubscriptionOperationStatusResponse, error) {
-	var val *TriggerSubscriptionOperationStatus
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return TriggerSubscriptionOperationStatusResponse{}, err
+func (client *triggerClient) getEventSubscriptionStatusHandleResponse(resp *azcore.Response) (TriggerGetEventSubscriptionStatusResponse, error) {
+	result := TriggerGetEventSubscriptionStatusResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.TriggerSubscriptionOperationStatus); err != nil {
+		return TriggerGetEventSubscriptionStatusResponse{}, err
 	}
-	return TriggerSubscriptionOperationStatusResponse{RawResponse: resp.Response, TriggerSubscriptionOperationStatus: val}, nil
+	return result, nil
 }
 
 // getEventSubscriptionStatusHandleError handles the GetEventSubscriptionStatus error response.
@@ -279,17 +279,17 @@ func (client *triggerClient) getEventSubscriptionStatusHandleError(resp *azcore.
 
 // GetTrigger - Gets a trigger.
 // If the operation fails it returns the *CloudError error type.
-func (client *triggerClient) GetTrigger(ctx context.Context, triggerName string, options *TriggerGetTriggerOptions) (TriggerResourceResponse, error) {
+func (client *triggerClient) GetTrigger(ctx context.Context, triggerName string, options *TriggerGetTriggerOptions) (TriggerGetTriggerResponse, error) {
 	req, err := client.getTriggerCreateRequest(ctx, triggerName, options)
 	if err != nil {
-		return TriggerResourceResponse{}, err
+		return TriggerGetTriggerResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return TriggerResourceResponse{}, err
+		return TriggerGetTriggerResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusNotModified) {
-		return TriggerResourceResponse{}, client.getTriggerHandleError(resp)
+		return TriggerGetTriggerResponse{}, client.getTriggerHandleError(resp)
 	}
 	return client.getTriggerHandleResponse(resp)
 }
@@ -317,12 +317,12 @@ func (client *triggerClient) getTriggerCreateRequest(ctx context.Context, trigge
 }
 
 // getTriggerHandleResponse handles the GetTrigger response.
-func (client *triggerClient) getTriggerHandleResponse(resp *azcore.Response) (TriggerResourceResponse, error) {
-	var val *TriggerResource
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return TriggerResourceResponse{}, err
+func (client *triggerClient) getTriggerHandleResponse(resp *azcore.Response) (TriggerGetTriggerResponse, error) {
+	result := TriggerGetTriggerResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.TriggerResource); err != nil {
+		return TriggerGetTriggerResponse{}, err
 	}
-	return TriggerResourceResponse{RawResponse: resp.Response, TriggerResource: val}, nil
+	return result, nil
 }
 
 // getTriggerHandleError handles the GetTrigger error response.
@@ -340,18 +340,15 @@ func (client *triggerClient) getTriggerHandleError(resp *azcore.Response) error 
 
 // GetTriggersByWorkspace - Lists triggers.
 // If the operation fails it returns the *CloudError error type.
-func (client *triggerClient) GetTriggersByWorkspace(options *TriggerGetTriggersByWorkspaceOptions) TriggerListResponsePager {
-	return &triggerListResponsePager{
-		pipeline: client.con.Pipeline(),
+func (client *triggerClient) GetTriggersByWorkspace(options *TriggerGetTriggersByWorkspaceOptions) TriggerGetTriggersByWorkspacePager {
+	return &triggerGetTriggersByWorkspacePager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.getTriggersByWorkspaceCreateRequest(ctx, options)
 		},
-		responder: client.getTriggersByWorkspaceHandleResponse,
-		errorer:   client.getTriggersByWorkspaceHandleError,
-		advancer: func(ctx context.Context, resp TriggerListResponseResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp TriggerGetTriggersByWorkspaceResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.TriggerListResponse.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -371,12 +368,12 @@ func (client *triggerClient) getTriggersByWorkspaceCreateRequest(ctx context.Con
 }
 
 // getTriggersByWorkspaceHandleResponse handles the GetTriggersByWorkspace response.
-func (client *triggerClient) getTriggersByWorkspaceHandleResponse(resp *azcore.Response) (TriggerListResponseResponse, error) {
-	var val *TriggerListResponse
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return TriggerListResponseResponse{}, err
+func (client *triggerClient) getTriggersByWorkspaceHandleResponse(resp *azcore.Response) (TriggerGetTriggersByWorkspaceResponse, error) {
+	result := TriggerGetTriggersByWorkspaceResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.TriggerListResponse); err != nil {
+		return TriggerGetTriggersByWorkspaceResponse{}, err
 	}
-	return TriggerListResponseResponse{RawResponse: resp.Response, TriggerListResponse: val}, nil
+	return result, nil
 }
 
 // getTriggersByWorkspaceHandleError handles the GetTriggersByWorkspace error response.
@@ -394,47 +391,47 @@ func (client *triggerClient) getTriggersByWorkspaceHandleError(resp *azcore.Resp
 
 // BeginStartTrigger - Starts a trigger.
 // If the operation fails it returns the *CloudError error type.
-func (client *triggerClient) BeginStartTrigger(ctx context.Context, triggerName string, options *TriggerBeginStartTriggerOptions) (HTTPPollerResponse, error) {
+func (client *triggerClient) BeginStartTrigger(ctx context.Context, triggerName string, options *TriggerBeginStartTriggerOptions) (TriggerStartTriggerPollerResponse, error) {
 	resp, err := client.startTrigger(ctx, triggerName, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return TriggerStartTriggerPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := TriggerStartTriggerPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := azcore.NewLROPoller("triggerClient.StartTrigger", resp, client.con.Pipeline(), client.startTriggerHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return TriggerStartTriggerPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &triggerStartTriggerPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (TriggerStartTriggerResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeStartTrigger creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *triggerClient) ResumeStartTrigger(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeStartTrigger creates a new TriggerStartTriggerPoller from the specified resume token.
+// token - The value must come from a previous call to TriggerStartTriggerPoller.ResumeToken().
+func (client *triggerClient) ResumeStartTrigger(ctx context.Context, token string) (TriggerStartTriggerPollerResponse, error) {
 	pt, err := azcore.NewLROPollerFromResumeToken("triggerClient.StartTrigger", token, client.con.Pipeline(), client.startTriggerHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return TriggerStartTriggerPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &triggerStartTriggerPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return TriggerStartTriggerPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := TriggerStartTriggerPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (TriggerStartTriggerResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -491,47 +488,47 @@ func (client *triggerClient) startTriggerHandleError(resp *azcore.Response) erro
 
 // BeginStopTrigger - Stops a trigger.
 // If the operation fails it returns the *CloudError error type.
-func (client *triggerClient) BeginStopTrigger(ctx context.Context, triggerName string, options *TriggerBeginStopTriggerOptions) (HTTPPollerResponse, error) {
+func (client *triggerClient) BeginStopTrigger(ctx context.Context, triggerName string, options *TriggerBeginStopTriggerOptions) (TriggerStopTriggerPollerResponse, error) {
 	resp, err := client.stopTrigger(ctx, triggerName, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return TriggerStopTriggerPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := TriggerStopTriggerPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := azcore.NewLROPoller("triggerClient.StopTrigger", resp, client.con.Pipeline(), client.stopTriggerHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return TriggerStopTriggerPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &triggerStopTriggerPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (TriggerStopTriggerResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeStopTrigger creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *triggerClient) ResumeStopTrigger(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeStopTrigger creates a new TriggerStopTriggerPoller from the specified resume token.
+// token - The value must come from a previous call to TriggerStopTriggerPoller.ResumeToken().
+func (client *triggerClient) ResumeStopTrigger(ctx context.Context, token string) (TriggerStopTriggerPollerResponse, error) {
 	pt, err := azcore.NewLROPollerFromResumeToken("triggerClient.StopTrigger", token, client.con.Pipeline(), client.stopTriggerHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return TriggerStopTriggerPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &triggerStopTriggerPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return TriggerStopTriggerPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := TriggerStopTriggerPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (TriggerStopTriggerResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -588,47 +585,47 @@ func (client *triggerClient) stopTriggerHandleError(resp *azcore.Response) error
 
 // BeginSubscribeTriggerToEvents - Subscribe event trigger to events.
 // If the operation fails it returns the *CloudError error type.
-func (client *triggerClient) BeginSubscribeTriggerToEvents(ctx context.Context, triggerName string, options *TriggerBeginSubscribeTriggerToEventsOptions) (TriggerSubscriptionOperationStatusPollerResponse, error) {
+func (client *triggerClient) BeginSubscribeTriggerToEvents(ctx context.Context, triggerName string, options *TriggerBeginSubscribeTriggerToEventsOptions) (TriggerSubscribeTriggerToEventsPollerResponse, error) {
 	resp, err := client.subscribeTriggerToEvents(ctx, triggerName, options)
 	if err != nil {
-		return TriggerSubscriptionOperationStatusPollerResponse{}, err
+		return TriggerSubscribeTriggerToEventsPollerResponse{}, err
 	}
-	result := TriggerSubscriptionOperationStatusPollerResponse{
+	result := TriggerSubscribeTriggerToEventsPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := azcore.NewLROPoller("triggerClient.SubscribeTriggerToEvents", resp, client.con.Pipeline(), client.subscribeTriggerToEventsHandleError)
 	if err != nil {
-		return TriggerSubscriptionOperationStatusPollerResponse{}, err
+		return TriggerSubscribeTriggerToEventsPollerResponse{}, err
 	}
-	poller := &triggerSubscriptionOperationStatusPoller{
+	poller := &triggerSubscribeTriggerToEventsPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (TriggerSubscriptionOperationStatusResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (TriggerSubscribeTriggerToEventsResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeSubscribeTriggerToEvents creates a new TriggerSubscriptionOperationStatusPoller from the specified resume token.
-// token - The value must come from a previous call to TriggerSubscriptionOperationStatusPoller.ResumeToken().
-func (client *triggerClient) ResumeSubscribeTriggerToEvents(ctx context.Context, token string) (TriggerSubscriptionOperationStatusPollerResponse, error) {
+// ResumeSubscribeTriggerToEvents creates a new TriggerSubscribeTriggerToEventsPoller from the specified resume token.
+// token - The value must come from a previous call to TriggerSubscribeTriggerToEventsPoller.ResumeToken().
+func (client *triggerClient) ResumeSubscribeTriggerToEvents(ctx context.Context, token string) (TriggerSubscribeTriggerToEventsPollerResponse, error) {
 	pt, err := azcore.NewLROPollerFromResumeToken("triggerClient.SubscribeTriggerToEvents", token, client.con.Pipeline(), client.subscribeTriggerToEventsHandleError)
 	if err != nil {
-		return TriggerSubscriptionOperationStatusPollerResponse{}, err
+		return TriggerSubscribeTriggerToEventsPollerResponse{}, err
 	}
-	poller := &triggerSubscriptionOperationStatusPoller{
+	poller := &triggerSubscribeTriggerToEventsPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return TriggerSubscriptionOperationStatusPollerResponse{}, err
+		return TriggerSubscribeTriggerToEventsPollerResponse{}, err
 	}
-	result := TriggerSubscriptionOperationStatusPollerResponse{
+	result := TriggerSubscribeTriggerToEventsPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (TriggerSubscriptionOperationStatusResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (TriggerSubscribeTriggerToEventsResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -685,47 +682,47 @@ func (client *triggerClient) subscribeTriggerToEventsHandleError(resp *azcore.Re
 
 // BeginUnsubscribeTriggerFromEvents - Unsubscribe event trigger from events.
 // If the operation fails it returns the *CloudError error type.
-func (client *triggerClient) BeginUnsubscribeTriggerFromEvents(ctx context.Context, triggerName string, options *TriggerBeginUnsubscribeTriggerFromEventsOptions) (TriggerSubscriptionOperationStatusPollerResponse, error) {
+func (client *triggerClient) BeginUnsubscribeTriggerFromEvents(ctx context.Context, triggerName string, options *TriggerBeginUnsubscribeTriggerFromEventsOptions) (TriggerUnsubscribeTriggerFromEventsPollerResponse, error) {
 	resp, err := client.unsubscribeTriggerFromEvents(ctx, triggerName, options)
 	if err != nil {
-		return TriggerSubscriptionOperationStatusPollerResponse{}, err
+		return TriggerUnsubscribeTriggerFromEventsPollerResponse{}, err
 	}
-	result := TriggerSubscriptionOperationStatusPollerResponse{
+	result := TriggerUnsubscribeTriggerFromEventsPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := azcore.NewLROPoller("triggerClient.UnsubscribeTriggerFromEvents", resp, client.con.Pipeline(), client.unsubscribeTriggerFromEventsHandleError)
 	if err != nil {
-		return TriggerSubscriptionOperationStatusPollerResponse{}, err
+		return TriggerUnsubscribeTriggerFromEventsPollerResponse{}, err
 	}
-	poller := &triggerSubscriptionOperationStatusPoller{
+	poller := &triggerUnsubscribeTriggerFromEventsPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (TriggerSubscriptionOperationStatusResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (TriggerUnsubscribeTriggerFromEventsResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeUnsubscribeTriggerFromEvents creates a new TriggerSubscriptionOperationStatusPoller from the specified resume token.
-// token - The value must come from a previous call to TriggerSubscriptionOperationStatusPoller.ResumeToken().
-func (client *triggerClient) ResumeUnsubscribeTriggerFromEvents(ctx context.Context, token string) (TriggerSubscriptionOperationStatusPollerResponse, error) {
+// ResumeUnsubscribeTriggerFromEvents creates a new TriggerUnsubscribeTriggerFromEventsPoller from the specified resume token.
+// token - The value must come from a previous call to TriggerUnsubscribeTriggerFromEventsPoller.ResumeToken().
+func (client *triggerClient) ResumeUnsubscribeTriggerFromEvents(ctx context.Context, token string) (TriggerUnsubscribeTriggerFromEventsPollerResponse, error) {
 	pt, err := azcore.NewLROPollerFromResumeToken("triggerClient.UnsubscribeTriggerFromEvents", token, client.con.Pipeline(), client.unsubscribeTriggerFromEventsHandleError)
 	if err != nil {
-		return TriggerSubscriptionOperationStatusPollerResponse{}, err
+		return TriggerUnsubscribeTriggerFromEventsPollerResponse{}, err
 	}
-	poller := &triggerSubscriptionOperationStatusPoller{
+	poller := &triggerUnsubscribeTriggerFromEventsPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return TriggerSubscriptionOperationStatusPollerResponse{}, err
+		return TriggerUnsubscribeTriggerFromEventsPollerResponse{}, err
 	}
-	result := TriggerSubscriptionOperationStatusPollerResponse{
+	result := TriggerUnsubscribeTriggerFromEventsPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (TriggerSubscriptionOperationStatusResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (TriggerUnsubscribeTriggerFromEventsResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil

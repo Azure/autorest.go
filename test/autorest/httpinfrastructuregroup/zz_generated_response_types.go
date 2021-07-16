@@ -9,112 +9,940 @@ package httpinfrastructuregroup
 
 import "net/http"
 
-// BResponse is the response envelope for operations that return a B type.
-type BResponse struct {
-	B *B
-
+// HTTPClientFailureDelete400Response contains the response from method HTTPClientFailure.Delete400.
+type HTTPClientFailureDelete400Response struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// BoolResponse is the response envelope for operations that return a bool type.
-type BoolResponse struct {
+// HTTPClientFailureDelete407Response contains the response from method HTTPClientFailure.Delete407.
+type HTTPClientFailureDelete407Response struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// simple boolean
-	Value *bool
 }
 
-// BooleanResponse contains a boolean response.
-type BooleanResponse struct {
+// HTTPClientFailureDelete417Response contains the response from method HTTPClientFailure.Delete417.
+type HTTPClientFailureDelete417Response struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
 
+// HTTPClientFailureGet400Response contains the response from method HTTPClientFailure.Get400.
+type HTTPClientFailureGet400Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPClientFailureGet402Response contains the response from method HTTPClientFailure.Get402.
+type HTTPClientFailureGet402Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPClientFailureGet403Response contains the response from method HTTPClientFailure.Get403.
+type HTTPClientFailureGet403Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPClientFailureGet411Response contains the response from method HTTPClientFailure.Get411.
+type HTTPClientFailureGet411Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPClientFailureGet412Response contains the response from method HTTPClientFailure.Get412.
+type HTTPClientFailureGet412Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPClientFailureGet416Response contains the response from method HTTPClientFailure.Get416.
+type HTTPClientFailureGet416Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPClientFailureHead400Response contains the response from method HTTPClientFailure.Head400.
+type HTTPClientFailureHead400Response struct {
+	HTTPClientFailureHead400Result
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPClientFailureHead400Result contains the result from method HTTPClientFailure.Head400.
+type HTTPClientFailureHead400Result struct {
 	// Success indicates if the operation succeeded or failed.
 	Success bool
 }
 
-// CResponse is the response envelope for operations that return a C type.
-type CResponse struct {
-	C *C
-
+// HTTPClientFailureHead401Response contains the response from method HTTPClientFailure.Head401.
+type HTTPClientFailureHead401Response struct {
+	HTTPClientFailureHead401Result
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DResponse is the response envelope for operations that return a D type.
-type DResponse struct {
-	D *D
+// HTTPClientFailureHead401Result contains the result from method HTTPClientFailure.Head401.
+type HTTPClientFailureHead401Result struct {
+	// Success indicates if the operation succeeded or failed.
+	Success bool
+}
 
+// HTTPClientFailureHead410Response contains the response from method HTTPClientFailure.Head410.
+type HTTPClientFailureHead410Response struct {
+	HTTPClientFailureHead410Result
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPClientFailureHead410Result contains the result from method HTTPClientFailure.Head410.
+type HTTPClientFailureHead410Result struct {
+	// Success indicates if the operation succeeded or failed.
+	Success bool
+}
+
+// HTTPClientFailureHead429Response contains the response from method HTTPClientFailure.Head429.
+type HTTPClientFailureHead429Response struct {
+	HTTPClientFailureHead429Result
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPClientFailureHead429Result contains the result from method HTTPClientFailure.Head429.
+type HTTPClientFailureHead429Result struct {
+	// Success indicates if the operation succeeded or failed.
+	Success bool
+}
+
+// HTTPClientFailureOptions400Response contains the response from method HTTPClientFailure.Options400.
+type HTTPClientFailureOptions400Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPClientFailureOptions403Response contains the response from method HTTPClientFailure.Options403.
+type HTTPClientFailureOptions403Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPClientFailureOptions412Response contains the response from method HTTPClientFailure.Options412.
+type HTTPClientFailureOptions412Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPClientFailurePatch400Response contains the response from method HTTPClientFailure.Patch400.
+type HTTPClientFailurePatch400Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPClientFailurePatch405Response contains the response from method HTTPClientFailure.Patch405.
+type HTTPClientFailurePatch405Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPClientFailurePatch414Response contains the response from method HTTPClientFailure.Patch414.
+type HTTPClientFailurePatch414Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPClientFailurePost400Response contains the response from method HTTPClientFailure.Post400.
+type HTTPClientFailurePost400Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPClientFailurePost406Response contains the response from method HTTPClientFailure.Post406.
+type HTTPClientFailurePost406Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPClientFailurePost415Response contains the response from method HTTPClientFailure.Post415.
+type HTTPClientFailurePost415Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPClientFailurePut400Response contains the response from method HTTPClientFailure.Put400.
+type HTTPClientFailurePut400Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPClientFailurePut404Response contains the response from method HTTPClientFailure.Put404.
+type HTTPClientFailurePut404Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPClientFailurePut409Response contains the response from method HTTPClientFailure.Put409.
+type HTTPClientFailurePut409Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPClientFailurePut413Response contains the response from method HTTPClientFailure.Put413.
+type HTTPClientFailurePut413Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPFailureGetEmptyErrorResponse contains the response from method HTTPFailure.GetEmptyError.
+type HTTPFailureGetEmptyErrorResponse struct {
+	HTTPFailureGetEmptyErrorResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPFailureGetEmptyErrorResult contains the result from method HTTPFailure.GetEmptyError.
+type HTTPFailureGetEmptyErrorResult struct {
+	// simple boolean
+	Value *bool
+}
+
+// HTTPFailureGetNoModelEmptyResponse contains the response from method HTTPFailure.GetNoModelEmpty.
+type HTTPFailureGetNoModelEmptyResponse struct {
+	HTTPFailureGetNoModelEmptyResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPFailureGetNoModelEmptyResult contains the result from method HTTPFailure.GetNoModelEmpty.
+type HTTPFailureGetNoModelEmptyResult struct {
+	// simple boolean
+	Value *bool
+}
+
+// HTTPFailureGetNoModelErrorResponse contains the response from method HTTPFailure.GetNoModelError.
+type HTTPFailureGetNoModelErrorResponse struct {
+	HTTPFailureGetNoModelErrorResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPFailureGetNoModelErrorResult contains the result from method HTTPFailure.GetNoModelError.
+type HTTPFailureGetNoModelErrorResult struct {
+	// simple boolean
+	Value *bool
+}
+
+// HTTPRedirectsDelete307Response contains the response from method HTTPRedirects.Delete307.
+type HTTPRedirectsDelete307Response struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
 // HTTPRedirectsGet300Response contains the response from method HTTPRedirects.Get300.
 type HTTPRedirectsGet300Response struct {
+	HTTPRedirectsGet300Result
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPRedirectsGet300Result contains the result from method HTTPRedirects.Get300.
+type HTTPRedirectsGet300Result struct {
 	// Location contains the information returned from the Location header response.
 	Location *string
 
+	// A list of location options for the request ['/http/success/get/200']
+	StringArray []*string
+}
+
+// HTTPRedirectsGet301Response contains the response from method HTTPRedirects.Get301.
+type HTTPRedirectsGet301Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPRedirectsGet302Response contains the response from method HTTPRedirects.Get302.
+type HTTPRedirectsGet302Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPRedirectsGet307Response contains the response from method HTTPRedirects.Get307.
+type HTTPRedirectsGet307Response struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
 // HTTPRedirectsHead300Response contains the response from method HTTPRedirects.Head300.
 type HTTPRedirectsHead300Response struct {
-	// Location contains the information returned from the Location header response.
-	Location *string
-
+	HTTPRedirectsHead300Result
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// HTTPRedirectsHead300Result contains the result from method HTTPRedirects.Head300.
+type HTTPRedirectsHead300Result struct {
+	// Location contains the information returned from the Location header response.
+	Location *string
 
 	// Success indicates if the operation succeeded or failed.
 	Success bool
 }
 
+// HTTPRedirectsHead301Response contains the response from method HTTPRedirects.Head301.
+type HTTPRedirectsHead301Response struct {
+	HTTPRedirectsHead301Result
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPRedirectsHead301Result contains the result from method HTTPRedirects.Head301.
+type HTTPRedirectsHead301Result struct {
+	// Success indicates if the operation succeeded or failed.
+	Success bool
+}
+
+// HTTPRedirectsHead302Response contains the response from method HTTPRedirects.Head302.
+type HTTPRedirectsHead302Response struct {
+	HTTPRedirectsHead302Result
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPRedirectsHead302Result contains the result from method HTTPRedirects.Head302.
+type HTTPRedirectsHead302Result struct {
+	// Success indicates if the operation succeeded or failed.
+	Success bool
+}
+
+// HTTPRedirectsHead307Response contains the response from method HTTPRedirects.Head307.
+type HTTPRedirectsHead307Response struct {
+	HTTPRedirectsHead307Result
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPRedirectsHead307Result contains the result from method HTTPRedirects.Head307.
+type HTTPRedirectsHead307Result struct {
+	// Success indicates if the operation succeeded or failed.
+	Success bool
+}
+
+// HTTPRedirectsOptions307Response contains the response from method HTTPRedirects.Options307.
+type HTTPRedirectsOptions307Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
 // HTTPRedirectsPatch302Response contains the response from method HTTPRedirects.Patch302.
 type HTTPRedirectsPatch302Response struct {
+	HTTPRedirectsPatch302Result
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPRedirectsPatch302Result contains the result from method HTTPRedirects.Patch302.
+type HTTPRedirectsPatch302Result struct {
 	// Location contains the information returned from the Location header response.
 	Location *string
+}
 
+// HTTPRedirectsPatch307Response contains the response from method HTTPRedirects.Patch307.
+type HTTPRedirectsPatch307Response struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
 // HTTPRedirectsPost303Response contains the response from method HTTPRedirects.Post303.
 type HTTPRedirectsPost303Response struct {
+	HTTPRedirectsPost303Result
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPRedirectsPost303Result contains the result from method HTTPRedirects.Post303.
+type HTTPRedirectsPost303Result struct {
 	// Location contains the information returned from the Location header response.
 	Location *string
+}
 
+// HTTPRedirectsPost307Response contains the response from method HTTPRedirects.Post307.
+type HTTPRedirectsPost307Response struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
 // HTTPRedirectsPut301Response contains the response from method HTTPRedirects.Put301.
 type HTTPRedirectsPut301Response struct {
-	// Location contains the information returned from the Location header response.
-	Location *string
-
+	HTTPRedirectsPut301Result
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// MyExceptionResponse is the response envelope for operations that return a MyException type.
-type MyExceptionResponse struct {
-	MyException *MyException
+// HTTPRedirectsPut301Result contains the result from method HTTPRedirects.Put301.
+type HTTPRedirectsPut301Result struct {
+	// Location contains the information returned from the Location header response.
+	Location *string
+}
 
+// HTTPRedirectsPut307Response contains the response from method HTTPRedirects.Put307.
+type HTTPRedirectsPut307Response struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// StringArrayResponse is the response envelope for operations that return a []*string type.
-type StringArrayResponse struct {
-	// Location contains the information returned from the Location header response.
-	Location *string
+// HTTPRetryDelete503Response contains the response from method HTTPRetry.Delete503.
+type HTTPRetryDelete503Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
 
+// HTTPRetryGet502Response contains the response from method HTTPRetry.Get502.
+type HTTPRetryGet502Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPRetryHead408Response contains the response from method HTTPRetry.Head408.
+type HTTPRetryHead408Response struct {
+	HTTPRetryHead408Result
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPRetryHead408Result contains the result from method HTTPRetry.Head408.
+type HTTPRetryHead408Result struct {
+	// Success indicates if the operation succeeded or failed.
+	Success bool
+}
+
+// HTTPRetryOptions502Response contains the response from method HTTPRetry.Options502.
+type HTTPRetryOptions502Response struct {
+	HTTPRetryOptions502Result
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPRetryOptions502Result contains the result from method HTTPRetry.Options502.
+type HTTPRetryOptions502Result struct {
+	// simple boolean
+	Value *bool
+}
+
+// HTTPRetryPatch500Response contains the response from method HTTPRetry.Patch500.
+type HTTPRetryPatch500Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPRetryPatch504Response contains the response from method HTTPRetry.Patch504.
+type HTTPRetryPatch504Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPRetryPost503Response contains the response from method HTTPRetry.Post503.
+type HTTPRetryPost503Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPRetryPut500Response contains the response from method HTTPRetry.Put500.
+type HTTPRetryPut500Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPRetryPut504Response contains the response from method HTTPRetry.Put504.
+type HTTPRetryPut504Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPServerFailureDelete505Response contains the response from method HTTPServerFailure.Delete505.
+type HTTPServerFailureDelete505Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPServerFailureGet501Response contains the response from method HTTPServerFailure.Get501.
+type HTTPServerFailureGet501Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPServerFailureHead501Response contains the response from method HTTPServerFailure.Head501.
+type HTTPServerFailureHead501Response struct {
+	HTTPServerFailureHead501Result
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPServerFailureHead501Result contains the result from method HTTPServerFailure.Head501.
+type HTTPServerFailureHead501Result struct {
+	// Success indicates if the operation succeeded or failed.
+	Success bool
+}
+
+// HTTPServerFailurePost505Response contains the response from method HTTPServerFailure.Post505.
+type HTTPServerFailurePost505Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPSuccessDelete200Response contains the response from method HTTPSuccess.Delete200.
+type HTTPSuccessDelete200Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPSuccessDelete202Response contains the response from method HTTPSuccess.Delete202.
+type HTTPSuccessDelete202Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPSuccessDelete204Response contains the response from method HTTPSuccess.Delete204.
+type HTTPSuccessDelete204Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPSuccessGet200Response contains the response from method HTTPSuccess.Get200.
+type HTTPSuccessGet200Response struct {
+	HTTPSuccessGet200Result
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPSuccessGet200Result contains the result from method HTTPSuccess.Get200.
+type HTTPSuccessGet200Result struct {
+	// simple boolean
+	Value *bool
+}
+
+// HTTPSuccessHead200Response contains the response from method HTTPSuccess.Head200.
+type HTTPSuccessHead200Response struct {
+	HTTPSuccessHead200Result
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPSuccessHead200Result contains the result from method HTTPSuccess.Head200.
+type HTTPSuccessHead200Result struct {
+	// Success indicates if the operation succeeded or failed.
+	Success bool
+}
+
+// HTTPSuccessHead204Response contains the response from method HTTPSuccess.Head204.
+type HTTPSuccessHead204Response struct {
+	HTTPSuccessHead204Result
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPSuccessHead204Result contains the result from method HTTPSuccess.Head204.
+type HTTPSuccessHead204Result struct {
+	// Success indicates if the operation succeeded or failed.
+	Success bool
+}
+
+// HTTPSuccessHead404Response contains the response from method HTTPSuccess.Head404.
+type HTTPSuccessHead404Response struct {
+	HTTPSuccessHead404Result
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPSuccessHead404Result contains the result from method HTTPSuccess.Head404.
+type HTTPSuccessHead404Result struct {
+	// Success indicates if the operation succeeded or failed.
+	Success bool
+}
+
+// HTTPSuccessOptions200Response contains the response from method HTTPSuccess.Options200.
+type HTTPSuccessOptions200Response struct {
+	HTTPSuccessOptions200Result
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPSuccessOptions200Result contains the result from method HTTPSuccess.Options200.
+type HTTPSuccessOptions200Result struct {
+	// simple boolean
+	Value *bool
+}
+
+// HTTPSuccessPatch200Response contains the response from method HTTPSuccess.Patch200.
+type HTTPSuccessPatch200Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPSuccessPatch202Response contains the response from method HTTPSuccess.Patch202.
+type HTTPSuccessPatch202Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPSuccessPatch204Response contains the response from method HTTPSuccess.Patch204.
+type HTTPSuccessPatch204Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPSuccessPost200Response contains the response from method HTTPSuccess.Post200.
+type HTTPSuccessPost200Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPSuccessPost201Response contains the response from method HTTPSuccess.Post201.
+type HTTPSuccessPost201Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPSuccessPost202Response contains the response from method HTTPSuccess.Post202.
+type HTTPSuccessPost202Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPSuccessPost204Response contains the response from method HTTPSuccess.Post204.
+type HTTPSuccessPost204Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPSuccessPut200Response contains the response from method HTTPSuccess.Put200.
+type HTTPSuccessPut200Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPSuccessPut201Response contains the response from method HTTPSuccess.Put201.
+type HTTPSuccessPut201Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPSuccessPut202Response contains the response from method HTTPSuccess.Put202.
+type HTTPSuccessPut202Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPSuccessPut204Response contains the response from method HTTPSuccess.Put204.
+type HTTPSuccessPut204Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// MultipleResponsesGet200Model201ModelDefaultError200ValidResponse contains the response from method MultipleResponses.Get200Model201ModelDefaultError200Valid.
+type MultipleResponsesGet200Model201ModelDefaultError200ValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 
-	// A list of location options for the request ['/http/success/get/200']
-	StringArray []*string
+	// // Possible types are MyException, B
+	Value interface{}
+}
+
+// MultipleResponsesGet200Model201ModelDefaultError201ValidResponse contains the response from method MultipleResponses.Get200Model201ModelDefaultError201Valid.
+type MultipleResponsesGet200Model201ModelDefaultError201ValidResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
+	// // Possible types are MyException, B
+	Value interface{}
+}
+
+// MultipleResponsesGet200Model201ModelDefaultError400ValidResponse contains the response from method MultipleResponses.Get200Model201ModelDefaultError400Valid.
+type MultipleResponsesGet200Model201ModelDefaultError400ValidResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
+	// // Possible types are MyException, B
+	Value interface{}
+}
+
+// MultipleResponsesGet200Model204NoModelDefaultError200ValidResponse contains the response from method MultipleResponses.Get200Model204NoModelDefaultError200Valid.
+type MultipleResponsesGet200Model204NoModelDefaultError200ValidResponse struct {
+	MultipleResponsesGet200Model204NoModelDefaultError200ValidResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// MultipleResponsesGet200Model204NoModelDefaultError200ValidResult contains the result from method MultipleResponses.Get200Model204NoModelDefaultError200Valid.
+type MultipleResponsesGet200Model204NoModelDefaultError200ValidResult struct {
+	MyException
+}
+
+// MultipleResponsesGet200Model204NoModelDefaultError201InvalidResponse contains the response from method MultipleResponses.Get200Model204NoModelDefaultError201Invalid.
+type MultipleResponsesGet200Model204NoModelDefaultError201InvalidResponse struct {
+	MultipleResponsesGet200Model204NoModelDefaultError201InvalidResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// MultipleResponsesGet200Model204NoModelDefaultError201InvalidResult contains the result from method MultipleResponses.Get200Model204NoModelDefaultError201Invalid.
+type MultipleResponsesGet200Model204NoModelDefaultError201InvalidResult struct {
+	MyException
+}
+
+// MultipleResponsesGet200Model204NoModelDefaultError202NoneResponse contains the response from method MultipleResponses.Get200Model204NoModelDefaultError202None.
+type MultipleResponsesGet200Model204NoModelDefaultError202NoneResponse struct {
+	MultipleResponsesGet200Model204NoModelDefaultError202NoneResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// MultipleResponsesGet200Model204NoModelDefaultError202NoneResult contains the result from method MultipleResponses.Get200Model204NoModelDefaultError202None.
+type MultipleResponsesGet200Model204NoModelDefaultError202NoneResult struct {
+	MyException
+}
+
+// MultipleResponsesGet200Model204NoModelDefaultError204ValidResponse contains the response from method MultipleResponses.Get200Model204NoModelDefaultError204Valid.
+type MultipleResponsesGet200Model204NoModelDefaultError204ValidResponse struct {
+	MultipleResponsesGet200Model204NoModelDefaultError204ValidResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// MultipleResponsesGet200Model204NoModelDefaultError204ValidResult contains the result from method MultipleResponses.Get200Model204NoModelDefaultError204Valid.
+type MultipleResponsesGet200Model204NoModelDefaultError204ValidResult struct {
+	MyException
+}
+
+// MultipleResponsesGet200Model204NoModelDefaultError400ValidResponse contains the response from method MultipleResponses.Get200Model204NoModelDefaultError400Valid.
+type MultipleResponsesGet200Model204NoModelDefaultError400ValidResponse struct {
+	MultipleResponsesGet200Model204NoModelDefaultError400ValidResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// MultipleResponsesGet200Model204NoModelDefaultError400ValidResult contains the result from method MultipleResponses.Get200Model204NoModelDefaultError400Valid.
+type MultipleResponsesGet200Model204NoModelDefaultError400ValidResult struct {
+	MyException
+}
+
+// MultipleResponsesGet200ModelA200InvalidResponse contains the response from method MultipleResponses.Get200ModelA200Invalid.
+type MultipleResponsesGet200ModelA200InvalidResponse struct {
+	MultipleResponsesGet200ModelA200InvalidResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// MultipleResponsesGet200ModelA200InvalidResult contains the result from method MultipleResponses.Get200ModelA200Invalid.
+type MultipleResponsesGet200ModelA200InvalidResult struct {
+	MyException
+}
+
+// MultipleResponsesGet200ModelA200NoneResponse contains the response from method MultipleResponses.Get200ModelA200None.
+type MultipleResponsesGet200ModelA200NoneResponse struct {
+	MultipleResponsesGet200ModelA200NoneResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// MultipleResponsesGet200ModelA200NoneResult contains the result from method MultipleResponses.Get200ModelA200None.
+type MultipleResponsesGet200ModelA200NoneResult struct {
+	MyException
+}
+
+// MultipleResponsesGet200ModelA200ValidResponse contains the response from method MultipleResponses.Get200ModelA200Valid.
+type MultipleResponsesGet200ModelA200ValidResponse struct {
+	MultipleResponsesGet200ModelA200ValidResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// MultipleResponsesGet200ModelA200ValidResult contains the result from method MultipleResponses.Get200ModelA200Valid.
+type MultipleResponsesGet200ModelA200ValidResult struct {
+	MyException
+}
+
+// MultipleResponsesGet200ModelA201ModelC404ModelDDefaultError200ValidResponse contains the response from method MultipleResponses.Get200ModelA201ModelC404ModelDDefaultError200Valid.
+type MultipleResponsesGet200ModelA201ModelC404ModelDDefaultError200ValidResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
+	// // Possible types are MyException, C, D
+	Value interface{}
+}
+
+// MultipleResponsesGet200ModelA201ModelC404ModelDDefaultError201ValidResponse contains the response from method MultipleResponses.Get200ModelA201ModelC404ModelDDefaultError201Valid.
+type MultipleResponsesGet200ModelA201ModelC404ModelDDefaultError201ValidResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
+	// // Possible types are MyException, C, D
+	Value interface{}
+}
+
+// MultipleResponsesGet200ModelA201ModelC404ModelDDefaultError400ValidResponse contains the response from method MultipleResponses.Get200ModelA201ModelC404ModelDDefaultError400Valid.
+type MultipleResponsesGet200ModelA201ModelC404ModelDDefaultError400ValidResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
+	// // Possible types are MyException, C, D
+	Value interface{}
+}
+
+// MultipleResponsesGet200ModelA201ModelC404ModelDDefaultError404ValidResponse contains the response from method MultipleResponses.Get200ModelA201ModelC404ModelDDefaultError404Valid.
+type MultipleResponsesGet200ModelA201ModelC404ModelDDefaultError404ValidResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
+	// // Possible types are MyException, C, D
+	Value interface{}
+}
+
+// MultipleResponsesGet200ModelA202ValidResponse contains the response from method MultipleResponses.Get200ModelA202Valid.
+type MultipleResponsesGet200ModelA202ValidResponse struct {
+	MultipleResponsesGet200ModelA202ValidResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// MultipleResponsesGet200ModelA202ValidResult contains the result from method MultipleResponses.Get200ModelA202Valid.
+type MultipleResponsesGet200ModelA202ValidResult struct {
+	MyException
+}
+
+// MultipleResponsesGet200ModelA400InvalidResponse contains the response from method MultipleResponses.Get200ModelA400Invalid.
+type MultipleResponsesGet200ModelA400InvalidResponse struct {
+	MultipleResponsesGet200ModelA400InvalidResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// MultipleResponsesGet200ModelA400InvalidResult contains the result from method MultipleResponses.Get200ModelA400Invalid.
+type MultipleResponsesGet200ModelA400InvalidResult struct {
+	MyException
+}
+
+// MultipleResponsesGet200ModelA400NoneResponse contains the response from method MultipleResponses.Get200ModelA400None.
+type MultipleResponsesGet200ModelA400NoneResponse struct {
+	MultipleResponsesGet200ModelA400NoneResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// MultipleResponsesGet200ModelA400NoneResult contains the result from method MultipleResponses.Get200ModelA400None.
+type MultipleResponsesGet200ModelA400NoneResult struct {
+	MyException
+}
+
+// MultipleResponsesGet200ModelA400ValidResponse contains the response from method MultipleResponses.Get200ModelA400Valid.
+type MultipleResponsesGet200ModelA400ValidResponse struct {
+	MultipleResponsesGet200ModelA400ValidResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// MultipleResponsesGet200ModelA400ValidResult contains the result from method MultipleResponses.Get200ModelA400Valid.
+type MultipleResponsesGet200ModelA400ValidResult struct {
+	MyException
+}
+
+// MultipleResponsesGet202None204NoneDefaultError202NoneResponse contains the response from method MultipleResponses.Get202None204NoneDefaultError202None.
+type MultipleResponsesGet202None204NoneDefaultError202NoneResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// MultipleResponsesGet202None204NoneDefaultError204NoneResponse contains the response from method MultipleResponses.Get202None204NoneDefaultError204None.
+type MultipleResponsesGet202None204NoneDefaultError204NoneResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// MultipleResponsesGet202None204NoneDefaultError400ValidResponse contains the response from method MultipleResponses.Get202None204NoneDefaultError400Valid.
+type MultipleResponsesGet202None204NoneDefaultError400ValidResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// MultipleResponsesGet202None204NoneDefaultNone202InvalidResponse contains the response from method MultipleResponses.Get202None204NoneDefaultNone202Invalid.
+type MultipleResponsesGet202None204NoneDefaultNone202InvalidResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// MultipleResponsesGet202None204NoneDefaultNone204NoneResponse contains the response from method MultipleResponses.Get202None204NoneDefaultNone204None.
+type MultipleResponsesGet202None204NoneDefaultNone204NoneResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// MultipleResponsesGet202None204NoneDefaultNone400InvalidResponse contains the response from method MultipleResponses.Get202None204NoneDefaultNone400Invalid.
+type MultipleResponsesGet202None204NoneDefaultNone400InvalidResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// MultipleResponsesGet202None204NoneDefaultNone400NoneResponse contains the response from method MultipleResponses.Get202None204NoneDefaultNone400None.
+type MultipleResponsesGet202None204NoneDefaultNone400NoneResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// MultipleResponsesGetDefaultModelA200NoneResponse contains the response from method MultipleResponses.GetDefaultModelA200None.
+type MultipleResponsesGetDefaultModelA200NoneResponse struct {
+	MultipleResponsesGetDefaultModelA200NoneResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// MultipleResponsesGetDefaultModelA200NoneResult contains the result from method MultipleResponses.GetDefaultModelA200None.
+type MultipleResponsesGetDefaultModelA200NoneResult struct {
+	MyException
+}
+
+// MultipleResponsesGetDefaultModelA200ValidResponse contains the response from method MultipleResponses.GetDefaultModelA200Valid.
+type MultipleResponsesGetDefaultModelA200ValidResponse struct {
+	MultipleResponsesGetDefaultModelA200ValidResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// MultipleResponsesGetDefaultModelA200ValidResult contains the result from method MultipleResponses.GetDefaultModelA200Valid.
+type MultipleResponsesGetDefaultModelA200ValidResult struct {
+	MyException
+}
+
+// MultipleResponsesGetDefaultModelA400NoneResponse contains the response from method MultipleResponses.GetDefaultModelA400None.
+type MultipleResponsesGetDefaultModelA400NoneResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// MultipleResponsesGetDefaultModelA400ValidResponse contains the response from method MultipleResponses.GetDefaultModelA400Valid.
+type MultipleResponsesGetDefaultModelA400ValidResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// MultipleResponsesGetDefaultNone200InvalidResponse contains the response from method MultipleResponses.GetDefaultNone200Invalid.
+type MultipleResponsesGetDefaultNone200InvalidResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// MultipleResponsesGetDefaultNone200NoneResponse contains the response from method MultipleResponses.GetDefaultNone200None.
+type MultipleResponsesGetDefaultNone200NoneResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// MultipleResponsesGetDefaultNone400InvalidResponse contains the response from method MultipleResponses.GetDefaultNone400Invalid.
+type MultipleResponsesGetDefaultNone400InvalidResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// MultipleResponsesGetDefaultNone400NoneResponse contains the response from method MultipleResponses.GetDefaultNone400None.
+type MultipleResponsesGetDefaultNone400NoneResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }

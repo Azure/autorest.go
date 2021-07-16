@@ -22,7 +22,7 @@ func TestReadonlypropertyGetValid(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetValid: %v", err)
 	}
-	if r := cmp.Diff(result.ReadonlyObj, &ReadonlyObj{ID: to.StringPtr("1234"), Size: to.Int32Ptr(2)}); r != "" {
+	if r := cmp.Diff(result.ReadonlyObj, ReadonlyObj{ID: to.StringPtr("1234"), Size: to.Int32Ptr(2)}); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -34,7 +34,7 @@ func TestReadonlypropertyPutValid(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutValid: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }

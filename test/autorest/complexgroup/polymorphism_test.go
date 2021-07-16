@@ -24,7 +24,7 @@ func TestPolymorphismGetComplicated(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	salmon, ok := result.Salmon.(*SmartSalmon)
+	salmon, ok := result.SalmonClassification.(*SmartSalmon)
 	if !ok {
 		t.Fatal("fish wasn't a smart salmon")
 	}
@@ -93,10 +93,10 @@ func TestPolymorphismGetComplicated(t *testing.T) {
 	}); r != "" {
 		t.Fatal(r)
 	}
-	if r := cmp.Diff(result.Salmon.GetSalmon(), &expectedSalmon); r != "" {
+	if r := cmp.Diff(result.SalmonClassification.GetSalmon(), &expectedSalmon); r != "" {
 		t.Fatal(r)
 	}
-	if r := cmp.Diff(result.Salmon.GetFish(), &expectedFish); r != "" {
+	if r := cmp.Diff(result.SalmonClassification.GetFish(), &expectedFish); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -108,7 +108,7 @@ func TestPolymorphismGetComposedWithDiscriminator(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(result.DotFishMarket, &DotFishMarket{
+	if r := cmp.Diff(result.DotFishMarket, DotFishMarket{
 		Fishes: []DotFishClassification{
 			&DotSalmon{
 				DotFish: DotFish{
@@ -173,7 +173,7 @@ func TestPolymorphismGetComposedWithoutDiscriminator(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(result.DotFishMarket, &DotFishMarket{
+	if r := cmp.Diff(result.DotFishMarket, DotFishMarket{
 		Fishes: []DotFishClassification{
 			&DotFish{
 				Species: to.StringPtr("king"),
@@ -220,7 +220,7 @@ func TestPolymorphismGetDotSyntax(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(result.DotFish, &DotSalmon{
+	if r := cmp.Diff(result.DotFishClassification, &DotSalmon{
 		DotFish: DotFish{
 			FishType: to.StringPtr("DotSalmon"),
 			Species:  to.StringPtr("king"),
@@ -239,7 +239,7 @@ func TestPolymorphismGetValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	salmon, ok := result.Fish.(*Salmon)
+	salmon, ok := result.FishClassification.(*Salmon)
 	if !ok {
 		t.Fatal("fish wasn't a salmon")
 	}
@@ -362,7 +362,7 @@ func TestPolymorphismPutComplicated(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -472,7 +472,7 @@ func TestPolymorphismPutValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := resp.StatusCode; s != http.StatusOK {
+	if s := resp.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }

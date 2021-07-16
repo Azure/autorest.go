@@ -9,10 +9,26 @@ package extenumsgroup
 
 import "net/http"
 
-// PetResponse is the response envelope for operations that return a Pet type.
-type PetResponse struct {
-	Pet *Pet
-
+// PetAddPetResponse contains the response from method Pet.AddPet.
+type PetAddPetResponse struct {
+	PetAddPetResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PetAddPetResult contains the result from method Pet.AddPet.
+type PetAddPetResult struct {
+	Pet
+}
+
+// PetGetByPetIDResponse contains the response from method Pet.GetByPetID.
+type PetGetByPetIDResponse struct {
+	PetGetByPetIDResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PetGetByPetIDResult contains the result from method Pet.GetByPetID.
+type PetGetByPetIDResult struct {
+	Pet
 }

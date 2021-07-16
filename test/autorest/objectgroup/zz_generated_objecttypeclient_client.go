@@ -27,17 +27,17 @@ func NewObjectTypeClient(con *Connection) *ObjectTypeClient {
 
 // Get - Basic get that returns an object. Returns object { 'message': 'An object was successfully returned' }
 // If the operation fails it returns a generic error.
-func (client *ObjectTypeClient) Get(ctx context.Context, options *ObjectTypeClientGetOptions) (ObjectResponse, error) {
+func (client *ObjectTypeClient) Get(ctx context.Context, options *ObjectTypeClientGetOptions) (ObjectTypeClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
-		return ObjectResponse{}, err
+		return ObjectTypeClientGetResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return ObjectResponse{}, err
+		return ObjectTypeClientGetResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return ObjectResponse{}, client.getHandleError(resp)
+		return ObjectTypeClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -55,12 +55,12 @@ func (client *ObjectTypeClient) getCreateRequest(ctx context.Context, options *O
 }
 
 // getHandleResponse handles the Get response.
-func (client *ObjectTypeClient) getHandleResponse(resp *azcore.Response) (ObjectResponse, error) {
-	var val map[string]interface{}
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ObjectResponse{}, err
+func (client *ObjectTypeClient) getHandleResponse(resp *azcore.Response) (ObjectTypeClientGetResponse, error) {
+	result := ObjectTypeClientGetResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.Object); err != nil {
+		return ObjectTypeClientGetResponse{}, err
 	}
-	return ObjectResponse{RawResponse: resp.Response, Object: val}, nil
+	return result, nil
 }
 
 // getHandleError handles the Get error response.
@@ -77,19 +77,19 @@ func (client *ObjectTypeClient) getHandleError(resp *azcore.Response) error {
 
 // Put - Basic put that puts an object. Pass in {'foo': 'bar'} to get a 200 and anything else to get an object error.
 // If the operation fails it returns a generic error.
-func (client *ObjectTypeClient) Put(ctx context.Context, putObject map[string]interface{}, options *ObjectTypeClientPutOptions) (*http.Response, error) {
+func (client *ObjectTypeClient) Put(ctx context.Context, putObject map[string]interface{}, options *ObjectTypeClientPutOptions) (ObjectTypeClientPutResponse, error) {
 	req, err := client.putCreateRequest(ctx, putObject, options)
 	if err != nil {
-		return nil, err
+		return ObjectTypeClientPutResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return ObjectTypeClientPutResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.putHandleError(resp)
+		return ObjectTypeClientPutResponse{}, client.putHandleError(resp)
 	}
-	return resp.Response, nil
+	return ObjectTypeClientPutResponse{RawResponse: resp.Response}, nil
 }
 
 // putCreateRequest creates the Put request.

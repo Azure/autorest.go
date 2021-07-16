@@ -9,18 +9,38 @@ package complexmodelgroup
 
 import "net/http"
 
-// CatalogArrayResponse is the response envelope for operations that return a CatalogArray type.
-type CatalogArrayResponse struct {
-	CatalogArray *CatalogArray
-
+// ComplexModelClientCreateResponse contains the response from method ComplexModelClient.Create.
+type ComplexModelClientCreateResponse struct {
+	ComplexModelClientCreateResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// CatalogDictionaryResponse is the response envelope for operations that return a CatalogDictionary type.
-type CatalogDictionaryResponse struct {
-	CatalogDictionary *CatalogDictionary
+// ComplexModelClientCreateResult contains the result from method ComplexModelClient.Create.
+type ComplexModelClientCreateResult struct {
+	CatalogDictionary
+}
 
+// ComplexModelClientListResponse contains the response from method ComplexModelClient.List.
+type ComplexModelClientListResponse struct {
+	ComplexModelClientListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// ComplexModelClientListResult contains the result from method ComplexModelClient.List.
+type ComplexModelClientListResult struct {
+	CatalogArray
+}
+
+// ComplexModelClientUpdateResponse contains the response from method ComplexModelClient.Update.
+type ComplexModelClientUpdateResponse struct {
+	ComplexModelClientUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ComplexModelClientUpdateResult contains the result from method ComplexModelClient.Update.
+type ComplexModelClientUpdateResult struct {
+	CatalogArray
 }

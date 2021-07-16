@@ -33,47 +33,47 @@ func NewVPNGatewaysClient(con *armcore.Connection, subscriptionID string) *VPNGa
 
 // BeginCreateOrUpdate - Creates a virtual wan vpn gateway if it doesn't exist else updates the existing gateway.
 // If the operation fails it returns the *CloudError error type.
-func (client *VPNGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, vpnGatewayParameters VPNGateway, options *VPNGatewaysBeginCreateOrUpdateOptions) (VPNGatewayPollerResponse, error) {
+func (client *VPNGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, vpnGatewayParameters VPNGateway, options *VPNGatewaysBeginCreateOrUpdateOptions) (VPNGatewaysCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, gatewayName, vpnGatewayParameters, options)
 	if err != nil {
-		return VPNGatewayPollerResponse{}, err
+		return VPNGatewaysCreateOrUpdatePollerResponse{}, err
 	}
-	result := VPNGatewayPollerResponse{
+	result := VPNGatewaysCreateOrUpdatePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("VPNGatewaysClient.CreateOrUpdate", "azure-async-operation", resp, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return VPNGatewayPollerResponse{}, err
+		return VPNGatewaysCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &vpnGatewayPoller{
+	poller := &vpnGatewaysCreateOrUpdatePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VPNGatewayResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VPNGatewaysCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new VPNGatewayPoller from the specified resume token.
-// token - The value must come from a previous call to VPNGatewayPoller.ResumeToken().
-func (client *VPNGatewaysClient) ResumeCreateOrUpdate(ctx context.Context, token string) (VPNGatewayPollerResponse, error) {
+// ResumeCreateOrUpdate creates a new VPNGatewaysCreateOrUpdatePoller from the specified resume token.
+// token - The value must come from a previous call to VPNGatewaysCreateOrUpdatePoller.ResumeToken().
+func (client *VPNGatewaysClient) ResumeCreateOrUpdate(ctx context.Context, token string) (VPNGatewaysCreateOrUpdatePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("VPNGatewaysClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return VPNGatewayPollerResponse{}, err
+		return VPNGatewaysCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &vpnGatewayPoller{
+	poller := &vpnGatewaysCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return VPNGatewayPollerResponse{}, err
+		return VPNGatewaysCreateOrUpdatePollerResponse{}, err
 	}
-	result := VPNGatewayPollerResponse{
+	result := VPNGatewaysCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VPNGatewayResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VPNGatewaysCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -138,47 +138,47 @@ func (client *VPNGatewaysClient) createOrUpdateHandleError(resp *azcore.Response
 
 // BeginDelete - Deletes a virtual wan vpn gateway.
 // If the operation fails it returns the *CloudError error type.
-func (client *VPNGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, gatewayName string, options *VPNGatewaysBeginDeleteOptions) (HTTPPollerResponse, error) {
+func (client *VPNGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, gatewayName string, options *VPNGatewaysBeginDeleteOptions) (VPNGatewaysDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, gatewayName, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return VPNGatewaysDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := VPNGatewaysDeletePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("VPNGatewaysClient.Delete", "location", resp, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return VPNGatewaysDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &vpnGatewaysDeletePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VPNGatewaysDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeDelete creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *VPNGatewaysClient) ResumeDelete(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeDelete creates a new VPNGatewaysDeletePoller from the specified resume token.
+// token - The value must come from a previous call to VPNGatewaysDeletePoller.ResumeToken().
+func (client *VPNGatewaysClient) ResumeDelete(ctx context.Context, token string) (VPNGatewaysDeletePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("VPNGatewaysClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return VPNGatewaysDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &vpnGatewaysDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return VPNGatewaysDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := VPNGatewaysDeletePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VPNGatewaysDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -243,17 +243,17 @@ func (client *VPNGatewaysClient) deleteHandleError(resp *azcore.Response) error 
 
 // Get - Retrieves the details of a virtual wan vpn gateway.
 // If the operation fails it returns the *CloudError error type.
-func (client *VPNGatewaysClient) Get(ctx context.Context, resourceGroupName string, gatewayName string, options *VPNGatewaysGetOptions) (VPNGatewayResponse, error) {
+func (client *VPNGatewaysClient) Get(ctx context.Context, resourceGroupName string, gatewayName string, options *VPNGatewaysGetOptions) (VPNGatewaysGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, gatewayName, options)
 	if err != nil {
-		return VPNGatewayResponse{}, err
+		return VPNGatewaysGetResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return VPNGatewayResponse{}, err
+		return VPNGatewaysGetResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return VPNGatewayResponse{}, client.getHandleError(resp)
+		return VPNGatewaysGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -286,12 +286,12 @@ func (client *VPNGatewaysClient) getCreateRequest(ctx context.Context, resourceG
 }
 
 // getHandleResponse handles the Get response.
-func (client *VPNGatewaysClient) getHandleResponse(resp *azcore.Response) (VPNGatewayResponse, error) {
-	var val *VPNGateway
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return VPNGatewayResponse{}, err
+func (client *VPNGatewaysClient) getHandleResponse(resp *azcore.Response) (VPNGatewaysGetResponse, error) {
+	result := VPNGatewaysGetResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.VPNGateway); err != nil {
+		return VPNGatewaysGetResponse{}, err
 	}
-	return VPNGatewayResponse{RawResponse: resp.Response, VPNGateway: val}, nil
+	return result, nil
 }
 
 // getHandleError handles the Get error response.
@@ -309,18 +309,15 @@ func (client *VPNGatewaysClient) getHandleError(resp *azcore.Response) error {
 
 // List - Lists all the VpnGateways in a subscription.
 // If the operation fails it returns the *CloudError error type.
-func (client *VPNGatewaysClient) List(options *VPNGatewaysListOptions) ListVPNGatewaysResultPager {
-	return &listVPNGatewaysResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *VPNGatewaysClient) List(options *VPNGatewaysListOptions) VPNGatewaysListPager {
+	return &vpnGatewaysListPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, options)
 		},
-		responder: client.listHandleResponse,
-		errorer:   client.listHandleError,
-		advancer: func(ctx context.Context, resp ListVPNGatewaysResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp VPNGatewaysListResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ListVPNGatewaysResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -344,12 +341,12 @@ func (client *VPNGatewaysClient) listCreateRequest(ctx context.Context, options 
 }
 
 // listHandleResponse handles the List response.
-func (client *VPNGatewaysClient) listHandleResponse(resp *azcore.Response) (ListVPNGatewaysResultResponse, error) {
-	var val *ListVPNGatewaysResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ListVPNGatewaysResultResponse{}, err
+func (client *VPNGatewaysClient) listHandleResponse(resp *azcore.Response) (VPNGatewaysListResponse, error) {
+	result := VPNGatewaysListResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.ListVPNGatewaysResult); err != nil {
+		return VPNGatewaysListResponse{}, err
 	}
-	return ListVPNGatewaysResultResponse{RawResponse: resp.Response, ListVPNGatewaysResult: val}, nil
+	return result, nil
 }
 
 // listHandleError handles the List error response.
@@ -367,18 +364,15 @@ func (client *VPNGatewaysClient) listHandleError(resp *azcore.Response) error {
 
 // ListByResourceGroup - Lists all the VpnGateways in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *VPNGatewaysClient) ListByResourceGroup(resourceGroupName string, options *VPNGatewaysListByResourceGroupOptions) ListVPNGatewaysResultPager {
-	return &listVPNGatewaysResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *VPNGatewaysClient) ListByResourceGroup(resourceGroupName string, options *VPNGatewaysListByResourceGroupOptions) VPNGatewaysListByResourceGroupPager {
+	return &vpnGatewaysListByResourceGroupPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
 		},
-		responder: client.listByResourceGroupHandleResponse,
-		errorer:   client.listByResourceGroupHandleError,
-		advancer: func(ctx context.Context, resp ListVPNGatewaysResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp VPNGatewaysListByResourceGroupResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ListVPNGatewaysResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -406,12 +400,12 @@ func (client *VPNGatewaysClient) listByResourceGroupCreateRequest(ctx context.Co
 }
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
-func (client *VPNGatewaysClient) listByResourceGroupHandleResponse(resp *azcore.Response) (ListVPNGatewaysResultResponse, error) {
-	var val *ListVPNGatewaysResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ListVPNGatewaysResultResponse{}, err
+func (client *VPNGatewaysClient) listByResourceGroupHandleResponse(resp *azcore.Response) (VPNGatewaysListByResourceGroupResponse, error) {
+	result := VPNGatewaysListByResourceGroupResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.ListVPNGatewaysResult); err != nil {
+		return VPNGatewaysListByResourceGroupResponse{}, err
 	}
-	return ListVPNGatewaysResultResponse{RawResponse: resp.Response, ListVPNGatewaysResult: val}, nil
+	return result, nil
 }
 
 // listByResourceGroupHandleError handles the ListByResourceGroup error response.
@@ -429,47 +423,47 @@ func (client *VPNGatewaysClient) listByResourceGroupHandleError(resp *azcore.Res
 
 // BeginReset - Resets the primary of the vpn gateway in the specified resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *VPNGatewaysClient) BeginReset(ctx context.Context, resourceGroupName string, gatewayName string, options *VPNGatewaysBeginResetOptions) (VPNGatewayPollerResponse, error) {
+func (client *VPNGatewaysClient) BeginReset(ctx context.Context, resourceGroupName string, gatewayName string, options *VPNGatewaysBeginResetOptions) (VPNGatewaysResetPollerResponse, error) {
 	resp, err := client.reset(ctx, resourceGroupName, gatewayName, options)
 	if err != nil {
-		return VPNGatewayPollerResponse{}, err
+		return VPNGatewaysResetPollerResponse{}, err
 	}
-	result := VPNGatewayPollerResponse{
+	result := VPNGatewaysResetPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("VPNGatewaysClient.Reset", "location", resp, client.con.Pipeline(), client.resetHandleError)
 	if err != nil {
-		return VPNGatewayPollerResponse{}, err
+		return VPNGatewaysResetPollerResponse{}, err
 	}
-	poller := &vpnGatewayPoller{
+	poller := &vpnGatewaysResetPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VPNGatewayResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VPNGatewaysResetResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeReset creates a new VPNGatewayPoller from the specified resume token.
-// token - The value must come from a previous call to VPNGatewayPoller.ResumeToken().
-func (client *VPNGatewaysClient) ResumeReset(ctx context.Context, token string) (VPNGatewayPollerResponse, error) {
+// ResumeReset creates a new VPNGatewaysResetPoller from the specified resume token.
+// token - The value must come from a previous call to VPNGatewaysResetPoller.ResumeToken().
+func (client *VPNGatewaysClient) ResumeReset(ctx context.Context, token string) (VPNGatewaysResetPollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("VPNGatewaysClient.Reset", token, client.con.Pipeline(), client.resetHandleError)
 	if err != nil {
-		return VPNGatewayPollerResponse{}, err
+		return VPNGatewaysResetPollerResponse{}, err
 	}
-	poller := &vpnGatewayPoller{
+	poller := &vpnGatewaysResetPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return VPNGatewayPollerResponse{}, err
+		return VPNGatewaysResetPollerResponse{}, err
 	}
-	result := VPNGatewayPollerResponse{
+	result := VPNGatewaysResetPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VPNGatewayResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VPNGatewaysResetResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -534,17 +528,17 @@ func (client *VPNGatewaysClient) resetHandleError(resp *azcore.Response) error {
 
 // UpdateTags - Updates virtual wan vpn gateway tags.
 // If the operation fails it returns the *CloudError error type.
-func (client *VPNGatewaysClient) UpdateTags(ctx context.Context, resourceGroupName string, gatewayName string, vpnGatewayParameters TagsObject, options *VPNGatewaysUpdateTagsOptions) (VPNGatewayResponse, error) {
+func (client *VPNGatewaysClient) UpdateTags(ctx context.Context, resourceGroupName string, gatewayName string, vpnGatewayParameters TagsObject, options *VPNGatewaysUpdateTagsOptions) (VPNGatewaysUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, gatewayName, vpnGatewayParameters, options)
 	if err != nil {
-		return VPNGatewayResponse{}, err
+		return VPNGatewaysUpdateTagsResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return VPNGatewayResponse{}, err
+		return VPNGatewaysUpdateTagsResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return VPNGatewayResponse{}, client.updateTagsHandleError(resp)
+		return VPNGatewaysUpdateTagsResponse{}, client.updateTagsHandleError(resp)
 	}
 	return client.updateTagsHandleResponse(resp)
 }
@@ -577,12 +571,12 @@ func (client *VPNGatewaysClient) updateTagsCreateRequest(ctx context.Context, re
 }
 
 // updateTagsHandleResponse handles the UpdateTags response.
-func (client *VPNGatewaysClient) updateTagsHandleResponse(resp *azcore.Response) (VPNGatewayResponse, error) {
-	var val *VPNGateway
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return VPNGatewayResponse{}, err
+func (client *VPNGatewaysClient) updateTagsHandleResponse(resp *azcore.Response) (VPNGatewaysUpdateTagsResponse, error) {
+	result := VPNGatewaysUpdateTagsResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.VPNGateway); err != nil {
+		return VPNGatewaysUpdateTagsResponse{}, err
 	}
-	return VPNGatewayResponse{RawResponse: resp.Response, VPNGateway: val}, nil
+	return result, nil
 }
 
 // updateTagsHandleError handles the UpdateTags error response.

@@ -24,47 +24,47 @@ type linkedServiceClient struct {
 
 // BeginCreateOrUpdateLinkedService - Creates or updates a linked service.
 // If the operation fails it returns the *CloudError error type.
-func (client *linkedServiceClient) BeginCreateOrUpdateLinkedService(ctx context.Context, linkedServiceName string, linkedService LinkedServiceResource, options *LinkedServiceBeginCreateOrUpdateLinkedServiceOptions) (LinkedServiceResourcePollerResponse, error) {
+func (client *linkedServiceClient) BeginCreateOrUpdateLinkedService(ctx context.Context, linkedServiceName string, linkedService LinkedServiceResource, options *LinkedServiceBeginCreateOrUpdateLinkedServiceOptions) (LinkedServiceCreateOrUpdateLinkedServicePollerResponse, error) {
 	resp, err := client.createOrUpdateLinkedService(ctx, linkedServiceName, linkedService, options)
 	if err != nil {
-		return LinkedServiceResourcePollerResponse{}, err
+		return LinkedServiceCreateOrUpdateLinkedServicePollerResponse{}, err
 	}
-	result := LinkedServiceResourcePollerResponse{
+	result := LinkedServiceCreateOrUpdateLinkedServicePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := azcore.NewLROPoller("linkedServiceClient.CreateOrUpdateLinkedService", resp, client.con.Pipeline(), client.createOrUpdateLinkedServiceHandleError)
 	if err != nil {
-		return LinkedServiceResourcePollerResponse{}, err
+		return LinkedServiceCreateOrUpdateLinkedServicePollerResponse{}, err
 	}
-	poller := &linkedServiceResourcePoller{
+	poller := &linkedServiceCreateOrUpdateLinkedServicePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LinkedServiceResourceResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LinkedServiceCreateOrUpdateLinkedServiceResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeCreateOrUpdateLinkedService creates a new LinkedServiceResourcePoller from the specified resume token.
-// token - The value must come from a previous call to LinkedServiceResourcePoller.ResumeToken().
-func (client *linkedServiceClient) ResumeCreateOrUpdateLinkedService(ctx context.Context, token string) (LinkedServiceResourcePollerResponse, error) {
+// ResumeCreateOrUpdateLinkedService creates a new LinkedServiceCreateOrUpdateLinkedServicePoller from the specified resume token.
+// token - The value must come from a previous call to LinkedServiceCreateOrUpdateLinkedServicePoller.ResumeToken().
+func (client *linkedServiceClient) ResumeCreateOrUpdateLinkedService(ctx context.Context, token string) (LinkedServiceCreateOrUpdateLinkedServicePollerResponse, error) {
 	pt, err := azcore.NewLROPollerFromResumeToken("linkedServiceClient.CreateOrUpdateLinkedService", token, client.con.Pipeline(), client.createOrUpdateLinkedServiceHandleError)
 	if err != nil {
-		return LinkedServiceResourcePollerResponse{}, err
+		return LinkedServiceCreateOrUpdateLinkedServicePollerResponse{}, err
 	}
-	poller := &linkedServiceResourcePoller{
+	poller := &linkedServiceCreateOrUpdateLinkedServicePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return LinkedServiceResourcePollerResponse{}, err
+		return LinkedServiceCreateOrUpdateLinkedServicePollerResponse{}, err
 	}
-	result := LinkedServiceResourcePollerResponse{
+	result := LinkedServiceCreateOrUpdateLinkedServicePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LinkedServiceResourceResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LinkedServiceCreateOrUpdateLinkedServiceResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -124,47 +124,47 @@ func (client *linkedServiceClient) createOrUpdateLinkedServiceHandleError(resp *
 
 // BeginDeleteLinkedService - Deletes a linked service.
 // If the operation fails it returns the *CloudError error type.
-func (client *linkedServiceClient) BeginDeleteLinkedService(ctx context.Context, linkedServiceName string, options *LinkedServiceBeginDeleteLinkedServiceOptions) (HTTPPollerResponse, error) {
+func (client *linkedServiceClient) BeginDeleteLinkedService(ctx context.Context, linkedServiceName string, options *LinkedServiceBeginDeleteLinkedServiceOptions) (LinkedServiceDeleteLinkedServicePollerResponse, error) {
 	resp, err := client.deleteLinkedService(ctx, linkedServiceName, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LinkedServiceDeleteLinkedServicePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := LinkedServiceDeleteLinkedServicePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := azcore.NewLROPoller("linkedServiceClient.DeleteLinkedService", resp, client.con.Pipeline(), client.deleteLinkedServiceHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LinkedServiceDeleteLinkedServicePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &linkedServiceDeleteLinkedServicePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LinkedServiceDeleteLinkedServiceResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeDeleteLinkedService creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *linkedServiceClient) ResumeDeleteLinkedService(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeDeleteLinkedService creates a new LinkedServiceDeleteLinkedServicePoller from the specified resume token.
+// token - The value must come from a previous call to LinkedServiceDeleteLinkedServicePoller.ResumeToken().
+func (client *linkedServiceClient) ResumeDeleteLinkedService(ctx context.Context, token string) (LinkedServiceDeleteLinkedServicePollerResponse, error) {
 	pt, err := azcore.NewLROPollerFromResumeToken("linkedServiceClient.DeleteLinkedService", token, client.con.Pipeline(), client.deleteLinkedServiceHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LinkedServiceDeleteLinkedServicePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &linkedServiceDeleteLinkedServicePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LinkedServiceDeleteLinkedServicePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := LinkedServiceDeleteLinkedServicePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LinkedServiceDeleteLinkedServiceResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -221,17 +221,17 @@ func (client *linkedServiceClient) deleteLinkedServiceHandleError(resp *azcore.R
 
 // GetLinkedService - Gets a linked service.
 // If the operation fails it returns the *CloudError error type.
-func (client *linkedServiceClient) GetLinkedService(ctx context.Context, linkedServiceName string, options *LinkedServiceGetLinkedServiceOptions) (LinkedServiceResourceResponse, error) {
+func (client *linkedServiceClient) GetLinkedService(ctx context.Context, linkedServiceName string, options *LinkedServiceGetLinkedServiceOptions) (LinkedServiceGetLinkedServiceResponse, error) {
 	req, err := client.getLinkedServiceCreateRequest(ctx, linkedServiceName, options)
 	if err != nil {
-		return LinkedServiceResourceResponse{}, err
+		return LinkedServiceGetLinkedServiceResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return LinkedServiceResourceResponse{}, err
+		return LinkedServiceGetLinkedServiceResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusNotModified) {
-		return LinkedServiceResourceResponse{}, client.getLinkedServiceHandleError(resp)
+		return LinkedServiceGetLinkedServiceResponse{}, client.getLinkedServiceHandleError(resp)
 	}
 	return client.getLinkedServiceHandleResponse(resp)
 }
@@ -259,12 +259,12 @@ func (client *linkedServiceClient) getLinkedServiceCreateRequest(ctx context.Con
 }
 
 // getLinkedServiceHandleResponse handles the GetLinkedService response.
-func (client *linkedServiceClient) getLinkedServiceHandleResponse(resp *azcore.Response) (LinkedServiceResourceResponse, error) {
-	var val *LinkedServiceResource
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return LinkedServiceResourceResponse{}, err
+func (client *linkedServiceClient) getLinkedServiceHandleResponse(resp *azcore.Response) (LinkedServiceGetLinkedServiceResponse, error) {
+	result := LinkedServiceGetLinkedServiceResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.LinkedServiceResource); err != nil {
+		return LinkedServiceGetLinkedServiceResponse{}, err
 	}
-	return LinkedServiceResourceResponse{RawResponse: resp.Response, LinkedServiceResource: val}, nil
+	return result, nil
 }
 
 // getLinkedServiceHandleError handles the GetLinkedService error response.
@@ -282,18 +282,15 @@ func (client *linkedServiceClient) getLinkedServiceHandleError(resp *azcore.Resp
 
 // GetLinkedServicesByWorkspace - Lists linked services.
 // If the operation fails it returns the *CloudError error type.
-func (client *linkedServiceClient) GetLinkedServicesByWorkspace(options *LinkedServiceGetLinkedServicesByWorkspaceOptions) LinkedServiceListResponsePager {
-	return &linkedServiceListResponsePager{
-		pipeline: client.con.Pipeline(),
+func (client *linkedServiceClient) GetLinkedServicesByWorkspace(options *LinkedServiceGetLinkedServicesByWorkspaceOptions) LinkedServiceGetLinkedServicesByWorkspacePager {
+	return &linkedServiceGetLinkedServicesByWorkspacePager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.getLinkedServicesByWorkspaceCreateRequest(ctx, options)
 		},
-		responder: client.getLinkedServicesByWorkspaceHandleResponse,
-		errorer:   client.getLinkedServicesByWorkspaceHandleError,
-		advancer: func(ctx context.Context, resp LinkedServiceListResponseResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp LinkedServiceGetLinkedServicesByWorkspaceResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.LinkedServiceListResponse.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -313,12 +310,12 @@ func (client *linkedServiceClient) getLinkedServicesByWorkspaceCreateRequest(ctx
 }
 
 // getLinkedServicesByWorkspaceHandleResponse handles the GetLinkedServicesByWorkspace response.
-func (client *linkedServiceClient) getLinkedServicesByWorkspaceHandleResponse(resp *azcore.Response) (LinkedServiceListResponseResponse, error) {
-	var val *LinkedServiceListResponse
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return LinkedServiceListResponseResponse{}, err
+func (client *linkedServiceClient) getLinkedServicesByWorkspaceHandleResponse(resp *azcore.Response) (LinkedServiceGetLinkedServicesByWorkspaceResponse, error) {
+	result := LinkedServiceGetLinkedServicesByWorkspaceResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.LinkedServiceListResponse); err != nil {
+		return LinkedServiceGetLinkedServicesByWorkspaceResponse{}, err
 	}
-	return LinkedServiceListResponseResponse{RawResponse: resp.Response, LinkedServiceListResponse: val}, nil
+	return result, nil
 }
 
 // getLinkedServicesByWorkspaceHandleError handles the GetLinkedServicesByWorkspace error response.
@@ -336,47 +333,47 @@ func (client *linkedServiceClient) getLinkedServicesByWorkspaceHandleError(resp 
 
 // BeginRenameLinkedService - Renames a linked service.
 // If the operation fails it returns the *CloudError error type.
-func (client *linkedServiceClient) BeginRenameLinkedService(ctx context.Context, linkedServiceName string, request ArtifactRenameRequest, options *LinkedServiceBeginRenameLinkedServiceOptions) (HTTPPollerResponse, error) {
+func (client *linkedServiceClient) BeginRenameLinkedService(ctx context.Context, linkedServiceName string, request ArtifactRenameRequest, options *LinkedServiceBeginRenameLinkedServiceOptions) (LinkedServiceRenameLinkedServicePollerResponse, error) {
 	resp, err := client.renameLinkedService(ctx, linkedServiceName, request, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LinkedServiceRenameLinkedServicePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := LinkedServiceRenameLinkedServicePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := azcore.NewLROPoller("linkedServiceClient.RenameLinkedService", resp, client.con.Pipeline(), client.renameLinkedServiceHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LinkedServiceRenameLinkedServicePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &linkedServiceRenameLinkedServicePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LinkedServiceRenameLinkedServiceResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeRenameLinkedService creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *linkedServiceClient) ResumeRenameLinkedService(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeRenameLinkedService creates a new LinkedServiceRenameLinkedServicePoller from the specified resume token.
+// token - The value must come from a previous call to LinkedServiceRenameLinkedServicePoller.ResumeToken().
+func (client *linkedServiceClient) ResumeRenameLinkedService(ctx context.Context, token string) (LinkedServiceRenameLinkedServicePollerResponse, error) {
 	pt, err := azcore.NewLROPollerFromResumeToken("linkedServiceClient.RenameLinkedService", token, client.con.Pipeline(), client.renameLinkedServiceHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LinkedServiceRenameLinkedServicePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &linkedServiceRenameLinkedServicePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LinkedServiceRenameLinkedServicePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := LinkedServiceRenameLinkedServicePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LinkedServiceRenameLinkedServiceResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil

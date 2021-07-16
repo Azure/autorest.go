@@ -32,17 +32,17 @@ func NewServiceAssociationLinksClient(con *armcore.Connection, subscriptionID st
 
 // List - Gets a list of service association links for a subnet.
 // If the operation fails it returns the *CloudError error type.
-func (client *ServiceAssociationLinksClient) List(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, options *ServiceAssociationLinksListOptions) (ServiceAssociationLinksListResultResponse, error) {
+func (client *ServiceAssociationLinksClient) List(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, options *ServiceAssociationLinksListOptions) (ServiceAssociationLinksListResponse, error) {
 	req, err := client.listCreateRequest(ctx, resourceGroupName, virtualNetworkName, subnetName, options)
 	if err != nil {
-		return ServiceAssociationLinksListResultResponse{}, err
+		return ServiceAssociationLinksListResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return ServiceAssociationLinksListResultResponse{}, err
+		return ServiceAssociationLinksListResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return ServiceAssociationLinksListResultResponse{}, client.listHandleError(resp)
+		return ServiceAssociationLinksListResponse{}, client.listHandleError(resp)
 	}
 	return client.listHandleResponse(resp)
 }
@@ -79,12 +79,12 @@ func (client *ServiceAssociationLinksClient) listCreateRequest(ctx context.Conte
 }
 
 // listHandleResponse handles the List response.
-func (client *ServiceAssociationLinksClient) listHandleResponse(resp *azcore.Response) (ServiceAssociationLinksListResultResponse, error) {
-	var val *ServiceAssociationLinksListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ServiceAssociationLinksListResultResponse{}, err
+func (client *ServiceAssociationLinksClient) listHandleResponse(resp *azcore.Response) (ServiceAssociationLinksListResponse, error) {
+	result := ServiceAssociationLinksListResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.ServiceAssociationLinksListResult); err != nil {
+		return ServiceAssociationLinksListResponse{}, err
 	}
-	return ServiceAssociationLinksListResultResponse{RawResponse: resp.Response, ServiceAssociationLinksListResult: val}, nil
+	return result, nil
 }
 
 // listHandleError handles the List error response.

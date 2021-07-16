@@ -32,18 +32,15 @@ func NewAvailableResourceGroupDelegationsClient(con *armcore.Connection, subscri
 
 // List - Gets all of the available subnet delegations for this resource group in this region.
 // If the operation fails it returns the *CloudError error type.
-func (client *AvailableResourceGroupDelegationsClient) List(location string, resourceGroupName string, options *AvailableResourceGroupDelegationsListOptions) AvailableDelegationsResultPager {
-	return &availableDelegationsResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *AvailableResourceGroupDelegationsClient) List(location string, resourceGroupName string, options *AvailableResourceGroupDelegationsListOptions) AvailableResourceGroupDelegationsListPager {
+	return &availableResourceGroupDelegationsListPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, location, resourceGroupName, options)
 		},
-		responder: client.listHandleResponse,
-		errorer:   client.listHandleError,
-		advancer: func(ctx context.Context, resp AvailableDelegationsResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp AvailableResourceGroupDelegationsListResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.AvailableDelegationsResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -75,12 +72,12 @@ func (client *AvailableResourceGroupDelegationsClient) listCreateRequest(ctx con
 }
 
 // listHandleResponse handles the List response.
-func (client *AvailableResourceGroupDelegationsClient) listHandleResponse(resp *azcore.Response) (AvailableDelegationsResultResponse, error) {
-	var val *AvailableDelegationsResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return AvailableDelegationsResultResponse{}, err
+func (client *AvailableResourceGroupDelegationsClient) listHandleResponse(resp *azcore.Response) (AvailableResourceGroupDelegationsListResponse, error) {
+	result := AvailableResourceGroupDelegationsListResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.AvailableDelegationsResult); err != nil {
+		return AvailableResourceGroupDelegationsListResponse{}, err
 	}
-	return AvailableDelegationsResultResponse{RawResponse: resp.Response, AvailableDelegationsResult: val}, nil
+	return result, nil
 }
 
 // listHandleError handles the List error response.

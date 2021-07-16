@@ -9,11 +9,28 @@ package reportgroup
 
 import "net/http"
 
-// MapOfInt32Response is the response envelope for operations that return a map[string]*int32 type.
-type MapOfInt32Response struct {
+// AutoRestReportServiceGetOptionalReportResponse contains the response from method AutoRestReportService.GetOptionalReport.
+type AutoRestReportServiceGetOptionalReportResponse struct {
+	AutoRestReportServiceGetOptionalReportResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
 
+// AutoRestReportServiceGetOptionalReportResult contains the result from method AutoRestReportService.GetOptionalReport.
+type AutoRestReportServiceGetOptionalReportResult struct {
+	// Dictionary of <integer>
+	Value map[string]*int32
+}
+
+// AutoRestReportServiceGetReportResponse contains the response from method AutoRestReportService.GetReport.
+type AutoRestReportServiceGetReportResponse struct {
+	AutoRestReportServiceGetReportResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// AutoRestReportServiceGetReportResult contains the result from method AutoRestReportService.GetReport.
+type AutoRestReportServiceGetReportResult struct {
 	// Dictionary of <integer>
 	Value map[string]*int32
 }

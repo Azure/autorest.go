@@ -33,47 +33,47 @@ func NewVirtualHubsClient(con *armcore.Connection, subscriptionID string) *Virtu
 
 // BeginCreateOrUpdate - Creates a VirtualHub resource if it doesn't exist else updates the existing VirtualHub.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualHubsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualHubName string, virtualHubParameters VirtualHub, options *VirtualHubsBeginCreateOrUpdateOptions) (VirtualHubPollerResponse, error) {
+func (client *VirtualHubsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualHubName string, virtualHubParameters VirtualHub, options *VirtualHubsBeginCreateOrUpdateOptions) (VirtualHubsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualHubName, virtualHubParameters, options)
 	if err != nil {
-		return VirtualHubPollerResponse{}, err
+		return VirtualHubsCreateOrUpdatePollerResponse{}, err
 	}
-	result := VirtualHubPollerResponse{
+	result := VirtualHubsCreateOrUpdatePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("VirtualHubsClient.CreateOrUpdate", "azure-async-operation", resp, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return VirtualHubPollerResponse{}, err
+		return VirtualHubsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &virtualHubPoller{
+	poller := &virtualHubsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualHubResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualHubsCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new VirtualHubPoller from the specified resume token.
-// token - The value must come from a previous call to VirtualHubPoller.ResumeToken().
-func (client *VirtualHubsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (VirtualHubPollerResponse, error) {
+// ResumeCreateOrUpdate creates a new VirtualHubsCreateOrUpdatePoller from the specified resume token.
+// token - The value must come from a previous call to VirtualHubsCreateOrUpdatePoller.ResumeToken().
+func (client *VirtualHubsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (VirtualHubsCreateOrUpdatePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("VirtualHubsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return VirtualHubPollerResponse{}, err
+		return VirtualHubsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &virtualHubPoller{
+	poller := &virtualHubsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return VirtualHubPollerResponse{}, err
+		return VirtualHubsCreateOrUpdatePollerResponse{}, err
 	}
-	result := VirtualHubPollerResponse{
+	result := VirtualHubsCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualHubResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualHubsCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -138,47 +138,47 @@ func (client *VirtualHubsClient) createOrUpdateHandleError(resp *azcore.Response
 
 // BeginDelete - Deletes a VirtualHub.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualHubsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualHubName string, options *VirtualHubsBeginDeleteOptions) (HTTPPollerResponse, error) {
+func (client *VirtualHubsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualHubName string, options *VirtualHubsBeginDeleteOptions) (VirtualHubsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, virtualHubName, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return VirtualHubsDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := VirtualHubsDeletePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("VirtualHubsClient.Delete", "location", resp, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return VirtualHubsDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &virtualHubsDeletePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualHubsDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeDelete creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *VirtualHubsClient) ResumeDelete(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeDelete creates a new VirtualHubsDeletePoller from the specified resume token.
+// token - The value must come from a previous call to VirtualHubsDeletePoller.ResumeToken().
+func (client *VirtualHubsClient) ResumeDelete(ctx context.Context, token string) (VirtualHubsDeletePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("VirtualHubsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return VirtualHubsDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &virtualHubsDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return VirtualHubsDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := VirtualHubsDeletePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualHubsDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -243,17 +243,17 @@ func (client *VirtualHubsClient) deleteHandleError(resp *azcore.Response) error 
 
 // Get - Retrieves the details of a VirtualHub.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualHubsClient) Get(ctx context.Context, resourceGroupName string, virtualHubName string, options *VirtualHubsGetOptions) (VirtualHubResponse, error) {
+func (client *VirtualHubsClient) Get(ctx context.Context, resourceGroupName string, virtualHubName string, options *VirtualHubsGetOptions) (VirtualHubsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, virtualHubName, options)
 	if err != nil {
-		return VirtualHubResponse{}, err
+		return VirtualHubsGetResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return VirtualHubResponse{}, err
+		return VirtualHubsGetResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return VirtualHubResponse{}, client.getHandleError(resp)
+		return VirtualHubsGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -286,12 +286,12 @@ func (client *VirtualHubsClient) getCreateRequest(ctx context.Context, resourceG
 }
 
 // getHandleResponse handles the Get response.
-func (client *VirtualHubsClient) getHandleResponse(resp *azcore.Response) (VirtualHubResponse, error) {
-	var val *VirtualHub
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return VirtualHubResponse{}, err
+func (client *VirtualHubsClient) getHandleResponse(resp *azcore.Response) (VirtualHubsGetResponse, error) {
+	result := VirtualHubsGetResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.VirtualHub); err != nil {
+		return VirtualHubsGetResponse{}, err
 	}
-	return VirtualHubResponse{RawResponse: resp.Response, VirtualHub: val}, nil
+	return result, nil
 }
 
 // getHandleError handles the Get error response.
@@ -309,18 +309,15 @@ func (client *VirtualHubsClient) getHandleError(resp *azcore.Response) error {
 
 // List - Lists all the VirtualHubs in a subscription.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualHubsClient) List(options *VirtualHubsListOptions) ListVirtualHubsResultPager {
-	return &listVirtualHubsResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *VirtualHubsClient) List(options *VirtualHubsListOptions) VirtualHubsListPager {
+	return &virtualHubsListPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, options)
 		},
-		responder: client.listHandleResponse,
-		errorer:   client.listHandleError,
-		advancer: func(ctx context.Context, resp ListVirtualHubsResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp VirtualHubsListResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ListVirtualHubsResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -344,12 +341,12 @@ func (client *VirtualHubsClient) listCreateRequest(ctx context.Context, options 
 }
 
 // listHandleResponse handles the List response.
-func (client *VirtualHubsClient) listHandleResponse(resp *azcore.Response) (ListVirtualHubsResultResponse, error) {
-	var val *ListVirtualHubsResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ListVirtualHubsResultResponse{}, err
+func (client *VirtualHubsClient) listHandleResponse(resp *azcore.Response) (VirtualHubsListResponse, error) {
+	result := VirtualHubsListResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.ListVirtualHubsResult); err != nil {
+		return VirtualHubsListResponse{}, err
 	}
-	return ListVirtualHubsResultResponse{RawResponse: resp.Response, ListVirtualHubsResult: val}, nil
+	return result, nil
 }
 
 // listHandleError handles the List error response.
@@ -367,18 +364,15 @@ func (client *VirtualHubsClient) listHandleError(resp *azcore.Response) error {
 
 // ListByResourceGroup - Lists all the VirtualHubs in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualHubsClient) ListByResourceGroup(resourceGroupName string, options *VirtualHubsListByResourceGroupOptions) ListVirtualHubsResultPager {
-	return &listVirtualHubsResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *VirtualHubsClient) ListByResourceGroup(resourceGroupName string, options *VirtualHubsListByResourceGroupOptions) VirtualHubsListByResourceGroupPager {
+	return &virtualHubsListByResourceGroupPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
 		},
-		responder: client.listByResourceGroupHandleResponse,
-		errorer:   client.listByResourceGroupHandleError,
-		advancer: func(ctx context.Context, resp ListVirtualHubsResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp VirtualHubsListByResourceGroupResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ListVirtualHubsResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -406,12 +400,12 @@ func (client *VirtualHubsClient) listByResourceGroupCreateRequest(ctx context.Co
 }
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
-func (client *VirtualHubsClient) listByResourceGroupHandleResponse(resp *azcore.Response) (ListVirtualHubsResultResponse, error) {
-	var val *ListVirtualHubsResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ListVirtualHubsResultResponse{}, err
+func (client *VirtualHubsClient) listByResourceGroupHandleResponse(resp *azcore.Response) (VirtualHubsListByResourceGroupResponse, error) {
+	result := VirtualHubsListByResourceGroupResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.ListVirtualHubsResult); err != nil {
+		return VirtualHubsListByResourceGroupResponse{}, err
 	}
-	return ListVirtualHubsResultResponse{RawResponse: resp.Response, ListVirtualHubsResult: val}, nil
+	return result, nil
 }
 
 // listByResourceGroupHandleError handles the ListByResourceGroup error response.
@@ -429,17 +423,17 @@ func (client *VirtualHubsClient) listByResourceGroupHandleError(resp *azcore.Res
 
 // UpdateTags - Updates VirtualHub tags.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualHubsClient) UpdateTags(ctx context.Context, resourceGroupName string, virtualHubName string, virtualHubParameters TagsObject, options *VirtualHubsUpdateTagsOptions) (VirtualHubResponse, error) {
+func (client *VirtualHubsClient) UpdateTags(ctx context.Context, resourceGroupName string, virtualHubName string, virtualHubParameters TagsObject, options *VirtualHubsUpdateTagsOptions) (VirtualHubsUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, virtualHubName, virtualHubParameters, options)
 	if err != nil {
-		return VirtualHubResponse{}, err
+		return VirtualHubsUpdateTagsResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return VirtualHubResponse{}, err
+		return VirtualHubsUpdateTagsResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return VirtualHubResponse{}, client.updateTagsHandleError(resp)
+		return VirtualHubsUpdateTagsResponse{}, client.updateTagsHandleError(resp)
 	}
 	return client.updateTagsHandleResponse(resp)
 }
@@ -472,12 +466,12 @@ func (client *VirtualHubsClient) updateTagsCreateRequest(ctx context.Context, re
 }
 
 // updateTagsHandleResponse handles the UpdateTags response.
-func (client *VirtualHubsClient) updateTagsHandleResponse(resp *azcore.Response) (VirtualHubResponse, error) {
-	var val *VirtualHub
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return VirtualHubResponse{}, err
+func (client *VirtualHubsClient) updateTagsHandleResponse(resp *azcore.Response) (VirtualHubsUpdateTagsResponse, error) {
+	result := VirtualHubsUpdateTagsResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.VirtualHub); err != nil {
+		return VirtualHubsUpdateTagsResponse{}, err
 	}
-	return VirtualHubResponse{RawResponse: resp.Response, VirtualHub: val}, nil
+	return result, nil
 }
 
 // updateTagsHandleError handles the UpdateTags error response.

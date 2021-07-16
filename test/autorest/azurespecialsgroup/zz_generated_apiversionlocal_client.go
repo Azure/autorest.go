@@ -27,19 +27,19 @@ func NewAPIVersionLocalClient(con *Connection) *APIVersionLocalClient {
 
 // GetMethodLocalNull - Get method with api-version modeled in the method. pass in api-version = null to succeed
 // If the operation fails it returns the *Error error type.
-func (client *APIVersionLocalClient) GetMethodLocalNull(ctx context.Context, options *APIVersionLocalGetMethodLocalNullOptions) (*http.Response, error) {
+func (client *APIVersionLocalClient) GetMethodLocalNull(ctx context.Context, options *APIVersionLocalGetMethodLocalNullOptions) (APIVersionLocalGetMethodLocalNullResponse, error) {
 	req, err := client.getMethodLocalNullCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return APIVersionLocalGetMethodLocalNullResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return APIVersionLocalGetMethodLocalNullResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getMethodLocalNullHandleError(resp)
+		return APIVersionLocalGetMethodLocalNullResponse{}, client.getMethodLocalNullHandleError(resp)
 	}
-	return resp.Response, nil
+	return APIVersionLocalGetMethodLocalNullResponse{RawResponse: resp.Response}, nil
 }
 
 // getMethodLocalNullCreateRequest creates the GetMethodLocalNull request.
@@ -74,19 +74,19 @@ func (client *APIVersionLocalClient) getMethodLocalNullHandleError(resp *azcore.
 
 // GetMethodLocalValid - Get method with api-version modeled in the method. pass in api-version = '2.0' to succeed
 // If the operation fails it returns the *Error error type.
-func (client *APIVersionLocalClient) GetMethodLocalValid(ctx context.Context, options *APIVersionLocalGetMethodLocalValidOptions) (*http.Response, error) {
+func (client *APIVersionLocalClient) GetMethodLocalValid(ctx context.Context, options *APIVersionLocalGetMethodLocalValidOptions) (APIVersionLocalGetMethodLocalValidResponse, error) {
 	req, err := client.getMethodLocalValidCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return APIVersionLocalGetMethodLocalValidResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return APIVersionLocalGetMethodLocalValidResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getMethodLocalValidHandleError(resp)
+		return APIVersionLocalGetMethodLocalValidResponse{}, client.getMethodLocalValidHandleError(resp)
 	}
-	return resp.Response, nil
+	return APIVersionLocalGetMethodLocalValidResponse{RawResponse: resp.Response}, nil
 }
 
 // getMethodLocalValidCreateRequest creates the GetMethodLocalValid request.
@@ -119,19 +119,19 @@ func (client *APIVersionLocalClient) getMethodLocalValidHandleError(resp *azcore
 
 // GetPathLocalValid - Get method with api-version modeled in the method. pass in api-version = '2.0' to succeed
 // If the operation fails it returns the *Error error type.
-func (client *APIVersionLocalClient) GetPathLocalValid(ctx context.Context, options *APIVersionLocalGetPathLocalValidOptions) (*http.Response, error) {
+func (client *APIVersionLocalClient) GetPathLocalValid(ctx context.Context, options *APIVersionLocalGetPathLocalValidOptions) (APIVersionLocalGetPathLocalValidResponse, error) {
 	req, err := client.getPathLocalValidCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return APIVersionLocalGetPathLocalValidResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return APIVersionLocalGetPathLocalValidResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getPathLocalValidHandleError(resp)
+		return APIVersionLocalGetPathLocalValidResponse{}, client.getPathLocalValidHandleError(resp)
 	}
-	return resp.Response, nil
+	return APIVersionLocalGetPathLocalValidResponse{RawResponse: resp.Response}, nil
 }
 
 // getPathLocalValidCreateRequest creates the GetPathLocalValid request.
@@ -164,19 +164,19 @@ func (client *APIVersionLocalClient) getPathLocalValidHandleError(resp *azcore.R
 
 // GetSwaggerLocalValid - Get method with api-version modeled in the method. pass in api-version = '2.0' to succeed
 // If the operation fails it returns the *Error error type.
-func (client *APIVersionLocalClient) GetSwaggerLocalValid(ctx context.Context, options *APIVersionLocalGetSwaggerLocalValidOptions) (*http.Response, error) {
+func (client *APIVersionLocalClient) GetSwaggerLocalValid(ctx context.Context, options *APIVersionLocalGetSwaggerLocalValidOptions) (APIVersionLocalGetSwaggerLocalValidResponse, error) {
 	req, err := client.getSwaggerLocalValidCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return APIVersionLocalGetSwaggerLocalValidResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return APIVersionLocalGetSwaggerLocalValidResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getSwaggerLocalValidHandleError(resp)
+		return APIVersionLocalGetSwaggerLocalValidResponse{}, client.getSwaggerLocalValidHandleError(resp)
 	}
-	return resp.Response, nil
+	return APIVersionLocalGetSwaggerLocalValidResponse{RawResponse: resp.Response}, nil
 }
 
 // getSwaggerLocalValidCreateRequest creates the GetSwaggerLocalValid request.

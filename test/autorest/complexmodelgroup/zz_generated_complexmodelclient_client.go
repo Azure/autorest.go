@@ -30,17 +30,17 @@ func NewComplexModelClient(con *Connection) *ComplexModelClient {
 
 // Create - Resets products.
 // If the operation fails it returns the *Error error type.
-func (client *ComplexModelClient) Create(ctx context.Context, subscriptionID string, resourceGroupName string, bodyParameter CatalogDictionaryOfArray, options *ComplexModelClientCreateOptions) (CatalogDictionaryResponse, error) {
+func (client *ComplexModelClient) Create(ctx context.Context, subscriptionID string, resourceGroupName string, bodyParameter CatalogDictionaryOfArray, options *ComplexModelClientCreateOptions) (ComplexModelClientCreateResponse, error) {
 	req, err := client.createCreateRequest(ctx, subscriptionID, resourceGroupName, bodyParameter, options)
 	if err != nil {
-		return CatalogDictionaryResponse{}, err
+		return ComplexModelClientCreateResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return CatalogDictionaryResponse{}, err
+		return ComplexModelClientCreateResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return CatalogDictionaryResponse{}, client.createHandleError(resp)
+		return ComplexModelClientCreateResponse{}, client.createHandleError(resp)
 	}
 	return client.createHandleResponse(resp)
 }
@@ -69,12 +69,12 @@ func (client *ComplexModelClient) createCreateRequest(ctx context.Context, subsc
 }
 
 // createHandleResponse handles the Create response.
-func (client *ComplexModelClient) createHandleResponse(resp *azcore.Response) (CatalogDictionaryResponse, error) {
-	var val *CatalogDictionary
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return CatalogDictionaryResponse{}, err
+func (client *ComplexModelClient) createHandleResponse(resp *azcore.Response) (ComplexModelClientCreateResponse, error) {
+	result := ComplexModelClientCreateResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.CatalogDictionary); err != nil {
+		return ComplexModelClientCreateResponse{}, err
 	}
-	return CatalogDictionaryResponse{RawResponse: resp.Response, CatalogDictionary: val}, nil
+	return result, nil
 }
 
 // createHandleError handles the Create error response.
@@ -94,17 +94,17 @@ func (client *ComplexModelClient) createHandleError(resp *azcore.Response) error
 // details about each product, and lists the products in
 // the proper display order.
 // If the operation fails it returns the *Error error type.
-func (client *ComplexModelClient) List(ctx context.Context, resourceGroupName string, options *ComplexModelClientListOptions) (CatalogArrayResponse, error) {
+func (client *ComplexModelClient) List(ctx context.Context, resourceGroupName string, options *ComplexModelClientListOptions) (ComplexModelClientListResponse, error) {
 	req, err := client.listCreateRequest(ctx, resourceGroupName, options)
 	if err != nil {
-		return CatalogArrayResponse{}, err
+		return ComplexModelClientListResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return CatalogArrayResponse{}, err
+		return ComplexModelClientListResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return CatalogArrayResponse{}, client.listHandleError(resp)
+		return ComplexModelClientListResponse{}, client.listHandleError(resp)
 	}
 	return client.listHandleResponse(resp)
 }
@@ -130,12 +130,12 @@ func (client *ComplexModelClient) listCreateRequest(ctx context.Context, resourc
 }
 
 // listHandleResponse handles the List response.
-func (client *ComplexModelClient) listHandleResponse(resp *azcore.Response) (CatalogArrayResponse, error) {
-	var val *CatalogArray
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return CatalogArrayResponse{}, err
+func (client *ComplexModelClient) listHandleResponse(resp *azcore.Response) (ComplexModelClientListResponse, error) {
+	result := ComplexModelClientListResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.CatalogArray); err != nil {
+		return ComplexModelClientListResponse{}, err
 	}
-	return CatalogArrayResponse{RawResponse: resp.Response, CatalogArray: val}, nil
+	return result, nil
 }
 
 // listHandleError handles the List error response.
@@ -153,17 +153,17 @@ func (client *ComplexModelClient) listHandleError(resp *azcore.Response) error {
 
 // Update - Resets products.
 // If the operation fails it returns the *Error error type.
-func (client *ComplexModelClient) Update(ctx context.Context, subscriptionID string, resourceGroupName string, bodyParameter CatalogArrayOfDictionary, options *ComplexModelClientUpdateOptions) (CatalogArrayResponse, error) {
+func (client *ComplexModelClient) Update(ctx context.Context, subscriptionID string, resourceGroupName string, bodyParameter CatalogArrayOfDictionary, options *ComplexModelClientUpdateOptions) (ComplexModelClientUpdateResponse, error) {
 	req, err := client.updateCreateRequest(ctx, subscriptionID, resourceGroupName, bodyParameter, options)
 	if err != nil {
-		return CatalogArrayResponse{}, err
+		return ComplexModelClientUpdateResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return CatalogArrayResponse{}, err
+		return ComplexModelClientUpdateResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return CatalogArrayResponse{}, client.updateHandleError(resp)
+		return ComplexModelClientUpdateResponse{}, client.updateHandleError(resp)
 	}
 	return client.updateHandleResponse(resp)
 }
@@ -192,12 +192,12 @@ func (client *ComplexModelClient) updateCreateRequest(ctx context.Context, subsc
 }
 
 // updateHandleResponse handles the Update response.
-func (client *ComplexModelClient) updateHandleResponse(resp *azcore.Response) (CatalogArrayResponse, error) {
-	var val *CatalogArray
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return CatalogArrayResponse{}, err
+func (client *ComplexModelClient) updateHandleResponse(resp *azcore.Response) (ComplexModelClientUpdateResponse, error) {
+	result := ComplexModelClientUpdateResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.CatalogArray); err != nil {
+		return ComplexModelClientUpdateResponse{}, err
 	}
-	return CatalogArrayResponse{RawResponse: resp.Response, CatalogArray: val}, nil
+	return result, nil
 }
 
 // updateHandleError handles the Update error response.

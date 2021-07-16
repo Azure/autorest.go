@@ -27,19 +27,19 @@ func NewHTTPRetryClient(con *Connection) *HTTPRetryClient {
 
 // Delete503 - Return 503 status code, then 200 after retry
 // If the operation fails it returns the *Error error type.
-func (client *HTTPRetryClient) Delete503(ctx context.Context, options *HTTPRetryDelete503Options) (*http.Response, error) {
+func (client *HTTPRetryClient) Delete503(ctx context.Context, options *HTTPRetryDelete503Options) (HTTPRetryDelete503Response, error) {
 	req, err := client.delete503CreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return HTTPRetryDelete503Response{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HTTPRetryDelete503Response{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.delete503HandleError(resp)
+		return HTTPRetryDelete503Response{}, client.delete503HandleError(resp)
 	}
-	return resp.Response, nil
+	return HTTPRetryDelete503Response{RawResponse: resp.Response}, nil
 }
 
 // delete503CreateRequest creates the Delete503 request.
@@ -69,19 +69,19 @@ func (client *HTTPRetryClient) delete503HandleError(resp *azcore.Response) error
 
 // Get502 - Return 502 status code, then 200 after retry
 // If the operation fails it returns the *Error error type.
-func (client *HTTPRetryClient) Get502(ctx context.Context, options *HTTPRetryGet502Options) (*http.Response, error) {
+func (client *HTTPRetryClient) Get502(ctx context.Context, options *HTTPRetryGet502Options) (HTTPRetryGet502Response, error) {
 	req, err := client.get502CreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return HTTPRetryGet502Response{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HTTPRetryGet502Response{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.get502HandleError(resp)
+		return HTTPRetryGet502Response{}, client.get502HandleError(resp)
 	}
-	return resp.Response, nil
+	return HTTPRetryGet502Response{RawResponse: resp.Response}, nil
 }
 
 // get502CreateRequest creates the Get502 request.
@@ -111,22 +111,20 @@ func (client *HTTPRetryClient) get502HandleError(resp *azcore.Response) error {
 
 // Head408 - Return 408 status code, then 200 after retry
 // If the operation fails it returns the *Error error type.
-func (client *HTTPRetryClient) Head408(ctx context.Context, options *HTTPRetryHead408Options) (BooleanResponse, error) {
+func (client *HTTPRetryClient) Head408(ctx context.Context, options *HTTPRetryHead408Options) (HTTPRetryHead408Response, error) {
 	req, err := client.head408CreateRequest(ctx, options)
 	if err != nil {
-		return BooleanResponse{}, err
+		return HTTPRetryHead408Response{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return BooleanResponse{}, err
+		return HTTPRetryHead408Response{}, err
 	}
+	result := HTTPRetryHead408Response{RawResponse: resp.Response}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
-		return BooleanResponse{RawResponse: resp.Response, Success: true}, nil
-	} else if resp.StatusCode >= 400 && resp.StatusCode < 500 {
-		return BooleanResponse{RawResponse: resp.Response, Success: false}, nil
-	} else {
-		return BooleanResponse{}, client.head408HandleError(resp)
+		result.Success = true
 	}
+	return result, nil
 }
 
 // head408CreateRequest creates the Head408 request.
@@ -141,32 +139,19 @@ func (client *HTTPRetryClient) head408CreateRequest(ctx context.Context, options
 	return req, nil
 }
 
-// head408HandleError handles the Head408 error response.
-func (client *HTTPRetryClient) head408HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
-	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
-	}
-	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
-	}
-	return azcore.NewResponseError(&errType, resp.Response)
-}
-
 // Options502 - Return 502 status code, then 200 after retry
 // If the operation fails it returns the *Error error type.
-func (client *HTTPRetryClient) Options502(ctx context.Context, options *HTTPRetryOptions502Options) (BoolResponse, error) {
+func (client *HTTPRetryClient) Options502(ctx context.Context, options *HTTPRetryOptions502Options) (HTTPRetryOptions502Response, error) {
 	req, err := client.options502CreateRequest(ctx, options)
 	if err != nil {
-		return BoolResponse{}, err
+		return HTTPRetryOptions502Response{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return BoolResponse{}, err
+		return HTTPRetryOptions502Response{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return BoolResponse{}, client.options502HandleError(resp)
+		return HTTPRetryOptions502Response{}, client.options502HandleError(resp)
 	}
 	return client.options502HandleResponse(resp)
 }
@@ -184,12 +169,12 @@ func (client *HTTPRetryClient) options502CreateRequest(ctx context.Context, opti
 }
 
 // options502HandleResponse handles the Options502 response.
-func (client *HTTPRetryClient) options502HandleResponse(resp *azcore.Response) (BoolResponse, error) {
-	var val *bool
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return BoolResponse{}, err
+func (client *HTTPRetryClient) options502HandleResponse(resp *azcore.Response) (HTTPRetryOptions502Response, error) {
+	result := HTTPRetryOptions502Response{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.Value); err != nil {
+		return HTTPRetryOptions502Response{}, err
 	}
-	return BoolResponse{RawResponse: resp.Response, Value: val}, nil
+	return result, nil
 }
 
 // options502HandleError handles the Options502 error response.
@@ -207,19 +192,19 @@ func (client *HTTPRetryClient) options502HandleError(resp *azcore.Response) erro
 
 // Patch500 - Return 500 status code, then 200 after retry
 // If the operation fails it returns the *Error error type.
-func (client *HTTPRetryClient) Patch500(ctx context.Context, options *HTTPRetryPatch500Options) (*http.Response, error) {
+func (client *HTTPRetryClient) Patch500(ctx context.Context, options *HTTPRetryPatch500Options) (HTTPRetryPatch500Response, error) {
 	req, err := client.patch500CreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return HTTPRetryPatch500Response{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HTTPRetryPatch500Response{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.patch500HandleError(resp)
+		return HTTPRetryPatch500Response{}, client.patch500HandleError(resp)
 	}
-	return resp.Response, nil
+	return HTTPRetryPatch500Response{RawResponse: resp.Response}, nil
 }
 
 // patch500CreateRequest creates the Patch500 request.
@@ -249,19 +234,19 @@ func (client *HTTPRetryClient) patch500HandleError(resp *azcore.Response) error 
 
 // Patch504 - Return 504 status code, then 200 after retry
 // If the operation fails it returns the *Error error type.
-func (client *HTTPRetryClient) Patch504(ctx context.Context, options *HTTPRetryPatch504Options) (*http.Response, error) {
+func (client *HTTPRetryClient) Patch504(ctx context.Context, options *HTTPRetryPatch504Options) (HTTPRetryPatch504Response, error) {
 	req, err := client.patch504CreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return HTTPRetryPatch504Response{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HTTPRetryPatch504Response{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.patch504HandleError(resp)
+		return HTTPRetryPatch504Response{}, client.patch504HandleError(resp)
 	}
-	return resp.Response, nil
+	return HTTPRetryPatch504Response{RawResponse: resp.Response}, nil
 }
 
 // patch504CreateRequest creates the Patch504 request.
@@ -291,19 +276,19 @@ func (client *HTTPRetryClient) patch504HandleError(resp *azcore.Response) error 
 
 // Post503 - Return 503 status code, then 200 after retry
 // If the operation fails it returns the *Error error type.
-func (client *HTTPRetryClient) Post503(ctx context.Context, options *HTTPRetryPost503Options) (*http.Response, error) {
+func (client *HTTPRetryClient) Post503(ctx context.Context, options *HTTPRetryPost503Options) (HTTPRetryPost503Response, error) {
 	req, err := client.post503CreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return HTTPRetryPost503Response{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HTTPRetryPost503Response{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.post503HandleError(resp)
+		return HTTPRetryPost503Response{}, client.post503HandleError(resp)
 	}
-	return resp.Response, nil
+	return HTTPRetryPost503Response{RawResponse: resp.Response}, nil
 }
 
 // post503CreateRequest creates the Post503 request.
@@ -333,19 +318,19 @@ func (client *HTTPRetryClient) post503HandleError(resp *azcore.Response) error {
 
 // Put500 - Return 500 status code, then 200 after retry
 // If the operation fails it returns the *Error error type.
-func (client *HTTPRetryClient) Put500(ctx context.Context, options *HTTPRetryPut500Options) (*http.Response, error) {
+func (client *HTTPRetryClient) Put500(ctx context.Context, options *HTTPRetryPut500Options) (HTTPRetryPut500Response, error) {
 	req, err := client.put500CreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return HTTPRetryPut500Response{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HTTPRetryPut500Response{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.put500HandleError(resp)
+		return HTTPRetryPut500Response{}, client.put500HandleError(resp)
 	}
-	return resp.Response, nil
+	return HTTPRetryPut500Response{RawResponse: resp.Response}, nil
 }
 
 // put500CreateRequest creates the Put500 request.
@@ -375,19 +360,19 @@ func (client *HTTPRetryClient) put500HandleError(resp *azcore.Response) error {
 
 // Put504 - Return 504 status code, then 200 after retry
 // If the operation fails it returns the *Error error type.
-func (client *HTTPRetryClient) Put504(ctx context.Context, options *HTTPRetryPut504Options) (*http.Response, error) {
+func (client *HTTPRetryClient) Put504(ctx context.Context, options *HTTPRetryPut504Options) (HTTPRetryPut504Response, error) {
 	req, err := client.put504CreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return HTTPRetryPut504Response{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HTTPRetryPut504Response{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.put504HandleError(resp)
+		return HTTPRetryPut504Response{}, client.put504HandleError(resp)
 	}
-	return resp.Response, nil
+	return HTTPRetryPut504Response{RawResponse: resp.Response}, nil
 }
 
 // put504CreateRequest creates the Put504 request.

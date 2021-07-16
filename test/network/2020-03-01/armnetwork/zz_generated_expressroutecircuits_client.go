@@ -33,47 +33,47 @@ func NewExpressRouteCircuitsClient(con *armcore.Connection, subscriptionID strin
 
 // BeginCreateOrUpdate - Creates or updates an express route circuit.
 // If the operation fails it returns the *CloudError error type.
-func (client *ExpressRouteCircuitsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, circuitName string, parameters ExpressRouteCircuit, options *ExpressRouteCircuitsBeginCreateOrUpdateOptions) (ExpressRouteCircuitPollerResponse, error) {
+func (client *ExpressRouteCircuitsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, circuitName string, parameters ExpressRouteCircuit, options *ExpressRouteCircuitsBeginCreateOrUpdateOptions) (ExpressRouteCircuitsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, circuitName, parameters, options)
 	if err != nil {
-		return ExpressRouteCircuitPollerResponse{}, err
+		return ExpressRouteCircuitsCreateOrUpdatePollerResponse{}, err
 	}
-	result := ExpressRouteCircuitPollerResponse{
+	result := ExpressRouteCircuitsCreateOrUpdatePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("ExpressRouteCircuitsClient.CreateOrUpdate", "azure-async-operation", resp, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return ExpressRouteCircuitPollerResponse{}, err
+		return ExpressRouteCircuitsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &expressRouteCircuitPoller{
+	poller := &expressRouteCircuitsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitsCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new ExpressRouteCircuitPoller from the specified resume token.
-// token - The value must come from a previous call to ExpressRouteCircuitPoller.ResumeToken().
-func (client *ExpressRouteCircuitsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (ExpressRouteCircuitPollerResponse, error) {
+// ResumeCreateOrUpdate creates a new ExpressRouteCircuitsCreateOrUpdatePoller from the specified resume token.
+// token - The value must come from a previous call to ExpressRouteCircuitsCreateOrUpdatePoller.ResumeToken().
+func (client *ExpressRouteCircuitsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (ExpressRouteCircuitsCreateOrUpdatePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("ExpressRouteCircuitsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return ExpressRouteCircuitPollerResponse{}, err
+		return ExpressRouteCircuitsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &expressRouteCircuitPoller{
+	poller := &expressRouteCircuitsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return ExpressRouteCircuitPollerResponse{}, err
+		return ExpressRouteCircuitsCreateOrUpdatePollerResponse{}, err
 	}
-	result := ExpressRouteCircuitPollerResponse{
+	result := ExpressRouteCircuitsCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitsCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -138,47 +138,47 @@ func (client *ExpressRouteCircuitsClient) createOrUpdateHandleError(resp *azcore
 
 // BeginDelete - Deletes the specified express route circuit.
 // If the operation fails it returns the *CloudError error type.
-func (client *ExpressRouteCircuitsClient) BeginDelete(ctx context.Context, resourceGroupName string, circuitName string, options *ExpressRouteCircuitsBeginDeleteOptions) (HTTPPollerResponse, error) {
+func (client *ExpressRouteCircuitsClient) BeginDelete(ctx context.Context, resourceGroupName string, circuitName string, options *ExpressRouteCircuitsBeginDeleteOptions) (ExpressRouteCircuitsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, circuitName, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return ExpressRouteCircuitsDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := ExpressRouteCircuitsDeletePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("ExpressRouteCircuitsClient.Delete", "location", resp, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return ExpressRouteCircuitsDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &expressRouteCircuitsDeletePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitsDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeDelete creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *ExpressRouteCircuitsClient) ResumeDelete(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeDelete creates a new ExpressRouteCircuitsDeletePoller from the specified resume token.
+// token - The value must come from a previous call to ExpressRouteCircuitsDeletePoller.ResumeToken().
+func (client *ExpressRouteCircuitsClient) ResumeDelete(ctx context.Context, token string) (ExpressRouteCircuitsDeletePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("ExpressRouteCircuitsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return ExpressRouteCircuitsDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &expressRouteCircuitsDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return ExpressRouteCircuitsDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := ExpressRouteCircuitsDeletePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitsDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -243,17 +243,17 @@ func (client *ExpressRouteCircuitsClient) deleteHandleError(resp *azcore.Respons
 
 // Get - Gets information about the specified express route circuit.
 // If the operation fails it returns the *CloudError error type.
-func (client *ExpressRouteCircuitsClient) Get(ctx context.Context, resourceGroupName string, circuitName string, options *ExpressRouteCircuitsGetOptions) (ExpressRouteCircuitResponse, error) {
+func (client *ExpressRouteCircuitsClient) Get(ctx context.Context, resourceGroupName string, circuitName string, options *ExpressRouteCircuitsGetOptions) (ExpressRouteCircuitsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, circuitName, options)
 	if err != nil {
-		return ExpressRouteCircuitResponse{}, err
+		return ExpressRouteCircuitsGetResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return ExpressRouteCircuitResponse{}, err
+		return ExpressRouteCircuitsGetResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return ExpressRouteCircuitResponse{}, client.getHandleError(resp)
+		return ExpressRouteCircuitsGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -286,12 +286,12 @@ func (client *ExpressRouteCircuitsClient) getCreateRequest(ctx context.Context, 
 }
 
 // getHandleResponse handles the Get response.
-func (client *ExpressRouteCircuitsClient) getHandleResponse(resp *azcore.Response) (ExpressRouteCircuitResponse, error) {
-	var val *ExpressRouteCircuit
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ExpressRouteCircuitResponse{}, err
+func (client *ExpressRouteCircuitsClient) getHandleResponse(resp *azcore.Response) (ExpressRouteCircuitsGetResponse, error) {
+	result := ExpressRouteCircuitsGetResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.ExpressRouteCircuit); err != nil {
+		return ExpressRouteCircuitsGetResponse{}, err
 	}
-	return ExpressRouteCircuitResponse{RawResponse: resp.Response, ExpressRouteCircuit: val}, nil
+	return result, nil
 }
 
 // getHandleError handles the Get error response.
@@ -309,17 +309,17 @@ func (client *ExpressRouteCircuitsClient) getHandleError(resp *azcore.Response) 
 
 // GetPeeringStats - Gets all stats from an express route circuit in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *ExpressRouteCircuitsClient) GetPeeringStats(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, options *ExpressRouteCircuitsGetPeeringStatsOptions) (ExpressRouteCircuitStatsResponse, error) {
+func (client *ExpressRouteCircuitsClient) GetPeeringStats(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, options *ExpressRouteCircuitsGetPeeringStatsOptions) (ExpressRouteCircuitsGetPeeringStatsResponse, error) {
 	req, err := client.getPeeringStatsCreateRequest(ctx, resourceGroupName, circuitName, peeringName, options)
 	if err != nil {
-		return ExpressRouteCircuitStatsResponse{}, err
+		return ExpressRouteCircuitsGetPeeringStatsResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return ExpressRouteCircuitStatsResponse{}, err
+		return ExpressRouteCircuitsGetPeeringStatsResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return ExpressRouteCircuitStatsResponse{}, client.getPeeringStatsHandleError(resp)
+		return ExpressRouteCircuitsGetPeeringStatsResponse{}, client.getPeeringStatsHandleError(resp)
 	}
 	return client.getPeeringStatsHandleResponse(resp)
 }
@@ -356,12 +356,12 @@ func (client *ExpressRouteCircuitsClient) getPeeringStatsCreateRequest(ctx conte
 }
 
 // getPeeringStatsHandleResponse handles the GetPeeringStats response.
-func (client *ExpressRouteCircuitsClient) getPeeringStatsHandleResponse(resp *azcore.Response) (ExpressRouteCircuitStatsResponse, error) {
-	var val *ExpressRouteCircuitStats
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ExpressRouteCircuitStatsResponse{}, err
+func (client *ExpressRouteCircuitsClient) getPeeringStatsHandleResponse(resp *azcore.Response) (ExpressRouteCircuitsGetPeeringStatsResponse, error) {
+	result := ExpressRouteCircuitsGetPeeringStatsResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.ExpressRouteCircuitStats); err != nil {
+		return ExpressRouteCircuitsGetPeeringStatsResponse{}, err
 	}
-	return ExpressRouteCircuitStatsResponse{RawResponse: resp.Response, ExpressRouteCircuitStats: val}, nil
+	return result, nil
 }
 
 // getPeeringStatsHandleError handles the GetPeeringStats error response.
@@ -379,17 +379,17 @@ func (client *ExpressRouteCircuitsClient) getPeeringStatsHandleError(resp *azcor
 
 // GetStats - Gets all the stats from an express route circuit in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *ExpressRouteCircuitsClient) GetStats(ctx context.Context, resourceGroupName string, circuitName string, options *ExpressRouteCircuitsGetStatsOptions) (ExpressRouteCircuitStatsResponse, error) {
+func (client *ExpressRouteCircuitsClient) GetStats(ctx context.Context, resourceGroupName string, circuitName string, options *ExpressRouteCircuitsGetStatsOptions) (ExpressRouteCircuitsGetStatsResponse, error) {
 	req, err := client.getStatsCreateRequest(ctx, resourceGroupName, circuitName, options)
 	if err != nil {
-		return ExpressRouteCircuitStatsResponse{}, err
+		return ExpressRouteCircuitsGetStatsResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return ExpressRouteCircuitStatsResponse{}, err
+		return ExpressRouteCircuitsGetStatsResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return ExpressRouteCircuitStatsResponse{}, client.getStatsHandleError(resp)
+		return ExpressRouteCircuitsGetStatsResponse{}, client.getStatsHandleError(resp)
 	}
 	return client.getStatsHandleResponse(resp)
 }
@@ -422,12 +422,12 @@ func (client *ExpressRouteCircuitsClient) getStatsCreateRequest(ctx context.Cont
 }
 
 // getStatsHandleResponse handles the GetStats response.
-func (client *ExpressRouteCircuitsClient) getStatsHandleResponse(resp *azcore.Response) (ExpressRouteCircuitStatsResponse, error) {
-	var val *ExpressRouteCircuitStats
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ExpressRouteCircuitStatsResponse{}, err
+func (client *ExpressRouteCircuitsClient) getStatsHandleResponse(resp *azcore.Response) (ExpressRouteCircuitsGetStatsResponse, error) {
+	result := ExpressRouteCircuitsGetStatsResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.ExpressRouteCircuitStats); err != nil {
+		return ExpressRouteCircuitsGetStatsResponse{}, err
 	}
-	return ExpressRouteCircuitStatsResponse{RawResponse: resp.Response, ExpressRouteCircuitStats: val}, nil
+	return result, nil
 }
 
 // getStatsHandleError handles the GetStats error response.
@@ -445,18 +445,15 @@ func (client *ExpressRouteCircuitsClient) getStatsHandleError(resp *azcore.Respo
 
 // List - Gets all the express route circuits in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *ExpressRouteCircuitsClient) List(resourceGroupName string, options *ExpressRouteCircuitsListOptions) ExpressRouteCircuitListResultPager {
-	return &expressRouteCircuitListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *ExpressRouteCircuitsClient) List(resourceGroupName string, options *ExpressRouteCircuitsListOptions) ExpressRouteCircuitsListPager {
+	return &expressRouteCircuitsListPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, options)
 		},
-		responder: client.listHandleResponse,
-		errorer:   client.listHandleError,
-		advancer: func(ctx context.Context, resp ExpressRouteCircuitListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp ExpressRouteCircuitsListResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ExpressRouteCircuitListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -484,12 +481,12 @@ func (client *ExpressRouteCircuitsClient) listCreateRequest(ctx context.Context,
 }
 
 // listHandleResponse handles the List response.
-func (client *ExpressRouteCircuitsClient) listHandleResponse(resp *azcore.Response) (ExpressRouteCircuitListResultResponse, error) {
-	var val *ExpressRouteCircuitListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ExpressRouteCircuitListResultResponse{}, err
+func (client *ExpressRouteCircuitsClient) listHandleResponse(resp *azcore.Response) (ExpressRouteCircuitsListResponse, error) {
+	result := ExpressRouteCircuitsListResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.ExpressRouteCircuitListResult); err != nil {
+		return ExpressRouteCircuitsListResponse{}, err
 	}
-	return ExpressRouteCircuitListResultResponse{RawResponse: resp.Response, ExpressRouteCircuitListResult: val}, nil
+	return result, nil
 }
 
 // listHandleError handles the List error response.
@@ -507,18 +504,15 @@ func (client *ExpressRouteCircuitsClient) listHandleError(resp *azcore.Response)
 
 // ListAll - Gets all the express route circuits in a subscription.
 // If the operation fails it returns the *CloudError error type.
-func (client *ExpressRouteCircuitsClient) ListAll(options *ExpressRouteCircuitsListAllOptions) ExpressRouteCircuitListResultPager {
-	return &expressRouteCircuitListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *ExpressRouteCircuitsClient) ListAll(options *ExpressRouteCircuitsListAllOptions) ExpressRouteCircuitsListAllPager {
+	return &expressRouteCircuitsListAllPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listAllCreateRequest(ctx, options)
 		},
-		responder: client.listAllHandleResponse,
-		errorer:   client.listAllHandleError,
-		advancer: func(ctx context.Context, resp ExpressRouteCircuitListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp ExpressRouteCircuitsListAllResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ExpressRouteCircuitListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -542,12 +536,12 @@ func (client *ExpressRouteCircuitsClient) listAllCreateRequest(ctx context.Conte
 }
 
 // listAllHandleResponse handles the ListAll response.
-func (client *ExpressRouteCircuitsClient) listAllHandleResponse(resp *azcore.Response) (ExpressRouteCircuitListResultResponse, error) {
-	var val *ExpressRouteCircuitListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ExpressRouteCircuitListResultResponse{}, err
+func (client *ExpressRouteCircuitsClient) listAllHandleResponse(resp *azcore.Response) (ExpressRouteCircuitsListAllResponse, error) {
+	result := ExpressRouteCircuitsListAllResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.ExpressRouteCircuitListResult); err != nil {
+		return ExpressRouteCircuitsListAllResponse{}, err
 	}
-	return ExpressRouteCircuitListResultResponse{RawResponse: resp.Response, ExpressRouteCircuitListResult: val}, nil
+	return result, nil
 }
 
 // listAllHandleError handles the ListAll error response.
@@ -565,47 +559,47 @@ func (client *ExpressRouteCircuitsClient) listAllHandleError(resp *azcore.Respon
 
 // BeginListArpTable - Gets the currently advertised ARP table associated with the express route circuit in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *ExpressRouteCircuitsClient) BeginListArpTable(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, devicePath string, options *ExpressRouteCircuitsBeginListArpTableOptions) (ExpressRouteCircuitsArpTableListResultPollerResponse, error) {
+func (client *ExpressRouteCircuitsClient) BeginListArpTable(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, devicePath string, options *ExpressRouteCircuitsBeginListArpTableOptions) (ExpressRouteCircuitsListArpTablePollerResponse, error) {
 	resp, err := client.listArpTable(ctx, resourceGroupName, circuitName, peeringName, devicePath, options)
 	if err != nil {
-		return ExpressRouteCircuitsArpTableListResultPollerResponse{}, err
+		return ExpressRouteCircuitsListArpTablePollerResponse{}, err
 	}
-	result := ExpressRouteCircuitsArpTableListResultPollerResponse{
+	result := ExpressRouteCircuitsListArpTablePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("ExpressRouteCircuitsClient.ListArpTable", "location", resp, client.con.Pipeline(), client.listArpTableHandleError)
 	if err != nil {
-		return ExpressRouteCircuitsArpTableListResultPollerResponse{}, err
+		return ExpressRouteCircuitsListArpTablePollerResponse{}, err
 	}
-	poller := &expressRouteCircuitsArpTableListResultPoller{
+	poller := &expressRouteCircuitsListArpTablePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitsArpTableListResultResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitsListArpTableResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeListArpTable creates a new ExpressRouteCircuitsArpTableListResultPoller from the specified resume token.
-// token - The value must come from a previous call to ExpressRouteCircuitsArpTableListResultPoller.ResumeToken().
-func (client *ExpressRouteCircuitsClient) ResumeListArpTable(ctx context.Context, token string) (ExpressRouteCircuitsArpTableListResultPollerResponse, error) {
+// ResumeListArpTable creates a new ExpressRouteCircuitsListArpTablePoller from the specified resume token.
+// token - The value must come from a previous call to ExpressRouteCircuitsListArpTablePoller.ResumeToken().
+func (client *ExpressRouteCircuitsClient) ResumeListArpTable(ctx context.Context, token string) (ExpressRouteCircuitsListArpTablePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("ExpressRouteCircuitsClient.ListArpTable", token, client.con.Pipeline(), client.listArpTableHandleError)
 	if err != nil {
-		return ExpressRouteCircuitsArpTableListResultPollerResponse{}, err
+		return ExpressRouteCircuitsListArpTablePollerResponse{}, err
 	}
-	poller := &expressRouteCircuitsArpTableListResultPoller{
+	poller := &expressRouteCircuitsListArpTablePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return ExpressRouteCircuitsArpTableListResultPollerResponse{}, err
+		return ExpressRouteCircuitsListArpTablePollerResponse{}, err
 	}
-	result := ExpressRouteCircuitsArpTableListResultPollerResponse{
+	result := ExpressRouteCircuitsListArpTablePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitsArpTableListResultResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitsListArpTableResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -678,47 +672,47 @@ func (client *ExpressRouteCircuitsClient) listArpTableHandleError(resp *azcore.R
 
 // BeginListRoutesTable - Gets the currently advertised routes table associated with the express route circuit in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *ExpressRouteCircuitsClient) BeginListRoutesTable(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, devicePath string, options *ExpressRouteCircuitsBeginListRoutesTableOptions) (ExpressRouteCircuitsRoutesTableListResultPollerResponse, error) {
+func (client *ExpressRouteCircuitsClient) BeginListRoutesTable(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, devicePath string, options *ExpressRouteCircuitsBeginListRoutesTableOptions) (ExpressRouteCircuitsListRoutesTablePollerResponse, error) {
 	resp, err := client.listRoutesTable(ctx, resourceGroupName, circuitName, peeringName, devicePath, options)
 	if err != nil {
-		return ExpressRouteCircuitsRoutesTableListResultPollerResponse{}, err
+		return ExpressRouteCircuitsListRoutesTablePollerResponse{}, err
 	}
-	result := ExpressRouteCircuitsRoutesTableListResultPollerResponse{
+	result := ExpressRouteCircuitsListRoutesTablePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("ExpressRouteCircuitsClient.ListRoutesTable", "location", resp, client.con.Pipeline(), client.listRoutesTableHandleError)
 	if err != nil {
-		return ExpressRouteCircuitsRoutesTableListResultPollerResponse{}, err
+		return ExpressRouteCircuitsListRoutesTablePollerResponse{}, err
 	}
-	poller := &expressRouteCircuitsRoutesTableListResultPoller{
+	poller := &expressRouteCircuitsListRoutesTablePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitsRoutesTableListResultResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitsListRoutesTableResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeListRoutesTable creates a new ExpressRouteCircuitsRoutesTableListResultPoller from the specified resume token.
-// token - The value must come from a previous call to ExpressRouteCircuitsRoutesTableListResultPoller.ResumeToken().
-func (client *ExpressRouteCircuitsClient) ResumeListRoutesTable(ctx context.Context, token string) (ExpressRouteCircuitsRoutesTableListResultPollerResponse, error) {
+// ResumeListRoutesTable creates a new ExpressRouteCircuitsListRoutesTablePoller from the specified resume token.
+// token - The value must come from a previous call to ExpressRouteCircuitsListRoutesTablePoller.ResumeToken().
+func (client *ExpressRouteCircuitsClient) ResumeListRoutesTable(ctx context.Context, token string) (ExpressRouteCircuitsListRoutesTablePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("ExpressRouteCircuitsClient.ListRoutesTable", token, client.con.Pipeline(), client.listRoutesTableHandleError)
 	if err != nil {
-		return ExpressRouteCircuitsRoutesTableListResultPollerResponse{}, err
+		return ExpressRouteCircuitsListRoutesTablePollerResponse{}, err
 	}
-	poller := &expressRouteCircuitsRoutesTableListResultPoller{
+	poller := &expressRouteCircuitsListRoutesTablePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return ExpressRouteCircuitsRoutesTableListResultPollerResponse{}, err
+		return ExpressRouteCircuitsListRoutesTablePollerResponse{}, err
 	}
-	result := ExpressRouteCircuitsRoutesTableListResultPollerResponse{
+	result := ExpressRouteCircuitsListRoutesTablePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitsRoutesTableListResultResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitsListRoutesTableResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -791,47 +785,47 @@ func (client *ExpressRouteCircuitsClient) listRoutesTableHandleError(resp *azcor
 
 // BeginListRoutesTableSummary - Gets the currently advertised routes table summary associated with the express route circuit in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *ExpressRouteCircuitsClient) BeginListRoutesTableSummary(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, devicePath string, options *ExpressRouteCircuitsBeginListRoutesTableSummaryOptions) (ExpressRouteCircuitsRoutesTableSummaryListResultPollerResponse, error) {
+func (client *ExpressRouteCircuitsClient) BeginListRoutesTableSummary(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, devicePath string, options *ExpressRouteCircuitsBeginListRoutesTableSummaryOptions) (ExpressRouteCircuitsListRoutesTableSummaryPollerResponse, error) {
 	resp, err := client.listRoutesTableSummary(ctx, resourceGroupName, circuitName, peeringName, devicePath, options)
 	if err != nil {
-		return ExpressRouteCircuitsRoutesTableSummaryListResultPollerResponse{}, err
+		return ExpressRouteCircuitsListRoutesTableSummaryPollerResponse{}, err
 	}
-	result := ExpressRouteCircuitsRoutesTableSummaryListResultPollerResponse{
+	result := ExpressRouteCircuitsListRoutesTableSummaryPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("ExpressRouteCircuitsClient.ListRoutesTableSummary", "location", resp, client.con.Pipeline(), client.listRoutesTableSummaryHandleError)
 	if err != nil {
-		return ExpressRouteCircuitsRoutesTableSummaryListResultPollerResponse{}, err
+		return ExpressRouteCircuitsListRoutesTableSummaryPollerResponse{}, err
 	}
-	poller := &expressRouteCircuitsRoutesTableSummaryListResultPoller{
+	poller := &expressRouteCircuitsListRoutesTableSummaryPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitsRoutesTableSummaryListResultResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitsListRoutesTableSummaryResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeListRoutesTableSummary creates a new ExpressRouteCircuitsRoutesTableSummaryListResultPoller from the specified resume token.
-// token - The value must come from a previous call to ExpressRouteCircuitsRoutesTableSummaryListResultPoller.ResumeToken().
-func (client *ExpressRouteCircuitsClient) ResumeListRoutesTableSummary(ctx context.Context, token string) (ExpressRouteCircuitsRoutesTableSummaryListResultPollerResponse, error) {
+// ResumeListRoutesTableSummary creates a new ExpressRouteCircuitsListRoutesTableSummaryPoller from the specified resume token.
+// token - The value must come from a previous call to ExpressRouteCircuitsListRoutesTableSummaryPoller.ResumeToken().
+func (client *ExpressRouteCircuitsClient) ResumeListRoutesTableSummary(ctx context.Context, token string) (ExpressRouteCircuitsListRoutesTableSummaryPollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("ExpressRouteCircuitsClient.ListRoutesTableSummary", token, client.con.Pipeline(), client.listRoutesTableSummaryHandleError)
 	if err != nil {
-		return ExpressRouteCircuitsRoutesTableSummaryListResultPollerResponse{}, err
+		return ExpressRouteCircuitsListRoutesTableSummaryPollerResponse{}, err
 	}
-	poller := &expressRouteCircuitsRoutesTableSummaryListResultPoller{
+	poller := &expressRouteCircuitsListRoutesTableSummaryPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return ExpressRouteCircuitsRoutesTableSummaryListResultPollerResponse{}, err
+		return ExpressRouteCircuitsListRoutesTableSummaryPollerResponse{}, err
 	}
-	result := ExpressRouteCircuitsRoutesTableSummaryListResultPollerResponse{
+	result := ExpressRouteCircuitsListRoutesTableSummaryPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitsRoutesTableSummaryListResultResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitsListRoutesTableSummaryResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -904,17 +898,17 @@ func (client *ExpressRouteCircuitsClient) listRoutesTableSummaryHandleError(resp
 
 // UpdateTags - Updates an express route circuit tags.
 // If the operation fails it returns the *CloudError error type.
-func (client *ExpressRouteCircuitsClient) UpdateTags(ctx context.Context, resourceGroupName string, circuitName string, parameters TagsObject, options *ExpressRouteCircuitsUpdateTagsOptions) (ExpressRouteCircuitResponse, error) {
+func (client *ExpressRouteCircuitsClient) UpdateTags(ctx context.Context, resourceGroupName string, circuitName string, parameters TagsObject, options *ExpressRouteCircuitsUpdateTagsOptions) (ExpressRouteCircuitsUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, circuitName, parameters, options)
 	if err != nil {
-		return ExpressRouteCircuitResponse{}, err
+		return ExpressRouteCircuitsUpdateTagsResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return ExpressRouteCircuitResponse{}, err
+		return ExpressRouteCircuitsUpdateTagsResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return ExpressRouteCircuitResponse{}, client.updateTagsHandleError(resp)
+		return ExpressRouteCircuitsUpdateTagsResponse{}, client.updateTagsHandleError(resp)
 	}
 	return client.updateTagsHandleResponse(resp)
 }
@@ -947,12 +941,12 @@ func (client *ExpressRouteCircuitsClient) updateTagsCreateRequest(ctx context.Co
 }
 
 // updateTagsHandleResponse handles the UpdateTags response.
-func (client *ExpressRouteCircuitsClient) updateTagsHandleResponse(resp *azcore.Response) (ExpressRouteCircuitResponse, error) {
-	var val *ExpressRouteCircuit
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ExpressRouteCircuitResponse{}, err
+func (client *ExpressRouteCircuitsClient) updateTagsHandleResponse(resp *azcore.Response) (ExpressRouteCircuitsUpdateTagsResponse, error) {
+	result := ExpressRouteCircuitsUpdateTagsResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.ExpressRouteCircuit); err != nil {
+		return ExpressRouteCircuitsUpdateTagsResponse{}, err
 	}
-	return ExpressRouteCircuitResponse{RawResponse: resp.Response, ExpressRouteCircuit: val}, nil
+	return result, nil
 }
 
 // updateTagsHandleError handles the UpdateTags error response.

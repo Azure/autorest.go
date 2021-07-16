@@ -36,7 +36,7 @@ func TestPut(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if resp.StatusCode != http.StatusOK {
+	if resp.RawResponse.StatusCode != http.StatusOK {
 		t.Fatal("unexpected status code")
 	}
 }

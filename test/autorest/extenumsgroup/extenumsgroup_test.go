@@ -25,7 +25,7 @@ func TestAddPet(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(result.Pet, &Pet{
+	if r := cmp.Diff(result.Pet, Pet{
 		Name: to.StringPtr("Retriever"),
 	}); r != "" {
 		t.Fatal(r)
@@ -38,7 +38,7 @@ func TestGetByPetIDExpected(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(result.Pet, &Pet{
+	if r := cmp.Diff(result.Pet, Pet{
 		DaysOfWeek: DaysOfWeekExtensibleEnumMonday.ToPtr(),
 		IntEnum:    IntEnumOne.ToPtr(),
 		Name:       to.StringPtr("Tommy Tomson"),
@@ -53,7 +53,7 @@ func TestGetByPetIDUnexpected(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(result.Pet, &Pet{
+	if r := cmp.Diff(result.Pet, Pet{
 		DaysOfWeek: (*DaysOfWeekExtensibleEnum)(to.StringPtr("Weekend")),
 		IntEnum:    IntEnumTwo.ToPtr(),
 		Name:       to.StringPtr("Casper Ghosty"),
@@ -68,7 +68,7 @@ func TestGetByPetIDAllowed(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(result.Pet, &Pet{
+	if r := cmp.Diff(result.Pet, Pet{
 		DaysOfWeek: DaysOfWeekExtensibleEnumThursday.ToPtr(),
 		IntEnum:    (*IntEnum)(to.StringPtr("2.1")),
 		Name:       to.StringPtr("Scooby Scarface"),

@@ -32,18 +32,15 @@ func NewExpressRouteServiceProvidersClient(con *armcore.Connection, subscription
 
 // List - Gets all the available express route service providers.
 // If the operation fails it returns the *CloudError error type.
-func (client *ExpressRouteServiceProvidersClient) List(options *ExpressRouteServiceProvidersListOptions) ExpressRouteServiceProviderListResultPager {
-	return &expressRouteServiceProviderListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *ExpressRouteServiceProvidersClient) List(options *ExpressRouteServiceProvidersListOptions) ExpressRouteServiceProvidersListPager {
+	return &expressRouteServiceProvidersListPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, options)
 		},
-		responder: client.listHandleResponse,
-		errorer:   client.listHandleError,
-		advancer: func(ctx context.Context, resp ExpressRouteServiceProviderListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp ExpressRouteServiceProvidersListResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ExpressRouteServiceProviderListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -67,12 +64,12 @@ func (client *ExpressRouteServiceProvidersClient) listCreateRequest(ctx context.
 }
 
 // listHandleResponse handles the List response.
-func (client *ExpressRouteServiceProvidersClient) listHandleResponse(resp *azcore.Response) (ExpressRouteServiceProviderListResultResponse, error) {
-	var val *ExpressRouteServiceProviderListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ExpressRouteServiceProviderListResultResponse{}, err
+func (client *ExpressRouteServiceProvidersClient) listHandleResponse(resp *azcore.Response) (ExpressRouteServiceProvidersListResponse, error) {
+	result := ExpressRouteServiceProvidersListResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.ExpressRouteServiceProviderListResult); err != nil {
+		return ExpressRouteServiceProvidersListResponse{}, err
 	}
-	return ExpressRouteServiceProviderListResultResponse{RawResponse: resp.Response, ExpressRouteServiceProviderListResult: val}, nil
+	return result, nil
 }
 
 // listHandleError handles the List error response.

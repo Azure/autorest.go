@@ -30,47 +30,47 @@ func NewLRORetrysClient(con *Connection) *LRORetrysClient {
 // BeginDelete202Retry200 - Long running delete request, service returns a 500, then a 202 to the initial request. Polls return this value until the last
 // poll returns a ‘200’ with ProvisioningState=’Succeeded’
 // If the operation fails it returns the *CloudError error type.
-func (client *LRORetrysClient) BeginDelete202Retry200(ctx context.Context, options *LRORetrysBeginDelete202Retry200Options) (HTTPPollerResponse, error) {
+func (client *LRORetrysClient) BeginDelete202Retry200(ctx context.Context, options *LRORetrysBeginDelete202Retry200Options) (LRORetrysDelete202Retry200PollerResponse, error) {
 	resp, err := client.delete202Retry200(ctx, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LRORetrysDelete202Retry200PollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := LRORetrysDelete202Retry200PollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("LRORetrysClient.Delete202Retry200", "", resp, client.con.Pipeline(), client.delete202Retry200HandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LRORetrysDelete202Retry200PollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &lroRetrysDelete202Retry200Poller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LRORetrysDelete202Retry200Response, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeDelete202Retry200 creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *LRORetrysClient) ResumeDelete202Retry200(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeDelete202Retry200 creates a new LRORetrysDelete202Retry200Poller from the specified resume token.
+// token - The value must come from a previous call to LRORetrysDelete202Retry200Poller.ResumeToken().
+func (client *LRORetrysClient) ResumeDelete202Retry200(ctx context.Context, token string) (LRORetrysDelete202Retry200PollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("LRORetrysClient.Delete202Retry200", token, client.con.Pipeline(), client.delete202Retry200HandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LRORetrysDelete202Retry200PollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &lroRetrysDelete202Retry200Poller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LRORetrysDelete202Retry200PollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := LRORetrysDelete202Retry200PollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LRORetrysDelete202Retry200Response, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -122,47 +122,47 @@ func (client *LRORetrysClient) delete202Retry200HandleError(resp *azcore.Respons
 // BeginDeleteAsyncRelativeRetrySucceeded - Long running delete request, service returns a 500, then a 202 to the initial request. Poll the endpoint indicated
 // in the Azure-AsyncOperation header for operation status
 // If the operation fails it returns the *CloudError error type.
-func (client *LRORetrysClient) BeginDeleteAsyncRelativeRetrySucceeded(ctx context.Context, options *LRORetrysBeginDeleteAsyncRelativeRetrySucceededOptions) (HTTPPollerResponse, error) {
+func (client *LRORetrysClient) BeginDeleteAsyncRelativeRetrySucceeded(ctx context.Context, options *LRORetrysBeginDeleteAsyncRelativeRetrySucceededOptions) (LRORetrysDeleteAsyncRelativeRetrySucceededPollerResponse, error) {
 	resp, err := client.deleteAsyncRelativeRetrySucceeded(ctx, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LRORetrysDeleteAsyncRelativeRetrySucceededPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := LRORetrysDeleteAsyncRelativeRetrySucceededPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("LRORetrysClient.DeleteAsyncRelativeRetrySucceeded", "", resp, client.con.Pipeline(), client.deleteAsyncRelativeRetrySucceededHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LRORetrysDeleteAsyncRelativeRetrySucceededPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &lroRetrysDeleteAsyncRelativeRetrySucceededPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LRORetrysDeleteAsyncRelativeRetrySucceededResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeDeleteAsyncRelativeRetrySucceeded creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *LRORetrysClient) ResumeDeleteAsyncRelativeRetrySucceeded(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeDeleteAsyncRelativeRetrySucceeded creates a new LRORetrysDeleteAsyncRelativeRetrySucceededPoller from the specified resume token.
+// token - The value must come from a previous call to LRORetrysDeleteAsyncRelativeRetrySucceededPoller.ResumeToken().
+func (client *LRORetrysClient) ResumeDeleteAsyncRelativeRetrySucceeded(ctx context.Context, token string) (LRORetrysDeleteAsyncRelativeRetrySucceededPollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("LRORetrysClient.DeleteAsyncRelativeRetrySucceeded", token, client.con.Pipeline(), client.deleteAsyncRelativeRetrySucceededHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LRORetrysDeleteAsyncRelativeRetrySucceededPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &lroRetrysDeleteAsyncRelativeRetrySucceededPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LRORetrysDeleteAsyncRelativeRetrySucceededPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := LRORetrysDeleteAsyncRelativeRetrySucceededPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LRORetrysDeleteAsyncRelativeRetrySucceededResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -215,47 +215,47 @@ func (client *LRORetrysClient) deleteAsyncRelativeRetrySucceededHandleError(resp
 // that contains ProvisioningState=’Accepted’. Polls return this value until the last poll returns a
 // ‘200’ with ProvisioningState=’Succeeded’
 // If the operation fails it returns the *CloudError error type.
-func (client *LRORetrysClient) BeginDeleteProvisioning202Accepted200Succeeded(ctx context.Context, options *LRORetrysBeginDeleteProvisioning202Accepted200SucceededOptions) (ProductPollerResponse, error) {
+func (client *LRORetrysClient) BeginDeleteProvisioning202Accepted200Succeeded(ctx context.Context, options *LRORetrysBeginDeleteProvisioning202Accepted200SucceededOptions) (LRORetrysDeleteProvisioning202Accepted200SucceededPollerResponse, error) {
 	resp, err := client.deleteProvisioning202Accepted200Succeeded(ctx, options)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LRORetrysDeleteProvisioning202Accepted200SucceededPollerResponse{}, err
 	}
-	result := ProductPollerResponse{
+	result := LRORetrysDeleteProvisioning202Accepted200SucceededPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("LRORetrysClient.DeleteProvisioning202Accepted200Succeeded", "", resp, client.con.Pipeline(), client.deleteProvisioning202Accepted200SucceededHandleError)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LRORetrysDeleteProvisioning202Accepted200SucceededPollerResponse{}, err
 	}
-	poller := &productPoller{
+	poller := &lroRetrysDeleteProvisioning202Accepted200SucceededPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LRORetrysDeleteProvisioning202Accepted200SucceededResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeDeleteProvisioning202Accepted200Succeeded creates a new ProductPoller from the specified resume token.
-// token - The value must come from a previous call to ProductPoller.ResumeToken().
-func (client *LRORetrysClient) ResumeDeleteProvisioning202Accepted200Succeeded(ctx context.Context, token string) (ProductPollerResponse, error) {
+// ResumeDeleteProvisioning202Accepted200Succeeded creates a new LRORetrysDeleteProvisioning202Accepted200SucceededPoller from the specified resume token.
+// token - The value must come from a previous call to LRORetrysDeleteProvisioning202Accepted200SucceededPoller.ResumeToken().
+func (client *LRORetrysClient) ResumeDeleteProvisioning202Accepted200Succeeded(ctx context.Context, token string) (LRORetrysDeleteProvisioning202Accepted200SucceededPollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("LRORetrysClient.DeleteProvisioning202Accepted200Succeeded", token, client.con.Pipeline(), client.deleteProvisioning202Accepted200SucceededHandleError)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LRORetrysDeleteProvisioning202Accepted200SucceededPollerResponse{}, err
 	}
-	poller := &productPoller{
+	poller := &lroRetrysDeleteProvisioning202Accepted200SucceededPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LRORetrysDeleteProvisioning202Accepted200SucceededPollerResponse{}, err
 	}
-	result := ProductPollerResponse{
+	result := LRORetrysDeleteProvisioning202Accepted200SucceededPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LRORetrysDeleteProvisioning202Accepted200SucceededResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -308,47 +308,47 @@ func (client *LRORetrysClient) deleteProvisioning202Accepted200SucceededHandleEr
 // BeginPost202Retry200 - Long running post request, service returns a 500, then a 202 to the initial request, with 'Location' and 'Retry-After' headers,
 // Polls return a 200 with a response body after success
 // If the operation fails it returns the *CloudError error type.
-func (client *LRORetrysClient) BeginPost202Retry200(ctx context.Context, options *LRORetrysBeginPost202Retry200Options) (HTTPPollerResponse, error) {
+func (client *LRORetrysClient) BeginPost202Retry200(ctx context.Context, options *LRORetrysBeginPost202Retry200Options) (LRORetrysPost202Retry200PollerResponse, error) {
 	resp, err := client.post202Retry200(ctx, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LRORetrysPost202Retry200PollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := LRORetrysPost202Retry200PollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("LRORetrysClient.Post202Retry200", "", resp, client.con.Pipeline(), client.post202Retry200HandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LRORetrysPost202Retry200PollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &lroRetrysPost202Retry200Poller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LRORetrysPost202Retry200Response, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumePost202Retry200 creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *LRORetrysClient) ResumePost202Retry200(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumePost202Retry200 creates a new LRORetrysPost202Retry200Poller from the specified resume token.
+// token - The value must come from a previous call to LRORetrysPost202Retry200Poller.ResumeToken().
+func (client *LRORetrysClient) ResumePost202Retry200(ctx context.Context, token string) (LRORetrysPost202Retry200PollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("LRORetrysClient.Post202Retry200", token, client.con.Pipeline(), client.post202Retry200HandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LRORetrysPost202Retry200PollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &lroRetrysPost202Retry200Poller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LRORetrysPost202Retry200PollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := LRORetrysPost202Retry200PollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LRORetrysPost202Retry200Response, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -404,47 +404,47 @@ func (client *LRORetrysClient) post202Retry200HandleError(resp *azcore.Response)
 // ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation
 // header for operation status
 // If the operation fails it returns the *CloudError error type.
-func (client *LRORetrysClient) BeginPostAsyncRelativeRetrySucceeded(ctx context.Context, options *LRORetrysBeginPostAsyncRelativeRetrySucceededOptions) (HTTPPollerResponse, error) {
+func (client *LRORetrysClient) BeginPostAsyncRelativeRetrySucceeded(ctx context.Context, options *LRORetrysBeginPostAsyncRelativeRetrySucceededOptions) (LRORetrysPostAsyncRelativeRetrySucceededPollerResponse, error) {
 	resp, err := client.postAsyncRelativeRetrySucceeded(ctx, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LRORetrysPostAsyncRelativeRetrySucceededPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := LRORetrysPostAsyncRelativeRetrySucceededPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("LRORetrysClient.PostAsyncRelativeRetrySucceeded", "", resp, client.con.Pipeline(), client.postAsyncRelativeRetrySucceededHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LRORetrysPostAsyncRelativeRetrySucceededPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &lroRetrysPostAsyncRelativeRetrySucceededPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LRORetrysPostAsyncRelativeRetrySucceededResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumePostAsyncRelativeRetrySucceeded creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *LRORetrysClient) ResumePostAsyncRelativeRetrySucceeded(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumePostAsyncRelativeRetrySucceeded creates a new LRORetrysPostAsyncRelativeRetrySucceededPoller from the specified resume token.
+// token - The value must come from a previous call to LRORetrysPostAsyncRelativeRetrySucceededPoller.ResumeToken().
+func (client *LRORetrysClient) ResumePostAsyncRelativeRetrySucceeded(ctx context.Context, token string) (LRORetrysPostAsyncRelativeRetrySucceededPollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("LRORetrysClient.PostAsyncRelativeRetrySucceeded", token, client.con.Pipeline(), client.postAsyncRelativeRetrySucceededHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LRORetrysPostAsyncRelativeRetrySucceededPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &lroRetrysPostAsyncRelativeRetrySucceededPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LRORetrysPostAsyncRelativeRetrySucceededPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := LRORetrysPostAsyncRelativeRetrySucceededPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LRORetrysPostAsyncRelativeRetrySucceededResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -501,47 +501,47 @@ func (client *LRORetrysClient) postAsyncRelativeRetrySucceededHandleError(resp *
 // Polls return this value until the last poll returns a
 // ‘200’ with ProvisioningState=’Succeeded’
 // If the operation fails it returns the *CloudError error type.
-func (client *LRORetrysClient) BeginPut201CreatingSucceeded200(ctx context.Context, options *LRORetrysBeginPut201CreatingSucceeded200Options) (ProductPollerResponse, error) {
+func (client *LRORetrysClient) BeginPut201CreatingSucceeded200(ctx context.Context, options *LRORetrysBeginPut201CreatingSucceeded200Options) (LRORetrysPut201CreatingSucceeded200PollerResponse, error) {
 	resp, err := client.put201CreatingSucceeded200(ctx, options)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LRORetrysPut201CreatingSucceeded200PollerResponse{}, err
 	}
-	result := ProductPollerResponse{
+	result := LRORetrysPut201CreatingSucceeded200PollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("LRORetrysClient.Put201CreatingSucceeded200", "", resp, client.con.Pipeline(), client.put201CreatingSucceeded200HandleError)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LRORetrysPut201CreatingSucceeded200PollerResponse{}, err
 	}
-	poller := &productPoller{
+	poller := &lroRetrysPut201CreatingSucceeded200Poller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LRORetrysPut201CreatingSucceeded200Response, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumePut201CreatingSucceeded200 creates a new ProductPoller from the specified resume token.
-// token - The value must come from a previous call to ProductPoller.ResumeToken().
-func (client *LRORetrysClient) ResumePut201CreatingSucceeded200(ctx context.Context, token string) (ProductPollerResponse, error) {
+// ResumePut201CreatingSucceeded200 creates a new LRORetrysPut201CreatingSucceeded200Poller from the specified resume token.
+// token - The value must come from a previous call to LRORetrysPut201CreatingSucceeded200Poller.ResumeToken().
+func (client *LRORetrysClient) ResumePut201CreatingSucceeded200(ctx context.Context, token string) (LRORetrysPut201CreatingSucceeded200PollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("LRORetrysClient.Put201CreatingSucceeded200", token, client.con.Pipeline(), client.put201CreatingSucceeded200HandleError)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LRORetrysPut201CreatingSucceeded200PollerResponse{}, err
 	}
-	poller := &productPoller{
+	poller := &lroRetrysPut201CreatingSucceeded200Poller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LRORetrysPut201CreatingSucceeded200PollerResponse{}, err
 	}
-	result := ProductPollerResponse{
+	result := LRORetrysPut201CreatingSucceeded200PollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LRORetrysPut201CreatingSucceeded200Response, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -598,47 +598,47 @@ func (client *LRORetrysClient) put201CreatingSucceeded200HandleError(resp *azcor
 // ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation
 // header for operation status
 // If the operation fails it returns the *CloudError error type.
-func (client *LRORetrysClient) BeginPutAsyncRelativeRetrySucceeded(ctx context.Context, options *LRORetrysBeginPutAsyncRelativeRetrySucceededOptions) (ProductPollerResponse, error) {
+func (client *LRORetrysClient) BeginPutAsyncRelativeRetrySucceeded(ctx context.Context, options *LRORetrysBeginPutAsyncRelativeRetrySucceededOptions) (LRORetrysPutAsyncRelativeRetrySucceededPollerResponse, error) {
 	resp, err := client.putAsyncRelativeRetrySucceeded(ctx, options)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LRORetrysPutAsyncRelativeRetrySucceededPollerResponse{}, err
 	}
-	result := ProductPollerResponse{
+	result := LRORetrysPutAsyncRelativeRetrySucceededPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("LRORetrysClient.PutAsyncRelativeRetrySucceeded", "", resp, client.con.Pipeline(), client.putAsyncRelativeRetrySucceededHandleError)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LRORetrysPutAsyncRelativeRetrySucceededPollerResponse{}, err
 	}
-	poller := &productPoller{
+	poller := &lroRetrysPutAsyncRelativeRetrySucceededPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LRORetrysPutAsyncRelativeRetrySucceededResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumePutAsyncRelativeRetrySucceeded creates a new ProductPoller from the specified resume token.
-// token - The value must come from a previous call to ProductPoller.ResumeToken().
-func (client *LRORetrysClient) ResumePutAsyncRelativeRetrySucceeded(ctx context.Context, token string) (ProductPollerResponse, error) {
+// ResumePutAsyncRelativeRetrySucceeded creates a new LRORetrysPutAsyncRelativeRetrySucceededPoller from the specified resume token.
+// token - The value must come from a previous call to LRORetrysPutAsyncRelativeRetrySucceededPoller.ResumeToken().
+func (client *LRORetrysClient) ResumePutAsyncRelativeRetrySucceeded(ctx context.Context, token string) (LRORetrysPutAsyncRelativeRetrySucceededPollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("LRORetrysClient.PutAsyncRelativeRetrySucceeded", token, client.con.Pipeline(), client.putAsyncRelativeRetrySucceededHandleError)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LRORetrysPutAsyncRelativeRetrySucceededPollerResponse{}, err
 	}
-	poller := &productPoller{
+	poller := &lroRetrysPutAsyncRelativeRetrySucceededPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LRORetrysPutAsyncRelativeRetrySucceededPollerResponse{}, err
 	}
-	result := ProductPollerResponse{
+	result := LRORetrysPutAsyncRelativeRetrySucceededPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LRORetrysPutAsyncRelativeRetrySucceededResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil

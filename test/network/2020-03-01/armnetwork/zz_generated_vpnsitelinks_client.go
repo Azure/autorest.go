@@ -32,17 +32,17 @@ func NewVPNSiteLinksClient(con *armcore.Connection, subscriptionID string) *VPNS
 
 // Get - Retrieves the details of a VPN site link.
 // If the operation fails it returns the *CloudError error type.
-func (client *VPNSiteLinksClient) Get(ctx context.Context, resourceGroupName string, vpnSiteName string, vpnSiteLinkName string, options *VPNSiteLinksGetOptions) (VPNSiteLinkResponse, error) {
+func (client *VPNSiteLinksClient) Get(ctx context.Context, resourceGroupName string, vpnSiteName string, vpnSiteLinkName string, options *VPNSiteLinksGetOptions) (VPNSiteLinksGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, vpnSiteName, vpnSiteLinkName, options)
 	if err != nil {
-		return VPNSiteLinkResponse{}, err
+		return VPNSiteLinksGetResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return VPNSiteLinkResponse{}, err
+		return VPNSiteLinksGetResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return VPNSiteLinkResponse{}, client.getHandleError(resp)
+		return VPNSiteLinksGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -79,12 +79,12 @@ func (client *VPNSiteLinksClient) getCreateRequest(ctx context.Context, resource
 }
 
 // getHandleResponse handles the Get response.
-func (client *VPNSiteLinksClient) getHandleResponse(resp *azcore.Response) (VPNSiteLinkResponse, error) {
-	var val *VPNSiteLink
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return VPNSiteLinkResponse{}, err
+func (client *VPNSiteLinksClient) getHandleResponse(resp *azcore.Response) (VPNSiteLinksGetResponse, error) {
+	result := VPNSiteLinksGetResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.VPNSiteLink); err != nil {
+		return VPNSiteLinksGetResponse{}, err
 	}
-	return VPNSiteLinkResponse{RawResponse: resp.Response, VPNSiteLink: val}, nil
+	return result, nil
 }
 
 // getHandleError handles the Get error response.
@@ -102,18 +102,15 @@ func (client *VPNSiteLinksClient) getHandleError(resp *azcore.Response) error {
 
 // ListByVPNSite - Lists all the vpnSiteLinks in a resource group for a vpn site.
 // If the operation fails it returns the *CloudError error type.
-func (client *VPNSiteLinksClient) ListByVPNSite(resourceGroupName string, vpnSiteName string, options *VPNSiteLinksListByVPNSiteOptions) ListVPNSiteLinksResultPager {
-	return &listVPNSiteLinksResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *VPNSiteLinksClient) ListByVPNSite(resourceGroupName string, vpnSiteName string, options *VPNSiteLinksListByVPNSiteOptions) VPNSiteLinksListByVPNSitePager {
+	return &vpnSiteLinksListByVPNSitePager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByVPNSiteCreateRequest(ctx, resourceGroupName, vpnSiteName, options)
 		},
-		responder: client.listByVPNSiteHandleResponse,
-		errorer:   client.listByVPNSiteHandleError,
-		advancer: func(ctx context.Context, resp ListVPNSiteLinksResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp VPNSiteLinksListByVPNSiteResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ListVPNSiteLinksResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -145,12 +142,12 @@ func (client *VPNSiteLinksClient) listByVPNSiteCreateRequest(ctx context.Context
 }
 
 // listByVPNSiteHandleResponse handles the ListByVPNSite response.
-func (client *VPNSiteLinksClient) listByVPNSiteHandleResponse(resp *azcore.Response) (ListVPNSiteLinksResultResponse, error) {
-	var val *ListVPNSiteLinksResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ListVPNSiteLinksResultResponse{}, err
+func (client *VPNSiteLinksClient) listByVPNSiteHandleResponse(resp *azcore.Response) (VPNSiteLinksListByVPNSiteResponse, error) {
+	result := VPNSiteLinksListByVPNSiteResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.ListVPNSiteLinksResult); err != nil {
+		return VPNSiteLinksListByVPNSiteResponse{}, err
 	}
-	return ListVPNSiteLinksResultResponse{RawResponse: resp.Response, ListVPNSiteLinksResult: val}, nil
+	return result, nil
 }
 
 // listByVPNSiteHandleError handles the ListByVPNSite error response.

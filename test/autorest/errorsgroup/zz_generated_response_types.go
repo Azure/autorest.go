@@ -9,18 +9,32 @@ package errorsgroup
 
 import "net/http"
 
-// PetActionResponse is the response envelope for operations that return a PetAction type.
-type PetActionResponse struct {
-	PetAction *PetAction
-
+// PetDoSomethingResponse contains the response from method Pet.DoSomething.
+type PetDoSomethingResponse struct {
+	PetDoSomethingResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PetResponse is the response envelope for operations that return a Pet type.
-type PetResponse struct {
-	Pet *Pet
+// PetDoSomethingResult contains the result from method Pet.DoSomething.
+type PetDoSomethingResult struct {
+	PetAction
+}
 
+// PetGetPetByIDResponse contains the response from method Pet.GetPetByID.
+type PetGetPetByIDResponse struct {
+	PetGetPetByIDResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PetGetPetByIDResult contains the result from method Pet.GetPetByID.
+type PetGetPetByIDResult struct {
+	Pet
+}
+
+// PetHasModelsParamResponse contains the response from method Pet.HasModelsParam.
+type PetHasModelsParamResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }

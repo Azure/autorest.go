@@ -28,19 +28,19 @@ func NewPathsClient(con *Connection) *PathsClient {
 
 // GetEmpty - Get a 200 to test a valid base uri
 // If the operation fails it returns the *Error error type.
-func (client *PathsClient) GetEmpty(ctx context.Context, accountName string, options *PathsGetEmptyOptions) (*http.Response, error) {
+func (client *PathsClient) GetEmpty(ctx context.Context, accountName string, options *PathsGetEmptyOptions) (PathsGetEmptyResponse, error) {
 	req, err := client.getEmptyCreateRequest(ctx, accountName, options)
 	if err != nil {
-		return nil, err
+		return PathsGetEmptyResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return PathsGetEmptyResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getEmptyHandleError(resp)
+		return PathsGetEmptyResponse{}, client.getEmptyHandleError(resp)
 	}
-	return resp.Response, nil
+	return PathsGetEmptyResponse{RawResponse: resp.Response}, nil
 }
 
 // getEmptyCreateRequest creates the GetEmpty request.

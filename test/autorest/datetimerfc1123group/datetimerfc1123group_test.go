@@ -30,9 +30,8 @@ func TestGetNull(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	var expected *time.Time
-	if r := cmp.Diff(result.Value, expected); r != "" {
-		t.Fatal(r)
+	if result.Value != nil {
+		t.Fatal("expected nil value")
 	}
 }
 
@@ -111,7 +110,7 @@ func TestPutUTCMaxDateTime(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -127,7 +126,7 @@ func TestPutUTCMinDateTime(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }

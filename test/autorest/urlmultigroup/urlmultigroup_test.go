@@ -22,7 +22,7 @@ func TestURLMultiArrayStringMultiEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ArrayStringMultiEmpty: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -35,7 +35,7 @@ func TestURLMultiArrayStringMultiNull(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ArrayStringMultiNull: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -53,7 +53,7 @@ func TestURLMultiArrayStringMultiValid(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ArrayStringMultiValid: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }

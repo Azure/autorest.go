@@ -30,19 +30,19 @@ func NewHeaderClient(con *Connection) *HeaderClient {
 
 // CustomRequestID - Send x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 in the header of the request
 // If the operation fails it returns the *Error error type.
-func (client *HeaderClient) CustomRequestID(ctx context.Context, options *HeaderCustomRequestIDOptions) (*http.Response, error) {
+func (client *HeaderClient) CustomRequestID(ctx context.Context, options *HeaderCustomRequestIDOptions) (HeaderCustomRequestIDResponse, error) {
 	req, err := client.customRequestIDCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return HeaderCustomRequestIDResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HeaderCustomRequestIDResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.customRequestIDHandleError(resp)
+		return HeaderCustomRequestIDResponse{}, client.customRequestIDHandleError(resp)
 	}
-	return resp.Response, nil
+	return HeaderCustomRequestIDResponse{RawResponse: resp.Response}, nil
 }
 
 // customRequestIDCreateRequest creates the CustomRequestID request.
@@ -72,19 +72,19 @@ func (client *HeaderClient) customRequestIDHandleError(resp *azcore.Response) er
 
 // ParamBool - Send a post request with header values "scenario": "true", "value": true or "scenario": "false", "value": false
 // If the operation fails it returns the *Error error type.
-func (client *HeaderClient) ParamBool(ctx context.Context, scenario string, value bool, options *HeaderParamBoolOptions) (*http.Response, error) {
+func (client *HeaderClient) ParamBool(ctx context.Context, scenario string, value bool, options *HeaderParamBoolOptions) (HeaderParamBoolResponse, error) {
 	req, err := client.paramBoolCreateRequest(ctx, scenario, value, options)
 	if err != nil {
-		return nil, err
+		return HeaderParamBoolResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HeaderParamBoolResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.paramBoolHandleError(resp)
+		return HeaderParamBoolResponse{}, client.paramBoolHandleError(resp)
 	}
-	return resp.Response, nil
+	return HeaderParamBoolResponse{RawResponse: resp.Response}, nil
 }
 
 // paramBoolCreateRequest creates the ParamBool request.
@@ -116,19 +116,19 @@ func (client *HeaderClient) paramBoolHandleError(resp *azcore.Response) error {
 
 // ParamByte - Send a post request with header values "scenario": "valid", "value": "啊齄丂狛狜隣郎隣兀﨩"
 // If the operation fails it returns the *Error error type.
-func (client *HeaderClient) ParamByte(ctx context.Context, scenario string, value []byte, options *HeaderParamByteOptions) (*http.Response, error) {
+func (client *HeaderClient) ParamByte(ctx context.Context, scenario string, value []byte, options *HeaderParamByteOptions) (HeaderParamByteResponse, error) {
 	req, err := client.paramByteCreateRequest(ctx, scenario, value, options)
 	if err != nil {
-		return nil, err
+		return HeaderParamByteResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HeaderParamByteResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.paramByteHandleError(resp)
+		return HeaderParamByteResponse{}, client.paramByteHandleError(resp)
 	}
-	return resp.Response, nil
+	return HeaderParamByteResponse{RawResponse: resp.Response}, nil
 }
 
 // paramByteCreateRequest creates the ParamByte request.
@@ -160,19 +160,19 @@ func (client *HeaderClient) paramByteHandleError(resp *azcore.Response) error {
 
 // ParamDate - Send a post request with header values "scenario": "valid", "value": "2010-01-01" or "scenario": "min", "value": "0001-01-01"
 // If the operation fails it returns the *Error error type.
-func (client *HeaderClient) ParamDate(ctx context.Context, scenario string, value time.Time, options *HeaderParamDateOptions) (*http.Response, error) {
+func (client *HeaderClient) ParamDate(ctx context.Context, scenario string, value time.Time, options *HeaderParamDateOptions) (HeaderParamDateResponse, error) {
 	req, err := client.paramDateCreateRequest(ctx, scenario, value, options)
 	if err != nil {
-		return nil, err
+		return HeaderParamDateResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HeaderParamDateResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.paramDateHandleError(resp)
+		return HeaderParamDateResponse{}, client.paramDateHandleError(resp)
 	}
-	return resp.Response, nil
+	return HeaderParamDateResponse{RawResponse: resp.Response}, nil
 }
 
 // paramDateCreateRequest creates the ParamDate request.
@@ -204,19 +204,19 @@ func (client *HeaderClient) paramDateHandleError(resp *azcore.Response) error {
 
 // ParamDatetime - Send a post request with header values "scenario": "valid", "value": "2010-01-01T12:34:56Z" or "scenario": "min", "value": "0001-01-01T00:00:00Z"
 // If the operation fails it returns the *Error error type.
-func (client *HeaderClient) ParamDatetime(ctx context.Context, scenario string, value time.Time, options *HeaderParamDatetimeOptions) (*http.Response, error) {
+func (client *HeaderClient) ParamDatetime(ctx context.Context, scenario string, value time.Time, options *HeaderParamDatetimeOptions) (HeaderParamDatetimeResponse, error) {
 	req, err := client.paramDatetimeCreateRequest(ctx, scenario, value, options)
 	if err != nil {
-		return nil, err
+		return HeaderParamDatetimeResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HeaderParamDatetimeResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.paramDatetimeHandleError(resp)
+		return HeaderParamDatetimeResponse{}, client.paramDatetimeHandleError(resp)
 	}
-	return resp.Response, nil
+	return HeaderParamDatetimeResponse{RawResponse: resp.Response}, nil
 }
 
 // paramDatetimeCreateRequest creates the ParamDatetime request.
@@ -249,19 +249,19 @@ func (client *HeaderClient) paramDatetimeHandleError(resp *azcore.Response) erro
 // ParamDatetimeRFC1123 - Send a post request with header values "scenario": "valid", "value": "Wed, 01 Jan 2010 12:34:56 GMT" or "scenario": "min", "value":
 // "Mon, 01 Jan 0001 00:00:00 GMT"
 // If the operation fails it returns the *Error error type.
-func (client *HeaderClient) ParamDatetimeRFC1123(ctx context.Context, scenario string, options *HeaderParamDatetimeRFC1123Options) (*http.Response, error) {
+func (client *HeaderClient) ParamDatetimeRFC1123(ctx context.Context, scenario string, options *HeaderParamDatetimeRFC1123Options) (HeaderParamDatetimeRFC1123Response, error) {
 	req, err := client.paramDatetimeRFC1123CreateRequest(ctx, scenario, options)
 	if err != nil {
-		return nil, err
+		return HeaderParamDatetimeRFC1123Response{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HeaderParamDatetimeRFC1123Response{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.paramDatetimeRFC1123HandleError(resp)
+		return HeaderParamDatetimeRFC1123Response{}, client.paramDatetimeRFC1123HandleError(resp)
 	}
-	return resp.Response, nil
+	return HeaderParamDatetimeRFC1123Response{RawResponse: resp.Response}, nil
 }
 
 // paramDatetimeRFC1123CreateRequest creates the ParamDatetimeRFC1123 request.
@@ -295,19 +295,19 @@ func (client *HeaderClient) paramDatetimeRFC1123HandleError(resp *azcore.Respons
 
 // ParamDouble - Send a post request with header values "scenario": "positive", "value": 7e120 or "scenario": "negative", "value": -3.0
 // If the operation fails it returns the *Error error type.
-func (client *HeaderClient) ParamDouble(ctx context.Context, scenario string, value float64, options *HeaderParamDoubleOptions) (*http.Response, error) {
+func (client *HeaderClient) ParamDouble(ctx context.Context, scenario string, value float64, options *HeaderParamDoubleOptions) (HeaderParamDoubleResponse, error) {
 	req, err := client.paramDoubleCreateRequest(ctx, scenario, value, options)
 	if err != nil {
-		return nil, err
+		return HeaderParamDoubleResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HeaderParamDoubleResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.paramDoubleHandleError(resp)
+		return HeaderParamDoubleResponse{}, client.paramDoubleHandleError(resp)
 	}
-	return resp.Response, nil
+	return HeaderParamDoubleResponse{RawResponse: resp.Response}, nil
 }
 
 // paramDoubleCreateRequest creates the ParamDouble request.
@@ -339,19 +339,19 @@ func (client *HeaderClient) paramDoubleHandleError(resp *azcore.Response) error 
 
 // ParamDuration - Send a post request with header values "scenario": "valid", "value": "P123DT22H14M12.011S"
 // If the operation fails it returns the *Error error type.
-func (client *HeaderClient) ParamDuration(ctx context.Context, scenario string, value string, options *HeaderParamDurationOptions) (*http.Response, error) {
+func (client *HeaderClient) ParamDuration(ctx context.Context, scenario string, value string, options *HeaderParamDurationOptions) (HeaderParamDurationResponse, error) {
 	req, err := client.paramDurationCreateRequest(ctx, scenario, value, options)
 	if err != nil {
-		return nil, err
+		return HeaderParamDurationResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HeaderParamDurationResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.paramDurationHandleError(resp)
+		return HeaderParamDurationResponse{}, client.paramDurationHandleError(resp)
 	}
-	return resp.Response, nil
+	return HeaderParamDurationResponse{RawResponse: resp.Response}, nil
 }
 
 // paramDurationCreateRequest creates the ParamDuration request.
@@ -383,19 +383,19 @@ func (client *HeaderClient) paramDurationHandleError(resp *azcore.Response) erro
 
 // ParamEnum - Send a post request with header values "scenario": "valid", "value": "GREY" or "scenario": "null", "value": null
 // If the operation fails it returns the *Error error type.
-func (client *HeaderClient) ParamEnum(ctx context.Context, scenario string, options *HeaderParamEnumOptions) (*http.Response, error) {
+func (client *HeaderClient) ParamEnum(ctx context.Context, scenario string, options *HeaderParamEnumOptions) (HeaderParamEnumResponse, error) {
 	req, err := client.paramEnumCreateRequest(ctx, scenario, options)
 	if err != nil {
-		return nil, err
+		return HeaderParamEnumResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HeaderParamEnumResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.paramEnumHandleError(resp)
+		return HeaderParamEnumResponse{}, client.paramEnumHandleError(resp)
 	}
-	return resp.Response, nil
+	return HeaderParamEnumResponse{RawResponse: resp.Response}, nil
 }
 
 // paramEnumCreateRequest creates the ParamEnum request.
@@ -429,19 +429,19 @@ func (client *HeaderClient) paramEnumHandleError(resp *azcore.Response) error {
 
 // ParamExistingKey - Send a post request with header value "User-Agent": "overwrite"
 // If the operation fails it returns the *Error error type.
-func (client *HeaderClient) ParamExistingKey(ctx context.Context, userAgent string, options *HeaderParamExistingKeyOptions) (*http.Response, error) {
+func (client *HeaderClient) ParamExistingKey(ctx context.Context, userAgent string, options *HeaderParamExistingKeyOptions) (HeaderParamExistingKeyResponse, error) {
 	req, err := client.paramExistingKeyCreateRequest(ctx, userAgent, options)
 	if err != nil {
-		return nil, err
+		return HeaderParamExistingKeyResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HeaderParamExistingKeyResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.paramExistingKeyHandleError(resp)
+		return HeaderParamExistingKeyResponse{}, client.paramExistingKeyHandleError(resp)
 	}
-	return resp.Response, nil
+	return HeaderParamExistingKeyResponse{RawResponse: resp.Response}, nil
 }
 
 // paramExistingKeyCreateRequest creates the ParamExistingKey request.
@@ -472,19 +472,19 @@ func (client *HeaderClient) paramExistingKeyHandleError(resp *azcore.Response) e
 
 // ParamFloat - Send a post request with header values "scenario": "positive", "value": 0.07 or "scenario": "negative", "value": -3.0
 // If the operation fails it returns the *Error error type.
-func (client *HeaderClient) ParamFloat(ctx context.Context, scenario string, value float32, options *HeaderParamFloatOptions) (*http.Response, error) {
+func (client *HeaderClient) ParamFloat(ctx context.Context, scenario string, value float32, options *HeaderParamFloatOptions) (HeaderParamFloatResponse, error) {
 	req, err := client.paramFloatCreateRequest(ctx, scenario, value, options)
 	if err != nil {
-		return nil, err
+		return HeaderParamFloatResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HeaderParamFloatResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.paramFloatHandleError(resp)
+		return HeaderParamFloatResponse{}, client.paramFloatHandleError(resp)
 	}
-	return resp.Response, nil
+	return HeaderParamFloatResponse{RawResponse: resp.Response}, nil
 }
 
 // paramFloatCreateRequest creates the ParamFloat request.
@@ -516,19 +516,19 @@ func (client *HeaderClient) paramFloatHandleError(resp *azcore.Response) error {
 
 // ParamInteger - Send a post request with header values "scenario": "positive", "value": 1 or "scenario": "negative", "value": -2
 // If the operation fails it returns the *Error error type.
-func (client *HeaderClient) ParamInteger(ctx context.Context, scenario string, value int32, options *HeaderParamIntegerOptions) (*http.Response, error) {
+func (client *HeaderClient) ParamInteger(ctx context.Context, scenario string, value int32, options *HeaderParamIntegerOptions) (HeaderParamIntegerResponse, error) {
 	req, err := client.paramIntegerCreateRequest(ctx, scenario, value, options)
 	if err != nil {
-		return nil, err
+		return HeaderParamIntegerResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HeaderParamIntegerResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.paramIntegerHandleError(resp)
+		return HeaderParamIntegerResponse{}, client.paramIntegerHandleError(resp)
 	}
-	return resp.Response, nil
+	return HeaderParamIntegerResponse{RawResponse: resp.Response}, nil
 }
 
 // paramIntegerCreateRequest creates the ParamInteger request.
@@ -560,19 +560,19 @@ func (client *HeaderClient) paramIntegerHandleError(resp *azcore.Response) error
 
 // ParamLong - Send a post request with header values "scenario": "positive", "value": 105 or "scenario": "negative", "value": -2
 // If the operation fails it returns the *Error error type.
-func (client *HeaderClient) ParamLong(ctx context.Context, scenario string, value int64, options *HeaderParamLongOptions) (*http.Response, error) {
+func (client *HeaderClient) ParamLong(ctx context.Context, scenario string, value int64, options *HeaderParamLongOptions) (HeaderParamLongResponse, error) {
 	req, err := client.paramLongCreateRequest(ctx, scenario, value, options)
 	if err != nil {
-		return nil, err
+		return HeaderParamLongResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HeaderParamLongResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.paramLongHandleError(resp)
+		return HeaderParamLongResponse{}, client.paramLongHandleError(resp)
 	}
-	return resp.Response, nil
+	return HeaderParamLongResponse{RawResponse: resp.Response}, nil
 }
 
 // paramLongCreateRequest creates the ParamLong request.
@@ -604,19 +604,19 @@ func (client *HeaderClient) paramLongHandleError(resp *azcore.Response) error {
 
 // ParamProtectedKey - Send a post request with header value "Content-Type": "text/html"
 // If the operation fails it returns the *Error error type.
-func (client *HeaderClient) ParamProtectedKey(ctx context.Context, contentType string, options *HeaderParamProtectedKeyOptions) (*http.Response, error) {
+func (client *HeaderClient) ParamProtectedKey(ctx context.Context, contentType string, options *HeaderParamProtectedKeyOptions) (HeaderParamProtectedKeyResponse, error) {
 	req, err := client.paramProtectedKeyCreateRequest(ctx, contentType, options)
 	if err != nil {
-		return nil, err
+		return HeaderParamProtectedKeyResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HeaderParamProtectedKeyResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.paramProtectedKeyHandleError(resp)
+		return HeaderParamProtectedKeyResponse{}, client.paramProtectedKeyHandleError(resp)
 	}
-	return resp.Response, nil
+	return HeaderParamProtectedKeyResponse{RawResponse: resp.Response}, nil
 }
 
 // paramProtectedKeyCreateRequest creates the ParamProtectedKey request.
@@ -648,19 +648,19 @@ func (client *HeaderClient) paramProtectedKeyHandleError(resp *azcore.Response) 
 // ParamString - Send a post request with header values "scenario": "valid", "value": "The quick brown fox jumps over the lazy dog" or "scenario": "null",
 // "value": null or "scenario": "empty", "value": ""
 // If the operation fails it returns the *Error error type.
-func (client *HeaderClient) ParamString(ctx context.Context, scenario string, options *HeaderParamStringOptions) (*http.Response, error) {
+func (client *HeaderClient) ParamString(ctx context.Context, scenario string, options *HeaderParamStringOptions) (HeaderParamStringResponse, error) {
 	req, err := client.paramStringCreateRequest(ctx, scenario, options)
 	if err != nil {
-		return nil, err
+		return HeaderParamStringResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HeaderParamStringResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.paramStringHandleError(resp)
+		return HeaderParamStringResponse{}, client.paramStringHandleError(resp)
 	}
-	return resp.Response, nil
+	return HeaderParamStringResponse{RawResponse: resp.Response}, nil
 }
 
 // paramStringCreateRequest creates the ParamString request.

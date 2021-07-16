@@ -28,19 +28,19 @@ func NewXMSClientRequestIDClient(con *Connection) *XMSClientRequestIDClient {
 
 // Get - Get method that overwrites x-ms-client-request header with value 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.
 // If the operation fails it returns a generic error.
-func (client *XMSClientRequestIDClient) Get(ctx context.Context, options *XMSClientRequestIDGetOptions) (*http.Response, error) {
+func (client *XMSClientRequestIDClient) Get(ctx context.Context, options *XMSClientRequestIDGetOptions) (XMSClientRequestIDGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return XMSClientRequestIDGetResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return XMSClientRequestIDGetResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getHandleError(resp)
+		return XMSClientRequestIDGetResponse{}, client.getHandleError(resp)
 	}
-	return resp.Response, nil
+	return XMSClientRequestIDGetResponse{RawResponse: resp.Response}, nil
 }
 
 // getCreateRequest creates the Get request.
@@ -68,19 +68,19 @@ func (client *XMSClientRequestIDClient) getHandleError(resp *azcore.Response) er
 
 // ParamGet - Get method that overwrites x-ms-client-request header with value 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.
 // If the operation fails it returns the *Error error type.
-func (client *XMSClientRequestIDClient) ParamGet(ctx context.Context, xmsClientRequestID string, options *XMSClientRequestIDParamGetOptions) (*http.Response, error) {
+func (client *XMSClientRequestIDClient) ParamGet(ctx context.Context, xmsClientRequestID string, options *XMSClientRequestIDParamGetOptions) (XMSClientRequestIDParamGetResponse, error) {
 	req, err := client.paramGetCreateRequest(ctx, xmsClientRequestID, options)
 	if err != nil {
-		return nil, err
+		return XMSClientRequestIDParamGetResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return XMSClientRequestIDParamGetResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.paramGetHandleError(resp)
+		return XMSClientRequestIDParamGetResponse{}, client.paramGetHandleError(resp)
 	}
-	return resp.Response, nil
+	return XMSClientRequestIDParamGetResponse{RawResponse: resp.Response}, nil
 }
 
 // paramGetCreateRequest creates the ParamGet request.

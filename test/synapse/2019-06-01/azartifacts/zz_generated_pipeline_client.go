@@ -25,47 +25,47 @@ type pipelineClient struct {
 
 // BeginCreateOrUpdatePipeline - Creates or updates a pipeline.
 // If the operation fails it returns the *CloudError error type.
-func (client *pipelineClient) BeginCreateOrUpdatePipeline(ctx context.Context, pipelineName string, pipeline PipelineResource, options *PipelineBeginCreateOrUpdatePipelineOptions) (PipelineResourcePollerResponse, error) {
+func (client *pipelineClient) BeginCreateOrUpdatePipeline(ctx context.Context, pipelineName string, pipeline PipelineResource, options *PipelineBeginCreateOrUpdatePipelineOptions) (PipelineCreateOrUpdatePipelinePollerResponse, error) {
 	resp, err := client.createOrUpdatePipeline(ctx, pipelineName, pipeline, options)
 	if err != nil {
-		return PipelineResourcePollerResponse{}, err
+		return PipelineCreateOrUpdatePipelinePollerResponse{}, err
 	}
-	result := PipelineResourcePollerResponse{
+	result := PipelineCreateOrUpdatePipelinePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := azcore.NewLROPoller("pipelineClient.CreateOrUpdatePipeline", resp, client.con.Pipeline(), client.createOrUpdatePipelineHandleError)
 	if err != nil {
-		return PipelineResourcePollerResponse{}, err
+		return PipelineCreateOrUpdatePipelinePollerResponse{}, err
 	}
-	poller := &pipelineResourcePoller{
+	poller := &pipelineCreateOrUpdatePipelinePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PipelineResourceResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PipelineCreateOrUpdatePipelineResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeCreateOrUpdatePipeline creates a new PipelineResourcePoller from the specified resume token.
-// token - The value must come from a previous call to PipelineResourcePoller.ResumeToken().
-func (client *pipelineClient) ResumeCreateOrUpdatePipeline(ctx context.Context, token string) (PipelineResourcePollerResponse, error) {
+// ResumeCreateOrUpdatePipeline creates a new PipelineCreateOrUpdatePipelinePoller from the specified resume token.
+// token - The value must come from a previous call to PipelineCreateOrUpdatePipelinePoller.ResumeToken().
+func (client *pipelineClient) ResumeCreateOrUpdatePipeline(ctx context.Context, token string) (PipelineCreateOrUpdatePipelinePollerResponse, error) {
 	pt, err := azcore.NewLROPollerFromResumeToken("pipelineClient.CreateOrUpdatePipeline", token, client.con.Pipeline(), client.createOrUpdatePipelineHandleError)
 	if err != nil {
-		return PipelineResourcePollerResponse{}, err
+		return PipelineCreateOrUpdatePipelinePollerResponse{}, err
 	}
-	poller := &pipelineResourcePoller{
+	poller := &pipelineCreateOrUpdatePipelinePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return PipelineResourcePollerResponse{}, err
+		return PipelineCreateOrUpdatePipelinePollerResponse{}, err
 	}
-	result := PipelineResourcePollerResponse{
+	result := PipelineCreateOrUpdatePipelinePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PipelineResourceResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PipelineCreateOrUpdatePipelineResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -125,17 +125,17 @@ func (client *pipelineClient) createOrUpdatePipelineHandleError(resp *azcore.Res
 
 // CreatePipelineRun - Creates a run of a pipeline.
 // If the operation fails it returns the *CloudError error type.
-func (client *pipelineClient) CreatePipelineRun(ctx context.Context, pipelineName string, options *PipelineCreatePipelineRunOptions) (CreateRunResponseResponse, error) {
+func (client *pipelineClient) CreatePipelineRun(ctx context.Context, pipelineName string, options *PipelineCreatePipelineRunOptions) (PipelineCreatePipelineRunResponse, error) {
 	req, err := client.createPipelineRunCreateRequest(ctx, pipelineName, options)
 	if err != nil {
-		return CreateRunResponseResponse{}, err
+		return PipelineCreatePipelineRunResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return CreateRunResponseResponse{}, err
+		return PipelineCreatePipelineRunResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusAccepted) {
-		return CreateRunResponseResponse{}, client.createPipelineRunHandleError(resp)
+		return PipelineCreatePipelineRunResponse{}, client.createPipelineRunHandleError(resp)
 	}
 	return client.createPipelineRunHandleResponse(resp)
 }
@@ -172,12 +172,12 @@ func (client *pipelineClient) createPipelineRunCreateRequest(ctx context.Context
 }
 
 // createPipelineRunHandleResponse handles the CreatePipelineRun response.
-func (client *pipelineClient) createPipelineRunHandleResponse(resp *azcore.Response) (CreateRunResponseResponse, error) {
-	var val *CreateRunResponse
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return CreateRunResponseResponse{}, err
+func (client *pipelineClient) createPipelineRunHandleResponse(resp *azcore.Response) (PipelineCreatePipelineRunResponse, error) {
+	result := PipelineCreatePipelineRunResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.CreateRunResponse); err != nil {
+		return PipelineCreatePipelineRunResponse{}, err
 	}
-	return CreateRunResponseResponse{RawResponse: resp.Response, CreateRunResponse: val}, nil
+	return result, nil
 }
 
 // createPipelineRunHandleError handles the CreatePipelineRun error response.
@@ -195,47 +195,47 @@ func (client *pipelineClient) createPipelineRunHandleError(resp *azcore.Response
 
 // BeginDeletePipeline - Deletes a pipeline.
 // If the operation fails it returns the *CloudError error type.
-func (client *pipelineClient) BeginDeletePipeline(ctx context.Context, pipelineName string, options *PipelineBeginDeletePipelineOptions) (HTTPPollerResponse, error) {
+func (client *pipelineClient) BeginDeletePipeline(ctx context.Context, pipelineName string, options *PipelineBeginDeletePipelineOptions) (PipelineDeletePipelinePollerResponse, error) {
 	resp, err := client.deletePipeline(ctx, pipelineName, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return PipelineDeletePipelinePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := PipelineDeletePipelinePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := azcore.NewLROPoller("pipelineClient.DeletePipeline", resp, client.con.Pipeline(), client.deletePipelineHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return PipelineDeletePipelinePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &pipelineDeletePipelinePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PipelineDeletePipelineResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeDeletePipeline creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *pipelineClient) ResumeDeletePipeline(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeDeletePipeline creates a new PipelineDeletePipelinePoller from the specified resume token.
+// token - The value must come from a previous call to PipelineDeletePipelinePoller.ResumeToken().
+func (client *pipelineClient) ResumeDeletePipeline(ctx context.Context, token string) (PipelineDeletePipelinePollerResponse, error) {
 	pt, err := azcore.NewLROPollerFromResumeToken("pipelineClient.DeletePipeline", token, client.con.Pipeline(), client.deletePipelineHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return PipelineDeletePipelinePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &pipelineDeletePipelinePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return PipelineDeletePipelinePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := PipelineDeletePipelinePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PipelineDeletePipelineResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -292,17 +292,17 @@ func (client *pipelineClient) deletePipelineHandleError(resp *azcore.Response) e
 
 // GetPipeline - Gets a pipeline.
 // If the operation fails it returns the *CloudError error type.
-func (client *pipelineClient) GetPipeline(ctx context.Context, pipelineName string, options *PipelineGetPipelineOptions) (PipelineResourceResponse, error) {
+func (client *pipelineClient) GetPipeline(ctx context.Context, pipelineName string, options *PipelineGetPipelineOptions) (PipelineGetPipelineResponse, error) {
 	req, err := client.getPipelineCreateRequest(ctx, pipelineName, options)
 	if err != nil {
-		return PipelineResourceResponse{}, err
+		return PipelineGetPipelineResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return PipelineResourceResponse{}, err
+		return PipelineGetPipelineResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusNotModified) {
-		return PipelineResourceResponse{}, client.getPipelineHandleError(resp)
+		return PipelineGetPipelineResponse{}, client.getPipelineHandleError(resp)
 	}
 	return client.getPipelineHandleResponse(resp)
 }
@@ -330,12 +330,12 @@ func (client *pipelineClient) getPipelineCreateRequest(ctx context.Context, pipe
 }
 
 // getPipelineHandleResponse handles the GetPipeline response.
-func (client *pipelineClient) getPipelineHandleResponse(resp *azcore.Response) (PipelineResourceResponse, error) {
-	var val *PipelineResource
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return PipelineResourceResponse{}, err
+func (client *pipelineClient) getPipelineHandleResponse(resp *azcore.Response) (PipelineGetPipelineResponse, error) {
+	result := PipelineGetPipelineResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.PipelineResource); err != nil {
+		return PipelineGetPipelineResponse{}, err
 	}
-	return PipelineResourceResponse{RawResponse: resp.Response, PipelineResource: val}, nil
+	return result, nil
 }
 
 // getPipelineHandleError handles the GetPipeline error response.
@@ -353,18 +353,15 @@ func (client *pipelineClient) getPipelineHandleError(resp *azcore.Response) erro
 
 // GetPipelinesByWorkspace - Lists pipelines.
 // If the operation fails it returns the *CloudError error type.
-func (client *pipelineClient) GetPipelinesByWorkspace(options *PipelineGetPipelinesByWorkspaceOptions) PipelineListResponsePager {
-	return &pipelineListResponsePager{
-		pipeline: client.con.Pipeline(),
+func (client *pipelineClient) GetPipelinesByWorkspace(options *PipelineGetPipelinesByWorkspaceOptions) PipelineGetPipelinesByWorkspacePager {
+	return &pipelineGetPipelinesByWorkspacePager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.getPipelinesByWorkspaceCreateRequest(ctx, options)
 		},
-		responder: client.getPipelinesByWorkspaceHandleResponse,
-		errorer:   client.getPipelinesByWorkspaceHandleError,
-		advancer: func(ctx context.Context, resp PipelineListResponseResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp PipelineGetPipelinesByWorkspaceResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.PipelineListResponse.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -384,12 +381,12 @@ func (client *pipelineClient) getPipelinesByWorkspaceCreateRequest(ctx context.C
 }
 
 // getPipelinesByWorkspaceHandleResponse handles the GetPipelinesByWorkspace response.
-func (client *pipelineClient) getPipelinesByWorkspaceHandleResponse(resp *azcore.Response) (PipelineListResponseResponse, error) {
-	var val *PipelineListResponse
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return PipelineListResponseResponse{}, err
+func (client *pipelineClient) getPipelinesByWorkspaceHandleResponse(resp *azcore.Response) (PipelineGetPipelinesByWorkspaceResponse, error) {
+	result := PipelineGetPipelinesByWorkspaceResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.PipelineListResponse); err != nil {
+		return PipelineGetPipelinesByWorkspaceResponse{}, err
 	}
-	return PipelineListResponseResponse{RawResponse: resp.Response, PipelineListResponse: val}, nil
+	return result, nil
 }
 
 // getPipelinesByWorkspaceHandleError handles the GetPipelinesByWorkspace error response.
@@ -407,47 +404,47 @@ func (client *pipelineClient) getPipelinesByWorkspaceHandleError(resp *azcore.Re
 
 // BeginRenamePipeline - Renames a pipeline.
 // If the operation fails it returns the *CloudError error type.
-func (client *pipelineClient) BeginRenamePipeline(ctx context.Context, pipelineName string, request ArtifactRenameRequest, options *PipelineBeginRenamePipelineOptions) (HTTPPollerResponse, error) {
+func (client *pipelineClient) BeginRenamePipeline(ctx context.Context, pipelineName string, request ArtifactRenameRequest, options *PipelineBeginRenamePipelineOptions) (PipelineRenamePipelinePollerResponse, error) {
 	resp, err := client.renamePipeline(ctx, pipelineName, request, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return PipelineRenamePipelinePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := PipelineRenamePipelinePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := azcore.NewLROPoller("pipelineClient.RenamePipeline", resp, client.con.Pipeline(), client.renamePipelineHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return PipelineRenamePipelinePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &pipelineRenamePipelinePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PipelineRenamePipelineResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeRenamePipeline creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *pipelineClient) ResumeRenamePipeline(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeRenamePipeline creates a new PipelineRenamePipelinePoller from the specified resume token.
+// token - The value must come from a previous call to PipelineRenamePipelinePoller.ResumeToken().
+func (client *pipelineClient) ResumeRenamePipeline(ctx context.Context, token string) (PipelineRenamePipelinePollerResponse, error) {
 	pt, err := azcore.NewLROPollerFromResumeToken("pipelineClient.RenamePipeline", token, client.con.Pipeline(), client.renamePipelineHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return PipelineRenamePipelinePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &pipelineRenamePipelinePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return PipelineRenamePipelinePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := PipelineRenamePipelinePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PipelineRenamePipelineResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil

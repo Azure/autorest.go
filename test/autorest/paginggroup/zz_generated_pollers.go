@@ -15,61 +15,44 @@ import (
 	"time"
 )
 
-// ProductResultPagerPoller provides polling facilities until the operation reaches a terminal state.
-type ProductResultPagerPoller interface {
+// PagingGetMultiplePagesLROPoller provides polling facilities until the operation reaches a terminal state.
+type PagingGetMultiplePagesLROPoller interface {
 	azcore.Poller
 	// FinalResponse performs a final GET to the service and returns the final response
 	// for the polling operation. If there is an error performing the final GET then an error is returned.
-	// If the final GET succeeded then the final ProductResultPager will be returned.
-	FinalResponse(ctx context.Context) (ProductResultPager, error)
+	// If the final GET succeeded then the final PagingGetMultiplePagesLROPager will be returned.
+	FinalResponse(ctx context.Context) (PagingGetMultiplePagesLROPager, error)
 }
 
-type productResultPagerPoller struct {
-	pt          *armcore.LROPoller
-	errHandler  productResultHandleError
-	respHandler productResultHandleResponse
-	statusCodes []int
+type pagingGetMultiplePagesLROPoller struct {
+	pt     *armcore.LROPoller
+	client *PagingClient
 }
 
-func (p *productResultPagerPoller) Done() bool {
+func (p *pagingGetMultiplePagesLROPoller) Done() bool {
 	return p.pt.Done()
 }
 
-func (p *productResultPagerPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *pagingGetMultiplePagesLROPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx)
 }
 
-func (p *productResultPagerPoller) FinalResponse(ctx context.Context) (ProductResultPager, error) {
-	respType := &productResultPager{}
-	resp, err := p.pt.FinalResponse(ctx, respType)
-	if err != nil {
+func (p *pagingGetMultiplePagesLROPoller) FinalResponse(ctx context.Context) (PagingGetMultiplePagesLROPager, error) {
+	respType := &pagingGetMultiplePagesLROPager{client: p.client}
+	if _, err := p.pt.FinalResponse(ctx, &respType.current.ProductResult); err != nil {
 		return nil, err
 	}
-	return p.handleResponse(&azcore.Response{Response: resp})
+	return respType, nil
 }
 
-func (p *productResultPagerPoller) ResumeToken() (string, error) {
+func (p *pagingGetMultiplePagesLROPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-func (p *productResultPagerPoller) pollUntilDone(ctx context.Context, freq time.Duration) (ProductResultPager, error) {
-	respType := &productResultPager{}
-	resp, err := p.pt.PollUntilDone(ctx, freq, respType)
-	if err != nil {
+func (p *pagingGetMultiplePagesLROPoller) pollUntilDone(ctx context.Context, freq time.Duration) (PagingGetMultiplePagesLROPager, error) {
+	respType := &pagingGetMultiplePagesLROPager{client: p.client}
+	if _, err := p.pt.PollUntilDone(ctx, freq, &respType.current.ProductResult); err != nil {
 		return nil, err
 	}
-	return p.handleResponse(&azcore.Response{Response: resp})
-}
-
-func (p *productResultPagerPoller) handleResponse(resp *azcore.Response) (ProductResultPager, error) {
-	return &productResultPager{
-		pipeline:  p.pt.Pipeline,
-		resp:      resp,
-		errorer:   p.errHandler,
-		responder: p.respHandler,
-		advancer: func(ctx context.Context, resp ProductResultResponse) (*azcore.Request, error) {
-			return azcore.NewRequest(ctx, http.MethodGet, *resp.ProductResult.NextLink)
-		},
-		statusCodes: p.statusCodes,
-	}, nil
+	return respType, nil
 }

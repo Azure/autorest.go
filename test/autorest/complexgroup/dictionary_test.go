@@ -21,7 +21,7 @@ func TestDictionaryGetEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetEmpty: %v", err)
 	}
-	if r := cmp.Diff(result.DictionaryWrapper, &DictionaryWrapper{DefaultProgram: map[string]*string{}}); r != "" {
+	if r := cmp.Diff(result.DictionaryWrapper, DictionaryWrapper{DefaultProgram: map[string]*string{}}); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -32,7 +32,7 @@ func TestDictionaryGetNotProvided(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetNotProvided: %v", err)
 	}
-	if r := cmp.Diff(result.DictionaryWrapper, &DictionaryWrapper{}); r != "" {
+	if r := cmp.Diff(result.DictionaryWrapper, DictionaryWrapper{}); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -43,7 +43,7 @@ func TestDictionaryGetNull(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetNull: %v", err)
 	}
-	if r := cmp.Diff(result.DictionaryWrapper, &DictionaryWrapper{}); r != "" {
+	if r := cmp.Diff(result.DictionaryWrapper, DictionaryWrapper{}); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -56,7 +56,7 @@ func TestDictionaryGetValid(t *testing.T) {
 	}
 	s1, s2, s3, s4 := "notepad", "mspaint", "excel", ""
 	val := DictionaryWrapper{DefaultProgram: map[string]*string{"txt": &s1, "bmp": &s2, "xls": &s3, "exe": &s4, "": nil}}
-	if r := cmp.Diff(result.DictionaryWrapper, &val); r != "" {
+	if r := cmp.Diff(result.DictionaryWrapper, val); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -67,7 +67,7 @@ func TestDictionaryPutEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutEmpty: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -79,7 +79,7 @@ func TestDictionaryPutValid(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutValid: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }

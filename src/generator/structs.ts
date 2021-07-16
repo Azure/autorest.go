@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { comment } from '@azure-tools/codegen';
-import { ConstantSchema, ImplementationLocation, ObjectSchema, Language, SchemaType, Parameter, Property } from '@autorest/codemodel';
+import { ConstantSchema, ImplementationLocation, Language, SchemaType, Parameter, Property } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
 import { commentLength, isArraySchema } from '../common/helpers';
 import { elementByValueForParam, hasDescription, sortAscending, substituteDiscriminator } from './helpers';
@@ -23,7 +23,7 @@ export class StructDef {
   readonly Properties?: Property[];
   readonly Parameters?: Parameter[];
   readonly Methods: StructMethod[];
-  readonly ComposedOf: ObjectSchema[];
+  readonly ComposedOf: string[];
   HasJSONMarshaller: boolean;
   HasJSONUnmarshaller: boolean;
   HasJSONByteArray: boolean;
@@ -39,7 +39,7 @@ export class StructDef {
       this.Parameters.sort((a: Parameter, b: Parameter) => { return sortAscending(a.language.go!.name, b.language.go!.name); });
     }
     this.Methods = new Array<StructMethod>();
-    this.ComposedOf = new Array<ObjectSchema>();
+    this.ComposedOf = new Array<string>();
     this.HasJSONMarshaller = false;
     this.HasJSONUnmarshaller = false;
     this.HasJSONByteArray = false;
@@ -56,7 +56,7 @@ export class StructDef {
     text += `type ${this.Language.name} struct {\n`;
     // any composed types go first
     for (const comp of values(this.ComposedOf)) {
-      text += `\t${comp.language.go!.name}\n`;
+      text += `\t${comp}\n`;
     }
     // used to track when to add an extra \n between fields that have comments
     let first = true;
@@ -78,6 +78,9 @@ export class StructDef {
       }
     });
     for (const prop of values(this.Properties)) {
+      if (prop.language.go!.embeddedType) {
+        continue;
+      }
       if (hasDescription(prop.language.go!)) {
         if (!first) {
           // add an extra new-line between fields IFF the field
@@ -176,6 +179,9 @@ export function generateStruct(imports: ImportManager, lang: Language, props?: P
   const st = new StructDef(lang, props);
   for (const prop of values(props)) {
     imports.addImportForSchemaType(prop.schema);
+    if (prop.language.go!.embeddedType) {
+      st.ComposedOf.push(substituteDiscriminator(prop.schema, true));
+    }
   }
   return st;
 }

@@ -33,47 +33,47 @@ func NewP2SVPNGatewaysClient(con *armcore.Connection, subscriptionID string) *P2
 
 // BeginCreateOrUpdate - Creates a virtual wan p2s vpn gateway if it doesn't exist else updates the existing gateway.
 // If the operation fails it returns the *CloudError error type.
-func (client *P2SVPNGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, p2SVPNGatewayParameters P2SVPNGateway, options *P2SVPNGatewaysBeginCreateOrUpdateOptions) (P2SVPNGatewayPollerResponse, error) {
+func (client *P2SVPNGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, p2SVPNGatewayParameters P2SVPNGateway, options *P2SVPNGatewaysBeginCreateOrUpdateOptions) (P2SVPNGatewaysCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, gatewayName, p2SVPNGatewayParameters, options)
 	if err != nil {
-		return P2SVPNGatewayPollerResponse{}, err
+		return P2SVPNGatewaysCreateOrUpdatePollerResponse{}, err
 	}
-	result := P2SVPNGatewayPollerResponse{
+	result := P2SVPNGatewaysCreateOrUpdatePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("P2SVPNGatewaysClient.CreateOrUpdate", "azure-async-operation", resp, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return P2SVPNGatewayPollerResponse{}, err
+		return P2SVPNGatewaysCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &p2SVPNGatewayPoller{
+	poller := &p2SVPNGatewaysCreateOrUpdatePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (P2SVPNGatewayResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (P2SVPNGatewaysCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new P2SVPNGatewayPoller from the specified resume token.
-// token - The value must come from a previous call to P2SVPNGatewayPoller.ResumeToken().
-func (client *P2SVPNGatewaysClient) ResumeCreateOrUpdate(ctx context.Context, token string) (P2SVPNGatewayPollerResponse, error) {
+// ResumeCreateOrUpdate creates a new P2SVPNGatewaysCreateOrUpdatePoller from the specified resume token.
+// token - The value must come from a previous call to P2SVPNGatewaysCreateOrUpdatePoller.ResumeToken().
+func (client *P2SVPNGatewaysClient) ResumeCreateOrUpdate(ctx context.Context, token string) (P2SVPNGatewaysCreateOrUpdatePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("P2SVPNGatewaysClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return P2SVPNGatewayPollerResponse{}, err
+		return P2SVPNGatewaysCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &p2SVPNGatewayPoller{
+	poller := &p2SVPNGatewaysCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return P2SVPNGatewayPollerResponse{}, err
+		return P2SVPNGatewaysCreateOrUpdatePollerResponse{}, err
 	}
-	result := P2SVPNGatewayPollerResponse{
+	result := P2SVPNGatewaysCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (P2SVPNGatewayResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (P2SVPNGatewaysCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -138,47 +138,47 @@ func (client *P2SVPNGatewaysClient) createOrUpdateHandleError(resp *azcore.Respo
 
 // BeginDelete - Deletes a virtual wan p2s vpn gateway.
 // If the operation fails it returns the *CloudError error type.
-func (client *P2SVPNGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, gatewayName string, options *P2SVPNGatewaysBeginDeleteOptions) (HTTPPollerResponse, error) {
+func (client *P2SVPNGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, gatewayName string, options *P2SVPNGatewaysBeginDeleteOptions) (P2SVPNGatewaysDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, gatewayName, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return P2SVPNGatewaysDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := P2SVPNGatewaysDeletePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("P2SVPNGatewaysClient.Delete", "location", resp, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return P2SVPNGatewaysDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &p2SVPNGatewaysDeletePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (P2SVPNGatewaysDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeDelete creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *P2SVPNGatewaysClient) ResumeDelete(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeDelete creates a new P2SVPNGatewaysDeletePoller from the specified resume token.
+// token - The value must come from a previous call to P2SVPNGatewaysDeletePoller.ResumeToken().
+func (client *P2SVPNGatewaysClient) ResumeDelete(ctx context.Context, token string) (P2SVPNGatewaysDeletePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("P2SVPNGatewaysClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return P2SVPNGatewaysDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &p2SVPNGatewaysDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return P2SVPNGatewaysDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := P2SVPNGatewaysDeletePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (P2SVPNGatewaysDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -243,47 +243,47 @@ func (client *P2SVPNGatewaysClient) deleteHandleError(resp *azcore.Response) err
 
 // BeginDisconnectP2SVPNConnections - Disconnect P2S vpn connections of the virtual wan P2SVpnGateway in the specified resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *P2SVPNGatewaysClient) BeginDisconnectP2SVPNConnections(ctx context.Context, resourceGroupName string, p2SVPNGatewayName string, request P2SVPNConnectionRequest, options *P2SVPNGatewaysBeginDisconnectP2SVPNConnectionsOptions) (HTTPPollerResponse, error) {
+func (client *P2SVPNGatewaysClient) BeginDisconnectP2SVPNConnections(ctx context.Context, resourceGroupName string, p2SVPNGatewayName string, request P2SVPNConnectionRequest, options *P2SVPNGatewaysBeginDisconnectP2SVPNConnectionsOptions) (P2SVPNGatewaysDisconnectP2SVPNConnectionsPollerResponse, error) {
 	resp, err := client.disconnectP2SVPNConnections(ctx, resourceGroupName, p2SVPNGatewayName, request, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return P2SVPNGatewaysDisconnectP2SVPNConnectionsPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := P2SVPNGatewaysDisconnectP2SVPNConnectionsPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("P2SVPNGatewaysClient.DisconnectP2SVPNConnections", "location", resp, client.con.Pipeline(), client.disconnectP2SVPNConnectionsHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return P2SVPNGatewaysDisconnectP2SVPNConnectionsPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &p2SVPNGatewaysDisconnectP2SVPNConnectionsPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (P2SVPNGatewaysDisconnectP2SVPNConnectionsResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeDisconnectP2SVPNConnections creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *P2SVPNGatewaysClient) ResumeDisconnectP2SVPNConnections(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeDisconnectP2SVPNConnections creates a new P2SVPNGatewaysDisconnectP2SVPNConnectionsPoller from the specified resume token.
+// token - The value must come from a previous call to P2SVPNGatewaysDisconnectP2SVPNConnectionsPoller.ResumeToken().
+func (client *P2SVPNGatewaysClient) ResumeDisconnectP2SVPNConnections(ctx context.Context, token string) (P2SVPNGatewaysDisconnectP2SVPNConnectionsPollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("P2SVPNGatewaysClient.DisconnectP2SVPNConnections", token, client.con.Pipeline(), client.disconnectP2SVPNConnectionsHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return P2SVPNGatewaysDisconnectP2SVPNConnectionsPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &p2SVPNGatewaysDisconnectP2SVPNConnectionsPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return P2SVPNGatewaysDisconnectP2SVPNConnectionsPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := P2SVPNGatewaysDisconnectP2SVPNConnectionsPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (P2SVPNGatewaysDisconnectP2SVPNConnectionsResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -348,47 +348,47 @@ func (client *P2SVPNGatewaysClient) disconnectP2SVPNConnectionsHandleError(resp 
 
 // BeginGenerateVPNProfile - Generates VPN profile for P2S client of the P2SVpnGateway in the specified resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *P2SVPNGatewaysClient) BeginGenerateVPNProfile(ctx context.Context, resourceGroupName string, gatewayName string, parameters P2SVPNProfileParameters, options *P2SVPNGatewaysBeginGenerateVPNProfileOptions) (VPNProfileResponsePollerResponse, error) {
+func (client *P2SVPNGatewaysClient) BeginGenerateVPNProfile(ctx context.Context, resourceGroupName string, gatewayName string, parameters P2SVPNProfileParameters, options *P2SVPNGatewaysBeginGenerateVPNProfileOptions) (P2SVPNGatewaysGenerateVPNProfilePollerResponse, error) {
 	resp, err := client.generateVPNProfile(ctx, resourceGroupName, gatewayName, parameters, options)
 	if err != nil {
-		return VPNProfileResponsePollerResponse{}, err
+		return P2SVPNGatewaysGenerateVPNProfilePollerResponse{}, err
 	}
-	result := VPNProfileResponsePollerResponse{
+	result := P2SVPNGatewaysGenerateVPNProfilePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("P2SVPNGatewaysClient.GenerateVPNProfile", "location", resp, client.con.Pipeline(), client.generateVPNProfileHandleError)
 	if err != nil {
-		return VPNProfileResponsePollerResponse{}, err
+		return P2SVPNGatewaysGenerateVPNProfilePollerResponse{}, err
 	}
-	poller := &vpnProfileResponsePoller{
+	poller := &p2SVPNGatewaysGenerateVPNProfilePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VPNProfileResponseResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (P2SVPNGatewaysGenerateVPNProfileResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeGenerateVPNProfile creates a new VPNProfileResponsePoller from the specified resume token.
-// token - The value must come from a previous call to VPNProfileResponsePoller.ResumeToken().
-func (client *P2SVPNGatewaysClient) ResumeGenerateVPNProfile(ctx context.Context, token string) (VPNProfileResponsePollerResponse, error) {
+// ResumeGenerateVPNProfile creates a new P2SVPNGatewaysGenerateVPNProfilePoller from the specified resume token.
+// token - The value must come from a previous call to P2SVPNGatewaysGenerateVPNProfilePoller.ResumeToken().
+func (client *P2SVPNGatewaysClient) ResumeGenerateVPNProfile(ctx context.Context, token string) (P2SVPNGatewaysGenerateVPNProfilePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("P2SVPNGatewaysClient.GenerateVPNProfile", token, client.con.Pipeline(), client.generateVPNProfileHandleError)
 	if err != nil {
-		return VPNProfileResponsePollerResponse{}, err
+		return P2SVPNGatewaysGenerateVPNProfilePollerResponse{}, err
 	}
-	poller := &vpnProfileResponsePoller{
+	poller := &p2SVPNGatewaysGenerateVPNProfilePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return VPNProfileResponsePollerResponse{}, err
+		return P2SVPNGatewaysGenerateVPNProfilePollerResponse{}, err
 	}
-	result := VPNProfileResponsePollerResponse{
+	result := P2SVPNGatewaysGenerateVPNProfilePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VPNProfileResponseResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (P2SVPNGatewaysGenerateVPNProfileResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -453,17 +453,17 @@ func (client *P2SVPNGatewaysClient) generateVPNProfileHandleError(resp *azcore.R
 
 // Get - Retrieves the details of a virtual wan p2s vpn gateway.
 // If the operation fails it returns the *CloudError error type.
-func (client *P2SVPNGatewaysClient) Get(ctx context.Context, resourceGroupName string, gatewayName string, options *P2SVPNGatewaysGetOptions) (P2SVPNGatewayResponse, error) {
+func (client *P2SVPNGatewaysClient) Get(ctx context.Context, resourceGroupName string, gatewayName string, options *P2SVPNGatewaysGetOptions) (P2SVPNGatewaysGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, gatewayName, options)
 	if err != nil {
-		return P2SVPNGatewayResponse{}, err
+		return P2SVPNGatewaysGetResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return P2SVPNGatewayResponse{}, err
+		return P2SVPNGatewaysGetResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return P2SVPNGatewayResponse{}, client.getHandleError(resp)
+		return P2SVPNGatewaysGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -496,12 +496,12 @@ func (client *P2SVPNGatewaysClient) getCreateRequest(ctx context.Context, resour
 }
 
 // getHandleResponse handles the Get response.
-func (client *P2SVPNGatewaysClient) getHandleResponse(resp *azcore.Response) (P2SVPNGatewayResponse, error) {
-	var val *P2SVPNGateway
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return P2SVPNGatewayResponse{}, err
+func (client *P2SVPNGatewaysClient) getHandleResponse(resp *azcore.Response) (P2SVPNGatewaysGetResponse, error) {
+	result := P2SVPNGatewaysGetResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.P2SVPNGateway); err != nil {
+		return P2SVPNGatewaysGetResponse{}, err
 	}
-	return P2SVPNGatewayResponse{RawResponse: resp.Response, P2SVPNGateway: val}, nil
+	return result, nil
 }
 
 // getHandleError handles the Get error response.
@@ -519,47 +519,47 @@ func (client *P2SVPNGatewaysClient) getHandleError(resp *azcore.Response) error 
 
 // BeginGetP2SVPNConnectionHealth - Gets the connection health of P2S clients of the virtual wan P2SVpnGateway in the specified resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *P2SVPNGatewaysClient) BeginGetP2SVPNConnectionHealth(ctx context.Context, resourceGroupName string, gatewayName string, options *P2SVPNGatewaysBeginGetP2SVPNConnectionHealthOptions) (P2SVPNGatewayPollerResponse, error) {
+func (client *P2SVPNGatewaysClient) BeginGetP2SVPNConnectionHealth(ctx context.Context, resourceGroupName string, gatewayName string, options *P2SVPNGatewaysBeginGetP2SVPNConnectionHealthOptions) (P2SVPNGatewaysGetP2SVPNConnectionHealthPollerResponse, error) {
 	resp, err := client.getP2SVPNConnectionHealth(ctx, resourceGroupName, gatewayName, options)
 	if err != nil {
-		return P2SVPNGatewayPollerResponse{}, err
+		return P2SVPNGatewaysGetP2SVPNConnectionHealthPollerResponse{}, err
 	}
-	result := P2SVPNGatewayPollerResponse{
+	result := P2SVPNGatewaysGetP2SVPNConnectionHealthPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("P2SVPNGatewaysClient.GetP2SVPNConnectionHealth", "location", resp, client.con.Pipeline(), client.getP2SVPNConnectionHealthHandleError)
 	if err != nil {
-		return P2SVPNGatewayPollerResponse{}, err
+		return P2SVPNGatewaysGetP2SVPNConnectionHealthPollerResponse{}, err
 	}
-	poller := &p2SVPNGatewayPoller{
+	poller := &p2SVPNGatewaysGetP2SVPNConnectionHealthPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (P2SVPNGatewayResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (P2SVPNGatewaysGetP2SVPNConnectionHealthResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeGetP2SVPNConnectionHealth creates a new P2SVPNGatewayPoller from the specified resume token.
-// token - The value must come from a previous call to P2SVPNGatewayPoller.ResumeToken().
-func (client *P2SVPNGatewaysClient) ResumeGetP2SVPNConnectionHealth(ctx context.Context, token string) (P2SVPNGatewayPollerResponse, error) {
+// ResumeGetP2SVPNConnectionHealth creates a new P2SVPNGatewaysGetP2SVPNConnectionHealthPoller from the specified resume token.
+// token - The value must come from a previous call to P2SVPNGatewaysGetP2SVPNConnectionHealthPoller.ResumeToken().
+func (client *P2SVPNGatewaysClient) ResumeGetP2SVPNConnectionHealth(ctx context.Context, token string) (P2SVPNGatewaysGetP2SVPNConnectionHealthPollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("P2SVPNGatewaysClient.GetP2SVPNConnectionHealth", token, client.con.Pipeline(), client.getP2SVPNConnectionHealthHandleError)
 	if err != nil {
-		return P2SVPNGatewayPollerResponse{}, err
+		return P2SVPNGatewaysGetP2SVPNConnectionHealthPollerResponse{}, err
 	}
-	poller := &p2SVPNGatewayPoller{
+	poller := &p2SVPNGatewaysGetP2SVPNConnectionHealthPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return P2SVPNGatewayPollerResponse{}, err
+		return P2SVPNGatewaysGetP2SVPNConnectionHealthPollerResponse{}, err
 	}
-	result := P2SVPNGatewayPollerResponse{
+	result := P2SVPNGatewaysGetP2SVPNConnectionHealthPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (P2SVPNGatewayResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (P2SVPNGatewaysGetP2SVPNConnectionHealthResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -625,47 +625,47 @@ func (client *P2SVPNGatewaysClient) getP2SVPNConnectionHealthHandleError(resp *a
 // BeginGetP2SVPNConnectionHealthDetailed - Gets the sas url to get the connection health detail of P2S clients of the virtual wan P2SVpnGateway in the
 // specified resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *P2SVPNGatewaysClient) BeginGetP2SVPNConnectionHealthDetailed(ctx context.Context, resourceGroupName string, gatewayName string, request P2SVPNConnectionHealthRequest, options *P2SVPNGatewaysBeginGetP2SVPNConnectionHealthDetailedOptions) (P2SVPNConnectionHealthPollerResponse, error) {
+func (client *P2SVPNGatewaysClient) BeginGetP2SVPNConnectionHealthDetailed(ctx context.Context, resourceGroupName string, gatewayName string, request P2SVPNConnectionHealthRequest, options *P2SVPNGatewaysBeginGetP2SVPNConnectionHealthDetailedOptions) (P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedPollerResponse, error) {
 	resp, err := client.getP2SVPNConnectionHealthDetailed(ctx, resourceGroupName, gatewayName, request, options)
 	if err != nil {
-		return P2SVPNConnectionHealthPollerResponse{}, err
+		return P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedPollerResponse{}, err
 	}
-	result := P2SVPNConnectionHealthPollerResponse{
+	result := P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("P2SVPNGatewaysClient.GetP2SVPNConnectionHealthDetailed", "location", resp, client.con.Pipeline(), client.getP2SVPNConnectionHealthDetailedHandleError)
 	if err != nil {
-		return P2SVPNConnectionHealthPollerResponse{}, err
+		return P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedPollerResponse{}, err
 	}
-	poller := &p2SVPNConnectionHealthPoller{
+	poller := &p2SVPNGatewaysGetP2SVPNConnectionHealthDetailedPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (P2SVPNConnectionHealthResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeGetP2SVPNConnectionHealthDetailed creates a new P2SVPNConnectionHealthPoller from the specified resume token.
-// token - The value must come from a previous call to P2SVPNConnectionHealthPoller.ResumeToken().
-func (client *P2SVPNGatewaysClient) ResumeGetP2SVPNConnectionHealthDetailed(ctx context.Context, token string) (P2SVPNConnectionHealthPollerResponse, error) {
+// ResumeGetP2SVPNConnectionHealthDetailed creates a new P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedPoller from the specified resume token.
+// token - The value must come from a previous call to P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedPoller.ResumeToken().
+func (client *P2SVPNGatewaysClient) ResumeGetP2SVPNConnectionHealthDetailed(ctx context.Context, token string) (P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedPollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("P2SVPNGatewaysClient.GetP2SVPNConnectionHealthDetailed", token, client.con.Pipeline(), client.getP2SVPNConnectionHealthDetailedHandleError)
 	if err != nil {
-		return P2SVPNConnectionHealthPollerResponse{}, err
+		return P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedPollerResponse{}, err
 	}
-	poller := &p2SVPNConnectionHealthPoller{
+	poller := &p2SVPNGatewaysGetP2SVPNConnectionHealthDetailedPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return P2SVPNConnectionHealthPollerResponse{}, err
+		return P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedPollerResponse{}, err
 	}
-	result := P2SVPNConnectionHealthPollerResponse{
+	result := P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (P2SVPNConnectionHealthResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -731,18 +731,15 @@ func (client *P2SVPNGatewaysClient) getP2SVPNConnectionHealthDetailedHandleError
 
 // List - Lists all the P2SVpnGateways in a subscription.
 // If the operation fails it returns the *CloudError error type.
-func (client *P2SVPNGatewaysClient) List(options *P2SVPNGatewaysListOptions) ListP2SVPNGatewaysResultPager {
-	return &listP2SVPNGatewaysResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *P2SVPNGatewaysClient) List(options *P2SVPNGatewaysListOptions) P2SVPNGatewaysListPager {
+	return &p2SVPNGatewaysListPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, options)
 		},
-		responder: client.listHandleResponse,
-		errorer:   client.listHandleError,
-		advancer: func(ctx context.Context, resp ListP2SVPNGatewaysResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp P2SVPNGatewaysListResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ListP2SVPNGatewaysResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -766,12 +763,12 @@ func (client *P2SVPNGatewaysClient) listCreateRequest(ctx context.Context, optio
 }
 
 // listHandleResponse handles the List response.
-func (client *P2SVPNGatewaysClient) listHandleResponse(resp *azcore.Response) (ListP2SVPNGatewaysResultResponse, error) {
-	var val *ListP2SVPNGatewaysResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ListP2SVPNGatewaysResultResponse{}, err
+func (client *P2SVPNGatewaysClient) listHandleResponse(resp *azcore.Response) (P2SVPNGatewaysListResponse, error) {
+	result := P2SVPNGatewaysListResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.ListP2SVPNGatewaysResult); err != nil {
+		return P2SVPNGatewaysListResponse{}, err
 	}
-	return ListP2SVPNGatewaysResultResponse{RawResponse: resp.Response, ListP2SVPNGatewaysResult: val}, nil
+	return result, nil
 }
 
 // listHandleError handles the List error response.
@@ -789,18 +786,15 @@ func (client *P2SVPNGatewaysClient) listHandleError(resp *azcore.Response) error
 
 // ListByResourceGroup - Lists all the P2SVpnGateways in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *P2SVPNGatewaysClient) ListByResourceGroup(resourceGroupName string, options *P2SVPNGatewaysListByResourceGroupOptions) ListP2SVPNGatewaysResultPager {
-	return &listP2SVPNGatewaysResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *P2SVPNGatewaysClient) ListByResourceGroup(resourceGroupName string, options *P2SVPNGatewaysListByResourceGroupOptions) P2SVPNGatewaysListByResourceGroupPager {
+	return &p2SVPNGatewaysListByResourceGroupPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
 		},
-		responder: client.listByResourceGroupHandleResponse,
-		errorer:   client.listByResourceGroupHandleError,
-		advancer: func(ctx context.Context, resp ListP2SVPNGatewaysResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp P2SVPNGatewaysListByResourceGroupResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ListP2SVPNGatewaysResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -828,12 +822,12 @@ func (client *P2SVPNGatewaysClient) listByResourceGroupCreateRequest(ctx context
 }
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
-func (client *P2SVPNGatewaysClient) listByResourceGroupHandleResponse(resp *azcore.Response) (ListP2SVPNGatewaysResultResponse, error) {
-	var val *ListP2SVPNGatewaysResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ListP2SVPNGatewaysResultResponse{}, err
+func (client *P2SVPNGatewaysClient) listByResourceGroupHandleResponse(resp *azcore.Response) (P2SVPNGatewaysListByResourceGroupResponse, error) {
+	result := P2SVPNGatewaysListByResourceGroupResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.ListP2SVPNGatewaysResult); err != nil {
+		return P2SVPNGatewaysListByResourceGroupResponse{}, err
 	}
-	return ListP2SVPNGatewaysResultResponse{RawResponse: resp.Response, ListP2SVPNGatewaysResult: val}, nil
+	return result, nil
 }
 
 // listByResourceGroupHandleError handles the ListByResourceGroup error response.
@@ -851,17 +845,17 @@ func (client *P2SVPNGatewaysClient) listByResourceGroupHandleError(resp *azcore.
 
 // UpdateTags - Updates virtual wan p2s vpn gateway tags.
 // If the operation fails it returns the *CloudError error type.
-func (client *P2SVPNGatewaysClient) UpdateTags(ctx context.Context, resourceGroupName string, gatewayName string, p2SVPNGatewayParameters TagsObject, options *P2SVPNGatewaysUpdateTagsOptions) (P2SVPNGatewayResponse, error) {
+func (client *P2SVPNGatewaysClient) UpdateTags(ctx context.Context, resourceGroupName string, gatewayName string, p2SVPNGatewayParameters TagsObject, options *P2SVPNGatewaysUpdateTagsOptions) (P2SVPNGatewaysUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, gatewayName, p2SVPNGatewayParameters, options)
 	if err != nil {
-		return P2SVPNGatewayResponse{}, err
+		return P2SVPNGatewaysUpdateTagsResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return P2SVPNGatewayResponse{}, err
+		return P2SVPNGatewaysUpdateTagsResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return P2SVPNGatewayResponse{}, client.updateTagsHandleError(resp)
+		return P2SVPNGatewaysUpdateTagsResponse{}, client.updateTagsHandleError(resp)
 	}
 	return client.updateTagsHandleResponse(resp)
 }
@@ -894,12 +888,12 @@ func (client *P2SVPNGatewaysClient) updateTagsCreateRequest(ctx context.Context,
 }
 
 // updateTagsHandleResponse handles the UpdateTags response.
-func (client *P2SVPNGatewaysClient) updateTagsHandleResponse(resp *azcore.Response) (P2SVPNGatewayResponse, error) {
-	var val *P2SVPNGateway
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return P2SVPNGatewayResponse{}, err
+func (client *P2SVPNGatewaysClient) updateTagsHandleResponse(resp *azcore.Response) (P2SVPNGatewaysUpdateTagsResponse, error) {
+	result := P2SVPNGatewaysUpdateTagsResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.P2SVPNGateway); err != nil {
+		return P2SVPNGatewaysUpdateTagsResponse{}, err
 	}
-	return P2SVPNGatewayResponse{RawResponse: resp.Response, P2SVPNGateway: val}, nil
+	return result, nil
 }
 
 // updateTagsHandleError handles the UpdateTags error response.

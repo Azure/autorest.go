@@ -33,47 +33,47 @@ func NewRouteTablesClient(con *armcore.Connection, subscriptionID string) *Route
 
 // BeginCreateOrUpdate - Create or updates a route table in a specified resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *RouteTablesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, routeTableName string, parameters RouteTable, options *RouteTablesBeginCreateOrUpdateOptions) (RouteTablePollerResponse, error) {
+func (client *RouteTablesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, routeTableName string, parameters RouteTable, options *RouteTablesBeginCreateOrUpdateOptions) (RouteTablesCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, routeTableName, parameters, options)
 	if err != nil {
-		return RouteTablePollerResponse{}, err
+		return RouteTablesCreateOrUpdatePollerResponse{}, err
 	}
-	result := RouteTablePollerResponse{
+	result := RouteTablesCreateOrUpdatePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("RouteTablesClient.CreateOrUpdate", "azure-async-operation", resp, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return RouteTablePollerResponse{}, err
+		return RouteTablesCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &routeTablePoller{
+	poller := &routeTablesCreateOrUpdatePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (RouteTableResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (RouteTablesCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new RouteTablePoller from the specified resume token.
-// token - The value must come from a previous call to RouteTablePoller.ResumeToken().
-func (client *RouteTablesClient) ResumeCreateOrUpdate(ctx context.Context, token string) (RouteTablePollerResponse, error) {
+// ResumeCreateOrUpdate creates a new RouteTablesCreateOrUpdatePoller from the specified resume token.
+// token - The value must come from a previous call to RouteTablesCreateOrUpdatePoller.ResumeToken().
+func (client *RouteTablesClient) ResumeCreateOrUpdate(ctx context.Context, token string) (RouteTablesCreateOrUpdatePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("RouteTablesClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return RouteTablePollerResponse{}, err
+		return RouteTablesCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &routeTablePoller{
+	poller := &routeTablesCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return RouteTablePollerResponse{}, err
+		return RouteTablesCreateOrUpdatePollerResponse{}, err
 	}
-	result := RouteTablePollerResponse{
+	result := RouteTablesCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (RouteTableResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (RouteTablesCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -138,47 +138,47 @@ func (client *RouteTablesClient) createOrUpdateHandleError(resp *azcore.Response
 
 // BeginDelete - Deletes the specified route table.
 // If the operation fails it returns the *CloudError error type.
-func (client *RouteTablesClient) BeginDelete(ctx context.Context, resourceGroupName string, routeTableName string, options *RouteTablesBeginDeleteOptions) (HTTPPollerResponse, error) {
+func (client *RouteTablesClient) BeginDelete(ctx context.Context, resourceGroupName string, routeTableName string, options *RouteTablesBeginDeleteOptions) (RouteTablesDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, routeTableName, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return RouteTablesDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := RouteTablesDeletePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("RouteTablesClient.Delete", "location", resp, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return RouteTablesDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &routeTablesDeletePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (RouteTablesDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeDelete creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *RouteTablesClient) ResumeDelete(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeDelete creates a new RouteTablesDeletePoller from the specified resume token.
+// token - The value must come from a previous call to RouteTablesDeletePoller.ResumeToken().
+func (client *RouteTablesClient) ResumeDelete(ctx context.Context, token string) (RouteTablesDeletePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("RouteTablesClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return RouteTablesDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &routeTablesDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return RouteTablesDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := RouteTablesDeletePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (RouteTablesDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -243,17 +243,17 @@ func (client *RouteTablesClient) deleteHandleError(resp *azcore.Response) error 
 
 // Get - Gets the specified route table.
 // If the operation fails it returns the *CloudError error type.
-func (client *RouteTablesClient) Get(ctx context.Context, resourceGroupName string, routeTableName string, options *RouteTablesGetOptions) (RouteTableResponse, error) {
+func (client *RouteTablesClient) Get(ctx context.Context, resourceGroupName string, routeTableName string, options *RouteTablesGetOptions) (RouteTablesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, routeTableName, options)
 	if err != nil {
-		return RouteTableResponse{}, err
+		return RouteTablesGetResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return RouteTableResponse{}, err
+		return RouteTablesGetResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return RouteTableResponse{}, client.getHandleError(resp)
+		return RouteTablesGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -289,12 +289,12 @@ func (client *RouteTablesClient) getCreateRequest(ctx context.Context, resourceG
 }
 
 // getHandleResponse handles the Get response.
-func (client *RouteTablesClient) getHandleResponse(resp *azcore.Response) (RouteTableResponse, error) {
-	var val *RouteTable
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return RouteTableResponse{}, err
+func (client *RouteTablesClient) getHandleResponse(resp *azcore.Response) (RouteTablesGetResponse, error) {
+	result := RouteTablesGetResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.RouteTable); err != nil {
+		return RouteTablesGetResponse{}, err
 	}
-	return RouteTableResponse{RawResponse: resp.Response, RouteTable: val}, nil
+	return result, nil
 }
 
 // getHandleError handles the Get error response.
@@ -312,18 +312,15 @@ func (client *RouteTablesClient) getHandleError(resp *azcore.Response) error {
 
 // List - Gets all route tables in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *RouteTablesClient) List(resourceGroupName string, options *RouteTablesListOptions) RouteTableListResultPager {
-	return &routeTableListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *RouteTablesClient) List(resourceGroupName string, options *RouteTablesListOptions) RouteTablesListPager {
+	return &routeTablesListPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, options)
 		},
-		responder: client.listHandleResponse,
-		errorer:   client.listHandleError,
-		advancer: func(ctx context.Context, resp RouteTableListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp RouteTablesListResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.RouteTableListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -351,12 +348,12 @@ func (client *RouteTablesClient) listCreateRequest(ctx context.Context, resource
 }
 
 // listHandleResponse handles the List response.
-func (client *RouteTablesClient) listHandleResponse(resp *azcore.Response) (RouteTableListResultResponse, error) {
-	var val *RouteTableListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return RouteTableListResultResponse{}, err
+func (client *RouteTablesClient) listHandleResponse(resp *azcore.Response) (RouteTablesListResponse, error) {
+	result := RouteTablesListResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.RouteTableListResult); err != nil {
+		return RouteTablesListResponse{}, err
 	}
-	return RouteTableListResultResponse{RawResponse: resp.Response, RouteTableListResult: val}, nil
+	return result, nil
 }
 
 // listHandleError handles the List error response.
@@ -374,18 +371,15 @@ func (client *RouteTablesClient) listHandleError(resp *azcore.Response) error {
 
 // ListAll - Gets all route tables in a subscription.
 // If the operation fails it returns the *CloudError error type.
-func (client *RouteTablesClient) ListAll(options *RouteTablesListAllOptions) RouteTableListResultPager {
-	return &routeTableListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *RouteTablesClient) ListAll(options *RouteTablesListAllOptions) RouteTablesListAllPager {
+	return &routeTablesListAllPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listAllCreateRequest(ctx, options)
 		},
-		responder: client.listAllHandleResponse,
-		errorer:   client.listAllHandleError,
-		advancer: func(ctx context.Context, resp RouteTableListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp RouteTablesListAllResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.RouteTableListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -409,12 +403,12 @@ func (client *RouteTablesClient) listAllCreateRequest(ctx context.Context, optio
 }
 
 // listAllHandleResponse handles the ListAll response.
-func (client *RouteTablesClient) listAllHandleResponse(resp *azcore.Response) (RouteTableListResultResponse, error) {
-	var val *RouteTableListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return RouteTableListResultResponse{}, err
+func (client *RouteTablesClient) listAllHandleResponse(resp *azcore.Response) (RouteTablesListAllResponse, error) {
+	result := RouteTablesListAllResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.RouteTableListResult); err != nil {
+		return RouteTablesListAllResponse{}, err
 	}
-	return RouteTableListResultResponse{RawResponse: resp.Response, RouteTableListResult: val}, nil
+	return result, nil
 }
 
 // listAllHandleError handles the ListAll error response.
@@ -432,17 +426,17 @@ func (client *RouteTablesClient) listAllHandleError(resp *azcore.Response) error
 
 // UpdateTags - Updates a route table tags.
 // If the operation fails it returns the *CloudError error type.
-func (client *RouteTablesClient) UpdateTags(ctx context.Context, resourceGroupName string, routeTableName string, parameters TagsObject, options *RouteTablesUpdateTagsOptions) (RouteTableResponse, error) {
+func (client *RouteTablesClient) UpdateTags(ctx context.Context, resourceGroupName string, routeTableName string, parameters TagsObject, options *RouteTablesUpdateTagsOptions) (RouteTablesUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, routeTableName, parameters, options)
 	if err != nil {
-		return RouteTableResponse{}, err
+		return RouteTablesUpdateTagsResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return RouteTableResponse{}, err
+		return RouteTablesUpdateTagsResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return RouteTableResponse{}, client.updateTagsHandleError(resp)
+		return RouteTablesUpdateTagsResponse{}, client.updateTagsHandleError(resp)
 	}
 	return client.updateTagsHandleResponse(resp)
 }
@@ -475,12 +469,12 @@ func (client *RouteTablesClient) updateTagsCreateRequest(ctx context.Context, re
 }
 
 // updateTagsHandleResponse handles the UpdateTags response.
-func (client *RouteTablesClient) updateTagsHandleResponse(resp *azcore.Response) (RouteTableResponse, error) {
-	var val *RouteTable
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return RouteTableResponse{}, err
+func (client *RouteTablesClient) updateTagsHandleResponse(resp *azcore.Response) (RouteTablesUpdateTagsResponse, error) {
+	result := RouteTablesUpdateTagsResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.RouteTable); err != nil {
+		return RouteTablesUpdateTagsResponse{}, err
 	}
-	return RouteTableResponse{RawResponse: resp.Response, RouteTable: val}, nil
+	return result, nil
 }
 
 // updateTagsHandleError handles the UpdateTags error response.

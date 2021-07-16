@@ -764,7 +764,7 @@ func TestPutArrayValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := resp.StatusCode; s != http.StatusOK {
+	if s := resp.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -776,7 +776,7 @@ func TestPutBooleanTfft(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := resp.StatusCode; s != http.StatusOK {
+	if s := resp.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -792,7 +792,7 @@ func TestPutByteValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := resp.StatusCode; s != http.StatusOK {
+	if s := resp.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -808,7 +808,7 @@ func TestPutComplexValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := resp.StatusCode; s != http.StatusOK {
+	if s := resp.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -823,7 +823,7 @@ func TestPutDateTimeRFC1123Valid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := resp.StatusCode; s != http.StatusOK {
+	if s := resp.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -838,7 +838,7 @@ func TestPutDateTimeValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := resp.StatusCode; s != http.StatusOK {
+	if s := resp.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -852,7 +852,7 @@ func TestPutDateValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := resp.StatusCode; s != http.StatusOK {
+	if s := resp.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -880,7 +880,7 @@ func TestPutDictionaryValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := resp.StatusCode; s != http.StatusOK {
+	if s := resp.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -892,7 +892,7 @@ func TestPutDoubleValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := resp.StatusCode; s != http.StatusOK {
+	if s := resp.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -904,7 +904,7 @@ func TestPutDurationValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := resp.StatusCode; s != http.StatusOK {
+	if s := resp.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -916,7 +916,7 @@ func TestPutEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := resp.StatusCode; s != http.StatusOK {
+	if s := resp.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -929,7 +929,7 @@ func TestPutEnumValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := resp.StatusCode; s != http.StatusOK {
+	if s := resp.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -941,7 +941,7 @@ func TestPutFloatValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := resp.StatusCode; s != http.StatusOK {
+	if s := resp.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -953,7 +953,7 @@ func TestPutIntegerValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := resp.StatusCode; s != http.StatusOK {
+	if s := resp.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -965,7 +965,7 @@ func TestPutLongValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := resp.StatusCode; s != http.StatusOK {
+	if s := resp.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -978,7 +978,7 @@ func TestPutStringEnumValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := resp.StatusCode; s != http.StatusOK {
+	if s := resp.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -990,7 +990,7 @@ func TestPutStringValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := resp.StatusCode; s != http.StatusOK {
+	if s := resp.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -1002,7 +1002,7 @@ func TestPutUUIDValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := resp.StatusCode; s != http.StatusOK {
+	if s := resp.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }

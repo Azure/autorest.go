@@ -13,520 +13,1175 @@ import (
 	"time"
 )
 
-// ActivityRunsQueryResponseResponse is the response envelope for operations that return a ActivityRunsQueryResponse type.
-type ActivityRunsQueryResponseResponse struct {
-	// A list activity runs.
-	ActivityRunsQueryResponse *ActivityRunsQueryResponse
-
+// BigDataPoolsGetResponse contains the response from method BigDataPools.Get.
+type BigDataPoolsGetResponse struct {
+	BigDataPoolsGetResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// AddDataFlowToDebugSessionResponseResponse is the response envelope for operations that return a AddDataFlowToDebugSessionResponse type.
-type AddDataFlowToDebugSessionResponseResponse struct {
-	// Response body structure for starting data flow debug session.
-	AddDataFlowToDebugSessionResponse *AddDataFlowToDebugSessionResponse
+// BigDataPoolsGetResult contains the result from method BigDataPools.Get.
+type BigDataPoolsGetResult struct {
+	BigDataPoolResourceInfo
+}
 
+// BigDataPoolsListResponse contains the response from method BigDataPools.List.
+type BigDataPoolsListResponse struct {
+	BigDataPoolsListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// BigDataPoolResourceInfoListResultResponse is the response envelope for operations that return a BigDataPoolResourceInfoListResult type.
-type BigDataPoolResourceInfoListResultResponse struct {
-	// Collection of Big Data pool information
-	BigDataPoolResourceInfoListResult *BigDataPoolResourceInfoListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+// BigDataPoolsListResult contains the result from method BigDataPools.List.
+type BigDataPoolsListResult struct {
+	BigDataPoolResourceInfoListResult
 }
 
-// BigDataPoolResourceInfoResponse is the response envelope for operations that return a BigDataPoolResourceInfo type.
-type BigDataPoolResourceInfoResponse struct {
-	// A Big Data pool
-	BigDataPoolResourceInfo *BigDataPoolResourceInfo
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// CreateDataFlowDebugSessionResponsePollerResponse is the response envelope for operations that asynchronously return a CreateDataFlowDebugSessionResponse
-// type.
-type CreateDataFlowDebugSessionResponsePollerResponse struct {
+// DataFlowCreateOrUpdateDataFlowPollerResponse contains the response from method DataFlow.CreateOrUpdateDataFlow.
+type DataFlowCreateOrUpdateDataFlowPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (CreateDataFlowDebugSessionResponseResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (DataFlowCreateOrUpdateDataFlowResponse, error)
 
 	// Poller contains an initialized poller.
-	Poller CreateDataFlowDebugSessionResponsePoller
+	Poller DataFlowCreateOrUpdateDataFlowPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// CreateDataFlowDebugSessionResponseResponse is the response envelope for operations that return a CreateDataFlowDebugSessionResponse type.
-type CreateDataFlowDebugSessionResponseResponse struct {
-	// Response body structure for creating data flow debug session.
-	CreateDataFlowDebugSessionResponse *CreateDataFlowDebugSessionResponse
-
+// DataFlowCreateOrUpdateDataFlowResponse contains the response from method DataFlow.CreateOrUpdateDataFlow.
+type DataFlowCreateOrUpdateDataFlowResponse struct {
+	DataFlowCreateOrUpdateDataFlowResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// CreateRunResponseResponse is the response envelope for operations that return a CreateRunResponse type.
-type CreateRunResponseResponse struct {
-	// Response body with a run identifier.
-	CreateRunResponse *CreateRunResponse
+// DataFlowCreateOrUpdateDataFlowResult contains the result from method DataFlow.CreateOrUpdateDataFlow.
+type DataFlowCreateOrUpdateDataFlowResult struct {
+	DataFlowResource
+}
 
+// DataFlowDebugSessionAddDataFlowResponse contains the response from method DataFlowDebugSession.AddDataFlow.
+type DataFlowDebugSessionAddDataFlowResponse struct {
+	DataFlowDebugSessionAddDataFlowResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DataFlowDebugCommandResponsePollerResponse is the response envelope for operations that asynchronously return a DataFlowDebugCommandResponse type.
-type DataFlowDebugCommandResponsePollerResponse struct {
+// DataFlowDebugSessionAddDataFlowResult contains the result from method DataFlowDebugSession.AddDataFlow.
+type DataFlowDebugSessionAddDataFlowResult struct {
+	AddDataFlowToDebugSessionResponse
+}
+
+// DataFlowDebugSessionCreateDataFlowDebugSessionPollerResponse contains the response from method DataFlowDebugSession.CreateDataFlowDebugSession.
+type DataFlowDebugSessionCreateDataFlowDebugSessionPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (DataFlowDebugCommandResponseResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (DataFlowDebugSessionCreateDataFlowDebugSessionResponse, error)
 
 	// Poller contains an initialized poller.
-	Poller DataFlowDebugCommandResponsePoller
+	Poller DataFlowDebugSessionCreateDataFlowDebugSessionPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DataFlowDebugCommandResponseResponse is the response envelope for operations that return a DataFlowDebugCommandResponse type.
-type DataFlowDebugCommandResponseResponse struct {
-	// Response body structure of data flow result for data preview, statistics or expression preview.
-	DataFlowDebugCommandResponse *DataFlowDebugCommandResponse
-
+// DataFlowDebugSessionCreateDataFlowDebugSessionResponse contains the response from method DataFlowDebugSession.CreateDataFlowDebugSession.
+type DataFlowDebugSessionCreateDataFlowDebugSessionResponse struct {
+	DataFlowDebugSessionCreateDataFlowDebugSessionResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DataFlowListResponseResponse is the response envelope for operations that return a DataFlowListResponse type.
-type DataFlowListResponseResponse struct {
-	// A list of data flow resources.
-	DataFlowListResponse *DataFlowListResponse
+// DataFlowDebugSessionCreateDataFlowDebugSessionResult contains the result from method DataFlowDebugSession.CreateDataFlowDebugSession.
+type DataFlowDebugSessionCreateDataFlowDebugSessionResult struct {
+	CreateDataFlowDebugSessionResponse
+}
 
+// DataFlowDebugSessionDeleteDataFlowDebugSessionResponse contains the response from method DataFlowDebugSession.DeleteDataFlowDebugSession.
+type DataFlowDebugSessionDeleteDataFlowDebugSessionResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DataFlowResourcePollerResponse is the response envelope for operations that asynchronously return a DataFlowResource type.
-type DataFlowResourcePollerResponse struct {
+// DataFlowDebugSessionExecuteCommandPollerResponse contains the response from method DataFlowDebugSession.ExecuteCommand.
+type DataFlowDebugSessionExecuteCommandPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (DataFlowResourceResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (DataFlowDebugSessionExecuteCommandResponse, error)
 
 	// Poller contains an initialized poller.
-	Poller DataFlowResourcePoller
+	Poller DataFlowDebugSessionExecuteCommandPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DataFlowResourceResponse is the response envelope for operations that return a DataFlowResource type.
-type DataFlowResourceResponse struct {
-	// Data flow resource type.
-	DataFlowResource *DataFlowResource
-
+// DataFlowDebugSessionExecuteCommandResponse contains the response from method DataFlowDebugSession.ExecuteCommand.
+type DataFlowDebugSessionExecuteCommandResponse struct {
+	DataFlowDebugSessionExecuteCommandResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DatasetListResponseResponse is the response envelope for operations that return a DatasetListResponse type.
-type DatasetListResponseResponse struct {
-	// A list of dataset resources.
-	DatasetListResponse *DatasetListResponse
+// DataFlowDebugSessionExecuteCommandResult contains the result from method DataFlowDebugSession.ExecuteCommand.
+type DataFlowDebugSessionExecuteCommandResult struct {
+	DataFlowDebugCommandResponse
+}
 
+// DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspaceResponse contains the response from method DataFlowDebugSession.QueryDataFlowDebugSessionsByWorkspace.
+type DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspaceResponse struct {
+	DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspaceResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DatasetResourcePollerResponse is the response envelope for operations that asynchronously return a DatasetResource type.
-type DatasetResourcePollerResponse struct {
+// DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspaceResult contains the result from method DataFlowDebugSession.QueryDataFlowDebugSessionsByWorkspace.
+type DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspaceResult struct {
+	QueryDataFlowDebugSessionsResponse
+}
+
+// DataFlowDeleteDataFlowPollerResponse contains the response from method DataFlow.DeleteDataFlow.
+type DataFlowDeleteDataFlowPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (DatasetResourceResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (DataFlowDeleteDataFlowResponse, error)
 
 	// Poller contains an initialized poller.
-	Poller DatasetResourcePoller
+	Poller DataFlowDeleteDataFlowPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DatasetResourceResponse is the response envelope for operations that return a DatasetResource type.
-type DatasetResourceResponse struct {
-	// Dataset resource type.
-	DatasetResource *DatasetResource
-
+// DataFlowDeleteDataFlowResponse contains the response from method DataFlow.DeleteDataFlow.
+type DataFlowDeleteDataFlowResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// GitHubAccessTokenResponseResponse is the response envelope for operations that return a GitHubAccessTokenResponse type.
-type GitHubAccessTokenResponseResponse struct {
-	GitHubAccessTokenResponse *GitHubAccessTokenResponse
-
+// DataFlowGetDataFlowResponse contains the response from method DataFlow.GetDataFlow.
+type DataFlowGetDataFlowResponse struct {
+	DataFlowGetDataFlowResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// HTTPPollerResponse contains the asynchronous HTTP response from the call to the service endpoint.
-type HTTPPollerResponse struct {
+// DataFlowGetDataFlowResult contains the result from method DataFlow.GetDataFlow.
+type DataFlowGetDataFlowResult struct {
+	DataFlowResource
+}
+
+// DataFlowGetDataFlowsByWorkspaceResponse contains the response from method DataFlow.GetDataFlowsByWorkspace.
+type DataFlowGetDataFlowsByWorkspaceResponse struct {
+	DataFlowGetDataFlowsByWorkspaceResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// DataFlowGetDataFlowsByWorkspaceResult contains the result from method DataFlow.GetDataFlowsByWorkspace.
+type DataFlowGetDataFlowsByWorkspaceResult struct {
+	DataFlowListResponse
+}
+
+// DataFlowRenameDataFlowPollerResponse contains the response from method DataFlow.RenameDataFlow.
+type DataFlowRenameDataFlowPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (*http.Response, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (DataFlowRenameDataFlowResponse, error)
 
 	// Poller contains an initialized poller.
-	Poller HTTPPoller
+	Poller DataFlowRenameDataFlowPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// IntegrationRuntimeListResponseResponse is the response envelope for operations that return a IntegrationRuntimeListResponse type.
-type IntegrationRuntimeListResponseResponse struct {
-	// A list of integration runtime resources.
-	IntegrationRuntimeListResponse *IntegrationRuntimeListResponse
-
+// DataFlowRenameDataFlowResponse contains the response from method DataFlow.RenameDataFlow.
+type DataFlowRenameDataFlowResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// IntegrationRuntimeResourceResponse is the response envelope for operations that return a IntegrationRuntimeResource type.
-type IntegrationRuntimeResourceResponse struct {
-	// Integration runtime resource type.
-	IntegrationRuntimeResource *IntegrationRuntimeResource
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// LibraryListResponseResponse is the response envelope for operations that return a LibraryListResponse type.
-type LibraryListResponseResponse struct {
-	// A list of Library resources.
-	LibraryListResponse *LibraryListResponse
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// LibraryResourceInfoPollerResponse is the response envelope for operations that asynchronously return a LibraryResourceInfo type.
-type LibraryResourceInfoPollerResponse struct {
+// DatasetCreateOrUpdateDatasetPollerResponse contains the response from method Dataset.CreateOrUpdateDataset.
+type DatasetCreateOrUpdateDatasetPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (LibraryResourceInfoResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (DatasetCreateOrUpdateDatasetResponse, error)
 
 	// Poller contains an initialized poller.
-	Poller LibraryResourceInfoPoller
+	Poller DatasetCreateOrUpdateDatasetPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// LibraryResourceInfoResponse is the response envelope for operations that return a LibraryResourceInfo type.
-type LibraryResourceInfoResponse struct {
-	// Library resource info
-	LibraryResourceInfo *LibraryResourceInfo
-
+// DatasetCreateOrUpdateDatasetResponse contains the response from method Dataset.CreateOrUpdateDataset.
+type DatasetCreateOrUpdateDatasetResponse struct {
+	DatasetCreateOrUpdateDatasetResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// LibraryResourceResponse is the response envelope for operations that return a LibraryResource type.
-type LibraryResourceResponse struct {
-	// Library response details
-	LibraryResource *LibraryResource
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+// DatasetCreateOrUpdateDatasetResult contains the result from method Dataset.CreateOrUpdateDataset.
+type DatasetCreateOrUpdateDatasetResult struct {
+	DatasetResource
 }
 
-// LinkedServiceListResponseResponse is the response envelope for operations that return a LinkedServiceListResponse type.
-type LinkedServiceListResponseResponse struct {
-	// A list of linked service resources.
-	LinkedServiceListResponse *LinkedServiceListResponse
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// LinkedServiceResourcePollerResponse is the response envelope for operations that asynchronously return a LinkedServiceResource type.
-type LinkedServiceResourcePollerResponse struct {
+// DatasetDeleteDatasetPollerResponse contains the response from method Dataset.DeleteDataset.
+type DatasetDeleteDatasetPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (LinkedServiceResourceResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (DatasetDeleteDatasetResponse, error)
 
 	// Poller contains an initialized poller.
-	Poller LinkedServiceResourcePoller
+	Poller DatasetDeleteDatasetPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// LinkedServiceResourceResponse is the response envelope for operations that return a LinkedServiceResource type.
-type LinkedServiceResourceResponse struct {
-	// Linked service resource type.
-	LinkedServiceResource *LinkedServiceResource
-
+// DatasetDeleteDatasetResponse contains the response from method Dataset.DeleteDataset.
+type DatasetDeleteDatasetResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// NotebookListResponseResponse is the response envelope for operations that return a NotebookListResponse type.
-type NotebookListResponseResponse struct {
-	// A list of Notebook resources.
-	NotebookListResponse *NotebookListResponse
-
+// DatasetGetDatasetResponse contains the response from method Dataset.GetDataset.
+type DatasetGetDatasetResponse struct {
+	DatasetGetDatasetResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// NotebookResourcePollerResponse is the response envelope for operations that asynchronously return a NotebookResource type.
-type NotebookResourcePollerResponse struct {
+// DatasetGetDatasetResult contains the result from method Dataset.GetDataset.
+type DatasetGetDatasetResult struct {
+	DatasetResource
+}
+
+// DatasetGetDatasetsByWorkspaceResponse contains the response from method Dataset.GetDatasetsByWorkspace.
+type DatasetGetDatasetsByWorkspaceResponse struct {
+	DatasetGetDatasetsByWorkspaceResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// DatasetGetDatasetsByWorkspaceResult contains the result from method Dataset.GetDatasetsByWorkspace.
+type DatasetGetDatasetsByWorkspaceResult struct {
+	DatasetListResponse
+}
+
+// DatasetRenameDatasetPollerResponse contains the response from method Dataset.RenameDataset.
+type DatasetRenameDatasetPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (NotebookResourceResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (DatasetRenameDatasetResponse, error)
 
 	// Poller contains an initialized poller.
-	Poller NotebookResourcePoller
+	Poller DatasetRenameDatasetPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// NotebookResourceResponse is the response envelope for operations that return a NotebookResource type.
-type NotebookResourceResponse struct {
-	// Notebook resource type.
-	NotebookResource *NotebookResource
-
+// DatasetRenameDatasetResponse contains the response from method Dataset.RenameDataset.
+type DatasetRenameDatasetResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// OperationResultResponse is the response envelope for operations that return a OperationResult type.
-type OperationResultResponse struct {
-	// Operation status for the operation
-	OperationResult *OperationResult
-
+// IntegrationRuntimesGetResponse contains the response from method IntegrationRuntimes.Get.
+type IntegrationRuntimesGetResponse struct {
+	IntegrationRuntimesGetResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PipelineListResponseResponse is the response envelope for operations that return a PipelineListResponse type.
-type PipelineListResponseResponse struct {
-	// A list of pipeline resources.
-	PipelineListResponse *PipelineListResponse
+// IntegrationRuntimesGetResult contains the result from method IntegrationRuntimes.Get.
+type IntegrationRuntimesGetResult struct {
+	IntegrationRuntimeResource
+}
 
+// IntegrationRuntimesListResponse contains the response from method IntegrationRuntimes.List.
+type IntegrationRuntimesListResponse struct {
+	IntegrationRuntimesListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PipelineResourcePollerResponse is the response envelope for operations that asynchronously return a PipelineResource type.
-type PipelineResourcePollerResponse struct {
+// IntegrationRuntimesListResult contains the result from method IntegrationRuntimes.List.
+type IntegrationRuntimesListResult struct {
+	IntegrationRuntimeListResponse
+}
+
+// LibraryAppendResponse contains the response from method Library.Append.
+type LibraryAppendResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LibraryCreatePollerResponse contains the response from method Library.Create.
+type LibraryCreatePollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (PipelineResourceResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LibraryCreateResponse, error)
 
 	// Poller contains an initialized poller.
-	Poller PipelineResourcePoller
+	Poller LibraryCreatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PipelineResourceResponse is the response envelope for operations that return a PipelineResource type.
-type PipelineResourceResponse struct {
-	// Pipeline resource type.
-	PipelineResource *PipelineResource
-
+// LibraryCreateResponse contains the response from method Library.Create.
+type LibraryCreateResponse struct {
+	LibraryCreateResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PipelineRunResponse is the response envelope for operations that return a PipelineRun type.
-type PipelineRunResponse struct {
-	// Information about a pipeline run.
-	PipelineRun *PipelineRun
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+// LibraryCreateResult contains the result from method Library.Create.
+type LibraryCreateResult struct {
+	LibraryResourceInfo
 }
 
-// PipelineRunsQueryResponseResponse is the response envelope for operations that return a PipelineRunsQueryResponse type.
-type PipelineRunsQueryResponseResponse struct {
-	// A list pipeline runs.
-	PipelineRunsQueryResponse *PipelineRunsQueryResponse
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// QueryDataFlowDebugSessionsResponseResponse is the response envelope for operations that return a QueryDataFlowDebugSessionsResponse type.
-type QueryDataFlowDebugSessionsResponseResponse struct {
-	// A list of active debug sessions.
-	QueryDataFlowDebugSessionsResponse *QueryDataFlowDebugSessionsResponse
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// SQLPoolInfoListResultResponse is the response envelope for operations that return a SQLPoolInfoListResult type.
-type SQLPoolInfoListResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// List of SQL pools
-	SQLPoolInfoListResult *SQLPoolInfoListResult
-}
-
-// SQLPoolResponse is the response envelope for operations that return a SQLPool type.
-type SQLPoolResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// A SQL Analytics pool
-	SQLPool *SQLPool
-}
-
-// SQLScriptResourcePollerResponse is the response envelope for operations that asynchronously return a SQLScriptResource type.
-type SQLScriptResourcePollerResponse struct {
+// LibraryDeletePollerResponse contains the response from method Library.Delete.
+type LibraryDeletePollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (SQLScriptResourceResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LibraryDeleteResponse, error)
 
 	// Poller contains an initialized poller.
-	Poller SQLScriptResourcePoller
+	Poller LibraryDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// SQLScriptResourceResponse is the response envelope for operations that return a SQLScriptResource type.
-type SQLScriptResourceResponse struct {
+// LibraryDeleteResponse contains the response from method Library.Delete.
+type LibraryDeleteResponse struct {
+	LibraryDeleteResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// Sql Script resource type.
-	SQLScriptResource *SQLScriptResource
 }
 
-// SQLScriptsListResponseResponse is the response envelope for operations that return a SQLScriptsListResponse type.
-type SQLScriptsListResponseResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// A list of sql scripts resources.
-	SQLScriptsListResponse *SQLScriptsListResponse
+// LibraryDeleteResult contains the result from method Library.Delete.
+type LibraryDeleteResult struct {
+	LibraryResourceInfo
 }
 
-// SparkBatchJobPollerResponse is the response envelope for operations that asynchronously return a SparkBatchJob type.
-type SparkBatchJobPollerResponse struct {
+// LibraryFlushPollerResponse contains the response from method Library.Flush.
+type LibraryFlushPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (SparkBatchJobResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LibraryFlushResponse, error)
 
 	// Poller contains an initialized poller.
-	Poller SparkBatchJobPoller
+	Poller LibraryFlushPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// SparkBatchJobResponse is the response envelope for operations that return a SparkBatchJob type.
-type SparkBatchJobResponse struct {
+// LibraryFlushResponse contains the response from method Library.Flush.
+type LibraryFlushResponse struct {
+	LibraryFlushResult
 	// RawResponse contains the underlying HTTP response.
-	RawResponse   *http.Response
-	SparkBatchJob *SparkBatchJob
+	RawResponse *http.Response
 }
 
-// SparkJobDefinitionResourcePollerResponse is the response envelope for operations that asynchronously return a SparkJobDefinitionResource type.
-type SparkJobDefinitionResourcePollerResponse struct {
+// LibraryFlushResult contains the result from method Library.Flush.
+type LibraryFlushResult struct {
+	LibraryResourceInfo
+}
+
+// LibraryGetOperationResultResponse contains the response from method Library.GetOperationResult.
+type LibraryGetOperationResultResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+
+	// // Possible types are LibraryResource, OperationResult
+	Value interface{}
+}
+
+// LibraryGetResponse contains the response from method Library.Get.
+type LibraryGetResponse struct {
+	LibraryGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LibraryGetResult contains the result from method Library.Get.
+type LibraryGetResult struct {
+	LibraryResource
+}
+
+// LibraryListResponseEnvelope contains the response from method Library.List.
+type LibraryListResponseEnvelope struct {
+	LibraryListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LibraryListResult contains the result from method Library.List.
+type LibraryListResult struct {
+	LibraryListResponse
+}
+
+// LinkedServiceCreateOrUpdateLinkedServicePollerResponse contains the response from method LinkedService.CreateOrUpdateLinkedService.
+type LinkedServiceCreateOrUpdateLinkedServicePollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (SparkJobDefinitionResourceResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LinkedServiceCreateOrUpdateLinkedServiceResponse, error)
 
 	// Poller contains an initialized poller.
-	Poller SparkJobDefinitionResourcePoller
+	Poller LinkedServiceCreateOrUpdateLinkedServicePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// SparkJobDefinitionResourceResponse is the response envelope for operations that return a SparkJobDefinitionResource type.
-type SparkJobDefinitionResourceResponse struct {
+// LinkedServiceCreateOrUpdateLinkedServiceResponse contains the response from method LinkedService.CreateOrUpdateLinkedService.
+type LinkedServiceCreateOrUpdateLinkedServiceResponse struct {
+	LinkedServiceCreateOrUpdateLinkedServiceResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// Spark job definition resource type.
-	SparkJobDefinitionResource *SparkJobDefinitionResource
 }
 
-// SparkJobDefinitionsListResponseResponse is the response envelope for operations that return a SparkJobDefinitionsListResponse type.
-type SparkJobDefinitionsListResponseResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// A list of spark job definitions resources.
-	SparkJobDefinitionsListResponse *SparkJobDefinitionsListResponse
+// LinkedServiceCreateOrUpdateLinkedServiceResult contains the result from method LinkedService.CreateOrUpdateLinkedService.
+type LinkedServiceCreateOrUpdateLinkedServiceResult struct {
+	LinkedServiceResource
 }
 
-// TriggerListResponseResponse is the response envelope for operations that return a TriggerListResponse type.
-type TriggerListResponseResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// A list of trigger resources.
-	TriggerListResponse *TriggerListResponse
-}
-
-// TriggerResourcePollerResponse is the response envelope for operations that asynchronously return a TriggerResource type.
-type TriggerResourcePollerResponse struct {
+// LinkedServiceDeleteLinkedServicePollerResponse contains the response from method LinkedService.DeleteLinkedService.
+type LinkedServiceDeleteLinkedServicePollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (TriggerResourceResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LinkedServiceDeleteLinkedServiceResponse, error)
 
 	// Poller contains an initialized poller.
-	Poller TriggerResourcePoller
+	Poller LinkedServiceDeleteLinkedServicePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// TriggerResourceResponse is the response envelope for operations that return a TriggerResource type.
-type TriggerResourceResponse struct {
+// LinkedServiceDeleteLinkedServiceResponse contains the response from method LinkedService.DeleteLinkedService.
+type LinkedServiceDeleteLinkedServiceResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// Trigger resource type.
-	TriggerResource *TriggerResource
 }
 
-// TriggerRunsQueryResponseResponse is the response envelope for operations that return a TriggerRunsQueryResponse type.
-type TriggerRunsQueryResponseResponse struct {
+// LinkedServiceGetLinkedServiceResponse contains the response from method LinkedService.GetLinkedService.
+type LinkedServiceGetLinkedServiceResponse struct {
+	LinkedServiceGetLinkedServiceResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// A list of trigger runs.
-	TriggerRunsQueryResponse *TriggerRunsQueryResponse
 }
 
-// TriggerSubscriptionOperationStatusPollerResponse is the response envelope for operations that asynchronously return a TriggerSubscriptionOperationStatus
-// type.
-type TriggerSubscriptionOperationStatusPollerResponse struct {
+// LinkedServiceGetLinkedServiceResult contains the result from method LinkedService.GetLinkedService.
+type LinkedServiceGetLinkedServiceResult struct {
+	LinkedServiceResource
+}
+
+// LinkedServiceGetLinkedServicesByWorkspaceResponse contains the response from method LinkedService.GetLinkedServicesByWorkspace.
+type LinkedServiceGetLinkedServicesByWorkspaceResponse struct {
+	LinkedServiceGetLinkedServicesByWorkspaceResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LinkedServiceGetLinkedServicesByWorkspaceResult contains the result from method LinkedService.GetLinkedServicesByWorkspace.
+type LinkedServiceGetLinkedServicesByWorkspaceResult struct {
+	LinkedServiceListResponse
+}
+
+// LinkedServiceRenameLinkedServicePollerResponse contains the response from method LinkedService.RenameLinkedService.
+type LinkedServiceRenameLinkedServicePollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (TriggerSubscriptionOperationStatusResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LinkedServiceRenameLinkedServiceResponse, error)
 
 	// Poller contains an initialized poller.
-	Poller TriggerSubscriptionOperationStatusPoller
+	Poller LinkedServiceRenameLinkedServicePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// TriggerSubscriptionOperationStatusResponse is the response envelope for operations that return a TriggerSubscriptionOperationStatus type.
-type TriggerSubscriptionOperationStatusResponse struct {
+// LinkedServiceRenameLinkedServiceResponse contains the response from method LinkedService.RenameLinkedService.
+type LinkedServiceRenameLinkedServiceResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// Defines the response of a trigger subscription operation.
-	TriggerSubscriptionOperationStatus *TriggerSubscriptionOperationStatus
 }
 
-// WorkspaceResponse is the response envelope for operations that return a Workspace type.
-type WorkspaceResponse struct {
+// NotebookCreateOrUpdateNotebookPollerResponse contains the response from method Notebook.CreateOrUpdateNotebook.
+type NotebookCreateOrUpdateNotebookPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (NotebookCreateOrUpdateNotebookResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller NotebookCreateOrUpdateNotebookPoller
+
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
 
-	// A workspace
-	Workspace *Workspace
+// NotebookCreateOrUpdateNotebookResponse contains the response from method Notebook.CreateOrUpdateNotebook.
+type NotebookCreateOrUpdateNotebookResponse struct {
+	NotebookCreateOrUpdateNotebookResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NotebookCreateOrUpdateNotebookResult contains the result from method Notebook.CreateOrUpdateNotebook.
+type NotebookCreateOrUpdateNotebookResult struct {
+	NotebookResource
+}
+
+// NotebookDeleteNotebookPollerResponse contains the response from method Notebook.DeleteNotebook.
+type NotebookDeleteNotebookPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (NotebookDeleteNotebookResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller NotebookDeleteNotebookPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NotebookDeleteNotebookResponse contains the response from method Notebook.DeleteNotebook.
+type NotebookDeleteNotebookResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NotebookGetNotebookResponse contains the response from method Notebook.GetNotebook.
+type NotebookGetNotebookResponse struct {
+	NotebookGetNotebookResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NotebookGetNotebookResult contains the result from method Notebook.GetNotebook.
+type NotebookGetNotebookResult struct {
+	NotebookResource
+}
+
+// NotebookGetNotebookSummaryByWorkSpaceResponse contains the response from method Notebook.GetNotebookSummaryByWorkSpace.
+type NotebookGetNotebookSummaryByWorkSpaceResponse struct {
+	NotebookGetNotebookSummaryByWorkSpaceResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NotebookGetNotebookSummaryByWorkSpaceResult contains the result from method Notebook.GetNotebookSummaryByWorkSpace.
+type NotebookGetNotebookSummaryByWorkSpaceResult struct {
+	NotebookListResponse
+}
+
+// NotebookGetNotebooksByWorkspaceResponse contains the response from method Notebook.GetNotebooksByWorkspace.
+type NotebookGetNotebooksByWorkspaceResponse struct {
+	NotebookGetNotebooksByWorkspaceResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NotebookGetNotebooksByWorkspaceResult contains the result from method Notebook.GetNotebooksByWorkspace.
+type NotebookGetNotebooksByWorkspaceResult struct {
+	NotebookListResponse
+}
+
+// NotebookRenameNotebookPollerResponse contains the response from method Notebook.RenameNotebook.
+type NotebookRenameNotebookPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (NotebookRenameNotebookResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller NotebookRenameNotebookPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NotebookRenameNotebookResponse contains the response from method Notebook.RenameNotebook.
+type NotebookRenameNotebookResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PipelineCreateOrUpdatePipelinePollerResponse contains the response from method Pipeline.CreateOrUpdatePipeline.
+type PipelineCreateOrUpdatePipelinePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (PipelineCreateOrUpdatePipelineResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller PipelineCreateOrUpdatePipelinePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PipelineCreateOrUpdatePipelineResponse contains the response from method Pipeline.CreateOrUpdatePipeline.
+type PipelineCreateOrUpdatePipelineResponse struct {
+	PipelineCreateOrUpdatePipelineResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PipelineCreateOrUpdatePipelineResult contains the result from method Pipeline.CreateOrUpdatePipeline.
+type PipelineCreateOrUpdatePipelineResult struct {
+	PipelineResource
+}
+
+// PipelineCreatePipelineRunResponse contains the response from method Pipeline.CreatePipelineRun.
+type PipelineCreatePipelineRunResponse struct {
+	PipelineCreatePipelineRunResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PipelineCreatePipelineRunResult contains the result from method Pipeline.CreatePipelineRun.
+type PipelineCreatePipelineRunResult struct {
+	CreateRunResponse
+}
+
+// PipelineDeletePipelinePollerResponse contains the response from method Pipeline.DeletePipeline.
+type PipelineDeletePipelinePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (PipelineDeletePipelineResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller PipelineDeletePipelinePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PipelineDeletePipelineResponse contains the response from method Pipeline.DeletePipeline.
+type PipelineDeletePipelineResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PipelineGetPipelineResponse contains the response from method Pipeline.GetPipeline.
+type PipelineGetPipelineResponse struct {
+	PipelineGetPipelineResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PipelineGetPipelineResult contains the result from method Pipeline.GetPipeline.
+type PipelineGetPipelineResult struct {
+	PipelineResource
+}
+
+// PipelineGetPipelinesByWorkspaceResponse contains the response from method Pipeline.GetPipelinesByWorkspace.
+type PipelineGetPipelinesByWorkspaceResponse struct {
+	PipelineGetPipelinesByWorkspaceResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PipelineGetPipelinesByWorkspaceResult contains the result from method Pipeline.GetPipelinesByWorkspace.
+type PipelineGetPipelinesByWorkspaceResult struct {
+	PipelineListResponse
+}
+
+// PipelineRenamePipelinePollerResponse contains the response from method Pipeline.RenamePipeline.
+type PipelineRenamePipelinePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (PipelineRenamePipelineResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller PipelineRenamePipelinePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PipelineRenamePipelineResponse contains the response from method Pipeline.RenamePipeline.
+type PipelineRenamePipelineResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PipelineRunCancelPipelineRunResponse contains the response from method PipelineRun.CancelPipelineRun.
+type PipelineRunCancelPipelineRunResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PipelineRunGetPipelineRunResponse contains the response from method PipelineRun.GetPipelineRun.
+type PipelineRunGetPipelineRunResponse struct {
+	PipelineRunGetPipelineRunResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PipelineRunGetPipelineRunResult contains the result from method PipelineRun.GetPipelineRun.
+type PipelineRunGetPipelineRunResult struct {
+	PipelineRun
+}
+
+// PipelineRunQueryActivityRunsResponse contains the response from method PipelineRun.QueryActivityRuns.
+type PipelineRunQueryActivityRunsResponse struct {
+	PipelineRunQueryActivityRunsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PipelineRunQueryActivityRunsResult contains the result from method PipelineRun.QueryActivityRuns.
+type PipelineRunQueryActivityRunsResult struct {
+	ActivityRunsQueryResponse
+}
+
+// PipelineRunQueryPipelineRunsByWorkspaceResponse contains the response from method PipelineRun.QueryPipelineRunsByWorkspace.
+type PipelineRunQueryPipelineRunsByWorkspaceResponse struct {
+	PipelineRunQueryPipelineRunsByWorkspaceResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PipelineRunQueryPipelineRunsByWorkspaceResult contains the result from method PipelineRun.QueryPipelineRunsByWorkspace.
+type PipelineRunQueryPipelineRunsByWorkspaceResult struct {
+	PipelineRunsQueryResponse
+}
+
+// SQLPoolsGetResponse contains the response from method SQLPools.Get.
+type SQLPoolsGetResponse struct {
+	SQLPoolsGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// SQLPoolsGetResult contains the result from method SQLPools.Get.
+type SQLPoolsGetResult struct {
+	SQLPool
+}
+
+// SQLPoolsListResponse contains the response from method SQLPools.List.
+type SQLPoolsListResponse struct {
+	SQLPoolsListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// SQLPoolsListResult contains the result from method SQLPools.List.
+type SQLPoolsListResult struct {
+	SQLPoolInfoListResult
+}
+
+// SQLScriptCreateOrUpdateSQLScriptPollerResponse contains the response from method SQLScript.CreateOrUpdateSQLScript.
+type SQLScriptCreateOrUpdateSQLScriptPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (SQLScriptCreateOrUpdateSQLScriptResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller SQLScriptCreateOrUpdateSQLScriptPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// SQLScriptCreateOrUpdateSQLScriptResponse contains the response from method SQLScript.CreateOrUpdateSQLScript.
+type SQLScriptCreateOrUpdateSQLScriptResponse struct {
+	SQLScriptCreateOrUpdateSQLScriptResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// SQLScriptCreateOrUpdateSQLScriptResult contains the result from method SQLScript.CreateOrUpdateSQLScript.
+type SQLScriptCreateOrUpdateSQLScriptResult struct {
+	SQLScriptResource
+}
+
+// SQLScriptDeleteSQLScriptPollerResponse contains the response from method SQLScript.DeleteSQLScript.
+type SQLScriptDeleteSQLScriptPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (SQLScriptDeleteSQLScriptResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller SQLScriptDeleteSQLScriptPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// SQLScriptDeleteSQLScriptResponse contains the response from method SQLScript.DeleteSQLScript.
+type SQLScriptDeleteSQLScriptResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// SQLScriptGetSQLScriptResponse contains the response from method SQLScript.GetSQLScript.
+type SQLScriptGetSQLScriptResponse struct {
+	SQLScriptGetSQLScriptResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// SQLScriptGetSQLScriptResult contains the result from method SQLScript.GetSQLScript.
+type SQLScriptGetSQLScriptResult struct {
+	SQLScriptResource
+}
+
+// SQLScriptGetSQLScriptsByWorkspaceResponse contains the response from method SQLScript.GetSQLScriptsByWorkspace.
+type SQLScriptGetSQLScriptsByWorkspaceResponse struct {
+	SQLScriptGetSQLScriptsByWorkspaceResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// SQLScriptGetSQLScriptsByWorkspaceResult contains the result from method SQLScript.GetSQLScriptsByWorkspace.
+type SQLScriptGetSQLScriptsByWorkspaceResult struct {
+	SQLScriptsListResponse
+}
+
+// SQLScriptRenameSQLScriptPollerResponse contains the response from method SQLScript.RenameSQLScript.
+type SQLScriptRenameSQLScriptPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (SQLScriptRenameSQLScriptResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller SQLScriptRenameSQLScriptPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// SQLScriptRenameSQLScriptResponse contains the response from method SQLScript.RenameSQLScript.
+type SQLScriptRenameSQLScriptResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// SparkJobDefinitionCreateOrUpdateSparkJobDefinitionPollerResponse contains the response from method SparkJobDefinition.CreateOrUpdateSparkJobDefinition.
+type SparkJobDefinitionCreateOrUpdateSparkJobDefinitionPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (SparkJobDefinitionCreateOrUpdateSparkJobDefinitionResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller SparkJobDefinitionCreateOrUpdateSparkJobDefinitionPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// SparkJobDefinitionCreateOrUpdateSparkJobDefinitionResponse contains the response from method SparkJobDefinition.CreateOrUpdateSparkJobDefinition.
+type SparkJobDefinitionCreateOrUpdateSparkJobDefinitionResponse struct {
+	SparkJobDefinitionCreateOrUpdateSparkJobDefinitionResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// SparkJobDefinitionCreateOrUpdateSparkJobDefinitionResult contains the result from method SparkJobDefinition.CreateOrUpdateSparkJobDefinition.
+type SparkJobDefinitionCreateOrUpdateSparkJobDefinitionResult struct {
+	SparkJobDefinitionResource
+}
+
+// SparkJobDefinitionDebugSparkJobDefinitionPollerResponse contains the response from method SparkJobDefinition.DebugSparkJobDefinition.
+type SparkJobDefinitionDebugSparkJobDefinitionPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (SparkJobDefinitionDebugSparkJobDefinitionResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller SparkJobDefinitionDebugSparkJobDefinitionPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// SparkJobDefinitionDebugSparkJobDefinitionResponse contains the response from method SparkJobDefinition.DebugSparkJobDefinition.
+type SparkJobDefinitionDebugSparkJobDefinitionResponse struct {
+	SparkJobDefinitionDebugSparkJobDefinitionResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// SparkJobDefinitionDebugSparkJobDefinitionResult contains the result from method SparkJobDefinition.DebugSparkJobDefinition.
+type SparkJobDefinitionDebugSparkJobDefinitionResult struct {
+	SparkBatchJob
+}
+
+// SparkJobDefinitionDeleteSparkJobDefinitionPollerResponse contains the response from method SparkJobDefinition.DeleteSparkJobDefinition.
+type SparkJobDefinitionDeleteSparkJobDefinitionPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (SparkJobDefinitionDeleteSparkJobDefinitionResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller SparkJobDefinitionDeleteSparkJobDefinitionPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// SparkJobDefinitionDeleteSparkJobDefinitionResponse contains the response from method SparkJobDefinition.DeleteSparkJobDefinition.
+type SparkJobDefinitionDeleteSparkJobDefinitionResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// SparkJobDefinitionExecuteSparkJobDefinitionPollerResponse contains the response from method SparkJobDefinition.ExecuteSparkJobDefinition.
+type SparkJobDefinitionExecuteSparkJobDefinitionPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (SparkJobDefinitionExecuteSparkJobDefinitionResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller SparkJobDefinitionExecuteSparkJobDefinitionPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// SparkJobDefinitionExecuteSparkJobDefinitionResponse contains the response from method SparkJobDefinition.ExecuteSparkJobDefinition.
+type SparkJobDefinitionExecuteSparkJobDefinitionResponse struct {
+	SparkJobDefinitionExecuteSparkJobDefinitionResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// SparkJobDefinitionExecuteSparkJobDefinitionResult contains the result from method SparkJobDefinition.ExecuteSparkJobDefinition.
+type SparkJobDefinitionExecuteSparkJobDefinitionResult struct {
+	SparkBatchJob
+}
+
+// SparkJobDefinitionGetSparkJobDefinitionResponse contains the response from method SparkJobDefinition.GetSparkJobDefinition.
+type SparkJobDefinitionGetSparkJobDefinitionResponse struct {
+	SparkJobDefinitionGetSparkJobDefinitionResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// SparkJobDefinitionGetSparkJobDefinitionResult contains the result from method SparkJobDefinition.GetSparkJobDefinition.
+type SparkJobDefinitionGetSparkJobDefinitionResult struct {
+	SparkJobDefinitionResource
+}
+
+// SparkJobDefinitionGetSparkJobDefinitionsByWorkspaceResponse contains the response from method SparkJobDefinition.GetSparkJobDefinitionsByWorkspace.
+type SparkJobDefinitionGetSparkJobDefinitionsByWorkspaceResponse struct {
+	SparkJobDefinitionGetSparkJobDefinitionsByWorkspaceResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// SparkJobDefinitionGetSparkJobDefinitionsByWorkspaceResult contains the result from method SparkJobDefinition.GetSparkJobDefinitionsByWorkspace.
+type SparkJobDefinitionGetSparkJobDefinitionsByWorkspaceResult struct {
+	SparkJobDefinitionsListResponse
+}
+
+// SparkJobDefinitionRenameSparkJobDefinitionPollerResponse contains the response from method SparkJobDefinition.RenameSparkJobDefinition.
+type SparkJobDefinitionRenameSparkJobDefinitionPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (SparkJobDefinitionRenameSparkJobDefinitionResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller SparkJobDefinitionRenameSparkJobDefinitionPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// SparkJobDefinitionRenameSparkJobDefinitionResponse contains the response from method SparkJobDefinition.RenameSparkJobDefinition.
+type SparkJobDefinitionRenameSparkJobDefinitionResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// TriggerCreateOrUpdateTriggerPollerResponse contains the response from method Trigger.CreateOrUpdateTrigger.
+type TriggerCreateOrUpdateTriggerPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (TriggerCreateOrUpdateTriggerResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller TriggerCreateOrUpdateTriggerPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// TriggerCreateOrUpdateTriggerResponse contains the response from method Trigger.CreateOrUpdateTrigger.
+type TriggerCreateOrUpdateTriggerResponse struct {
+	TriggerCreateOrUpdateTriggerResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// TriggerCreateOrUpdateTriggerResult contains the result from method Trigger.CreateOrUpdateTrigger.
+type TriggerCreateOrUpdateTriggerResult struct {
+	TriggerResource
+}
+
+// TriggerDeleteTriggerPollerResponse contains the response from method Trigger.DeleteTrigger.
+type TriggerDeleteTriggerPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (TriggerDeleteTriggerResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller TriggerDeleteTriggerPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// TriggerDeleteTriggerResponse contains the response from method Trigger.DeleteTrigger.
+type TriggerDeleteTriggerResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// TriggerGetEventSubscriptionStatusResponse contains the response from method Trigger.GetEventSubscriptionStatus.
+type TriggerGetEventSubscriptionStatusResponse struct {
+	TriggerGetEventSubscriptionStatusResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// TriggerGetEventSubscriptionStatusResult contains the result from method Trigger.GetEventSubscriptionStatus.
+type TriggerGetEventSubscriptionStatusResult struct {
+	TriggerSubscriptionOperationStatus
+}
+
+// TriggerGetTriggerResponse contains the response from method Trigger.GetTrigger.
+type TriggerGetTriggerResponse struct {
+	TriggerGetTriggerResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// TriggerGetTriggerResult contains the result from method Trigger.GetTrigger.
+type TriggerGetTriggerResult struct {
+	TriggerResource
+}
+
+// TriggerGetTriggersByWorkspaceResponse contains the response from method Trigger.GetTriggersByWorkspace.
+type TriggerGetTriggersByWorkspaceResponse struct {
+	TriggerGetTriggersByWorkspaceResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// TriggerGetTriggersByWorkspaceResult contains the result from method Trigger.GetTriggersByWorkspace.
+type TriggerGetTriggersByWorkspaceResult struct {
+	TriggerListResponse
+}
+
+// TriggerRunCancelTriggerInstanceResponse contains the response from method TriggerRun.CancelTriggerInstance.
+type TriggerRunCancelTriggerInstanceResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// TriggerRunQueryTriggerRunsByWorkspaceResponse contains the response from method TriggerRun.QueryTriggerRunsByWorkspace.
+type TriggerRunQueryTriggerRunsByWorkspaceResponse struct {
+	TriggerRunQueryTriggerRunsByWorkspaceResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// TriggerRunQueryTriggerRunsByWorkspaceResult contains the result from method TriggerRun.QueryTriggerRunsByWorkspace.
+type TriggerRunQueryTriggerRunsByWorkspaceResult struct {
+	TriggerRunsQueryResponse
+}
+
+// TriggerRunRerunTriggerInstanceResponse contains the response from method TriggerRun.RerunTriggerInstance.
+type TriggerRunRerunTriggerInstanceResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// TriggerStartTriggerPollerResponse contains the response from method Trigger.StartTrigger.
+type TriggerStartTriggerPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (TriggerStartTriggerResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller TriggerStartTriggerPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// TriggerStartTriggerResponse contains the response from method Trigger.StartTrigger.
+type TriggerStartTriggerResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// TriggerStopTriggerPollerResponse contains the response from method Trigger.StopTrigger.
+type TriggerStopTriggerPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (TriggerStopTriggerResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller TriggerStopTriggerPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// TriggerStopTriggerResponse contains the response from method Trigger.StopTrigger.
+type TriggerStopTriggerResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// TriggerSubscribeTriggerToEventsPollerResponse contains the response from method Trigger.SubscribeTriggerToEvents.
+type TriggerSubscribeTriggerToEventsPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (TriggerSubscribeTriggerToEventsResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller TriggerSubscribeTriggerToEventsPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// TriggerSubscribeTriggerToEventsResponse contains the response from method Trigger.SubscribeTriggerToEvents.
+type TriggerSubscribeTriggerToEventsResponse struct {
+	TriggerSubscribeTriggerToEventsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// TriggerSubscribeTriggerToEventsResult contains the result from method Trigger.SubscribeTriggerToEvents.
+type TriggerSubscribeTriggerToEventsResult struct {
+	TriggerSubscriptionOperationStatus
+}
+
+// TriggerUnsubscribeTriggerFromEventsPollerResponse contains the response from method Trigger.UnsubscribeTriggerFromEvents.
+type TriggerUnsubscribeTriggerFromEventsPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (TriggerUnsubscribeTriggerFromEventsResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller TriggerUnsubscribeTriggerFromEventsPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// TriggerUnsubscribeTriggerFromEventsResponse contains the response from method Trigger.UnsubscribeTriggerFromEvents.
+type TriggerUnsubscribeTriggerFromEventsResponse struct {
+	TriggerUnsubscribeTriggerFromEventsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// TriggerUnsubscribeTriggerFromEventsResult contains the result from method Trigger.UnsubscribeTriggerFromEvents.
+type TriggerUnsubscribeTriggerFromEventsResult struct {
+	TriggerSubscriptionOperationStatus
+}
+
+// WorkspaceGetResponse contains the response from method Workspace.Get.
+type WorkspaceGetResponse struct {
+	WorkspaceGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// WorkspaceGetResult contains the result from method Workspace.Get.
+type WorkspaceGetResult struct {
+	Workspace
+}
+
+// WorkspaceGitRepoManagementGetGitHubAccessTokenResponse contains the response from method WorkspaceGitRepoManagement.GetGitHubAccessToken.
+type WorkspaceGitRepoManagementGetGitHubAccessTokenResponse struct {
+	WorkspaceGitRepoManagementGetGitHubAccessTokenResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// WorkspaceGitRepoManagementGetGitHubAccessTokenResult contains the result from method WorkspaceGitRepoManagement.GetGitHubAccessToken.
+type WorkspaceGitRepoManagementGetGitHubAccessTokenResult struct {
+	GitHubAccessTokenResponse
 }

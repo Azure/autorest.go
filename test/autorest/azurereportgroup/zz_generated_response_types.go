@@ -9,11 +9,15 @@ package azurereportgroup
 
 import "net/http"
 
-// MapOfInt32Response is the response envelope for operations that return a map[string]*int32 type.
-type MapOfInt32Response struct {
+// AutoRestReportServiceForAzureGetReportResponse contains the response from method AutoRestReportServiceForAzure.GetReport.
+type AutoRestReportServiceForAzureGetReportResponse struct {
+	AutoRestReportServiceForAzureGetReportResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
 
+// AutoRestReportServiceForAzureGetReportResult contains the result from method AutoRestReportServiceForAzure.GetReport.
+type AutoRestReportServiceForAzureGetReportResult struct {
 	// Dictionary of <integer>
 	Value map[string]*int32
 }

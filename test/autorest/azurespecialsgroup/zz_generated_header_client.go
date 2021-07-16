@@ -88,9 +88,6 @@ func (client *HeaderClient) CustomNamedRequestIDHead(ctx context.Context, fooCli
 	if err != nil {
 		return HeaderCustomNamedRequestIDHeadResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusNotFound) {
-		return HeaderCustomNamedRequestIDHeadResponse{}, client.customNamedRequestIDHeadHandleError(resp)
-	}
 	return client.customNamedRequestIDHeadHandleResponse(resp)
 }
 
@@ -110,26 +107,13 @@ func (client *HeaderClient) customNamedRequestIDHeadCreateRequest(ctx context.Co
 // customNamedRequestIDHeadHandleResponse handles the CustomNamedRequestIDHead response.
 func (client *HeaderClient) customNamedRequestIDHeadHandleResponse(resp *azcore.Response) (HeaderCustomNamedRequestIDHeadResponse, error) {
 	result := HeaderCustomNamedRequestIDHeadResponse{RawResponse: resp.Response}
-	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
-		result.Success = true
-	}
 	if val := resp.Header.Get("foo-request-id"); val != "" {
 		result.FooRequestID = &val
 	}
+	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
+		result.Success = true
+	}
 	return result, nil
-}
-
-// customNamedRequestIDHeadHandleError handles the CustomNamedRequestIDHead error response.
-func (client *HeaderClient) customNamedRequestIDHeadHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
-	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
-	}
-	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
-	}
-	return azcore.NewResponseError(&errType, resp.Response)
 }
 
 // CustomNamedRequestIDParamGrouping - Send foo-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 in the header of the request, via a parameter group

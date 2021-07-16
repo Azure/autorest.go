@@ -13,427 +13,1190 @@ import (
 	"time"
 )
 
-// BackupCertificateResultResponse is the response envelope for operations that return a BackupCertificateResult type.
-type BackupCertificateResultResponse struct {
-	// The backup certificate result, containing the backup blob.
-	BackupCertificateResult *BackupCertificateResult
-
+// HSMSecurityDomainDownloadPendingResponse contains the response from method HSMSecurityDomain.DownloadPending.
+type HSMSecurityDomainDownloadPendingResponse struct {
+	HSMSecurityDomainDownloadPendingResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// BackupKeyResultResponse is the response envelope for operations that return a BackupKeyResult type.
-type BackupKeyResultResponse struct {
-	// The backup key result, containing the backup blob.
-	BackupKeyResult *BackupKeyResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+// HSMSecurityDomainDownloadPendingResult contains the result from method HSMSecurityDomain.DownloadPending.
+type HSMSecurityDomainDownloadPendingResult struct {
+	SecurityDomainOperationStatus
 }
 
-// BackupSecretResultResponse is the response envelope for operations that return a BackupSecretResult type.
-type BackupSecretResultResponse struct {
-	// The backup secret result, containing the backup blob.
-	BackupSecretResult *BackupSecretResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// BackupStorageResultResponse is the response envelope for operations that return a BackupStorageResult type.
-type BackupStorageResultResponse struct {
-	// The backup storage result, containing the backup blob.
-	BackupStorageResult *BackupStorageResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// CertificateBundleResponse is the response envelope for operations that return a CertificateBundle type.
-type CertificateBundleResponse struct {
-	// A certificate bundle consists of a certificate (X509) plus its attributes.
-	CertificateBundle *CertificateBundle
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// CertificateIssuerListResultResponse is the response envelope for operations that return a CertificateIssuerListResult type.
-type CertificateIssuerListResultResponse struct {
-	// The certificate issuer list result.
-	CertificateIssuerListResult *CertificateIssuerListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// CertificateListResultResponse is the response envelope for operations that return a CertificateListResult type.
-type CertificateListResultResponse struct {
-	// The certificate list result.
-	CertificateListResult *CertificateListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// CertificateOperationResponse is the response envelope for operations that return a CertificateOperation type.
-type CertificateOperationResponse struct {
-	// A certificate operation is returned in case of asynchronous requests.
-	CertificateOperation *CertificateOperation
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// CertificatePolicyResponse is the response envelope for operations that return a CertificatePolicy type.
-type CertificatePolicyResponse struct {
-	// Management policy for a certificate.
-	CertificatePolicy *CertificatePolicy
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ContactsResponse is the response envelope for operations that return a Contacts type.
-type ContactsResponse struct {
-	// The contacts for the vault certificates.
-	Contacts *Contacts
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// DeletedCertificateBundleResponse is the response envelope for operations that return a DeletedCertificateBundle type.
-type DeletedCertificateBundleResponse struct {
-	// A Deleted Certificate consisting of its previous id, attributes and its tags, as well as information on when it will be purged.
-	DeletedCertificateBundle *DeletedCertificateBundle
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// DeletedCertificateListResultResponse is the response envelope for operations that return a DeletedCertificateListResult type.
-type DeletedCertificateListResultResponse struct {
-	// A list of certificates that have been deleted in this vault.
-	DeletedCertificateListResult *DeletedCertificateListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// DeletedKeyBundleResponse is the response envelope for operations that return a DeletedKeyBundle type.
-type DeletedKeyBundleResponse struct {
-	// A DeletedKeyBundle consisting of a WebKey plus its Attributes and deletion info
-	DeletedKeyBundle *DeletedKeyBundle
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// DeletedKeyListResultResponse is the response envelope for operations that return a DeletedKeyListResult type.
-type DeletedKeyListResultResponse struct {
-	// A list of keys that have been deleted in this vault.
-	DeletedKeyListResult *DeletedKeyListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// DeletedSasDefinitionBundleResponse is the response envelope for operations that return a DeletedSasDefinitionBundle type.
-type DeletedSasDefinitionBundleResponse struct {
-	// A deleted SAS definition bundle consisting of its previous id, attributes and its tags, as well as information on when it will be purged.
-	DeletedSasDefinitionBundle *DeletedSasDefinitionBundle
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// DeletedSasDefinitionListResultResponse is the response envelope for operations that return a DeletedSasDefinitionListResult type.
-type DeletedSasDefinitionListResultResponse struct {
-	// The deleted SAS definition list result
-	DeletedSasDefinitionListResult *DeletedSasDefinitionListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// DeletedSecretBundleResponse is the response envelope for operations that return a DeletedSecretBundle type.
-type DeletedSecretBundleResponse struct {
-	// A Deleted Secret consisting of its previous id, attributes and its tags, as well as information on when it will be purged.
-	DeletedSecretBundle *DeletedSecretBundle
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// DeletedSecretListResultResponse is the response envelope for operations that return a DeletedSecretListResult type.
-type DeletedSecretListResultResponse struct {
-	// The deleted secret list result
-	DeletedSecretListResult *DeletedSecretListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// DeletedStorageBundleResponse is the response envelope for operations that return a DeletedStorageBundle type.
-type DeletedStorageBundleResponse struct {
-	// A deleted storage account bundle consisting of its previous id, attributes and its tags, as well as information on when it will be purged.
-	DeletedStorageBundle *DeletedStorageBundle
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// DeletedStorageListResultResponse is the response envelope for operations that return a DeletedStorageListResult type.
-type DeletedStorageListResultResponse struct {
-	// The deleted storage account list result
-	DeletedStorageListResult *DeletedStorageListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// FullBackupOperationPollerResponse is the response envelope for operations that asynchronously return a FullBackupOperation type.
-type FullBackupOperationPollerResponse struct {
+// HSMSecurityDomainDownloadPollerResponse contains the response from method HSMSecurityDomain.Download.
+type HSMSecurityDomainDownloadPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (FullBackupOperationResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (HSMSecurityDomainDownloadResponse, error)
 
 	// Poller contains an initialized poller.
-	Poller FullBackupOperationPoller
+	Poller HSMSecurityDomainDownloadPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// FullBackupOperationResponse is the response envelope for operations that return a FullBackupOperation type.
-type FullBackupOperationResponse struct {
-	// Full backup operation
-	FullBackupOperation *FullBackupOperation
-
+// HSMSecurityDomainDownloadResponse contains the response from method HSMSecurityDomain.Download.
+type HSMSecurityDomainDownloadResponse struct {
+	HSMSecurityDomainDownloadResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// IssuerBundleResponse is the response envelope for operations that return a IssuerBundle type.
-type IssuerBundleResponse struct {
-	// The issuer for Key Vault certificate.
-	IssuerBundle *IssuerBundle
+// HSMSecurityDomainDownloadResult contains the result from method HSMSecurityDomain.Download.
+type HSMSecurityDomainDownloadResult struct {
+	SecurityDomainObject
+}
 
+// HSMSecurityDomainTransferKeyResponse contains the response from method HSMSecurityDomain.TransferKey.
+type HSMSecurityDomainTransferKeyResponse struct {
+	HSMSecurityDomainTransferKeyResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// KeyBundleResponse is the response envelope for operations that return a KeyBundle type.
-type KeyBundleResponse struct {
-	// A KeyBundle consisting of a WebKey plus its attributes.
-	KeyBundle *KeyBundle
+// HSMSecurityDomainTransferKeyResult contains the result from method HSMSecurityDomain.TransferKey.
+type HSMSecurityDomainTransferKeyResult struct {
+	TransferKey
+}
 
+// HSMSecurityDomainUploadPendingResponse contains the response from method HSMSecurityDomain.UploadPending.
+type HSMSecurityDomainUploadPendingResponse struct {
+	HSMSecurityDomainUploadPendingResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// KeyListResultResponse is the response envelope for operations that return a KeyListResult type.
-type KeyListResultResponse struct {
-	// The key list result.
-	KeyListResult *KeyListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+// HSMSecurityDomainUploadPendingResult contains the result from method HSMSecurityDomain.UploadPending.
+type HSMSecurityDomainUploadPendingResult struct {
+	SecurityDomainOperationStatus
 }
 
-// KeyOperationResultResponse is the response envelope for operations that return a KeyOperationResult type.
-type KeyOperationResultResponse struct {
-	// The key operation result.
-	KeyOperationResult *KeyOperationResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// KeyVerifyResultResponse is the response envelope for operations that return a KeyVerifyResult type.
-type KeyVerifyResultResponse struct {
-	// The key verify result.
-	KeyVerifyResult *KeyVerifyResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// RestoreOperationPollerResponse is the response envelope for operations that asynchronously return a RestoreOperation type.
-type RestoreOperationPollerResponse struct {
+// HSMSecurityDomainUploadPollerResponse contains the response from method HSMSecurityDomain.Upload.
+type HSMSecurityDomainUploadPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (RestoreOperationResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (HSMSecurityDomainUploadResponse, error)
 
 	// Poller contains an initialized poller.
-	Poller RestoreOperationPoller
+	Poller HSMSecurityDomainUploadPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// RestoreOperationResponse is the response envelope for operations that return a RestoreOperation type.
-type RestoreOperationResponse struct {
+// HSMSecurityDomainUploadResponse contains the response from method HSMSecurityDomain.Upload.
+type HSMSecurityDomainUploadResponse struct {
+	HSMSecurityDomainUploadResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// Restore operation
-	RestoreOperation *RestoreOperation
 }
 
-// RoleAssignmentListResultResponse is the response envelope for operations that return a RoleAssignmentListResult type.
-type RoleAssignmentListResultResponse struct {
+// HSMSecurityDomainUploadResult contains the result from method HSMSecurityDomain.Upload.
+type HSMSecurityDomainUploadResult struct {
+	SecurityDomainOperationStatus
+}
+
+// KeyVaultClientBackupCertificateResponse contains the response from method KeyVaultClient.BackupCertificate.
+type KeyVaultClientBackupCertificateResponse struct {
+	KeyVaultClientBackupCertificateResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// Role assignment list operation result.
-	RoleAssignmentListResult *RoleAssignmentListResult
 }
 
-// RoleAssignmentResponse is the response envelope for operations that return a RoleAssignment type.
-type RoleAssignmentResponse struct {
+// KeyVaultClientBackupCertificateResult contains the result from method KeyVaultClient.BackupCertificate.
+type KeyVaultClientBackupCertificateResult struct {
+	BackupCertificateResult
+}
+
+// KeyVaultClientBackupKeyResponse contains the response from method KeyVaultClient.BackupKey.
+type KeyVaultClientBackupKeyResponse struct {
+	KeyVaultClientBackupKeyResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// Role Assignments
-	RoleAssignment *RoleAssignment
 }
 
-// RoleDefinitionListResultResponse is the response envelope for operations that return a RoleDefinitionListResult type.
-type RoleDefinitionListResultResponse struct {
+// KeyVaultClientBackupKeyResult contains the result from method KeyVaultClient.BackupKey.
+type KeyVaultClientBackupKeyResult struct {
+	BackupKeyResult
+}
+
+// KeyVaultClientBackupSecretResponse contains the response from method KeyVaultClient.BackupSecret.
+type KeyVaultClientBackupSecretResponse struct {
+	KeyVaultClientBackupSecretResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// Role definition list operation result.
-	RoleDefinitionListResult *RoleDefinitionListResult
 }
 
-// RoleDefinitionResponse is the response envelope for operations that return a RoleDefinition type.
-type RoleDefinitionResponse struct {
+// KeyVaultClientBackupSecretResult contains the result from method KeyVaultClient.BackupSecret.
+type KeyVaultClientBackupSecretResult struct {
+	BackupSecretResult
+}
+
+// KeyVaultClientBackupStorageAccountResponse contains the response from method KeyVaultClient.BackupStorageAccount.
+type KeyVaultClientBackupStorageAccountResponse struct {
+	KeyVaultClientBackupStorageAccountResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// Role definition.
-	RoleDefinition *RoleDefinition
 }
 
-// SasDefinitionBundleResponse is the response envelope for operations that return a SasDefinitionBundle type.
-type SasDefinitionBundleResponse struct {
+// KeyVaultClientBackupStorageAccountResult contains the result from method KeyVaultClient.BackupStorageAccount.
+type KeyVaultClientBackupStorageAccountResult struct {
+	BackupStorageResult
+}
+
+// KeyVaultClientCreateCertificateResponse contains the response from method KeyVaultClient.CreateCertificate.
+type KeyVaultClientCreateCertificateResponse struct {
+	KeyVaultClientCreateCertificateResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// A SAS definition bundle consists of key vault SAS definition details plus its attributes.
-	SasDefinitionBundle *SasDefinitionBundle
 }
 
-// SasDefinitionListResultResponse is the response envelope for operations that return a SasDefinitionListResult type.
-type SasDefinitionListResultResponse struct {
+// KeyVaultClientCreateCertificateResult contains the result from method KeyVaultClient.CreateCertificate.
+type KeyVaultClientCreateCertificateResult struct {
+	CertificateOperation
+}
+
+// KeyVaultClientCreateKeyResponse contains the response from method KeyVaultClient.CreateKey.
+type KeyVaultClientCreateKeyResponse struct {
+	KeyVaultClientCreateKeyResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// The storage account SAS definition list result.
-	SasDefinitionListResult *SasDefinitionListResult
 }
 
-// SecretBundleResponse is the response envelope for operations that return a SecretBundle type.
-type SecretBundleResponse struct {
+// KeyVaultClientCreateKeyResult contains the result from method KeyVaultClient.CreateKey.
+type KeyVaultClientCreateKeyResult struct {
+	KeyBundle
+}
+
+// KeyVaultClientDecryptResponse contains the response from method KeyVaultClient.Decrypt.
+type KeyVaultClientDecryptResponse struct {
+	KeyVaultClientDecryptResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// A secret consisting of a value, id and its attributes.
-	SecretBundle *SecretBundle
 }
 
-// SecretListResultResponse is the response envelope for operations that return a SecretListResult type.
-type SecretListResultResponse struct {
+// KeyVaultClientDecryptResult contains the result from method KeyVaultClient.Decrypt.
+type KeyVaultClientDecryptResult struct {
+	KeyOperationResult
+}
+
+// KeyVaultClientDeleteCertificateContactsResponse contains the response from method KeyVaultClient.DeleteCertificateContacts.
+type KeyVaultClientDeleteCertificateContactsResponse struct {
+	KeyVaultClientDeleteCertificateContactsResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// The secret list result.
-	SecretListResult *SecretListResult
 }
 
-// SecurityDomainObjectPollerResponse is the response envelope for operations that asynchronously return a SecurityDomainObject type.
-type SecurityDomainObjectPollerResponse struct {
+// KeyVaultClientDeleteCertificateContactsResult contains the result from method KeyVaultClient.DeleteCertificateContacts.
+type KeyVaultClientDeleteCertificateContactsResult struct {
+	Contacts
+}
+
+// KeyVaultClientDeleteCertificateIssuerResponse contains the response from method KeyVaultClient.DeleteCertificateIssuer.
+type KeyVaultClientDeleteCertificateIssuerResponse struct {
+	KeyVaultClientDeleteCertificateIssuerResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientDeleteCertificateIssuerResult contains the result from method KeyVaultClient.DeleteCertificateIssuer.
+type KeyVaultClientDeleteCertificateIssuerResult struct {
+	IssuerBundle
+}
+
+// KeyVaultClientDeleteCertificateOperationResponse contains the response from method KeyVaultClient.DeleteCertificateOperation.
+type KeyVaultClientDeleteCertificateOperationResponse struct {
+	KeyVaultClientDeleteCertificateOperationResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientDeleteCertificateOperationResult contains the result from method KeyVaultClient.DeleteCertificateOperation.
+type KeyVaultClientDeleteCertificateOperationResult struct {
+	CertificateOperation
+}
+
+// KeyVaultClientDeleteCertificateResponse contains the response from method KeyVaultClient.DeleteCertificate.
+type KeyVaultClientDeleteCertificateResponse struct {
+	KeyVaultClientDeleteCertificateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientDeleteCertificateResult contains the result from method KeyVaultClient.DeleteCertificate.
+type KeyVaultClientDeleteCertificateResult struct {
+	DeletedCertificateBundle
+}
+
+// KeyVaultClientDeleteKeyResponse contains the response from method KeyVaultClient.DeleteKey.
+type KeyVaultClientDeleteKeyResponse struct {
+	KeyVaultClientDeleteKeyResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientDeleteKeyResult contains the result from method KeyVaultClient.DeleteKey.
+type KeyVaultClientDeleteKeyResult struct {
+	DeletedKeyBundle
+}
+
+// KeyVaultClientDeleteSasDefinitionResponse contains the response from method KeyVaultClient.DeleteSasDefinition.
+type KeyVaultClientDeleteSasDefinitionResponse struct {
+	KeyVaultClientDeleteSasDefinitionResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientDeleteSasDefinitionResult contains the result from method KeyVaultClient.DeleteSasDefinition.
+type KeyVaultClientDeleteSasDefinitionResult struct {
+	DeletedSasDefinitionBundle
+}
+
+// KeyVaultClientDeleteSecretResponse contains the response from method KeyVaultClient.DeleteSecret.
+type KeyVaultClientDeleteSecretResponse struct {
+	KeyVaultClientDeleteSecretResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientDeleteSecretResult contains the result from method KeyVaultClient.DeleteSecret.
+type KeyVaultClientDeleteSecretResult struct {
+	DeletedSecretBundle
+}
+
+// KeyVaultClientDeleteStorageAccountResponse contains the response from method KeyVaultClient.DeleteStorageAccount.
+type KeyVaultClientDeleteStorageAccountResponse struct {
+	KeyVaultClientDeleteStorageAccountResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientDeleteStorageAccountResult contains the result from method KeyVaultClient.DeleteStorageAccount.
+type KeyVaultClientDeleteStorageAccountResult struct {
+	DeletedStorageBundle
+}
+
+// KeyVaultClientEncryptResponse contains the response from method KeyVaultClient.Encrypt.
+type KeyVaultClientEncryptResponse struct {
+	KeyVaultClientEncryptResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientEncryptResult contains the result from method KeyVaultClient.Encrypt.
+type KeyVaultClientEncryptResult struct {
+	KeyOperationResult
+}
+
+// KeyVaultClientFullBackupPollerResponse contains the response from method KeyVaultClient.FullBackup.
+type KeyVaultClientFullBackupPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (SecurityDomainObjectResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (KeyVaultClientFullBackupResponse, error)
 
 	// Poller contains an initialized poller.
-	Poller SecurityDomainObjectPoller
+	Poller KeyVaultClientFullBackupPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// SecurityDomainObjectResponse is the response envelope for operations that return a SecurityDomainObject type.
-type SecurityDomainObjectResponse struct {
+// KeyVaultClientFullBackupResponse contains the response from method KeyVaultClient.FullBackup.
+type KeyVaultClientFullBackupResponse struct {
+	KeyVaultClientFullBackupResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// The Security Domain.
-	SecurityDomainObject *SecurityDomainObject
 }
 
-// SecurityDomainOperationStatusPollerResponse is the response envelope for operations that asynchronously return a SecurityDomainOperationStatus type.
-type SecurityDomainOperationStatusPollerResponse struct {
+// KeyVaultClientFullBackupResult contains the result from method KeyVaultClient.FullBackup.
+type KeyVaultClientFullBackupResult struct {
+	FullBackupOperation
+}
+
+// KeyVaultClientFullBackupStatusResponse contains the response from method KeyVaultClient.FullBackupStatus.
+type KeyVaultClientFullBackupStatusResponse struct {
+	KeyVaultClientFullBackupStatusResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientFullBackupStatusResult contains the result from method KeyVaultClient.FullBackupStatus.
+type KeyVaultClientFullBackupStatusResult struct {
+	FullBackupOperation
+}
+
+// KeyVaultClientFullRestoreOperationPollerResponse contains the response from method KeyVaultClient.FullRestoreOperation.
+type KeyVaultClientFullRestoreOperationPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (SecurityDomainOperationStatusResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (KeyVaultClientFullRestoreOperationResponse, error)
 
 	// Poller contains an initialized poller.
-	Poller SecurityDomainOperationStatusPoller
+	Poller KeyVaultClientFullRestoreOperationPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// SecurityDomainOperationStatusResponse is the response envelope for operations that return a SecurityDomainOperationStatus type.
-type SecurityDomainOperationStatusResponse struct {
+// KeyVaultClientFullRestoreOperationResponse contains the response from method KeyVaultClient.FullRestoreOperation.
+type KeyVaultClientFullRestoreOperationResponse struct {
+	KeyVaultClientFullRestoreOperationResult
 	// RawResponse contains the underlying HTTP response.
-	RawResponse                   *http.Response
-	SecurityDomainOperationStatus *SecurityDomainOperationStatus
+	RawResponse *http.Response
 }
 
-// SelectiveKeyRestoreOperationPollerResponse is the response envelope for operations that asynchronously return a SelectiveKeyRestoreOperation type.
-type SelectiveKeyRestoreOperationPollerResponse struct {
+// KeyVaultClientFullRestoreOperationResult contains the result from method KeyVaultClient.FullRestoreOperation.
+type KeyVaultClientFullRestoreOperationResult struct {
+	RestoreOperation
+}
+
+// KeyVaultClientGetCertificateContactsResponse contains the response from method KeyVaultClient.GetCertificateContacts.
+type KeyVaultClientGetCertificateContactsResponse struct {
+	KeyVaultClientGetCertificateContactsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientGetCertificateContactsResult contains the result from method KeyVaultClient.GetCertificateContacts.
+type KeyVaultClientGetCertificateContactsResult struct {
+	Contacts
+}
+
+// KeyVaultClientGetCertificateIssuerResponse contains the response from method KeyVaultClient.GetCertificateIssuer.
+type KeyVaultClientGetCertificateIssuerResponse struct {
+	KeyVaultClientGetCertificateIssuerResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientGetCertificateIssuerResult contains the result from method KeyVaultClient.GetCertificateIssuer.
+type KeyVaultClientGetCertificateIssuerResult struct {
+	IssuerBundle
+}
+
+// KeyVaultClientGetCertificateIssuersResponse contains the response from method KeyVaultClient.GetCertificateIssuers.
+type KeyVaultClientGetCertificateIssuersResponse struct {
+	KeyVaultClientGetCertificateIssuersResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientGetCertificateIssuersResult contains the result from method KeyVaultClient.GetCertificateIssuers.
+type KeyVaultClientGetCertificateIssuersResult struct {
+	CertificateIssuerListResult
+}
+
+// KeyVaultClientGetCertificateOperationResponse contains the response from method KeyVaultClient.GetCertificateOperation.
+type KeyVaultClientGetCertificateOperationResponse struct {
+	KeyVaultClientGetCertificateOperationResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientGetCertificateOperationResult contains the result from method KeyVaultClient.GetCertificateOperation.
+type KeyVaultClientGetCertificateOperationResult struct {
+	CertificateOperation
+}
+
+// KeyVaultClientGetCertificatePolicyResponse contains the response from method KeyVaultClient.GetCertificatePolicy.
+type KeyVaultClientGetCertificatePolicyResponse struct {
+	KeyVaultClientGetCertificatePolicyResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientGetCertificatePolicyResult contains the result from method KeyVaultClient.GetCertificatePolicy.
+type KeyVaultClientGetCertificatePolicyResult struct {
+	CertificatePolicy
+}
+
+// KeyVaultClientGetCertificateResponse contains the response from method KeyVaultClient.GetCertificate.
+type KeyVaultClientGetCertificateResponse struct {
+	KeyVaultClientGetCertificateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientGetCertificateResult contains the result from method KeyVaultClient.GetCertificate.
+type KeyVaultClientGetCertificateResult struct {
+	CertificateBundle
+}
+
+// KeyVaultClientGetCertificateVersionsResponse contains the response from method KeyVaultClient.GetCertificateVersions.
+type KeyVaultClientGetCertificateVersionsResponse struct {
+	KeyVaultClientGetCertificateVersionsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientGetCertificateVersionsResult contains the result from method KeyVaultClient.GetCertificateVersions.
+type KeyVaultClientGetCertificateVersionsResult struct {
+	CertificateListResult
+}
+
+// KeyVaultClientGetCertificatesResponse contains the response from method KeyVaultClient.GetCertificates.
+type KeyVaultClientGetCertificatesResponse struct {
+	KeyVaultClientGetCertificatesResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientGetCertificatesResult contains the result from method KeyVaultClient.GetCertificates.
+type KeyVaultClientGetCertificatesResult struct {
+	CertificateListResult
+}
+
+// KeyVaultClientGetDeletedCertificateResponse contains the response from method KeyVaultClient.GetDeletedCertificate.
+type KeyVaultClientGetDeletedCertificateResponse struct {
+	KeyVaultClientGetDeletedCertificateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientGetDeletedCertificateResult contains the result from method KeyVaultClient.GetDeletedCertificate.
+type KeyVaultClientGetDeletedCertificateResult struct {
+	DeletedCertificateBundle
+}
+
+// KeyVaultClientGetDeletedCertificatesResponse contains the response from method KeyVaultClient.GetDeletedCertificates.
+type KeyVaultClientGetDeletedCertificatesResponse struct {
+	KeyVaultClientGetDeletedCertificatesResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientGetDeletedCertificatesResult contains the result from method KeyVaultClient.GetDeletedCertificates.
+type KeyVaultClientGetDeletedCertificatesResult struct {
+	DeletedCertificateListResult
+}
+
+// KeyVaultClientGetDeletedKeyResponse contains the response from method KeyVaultClient.GetDeletedKey.
+type KeyVaultClientGetDeletedKeyResponse struct {
+	KeyVaultClientGetDeletedKeyResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientGetDeletedKeyResult contains the result from method KeyVaultClient.GetDeletedKey.
+type KeyVaultClientGetDeletedKeyResult struct {
+	DeletedKeyBundle
+}
+
+// KeyVaultClientGetDeletedKeysResponse contains the response from method KeyVaultClient.GetDeletedKeys.
+type KeyVaultClientGetDeletedKeysResponse struct {
+	KeyVaultClientGetDeletedKeysResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientGetDeletedKeysResult contains the result from method KeyVaultClient.GetDeletedKeys.
+type KeyVaultClientGetDeletedKeysResult struct {
+	DeletedKeyListResult
+}
+
+// KeyVaultClientGetDeletedSasDefinitionResponse contains the response from method KeyVaultClient.GetDeletedSasDefinition.
+type KeyVaultClientGetDeletedSasDefinitionResponse struct {
+	KeyVaultClientGetDeletedSasDefinitionResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientGetDeletedSasDefinitionResult contains the result from method KeyVaultClient.GetDeletedSasDefinition.
+type KeyVaultClientGetDeletedSasDefinitionResult struct {
+	DeletedSasDefinitionBundle
+}
+
+// KeyVaultClientGetDeletedSasDefinitionsResponse contains the response from method KeyVaultClient.GetDeletedSasDefinitions.
+type KeyVaultClientGetDeletedSasDefinitionsResponse struct {
+	KeyVaultClientGetDeletedSasDefinitionsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientGetDeletedSasDefinitionsResult contains the result from method KeyVaultClient.GetDeletedSasDefinitions.
+type KeyVaultClientGetDeletedSasDefinitionsResult struct {
+	DeletedSasDefinitionListResult
+}
+
+// KeyVaultClientGetDeletedSecretResponse contains the response from method KeyVaultClient.GetDeletedSecret.
+type KeyVaultClientGetDeletedSecretResponse struct {
+	KeyVaultClientGetDeletedSecretResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientGetDeletedSecretResult contains the result from method KeyVaultClient.GetDeletedSecret.
+type KeyVaultClientGetDeletedSecretResult struct {
+	DeletedSecretBundle
+}
+
+// KeyVaultClientGetDeletedSecretsResponse contains the response from method KeyVaultClient.GetDeletedSecrets.
+type KeyVaultClientGetDeletedSecretsResponse struct {
+	KeyVaultClientGetDeletedSecretsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientGetDeletedSecretsResult contains the result from method KeyVaultClient.GetDeletedSecrets.
+type KeyVaultClientGetDeletedSecretsResult struct {
+	DeletedSecretListResult
+}
+
+// KeyVaultClientGetDeletedStorageAccountResponse contains the response from method KeyVaultClient.GetDeletedStorageAccount.
+type KeyVaultClientGetDeletedStorageAccountResponse struct {
+	KeyVaultClientGetDeletedStorageAccountResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientGetDeletedStorageAccountResult contains the result from method KeyVaultClient.GetDeletedStorageAccount.
+type KeyVaultClientGetDeletedStorageAccountResult struct {
+	DeletedStorageBundle
+}
+
+// KeyVaultClientGetDeletedStorageAccountsResponse contains the response from method KeyVaultClient.GetDeletedStorageAccounts.
+type KeyVaultClientGetDeletedStorageAccountsResponse struct {
+	KeyVaultClientGetDeletedStorageAccountsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientGetDeletedStorageAccountsResult contains the result from method KeyVaultClient.GetDeletedStorageAccounts.
+type KeyVaultClientGetDeletedStorageAccountsResult struct {
+	DeletedStorageListResult
+}
+
+// KeyVaultClientGetKeyResponse contains the response from method KeyVaultClient.GetKey.
+type KeyVaultClientGetKeyResponse struct {
+	KeyVaultClientGetKeyResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientGetKeyResult contains the result from method KeyVaultClient.GetKey.
+type KeyVaultClientGetKeyResult struct {
+	KeyBundle
+}
+
+// KeyVaultClientGetKeyVersionsResponse contains the response from method KeyVaultClient.GetKeyVersions.
+type KeyVaultClientGetKeyVersionsResponse struct {
+	KeyVaultClientGetKeyVersionsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientGetKeyVersionsResult contains the result from method KeyVaultClient.GetKeyVersions.
+type KeyVaultClientGetKeyVersionsResult struct {
+	KeyListResult
+}
+
+// KeyVaultClientGetKeysResponse contains the response from method KeyVaultClient.GetKeys.
+type KeyVaultClientGetKeysResponse struct {
+	KeyVaultClientGetKeysResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientGetKeysResult contains the result from method KeyVaultClient.GetKeys.
+type KeyVaultClientGetKeysResult struct {
+	KeyListResult
+}
+
+// KeyVaultClientGetSasDefinitionResponse contains the response from method KeyVaultClient.GetSasDefinition.
+type KeyVaultClientGetSasDefinitionResponse struct {
+	KeyVaultClientGetSasDefinitionResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientGetSasDefinitionResult contains the result from method KeyVaultClient.GetSasDefinition.
+type KeyVaultClientGetSasDefinitionResult struct {
+	SasDefinitionBundle
+}
+
+// KeyVaultClientGetSasDefinitionsResponse contains the response from method KeyVaultClient.GetSasDefinitions.
+type KeyVaultClientGetSasDefinitionsResponse struct {
+	KeyVaultClientGetSasDefinitionsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientGetSasDefinitionsResult contains the result from method KeyVaultClient.GetSasDefinitions.
+type KeyVaultClientGetSasDefinitionsResult struct {
+	SasDefinitionListResult
+}
+
+// KeyVaultClientGetSecretResponse contains the response from method KeyVaultClient.GetSecret.
+type KeyVaultClientGetSecretResponse struct {
+	KeyVaultClientGetSecretResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientGetSecretResult contains the result from method KeyVaultClient.GetSecret.
+type KeyVaultClientGetSecretResult struct {
+	SecretBundle
+}
+
+// KeyVaultClientGetSecretVersionsResponse contains the response from method KeyVaultClient.GetSecretVersions.
+type KeyVaultClientGetSecretVersionsResponse struct {
+	KeyVaultClientGetSecretVersionsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientGetSecretVersionsResult contains the result from method KeyVaultClient.GetSecretVersions.
+type KeyVaultClientGetSecretVersionsResult struct {
+	SecretListResult
+}
+
+// KeyVaultClientGetSecretsResponse contains the response from method KeyVaultClient.GetSecrets.
+type KeyVaultClientGetSecretsResponse struct {
+	KeyVaultClientGetSecretsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientGetSecretsResult contains the result from method KeyVaultClient.GetSecrets.
+type KeyVaultClientGetSecretsResult struct {
+	SecretListResult
+}
+
+// KeyVaultClientGetStorageAccountResponse contains the response from method KeyVaultClient.GetStorageAccount.
+type KeyVaultClientGetStorageAccountResponse struct {
+	KeyVaultClientGetStorageAccountResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientGetStorageAccountResult contains the result from method KeyVaultClient.GetStorageAccount.
+type KeyVaultClientGetStorageAccountResult struct {
+	StorageBundle
+}
+
+// KeyVaultClientGetStorageAccountsResponse contains the response from method KeyVaultClient.GetStorageAccounts.
+type KeyVaultClientGetStorageAccountsResponse struct {
+	KeyVaultClientGetStorageAccountsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientGetStorageAccountsResult contains the result from method KeyVaultClient.GetStorageAccounts.
+type KeyVaultClientGetStorageAccountsResult struct {
+	StorageListResult
+}
+
+// KeyVaultClientImportCertificateResponse contains the response from method KeyVaultClient.ImportCertificate.
+type KeyVaultClientImportCertificateResponse struct {
+	KeyVaultClientImportCertificateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientImportCertificateResult contains the result from method KeyVaultClient.ImportCertificate.
+type KeyVaultClientImportCertificateResult struct {
+	CertificateBundle
+}
+
+// KeyVaultClientImportKeyResponse contains the response from method KeyVaultClient.ImportKey.
+type KeyVaultClientImportKeyResponse struct {
+	KeyVaultClientImportKeyResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientImportKeyResult contains the result from method KeyVaultClient.ImportKey.
+type KeyVaultClientImportKeyResult struct {
+	KeyBundle
+}
+
+// KeyVaultClientMergeCertificateResponse contains the response from method KeyVaultClient.MergeCertificate.
+type KeyVaultClientMergeCertificateResponse struct {
+	KeyVaultClientMergeCertificateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientMergeCertificateResult contains the result from method KeyVaultClient.MergeCertificate.
+type KeyVaultClientMergeCertificateResult struct {
+	CertificateBundle
+}
+
+// KeyVaultClientPurgeDeletedCertificateResponse contains the response from method KeyVaultClient.PurgeDeletedCertificate.
+type KeyVaultClientPurgeDeletedCertificateResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientPurgeDeletedKeyResponse contains the response from method KeyVaultClient.PurgeDeletedKey.
+type KeyVaultClientPurgeDeletedKeyResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientPurgeDeletedSecretResponse contains the response from method KeyVaultClient.PurgeDeletedSecret.
+type KeyVaultClientPurgeDeletedSecretResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientPurgeDeletedStorageAccountResponse contains the response from method KeyVaultClient.PurgeDeletedStorageAccount.
+type KeyVaultClientPurgeDeletedStorageAccountResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientRecoverDeletedCertificateResponse contains the response from method KeyVaultClient.RecoverDeletedCertificate.
+type KeyVaultClientRecoverDeletedCertificateResponse struct {
+	KeyVaultClientRecoverDeletedCertificateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientRecoverDeletedCertificateResult contains the result from method KeyVaultClient.RecoverDeletedCertificate.
+type KeyVaultClientRecoverDeletedCertificateResult struct {
+	CertificateBundle
+}
+
+// KeyVaultClientRecoverDeletedKeyResponse contains the response from method KeyVaultClient.RecoverDeletedKey.
+type KeyVaultClientRecoverDeletedKeyResponse struct {
+	KeyVaultClientRecoverDeletedKeyResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientRecoverDeletedKeyResult contains the result from method KeyVaultClient.RecoverDeletedKey.
+type KeyVaultClientRecoverDeletedKeyResult struct {
+	KeyBundle
+}
+
+// KeyVaultClientRecoverDeletedSasDefinitionResponse contains the response from method KeyVaultClient.RecoverDeletedSasDefinition.
+type KeyVaultClientRecoverDeletedSasDefinitionResponse struct {
+	KeyVaultClientRecoverDeletedSasDefinitionResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientRecoverDeletedSasDefinitionResult contains the result from method KeyVaultClient.RecoverDeletedSasDefinition.
+type KeyVaultClientRecoverDeletedSasDefinitionResult struct {
+	SasDefinitionBundle
+}
+
+// KeyVaultClientRecoverDeletedSecretResponse contains the response from method KeyVaultClient.RecoverDeletedSecret.
+type KeyVaultClientRecoverDeletedSecretResponse struct {
+	KeyVaultClientRecoverDeletedSecretResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientRecoverDeletedSecretResult contains the result from method KeyVaultClient.RecoverDeletedSecret.
+type KeyVaultClientRecoverDeletedSecretResult struct {
+	SecretBundle
+}
+
+// KeyVaultClientRecoverDeletedStorageAccountResponse contains the response from method KeyVaultClient.RecoverDeletedStorageAccount.
+type KeyVaultClientRecoverDeletedStorageAccountResponse struct {
+	KeyVaultClientRecoverDeletedStorageAccountResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientRecoverDeletedStorageAccountResult contains the result from method KeyVaultClient.RecoverDeletedStorageAccount.
+type KeyVaultClientRecoverDeletedStorageAccountResult struct {
+	StorageBundle
+}
+
+// KeyVaultClientRegenerateStorageAccountKeyResponse contains the response from method KeyVaultClient.RegenerateStorageAccountKey.
+type KeyVaultClientRegenerateStorageAccountKeyResponse struct {
+	KeyVaultClientRegenerateStorageAccountKeyResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientRegenerateStorageAccountKeyResult contains the result from method KeyVaultClient.RegenerateStorageAccountKey.
+type KeyVaultClientRegenerateStorageAccountKeyResult struct {
+	StorageBundle
+}
+
+// KeyVaultClientRestoreCertificateResponse contains the response from method KeyVaultClient.RestoreCertificate.
+type KeyVaultClientRestoreCertificateResponse struct {
+	KeyVaultClientRestoreCertificateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientRestoreCertificateResult contains the result from method KeyVaultClient.RestoreCertificate.
+type KeyVaultClientRestoreCertificateResult struct {
+	CertificateBundle
+}
+
+// KeyVaultClientRestoreKeyResponse contains the response from method KeyVaultClient.RestoreKey.
+type KeyVaultClientRestoreKeyResponse struct {
+	KeyVaultClientRestoreKeyResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientRestoreKeyResult contains the result from method KeyVaultClient.RestoreKey.
+type KeyVaultClientRestoreKeyResult struct {
+	KeyBundle
+}
+
+// KeyVaultClientRestoreSecretResponse contains the response from method KeyVaultClient.RestoreSecret.
+type KeyVaultClientRestoreSecretResponse struct {
+	KeyVaultClientRestoreSecretResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientRestoreSecretResult contains the result from method KeyVaultClient.RestoreSecret.
+type KeyVaultClientRestoreSecretResult struct {
+	SecretBundle
+}
+
+// KeyVaultClientRestoreStatusResponse contains the response from method KeyVaultClient.RestoreStatus.
+type KeyVaultClientRestoreStatusResponse struct {
+	KeyVaultClientRestoreStatusResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientRestoreStatusResult contains the result from method KeyVaultClient.RestoreStatus.
+type KeyVaultClientRestoreStatusResult struct {
+	RestoreOperation
+}
+
+// KeyVaultClientRestoreStorageAccountResponse contains the response from method KeyVaultClient.RestoreStorageAccount.
+type KeyVaultClientRestoreStorageAccountResponse struct {
+	KeyVaultClientRestoreStorageAccountResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientRestoreStorageAccountResult contains the result from method KeyVaultClient.RestoreStorageAccount.
+type KeyVaultClientRestoreStorageAccountResult struct {
+	StorageBundle
+}
+
+// KeyVaultClientSelectiveKeyRestoreOperationPollerResponse contains the response from method KeyVaultClient.SelectiveKeyRestoreOperation.
+type KeyVaultClientSelectiveKeyRestoreOperationPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (SelectiveKeyRestoreOperationResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (KeyVaultClientSelectiveKeyRestoreOperationResponse, error)
 
 	// Poller contains an initialized poller.
-	Poller SelectiveKeyRestoreOperationPoller
+	Poller KeyVaultClientSelectiveKeyRestoreOperationPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// SelectiveKeyRestoreOperationResponse is the response envelope for operations that return a SelectiveKeyRestoreOperation type.
-type SelectiveKeyRestoreOperationResponse struct {
+// KeyVaultClientSelectiveKeyRestoreOperationResponse contains the response from method KeyVaultClient.SelectiveKeyRestoreOperation.
+type KeyVaultClientSelectiveKeyRestoreOperationResponse struct {
+	KeyVaultClientSelectiveKeyRestoreOperationResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// Selective Key Restore operation
-	SelectiveKeyRestoreOperation *SelectiveKeyRestoreOperation
 }
 
-// StorageBundleResponse is the response envelope for operations that return a StorageBundle type.
-type StorageBundleResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// A Storage account bundle consists of key vault storage account details plus its attributes.
-	StorageBundle *StorageBundle
+// KeyVaultClientSelectiveKeyRestoreOperationResult contains the result from method KeyVaultClient.SelectiveKeyRestoreOperation.
+type KeyVaultClientSelectiveKeyRestoreOperationResult struct {
+	SelectiveKeyRestoreOperation
 }
 
-// StorageListResultResponse is the response envelope for operations that return a StorageListResult type.
-type StorageListResultResponse struct {
+// KeyVaultClientSetCertificateContactsResponse contains the response from method KeyVaultClient.SetCertificateContacts.
+type KeyVaultClientSetCertificateContactsResponse struct {
+	KeyVaultClientSetCertificateContactsResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// The storage accounts list result.
-	StorageListResult *StorageListResult
 }
 
-// TransferKeyResponse is the response envelope for operations that return a TransferKey type.
-type TransferKeyResponse struct {
+// KeyVaultClientSetCertificateContactsResult contains the result from method KeyVaultClient.SetCertificateContacts.
+type KeyVaultClientSetCertificateContactsResult struct {
+	Contacts
+}
+
+// KeyVaultClientSetCertificateIssuerResponse contains the response from method KeyVaultClient.SetCertificateIssuer.
+type KeyVaultClientSetCertificateIssuerResponse struct {
+	KeyVaultClientSetCertificateIssuerResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-	TransferKey *TransferKey
+}
+
+// KeyVaultClientSetCertificateIssuerResult contains the result from method KeyVaultClient.SetCertificateIssuer.
+type KeyVaultClientSetCertificateIssuerResult struct {
+	IssuerBundle
+}
+
+// KeyVaultClientSetSasDefinitionResponse contains the response from method KeyVaultClient.SetSasDefinition.
+type KeyVaultClientSetSasDefinitionResponse struct {
+	KeyVaultClientSetSasDefinitionResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientSetSasDefinitionResult contains the result from method KeyVaultClient.SetSasDefinition.
+type KeyVaultClientSetSasDefinitionResult struct {
+	SasDefinitionBundle
+}
+
+// KeyVaultClientSetSecretResponse contains the response from method KeyVaultClient.SetSecret.
+type KeyVaultClientSetSecretResponse struct {
+	KeyVaultClientSetSecretResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientSetSecretResult contains the result from method KeyVaultClient.SetSecret.
+type KeyVaultClientSetSecretResult struct {
+	SecretBundle
+}
+
+// KeyVaultClientSetStorageAccountResponse contains the response from method KeyVaultClient.SetStorageAccount.
+type KeyVaultClientSetStorageAccountResponse struct {
+	KeyVaultClientSetStorageAccountResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientSetStorageAccountResult contains the result from method KeyVaultClient.SetStorageAccount.
+type KeyVaultClientSetStorageAccountResult struct {
+	StorageBundle
+}
+
+// KeyVaultClientSignResponse contains the response from method KeyVaultClient.Sign.
+type KeyVaultClientSignResponse struct {
+	KeyVaultClientSignResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientSignResult contains the result from method KeyVaultClient.Sign.
+type KeyVaultClientSignResult struct {
+	KeyOperationResult
+}
+
+// KeyVaultClientUnwrapKeyResponse contains the response from method KeyVaultClient.UnwrapKey.
+type KeyVaultClientUnwrapKeyResponse struct {
+	KeyVaultClientUnwrapKeyResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientUnwrapKeyResult contains the result from method KeyVaultClient.UnwrapKey.
+type KeyVaultClientUnwrapKeyResult struct {
+	KeyOperationResult
+}
+
+// KeyVaultClientUpdateCertificateIssuerResponse contains the response from method KeyVaultClient.UpdateCertificateIssuer.
+type KeyVaultClientUpdateCertificateIssuerResponse struct {
+	KeyVaultClientUpdateCertificateIssuerResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientUpdateCertificateIssuerResult contains the result from method KeyVaultClient.UpdateCertificateIssuer.
+type KeyVaultClientUpdateCertificateIssuerResult struct {
+	IssuerBundle
+}
+
+// KeyVaultClientUpdateCertificateOperationResponse contains the response from method KeyVaultClient.UpdateCertificateOperation.
+type KeyVaultClientUpdateCertificateOperationResponse struct {
+	KeyVaultClientUpdateCertificateOperationResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientUpdateCertificateOperationResult contains the result from method KeyVaultClient.UpdateCertificateOperation.
+type KeyVaultClientUpdateCertificateOperationResult struct {
+	CertificateOperation
+}
+
+// KeyVaultClientUpdateCertificatePolicyResponse contains the response from method KeyVaultClient.UpdateCertificatePolicy.
+type KeyVaultClientUpdateCertificatePolicyResponse struct {
+	KeyVaultClientUpdateCertificatePolicyResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientUpdateCertificatePolicyResult contains the result from method KeyVaultClient.UpdateCertificatePolicy.
+type KeyVaultClientUpdateCertificatePolicyResult struct {
+	CertificatePolicy
+}
+
+// KeyVaultClientUpdateCertificateResponse contains the response from method KeyVaultClient.UpdateCertificate.
+type KeyVaultClientUpdateCertificateResponse struct {
+	KeyVaultClientUpdateCertificateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientUpdateCertificateResult contains the result from method KeyVaultClient.UpdateCertificate.
+type KeyVaultClientUpdateCertificateResult struct {
+	CertificateBundle
+}
+
+// KeyVaultClientUpdateKeyResponse contains the response from method KeyVaultClient.UpdateKey.
+type KeyVaultClientUpdateKeyResponse struct {
+	KeyVaultClientUpdateKeyResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientUpdateKeyResult contains the result from method KeyVaultClient.UpdateKey.
+type KeyVaultClientUpdateKeyResult struct {
+	KeyBundle
+}
+
+// KeyVaultClientUpdateSasDefinitionResponse contains the response from method KeyVaultClient.UpdateSasDefinition.
+type KeyVaultClientUpdateSasDefinitionResponse struct {
+	KeyVaultClientUpdateSasDefinitionResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientUpdateSasDefinitionResult contains the result from method KeyVaultClient.UpdateSasDefinition.
+type KeyVaultClientUpdateSasDefinitionResult struct {
+	SasDefinitionBundle
+}
+
+// KeyVaultClientUpdateSecretResponse contains the response from method KeyVaultClient.UpdateSecret.
+type KeyVaultClientUpdateSecretResponse struct {
+	KeyVaultClientUpdateSecretResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientUpdateSecretResult contains the result from method KeyVaultClient.UpdateSecret.
+type KeyVaultClientUpdateSecretResult struct {
+	SecretBundle
+}
+
+// KeyVaultClientUpdateStorageAccountResponse contains the response from method KeyVaultClient.UpdateStorageAccount.
+type KeyVaultClientUpdateStorageAccountResponse struct {
+	KeyVaultClientUpdateStorageAccountResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientUpdateStorageAccountResult contains the result from method KeyVaultClient.UpdateStorageAccount.
+type KeyVaultClientUpdateStorageAccountResult struct {
+	StorageBundle
+}
+
+// KeyVaultClientVerifyResponse contains the response from method KeyVaultClient.Verify.
+type KeyVaultClientVerifyResponse struct {
+	KeyVaultClientVerifyResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientVerifyResult contains the result from method KeyVaultClient.Verify.
+type KeyVaultClientVerifyResult struct {
+	KeyVerifyResult
+}
+
+// KeyVaultClientWrapKeyResponse contains the response from method KeyVaultClient.WrapKey.
+type KeyVaultClientWrapKeyResponse struct {
+	KeyVaultClientWrapKeyResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// KeyVaultClientWrapKeyResult contains the result from method KeyVaultClient.WrapKey.
+type KeyVaultClientWrapKeyResult struct {
+	KeyOperationResult
+}
+
+// RoleAssignmentsCreateResponse contains the response from method RoleAssignments.Create.
+type RoleAssignmentsCreateResponse struct {
+	RoleAssignmentsCreateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// RoleAssignmentsCreateResult contains the result from method RoleAssignments.Create.
+type RoleAssignmentsCreateResult struct {
+	RoleAssignment
+}
+
+// RoleAssignmentsDeleteResponse contains the response from method RoleAssignments.Delete.
+type RoleAssignmentsDeleteResponse struct {
+	RoleAssignmentsDeleteResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// RoleAssignmentsDeleteResult contains the result from method RoleAssignments.Delete.
+type RoleAssignmentsDeleteResult struct {
+	RoleAssignment
+}
+
+// RoleAssignmentsGetResponse contains the response from method RoleAssignments.Get.
+type RoleAssignmentsGetResponse struct {
+	RoleAssignmentsGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// RoleAssignmentsGetResult contains the result from method RoleAssignments.Get.
+type RoleAssignmentsGetResult struct {
+	RoleAssignment
+}
+
+// RoleAssignmentsListForScopeResponse contains the response from method RoleAssignments.ListForScope.
+type RoleAssignmentsListForScopeResponse struct {
+	RoleAssignmentsListForScopeResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// RoleAssignmentsListForScopeResult contains the result from method RoleAssignments.ListForScope.
+type RoleAssignmentsListForScopeResult struct {
+	RoleAssignmentListResult
+}
+
+// RoleDefinitionsCreateOrUpdateResponse contains the response from method RoleDefinitions.CreateOrUpdate.
+type RoleDefinitionsCreateOrUpdateResponse struct {
+	RoleDefinitionsCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// RoleDefinitionsCreateOrUpdateResult contains the result from method RoleDefinitions.CreateOrUpdate.
+type RoleDefinitionsCreateOrUpdateResult struct {
+	RoleDefinition
+}
+
+// RoleDefinitionsDeleteResponse contains the response from method RoleDefinitions.Delete.
+type RoleDefinitionsDeleteResponse struct {
+	RoleDefinitionsDeleteResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// RoleDefinitionsDeleteResult contains the result from method RoleDefinitions.Delete.
+type RoleDefinitionsDeleteResult struct {
+	RoleDefinition
+}
+
+// RoleDefinitionsGetResponse contains the response from method RoleDefinitions.Get.
+type RoleDefinitionsGetResponse struct {
+	RoleDefinitionsGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// RoleDefinitionsGetResult contains the result from method RoleDefinitions.Get.
+type RoleDefinitionsGetResult struct {
+	RoleDefinition
+}
+
+// RoleDefinitionsListResponse contains the response from method RoleDefinitions.List.
+type RoleDefinitionsListResponse struct {
+	RoleDefinitionsListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// RoleDefinitionsListResult contains the result from method RoleDefinitions.List.
+type RoleDefinitionsListResult struct {
+	RoleDefinitionListResult
 }

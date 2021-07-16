@@ -23,19 +23,19 @@ type sparkSessionClient struct {
 
 // CancelSparkSession - Cancels a running spark session.
 // If the operation fails it returns a generic error.
-func (client *sparkSessionClient) CancelSparkSession(ctx context.Context, sessionID int32, options *SparkSessionCancelSparkSessionOptions) (*http.Response, error) {
+func (client *sparkSessionClient) CancelSparkSession(ctx context.Context, sessionID int32, options *SparkSessionCancelSparkSessionOptions) (SparkSessionCancelSparkSessionResponse, error) {
 	req, err := client.cancelSparkSessionCreateRequest(ctx, sessionID, options)
 	if err != nil {
-		return nil, err
+		return SparkSessionCancelSparkSessionResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return SparkSessionCancelSparkSessionResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.cancelSparkSessionHandleError(resp)
+		return SparkSessionCancelSparkSessionResponse{}, client.cancelSparkSessionHandleError(resp)
 	}
-	return resp.Response, nil
+	return SparkSessionCancelSparkSessionResponse{RawResponse: resp.Response}, nil
 }
 
 // cancelSparkSessionCreateRequest creates the CancelSparkSession request.
@@ -64,17 +64,17 @@ func (client *sparkSessionClient) cancelSparkSessionHandleError(resp *azcore.Res
 
 // CancelSparkStatement - Kill a statement within a session.
 // If the operation fails it returns a generic error.
-func (client *sparkSessionClient) CancelSparkStatement(ctx context.Context, sessionID int32, statementID int32, options *SparkSessionCancelSparkStatementOptions) (SparkStatementCancellationResultResponse, error) {
+func (client *sparkSessionClient) CancelSparkStatement(ctx context.Context, sessionID int32, statementID int32, options *SparkSessionCancelSparkStatementOptions) (SparkSessionCancelSparkStatementResponse, error) {
 	req, err := client.cancelSparkStatementCreateRequest(ctx, sessionID, statementID, options)
 	if err != nil {
-		return SparkStatementCancellationResultResponse{}, err
+		return SparkSessionCancelSparkStatementResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return SparkStatementCancellationResultResponse{}, err
+		return SparkSessionCancelSparkStatementResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return SparkStatementCancellationResultResponse{}, client.cancelSparkStatementHandleError(resp)
+		return SparkSessionCancelSparkStatementResponse{}, client.cancelSparkStatementHandleError(resp)
 	}
 	return client.cancelSparkStatementHandleResponse(resp)
 }
@@ -94,12 +94,12 @@ func (client *sparkSessionClient) cancelSparkStatementCreateRequest(ctx context.
 }
 
 // cancelSparkStatementHandleResponse handles the CancelSparkStatement response.
-func (client *sparkSessionClient) cancelSparkStatementHandleResponse(resp *azcore.Response) (SparkStatementCancellationResultResponse, error) {
-	var val *SparkStatementCancellationResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return SparkStatementCancellationResultResponse{}, err
+func (client *sparkSessionClient) cancelSparkStatementHandleResponse(resp *azcore.Response) (SparkSessionCancelSparkStatementResponse, error) {
+	result := SparkSessionCancelSparkStatementResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.SparkStatementCancellationResult); err != nil {
+		return SparkSessionCancelSparkStatementResponse{}, err
 	}
-	return SparkStatementCancellationResultResponse{RawResponse: resp.Response, SparkStatementCancellationResult: val}, nil
+	return result, nil
 }
 
 // cancelSparkStatementHandleError handles the CancelSparkStatement error response.
@@ -116,17 +116,17 @@ func (client *sparkSessionClient) cancelSparkStatementHandleError(resp *azcore.R
 
 // CreateSparkSession - Create new spark session.
 // If the operation fails it returns a generic error.
-func (client *sparkSessionClient) CreateSparkSession(ctx context.Context, sparkSessionOptions SparkSessionOptions, options *SparkSessionCreateSparkSessionOptions) (SparkSessionResponse, error) {
+func (client *sparkSessionClient) CreateSparkSession(ctx context.Context, sparkSessionOptions SparkSessionOptions, options *SparkSessionCreateSparkSessionOptions) (SparkSessionCreateSparkSessionResponse, error) {
 	req, err := client.createSparkSessionCreateRequest(ctx, sparkSessionOptions, options)
 	if err != nil {
-		return SparkSessionResponse{}, err
+		return SparkSessionCreateSparkSessionResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return SparkSessionResponse{}, err
+		return SparkSessionCreateSparkSessionResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return SparkSessionResponse{}, client.createSparkSessionHandleError(resp)
+		return SparkSessionCreateSparkSessionResponse{}, client.createSparkSessionHandleError(resp)
 	}
 	return client.createSparkSessionHandleResponse(resp)
 }
@@ -149,12 +149,12 @@ func (client *sparkSessionClient) createSparkSessionCreateRequest(ctx context.Co
 }
 
 // createSparkSessionHandleResponse handles the CreateSparkSession response.
-func (client *sparkSessionClient) createSparkSessionHandleResponse(resp *azcore.Response) (SparkSessionResponse, error) {
-	var val *SparkSession
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return SparkSessionResponse{}, err
+func (client *sparkSessionClient) createSparkSessionHandleResponse(resp *azcore.Response) (SparkSessionCreateSparkSessionResponse, error) {
+	result := SparkSessionCreateSparkSessionResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.SparkSession); err != nil {
+		return SparkSessionCreateSparkSessionResponse{}, err
 	}
-	return SparkSessionResponse{RawResponse: resp.Response, SparkSession: val}, nil
+	return result, nil
 }
 
 // createSparkSessionHandleError handles the CreateSparkSession error response.
@@ -171,17 +171,17 @@ func (client *sparkSessionClient) createSparkSessionHandleError(resp *azcore.Res
 
 // CreateSparkStatement - Create statement within a spark session.
 // If the operation fails it returns a generic error.
-func (client *sparkSessionClient) CreateSparkStatement(ctx context.Context, sessionID int32, sparkStatementOptions SparkStatementOptions, options *SparkSessionCreateSparkStatementOptions) (SparkStatementResponse, error) {
+func (client *sparkSessionClient) CreateSparkStatement(ctx context.Context, sessionID int32, sparkStatementOptions SparkStatementOptions, options *SparkSessionCreateSparkStatementOptions) (SparkSessionCreateSparkStatementResponse, error) {
 	req, err := client.createSparkStatementCreateRequest(ctx, sessionID, sparkStatementOptions, options)
 	if err != nil {
-		return SparkStatementResponse{}, err
+		return SparkSessionCreateSparkStatementResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return SparkStatementResponse{}, err
+		return SparkSessionCreateSparkStatementResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return SparkStatementResponse{}, client.createSparkStatementHandleError(resp)
+		return SparkSessionCreateSparkStatementResponse{}, client.createSparkStatementHandleError(resp)
 	}
 	return client.createSparkStatementHandleResponse(resp)
 }
@@ -200,12 +200,12 @@ func (client *sparkSessionClient) createSparkStatementCreateRequest(ctx context.
 }
 
 // createSparkStatementHandleResponse handles the CreateSparkStatement response.
-func (client *sparkSessionClient) createSparkStatementHandleResponse(resp *azcore.Response) (SparkStatementResponse, error) {
-	var val *SparkStatement
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return SparkStatementResponse{}, err
+func (client *sparkSessionClient) createSparkStatementHandleResponse(resp *azcore.Response) (SparkSessionCreateSparkStatementResponse, error) {
+	result := SparkSessionCreateSparkStatementResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.SparkStatement); err != nil {
+		return SparkSessionCreateSparkStatementResponse{}, err
 	}
-	return SparkStatementResponse{RawResponse: resp.Response, SparkStatement: val}, nil
+	return result, nil
 }
 
 // createSparkStatementHandleError handles the CreateSparkStatement error response.
@@ -222,17 +222,17 @@ func (client *sparkSessionClient) createSparkStatementHandleError(resp *azcore.R
 
 // GetSparkSession - Gets a single spark session.
 // If the operation fails it returns a generic error.
-func (client *sparkSessionClient) GetSparkSession(ctx context.Context, sessionID int32, options *SparkSessionGetSparkSessionOptions) (SparkSessionResponse, error) {
+func (client *sparkSessionClient) GetSparkSession(ctx context.Context, sessionID int32, options *SparkSessionGetSparkSessionOptions) (SparkSessionGetSparkSessionResponse, error) {
 	req, err := client.getSparkSessionCreateRequest(ctx, sessionID, options)
 	if err != nil {
-		return SparkSessionResponse{}, err
+		return SparkSessionGetSparkSessionResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return SparkSessionResponse{}, err
+		return SparkSessionGetSparkSessionResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return SparkSessionResponse{}, client.getSparkSessionHandleError(resp)
+		return SparkSessionGetSparkSessionResponse{}, client.getSparkSessionHandleError(resp)
 	}
 	return client.getSparkSessionHandleResponse(resp)
 }
@@ -256,12 +256,12 @@ func (client *sparkSessionClient) getSparkSessionCreateRequest(ctx context.Conte
 }
 
 // getSparkSessionHandleResponse handles the GetSparkSession response.
-func (client *sparkSessionClient) getSparkSessionHandleResponse(resp *azcore.Response) (SparkSessionResponse, error) {
-	var val *SparkSession
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return SparkSessionResponse{}, err
+func (client *sparkSessionClient) getSparkSessionHandleResponse(resp *azcore.Response) (SparkSessionGetSparkSessionResponse, error) {
+	result := SparkSessionGetSparkSessionResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.SparkSession); err != nil {
+		return SparkSessionGetSparkSessionResponse{}, err
 	}
-	return SparkSessionResponse{RawResponse: resp.Response, SparkSession: val}, nil
+	return result, nil
 }
 
 // getSparkSessionHandleError handles the GetSparkSession error response.
@@ -278,17 +278,17 @@ func (client *sparkSessionClient) getSparkSessionHandleError(resp *azcore.Respon
 
 // GetSparkSessions - List all spark sessions which are running under a particular spark pool.
 // If the operation fails it returns a generic error.
-func (client *sparkSessionClient) GetSparkSessions(ctx context.Context, options *SparkSessionGetSparkSessionsOptions) (SparkSessionCollectionResponse, error) {
+func (client *sparkSessionClient) GetSparkSessions(ctx context.Context, options *SparkSessionGetSparkSessionsOptions) (SparkSessionGetSparkSessionsResponse, error) {
 	req, err := client.getSparkSessionsCreateRequest(ctx, options)
 	if err != nil {
-		return SparkSessionCollectionResponse{}, err
+		return SparkSessionGetSparkSessionsResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return SparkSessionCollectionResponse{}, err
+		return SparkSessionGetSparkSessionsResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return SparkSessionCollectionResponse{}, client.getSparkSessionsHandleError(resp)
+		return SparkSessionGetSparkSessionsResponse{}, client.getSparkSessionsHandleError(resp)
 	}
 	return client.getSparkSessionsHandleResponse(resp)
 }
@@ -317,12 +317,12 @@ func (client *sparkSessionClient) getSparkSessionsCreateRequest(ctx context.Cont
 }
 
 // getSparkSessionsHandleResponse handles the GetSparkSessions response.
-func (client *sparkSessionClient) getSparkSessionsHandleResponse(resp *azcore.Response) (SparkSessionCollectionResponse, error) {
-	var val *SparkSessionCollection
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return SparkSessionCollectionResponse{}, err
+func (client *sparkSessionClient) getSparkSessionsHandleResponse(resp *azcore.Response) (SparkSessionGetSparkSessionsResponse, error) {
+	result := SparkSessionGetSparkSessionsResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.SparkSessionCollection); err != nil {
+		return SparkSessionGetSparkSessionsResponse{}, err
 	}
-	return SparkSessionCollectionResponse{RawResponse: resp.Response, SparkSessionCollection: val}, nil
+	return result, nil
 }
 
 // getSparkSessionsHandleError handles the GetSparkSessions error response.
@@ -339,17 +339,17 @@ func (client *sparkSessionClient) getSparkSessionsHandleError(resp *azcore.Respo
 
 // GetSparkStatement - Gets a single statement within a spark session.
 // If the operation fails it returns a generic error.
-func (client *sparkSessionClient) GetSparkStatement(ctx context.Context, sessionID int32, statementID int32, options *SparkSessionGetSparkStatementOptions) (SparkStatementResponse, error) {
+func (client *sparkSessionClient) GetSparkStatement(ctx context.Context, sessionID int32, statementID int32, options *SparkSessionGetSparkStatementOptions) (SparkSessionGetSparkStatementResponse, error) {
 	req, err := client.getSparkStatementCreateRequest(ctx, sessionID, statementID, options)
 	if err != nil {
-		return SparkStatementResponse{}, err
+		return SparkSessionGetSparkStatementResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return SparkStatementResponse{}, err
+		return SparkSessionGetSparkStatementResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return SparkStatementResponse{}, client.getSparkStatementHandleError(resp)
+		return SparkSessionGetSparkStatementResponse{}, client.getSparkStatementHandleError(resp)
 	}
 	return client.getSparkStatementHandleResponse(resp)
 }
@@ -369,12 +369,12 @@ func (client *sparkSessionClient) getSparkStatementCreateRequest(ctx context.Con
 }
 
 // getSparkStatementHandleResponse handles the GetSparkStatement response.
-func (client *sparkSessionClient) getSparkStatementHandleResponse(resp *azcore.Response) (SparkStatementResponse, error) {
-	var val *SparkStatement
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return SparkStatementResponse{}, err
+func (client *sparkSessionClient) getSparkStatementHandleResponse(resp *azcore.Response) (SparkSessionGetSparkStatementResponse, error) {
+	result := SparkSessionGetSparkStatementResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.SparkStatement); err != nil {
+		return SparkSessionGetSparkStatementResponse{}, err
 	}
-	return SparkStatementResponse{RawResponse: resp.Response, SparkStatement: val}, nil
+	return result, nil
 }
 
 // getSparkStatementHandleError handles the GetSparkStatement error response.
@@ -391,17 +391,17 @@ func (client *sparkSessionClient) getSparkStatementHandleError(resp *azcore.Resp
 
 // GetSparkStatements - Gets a list of statements within a spark session.
 // If the operation fails it returns a generic error.
-func (client *sparkSessionClient) GetSparkStatements(ctx context.Context, sessionID int32, options *SparkSessionGetSparkStatementsOptions) (SparkStatementCollectionResponse, error) {
+func (client *sparkSessionClient) GetSparkStatements(ctx context.Context, sessionID int32, options *SparkSessionGetSparkStatementsOptions) (SparkSessionGetSparkStatementsResponse, error) {
 	req, err := client.getSparkStatementsCreateRequest(ctx, sessionID, options)
 	if err != nil {
-		return SparkStatementCollectionResponse{}, err
+		return SparkSessionGetSparkStatementsResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return SparkStatementCollectionResponse{}, err
+		return SparkSessionGetSparkStatementsResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return SparkStatementCollectionResponse{}, client.getSparkStatementsHandleError(resp)
+		return SparkSessionGetSparkStatementsResponse{}, client.getSparkStatementsHandleError(resp)
 	}
 	return client.getSparkStatementsHandleResponse(resp)
 }
@@ -420,12 +420,12 @@ func (client *sparkSessionClient) getSparkStatementsCreateRequest(ctx context.Co
 }
 
 // getSparkStatementsHandleResponse handles the GetSparkStatements response.
-func (client *sparkSessionClient) getSparkStatementsHandleResponse(resp *azcore.Response) (SparkStatementCollectionResponse, error) {
-	var val *SparkStatementCollection
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return SparkStatementCollectionResponse{}, err
+func (client *sparkSessionClient) getSparkStatementsHandleResponse(resp *azcore.Response) (SparkSessionGetSparkStatementsResponse, error) {
+	result := SparkSessionGetSparkStatementsResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.SparkStatementCollection); err != nil {
+		return SparkSessionGetSparkStatementsResponse{}, err
 	}
-	return SparkStatementCollectionResponse{RawResponse: resp.Response, SparkStatementCollection: val}, nil
+	return result, nil
 }
 
 // getSparkStatementsHandleError handles the GetSparkStatements error response.
@@ -442,19 +442,19 @@ func (client *sparkSessionClient) getSparkStatementsHandleError(resp *azcore.Res
 
 // ResetSparkSessionTimeout - Sends a keep alive call to the current session to reset the session timeout.
 // If the operation fails it returns a generic error.
-func (client *sparkSessionClient) ResetSparkSessionTimeout(ctx context.Context, sessionID int32, options *SparkSessionResetSparkSessionTimeoutOptions) (*http.Response, error) {
+func (client *sparkSessionClient) ResetSparkSessionTimeout(ctx context.Context, sessionID int32, options *SparkSessionResetSparkSessionTimeoutOptions) (SparkSessionResetSparkSessionTimeoutResponse, error) {
 	req, err := client.resetSparkSessionTimeoutCreateRequest(ctx, sessionID, options)
 	if err != nil {
-		return nil, err
+		return SparkSessionResetSparkSessionTimeoutResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return SparkSessionResetSparkSessionTimeoutResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.resetSparkSessionTimeoutHandleError(resp)
+		return SparkSessionResetSparkSessionTimeoutResponse{}, client.resetSparkSessionTimeoutHandleError(resp)
 	}
-	return resp.Response, nil
+	return SparkSessionResetSparkSessionTimeoutResponse{RawResponse: resp.Response}, nil
 }
 
 // resetSparkSessionTimeoutCreateRequest creates the ResetSparkSessionTimeout request.

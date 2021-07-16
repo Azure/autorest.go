@@ -22,7 +22,7 @@ func TestBasicGetValid(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetValid: %v", err)
 	}
-	if r := cmp.Diff(result.Basic, &Basic{ID: to.Int32Ptr(2), Name: to.StringPtr("abc"), Color: CMYKColorsYELLOW.ToPtr()}); r != "" {
+	if r := cmp.Diff(result.Basic, Basic{ID: to.Int32Ptr(2), Name: to.StringPtr("abc"), Color: CMYKColorsYELLOW.ToPtr()}); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -37,7 +37,7 @@ func TestBasicPutValid(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutValid: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -48,7 +48,7 @@ func TestBasicGetInvalid(t *testing.T) {
 	if err == nil {
 		t.Fatal("GetInvalid expected an error")
 	}
-	if r := cmp.Diff(result, BasicResponse{}); r != "" {
+	if r := cmp.Diff(result, BasicGetInvalidResponse{}); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -59,7 +59,7 @@ func TestBasicGetEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetEmpty: %v", err)
 	}
-	if r := cmp.Diff(result.Basic, &Basic{}); r != "" {
+	if r := cmp.Diff(result.Basic, Basic{}); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -70,7 +70,7 @@ func TestBasicGetNull(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetNull: %v", err)
 	}
-	if r := cmp.Diff(result.Basic, &Basic{}); r != "" {
+	if r := cmp.Diff(result.Basic, Basic{}); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -81,7 +81,7 @@ func TestBasicGetNotProvided(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetNotProvided: %v", err)
 	}
-	if r := cmp.Diff(result.Basic, (*Basic)(nil)); r != "" {
+	if r := cmp.Diff(result.Basic, Basic{}); r != "" {
 		t.Fatal(r)
 	}
 }

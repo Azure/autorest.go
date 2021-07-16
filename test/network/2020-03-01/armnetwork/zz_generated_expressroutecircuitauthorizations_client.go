@@ -33,47 +33,47 @@ func NewExpressRouteCircuitAuthorizationsClient(con *armcore.Connection, subscri
 
 // BeginCreateOrUpdate - Creates or updates an authorization in the specified express route circuit.
 // If the operation fails it returns the *CloudError error type.
-func (client *ExpressRouteCircuitAuthorizationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, circuitName string, authorizationName string, authorizationParameters ExpressRouteCircuitAuthorization, options *ExpressRouteCircuitAuthorizationsBeginCreateOrUpdateOptions) (ExpressRouteCircuitAuthorizationPollerResponse, error) {
+func (client *ExpressRouteCircuitAuthorizationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, circuitName string, authorizationName string, authorizationParameters ExpressRouteCircuitAuthorization, options *ExpressRouteCircuitAuthorizationsBeginCreateOrUpdateOptions) (ExpressRouteCircuitAuthorizationsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, circuitName, authorizationName, authorizationParameters, options)
 	if err != nil {
-		return ExpressRouteCircuitAuthorizationPollerResponse{}, err
+		return ExpressRouteCircuitAuthorizationsCreateOrUpdatePollerResponse{}, err
 	}
-	result := ExpressRouteCircuitAuthorizationPollerResponse{
+	result := ExpressRouteCircuitAuthorizationsCreateOrUpdatePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("ExpressRouteCircuitAuthorizationsClient.CreateOrUpdate", "azure-async-operation", resp, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return ExpressRouteCircuitAuthorizationPollerResponse{}, err
+		return ExpressRouteCircuitAuthorizationsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &expressRouteCircuitAuthorizationPoller{
+	poller := &expressRouteCircuitAuthorizationsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitAuthorizationResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitAuthorizationsCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new ExpressRouteCircuitAuthorizationPoller from the specified resume token.
-// token - The value must come from a previous call to ExpressRouteCircuitAuthorizationPoller.ResumeToken().
-func (client *ExpressRouteCircuitAuthorizationsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (ExpressRouteCircuitAuthorizationPollerResponse, error) {
+// ResumeCreateOrUpdate creates a new ExpressRouteCircuitAuthorizationsCreateOrUpdatePoller from the specified resume token.
+// token - The value must come from a previous call to ExpressRouteCircuitAuthorizationsCreateOrUpdatePoller.ResumeToken().
+func (client *ExpressRouteCircuitAuthorizationsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (ExpressRouteCircuitAuthorizationsCreateOrUpdatePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("ExpressRouteCircuitAuthorizationsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return ExpressRouteCircuitAuthorizationPollerResponse{}, err
+		return ExpressRouteCircuitAuthorizationsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &expressRouteCircuitAuthorizationPoller{
+	poller := &expressRouteCircuitAuthorizationsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return ExpressRouteCircuitAuthorizationPollerResponse{}, err
+		return ExpressRouteCircuitAuthorizationsCreateOrUpdatePollerResponse{}, err
 	}
-	result := ExpressRouteCircuitAuthorizationPollerResponse{
+	result := ExpressRouteCircuitAuthorizationsCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitAuthorizationResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitAuthorizationsCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -142,47 +142,47 @@ func (client *ExpressRouteCircuitAuthorizationsClient) createOrUpdateHandleError
 
 // BeginDelete - Deletes the specified authorization from the specified express route circuit.
 // If the operation fails it returns the *CloudError error type.
-func (client *ExpressRouteCircuitAuthorizationsClient) BeginDelete(ctx context.Context, resourceGroupName string, circuitName string, authorizationName string, options *ExpressRouteCircuitAuthorizationsBeginDeleteOptions) (HTTPPollerResponse, error) {
+func (client *ExpressRouteCircuitAuthorizationsClient) BeginDelete(ctx context.Context, resourceGroupName string, circuitName string, authorizationName string, options *ExpressRouteCircuitAuthorizationsBeginDeleteOptions) (ExpressRouteCircuitAuthorizationsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, circuitName, authorizationName, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return ExpressRouteCircuitAuthorizationsDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := ExpressRouteCircuitAuthorizationsDeletePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("ExpressRouteCircuitAuthorizationsClient.Delete", "location", resp, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return ExpressRouteCircuitAuthorizationsDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &expressRouteCircuitAuthorizationsDeletePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitAuthorizationsDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeDelete creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *ExpressRouteCircuitAuthorizationsClient) ResumeDelete(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeDelete creates a new ExpressRouteCircuitAuthorizationsDeletePoller from the specified resume token.
+// token - The value must come from a previous call to ExpressRouteCircuitAuthorizationsDeletePoller.ResumeToken().
+func (client *ExpressRouteCircuitAuthorizationsClient) ResumeDelete(ctx context.Context, token string) (ExpressRouteCircuitAuthorizationsDeletePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("ExpressRouteCircuitAuthorizationsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return ExpressRouteCircuitAuthorizationsDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &expressRouteCircuitAuthorizationsDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return ExpressRouteCircuitAuthorizationsDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := ExpressRouteCircuitAuthorizationsDeletePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitAuthorizationsDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -251,17 +251,17 @@ func (client *ExpressRouteCircuitAuthorizationsClient) deleteHandleError(resp *a
 
 // Get - Gets the specified authorization from the specified express route circuit.
 // If the operation fails it returns the *CloudError error type.
-func (client *ExpressRouteCircuitAuthorizationsClient) Get(ctx context.Context, resourceGroupName string, circuitName string, authorizationName string, options *ExpressRouteCircuitAuthorizationsGetOptions) (ExpressRouteCircuitAuthorizationResponse, error) {
+func (client *ExpressRouteCircuitAuthorizationsClient) Get(ctx context.Context, resourceGroupName string, circuitName string, authorizationName string, options *ExpressRouteCircuitAuthorizationsGetOptions) (ExpressRouteCircuitAuthorizationsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, circuitName, authorizationName, options)
 	if err != nil {
-		return ExpressRouteCircuitAuthorizationResponse{}, err
+		return ExpressRouteCircuitAuthorizationsGetResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return ExpressRouteCircuitAuthorizationResponse{}, err
+		return ExpressRouteCircuitAuthorizationsGetResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return ExpressRouteCircuitAuthorizationResponse{}, client.getHandleError(resp)
+		return ExpressRouteCircuitAuthorizationsGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -298,12 +298,12 @@ func (client *ExpressRouteCircuitAuthorizationsClient) getCreateRequest(ctx cont
 }
 
 // getHandleResponse handles the Get response.
-func (client *ExpressRouteCircuitAuthorizationsClient) getHandleResponse(resp *azcore.Response) (ExpressRouteCircuitAuthorizationResponse, error) {
-	var val *ExpressRouteCircuitAuthorization
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ExpressRouteCircuitAuthorizationResponse{}, err
+func (client *ExpressRouteCircuitAuthorizationsClient) getHandleResponse(resp *azcore.Response) (ExpressRouteCircuitAuthorizationsGetResponse, error) {
+	result := ExpressRouteCircuitAuthorizationsGetResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.ExpressRouteCircuitAuthorization); err != nil {
+		return ExpressRouteCircuitAuthorizationsGetResponse{}, err
 	}
-	return ExpressRouteCircuitAuthorizationResponse{RawResponse: resp.Response, ExpressRouteCircuitAuthorization: val}, nil
+	return result, nil
 }
 
 // getHandleError handles the Get error response.
@@ -321,18 +321,15 @@ func (client *ExpressRouteCircuitAuthorizationsClient) getHandleError(resp *azco
 
 // List - Gets all authorizations in an express route circuit.
 // If the operation fails it returns the *CloudError error type.
-func (client *ExpressRouteCircuitAuthorizationsClient) List(resourceGroupName string, circuitName string, options *ExpressRouteCircuitAuthorizationsListOptions) AuthorizationListResultPager {
-	return &authorizationListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *ExpressRouteCircuitAuthorizationsClient) List(resourceGroupName string, circuitName string, options *ExpressRouteCircuitAuthorizationsListOptions) ExpressRouteCircuitAuthorizationsListPager {
+	return &expressRouteCircuitAuthorizationsListPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, circuitName, options)
 		},
-		responder: client.listHandleResponse,
-		errorer:   client.listHandleError,
-		advancer: func(ctx context.Context, resp AuthorizationListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp ExpressRouteCircuitAuthorizationsListResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.AuthorizationListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -364,12 +361,12 @@ func (client *ExpressRouteCircuitAuthorizationsClient) listCreateRequest(ctx con
 }
 
 // listHandleResponse handles the List response.
-func (client *ExpressRouteCircuitAuthorizationsClient) listHandleResponse(resp *azcore.Response) (AuthorizationListResultResponse, error) {
-	var val *AuthorizationListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return AuthorizationListResultResponse{}, err
+func (client *ExpressRouteCircuitAuthorizationsClient) listHandleResponse(resp *azcore.Response) (ExpressRouteCircuitAuthorizationsListResponse, error) {
+	result := ExpressRouteCircuitAuthorizationsListResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.AuthorizationListResult); err != nil {
+		return ExpressRouteCircuitAuthorizationsListResponse{}, err
 	}
-	return AuthorizationListResultResponse{RawResponse: resp.Response, AuthorizationListResult: val}, nil
+	return result, nil
 }
 
 // listHandleError handles the List error response.

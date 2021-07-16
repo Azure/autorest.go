@@ -33,47 +33,47 @@ func NewDdosProtectionPlansClient(con *armcore.Connection, subscriptionID string
 
 // BeginCreateOrUpdate - Creates or updates a DDoS protection plan.
 // If the operation fails it returns the *CloudError error type.
-func (client *DdosProtectionPlansClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, parameters DdosProtectionPlan, options *DdosProtectionPlansBeginCreateOrUpdateOptions) (DdosProtectionPlanPollerResponse, error) {
+func (client *DdosProtectionPlansClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, parameters DdosProtectionPlan, options *DdosProtectionPlansBeginCreateOrUpdateOptions) (DdosProtectionPlansCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, ddosProtectionPlanName, parameters, options)
 	if err != nil {
-		return DdosProtectionPlanPollerResponse{}, err
+		return DdosProtectionPlansCreateOrUpdatePollerResponse{}, err
 	}
-	result := DdosProtectionPlanPollerResponse{
+	result := DdosProtectionPlansCreateOrUpdatePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("DdosProtectionPlansClient.CreateOrUpdate", "azure-async-operation", resp, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return DdosProtectionPlanPollerResponse{}, err
+		return DdosProtectionPlansCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &ddosProtectionPlanPoller{
+	poller := &ddosProtectionPlansCreateOrUpdatePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DdosProtectionPlanResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DdosProtectionPlansCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new DdosProtectionPlanPoller from the specified resume token.
-// token - The value must come from a previous call to DdosProtectionPlanPoller.ResumeToken().
-func (client *DdosProtectionPlansClient) ResumeCreateOrUpdate(ctx context.Context, token string) (DdosProtectionPlanPollerResponse, error) {
+// ResumeCreateOrUpdate creates a new DdosProtectionPlansCreateOrUpdatePoller from the specified resume token.
+// token - The value must come from a previous call to DdosProtectionPlansCreateOrUpdatePoller.ResumeToken().
+func (client *DdosProtectionPlansClient) ResumeCreateOrUpdate(ctx context.Context, token string) (DdosProtectionPlansCreateOrUpdatePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("DdosProtectionPlansClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return DdosProtectionPlanPollerResponse{}, err
+		return DdosProtectionPlansCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &ddosProtectionPlanPoller{
+	poller := &ddosProtectionPlansCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return DdosProtectionPlanPollerResponse{}, err
+		return DdosProtectionPlansCreateOrUpdatePollerResponse{}, err
 	}
-	result := DdosProtectionPlanPollerResponse{
+	result := DdosProtectionPlansCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DdosProtectionPlanResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DdosProtectionPlansCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -138,47 +138,47 @@ func (client *DdosProtectionPlansClient) createOrUpdateHandleError(resp *azcore.
 
 // BeginDelete - Deletes the specified DDoS protection plan.
 // If the operation fails it returns the *CloudError error type.
-func (client *DdosProtectionPlansClient) BeginDelete(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, options *DdosProtectionPlansBeginDeleteOptions) (HTTPPollerResponse, error) {
+func (client *DdosProtectionPlansClient) BeginDelete(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, options *DdosProtectionPlansBeginDeleteOptions) (DdosProtectionPlansDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, ddosProtectionPlanName, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return DdosProtectionPlansDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := DdosProtectionPlansDeletePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("DdosProtectionPlansClient.Delete", "location", resp, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return DdosProtectionPlansDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &ddosProtectionPlansDeletePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DdosProtectionPlansDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeDelete creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *DdosProtectionPlansClient) ResumeDelete(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeDelete creates a new DdosProtectionPlansDeletePoller from the specified resume token.
+// token - The value must come from a previous call to DdosProtectionPlansDeletePoller.ResumeToken().
+func (client *DdosProtectionPlansClient) ResumeDelete(ctx context.Context, token string) (DdosProtectionPlansDeletePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("DdosProtectionPlansClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return DdosProtectionPlansDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &ddosProtectionPlansDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return DdosProtectionPlansDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := DdosProtectionPlansDeletePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DdosProtectionPlansDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -243,17 +243,17 @@ func (client *DdosProtectionPlansClient) deleteHandleError(resp *azcore.Response
 
 // Get - Gets information about the specified DDoS protection plan.
 // If the operation fails it returns the *CloudError error type.
-func (client *DdosProtectionPlansClient) Get(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, options *DdosProtectionPlansGetOptions) (DdosProtectionPlanResponse, error) {
+func (client *DdosProtectionPlansClient) Get(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, options *DdosProtectionPlansGetOptions) (DdosProtectionPlansGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, ddosProtectionPlanName, options)
 	if err != nil {
-		return DdosProtectionPlanResponse{}, err
+		return DdosProtectionPlansGetResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return DdosProtectionPlanResponse{}, err
+		return DdosProtectionPlansGetResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return DdosProtectionPlanResponse{}, client.getHandleError(resp)
+		return DdosProtectionPlansGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -286,12 +286,12 @@ func (client *DdosProtectionPlansClient) getCreateRequest(ctx context.Context, r
 }
 
 // getHandleResponse handles the Get response.
-func (client *DdosProtectionPlansClient) getHandleResponse(resp *azcore.Response) (DdosProtectionPlanResponse, error) {
-	var val *DdosProtectionPlan
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return DdosProtectionPlanResponse{}, err
+func (client *DdosProtectionPlansClient) getHandleResponse(resp *azcore.Response) (DdosProtectionPlansGetResponse, error) {
+	result := DdosProtectionPlansGetResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.DdosProtectionPlan); err != nil {
+		return DdosProtectionPlansGetResponse{}, err
 	}
-	return DdosProtectionPlanResponse{RawResponse: resp.Response, DdosProtectionPlan: val}, nil
+	return result, nil
 }
 
 // getHandleError handles the Get error response.
@@ -309,18 +309,15 @@ func (client *DdosProtectionPlansClient) getHandleError(resp *azcore.Response) e
 
 // List - Gets all DDoS protection plans in a subscription.
 // If the operation fails it returns the *CloudError error type.
-func (client *DdosProtectionPlansClient) List(options *DdosProtectionPlansListOptions) DdosProtectionPlanListResultPager {
-	return &ddosProtectionPlanListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *DdosProtectionPlansClient) List(options *DdosProtectionPlansListOptions) DdosProtectionPlansListPager {
+	return &ddosProtectionPlansListPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, options)
 		},
-		responder: client.listHandleResponse,
-		errorer:   client.listHandleError,
-		advancer: func(ctx context.Context, resp DdosProtectionPlanListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp DdosProtectionPlansListResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.DdosProtectionPlanListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -344,12 +341,12 @@ func (client *DdosProtectionPlansClient) listCreateRequest(ctx context.Context, 
 }
 
 // listHandleResponse handles the List response.
-func (client *DdosProtectionPlansClient) listHandleResponse(resp *azcore.Response) (DdosProtectionPlanListResultResponse, error) {
-	var val *DdosProtectionPlanListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return DdosProtectionPlanListResultResponse{}, err
+func (client *DdosProtectionPlansClient) listHandleResponse(resp *azcore.Response) (DdosProtectionPlansListResponse, error) {
+	result := DdosProtectionPlansListResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.DdosProtectionPlanListResult); err != nil {
+		return DdosProtectionPlansListResponse{}, err
 	}
-	return DdosProtectionPlanListResultResponse{RawResponse: resp.Response, DdosProtectionPlanListResult: val}, nil
+	return result, nil
 }
 
 // listHandleError handles the List error response.
@@ -367,18 +364,15 @@ func (client *DdosProtectionPlansClient) listHandleError(resp *azcore.Response) 
 
 // ListByResourceGroup - Gets all the DDoS protection plans in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *DdosProtectionPlansClient) ListByResourceGroup(resourceGroupName string, options *DdosProtectionPlansListByResourceGroupOptions) DdosProtectionPlanListResultPager {
-	return &ddosProtectionPlanListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *DdosProtectionPlansClient) ListByResourceGroup(resourceGroupName string, options *DdosProtectionPlansListByResourceGroupOptions) DdosProtectionPlansListByResourceGroupPager {
+	return &ddosProtectionPlansListByResourceGroupPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
 		},
-		responder: client.listByResourceGroupHandleResponse,
-		errorer:   client.listByResourceGroupHandleError,
-		advancer: func(ctx context.Context, resp DdosProtectionPlanListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp DdosProtectionPlansListByResourceGroupResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.DdosProtectionPlanListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -406,12 +400,12 @@ func (client *DdosProtectionPlansClient) listByResourceGroupCreateRequest(ctx co
 }
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
-func (client *DdosProtectionPlansClient) listByResourceGroupHandleResponse(resp *azcore.Response) (DdosProtectionPlanListResultResponse, error) {
-	var val *DdosProtectionPlanListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return DdosProtectionPlanListResultResponse{}, err
+func (client *DdosProtectionPlansClient) listByResourceGroupHandleResponse(resp *azcore.Response) (DdosProtectionPlansListByResourceGroupResponse, error) {
+	result := DdosProtectionPlansListByResourceGroupResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.DdosProtectionPlanListResult); err != nil {
+		return DdosProtectionPlansListByResourceGroupResponse{}, err
 	}
-	return DdosProtectionPlanListResultResponse{RawResponse: resp.Response, DdosProtectionPlanListResult: val}, nil
+	return result, nil
 }
 
 // listByResourceGroupHandleError handles the ListByResourceGroup error response.
@@ -429,17 +423,17 @@ func (client *DdosProtectionPlansClient) listByResourceGroupHandleError(resp *az
 
 // UpdateTags - Update a DDoS protection plan tags.
 // If the operation fails it returns the *CloudError error type.
-func (client *DdosProtectionPlansClient) UpdateTags(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, parameters TagsObject, options *DdosProtectionPlansUpdateTagsOptions) (DdosProtectionPlanResponse, error) {
+func (client *DdosProtectionPlansClient) UpdateTags(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, parameters TagsObject, options *DdosProtectionPlansUpdateTagsOptions) (DdosProtectionPlansUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, ddosProtectionPlanName, parameters, options)
 	if err != nil {
-		return DdosProtectionPlanResponse{}, err
+		return DdosProtectionPlansUpdateTagsResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return DdosProtectionPlanResponse{}, err
+		return DdosProtectionPlansUpdateTagsResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return DdosProtectionPlanResponse{}, client.updateTagsHandleError(resp)
+		return DdosProtectionPlansUpdateTagsResponse{}, client.updateTagsHandleError(resp)
 	}
 	return client.updateTagsHandleResponse(resp)
 }
@@ -472,12 +466,12 @@ func (client *DdosProtectionPlansClient) updateTagsCreateRequest(ctx context.Con
 }
 
 // updateTagsHandleResponse handles the UpdateTags response.
-func (client *DdosProtectionPlansClient) updateTagsHandleResponse(resp *azcore.Response) (DdosProtectionPlanResponse, error) {
-	var val *DdosProtectionPlan
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return DdosProtectionPlanResponse{}, err
+func (client *DdosProtectionPlansClient) updateTagsHandleResponse(resp *azcore.Response) (DdosProtectionPlansUpdateTagsResponse, error) {
+	result := DdosProtectionPlansUpdateTagsResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.DdosProtectionPlan); err != nil {
+		return DdosProtectionPlansUpdateTagsResponse{}, err
 	}
-	return DdosProtectionPlanResponse{RawResponse: resp.Response, DdosProtectionPlan: val}, nil
+	return result, nil
 }
 
 // updateTagsHandleError handles the UpdateTags error response.

@@ -33,47 +33,47 @@ func NewSecurityPartnerProvidersClient(con *armcore.Connection, subscriptionID s
 
 // BeginCreateOrUpdate - Creates or updates the specified Security Partner Provider.
 // If the operation fails it returns the *CloudError error type.
-func (client *SecurityPartnerProvidersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, parameters SecurityPartnerProvider, options *SecurityPartnerProvidersBeginCreateOrUpdateOptions) (SecurityPartnerProviderPollerResponse, error) {
+func (client *SecurityPartnerProvidersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, parameters SecurityPartnerProvider, options *SecurityPartnerProvidersBeginCreateOrUpdateOptions) (SecurityPartnerProvidersCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, securityPartnerProviderName, parameters, options)
 	if err != nil {
-		return SecurityPartnerProviderPollerResponse{}, err
+		return SecurityPartnerProvidersCreateOrUpdatePollerResponse{}, err
 	}
-	result := SecurityPartnerProviderPollerResponse{
+	result := SecurityPartnerProvidersCreateOrUpdatePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("SecurityPartnerProvidersClient.CreateOrUpdate", "azure-async-operation", resp, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return SecurityPartnerProviderPollerResponse{}, err
+		return SecurityPartnerProvidersCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &securityPartnerProviderPoller{
+	poller := &securityPartnerProvidersCreateOrUpdatePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SecurityPartnerProviderResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SecurityPartnerProvidersCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new SecurityPartnerProviderPoller from the specified resume token.
-// token - The value must come from a previous call to SecurityPartnerProviderPoller.ResumeToken().
-func (client *SecurityPartnerProvidersClient) ResumeCreateOrUpdate(ctx context.Context, token string) (SecurityPartnerProviderPollerResponse, error) {
+// ResumeCreateOrUpdate creates a new SecurityPartnerProvidersCreateOrUpdatePoller from the specified resume token.
+// token - The value must come from a previous call to SecurityPartnerProvidersCreateOrUpdatePoller.ResumeToken().
+func (client *SecurityPartnerProvidersClient) ResumeCreateOrUpdate(ctx context.Context, token string) (SecurityPartnerProvidersCreateOrUpdatePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("SecurityPartnerProvidersClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return SecurityPartnerProviderPollerResponse{}, err
+		return SecurityPartnerProvidersCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &securityPartnerProviderPoller{
+	poller := &securityPartnerProvidersCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return SecurityPartnerProviderPollerResponse{}, err
+		return SecurityPartnerProvidersCreateOrUpdatePollerResponse{}, err
 	}
-	result := SecurityPartnerProviderPollerResponse{
+	result := SecurityPartnerProvidersCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SecurityPartnerProviderResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SecurityPartnerProvidersCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -138,47 +138,47 @@ func (client *SecurityPartnerProvidersClient) createOrUpdateHandleError(resp *az
 
 // BeginDelete - Deletes the specified Security Partner Provider.
 // If the operation fails it returns the *CloudError error type.
-func (client *SecurityPartnerProvidersClient) BeginDelete(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, options *SecurityPartnerProvidersBeginDeleteOptions) (HTTPPollerResponse, error) {
+func (client *SecurityPartnerProvidersClient) BeginDelete(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, options *SecurityPartnerProvidersBeginDeleteOptions) (SecurityPartnerProvidersDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, securityPartnerProviderName, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return SecurityPartnerProvidersDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := SecurityPartnerProvidersDeletePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("SecurityPartnerProvidersClient.Delete", "location", resp, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return SecurityPartnerProvidersDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &securityPartnerProvidersDeletePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SecurityPartnerProvidersDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeDelete creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *SecurityPartnerProvidersClient) ResumeDelete(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeDelete creates a new SecurityPartnerProvidersDeletePoller from the specified resume token.
+// token - The value must come from a previous call to SecurityPartnerProvidersDeletePoller.ResumeToken().
+func (client *SecurityPartnerProvidersClient) ResumeDelete(ctx context.Context, token string) (SecurityPartnerProvidersDeletePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("SecurityPartnerProvidersClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return SecurityPartnerProvidersDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &securityPartnerProvidersDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return SecurityPartnerProvidersDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := SecurityPartnerProvidersDeletePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SecurityPartnerProvidersDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -243,17 +243,17 @@ func (client *SecurityPartnerProvidersClient) deleteHandleError(resp *azcore.Res
 
 // Get - Gets the specified Security Partner Provider.
 // If the operation fails it returns the *CloudError error type.
-func (client *SecurityPartnerProvidersClient) Get(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, options *SecurityPartnerProvidersGetOptions) (SecurityPartnerProviderResponse, error) {
+func (client *SecurityPartnerProvidersClient) Get(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, options *SecurityPartnerProvidersGetOptions) (SecurityPartnerProvidersGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, securityPartnerProviderName, options)
 	if err != nil {
-		return SecurityPartnerProviderResponse{}, err
+		return SecurityPartnerProvidersGetResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return SecurityPartnerProviderResponse{}, err
+		return SecurityPartnerProvidersGetResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return SecurityPartnerProviderResponse{}, client.getHandleError(resp)
+		return SecurityPartnerProvidersGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -286,12 +286,12 @@ func (client *SecurityPartnerProvidersClient) getCreateRequest(ctx context.Conte
 }
 
 // getHandleResponse handles the Get response.
-func (client *SecurityPartnerProvidersClient) getHandleResponse(resp *azcore.Response) (SecurityPartnerProviderResponse, error) {
-	var val *SecurityPartnerProvider
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return SecurityPartnerProviderResponse{}, err
+func (client *SecurityPartnerProvidersClient) getHandleResponse(resp *azcore.Response) (SecurityPartnerProvidersGetResponse, error) {
+	result := SecurityPartnerProvidersGetResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.SecurityPartnerProvider); err != nil {
+		return SecurityPartnerProvidersGetResponse{}, err
 	}
-	return SecurityPartnerProviderResponse{RawResponse: resp.Response, SecurityPartnerProvider: val}, nil
+	return result, nil
 }
 
 // getHandleError handles the Get error response.
@@ -309,18 +309,15 @@ func (client *SecurityPartnerProvidersClient) getHandleError(resp *azcore.Respon
 
 // List - Gets all the Security Partner Providers in a subscription.
 // If the operation fails it returns the *CloudError error type.
-func (client *SecurityPartnerProvidersClient) List(options *SecurityPartnerProvidersListOptions) SecurityPartnerProviderListResultPager {
-	return &securityPartnerProviderListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *SecurityPartnerProvidersClient) List(options *SecurityPartnerProvidersListOptions) SecurityPartnerProvidersListPager {
+	return &securityPartnerProvidersListPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, options)
 		},
-		responder: client.listHandleResponse,
-		errorer:   client.listHandleError,
-		advancer: func(ctx context.Context, resp SecurityPartnerProviderListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp SecurityPartnerProvidersListResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.SecurityPartnerProviderListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -344,12 +341,12 @@ func (client *SecurityPartnerProvidersClient) listCreateRequest(ctx context.Cont
 }
 
 // listHandleResponse handles the List response.
-func (client *SecurityPartnerProvidersClient) listHandleResponse(resp *azcore.Response) (SecurityPartnerProviderListResultResponse, error) {
-	var val *SecurityPartnerProviderListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return SecurityPartnerProviderListResultResponse{}, err
+func (client *SecurityPartnerProvidersClient) listHandleResponse(resp *azcore.Response) (SecurityPartnerProvidersListResponse, error) {
+	result := SecurityPartnerProvidersListResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.SecurityPartnerProviderListResult); err != nil {
+		return SecurityPartnerProvidersListResponse{}, err
 	}
-	return SecurityPartnerProviderListResultResponse{RawResponse: resp.Response, SecurityPartnerProviderListResult: val}, nil
+	return result, nil
 }
 
 // listHandleError handles the List error response.
@@ -367,18 +364,15 @@ func (client *SecurityPartnerProvidersClient) listHandleError(resp *azcore.Respo
 
 // ListByResourceGroup - Lists all Security Partner Providers in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *SecurityPartnerProvidersClient) ListByResourceGroup(resourceGroupName string, options *SecurityPartnerProvidersListByResourceGroupOptions) SecurityPartnerProviderListResultPager {
-	return &securityPartnerProviderListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *SecurityPartnerProvidersClient) ListByResourceGroup(resourceGroupName string, options *SecurityPartnerProvidersListByResourceGroupOptions) SecurityPartnerProvidersListByResourceGroupPager {
+	return &securityPartnerProvidersListByResourceGroupPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
 		},
-		responder: client.listByResourceGroupHandleResponse,
-		errorer:   client.listByResourceGroupHandleError,
-		advancer: func(ctx context.Context, resp SecurityPartnerProviderListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp SecurityPartnerProvidersListByResourceGroupResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.SecurityPartnerProviderListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -406,12 +400,12 @@ func (client *SecurityPartnerProvidersClient) listByResourceGroupCreateRequest(c
 }
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
-func (client *SecurityPartnerProvidersClient) listByResourceGroupHandleResponse(resp *azcore.Response) (SecurityPartnerProviderListResultResponse, error) {
-	var val *SecurityPartnerProviderListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return SecurityPartnerProviderListResultResponse{}, err
+func (client *SecurityPartnerProvidersClient) listByResourceGroupHandleResponse(resp *azcore.Response) (SecurityPartnerProvidersListByResourceGroupResponse, error) {
+	result := SecurityPartnerProvidersListByResourceGroupResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.SecurityPartnerProviderListResult); err != nil {
+		return SecurityPartnerProvidersListByResourceGroupResponse{}, err
 	}
-	return SecurityPartnerProviderListResultResponse{RawResponse: resp.Response, SecurityPartnerProviderListResult: val}, nil
+	return result, nil
 }
 
 // listByResourceGroupHandleError handles the ListByResourceGroup error response.
@@ -429,17 +423,17 @@ func (client *SecurityPartnerProvidersClient) listByResourceGroupHandleError(res
 
 // UpdateTags - Updates tags of a Security Partner Provider resource.
 // If the operation fails it returns the *CloudError error type.
-func (client *SecurityPartnerProvidersClient) UpdateTags(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, parameters TagsObject, options *SecurityPartnerProvidersUpdateTagsOptions) (SecurityPartnerProviderResponse, error) {
+func (client *SecurityPartnerProvidersClient) UpdateTags(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, parameters TagsObject, options *SecurityPartnerProvidersUpdateTagsOptions) (SecurityPartnerProvidersUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, securityPartnerProviderName, parameters, options)
 	if err != nil {
-		return SecurityPartnerProviderResponse{}, err
+		return SecurityPartnerProvidersUpdateTagsResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return SecurityPartnerProviderResponse{}, err
+		return SecurityPartnerProvidersUpdateTagsResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return SecurityPartnerProviderResponse{}, client.updateTagsHandleError(resp)
+		return SecurityPartnerProvidersUpdateTagsResponse{}, client.updateTagsHandleError(resp)
 	}
 	return client.updateTagsHandleResponse(resp)
 }
@@ -472,12 +466,12 @@ func (client *SecurityPartnerProvidersClient) updateTagsCreateRequest(ctx contex
 }
 
 // updateTagsHandleResponse handles the UpdateTags response.
-func (client *SecurityPartnerProvidersClient) updateTagsHandleResponse(resp *azcore.Response) (SecurityPartnerProviderResponse, error) {
-	var val *SecurityPartnerProvider
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return SecurityPartnerProviderResponse{}, err
+func (client *SecurityPartnerProvidersClient) updateTagsHandleResponse(resp *azcore.Response) (SecurityPartnerProvidersUpdateTagsResponse, error) {
+	result := SecurityPartnerProvidersUpdateTagsResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.SecurityPartnerProvider); err != nil {
+		return SecurityPartnerProvidersUpdateTagsResponse{}, err
 	}
-	return SecurityPartnerProviderResponse{RawResponse: resp.Response, SecurityPartnerProvider: val}, nil
+	return result, nil
 }
 
 // updateTagsHandleError handles the UpdateTags error response.

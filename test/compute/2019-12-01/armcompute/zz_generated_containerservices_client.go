@@ -32,47 +32,47 @@ func NewContainerServicesClient(con *armcore.Connection, subscriptionID string) 
 
 // BeginCreateOrUpdate - Creates or updates a container service with the specified configuration of orchestrator, masters, and agents.
 // If the operation fails it returns a generic error.
-func (client *ContainerServicesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, containerServiceName string, parameters ContainerService, options *ContainerServicesBeginCreateOrUpdateOptions) (ContainerServicePollerResponse, error) {
+func (client *ContainerServicesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, containerServiceName string, parameters ContainerService, options *ContainerServicesBeginCreateOrUpdateOptions) (ContainerServicesCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, containerServiceName, parameters, options)
 	if err != nil {
-		return ContainerServicePollerResponse{}, err
+		return ContainerServicesCreateOrUpdatePollerResponse{}, err
 	}
-	result := ContainerServicePollerResponse{
+	result := ContainerServicesCreateOrUpdatePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("ContainerServicesClient.CreateOrUpdate", "", resp, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return ContainerServicePollerResponse{}, err
+		return ContainerServicesCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &containerServicePoller{
+	poller := &containerServicesCreateOrUpdatePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ContainerServiceResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ContainerServicesCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new ContainerServicePoller from the specified resume token.
-// token - The value must come from a previous call to ContainerServicePoller.ResumeToken().
-func (client *ContainerServicesClient) ResumeCreateOrUpdate(ctx context.Context, token string) (ContainerServicePollerResponse, error) {
+// ResumeCreateOrUpdate creates a new ContainerServicesCreateOrUpdatePoller from the specified resume token.
+// token - The value must come from a previous call to ContainerServicesCreateOrUpdatePoller.ResumeToken().
+func (client *ContainerServicesClient) ResumeCreateOrUpdate(ctx context.Context, token string) (ContainerServicesCreateOrUpdatePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("ContainerServicesClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return ContainerServicePollerResponse{}, err
+		return ContainerServicesCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &containerServicePoller{
+	poller := &containerServicesCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return ContainerServicePollerResponse{}, err
+		return ContainerServicesCreateOrUpdatePollerResponse{}, err
 	}
-	result := ContainerServicePollerResponse{
+	result := ContainerServicesCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ContainerServiceResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ContainerServicesCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -139,47 +139,47 @@ func (client *ContainerServicesClient) createOrUpdateHandleError(resp *azcore.Re
 // storage accounts, VMs, and availability sets. All the other resources created with the container service are part of the same resource group and can
 // be deleted individually.
 // If the operation fails it returns a generic error.
-func (client *ContainerServicesClient) BeginDelete(ctx context.Context, resourceGroupName string, containerServiceName string, options *ContainerServicesBeginDeleteOptions) (HTTPPollerResponse, error) {
+func (client *ContainerServicesClient) BeginDelete(ctx context.Context, resourceGroupName string, containerServiceName string, options *ContainerServicesBeginDeleteOptions) (ContainerServicesDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, containerServiceName, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return ContainerServicesDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := ContainerServicesDeletePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("ContainerServicesClient.Delete", "", resp, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return ContainerServicesDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &containerServicesDeletePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ContainerServicesDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeDelete creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *ContainerServicesClient) ResumeDelete(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeDelete creates a new ContainerServicesDeletePoller from the specified resume token.
+// token - The value must come from a previous call to ContainerServicesDeletePoller.ResumeToken().
+func (client *ContainerServicesClient) ResumeDelete(ctx context.Context, token string) (ContainerServicesDeletePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("ContainerServicesClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return ContainerServicesDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &containerServicesDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return ContainerServicesDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := ContainerServicesDeletePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ContainerServicesDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -247,17 +247,17 @@ func (client *ContainerServicesClient) deleteHandleError(resp *azcore.Response) 
 // state, orchestrator, number of masters and
 // agents, and FQDNs of masters and agents.
 // If the operation fails it returns a generic error.
-func (client *ContainerServicesClient) Get(ctx context.Context, resourceGroupName string, containerServiceName string, options *ContainerServicesGetOptions) (ContainerServiceResponse, error) {
+func (client *ContainerServicesClient) Get(ctx context.Context, resourceGroupName string, containerServiceName string, options *ContainerServicesGetOptions) (ContainerServicesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, containerServiceName, options)
 	if err != nil {
-		return ContainerServiceResponse{}, err
+		return ContainerServicesGetResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return ContainerServiceResponse{}, err
+		return ContainerServicesGetResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return ContainerServiceResponse{}, client.getHandleError(resp)
+		return ContainerServicesGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -290,12 +290,12 @@ func (client *ContainerServicesClient) getCreateRequest(ctx context.Context, res
 }
 
 // getHandleResponse handles the Get response.
-func (client *ContainerServicesClient) getHandleResponse(resp *azcore.Response) (ContainerServiceResponse, error) {
-	var val *ContainerService
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ContainerServiceResponse{}, err
+func (client *ContainerServicesClient) getHandleResponse(resp *azcore.Response) (ContainerServicesGetResponse, error) {
+	result := ContainerServicesGetResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.ContainerService); err != nil {
+		return ContainerServicesGetResponse{}, err
 	}
-	return ContainerServiceResponse{RawResponse: resp.Response, ContainerService: val}, nil
+	return result, nil
 }
 
 // getHandleError handles the Get error response.
@@ -314,18 +314,15 @@ func (client *ContainerServicesClient) getHandleError(resp *azcore.Response) err
 // number of masters and agents, and FQDNs of
 // masters and agents.
 // If the operation fails it returns a generic error.
-func (client *ContainerServicesClient) List(options *ContainerServicesListOptions) ContainerServiceListResultPager {
-	return &containerServiceListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *ContainerServicesClient) List(options *ContainerServicesListOptions) ContainerServicesListPager {
+	return &containerServicesListPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, options)
 		},
-		responder: client.listHandleResponse,
-		errorer:   client.listHandleError,
-		advancer: func(ctx context.Context, resp ContainerServiceListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp ContainerServicesListResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ContainerServiceListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -349,12 +346,12 @@ func (client *ContainerServicesClient) listCreateRequest(ctx context.Context, op
 }
 
 // listHandleResponse handles the List response.
-func (client *ContainerServicesClient) listHandleResponse(resp *azcore.Response) (ContainerServiceListResultResponse, error) {
-	var val *ContainerServiceListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ContainerServiceListResultResponse{}, err
+func (client *ContainerServicesClient) listHandleResponse(resp *azcore.Response) (ContainerServicesListResponse, error) {
+	result := ContainerServicesListResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.ContainerServiceListResult); err != nil {
+		return ContainerServicesListResponse{}, err
 	}
-	return ContainerServiceListResultResponse{RawResponse: resp.Response, ContainerServiceListResult: val}, nil
+	return result, nil
 }
 
 // listHandleError handles the List error response.
@@ -373,18 +370,15 @@ func (client *ContainerServicesClient) listHandleError(resp *azcore.Response) er
 // service including state, orchestrator, number of masters and
 // agents, and FQDNs of masters and agents.
 // If the operation fails it returns a generic error.
-func (client *ContainerServicesClient) ListByResourceGroup(resourceGroupName string, options *ContainerServicesListByResourceGroupOptions) ContainerServiceListResultPager {
-	return &containerServiceListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *ContainerServicesClient) ListByResourceGroup(resourceGroupName string, options *ContainerServicesListByResourceGroupOptions) ContainerServicesListByResourceGroupPager {
+	return &containerServicesListByResourceGroupPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
 		},
-		responder: client.listByResourceGroupHandleResponse,
-		errorer:   client.listByResourceGroupHandleError,
-		advancer: func(ctx context.Context, resp ContainerServiceListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp ContainerServicesListByResourceGroupResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ContainerServiceListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -412,12 +406,12 @@ func (client *ContainerServicesClient) listByResourceGroupCreateRequest(ctx cont
 }
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
-func (client *ContainerServicesClient) listByResourceGroupHandleResponse(resp *azcore.Response) (ContainerServiceListResultResponse, error) {
-	var val *ContainerServiceListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ContainerServiceListResultResponse{}, err
+func (client *ContainerServicesClient) listByResourceGroupHandleResponse(resp *azcore.Response) (ContainerServicesListByResourceGroupResponse, error) {
+	result := ContainerServicesListByResourceGroupResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.ContainerServiceListResult); err != nil {
+		return ContainerServicesListByResourceGroupResponse{}, err
 	}
-	return ContainerServiceListResultResponse{RawResponse: resp.Response, ContainerServiceListResult: val}, nil
+	return result, nil
 }
 
 // listByResourceGroupHandleError handles the ListByResourceGroup error response.

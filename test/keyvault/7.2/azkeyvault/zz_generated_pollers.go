@@ -14,226 +14,226 @@ import (
 	"time"
 )
 
-// FullBackupOperationPoller provides polling facilities until the operation reaches a terminal state.
-type FullBackupOperationPoller interface {
+// HSMSecurityDomainDownloadPoller provides polling facilities until the operation reaches a terminal state.
+type HSMSecurityDomainDownloadPoller interface {
 	azcore.Poller
 	// FinalResponse performs a final GET to the service and returns the final response
 	// for the polling operation. If there is an error performing the final GET then an error is returned.
-	// If the final GET succeeded then the final FullBackupOperationResponse will be returned.
-	FinalResponse(ctx context.Context) (FullBackupOperationResponse, error)
+	// If the final GET succeeded then the final HSMSecurityDomainDownloadResponse will be returned.
+	FinalResponse(ctx context.Context) (HSMSecurityDomainDownloadResponse, error)
 }
 
-type fullBackupOperationPoller struct {
+type hsmSecurityDomainDownloadPoller struct {
 	pt *azcore.LROPoller
 }
 
-func (p *fullBackupOperationPoller) Done() bool {
+func (p *hsmSecurityDomainDownloadPoller) Done() bool {
 	return p.pt.Done()
 }
 
-func (p *fullBackupOperationPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *hsmSecurityDomainDownloadPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx)
 }
 
-func (p *fullBackupOperationPoller) FinalResponse(ctx context.Context) (FullBackupOperationResponse, error) {
-	respType := FullBackupOperationResponse{FullBackupOperation: &FullBackupOperation{}}
-	resp, err := p.pt.FinalResponse(ctx, respType.FullBackupOperation)
+func (p *hsmSecurityDomainDownloadPoller) FinalResponse(ctx context.Context) (HSMSecurityDomainDownloadResponse, error) {
+	respType := HSMSecurityDomainDownloadResponse{}
+	resp, err := p.pt.FinalResponse(ctx, &respType.SecurityDomainObject)
 	if err != nil {
-		return FullBackupOperationResponse{}, err
+		return HSMSecurityDomainDownloadResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
 }
 
-func (p *fullBackupOperationPoller) ResumeToken() (string, error) {
+func (p *hsmSecurityDomainDownloadPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-func (p *fullBackupOperationPoller) pollUntilDone(ctx context.Context, freq time.Duration) (FullBackupOperationResponse, error) {
-	respType := FullBackupOperationResponse{FullBackupOperation: &FullBackupOperation{}}
-	resp, err := p.pt.PollUntilDone(ctx, freq, respType.FullBackupOperation)
+func (p *hsmSecurityDomainDownloadPoller) pollUntilDone(ctx context.Context, freq time.Duration) (HSMSecurityDomainDownloadResponse, error) {
+	respType := HSMSecurityDomainDownloadResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.SecurityDomainObject)
 	if err != nil {
-		return FullBackupOperationResponse{}, err
+		return HSMSecurityDomainDownloadResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
 }
 
-// RestoreOperationPoller provides polling facilities until the operation reaches a terminal state.
-type RestoreOperationPoller interface {
+// HSMSecurityDomainUploadPoller provides polling facilities until the operation reaches a terminal state.
+type HSMSecurityDomainUploadPoller interface {
 	azcore.Poller
 	// FinalResponse performs a final GET to the service and returns the final response
 	// for the polling operation. If there is an error performing the final GET then an error is returned.
-	// If the final GET succeeded then the final RestoreOperationResponse will be returned.
-	FinalResponse(ctx context.Context) (RestoreOperationResponse, error)
+	// If the final GET succeeded then the final HSMSecurityDomainUploadResponse will be returned.
+	FinalResponse(ctx context.Context) (HSMSecurityDomainUploadResponse, error)
 }
 
-type restoreOperationPoller struct {
+type hsmSecurityDomainUploadPoller struct {
 	pt *azcore.LROPoller
 }
 
-func (p *restoreOperationPoller) Done() bool {
+func (p *hsmSecurityDomainUploadPoller) Done() bool {
 	return p.pt.Done()
 }
 
-func (p *restoreOperationPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *hsmSecurityDomainUploadPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx)
 }
 
-func (p *restoreOperationPoller) FinalResponse(ctx context.Context) (RestoreOperationResponse, error) {
-	respType := RestoreOperationResponse{RestoreOperation: &RestoreOperation{}}
-	resp, err := p.pt.FinalResponse(ctx, respType.RestoreOperation)
+func (p *hsmSecurityDomainUploadPoller) FinalResponse(ctx context.Context) (HSMSecurityDomainUploadResponse, error) {
+	respType := HSMSecurityDomainUploadResponse{}
+	resp, err := p.pt.FinalResponse(ctx, &respType.SecurityDomainOperationStatus)
 	if err != nil {
-		return RestoreOperationResponse{}, err
+		return HSMSecurityDomainUploadResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
 }
 
-func (p *restoreOperationPoller) ResumeToken() (string, error) {
+func (p *hsmSecurityDomainUploadPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-func (p *restoreOperationPoller) pollUntilDone(ctx context.Context, freq time.Duration) (RestoreOperationResponse, error) {
-	respType := RestoreOperationResponse{RestoreOperation: &RestoreOperation{}}
-	resp, err := p.pt.PollUntilDone(ctx, freq, respType.RestoreOperation)
+func (p *hsmSecurityDomainUploadPoller) pollUntilDone(ctx context.Context, freq time.Duration) (HSMSecurityDomainUploadResponse, error) {
+	respType := HSMSecurityDomainUploadResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.SecurityDomainOperationStatus)
 	if err != nil {
-		return RestoreOperationResponse{}, err
+		return HSMSecurityDomainUploadResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
 }
 
-// SecurityDomainObjectPoller provides polling facilities until the operation reaches a terminal state.
-type SecurityDomainObjectPoller interface {
+// KeyVaultClientFullBackupPoller provides polling facilities until the operation reaches a terminal state.
+type KeyVaultClientFullBackupPoller interface {
 	azcore.Poller
 	// FinalResponse performs a final GET to the service and returns the final response
 	// for the polling operation. If there is an error performing the final GET then an error is returned.
-	// If the final GET succeeded then the final SecurityDomainObjectResponse will be returned.
-	FinalResponse(ctx context.Context) (SecurityDomainObjectResponse, error)
+	// If the final GET succeeded then the final KeyVaultClientFullBackupResponse will be returned.
+	FinalResponse(ctx context.Context) (KeyVaultClientFullBackupResponse, error)
 }
 
-type securityDomainObjectPoller struct {
+type keyVaultClientFullBackupPoller struct {
 	pt *azcore.LROPoller
 }
 
-func (p *securityDomainObjectPoller) Done() bool {
+func (p *keyVaultClientFullBackupPoller) Done() bool {
 	return p.pt.Done()
 }
 
-func (p *securityDomainObjectPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *keyVaultClientFullBackupPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx)
 }
 
-func (p *securityDomainObjectPoller) FinalResponse(ctx context.Context) (SecurityDomainObjectResponse, error) {
-	respType := SecurityDomainObjectResponse{SecurityDomainObject: &SecurityDomainObject{}}
-	resp, err := p.pt.FinalResponse(ctx, respType.SecurityDomainObject)
+func (p *keyVaultClientFullBackupPoller) FinalResponse(ctx context.Context) (KeyVaultClientFullBackupResponse, error) {
+	respType := KeyVaultClientFullBackupResponse{}
+	resp, err := p.pt.FinalResponse(ctx, &respType.FullBackupOperation)
 	if err != nil {
-		return SecurityDomainObjectResponse{}, err
+		return KeyVaultClientFullBackupResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
 }
 
-func (p *securityDomainObjectPoller) ResumeToken() (string, error) {
+func (p *keyVaultClientFullBackupPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-func (p *securityDomainObjectPoller) pollUntilDone(ctx context.Context, freq time.Duration) (SecurityDomainObjectResponse, error) {
-	respType := SecurityDomainObjectResponse{SecurityDomainObject: &SecurityDomainObject{}}
-	resp, err := p.pt.PollUntilDone(ctx, freq, respType.SecurityDomainObject)
+func (p *keyVaultClientFullBackupPoller) pollUntilDone(ctx context.Context, freq time.Duration) (KeyVaultClientFullBackupResponse, error) {
+	respType := KeyVaultClientFullBackupResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.FullBackupOperation)
 	if err != nil {
-		return SecurityDomainObjectResponse{}, err
+		return KeyVaultClientFullBackupResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
 }
 
-// SecurityDomainOperationStatusPoller provides polling facilities until the operation reaches a terminal state.
-type SecurityDomainOperationStatusPoller interface {
+// KeyVaultClientFullRestoreOperationPoller provides polling facilities until the operation reaches a terminal state.
+type KeyVaultClientFullRestoreOperationPoller interface {
 	azcore.Poller
 	// FinalResponse performs a final GET to the service and returns the final response
 	// for the polling operation. If there is an error performing the final GET then an error is returned.
-	// If the final GET succeeded then the final SecurityDomainOperationStatusResponse will be returned.
-	FinalResponse(ctx context.Context) (SecurityDomainOperationStatusResponse, error)
+	// If the final GET succeeded then the final KeyVaultClientFullRestoreOperationResponse will be returned.
+	FinalResponse(ctx context.Context) (KeyVaultClientFullRestoreOperationResponse, error)
 }
 
-type securityDomainOperationStatusPoller struct {
+type keyVaultClientFullRestoreOperationPoller struct {
 	pt *azcore.LROPoller
 }
 
-func (p *securityDomainOperationStatusPoller) Done() bool {
+func (p *keyVaultClientFullRestoreOperationPoller) Done() bool {
 	return p.pt.Done()
 }
 
-func (p *securityDomainOperationStatusPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *keyVaultClientFullRestoreOperationPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx)
 }
 
-func (p *securityDomainOperationStatusPoller) FinalResponse(ctx context.Context) (SecurityDomainOperationStatusResponse, error) {
-	respType := SecurityDomainOperationStatusResponse{SecurityDomainOperationStatus: &SecurityDomainOperationStatus{}}
-	resp, err := p.pt.FinalResponse(ctx, respType.SecurityDomainOperationStatus)
+func (p *keyVaultClientFullRestoreOperationPoller) FinalResponse(ctx context.Context) (KeyVaultClientFullRestoreOperationResponse, error) {
+	respType := KeyVaultClientFullRestoreOperationResponse{}
+	resp, err := p.pt.FinalResponse(ctx, &respType.RestoreOperation)
 	if err != nil {
-		return SecurityDomainOperationStatusResponse{}, err
+		return KeyVaultClientFullRestoreOperationResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
 }
 
-func (p *securityDomainOperationStatusPoller) ResumeToken() (string, error) {
+func (p *keyVaultClientFullRestoreOperationPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-func (p *securityDomainOperationStatusPoller) pollUntilDone(ctx context.Context, freq time.Duration) (SecurityDomainOperationStatusResponse, error) {
-	respType := SecurityDomainOperationStatusResponse{SecurityDomainOperationStatus: &SecurityDomainOperationStatus{}}
-	resp, err := p.pt.PollUntilDone(ctx, freq, respType.SecurityDomainOperationStatus)
+func (p *keyVaultClientFullRestoreOperationPoller) pollUntilDone(ctx context.Context, freq time.Duration) (KeyVaultClientFullRestoreOperationResponse, error) {
+	respType := KeyVaultClientFullRestoreOperationResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.RestoreOperation)
 	if err != nil {
-		return SecurityDomainOperationStatusResponse{}, err
+		return KeyVaultClientFullRestoreOperationResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
 }
 
-// SelectiveKeyRestoreOperationPoller provides polling facilities until the operation reaches a terminal state.
-type SelectiveKeyRestoreOperationPoller interface {
+// KeyVaultClientSelectiveKeyRestoreOperationPoller provides polling facilities until the operation reaches a terminal state.
+type KeyVaultClientSelectiveKeyRestoreOperationPoller interface {
 	azcore.Poller
 	// FinalResponse performs a final GET to the service and returns the final response
 	// for the polling operation. If there is an error performing the final GET then an error is returned.
-	// If the final GET succeeded then the final SelectiveKeyRestoreOperationResponse will be returned.
-	FinalResponse(ctx context.Context) (SelectiveKeyRestoreOperationResponse, error)
+	// If the final GET succeeded then the final KeyVaultClientSelectiveKeyRestoreOperationResponse will be returned.
+	FinalResponse(ctx context.Context) (KeyVaultClientSelectiveKeyRestoreOperationResponse, error)
 }
 
-type selectiveKeyRestoreOperationPoller struct {
+type keyVaultClientSelectiveKeyRestoreOperationPoller struct {
 	pt *azcore.LROPoller
 }
 
-func (p *selectiveKeyRestoreOperationPoller) Done() bool {
+func (p *keyVaultClientSelectiveKeyRestoreOperationPoller) Done() bool {
 	return p.pt.Done()
 }
 
-func (p *selectiveKeyRestoreOperationPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *keyVaultClientSelectiveKeyRestoreOperationPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx)
 }
 
-func (p *selectiveKeyRestoreOperationPoller) FinalResponse(ctx context.Context) (SelectiveKeyRestoreOperationResponse, error) {
-	respType := SelectiveKeyRestoreOperationResponse{SelectiveKeyRestoreOperation: &SelectiveKeyRestoreOperation{}}
-	resp, err := p.pt.FinalResponse(ctx, respType.SelectiveKeyRestoreOperation)
+func (p *keyVaultClientSelectiveKeyRestoreOperationPoller) FinalResponse(ctx context.Context) (KeyVaultClientSelectiveKeyRestoreOperationResponse, error) {
+	respType := KeyVaultClientSelectiveKeyRestoreOperationResponse{}
+	resp, err := p.pt.FinalResponse(ctx, &respType.SelectiveKeyRestoreOperation)
 	if err != nil {
-		return SelectiveKeyRestoreOperationResponse{}, err
+		return KeyVaultClientSelectiveKeyRestoreOperationResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
 }
 
-func (p *selectiveKeyRestoreOperationPoller) ResumeToken() (string, error) {
+func (p *keyVaultClientSelectiveKeyRestoreOperationPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-func (p *selectiveKeyRestoreOperationPoller) pollUntilDone(ctx context.Context, freq time.Duration) (SelectiveKeyRestoreOperationResponse, error) {
-	respType := SelectiveKeyRestoreOperationResponse{SelectiveKeyRestoreOperation: &SelectiveKeyRestoreOperation{}}
-	resp, err := p.pt.PollUntilDone(ctx, freq, respType.SelectiveKeyRestoreOperation)
+func (p *keyVaultClientSelectiveKeyRestoreOperationPoller) pollUntilDone(ctx context.Context, freq time.Duration) (KeyVaultClientSelectiveKeyRestoreOperationResponse, error) {
+	respType := KeyVaultClientSelectiveKeyRestoreOperationResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.SelectiveKeyRestoreOperation)
 	if err != nil {
-		return SelectiveKeyRestoreOperationResponse{}, err
+		return KeyVaultClientSelectiveKeyRestoreOperationResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil

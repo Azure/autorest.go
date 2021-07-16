@@ -33,47 +33,47 @@ func NewVPNSitesConfigurationClient(con *armcore.Connection, subscriptionID stri
 
 // BeginDownload - Gives the sas-url to download the configurations for vpn-sites in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *VPNSitesConfigurationClient) BeginDownload(ctx context.Context, resourceGroupName string, virtualWANName string, request GetVPNSitesConfigurationRequest, options *VPNSitesConfigurationBeginDownloadOptions) (HTTPPollerResponse, error) {
+func (client *VPNSitesConfigurationClient) BeginDownload(ctx context.Context, resourceGroupName string, virtualWANName string, request GetVPNSitesConfigurationRequest, options *VPNSitesConfigurationBeginDownloadOptions) (VPNSitesConfigurationDownloadPollerResponse, error) {
 	resp, err := client.download(ctx, resourceGroupName, virtualWANName, request, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return VPNSitesConfigurationDownloadPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := VPNSitesConfigurationDownloadPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("VPNSitesConfigurationClient.Download", "location", resp, client.con.Pipeline(), client.downloadHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return VPNSitesConfigurationDownloadPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &vpnSitesConfigurationDownloadPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VPNSitesConfigurationDownloadResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeDownload creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *VPNSitesConfigurationClient) ResumeDownload(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeDownload creates a new VPNSitesConfigurationDownloadPoller from the specified resume token.
+// token - The value must come from a previous call to VPNSitesConfigurationDownloadPoller.ResumeToken().
+func (client *VPNSitesConfigurationClient) ResumeDownload(ctx context.Context, token string) (VPNSitesConfigurationDownloadPollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("VPNSitesConfigurationClient.Download", token, client.con.Pipeline(), client.downloadHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return VPNSitesConfigurationDownloadPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &vpnSitesConfigurationDownloadPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return VPNSitesConfigurationDownloadPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := VPNSitesConfigurationDownloadPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VPNSitesConfigurationDownloadResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil

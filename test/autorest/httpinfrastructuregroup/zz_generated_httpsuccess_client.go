@@ -27,19 +27,19 @@ func NewHTTPSuccessClient(con *Connection) *HTTPSuccessClient {
 
 // Delete200 - Delete simple boolean value true returns 200
 // If the operation fails it returns the *Error error type.
-func (client *HTTPSuccessClient) Delete200(ctx context.Context, options *HTTPSuccessDelete200Options) (*http.Response, error) {
+func (client *HTTPSuccessClient) Delete200(ctx context.Context, options *HTTPSuccessDelete200Options) (HTTPSuccessDelete200Response, error) {
 	req, err := client.delete200CreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return HTTPSuccessDelete200Response{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HTTPSuccessDelete200Response{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.delete200HandleError(resp)
+		return HTTPSuccessDelete200Response{}, client.delete200HandleError(resp)
 	}
-	return resp.Response, nil
+	return HTTPSuccessDelete200Response{RawResponse: resp.Response}, nil
 }
 
 // delete200CreateRequest creates the Delete200 request.
@@ -69,19 +69,19 @@ func (client *HTTPSuccessClient) delete200HandleError(resp *azcore.Response) err
 
 // Delete202 - Delete true Boolean value in request returns 202 (accepted)
 // If the operation fails it returns the *Error error type.
-func (client *HTTPSuccessClient) Delete202(ctx context.Context, options *HTTPSuccessDelete202Options) (*http.Response, error) {
+func (client *HTTPSuccessClient) Delete202(ctx context.Context, options *HTTPSuccessDelete202Options) (HTTPSuccessDelete202Response, error) {
 	req, err := client.delete202CreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return HTTPSuccessDelete202Response{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HTTPSuccessDelete202Response{}, err
 	}
 	if !resp.HasStatusCode(http.StatusAccepted) {
-		return nil, client.delete202HandleError(resp)
+		return HTTPSuccessDelete202Response{}, client.delete202HandleError(resp)
 	}
-	return resp.Response, nil
+	return HTTPSuccessDelete202Response{RawResponse: resp.Response}, nil
 }
 
 // delete202CreateRequest creates the Delete202 request.
@@ -111,19 +111,19 @@ func (client *HTTPSuccessClient) delete202HandleError(resp *azcore.Response) err
 
 // Delete204 - Delete true Boolean value in request returns 204 (no content)
 // If the operation fails it returns the *Error error type.
-func (client *HTTPSuccessClient) Delete204(ctx context.Context, options *HTTPSuccessDelete204Options) (*http.Response, error) {
+func (client *HTTPSuccessClient) Delete204(ctx context.Context, options *HTTPSuccessDelete204Options) (HTTPSuccessDelete204Response, error) {
 	req, err := client.delete204CreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return HTTPSuccessDelete204Response{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HTTPSuccessDelete204Response{}, err
 	}
 	if !resp.HasStatusCode(http.StatusNoContent) {
-		return nil, client.delete204HandleError(resp)
+		return HTTPSuccessDelete204Response{}, client.delete204HandleError(resp)
 	}
-	return resp.Response, nil
+	return HTTPSuccessDelete204Response{RawResponse: resp.Response}, nil
 }
 
 // delete204CreateRequest creates the Delete204 request.
@@ -153,17 +153,17 @@ func (client *HTTPSuccessClient) delete204HandleError(resp *azcore.Response) err
 
 // Get200 - Get 200 success
 // If the operation fails it returns the *Error error type.
-func (client *HTTPSuccessClient) Get200(ctx context.Context, options *HTTPSuccessGet200Options) (BoolResponse, error) {
+func (client *HTTPSuccessClient) Get200(ctx context.Context, options *HTTPSuccessGet200Options) (HTTPSuccessGet200Response, error) {
 	req, err := client.get200CreateRequest(ctx, options)
 	if err != nil {
-		return BoolResponse{}, err
+		return HTTPSuccessGet200Response{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return BoolResponse{}, err
+		return HTTPSuccessGet200Response{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return BoolResponse{}, client.get200HandleError(resp)
+		return HTTPSuccessGet200Response{}, client.get200HandleError(resp)
 	}
 	return client.get200HandleResponse(resp)
 }
@@ -181,12 +181,12 @@ func (client *HTTPSuccessClient) get200CreateRequest(ctx context.Context, option
 }
 
 // get200HandleResponse handles the Get200 response.
-func (client *HTTPSuccessClient) get200HandleResponse(resp *azcore.Response) (BoolResponse, error) {
-	var val *bool
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return BoolResponse{}, err
+func (client *HTTPSuccessClient) get200HandleResponse(resp *azcore.Response) (HTTPSuccessGet200Response, error) {
+	result := HTTPSuccessGet200Response{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.Value); err != nil {
+		return HTTPSuccessGet200Response{}, err
 	}
-	return BoolResponse{RawResponse: resp.Response, Value: val}, nil
+	return result, nil
 }
 
 // get200HandleError handles the Get200 error response.
@@ -204,22 +204,20 @@ func (client *HTTPSuccessClient) get200HandleError(resp *azcore.Response) error 
 
 // Head200 - Return 200 status code if successful
 // If the operation fails it returns the *Error error type.
-func (client *HTTPSuccessClient) Head200(ctx context.Context, options *HTTPSuccessHead200Options) (BooleanResponse, error) {
+func (client *HTTPSuccessClient) Head200(ctx context.Context, options *HTTPSuccessHead200Options) (HTTPSuccessHead200Response, error) {
 	req, err := client.head200CreateRequest(ctx, options)
 	if err != nil {
-		return BooleanResponse{}, err
+		return HTTPSuccessHead200Response{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return BooleanResponse{}, err
+		return HTTPSuccessHead200Response{}, err
 	}
+	result := HTTPSuccessHead200Response{RawResponse: resp.Response}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
-		return BooleanResponse{RawResponse: resp.Response, Success: true}, nil
-	} else if resp.StatusCode >= 400 && resp.StatusCode < 500 {
-		return BooleanResponse{RawResponse: resp.Response, Success: false}, nil
-	} else {
-		return BooleanResponse{}, client.head200HandleError(resp)
+		result.Success = true
 	}
+	return result, nil
 }
 
 // head200CreateRequest creates the Head200 request.
@@ -234,37 +232,22 @@ func (client *HTTPSuccessClient) head200CreateRequest(ctx context.Context, optio
 	return req, nil
 }
 
-// head200HandleError handles the Head200 error response.
-func (client *HTTPSuccessClient) head200HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
-	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
-	}
-	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
-	}
-	return azcore.NewResponseError(&errType, resp.Response)
-}
-
 // Head204 - Return 204 status code if successful
 // If the operation fails it returns the *Error error type.
-func (client *HTTPSuccessClient) Head204(ctx context.Context, options *HTTPSuccessHead204Options) (BooleanResponse, error) {
+func (client *HTTPSuccessClient) Head204(ctx context.Context, options *HTTPSuccessHead204Options) (HTTPSuccessHead204Response, error) {
 	req, err := client.head204CreateRequest(ctx, options)
 	if err != nil {
-		return BooleanResponse{}, err
+		return HTTPSuccessHead204Response{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return BooleanResponse{}, err
+		return HTTPSuccessHead204Response{}, err
 	}
+	result := HTTPSuccessHead204Response{RawResponse: resp.Response}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
-		return BooleanResponse{RawResponse: resp.Response, Success: true}, nil
-	} else if resp.StatusCode >= 400 && resp.StatusCode < 500 {
-		return BooleanResponse{RawResponse: resp.Response, Success: false}, nil
-	} else {
-		return BooleanResponse{}, client.head204HandleError(resp)
+		result.Success = true
 	}
+	return result, nil
 }
 
 // head204CreateRequest creates the Head204 request.
@@ -279,37 +262,22 @@ func (client *HTTPSuccessClient) head204CreateRequest(ctx context.Context, optio
 	return req, nil
 }
 
-// head204HandleError handles the Head204 error response.
-func (client *HTTPSuccessClient) head204HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
-	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
-	}
-	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
-	}
-	return azcore.NewResponseError(&errType, resp.Response)
-}
-
 // Head404 - Return 404 status code
 // If the operation fails it returns the *Error error type.
-func (client *HTTPSuccessClient) Head404(ctx context.Context, options *HTTPSuccessHead404Options) (BooleanResponse, error) {
+func (client *HTTPSuccessClient) Head404(ctx context.Context, options *HTTPSuccessHead404Options) (HTTPSuccessHead404Response, error) {
 	req, err := client.head404CreateRequest(ctx, options)
 	if err != nil {
-		return BooleanResponse{}, err
+		return HTTPSuccessHead404Response{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return BooleanResponse{}, err
+		return HTTPSuccessHead404Response{}, err
 	}
+	result := HTTPSuccessHead404Response{RawResponse: resp.Response}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
-		return BooleanResponse{RawResponse: resp.Response, Success: true}, nil
-	} else if resp.StatusCode >= 400 && resp.StatusCode < 500 {
-		return BooleanResponse{RawResponse: resp.Response, Success: false}, nil
-	} else {
-		return BooleanResponse{}, client.head404HandleError(resp)
+		result.Success = true
 	}
+	return result, nil
 }
 
 // head404CreateRequest creates the Head404 request.
@@ -324,32 +292,19 @@ func (client *HTTPSuccessClient) head404CreateRequest(ctx context.Context, optio
 	return req, nil
 }
 
-// head404HandleError handles the Head404 error response.
-func (client *HTTPSuccessClient) head404HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
-	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
-	}
-	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
-	}
-	return azcore.NewResponseError(&errType, resp.Response)
-}
-
 // Options200 - Options 200 success
 // If the operation fails it returns the *Error error type.
-func (client *HTTPSuccessClient) Options200(ctx context.Context, options *HTTPSuccessOptions200Options) (BoolResponse, error) {
+func (client *HTTPSuccessClient) Options200(ctx context.Context, options *HTTPSuccessOptions200Options) (HTTPSuccessOptions200Response, error) {
 	req, err := client.options200CreateRequest(ctx, options)
 	if err != nil {
-		return BoolResponse{}, err
+		return HTTPSuccessOptions200Response{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return BoolResponse{}, err
+		return HTTPSuccessOptions200Response{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return BoolResponse{}, client.options200HandleError(resp)
+		return HTTPSuccessOptions200Response{}, client.options200HandleError(resp)
 	}
 	return client.options200HandleResponse(resp)
 }
@@ -367,12 +322,12 @@ func (client *HTTPSuccessClient) options200CreateRequest(ctx context.Context, op
 }
 
 // options200HandleResponse handles the Options200 response.
-func (client *HTTPSuccessClient) options200HandleResponse(resp *azcore.Response) (BoolResponse, error) {
-	var val *bool
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return BoolResponse{}, err
+func (client *HTTPSuccessClient) options200HandleResponse(resp *azcore.Response) (HTTPSuccessOptions200Response, error) {
+	result := HTTPSuccessOptions200Response{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.Value); err != nil {
+		return HTTPSuccessOptions200Response{}, err
 	}
-	return BoolResponse{RawResponse: resp.Response, Value: val}, nil
+	return result, nil
 }
 
 // options200HandleError handles the Options200 error response.
@@ -390,19 +345,19 @@ func (client *HTTPSuccessClient) options200HandleError(resp *azcore.Response) er
 
 // Patch200 - Patch true Boolean value in request returning 200
 // If the operation fails it returns the *Error error type.
-func (client *HTTPSuccessClient) Patch200(ctx context.Context, options *HTTPSuccessPatch200Options) (*http.Response, error) {
+func (client *HTTPSuccessClient) Patch200(ctx context.Context, options *HTTPSuccessPatch200Options) (HTTPSuccessPatch200Response, error) {
 	req, err := client.patch200CreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return HTTPSuccessPatch200Response{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HTTPSuccessPatch200Response{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.patch200HandleError(resp)
+		return HTTPSuccessPatch200Response{}, client.patch200HandleError(resp)
 	}
-	return resp.Response, nil
+	return HTTPSuccessPatch200Response{RawResponse: resp.Response}, nil
 }
 
 // patch200CreateRequest creates the Patch200 request.
@@ -432,19 +387,19 @@ func (client *HTTPSuccessClient) patch200HandleError(resp *azcore.Response) erro
 
 // Patch202 - Patch true Boolean value in request returns 202
 // If the operation fails it returns the *Error error type.
-func (client *HTTPSuccessClient) Patch202(ctx context.Context, options *HTTPSuccessPatch202Options) (*http.Response, error) {
+func (client *HTTPSuccessClient) Patch202(ctx context.Context, options *HTTPSuccessPatch202Options) (HTTPSuccessPatch202Response, error) {
 	req, err := client.patch202CreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return HTTPSuccessPatch202Response{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HTTPSuccessPatch202Response{}, err
 	}
 	if !resp.HasStatusCode(http.StatusAccepted) {
-		return nil, client.patch202HandleError(resp)
+		return HTTPSuccessPatch202Response{}, client.patch202HandleError(resp)
 	}
-	return resp.Response, nil
+	return HTTPSuccessPatch202Response{RawResponse: resp.Response}, nil
 }
 
 // patch202CreateRequest creates the Patch202 request.
@@ -474,19 +429,19 @@ func (client *HTTPSuccessClient) patch202HandleError(resp *azcore.Response) erro
 
 // Patch204 - Patch true Boolean value in request returns 204 (no content)
 // If the operation fails it returns the *Error error type.
-func (client *HTTPSuccessClient) Patch204(ctx context.Context, options *HTTPSuccessPatch204Options) (*http.Response, error) {
+func (client *HTTPSuccessClient) Patch204(ctx context.Context, options *HTTPSuccessPatch204Options) (HTTPSuccessPatch204Response, error) {
 	req, err := client.patch204CreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return HTTPSuccessPatch204Response{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HTTPSuccessPatch204Response{}, err
 	}
 	if !resp.HasStatusCode(http.StatusNoContent) {
-		return nil, client.patch204HandleError(resp)
+		return HTTPSuccessPatch204Response{}, client.patch204HandleError(resp)
 	}
-	return resp.Response, nil
+	return HTTPSuccessPatch204Response{RawResponse: resp.Response}, nil
 }
 
 // patch204CreateRequest creates the Patch204 request.
@@ -516,19 +471,19 @@ func (client *HTTPSuccessClient) patch204HandleError(resp *azcore.Response) erro
 
 // Post200 - Post bollean value true in request that returns a 200
 // If the operation fails it returns the *Error error type.
-func (client *HTTPSuccessClient) Post200(ctx context.Context, options *HTTPSuccessPost200Options) (*http.Response, error) {
+func (client *HTTPSuccessClient) Post200(ctx context.Context, options *HTTPSuccessPost200Options) (HTTPSuccessPost200Response, error) {
 	req, err := client.post200CreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return HTTPSuccessPost200Response{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HTTPSuccessPost200Response{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.post200HandleError(resp)
+		return HTTPSuccessPost200Response{}, client.post200HandleError(resp)
 	}
-	return resp.Response, nil
+	return HTTPSuccessPost200Response{RawResponse: resp.Response}, nil
 }
 
 // post200CreateRequest creates the Post200 request.
@@ -558,19 +513,19 @@ func (client *HTTPSuccessClient) post200HandleError(resp *azcore.Response) error
 
 // Post201 - Post true Boolean value in request returns 201 (Created)
 // If the operation fails it returns the *Error error type.
-func (client *HTTPSuccessClient) Post201(ctx context.Context, options *HTTPSuccessPost201Options) (*http.Response, error) {
+func (client *HTTPSuccessClient) Post201(ctx context.Context, options *HTTPSuccessPost201Options) (HTTPSuccessPost201Response, error) {
 	req, err := client.post201CreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return HTTPSuccessPost201Response{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HTTPSuccessPost201Response{}, err
 	}
 	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.post201HandleError(resp)
+		return HTTPSuccessPost201Response{}, client.post201HandleError(resp)
 	}
-	return resp.Response, nil
+	return HTTPSuccessPost201Response{RawResponse: resp.Response}, nil
 }
 
 // post201CreateRequest creates the Post201 request.
@@ -600,19 +555,19 @@ func (client *HTTPSuccessClient) post201HandleError(resp *azcore.Response) error
 
 // Post202 - Post true Boolean value in request returns 202 (Accepted)
 // If the operation fails it returns the *Error error type.
-func (client *HTTPSuccessClient) Post202(ctx context.Context, options *HTTPSuccessPost202Options) (*http.Response, error) {
+func (client *HTTPSuccessClient) Post202(ctx context.Context, options *HTTPSuccessPost202Options) (HTTPSuccessPost202Response, error) {
 	req, err := client.post202CreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return HTTPSuccessPost202Response{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HTTPSuccessPost202Response{}, err
 	}
 	if !resp.HasStatusCode(http.StatusAccepted) {
-		return nil, client.post202HandleError(resp)
+		return HTTPSuccessPost202Response{}, client.post202HandleError(resp)
 	}
-	return resp.Response, nil
+	return HTTPSuccessPost202Response{RawResponse: resp.Response}, nil
 }
 
 // post202CreateRequest creates the Post202 request.
@@ -642,19 +597,19 @@ func (client *HTTPSuccessClient) post202HandleError(resp *azcore.Response) error
 
 // Post204 - Post true Boolean value in request returns 204 (no content)
 // If the operation fails it returns the *Error error type.
-func (client *HTTPSuccessClient) Post204(ctx context.Context, options *HTTPSuccessPost204Options) (*http.Response, error) {
+func (client *HTTPSuccessClient) Post204(ctx context.Context, options *HTTPSuccessPost204Options) (HTTPSuccessPost204Response, error) {
 	req, err := client.post204CreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return HTTPSuccessPost204Response{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HTTPSuccessPost204Response{}, err
 	}
 	if !resp.HasStatusCode(http.StatusNoContent) {
-		return nil, client.post204HandleError(resp)
+		return HTTPSuccessPost204Response{}, client.post204HandleError(resp)
 	}
-	return resp.Response, nil
+	return HTTPSuccessPost204Response{RawResponse: resp.Response}, nil
 }
 
 // post204CreateRequest creates the Post204 request.
@@ -684,19 +639,19 @@ func (client *HTTPSuccessClient) post204HandleError(resp *azcore.Response) error
 
 // Put200 - Put boolean value true returning 200 success
 // If the operation fails it returns the *Error error type.
-func (client *HTTPSuccessClient) Put200(ctx context.Context, options *HTTPSuccessPut200Options) (*http.Response, error) {
+func (client *HTTPSuccessClient) Put200(ctx context.Context, options *HTTPSuccessPut200Options) (HTTPSuccessPut200Response, error) {
 	req, err := client.put200CreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return HTTPSuccessPut200Response{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HTTPSuccessPut200Response{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.put200HandleError(resp)
+		return HTTPSuccessPut200Response{}, client.put200HandleError(resp)
 	}
-	return resp.Response, nil
+	return HTTPSuccessPut200Response{RawResponse: resp.Response}, nil
 }
 
 // put200CreateRequest creates the Put200 request.
@@ -726,19 +681,19 @@ func (client *HTTPSuccessClient) put200HandleError(resp *azcore.Response) error 
 
 // Put201 - Put true Boolean value in request returns 201
 // If the operation fails it returns the *Error error type.
-func (client *HTTPSuccessClient) Put201(ctx context.Context, options *HTTPSuccessPut201Options) (*http.Response, error) {
+func (client *HTTPSuccessClient) Put201(ctx context.Context, options *HTTPSuccessPut201Options) (HTTPSuccessPut201Response, error) {
 	req, err := client.put201CreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return HTTPSuccessPut201Response{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HTTPSuccessPut201Response{}, err
 	}
 	if !resp.HasStatusCode(http.StatusCreated) {
-		return nil, client.put201HandleError(resp)
+		return HTTPSuccessPut201Response{}, client.put201HandleError(resp)
 	}
-	return resp.Response, nil
+	return HTTPSuccessPut201Response{RawResponse: resp.Response}, nil
 }
 
 // put201CreateRequest creates the Put201 request.
@@ -768,19 +723,19 @@ func (client *HTTPSuccessClient) put201HandleError(resp *azcore.Response) error 
 
 // Put202 - Put true Boolean value in request returns 202 (Accepted)
 // If the operation fails it returns the *Error error type.
-func (client *HTTPSuccessClient) Put202(ctx context.Context, options *HTTPSuccessPut202Options) (*http.Response, error) {
+func (client *HTTPSuccessClient) Put202(ctx context.Context, options *HTTPSuccessPut202Options) (HTTPSuccessPut202Response, error) {
 	req, err := client.put202CreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return HTTPSuccessPut202Response{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HTTPSuccessPut202Response{}, err
 	}
 	if !resp.HasStatusCode(http.StatusAccepted) {
-		return nil, client.put202HandleError(resp)
+		return HTTPSuccessPut202Response{}, client.put202HandleError(resp)
 	}
-	return resp.Response, nil
+	return HTTPSuccessPut202Response{RawResponse: resp.Response}, nil
 }
 
 // put202CreateRequest creates the Put202 request.
@@ -810,19 +765,19 @@ func (client *HTTPSuccessClient) put202HandleError(resp *azcore.Response) error 
 
 // Put204 - Put true Boolean value in request returns 204 (no content)
 // If the operation fails it returns the *Error error type.
-func (client *HTTPSuccessClient) Put204(ctx context.Context, options *HTTPSuccessPut204Options) (*http.Response, error) {
+func (client *HTTPSuccessClient) Put204(ctx context.Context, options *HTTPSuccessPut204Options) (HTTPSuccessPut204Response, error) {
 	req, err := client.put204CreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return HTTPSuccessPut204Response{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return HTTPSuccessPut204Response{}, err
 	}
 	if !resp.HasStatusCode(http.StatusNoContent) {
-		return nil, client.put204HandleError(resp)
+		return HTTPSuccessPut204Response{}, client.put204HandleError(resp)
 	}
-	return resp.Response, nil
+	return HTTPSuccessPut204Response{RawResponse: resp.Response}, nil
 }
 
 // put204CreateRequest creates the Put204 request.

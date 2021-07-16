@@ -31,7 +31,7 @@ func TestDoSomethingSuccess(t *testing.T) {
 		t.Fatal(err)
 	}
 	// bug in test server, route returns wrong JSON model so PetAction is empty
-	if r := cmp.Diff(result.PetAction, &PetAction{}); r != "" {
+	if r := cmp.Diff(result.PetAction, PetAction{}); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -109,7 +109,7 @@ func TestGetPetByIDSuccess1(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(result.Pet, &Pet{
+	if r := cmp.Diff(result.Pet, Pet{
 		Animal: Animal{
 			AniType: to.StringPtr("Dog"),
 		},

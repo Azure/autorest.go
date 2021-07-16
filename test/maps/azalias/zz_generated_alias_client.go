@@ -33,17 +33,17 @@ type aliasClient struct {
 // "lastUpdatedTimestamp":
 // "2020-02-13T21:19:22.123Z" }
 // If the operation fails it returns a generic error.
-func (client *aliasClient) Create(ctx context.Context, options *AliasCreateOptions) (AliasesCreateResponseResponse, error) {
+func (client *aliasClient) Create(ctx context.Context, options *AliasCreateOptions) (AliasCreateResponse, error) {
 	req, err := client.createCreateRequest(ctx, options)
 	if err != nil {
-		return AliasesCreateResponseResponse{}, err
+		return AliasCreateResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return AliasesCreateResponseResponse{}, err
+		return AliasCreateResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusCreated) {
-		return AliasesCreateResponseResponse{}, client.createHandleError(resp)
+		return AliasCreateResponse{}, client.createHandleError(resp)
 	}
 	return client.createHandleResponse(resp)
 }
@@ -67,14 +67,13 @@ func (client *aliasClient) createCreateRequest(ctx context.Context, options *Ali
 }
 
 // createHandleResponse handles the Create response.
-func (client *aliasClient) createHandleResponse(resp *azcore.Response) (AliasesCreateResponseResponse, error) {
-	var val *AliasesCreateResponse
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return AliasesCreateResponseResponse{}, err
-	}
-	result := AliasesCreateResponseResponse{RawResponse: resp.Response, AliasesCreateResponse: val}
+func (client *aliasClient) createHandleResponse(resp *azcore.Response) (AliasCreateResponse, error) {
+	result := AliasCreateResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("Access-Control-Expose-Headers"); val != "" {
 		result.AccessControlExposeHeaders = &val
+	}
+	if err := resp.UnmarshalAsJSON(&result.AliasesCreateResponse); err != nil {
+		return AliasCreateResponse{}, err
 	}
 	return result, nil
 }
@@ -108,18 +107,15 @@ func (client *aliasClient) createHandleError(resp *azcore.Response) error {
 // null, "lastUpdatedTimestamp":
 // "2020-02-18T19:53:33.123Z" } ] }
 // If the operation fails it returns a generic error.
-func (client *aliasClient) List(options *AliasListOptions) AliasListResponsePager {
-	return &aliasListResponsePager{
-		pipeline: client.con.Pipeline(),
+func (client *aliasClient) List(options *AliasListOptions) AliasListPager {
+	return &aliasListPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, options)
 		},
-		responder: client.listHandleResponse,
-		errorer:   client.listHandleError,
-		advancer: func(ctx context.Context, resp AliasListResponseResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp AliasListResponseEnvelope) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.AliasListResponse.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -139,12 +135,12 @@ func (client *aliasClient) listCreateRequest(ctx context.Context, options *Alias
 }
 
 // listHandleResponse handles the List response.
-func (client *aliasClient) listHandleResponse(resp *azcore.Response) (AliasListResponseResponse, error) {
-	var val *AliasListResponse
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return AliasListResponseResponse{}, err
+func (client *aliasClient) listHandleResponse(resp *azcore.Response) (AliasListResponseEnvelope, error) {
+	result := AliasListResponseEnvelope{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.AliasListResponse); err != nil {
+		return AliasListResponseEnvelope{}, err
 	}
-	return AliasListResponseResponse{RawResponse: resp.Response, AliasListResponse: val}, nil
+	return result, nil
 }
 
 // listHandleError handles the List error response.

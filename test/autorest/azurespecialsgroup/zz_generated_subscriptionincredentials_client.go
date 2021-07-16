@@ -32,19 +32,19 @@ func NewSubscriptionInCredentialsClient(con *Connection, subscriptionID string) 
 // PostMethodGlobalNotProvidedValid - POST method with subscriptionId modeled in credentials. Set the credential subscriptionId to '1234-5678-9012-3456'
 // to succeed
 // If the operation fails it returns the *Error error type.
-func (client *SubscriptionInCredentialsClient) PostMethodGlobalNotProvidedValid(ctx context.Context, options *SubscriptionInCredentialsPostMethodGlobalNotProvidedValidOptions) (*http.Response, error) {
+func (client *SubscriptionInCredentialsClient) PostMethodGlobalNotProvidedValid(ctx context.Context, options *SubscriptionInCredentialsPostMethodGlobalNotProvidedValidOptions) (SubscriptionInCredentialsPostMethodGlobalNotProvidedValidResponse, error) {
 	req, err := client.postMethodGlobalNotProvidedValidCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return SubscriptionInCredentialsPostMethodGlobalNotProvidedValidResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return SubscriptionInCredentialsPostMethodGlobalNotProvidedValidResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.postMethodGlobalNotProvidedValidHandleError(resp)
+		return SubscriptionInCredentialsPostMethodGlobalNotProvidedValidResponse{}, client.postMethodGlobalNotProvidedValidHandleError(resp)
 	}
-	return resp.Response, nil
+	return SubscriptionInCredentialsPostMethodGlobalNotProvidedValidResponse{RawResponse: resp.Response}, nil
 }
 
 // postMethodGlobalNotProvidedValidCreateRequest creates the PostMethodGlobalNotProvidedValid request.
@@ -82,19 +82,19 @@ func (client *SubscriptionInCredentialsClient) postMethodGlobalNotProvidedValidH
 // PostMethodGlobalNull - POST method with subscriptionId modeled in credentials. Set the credential subscriptionId to null, and client-side validation
 // should prevent you from making this call
 // If the operation fails it returns the *Error error type.
-func (client *SubscriptionInCredentialsClient) PostMethodGlobalNull(ctx context.Context, options *SubscriptionInCredentialsPostMethodGlobalNullOptions) (*http.Response, error) {
+func (client *SubscriptionInCredentialsClient) PostMethodGlobalNull(ctx context.Context, options *SubscriptionInCredentialsPostMethodGlobalNullOptions) (SubscriptionInCredentialsPostMethodGlobalNullResponse, error) {
 	req, err := client.postMethodGlobalNullCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return SubscriptionInCredentialsPostMethodGlobalNullResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return SubscriptionInCredentialsPostMethodGlobalNullResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.postMethodGlobalNullHandleError(resp)
+		return SubscriptionInCredentialsPostMethodGlobalNullResponse{}, client.postMethodGlobalNullHandleError(resp)
 	}
-	return resp.Response, nil
+	return SubscriptionInCredentialsPostMethodGlobalNullResponse{RawResponse: resp.Response}, nil
 }
 
 // postMethodGlobalNullCreateRequest creates the PostMethodGlobalNull request.
@@ -128,19 +128,19 @@ func (client *SubscriptionInCredentialsClient) postMethodGlobalNullHandleError(r
 
 // PostMethodGlobalValid - POST method with subscriptionId modeled in credentials. Set the credential subscriptionId to '1234-5678-9012-3456' to succeed
 // If the operation fails it returns the *Error error type.
-func (client *SubscriptionInCredentialsClient) PostMethodGlobalValid(ctx context.Context, options *SubscriptionInCredentialsPostMethodGlobalValidOptions) (*http.Response, error) {
+func (client *SubscriptionInCredentialsClient) PostMethodGlobalValid(ctx context.Context, options *SubscriptionInCredentialsPostMethodGlobalValidOptions) (SubscriptionInCredentialsPostMethodGlobalValidResponse, error) {
 	req, err := client.postMethodGlobalValidCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return SubscriptionInCredentialsPostMethodGlobalValidResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return SubscriptionInCredentialsPostMethodGlobalValidResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.postMethodGlobalValidHandleError(resp)
+		return SubscriptionInCredentialsPostMethodGlobalValidResponse{}, client.postMethodGlobalValidHandleError(resp)
 	}
-	return resp.Response, nil
+	return SubscriptionInCredentialsPostMethodGlobalValidResponse{RawResponse: resp.Response}, nil
 }
 
 // postMethodGlobalValidCreateRequest creates the PostMethodGlobalValid request.
@@ -174,19 +174,19 @@ func (client *SubscriptionInCredentialsClient) postMethodGlobalValidHandleError(
 
 // PostPathGlobalValid - POST method with subscriptionId modeled in credentials. Set the credential subscriptionId to '1234-5678-9012-3456' to succeed
 // If the operation fails it returns the *Error error type.
-func (client *SubscriptionInCredentialsClient) PostPathGlobalValid(ctx context.Context, options *SubscriptionInCredentialsPostPathGlobalValidOptions) (*http.Response, error) {
+func (client *SubscriptionInCredentialsClient) PostPathGlobalValid(ctx context.Context, options *SubscriptionInCredentialsPostPathGlobalValidOptions) (SubscriptionInCredentialsPostPathGlobalValidResponse, error) {
 	req, err := client.postPathGlobalValidCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return SubscriptionInCredentialsPostPathGlobalValidResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return SubscriptionInCredentialsPostPathGlobalValidResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.postPathGlobalValidHandleError(resp)
+		return SubscriptionInCredentialsPostPathGlobalValidResponse{}, client.postPathGlobalValidHandleError(resp)
 	}
-	return resp.Response, nil
+	return SubscriptionInCredentialsPostPathGlobalValidResponse{RawResponse: resp.Response}, nil
 }
 
 // postPathGlobalValidCreateRequest creates the PostPathGlobalValid request.
@@ -220,19 +220,19 @@ func (client *SubscriptionInCredentialsClient) postPathGlobalValidHandleError(re
 
 // PostSwaggerGlobalValid - POST method with subscriptionId modeled in credentials. Set the credential subscriptionId to '1234-5678-9012-3456' to succeed
 // If the operation fails it returns the *Error error type.
-func (client *SubscriptionInCredentialsClient) PostSwaggerGlobalValid(ctx context.Context, options *SubscriptionInCredentialsPostSwaggerGlobalValidOptions) (*http.Response, error) {
+func (client *SubscriptionInCredentialsClient) PostSwaggerGlobalValid(ctx context.Context, options *SubscriptionInCredentialsPostSwaggerGlobalValidOptions) (SubscriptionInCredentialsPostSwaggerGlobalValidResponse, error) {
 	req, err := client.postSwaggerGlobalValidCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return SubscriptionInCredentialsPostSwaggerGlobalValidResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return SubscriptionInCredentialsPostSwaggerGlobalValidResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.postSwaggerGlobalValidHandleError(resp)
+		return SubscriptionInCredentialsPostSwaggerGlobalValidResponse{}, client.postSwaggerGlobalValidHandleError(resp)
 	}
-	return resp.Response, nil
+	return SubscriptionInCredentialsPostSwaggerGlobalValidResponse{RawResponse: resp.Response}, nil
 }
 
 // postSwaggerGlobalValidCreateRequest creates the PostSwaggerGlobalValid request.

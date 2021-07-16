@@ -23,17 +23,17 @@ type integrationRuntimesClient struct {
 
 // Get - Get Integration Runtime
 // If the operation fails it returns the *ErrorContract error type.
-func (client *integrationRuntimesClient) Get(ctx context.Context, integrationRuntimeName string, options *IntegrationRuntimesGetOptions) (IntegrationRuntimeResourceResponse, error) {
+func (client *integrationRuntimesClient) Get(ctx context.Context, integrationRuntimeName string, options *IntegrationRuntimesGetOptions) (IntegrationRuntimesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, integrationRuntimeName, options)
 	if err != nil {
-		return IntegrationRuntimeResourceResponse{}, err
+		return IntegrationRuntimesGetResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return IntegrationRuntimeResourceResponse{}, err
+		return IntegrationRuntimesGetResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return IntegrationRuntimeResourceResponse{}, client.getHandleError(resp)
+		return IntegrationRuntimesGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -58,12 +58,12 @@ func (client *integrationRuntimesClient) getCreateRequest(ctx context.Context, i
 }
 
 // getHandleResponse handles the Get response.
-func (client *integrationRuntimesClient) getHandleResponse(resp *azcore.Response) (IntegrationRuntimeResourceResponse, error) {
-	var val *IntegrationRuntimeResource
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return IntegrationRuntimeResourceResponse{}, err
+func (client *integrationRuntimesClient) getHandleResponse(resp *azcore.Response) (IntegrationRuntimesGetResponse, error) {
+	result := IntegrationRuntimesGetResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.IntegrationRuntimeResource); err != nil {
+		return IntegrationRuntimesGetResponse{}, err
 	}
-	return IntegrationRuntimeResourceResponse{RawResponse: resp.Response, IntegrationRuntimeResource: val}, nil
+	return result, nil
 }
 
 // getHandleError handles the Get error response.
@@ -81,17 +81,17 @@ func (client *integrationRuntimesClient) getHandleError(resp *azcore.Response) e
 
 // List - List Integration Runtimes
 // If the operation fails it returns the *ErrorContract error type.
-func (client *integrationRuntimesClient) List(ctx context.Context, options *IntegrationRuntimesListOptions) (IntegrationRuntimeListResponseResponse, error) {
+func (client *integrationRuntimesClient) List(ctx context.Context, options *IntegrationRuntimesListOptions) (IntegrationRuntimesListResponse, error) {
 	req, err := client.listCreateRequest(ctx, options)
 	if err != nil {
-		return IntegrationRuntimeListResponseResponse{}, err
+		return IntegrationRuntimesListResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return IntegrationRuntimeListResponseResponse{}, err
+		return IntegrationRuntimesListResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return IntegrationRuntimeListResponseResponse{}, client.listHandleError(resp)
+		return IntegrationRuntimesListResponse{}, client.listHandleError(resp)
 	}
 	return client.listHandleResponse(resp)
 }
@@ -112,12 +112,12 @@ func (client *integrationRuntimesClient) listCreateRequest(ctx context.Context, 
 }
 
 // listHandleResponse handles the List response.
-func (client *integrationRuntimesClient) listHandleResponse(resp *azcore.Response) (IntegrationRuntimeListResponseResponse, error) {
-	var val *IntegrationRuntimeListResponse
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return IntegrationRuntimeListResponseResponse{}, err
+func (client *integrationRuntimesClient) listHandleResponse(resp *azcore.Response) (IntegrationRuntimesListResponse, error) {
+	result := IntegrationRuntimesListResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.IntegrationRuntimeListResponse); err != nil {
+		return IntegrationRuntimesListResponse{}, err
 	}
-	return IntegrationRuntimeListResponseResponse{RawResponse: resp.Response, IntegrationRuntimeListResponse: val}, nil
+	return result, nil
 }
 
 // listHandleError handles the List error response.

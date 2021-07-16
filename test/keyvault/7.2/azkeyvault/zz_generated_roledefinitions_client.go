@@ -30,17 +30,17 @@ func NewRoleDefinitionsClient(con *Connection) *RoleDefinitionsClient {
 
 // CreateOrUpdate - Creates or updates a custom role definition.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *RoleDefinitionsClient) CreateOrUpdate(ctx context.Context, vaultBaseURL string, scope string, roleDefinitionName string, parameters RoleDefinitionCreateParameters, options *RoleDefinitionsCreateOrUpdateOptions) (RoleDefinitionResponse, error) {
+func (client *RoleDefinitionsClient) CreateOrUpdate(ctx context.Context, vaultBaseURL string, scope string, roleDefinitionName string, parameters RoleDefinitionCreateParameters, options *RoleDefinitionsCreateOrUpdateOptions) (RoleDefinitionsCreateOrUpdateResponse, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, vaultBaseURL, scope, roleDefinitionName, parameters, options)
 	if err != nil {
-		return RoleDefinitionResponse{}, err
+		return RoleDefinitionsCreateOrUpdateResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return RoleDefinitionResponse{}, err
+		return RoleDefinitionsCreateOrUpdateResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusCreated) {
-		return RoleDefinitionResponse{}, client.createOrUpdateHandleError(resp)
+		return RoleDefinitionsCreateOrUpdateResponse{}, client.createOrUpdateHandleError(resp)
 	}
 	return client.createOrUpdateHandleResponse(resp)
 }
@@ -71,12 +71,12 @@ func (client *RoleDefinitionsClient) createOrUpdateCreateRequest(ctx context.Con
 }
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *RoleDefinitionsClient) createOrUpdateHandleResponse(resp *azcore.Response) (RoleDefinitionResponse, error) {
-	var val *RoleDefinition
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return RoleDefinitionResponse{}, err
+func (client *RoleDefinitionsClient) createOrUpdateHandleResponse(resp *azcore.Response) (RoleDefinitionsCreateOrUpdateResponse, error) {
+	result := RoleDefinitionsCreateOrUpdateResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.RoleDefinition); err != nil {
+		return RoleDefinitionsCreateOrUpdateResponse{}, err
 	}
-	return RoleDefinitionResponse{RawResponse: resp.Response, RoleDefinition: val}, nil
+	return result, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
@@ -94,17 +94,17 @@ func (client *RoleDefinitionsClient) createOrUpdateHandleError(resp *azcore.Resp
 
 // Delete - Deletes a custom role definition.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *RoleDefinitionsClient) Delete(ctx context.Context, vaultBaseURL string, scope string, roleDefinitionName string, options *RoleDefinitionsDeleteOptions) (RoleDefinitionResponse, error) {
+func (client *RoleDefinitionsClient) Delete(ctx context.Context, vaultBaseURL string, scope string, roleDefinitionName string, options *RoleDefinitionsDeleteOptions) (RoleDefinitionsDeleteResponse, error) {
 	req, err := client.deleteCreateRequest(ctx, vaultBaseURL, scope, roleDefinitionName, options)
 	if err != nil {
-		return RoleDefinitionResponse{}, err
+		return RoleDefinitionsDeleteResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return RoleDefinitionResponse{}, err
+		return RoleDefinitionsDeleteResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return RoleDefinitionResponse{}, client.deleteHandleError(resp)
+		return RoleDefinitionsDeleteResponse{}, client.deleteHandleError(resp)
 	}
 	return client.deleteHandleResponse(resp)
 }
@@ -135,12 +135,12 @@ func (client *RoleDefinitionsClient) deleteCreateRequest(ctx context.Context, va
 }
 
 // deleteHandleResponse handles the Delete response.
-func (client *RoleDefinitionsClient) deleteHandleResponse(resp *azcore.Response) (RoleDefinitionResponse, error) {
-	var val *RoleDefinition
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return RoleDefinitionResponse{}, err
+func (client *RoleDefinitionsClient) deleteHandleResponse(resp *azcore.Response) (RoleDefinitionsDeleteResponse, error) {
+	result := RoleDefinitionsDeleteResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.RoleDefinition); err != nil {
+		return RoleDefinitionsDeleteResponse{}, err
 	}
-	return RoleDefinitionResponse{RawResponse: resp.Response, RoleDefinition: val}, nil
+	return result, nil
 }
 
 // deleteHandleError handles the Delete error response.
@@ -158,17 +158,17 @@ func (client *RoleDefinitionsClient) deleteHandleError(resp *azcore.Response) er
 
 // Get - Get the specified role definition.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *RoleDefinitionsClient) Get(ctx context.Context, vaultBaseURL string, scope string, roleDefinitionName string, options *RoleDefinitionsGetOptions) (RoleDefinitionResponse, error) {
+func (client *RoleDefinitionsClient) Get(ctx context.Context, vaultBaseURL string, scope string, roleDefinitionName string, options *RoleDefinitionsGetOptions) (RoleDefinitionsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, vaultBaseURL, scope, roleDefinitionName, options)
 	if err != nil {
-		return RoleDefinitionResponse{}, err
+		return RoleDefinitionsGetResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return RoleDefinitionResponse{}, err
+		return RoleDefinitionsGetResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return RoleDefinitionResponse{}, client.getHandleError(resp)
+		return RoleDefinitionsGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -199,12 +199,12 @@ func (client *RoleDefinitionsClient) getCreateRequest(ctx context.Context, vault
 }
 
 // getHandleResponse handles the Get response.
-func (client *RoleDefinitionsClient) getHandleResponse(resp *azcore.Response) (RoleDefinitionResponse, error) {
-	var val *RoleDefinition
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return RoleDefinitionResponse{}, err
+func (client *RoleDefinitionsClient) getHandleResponse(resp *azcore.Response) (RoleDefinitionsGetResponse, error) {
+	result := RoleDefinitionsGetResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.RoleDefinition); err != nil {
+		return RoleDefinitionsGetResponse{}, err
 	}
-	return RoleDefinitionResponse{RawResponse: resp.Response, RoleDefinition: val}, nil
+	return result, nil
 }
 
 // getHandleError handles the Get error response.
@@ -222,18 +222,15 @@ func (client *RoleDefinitionsClient) getHandleError(resp *azcore.Response) error
 
 // List - Get all role definitions that are applicable at scope and above.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *RoleDefinitionsClient) List(vaultBaseURL string, scope string, options *RoleDefinitionsListOptions) RoleDefinitionListResultPager {
-	return &roleDefinitionListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *RoleDefinitionsClient) List(vaultBaseURL string, scope string, options *RoleDefinitionsListOptions) RoleDefinitionsListPager {
+	return &roleDefinitionsListPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, vaultBaseURL, scope, options)
 		},
-		responder: client.listHandleResponse,
-		errorer:   client.listHandleError,
-		advancer: func(ctx context.Context, resp RoleDefinitionListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp RoleDefinitionsListResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.RoleDefinitionListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -262,12 +259,12 @@ func (client *RoleDefinitionsClient) listCreateRequest(ctx context.Context, vaul
 }
 
 // listHandleResponse handles the List response.
-func (client *RoleDefinitionsClient) listHandleResponse(resp *azcore.Response) (RoleDefinitionListResultResponse, error) {
-	var val *RoleDefinitionListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return RoleDefinitionListResultResponse{}, err
+func (client *RoleDefinitionsClient) listHandleResponse(resp *azcore.Response) (RoleDefinitionsListResponse, error) {
+	result := RoleDefinitionsListResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.RoleDefinitionListResult); err != nil {
+		return RoleDefinitionsListResponse{}, err
 	}
-	return RoleDefinitionListResultResponse{RawResponse: resp.Response, RoleDefinitionListResult: val}, nil
+	return result, nil
 }
 
 // listHandleError handles the List error response.
