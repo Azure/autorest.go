@@ -348,7 +348,7 @@ export function getStatusCodes(op: Operation): string[] {
     // if the operation defines no status codes (which is non-conformant)
     // then add 200, 201, 202, and 204 to the list.  this is to accomodate
     // some quirky tests in the test server.
-    // TODO: fix test server and remove this.
+    // TODO: https://github.com/Azure/autorest.go/issues/659
     statusCodes = ['200', '201', '202', '204'];
   }
   return statusCodes;
