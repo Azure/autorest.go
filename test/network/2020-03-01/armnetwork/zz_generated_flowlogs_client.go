@@ -33,47 +33,47 @@ func NewFlowLogsClient(con *armcore.Connection, subscriptionID string) *FlowLogs
 
 // BeginCreateOrUpdate - Create or update a flow log for the specified network security group.
 // If the operation fails it returns the *ErrorResponse error type.
-func (client *FlowLogsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, parameters FlowLog, options *FlowLogsBeginCreateOrUpdateOptions) (FlowLogPollerResponse, error) {
+func (client *FlowLogsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, parameters FlowLog, options *FlowLogsBeginCreateOrUpdateOptions) (FlowLogsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, networkWatcherName, flowLogName, parameters, options)
 	if err != nil {
-		return FlowLogPollerResponse{}, err
+		return FlowLogsCreateOrUpdatePollerResponse{}, err
 	}
-	result := FlowLogPollerResponse{
+	result := FlowLogsCreateOrUpdatePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("FlowLogsClient.CreateOrUpdate", "azure-async-operation", resp, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return FlowLogPollerResponse{}, err
+		return FlowLogsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &flowLogPoller{
+	poller := &flowLogsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (FlowLogResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (FlowLogsCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new FlowLogPoller from the specified resume token.
-// token - The value must come from a previous call to FlowLogPoller.ResumeToken().
-func (client *FlowLogsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (FlowLogPollerResponse, error) {
+// ResumeCreateOrUpdate creates a new FlowLogsCreateOrUpdatePoller from the specified resume token.
+// token - The value must come from a previous call to FlowLogsCreateOrUpdatePoller.ResumeToken().
+func (client *FlowLogsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (FlowLogsCreateOrUpdatePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("FlowLogsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return FlowLogPollerResponse{}, err
+		return FlowLogsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &flowLogPoller{
+	poller := &flowLogsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return FlowLogPollerResponse{}, err
+		return FlowLogsCreateOrUpdatePollerResponse{}, err
 	}
-	result := FlowLogPollerResponse{
+	result := FlowLogsCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (FlowLogResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (FlowLogsCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -142,47 +142,47 @@ func (client *FlowLogsClient) createOrUpdateHandleError(resp *azcore.Response) e
 
 // BeginDelete - Deletes the specified flow log resource.
 // If the operation fails it returns the *ErrorResponse error type.
-func (client *FlowLogsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, options *FlowLogsBeginDeleteOptions) (HTTPPollerResponse, error) {
+func (client *FlowLogsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, options *FlowLogsBeginDeleteOptions) (FlowLogsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, networkWatcherName, flowLogName, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return FlowLogsDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := FlowLogsDeletePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("FlowLogsClient.Delete", "location", resp, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return FlowLogsDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &flowLogsDeletePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (FlowLogsDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeDelete creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *FlowLogsClient) ResumeDelete(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeDelete creates a new FlowLogsDeletePoller from the specified resume token.
+// token - The value must come from a previous call to FlowLogsDeletePoller.ResumeToken().
+func (client *FlowLogsClient) ResumeDelete(ctx context.Context, token string) (FlowLogsDeletePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("FlowLogsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return FlowLogsDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &flowLogsDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return FlowLogsDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := FlowLogsDeletePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (FlowLogsDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -251,17 +251,17 @@ func (client *FlowLogsClient) deleteHandleError(resp *azcore.Response) error {
 
 // Get - Gets a flow log resource by name.
 // If the operation fails it returns the *ErrorResponse error type.
-func (client *FlowLogsClient) Get(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, options *FlowLogsGetOptions) (FlowLogResponse, error) {
+func (client *FlowLogsClient) Get(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, options *FlowLogsGetOptions) (FlowLogsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkWatcherName, flowLogName, options)
 	if err != nil {
-		return FlowLogResponse{}, err
+		return FlowLogsGetResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return FlowLogResponse{}, err
+		return FlowLogsGetResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return FlowLogResponse{}, client.getHandleError(resp)
+		return FlowLogsGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -298,12 +298,12 @@ func (client *FlowLogsClient) getCreateRequest(ctx context.Context, resourceGrou
 }
 
 // getHandleResponse handles the Get response.
-func (client *FlowLogsClient) getHandleResponse(resp *azcore.Response) (FlowLogResponse, error) {
-	var val *FlowLog
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return FlowLogResponse{}, err
+func (client *FlowLogsClient) getHandleResponse(resp *azcore.Response) (FlowLogsGetResponse, error) {
+	result := FlowLogsGetResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.FlowLog); err != nil {
+		return FlowLogsGetResponse{}, err
 	}
-	return FlowLogResponse{RawResponse: resp.Response, FlowLog: val}, nil
+	return result, nil
 }
 
 // getHandleError handles the Get error response.
@@ -321,18 +321,15 @@ func (client *FlowLogsClient) getHandleError(resp *azcore.Response) error {
 
 // List - Lists all flow log resources for the specified Network Watcher.
 // If the operation fails it returns the *ErrorResponse error type.
-func (client *FlowLogsClient) List(resourceGroupName string, networkWatcherName string, options *FlowLogsListOptions) FlowLogListResultPager {
-	return &flowLogListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *FlowLogsClient) List(resourceGroupName string, networkWatcherName string, options *FlowLogsListOptions) FlowLogsListPager {
+	return &flowLogsListPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, networkWatcherName, options)
 		},
-		responder: client.listHandleResponse,
-		errorer:   client.listHandleError,
-		advancer: func(ctx context.Context, resp FlowLogListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp FlowLogsListResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.FlowLogListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -364,12 +361,12 @@ func (client *FlowLogsClient) listCreateRequest(ctx context.Context, resourceGro
 }
 
 // listHandleResponse handles the List response.
-func (client *FlowLogsClient) listHandleResponse(resp *azcore.Response) (FlowLogListResultResponse, error) {
-	var val *FlowLogListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return FlowLogListResultResponse{}, err
+func (client *FlowLogsClient) listHandleResponse(resp *azcore.Response) (FlowLogsListResponse, error) {
+	result := FlowLogsListResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.FlowLogListResult); err != nil {
+		return FlowLogsListResponse{}, err
 	}
-	return FlowLogListResultResponse{RawResponse: resp.Response, FlowLogListResult: val}, nil
+	return result, nil
 }
 
 // listHandleError handles the List error response.

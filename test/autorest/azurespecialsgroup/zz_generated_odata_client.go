@@ -28,19 +28,19 @@ func NewOdataClient(con *Connection) *OdataClient {
 
 // GetWithFilter - Specify filter parameter with value '$filter=id gt 5 and name eq 'foo'&$orderby=id&$top=10'
 // If the operation fails it returns the *Error error type.
-func (client *OdataClient) GetWithFilter(ctx context.Context, options *OdataGetWithFilterOptions) (*http.Response, error) {
+func (client *OdataClient) GetWithFilter(ctx context.Context, options *OdataGetWithFilterOptions) (OdataGetWithFilterResponse, error) {
 	req, err := client.getWithFilterCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return OdataGetWithFilterResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return OdataGetWithFilterResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getWithFilterHandleError(resp)
+		return OdataGetWithFilterResponse{}, client.getWithFilterHandleError(resp)
 	}
-	return resp.Response, nil
+	return OdataGetWithFilterResponse{RawResponse: resp.Response}, nil
 }
 
 // getWithFilterCreateRequest creates the GetWithFilter request.

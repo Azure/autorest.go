@@ -20,7 +20,7 @@ func TestArrayCSVInPath(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -31,7 +31,7 @@ func TestPathsBase64URL(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -42,7 +42,7 @@ func TestPathsByteEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -53,7 +53,7 @@ func TestPathsByteMultiByte(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -74,7 +74,7 @@ func TestPathsDateNull(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.StatusCode; s != http.StatusBadRequest {
+	if s := result.RawResponse.StatusCode; s != http.StatusBadRequest {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -86,7 +86,7 @@ func TestPathsDateTimeNull(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.StatusCode; s != http.StatusBadRequest {
+	if s := result.RawResponse.StatusCode; s != http.StatusBadRequest {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -97,7 +97,7 @@ func TestPathsDateTimeValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -108,7 +108,7 @@ func TestPathsDateValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -119,7 +119,7 @@ func TestPathsDoubleDecimalNegative(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -130,7 +130,7 @@ func TestPathsDoubleDecimalPositive(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -151,7 +151,7 @@ func TestPathsEnumValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -162,7 +162,7 @@ func TestPathsFloatScientificNegative(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -173,7 +173,7 @@ func TestPathsFloatScientificPositive(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -184,7 +184,7 @@ func TestPathsGetBooleanFalse(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -195,7 +195,7 @@ func TestPathsGetBooleanTrue(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -206,7 +206,7 @@ func TestPathsGetIntNegativeOneMillion(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -217,7 +217,7 @@ func TestPathsGetIntOneMillion(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -228,7 +228,7 @@ func TestPathsGetNegativeTenBillion(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -239,7 +239,7 @@ func TestPathsGetTenBillion(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -250,7 +250,7 @@ func TestPathsStringEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -270,7 +270,7 @@ func TestPathsStringURLEncoded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -281,7 +281,7 @@ func TestPathsStringURLNonEncoded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -292,7 +292,7 @@ func TestPathsStringUnicode(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -307,7 +307,7 @@ func TestPathsUnixTimeURL(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }

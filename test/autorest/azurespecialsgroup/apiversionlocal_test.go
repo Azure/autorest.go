@@ -20,7 +20,7 @@ func TestGetMethodLocalNull(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -32,7 +32,7 @@ func TestGetMethodLocalValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -44,7 +44,7 @@ func TestGetPathLocalValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -56,7 +56,7 @@ func TestGetSwaggerLocalValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }

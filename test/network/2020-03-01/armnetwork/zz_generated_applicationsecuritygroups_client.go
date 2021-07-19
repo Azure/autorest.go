@@ -33,47 +33,47 @@ func NewApplicationSecurityGroupsClient(con *armcore.Connection, subscriptionID 
 
 // BeginCreateOrUpdate - Creates or updates an application security group.
 // If the operation fails it returns the *CloudError error type.
-func (client *ApplicationSecurityGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string, parameters ApplicationSecurityGroup, options *ApplicationSecurityGroupsBeginCreateOrUpdateOptions) (ApplicationSecurityGroupPollerResponse, error) {
+func (client *ApplicationSecurityGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string, parameters ApplicationSecurityGroup, options *ApplicationSecurityGroupsBeginCreateOrUpdateOptions) (ApplicationSecurityGroupsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, applicationSecurityGroupName, parameters, options)
 	if err != nil {
-		return ApplicationSecurityGroupPollerResponse{}, err
+		return ApplicationSecurityGroupsCreateOrUpdatePollerResponse{}, err
 	}
-	result := ApplicationSecurityGroupPollerResponse{
+	result := ApplicationSecurityGroupsCreateOrUpdatePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("ApplicationSecurityGroupsClient.CreateOrUpdate", "azure-async-operation", resp, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return ApplicationSecurityGroupPollerResponse{}, err
+		return ApplicationSecurityGroupsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &applicationSecurityGroupPoller{
+	poller := &applicationSecurityGroupsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ApplicationSecurityGroupResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ApplicationSecurityGroupsCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new ApplicationSecurityGroupPoller from the specified resume token.
-// token - The value must come from a previous call to ApplicationSecurityGroupPoller.ResumeToken().
-func (client *ApplicationSecurityGroupsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (ApplicationSecurityGroupPollerResponse, error) {
+// ResumeCreateOrUpdate creates a new ApplicationSecurityGroupsCreateOrUpdatePoller from the specified resume token.
+// token - The value must come from a previous call to ApplicationSecurityGroupsCreateOrUpdatePoller.ResumeToken().
+func (client *ApplicationSecurityGroupsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (ApplicationSecurityGroupsCreateOrUpdatePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("ApplicationSecurityGroupsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return ApplicationSecurityGroupPollerResponse{}, err
+		return ApplicationSecurityGroupsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &applicationSecurityGroupPoller{
+	poller := &applicationSecurityGroupsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return ApplicationSecurityGroupPollerResponse{}, err
+		return ApplicationSecurityGroupsCreateOrUpdatePollerResponse{}, err
 	}
-	result := ApplicationSecurityGroupPollerResponse{
+	result := ApplicationSecurityGroupsCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ApplicationSecurityGroupResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ApplicationSecurityGroupsCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -138,47 +138,47 @@ func (client *ApplicationSecurityGroupsClient) createOrUpdateHandleError(resp *a
 
 // BeginDelete - Deletes the specified application security group.
 // If the operation fails it returns the *CloudError error type.
-func (client *ApplicationSecurityGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string, options *ApplicationSecurityGroupsBeginDeleteOptions) (HTTPPollerResponse, error) {
+func (client *ApplicationSecurityGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string, options *ApplicationSecurityGroupsBeginDeleteOptions) (ApplicationSecurityGroupsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, applicationSecurityGroupName, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return ApplicationSecurityGroupsDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := ApplicationSecurityGroupsDeletePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("ApplicationSecurityGroupsClient.Delete", "location", resp, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return ApplicationSecurityGroupsDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &applicationSecurityGroupsDeletePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ApplicationSecurityGroupsDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeDelete creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *ApplicationSecurityGroupsClient) ResumeDelete(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeDelete creates a new ApplicationSecurityGroupsDeletePoller from the specified resume token.
+// token - The value must come from a previous call to ApplicationSecurityGroupsDeletePoller.ResumeToken().
+func (client *ApplicationSecurityGroupsClient) ResumeDelete(ctx context.Context, token string) (ApplicationSecurityGroupsDeletePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("ApplicationSecurityGroupsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return ApplicationSecurityGroupsDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &applicationSecurityGroupsDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return ApplicationSecurityGroupsDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := ApplicationSecurityGroupsDeletePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ApplicationSecurityGroupsDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -243,17 +243,17 @@ func (client *ApplicationSecurityGroupsClient) deleteHandleError(resp *azcore.Re
 
 // Get - Gets information about the specified application security group.
 // If the operation fails it returns the *CloudError error type.
-func (client *ApplicationSecurityGroupsClient) Get(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string, options *ApplicationSecurityGroupsGetOptions) (ApplicationSecurityGroupResponse, error) {
+func (client *ApplicationSecurityGroupsClient) Get(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string, options *ApplicationSecurityGroupsGetOptions) (ApplicationSecurityGroupsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, applicationSecurityGroupName, options)
 	if err != nil {
-		return ApplicationSecurityGroupResponse{}, err
+		return ApplicationSecurityGroupsGetResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return ApplicationSecurityGroupResponse{}, err
+		return ApplicationSecurityGroupsGetResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return ApplicationSecurityGroupResponse{}, client.getHandleError(resp)
+		return ApplicationSecurityGroupsGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -286,12 +286,12 @@ func (client *ApplicationSecurityGroupsClient) getCreateRequest(ctx context.Cont
 }
 
 // getHandleResponse handles the Get response.
-func (client *ApplicationSecurityGroupsClient) getHandleResponse(resp *azcore.Response) (ApplicationSecurityGroupResponse, error) {
-	var val *ApplicationSecurityGroup
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ApplicationSecurityGroupResponse{}, err
+func (client *ApplicationSecurityGroupsClient) getHandleResponse(resp *azcore.Response) (ApplicationSecurityGroupsGetResponse, error) {
+	result := ApplicationSecurityGroupsGetResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.ApplicationSecurityGroup); err != nil {
+		return ApplicationSecurityGroupsGetResponse{}, err
 	}
-	return ApplicationSecurityGroupResponse{RawResponse: resp.Response, ApplicationSecurityGroup: val}, nil
+	return result, nil
 }
 
 // getHandleError handles the Get error response.
@@ -309,18 +309,15 @@ func (client *ApplicationSecurityGroupsClient) getHandleError(resp *azcore.Respo
 
 // List - Gets all the application security groups in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *ApplicationSecurityGroupsClient) List(resourceGroupName string, options *ApplicationSecurityGroupsListOptions) ApplicationSecurityGroupListResultPager {
-	return &applicationSecurityGroupListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *ApplicationSecurityGroupsClient) List(resourceGroupName string, options *ApplicationSecurityGroupsListOptions) ApplicationSecurityGroupsListPager {
+	return &applicationSecurityGroupsListPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, options)
 		},
-		responder: client.listHandleResponse,
-		errorer:   client.listHandleError,
-		advancer: func(ctx context.Context, resp ApplicationSecurityGroupListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp ApplicationSecurityGroupsListResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ApplicationSecurityGroupListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -348,12 +345,12 @@ func (client *ApplicationSecurityGroupsClient) listCreateRequest(ctx context.Con
 }
 
 // listHandleResponse handles the List response.
-func (client *ApplicationSecurityGroupsClient) listHandleResponse(resp *azcore.Response) (ApplicationSecurityGroupListResultResponse, error) {
-	var val *ApplicationSecurityGroupListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ApplicationSecurityGroupListResultResponse{}, err
+func (client *ApplicationSecurityGroupsClient) listHandleResponse(resp *azcore.Response) (ApplicationSecurityGroupsListResponse, error) {
+	result := ApplicationSecurityGroupsListResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.ApplicationSecurityGroupListResult); err != nil {
+		return ApplicationSecurityGroupsListResponse{}, err
 	}
-	return ApplicationSecurityGroupListResultResponse{RawResponse: resp.Response, ApplicationSecurityGroupListResult: val}, nil
+	return result, nil
 }
 
 // listHandleError handles the List error response.
@@ -371,18 +368,15 @@ func (client *ApplicationSecurityGroupsClient) listHandleError(resp *azcore.Resp
 
 // ListAll - Gets all application security groups in a subscription.
 // If the operation fails it returns the *CloudError error type.
-func (client *ApplicationSecurityGroupsClient) ListAll(options *ApplicationSecurityGroupsListAllOptions) ApplicationSecurityGroupListResultPager {
-	return &applicationSecurityGroupListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *ApplicationSecurityGroupsClient) ListAll(options *ApplicationSecurityGroupsListAllOptions) ApplicationSecurityGroupsListAllPager {
+	return &applicationSecurityGroupsListAllPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listAllCreateRequest(ctx, options)
 		},
-		responder: client.listAllHandleResponse,
-		errorer:   client.listAllHandleError,
-		advancer: func(ctx context.Context, resp ApplicationSecurityGroupListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp ApplicationSecurityGroupsListAllResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ApplicationSecurityGroupListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -406,12 +400,12 @@ func (client *ApplicationSecurityGroupsClient) listAllCreateRequest(ctx context.
 }
 
 // listAllHandleResponse handles the ListAll response.
-func (client *ApplicationSecurityGroupsClient) listAllHandleResponse(resp *azcore.Response) (ApplicationSecurityGroupListResultResponse, error) {
-	var val *ApplicationSecurityGroupListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ApplicationSecurityGroupListResultResponse{}, err
+func (client *ApplicationSecurityGroupsClient) listAllHandleResponse(resp *azcore.Response) (ApplicationSecurityGroupsListAllResponse, error) {
+	result := ApplicationSecurityGroupsListAllResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.ApplicationSecurityGroupListResult); err != nil {
+		return ApplicationSecurityGroupsListAllResponse{}, err
 	}
-	return ApplicationSecurityGroupListResultResponse{RawResponse: resp.Response, ApplicationSecurityGroupListResult: val}, nil
+	return result, nil
 }
 
 // listAllHandleError handles the ListAll error response.
@@ -429,17 +423,17 @@ func (client *ApplicationSecurityGroupsClient) listAllHandleError(resp *azcore.R
 
 // UpdateTags - Updates an application security group's tags.
 // If the operation fails it returns the *CloudError error type.
-func (client *ApplicationSecurityGroupsClient) UpdateTags(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string, parameters TagsObject, options *ApplicationSecurityGroupsUpdateTagsOptions) (ApplicationSecurityGroupResponse, error) {
+func (client *ApplicationSecurityGroupsClient) UpdateTags(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string, parameters TagsObject, options *ApplicationSecurityGroupsUpdateTagsOptions) (ApplicationSecurityGroupsUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, applicationSecurityGroupName, parameters, options)
 	if err != nil {
-		return ApplicationSecurityGroupResponse{}, err
+		return ApplicationSecurityGroupsUpdateTagsResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return ApplicationSecurityGroupResponse{}, err
+		return ApplicationSecurityGroupsUpdateTagsResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return ApplicationSecurityGroupResponse{}, client.updateTagsHandleError(resp)
+		return ApplicationSecurityGroupsUpdateTagsResponse{}, client.updateTagsHandleError(resp)
 	}
 	return client.updateTagsHandleResponse(resp)
 }
@@ -472,12 +466,12 @@ func (client *ApplicationSecurityGroupsClient) updateTagsCreateRequest(ctx conte
 }
 
 // updateTagsHandleResponse handles the UpdateTags response.
-func (client *ApplicationSecurityGroupsClient) updateTagsHandleResponse(resp *azcore.Response) (ApplicationSecurityGroupResponse, error) {
-	var val *ApplicationSecurityGroup
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ApplicationSecurityGroupResponse{}, err
+func (client *ApplicationSecurityGroupsClient) updateTagsHandleResponse(resp *azcore.Response) (ApplicationSecurityGroupsUpdateTagsResponse, error) {
+	result := ApplicationSecurityGroupsUpdateTagsResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.ApplicationSecurityGroup); err != nil {
+		return ApplicationSecurityGroupsUpdateTagsResponse{}, err
 	}
-	return ApplicationSecurityGroupResponse{RawResponse: resp.Response, ApplicationSecurityGroup: val}, nil
+	return result, nil
 }
 
 // updateTagsHandleError handles the UpdateTags error response.

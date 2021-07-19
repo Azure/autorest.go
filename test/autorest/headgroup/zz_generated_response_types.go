@@ -9,11 +9,41 @@ package headgroup
 
 import "net/http"
 
-// BooleanResponse contains a boolean response.
-type BooleanResponse struct {
+// HTTPSuccessHead200Response contains the response from method HTTPSuccess.Head200.
+type HTTPSuccessHead200Response struct {
+	HTTPSuccessHead200Result
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
 
+// HTTPSuccessHead200Result contains the result from method HTTPSuccess.Head200.
+type HTTPSuccessHead200Result struct {
+	// Success indicates if the operation succeeded or failed.
+	Success bool
+}
+
+// HTTPSuccessHead204Response contains the response from method HTTPSuccess.Head204.
+type HTTPSuccessHead204Response struct {
+	HTTPSuccessHead204Result
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPSuccessHead204Result contains the result from method HTTPSuccess.Head204.
+type HTTPSuccessHead204Result struct {
+	// Success indicates if the operation succeeded or failed.
+	Success bool
+}
+
+// HTTPSuccessHead404Response contains the response from method HTTPSuccess.Head404.
+type HTTPSuccessHead404Response struct {
+	HTTPSuccessHead404Result
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HTTPSuccessHead404Result contains the result from method HTTPSuccess.Head404.
+type HTTPSuccessHead404Result struct {
 	// Success indicates if the operation succeeded or failed.
 	Success bool
 }

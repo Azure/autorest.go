@@ -21,17 +21,17 @@ type dataFlowDebugSessionClient struct {
 
 // AddDataFlow - Add a data flow into debug session.
 // If the operation fails it returns the *CloudError error type.
-func (client *dataFlowDebugSessionClient) AddDataFlow(ctx context.Context, request DataFlowDebugPackage, options *DataFlowDebugSessionAddDataFlowOptions) (AddDataFlowToDebugSessionResponseResponse, error) {
+func (client *dataFlowDebugSessionClient) AddDataFlow(ctx context.Context, request DataFlowDebugPackage, options *DataFlowDebugSessionAddDataFlowOptions) (DataFlowDebugSessionAddDataFlowResponse, error) {
 	req, err := client.addDataFlowCreateRequest(ctx, request, options)
 	if err != nil {
-		return AddDataFlowToDebugSessionResponseResponse{}, err
+		return DataFlowDebugSessionAddDataFlowResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return AddDataFlowToDebugSessionResponseResponse{}, err
+		return DataFlowDebugSessionAddDataFlowResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return AddDataFlowToDebugSessionResponseResponse{}, client.addDataFlowHandleError(resp)
+		return DataFlowDebugSessionAddDataFlowResponse{}, client.addDataFlowHandleError(resp)
 	}
 	return client.addDataFlowHandleResponse(resp)
 }
@@ -52,12 +52,12 @@ func (client *dataFlowDebugSessionClient) addDataFlowCreateRequest(ctx context.C
 }
 
 // addDataFlowHandleResponse handles the AddDataFlow response.
-func (client *dataFlowDebugSessionClient) addDataFlowHandleResponse(resp *azcore.Response) (AddDataFlowToDebugSessionResponseResponse, error) {
-	var val *AddDataFlowToDebugSessionResponse
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return AddDataFlowToDebugSessionResponseResponse{}, err
+func (client *dataFlowDebugSessionClient) addDataFlowHandleResponse(resp *azcore.Response) (DataFlowDebugSessionAddDataFlowResponse, error) {
+	result := DataFlowDebugSessionAddDataFlowResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.AddDataFlowToDebugSessionResponse); err != nil {
+		return DataFlowDebugSessionAddDataFlowResponse{}, err
 	}
-	return AddDataFlowToDebugSessionResponseResponse{RawResponse: resp.Response, AddDataFlowToDebugSessionResponse: val}, nil
+	return result, nil
 }
 
 // addDataFlowHandleError handles the AddDataFlow error response.
@@ -75,47 +75,47 @@ func (client *dataFlowDebugSessionClient) addDataFlowHandleError(resp *azcore.Re
 
 // BeginCreateDataFlowDebugSession - Creates a data flow debug session.
 // If the operation fails it returns the *CloudError error type.
-func (client *dataFlowDebugSessionClient) BeginCreateDataFlowDebugSession(ctx context.Context, request CreateDataFlowDebugSessionRequest, options *DataFlowDebugSessionBeginCreateDataFlowDebugSessionOptions) (CreateDataFlowDebugSessionResponsePollerResponse, error) {
+func (client *dataFlowDebugSessionClient) BeginCreateDataFlowDebugSession(ctx context.Context, request CreateDataFlowDebugSessionRequest, options *DataFlowDebugSessionBeginCreateDataFlowDebugSessionOptions) (DataFlowDebugSessionCreateDataFlowDebugSessionPollerResponse, error) {
 	resp, err := client.createDataFlowDebugSession(ctx, request, options)
 	if err != nil {
-		return CreateDataFlowDebugSessionResponsePollerResponse{}, err
+		return DataFlowDebugSessionCreateDataFlowDebugSessionPollerResponse{}, err
 	}
-	result := CreateDataFlowDebugSessionResponsePollerResponse{
+	result := DataFlowDebugSessionCreateDataFlowDebugSessionPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := azcore.NewLROPoller("dataFlowDebugSessionClient.CreateDataFlowDebugSession", resp, client.con.Pipeline(), client.createDataFlowDebugSessionHandleError)
 	if err != nil {
-		return CreateDataFlowDebugSessionResponsePollerResponse{}, err
+		return DataFlowDebugSessionCreateDataFlowDebugSessionPollerResponse{}, err
 	}
-	poller := &createDataFlowDebugSessionResponsePoller{
+	poller := &dataFlowDebugSessionCreateDataFlowDebugSessionPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (CreateDataFlowDebugSessionResponseResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DataFlowDebugSessionCreateDataFlowDebugSessionResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeCreateDataFlowDebugSession creates a new CreateDataFlowDebugSessionResponsePoller from the specified resume token.
-// token - The value must come from a previous call to CreateDataFlowDebugSessionResponsePoller.ResumeToken().
-func (client *dataFlowDebugSessionClient) ResumeCreateDataFlowDebugSession(ctx context.Context, token string) (CreateDataFlowDebugSessionResponsePollerResponse, error) {
+// ResumeCreateDataFlowDebugSession creates a new DataFlowDebugSessionCreateDataFlowDebugSessionPoller from the specified resume token.
+// token - The value must come from a previous call to DataFlowDebugSessionCreateDataFlowDebugSessionPoller.ResumeToken().
+func (client *dataFlowDebugSessionClient) ResumeCreateDataFlowDebugSession(ctx context.Context, token string) (DataFlowDebugSessionCreateDataFlowDebugSessionPollerResponse, error) {
 	pt, err := azcore.NewLROPollerFromResumeToken("dataFlowDebugSessionClient.CreateDataFlowDebugSession", token, client.con.Pipeline(), client.createDataFlowDebugSessionHandleError)
 	if err != nil {
-		return CreateDataFlowDebugSessionResponsePollerResponse{}, err
+		return DataFlowDebugSessionCreateDataFlowDebugSessionPollerResponse{}, err
 	}
-	poller := &createDataFlowDebugSessionResponsePoller{
+	poller := &dataFlowDebugSessionCreateDataFlowDebugSessionPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return CreateDataFlowDebugSessionResponsePollerResponse{}, err
+		return DataFlowDebugSessionCreateDataFlowDebugSessionPollerResponse{}, err
 	}
-	result := CreateDataFlowDebugSessionResponsePollerResponse{
+	result := DataFlowDebugSessionCreateDataFlowDebugSessionPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (CreateDataFlowDebugSessionResponseResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DataFlowDebugSessionCreateDataFlowDebugSessionResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -168,19 +168,19 @@ func (client *dataFlowDebugSessionClient) createDataFlowDebugSessionHandleError(
 
 // DeleteDataFlowDebugSession - Deletes a data flow debug session.
 // If the operation fails it returns the *CloudError error type.
-func (client *dataFlowDebugSessionClient) DeleteDataFlowDebugSession(ctx context.Context, request DeleteDataFlowDebugSessionRequest, options *DataFlowDebugSessionDeleteDataFlowDebugSessionOptions) (*http.Response, error) {
+func (client *dataFlowDebugSessionClient) DeleteDataFlowDebugSession(ctx context.Context, request DeleteDataFlowDebugSessionRequest, options *DataFlowDebugSessionDeleteDataFlowDebugSessionOptions) (DataFlowDebugSessionDeleteDataFlowDebugSessionResponse, error) {
 	req, err := client.deleteDataFlowDebugSessionCreateRequest(ctx, request, options)
 	if err != nil {
-		return nil, err
+		return DataFlowDebugSessionDeleteDataFlowDebugSessionResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return DataFlowDebugSessionDeleteDataFlowDebugSessionResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.deleteDataFlowDebugSessionHandleError(resp)
+		return DataFlowDebugSessionDeleteDataFlowDebugSessionResponse{}, client.deleteDataFlowDebugSessionHandleError(resp)
 	}
-	return resp.Response, nil
+	return DataFlowDebugSessionDeleteDataFlowDebugSessionResponse{RawResponse: resp.Response}, nil
 }
 
 // deleteDataFlowDebugSessionCreateRequest creates the DeleteDataFlowDebugSession request.
@@ -213,47 +213,47 @@ func (client *dataFlowDebugSessionClient) deleteDataFlowDebugSessionHandleError(
 
 // BeginExecuteCommand - Execute a data flow debug command.
 // If the operation fails it returns the *CloudError error type.
-func (client *dataFlowDebugSessionClient) BeginExecuteCommand(ctx context.Context, request DataFlowDebugCommandRequest, options *DataFlowDebugSessionBeginExecuteCommandOptions) (DataFlowDebugCommandResponsePollerResponse, error) {
+func (client *dataFlowDebugSessionClient) BeginExecuteCommand(ctx context.Context, request DataFlowDebugCommandRequest, options *DataFlowDebugSessionBeginExecuteCommandOptions) (DataFlowDebugSessionExecuteCommandPollerResponse, error) {
 	resp, err := client.executeCommand(ctx, request, options)
 	if err != nil {
-		return DataFlowDebugCommandResponsePollerResponse{}, err
+		return DataFlowDebugSessionExecuteCommandPollerResponse{}, err
 	}
-	result := DataFlowDebugCommandResponsePollerResponse{
+	result := DataFlowDebugSessionExecuteCommandPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := azcore.NewLROPoller("dataFlowDebugSessionClient.ExecuteCommand", resp, client.con.Pipeline(), client.executeCommandHandleError)
 	if err != nil {
-		return DataFlowDebugCommandResponsePollerResponse{}, err
+		return DataFlowDebugSessionExecuteCommandPollerResponse{}, err
 	}
-	poller := &dataFlowDebugCommandResponsePoller{
+	poller := &dataFlowDebugSessionExecuteCommandPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DataFlowDebugCommandResponseResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DataFlowDebugSessionExecuteCommandResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeExecuteCommand creates a new DataFlowDebugCommandResponsePoller from the specified resume token.
-// token - The value must come from a previous call to DataFlowDebugCommandResponsePoller.ResumeToken().
-func (client *dataFlowDebugSessionClient) ResumeExecuteCommand(ctx context.Context, token string) (DataFlowDebugCommandResponsePollerResponse, error) {
+// ResumeExecuteCommand creates a new DataFlowDebugSessionExecuteCommandPoller from the specified resume token.
+// token - The value must come from a previous call to DataFlowDebugSessionExecuteCommandPoller.ResumeToken().
+func (client *dataFlowDebugSessionClient) ResumeExecuteCommand(ctx context.Context, token string) (DataFlowDebugSessionExecuteCommandPollerResponse, error) {
 	pt, err := azcore.NewLROPollerFromResumeToken("dataFlowDebugSessionClient.ExecuteCommand", token, client.con.Pipeline(), client.executeCommandHandleError)
 	if err != nil {
-		return DataFlowDebugCommandResponsePollerResponse{}, err
+		return DataFlowDebugSessionExecuteCommandPollerResponse{}, err
 	}
-	poller := &dataFlowDebugCommandResponsePoller{
+	poller := &dataFlowDebugSessionExecuteCommandPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return DataFlowDebugCommandResponsePollerResponse{}, err
+		return DataFlowDebugSessionExecuteCommandPollerResponse{}, err
 	}
-	result := DataFlowDebugCommandResponsePollerResponse{
+	result := DataFlowDebugSessionExecuteCommandPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DataFlowDebugCommandResponseResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DataFlowDebugSessionExecuteCommandResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -306,18 +306,15 @@ func (client *dataFlowDebugSessionClient) executeCommandHandleError(resp *azcore
 
 // QueryDataFlowDebugSessionsByWorkspace - Query all active data flow debug sessions.
 // If the operation fails it returns the *CloudError error type.
-func (client *dataFlowDebugSessionClient) QueryDataFlowDebugSessionsByWorkspace(options *DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspaceOptions) QueryDataFlowDebugSessionsResponsePager {
-	return &queryDataFlowDebugSessionsResponsePager{
-		pipeline: client.con.Pipeline(),
+func (client *dataFlowDebugSessionClient) QueryDataFlowDebugSessionsByWorkspace(options *DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspaceOptions) DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspacePager {
+	return &dataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspacePager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.queryDataFlowDebugSessionsByWorkspaceCreateRequest(ctx, options)
 		},
-		responder: client.queryDataFlowDebugSessionsByWorkspaceHandleResponse,
-		errorer:   client.queryDataFlowDebugSessionsByWorkspaceHandleError,
-		advancer: func(ctx context.Context, resp QueryDataFlowDebugSessionsResponseResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspaceResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.QueryDataFlowDebugSessionsResponse.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -337,12 +334,12 @@ func (client *dataFlowDebugSessionClient) queryDataFlowDebugSessionsByWorkspaceC
 }
 
 // queryDataFlowDebugSessionsByWorkspaceHandleResponse handles the QueryDataFlowDebugSessionsByWorkspace response.
-func (client *dataFlowDebugSessionClient) queryDataFlowDebugSessionsByWorkspaceHandleResponse(resp *azcore.Response) (QueryDataFlowDebugSessionsResponseResponse, error) {
-	var val *QueryDataFlowDebugSessionsResponse
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return QueryDataFlowDebugSessionsResponseResponse{}, err
+func (client *dataFlowDebugSessionClient) queryDataFlowDebugSessionsByWorkspaceHandleResponse(resp *azcore.Response) (DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspaceResponse, error) {
+	result := DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspaceResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.QueryDataFlowDebugSessionsResponse); err != nil {
+		return DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspaceResponse{}, err
 	}
-	return QueryDataFlowDebugSessionsResponseResponse{RawResponse: resp.Response, QueryDataFlowDebugSessionsResponse: val}, nil
+	return result, nil
 }
 
 // queryDataFlowDebugSessionsByWorkspaceHandleError handles the QueryDataFlowDebugSessionsByWorkspace error response.

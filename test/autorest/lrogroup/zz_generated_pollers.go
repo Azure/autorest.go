@@ -15,214 +15,3511 @@ import (
 	"time"
 )
 
-// HTTPPoller provides polling facilities until the operation reaches a terminal state.
-type HTTPPoller interface {
+// LRORetrysDelete202Retry200Poller provides polling facilities until the operation reaches a terminal state.
+type LRORetrysDelete202Retry200Poller interface {
 	azcore.Poller
 	// FinalResponse performs a final GET to the service and returns the final response
 	// for the polling operation. If there is an error performing the final GET then an error is returned.
-	// If the final GET succeeded then the final *http.Response will be returned.
-	FinalResponse(ctx context.Context) (*http.Response, error)
+	// If the final GET succeeded then the final LRORetrysDelete202Retry200Response will be returned.
+	FinalResponse(ctx context.Context) (LRORetrysDelete202Retry200Response, error)
 }
 
-type httpPoller struct {
+type lroRetrysDelete202Retry200Poller struct {
 	pt *armcore.LROPoller
 }
 
-func (p *httpPoller) Done() bool {
+func (p *lroRetrysDelete202Retry200Poller) Done() bool {
 	return p.pt.Done()
 }
 
-func (p *httpPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *lroRetrysDelete202Retry200Poller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx)
 }
 
-func (p *httpPoller) FinalResponse(ctx context.Context) (*http.Response, error) {
-	return p.pt.FinalResponse(ctx, nil)
+func (p *lroRetrysDelete202Retry200Poller) FinalResponse(ctx context.Context) (LRORetrysDelete202Retry200Response, error) {
+	respType := LRORetrysDelete202Retry200Response{}
+	resp, err := p.pt.FinalResponse(ctx, nil)
+	if err != nil {
+		return LRORetrysDelete202Retry200Response{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
-func (p *httpPoller) ResumeToken() (string, error) {
+func (p *lroRetrysDelete202Retry200Poller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-func (p *httpPoller) pollUntilDone(ctx context.Context, freq time.Duration) (*http.Response, error) {
-	return p.pt.PollUntilDone(ctx, freq, nil)
+func (p *lroRetrysDelete202Retry200Poller) pollUntilDone(ctx context.Context, freq time.Duration) (LRORetrysDelete202Retry200Response, error) {
+	respType := LRORetrysDelete202Retry200Response{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return LRORetrysDelete202Retry200Response{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
-// ProductArrayPoller provides polling facilities until the operation reaches a terminal state.
-type ProductArrayPoller interface {
+// LRORetrysDeleteAsyncRelativeRetrySucceededPoller provides polling facilities until the operation reaches a terminal state.
+type LRORetrysDeleteAsyncRelativeRetrySucceededPoller interface {
 	azcore.Poller
 	// FinalResponse performs a final GET to the service and returns the final response
 	// for the polling operation. If there is an error performing the final GET then an error is returned.
-	// If the final GET succeeded then the final ProductArrayResponse will be returned.
-	FinalResponse(ctx context.Context) (ProductArrayResponse, error)
+	// If the final GET succeeded then the final LRORetrysDeleteAsyncRelativeRetrySucceededResponse will be returned.
+	FinalResponse(ctx context.Context) (LRORetrysDeleteAsyncRelativeRetrySucceededResponse, error)
 }
 
-type productArrayPoller struct {
+type lroRetrysDeleteAsyncRelativeRetrySucceededPoller struct {
 	pt *armcore.LROPoller
 }
 
-func (p *productArrayPoller) Done() bool {
+func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) Done() bool {
 	return p.pt.Done()
 }
 
-func (p *productArrayPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx)
 }
 
-func (p *productArrayPoller) FinalResponse(ctx context.Context) (ProductArrayResponse, error) {
-	respType := ProductArrayResponse{ProductArray: []*Product{}}
+func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) FinalResponse(ctx context.Context) (LRORetrysDeleteAsyncRelativeRetrySucceededResponse, error) {
+	respType := LRORetrysDeleteAsyncRelativeRetrySucceededResponse{}
+	resp, err := p.pt.FinalResponse(ctx, nil)
+	if err != nil {
+		return LRORetrysDeleteAsyncRelativeRetrySucceededResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lroRetrysDeleteAsyncRelativeRetrySucceededPoller) pollUntilDone(ctx context.Context, freq time.Duration) (LRORetrysDeleteAsyncRelativeRetrySucceededResponse, error) {
+	respType := LRORetrysDeleteAsyncRelativeRetrySucceededResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return LRORetrysDeleteAsyncRelativeRetrySucceededResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LRORetrysDeleteProvisioning202Accepted200SucceededPoller provides polling facilities until the operation reaches a terminal state.
+type LRORetrysDeleteProvisioning202Accepted200SucceededPoller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LRORetrysDeleteProvisioning202Accepted200SucceededResponse will be returned.
+	FinalResponse(ctx context.Context) (LRORetrysDeleteProvisioning202Accepted200SucceededResponse, error)
+}
+
+type lroRetrysDeleteProvisioning202Accepted200SucceededPoller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) FinalResponse(ctx context.Context) (LRORetrysDeleteProvisioning202Accepted200SucceededResponse, error) {
+	respType := LRORetrysDeleteProvisioning202Accepted200SucceededResponse{}
+	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	if err != nil {
+		return LRORetrysDeleteProvisioning202Accepted200SucceededResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lroRetrysDeleteProvisioning202Accepted200SucceededPoller) pollUntilDone(ctx context.Context, freq time.Duration) (LRORetrysDeleteProvisioning202Accepted200SucceededResponse, error) {
+	respType := LRORetrysDeleteProvisioning202Accepted200SucceededResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.Product)
+	if err != nil {
+		return LRORetrysDeleteProvisioning202Accepted200SucceededResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LRORetrysPost202Retry200Poller provides polling facilities until the operation reaches a terminal state.
+type LRORetrysPost202Retry200Poller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LRORetrysPost202Retry200Response will be returned.
+	FinalResponse(ctx context.Context) (LRORetrysPost202Retry200Response, error)
+}
+
+type lroRetrysPost202Retry200Poller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lroRetrysPost202Retry200Poller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lroRetrysPost202Retry200Poller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lroRetrysPost202Retry200Poller) FinalResponse(ctx context.Context) (LRORetrysPost202Retry200Response, error) {
+	respType := LRORetrysPost202Retry200Response{}
+	resp, err := p.pt.FinalResponse(ctx, nil)
+	if err != nil {
+		return LRORetrysPost202Retry200Response{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lroRetrysPost202Retry200Poller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lroRetrysPost202Retry200Poller) pollUntilDone(ctx context.Context, freq time.Duration) (LRORetrysPost202Retry200Response, error) {
+	respType := LRORetrysPost202Retry200Response{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return LRORetrysPost202Retry200Response{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LRORetrysPostAsyncRelativeRetrySucceededPoller provides polling facilities until the operation reaches a terminal state.
+type LRORetrysPostAsyncRelativeRetrySucceededPoller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LRORetrysPostAsyncRelativeRetrySucceededResponse will be returned.
+	FinalResponse(ctx context.Context) (LRORetrysPostAsyncRelativeRetrySucceededResponse, error)
+}
+
+type lroRetrysPostAsyncRelativeRetrySucceededPoller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) FinalResponse(ctx context.Context) (LRORetrysPostAsyncRelativeRetrySucceededResponse, error) {
+	respType := LRORetrysPostAsyncRelativeRetrySucceededResponse{}
+	resp, err := p.pt.FinalResponse(ctx, nil)
+	if err != nil {
+		return LRORetrysPostAsyncRelativeRetrySucceededResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lroRetrysPostAsyncRelativeRetrySucceededPoller) pollUntilDone(ctx context.Context, freq time.Duration) (LRORetrysPostAsyncRelativeRetrySucceededResponse, error) {
+	respType := LRORetrysPostAsyncRelativeRetrySucceededResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return LRORetrysPostAsyncRelativeRetrySucceededResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LRORetrysPut201CreatingSucceeded200Poller provides polling facilities until the operation reaches a terminal state.
+type LRORetrysPut201CreatingSucceeded200Poller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LRORetrysPut201CreatingSucceeded200Response will be returned.
+	FinalResponse(ctx context.Context) (LRORetrysPut201CreatingSucceeded200Response, error)
+}
+
+type lroRetrysPut201CreatingSucceeded200Poller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lroRetrysPut201CreatingSucceeded200Poller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lroRetrysPut201CreatingSucceeded200Poller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lroRetrysPut201CreatingSucceeded200Poller) FinalResponse(ctx context.Context) (LRORetrysPut201CreatingSucceeded200Response, error) {
+	respType := LRORetrysPut201CreatingSucceeded200Response{}
+	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	if err != nil {
+		return LRORetrysPut201CreatingSucceeded200Response{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lroRetrysPut201CreatingSucceeded200Poller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lroRetrysPut201CreatingSucceeded200Poller) pollUntilDone(ctx context.Context, freq time.Duration) (LRORetrysPut201CreatingSucceeded200Response, error) {
+	respType := LRORetrysPut201CreatingSucceeded200Response{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.Product)
+	if err != nil {
+		return LRORetrysPut201CreatingSucceeded200Response{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LRORetrysPutAsyncRelativeRetrySucceededPoller provides polling facilities until the operation reaches a terminal state.
+type LRORetrysPutAsyncRelativeRetrySucceededPoller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LRORetrysPutAsyncRelativeRetrySucceededResponse will be returned.
+	FinalResponse(ctx context.Context) (LRORetrysPutAsyncRelativeRetrySucceededResponse, error)
+}
+
+type lroRetrysPutAsyncRelativeRetrySucceededPoller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) FinalResponse(ctx context.Context) (LRORetrysPutAsyncRelativeRetrySucceededResponse, error) {
+	respType := LRORetrysPutAsyncRelativeRetrySucceededResponse{}
+	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	if err != nil {
+		return LRORetrysPutAsyncRelativeRetrySucceededResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lroRetrysPutAsyncRelativeRetrySucceededPoller) pollUntilDone(ctx context.Context, freq time.Duration) (LRORetrysPutAsyncRelativeRetrySucceededResponse, error) {
+	respType := LRORetrysPutAsyncRelativeRetrySucceededResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.Product)
+	if err != nil {
+		return LRORetrysPutAsyncRelativeRetrySucceededResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROSADsDelete202NonRetry400Poller provides polling facilities until the operation reaches a terminal state.
+type LROSADsDelete202NonRetry400Poller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROSADsDelete202NonRetry400Response will be returned.
+	FinalResponse(ctx context.Context) (LROSADsDelete202NonRetry400Response, error)
+}
+
+type lrosaDsDelete202NonRetry400Poller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrosaDsDelete202NonRetry400Poller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrosaDsDelete202NonRetry400Poller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrosaDsDelete202NonRetry400Poller) FinalResponse(ctx context.Context) (LROSADsDelete202NonRetry400Response, error) {
+	respType := LROSADsDelete202NonRetry400Response{}
+	resp, err := p.pt.FinalResponse(ctx, nil)
+	if err != nil {
+		return LROSADsDelete202NonRetry400Response{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrosaDsDelete202NonRetry400Poller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrosaDsDelete202NonRetry400Poller) pollUntilDone(ctx context.Context, freq time.Duration) (LROSADsDelete202NonRetry400Response, error) {
+	respType := LROSADsDelete202NonRetry400Response{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return LROSADsDelete202NonRetry400Response{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROSADsDelete202RetryInvalidHeaderPoller provides polling facilities until the operation reaches a terminal state.
+type LROSADsDelete202RetryInvalidHeaderPoller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROSADsDelete202RetryInvalidHeaderResponse will be returned.
+	FinalResponse(ctx context.Context) (LROSADsDelete202RetryInvalidHeaderResponse, error)
+}
+
+type lrosaDsDelete202RetryInvalidHeaderPoller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrosaDsDelete202RetryInvalidHeaderPoller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrosaDsDelete202RetryInvalidHeaderPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrosaDsDelete202RetryInvalidHeaderPoller) FinalResponse(ctx context.Context) (LROSADsDelete202RetryInvalidHeaderResponse, error) {
+	respType := LROSADsDelete202RetryInvalidHeaderResponse{}
+	resp, err := p.pt.FinalResponse(ctx, nil)
+	if err != nil {
+		return LROSADsDelete202RetryInvalidHeaderResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrosaDsDelete202RetryInvalidHeaderPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrosaDsDelete202RetryInvalidHeaderPoller) pollUntilDone(ctx context.Context, freq time.Duration) (LROSADsDelete202RetryInvalidHeaderResponse, error) {
+	respType := LROSADsDelete202RetryInvalidHeaderResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return LROSADsDelete202RetryInvalidHeaderResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROSADsDelete204SucceededPoller provides polling facilities until the operation reaches a terminal state.
+type LROSADsDelete204SucceededPoller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROSADsDelete204SucceededResponse will be returned.
+	FinalResponse(ctx context.Context) (LROSADsDelete204SucceededResponse, error)
+}
+
+type lrosaDsDelete204SucceededPoller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrosaDsDelete204SucceededPoller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrosaDsDelete204SucceededPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrosaDsDelete204SucceededPoller) FinalResponse(ctx context.Context) (LROSADsDelete204SucceededResponse, error) {
+	respType := LROSADsDelete204SucceededResponse{}
+	resp, err := p.pt.FinalResponse(ctx, nil)
+	if err != nil {
+		return LROSADsDelete204SucceededResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrosaDsDelete204SucceededPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrosaDsDelete204SucceededPoller) pollUntilDone(ctx context.Context, freq time.Duration) (LROSADsDelete204SucceededResponse, error) {
+	respType := LROSADsDelete204SucceededResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return LROSADsDelete204SucceededResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROSADsDeleteAsyncRelativeRetry400Poller provides polling facilities until the operation reaches a terminal state.
+type LROSADsDeleteAsyncRelativeRetry400Poller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROSADsDeleteAsyncRelativeRetry400Response will be returned.
+	FinalResponse(ctx context.Context) (LROSADsDeleteAsyncRelativeRetry400Response, error)
+}
+
+type lrosaDsDeleteAsyncRelativeRetry400Poller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) FinalResponse(ctx context.Context) (LROSADsDeleteAsyncRelativeRetry400Response, error) {
+	respType := LROSADsDeleteAsyncRelativeRetry400Response{}
+	resp, err := p.pt.FinalResponse(ctx, nil)
+	if err != nil {
+		return LROSADsDeleteAsyncRelativeRetry400Response{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrosaDsDeleteAsyncRelativeRetry400Poller) pollUntilDone(ctx context.Context, freq time.Duration) (LROSADsDeleteAsyncRelativeRetry400Response, error) {
+	respType := LROSADsDeleteAsyncRelativeRetry400Response{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return LROSADsDeleteAsyncRelativeRetry400Response{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROSADsDeleteAsyncRelativeRetryInvalidHeaderPoller provides polling facilities until the operation reaches a terminal state.
+type LROSADsDeleteAsyncRelativeRetryInvalidHeaderPoller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROSADsDeleteAsyncRelativeRetryInvalidHeaderResponse will be returned.
+	FinalResponse(ctx context.Context) (LROSADsDeleteAsyncRelativeRetryInvalidHeaderResponse, error)
+}
+
+type lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) FinalResponse(ctx context.Context) (LROSADsDeleteAsyncRelativeRetryInvalidHeaderResponse, error) {
+	respType := LROSADsDeleteAsyncRelativeRetryInvalidHeaderResponse{}
+	resp, err := p.pt.FinalResponse(ctx, nil)
+	if err != nil {
+		return LROSADsDeleteAsyncRelativeRetryInvalidHeaderResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller) pollUntilDone(ctx context.Context, freq time.Duration) (LROSADsDeleteAsyncRelativeRetryInvalidHeaderResponse, error) {
+	respType := LROSADsDeleteAsyncRelativeRetryInvalidHeaderResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return LROSADsDeleteAsyncRelativeRetryInvalidHeaderResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingPoller provides polling facilities until the operation reaches a terminal state.
+type LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingPoller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingResponse will be returned.
+	FinalResponse(ctx context.Context) (LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingResponse, error)
+}
+
+type lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) FinalResponse(ctx context.Context) (LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingResponse, error) {
+	respType := LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingResponse{}
+	resp, err := p.pt.FinalResponse(ctx, nil)
+	if err != nil {
+		return LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) pollUntilDone(ctx context.Context, freq time.Duration) (LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingResponse, error) {
+	respType := LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROSADsDeleteAsyncRelativeRetryNoStatusPoller provides polling facilities until the operation reaches a terminal state.
+type LROSADsDeleteAsyncRelativeRetryNoStatusPoller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROSADsDeleteAsyncRelativeRetryNoStatusResponse will be returned.
+	FinalResponse(ctx context.Context) (LROSADsDeleteAsyncRelativeRetryNoStatusResponse, error)
+}
+
+type lrosaDsDeleteAsyncRelativeRetryNoStatusPoller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) FinalResponse(ctx context.Context) (LROSADsDeleteAsyncRelativeRetryNoStatusResponse, error) {
+	respType := LROSADsDeleteAsyncRelativeRetryNoStatusResponse{}
+	resp, err := p.pt.FinalResponse(ctx, nil)
+	if err != nil {
+		return LROSADsDeleteAsyncRelativeRetryNoStatusResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrosaDsDeleteAsyncRelativeRetryNoStatusPoller) pollUntilDone(ctx context.Context, freq time.Duration) (LROSADsDeleteAsyncRelativeRetryNoStatusResponse, error) {
+	respType := LROSADsDeleteAsyncRelativeRetryNoStatusResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return LROSADsDeleteAsyncRelativeRetryNoStatusResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROSADsDeleteNonRetry400Poller provides polling facilities until the operation reaches a terminal state.
+type LROSADsDeleteNonRetry400Poller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROSADsDeleteNonRetry400Response will be returned.
+	FinalResponse(ctx context.Context) (LROSADsDeleteNonRetry400Response, error)
+}
+
+type lrosaDsDeleteNonRetry400Poller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrosaDsDeleteNonRetry400Poller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrosaDsDeleteNonRetry400Poller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrosaDsDeleteNonRetry400Poller) FinalResponse(ctx context.Context) (LROSADsDeleteNonRetry400Response, error) {
+	respType := LROSADsDeleteNonRetry400Response{}
+	resp, err := p.pt.FinalResponse(ctx, nil)
+	if err != nil {
+		return LROSADsDeleteNonRetry400Response{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrosaDsDeleteNonRetry400Poller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrosaDsDeleteNonRetry400Poller) pollUntilDone(ctx context.Context, freq time.Duration) (LROSADsDeleteNonRetry400Response, error) {
+	respType := LROSADsDeleteNonRetry400Response{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return LROSADsDeleteNonRetry400Response{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROSADsPost202NoLocationPoller provides polling facilities until the operation reaches a terminal state.
+type LROSADsPost202NoLocationPoller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROSADsPost202NoLocationResponse will be returned.
+	FinalResponse(ctx context.Context) (LROSADsPost202NoLocationResponse, error)
+}
+
+type lrosaDsPost202NoLocationPoller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrosaDsPost202NoLocationPoller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrosaDsPost202NoLocationPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrosaDsPost202NoLocationPoller) FinalResponse(ctx context.Context) (LROSADsPost202NoLocationResponse, error) {
+	respType := LROSADsPost202NoLocationResponse{}
+	resp, err := p.pt.FinalResponse(ctx, nil)
+	if err != nil {
+		return LROSADsPost202NoLocationResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrosaDsPost202NoLocationPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrosaDsPost202NoLocationPoller) pollUntilDone(ctx context.Context, freq time.Duration) (LROSADsPost202NoLocationResponse, error) {
+	respType := LROSADsPost202NoLocationResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return LROSADsPost202NoLocationResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROSADsPost202NonRetry400Poller provides polling facilities until the operation reaches a terminal state.
+type LROSADsPost202NonRetry400Poller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROSADsPost202NonRetry400Response will be returned.
+	FinalResponse(ctx context.Context) (LROSADsPost202NonRetry400Response, error)
+}
+
+type lrosaDsPost202NonRetry400Poller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrosaDsPost202NonRetry400Poller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrosaDsPost202NonRetry400Poller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrosaDsPost202NonRetry400Poller) FinalResponse(ctx context.Context) (LROSADsPost202NonRetry400Response, error) {
+	respType := LROSADsPost202NonRetry400Response{}
+	resp, err := p.pt.FinalResponse(ctx, nil)
+	if err != nil {
+		return LROSADsPost202NonRetry400Response{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrosaDsPost202NonRetry400Poller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrosaDsPost202NonRetry400Poller) pollUntilDone(ctx context.Context, freq time.Duration) (LROSADsPost202NonRetry400Response, error) {
+	respType := LROSADsPost202NonRetry400Response{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return LROSADsPost202NonRetry400Response{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROSADsPost202RetryInvalidHeaderPoller provides polling facilities until the operation reaches a terminal state.
+type LROSADsPost202RetryInvalidHeaderPoller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROSADsPost202RetryInvalidHeaderResponse will be returned.
+	FinalResponse(ctx context.Context) (LROSADsPost202RetryInvalidHeaderResponse, error)
+}
+
+type lrosaDsPost202RetryInvalidHeaderPoller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrosaDsPost202RetryInvalidHeaderPoller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrosaDsPost202RetryInvalidHeaderPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrosaDsPost202RetryInvalidHeaderPoller) FinalResponse(ctx context.Context) (LROSADsPost202RetryInvalidHeaderResponse, error) {
+	respType := LROSADsPost202RetryInvalidHeaderResponse{}
+	resp, err := p.pt.FinalResponse(ctx, nil)
+	if err != nil {
+		return LROSADsPost202RetryInvalidHeaderResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrosaDsPost202RetryInvalidHeaderPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrosaDsPost202RetryInvalidHeaderPoller) pollUntilDone(ctx context.Context, freq time.Duration) (LROSADsPost202RetryInvalidHeaderResponse, error) {
+	respType := LROSADsPost202RetryInvalidHeaderResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return LROSADsPost202RetryInvalidHeaderResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROSADsPostAsyncRelativeRetry400Poller provides polling facilities until the operation reaches a terminal state.
+type LROSADsPostAsyncRelativeRetry400Poller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROSADsPostAsyncRelativeRetry400Response will be returned.
+	FinalResponse(ctx context.Context) (LROSADsPostAsyncRelativeRetry400Response, error)
+}
+
+type lrosaDsPostAsyncRelativeRetry400Poller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrosaDsPostAsyncRelativeRetry400Poller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrosaDsPostAsyncRelativeRetry400Poller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrosaDsPostAsyncRelativeRetry400Poller) FinalResponse(ctx context.Context) (LROSADsPostAsyncRelativeRetry400Response, error) {
+	respType := LROSADsPostAsyncRelativeRetry400Response{}
+	resp, err := p.pt.FinalResponse(ctx, nil)
+	if err != nil {
+		return LROSADsPostAsyncRelativeRetry400Response{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrosaDsPostAsyncRelativeRetry400Poller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrosaDsPostAsyncRelativeRetry400Poller) pollUntilDone(ctx context.Context, freq time.Duration) (LROSADsPostAsyncRelativeRetry400Response, error) {
+	respType := LROSADsPostAsyncRelativeRetry400Response{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return LROSADsPostAsyncRelativeRetry400Response{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROSADsPostAsyncRelativeRetryInvalidHeaderPoller provides polling facilities until the operation reaches a terminal state.
+type LROSADsPostAsyncRelativeRetryInvalidHeaderPoller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROSADsPostAsyncRelativeRetryInvalidHeaderResponse will be returned.
+	FinalResponse(ctx context.Context) (LROSADsPostAsyncRelativeRetryInvalidHeaderResponse, error)
+}
+
+type lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) FinalResponse(ctx context.Context) (LROSADsPostAsyncRelativeRetryInvalidHeaderResponse, error) {
+	respType := LROSADsPostAsyncRelativeRetryInvalidHeaderResponse{}
+	resp, err := p.pt.FinalResponse(ctx, nil)
+	if err != nil {
+		return LROSADsPostAsyncRelativeRetryInvalidHeaderResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller) pollUntilDone(ctx context.Context, freq time.Duration) (LROSADsPostAsyncRelativeRetryInvalidHeaderResponse, error) {
+	respType := LROSADsPostAsyncRelativeRetryInvalidHeaderResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return LROSADsPostAsyncRelativeRetryInvalidHeaderResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROSADsPostAsyncRelativeRetryInvalidJSONPollingPoller provides polling facilities until the operation reaches a terminal state.
+type LROSADsPostAsyncRelativeRetryInvalidJSONPollingPoller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROSADsPostAsyncRelativeRetryInvalidJSONPollingResponse will be returned.
+	FinalResponse(ctx context.Context) (LROSADsPostAsyncRelativeRetryInvalidJSONPollingResponse, error)
+}
+
+type lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) FinalResponse(ctx context.Context) (LROSADsPostAsyncRelativeRetryInvalidJSONPollingResponse, error) {
+	respType := LROSADsPostAsyncRelativeRetryInvalidJSONPollingResponse{}
+	resp, err := p.pt.FinalResponse(ctx, nil)
+	if err != nil {
+		return LROSADsPostAsyncRelativeRetryInvalidJSONPollingResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller) pollUntilDone(ctx context.Context, freq time.Duration) (LROSADsPostAsyncRelativeRetryInvalidJSONPollingResponse, error) {
+	respType := LROSADsPostAsyncRelativeRetryInvalidJSONPollingResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return LROSADsPostAsyncRelativeRetryInvalidJSONPollingResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROSADsPostAsyncRelativeRetryNoPayloadPoller provides polling facilities until the operation reaches a terminal state.
+type LROSADsPostAsyncRelativeRetryNoPayloadPoller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROSADsPostAsyncRelativeRetryNoPayloadResponse will be returned.
+	FinalResponse(ctx context.Context) (LROSADsPostAsyncRelativeRetryNoPayloadResponse, error)
+}
+
+type lrosaDsPostAsyncRelativeRetryNoPayloadPoller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) FinalResponse(ctx context.Context) (LROSADsPostAsyncRelativeRetryNoPayloadResponse, error) {
+	respType := LROSADsPostAsyncRelativeRetryNoPayloadResponse{}
+	resp, err := p.pt.FinalResponse(ctx, nil)
+	if err != nil {
+		return LROSADsPostAsyncRelativeRetryNoPayloadResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrosaDsPostAsyncRelativeRetryNoPayloadPoller) pollUntilDone(ctx context.Context, freq time.Duration) (LROSADsPostAsyncRelativeRetryNoPayloadResponse, error) {
+	respType := LROSADsPostAsyncRelativeRetryNoPayloadResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return LROSADsPostAsyncRelativeRetryNoPayloadResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROSADsPostNonRetry400Poller provides polling facilities until the operation reaches a terminal state.
+type LROSADsPostNonRetry400Poller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROSADsPostNonRetry400Response will be returned.
+	FinalResponse(ctx context.Context) (LROSADsPostNonRetry400Response, error)
+}
+
+type lrosaDsPostNonRetry400Poller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrosaDsPostNonRetry400Poller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrosaDsPostNonRetry400Poller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrosaDsPostNonRetry400Poller) FinalResponse(ctx context.Context) (LROSADsPostNonRetry400Response, error) {
+	respType := LROSADsPostNonRetry400Response{}
+	resp, err := p.pt.FinalResponse(ctx, nil)
+	if err != nil {
+		return LROSADsPostNonRetry400Response{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrosaDsPostNonRetry400Poller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrosaDsPostNonRetry400Poller) pollUntilDone(ctx context.Context, freq time.Duration) (LROSADsPostNonRetry400Response, error) {
+	respType := LROSADsPostNonRetry400Response{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return LROSADsPostNonRetry400Response{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROSADsPut200InvalidJSONPoller provides polling facilities until the operation reaches a terminal state.
+type LROSADsPut200InvalidJSONPoller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROSADsPut200InvalidJSONResponse will be returned.
+	FinalResponse(ctx context.Context) (LROSADsPut200InvalidJSONResponse, error)
+}
+
+type lrosaDsPut200InvalidJSONPoller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrosaDsPut200InvalidJSONPoller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrosaDsPut200InvalidJSONPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrosaDsPut200InvalidJSONPoller) FinalResponse(ctx context.Context) (LROSADsPut200InvalidJSONResponse, error) {
+	respType := LROSADsPut200InvalidJSONResponse{}
+	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	if err != nil {
+		return LROSADsPut200InvalidJSONResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrosaDsPut200InvalidJSONPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrosaDsPut200InvalidJSONPoller) pollUntilDone(ctx context.Context, freq time.Duration) (LROSADsPut200InvalidJSONResponse, error) {
+	respType := LROSADsPut200InvalidJSONResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.Product)
+	if err != nil {
+		return LROSADsPut200InvalidJSONResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROSADsPutAsyncRelativeRetry400Poller provides polling facilities until the operation reaches a terminal state.
+type LROSADsPutAsyncRelativeRetry400Poller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROSADsPutAsyncRelativeRetry400Response will be returned.
+	FinalResponse(ctx context.Context) (LROSADsPutAsyncRelativeRetry400Response, error)
+}
+
+type lrosaDsPutAsyncRelativeRetry400Poller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrosaDsPutAsyncRelativeRetry400Poller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrosaDsPutAsyncRelativeRetry400Poller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrosaDsPutAsyncRelativeRetry400Poller) FinalResponse(ctx context.Context) (LROSADsPutAsyncRelativeRetry400Response, error) {
+	respType := LROSADsPutAsyncRelativeRetry400Response{}
+	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	if err != nil {
+		return LROSADsPutAsyncRelativeRetry400Response{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrosaDsPutAsyncRelativeRetry400Poller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrosaDsPutAsyncRelativeRetry400Poller) pollUntilDone(ctx context.Context, freq time.Duration) (LROSADsPutAsyncRelativeRetry400Response, error) {
+	respType := LROSADsPutAsyncRelativeRetry400Response{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.Product)
+	if err != nil {
+		return LROSADsPutAsyncRelativeRetry400Response{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROSADsPutAsyncRelativeRetryInvalidHeaderPoller provides polling facilities until the operation reaches a terminal state.
+type LROSADsPutAsyncRelativeRetryInvalidHeaderPoller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROSADsPutAsyncRelativeRetryInvalidHeaderResponse will be returned.
+	FinalResponse(ctx context.Context) (LROSADsPutAsyncRelativeRetryInvalidHeaderResponse, error)
+}
+
+type lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) FinalResponse(ctx context.Context) (LROSADsPutAsyncRelativeRetryInvalidHeaderResponse, error) {
+	respType := LROSADsPutAsyncRelativeRetryInvalidHeaderResponse{}
+	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	if err != nil {
+		return LROSADsPutAsyncRelativeRetryInvalidHeaderResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller) pollUntilDone(ctx context.Context, freq time.Duration) (LROSADsPutAsyncRelativeRetryInvalidHeaderResponse, error) {
+	respType := LROSADsPutAsyncRelativeRetryInvalidHeaderResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.Product)
+	if err != nil {
+		return LROSADsPutAsyncRelativeRetryInvalidHeaderResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROSADsPutAsyncRelativeRetryInvalidJSONPollingPoller provides polling facilities until the operation reaches a terminal state.
+type LROSADsPutAsyncRelativeRetryInvalidJSONPollingPoller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROSADsPutAsyncRelativeRetryInvalidJSONPollingResponse will be returned.
+	FinalResponse(ctx context.Context) (LROSADsPutAsyncRelativeRetryInvalidJSONPollingResponse, error)
+}
+
+type lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) FinalResponse(ctx context.Context) (LROSADsPutAsyncRelativeRetryInvalidJSONPollingResponse, error) {
+	respType := LROSADsPutAsyncRelativeRetryInvalidJSONPollingResponse{}
+	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	if err != nil {
+		return LROSADsPutAsyncRelativeRetryInvalidJSONPollingResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller) pollUntilDone(ctx context.Context, freq time.Duration) (LROSADsPutAsyncRelativeRetryInvalidJSONPollingResponse, error) {
+	respType := LROSADsPutAsyncRelativeRetryInvalidJSONPollingResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.Product)
+	if err != nil {
+		return LROSADsPutAsyncRelativeRetryInvalidJSONPollingResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROSADsPutAsyncRelativeRetryNoStatusPayloadPoller provides polling facilities until the operation reaches a terminal state.
+type LROSADsPutAsyncRelativeRetryNoStatusPayloadPoller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROSADsPutAsyncRelativeRetryNoStatusPayloadResponse will be returned.
+	FinalResponse(ctx context.Context) (LROSADsPutAsyncRelativeRetryNoStatusPayloadResponse, error)
+}
+
+type lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) FinalResponse(ctx context.Context) (LROSADsPutAsyncRelativeRetryNoStatusPayloadResponse, error) {
+	respType := LROSADsPutAsyncRelativeRetryNoStatusPayloadResponse{}
+	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	if err != nil {
+		return LROSADsPutAsyncRelativeRetryNoStatusPayloadResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller) pollUntilDone(ctx context.Context, freq time.Duration) (LROSADsPutAsyncRelativeRetryNoStatusPayloadResponse, error) {
+	respType := LROSADsPutAsyncRelativeRetryNoStatusPayloadResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.Product)
+	if err != nil {
+		return LROSADsPutAsyncRelativeRetryNoStatusPayloadResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROSADsPutAsyncRelativeRetryNoStatusPoller provides polling facilities until the operation reaches a terminal state.
+type LROSADsPutAsyncRelativeRetryNoStatusPoller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROSADsPutAsyncRelativeRetryNoStatusResponse will be returned.
+	FinalResponse(ctx context.Context) (LROSADsPutAsyncRelativeRetryNoStatusResponse, error)
+}
+
+type lrosaDsPutAsyncRelativeRetryNoStatusPoller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) FinalResponse(ctx context.Context) (LROSADsPutAsyncRelativeRetryNoStatusResponse, error) {
+	respType := LROSADsPutAsyncRelativeRetryNoStatusResponse{}
+	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	if err != nil {
+		return LROSADsPutAsyncRelativeRetryNoStatusResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrosaDsPutAsyncRelativeRetryNoStatusPoller) pollUntilDone(ctx context.Context, freq time.Duration) (LROSADsPutAsyncRelativeRetryNoStatusResponse, error) {
+	respType := LROSADsPutAsyncRelativeRetryNoStatusResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.Product)
+	if err != nil {
+		return LROSADsPutAsyncRelativeRetryNoStatusResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROSADsPutError201NoProvisioningStatePayloadPoller provides polling facilities until the operation reaches a terminal state.
+type LROSADsPutError201NoProvisioningStatePayloadPoller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROSADsPutError201NoProvisioningStatePayloadResponse will be returned.
+	FinalResponse(ctx context.Context) (LROSADsPutError201NoProvisioningStatePayloadResponse, error)
+}
+
+type lrosaDsPutError201NoProvisioningStatePayloadPoller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) FinalResponse(ctx context.Context) (LROSADsPutError201NoProvisioningStatePayloadResponse, error) {
+	respType := LROSADsPutError201NoProvisioningStatePayloadResponse{}
+	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	if err != nil {
+		return LROSADsPutError201NoProvisioningStatePayloadResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrosaDsPutError201NoProvisioningStatePayloadPoller) pollUntilDone(ctx context.Context, freq time.Duration) (LROSADsPutError201NoProvisioningStatePayloadResponse, error) {
+	respType := LROSADsPutError201NoProvisioningStatePayloadResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.Product)
+	if err != nil {
+		return LROSADsPutError201NoProvisioningStatePayloadResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROSADsPutNonRetry201Creating400InvalidJSONPoller provides polling facilities until the operation reaches a terminal state.
+type LROSADsPutNonRetry201Creating400InvalidJSONPoller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROSADsPutNonRetry201Creating400InvalidJSONResponse will be returned.
+	FinalResponse(ctx context.Context) (LROSADsPutNonRetry201Creating400InvalidJSONResponse, error)
+}
+
+type lrosaDsPutNonRetry201Creating400InvalidJSONPoller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) FinalResponse(ctx context.Context) (LROSADsPutNonRetry201Creating400InvalidJSONResponse, error) {
+	respType := LROSADsPutNonRetry201Creating400InvalidJSONResponse{}
+	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	if err != nil {
+		return LROSADsPutNonRetry201Creating400InvalidJSONResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrosaDsPutNonRetry201Creating400InvalidJSONPoller) pollUntilDone(ctx context.Context, freq time.Duration) (LROSADsPutNonRetry201Creating400InvalidJSONResponse, error) {
+	respType := LROSADsPutNonRetry201Creating400InvalidJSONResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.Product)
+	if err != nil {
+		return LROSADsPutNonRetry201Creating400InvalidJSONResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROSADsPutNonRetry201Creating400Poller provides polling facilities until the operation reaches a terminal state.
+type LROSADsPutNonRetry201Creating400Poller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROSADsPutNonRetry201Creating400Response will be returned.
+	FinalResponse(ctx context.Context) (LROSADsPutNonRetry201Creating400Response, error)
+}
+
+type lrosaDsPutNonRetry201Creating400Poller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrosaDsPutNonRetry201Creating400Poller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrosaDsPutNonRetry201Creating400Poller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrosaDsPutNonRetry201Creating400Poller) FinalResponse(ctx context.Context) (LROSADsPutNonRetry201Creating400Response, error) {
+	respType := LROSADsPutNonRetry201Creating400Response{}
+	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	if err != nil {
+		return LROSADsPutNonRetry201Creating400Response{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrosaDsPutNonRetry201Creating400Poller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrosaDsPutNonRetry201Creating400Poller) pollUntilDone(ctx context.Context, freq time.Duration) (LROSADsPutNonRetry201Creating400Response, error) {
+	respType := LROSADsPutNonRetry201Creating400Response{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.Product)
+	if err != nil {
+		return LROSADsPutNonRetry201Creating400Response{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROSADsPutNonRetry400Poller provides polling facilities until the operation reaches a terminal state.
+type LROSADsPutNonRetry400Poller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROSADsPutNonRetry400Response will be returned.
+	FinalResponse(ctx context.Context) (LROSADsPutNonRetry400Response, error)
+}
+
+type lrosaDsPutNonRetry400Poller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrosaDsPutNonRetry400Poller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrosaDsPutNonRetry400Poller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrosaDsPutNonRetry400Poller) FinalResponse(ctx context.Context) (LROSADsPutNonRetry400Response, error) {
+	respType := LROSADsPutNonRetry400Response{}
+	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	if err != nil {
+		return LROSADsPutNonRetry400Response{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrosaDsPutNonRetry400Poller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrosaDsPutNonRetry400Poller) pollUntilDone(ctx context.Context, freq time.Duration) (LROSADsPutNonRetry400Response, error) {
+	respType := LROSADsPutNonRetry400Response{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.Product)
+	if err != nil {
+		return LROSADsPutNonRetry400Response{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROsCustomHeaderPost202Retry200Poller provides polling facilities until the operation reaches a terminal state.
+type LROsCustomHeaderPost202Retry200Poller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROsCustomHeaderPost202Retry200Response will be returned.
+	FinalResponse(ctx context.Context) (LROsCustomHeaderPost202Retry200Response, error)
+}
+
+type lrOsCustomHeaderPost202Retry200Poller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrOsCustomHeaderPost202Retry200Poller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrOsCustomHeaderPost202Retry200Poller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrOsCustomHeaderPost202Retry200Poller) FinalResponse(ctx context.Context) (LROsCustomHeaderPost202Retry200Response, error) {
+	respType := LROsCustomHeaderPost202Retry200Response{}
+	resp, err := p.pt.FinalResponse(ctx, nil)
+	if err != nil {
+		return LROsCustomHeaderPost202Retry200Response{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrOsCustomHeaderPost202Retry200Poller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrOsCustomHeaderPost202Retry200Poller) pollUntilDone(ctx context.Context, freq time.Duration) (LROsCustomHeaderPost202Retry200Response, error) {
+	respType := LROsCustomHeaderPost202Retry200Response{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return LROsCustomHeaderPost202Retry200Response{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROsCustomHeaderPostAsyncRetrySucceededPoller provides polling facilities until the operation reaches a terminal state.
+type LROsCustomHeaderPostAsyncRetrySucceededPoller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROsCustomHeaderPostAsyncRetrySucceededResponse will be returned.
+	FinalResponse(ctx context.Context) (LROsCustomHeaderPostAsyncRetrySucceededResponse, error)
+}
+
+type lrOsCustomHeaderPostAsyncRetrySucceededPoller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrOsCustomHeaderPostAsyncRetrySucceededPoller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrOsCustomHeaderPostAsyncRetrySucceededPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrOsCustomHeaderPostAsyncRetrySucceededPoller) FinalResponse(ctx context.Context) (LROsCustomHeaderPostAsyncRetrySucceededResponse, error) {
+	respType := LROsCustomHeaderPostAsyncRetrySucceededResponse{}
+	resp, err := p.pt.FinalResponse(ctx, nil)
+	if err != nil {
+		return LROsCustomHeaderPostAsyncRetrySucceededResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrOsCustomHeaderPostAsyncRetrySucceededPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrOsCustomHeaderPostAsyncRetrySucceededPoller) pollUntilDone(ctx context.Context, freq time.Duration) (LROsCustomHeaderPostAsyncRetrySucceededResponse, error) {
+	respType := LROsCustomHeaderPostAsyncRetrySucceededResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return LROsCustomHeaderPostAsyncRetrySucceededResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROsCustomHeaderPut201CreatingSucceeded200Poller provides polling facilities until the operation reaches a terminal state.
+type LROsCustomHeaderPut201CreatingSucceeded200Poller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROsCustomHeaderPut201CreatingSucceeded200Response will be returned.
+	FinalResponse(ctx context.Context) (LROsCustomHeaderPut201CreatingSucceeded200Response, error)
+}
+
+type lrOsCustomHeaderPut201CreatingSucceeded200Poller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrOsCustomHeaderPut201CreatingSucceeded200Poller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrOsCustomHeaderPut201CreatingSucceeded200Poller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrOsCustomHeaderPut201CreatingSucceeded200Poller) FinalResponse(ctx context.Context) (LROsCustomHeaderPut201CreatingSucceeded200Response, error) {
+	respType := LROsCustomHeaderPut201CreatingSucceeded200Response{}
+	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	if err != nil {
+		return LROsCustomHeaderPut201CreatingSucceeded200Response{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrOsCustomHeaderPut201CreatingSucceeded200Poller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrOsCustomHeaderPut201CreatingSucceeded200Poller) pollUntilDone(ctx context.Context, freq time.Duration) (LROsCustomHeaderPut201CreatingSucceeded200Response, error) {
+	respType := LROsCustomHeaderPut201CreatingSucceeded200Response{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.Product)
+	if err != nil {
+		return LROsCustomHeaderPut201CreatingSucceeded200Response{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROsCustomHeaderPutAsyncRetrySucceededPoller provides polling facilities until the operation reaches a terminal state.
+type LROsCustomHeaderPutAsyncRetrySucceededPoller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROsCustomHeaderPutAsyncRetrySucceededResponse will be returned.
+	FinalResponse(ctx context.Context) (LROsCustomHeaderPutAsyncRetrySucceededResponse, error)
+}
+
+type lrOsCustomHeaderPutAsyncRetrySucceededPoller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrOsCustomHeaderPutAsyncRetrySucceededPoller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrOsCustomHeaderPutAsyncRetrySucceededPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrOsCustomHeaderPutAsyncRetrySucceededPoller) FinalResponse(ctx context.Context) (LROsCustomHeaderPutAsyncRetrySucceededResponse, error) {
+	respType := LROsCustomHeaderPutAsyncRetrySucceededResponse{}
+	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	if err != nil {
+		return LROsCustomHeaderPutAsyncRetrySucceededResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrOsCustomHeaderPutAsyncRetrySucceededPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrOsCustomHeaderPutAsyncRetrySucceededPoller) pollUntilDone(ctx context.Context, freq time.Duration) (LROsCustomHeaderPutAsyncRetrySucceededResponse, error) {
+	respType := LROsCustomHeaderPutAsyncRetrySucceededResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.Product)
+	if err != nil {
+		return LROsCustomHeaderPutAsyncRetrySucceededResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROsDelete202NoRetry204Poller provides polling facilities until the operation reaches a terminal state.
+type LROsDelete202NoRetry204Poller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROsDelete202NoRetry204Response will be returned.
+	FinalResponse(ctx context.Context) (LROsDelete202NoRetry204Response, error)
+}
+
+type lrOsDelete202NoRetry204Poller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrOsDelete202NoRetry204Poller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrOsDelete202NoRetry204Poller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrOsDelete202NoRetry204Poller) FinalResponse(ctx context.Context) (LROsDelete202NoRetry204Response, error) {
+	respType := LROsDelete202NoRetry204Response{}
+	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	if err != nil {
+		return LROsDelete202NoRetry204Response{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrOsDelete202NoRetry204Poller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrOsDelete202NoRetry204Poller) pollUntilDone(ctx context.Context, freq time.Duration) (LROsDelete202NoRetry204Response, error) {
+	respType := LROsDelete202NoRetry204Response{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.Product)
+	if err != nil {
+		return LROsDelete202NoRetry204Response{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROsDelete202Retry200Poller provides polling facilities until the operation reaches a terminal state.
+type LROsDelete202Retry200Poller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROsDelete202Retry200Response will be returned.
+	FinalResponse(ctx context.Context) (LROsDelete202Retry200Response, error)
+}
+
+type lrOsDelete202Retry200Poller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrOsDelete202Retry200Poller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrOsDelete202Retry200Poller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrOsDelete202Retry200Poller) FinalResponse(ctx context.Context) (LROsDelete202Retry200Response, error) {
+	respType := LROsDelete202Retry200Response{}
+	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	if err != nil {
+		return LROsDelete202Retry200Response{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrOsDelete202Retry200Poller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrOsDelete202Retry200Poller) pollUntilDone(ctx context.Context, freq time.Duration) (LROsDelete202Retry200Response, error) {
+	respType := LROsDelete202Retry200Response{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.Product)
+	if err != nil {
+		return LROsDelete202Retry200Response{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROsDelete204SucceededPoller provides polling facilities until the operation reaches a terminal state.
+type LROsDelete204SucceededPoller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROsDelete204SucceededResponse will be returned.
+	FinalResponse(ctx context.Context) (LROsDelete204SucceededResponse, error)
+}
+
+type lrOsDelete204SucceededPoller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrOsDelete204SucceededPoller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrOsDelete204SucceededPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrOsDelete204SucceededPoller) FinalResponse(ctx context.Context) (LROsDelete204SucceededResponse, error) {
+	respType := LROsDelete204SucceededResponse{}
+	resp, err := p.pt.FinalResponse(ctx, nil)
+	if err != nil {
+		return LROsDelete204SucceededResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrOsDelete204SucceededPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrOsDelete204SucceededPoller) pollUntilDone(ctx context.Context, freq time.Duration) (LROsDelete204SucceededResponse, error) {
+	respType := LROsDelete204SucceededResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return LROsDelete204SucceededResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROsDeleteAsyncNoHeaderInRetryPoller provides polling facilities until the operation reaches a terminal state.
+type LROsDeleteAsyncNoHeaderInRetryPoller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROsDeleteAsyncNoHeaderInRetryResponse will be returned.
+	FinalResponse(ctx context.Context) (LROsDeleteAsyncNoHeaderInRetryResponse, error)
+}
+
+type lrOsDeleteAsyncNoHeaderInRetryPoller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrOsDeleteAsyncNoHeaderInRetryPoller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrOsDeleteAsyncNoHeaderInRetryPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrOsDeleteAsyncNoHeaderInRetryPoller) FinalResponse(ctx context.Context) (LROsDeleteAsyncNoHeaderInRetryResponse, error) {
+	respType := LROsDeleteAsyncNoHeaderInRetryResponse{}
+	resp, err := p.pt.FinalResponse(ctx, nil)
+	if err != nil {
+		return LROsDeleteAsyncNoHeaderInRetryResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrOsDeleteAsyncNoHeaderInRetryPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrOsDeleteAsyncNoHeaderInRetryPoller) pollUntilDone(ctx context.Context, freq time.Duration) (LROsDeleteAsyncNoHeaderInRetryResponse, error) {
+	respType := LROsDeleteAsyncNoHeaderInRetryResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return LROsDeleteAsyncNoHeaderInRetryResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROsDeleteAsyncNoRetrySucceededPoller provides polling facilities until the operation reaches a terminal state.
+type LROsDeleteAsyncNoRetrySucceededPoller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROsDeleteAsyncNoRetrySucceededResponse will be returned.
+	FinalResponse(ctx context.Context) (LROsDeleteAsyncNoRetrySucceededResponse, error)
+}
+
+type lrOsDeleteAsyncNoRetrySucceededPoller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrOsDeleteAsyncNoRetrySucceededPoller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrOsDeleteAsyncNoRetrySucceededPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrOsDeleteAsyncNoRetrySucceededPoller) FinalResponse(ctx context.Context) (LROsDeleteAsyncNoRetrySucceededResponse, error) {
+	respType := LROsDeleteAsyncNoRetrySucceededResponse{}
+	resp, err := p.pt.FinalResponse(ctx, nil)
+	if err != nil {
+		return LROsDeleteAsyncNoRetrySucceededResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrOsDeleteAsyncNoRetrySucceededPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrOsDeleteAsyncNoRetrySucceededPoller) pollUntilDone(ctx context.Context, freq time.Duration) (LROsDeleteAsyncNoRetrySucceededResponse, error) {
+	respType := LROsDeleteAsyncNoRetrySucceededResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return LROsDeleteAsyncNoRetrySucceededResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROsDeleteAsyncRetryFailedPoller provides polling facilities until the operation reaches a terminal state.
+type LROsDeleteAsyncRetryFailedPoller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROsDeleteAsyncRetryFailedResponse will be returned.
+	FinalResponse(ctx context.Context) (LROsDeleteAsyncRetryFailedResponse, error)
+}
+
+type lrOsDeleteAsyncRetryFailedPoller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrOsDeleteAsyncRetryFailedPoller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrOsDeleteAsyncRetryFailedPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrOsDeleteAsyncRetryFailedPoller) FinalResponse(ctx context.Context) (LROsDeleteAsyncRetryFailedResponse, error) {
+	respType := LROsDeleteAsyncRetryFailedResponse{}
+	resp, err := p.pt.FinalResponse(ctx, nil)
+	if err != nil {
+		return LROsDeleteAsyncRetryFailedResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrOsDeleteAsyncRetryFailedPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrOsDeleteAsyncRetryFailedPoller) pollUntilDone(ctx context.Context, freq time.Duration) (LROsDeleteAsyncRetryFailedResponse, error) {
+	respType := LROsDeleteAsyncRetryFailedResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return LROsDeleteAsyncRetryFailedResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROsDeleteAsyncRetrySucceededPoller provides polling facilities until the operation reaches a terminal state.
+type LROsDeleteAsyncRetrySucceededPoller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROsDeleteAsyncRetrySucceededResponse will be returned.
+	FinalResponse(ctx context.Context) (LROsDeleteAsyncRetrySucceededResponse, error)
+}
+
+type lrOsDeleteAsyncRetrySucceededPoller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrOsDeleteAsyncRetrySucceededPoller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrOsDeleteAsyncRetrySucceededPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrOsDeleteAsyncRetrySucceededPoller) FinalResponse(ctx context.Context) (LROsDeleteAsyncRetrySucceededResponse, error) {
+	respType := LROsDeleteAsyncRetrySucceededResponse{}
+	resp, err := p.pt.FinalResponse(ctx, nil)
+	if err != nil {
+		return LROsDeleteAsyncRetrySucceededResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrOsDeleteAsyncRetrySucceededPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrOsDeleteAsyncRetrySucceededPoller) pollUntilDone(ctx context.Context, freq time.Duration) (LROsDeleteAsyncRetrySucceededResponse, error) {
+	respType := LROsDeleteAsyncRetrySucceededResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return LROsDeleteAsyncRetrySucceededResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROsDeleteAsyncRetrycanceledPoller provides polling facilities until the operation reaches a terminal state.
+type LROsDeleteAsyncRetrycanceledPoller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROsDeleteAsyncRetrycanceledResponse will be returned.
+	FinalResponse(ctx context.Context) (LROsDeleteAsyncRetrycanceledResponse, error)
+}
+
+type lrOsDeleteAsyncRetrycanceledPoller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrOsDeleteAsyncRetrycanceledPoller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrOsDeleteAsyncRetrycanceledPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrOsDeleteAsyncRetrycanceledPoller) FinalResponse(ctx context.Context) (LROsDeleteAsyncRetrycanceledResponse, error) {
+	respType := LROsDeleteAsyncRetrycanceledResponse{}
+	resp, err := p.pt.FinalResponse(ctx, nil)
+	if err != nil {
+		return LROsDeleteAsyncRetrycanceledResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrOsDeleteAsyncRetrycanceledPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrOsDeleteAsyncRetrycanceledPoller) pollUntilDone(ctx context.Context, freq time.Duration) (LROsDeleteAsyncRetrycanceledResponse, error) {
+	respType := LROsDeleteAsyncRetrycanceledResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return LROsDeleteAsyncRetrycanceledResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROsDeleteNoHeaderInRetryPoller provides polling facilities until the operation reaches a terminal state.
+type LROsDeleteNoHeaderInRetryPoller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROsDeleteNoHeaderInRetryResponse will be returned.
+	FinalResponse(ctx context.Context) (LROsDeleteNoHeaderInRetryResponse, error)
+}
+
+type lrOsDeleteNoHeaderInRetryPoller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrOsDeleteNoHeaderInRetryPoller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrOsDeleteNoHeaderInRetryPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrOsDeleteNoHeaderInRetryPoller) FinalResponse(ctx context.Context) (LROsDeleteNoHeaderInRetryResponse, error) {
+	respType := LROsDeleteNoHeaderInRetryResponse{}
+	resp, err := p.pt.FinalResponse(ctx, nil)
+	if err != nil {
+		return LROsDeleteNoHeaderInRetryResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrOsDeleteNoHeaderInRetryPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrOsDeleteNoHeaderInRetryPoller) pollUntilDone(ctx context.Context, freq time.Duration) (LROsDeleteNoHeaderInRetryResponse, error) {
+	respType := LROsDeleteNoHeaderInRetryResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return LROsDeleteNoHeaderInRetryResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROsDeleteProvisioning202Accepted200SucceededPoller provides polling facilities until the operation reaches a terminal state.
+type LROsDeleteProvisioning202Accepted200SucceededPoller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROsDeleteProvisioning202Accepted200SucceededResponse will be returned.
+	FinalResponse(ctx context.Context) (LROsDeleteProvisioning202Accepted200SucceededResponse, error)
+}
+
+type lrOsDeleteProvisioning202Accepted200SucceededPoller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrOsDeleteProvisioning202Accepted200SucceededPoller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrOsDeleteProvisioning202Accepted200SucceededPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrOsDeleteProvisioning202Accepted200SucceededPoller) FinalResponse(ctx context.Context) (LROsDeleteProvisioning202Accepted200SucceededResponse, error) {
+	respType := LROsDeleteProvisioning202Accepted200SucceededResponse{}
+	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	if err != nil {
+		return LROsDeleteProvisioning202Accepted200SucceededResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrOsDeleteProvisioning202Accepted200SucceededPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrOsDeleteProvisioning202Accepted200SucceededPoller) pollUntilDone(ctx context.Context, freq time.Duration) (LROsDeleteProvisioning202Accepted200SucceededResponse, error) {
+	respType := LROsDeleteProvisioning202Accepted200SucceededResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.Product)
+	if err != nil {
+		return LROsDeleteProvisioning202Accepted200SucceededResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROsDeleteProvisioning202DeletingFailed200Poller provides polling facilities until the operation reaches a terminal state.
+type LROsDeleteProvisioning202DeletingFailed200Poller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROsDeleteProvisioning202DeletingFailed200Response will be returned.
+	FinalResponse(ctx context.Context) (LROsDeleteProvisioning202DeletingFailed200Response, error)
+}
+
+type lrOsDeleteProvisioning202DeletingFailed200Poller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrOsDeleteProvisioning202DeletingFailed200Poller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrOsDeleteProvisioning202DeletingFailed200Poller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrOsDeleteProvisioning202DeletingFailed200Poller) FinalResponse(ctx context.Context) (LROsDeleteProvisioning202DeletingFailed200Response, error) {
+	respType := LROsDeleteProvisioning202DeletingFailed200Response{}
+	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	if err != nil {
+		return LROsDeleteProvisioning202DeletingFailed200Response{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrOsDeleteProvisioning202DeletingFailed200Poller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrOsDeleteProvisioning202DeletingFailed200Poller) pollUntilDone(ctx context.Context, freq time.Duration) (LROsDeleteProvisioning202DeletingFailed200Response, error) {
+	respType := LROsDeleteProvisioning202DeletingFailed200Response{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.Product)
+	if err != nil {
+		return LROsDeleteProvisioning202DeletingFailed200Response{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROsDeleteProvisioning202Deletingcanceled200Poller provides polling facilities until the operation reaches a terminal state.
+type LROsDeleteProvisioning202Deletingcanceled200Poller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROsDeleteProvisioning202Deletingcanceled200Response will be returned.
+	FinalResponse(ctx context.Context) (LROsDeleteProvisioning202Deletingcanceled200Response, error)
+}
+
+type lrOsDeleteProvisioning202Deletingcanceled200Poller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrOsDeleteProvisioning202Deletingcanceled200Poller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrOsDeleteProvisioning202Deletingcanceled200Poller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrOsDeleteProvisioning202Deletingcanceled200Poller) FinalResponse(ctx context.Context) (LROsDeleteProvisioning202Deletingcanceled200Response, error) {
+	respType := LROsDeleteProvisioning202Deletingcanceled200Response{}
+	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	if err != nil {
+		return LROsDeleteProvisioning202Deletingcanceled200Response{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrOsDeleteProvisioning202Deletingcanceled200Poller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrOsDeleteProvisioning202Deletingcanceled200Poller) pollUntilDone(ctx context.Context, freq time.Duration) (LROsDeleteProvisioning202Deletingcanceled200Response, error) {
+	respType := LROsDeleteProvisioning202Deletingcanceled200Response{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.Product)
+	if err != nil {
+		return LROsDeleteProvisioning202Deletingcanceled200Response{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROsPost200WithPayloadPoller provides polling facilities until the operation reaches a terminal state.
+type LROsPost200WithPayloadPoller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROsPost200WithPayloadResponse will be returned.
+	FinalResponse(ctx context.Context) (LROsPost200WithPayloadResponse, error)
+}
+
+type lrOsPost200WithPayloadPoller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrOsPost200WithPayloadPoller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrOsPost200WithPayloadPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrOsPost200WithPayloadPoller) FinalResponse(ctx context.Context) (LROsPost200WithPayloadResponse, error) {
+	respType := LROsPost200WithPayloadResponse{}
+	resp, err := p.pt.FinalResponse(ctx, &respType.SKU)
+	if err != nil {
+		return LROsPost200WithPayloadResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrOsPost200WithPayloadPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrOsPost200WithPayloadPoller) pollUntilDone(ctx context.Context, freq time.Duration) (LROsPost200WithPayloadResponse, error) {
+	respType := LROsPost200WithPayloadResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.SKU)
+	if err != nil {
+		return LROsPost200WithPayloadResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROsPost202ListPoller provides polling facilities until the operation reaches a terminal state.
+type LROsPost202ListPoller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROsPost202ListResponse will be returned.
+	FinalResponse(ctx context.Context) (LROsPost202ListResponse, error)
+}
+
+type lrOsPost202ListPoller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrOsPost202ListPoller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrOsPost202ListPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrOsPost202ListPoller) FinalResponse(ctx context.Context) (LROsPost202ListResponse, error) {
+	respType := LROsPost202ListResponse{}
 	resp, err := p.pt.FinalResponse(ctx, &respType.ProductArray)
 	if err != nil {
-		return ProductArrayResponse{}, err
+		return LROsPost202ListResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
 }
 
-func (p *productArrayPoller) ResumeToken() (string, error) {
+func (p *lrOsPost202ListPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-func (p *productArrayPoller) pollUntilDone(ctx context.Context, freq time.Duration) (ProductArrayResponse, error) {
-	respType := ProductArrayResponse{ProductArray: []*Product{}}
+func (p *lrOsPost202ListPoller) pollUntilDone(ctx context.Context, freq time.Duration) (LROsPost202ListResponse, error) {
+	respType := LROsPost202ListResponse{}
 	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.ProductArray)
 	if err != nil {
-		return ProductArrayResponse{}, err
+		return LROsPost202ListResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
 }
 
-// ProductPoller provides polling facilities until the operation reaches a terminal state.
-type ProductPoller interface {
+// LROsPost202NoRetry204Poller provides polling facilities until the operation reaches a terminal state.
+type LROsPost202NoRetry204Poller interface {
 	azcore.Poller
 	// FinalResponse performs a final GET to the service and returns the final response
 	// for the polling operation. If there is an error performing the final GET then an error is returned.
-	// If the final GET succeeded then the final ProductResponse will be returned.
-	FinalResponse(ctx context.Context) (ProductResponse, error)
+	// If the final GET succeeded then the final LROsPost202NoRetry204Response will be returned.
+	FinalResponse(ctx context.Context) (LROsPost202NoRetry204Response, error)
 }
 
-type productPoller struct {
+type lrOsPost202NoRetry204Poller struct {
 	pt *armcore.LROPoller
 }
 
-func (p *productPoller) Done() bool {
+func (p *lrOsPost202NoRetry204Poller) Done() bool {
 	return p.pt.Done()
 }
 
-func (p *productPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *lrOsPost202NoRetry204Poller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx)
 }
 
-func (p *productPoller) FinalResponse(ctx context.Context) (ProductResponse, error) {
-	respType := ProductResponse{Product: &Product{}}
-	resp, err := p.pt.FinalResponse(ctx, respType.Product)
+func (p *lrOsPost202NoRetry204Poller) FinalResponse(ctx context.Context) (LROsPost202NoRetry204Response, error) {
+	respType := LROsPost202NoRetry204Response{}
+	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
 	if err != nil {
-		return ProductResponse{}, err
+		return LROsPost202NoRetry204Response{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
 }
 
-func (p *productPoller) ResumeToken() (string, error) {
+func (p *lrOsPost202NoRetry204Poller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-func (p *productPoller) pollUntilDone(ctx context.Context, freq time.Duration) (ProductResponse, error) {
-	respType := ProductResponse{Product: &Product{}}
-	resp, err := p.pt.PollUntilDone(ctx, freq, respType.Product)
+func (p *lrOsPost202NoRetry204Poller) pollUntilDone(ctx context.Context, freq time.Duration) (LROsPost202NoRetry204Response, error) {
+	respType := LROsPost202NoRetry204Response{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.Product)
 	if err != nil {
-		return ProductResponse{}, err
+		return LROsPost202NoRetry204Response{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
 }
 
-// SKUPoller provides polling facilities until the operation reaches a terminal state.
-type SKUPoller interface {
+// LROsPost202Retry200Poller provides polling facilities until the operation reaches a terminal state.
+type LROsPost202Retry200Poller interface {
 	azcore.Poller
 	// FinalResponse performs a final GET to the service and returns the final response
 	// for the polling operation. If there is an error performing the final GET then an error is returned.
-	// If the final GET succeeded then the final SKUResponse will be returned.
-	FinalResponse(ctx context.Context) (SKUResponse, error)
+	// If the final GET succeeded then the final LROsPost202Retry200Response will be returned.
+	FinalResponse(ctx context.Context) (LROsPost202Retry200Response, error)
 }
 
-type skuPoller struct {
+type lrOsPost202Retry200Poller struct {
 	pt *armcore.LROPoller
 }
 
-func (p *skuPoller) Done() bool {
+func (p *lrOsPost202Retry200Poller) Done() bool {
 	return p.pt.Done()
 }
 
-func (p *skuPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *lrOsPost202Retry200Poller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx)
 }
 
-func (p *skuPoller) FinalResponse(ctx context.Context) (SKUResponse, error) {
-	respType := SKUResponse{SKU: &SKU{}}
-	resp, err := p.pt.FinalResponse(ctx, respType.SKU)
+func (p *lrOsPost202Retry200Poller) FinalResponse(ctx context.Context) (LROsPost202Retry200Response, error) {
+	respType := LROsPost202Retry200Response{}
+	resp, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
-		return SKUResponse{}, err
+		return LROsPost202Retry200Response{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
 }
 
-func (p *skuPoller) ResumeToken() (string, error) {
+func (p *lrOsPost202Retry200Poller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-func (p *skuPoller) pollUntilDone(ctx context.Context, freq time.Duration) (SKUResponse, error) {
-	respType := SKUResponse{SKU: &SKU{}}
-	resp, err := p.pt.PollUntilDone(ctx, freq, respType.SKU)
+func (p *lrOsPost202Retry200Poller) pollUntilDone(ctx context.Context, freq time.Duration) (LROsPost202Retry200Response, error) {
+	respType := LROsPost202Retry200Response{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, nil)
 	if err != nil {
-		return SKUResponse{}, err
+		return LROsPost202Retry200Response{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
 }
 
-// SubProductPoller provides polling facilities until the operation reaches a terminal state.
-type SubProductPoller interface {
+// LROsPostAsyncNoRetrySucceededPoller provides polling facilities until the operation reaches a terminal state.
+type LROsPostAsyncNoRetrySucceededPoller interface {
 	azcore.Poller
 	// FinalResponse performs a final GET to the service and returns the final response
 	// for the polling operation. If there is an error performing the final GET then an error is returned.
-	// If the final GET succeeded then the final SubProductResponse will be returned.
-	FinalResponse(ctx context.Context) (SubProductResponse, error)
+	// If the final GET succeeded then the final LROsPostAsyncNoRetrySucceededResponse will be returned.
+	FinalResponse(ctx context.Context) (LROsPostAsyncNoRetrySucceededResponse, error)
 }
 
-type subProductPoller struct {
+type lrOsPostAsyncNoRetrySucceededPoller struct {
 	pt *armcore.LROPoller
 }
 
-func (p *subProductPoller) Done() bool {
+func (p *lrOsPostAsyncNoRetrySucceededPoller) Done() bool {
 	return p.pt.Done()
 }
 
-func (p *subProductPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *lrOsPostAsyncNoRetrySucceededPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx)
 }
 
-func (p *subProductPoller) FinalResponse(ctx context.Context) (SubProductResponse, error) {
-	respType := SubProductResponse{SubProduct: &SubProduct{}}
-	resp, err := p.pt.FinalResponse(ctx, respType.SubProduct)
+func (p *lrOsPostAsyncNoRetrySucceededPoller) FinalResponse(ctx context.Context) (LROsPostAsyncNoRetrySucceededResponse, error) {
+	respType := LROsPostAsyncNoRetrySucceededResponse{}
+	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
 	if err != nil {
-		return SubProductResponse{}, err
+		return LROsPostAsyncNoRetrySucceededResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
 }
 
-func (p *subProductPoller) ResumeToken() (string, error) {
+func (p *lrOsPostAsyncNoRetrySucceededPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-func (p *subProductPoller) pollUntilDone(ctx context.Context, freq time.Duration) (SubProductResponse, error) {
-	respType := SubProductResponse{SubProduct: &SubProduct{}}
-	resp, err := p.pt.PollUntilDone(ctx, freq, respType.SubProduct)
+func (p *lrOsPostAsyncNoRetrySucceededPoller) pollUntilDone(ctx context.Context, freq time.Duration) (LROsPostAsyncNoRetrySucceededResponse, error) {
+	respType := LROsPostAsyncNoRetrySucceededResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.Product)
 	if err != nil {
-		return SubProductResponse{}, err
+		return LROsPostAsyncNoRetrySucceededResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROsPostAsyncRetryFailedPoller provides polling facilities until the operation reaches a terminal state.
+type LROsPostAsyncRetryFailedPoller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROsPostAsyncRetryFailedResponse will be returned.
+	FinalResponse(ctx context.Context) (LROsPostAsyncRetryFailedResponse, error)
+}
+
+type lrOsPostAsyncRetryFailedPoller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrOsPostAsyncRetryFailedPoller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrOsPostAsyncRetryFailedPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrOsPostAsyncRetryFailedPoller) FinalResponse(ctx context.Context) (LROsPostAsyncRetryFailedResponse, error) {
+	respType := LROsPostAsyncRetryFailedResponse{}
+	resp, err := p.pt.FinalResponse(ctx, nil)
+	if err != nil {
+		return LROsPostAsyncRetryFailedResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrOsPostAsyncRetryFailedPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrOsPostAsyncRetryFailedPoller) pollUntilDone(ctx context.Context, freq time.Duration) (LROsPostAsyncRetryFailedResponse, error) {
+	respType := LROsPostAsyncRetryFailedResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return LROsPostAsyncRetryFailedResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROsPostAsyncRetrySucceededPoller provides polling facilities until the operation reaches a terminal state.
+type LROsPostAsyncRetrySucceededPoller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROsPostAsyncRetrySucceededResponse will be returned.
+	FinalResponse(ctx context.Context) (LROsPostAsyncRetrySucceededResponse, error)
+}
+
+type lrOsPostAsyncRetrySucceededPoller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrOsPostAsyncRetrySucceededPoller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrOsPostAsyncRetrySucceededPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrOsPostAsyncRetrySucceededPoller) FinalResponse(ctx context.Context) (LROsPostAsyncRetrySucceededResponse, error) {
+	respType := LROsPostAsyncRetrySucceededResponse{}
+	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	if err != nil {
+		return LROsPostAsyncRetrySucceededResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrOsPostAsyncRetrySucceededPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrOsPostAsyncRetrySucceededPoller) pollUntilDone(ctx context.Context, freq time.Duration) (LROsPostAsyncRetrySucceededResponse, error) {
+	respType := LROsPostAsyncRetrySucceededResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.Product)
+	if err != nil {
+		return LROsPostAsyncRetrySucceededResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROsPostAsyncRetrycanceledPoller provides polling facilities until the operation reaches a terminal state.
+type LROsPostAsyncRetrycanceledPoller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROsPostAsyncRetrycanceledResponse will be returned.
+	FinalResponse(ctx context.Context) (LROsPostAsyncRetrycanceledResponse, error)
+}
+
+type lrOsPostAsyncRetrycanceledPoller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrOsPostAsyncRetrycanceledPoller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrOsPostAsyncRetrycanceledPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrOsPostAsyncRetrycanceledPoller) FinalResponse(ctx context.Context) (LROsPostAsyncRetrycanceledResponse, error) {
+	respType := LROsPostAsyncRetrycanceledResponse{}
+	resp, err := p.pt.FinalResponse(ctx, nil)
+	if err != nil {
+		return LROsPostAsyncRetrycanceledResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrOsPostAsyncRetrycanceledPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrOsPostAsyncRetrycanceledPoller) pollUntilDone(ctx context.Context, freq time.Duration) (LROsPostAsyncRetrycanceledResponse, error) {
+	respType := LROsPostAsyncRetrycanceledResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return LROsPostAsyncRetrycanceledResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROsPostDoubleHeadersFinalAzureHeaderGetDefaultPoller provides polling facilities until the operation reaches a terminal state.
+type LROsPostDoubleHeadersFinalAzureHeaderGetDefaultPoller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROsPostDoubleHeadersFinalAzureHeaderGetDefaultResponse will be returned.
+	FinalResponse(ctx context.Context) (LROsPostDoubleHeadersFinalAzureHeaderGetDefaultResponse, error)
+}
+
+type lrOsPostDoubleHeadersFinalAzureHeaderGetDefaultPoller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrOsPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrOsPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrOsPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) FinalResponse(ctx context.Context) (LROsPostDoubleHeadersFinalAzureHeaderGetDefaultResponse, error) {
+	respType := LROsPostDoubleHeadersFinalAzureHeaderGetDefaultResponse{}
+	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	if err != nil {
+		return LROsPostDoubleHeadersFinalAzureHeaderGetDefaultResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrOsPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrOsPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) pollUntilDone(ctx context.Context, freq time.Duration) (LROsPostDoubleHeadersFinalAzureHeaderGetDefaultResponse, error) {
+	respType := LROsPostDoubleHeadersFinalAzureHeaderGetDefaultResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.Product)
+	if err != nil {
+		return LROsPostDoubleHeadersFinalAzureHeaderGetDefaultResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROsPostDoubleHeadersFinalAzureHeaderGetPoller provides polling facilities until the operation reaches a terminal state.
+type LROsPostDoubleHeadersFinalAzureHeaderGetPoller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROsPostDoubleHeadersFinalAzureHeaderGetResponse will be returned.
+	FinalResponse(ctx context.Context) (LROsPostDoubleHeadersFinalAzureHeaderGetResponse, error)
+}
+
+type lrOsPostDoubleHeadersFinalAzureHeaderGetPoller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrOsPostDoubleHeadersFinalAzureHeaderGetPoller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrOsPostDoubleHeadersFinalAzureHeaderGetPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrOsPostDoubleHeadersFinalAzureHeaderGetPoller) FinalResponse(ctx context.Context) (LROsPostDoubleHeadersFinalAzureHeaderGetResponse, error) {
+	respType := LROsPostDoubleHeadersFinalAzureHeaderGetResponse{}
+	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	if err != nil {
+		return LROsPostDoubleHeadersFinalAzureHeaderGetResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrOsPostDoubleHeadersFinalAzureHeaderGetPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrOsPostDoubleHeadersFinalAzureHeaderGetPoller) pollUntilDone(ctx context.Context, freq time.Duration) (LROsPostDoubleHeadersFinalAzureHeaderGetResponse, error) {
+	respType := LROsPostDoubleHeadersFinalAzureHeaderGetResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.Product)
+	if err != nil {
+		return LROsPostDoubleHeadersFinalAzureHeaderGetResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROsPostDoubleHeadersFinalLocationGetPoller provides polling facilities until the operation reaches a terminal state.
+type LROsPostDoubleHeadersFinalLocationGetPoller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROsPostDoubleHeadersFinalLocationGetResponse will be returned.
+	FinalResponse(ctx context.Context) (LROsPostDoubleHeadersFinalLocationGetResponse, error)
+}
+
+type lrOsPostDoubleHeadersFinalLocationGetPoller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrOsPostDoubleHeadersFinalLocationGetPoller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrOsPostDoubleHeadersFinalLocationGetPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrOsPostDoubleHeadersFinalLocationGetPoller) FinalResponse(ctx context.Context) (LROsPostDoubleHeadersFinalLocationGetResponse, error) {
+	respType := LROsPostDoubleHeadersFinalLocationGetResponse{}
+	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	if err != nil {
+		return LROsPostDoubleHeadersFinalLocationGetResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrOsPostDoubleHeadersFinalLocationGetPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrOsPostDoubleHeadersFinalLocationGetPoller) pollUntilDone(ctx context.Context, freq time.Duration) (LROsPostDoubleHeadersFinalLocationGetResponse, error) {
+	respType := LROsPostDoubleHeadersFinalLocationGetResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.Product)
+	if err != nil {
+		return LROsPostDoubleHeadersFinalLocationGetResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROsPut200Acceptedcanceled200Poller provides polling facilities until the operation reaches a terminal state.
+type LROsPut200Acceptedcanceled200Poller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROsPut200Acceptedcanceled200Response will be returned.
+	FinalResponse(ctx context.Context) (LROsPut200Acceptedcanceled200Response, error)
+}
+
+type lrOsPut200Acceptedcanceled200Poller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrOsPut200Acceptedcanceled200Poller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrOsPut200Acceptedcanceled200Poller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrOsPut200Acceptedcanceled200Poller) FinalResponse(ctx context.Context) (LROsPut200Acceptedcanceled200Response, error) {
+	respType := LROsPut200Acceptedcanceled200Response{}
+	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	if err != nil {
+		return LROsPut200Acceptedcanceled200Response{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrOsPut200Acceptedcanceled200Poller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrOsPut200Acceptedcanceled200Poller) pollUntilDone(ctx context.Context, freq time.Duration) (LROsPut200Acceptedcanceled200Response, error) {
+	respType := LROsPut200Acceptedcanceled200Response{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.Product)
+	if err != nil {
+		return LROsPut200Acceptedcanceled200Response{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROsPut200SucceededNoStatePoller provides polling facilities until the operation reaches a terminal state.
+type LROsPut200SucceededNoStatePoller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROsPut200SucceededNoStateResponse will be returned.
+	FinalResponse(ctx context.Context) (LROsPut200SucceededNoStateResponse, error)
+}
+
+type lrOsPut200SucceededNoStatePoller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrOsPut200SucceededNoStatePoller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrOsPut200SucceededNoStatePoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrOsPut200SucceededNoStatePoller) FinalResponse(ctx context.Context) (LROsPut200SucceededNoStateResponse, error) {
+	respType := LROsPut200SucceededNoStateResponse{}
+	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	if err != nil {
+		return LROsPut200SucceededNoStateResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrOsPut200SucceededNoStatePoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrOsPut200SucceededNoStatePoller) pollUntilDone(ctx context.Context, freq time.Duration) (LROsPut200SucceededNoStateResponse, error) {
+	respType := LROsPut200SucceededNoStateResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.Product)
+	if err != nil {
+		return LROsPut200SucceededNoStateResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROsPut200SucceededPoller provides polling facilities until the operation reaches a terminal state.
+type LROsPut200SucceededPoller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROsPut200SucceededResponse will be returned.
+	FinalResponse(ctx context.Context) (LROsPut200SucceededResponse, error)
+}
+
+type lrOsPut200SucceededPoller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrOsPut200SucceededPoller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrOsPut200SucceededPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrOsPut200SucceededPoller) FinalResponse(ctx context.Context) (LROsPut200SucceededResponse, error) {
+	respType := LROsPut200SucceededResponse{}
+	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	if err != nil {
+		return LROsPut200SucceededResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrOsPut200SucceededPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrOsPut200SucceededPoller) pollUntilDone(ctx context.Context, freq time.Duration) (LROsPut200SucceededResponse, error) {
+	respType := LROsPut200SucceededResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.Product)
+	if err != nil {
+		return LROsPut200SucceededResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROsPut200UpdatingSucceeded204Poller provides polling facilities until the operation reaches a terminal state.
+type LROsPut200UpdatingSucceeded204Poller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROsPut200UpdatingSucceeded204Response will be returned.
+	FinalResponse(ctx context.Context) (LROsPut200UpdatingSucceeded204Response, error)
+}
+
+type lrOsPut200UpdatingSucceeded204Poller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrOsPut200UpdatingSucceeded204Poller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrOsPut200UpdatingSucceeded204Poller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrOsPut200UpdatingSucceeded204Poller) FinalResponse(ctx context.Context) (LROsPut200UpdatingSucceeded204Response, error) {
+	respType := LROsPut200UpdatingSucceeded204Response{}
+	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	if err != nil {
+		return LROsPut200UpdatingSucceeded204Response{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrOsPut200UpdatingSucceeded204Poller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrOsPut200UpdatingSucceeded204Poller) pollUntilDone(ctx context.Context, freq time.Duration) (LROsPut200UpdatingSucceeded204Response, error) {
+	respType := LROsPut200UpdatingSucceeded204Response{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.Product)
+	if err != nil {
+		return LROsPut200UpdatingSucceeded204Response{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROsPut201CreatingFailed200Poller provides polling facilities until the operation reaches a terminal state.
+type LROsPut201CreatingFailed200Poller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROsPut201CreatingFailed200Response will be returned.
+	FinalResponse(ctx context.Context) (LROsPut201CreatingFailed200Response, error)
+}
+
+type lrOsPut201CreatingFailed200Poller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrOsPut201CreatingFailed200Poller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrOsPut201CreatingFailed200Poller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrOsPut201CreatingFailed200Poller) FinalResponse(ctx context.Context) (LROsPut201CreatingFailed200Response, error) {
+	respType := LROsPut201CreatingFailed200Response{}
+	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	if err != nil {
+		return LROsPut201CreatingFailed200Response{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrOsPut201CreatingFailed200Poller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrOsPut201CreatingFailed200Poller) pollUntilDone(ctx context.Context, freq time.Duration) (LROsPut201CreatingFailed200Response, error) {
+	respType := LROsPut201CreatingFailed200Response{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.Product)
+	if err != nil {
+		return LROsPut201CreatingFailed200Response{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROsPut201CreatingSucceeded200Poller provides polling facilities until the operation reaches a terminal state.
+type LROsPut201CreatingSucceeded200Poller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROsPut201CreatingSucceeded200Response will be returned.
+	FinalResponse(ctx context.Context) (LROsPut201CreatingSucceeded200Response, error)
+}
+
+type lrOsPut201CreatingSucceeded200Poller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrOsPut201CreatingSucceeded200Poller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrOsPut201CreatingSucceeded200Poller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrOsPut201CreatingSucceeded200Poller) FinalResponse(ctx context.Context) (LROsPut201CreatingSucceeded200Response, error) {
+	respType := LROsPut201CreatingSucceeded200Response{}
+	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	if err != nil {
+		return LROsPut201CreatingSucceeded200Response{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrOsPut201CreatingSucceeded200Poller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrOsPut201CreatingSucceeded200Poller) pollUntilDone(ctx context.Context, freq time.Duration) (LROsPut201CreatingSucceeded200Response, error) {
+	respType := LROsPut201CreatingSucceeded200Response{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.Product)
+	if err != nil {
+		return LROsPut201CreatingSucceeded200Response{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROsPut201SucceededPoller provides polling facilities until the operation reaches a terminal state.
+type LROsPut201SucceededPoller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROsPut201SucceededResponse will be returned.
+	FinalResponse(ctx context.Context) (LROsPut201SucceededResponse, error)
+}
+
+type lrOsPut201SucceededPoller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrOsPut201SucceededPoller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrOsPut201SucceededPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrOsPut201SucceededPoller) FinalResponse(ctx context.Context) (LROsPut201SucceededResponse, error) {
+	respType := LROsPut201SucceededResponse{}
+	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	if err != nil {
+		return LROsPut201SucceededResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrOsPut201SucceededPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrOsPut201SucceededPoller) pollUntilDone(ctx context.Context, freq time.Duration) (LROsPut201SucceededResponse, error) {
+	respType := LROsPut201SucceededResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.Product)
+	if err != nil {
+		return LROsPut201SucceededResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROsPut202Retry200Poller provides polling facilities until the operation reaches a terminal state.
+type LROsPut202Retry200Poller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROsPut202Retry200Response will be returned.
+	FinalResponse(ctx context.Context) (LROsPut202Retry200Response, error)
+}
+
+type lrOsPut202Retry200Poller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrOsPut202Retry200Poller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrOsPut202Retry200Poller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrOsPut202Retry200Poller) FinalResponse(ctx context.Context) (LROsPut202Retry200Response, error) {
+	respType := LROsPut202Retry200Response{}
+	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	if err != nil {
+		return LROsPut202Retry200Response{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrOsPut202Retry200Poller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrOsPut202Retry200Poller) pollUntilDone(ctx context.Context, freq time.Duration) (LROsPut202Retry200Response, error) {
+	respType := LROsPut202Retry200Response{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.Product)
+	if err != nil {
+		return LROsPut202Retry200Response{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROsPutAsyncNoHeaderInRetryPoller provides polling facilities until the operation reaches a terminal state.
+type LROsPutAsyncNoHeaderInRetryPoller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROsPutAsyncNoHeaderInRetryResponse will be returned.
+	FinalResponse(ctx context.Context) (LROsPutAsyncNoHeaderInRetryResponse, error)
+}
+
+type lrOsPutAsyncNoHeaderInRetryPoller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrOsPutAsyncNoHeaderInRetryPoller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrOsPutAsyncNoHeaderInRetryPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrOsPutAsyncNoHeaderInRetryPoller) FinalResponse(ctx context.Context) (LROsPutAsyncNoHeaderInRetryResponse, error) {
+	respType := LROsPutAsyncNoHeaderInRetryResponse{}
+	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	if err != nil {
+		return LROsPutAsyncNoHeaderInRetryResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrOsPutAsyncNoHeaderInRetryPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrOsPutAsyncNoHeaderInRetryPoller) pollUntilDone(ctx context.Context, freq time.Duration) (LROsPutAsyncNoHeaderInRetryResponse, error) {
+	respType := LROsPutAsyncNoHeaderInRetryResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.Product)
+	if err != nil {
+		return LROsPutAsyncNoHeaderInRetryResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROsPutAsyncNoRetrySucceededPoller provides polling facilities until the operation reaches a terminal state.
+type LROsPutAsyncNoRetrySucceededPoller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROsPutAsyncNoRetrySucceededResponse will be returned.
+	FinalResponse(ctx context.Context) (LROsPutAsyncNoRetrySucceededResponse, error)
+}
+
+type lrOsPutAsyncNoRetrySucceededPoller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrOsPutAsyncNoRetrySucceededPoller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrOsPutAsyncNoRetrySucceededPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrOsPutAsyncNoRetrySucceededPoller) FinalResponse(ctx context.Context) (LROsPutAsyncNoRetrySucceededResponse, error) {
+	respType := LROsPutAsyncNoRetrySucceededResponse{}
+	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	if err != nil {
+		return LROsPutAsyncNoRetrySucceededResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrOsPutAsyncNoRetrySucceededPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrOsPutAsyncNoRetrySucceededPoller) pollUntilDone(ctx context.Context, freq time.Duration) (LROsPutAsyncNoRetrySucceededResponse, error) {
+	respType := LROsPutAsyncNoRetrySucceededResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.Product)
+	if err != nil {
+		return LROsPutAsyncNoRetrySucceededResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROsPutAsyncNoRetrycanceledPoller provides polling facilities until the operation reaches a terminal state.
+type LROsPutAsyncNoRetrycanceledPoller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROsPutAsyncNoRetrycanceledResponse will be returned.
+	FinalResponse(ctx context.Context) (LROsPutAsyncNoRetrycanceledResponse, error)
+}
+
+type lrOsPutAsyncNoRetrycanceledPoller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrOsPutAsyncNoRetrycanceledPoller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrOsPutAsyncNoRetrycanceledPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrOsPutAsyncNoRetrycanceledPoller) FinalResponse(ctx context.Context) (LROsPutAsyncNoRetrycanceledResponse, error) {
+	respType := LROsPutAsyncNoRetrycanceledResponse{}
+	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	if err != nil {
+		return LROsPutAsyncNoRetrycanceledResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrOsPutAsyncNoRetrycanceledPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrOsPutAsyncNoRetrycanceledPoller) pollUntilDone(ctx context.Context, freq time.Duration) (LROsPutAsyncNoRetrycanceledResponse, error) {
+	respType := LROsPutAsyncNoRetrycanceledResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.Product)
+	if err != nil {
+		return LROsPutAsyncNoRetrycanceledResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROsPutAsyncNonResourcePoller provides polling facilities until the operation reaches a terminal state.
+type LROsPutAsyncNonResourcePoller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROsPutAsyncNonResourceResponse will be returned.
+	FinalResponse(ctx context.Context) (LROsPutAsyncNonResourceResponse, error)
+}
+
+type lrOsPutAsyncNonResourcePoller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrOsPutAsyncNonResourcePoller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrOsPutAsyncNonResourcePoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrOsPutAsyncNonResourcePoller) FinalResponse(ctx context.Context) (LROsPutAsyncNonResourceResponse, error) {
+	respType := LROsPutAsyncNonResourceResponse{}
+	resp, err := p.pt.FinalResponse(ctx, &respType.SKU)
+	if err != nil {
+		return LROsPutAsyncNonResourceResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrOsPutAsyncNonResourcePoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrOsPutAsyncNonResourcePoller) pollUntilDone(ctx context.Context, freq time.Duration) (LROsPutAsyncNonResourceResponse, error) {
+	respType := LROsPutAsyncNonResourceResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.SKU)
+	if err != nil {
+		return LROsPutAsyncNonResourceResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROsPutAsyncRetryFailedPoller provides polling facilities until the operation reaches a terminal state.
+type LROsPutAsyncRetryFailedPoller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROsPutAsyncRetryFailedResponse will be returned.
+	FinalResponse(ctx context.Context) (LROsPutAsyncRetryFailedResponse, error)
+}
+
+type lrOsPutAsyncRetryFailedPoller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrOsPutAsyncRetryFailedPoller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrOsPutAsyncRetryFailedPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrOsPutAsyncRetryFailedPoller) FinalResponse(ctx context.Context) (LROsPutAsyncRetryFailedResponse, error) {
+	respType := LROsPutAsyncRetryFailedResponse{}
+	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	if err != nil {
+		return LROsPutAsyncRetryFailedResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrOsPutAsyncRetryFailedPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrOsPutAsyncRetryFailedPoller) pollUntilDone(ctx context.Context, freq time.Duration) (LROsPutAsyncRetryFailedResponse, error) {
+	respType := LROsPutAsyncRetryFailedResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.Product)
+	if err != nil {
+		return LROsPutAsyncRetryFailedResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROsPutAsyncRetrySucceededPoller provides polling facilities until the operation reaches a terminal state.
+type LROsPutAsyncRetrySucceededPoller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROsPutAsyncRetrySucceededResponse will be returned.
+	FinalResponse(ctx context.Context) (LROsPutAsyncRetrySucceededResponse, error)
+}
+
+type lrOsPutAsyncRetrySucceededPoller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrOsPutAsyncRetrySucceededPoller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrOsPutAsyncRetrySucceededPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrOsPutAsyncRetrySucceededPoller) FinalResponse(ctx context.Context) (LROsPutAsyncRetrySucceededResponse, error) {
+	respType := LROsPutAsyncRetrySucceededResponse{}
+	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	if err != nil {
+		return LROsPutAsyncRetrySucceededResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrOsPutAsyncRetrySucceededPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrOsPutAsyncRetrySucceededPoller) pollUntilDone(ctx context.Context, freq time.Duration) (LROsPutAsyncRetrySucceededResponse, error) {
+	respType := LROsPutAsyncRetrySucceededResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.Product)
+	if err != nil {
+		return LROsPutAsyncRetrySucceededResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROsPutAsyncSubResourcePoller provides polling facilities until the operation reaches a terminal state.
+type LROsPutAsyncSubResourcePoller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROsPutAsyncSubResourceResponse will be returned.
+	FinalResponse(ctx context.Context) (LROsPutAsyncSubResourceResponse, error)
+}
+
+type lrOsPutAsyncSubResourcePoller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrOsPutAsyncSubResourcePoller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrOsPutAsyncSubResourcePoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrOsPutAsyncSubResourcePoller) FinalResponse(ctx context.Context) (LROsPutAsyncSubResourceResponse, error) {
+	respType := LROsPutAsyncSubResourceResponse{}
+	resp, err := p.pt.FinalResponse(ctx, &respType.SubProduct)
+	if err != nil {
+		return LROsPutAsyncSubResourceResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrOsPutAsyncSubResourcePoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrOsPutAsyncSubResourcePoller) pollUntilDone(ctx context.Context, freq time.Duration) (LROsPutAsyncSubResourceResponse, error) {
+	respType := LROsPutAsyncSubResourceResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.SubProduct)
+	if err != nil {
+		return LROsPutAsyncSubResourceResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROsPutNoHeaderInRetryPoller provides polling facilities until the operation reaches a terminal state.
+type LROsPutNoHeaderInRetryPoller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROsPutNoHeaderInRetryResponse will be returned.
+	FinalResponse(ctx context.Context) (LROsPutNoHeaderInRetryResponse, error)
+}
+
+type lrOsPutNoHeaderInRetryPoller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrOsPutNoHeaderInRetryPoller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrOsPutNoHeaderInRetryPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrOsPutNoHeaderInRetryPoller) FinalResponse(ctx context.Context) (LROsPutNoHeaderInRetryResponse, error) {
+	respType := LROsPutNoHeaderInRetryResponse{}
+	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	if err != nil {
+		return LROsPutNoHeaderInRetryResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrOsPutNoHeaderInRetryPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrOsPutNoHeaderInRetryPoller) pollUntilDone(ctx context.Context, freq time.Duration) (LROsPutNoHeaderInRetryResponse, error) {
+	respType := LROsPutNoHeaderInRetryResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.Product)
+	if err != nil {
+		return LROsPutNoHeaderInRetryResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROsPutNonResourcePoller provides polling facilities until the operation reaches a terminal state.
+type LROsPutNonResourcePoller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROsPutNonResourceResponse will be returned.
+	FinalResponse(ctx context.Context) (LROsPutNonResourceResponse, error)
+}
+
+type lrOsPutNonResourcePoller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrOsPutNonResourcePoller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrOsPutNonResourcePoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrOsPutNonResourcePoller) FinalResponse(ctx context.Context) (LROsPutNonResourceResponse, error) {
+	respType := LROsPutNonResourceResponse{}
+	resp, err := p.pt.FinalResponse(ctx, &respType.SKU)
+	if err != nil {
+		return LROsPutNonResourceResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrOsPutNonResourcePoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrOsPutNonResourcePoller) pollUntilDone(ctx context.Context, freq time.Duration) (LROsPutNonResourceResponse, error) {
+	respType := LROsPutNonResourceResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.SKU)
+	if err != nil {
+		return LROsPutNonResourceResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// LROsPutSubResourcePoller provides polling facilities until the operation reaches a terminal state.
+type LROsPutSubResourcePoller interface {
+	azcore.Poller
+	// FinalResponse performs a final GET to the service and returns the final response
+	// for the polling operation. If there is an error performing the final GET then an error is returned.
+	// If the final GET succeeded then the final LROsPutSubResourceResponse will be returned.
+	FinalResponse(ctx context.Context) (LROsPutSubResourceResponse, error)
+}
+
+type lrOsPutSubResourcePoller struct {
+	pt *armcore.LROPoller
+}
+
+func (p *lrOsPutSubResourcePoller) Done() bool {
+	return p.pt.Done()
+}
+
+func (p *lrOsPutSubResourcePoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+func (p *lrOsPutSubResourcePoller) FinalResponse(ctx context.Context) (LROsPutSubResourceResponse, error) {
+	respType := LROsPutSubResourceResponse{}
+	resp, err := p.pt.FinalResponse(ctx, &respType.SubProduct)
+	if err != nil {
+		return LROsPutSubResourceResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+func (p *lrOsPutSubResourcePoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+func (p *lrOsPutSubResourcePoller) pollUntilDone(ctx context.Context, freq time.Duration) (LROsPutSubResourceResponse, error) {
+	respType := LROsPutSubResourceResponse{}
+	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.SubProduct)
+	if err != nil {
+		return LROsPutSubResourceResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil

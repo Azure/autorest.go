@@ -10,208 +10,29 @@ package paginggroup
 import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"net/http"
 	"reflect"
 )
 
-// OdataProductResultPager provides iteration over OdataProductResult pages.
-type OdataProductResultPager interface {
+type PagingFirstResponseEmptyPager interface {
 	azcore.Pager
-
-	// PageResponse returns the current OdataProductResultResponse.
-	PageResponse() OdataProductResultResponse
+	// PageResponse returns the current PagingFirstResponseEmptyResponse.
+	PageResponse() PagingFirstResponseEmptyResponse
 }
 
-type odataProductResultCreateRequest func(context.Context) (*azcore.Request, error)
-
-type odataProductResultHandleError func(*azcore.Response) error
-
-type odataProductResultHandleResponse func(*azcore.Response) (OdataProductResultResponse, error)
-
-type odataProductResultAdvancePage func(context.Context, OdataProductResultResponse) (*azcore.Request, error)
-
-type odataProductResultPager struct {
-	// the pipeline for making the request
-	pipeline azcore.Pipeline
-	// creates the initial request (non-LRO case)
-	requester odataProductResultCreateRequest
-	// callback for handling response errors
-	errorer odataProductResultHandleError
-	// callback for handling the HTTP response
-	responder odataProductResultHandleResponse
-	// callback for advancing to the next page
-	advancer odataProductResultAdvancePage
-	// contains the current response
-	current OdataProductResultResponse
-	// status codes for successful retrieval
-	statusCodes []int
-	// any error encountered
-	err error
+type pagingFirstResponseEmptyPager struct {
+	client    *PagingClient
+	current   PagingFirstResponseEmptyResponse
+	err       error
+	requester func(context.Context) (*azcore.Request, error)
+	advancer  func(context.Context, PagingFirstResponseEmptyResponse) (*azcore.Request, error)
 }
 
-func (p *odataProductResultPager) Err() error {
+func (p *pagingFirstResponseEmptyPager) Err() error {
 	return p.err
 }
 
-func (p *odataProductResultPager) NextPage(ctx context.Context) bool {
-	var req *azcore.Request
-	var err error
-	if !reflect.ValueOf(p.current).IsZero() {
-		if p.current.OdataProductResult.OdataNextLink == nil || len(*p.current.OdataProductResult.OdataNextLink) == 0 {
-			return false
-		}
-		req, err = p.advancer(ctx, p.current)
-	} else {
-		req, err = p.requester(ctx)
-	}
-	if err != nil {
-		p.err = err
-		return false
-	}
-	resp, err := p.pipeline.Do(req)
-	if err != nil {
-		p.err = err
-		return false
-	}
-	if !resp.HasStatusCode(p.statusCodes...) {
-		p.err = p.errorer(resp)
-		return false
-	}
-	result, err := p.responder(resp)
-	if err != nil {
-		p.err = err
-		return false
-	}
-	p.current = result
-	return true
-}
-
-func (p *odataProductResultPager) PageResponse() OdataProductResultResponse {
-	return p.current
-}
-
-// ProductResultPager provides iteration over ProductResult pages.
-type ProductResultPager interface {
-	azcore.Pager
-
-	// PageResponse returns the current ProductResultResponse.
-	PageResponse() ProductResultResponse
-}
-
-type productResultCreateRequest func(context.Context) (*azcore.Request, error)
-
-type productResultHandleError func(*azcore.Response) error
-
-type productResultHandleResponse func(*azcore.Response) (ProductResultResponse, error)
-
-type productResultAdvancePage func(context.Context, ProductResultResponse) (*azcore.Request, error)
-
-type productResultPager struct {
-	// the pipeline for making the request
-	pipeline azcore.Pipeline
-	// creates the initial request (non-LRO case)
-	requester productResultCreateRequest
-	// callback for handling response errors
-	errorer productResultHandleError
-	// callback for handling the HTTP response
-	responder productResultHandleResponse
-	// callback for advancing to the next page
-	advancer productResultAdvancePage
-	// contains the current response
-	current ProductResultResponse
-	// status codes for successful retrieval
-	statusCodes []int
-	// any error encountered
-	err error
-	// previous response from the endpoint (LRO case)
-	resp *azcore.Response
-}
-
-func (p *productResultPager) Err() error {
-	return p.err
-}
-
-func (p *productResultPager) NextPage(ctx context.Context) bool {
-	var req *azcore.Request
-	var err error
-	if !reflect.ValueOf(p.current).IsZero() {
-		if p.current.ProductResult.NextLink == nil || len(*p.current.ProductResult.NextLink) == 0 {
-			return false
-		}
-		req, err = p.advancer(ctx, p.current)
-	} else if p.resp == nil {
-		req, err = p.requester(ctx)
-	}
-	if err != nil {
-		p.err = err
-		return false
-	}
-	resp := p.resp
-	if resp == nil {
-		resp, err = p.pipeline.Do(req)
-	} else {
-		p.resp = nil
-	}
-	if err != nil {
-		p.err = err
-		return false
-	}
-	if !resp.HasStatusCode(p.statusCodes...) {
-		p.err = p.errorer(resp)
-		return false
-	}
-	result, err := p.responder(resp)
-	if err != nil {
-		p.err = err
-		return false
-	}
-	p.current = result
-	return true
-}
-
-func (p *productResultPager) PageResponse() ProductResultResponse {
-	return p.current
-}
-
-// ProductResultValuePager provides iteration over ProductResultValue pages.
-type ProductResultValuePager interface {
-	azcore.Pager
-
-	// PageResponse returns the current ProductResultValueResponse.
-	PageResponse() ProductResultValueResponse
-}
-
-type productResultValueCreateRequest func(context.Context) (*azcore.Request, error)
-
-type productResultValueHandleError func(*azcore.Response) error
-
-type productResultValueHandleResponse func(*azcore.Response) (ProductResultValueResponse, error)
-
-type productResultValueAdvancePage func(context.Context, ProductResultValueResponse) (*azcore.Request, error)
-
-type productResultValuePager struct {
-	// the pipeline for making the request
-	pipeline azcore.Pipeline
-	// creates the initial request (non-LRO case)
-	requester productResultValueCreateRequest
-	// callback for handling response errors
-	errorer productResultValueHandleError
-	// callback for handling the HTTP response
-	responder productResultValueHandleResponse
-	// callback for advancing to the next page
-	advancer productResultValueAdvancePage
-	// contains the current response
-	current ProductResultValueResponse
-	// status codes for successful retrieval
-	statusCodes []int
-	// any error encountered
-	err error
-}
-
-func (p *productResultValuePager) Err() error {
-	return p.err
-}
-
-func (p *productResultValuePager) NextPage(ctx context.Context) bool {
+func (p *pagingFirstResponseEmptyPager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -226,16 +47,16 @@ func (p *productResultValuePager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	resp, err := p.pipeline.Do(req)
+	resp, err := p.client.con.Pipeline().Do(req)
 	if err != nil {
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(p.statusCodes...) {
-		p.err = p.errorer(resp)
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.client.firstResponseEmptyHandleError(resp)
 		return false
 	}
-	result, err := p.responder(resp)
+	result, err := p.client.firstResponseEmptyHandleResponse(resp)
 	if err != nil {
 		p.err = err
 		return false
@@ -244,50 +65,632 @@ func (p *productResultValuePager) NextPage(ctx context.Context) bool {
 	return true
 }
 
-func (p *productResultValuePager) PageResponse() ProductResultValueResponse {
+func (p *pagingFirstResponseEmptyPager) PageResponse() PagingFirstResponseEmptyResponse {
 	return p.current
 }
 
-// ProductResultValueWithXMSClientNamePager provides iteration over ProductResultValueWithXMSClientName pages.
-type ProductResultValueWithXMSClientNamePager interface {
+type PagingGetMultiplePagesFailurePager interface {
 	azcore.Pager
-
-	// PageResponse returns the current ProductResultValueWithXMSClientNameResponse.
-	PageResponse() ProductResultValueWithXMSClientNameResponse
+	// PageResponse returns the current PagingGetMultiplePagesFailureResponse.
+	PageResponse() PagingGetMultiplePagesFailureResponse
 }
 
-type productResultValueWithXMSClientNameCreateRequest func(context.Context) (*azcore.Request, error)
-
-type productResultValueWithXMSClientNameHandleError func(*azcore.Response) error
-
-type productResultValueWithXMSClientNameHandleResponse func(*azcore.Response) (ProductResultValueWithXMSClientNameResponse, error)
-
-type productResultValueWithXMSClientNameAdvancePage func(context.Context, ProductResultValueWithXMSClientNameResponse) (*azcore.Request, error)
-
-type productResultValueWithXMSClientNamePager struct {
-	// the pipeline for making the request
-	pipeline azcore.Pipeline
-	// creates the initial request (non-LRO case)
-	requester productResultValueWithXMSClientNameCreateRequest
-	// callback for handling response errors
-	errorer productResultValueWithXMSClientNameHandleError
-	// callback for handling the HTTP response
-	responder productResultValueWithXMSClientNameHandleResponse
-	// callback for advancing to the next page
-	advancer productResultValueWithXMSClientNameAdvancePage
-	// contains the current response
-	current ProductResultValueWithXMSClientNameResponse
-	// status codes for successful retrieval
-	statusCodes []int
-	// any error encountered
-	err error
+type pagingGetMultiplePagesFailurePager struct {
+	client    *PagingClient
+	current   PagingGetMultiplePagesFailureResponse
+	err       error
+	requester func(context.Context) (*azcore.Request, error)
+	advancer  func(context.Context, PagingGetMultiplePagesFailureResponse) (*azcore.Request, error)
 }
 
-func (p *productResultValueWithXMSClientNamePager) Err() error {
+func (p *pagingGetMultiplePagesFailurePager) Err() error {
 	return p.err
 }
 
-func (p *productResultValueWithXMSClientNamePager) NextPage(ctx context.Context) bool {
+func (p *pagingGetMultiplePagesFailurePager) NextPage(ctx context.Context) bool {
+	var req *azcore.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		if p.current.ProductResult.NextLink == nil || len(*p.current.ProductResult.NextLink) == 0 {
+			return false
+		}
+		req, err = p.advancer(ctx, p.current)
+	} else {
+		req, err = p.requester(ctx)
+	}
+	if err != nil {
+		p.err = err
+		return false
+	}
+	resp, err := p.client.con.Pipeline().Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.client.getMultiplePagesFailureHandleError(resp)
+		return false
+	}
+	result, err := p.client.getMultiplePagesFailureHandleResponse(resp)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	p.current = result
+	return true
+}
+
+func (p *pagingGetMultiplePagesFailurePager) PageResponse() PagingGetMultiplePagesFailureResponse {
+	return p.current
+}
+
+type PagingGetMultiplePagesFailureURIPager interface {
+	azcore.Pager
+	// PageResponse returns the current PagingGetMultiplePagesFailureURIResponse.
+	PageResponse() PagingGetMultiplePagesFailureURIResponse
+}
+
+type pagingGetMultiplePagesFailureURIPager struct {
+	client    *PagingClient
+	current   PagingGetMultiplePagesFailureURIResponse
+	err       error
+	requester func(context.Context) (*azcore.Request, error)
+	advancer  func(context.Context, PagingGetMultiplePagesFailureURIResponse) (*azcore.Request, error)
+}
+
+func (p *pagingGetMultiplePagesFailureURIPager) Err() error {
+	return p.err
+}
+
+func (p *pagingGetMultiplePagesFailureURIPager) NextPage(ctx context.Context) bool {
+	var req *azcore.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		if p.current.ProductResult.NextLink == nil || len(*p.current.ProductResult.NextLink) == 0 {
+			return false
+		}
+		req, err = p.advancer(ctx, p.current)
+	} else {
+		req, err = p.requester(ctx)
+	}
+	if err != nil {
+		p.err = err
+		return false
+	}
+	resp, err := p.client.con.Pipeline().Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.client.getMultiplePagesFailureURIHandleError(resp)
+		return false
+	}
+	result, err := p.client.getMultiplePagesFailureURIHandleResponse(resp)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	p.current = result
+	return true
+}
+
+func (p *pagingGetMultiplePagesFailureURIPager) PageResponse() PagingGetMultiplePagesFailureURIResponse {
+	return p.current
+}
+
+type PagingGetMultiplePagesFragmentNextLinkPager interface {
+	azcore.Pager
+	// PageResponse returns the current PagingGetMultiplePagesFragmentNextLinkResponse.
+	PageResponse() PagingGetMultiplePagesFragmentNextLinkResponse
+}
+
+type pagingGetMultiplePagesFragmentNextLinkPager struct {
+	client    *PagingClient
+	current   PagingGetMultiplePagesFragmentNextLinkResponse
+	err       error
+	requester func(context.Context) (*azcore.Request, error)
+	advancer  func(context.Context, PagingGetMultiplePagesFragmentNextLinkResponse) (*azcore.Request, error)
+}
+
+func (p *pagingGetMultiplePagesFragmentNextLinkPager) Err() error {
+	return p.err
+}
+
+func (p *pagingGetMultiplePagesFragmentNextLinkPager) NextPage(ctx context.Context) bool {
+	var req *azcore.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		if p.current.OdataProductResult.OdataNextLink == nil || len(*p.current.OdataProductResult.OdataNextLink) == 0 {
+			return false
+		}
+		req, err = p.advancer(ctx, p.current)
+	} else {
+		req, err = p.requester(ctx)
+	}
+	if err != nil {
+		p.err = err
+		return false
+	}
+	resp, err := p.client.con.Pipeline().Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.client.getMultiplePagesFragmentNextLinkHandleError(resp)
+		return false
+	}
+	result, err := p.client.getMultiplePagesFragmentNextLinkHandleResponse(resp)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	p.current = result
+	return true
+}
+
+func (p *pagingGetMultiplePagesFragmentNextLinkPager) PageResponse() PagingGetMultiplePagesFragmentNextLinkResponse {
+	return p.current
+}
+
+type PagingGetMultiplePagesFragmentWithGroupingNextLinkPager interface {
+	azcore.Pager
+	// PageResponse returns the current PagingGetMultiplePagesFragmentWithGroupingNextLinkResponse.
+	PageResponse() PagingGetMultiplePagesFragmentWithGroupingNextLinkResponse
+}
+
+type pagingGetMultiplePagesFragmentWithGroupingNextLinkPager struct {
+	client    *PagingClient
+	current   PagingGetMultiplePagesFragmentWithGroupingNextLinkResponse
+	err       error
+	requester func(context.Context) (*azcore.Request, error)
+	advancer  func(context.Context, PagingGetMultiplePagesFragmentWithGroupingNextLinkResponse) (*azcore.Request, error)
+}
+
+func (p *pagingGetMultiplePagesFragmentWithGroupingNextLinkPager) Err() error {
+	return p.err
+}
+
+func (p *pagingGetMultiplePagesFragmentWithGroupingNextLinkPager) NextPage(ctx context.Context) bool {
+	var req *azcore.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		if p.current.OdataProductResult.OdataNextLink == nil || len(*p.current.OdataProductResult.OdataNextLink) == 0 {
+			return false
+		}
+		req, err = p.advancer(ctx, p.current)
+	} else {
+		req, err = p.requester(ctx)
+	}
+	if err != nil {
+		p.err = err
+		return false
+	}
+	resp, err := p.client.con.Pipeline().Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.client.getMultiplePagesFragmentWithGroupingNextLinkHandleError(resp)
+		return false
+	}
+	result, err := p.client.getMultiplePagesFragmentWithGroupingNextLinkHandleResponse(resp)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	p.current = result
+	return true
+}
+
+func (p *pagingGetMultiplePagesFragmentWithGroupingNextLinkPager) PageResponse() PagingGetMultiplePagesFragmentWithGroupingNextLinkResponse {
+	return p.current
+}
+
+type PagingGetMultiplePagesLROPager interface {
+	azcore.Pager
+	// PageResponse returns the current PagingGetMultiplePagesLROResponse.
+	PageResponse() PagingGetMultiplePagesLROResponse
+}
+
+type pagingGetMultiplePagesLROPager struct {
+	client  *PagingClient
+	current PagingGetMultiplePagesLROResponse
+	err     error
+	second  bool
+}
+
+func (p *pagingGetMultiplePagesLROPager) Err() error {
+	return p.err
+}
+
+func (p *pagingGetMultiplePagesLROPager) NextPage(ctx context.Context) bool {
+	if !p.second {
+		p.second = true
+		return true
+	} else if !reflect.ValueOf(p.current).IsZero() {
+		if p.current.ProductResult.NextLink == nil || len(*p.current.ProductResult.NextLink) == 0 {
+			return false
+		}
+	}
+	req, err := azcore.NewRequest(ctx, http.MethodGet, *p.current.ProductResult.NextLink)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	resp, err := p.client.con.Pipeline().Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusAccepted) {
+		p.err = p.client.getMultiplePagesLROHandleError(resp)
+		return false
+	}
+	result, err := p.client.getMultiplePagesLROHandleResponse(resp)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	p.current = result
+	return true
+}
+
+func (p *pagingGetMultiplePagesLROPager) PageResponse() PagingGetMultiplePagesLROResponse {
+	return p.current
+}
+
+type PagingGetMultiplePagesPager interface {
+	azcore.Pager
+	// PageResponse returns the current PagingGetMultiplePagesResponse.
+	PageResponse() PagingGetMultiplePagesResponse
+}
+
+type pagingGetMultiplePagesPager struct {
+	client    *PagingClient
+	current   PagingGetMultiplePagesResponse
+	err       error
+	requester func(context.Context) (*azcore.Request, error)
+	advancer  func(context.Context, PagingGetMultiplePagesResponse) (*azcore.Request, error)
+}
+
+func (p *pagingGetMultiplePagesPager) Err() error {
+	return p.err
+}
+
+func (p *pagingGetMultiplePagesPager) NextPage(ctx context.Context) bool {
+	var req *azcore.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		if p.current.ProductResult.NextLink == nil || len(*p.current.ProductResult.NextLink) == 0 {
+			return false
+		}
+		req, err = p.advancer(ctx, p.current)
+	} else {
+		req, err = p.requester(ctx)
+	}
+	if err != nil {
+		p.err = err
+		return false
+	}
+	resp, err := p.client.con.Pipeline().Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.client.getMultiplePagesHandleError(resp)
+		return false
+	}
+	result, err := p.client.getMultiplePagesHandleResponse(resp)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	p.current = result
+	return true
+}
+
+func (p *pagingGetMultiplePagesPager) PageResponse() PagingGetMultiplePagesResponse {
+	return p.current
+}
+
+type PagingGetMultiplePagesRetryFirstPager interface {
+	azcore.Pager
+	// PageResponse returns the current PagingGetMultiplePagesRetryFirstResponse.
+	PageResponse() PagingGetMultiplePagesRetryFirstResponse
+}
+
+type pagingGetMultiplePagesRetryFirstPager struct {
+	client    *PagingClient
+	current   PagingGetMultiplePagesRetryFirstResponse
+	err       error
+	requester func(context.Context) (*azcore.Request, error)
+	advancer  func(context.Context, PagingGetMultiplePagesRetryFirstResponse) (*azcore.Request, error)
+}
+
+func (p *pagingGetMultiplePagesRetryFirstPager) Err() error {
+	return p.err
+}
+
+func (p *pagingGetMultiplePagesRetryFirstPager) NextPage(ctx context.Context) bool {
+	var req *azcore.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		if p.current.ProductResult.NextLink == nil || len(*p.current.ProductResult.NextLink) == 0 {
+			return false
+		}
+		req, err = p.advancer(ctx, p.current)
+	} else {
+		req, err = p.requester(ctx)
+	}
+	if err != nil {
+		p.err = err
+		return false
+	}
+	resp, err := p.client.con.Pipeline().Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.client.getMultiplePagesRetryFirstHandleError(resp)
+		return false
+	}
+	result, err := p.client.getMultiplePagesRetryFirstHandleResponse(resp)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	p.current = result
+	return true
+}
+
+func (p *pagingGetMultiplePagesRetryFirstPager) PageResponse() PagingGetMultiplePagesRetryFirstResponse {
+	return p.current
+}
+
+type PagingGetMultiplePagesRetrySecondPager interface {
+	azcore.Pager
+	// PageResponse returns the current PagingGetMultiplePagesRetrySecondResponse.
+	PageResponse() PagingGetMultiplePagesRetrySecondResponse
+}
+
+type pagingGetMultiplePagesRetrySecondPager struct {
+	client    *PagingClient
+	current   PagingGetMultiplePagesRetrySecondResponse
+	err       error
+	requester func(context.Context) (*azcore.Request, error)
+	advancer  func(context.Context, PagingGetMultiplePagesRetrySecondResponse) (*azcore.Request, error)
+}
+
+func (p *pagingGetMultiplePagesRetrySecondPager) Err() error {
+	return p.err
+}
+
+func (p *pagingGetMultiplePagesRetrySecondPager) NextPage(ctx context.Context) bool {
+	var req *azcore.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		if p.current.ProductResult.NextLink == nil || len(*p.current.ProductResult.NextLink) == 0 {
+			return false
+		}
+		req, err = p.advancer(ctx, p.current)
+	} else {
+		req, err = p.requester(ctx)
+	}
+	if err != nil {
+		p.err = err
+		return false
+	}
+	resp, err := p.client.con.Pipeline().Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.client.getMultiplePagesRetrySecondHandleError(resp)
+		return false
+	}
+	result, err := p.client.getMultiplePagesRetrySecondHandleResponse(resp)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	p.current = result
+	return true
+}
+
+func (p *pagingGetMultiplePagesRetrySecondPager) PageResponse() PagingGetMultiplePagesRetrySecondResponse {
+	return p.current
+}
+
+type PagingGetMultiplePagesWithOffsetPager interface {
+	azcore.Pager
+	// PageResponse returns the current PagingGetMultiplePagesWithOffsetResponse.
+	PageResponse() PagingGetMultiplePagesWithOffsetResponse
+}
+
+type pagingGetMultiplePagesWithOffsetPager struct {
+	client    *PagingClient
+	current   PagingGetMultiplePagesWithOffsetResponse
+	err       error
+	requester func(context.Context) (*azcore.Request, error)
+	advancer  func(context.Context, PagingGetMultiplePagesWithOffsetResponse) (*azcore.Request, error)
+}
+
+func (p *pagingGetMultiplePagesWithOffsetPager) Err() error {
+	return p.err
+}
+
+func (p *pagingGetMultiplePagesWithOffsetPager) NextPage(ctx context.Context) bool {
+	var req *azcore.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		if p.current.ProductResult.NextLink == nil || len(*p.current.ProductResult.NextLink) == 0 {
+			return false
+		}
+		req, err = p.advancer(ctx, p.current)
+	} else {
+		req, err = p.requester(ctx)
+	}
+	if err != nil {
+		p.err = err
+		return false
+	}
+	resp, err := p.client.con.Pipeline().Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.client.getMultiplePagesWithOffsetHandleError(resp)
+		return false
+	}
+	result, err := p.client.getMultiplePagesWithOffsetHandleResponse(resp)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	p.current = result
+	return true
+}
+
+func (p *pagingGetMultiplePagesWithOffsetPager) PageResponse() PagingGetMultiplePagesWithOffsetResponse {
+	return p.current
+}
+
+type PagingGetNoItemNamePagesPager interface {
+	azcore.Pager
+	// PageResponse returns the current PagingGetNoItemNamePagesResponse.
+	PageResponse() PagingGetNoItemNamePagesResponse
+}
+
+type pagingGetNoItemNamePagesPager struct {
+	client    *PagingClient
+	current   PagingGetNoItemNamePagesResponse
+	err       error
+	requester func(context.Context) (*azcore.Request, error)
+	advancer  func(context.Context, PagingGetNoItemNamePagesResponse) (*azcore.Request, error)
+}
+
+func (p *pagingGetNoItemNamePagesPager) Err() error {
+	return p.err
+}
+
+func (p *pagingGetNoItemNamePagesPager) NextPage(ctx context.Context) bool {
+	var req *azcore.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		if p.current.ProductResultValue.NextLink == nil || len(*p.current.ProductResultValue.NextLink) == 0 {
+			return false
+		}
+		req, err = p.advancer(ctx, p.current)
+	} else {
+		req, err = p.requester(ctx)
+	}
+	if err != nil {
+		p.err = err
+		return false
+	}
+	resp, err := p.client.con.Pipeline().Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.client.getNoItemNamePagesHandleError(resp)
+		return false
+	}
+	result, err := p.client.getNoItemNamePagesHandleResponse(resp)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	p.current = result
+	return true
+}
+
+func (p *pagingGetNoItemNamePagesPager) PageResponse() PagingGetNoItemNamePagesResponse {
+	return p.current
+}
+
+type PagingGetOdataMultiplePagesPager interface {
+	azcore.Pager
+	// PageResponse returns the current PagingGetOdataMultiplePagesResponse.
+	PageResponse() PagingGetOdataMultiplePagesResponse
+}
+
+type pagingGetOdataMultiplePagesPager struct {
+	client    *PagingClient
+	current   PagingGetOdataMultiplePagesResponse
+	err       error
+	requester func(context.Context) (*azcore.Request, error)
+	advancer  func(context.Context, PagingGetOdataMultiplePagesResponse) (*azcore.Request, error)
+}
+
+func (p *pagingGetOdataMultiplePagesPager) Err() error {
+	return p.err
+}
+
+func (p *pagingGetOdataMultiplePagesPager) NextPage(ctx context.Context) bool {
+	var req *azcore.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		if p.current.OdataProductResult.OdataNextLink == nil || len(*p.current.OdataProductResult.OdataNextLink) == 0 {
+			return false
+		}
+		req, err = p.advancer(ctx, p.current)
+	} else {
+		req, err = p.requester(ctx)
+	}
+	if err != nil {
+		p.err = err
+		return false
+	}
+	resp, err := p.client.con.Pipeline().Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.client.getOdataMultiplePagesHandleError(resp)
+		return false
+	}
+	result, err := p.client.getOdataMultiplePagesHandleResponse(resp)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	p.current = result
+	return true
+}
+
+func (p *pagingGetOdataMultiplePagesPager) PageResponse() PagingGetOdataMultiplePagesResponse {
+	return p.current
+}
+
+type PagingGetPagingModelWithItemNameWithXMSClientNamePager interface {
+	azcore.Pager
+	// PageResponse returns the current PagingGetPagingModelWithItemNameWithXMSClientNameResponse.
+	PageResponse() PagingGetPagingModelWithItemNameWithXMSClientNameResponse
+}
+
+type pagingGetPagingModelWithItemNameWithXMSClientNamePager struct {
+	client    *PagingClient
+	current   PagingGetPagingModelWithItemNameWithXMSClientNameResponse
+	err       error
+	requester func(context.Context) (*azcore.Request, error)
+	advancer  func(context.Context, PagingGetPagingModelWithItemNameWithXMSClientNameResponse) (*azcore.Request, error)
+}
+
+func (p *pagingGetPagingModelWithItemNameWithXMSClientNamePager) Err() error {
+	return p.err
+}
+
+func (p *pagingGetPagingModelWithItemNameWithXMSClientNamePager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -302,16 +705,16 @@ func (p *productResultValueWithXMSClientNamePager) NextPage(ctx context.Context)
 		p.err = err
 		return false
 	}
-	resp, err := p.pipeline.Do(req)
+	resp, err := p.client.con.Pipeline().Do(req)
 	if err != nil {
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(p.statusCodes...) {
-		p.err = p.errorer(resp)
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.client.getPagingModelWithItemNameWithXMSClientNameHandleError(resp)
 		return false
 	}
-	result, err := p.responder(resp)
+	result, err := p.client.getPagingModelWithItemNameWithXMSClientNameHandleResponse(resp)
 	if err != nil {
 		p.err = err
 		return false
@@ -320,6 +723,281 @@ func (p *productResultValueWithXMSClientNamePager) NextPage(ctx context.Context)
 	return true
 }
 
-func (p *productResultValueWithXMSClientNamePager) PageResponse() ProductResultValueWithXMSClientNameResponse {
+func (p *pagingGetPagingModelWithItemNameWithXMSClientNamePager) PageResponse() PagingGetPagingModelWithItemNameWithXMSClientNameResponse {
+	return p.current
+}
+
+type PagingGetSinglePagesFailurePager interface {
+	azcore.Pager
+	// PageResponse returns the current PagingGetSinglePagesFailureResponse.
+	PageResponse() PagingGetSinglePagesFailureResponse
+}
+
+type pagingGetSinglePagesFailurePager struct {
+	client    *PagingClient
+	current   PagingGetSinglePagesFailureResponse
+	err       error
+	requester func(context.Context) (*azcore.Request, error)
+	advancer  func(context.Context, PagingGetSinglePagesFailureResponse) (*azcore.Request, error)
+}
+
+func (p *pagingGetSinglePagesFailurePager) Err() error {
+	return p.err
+}
+
+func (p *pagingGetSinglePagesFailurePager) NextPage(ctx context.Context) bool {
+	var req *azcore.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		if p.current.ProductResult.NextLink == nil || len(*p.current.ProductResult.NextLink) == 0 {
+			return false
+		}
+		req, err = p.advancer(ctx, p.current)
+	} else {
+		req, err = p.requester(ctx)
+	}
+	if err != nil {
+		p.err = err
+		return false
+	}
+	resp, err := p.client.con.Pipeline().Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.client.getSinglePagesFailureHandleError(resp)
+		return false
+	}
+	result, err := p.client.getSinglePagesFailureHandleResponse(resp)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	p.current = result
+	return true
+}
+
+func (p *pagingGetSinglePagesFailurePager) PageResponse() PagingGetSinglePagesFailureResponse {
+	return p.current
+}
+
+type PagingGetSinglePagesPager interface {
+	azcore.Pager
+	// PageResponse returns the current PagingGetSinglePagesResponse.
+	PageResponse() PagingGetSinglePagesResponse
+}
+
+type pagingGetSinglePagesPager struct {
+	client    *PagingClient
+	current   PagingGetSinglePagesResponse
+	err       error
+	requester func(context.Context) (*azcore.Request, error)
+	advancer  func(context.Context, PagingGetSinglePagesResponse) (*azcore.Request, error)
+}
+
+func (p *pagingGetSinglePagesPager) Err() error {
+	return p.err
+}
+
+func (p *pagingGetSinglePagesPager) NextPage(ctx context.Context) bool {
+	var req *azcore.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		if p.current.ProductResult.NextLink == nil || len(*p.current.ProductResult.NextLink) == 0 {
+			return false
+		}
+		req, err = p.advancer(ctx, p.current)
+	} else {
+		req, err = p.requester(ctx)
+	}
+	if err != nil {
+		p.err = err
+		return false
+	}
+	resp, err := p.client.con.Pipeline().Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.client.getSinglePagesHandleError(resp)
+		return false
+	}
+	result, err := p.client.getSinglePagesHandleResponse(resp)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	p.current = result
+	return true
+}
+
+func (p *pagingGetSinglePagesPager) PageResponse() PagingGetSinglePagesResponse {
+	return p.current
+}
+
+type PagingGetWithQueryParamsPager interface {
+	azcore.Pager
+	// PageResponse returns the current PagingGetWithQueryParamsResponse.
+	PageResponse() PagingGetWithQueryParamsResponse
+}
+
+type pagingGetWithQueryParamsPager struct {
+	client    *PagingClient
+	current   PagingGetWithQueryParamsResponse
+	err       error
+	requester func(context.Context) (*azcore.Request, error)
+	advancer  func(context.Context, PagingGetWithQueryParamsResponse) (*azcore.Request, error)
+}
+
+func (p *pagingGetWithQueryParamsPager) Err() error {
+	return p.err
+}
+
+func (p *pagingGetWithQueryParamsPager) NextPage(ctx context.Context) bool {
+	var req *azcore.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		if p.current.ProductResult.NextLink == nil || len(*p.current.ProductResult.NextLink) == 0 {
+			return false
+		}
+		req, err = p.advancer(ctx, p.current)
+	} else {
+		req, err = p.requester(ctx)
+	}
+	if err != nil {
+		p.err = err
+		return false
+	}
+	resp, err := p.client.con.Pipeline().Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.client.getWithQueryParamsHandleError(resp)
+		return false
+	}
+	result, err := p.client.getWithQueryParamsHandleResponse(resp)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	p.current = result
+	return true
+}
+
+func (p *pagingGetWithQueryParamsPager) PageResponse() PagingGetWithQueryParamsResponse {
+	return p.current
+}
+
+type PagingNextFragmentPager interface {
+	azcore.Pager
+	// PageResponse returns the current PagingNextFragmentResponse.
+	PageResponse() PagingNextFragmentResponse
+}
+
+type pagingNextFragmentPager struct {
+	client    *PagingClient
+	current   PagingNextFragmentResponse
+	err       error
+	requester func(context.Context) (*azcore.Request, error)
+	advancer  func(context.Context, PagingNextFragmentResponse) (*azcore.Request, error)
+}
+
+func (p *pagingNextFragmentPager) Err() error {
+	return p.err
+}
+
+func (p *pagingNextFragmentPager) NextPage(ctx context.Context) bool {
+	var req *azcore.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		if p.current.OdataProductResult.OdataNextLink == nil || len(*p.current.OdataProductResult.OdataNextLink) == 0 {
+			return false
+		}
+		req, err = p.advancer(ctx, p.current)
+	} else {
+		req, err = p.requester(ctx)
+	}
+	if err != nil {
+		p.err = err
+		return false
+	}
+	resp, err := p.client.con.Pipeline().Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.client.nextFragmentHandleError(resp)
+		return false
+	}
+	result, err := p.client.nextFragmentHandleResponse(resp)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	p.current = result
+	return true
+}
+
+func (p *pagingNextFragmentPager) PageResponse() PagingNextFragmentResponse {
+	return p.current
+}
+
+type PagingNextFragmentWithGroupingPager interface {
+	azcore.Pager
+	// PageResponse returns the current PagingNextFragmentWithGroupingResponse.
+	PageResponse() PagingNextFragmentWithGroupingResponse
+}
+
+type pagingNextFragmentWithGroupingPager struct {
+	client    *PagingClient
+	current   PagingNextFragmentWithGroupingResponse
+	err       error
+	requester func(context.Context) (*azcore.Request, error)
+	advancer  func(context.Context, PagingNextFragmentWithGroupingResponse) (*azcore.Request, error)
+}
+
+func (p *pagingNextFragmentWithGroupingPager) Err() error {
+	return p.err
+}
+
+func (p *pagingNextFragmentWithGroupingPager) NextPage(ctx context.Context) bool {
+	var req *azcore.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		if p.current.OdataProductResult.OdataNextLink == nil || len(*p.current.OdataProductResult.OdataNextLink) == 0 {
+			return false
+		}
+		req, err = p.advancer(ctx, p.current)
+	} else {
+		req, err = p.requester(ctx)
+	}
+	if err != nil {
+		p.err = err
+		return false
+	}
+	resp, err := p.client.con.Pipeline().Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.client.nextFragmentWithGroupingHandleError(resp)
+		return false
+	}
+	result, err := p.client.nextFragmentWithGroupingHandleResponse(resp)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	p.current = result
+	return true
+}
+
+func (p *pagingNextFragmentWithGroupingPager) PageResponse() PagingNextFragmentWithGroupingResponse {
 	return p.current
 }

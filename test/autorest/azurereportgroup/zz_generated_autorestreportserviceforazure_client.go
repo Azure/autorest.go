@@ -27,17 +27,17 @@ func NewAutoRestReportServiceForAzureClient(con *Connection) *AutoRestReportServ
 
 // GetReport - Get test coverage report
 // If the operation fails it returns the *Error error type.
-func (client *AutoRestReportServiceForAzureClient) GetReport(ctx context.Context, options *AutoRestReportServiceForAzureGetReportOptions) (MapOfInt32Response, error) {
+func (client *AutoRestReportServiceForAzureClient) GetReport(ctx context.Context, options *AutoRestReportServiceForAzureGetReportOptions) (AutoRestReportServiceForAzureGetReportResponse, error) {
 	req, err := client.getReportCreateRequest(ctx, options)
 	if err != nil {
-		return MapOfInt32Response{}, err
+		return AutoRestReportServiceForAzureGetReportResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return MapOfInt32Response{}, err
+		return AutoRestReportServiceForAzureGetReportResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return MapOfInt32Response{}, client.getReportHandleError(resp)
+		return AutoRestReportServiceForAzureGetReportResponse{}, client.getReportHandleError(resp)
 	}
 	return client.getReportHandleResponse(resp)
 }
@@ -60,12 +60,12 @@ func (client *AutoRestReportServiceForAzureClient) getReportCreateRequest(ctx co
 }
 
 // getReportHandleResponse handles the GetReport response.
-func (client *AutoRestReportServiceForAzureClient) getReportHandleResponse(resp *azcore.Response) (MapOfInt32Response, error) {
-	var val map[string]*int32
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return MapOfInt32Response{}, err
+func (client *AutoRestReportServiceForAzureClient) getReportHandleResponse(resp *azcore.Response) (AutoRestReportServiceForAzureGetReportResponse, error) {
+	result := AutoRestReportServiceForAzureGetReportResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.Value); err != nil {
+		return AutoRestReportServiceForAzureGetReportResponse{}, err
 	}
-	return MapOfInt32Response{RawResponse: resp.Response, Value: val}, nil
+	return result, nil
 }
 
 // getReportHandleError handles the GetReport error response.

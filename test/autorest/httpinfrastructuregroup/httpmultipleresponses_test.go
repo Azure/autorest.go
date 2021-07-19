@@ -26,13 +26,13 @@ func TestGet200Model201ModelDefaultError200Valid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	switch x := result.(type) {
-	case MyExceptionResponse:
-		if r := cmp.Diff(x.MyException.StatusCode, to.StringPtr("200")); r != "" {
+	switch x := result.Value.(type) {
+	case MyException:
+		if r := cmp.Diff(x.StatusCode, to.StringPtr("200")); r != "" {
 			t.Fatal(r)
 		}
-	case BResponse:
-		if s := x.RawResponse.StatusCode; s != http.StatusCreated {
+	case B:
+		if s := result.RawResponse.StatusCode; s != http.StatusCreated {
 			t.Fatalf("unexpected status code %d", s)
 		}
 	default:
@@ -47,11 +47,11 @@ func TestGet200Model201ModelDefaultError201Valid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	r, ok := result.(BResponse)
+	r, ok := result.Value.(B)
 	if !ok {
 		t.Fatalf("unexpected response type %T", result)
 	}
-	if r := cmp.Diff(r.B, &B{
+	if r := cmp.Diff(r, B{
 		MyException: MyException{
 			StatusCode: to.StringPtr("201"),
 		},
@@ -75,7 +75,7 @@ func TestGet200Model201ModelDefaultError400Valid(t *testing.T) {
 	}, cmpopts.IgnoreUnexported(Error{})); r != "" {
 		t.Fatal(r)
 	}
-	if result != nil {
+	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected nil result")
 	}
 }
@@ -87,7 +87,7 @@ func TestGet200Model204NoModelDefaultError200Valid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(result.MyException, &MyException{
+	if r := cmp.Diff(result.MyException, MyException{
 		StatusCode: to.StringPtr("200"),
 	}, cmpopts.IgnoreUnexported(MyException{})); r != "" {
 		t.Fatal(r)
@@ -136,8 +136,8 @@ func TestGet200Model204NoModelDefaultError204Valid(t *testing.T) {
 	if s := result.RawResponse.StatusCode; s != http.StatusNoContent {
 		t.Fatalf("unexpected status code %d", s)
 	}
-	if result.MyException != nil {
-		t.Fatal("expected nil payload")
+	if !reflect.ValueOf(result.MyException).IsZero() {
+		t.Fatal("expected zero-value MyException")
 	}
 }
 
@@ -172,8 +172,8 @@ func TestGet200ModelA200None(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if result.MyException != nil {
-		t.Fatal("expected nil MyException")
+	if !reflect.ValueOf(result.MyException).IsZero() {
+		t.Fatal("expected zero-value MyException")
 	}
 }
 
@@ -184,7 +184,7 @@ func TestGet200ModelA200Valid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(result.MyException, &MyException{
+	if r := cmp.Diff(result.MyException, MyException{
 		StatusCode: to.StringPtr("200"),
 	}, cmpopts.IgnoreUnexported(MyException{})); r != "" {
 		t.Fatal(r)
@@ -198,11 +198,11 @@ func TestGet200ModelA201ModelC404ModelDDefaultError200Valid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	r, ok := result.(MyExceptionResponse)
+	r, ok := result.Value.(MyException)
 	if !ok {
 		t.Fatalf("unexpected result type %T", result)
 	}
-	if r := cmp.Diff(r.MyException, &MyException{
+	if r := cmp.Diff(r, MyException{
 		StatusCode: to.StringPtr("200"),
 	}, cmpopts.IgnoreUnexported(MyException{})); r != "" {
 		t.Fatal(r)
@@ -216,11 +216,11 @@ func TestGet200ModelA201ModelC404ModelDDefaultError201Valid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	r, ok := result.(CResponse)
+	r, ok := result.Value.(C)
 	if !ok {
 		t.Fatalf("unexpected result type %T", result)
 	}
-	if r := cmp.Diff(r.C, &C{
+	if r := cmp.Diff(r, C{
 		HTTPCode: to.StringPtr("201"),
 	}); r != "" {
 		t.Fatal(r)
@@ -241,7 +241,7 @@ func TestGet200ModelA201ModelC404ModelDDefaultError400Valid(t *testing.T) {
 	}, cmpopts.IgnoreUnexported(Error{})); r != "" {
 		t.Fatal(r)
 	}
-	if result != nil {
+	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected nil result")
 	}
 }
@@ -253,11 +253,11 @@ func TestGet200ModelA201ModelC404ModelDDefaultError404Valid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	r, ok := result.(DResponse)
+	r, ok := result.Value.(D)
 	if !ok {
 		t.Fatalf("unexpected result type %T", result)
 	}
-	if r := cmp.Diff(r.D, &D{
+	if r := cmp.Diff(r, D{
 		HTTPStatusCode: to.StringPtr("404"),
 	}); r != "" {
 		t.Fatal(r)
@@ -271,7 +271,7 @@ func TestGet200ModelA202Valid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(result.MyException, &MyException{
+	if r := cmp.Diff(result.MyException, MyException{
 		StatusCode: to.StringPtr("200"),
 	}, cmpopts.IgnoreUnexported(MyException{})); r != "" {
 		t.Fatal(r)
@@ -314,7 +314,7 @@ func TestGet202None204NoneDefaultError202None(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.StatusCode; s != http.StatusAccepted {
+	if s := result.RawResponse.StatusCode; s != http.StatusAccepted {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -326,7 +326,7 @@ func TestGet202None204NoneDefaultError204None(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.StatusCode; s != http.StatusNoContent {
+	if s := result.RawResponse.StatusCode; s != http.StatusNoContent {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -338,7 +338,7 @@ func TestGet202None204NoneDefaultError400Valid(t *testing.T) {
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
-	if result != nil {
+	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("unexpected nil response")
 	}
 }
@@ -350,7 +350,7 @@ func TestGet202None204NoneDefaultNone202Invalid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.StatusCode; s != http.StatusAccepted {
+	if s := result.RawResponse.StatusCode; s != http.StatusAccepted {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -362,7 +362,7 @@ func TestGet202None204NoneDefaultNone204None(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.StatusCode; s != http.StatusNoContent {
+	if s := result.RawResponse.StatusCode; s != http.StatusNoContent {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -374,7 +374,7 @@ func TestGet202None204NoneDefaultNone400Invalid(t *testing.T) {
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
-	if result != nil {
+	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("unexpected nil response")
 	}
 }
@@ -386,7 +386,7 @@ func TestGet202None204NoneDefaultNone400None(t *testing.T) {
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
-	if result != nil {
+	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("unexpected nil response")
 	}
 }
@@ -398,8 +398,8 @@ func TestGetDefaultModelA200None(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if result.MyException != nil {
-		t.Fatal("expected nil MyException")
+	if !reflect.ValueOf(result.MyException).IsZero() {
+		t.Fatal("expected zero-value MyException")
 	}
 }
 
@@ -410,7 +410,7 @@ func TestGetDefaultModelA200Valid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(result.MyException, &MyException{
+	if r := cmp.Diff(result.MyException, MyException{
 		StatusCode: to.StringPtr("200"),
 	}, cmpopts.IgnoreUnexported(MyException{})); r != "" {
 		t.Fatal(r)
@@ -424,7 +424,7 @@ func TestGetDefaultModelA400None(t *testing.T) {
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
-	if result != nil {
+	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("unexpected nil response")
 	}
 }
@@ -436,7 +436,7 @@ func TestGetDefaultModelA400Valid(t *testing.T) {
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
-	if result != nil {
+	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("unexpected nil response")
 	}
 }
@@ -453,7 +453,7 @@ func TestGetDefaultNone200None(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -465,7 +465,7 @@ func TestGetDefaultNone400Invalid(t *testing.T) {
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
-	if result != nil {
+	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("unexpected nil response")
 	}
 }
@@ -477,7 +477,7 @@ func TestGetDefaultNone400None(t *testing.T) {
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
-	if result != nil {
+	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("unexpected nil response")
 	}
 }

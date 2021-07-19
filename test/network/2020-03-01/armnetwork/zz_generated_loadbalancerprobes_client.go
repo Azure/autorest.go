@@ -32,17 +32,17 @@ func NewLoadBalancerProbesClient(con *armcore.Connection, subscriptionID string)
 
 // Get - Gets load balancer probe.
 // If the operation fails it returns the *CloudError error type.
-func (client *LoadBalancerProbesClient) Get(ctx context.Context, resourceGroupName string, loadBalancerName string, probeName string, options *LoadBalancerProbesGetOptions) (ProbeResponse, error) {
+func (client *LoadBalancerProbesClient) Get(ctx context.Context, resourceGroupName string, loadBalancerName string, probeName string, options *LoadBalancerProbesGetOptions) (LoadBalancerProbesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, loadBalancerName, probeName, options)
 	if err != nil {
-		return ProbeResponse{}, err
+		return LoadBalancerProbesGetResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return ProbeResponse{}, err
+		return LoadBalancerProbesGetResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return ProbeResponse{}, client.getHandleError(resp)
+		return LoadBalancerProbesGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -79,12 +79,12 @@ func (client *LoadBalancerProbesClient) getCreateRequest(ctx context.Context, re
 }
 
 // getHandleResponse handles the Get response.
-func (client *LoadBalancerProbesClient) getHandleResponse(resp *azcore.Response) (ProbeResponse, error) {
-	var val *Probe
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ProbeResponse{}, err
+func (client *LoadBalancerProbesClient) getHandleResponse(resp *azcore.Response) (LoadBalancerProbesGetResponse, error) {
+	result := LoadBalancerProbesGetResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.Probe); err != nil {
+		return LoadBalancerProbesGetResponse{}, err
 	}
-	return ProbeResponse{RawResponse: resp.Response, Probe: val}, nil
+	return result, nil
 }
 
 // getHandleError handles the Get error response.
@@ -102,18 +102,15 @@ func (client *LoadBalancerProbesClient) getHandleError(resp *azcore.Response) er
 
 // List - Gets all the load balancer probes.
 // If the operation fails it returns the *CloudError error type.
-func (client *LoadBalancerProbesClient) List(resourceGroupName string, loadBalancerName string, options *LoadBalancerProbesListOptions) LoadBalancerProbeListResultPager {
-	return &loadBalancerProbeListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *LoadBalancerProbesClient) List(resourceGroupName string, loadBalancerName string, options *LoadBalancerProbesListOptions) LoadBalancerProbesListPager {
+	return &loadBalancerProbesListPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, loadBalancerName, options)
 		},
-		responder: client.listHandleResponse,
-		errorer:   client.listHandleError,
-		advancer: func(ctx context.Context, resp LoadBalancerProbeListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp LoadBalancerProbesListResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.LoadBalancerProbeListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -145,12 +142,12 @@ func (client *LoadBalancerProbesClient) listCreateRequest(ctx context.Context, r
 }
 
 // listHandleResponse handles the List response.
-func (client *LoadBalancerProbesClient) listHandleResponse(resp *azcore.Response) (LoadBalancerProbeListResultResponse, error) {
-	var val *LoadBalancerProbeListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return LoadBalancerProbeListResultResponse{}, err
+func (client *LoadBalancerProbesClient) listHandleResponse(resp *azcore.Response) (LoadBalancerProbesListResponse, error) {
+	result := LoadBalancerProbesListResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.LoadBalancerProbeListResult); err != nil {
+		return LoadBalancerProbesListResponse{}, err
 	}
-	return LoadBalancerProbeListResultResponse{RawResponse: resp.Response, LoadBalancerProbeListResult: val}, nil
+	return result, nil
 }
 
 // listHandleError handles the List error response.

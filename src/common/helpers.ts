@@ -38,17 +38,13 @@ export function isDictionarySchema(resp: Schema): resp is DictionarySchema {
 }
 
 // returns SchemaResponse type predicate if the response has a schema
-export function isSchemaResponse(resp?: Response): resp is SchemaResponse {
+export function isSchemaResponse(resp: Response): resp is SchemaResponse {
   return (resp as SchemaResponse).schema !== undefined;
 }
 
 export interface PagerInfo {
   name: string;
-  respEnv: string;   // name of the response envelope
-  respType: string;  // name of the response type
-  respField: string; // name of the response type field within the response envelope
-  nextLink: string;  // name of the next link field within the response envelope
-  hasLRO: boolean;   // true if this pager is used with an LRO
+  op: Operation;
 }
 
 // returns the type name of the internal pager type
@@ -63,10 +59,7 @@ export function isPageableOperation(op: Operation): boolean {
 
 export interface PollerInfo {
   name: string;
-  respEnv: string;    // name of the response envelope
-  respField?: string; // name of the response type field within the response envelope
-  respType?: Schema;  // schema of the response type
-  pager?: PagerInfo;
+  op: Operation;
 }
 
 // returns the type name of the internal poller type
@@ -112,7 +105,7 @@ export function hasPolymorphicField(obj: ObjectSchema): boolean {
 
 // returns the schema response for this operation.
 // calling this on multi-response operations will result in an error.
-export function getResponse(op: Operation): SchemaResponse | undefined {
+export function getSchemaResponse(op: Operation): SchemaResponse | undefined {
   if (!op.responses) {
     return undefined;
   }
@@ -131,7 +124,7 @@ export function getResponse(op: Operation): SchemaResponse | undefined {
   }
   // multiple schema responses, for LROs find the best fit.
   if (!isLROOperation(op)) {
-    throw new Error('getResponse() called for multi-response operation');
+    throw new Error('getSchemaResponse() called for multi-response operation');
   }
   // for LROs, there are a couple of corner-cases we need to handle WRT response types.
   // 1. 200 Foo / 20x Bar - we take Foo and display a warning
@@ -156,6 +149,23 @@ export function getResponse(op: Operation): SchemaResponse | undefined {
   // case #1
   // TODO: log warning
   return with200;
+}
+
+// returns true if the operation returns multiple response types
+export function isMultiRespOperation(op: Operation): boolean {
+  // treat LROs as single-response ops
+  if (!op.responses || op.responses.length === 1 || isLROOperation(op)) {
+    return false;
+  }
+  // count the number of distinct schemas returned by this operation
+  const schemaResponses = new Array<SchemaResponse>();
+  for (const response of values(op.responses)) {
+    // perform the comparison by name as some responses have different objects for the same underlying response type
+    if (isSchemaResponse(response) && !values(schemaResponses).where(sr => sr.schema.language.go!.name === response.schema.language.go!.name).any()) {
+      schemaResponses.push(response);
+    }
+  }
+  return schemaResponses.length > 1;
 }
 
 // returns true if the type is implicitly passed by value (map, slice, etc)

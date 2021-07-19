@@ -24,47 +24,47 @@ type notebookClient struct {
 
 // BeginCreateOrUpdateNotebook - Creates or updates a Note Book.
 // If the operation fails it returns the *CloudError error type.
-func (client *notebookClient) BeginCreateOrUpdateNotebook(ctx context.Context, notebookName string, notebook NotebookResource, options *NotebookBeginCreateOrUpdateNotebookOptions) (NotebookResourcePollerResponse, error) {
+func (client *notebookClient) BeginCreateOrUpdateNotebook(ctx context.Context, notebookName string, notebook NotebookResource, options *NotebookBeginCreateOrUpdateNotebookOptions) (NotebookCreateOrUpdateNotebookPollerResponse, error) {
 	resp, err := client.createOrUpdateNotebook(ctx, notebookName, notebook, options)
 	if err != nil {
-		return NotebookResourcePollerResponse{}, err
+		return NotebookCreateOrUpdateNotebookPollerResponse{}, err
 	}
-	result := NotebookResourcePollerResponse{
+	result := NotebookCreateOrUpdateNotebookPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := azcore.NewLROPoller("notebookClient.CreateOrUpdateNotebook", resp, client.con.Pipeline(), client.createOrUpdateNotebookHandleError)
 	if err != nil {
-		return NotebookResourcePollerResponse{}, err
+		return NotebookCreateOrUpdateNotebookPollerResponse{}, err
 	}
-	poller := &notebookResourcePoller{
+	poller := &notebookCreateOrUpdateNotebookPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NotebookResourceResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NotebookCreateOrUpdateNotebookResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeCreateOrUpdateNotebook creates a new NotebookResourcePoller from the specified resume token.
-// token - The value must come from a previous call to NotebookResourcePoller.ResumeToken().
-func (client *notebookClient) ResumeCreateOrUpdateNotebook(ctx context.Context, token string) (NotebookResourcePollerResponse, error) {
+// ResumeCreateOrUpdateNotebook creates a new NotebookCreateOrUpdateNotebookPoller from the specified resume token.
+// token - The value must come from a previous call to NotebookCreateOrUpdateNotebookPoller.ResumeToken().
+func (client *notebookClient) ResumeCreateOrUpdateNotebook(ctx context.Context, token string) (NotebookCreateOrUpdateNotebookPollerResponse, error) {
 	pt, err := azcore.NewLROPollerFromResumeToken("notebookClient.CreateOrUpdateNotebook", token, client.con.Pipeline(), client.createOrUpdateNotebookHandleError)
 	if err != nil {
-		return NotebookResourcePollerResponse{}, err
+		return NotebookCreateOrUpdateNotebookPollerResponse{}, err
 	}
-	poller := &notebookResourcePoller{
+	poller := &notebookCreateOrUpdateNotebookPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return NotebookResourcePollerResponse{}, err
+		return NotebookCreateOrUpdateNotebookPollerResponse{}, err
 	}
-	result := NotebookResourcePollerResponse{
+	result := NotebookCreateOrUpdateNotebookPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NotebookResourceResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NotebookCreateOrUpdateNotebookResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -124,47 +124,47 @@ func (client *notebookClient) createOrUpdateNotebookHandleError(resp *azcore.Res
 
 // BeginDeleteNotebook - Deletes a Note book.
 // If the operation fails it returns the *CloudError error type.
-func (client *notebookClient) BeginDeleteNotebook(ctx context.Context, notebookName string, options *NotebookBeginDeleteNotebookOptions) (HTTPPollerResponse, error) {
+func (client *notebookClient) BeginDeleteNotebook(ctx context.Context, notebookName string, options *NotebookBeginDeleteNotebookOptions) (NotebookDeleteNotebookPollerResponse, error) {
 	resp, err := client.deleteNotebook(ctx, notebookName, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return NotebookDeleteNotebookPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := NotebookDeleteNotebookPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := azcore.NewLROPoller("notebookClient.DeleteNotebook", resp, client.con.Pipeline(), client.deleteNotebookHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return NotebookDeleteNotebookPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &notebookDeleteNotebookPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NotebookDeleteNotebookResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeDeleteNotebook creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *notebookClient) ResumeDeleteNotebook(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeDeleteNotebook creates a new NotebookDeleteNotebookPoller from the specified resume token.
+// token - The value must come from a previous call to NotebookDeleteNotebookPoller.ResumeToken().
+func (client *notebookClient) ResumeDeleteNotebook(ctx context.Context, token string) (NotebookDeleteNotebookPollerResponse, error) {
 	pt, err := azcore.NewLROPollerFromResumeToken("notebookClient.DeleteNotebook", token, client.con.Pipeline(), client.deleteNotebookHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return NotebookDeleteNotebookPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &notebookDeleteNotebookPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return NotebookDeleteNotebookPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := NotebookDeleteNotebookPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NotebookDeleteNotebookResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -221,17 +221,17 @@ func (client *notebookClient) deleteNotebookHandleError(resp *azcore.Response) e
 
 // GetNotebook - Gets a Note Book.
 // If the operation fails it returns the *CloudError error type.
-func (client *notebookClient) GetNotebook(ctx context.Context, notebookName string, options *NotebookGetNotebookOptions) (NotebookResourceResponse, error) {
+func (client *notebookClient) GetNotebook(ctx context.Context, notebookName string, options *NotebookGetNotebookOptions) (NotebookGetNotebookResponse, error) {
 	req, err := client.getNotebookCreateRequest(ctx, notebookName, options)
 	if err != nil {
-		return NotebookResourceResponse{}, err
+		return NotebookGetNotebookResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return NotebookResourceResponse{}, err
+		return NotebookGetNotebookResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusNotModified) {
-		return NotebookResourceResponse{}, client.getNotebookHandleError(resp)
+		return NotebookGetNotebookResponse{}, client.getNotebookHandleError(resp)
 	}
 	return client.getNotebookHandleResponse(resp)
 }
@@ -259,12 +259,12 @@ func (client *notebookClient) getNotebookCreateRequest(ctx context.Context, note
 }
 
 // getNotebookHandleResponse handles the GetNotebook response.
-func (client *notebookClient) getNotebookHandleResponse(resp *azcore.Response) (NotebookResourceResponse, error) {
-	var val *NotebookResource
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return NotebookResourceResponse{}, err
+func (client *notebookClient) getNotebookHandleResponse(resp *azcore.Response) (NotebookGetNotebookResponse, error) {
+	result := NotebookGetNotebookResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.NotebookResource); err != nil {
+		return NotebookGetNotebookResponse{}, err
 	}
-	return NotebookResourceResponse{RawResponse: resp.Response, NotebookResource: val}, nil
+	return result, nil
 }
 
 // getNotebookHandleError handles the GetNotebook error response.
@@ -282,18 +282,15 @@ func (client *notebookClient) getNotebookHandleError(resp *azcore.Response) erro
 
 // GetNotebookSummaryByWorkSpace - Lists a summary of Notebooks.
 // If the operation fails it returns the *CloudError error type.
-func (client *notebookClient) GetNotebookSummaryByWorkSpace(options *NotebookGetNotebookSummaryByWorkSpaceOptions) NotebookListResponsePager {
-	return &notebookListResponsePager{
-		pipeline: client.con.Pipeline(),
+func (client *notebookClient) GetNotebookSummaryByWorkSpace(options *NotebookGetNotebookSummaryByWorkSpaceOptions) NotebookGetNotebookSummaryByWorkSpacePager {
+	return &notebookGetNotebookSummaryByWorkSpacePager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.getNotebookSummaryByWorkSpaceCreateRequest(ctx, options)
 		},
-		responder: client.getNotebookSummaryByWorkSpaceHandleResponse,
-		errorer:   client.getNotebookSummaryByWorkSpaceHandleError,
-		advancer: func(ctx context.Context, resp NotebookListResponseResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp NotebookGetNotebookSummaryByWorkSpaceResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.NotebookListResponse.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -313,12 +310,12 @@ func (client *notebookClient) getNotebookSummaryByWorkSpaceCreateRequest(ctx con
 }
 
 // getNotebookSummaryByWorkSpaceHandleResponse handles the GetNotebookSummaryByWorkSpace response.
-func (client *notebookClient) getNotebookSummaryByWorkSpaceHandleResponse(resp *azcore.Response) (NotebookListResponseResponse, error) {
-	var val *NotebookListResponse
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return NotebookListResponseResponse{}, err
+func (client *notebookClient) getNotebookSummaryByWorkSpaceHandleResponse(resp *azcore.Response) (NotebookGetNotebookSummaryByWorkSpaceResponse, error) {
+	result := NotebookGetNotebookSummaryByWorkSpaceResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.NotebookListResponse); err != nil {
+		return NotebookGetNotebookSummaryByWorkSpaceResponse{}, err
 	}
-	return NotebookListResponseResponse{RawResponse: resp.Response, NotebookListResponse: val}, nil
+	return result, nil
 }
 
 // getNotebookSummaryByWorkSpaceHandleError handles the GetNotebookSummaryByWorkSpace error response.
@@ -336,18 +333,15 @@ func (client *notebookClient) getNotebookSummaryByWorkSpaceHandleError(resp *azc
 
 // GetNotebooksByWorkspace - Lists Notebooks.
 // If the operation fails it returns the *CloudError error type.
-func (client *notebookClient) GetNotebooksByWorkspace(options *NotebookGetNotebooksByWorkspaceOptions) NotebookListResponsePager {
-	return &notebookListResponsePager{
-		pipeline: client.con.Pipeline(),
+func (client *notebookClient) GetNotebooksByWorkspace(options *NotebookGetNotebooksByWorkspaceOptions) NotebookGetNotebooksByWorkspacePager {
+	return &notebookGetNotebooksByWorkspacePager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.getNotebooksByWorkspaceCreateRequest(ctx, options)
 		},
-		responder: client.getNotebooksByWorkspaceHandleResponse,
-		errorer:   client.getNotebooksByWorkspaceHandleError,
-		advancer: func(ctx context.Context, resp NotebookListResponseResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp NotebookGetNotebooksByWorkspaceResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.NotebookListResponse.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -367,12 +361,12 @@ func (client *notebookClient) getNotebooksByWorkspaceCreateRequest(ctx context.C
 }
 
 // getNotebooksByWorkspaceHandleResponse handles the GetNotebooksByWorkspace response.
-func (client *notebookClient) getNotebooksByWorkspaceHandleResponse(resp *azcore.Response) (NotebookListResponseResponse, error) {
-	var val *NotebookListResponse
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return NotebookListResponseResponse{}, err
+func (client *notebookClient) getNotebooksByWorkspaceHandleResponse(resp *azcore.Response) (NotebookGetNotebooksByWorkspaceResponse, error) {
+	result := NotebookGetNotebooksByWorkspaceResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.NotebookListResponse); err != nil {
+		return NotebookGetNotebooksByWorkspaceResponse{}, err
 	}
-	return NotebookListResponseResponse{RawResponse: resp.Response, NotebookListResponse: val}, nil
+	return result, nil
 }
 
 // getNotebooksByWorkspaceHandleError handles the GetNotebooksByWorkspace error response.
@@ -390,47 +384,47 @@ func (client *notebookClient) getNotebooksByWorkspaceHandleError(resp *azcore.Re
 
 // BeginRenameNotebook - Renames a notebook.
 // If the operation fails it returns the *CloudError error type.
-func (client *notebookClient) BeginRenameNotebook(ctx context.Context, notebookName string, request ArtifactRenameRequest, options *NotebookBeginRenameNotebookOptions) (HTTPPollerResponse, error) {
+func (client *notebookClient) BeginRenameNotebook(ctx context.Context, notebookName string, request ArtifactRenameRequest, options *NotebookBeginRenameNotebookOptions) (NotebookRenameNotebookPollerResponse, error) {
 	resp, err := client.renameNotebook(ctx, notebookName, request, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return NotebookRenameNotebookPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := NotebookRenameNotebookPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := azcore.NewLROPoller("notebookClient.RenameNotebook", resp, client.con.Pipeline(), client.renameNotebookHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return NotebookRenameNotebookPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &notebookRenameNotebookPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NotebookRenameNotebookResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeRenameNotebook creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *notebookClient) ResumeRenameNotebook(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeRenameNotebook creates a new NotebookRenameNotebookPoller from the specified resume token.
+// token - The value must come from a previous call to NotebookRenameNotebookPoller.ResumeToken().
+func (client *notebookClient) ResumeRenameNotebook(ctx context.Context, token string) (NotebookRenameNotebookPollerResponse, error) {
 	pt, err := azcore.NewLROPollerFromResumeToken("notebookClient.RenameNotebook", token, client.con.Pipeline(), client.renameNotebookHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return NotebookRenameNotebookPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &notebookRenameNotebookPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return NotebookRenameNotebookPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := NotebookRenameNotebookPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NotebookRenameNotebookResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil

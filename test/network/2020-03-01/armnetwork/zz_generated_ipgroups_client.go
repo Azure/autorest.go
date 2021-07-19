@@ -33,47 +33,47 @@ func NewIPGroupsClient(con *armcore.Connection, subscriptionID string) *IPGroups
 
 // BeginCreateOrUpdate - Creates or updates an ipGroups in a specified resource group.
 // If the operation fails it returns the *Error error type.
-func (client *IPGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ipGroupsName string, parameters IPGroup, options *IPGroupsBeginCreateOrUpdateOptions) (IPGroupPollerResponse, error) {
+func (client *IPGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ipGroupsName string, parameters IPGroup, options *IPGroupsBeginCreateOrUpdateOptions) (IPGroupsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, ipGroupsName, parameters, options)
 	if err != nil {
-		return IPGroupPollerResponse{}, err
+		return IPGroupsCreateOrUpdatePollerResponse{}, err
 	}
-	result := IPGroupPollerResponse{
+	result := IPGroupsCreateOrUpdatePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("IPGroupsClient.CreateOrUpdate", "azure-async-operation", resp, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return IPGroupPollerResponse{}, err
+		return IPGroupsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &ipGroupPoller{
+	poller := &ipGroupsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (IPGroupResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (IPGroupsCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new IPGroupPoller from the specified resume token.
-// token - The value must come from a previous call to IPGroupPoller.ResumeToken().
-func (client *IPGroupsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (IPGroupPollerResponse, error) {
+// ResumeCreateOrUpdate creates a new IPGroupsCreateOrUpdatePoller from the specified resume token.
+// token - The value must come from a previous call to IPGroupsCreateOrUpdatePoller.ResumeToken().
+func (client *IPGroupsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (IPGroupsCreateOrUpdatePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("IPGroupsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return IPGroupPollerResponse{}, err
+		return IPGroupsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &ipGroupPoller{
+	poller := &ipGroupsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return IPGroupPollerResponse{}, err
+		return IPGroupsCreateOrUpdatePollerResponse{}, err
 	}
-	result := IPGroupPollerResponse{
+	result := IPGroupsCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (IPGroupResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (IPGroupsCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -138,47 +138,47 @@ func (client *IPGroupsClient) createOrUpdateHandleError(resp *azcore.Response) e
 
 // BeginDelete - Deletes the specified ipGroups.
 // If the operation fails it returns the *Error error type.
-func (client *IPGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, ipGroupsName string, options *IPGroupsBeginDeleteOptions) (HTTPPollerResponse, error) {
+func (client *IPGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, ipGroupsName string, options *IPGroupsBeginDeleteOptions) (IPGroupsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, ipGroupsName, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return IPGroupsDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := IPGroupsDeletePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("IPGroupsClient.Delete", "location", resp, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return IPGroupsDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &ipGroupsDeletePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (IPGroupsDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeDelete creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *IPGroupsClient) ResumeDelete(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeDelete creates a new IPGroupsDeletePoller from the specified resume token.
+// token - The value must come from a previous call to IPGroupsDeletePoller.ResumeToken().
+func (client *IPGroupsClient) ResumeDelete(ctx context.Context, token string) (IPGroupsDeletePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("IPGroupsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return IPGroupsDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &ipGroupsDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return IPGroupsDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := IPGroupsDeletePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (IPGroupsDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -243,17 +243,17 @@ func (client *IPGroupsClient) deleteHandleError(resp *azcore.Response) error {
 
 // Get - Gets the specified ipGroups.
 // If the operation fails it returns the *Error error type.
-func (client *IPGroupsClient) Get(ctx context.Context, resourceGroupName string, ipGroupsName string, options *IPGroupsGetOptions) (IPGroupResponse, error) {
+func (client *IPGroupsClient) Get(ctx context.Context, resourceGroupName string, ipGroupsName string, options *IPGroupsGetOptions) (IPGroupsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, ipGroupsName, options)
 	if err != nil {
-		return IPGroupResponse{}, err
+		return IPGroupsGetResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return IPGroupResponse{}, err
+		return IPGroupsGetResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return IPGroupResponse{}, client.getHandleError(resp)
+		return IPGroupsGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -289,12 +289,12 @@ func (client *IPGroupsClient) getCreateRequest(ctx context.Context, resourceGrou
 }
 
 // getHandleResponse handles the Get response.
-func (client *IPGroupsClient) getHandleResponse(resp *azcore.Response) (IPGroupResponse, error) {
-	var val *IPGroup
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return IPGroupResponse{}, err
+func (client *IPGroupsClient) getHandleResponse(resp *azcore.Response) (IPGroupsGetResponse, error) {
+	result := IPGroupsGetResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.IPGroup); err != nil {
+		return IPGroupsGetResponse{}, err
 	}
-	return IPGroupResponse{RawResponse: resp.Response, IPGroup: val}, nil
+	return result, nil
 }
 
 // getHandleError handles the Get error response.
@@ -312,18 +312,15 @@ func (client *IPGroupsClient) getHandleError(resp *azcore.Response) error {
 
 // List - Gets all IpGroups in a subscription.
 // If the operation fails it returns the *Error error type.
-func (client *IPGroupsClient) List(options *IPGroupsListOptions) IPGroupListResultPager {
-	return &ipGroupListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *IPGroupsClient) List(options *IPGroupsListOptions) IPGroupsListPager {
+	return &ipGroupsListPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, options)
 		},
-		responder: client.listHandleResponse,
-		errorer:   client.listHandleError,
-		advancer: func(ctx context.Context, resp IPGroupListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp IPGroupsListResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.IPGroupListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -347,12 +344,12 @@ func (client *IPGroupsClient) listCreateRequest(ctx context.Context, options *IP
 }
 
 // listHandleResponse handles the List response.
-func (client *IPGroupsClient) listHandleResponse(resp *azcore.Response) (IPGroupListResultResponse, error) {
-	var val *IPGroupListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return IPGroupListResultResponse{}, err
+func (client *IPGroupsClient) listHandleResponse(resp *azcore.Response) (IPGroupsListResponse, error) {
+	result := IPGroupsListResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.IPGroupListResult); err != nil {
+		return IPGroupsListResponse{}, err
 	}
-	return IPGroupListResultResponse{RawResponse: resp.Response, IPGroupListResult: val}, nil
+	return result, nil
 }
 
 // listHandleError handles the List error response.
@@ -370,18 +367,15 @@ func (client *IPGroupsClient) listHandleError(resp *azcore.Response) error {
 
 // ListByResourceGroup - Gets all IpGroups in a resource group.
 // If the operation fails it returns the *Error error type.
-func (client *IPGroupsClient) ListByResourceGroup(resourceGroupName string, options *IPGroupsListByResourceGroupOptions) IPGroupListResultPager {
-	return &ipGroupListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *IPGroupsClient) ListByResourceGroup(resourceGroupName string, options *IPGroupsListByResourceGroupOptions) IPGroupsListByResourceGroupPager {
+	return &ipGroupsListByResourceGroupPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
 		},
-		responder: client.listByResourceGroupHandleResponse,
-		errorer:   client.listByResourceGroupHandleError,
-		advancer: func(ctx context.Context, resp IPGroupListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp IPGroupsListByResourceGroupResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.IPGroupListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -409,12 +403,12 @@ func (client *IPGroupsClient) listByResourceGroupCreateRequest(ctx context.Conte
 }
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
-func (client *IPGroupsClient) listByResourceGroupHandleResponse(resp *azcore.Response) (IPGroupListResultResponse, error) {
-	var val *IPGroupListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return IPGroupListResultResponse{}, err
+func (client *IPGroupsClient) listByResourceGroupHandleResponse(resp *azcore.Response) (IPGroupsListByResourceGroupResponse, error) {
+	result := IPGroupsListByResourceGroupResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.IPGroupListResult); err != nil {
+		return IPGroupsListByResourceGroupResponse{}, err
 	}
-	return IPGroupListResultResponse{RawResponse: resp.Response, IPGroupListResult: val}, nil
+	return result, nil
 }
 
 // listByResourceGroupHandleError handles the ListByResourceGroup error response.
@@ -432,17 +426,17 @@ func (client *IPGroupsClient) listByResourceGroupHandleError(resp *azcore.Respon
 
 // UpdateGroups - Updates tags of an IpGroups resource.
 // If the operation fails it returns the *Error error type.
-func (client *IPGroupsClient) UpdateGroups(ctx context.Context, resourceGroupName string, ipGroupsName string, parameters TagsObject, options *IPGroupsUpdateGroupsOptions) (IPGroupResponse, error) {
+func (client *IPGroupsClient) UpdateGroups(ctx context.Context, resourceGroupName string, ipGroupsName string, parameters TagsObject, options *IPGroupsUpdateGroupsOptions) (IPGroupsUpdateGroupsResponse, error) {
 	req, err := client.updateGroupsCreateRequest(ctx, resourceGroupName, ipGroupsName, parameters, options)
 	if err != nil {
-		return IPGroupResponse{}, err
+		return IPGroupsUpdateGroupsResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return IPGroupResponse{}, err
+		return IPGroupsUpdateGroupsResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return IPGroupResponse{}, client.updateGroupsHandleError(resp)
+		return IPGroupsUpdateGroupsResponse{}, client.updateGroupsHandleError(resp)
 	}
 	return client.updateGroupsHandleResponse(resp)
 }
@@ -475,12 +469,12 @@ func (client *IPGroupsClient) updateGroupsCreateRequest(ctx context.Context, res
 }
 
 // updateGroupsHandleResponse handles the UpdateGroups response.
-func (client *IPGroupsClient) updateGroupsHandleResponse(resp *azcore.Response) (IPGroupResponse, error) {
-	var val *IPGroup
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return IPGroupResponse{}, err
+func (client *IPGroupsClient) updateGroupsHandleResponse(resp *azcore.Response) (IPGroupsUpdateGroupsResponse, error) {
+	result := IPGroupsUpdateGroupsResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.IPGroup); err != nil {
+		return IPGroupsUpdateGroupsResponse{}, err
 	}
-	return IPGroupResponse{RawResponse: resp.Response, IPGroup: val}, nil
+	return result, nil
 }
 
 // updateGroupsHandleError handles the UpdateGroups error response.

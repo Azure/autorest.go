@@ -33,47 +33,47 @@ func NewVPNServerConfigurationsAssociatedWithVirtualWanClient(con *armcore.Conne
 
 // BeginList - Gives the list of VpnServerConfigurations associated with Virtual Wan in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) BeginList(ctx context.Context, resourceGroupName string, virtualWANName string, options *VPNServerConfigurationsAssociatedWithVirtualWanBeginListOptions) (VPNServerConfigurationsResponsePollerResponse, error) {
+func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) BeginList(ctx context.Context, resourceGroupName string, virtualWANName string, options *VPNServerConfigurationsAssociatedWithVirtualWanBeginListOptions) (VPNServerConfigurationsAssociatedWithVirtualWanListPollerResponse, error) {
 	resp, err := client.listOperation(ctx, resourceGroupName, virtualWANName, options)
 	if err != nil {
-		return VPNServerConfigurationsResponsePollerResponse{}, err
+		return VPNServerConfigurationsAssociatedWithVirtualWanListPollerResponse{}, err
 	}
-	result := VPNServerConfigurationsResponsePollerResponse{
+	result := VPNServerConfigurationsAssociatedWithVirtualWanListPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("VPNServerConfigurationsAssociatedWithVirtualWanClient.List", "location", resp, client.con.Pipeline(), client.listHandleError)
 	if err != nil {
-		return VPNServerConfigurationsResponsePollerResponse{}, err
+		return VPNServerConfigurationsAssociatedWithVirtualWanListPollerResponse{}, err
 	}
-	poller := &vpnServerConfigurationsResponsePoller{
+	poller := &vpnServerConfigurationsAssociatedWithVirtualWanListPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VPNServerConfigurationsResponseResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VPNServerConfigurationsAssociatedWithVirtualWanListResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeList creates a new VPNServerConfigurationsResponsePoller from the specified resume token.
-// token - The value must come from a previous call to VPNServerConfigurationsResponsePoller.ResumeToken().
-func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) ResumeList(ctx context.Context, token string) (VPNServerConfigurationsResponsePollerResponse, error) {
+// ResumeList creates a new VPNServerConfigurationsAssociatedWithVirtualWanListPoller from the specified resume token.
+// token - The value must come from a previous call to VPNServerConfigurationsAssociatedWithVirtualWanListPoller.ResumeToken().
+func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) ResumeList(ctx context.Context, token string) (VPNServerConfigurationsAssociatedWithVirtualWanListPollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("VPNServerConfigurationsAssociatedWithVirtualWanClient.List", token, client.con.Pipeline(), client.listHandleError)
 	if err != nil {
-		return VPNServerConfigurationsResponsePollerResponse{}, err
+		return VPNServerConfigurationsAssociatedWithVirtualWanListPollerResponse{}, err
 	}
-	poller := &vpnServerConfigurationsResponsePoller{
+	poller := &vpnServerConfigurationsAssociatedWithVirtualWanListPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return VPNServerConfigurationsResponsePollerResponse{}, err
+		return VPNServerConfigurationsAssociatedWithVirtualWanListPollerResponse{}, err
 	}
-	result := VPNServerConfigurationsResponsePollerResponse{
+	result := VPNServerConfigurationsAssociatedWithVirtualWanListPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VPNServerConfigurationsResponseResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VPNServerConfigurationsAssociatedWithVirtualWanListResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil

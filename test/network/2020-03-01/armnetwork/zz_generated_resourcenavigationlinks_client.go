@@ -32,17 +32,17 @@ func NewResourceNavigationLinksClient(con *armcore.Connection, subscriptionID st
 
 // List - Gets a list of resource navigation links for a subnet.
 // If the operation fails it returns the *CloudError error type.
-func (client *ResourceNavigationLinksClient) List(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, options *ResourceNavigationLinksListOptions) (ResourceNavigationLinksListResultResponse, error) {
+func (client *ResourceNavigationLinksClient) List(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, options *ResourceNavigationLinksListOptions) (ResourceNavigationLinksListResponse, error) {
 	req, err := client.listCreateRequest(ctx, resourceGroupName, virtualNetworkName, subnetName, options)
 	if err != nil {
-		return ResourceNavigationLinksListResultResponse{}, err
+		return ResourceNavigationLinksListResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return ResourceNavigationLinksListResultResponse{}, err
+		return ResourceNavigationLinksListResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return ResourceNavigationLinksListResultResponse{}, client.listHandleError(resp)
+		return ResourceNavigationLinksListResponse{}, client.listHandleError(resp)
 	}
 	return client.listHandleResponse(resp)
 }
@@ -79,12 +79,12 @@ func (client *ResourceNavigationLinksClient) listCreateRequest(ctx context.Conte
 }
 
 // listHandleResponse handles the List response.
-func (client *ResourceNavigationLinksClient) listHandleResponse(resp *azcore.Response) (ResourceNavigationLinksListResultResponse, error) {
-	var val *ResourceNavigationLinksListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ResourceNavigationLinksListResultResponse{}, err
+func (client *ResourceNavigationLinksClient) listHandleResponse(resp *azcore.Response) (ResourceNavigationLinksListResponse, error) {
+	result := ResourceNavigationLinksListResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.ResourceNavigationLinksListResult); err != nil {
+		return ResourceNavigationLinksListResponse{}, err
 	}
-	return ResourceNavigationLinksListResultResponse{RawResponse: resp.Response, ResourceNavigationLinksListResult: val}, nil
+	return result, nil
 }
 
 // listHandleError handles the List error response.

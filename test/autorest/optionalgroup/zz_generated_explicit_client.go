@@ -29,19 +29,19 @@ func NewExplicitClient(con *Connection) *ExplicitClient {
 
 // PostOptionalArrayHeader - Test explicitly optional integer. Please put a header 'headerParameter' => null.
 // If the operation fails it returns the *Error error type.
-func (client *ExplicitClient) PostOptionalArrayHeader(ctx context.Context, options *ExplicitPostOptionalArrayHeaderOptions) (*http.Response, error) {
+func (client *ExplicitClient) PostOptionalArrayHeader(ctx context.Context, options *ExplicitPostOptionalArrayHeaderOptions) (ExplicitPostOptionalArrayHeaderResponse, error) {
 	req, err := client.postOptionalArrayHeaderCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return ExplicitPostOptionalArrayHeaderResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return ExplicitPostOptionalArrayHeaderResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.postOptionalArrayHeaderHandleError(resp)
+		return ExplicitPostOptionalArrayHeaderResponse{}, client.postOptionalArrayHeaderHandleError(resp)
 	}
-	return resp.Response, nil
+	return ExplicitPostOptionalArrayHeaderResponse{RawResponse: resp.Response}, nil
 }
 
 // postOptionalArrayHeaderCreateRequest creates the PostOptionalArrayHeader request.
@@ -74,19 +74,19 @@ func (client *ExplicitClient) postOptionalArrayHeaderHandleError(resp *azcore.Re
 
 // PostOptionalArrayParameter - Test explicitly optional array. Please put null.
 // If the operation fails it returns the *Error error type.
-func (client *ExplicitClient) PostOptionalArrayParameter(ctx context.Context, options *ExplicitPostOptionalArrayParameterOptions) (*http.Response, error) {
+func (client *ExplicitClient) PostOptionalArrayParameter(ctx context.Context, options *ExplicitPostOptionalArrayParameterOptions) (ExplicitPostOptionalArrayParameterResponse, error) {
 	req, err := client.postOptionalArrayParameterCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return ExplicitPostOptionalArrayParameterResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return ExplicitPostOptionalArrayParameterResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.postOptionalArrayParameterHandleError(resp)
+		return ExplicitPostOptionalArrayParameterResponse{}, client.postOptionalArrayParameterHandleError(resp)
 	}
-	return resp.Response, nil
+	return ExplicitPostOptionalArrayParameterResponse{RawResponse: resp.Response}, nil
 }
 
 // postOptionalArrayParameterCreateRequest creates the PostOptionalArrayParameter request.
@@ -119,19 +119,19 @@ func (client *ExplicitClient) postOptionalArrayParameterHandleError(resp *azcore
 
 // PostOptionalArrayProperty - Test explicitly optional array. Please put a valid array-wrapper with 'value' = null.
 // If the operation fails it returns the *Error error type.
-func (client *ExplicitClient) PostOptionalArrayProperty(ctx context.Context, options *ExplicitPostOptionalArrayPropertyOptions) (*http.Response, error) {
+func (client *ExplicitClient) PostOptionalArrayProperty(ctx context.Context, options *ExplicitPostOptionalArrayPropertyOptions) (ExplicitPostOptionalArrayPropertyResponse, error) {
 	req, err := client.postOptionalArrayPropertyCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return ExplicitPostOptionalArrayPropertyResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return ExplicitPostOptionalArrayPropertyResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.postOptionalArrayPropertyHandleError(resp)
+		return ExplicitPostOptionalArrayPropertyResponse{}, client.postOptionalArrayPropertyHandleError(resp)
 	}
-	return resp.Response, nil
+	return ExplicitPostOptionalArrayPropertyResponse{RawResponse: resp.Response}, nil
 }
 
 // postOptionalArrayPropertyCreateRequest creates the PostOptionalArrayProperty request.
@@ -164,19 +164,19 @@ func (client *ExplicitClient) postOptionalArrayPropertyHandleError(resp *azcore.
 
 // PostOptionalClassParameter - Test explicitly optional complex object. Please put null.
 // If the operation fails it returns the *Error error type.
-func (client *ExplicitClient) PostOptionalClassParameter(ctx context.Context, options *ExplicitPostOptionalClassParameterOptions) (*http.Response, error) {
+func (client *ExplicitClient) PostOptionalClassParameter(ctx context.Context, options *ExplicitPostOptionalClassParameterOptions) (ExplicitPostOptionalClassParameterResponse, error) {
 	req, err := client.postOptionalClassParameterCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return ExplicitPostOptionalClassParameterResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return ExplicitPostOptionalClassParameterResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.postOptionalClassParameterHandleError(resp)
+		return ExplicitPostOptionalClassParameterResponse{}, client.postOptionalClassParameterHandleError(resp)
 	}
-	return resp.Response, nil
+	return ExplicitPostOptionalClassParameterResponse{RawResponse: resp.Response}, nil
 }
 
 // postOptionalClassParameterCreateRequest creates the PostOptionalClassParameter request.
@@ -209,19 +209,19 @@ func (client *ExplicitClient) postOptionalClassParameterHandleError(resp *azcore
 
 // PostOptionalClassProperty - Test explicitly optional complex object. Please put a valid class-wrapper with 'value' = null.
 // If the operation fails it returns the *Error error type.
-func (client *ExplicitClient) PostOptionalClassProperty(ctx context.Context, options *ExplicitPostOptionalClassPropertyOptions) (*http.Response, error) {
+func (client *ExplicitClient) PostOptionalClassProperty(ctx context.Context, options *ExplicitPostOptionalClassPropertyOptions) (ExplicitPostOptionalClassPropertyResponse, error) {
 	req, err := client.postOptionalClassPropertyCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return ExplicitPostOptionalClassPropertyResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return ExplicitPostOptionalClassPropertyResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.postOptionalClassPropertyHandleError(resp)
+		return ExplicitPostOptionalClassPropertyResponse{}, client.postOptionalClassPropertyHandleError(resp)
 	}
-	return resp.Response, nil
+	return ExplicitPostOptionalClassPropertyResponse{RawResponse: resp.Response}, nil
 }
 
 // postOptionalClassPropertyCreateRequest creates the PostOptionalClassProperty request.
@@ -254,19 +254,19 @@ func (client *ExplicitClient) postOptionalClassPropertyHandleError(resp *azcore.
 
 // PostOptionalIntegerHeader - Test explicitly optional integer. Please put a header 'headerParameter' => null.
 // If the operation fails it returns the *Error error type.
-func (client *ExplicitClient) PostOptionalIntegerHeader(ctx context.Context, options *ExplicitPostOptionalIntegerHeaderOptions) (*http.Response, error) {
+func (client *ExplicitClient) PostOptionalIntegerHeader(ctx context.Context, options *ExplicitPostOptionalIntegerHeaderOptions) (ExplicitPostOptionalIntegerHeaderResponse, error) {
 	req, err := client.postOptionalIntegerHeaderCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return ExplicitPostOptionalIntegerHeaderResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return ExplicitPostOptionalIntegerHeaderResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.postOptionalIntegerHeaderHandleError(resp)
+		return ExplicitPostOptionalIntegerHeaderResponse{}, client.postOptionalIntegerHeaderHandleError(resp)
 	}
-	return resp.Response, nil
+	return ExplicitPostOptionalIntegerHeaderResponse{RawResponse: resp.Response}, nil
 }
 
 // postOptionalIntegerHeaderCreateRequest creates the PostOptionalIntegerHeader request.
@@ -299,19 +299,19 @@ func (client *ExplicitClient) postOptionalIntegerHeaderHandleError(resp *azcore.
 
 // PostOptionalIntegerParameter - Test explicitly optional integer. Please put null.
 // If the operation fails it returns the *Error error type.
-func (client *ExplicitClient) PostOptionalIntegerParameter(ctx context.Context, options *ExplicitPostOptionalIntegerParameterOptions) (*http.Response, error) {
+func (client *ExplicitClient) PostOptionalIntegerParameter(ctx context.Context, options *ExplicitPostOptionalIntegerParameterOptions) (ExplicitPostOptionalIntegerParameterResponse, error) {
 	req, err := client.postOptionalIntegerParameterCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return ExplicitPostOptionalIntegerParameterResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return ExplicitPostOptionalIntegerParameterResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.postOptionalIntegerParameterHandleError(resp)
+		return ExplicitPostOptionalIntegerParameterResponse{}, client.postOptionalIntegerParameterHandleError(resp)
 	}
-	return resp.Response, nil
+	return ExplicitPostOptionalIntegerParameterResponse{RawResponse: resp.Response}, nil
 }
 
 // postOptionalIntegerParameterCreateRequest creates the PostOptionalIntegerParameter request.
@@ -344,19 +344,19 @@ func (client *ExplicitClient) postOptionalIntegerParameterHandleError(resp *azco
 
 // PostOptionalIntegerProperty - Test explicitly optional integer. Please put a valid int-wrapper with 'value' = null.
 // If the operation fails it returns the *Error error type.
-func (client *ExplicitClient) PostOptionalIntegerProperty(ctx context.Context, options *ExplicitPostOptionalIntegerPropertyOptions) (*http.Response, error) {
+func (client *ExplicitClient) PostOptionalIntegerProperty(ctx context.Context, options *ExplicitPostOptionalIntegerPropertyOptions) (ExplicitPostOptionalIntegerPropertyResponse, error) {
 	req, err := client.postOptionalIntegerPropertyCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return ExplicitPostOptionalIntegerPropertyResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return ExplicitPostOptionalIntegerPropertyResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.postOptionalIntegerPropertyHandleError(resp)
+		return ExplicitPostOptionalIntegerPropertyResponse{}, client.postOptionalIntegerPropertyHandleError(resp)
 	}
-	return resp.Response, nil
+	return ExplicitPostOptionalIntegerPropertyResponse{RawResponse: resp.Response}, nil
 }
 
 // postOptionalIntegerPropertyCreateRequest creates the PostOptionalIntegerProperty request.
@@ -389,19 +389,19 @@ func (client *ExplicitClient) postOptionalIntegerPropertyHandleError(resp *azcor
 
 // PostOptionalStringHeader - Test explicitly optional string. Please put a header 'headerParameter' => null.
 // If the operation fails it returns the *Error error type.
-func (client *ExplicitClient) PostOptionalStringHeader(ctx context.Context, options *ExplicitPostOptionalStringHeaderOptions) (*http.Response, error) {
+func (client *ExplicitClient) PostOptionalStringHeader(ctx context.Context, options *ExplicitPostOptionalStringHeaderOptions) (ExplicitPostOptionalStringHeaderResponse, error) {
 	req, err := client.postOptionalStringHeaderCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return ExplicitPostOptionalStringHeaderResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return ExplicitPostOptionalStringHeaderResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.postOptionalStringHeaderHandleError(resp)
+		return ExplicitPostOptionalStringHeaderResponse{}, client.postOptionalStringHeaderHandleError(resp)
 	}
-	return resp.Response, nil
+	return ExplicitPostOptionalStringHeaderResponse{RawResponse: resp.Response}, nil
 }
 
 // postOptionalStringHeaderCreateRequest creates the PostOptionalStringHeader request.
@@ -434,19 +434,19 @@ func (client *ExplicitClient) postOptionalStringHeaderHandleError(resp *azcore.R
 
 // PostOptionalStringParameter - Test explicitly optional string. Please put null.
 // If the operation fails it returns the *Error error type.
-func (client *ExplicitClient) PostOptionalStringParameter(ctx context.Context, options *ExplicitPostOptionalStringParameterOptions) (*http.Response, error) {
+func (client *ExplicitClient) PostOptionalStringParameter(ctx context.Context, options *ExplicitPostOptionalStringParameterOptions) (ExplicitPostOptionalStringParameterResponse, error) {
 	req, err := client.postOptionalStringParameterCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return ExplicitPostOptionalStringParameterResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return ExplicitPostOptionalStringParameterResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.postOptionalStringParameterHandleError(resp)
+		return ExplicitPostOptionalStringParameterResponse{}, client.postOptionalStringParameterHandleError(resp)
 	}
-	return resp.Response, nil
+	return ExplicitPostOptionalStringParameterResponse{RawResponse: resp.Response}, nil
 }
 
 // postOptionalStringParameterCreateRequest creates the PostOptionalStringParameter request.
@@ -479,19 +479,19 @@ func (client *ExplicitClient) postOptionalStringParameterHandleError(resp *azcor
 
 // PostOptionalStringProperty - Test explicitly optional integer. Please put a valid string-wrapper with 'value' = null.
 // If the operation fails it returns the *Error error type.
-func (client *ExplicitClient) PostOptionalStringProperty(ctx context.Context, options *ExplicitPostOptionalStringPropertyOptions) (*http.Response, error) {
+func (client *ExplicitClient) PostOptionalStringProperty(ctx context.Context, options *ExplicitPostOptionalStringPropertyOptions) (ExplicitPostOptionalStringPropertyResponse, error) {
 	req, err := client.postOptionalStringPropertyCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return ExplicitPostOptionalStringPropertyResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return ExplicitPostOptionalStringPropertyResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.postOptionalStringPropertyHandleError(resp)
+		return ExplicitPostOptionalStringPropertyResponse{}, client.postOptionalStringPropertyHandleError(resp)
 	}
-	return resp.Response, nil
+	return ExplicitPostOptionalStringPropertyResponse{RawResponse: resp.Response}, nil
 }
 
 // postOptionalStringPropertyCreateRequest creates the PostOptionalStringProperty request.
@@ -525,19 +525,19 @@ func (client *ExplicitClient) postOptionalStringPropertyHandleError(resp *azcore
 // PostRequiredArrayHeader - Test explicitly required array. Please put a header 'headerParameter' => null and the client library should throw before the
 // request is sent.
 // If the operation fails it returns the *Error error type.
-func (client *ExplicitClient) PostRequiredArrayHeader(ctx context.Context, headerParameter []string, options *ExplicitPostRequiredArrayHeaderOptions) (*http.Response, error) {
+func (client *ExplicitClient) PostRequiredArrayHeader(ctx context.Context, headerParameter []string, options *ExplicitPostRequiredArrayHeaderOptions) (ExplicitPostRequiredArrayHeaderResponse, error) {
 	req, err := client.postRequiredArrayHeaderCreateRequest(ctx, headerParameter, options)
 	if err != nil {
-		return nil, err
+		return ExplicitPostRequiredArrayHeaderResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return ExplicitPostRequiredArrayHeaderResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.postRequiredArrayHeaderHandleError(resp)
+		return ExplicitPostRequiredArrayHeaderResponse{}, client.postRequiredArrayHeaderHandleError(resp)
 	}
-	return resp.Response, nil
+	return ExplicitPostRequiredArrayHeaderResponse{RawResponse: resp.Response}, nil
 }
 
 // postRequiredArrayHeaderCreateRequest creates the PostRequiredArrayHeader request.
@@ -568,19 +568,19 @@ func (client *ExplicitClient) postRequiredArrayHeaderHandleError(resp *azcore.Re
 
 // PostRequiredArrayParameter - Test explicitly required array. Please put null and the client library should throw before the request is sent.
 // If the operation fails it returns the *Error error type.
-func (client *ExplicitClient) PostRequiredArrayParameter(ctx context.Context, bodyParameter []*string, options *ExplicitPostRequiredArrayParameterOptions) (*http.Response, error) {
+func (client *ExplicitClient) PostRequiredArrayParameter(ctx context.Context, bodyParameter []*string, options *ExplicitPostRequiredArrayParameterOptions) (ExplicitPostRequiredArrayParameterResponse, error) {
 	req, err := client.postRequiredArrayParameterCreateRequest(ctx, bodyParameter, options)
 	if err != nil {
-		return nil, err
+		return ExplicitPostRequiredArrayParameterResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return ExplicitPostRequiredArrayParameterResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.postRequiredArrayParameterHandleError(resp)
+		return ExplicitPostRequiredArrayParameterResponse{}, client.postRequiredArrayParameterHandleError(resp)
 	}
-	return resp.Response, nil
+	return ExplicitPostRequiredArrayParameterResponse{RawResponse: resp.Response}, nil
 }
 
 // postRequiredArrayParameterCreateRequest creates the PostRequiredArrayParameter request.
@@ -611,19 +611,19 @@ func (client *ExplicitClient) postRequiredArrayParameterHandleError(resp *azcore
 // PostRequiredArrayProperty - Test explicitly required array. Please put a valid array-wrapper with 'value' = null and the client library should throw
 // before the request is sent.
 // If the operation fails it returns the *Error error type.
-func (client *ExplicitClient) PostRequiredArrayProperty(ctx context.Context, bodyParameter ArrayWrapper, options *ExplicitPostRequiredArrayPropertyOptions) (*http.Response, error) {
+func (client *ExplicitClient) PostRequiredArrayProperty(ctx context.Context, bodyParameter ArrayWrapper, options *ExplicitPostRequiredArrayPropertyOptions) (ExplicitPostRequiredArrayPropertyResponse, error) {
 	req, err := client.postRequiredArrayPropertyCreateRequest(ctx, bodyParameter, options)
 	if err != nil {
-		return nil, err
+		return ExplicitPostRequiredArrayPropertyResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return ExplicitPostRequiredArrayPropertyResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.postRequiredArrayPropertyHandleError(resp)
+		return ExplicitPostRequiredArrayPropertyResponse{}, client.postRequiredArrayPropertyHandleError(resp)
 	}
-	return resp.Response, nil
+	return ExplicitPostRequiredArrayPropertyResponse{RawResponse: resp.Response}, nil
 }
 
 // postRequiredArrayPropertyCreateRequest creates the PostRequiredArrayProperty request.
@@ -653,19 +653,19 @@ func (client *ExplicitClient) postRequiredArrayPropertyHandleError(resp *azcore.
 
 // PostRequiredClassParameter - Test explicitly required complex object. Please put null and the client library should throw before the request is sent.
 // If the operation fails it returns the *Error error type.
-func (client *ExplicitClient) PostRequiredClassParameter(ctx context.Context, bodyParameter Product, options *ExplicitPostRequiredClassParameterOptions) (*http.Response, error) {
+func (client *ExplicitClient) PostRequiredClassParameter(ctx context.Context, bodyParameter Product, options *ExplicitPostRequiredClassParameterOptions) (ExplicitPostRequiredClassParameterResponse, error) {
 	req, err := client.postRequiredClassParameterCreateRequest(ctx, bodyParameter, options)
 	if err != nil {
-		return nil, err
+		return ExplicitPostRequiredClassParameterResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return ExplicitPostRequiredClassParameterResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.postRequiredClassParameterHandleError(resp)
+		return ExplicitPostRequiredClassParameterResponse{}, client.postRequiredClassParameterHandleError(resp)
 	}
-	return resp.Response, nil
+	return ExplicitPostRequiredClassParameterResponse{RawResponse: resp.Response}, nil
 }
 
 // postRequiredClassParameterCreateRequest creates the PostRequiredClassParameter request.
@@ -696,19 +696,19 @@ func (client *ExplicitClient) postRequiredClassParameterHandleError(resp *azcore
 // PostRequiredClassProperty - Test explicitly required complex object. Please put a valid class-wrapper with 'value' = null and the client library should
 // throw before the request is sent.
 // If the operation fails it returns the *Error error type.
-func (client *ExplicitClient) PostRequiredClassProperty(ctx context.Context, bodyParameter ClassWrapper, options *ExplicitPostRequiredClassPropertyOptions) (*http.Response, error) {
+func (client *ExplicitClient) PostRequiredClassProperty(ctx context.Context, bodyParameter ClassWrapper, options *ExplicitPostRequiredClassPropertyOptions) (ExplicitPostRequiredClassPropertyResponse, error) {
 	req, err := client.postRequiredClassPropertyCreateRequest(ctx, bodyParameter, options)
 	if err != nil {
-		return nil, err
+		return ExplicitPostRequiredClassPropertyResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return ExplicitPostRequiredClassPropertyResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.postRequiredClassPropertyHandleError(resp)
+		return ExplicitPostRequiredClassPropertyResponse{}, client.postRequiredClassPropertyHandleError(resp)
 	}
-	return resp.Response, nil
+	return ExplicitPostRequiredClassPropertyResponse{RawResponse: resp.Response}, nil
 }
 
 // postRequiredClassPropertyCreateRequest creates the PostRequiredClassProperty request.
@@ -739,19 +739,19 @@ func (client *ExplicitClient) postRequiredClassPropertyHandleError(resp *azcore.
 // PostRequiredIntegerHeader - Test explicitly required integer. Please put a header 'headerParameter' => null and the client library should throw before
 // the request is sent.
 // If the operation fails it returns the *Error error type.
-func (client *ExplicitClient) PostRequiredIntegerHeader(ctx context.Context, headerParameter int32, options *ExplicitPostRequiredIntegerHeaderOptions) (*http.Response, error) {
+func (client *ExplicitClient) PostRequiredIntegerHeader(ctx context.Context, headerParameter int32, options *ExplicitPostRequiredIntegerHeaderOptions) (ExplicitPostRequiredIntegerHeaderResponse, error) {
 	req, err := client.postRequiredIntegerHeaderCreateRequest(ctx, headerParameter, options)
 	if err != nil {
-		return nil, err
+		return ExplicitPostRequiredIntegerHeaderResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return ExplicitPostRequiredIntegerHeaderResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.postRequiredIntegerHeaderHandleError(resp)
+		return ExplicitPostRequiredIntegerHeaderResponse{}, client.postRequiredIntegerHeaderHandleError(resp)
 	}
-	return resp.Response, nil
+	return ExplicitPostRequiredIntegerHeaderResponse{RawResponse: resp.Response}, nil
 }
 
 // postRequiredIntegerHeaderCreateRequest creates the PostRequiredIntegerHeader request.
@@ -782,19 +782,19 @@ func (client *ExplicitClient) postRequiredIntegerHeaderHandleError(resp *azcore.
 
 // PostRequiredIntegerParameter - Test explicitly required integer. Please put null and the client library should throw before the request is sent.
 // If the operation fails it returns the *Error error type.
-func (client *ExplicitClient) PostRequiredIntegerParameter(ctx context.Context, bodyParameter int32, options *ExplicitPostRequiredIntegerParameterOptions) (*http.Response, error) {
+func (client *ExplicitClient) PostRequiredIntegerParameter(ctx context.Context, bodyParameter int32, options *ExplicitPostRequiredIntegerParameterOptions) (ExplicitPostRequiredIntegerParameterResponse, error) {
 	req, err := client.postRequiredIntegerParameterCreateRequest(ctx, bodyParameter, options)
 	if err != nil {
-		return nil, err
+		return ExplicitPostRequiredIntegerParameterResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return ExplicitPostRequiredIntegerParameterResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.postRequiredIntegerParameterHandleError(resp)
+		return ExplicitPostRequiredIntegerParameterResponse{}, client.postRequiredIntegerParameterHandleError(resp)
 	}
-	return resp.Response, nil
+	return ExplicitPostRequiredIntegerParameterResponse{RawResponse: resp.Response}, nil
 }
 
 // postRequiredIntegerParameterCreateRequest creates the PostRequiredIntegerParameter request.
@@ -825,19 +825,19 @@ func (client *ExplicitClient) postRequiredIntegerParameterHandleError(resp *azco
 // PostRequiredIntegerProperty - Test explicitly required integer. Please put a valid int-wrapper with 'value' = null and the client library should throw
 // before the request is sent.
 // If the operation fails it returns the *Error error type.
-func (client *ExplicitClient) PostRequiredIntegerProperty(ctx context.Context, bodyParameter IntWrapper, options *ExplicitPostRequiredIntegerPropertyOptions) (*http.Response, error) {
+func (client *ExplicitClient) PostRequiredIntegerProperty(ctx context.Context, bodyParameter IntWrapper, options *ExplicitPostRequiredIntegerPropertyOptions) (ExplicitPostRequiredIntegerPropertyResponse, error) {
 	req, err := client.postRequiredIntegerPropertyCreateRequest(ctx, bodyParameter, options)
 	if err != nil {
-		return nil, err
+		return ExplicitPostRequiredIntegerPropertyResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return ExplicitPostRequiredIntegerPropertyResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.postRequiredIntegerPropertyHandleError(resp)
+		return ExplicitPostRequiredIntegerPropertyResponse{}, client.postRequiredIntegerPropertyHandleError(resp)
 	}
-	return resp.Response, nil
+	return ExplicitPostRequiredIntegerPropertyResponse{RawResponse: resp.Response}, nil
 }
 
 // postRequiredIntegerPropertyCreateRequest creates the PostRequiredIntegerProperty request.
@@ -868,19 +868,19 @@ func (client *ExplicitClient) postRequiredIntegerPropertyHandleError(resp *azcor
 // PostRequiredStringHeader - Test explicitly required string. Please put a header 'headerParameter' => null and the client library should throw before
 // the request is sent.
 // If the operation fails it returns the *Error error type.
-func (client *ExplicitClient) PostRequiredStringHeader(ctx context.Context, headerParameter string, options *ExplicitPostRequiredStringHeaderOptions) (*http.Response, error) {
+func (client *ExplicitClient) PostRequiredStringHeader(ctx context.Context, headerParameter string, options *ExplicitPostRequiredStringHeaderOptions) (ExplicitPostRequiredStringHeaderResponse, error) {
 	req, err := client.postRequiredStringHeaderCreateRequest(ctx, headerParameter, options)
 	if err != nil {
-		return nil, err
+		return ExplicitPostRequiredStringHeaderResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return ExplicitPostRequiredStringHeaderResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.postRequiredStringHeaderHandleError(resp)
+		return ExplicitPostRequiredStringHeaderResponse{}, client.postRequiredStringHeaderHandleError(resp)
 	}
-	return resp.Response, nil
+	return ExplicitPostRequiredStringHeaderResponse{RawResponse: resp.Response}, nil
 }
 
 // postRequiredStringHeaderCreateRequest creates the PostRequiredStringHeader request.
@@ -911,19 +911,19 @@ func (client *ExplicitClient) postRequiredStringHeaderHandleError(resp *azcore.R
 
 // PostRequiredStringParameter - Test explicitly required string. Please put null and the client library should throw before the request is sent.
 // If the operation fails it returns the *Error error type.
-func (client *ExplicitClient) PostRequiredStringParameter(ctx context.Context, bodyParameter string, options *ExplicitPostRequiredStringParameterOptions) (*http.Response, error) {
+func (client *ExplicitClient) PostRequiredStringParameter(ctx context.Context, bodyParameter string, options *ExplicitPostRequiredStringParameterOptions) (ExplicitPostRequiredStringParameterResponse, error) {
 	req, err := client.postRequiredStringParameterCreateRequest(ctx, bodyParameter, options)
 	if err != nil {
-		return nil, err
+		return ExplicitPostRequiredStringParameterResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return ExplicitPostRequiredStringParameterResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.postRequiredStringParameterHandleError(resp)
+		return ExplicitPostRequiredStringParameterResponse{}, client.postRequiredStringParameterHandleError(resp)
 	}
-	return resp.Response, nil
+	return ExplicitPostRequiredStringParameterResponse{RawResponse: resp.Response}, nil
 }
 
 // postRequiredStringParameterCreateRequest creates the PostRequiredStringParameter request.
@@ -954,19 +954,19 @@ func (client *ExplicitClient) postRequiredStringParameterHandleError(resp *azcor
 // PostRequiredStringProperty - Test explicitly required string. Please put a valid string-wrapper with 'value' = null and the client library should throw
 // before the request is sent.
 // If the operation fails it returns the *Error error type.
-func (client *ExplicitClient) PostRequiredStringProperty(ctx context.Context, bodyParameter StringWrapper, options *ExplicitPostRequiredStringPropertyOptions) (*http.Response, error) {
+func (client *ExplicitClient) PostRequiredStringProperty(ctx context.Context, bodyParameter StringWrapper, options *ExplicitPostRequiredStringPropertyOptions) (ExplicitPostRequiredStringPropertyResponse, error) {
 	req, err := client.postRequiredStringPropertyCreateRequest(ctx, bodyParameter, options)
 	if err != nil {
-		return nil, err
+		return ExplicitPostRequiredStringPropertyResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return ExplicitPostRequiredStringPropertyResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.postRequiredStringPropertyHandleError(resp)
+		return ExplicitPostRequiredStringPropertyResponse{}, client.postRequiredStringPropertyHandleError(resp)
 	}
-	return resp.Response, nil
+	return ExplicitPostRequiredStringPropertyResponse{RawResponse: resp.Response}, nil
 }
 
 // postRequiredStringPropertyCreateRequest creates the PostRequiredStringProperty request.
@@ -996,19 +996,19 @@ func (client *ExplicitClient) postRequiredStringPropertyHandleError(resp *azcore
 
 // PutOptionalBinaryBody - Test explicitly optional body parameter
 // If the operation fails it returns the *Error error type.
-func (client *ExplicitClient) PutOptionalBinaryBody(ctx context.Context, options *ExplicitPutOptionalBinaryBodyOptions) (*http.Response, error) {
+func (client *ExplicitClient) PutOptionalBinaryBody(ctx context.Context, options *ExplicitPutOptionalBinaryBodyOptions) (ExplicitPutOptionalBinaryBodyResponse, error) {
 	req, err := client.putOptionalBinaryBodyCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return ExplicitPutOptionalBinaryBodyResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return ExplicitPutOptionalBinaryBodyResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.putOptionalBinaryBodyHandleError(resp)
+		return ExplicitPutOptionalBinaryBodyResponse{}, client.putOptionalBinaryBodyHandleError(resp)
 	}
-	return resp.Response, nil
+	return ExplicitPutOptionalBinaryBodyResponse{RawResponse: resp.Response}, nil
 }
 
 // putOptionalBinaryBodyCreateRequest creates the PutOptionalBinaryBody request.
@@ -1041,19 +1041,19 @@ func (client *ExplicitClient) putOptionalBinaryBodyHandleError(resp *azcore.Resp
 
 // PutRequiredBinaryBody - Test explicitly required body parameter
 // If the operation fails it returns the *Error error type.
-func (client *ExplicitClient) PutRequiredBinaryBody(ctx context.Context, bodyParameter azcore.ReadSeekCloser, options *ExplicitPutRequiredBinaryBodyOptions) (*http.Response, error) {
+func (client *ExplicitClient) PutRequiredBinaryBody(ctx context.Context, bodyParameter azcore.ReadSeekCloser, options *ExplicitPutRequiredBinaryBodyOptions) (ExplicitPutRequiredBinaryBodyResponse, error) {
 	req, err := client.putRequiredBinaryBodyCreateRequest(ctx, bodyParameter, options)
 	if err != nil {
-		return nil, err
+		return ExplicitPutRequiredBinaryBodyResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return ExplicitPutRequiredBinaryBodyResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.putRequiredBinaryBodyHandleError(resp)
+		return ExplicitPutRequiredBinaryBodyResponse{}, client.putRequiredBinaryBodyHandleError(resp)
 	}
-	return resp.Response, nil
+	return ExplicitPutRequiredBinaryBodyResponse{RawResponse: resp.Response}, nil
 }
 
 // putRequiredBinaryBodyCreateRequest creates the PutRequiredBinaryBody request.

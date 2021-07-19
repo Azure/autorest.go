@@ -34,6 +34,9 @@ func TestCustomNamedRequestIDHead(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	if !result.Success {
+		t.Fatal("expected success")
+	}
 	if r := cmp.Diff(result.FooRequestID, to.StringPtr("123")); r != "" {
 		t.Fatal(r)
 	}

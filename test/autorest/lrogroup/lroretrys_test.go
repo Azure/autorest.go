@@ -39,7 +39,7 @@ func TestLRORetrysBeginDelete202Retry200(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := res.StatusCode; s != http.StatusOK {
+	if s := res.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -63,7 +63,7 @@ func TestLRORetrysBeginDeleteAsyncRelativeRetrySucceeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := res.StatusCode; s != http.StatusOK {
+	if s := res.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -90,7 +90,7 @@ func TestLRORetrysBeginDeleteProvisioning202Accepted200Succeeded(t *testing.T) {
 	if s := res.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
-	if r := cmp.Diff(res.Product, &Product{
+	if r := cmp.Diff(res.Product, Product{
 		Resource: Resource{
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),
@@ -122,7 +122,7 @@ func TestLRORetrysBeginPost202Retry200(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := res.StatusCode; s != http.StatusOK {
+	if s := res.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -146,7 +146,7 @@ func TestLRORetrysBeginPostAsyncRelativeRetrySucceeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := res.StatusCode; s != http.StatusOK {
+	if s := res.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -173,7 +173,7 @@ func TestLRORetrysBeginPut201CreatingSucceeded200(t *testing.T) {
 	if s := res.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
-	if r := cmp.Diff(res.Product, &Product{
+	if r := cmp.Diff(res.Product, Product{
 		Resource: Resource{
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),
@@ -208,7 +208,7 @@ func TestLRORetrysBeginPutAsyncRelativeRetrySucceeded(t *testing.T) {
 	if s := res.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
-	if r := cmp.Diff(res.Product, &Product{
+	if r := cmp.Diff(res.Product, Product{
 		Resource: Resource{
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),

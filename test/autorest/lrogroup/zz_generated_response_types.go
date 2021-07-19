@@ -13,93 +13,1683 @@ import (
 	"time"
 )
 
-// HTTPPollerResponse contains the asynchronous HTTP response from the call to the service endpoint.
-type HTTPPollerResponse struct {
+// LRORetrysDelete202Retry200PollerResponse contains the response from method LRORetrys.Delete202Retry200.
+type LRORetrysDelete202Retry200PollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (*http.Response, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LRORetrysDelete202Retry200Response, error)
 
 	// Poller contains an initialized poller.
-	Poller HTTPPoller
+	Poller LRORetrysDelete202Retry200Poller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ProductArrayPollerResponse is the response envelope for operations that asynchronously return a []*Product type.
-type ProductArrayPollerResponse struct {
+// LRORetrysDelete202Retry200Response contains the response from method LRORetrys.Delete202Retry200.
+type LRORetrysDelete202Retry200Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LRORetrysDeleteAsyncRelativeRetrySucceededPollerResponse contains the response from method LRORetrys.DeleteAsyncRelativeRetrySucceeded.
+type LRORetrysDeleteAsyncRelativeRetrySucceededPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ProductArrayResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LRORetrysDeleteAsyncRelativeRetrySucceededResponse, error)
 
 	// Poller contains an initialized poller.
-	Poller ProductArrayPoller
+	Poller LRORetrysDeleteAsyncRelativeRetrySucceededPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ProductArrayResponse is the response envelope for operations that return a []*Product type.
-type ProductArrayResponse struct {
+// LRORetrysDeleteAsyncRelativeRetrySucceededResponse contains the response from method LRORetrys.DeleteAsyncRelativeRetrySucceeded.
+type LRORetrysDeleteAsyncRelativeRetrySucceededResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LRORetrysDeleteProvisioning202Accepted200SucceededPollerResponse contains the response from method LRORetrys.DeleteProvisioning202Accepted200Succeeded.
+type LRORetrysDeleteProvisioning202Accepted200SucceededPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LRORetrysDeleteProvisioning202Accepted200SucceededResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LRORetrysDeleteProvisioning202Accepted200SucceededPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LRORetrysDeleteProvisioning202Accepted200SucceededResponse contains the response from method LRORetrys.DeleteProvisioning202Accepted200Succeeded.
+type LRORetrysDeleteProvisioning202Accepted200SucceededResponse struct {
+	LRORetrysDeleteProvisioning202Accepted200SucceededResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LRORetrysDeleteProvisioning202Accepted200SucceededResult contains the result from method LRORetrys.DeleteProvisioning202Accepted200Succeeded.
+type LRORetrysDeleteProvisioning202Accepted200SucceededResult struct {
+	Product
+}
+
+// LRORetrysPost202Retry200PollerResponse contains the response from method LRORetrys.Post202Retry200.
+type LRORetrysPost202Retry200PollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LRORetrysPost202Retry200Response, error)
+
+	// Poller contains an initialized poller.
+	Poller LRORetrysPost202Retry200Poller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LRORetrysPost202Retry200Response contains the response from method LRORetrys.Post202Retry200.
+type LRORetrysPost202Retry200Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LRORetrysPostAsyncRelativeRetrySucceededPollerResponse contains the response from method LRORetrys.PostAsyncRelativeRetrySucceeded.
+type LRORetrysPostAsyncRelativeRetrySucceededPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LRORetrysPostAsyncRelativeRetrySucceededResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LRORetrysPostAsyncRelativeRetrySucceededPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LRORetrysPostAsyncRelativeRetrySucceededResponse contains the response from method LRORetrys.PostAsyncRelativeRetrySucceeded.
+type LRORetrysPostAsyncRelativeRetrySucceededResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LRORetrysPut201CreatingSucceeded200PollerResponse contains the response from method LRORetrys.Put201CreatingSucceeded200.
+type LRORetrysPut201CreatingSucceeded200PollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LRORetrysPut201CreatingSucceeded200Response, error)
+
+	// Poller contains an initialized poller.
+	Poller LRORetrysPut201CreatingSucceeded200Poller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LRORetrysPut201CreatingSucceeded200Response contains the response from method LRORetrys.Put201CreatingSucceeded200.
+type LRORetrysPut201CreatingSucceeded200Response struct {
+	LRORetrysPut201CreatingSucceeded200Result
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LRORetrysPut201CreatingSucceeded200Result contains the result from method LRORetrys.Put201CreatingSucceeded200.
+type LRORetrysPut201CreatingSucceeded200Result struct {
+	Product
+}
+
+// LRORetrysPutAsyncRelativeRetrySucceededPollerResponse contains the response from method LRORetrys.PutAsyncRelativeRetrySucceeded.
+type LRORetrysPutAsyncRelativeRetrySucceededPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LRORetrysPutAsyncRelativeRetrySucceededResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LRORetrysPutAsyncRelativeRetrySucceededPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LRORetrysPutAsyncRelativeRetrySucceededResponse contains the response from method LRORetrys.PutAsyncRelativeRetrySucceeded.
+type LRORetrysPutAsyncRelativeRetrySucceededResponse struct {
+	LRORetrysPutAsyncRelativeRetrySucceededResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LRORetrysPutAsyncRelativeRetrySucceededResult contains the result from method LRORetrys.PutAsyncRelativeRetrySucceeded.
+type LRORetrysPutAsyncRelativeRetrySucceededResult struct {
+	Product
+}
+
+// LROSADsDelete202NonRetry400PollerResponse contains the response from method LROSADs.Delete202NonRetry400.
+type LROSADsDelete202NonRetry400PollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROSADsDelete202NonRetry400Response, error)
+
+	// Poller contains an initialized poller.
+	Poller LROSADsDelete202NonRetry400Poller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsDelete202NonRetry400Response contains the response from method LROSADs.Delete202NonRetry400.
+type LROSADsDelete202NonRetry400Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsDelete202RetryInvalidHeaderPollerResponse contains the response from method LROSADs.Delete202RetryInvalidHeader.
+type LROSADsDelete202RetryInvalidHeaderPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROSADsDelete202RetryInvalidHeaderResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LROSADsDelete202RetryInvalidHeaderPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsDelete202RetryInvalidHeaderResponse contains the response from method LROSADs.Delete202RetryInvalidHeader.
+type LROSADsDelete202RetryInvalidHeaderResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsDelete204SucceededPollerResponse contains the response from method LROSADs.Delete204Succeeded.
+type LROSADsDelete204SucceededPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROSADsDelete204SucceededResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LROSADsDelete204SucceededPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsDelete204SucceededResponse contains the response from method LROSADs.Delete204Succeeded.
+type LROSADsDelete204SucceededResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsDeleteAsyncRelativeRetry400PollerResponse contains the response from method LROSADs.DeleteAsyncRelativeRetry400.
+type LROSADsDeleteAsyncRelativeRetry400PollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROSADsDeleteAsyncRelativeRetry400Response, error)
+
+	// Poller contains an initialized poller.
+	Poller LROSADsDeleteAsyncRelativeRetry400Poller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsDeleteAsyncRelativeRetry400Response contains the response from method LROSADs.DeleteAsyncRelativeRetry400.
+type LROSADsDeleteAsyncRelativeRetry400Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsDeleteAsyncRelativeRetryInvalidHeaderPollerResponse contains the response from method LROSADs.DeleteAsyncRelativeRetryInvalidHeader.
+type LROSADsDeleteAsyncRelativeRetryInvalidHeaderPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROSADsDeleteAsyncRelativeRetryInvalidHeaderResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LROSADsDeleteAsyncRelativeRetryInvalidHeaderPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsDeleteAsyncRelativeRetryInvalidHeaderResponse contains the response from method LROSADs.DeleteAsyncRelativeRetryInvalidHeader.
+type LROSADsDeleteAsyncRelativeRetryInvalidHeaderResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingPollerResponse contains the response from method LROSADs.DeleteAsyncRelativeRetryInvalidJSONPolling.
+type LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingResponse contains the response from method LROSADs.DeleteAsyncRelativeRetryInvalidJSONPolling.
+type LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsDeleteAsyncRelativeRetryNoStatusPollerResponse contains the response from method LROSADs.DeleteAsyncRelativeRetryNoStatus.
+type LROSADsDeleteAsyncRelativeRetryNoStatusPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROSADsDeleteAsyncRelativeRetryNoStatusResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LROSADsDeleteAsyncRelativeRetryNoStatusPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsDeleteAsyncRelativeRetryNoStatusResponse contains the response from method LROSADs.DeleteAsyncRelativeRetryNoStatus.
+type LROSADsDeleteAsyncRelativeRetryNoStatusResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsDeleteNonRetry400PollerResponse contains the response from method LROSADs.DeleteNonRetry400.
+type LROSADsDeleteNonRetry400PollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROSADsDeleteNonRetry400Response, error)
+
+	// Poller contains an initialized poller.
+	Poller LROSADsDeleteNonRetry400Poller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsDeleteNonRetry400Response contains the response from method LROSADs.DeleteNonRetry400.
+type LROSADsDeleteNonRetry400Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsPost202NoLocationPollerResponse contains the response from method LROSADs.Post202NoLocation.
+type LROSADsPost202NoLocationPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROSADsPost202NoLocationResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LROSADsPost202NoLocationPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsPost202NoLocationResponse contains the response from method LROSADs.Post202NoLocation.
+type LROSADsPost202NoLocationResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsPost202NonRetry400PollerResponse contains the response from method LROSADs.Post202NonRetry400.
+type LROSADsPost202NonRetry400PollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROSADsPost202NonRetry400Response, error)
+
+	// Poller contains an initialized poller.
+	Poller LROSADsPost202NonRetry400Poller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsPost202NonRetry400Response contains the response from method LROSADs.Post202NonRetry400.
+type LROSADsPost202NonRetry400Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsPost202RetryInvalidHeaderPollerResponse contains the response from method LROSADs.Post202RetryInvalidHeader.
+type LROSADsPost202RetryInvalidHeaderPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROSADsPost202RetryInvalidHeaderResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LROSADsPost202RetryInvalidHeaderPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsPost202RetryInvalidHeaderResponse contains the response from method LROSADs.Post202RetryInvalidHeader.
+type LROSADsPost202RetryInvalidHeaderResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsPostAsyncRelativeRetry400PollerResponse contains the response from method LROSADs.PostAsyncRelativeRetry400.
+type LROSADsPostAsyncRelativeRetry400PollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROSADsPostAsyncRelativeRetry400Response, error)
+
+	// Poller contains an initialized poller.
+	Poller LROSADsPostAsyncRelativeRetry400Poller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsPostAsyncRelativeRetry400Response contains the response from method LROSADs.PostAsyncRelativeRetry400.
+type LROSADsPostAsyncRelativeRetry400Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsPostAsyncRelativeRetryInvalidHeaderPollerResponse contains the response from method LROSADs.PostAsyncRelativeRetryInvalidHeader.
+type LROSADsPostAsyncRelativeRetryInvalidHeaderPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROSADsPostAsyncRelativeRetryInvalidHeaderResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LROSADsPostAsyncRelativeRetryInvalidHeaderPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsPostAsyncRelativeRetryInvalidHeaderResponse contains the response from method LROSADs.PostAsyncRelativeRetryInvalidHeader.
+type LROSADsPostAsyncRelativeRetryInvalidHeaderResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsPostAsyncRelativeRetryInvalidJSONPollingPollerResponse contains the response from method LROSADs.PostAsyncRelativeRetryInvalidJSONPolling.
+type LROSADsPostAsyncRelativeRetryInvalidJSONPollingPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROSADsPostAsyncRelativeRetryInvalidJSONPollingResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LROSADsPostAsyncRelativeRetryInvalidJSONPollingPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsPostAsyncRelativeRetryInvalidJSONPollingResponse contains the response from method LROSADs.PostAsyncRelativeRetryInvalidJSONPolling.
+type LROSADsPostAsyncRelativeRetryInvalidJSONPollingResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsPostAsyncRelativeRetryNoPayloadPollerResponse contains the response from method LROSADs.PostAsyncRelativeRetryNoPayload.
+type LROSADsPostAsyncRelativeRetryNoPayloadPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROSADsPostAsyncRelativeRetryNoPayloadResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LROSADsPostAsyncRelativeRetryNoPayloadPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsPostAsyncRelativeRetryNoPayloadResponse contains the response from method LROSADs.PostAsyncRelativeRetryNoPayload.
+type LROSADsPostAsyncRelativeRetryNoPayloadResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsPostNonRetry400PollerResponse contains the response from method LROSADs.PostNonRetry400.
+type LROSADsPostNonRetry400PollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROSADsPostNonRetry400Response, error)
+
+	// Poller contains an initialized poller.
+	Poller LROSADsPostNonRetry400Poller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsPostNonRetry400Response contains the response from method LROSADs.PostNonRetry400.
+type LROSADsPostNonRetry400Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsPut200InvalidJSONPollerResponse contains the response from method LROSADs.Put200InvalidJSON.
+type LROSADsPut200InvalidJSONPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROSADsPut200InvalidJSONResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LROSADsPut200InvalidJSONPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsPut200InvalidJSONResponse contains the response from method LROSADs.Put200InvalidJSON.
+type LROSADsPut200InvalidJSONResponse struct {
+	LROSADsPut200InvalidJSONResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsPut200InvalidJSONResult contains the result from method LROSADs.Put200InvalidJSON.
+type LROSADsPut200InvalidJSONResult struct {
+	Product
+}
+
+// LROSADsPutAsyncRelativeRetry400PollerResponse contains the response from method LROSADs.PutAsyncRelativeRetry400.
+type LROSADsPutAsyncRelativeRetry400PollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROSADsPutAsyncRelativeRetry400Response, error)
+
+	// Poller contains an initialized poller.
+	Poller LROSADsPutAsyncRelativeRetry400Poller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsPutAsyncRelativeRetry400Response contains the response from method LROSADs.PutAsyncRelativeRetry400.
+type LROSADsPutAsyncRelativeRetry400Response struct {
+	LROSADsPutAsyncRelativeRetry400Result
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsPutAsyncRelativeRetry400Result contains the result from method LROSADs.PutAsyncRelativeRetry400.
+type LROSADsPutAsyncRelativeRetry400Result struct {
+	Product
+}
+
+// LROSADsPutAsyncRelativeRetryInvalidHeaderPollerResponse contains the response from method LROSADs.PutAsyncRelativeRetryInvalidHeader.
+type LROSADsPutAsyncRelativeRetryInvalidHeaderPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROSADsPutAsyncRelativeRetryInvalidHeaderResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LROSADsPutAsyncRelativeRetryInvalidHeaderPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsPutAsyncRelativeRetryInvalidHeaderResponse contains the response from method LROSADs.PutAsyncRelativeRetryInvalidHeader.
+type LROSADsPutAsyncRelativeRetryInvalidHeaderResponse struct {
+	LROSADsPutAsyncRelativeRetryInvalidHeaderResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsPutAsyncRelativeRetryInvalidHeaderResult contains the result from method LROSADs.PutAsyncRelativeRetryInvalidHeader.
+type LROSADsPutAsyncRelativeRetryInvalidHeaderResult struct {
+	Product
+}
+
+// LROSADsPutAsyncRelativeRetryInvalidJSONPollingPollerResponse contains the response from method LROSADs.PutAsyncRelativeRetryInvalidJSONPolling.
+type LROSADsPutAsyncRelativeRetryInvalidJSONPollingPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROSADsPutAsyncRelativeRetryInvalidJSONPollingResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LROSADsPutAsyncRelativeRetryInvalidJSONPollingPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsPutAsyncRelativeRetryInvalidJSONPollingResponse contains the response from method LROSADs.PutAsyncRelativeRetryInvalidJSONPolling.
+type LROSADsPutAsyncRelativeRetryInvalidJSONPollingResponse struct {
+	LROSADsPutAsyncRelativeRetryInvalidJSONPollingResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsPutAsyncRelativeRetryInvalidJSONPollingResult contains the result from method LROSADs.PutAsyncRelativeRetryInvalidJSONPolling.
+type LROSADsPutAsyncRelativeRetryInvalidJSONPollingResult struct {
+	Product
+}
+
+// LROSADsPutAsyncRelativeRetryNoStatusPayloadPollerResponse contains the response from method LROSADs.PutAsyncRelativeRetryNoStatusPayload.
+type LROSADsPutAsyncRelativeRetryNoStatusPayloadPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROSADsPutAsyncRelativeRetryNoStatusPayloadResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LROSADsPutAsyncRelativeRetryNoStatusPayloadPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsPutAsyncRelativeRetryNoStatusPayloadResponse contains the response from method LROSADs.PutAsyncRelativeRetryNoStatusPayload.
+type LROSADsPutAsyncRelativeRetryNoStatusPayloadResponse struct {
+	LROSADsPutAsyncRelativeRetryNoStatusPayloadResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsPutAsyncRelativeRetryNoStatusPayloadResult contains the result from method LROSADs.PutAsyncRelativeRetryNoStatusPayload.
+type LROSADsPutAsyncRelativeRetryNoStatusPayloadResult struct {
+	Product
+}
+
+// LROSADsPutAsyncRelativeRetryNoStatusPollerResponse contains the response from method LROSADs.PutAsyncRelativeRetryNoStatus.
+type LROSADsPutAsyncRelativeRetryNoStatusPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROSADsPutAsyncRelativeRetryNoStatusResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LROSADsPutAsyncRelativeRetryNoStatusPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsPutAsyncRelativeRetryNoStatusResponse contains the response from method LROSADs.PutAsyncRelativeRetryNoStatus.
+type LROSADsPutAsyncRelativeRetryNoStatusResponse struct {
+	LROSADsPutAsyncRelativeRetryNoStatusResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsPutAsyncRelativeRetryNoStatusResult contains the result from method LROSADs.PutAsyncRelativeRetryNoStatus.
+type LROSADsPutAsyncRelativeRetryNoStatusResult struct {
+	Product
+}
+
+// LROSADsPutError201NoProvisioningStatePayloadPollerResponse contains the response from method LROSADs.PutError201NoProvisioningStatePayload.
+type LROSADsPutError201NoProvisioningStatePayloadPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROSADsPutError201NoProvisioningStatePayloadResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LROSADsPutError201NoProvisioningStatePayloadPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsPutError201NoProvisioningStatePayloadResponse contains the response from method LROSADs.PutError201NoProvisioningStatePayload.
+type LROSADsPutError201NoProvisioningStatePayloadResponse struct {
+	LROSADsPutError201NoProvisioningStatePayloadResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsPutError201NoProvisioningStatePayloadResult contains the result from method LROSADs.PutError201NoProvisioningStatePayload.
+type LROSADsPutError201NoProvisioningStatePayloadResult struct {
+	Product
+}
+
+// LROSADsPutNonRetry201Creating400InvalidJSONPollerResponse contains the response from method LROSADs.PutNonRetry201Creating400InvalidJSON.
+type LROSADsPutNonRetry201Creating400InvalidJSONPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROSADsPutNonRetry201Creating400InvalidJSONResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LROSADsPutNonRetry201Creating400InvalidJSONPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsPutNonRetry201Creating400InvalidJSONResponse contains the response from method LROSADs.PutNonRetry201Creating400InvalidJSON.
+type LROSADsPutNonRetry201Creating400InvalidJSONResponse struct {
+	LROSADsPutNonRetry201Creating400InvalidJSONResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsPutNonRetry201Creating400InvalidJSONResult contains the result from method LROSADs.PutNonRetry201Creating400InvalidJSON.
+type LROSADsPutNonRetry201Creating400InvalidJSONResult struct {
+	Product
+}
+
+// LROSADsPutNonRetry201Creating400PollerResponse contains the response from method LROSADs.PutNonRetry201Creating400.
+type LROSADsPutNonRetry201Creating400PollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROSADsPutNonRetry201Creating400Response, error)
+
+	// Poller contains an initialized poller.
+	Poller LROSADsPutNonRetry201Creating400Poller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsPutNonRetry201Creating400Response contains the response from method LROSADs.PutNonRetry201Creating400.
+type LROSADsPutNonRetry201Creating400Response struct {
+	LROSADsPutNonRetry201Creating400Result
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsPutNonRetry201Creating400Result contains the result from method LROSADs.PutNonRetry201Creating400.
+type LROSADsPutNonRetry201Creating400Result struct {
+	Product
+}
+
+// LROSADsPutNonRetry400PollerResponse contains the response from method LROSADs.PutNonRetry400.
+type LROSADsPutNonRetry400PollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROSADsPutNonRetry400Response, error)
+
+	// Poller contains an initialized poller.
+	Poller LROSADsPutNonRetry400Poller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsPutNonRetry400Response contains the response from method LROSADs.PutNonRetry400.
+type LROSADsPutNonRetry400Response struct {
+	LROSADsPutNonRetry400Result
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROSADsPutNonRetry400Result contains the result from method LROSADs.PutNonRetry400.
+type LROSADsPutNonRetry400Result struct {
+	Product
+}
+
+// LROsCustomHeaderPost202Retry200PollerResponse contains the response from method LROsCustomHeader.Post202Retry200.
+type LROsCustomHeaderPost202Retry200PollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROsCustomHeaderPost202Retry200Response, error)
+
+	// Poller contains an initialized poller.
+	Poller LROsCustomHeaderPost202Retry200Poller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsCustomHeaderPost202Retry200Response contains the response from method LROsCustomHeader.Post202Retry200.
+type LROsCustomHeaderPost202Retry200Response struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsCustomHeaderPostAsyncRetrySucceededPollerResponse contains the response from method LROsCustomHeader.PostAsyncRetrySucceeded.
+type LROsCustomHeaderPostAsyncRetrySucceededPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROsCustomHeaderPostAsyncRetrySucceededResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LROsCustomHeaderPostAsyncRetrySucceededPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsCustomHeaderPostAsyncRetrySucceededResponse contains the response from method LROsCustomHeader.PostAsyncRetrySucceeded.
+type LROsCustomHeaderPostAsyncRetrySucceededResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsCustomHeaderPut201CreatingSucceeded200PollerResponse contains the response from method LROsCustomHeader.Put201CreatingSucceeded200.
+type LROsCustomHeaderPut201CreatingSucceeded200PollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROsCustomHeaderPut201CreatingSucceeded200Response, error)
+
+	// Poller contains an initialized poller.
+	Poller LROsCustomHeaderPut201CreatingSucceeded200Poller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsCustomHeaderPut201CreatingSucceeded200Response contains the response from method LROsCustomHeader.Put201CreatingSucceeded200.
+type LROsCustomHeaderPut201CreatingSucceeded200Response struct {
+	LROsCustomHeaderPut201CreatingSucceeded200Result
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsCustomHeaderPut201CreatingSucceeded200Result contains the result from method LROsCustomHeader.Put201CreatingSucceeded200.
+type LROsCustomHeaderPut201CreatingSucceeded200Result struct {
+	Product
+}
+
+// LROsCustomHeaderPutAsyncRetrySucceededPollerResponse contains the response from method LROsCustomHeader.PutAsyncRetrySucceeded.
+type LROsCustomHeaderPutAsyncRetrySucceededPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROsCustomHeaderPutAsyncRetrySucceededResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LROsCustomHeaderPutAsyncRetrySucceededPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsCustomHeaderPutAsyncRetrySucceededResponse contains the response from method LROsCustomHeader.PutAsyncRetrySucceeded.
+type LROsCustomHeaderPutAsyncRetrySucceededResponse struct {
+	LROsCustomHeaderPutAsyncRetrySucceededResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsCustomHeaderPutAsyncRetrySucceededResult contains the result from method LROsCustomHeader.PutAsyncRetrySucceeded.
+type LROsCustomHeaderPutAsyncRetrySucceededResult struct {
+	Product
+}
+
+// LROsDelete202NoRetry204PollerResponse contains the response from method LROs.Delete202NoRetry204.
+type LROsDelete202NoRetry204PollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROsDelete202NoRetry204Response, error)
+
+	// Poller contains an initialized poller.
+	Poller LROsDelete202NoRetry204Poller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsDelete202NoRetry204Response contains the response from method LROs.Delete202NoRetry204.
+type LROsDelete202NoRetry204Response struct {
+	LROsDelete202NoRetry204Result
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsDelete202NoRetry204Result contains the result from method LROs.Delete202NoRetry204.
+type LROsDelete202NoRetry204Result struct {
+	Product
+}
+
+// LROsDelete202Retry200PollerResponse contains the response from method LROs.Delete202Retry200.
+type LROsDelete202Retry200PollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROsDelete202Retry200Response, error)
+
+	// Poller contains an initialized poller.
+	Poller LROsDelete202Retry200Poller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsDelete202Retry200Response contains the response from method LROs.Delete202Retry200.
+type LROsDelete202Retry200Response struct {
+	LROsDelete202Retry200Result
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsDelete202Retry200Result contains the result from method LROs.Delete202Retry200.
+type LROsDelete202Retry200Result struct {
+	Product
+}
+
+// LROsDelete204SucceededPollerResponse contains the response from method LROs.Delete204Succeeded.
+type LROsDelete204SucceededPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROsDelete204SucceededResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LROsDelete204SucceededPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsDelete204SucceededResponse contains the response from method LROs.Delete204Succeeded.
+type LROsDelete204SucceededResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsDeleteAsyncNoHeaderInRetryPollerResponse contains the response from method LROs.DeleteAsyncNoHeaderInRetry.
+type LROsDeleteAsyncNoHeaderInRetryPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROsDeleteAsyncNoHeaderInRetryResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LROsDeleteAsyncNoHeaderInRetryPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsDeleteAsyncNoHeaderInRetryResponse contains the response from method LROs.DeleteAsyncNoHeaderInRetry.
+type LROsDeleteAsyncNoHeaderInRetryResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsDeleteAsyncNoRetrySucceededPollerResponse contains the response from method LROs.DeleteAsyncNoRetrySucceeded.
+type LROsDeleteAsyncNoRetrySucceededPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROsDeleteAsyncNoRetrySucceededResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LROsDeleteAsyncNoRetrySucceededPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsDeleteAsyncNoRetrySucceededResponse contains the response from method LROs.DeleteAsyncNoRetrySucceeded.
+type LROsDeleteAsyncNoRetrySucceededResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsDeleteAsyncRetryFailedPollerResponse contains the response from method LROs.DeleteAsyncRetryFailed.
+type LROsDeleteAsyncRetryFailedPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROsDeleteAsyncRetryFailedResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LROsDeleteAsyncRetryFailedPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsDeleteAsyncRetryFailedResponse contains the response from method LROs.DeleteAsyncRetryFailed.
+type LROsDeleteAsyncRetryFailedResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsDeleteAsyncRetrySucceededPollerResponse contains the response from method LROs.DeleteAsyncRetrySucceeded.
+type LROsDeleteAsyncRetrySucceededPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROsDeleteAsyncRetrySucceededResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LROsDeleteAsyncRetrySucceededPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsDeleteAsyncRetrySucceededResponse contains the response from method LROs.DeleteAsyncRetrySucceeded.
+type LROsDeleteAsyncRetrySucceededResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsDeleteAsyncRetrycanceledPollerResponse contains the response from method LROs.DeleteAsyncRetrycanceled.
+type LROsDeleteAsyncRetrycanceledPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROsDeleteAsyncRetrycanceledResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LROsDeleteAsyncRetrycanceledPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsDeleteAsyncRetrycanceledResponse contains the response from method LROs.DeleteAsyncRetrycanceled.
+type LROsDeleteAsyncRetrycanceledResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsDeleteNoHeaderInRetryPollerResponse contains the response from method LROs.DeleteNoHeaderInRetry.
+type LROsDeleteNoHeaderInRetryPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROsDeleteNoHeaderInRetryResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LROsDeleteNoHeaderInRetryPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsDeleteNoHeaderInRetryResponse contains the response from method LROs.DeleteNoHeaderInRetry.
+type LROsDeleteNoHeaderInRetryResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsDeleteProvisioning202Accepted200SucceededPollerResponse contains the response from method LROs.DeleteProvisioning202Accepted200Succeeded.
+type LROsDeleteProvisioning202Accepted200SucceededPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROsDeleteProvisioning202Accepted200SucceededResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LROsDeleteProvisioning202Accepted200SucceededPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsDeleteProvisioning202Accepted200SucceededResponse contains the response from method LROs.DeleteProvisioning202Accepted200Succeeded.
+type LROsDeleteProvisioning202Accepted200SucceededResponse struct {
+	LROsDeleteProvisioning202Accepted200SucceededResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsDeleteProvisioning202Accepted200SucceededResult contains the result from method LROs.DeleteProvisioning202Accepted200Succeeded.
+type LROsDeleteProvisioning202Accepted200SucceededResult struct {
+	Product
+}
+
+// LROsDeleteProvisioning202DeletingFailed200PollerResponse contains the response from method LROs.DeleteProvisioning202DeletingFailed200.
+type LROsDeleteProvisioning202DeletingFailed200PollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROsDeleteProvisioning202DeletingFailed200Response, error)
+
+	// Poller contains an initialized poller.
+	Poller LROsDeleteProvisioning202DeletingFailed200Poller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsDeleteProvisioning202DeletingFailed200Response contains the response from method LROs.DeleteProvisioning202DeletingFailed200.
+type LROsDeleteProvisioning202DeletingFailed200Response struct {
+	LROsDeleteProvisioning202DeletingFailed200Result
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsDeleteProvisioning202DeletingFailed200Result contains the result from method LROs.DeleteProvisioning202DeletingFailed200.
+type LROsDeleteProvisioning202DeletingFailed200Result struct {
+	Product
+}
+
+// LROsDeleteProvisioning202Deletingcanceled200PollerResponse contains the response from method LROs.DeleteProvisioning202Deletingcanceled200.
+type LROsDeleteProvisioning202Deletingcanceled200PollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROsDeleteProvisioning202Deletingcanceled200Response, error)
+
+	// Poller contains an initialized poller.
+	Poller LROsDeleteProvisioning202Deletingcanceled200Poller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsDeleteProvisioning202Deletingcanceled200Response contains the response from method LROs.DeleteProvisioning202Deletingcanceled200.
+type LROsDeleteProvisioning202Deletingcanceled200Response struct {
+	LROsDeleteProvisioning202Deletingcanceled200Result
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsDeleteProvisioning202Deletingcanceled200Result contains the result from method LROs.DeleteProvisioning202Deletingcanceled200.
+type LROsDeleteProvisioning202Deletingcanceled200Result struct {
+	Product
+}
+
+// LROsPost200WithPayloadPollerResponse contains the response from method LROs.Post200WithPayload.
+type LROsPost200WithPayloadPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROsPost200WithPayloadResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LROsPost200WithPayloadPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPost200WithPayloadResponse contains the response from method LROs.Post200WithPayload.
+type LROsPost200WithPayloadResponse struct {
+	LROsPost200WithPayloadResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPost200WithPayloadResult contains the result from method LROs.Post200WithPayload.
+type LROsPost200WithPayloadResult struct {
+	SKU
+}
+
+// LROsPost202ListPollerResponse contains the response from method LROs.Post202List.
+type LROsPost202ListPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROsPost202ListResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LROsPost202ListPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPost202ListResponse contains the response from method LROs.Post202List.
+type LROsPost202ListResponse struct {
+	LROsPost202ListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPost202ListResult contains the result from method LROs.Post202List.
+type LROsPost202ListResult struct {
 	// Array of Product
 	ProductArray []*Product
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
-// ProductPollerResponse is the response envelope for operations that asynchronously return a Product type.
-type ProductPollerResponse struct {
+// LROsPost202NoRetry204PollerResponse contains the response from method LROs.Post202NoRetry204.
+type LROsPost202NoRetry204PollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ProductResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROsPost202NoRetry204Response, error)
 
 	// Poller contains an initialized poller.
-	Poller ProductPoller
+	Poller LROsPost202NoRetry204Poller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ProductResponse is the response envelope for operations that return a Product type.
-type ProductResponse struct {
-	Product *Product
-
+// LROsPost202NoRetry204Response contains the response from method LROs.Post202NoRetry204.
+type LROsPost202NoRetry204Response struct {
+	LROsPost202NoRetry204Result
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// SKUPollerResponse is the response envelope for operations that asynchronously return a SKU type.
-type SKUPollerResponse struct {
+// LROsPost202NoRetry204Result contains the result from method LROs.Post202NoRetry204.
+type LROsPost202NoRetry204Result struct {
+	Product
+}
+
+// LROsPost202Retry200PollerResponse contains the response from method LROs.Post202Retry200.
+type LROsPost202Retry200PollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (SKUResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROsPost202Retry200Response, error)
 
 	// Poller contains an initialized poller.
-	Poller SKUPoller
+	Poller LROsPost202Retry200Poller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// SKUResponse is the response envelope for operations that return a SKU type.
-type SKUResponse struct {
+// LROsPost202Retry200Response contains the response from method LROs.Post202Retry200.
+type LROsPost202Retry200Response struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-	SKU         *SKU
 }
 
-// SubProductPollerResponse is the response envelope for operations that asynchronously return a SubProduct type.
-type SubProductPollerResponse struct {
+// LROsPostAsyncNoRetrySucceededPollerResponse contains the response from method LROs.PostAsyncNoRetrySucceeded.
+type LROsPostAsyncNoRetrySucceededPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (SubProductResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROsPostAsyncNoRetrySucceededResponse, error)
 
 	// Poller contains an initialized poller.
-	Poller SubProductPoller
+	Poller LROsPostAsyncNoRetrySucceededPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// SubProductResponse is the response envelope for operations that return a SubProduct type.
-type SubProductResponse struct {
+// LROsPostAsyncNoRetrySucceededResponse contains the response from method LROs.PostAsyncNoRetrySucceeded.
+type LROsPostAsyncNoRetrySucceededResponse struct {
+	LROsPostAsyncNoRetrySucceededResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-	SubProduct  *SubProduct
+}
+
+// LROsPostAsyncNoRetrySucceededResult contains the result from method LROs.PostAsyncNoRetrySucceeded.
+type LROsPostAsyncNoRetrySucceededResult struct {
+	Product
+}
+
+// LROsPostAsyncRetryFailedPollerResponse contains the response from method LROs.PostAsyncRetryFailed.
+type LROsPostAsyncRetryFailedPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROsPostAsyncRetryFailedResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LROsPostAsyncRetryFailedPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPostAsyncRetryFailedResponse contains the response from method LROs.PostAsyncRetryFailed.
+type LROsPostAsyncRetryFailedResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPostAsyncRetrySucceededPollerResponse contains the response from method LROs.PostAsyncRetrySucceeded.
+type LROsPostAsyncRetrySucceededPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROsPostAsyncRetrySucceededResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LROsPostAsyncRetrySucceededPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPostAsyncRetrySucceededResponse contains the response from method LROs.PostAsyncRetrySucceeded.
+type LROsPostAsyncRetrySucceededResponse struct {
+	LROsPostAsyncRetrySucceededResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPostAsyncRetrySucceededResult contains the result from method LROs.PostAsyncRetrySucceeded.
+type LROsPostAsyncRetrySucceededResult struct {
+	Product
+}
+
+// LROsPostAsyncRetrycanceledPollerResponse contains the response from method LROs.PostAsyncRetrycanceled.
+type LROsPostAsyncRetrycanceledPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROsPostAsyncRetrycanceledResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LROsPostAsyncRetrycanceledPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPostAsyncRetrycanceledResponse contains the response from method LROs.PostAsyncRetrycanceled.
+type LROsPostAsyncRetrycanceledResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPostDoubleHeadersFinalAzureHeaderGetDefaultPollerResponse contains the response from method LROs.PostDoubleHeadersFinalAzureHeaderGetDefault.
+type LROsPostDoubleHeadersFinalAzureHeaderGetDefaultPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROsPostDoubleHeadersFinalAzureHeaderGetDefaultResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LROsPostDoubleHeadersFinalAzureHeaderGetDefaultPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPostDoubleHeadersFinalAzureHeaderGetDefaultResponse contains the response from method LROs.PostDoubleHeadersFinalAzureHeaderGetDefault.
+type LROsPostDoubleHeadersFinalAzureHeaderGetDefaultResponse struct {
+	LROsPostDoubleHeadersFinalAzureHeaderGetDefaultResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPostDoubleHeadersFinalAzureHeaderGetDefaultResult contains the result from method LROs.PostDoubleHeadersFinalAzureHeaderGetDefault.
+type LROsPostDoubleHeadersFinalAzureHeaderGetDefaultResult struct {
+	Product
+}
+
+// LROsPostDoubleHeadersFinalAzureHeaderGetPollerResponse contains the response from method LROs.PostDoubleHeadersFinalAzureHeaderGet.
+type LROsPostDoubleHeadersFinalAzureHeaderGetPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROsPostDoubleHeadersFinalAzureHeaderGetResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LROsPostDoubleHeadersFinalAzureHeaderGetPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPostDoubleHeadersFinalAzureHeaderGetResponse contains the response from method LROs.PostDoubleHeadersFinalAzureHeaderGet.
+type LROsPostDoubleHeadersFinalAzureHeaderGetResponse struct {
+	LROsPostDoubleHeadersFinalAzureHeaderGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPostDoubleHeadersFinalAzureHeaderGetResult contains the result from method LROs.PostDoubleHeadersFinalAzureHeaderGet.
+type LROsPostDoubleHeadersFinalAzureHeaderGetResult struct {
+	Product
+}
+
+// LROsPostDoubleHeadersFinalLocationGetPollerResponse contains the response from method LROs.PostDoubleHeadersFinalLocationGet.
+type LROsPostDoubleHeadersFinalLocationGetPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROsPostDoubleHeadersFinalLocationGetResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LROsPostDoubleHeadersFinalLocationGetPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPostDoubleHeadersFinalLocationGetResponse contains the response from method LROs.PostDoubleHeadersFinalLocationGet.
+type LROsPostDoubleHeadersFinalLocationGetResponse struct {
+	LROsPostDoubleHeadersFinalLocationGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPostDoubleHeadersFinalLocationGetResult contains the result from method LROs.PostDoubleHeadersFinalLocationGet.
+type LROsPostDoubleHeadersFinalLocationGetResult struct {
+	Product
+}
+
+// LROsPut200Acceptedcanceled200PollerResponse contains the response from method LROs.Put200Acceptedcanceled200.
+type LROsPut200Acceptedcanceled200PollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROsPut200Acceptedcanceled200Response, error)
+
+	// Poller contains an initialized poller.
+	Poller LROsPut200Acceptedcanceled200Poller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPut200Acceptedcanceled200Response contains the response from method LROs.Put200Acceptedcanceled200.
+type LROsPut200Acceptedcanceled200Response struct {
+	LROsPut200Acceptedcanceled200Result
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPut200Acceptedcanceled200Result contains the result from method LROs.Put200Acceptedcanceled200.
+type LROsPut200Acceptedcanceled200Result struct {
+	Product
+}
+
+// LROsPut200SucceededNoStatePollerResponse contains the response from method LROs.Put200SucceededNoState.
+type LROsPut200SucceededNoStatePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROsPut200SucceededNoStateResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LROsPut200SucceededNoStatePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPut200SucceededNoStateResponse contains the response from method LROs.Put200SucceededNoState.
+type LROsPut200SucceededNoStateResponse struct {
+	LROsPut200SucceededNoStateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPut200SucceededNoStateResult contains the result from method LROs.Put200SucceededNoState.
+type LROsPut200SucceededNoStateResult struct {
+	Product
+}
+
+// LROsPut200SucceededPollerResponse contains the response from method LROs.Put200Succeeded.
+type LROsPut200SucceededPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROsPut200SucceededResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LROsPut200SucceededPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPut200SucceededResponse contains the response from method LROs.Put200Succeeded.
+type LROsPut200SucceededResponse struct {
+	LROsPut200SucceededResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPut200SucceededResult contains the result from method LROs.Put200Succeeded.
+type LROsPut200SucceededResult struct {
+	Product
+}
+
+// LROsPut200UpdatingSucceeded204PollerResponse contains the response from method LROs.Put200UpdatingSucceeded204.
+type LROsPut200UpdatingSucceeded204PollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROsPut200UpdatingSucceeded204Response, error)
+
+	// Poller contains an initialized poller.
+	Poller LROsPut200UpdatingSucceeded204Poller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPut200UpdatingSucceeded204Response contains the response from method LROs.Put200UpdatingSucceeded204.
+type LROsPut200UpdatingSucceeded204Response struct {
+	LROsPut200UpdatingSucceeded204Result
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPut200UpdatingSucceeded204Result contains the result from method LROs.Put200UpdatingSucceeded204.
+type LROsPut200UpdatingSucceeded204Result struct {
+	Product
+}
+
+// LROsPut201CreatingFailed200PollerResponse contains the response from method LROs.Put201CreatingFailed200.
+type LROsPut201CreatingFailed200PollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROsPut201CreatingFailed200Response, error)
+
+	// Poller contains an initialized poller.
+	Poller LROsPut201CreatingFailed200Poller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPut201CreatingFailed200Response contains the response from method LROs.Put201CreatingFailed200.
+type LROsPut201CreatingFailed200Response struct {
+	LROsPut201CreatingFailed200Result
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPut201CreatingFailed200Result contains the result from method LROs.Put201CreatingFailed200.
+type LROsPut201CreatingFailed200Result struct {
+	Product
+}
+
+// LROsPut201CreatingSucceeded200PollerResponse contains the response from method LROs.Put201CreatingSucceeded200.
+type LROsPut201CreatingSucceeded200PollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROsPut201CreatingSucceeded200Response, error)
+
+	// Poller contains an initialized poller.
+	Poller LROsPut201CreatingSucceeded200Poller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPut201CreatingSucceeded200Response contains the response from method LROs.Put201CreatingSucceeded200.
+type LROsPut201CreatingSucceeded200Response struct {
+	LROsPut201CreatingSucceeded200Result
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPut201CreatingSucceeded200Result contains the result from method LROs.Put201CreatingSucceeded200.
+type LROsPut201CreatingSucceeded200Result struct {
+	Product
+}
+
+// LROsPut201SucceededPollerResponse contains the response from method LROs.Put201Succeeded.
+type LROsPut201SucceededPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROsPut201SucceededResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LROsPut201SucceededPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPut201SucceededResponse contains the response from method LROs.Put201Succeeded.
+type LROsPut201SucceededResponse struct {
+	LROsPut201SucceededResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPut201SucceededResult contains the result from method LROs.Put201Succeeded.
+type LROsPut201SucceededResult struct {
+	Product
+}
+
+// LROsPut202Retry200PollerResponse contains the response from method LROs.Put202Retry200.
+type LROsPut202Retry200PollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROsPut202Retry200Response, error)
+
+	// Poller contains an initialized poller.
+	Poller LROsPut202Retry200Poller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPut202Retry200Response contains the response from method LROs.Put202Retry200.
+type LROsPut202Retry200Response struct {
+	LROsPut202Retry200Result
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPut202Retry200Result contains the result from method LROs.Put202Retry200.
+type LROsPut202Retry200Result struct {
+	Product
+}
+
+// LROsPutAsyncNoHeaderInRetryPollerResponse contains the response from method LROs.PutAsyncNoHeaderInRetry.
+type LROsPutAsyncNoHeaderInRetryPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROsPutAsyncNoHeaderInRetryResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LROsPutAsyncNoHeaderInRetryPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPutAsyncNoHeaderInRetryResponse contains the response from method LROs.PutAsyncNoHeaderInRetry.
+type LROsPutAsyncNoHeaderInRetryResponse struct {
+	LROsPutAsyncNoHeaderInRetryResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPutAsyncNoHeaderInRetryResult contains the result from method LROs.PutAsyncNoHeaderInRetry.
+type LROsPutAsyncNoHeaderInRetryResult struct {
+	Product
+}
+
+// LROsPutAsyncNoRetrySucceededPollerResponse contains the response from method LROs.PutAsyncNoRetrySucceeded.
+type LROsPutAsyncNoRetrySucceededPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROsPutAsyncNoRetrySucceededResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LROsPutAsyncNoRetrySucceededPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPutAsyncNoRetrySucceededResponse contains the response from method LROs.PutAsyncNoRetrySucceeded.
+type LROsPutAsyncNoRetrySucceededResponse struct {
+	LROsPutAsyncNoRetrySucceededResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPutAsyncNoRetrySucceededResult contains the result from method LROs.PutAsyncNoRetrySucceeded.
+type LROsPutAsyncNoRetrySucceededResult struct {
+	Product
+}
+
+// LROsPutAsyncNoRetrycanceledPollerResponse contains the response from method LROs.PutAsyncNoRetrycanceled.
+type LROsPutAsyncNoRetrycanceledPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROsPutAsyncNoRetrycanceledResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LROsPutAsyncNoRetrycanceledPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPutAsyncNoRetrycanceledResponse contains the response from method LROs.PutAsyncNoRetrycanceled.
+type LROsPutAsyncNoRetrycanceledResponse struct {
+	LROsPutAsyncNoRetrycanceledResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPutAsyncNoRetrycanceledResult contains the result from method LROs.PutAsyncNoRetrycanceled.
+type LROsPutAsyncNoRetrycanceledResult struct {
+	Product
+}
+
+// LROsPutAsyncNonResourcePollerResponse contains the response from method LROs.PutAsyncNonResource.
+type LROsPutAsyncNonResourcePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROsPutAsyncNonResourceResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LROsPutAsyncNonResourcePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPutAsyncNonResourceResponse contains the response from method LROs.PutAsyncNonResource.
+type LROsPutAsyncNonResourceResponse struct {
+	LROsPutAsyncNonResourceResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPutAsyncNonResourceResult contains the result from method LROs.PutAsyncNonResource.
+type LROsPutAsyncNonResourceResult struct {
+	SKU
+}
+
+// LROsPutAsyncRetryFailedPollerResponse contains the response from method LROs.PutAsyncRetryFailed.
+type LROsPutAsyncRetryFailedPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROsPutAsyncRetryFailedResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LROsPutAsyncRetryFailedPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPutAsyncRetryFailedResponse contains the response from method LROs.PutAsyncRetryFailed.
+type LROsPutAsyncRetryFailedResponse struct {
+	LROsPutAsyncRetryFailedResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPutAsyncRetryFailedResult contains the result from method LROs.PutAsyncRetryFailed.
+type LROsPutAsyncRetryFailedResult struct {
+	Product
+}
+
+// LROsPutAsyncRetrySucceededPollerResponse contains the response from method LROs.PutAsyncRetrySucceeded.
+type LROsPutAsyncRetrySucceededPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROsPutAsyncRetrySucceededResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LROsPutAsyncRetrySucceededPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPutAsyncRetrySucceededResponse contains the response from method LROs.PutAsyncRetrySucceeded.
+type LROsPutAsyncRetrySucceededResponse struct {
+	LROsPutAsyncRetrySucceededResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPutAsyncRetrySucceededResult contains the result from method LROs.PutAsyncRetrySucceeded.
+type LROsPutAsyncRetrySucceededResult struct {
+	Product
+}
+
+// LROsPutAsyncSubResourcePollerResponse contains the response from method LROs.PutAsyncSubResource.
+type LROsPutAsyncSubResourcePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROsPutAsyncSubResourceResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LROsPutAsyncSubResourcePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPutAsyncSubResourceResponse contains the response from method LROs.PutAsyncSubResource.
+type LROsPutAsyncSubResourceResponse struct {
+	LROsPutAsyncSubResourceResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPutAsyncSubResourceResult contains the result from method LROs.PutAsyncSubResource.
+type LROsPutAsyncSubResourceResult struct {
+	SubProduct
+}
+
+// LROsPutNoHeaderInRetryPollerResponse contains the response from method LROs.PutNoHeaderInRetry.
+type LROsPutNoHeaderInRetryPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROsPutNoHeaderInRetryResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LROsPutNoHeaderInRetryPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPutNoHeaderInRetryResponse contains the response from method LROs.PutNoHeaderInRetry.
+type LROsPutNoHeaderInRetryResponse struct {
+	LROsPutNoHeaderInRetryResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPutNoHeaderInRetryResult contains the result from method LROs.PutNoHeaderInRetry.
+type LROsPutNoHeaderInRetryResult struct {
+	Product
+}
+
+// LROsPutNonResourcePollerResponse contains the response from method LROs.PutNonResource.
+type LROsPutNonResourcePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROsPutNonResourceResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LROsPutNonResourcePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPutNonResourceResponse contains the response from method LROs.PutNonResource.
+type LROsPutNonResourceResponse struct {
+	LROsPutNonResourceResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPutNonResourceResult contains the result from method LROs.PutNonResource.
+type LROsPutNonResourceResult struct {
+	SKU
+}
+
+// LROsPutSubResourcePollerResponse contains the response from method LROs.PutSubResource.
+type LROsPutSubResourcePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LROsPutSubResourceResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LROsPutSubResourcePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPutSubResourceResponse contains the response from method LROs.PutSubResource.
+type LROsPutSubResourceResponse struct {
+	LROsPutSubResourceResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPutSubResourceResult contains the result from method LROs.PutSubResource.
+type LROsPutSubResourceResult struct {
+	SubProduct
 }

@@ -20,16 +20,16 @@ func TestGetEmptyFile(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
-	if result.Body == nil {
+	if result.RawResponse.Body == nil {
 		t.Fatal("unexpected nil response body")
 	}
-	if result.ContentLength != 0 {
-		t.Fatalf("expected zero ContentLength, got %d", result.ContentLength)
+	if result.RawResponse.ContentLength != 0 {
+		t.Fatalf("expected zero ContentLength, got %d", result.RawResponse.ContentLength)
 	}
-	result.Body.Close()
+	result.RawResponse.Body.Close()
 }
 
 func TestGetFile(t *testing.T) {
@@ -38,17 +38,17 @@ func TestGetFile(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
-	if result.Body == nil {
+	if result.RawResponse.Body == nil {
 		t.Fatal("unexpected nil response body")
 	}
-	b, err := ioutil.ReadAll(result.Body)
+	b, err := ioutil.ReadAll(result.RawResponse.Body)
 	if err != nil {
 		t.Fatal(err)
 	}
-	result.Body.Close()
+	result.RawResponse.Body.Close()
 	if l := len(b); l != 8725 {
 		t.Fatalf("unexpected byte count: want 8725, got %d", l)
 	}
@@ -61,17 +61,17 @@ func TestGetFileLarge(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
-	if result.Body == nil {
+	if result.RawResponse.Body == nil {
 		t.Fatal("unexpected nil response body")
 	}
-	b, err := ioutil.ReadAll(result.Body)
+	b, err := ioutil.ReadAll(result.RawResponse.Body)
 	if err != nil {
 		t.Fatal(err)
 	}
-	result.Body.Close()
+	result.RawResponse.Body.Close()
 	const size = 3000 * 1024 * 1024
 	if l := len(b); l != size {
 		t.Fatalf("unexpected byte count: want %d, got %d", size, l)

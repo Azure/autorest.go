@@ -27,19 +27,19 @@ func NewAPIVersionDefaultClient(con *Connection) *APIVersionDefaultClient {
 
 // GetMethodGlobalNotProvidedValid - GET method with api-version modeled in global settings.
 // If the operation fails it returns the *Error error type.
-func (client *APIVersionDefaultClient) GetMethodGlobalNotProvidedValid(ctx context.Context, options *APIVersionDefaultGetMethodGlobalNotProvidedValidOptions) (*http.Response, error) {
+func (client *APIVersionDefaultClient) GetMethodGlobalNotProvidedValid(ctx context.Context, options *APIVersionDefaultGetMethodGlobalNotProvidedValidOptions) (APIVersionDefaultGetMethodGlobalNotProvidedValidResponse, error) {
 	req, err := client.getMethodGlobalNotProvidedValidCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return APIVersionDefaultGetMethodGlobalNotProvidedValidResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return APIVersionDefaultGetMethodGlobalNotProvidedValidResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getMethodGlobalNotProvidedValidHandleError(resp)
+		return APIVersionDefaultGetMethodGlobalNotProvidedValidResponse{}, client.getMethodGlobalNotProvidedValidHandleError(resp)
 	}
-	return resp.Response, nil
+	return APIVersionDefaultGetMethodGlobalNotProvidedValidResponse{RawResponse: resp.Response}, nil
 }
 
 // getMethodGlobalNotProvidedValidCreateRequest creates the GetMethodGlobalNotProvidedValid request.
@@ -72,19 +72,19 @@ func (client *APIVersionDefaultClient) getMethodGlobalNotProvidedValidHandleErro
 
 // GetMethodGlobalValid - GET method with api-version modeled in global settings.
 // If the operation fails it returns the *Error error type.
-func (client *APIVersionDefaultClient) GetMethodGlobalValid(ctx context.Context, options *APIVersionDefaultGetMethodGlobalValidOptions) (*http.Response, error) {
+func (client *APIVersionDefaultClient) GetMethodGlobalValid(ctx context.Context, options *APIVersionDefaultGetMethodGlobalValidOptions) (APIVersionDefaultGetMethodGlobalValidResponse, error) {
 	req, err := client.getMethodGlobalValidCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return APIVersionDefaultGetMethodGlobalValidResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return APIVersionDefaultGetMethodGlobalValidResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getMethodGlobalValidHandleError(resp)
+		return APIVersionDefaultGetMethodGlobalValidResponse{}, client.getMethodGlobalValidHandleError(resp)
 	}
-	return resp.Response, nil
+	return APIVersionDefaultGetMethodGlobalValidResponse{RawResponse: resp.Response}, nil
 }
 
 // getMethodGlobalValidCreateRequest creates the GetMethodGlobalValid request.
@@ -117,19 +117,19 @@ func (client *APIVersionDefaultClient) getMethodGlobalValidHandleError(resp *azc
 
 // GetPathGlobalValid - GET method with api-version modeled in global settings.
 // If the operation fails it returns the *Error error type.
-func (client *APIVersionDefaultClient) GetPathGlobalValid(ctx context.Context, options *APIVersionDefaultGetPathGlobalValidOptions) (*http.Response, error) {
+func (client *APIVersionDefaultClient) GetPathGlobalValid(ctx context.Context, options *APIVersionDefaultGetPathGlobalValidOptions) (APIVersionDefaultGetPathGlobalValidResponse, error) {
 	req, err := client.getPathGlobalValidCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return APIVersionDefaultGetPathGlobalValidResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return APIVersionDefaultGetPathGlobalValidResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getPathGlobalValidHandleError(resp)
+		return APIVersionDefaultGetPathGlobalValidResponse{}, client.getPathGlobalValidHandleError(resp)
 	}
-	return resp.Response, nil
+	return APIVersionDefaultGetPathGlobalValidResponse{RawResponse: resp.Response}, nil
 }
 
 // getPathGlobalValidCreateRequest creates the GetPathGlobalValid request.
@@ -162,19 +162,19 @@ func (client *APIVersionDefaultClient) getPathGlobalValidHandleError(resp *azcor
 
 // GetSwaggerGlobalValid - GET method with api-version modeled in global settings.
 // If the operation fails it returns the *Error error type.
-func (client *APIVersionDefaultClient) GetSwaggerGlobalValid(ctx context.Context, options *APIVersionDefaultGetSwaggerGlobalValidOptions) (*http.Response, error) {
+func (client *APIVersionDefaultClient) GetSwaggerGlobalValid(ctx context.Context, options *APIVersionDefaultGetSwaggerGlobalValidOptions) (APIVersionDefaultGetSwaggerGlobalValidResponse, error) {
 	req, err := client.getSwaggerGlobalValidCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return APIVersionDefaultGetSwaggerGlobalValidResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return APIVersionDefaultGetSwaggerGlobalValidResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getSwaggerGlobalValidHandleError(resp)
+		return APIVersionDefaultGetSwaggerGlobalValidResponse{}, client.getSwaggerGlobalValidHandleError(resp)
 	}
-	return resp.Response, nil
+	return APIVersionDefaultGetSwaggerGlobalValidResponse{RawResponse: resp.Response}, nil
 }
 
 // getSwaggerGlobalValidCreateRequest creates the GetSwaggerGlobalValid request.

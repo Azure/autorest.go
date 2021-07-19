@@ -28,17 +28,17 @@ func NewMediaTypesClient(con *Connection) *MediaTypesClient {
 
 // AnalyzeBody - Analyze body, that could be different media types.
 // If the operation fails it returns a generic error.
-func (client *MediaTypesClient) AnalyzeBody(ctx context.Context, contentType ContentType, options *MediaTypesClientAnalyzeBodyOptions) (StringResponse, error) {
+func (client *MediaTypesClient) AnalyzeBody(ctx context.Context, contentType ContentType, options *MediaTypesClientAnalyzeBodyOptions) (MediaTypesClientAnalyzeBodyResponse, error) {
 	req, err := client.analyzeBodyCreateRequest(ctx, contentType, options)
 	if err != nil {
-		return StringResponse{}, err
+		return MediaTypesClientAnalyzeBodyResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return StringResponse{}, err
+		return MediaTypesClientAnalyzeBodyResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return StringResponse{}, client.analyzeBodyHandleError(resp)
+		return MediaTypesClientAnalyzeBodyResponse{}, client.analyzeBodyHandleError(resp)
 	}
 	return client.analyzeBodyHandleResponse(resp)
 }
@@ -60,12 +60,12 @@ func (client *MediaTypesClient) analyzeBodyCreateRequest(ctx context.Context, co
 }
 
 // analyzeBodyHandleResponse handles the AnalyzeBody response.
-func (client *MediaTypesClient) analyzeBodyHandleResponse(resp *azcore.Response) (StringResponse, error) {
-	var val *string
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return StringResponse{}, err
+func (client *MediaTypesClient) analyzeBodyHandleResponse(resp *azcore.Response) (MediaTypesClientAnalyzeBodyResponse, error) {
+	result := MediaTypesClientAnalyzeBodyResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.Value); err != nil {
+		return MediaTypesClientAnalyzeBodyResponse{}, err
 	}
-	return StringResponse{RawResponse: resp.Response, Value: val}, nil
+	return result, nil
 }
 
 // analyzeBodyHandleError handles the AnalyzeBody error response.
@@ -82,17 +82,17 @@ func (client *MediaTypesClient) analyzeBodyHandleError(resp *azcore.Response) er
 
 // AnalyzeBodyWithSourcePath - Analyze body, that could be different media types.
 // If the operation fails it returns a generic error.
-func (client *MediaTypesClient) AnalyzeBodyWithSourcePath(ctx context.Context, options *MediaTypesClientAnalyzeBodyWithSourcePathOptions) (StringResponse, error) {
+func (client *MediaTypesClient) AnalyzeBodyWithSourcePath(ctx context.Context, options *MediaTypesClientAnalyzeBodyWithSourcePathOptions) (MediaTypesClientAnalyzeBodyWithSourcePathResponse, error) {
 	req, err := client.analyzeBodyWithSourcePathCreateRequest(ctx, options)
 	if err != nil {
-		return StringResponse{}, err
+		return MediaTypesClientAnalyzeBodyWithSourcePathResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return StringResponse{}, err
+		return MediaTypesClientAnalyzeBodyWithSourcePathResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return StringResponse{}, client.analyzeBodyWithSourcePathHandleError(resp)
+		return MediaTypesClientAnalyzeBodyWithSourcePathResponse{}, client.analyzeBodyWithSourcePathHandleError(resp)
 	}
 	return client.analyzeBodyWithSourcePathHandleResponse(resp)
 }
@@ -113,12 +113,12 @@ func (client *MediaTypesClient) analyzeBodyWithSourcePathCreateRequest(ctx conte
 }
 
 // analyzeBodyWithSourcePathHandleResponse handles the AnalyzeBodyWithSourcePath response.
-func (client *MediaTypesClient) analyzeBodyWithSourcePathHandleResponse(resp *azcore.Response) (StringResponse, error) {
-	var val *string
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return StringResponse{}, err
+func (client *MediaTypesClient) analyzeBodyWithSourcePathHandleResponse(resp *azcore.Response) (MediaTypesClientAnalyzeBodyWithSourcePathResponse, error) {
+	result := MediaTypesClientAnalyzeBodyWithSourcePathResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.Value); err != nil {
+		return MediaTypesClientAnalyzeBodyWithSourcePathResponse{}, err
 	}
-	return StringResponse{RawResponse: resp.Response, Value: val}, nil
+	return result, nil
 }
 
 // analyzeBodyWithSourcePathHandleError handles the AnalyzeBodyWithSourcePath error response.
@@ -135,17 +135,17 @@ func (client *MediaTypesClient) analyzeBodyWithSourcePathHandleError(resp *azcor
 
 // ContentTypeWithEncoding - Pass in contentType 'text/plain; encoding=UTF-8' to pass test. Value for input does not matter
 // If the operation fails it returns a generic error.
-func (client *MediaTypesClient) ContentTypeWithEncoding(ctx context.Context, options *MediaTypesClientContentTypeWithEncodingOptions) (StringResponse, error) {
+func (client *MediaTypesClient) ContentTypeWithEncoding(ctx context.Context, options *MediaTypesClientContentTypeWithEncodingOptions) (MediaTypesClientContentTypeWithEncodingResponse, error) {
 	req, err := client.contentTypeWithEncodingCreateRequest(ctx, options)
 	if err != nil {
-		return StringResponse{}, err
+		return MediaTypesClientContentTypeWithEncodingResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return StringResponse{}, err
+		return MediaTypesClientContentTypeWithEncodingResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return StringResponse{}, client.contentTypeWithEncodingHandleError(resp)
+		return MediaTypesClientContentTypeWithEncodingResponse{}, client.contentTypeWithEncodingHandleError(resp)
 	}
 	return client.contentTypeWithEncodingHandleResponse(resp)
 }
@@ -167,12 +167,12 @@ func (client *MediaTypesClient) contentTypeWithEncodingCreateRequest(ctx context
 }
 
 // contentTypeWithEncodingHandleResponse handles the ContentTypeWithEncoding response.
-func (client *MediaTypesClient) contentTypeWithEncodingHandleResponse(resp *azcore.Response) (StringResponse, error) {
-	var val *string
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return StringResponse{}, err
+func (client *MediaTypesClient) contentTypeWithEncodingHandleResponse(resp *azcore.Response) (MediaTypesClientContentTypeWithEncodingResponse, error) {
+	result := MediaTypesClientContentTypeWithEncodingResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.Value); err != nil {
+		return MediaTypesClientContentTypeWithEncodingResponse{}, err
 	}
-	return StringResponse{RawResponse: resp.Response, Value: val}, nil
+	return result, nil
 }
 
 // contentTypeWithEncodingHandleError handles the ContentTypeWithEncoding error response.

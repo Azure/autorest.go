@@ -36,7 +36,7 @@ func TestStringPutMBCS(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutMBCS: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -140,7 +140,7 @@ func TestStringPutBase64URLEncoded(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutBase64URLEncoded: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -151,7 +151,7 @@ func TestStringPutEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutEmpty: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -162,7 +162,7 @@ func TestStringPutNull(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutNull: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -173,7 +173,7 @@ func TestStringPutWhitespace(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutWhitespace: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }

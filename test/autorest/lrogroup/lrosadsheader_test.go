@@ -60,7 +60,7 @@ func TestLROSADSBeginDelete204Succeeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := pollResp.StatusCode; s != http.StatusNoContent {
+	if s := pollResp.RawResponse.StatusCode; s != http.StatusNoContent {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }

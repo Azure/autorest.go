@@ -5,9 +5,9 @@
 
 import { comment, KnownMediaType, serialize } from '@azure-tools/codegen';
 import { Host, startSession, Session } from '@autorest/extension-base';
-import { ObjectSchema, ArraySchema, ByteArraySchema, ChoiceValue, codeModelSchema, CodeModel, DateTimeSchema, GroupProperty, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema, ConstantSchema, Request } from '@autorest/codemodel';
+import { AnySchema, ObjectSchema, ArraySchema, ByteArraySchema, ChoiceValue, codeModelSchema, CodeModel, DateTimeSchema, GroupProperty, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema, ConstantSchema, Request, BooleanSchema } from '@autorest/codemodel';
 import { clone, items, values } from '@azure-tools/linq';
-import { aggregateParameters, getResponse, hasAdditionalProperties, isPageableOperation, isObjectSchema, isSchemaResponse, isTypePassedByValue, PagerInfo, isLROOperation, PollerInfo } from '../common/helpers';
+import { aggregateParameters, getSchemaResponse, hasAdditionalProperties, isMultiRespOperation, isTypePassedByValue, isPageableOperation, isObjectSchema, isSchemaResponse, PagerInfo, PollerInfo, isLROOperation } from '../common/helpers';
 import { namer, protocolMethods } from './namer';
 import { fromString } from 'html-to-text';
 import { Converter } from 'showdown';
@@ -581,9 +581,6 @@ function processOperationResponses(session: Session<CodeModel>) {
       } else {
         op.language.go!.description += 'a generic error.';
       }
-      if (!op.responses) {
-        continue;
-      }
       // recursively add the marshalling format to the responses if applicable.
       // also remove any HTTP redirects from the list of responses.
       const filtered = new Array<Response>();
@@ -622,10 +619,32 @@ function processOperationResponses(session: Session<CodeModel>) {
       if (filtered.length === 0) {
         // handling of operations with no responses expects an undefined list, not an empty one
         op.responses = undefined;
-      } else if (op.responses.length !== filtered.length) {
+      } else if (op.responses?.length !== filtered.length) {
         op.responses = filtered;
       }
-      createResponseEnvelope(session.model, group, op);
+      // create pageable type info before poller as the pager-poller depends on it
+      if (isPageableOperation(op)) {
+        if (session.model.language.go!.pageableTypes === undefined) {
+          session.model.language.go!.pageableTypes = new Array<PagerInfo>();
+        }
+        const name = `${group.language.go!.name}${op.language.go!.name}Pager`;
+        // create a new one, add to global list and assign to method
+        const pager = {
+          name: name,
+          op: op,
+        };
+        const pagers = <Array<PagerInfo>>session.model.language.go!.pageableTypes;
+        pagers.push(pager);
+        op.language.go!.pageableType = pager;
+      }
+      if (isLROOperation(op)) {
+        if (session.model.language.go!.pollerTypes === undefined) {
+          session.model.language.go!.pollerTypes = new Array<PollerInfo>();
+        }
+        createLROResponseEnvelope(session.model, group, op);
+      } else {
+        createResponseEnvelope(session.model, group, op);
+      }
     }
   }
 }
@@ -662,289 +681,194 @@ interface HttpHeaderWithDescription extends HttpHeader {
 // the name of the struct field for scalar responses (int, string, etc)
 const scalarResponsePropName = 'Value';
 
-// creates the response envelope type to be returned from an operation and updates the operation
+// creates the response/result envelope types to be returned from an operation and updates the operation.
+// for LROs, this is also called to create the final response envelope.
+// the response envelope consists of two parts, the outer response envelope and the inner result envelope.
+// each operation gets its own response/result envelope pair
+//
+// type GetWidgetResponse struct { <== this is the response envelope, it groups the result with the raw HTTP response (to be replaced by Result[T any])
+//   GetWidgetResult
+//   RawResponse *http.Response
+//}
+//
+// type GetWidgetResult struct { <== this is the result envelope, it groups the schema result along with any per-operation header values
+//   Widget <== this is the result field, i.e. the schema result
+//   Header1 *string <== modeled header response
+//   Header2 *int    <== modeled header response
+//}
 function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op: Operation) {
   // create the `type <type>Response struct` response
   // type with a `RawResponse *http.Response` field
 
-  // when receiving multiple possible responses, they might expect the same headers in many cases
-  // we use a map to only add unique headers to the response model based on the header name
+  // aggregate headers from all responses as all of them will go into the same result envelope
   const headers = new Map<string, HttpHeaderWithDescription>();
-  for (const resp of values(op.responses)) {
-    // check if the response is expecting information from headers
-    for (const header of values(resp.protocol.http!.headers)) {
-      const head = <HttpHeader>header;
-      // convert each header to a property and append it to the response properties list
-      const name = head.language.go!.name;
-      if (!headers.has(name)) {
-        const description = `${name} contains the information returned from the ${head.header} header response.`
-        headers.set(name, <HttpHeaderWithDescription>{
-          ...head,
-          description: description
-        });
+  // skip adding headers for LROs for now, this is to avoid adding
+  // any LRO-specific polling headers.
+  // TODO: maybe switch to skip specific polling ones in the future?
+  if (!isLROOperation(op)) {
+    for (const resp of values(op.responses)) {
+      // check if the response is expecting information from headers
+      for (const header of values(resp.protocol.http!.headers)) {
+        const head = <HttpHeader>header;
+        // convert each header to a property and append it to the response properties list
+        const name = head.language.go!.name;
+        if (!headers.has(name)) {
+          const description = `${name} contains the information returned from the ${head.header} header response.`
+          headers.set(name, <HttpHeaderWithDescription>{
+            ...head,
+            description: description
+          });
+        }
       }
     }
   }
-  const createRawResponseProp = function (): Property {
-    return newProperty('RawResponse', 'RawResponse contains the underlying HTTP response.', newObject('http.Response', 'raw HTTP response'));
+  const addHeadersToSchema = function (resultEnv: ObjectSchema) {
+    if (headers.size === 0) {
+      return;
+    }
+    if (!resultEnv.properties) {
+      resultEnv.properties = new Array<Property>();
+    }
+    for (const item of items(headers)) {
+      const prop = newRespProperty(item.key, item.value.description, item.value.schema, false);
+      // propagate any extensions so we can access them through the property
+      prop.extensions = item.value.extensions;
+      prop.language.go!.fromHeader = item.value.header;
+      resultEnv.properties.push(prop);
+    }
   }
-  const createSuccessProp = function (): Property {
-    const successSchema = newObject('bool', 'bool response');
-    const successProp = newProperty('Success', 'Success indicates if the operation succeeded or failed.', successSchema);
-    successProp.language.go!.byValue = true;
-    return successProp;
-  }
-  // if this is an ARM spec and this is a HEAD method then return a BooleanResponse
-  // response envelope instead of http.Response.  only do this if the operation doesn't model any
-  // header values (HAB will be enabled for that response envelope).
-  if (codeModel.language.go!.headAsBoolean && op.requests![0].protocol.http!.method === 'head' && headers.size === 0) {
-    // enable treating HEAD requests as boolean responses.
-    op.language.go!.headAsBoolean = true;
-    const name = 'BooleanResponse';
-    if (!responseEnvelopeExists(codeModel, name)) {
-      const description = `${name} contains a boolean response.`;
-      const respEnv = newObject(name, description);
+  // contains all the response envelopes
+  const responseEnvelopes = <Array<ObjectSchema>>codeModel.language.go!.responseEnvelopes;
+  // first create the response envelope, each operation gets one
+  const respEnvName = ensureUniqueModelName(codeModel, `${group.language.go!.name}${op.language.go!.name}Response`, 'Envelope');
+  const respEnv = newObject(respEnvName, `${respEnvName} contains the response from method ${group.language.go!.name}.${op.language.go!.name}.`);
+  respEnv.language.go!.responseType = true;
+  respEnv.properties = new Array<Property>();
+  respEnv.properties.push(createRawResponseProp());
+  responseEnvelopes.push(respEnv);
+  op.language.go!.responseEnv = respEnv;
 
-      respEnv.language.go!.properties = [
-        createRawResponseProp(),
-        createSuccessProp(),
-      ];
-      // mark as a response type
-      respEnv.language.go!.responseType = {
-        name: name,
-        description: description,
-        responseType: true,
-      }
-      // add this response schema to the global list of response
-      const responseEnvelopes = <Array<Schema>>codeModel.language.go!.responseEnvelopes;
-      responseEnvelopes.push(respEnv);
-    }
-    // HEAD operations will never be pagable, LROs etc so exit
+  // now create the appropriate result envelope
+
+  if (codeModel.language.go!.headAsBoolean && op.requests![0].protocol.http!.method === 'head') {
+    op.language.go!.headAsBoolean = true;
+    const name = ensureUniqueModelName(codeModel, `${group.language.go!.name}${op.language.go!.name}Result`, 'Envelope');
+    const resultEnv = newObject(name, `${name} contains the result from method ${group.language.go!.name}.${op.language.go!.name}.`);
+    resultEnv.language.go!.responseType = true;
+    const successProp = newProperty('Success', 'Success indicates if the operation succeeded or failed.', newBoolean('bool', 'bool response'));
+    successProp.language.go!.byValue = true;
+    resultEnv.properties = [
+      successProp,
+    ];
+    addHeadersToSchema(resultEnv);
+    // now add the result envelope to the response envelope
+    const resultProp = newRespProperty(name, 'Contains the result of the operation.', resultEnv, true);
+    respEnv.properties.push(resultProp);
+    respEnv.language.go!.resultEnv = resultProp;
+    op.language.go!.responseEnv = respEnv;
     return;
   }
-  // if the response defines a schema then add it as a field to the response type.
-  // only do this if the response schema hasn't been processed yet.
-  for (const response of values(op.responses)) {
-    if (!isSchemaResponse(response)) {
-      // the response doesn't return a model.  if it returns
-      // headers then create a model that contains them, except for LROs.
-      if (headers.size > 0 && !isLROOperation(op)) {
-        const name = `${group.language.go!.name}${op.language.go!.name}Response`;
-        const description = `${name} contains the response from method ${group.language.go!.name}.${op.language.go!.name}.`;
-        const respEnv = newObject(name, description);
-        respEnv.language.go!.properties = [
-          createRawResponseProp()
-        ];
-        for (const item of items(headers)) {
-          const prop = newRespProperty(item.key, item.value.description, item.value.schema);
-          // propagate any extensions so we can access them through the property
-          prop.extensions = item.value.extensions;
-          prop.language.go!.fromHeader = item.value.header;
-          (<Array<Property>>respEnv.language.go!.properties).push(prop);
-        }
-        if (codeModel.language.go!.headAsBoolean && op.requests![0].protocol.http!.method === 'head') {
-          // this is the intersection of head-as-boolean with modeled header responses
-          op.language.go!.headAsBoolean = true;
-          (<Array<Property>>respEnv.language.go!.properties).push(createSuccessProp());
-        }
-        // mark as a response type
-        respEnv.language.go!.responseType = {
-          name: name,
-          description: description,
-          responseType: true,
-        }
-        if (!responseEnvelopeExists(codeModel, respEnv.language.go!.responseType.name)) {
-          // add this response schema to the global list of response
-          const responseEnvelopes = <Array<Schema>>codeModel.language.go!.responseEnvelopes;
-          responseEnvelopes.push(respEnv);
-          // attach it to the response
-          (<SchemaResponse>response).schema = respEnv;
-        }
-      }
-    } else if (!responseEnvelopeCreated(codeModel, response.schema)) {
-      response.schema.language.go!.responseType = generateResponseEnvelopeName(codeModel, response.schema);
-      response.schema.language.go!.properties = [
-        createRawResponseProp()
-      ];
-      const marshallingFormat = getMarshallingFormat(response.protocol);
-      response.schema.language.go!.responseType.marshallingFormat = marshallingFormat;
-      // for operations that return scalar types we use a fixed field name
-      let propName = scalarResponsePropName;
-      if (response.schema.type === SchemaType.Object) {
-        // for object types use the type's name as the field name
-        propName = response.schema.language.go!.name;
-      } else if (response.schema.type === SchemaType.Array) {
-        // for array types use the element type's name
-        propName = recursiveTypeName(response.schema);
-      } else if (response.schema.type === SchemaType.Any) {
-        propName = 'Interface';
-      } else if (response.schema.type === SchemaType.AnyObject) {
-        propName = 'Object';
-      }
-      if (response.schema.serialization?.xml && response.schema.serialization.xml.name) {
-        // always prefer the XML name
-        propName = (<string>response.schema.serialization.xml.name).capitalize();
-      }
-      response.schema.language.go!.responseType.value = propName;
-      // for LROs add a specific poller response envelope to return from Begin operations
-      if (!isLROOperation(op)) {
-        // exclude LRO headers from Widget response envelopes
-        // add any headers to the response type
-        for (const item of items(headers)) {
-          const prop = newProperty(item.key, item.value.description, item.value.schema);
-          prop.language.go!.fromHeader = item.value.header;
-          (<Array<Property>>response.schema.language.go!.properties).push(prop);
-        }
-      }
-      // the Widget response doesn't belong in the poller response envelope
-      const respProp = newRespProperty(propName, response.schema.language.go!.description, response.schema);
-      if (respProp.language.go!.byValue === true) {
-        // promote the byValue setting to the response type as it's needed during
-        // response unmarshalling and we don't have access to the underlying property
-        response.schema.language.go!.responseType.byValue = true;
-      }
-      (<Array<Property>>response.schema.language.go!.properties).push(respProp);
-      if (!responseEnvelopeExists(codeModel, response.schema.language.go!.name)) {
-        // add this response schema to the global list of response
-        const responseEnvelopes = <Array<Schema>>codeModel.language.go!.responseEnvelopes;
-        responseEnvelopes.push(response.schema);
-      }
-    } else if (headers.size > 0 && !isLROOperation(op)) {
-      // the response envelope has already been created.  it's shared across operations
-      // however we fold all header responses into the same envelope.
-      // find the matching response type entry.
-      const rt = generateResponseEnvelopeName(codeModel, response.schema);
-      const responseEnvelopes = <Array<Schema>>codeModel.language.go!.responseEnvelopes;
-      for (const respEnv of values(responseEnvelopes)) {
-        if (respEnv.language.go!.responseType.name === rt.name) {
-          // check if we need to add any headers
-          const respProps = <Array<Property>>respEnv.language.go!.properties;
-          for (const header of items(headers)) {
-            let exists = false;
-            for (const prop of values(respProps)) {
-              if (prop.language.go!.name === header.key) {
-                exists = true;
-                break;
-              }
-            }
-            if (!exists) {
-              const prop = newRespProperty(header.key, header.value.description, header.value.schema);
-              prop.language.go!.fromHeader = header.value.header;
-              respProps.push(prop);
-            }
-          }
-        }
+  if (isMultiRespOperation(op)) {
+    const resultTypes = new Array<string>();
+    for (const response of values(op.responses)) {
+      // the operation might contain a mix of schemas and non-schema responses.
+      // we only care about the ones that return a schema.
+      if (isSchemaResponse(response)) {
+        resultTypes.push(response.schema.language.go!.name);
       }
     }
+    // for multi-response operations, we don't create result envelopes.
+    // instead, we add the header responses to the response envelope.
+    addHeadersToSchema(respEnv);
+    const resultProp = newRespProperty('Value', `// Possible types are ${resultTypes.join(', ')}\n`, newAny('multi-response value'), true);
+    respEnv.properties.push(resultProp);
+    respEnv.language.go!.resultEnv = resultProp;
+    return;
   }
-  // create pageable type info
-  if (isPageableOperation(op)) {
-    if (codeModel.language.go!.pageableTypes === undefined) {
-      codeModel.language.go!.pageableTypes = new Array<PagerInfo>();
+  const response = getSchemaResponse(op);
+  // if the response defines a schema then create a result envelope and add it to the response envelope.
+  if (response) {
+    const name = ensureUniqueModelName(codeModel, `${group.language.go!.name}${op.language.go!.name}Result`, 'Envelope');
+    const resultEnv = newObject(name, `${name} contains the result from method ${group.language.go!.name}.${op.language.go!.name}.`);
+    resultEnv.language.go!.responseType = true;
+    // propagate marshalling format to the result envelope
+    resultEnv.language.go!.marshallingFormat = response.schema.language.go!.marshallingFormat;
+    resultEnv.properties = new Array<Property>();
+    // for operations that return scalar types we use a fixed field name
+    let propName = scalarResponsePropName;
+    if (response.schema.type === SchemaType.Object) {
+      // for object types use the type's name as the field name
+      propName = response.schema.language.go!.name;
+    } else if (response.schema.type === SchemaType.Array) {
+      // for array types use the element type's name
+      propName = recursiveTypeName(response.schema);
+    } else if (response.schema.type === SchemaType.Any) {
+      propName = 'Interface';
+    } else if (response.schema.type === SchemaType.AnyObject) {
+      propName = 'Object';
     }
-    const schemaResponse = getResponse(op);
-    if (schemaResponse === undefined) {
-      throw new Error(`${op.language.go!.name}: pageable operation has no schema for response`);
+    if (response.schema.serialization?.xml && response.schema.serialization.xml.name) {
+      // always prefer the XML name
+      propName = (<string>response.schema.serialization.xml.name).capitalize();
     }
-    const name = `${schemaResponse.schema.language.go!.name}Pager`;
-    // check to see if the pager has already been created
-    let skipAddPager = false; // skipAdd allows not adding the pager to the list of pageable types and continue on to LRO check
-    const pagers = <Array<PagerInfo>>codeModel.language.go!.pageableTypes;
-    for (const pager of values(pagers)) {
-      if (pager.name === name) {
-        // set when a pager is used in an LRO, or is shared between LRO and no-LRO operations
-        if (isLROOperation(op)) {
-          pager.hasLRO = true;
-        }
-        // found a match, hook it up to the method
-        op.language.go!.pageableType = pager;
-        skipAddPager = true;
-        break;
-      }
-    }
-    if (!skipAddPager) {
-      // create a new one, add to global list and assign to method
-      let respField = schemaResponse.schema.language.go!.name;
-      if (schemaResponse.schema.serialization?.xml?.name) {
-        // xml can specifiy its own name, prefer that if available
-        respField = schemaResponse.schema.serialization.xml.name;
-      }
-      const pager = {
-        name: name,
-        respEnv: schemaResponse.schema.language.go!.responseType.name,
-        respType: schemaResponse.schema.language.go!.name,
-        respField: respField,
-        nextLink: op.language.go!.paging.nextLinkName,
-        hasLRO: isLROOperation(op),
-      };
-      pagers.push(pager);
-      op.language.go!.pageableType = pager;
-    }
-  }
-  // create poller type info
-  if (isLROOperation(op)) {
-    const schemaResponse = getResponse(op);
-    if (op.language.go!.paging && op.language.go!.paging.member) {
-      // implementing support for this is very complicated, and since
-      // no services at present use this pattern avoid it for now
-      throw new Error(`${op.language.go!.name}: unsupported pager-poller that uses next page operation`);
-    }
-    // create the poller response envelope
-    generateLROResponseEnvelope(schemaResponse, op, codeModel);
-    if (codeModel.language.go!.pollerTypes === undefined) {
-      codeModel.language.go!.pollerTypes = new Array<PollerInfo>();
-    }
-    // Determine the type of poller that needs to be added based on whether a schema is specified in the response
-    // if there is no schema specified for the operation response then a simple HTTP poller will be instantiated
-    const name = generateLROPollerName(schemaResponse, op);
-    const pollers = <Array<PollerInfo>>codeModel.language.go!.pollerTypes;
-    let skipAddLRO = false;
-    for (const poller of values(pollers)) {
-      if (poller.name === name) {
-        // found a match, hook it up to the method
-        op.language.go!.pollerType = poller;
-        skipAddLRO = true;
-        break;
-      }
-    }
-    if (!skipAddLRO) {
-      // Adding the operation group name to the poller name for polling operations that need to be unique to that operation group
-      // create a new one, add to global list and assign to method
-      let respEnv = "HTTPPollerResponse";
-      let respField: string | undefined;
-      let respType: Schema | undefined;
-      if (schemaResponse !== undefined) {
-        respEnv = schemaResponse.schema.language.go!.responseType.name;
-        respField = schemaResponse.schema.language.go!.responseType.value;
-        respType = schemaResponse.schema;
-      }
-      const poller = {
-        name: name,
-        respEnv: respEnv,
-        respField: respField,
-        respType: respType,
-        pager: op.language.go!.pageableType,
-      };
-      pollers.push(poller);
-      op.language.go!.pollerType = poller;
-    }
+    // add any headers to the response type
+    addHeadersToSchema(resultEnv);
+    // we want to pass integral types byref to maintain parity with struct fields
+    const byValue = isTypePassedByValue(response.schema) || response.schema.type === SchemaType.Object;
+    const respProp = newRespProperty(propName, response.schema.language.go!.description, response.schema, byValue);
+    resultEnv.properties.push(respProp);
+    // now add the result type to the response envelope
+    const resultEnvProp = newRespProperty(name, 'Contains the result of the operation.', resultEnv, true);
+    respEnv.properties.push(resultEnvProp);
+    respEnv.language.go!.resultEnv = resultEnvProp;
+    // shortcut to aid finding the result property
+    resultEnvProp.language.go!.resultField = respProp;
+  } else if (headers.size > 0) {
+    // the response doesn't return a model.  if it returns
+    // headers then create a result envelope that contains them.
+    const name = ensureUniqueModelName(codeModel, `${group.language.go!.name}${op.language.go!.name}Result`, 'Envelope');
+    const resultEnv = newObject(name, `${name} contains the result from method ${group.language.go!.name}.${op.language.go!.name}.`);
+    resultEnv.language.go!.responseType = true;
+    resultEnv.properties = new Array<Property>();
+    addHeadersToSchema(resultEnv);
+    const resultEnvProp = newRespProperty(name, 'Contains the result of the operation.', resultEnv, true);
+    respEnv.properties.push(resultEnvProp);
+    respEnv.language.go!.resultEnv = resultEnvProp;
   }
 }
 
-// returns true if the named response envelope has already been created
-function responseEnvelopeExists(codeModel: CodeModel, name: string): ObjectSchema | undefined {
-  for (const resp of codeModel.language.go!.responseEnvelopes) {
-    if (resp.language.go!.name === name) {
-      return resp;
+// appends suffix to name if name is an existing model type
+function ensureUniqueModelName(codeModel: CodeModel, name: string, suffix: string): string {
+  for (const obj of values(codeModel.schemas.objects)) {
+    if (obj.language.go!.name === name) {
+      return name + suffix;
     }
   }
-  return undefined;
+  return name;
+}
+
+function createRawResponseProp(): Property {
+  return newProperty('RawResponse', 'RawResponse contains the underlying HTTP response.', newObject('http.Response', 'raw HTTP response'));
 }
 
 function newObject(name: string, desc: string): ObjectSchema {
-  let obj = new ObjectSchema(name, desc);
+  const obj = new ObjectSchema(name, desc);
   obj.language.go = obj.language.default;
   return obj;
+}
+
+function newAny(desc: string): AnySchema {
+  const any = new AnySchema(desc);
+  any.language.go = any.language.default;
+  any.language.go!.name = 'interface{}';
+  return any;
+}
+
+function newBoolean(name: string, desc: string): BooleanSchema {
+  const bool = new BooleanSchema(name, desc);
+  bool.language.go = bool.language.default;
+  bool.language.go!.name = 'bool';
+  return bool;
 }
 
 function newProperty(name: string, desc: string, schema: Schema): Property {
@@ -956,10 +880,15 @@ function newProperty(name: string, desc: string, schema: Schema): Property {
   return prop;
 }
 
-function newRespProperty(name: string, desc: string, schema: Schema): Property {
+function newRespProperty(name: string, desc: string, schema: Schema, byValue: boolean): Property {
   const prop = newProperty(name, desc, schema);
   if (isTypePassedByValue(schema)) {
-    prop.language.go!.byValue = true;
+    byValue = true;
+  }
+  prop.language.go!.byValue = byValue;
+  if (schema.type === SchemaType.Object) {
+    // indicates we should anonymously embed this type into the containing type
+    prop.language.go!.embeddedType = true;
   }
   return prop;
 }
@@ -975,27 +904,6 @@ function getMarshallingFormat(protocol: Protocols): 'json' | 'xml' | 'na' {
     default:
       return 'na';
   }
-}
-
-// returns true if a response envelope has been created for the specified response.
-// also associates the response envelope with the specified response as required.
-function responseEnvelopeCreated(codeModel: CodeModel, schema: Schema): boolean {
-  const responseType = generateResponseEnvelopeName(codeModel, schema);
-  const responseEnvelopes = <Array<Schema>>codeModel.language.go!.responseEnvelopes;
-  for (const respEnv of values(responseEnvelopes)) {
-    if (respEnv.language.go!.responseType.name === responseType.name) {
-      // unnamed string enum responses and string responses are different schemas
-      // but with identical layouts.  so we have a corner-case where we've already
-      // created a response type (i.e. StringResponse) for one of the schemas but
-      // not for the other.  so if the response type has already been created and
-      // the responseType hasn't been set, copy it over.
-      if (schema.language.go!.responseType === undefined) {
-        schema.language.go!.responseType = respEnv.language.go!.responseType;
-      }
-      return true;
-    }
-  }
-  return false;
 }
 
 function recursiveTypeName(schema: Schema): string {
@@ -1047,112 +955,66 @@ function recursiveTypeName(schema: Schema): string {
   }
 }
 
-function generateResponseEnvelopeName(codeModel: CodeModel, schema: Schema): Language {
-  let name = `${recursiveTypeName(schema)}Response`;
-  // ensure the response envelope name doesn't collide with an existing type name
-  for (const obj of values(codeModel.schemas.objects)) {
-    if (obj.language.go!.name === name) {
-      // found a collision, append a suffix
-      name += 'Type';
-      break;
-    }
-  }
-  return {
-    name: name,
-    description: `${name} is the response envelope for operations that return a ${schema.language.go!.name} type.`,
-    responseType: true,
-  };
-}
-
-// generate LRO response type name is separate from the general response type name
-// generation, since it requires returning the poller response envelope
-function generateLROResponseEnvelopeName(response: SchemaResponse | undefined, op: Operation): Language {
-  // default to generic response envelope
-  let name = 'HTTPPollerResponse';
-  let desc = `${name} contains the asynchronous HTTP response from the call to the service endpoint.`;
-  if (isPageableOperation(op)) {
-    name = `${op.language.go!.pageableType.name}PollerResponse`;
-    desc = `${name} is the response envelope for operations that asynchronously return a ${op.language.go!.pageableType.name} type.`;
-  } else if (response !== undefined) {
-    // create a type-specific response envelope
-    const typeName = recursiveTypeName(response.schema) + 'Poller';
-    name = `${typeName}Response`;
-    desc = `${name} is the response envelope for operations that asynchronously return a ${response.schema.language.go!.name} type.`;
-  }
-  return {
-    name: name,
-    description: desc,
-    responseType: true,
-  };
-}
-
-function generateLROPollerName(response: SchemaResponse | undefined, op: Operation): string {
-  if (response === undefined) {
-    return 'HTTPPoller';
-  }
-  if (isPageableOperation(op)) {
-    return `${op.language.go!.pageableType.name}Poller`;
-  }
-  if (response.schema.language.go!.responseType.value === scalarResponsePropName) {
-    // for scalar responses, use the underlying type name for the poller
-    return `${(<string>response.schema.language.go!.name).capitalize()}Poller`;
-  }
-  return `${response.schema.language.go!.responseType.value}Poller`;
-}
-
 // creates the LRO response envelope for the specified operation/response
-function generateLROResponseEnvelope(response: SchemaResponse | undefined, op: Operation, codeModel: CodeModel) {
-  const respTypeName = generateLROResponseEnvelopeName(response, op);
-  const respEnv = responseEnvelopeExists(codeModel, respTypeName.name);
-  if (respEnv) {
-    if (response) {
-      // ensure the response has the LRO response type hooked up.
-      // this can happen for cases where operations return the same
-      // response type but M4 creates different response objects.
-      response.schema.language.go!.lroResponseType = respEnv;
-    }
-    return;
+function createLROResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op: Operation) {
+  if (op.language.go!.paging && op.language.go!.paging.member) {
+    // implementing support for this is very complicated, and since
+    // no services at present use this pattern avoid it for now
+    throw new Error(`${op.language.go!.name}: unsupported pager-poller that uses next page operation`);
   }
-  const respTypeObject = newObject(respTypeName.name, respTypeName.description);
-  respTypeObject.language.go!.responseType = respTypeName;
-  let pollerResponse: string;
-  let pollerTypeName: string;
-  if (response === undefined) {
-    pollerResponse = '*http.Response';
-    pollerTypeName = 'HTTPPoller';
-    // mark as a response type
-    respTypeObject.language.go!.responseType = {
-      name: respTypeName.name,
-      description: respTypeName.description,
-      responseType: true,
-    };
-  } else if (isPageableOperation(op)) {
-    pollerResponse = `${(<SchemaResponse>response).schema.language.go!.name}Pager`;
-    pollerTypeName = `${(<SchemaResponse>response).schema.language.go!.name}PagerPoller`;
-    response.schema.language.go!.lroResponseType = respTypeObject;
-  } else {
-    pollerResponse = response.schema.language.go!.responseType.name;
-    pollerTypeName = generateLROPollerName(response, op);
-    response.schema.language.go!.lroResponseType = respTypeObject;
+  // LROs have two response envelopes.
+  // the outer is the response envelope returned by the Begin* and Resume* methods, it depends on the poller.
+  // the inner is the response/result envelope returned by the PollUntilDone and FinalResponse methods, the poller depends on it.
+  // so we create them in the following order: inner, poller, outer
+
+  // contains all the response envelopes
+  const responseEnvelopes = <Array<ObjectSchema>>codeModel.language.go!.responseEnvelopes;
+  // create the "inner" response envelope
+  createResponseEnvelope(codeModel, group, op);
+  // now create the poller
+  if (op.language.go!.paging && op.language.go!.paging.member) {
+    // implementing support for this is very complicated, and since
+    // no services at present use this pattern avoid it for now
+    throw new Error(`${op.language.go!.name}: unsupported pager-poller that uses next page operation`);
   }
-  respTypeObject.language.go!.responseType.isLRO = true;
+  if (codeModel.language.go!.pollerTypes === undefined) {
+    codeModel.language.go!.pollerTypes = new Array<PollerInfo>();
+  }
+  const pollerName = `${group.language.go!.name}${op.language.go!.name}Poller`;
+  const pollers = <Array<PollerInfo>>codeModel.language.go!.pollerTypes;
+  const poller = {
+    name: pollerName,
+    op: op,
+  };
+  pollers.push(poller);
+  op.language.go!.pollerType = poller;
+
+  // finally create the outer response envelope
+  const outerRespEnvName = `${group.language.go!.name}${op.language.go!.name}PollerResponse`;
+  const outerRespEnv = newObject(outerRespEnvName, `${outerRespEnvName} contains the response from method ${group.language.go!.name}.${op.language.go!.name}.`);
+  outerRespEnv.language.go!.responseType = true;
+  outerRespEnv.language.go!.isLRO = true;
+  outerRespEnv.properties = new Array<Property>();
+  outerRespEnv.properties.push(createRawResponseProp());
   // create PollUntilDone
-  const pollerFunc = newObject(`func(ctx context.Context, frequency time.Duration) (${pollerResponse}, error)`, 'PollUntilDone');
+  let pollerRespType = op.language.go!.responseEnv.language.go!.name;
+  if (isPageableOperation(op)) {
+    pollerRespType = (<PagerInfo>op.language.go!.pageableType).name;
+  }
+  const pollerFunc = newObject(`func(ctx context.Context, frequency time.Duration) (${pollerRespType}, error)`, 'PollUntilDone');
   const pollUntilDone = newProperty('PollUntilDone', 'PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received',
     pollerFunc);
   pollUntilDone.language.go!.byValue = true;
+  outerRespEnv.properties.push(pollUntilDone);
   // create Poller
-  const pollerType = newObject(pollerTypeName, 'poller');
-  const poller = newProperty('Poller', 'Poller contains an initialized poller.', pollerType);
-  poller.language.go!.byValue = true;
-  respTypeObject.language.go!.properties = [
-    newProperty('RawResponse', 'RawResponse contains the underlying HTTP response.', newObject('http.Response', 'HTTP response')),
-    pollUntilDone,
-    poller
-  ];
-  // add the LRO response schema to the global list of response
-  const responseEnvelopes = <Array<Schema>>codeModel.language.go!.responseEnvelopes;
-  responseEnvelopes.push(respTypeObject);
+  const pollerType = newObject(pollerName, 'poller');
+  const pollerProp = newProperty('Poller', 'Poller contains an initialized poller.', pollerType);
+  pollerProp.language.go!.byValue = true;
+  outerRespEnv.properties.push(pollerProp);
+  responseEnvelopes.push(outerRespEnv);
+  // move the inner response envelope created earlier
+  op.language.go!.finalResponseEnv = op.language.go!.responseEnv;
+  op.language.go!.responseEnv = outerRespEnv;
 }
 
 function getRootDiscriminator(obj: ObjectSchema): ObjectSchema {

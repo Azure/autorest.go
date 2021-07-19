@@ -12,9 +12,86 @@ import (
 	"time"
 )
 
-// TimeResponse is the response envelope for operations that return a time.Time type.
-type TimeResponse struct {
+// DateGetInvalidDateResponse contains the response from method Date.GetInvalidDate.
+type DateGetInvalidDateResponse struct {
+	DateGetInvalidDateResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-	Value       *time.Time
+}
+
+// DateGetInvalidDateResult contains the result from method Date.GetInvalidDate.
+type DateGetInvalidDateResult struct {
+	Value *time.Time
+}
+
+// DateGetMaxDateResponse contains the response from method Date.GetMaxDate.
+type DateGetMaxDateResponse struct {
+	DateGetMaxDateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// DateGetMaxDateResult contains the result from method Date.GetMaxDate.
+type DateGetMaxDateResult struct {
+	Value *time.Time
+}
+
+// DateGetMinDateResponse contains the response from method Date.GetMinDate.
+type DateGetMinDateResponse struct {
+	DateGetMinDateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// DateGetMinDateResult contains the result from method Date.GetMinDate.
+type DateGetMinDateResult struct {
+	Value *time.Time
+}
+
+// DateGetNullResponse contains the response from method Date.GetNull.
+type DateGetNullResponse struct {
+	DateGetNullResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// DateGetNullResult contains the result from method Date.GetNull.
+type DateGetNullResult struct {
+	Value *time.Time
+}
+
+// DateGetOverflowDateResponse contains the response from method Date.GetOverflowDate.
+type DateGetOverflowDateResponse struct {
+	DateGetOverflowDateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// DateGetOverflowDateResult contains the result from method Date.GetOverflowDate.
+type DateGetOverflowDateResult struct {
+	Value *time.Time
+}
+
+// DateGetUnderflowDateResponse contains the response from method Date.GetUnderflowDate.
+type DateGetUnderflowDateResponse struct {
+	DateGetUnderflowDateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// DateGetUnderflowDateResult contains the result from method Date.GetUnderflowDate.
+type DateGetUnderflowDateResult struct {
+	Value *time.Time
+}
+
+// DatePutMaxDateResponse contains the response from method Date.PutMaxDate.
+type DatePutMaxDateResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// DatePutMinDateResponse contains the response from method Date.PutMinDate.
+type DatePutMinDateResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }

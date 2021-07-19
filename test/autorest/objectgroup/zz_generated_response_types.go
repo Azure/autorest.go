@@ -9,11 +9,21 @@ package objectgroup
 
 import "net/http"
 
-// ObjectResponse is the response envelope for operations that return a map[string]interface{} type.
-type ObjectResponse struct {
+// ObjectTypeClientGetResponse contains the response from method ObjectTypeClient.Get.
+type ObjectTypeClientGetResponse struct {
+	ObjectTypeClientGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ObjectTypeClientGetResult contains the result from method ObjectTypeClient.Get.
+type ObjectTypeClientGetResult struct {
 	// Any object
 	Object map[string]interface{}
+}
 
+// ObjectTypeClientPutResponse contains the response from method ObjectTypeClient.Put.
+type ObjectTypeClientPutResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }

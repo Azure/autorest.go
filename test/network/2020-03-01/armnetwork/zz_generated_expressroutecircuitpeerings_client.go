@@ -33,47 +33,47 @@ func NewExpressRouteCircuitPeeringsClient(con *armcore.Connection, subscriptionI
 
 // BeginCreateOrUpdate - Creates or updates a peering in the specified express route circuits.
 // If the operation fails it returns the *CloudError error type.
-func (client *ExpressRouteCircuitPeeringsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, peeringParameters ExpressRouteCircuitPeering, options *ExpressRouteCircuitPeeringsBeginCreateOrUpdateOptions) (ExpressRouteCircuitPeeringPollerResponse, error) {
+func (client *ExpressRouteCircuitPeeringsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, peeringParameters ExpressRouteCircuitPeering, options *ExpressRouteCircuitPeeringsBeginCreateOrUpdateOptions) (ExpressRouteCircuitPeeringsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, circuitName, peeringName, peeringParameters, options)
 	if err != nil {
-		return ExpressRouteCircuitPeeringPollerResponse{}, err
+		return ExpressRouteCircuitPeeringsCreateOrUpdatePollerResponse{}, err
 	}
-	result := ExpressRouteCircuitPeeringPollerResponse{
+	result := ExpressRouteCircuitPeeringsCreateOrUpdatePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("ExpressRouteCircuitPeeringsClient.CreateOrUpdate", "azure-async-operation", resp, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return ExpressRouteCircuitPeeringPollerResponse{}, err
+		return ExpressRouteCircuitPeeringsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &expressRouteCircuitPeeringPoller{
+	poller := &expressRouteCircuitPeeringsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitPeeringResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitPeeringsCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new ExpressRouteCircuitPeeringPoller from the specified resume token.
-// token - The value must come from a previous call to ExpressRouteCircuitPeeringPoller.ResumeToken().
-func (client *ExpressRouteCircuitPeeringsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (ExpressRouteCircuitPeeringPollerResponse, error) {
+// ResumeCreateOrUpdate creates a new ExpressRouteCircuitPeeringsCreateOrUpdatePoller from the specified resume token.
+// token - The value must come from a previous call to ExpressRouteCircuitPeeringsCreateOrUpdatePoller.ResumeToken().
+func (client *ExpressRouteCircuitPeeringsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (ExpressRouteCircuitPeeringsCreateOrUpdatePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("ExpressRouteCircuitPeeringsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return ExpressRouteCircuitPeeringPollerResponse{}, err
+		return ExpressRouteCircuitPeeringsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &expressRouteCircuitPeeringPoller{
+	poller := &expressRouteCircuitPeeringsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return ExpressRouteCircuitPeeringPollerResponse{}, err
+		return ExpressRouteCircuitPeeringsCreateOrUpdatePollerResponse{}, err
 	}
-	result := ExpressRouteCircuitPeeringPollerResponse{
+	result := ExpressRouteCircuitPeeringsCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitPeeringResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitPeeringsCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -142,47 +142,47 @@ func (client *ExpressRouteCircuitPeeringsClient) createOrUpdateHandleError(resp 
 
 // BeginDelete - Deletes the specified peering from the specified express route circuit.
 // If the operation fails it returns the *CloudError error type.
-func (client *ExpressRouteCircuitPeeringsClient) BeginDelete(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, options *ExpressRouteCircuitPeeringsBeginDeleteOptions) (HTTPPollerResponse, error) {
+func (client *ExpressRouteCircuitPeeringsClient) BeginDelete(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, options *ExpressRouteCircuitPeeringsBeginDeleteOptions) (ExpressRouteCircuitPeeringsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, circuitName, peeringName, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return ExpressRouteCircuitPeeringsDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := ExpressRouteCircuitPeeringsDeletePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("ExpressRouteCircuitPeeringsClient.Delete", "location", resp, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return ExpressRouteCircuitPeeringsDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &expressRouteCircuitPeeringsDeletePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitPeeringsDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeDelete creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *ExpressRouteCircuitPeeringsClient) ResumeDelete(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeDelete creates a new ExpressRouteCircuitPeeringsDeletePoller from the specified resume token.
+// token - The value must come from a previous call to ExpressRouteCircuitPeeringsDeletePoller.ResumeToken().
+func (client *ExpressRouteCircuitPeeringsClient) ResumeDelete(ctx context.Context, token string) (ExpressRouteCircuitPeeringsDeletePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("ExpressRouteCircuitPeeringsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return ExpressRouteCircuitPeeringsDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &expressRouteCircuitPeeringsDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return ExpressRouteCircuitPeeringsDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := ExpressRouteCircuitPeeringsDeletePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitPeeringsDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -251,17 +251,17 @@ func (client *ExpressRouteCircuitPeeringsClient) deleteHandleError(resp *azcore.
 
 // Get - Gets the specified peering for the express route circuit.
 // If the operation fails it returns the *CloudError error type.
-func (client *ExpressRouteCircuitPeeringsClient) Get(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, options *ExpressRouteCircuitPeeringsGetOptions) (ExpressRouteCircuitPeeringResponse, error) {
+func (client *ExpressRouteCircuitPeeringsClient) Get(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, options *ExpressRouteCircuitPeeringsGetOptions) (ExpressRouteCircuitPeeringsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, circuitName, peeringName, options)
 	if err != nil {
-		return ExpressRouteCircuitPeeringResponse{}, err
+		return ExpressRouteCircuitPeeringsGetResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return ExpressRouteCircuitPeeringResponse{}, err
+		return ExpressRouteCircuitPeeringsGetResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return ExpressRouteCircuitPeeringResponse{}, client.getHandleError(resp)
+		return ExpressRouteCircuitPeeringsGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -298,12 +298,12 @@ func (client *ExpressRouteCircuitPeeringsClient) getCreateRequest(ctx context.Co
 }
 
 // getHandleResponse handles the Get response.
-func (client *ExpressRouteCircuitPeeringsClient) getHandleResponse(resp *azcore.Response) (ExpressRouteCircuitPeeringResponse, error) {
-	var val *ExpressRouteCircuitPeering
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ExpressRouteCircuitPeeringResponse{}, err
+func (client *ExpressRouteCircuitPeeringsClient) getHandleResponse(resp *azcore.Response) (ExpressRouteCircuitPeeringsGetResponse, error) {
+	result := ExpressRouteCircuitPeeringsGetResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.ExpressRouteCircuitPeering); err != nil {
+		return ExpressRouteCircuitPeeringsGetResponse{}, err
 	}
-	return ExpressRouteCircuitPeeringResponse{RawResponse: resp.Response, ExpressRouteCircuitPeering: val}, nil
+	return result, nil
 }
 
 // getHandleError handles the Get error response.
@@ -321,18 +321,15 @@ func (client *ExpressRouteCircuitPeeringsClient) getHandleError(resp *azcore.Res
 
 // List - Gets all peerings in a specified express route circuit.
 // If the operation fails it returns the *CloudError error type.
-func (client *ExpressRouteCircuitPeeringsClient) List(resourceGroupName string, circuitName string, options *ExpressRouteCircuitPeeringsListOptions) ExpressRouteCircuitPeeringListResultPager {
-	return &expressRouteCircuitPeeringListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *ExpressRouteCircuitPeeringsClient) List(resourceGroupName string, circuitName string, options *ExpressRouteCircuitPeeringsListOptions) ExpressRouteCircuitPeeringsListPager {
+	return &expressRouteCircuitPeeringsListPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, circuitName, options)
 		},
-		responder: client.listHandleResponse,
-		errorer:   client.listHandleError,
-		advancer: func(ctx context.Context, resp ExpressRouteCircuitPeeringListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp ExpressRouteCircuitPeeringsListResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ExpressRouteCircuitPeeringListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -364,12 +361,12 @@ func (client *ExpressRouteCircuitPeeringsClient) listCreateRequest(ctx context.C
 }
 
 // listHandleResponse handles the List response.
-func (client *ExpressRouteCircuitPeeringsClient) listHandleResponse(resp *azcore.Response) (ExpressRouteCircuitPeeringListResultResponse, error) {
-	var val *ExpressRouteCircuitPeeringListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ExpressRouteCircuitPeeringListResultResponse{}, err
+func (client *ExpressRouteCircuitPeeringsClient) listHandleResponse(resp *azcore.Response) (ExpressRouteCircuitPeeringsListResponse, error) {
+	result := ExpressRouteCircuitPeeringsListResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.ExpressRouteCircuitPeeringListResult); err != nil {
+		return ExpressRouteCircuitPeeringsListResponse{}, err
 	}
-	return ExpressRouteCircuitPeeringListResultResponse{RawResponse: resp.Response, ExpressRouteCircuitPeeringListResult: val}, nil
+	return result, nil
 }
 
 // listHandleError handles the List error response.

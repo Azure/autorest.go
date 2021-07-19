@@ -6,6 +6,7 @@ package optionalgroup
 import (
 	"context"
 	"net/http"
+	"reflect"
 	"testing"
 )
 
@@ -19,7 +20,7 @@ func TestExplicitPostOptionalArrayHeader(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PostOptionalArrayHeader: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -30,7 +31,7 @@ func TestExplicitPostOptionalArrayParameter(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PostOptionalArrayParameter: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -41,7 +42,7 @@ func TestExplicitPostOptionalArrayProperty(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PostOptionalArrayProperty: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -52,7 +53,7 @@ func TestExplicitPostOptionalClassParameter(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PostOptionalClassParameter: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -63,7 +64,7 @@ func TestExplicitPostOptionalClassProperty(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PostOptionalClassProperty: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -74,7 +75,7 @@ func TestExplicitPostOptionalIntegerHeader(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PostOptionalIntegerHeader: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -85,7 +86,7 @@ func TestExplicitPostOptionalIntegerParameter(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PostOptionalIntegerParameter: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -96,7 +97,7 @@ func TestExplicitPostOptionalIntegerProperty(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PostOptionalIntegerProperty: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -107,7 +108,7 @@ func TestExplicitPostOptionalStringHeader(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PostOptionalStringHeader: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -118,7 +119,7 @@ func TestExplicitPostOptionalStringParameter(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PostOptionalStringParameter: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -129,7 +130,7 @@ func TestExplicitPostOptionalStringProperty(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PostOptionalStringProperty: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -142,7 +143,7 @@ func TestExplicitPostRequiredArrayHeader(t *testing.T) {
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}
-	if result != nil {
+	if !reflect.ValueOf(result).IsZero() {
 		t.Fatalf("Expected a nil result but received informaiton in result")
 	}
 }
@@ -155,7 +156,7 @@ func TestExplicitPostRequiredArrayParameter(t *testing.T) {
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}
-	if result != nil {
+	if !reflect.ValueOf(result).IsZero() {
 		t.Fatalf("Expected a nil result but received informaiton in result")
 	}
 }
@@ -167,7 +168,7 @@ func TestExplicitPostRequiredArrayProperty(t *testing.T) {
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}
-	if result != nil {
+	if !reflect.ValueOf(result).IsZero() {
 		t.Fatalf("Expected a nil result but received informaiton in result")
 	}
 }
@@ -180,7 +181,7 @@ func TestExplicitPostRequiredClassParameter(t *testing.T) {
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}
-	if result != nil {
+	if !reflect.ValueOf(result).IsZero() {
 		t.Fatalf("Expected a nil result but received informaiton in result")
 	}
 }
@@ -192,7 +193,7 @@ func TestExplicitPostRequiredClassProperty(t *testing.T) {
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}
-	if result != nil {
+	if !reflect.ValueOf(result).IsZero() {
 		t.Fatalf("Expected a nil result but received informaiton in result")
 	}
 }
@@ -205,7 +206,7 @@ func TestExplicitPostRequiredIntegerHeader(t *testing.T) {
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}
-	if result != nil {
+	if !reflect.ValueOf(result).IsZero() {
 		t.Fatalf("Expected a nil result but received informaiton in result")
 	}
 }
@@ -218,7 +219,7 @@ func TestExplicitPostRequiredIntegerParameter(t *testing.T) {
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}
-	if result != nil {
+	if !reflect.ValueOf(result).IsZero() {
 		t.Fatalf("Expected a nil result but received informaiton in result")
 	}
 }
@@ -231,7 +232,7 @@ func TestExplicitPostRequiredIntegerProperty(t *testing.T) {
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}
-	if result != nil {
+	if !reflect.ValueOf(result).IsZero() {
 		t.Fatalf("Expected a nil result but received informaiton in result")
 	}
 }
@@ -244,7 +245,7 @@ func TestExplicitPostRequiredStringHeader(t *testing.T) {
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}
-	if result != nil {
+	if !reflect.ValueOf(result).IsZero() {
 		t.Fatalf("Expected a nil result but received informaiton in result")
 	}
 }
@@ -257,7 +258,7 @@ func TestExplicitPostRequiredStringParameter(t *testing.T) {
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}
-	if result != nil {
+	if !reflect.ValueOf(result).IsZero() {
 		t.Fatalf("Expected a nil result but received informaiton in result")
 	}
 }
@@ -270,7 +271,7 @@ func TestExplicitPostRequiredStringProperty(t *testing.T) {
 	if err == nil {
 		t.Fatalf("Expected an error but did not receive one")
 	}
-	if result != nil {
+	if !reflect.ValueOf(result).IsZero() {
 		t.Fatalf("Expected a nil result but received informaiton in result")
 	}
 }

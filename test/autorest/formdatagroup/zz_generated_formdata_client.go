@@ -27,19 +27,19 @@ func NewFormdataClient(con *Connection) *FormdataClient {
 
 // UploadFile - Upload file
 // If the operation fails it returns the *Error error type.
-func (client *FormdataClient) UploadFile(ctx context.Context, fileContent azcore.ReadSeekCloser, fileName string, options *FormdataUploadFileOptions) (*http.Response, error) {
+func (client *FormdataClient) UploadFile(ctx context.Context, fileContent azcore.ReadSeekCloser, fileName string, options *FormdataUploadFileOptions) (FormdataUploadFileResponse, error) {
 	req, err := client.uploadFileCreateRequest(ctx, fileContent, fileName, options)
 	if err != nil {
-		return nil, err
+		return FormdataUploadFileResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return FormdataUploadFileResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.uploadFileHandleError(resp)
+		return FormdataUploadFileResponse{}, client.uploadFileHandleError(resp)
 	}
-	return resp.Response, nil
+	return FormdataUploadFileResponse{RawResponse: resp.Response}, nil
 }
 
 // uploadFileCreateRequest creates the UploadFile request.
@@ -76,19 +76,19 @@ func (client *FormdataClient) uploadFileHandleError(resp *azcore.Response) error
 
 // UploadFileViaBody - Upload file
 // If the operation fails it returns the *Error error type.
-func (client *FormdataClient) UploadFileViaBody(ctx context.Context, fileContent azcore.ReadSeekCloser, options *FormdataUploadFileViaBodyOptions) (*http.Response, error) {
+func (client *FormdataClient) UploadFileViaBody(ctx context.Context, fileContent azcore.ReadSeekCloser, options *FormdataUploadFileViaBodyOptions) (FormdataUploadFileViaBodyResponse, error) {
 	req, err := client.uploadFileViaBodyCreateRequest(ctx, fileContent, options)
 	if err != nil {
-		return nil, err
+		return FormdataUploadFileViaBodyResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return FormdataUploadFileViaBodyResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.uploadFileViaBodyHandleError(resp)
+		return FormdataUploadFileViaBodyResponse{}, client.uploadFileViaBodyHandleError(resp)
 	}
-	return resp.Response, nil
+	return FormdataUploadFileViaBodyResponse{RawResponse: resp.Response}, nil
 }
 
 // uploadFileViaBodyCreateRequest creates the UploadFileViaBody request.
@@ -119,19 +119,19 @@ func (client *FormdataClient) uploadFileViaBodyHandleError(resp *azcore.Response
 
 // UploadFiles - Upload multiple files
 // If the operation fails it returns the *Error error type.
-func (client *FormdataClient) UploadFiles(ctx context.Context, fileContent []azcore.ReadSeekCloser, options *FormdataUploadFilesOptions) (*http.Response, error) {
+func (client *FormdataClient) UploadFiles(ctx context.Context, fileContent []azcore.ReadSeekCloser, options *FormdataUploadFilesOptions) (FormdataUploadFilesResponse, error) {
 	req, err := client.uploadFilesCreateRequest(ctx, fileContent, options)
 	if err != nil {
-		return nil, err
+		return FormdataUploadFilesResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return FormdataUploadFilesResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.uploadFilesHandleError(resp)
+		return FormdataUploadFilesResponse{}, client.uploadFilesHandleError(resp)
 	}
-	return resp.Response, nil
+	return FormdataUploadFilesResponse{RawResponse: resp.Response}, nil
 }
 
 // uploadFilesCreateRequest creates the UploadFiles request.

@@ -29,17 +29,17 @@ func NewServiceClient(con *Connection) *ServiceClient {
 
 // GetProperties - Gets the properties of an account's Table service, including properties for Analytics and CORS (Cross-Origin Resource Sharing) rules.
 // If the operation fails it returns the *TableServiceError error type.
-func (client *ServiceClient) GetProperties(ctx context.Context, options *ServiceGetPropertiesOptions) (TableServicePropertiesResponse, error) {
+func (client *ServiceClient) GetProperties(ctx context.Context, options *ServiceGetPropertiesOptions) (ServiceGetPropertiesResponse, error) {
 	req, err := client.getPropertiesCreateRequest(ctx, options)
 	if err != nil {
-		return TableServicePropertiesResponse{}, err
+		return ServiceGetPropertiesResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return TableServicePropertiesResponse{}, err
+		return ServiceGetPropertiesResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return TableServicePropertiesResponse{}, client.getPropertiesHandleError(resp)
+		return ServiceGetPropertiesResponse{}, client.getPropertiesHandleError(resp)
 	}
 	return client.getPropertiesHandleResponse(resp)
 }
@@ -67,12 +67,8 @@ func (client *ServiceClient) getPropertiesCreateRequest(ctx context.Context, opt
 }
 
 // getPropertiesHandleResponse handles the GetProperties response.
-func (client *ServiceClient) getPropertiesHandleResponse(resp *azcore.Response) (TableServicePropertiesResponse, error) {
-	var val *TableServiceProperties
-	if err := resp.UnmarshalAsXML(&val); err != nil {
-		return TableServicePropertiesResponse{}, err
-	}
-	result := TableServicePropertiesResponse{RawResponse: resp.Response, StorageServiceProperties: val}
+func (client *ServiceClient) getPropertiesHandleResponse(resp *azcore.Response) (ServiceGetPropertiesResponse, error) {
+	result := ServiceGetPropertiesResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -81,6 +77,9 @@ func (client *ServiceClient) getPropertiesHandleResponse(resp *azcore.Response) 
 	}
 	if val := resp.Header.Get("x-ms-version"); val != "" {
 		result.Version = &val
+	}
+	if err := resp.UnmarshalAsXML(&result.TableServiceProperties); err != nil {
+		return ServiceGetPropertiesResponse{}, err
 	}
 	return result, nil
 }
@@ -101,17 +100,17 @@ func (client *ServiceClient) getPropertiesHandleError(resp *azcore.Response) err
 // GetStatistics - Retrieves statistics related to replication for the Table service. It is only available on the secondary location endpoint when read-access
 // geo-redundant replication is enabled for the account.
 // If the operation fails it returns the *TableServiceError error type.
-func (client *ServiceClient) GetStatistics(ctx context.Context, options *ServiceGetStatisticsOptions) (TableServiceStatsResponse, error) {
+func (client *ServiceClient) GetStatistics(ctx context.Context, options *ServiceGetStatisticsOptions) (ServiceGetStatisticsResponse, error) {
 	req, err := client.getStatisticsCreateRequest(ctx, options)
 	if err != nil {
-		return TableServiceStatsResponse{}, err
+		return ServiceGetStatisticsResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return TableServiceStatsResponse{}, err
+		return ServiceGetStatisticsResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return TableServiceStatsResponse{}, client.getStatisticsHandleError(resp)
+		return ServiceGetStatisticsResponse{}, client.getStatisticsHandleError(resp)
 	}
 	return client.getStatisticsHandleResponse(resp)
 }
@@ -139,12 +138,8 @@ func (client *ServiceClient) getStatisticsCreateRequest(ctx context.Context, opt
 }
 
 // getStatisticsHandleResponse handles the GetStatistics response.
-func (client *ServiceClient) getStatisticsHandleResponse(resp *azcore.Response) (TableServiceStatsResponse, error) {
-	var val *TableServiceStats
-	if err := resp.UnmarshalAsXML(&val); err != nil {
-		return TableServiceStatsResponse{}, err
-	}
-	result := TableServiceStatsResponse{RawResponse: resp.Response, StorageServiceStats: val}
+func (client *ServiceClient) getStatisticsHandleResponse(resp *azcore.Response) (ServiceGetStatisticsResponse, error) {
+	result := ServiceGetStatisticsResponse{RawResponse: resp.Response}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -157,9 +152,12 @@ func (client *ServiceClient) getStatisticsHandleResponse(resp *azcore.Response) 
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return TableServiceStatsResponse{}, err
+			return ServiceGetStatisticsResponse{}, err
 		}
 		result.Date = &date
+	}
+	if err := resp.UnmarshalAsXML(&result.TableServiceStats); err != nil {
+		return ServiceGetStatisticsResponse{}, err
 	}
 	return result, nil
 }

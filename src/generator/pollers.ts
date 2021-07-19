@@ -4,12 +4,11 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Session } from '@autorest/extension-base';
-import { CodeModel, SchemaType, Schema, ArraySchema } from '@autorest/codemodel';
+import { CodeModel, ObjectSchema, Property } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
-import { internalPagerTypeName, internalPollerTypeName, PollerInfo } from '../common/helpers';
-import { contentPreamble, sortAscending } from './helpers';
+import { internalPagerTypeName, internalPollerTypeName, PagerInfo, PollerInfo } from '../common/helpers';
+import { contentPreamble, getFinalResponseEnvelopeName, getResultFieldName, sortAscending } from './helpers';
 import { ImportManager } from './imports';
-import { ensureNameCase } from '../transform/namer';
 
 // Creates the content in pollers.go
 export async function generatePollers(session: Session<CodeModel>): Promise<string> {
@@ -44,10 +43,8 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
     } else {
       bodyText += '\tpt *azcore.LROPoller\n';
     }
-    if (poller.pager) {
-      bodyText += `\terrHandler ${ensureNameCase(poller.pager.respType, true)}HandleError\n`;
-      bodyText += `\trespHandler ${ensureNameCase(poller.pager.respType, true)}HandleResponse\n`;
-      bodyText += '\tstatusCodes []int\n';
+    if (poller.op.language.go!.pageableType) {
+      bodyText += `\tclient *${poller.op.language.go!.clientName}\n`;
     }
     bodyText += '}\n\n';
     // internal poller methods
@@ -56,9 +53,6 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
     bodyText += pudFinalResp('FinalResponse', poller, imports);
     bodyText += `func (p *${pollerName}) ResumeToken() (string, error) {\n\treturn p.pt.ResumeToken()\n}\n\n`;
     bodyText += pudFinalResp('pollUntilDone', poller, imports);
-    if (poller.pager) {
-      bodyText += pagerHandleResponse(poller);
-    }
   }
   text += imports.text();
   text += bodyText;
@@ -66,14 +60,11 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
 }
 
 function getResponseType(poller: PollerInfo): string {
-  let respType = '*http.Response';
   // check for pager must come first
-  if (poller.pager) {
-    respType = poller.pager.name;
-  } else if (poller.respType) {
-    respType = poller.respEnv;
+  if (poller.op.language.go!.pageableType) {
+    return (<PagerInfo>poller.op.language.go!.pageableType).name;
   }
-  return respType;
+  return getFinalResponseEnvelopeName(poller.op);
 }
 
 function finalResponseDecl(poller: PollerInfo): string {
@@ -96,75 +87,27 @@ function pudFinalResp(op: 'pollUntilDone' | 'FinalResponse', poller: PollerInfo,
     freqParam = ', freq';
   }
   let text = `func (p *${internalPollerTypeName(poller)}) ${op}(ctx context.Context${durParam}) (${getResponseType(poller)}, error) {\n`;
-  if (poller.pager) {
+  if (poller.op.language.go!.pageableType) {
     // pager-pollers have a slightly different impl
-    text += `\trespType := &${ensureNameCase(poller.pager.name, true)}{}\n`;
-    text += `\tresp, err := p.pt.${op.capitalize()}(ctx${freqParam}, respType)\n`;
-    text += `\tif err != nil {\n\t\treturn nil, err\n\t}\n`;
-    text += '\treturn p.handleResponse(&azcore.Response{Response: resp})\n';
-  } else if (poller.respType) {
-    let reference = '';
-    let respByRef = '&';
-    if (poller.respType.type === SchemaType.Array || poller.respType.type === SchemaType.Dictionary) {
-      // arrays and maps are returned by value
-      respByRef = '';
-      // but we need to pass them by reference to the unmarshaller
-      reference = '&';
-    }
-    if (isScalarType(poller.respType)) {
-      text += `\trespType := ${poller.respEnv}{}\n`;
-      reference = '&';
-    } else if (poller.respType.type === SchemaType.Any || poller.respType.type === SchemaType.AnyObject) {
-      text += `\trespType := ${poller.respEnv}{}\n`;
-    } else {
-      text += `\trespType := ${poller.respEnv}{${poller.respField}: ${respByRef}${poller.respType.language.go!.name}{}}\n`;
-    }
-    text += `\tresp, err := p.pt.${op.capitalize()}(ctx${freqParam}, ${reference}respType.${poller.respField})\n`;
-    text += `\tif err != nil {\n\t\treturn ${poller.respEnv}{}, err\n\t}\n`;
-    text += '\trespType.RawResponse = resp\n';
+    text += `\trespType := &${internalPagerTypeName(poller.op.language.go!.pageableType)}{client: p.client}\n`;
+    text += `\tif _, err := p.pt.${op.capitalize()}(ctx${freqParam}, &respType.current.${getResultFieldName(poller.op)}); err != nil {\n\t\treturn nil, err\n\t}\n`;
     text += '\treturn respType, nil\n';
   } else {
-    // poller doesn't return a type
-    text += `\treturn p.pt.${op.capitalize()}(ctx${freqParam}, nil)\n`;
+    const finalRespEnv = <ObjectSchema>poller.op.language.go!.finalResponseEnv;
+    const resultEnv = <Property>finalRespEnv.language.go!.resultEnv;
+    text += `\trespType := ${finalRespEnv.language.go!.name}{}\n`;
+    if (resultEnv) {
+      // the operation returns a model of some sort, probe further
+      const resultProp = <Property>resultEnv.language.go!.resultField;
+      text += `\tresp, err := p.pt.${op.capitalize()}(ctx${freqParam}, &respType.${resultProp.language.go!.name})\n`;
+    } else {
+      // the operation doesn't return a model
+      text += `\tresp, err := p.pt.${op.capitalize()}(ctx${freqParam}, nil)\n`;
+    }
+    text += `\tif err != nil {\n\t\treturn ${finalRespEnv.language.go!.name}{}, err\n\t}\n`;
+    text += '\trespType.RawResponse = resp\n';
+    text += '\treturn respType, nil\n';
   }
   text += '}\n\n';
   return text;
-}
-
-function pagerHandleResponse(poller: PollerInfo): string {
-  let text = `func(p * ${internalPollerTypeName(poller)}) handleResponse(resp * azcore.Response)(${getResponseType(poller)}, error) {\n`;
-  text += `\treturn &${internalPagerTypeName(poller.pager!)}{\n`;
-  text += `\t\tpipeline: p.pt.Pipeline,\n`;
-  text += `\t\tresp: resp,\n`;
-  text += '\t\terrorer: p.errHandler,\n';
-  text += `\t\tresponder: p.respHandler,\n`;
-  text += `\t\tadvancer: func(ctx context.Context, resp ${poller.pager!.respEnv}) (*azcore.Request, error) {\n`;
-  text += `\t\t\treturn azcore.NewRequest(ctx, http.MethodGet, *resp.${poller.pager!.respField}.${poller.pager!.nextLink})\n`;
-  text += '\t\t},\n';
-  text += `\t\tstatusCodes: p.statusCodes,\n`;
-  text += `\t}, nil`;
-  text += '}\n\n';
-  return text;
-}
-
-function isScalarType(schema: Schema): boolean {
-  switch (schema.type) {
-    case SchemaType.Array:
-      return isScalarType((<ArraySchema>schema).elementType);
-    case SchemaType.Boolean:
-    case SchemaType.ByteArray:
-    case SchemaType.Choice:
-    case SchemaType.Duration:
-    case SchemaType.Integer:
-    case SchemaType.Number:
-    case SchemaType.SealedChoice:
-    case SchemaType.String:
-    case SchemaType.Time:
-    case SchemaType.UnixTime:
-    case SchemaType.Uri:
-    case SchemaType.Uuid:
-      return true;
-    default:
-      return false;
-  }
 }

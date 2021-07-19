@@ -58,9 +58,8 @@ func TestGetNull(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	var dt *time.Time
-	if r := cmp.Diff(resp.Value, dt); r != "" {
-		t.Fatal(r)
+	if resp.Value != nil {
+		t.Fatal("expected nil value")
 	}
 }
 
@@ -93,7 +92,7 @@ func TestPutMaxDate(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.StatusCode, http.StatusOK); r != "" {
+	if r := cmp.Diff(resp.RawResponse.StatusCode, http.StatusOK); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -105,7 +104,7 @@ func TestPutMinDate(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.StatusCode, http.StatusOK); r != "" {
+	if r := cmp.Diff(resp.RawResponse.StatusCode, http.StatusOK); r != "" {
 		t.Fatal(r)
 	}
 }

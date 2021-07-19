@@ -219,7 +219,7 @@ func TestNumberPutBigDecimal(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutBigDecimal: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -230,7 +230,7 @@ func TestNumberPutBigDecimalNegativeDecimal(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutBigDecimalNegativeDecimal: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -241,7 +241,7 @@ func TestNumberPutBigDecimalPositiveDecimal(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutBigDecimalPositiveDecimal: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -252,7 +252,7 @@ func TestNumberPutBigDouble(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutBigDouble: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -263,7 +263,7 @@ func TestNumberPutBigDoubleNegativeDecimal(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutBigDoubleNegativeDecimal: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -274,7 +274,7 @@ func TestNumberPutBigDoublePositiveDecimal(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutBigDeoublePositiveDecimal: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -285,7 +285,7 @@ func TestNumberPutBigFloat(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutBigFloat: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -296,7 +296,7 @@ func TestNumberPutSmallDecimal(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutSmallDecimal: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -307,7 +307,7 @@ func TestNumberPutSmallDouble(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutSmallDouble: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -318,7 +318,7 @@ func TestNumberPutSmallFloat(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutSmallFloat: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }

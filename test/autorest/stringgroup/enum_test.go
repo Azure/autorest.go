@@ -53,7 +53,7 @@ func TestEnumGetReferencedConstant(t *testing.T) {
 		t.Fatalf("unexpected status code %d", s)
 	}
 	val := "Sample String"
-	if r := cmp.Diff(result.RefColorConstant, &RefColorConstant{Field1: &val}); r != "" {
+	if r := cmp.Diff(result.RefColorConstant, RefColorConstant{Field1: &val}); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -64,7 +64,7 @@ func TestEnumPutNotExpandable(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutNotExpandable: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -75,7 +75,7 @@ func TestEnumPutReferenced(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutReferenced: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -87,7 +87,7 @@ func TestEnumPutReferencedConstant(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutReferencedConstant: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 

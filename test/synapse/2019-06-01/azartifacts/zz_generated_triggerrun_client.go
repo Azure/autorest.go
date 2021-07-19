@@ -23,19 +23,19 @@ type triggerRunClient struct {
 
 // CancelTriggerInstance - Cancel single trigger instance by runId.
 // If the operation fails it returns the *CloudError error type.
-func (client *triggerRunClient) CancelTriggerInstance(ctx context.Context, triggerName string, runID string, options *TriggerRunCancelTriggerInstanceOptions) (*http.Response, error) {
+func (client *triggerRunClient) CancelTriggerInstance(ctx context.Context, triggerName string, runID string, options *TriggerRunCancelTriggerInstanceOptions) (TriggerRunCancelTriggerInstanceResponse, error) {
 	req, err := client.cancelTriggerInstanceCreateRequest(ctx, triggerName, runID, options)
 	if err != nil {
-		return nil, err
+		return TriggerRunCancelTriggerInstanceResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return TriggerRunCancelTriggerInstanceResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.cancelTriggerInstanceHandleError(resp)
+		return TriggerRunCancelTriggerInstanceResponse{}, client.cancelTriggerInstanceHandleError(resp)
 	}
-	return resp.Response, nil
+	return TriggerRunCancelTriggerInstanceResponse{RawResponse: resp.Response}, nil
 }
 
 // cancelTriggerInstanceCreateRequest creates the CancelTriggerInstance request.
@@ -76,17 +76,17 @@ func (client *triggerRunClient) cancelTriggerInstanceHandleError(resp *azcore.Re
 
 // QueryTriggerRunsByWorkspace - Query trigger runs.
 // If the operation fails it returns the *CloudError error type.
-func (client *triggerRunClient) QueryTriggerRunsByWorkspace(ctx context.Context, filterParameters RunFilterParameters, options *TriggerRunQueryTriggerRunsByWorkspaceOptions) (TriggerRunsQueryResponseResponse, error) {
+func (client *triggerRunClient) QueryTriggerRunsByWorkspace(ctx context.Context, filterParameters RunFilterParameters, options *TriggerRunQueryTriggerRunsByWorkspaceOptions) (TriggerRunQueryTriggerRunsByWorkspaceResponse, error) {
 	req, err := client.queryTriggerRunsByWorkspaceCreateRequest(ctx, filterParameters, options)
 	if err != nil {
-		return TriggerRunsQueryResponseResponse{}, err
+		return TriggerRunQueryTriggerRunsByWorkspaceResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return TriggerRunsQueryResponseResponse{}, err
+		return TriggerRunQueryTriggerRunsByWorkspaceResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return TriggerRunsQueryResponseResponse{}, client.queryTriggerRunsByWorkspaceHandleError(resp)
+		return TriggerRunQueryTriggerRunsByWorkspaceResponse{}, client.queryTriggerRunsByWorkspaceHandleError(resp)
 	}
 	return client.queryTriggerRunsByWorkspaceHandleResponse(resp)
 }
@@ -107,12 +107,12 @@ func (client *triggerRunClient) queryTriggerRunsByWorkspaceCreateRequest(ctx con
 }
 
 // queryTriggerRunsByWorkspaceHandleResponse handles the QueryTriggerRunsByWorkspace response.
-func (client *triggerRunClient) queryTriggerRunsByWorkspaceHandleResponse(resp *azcore.Response) (TriggerRunsQueryResponseResponse, error) {
-	var val *TriggerRunsQueryResponse
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return TriggerRunsQueryResponseResponse{}, err
+func (client *triggerRunClient) queryTriggerRunsByWorkspaceHandleResponse(resp *azcore.Response) (TriggerRunQueryTriggerRunsByWorkspaceResponse, error) {
+	result := TriggerRunQueryTriggerRunsByWorkspaceResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.TriggerRunsQueryResponse); err != nil {
+		return TriggerRunQueryTriggerRunsByWorkspaceResponse{}, err
 	}
-	return TriggerRunsQueryResponseResponse{RawResponse: resp.Response, TriggerRunsQueryResponse: val}, nil
+	return result, nil
 }
 
 // queryTriggerRunsByWorkspaceHandleError handles the QueryTriggerRunsByWorkspace error response.
@@ -130,19 +130,19 @@ func (client *triggerRunClient) queryTriggerRunsByWorkspaceHandleError(resp *azc
 
 // RerunTriggerInstance - Rerun single trigger instance by runId.
 // If the operation fails it returns the *CloudError error type.
-func (client *triggerRunClient) RerunTriggerInstance(ctx context.Context, triggerName string, runID string, options *TriggerRunRerunTriggerInstanceOptions) (*http.Response, error) {
+func (client *triggerRunClient) RerunTriggerInstance(ctx context.Context, triggerName string, runID string, options *TriggerRunRerunTriggerInstanceOptions) (TriggerRunRerunTriggerInstanceResponse, error) {
 	req, err := client.rerunTriggerInstanceCreateRequest(ctx, triggerName, runID, options)
 	if err != nil {
-		return nil, err
+		return TriggerRunRerunTriggerInstanceResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return TriggerRunRerunTriggerInstanceResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.rerunTriggerInstanceHandleError(resp)
+		return TriggerRunRerunTriggerInstanceResponse{}, client.rerunTriggerInstanceHandleError(resp)
 	}
-	return resp.Response, nil
+	return TriggerRunRerunTriggerInstanceResponse{RawResponse: resp.Response}, nil
 }
 
 // rerunTriggerInstanceCreateRequest creates the RerunTriggerInstance request.

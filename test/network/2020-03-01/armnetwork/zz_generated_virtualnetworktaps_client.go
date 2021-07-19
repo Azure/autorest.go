@@ -33,47 +33,47 @@ func NewVirtualNetworkTapsClient(con *armcore.Connection, subscriptionID string)
 
 // BeginCreateOrUpdate - Creates or updates a Virtual Network Tap.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualNetworkTapsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, tapName string, parameters VirtualNetworkTap, options *VirtualNetworkTapsBeginCreateOrUpdateOptions) (VirtualNetworkTapPollerResponse, error) {
+func (client *VirtualNetworkTapsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, tapName string, parameters VirtualNetworkTap, options *VirtualNetworkTapsBeginCreateOrUpdateOptions) (VirtualNetworkTapsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, tapName, parameters, options)
 	if err != nil {
-		return VirtualNetworkTapPollerResponse{}, err
+		return VirtualNetworkTapsCreateOrUpdatePollerResponse{}, err
 	}
-	result := VirtualNetworkTapPollerResponse{
+	result := VirtualNetworkTapsCreateOrUpdatePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("VirtualNetworkTapsClient.CreateOrUpdate", "azure-async-operation", resp, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return VirtualNetworkTapPollerResponse{}, err
+		return VirtualNetworkTapsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &virtualNetworkTapPoller{
+	poller := &virtualNetworkTapsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkTapResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkTapsCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new VirtualNetworkTapPoller from the specified resume token.
-// token - The value must come from a previous call to VirtualNetworkTapPoller.ResumeToken().
-func (client *VirtualNetworkTapsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (VirtualNetworkTapPollerResponse, error) {
+// ResumeCreateOrUpdate creates a new VirtualNetworkTapsCreateOrUpdatePoller from the specified resume token.
+// token - The value must come from a previous call to VirtualNetworkTapsCreateOrUpdatePoller.ResumeToken().
+func (client *VirtualNetworkTapsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (VirtualNetworkTapsCreateOrUpdatePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworkTapsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return VirtualNetworkTapPollerResponse{}, err
+		return VirtualNetworkTapsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &virtualNetworkTapPoller{
+	poller := &virtualNetworkTapsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return VirtualNetworkTapPollerResponse{}, err
+		return VirtualNetworkTapsCreateOrUpdatePollerResponse{}, err
 	}
-	result := VirtualNetworkTapPollerResponse{
+	result := VirtualNetworkTapsCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkTapResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkTapsCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -138,47 +138,47 @@ func (client *VirtualNetworkTapsClient) createOrUpdateHandleError(resp *azcore.R
 
 // BeginDelete - Deletes the specified virtual network tap.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualNetworkTapsClient) BeginDelete(ctx context.Context, resourceGroupName string, tapName string, options *VirtualNetworkTapsBeginDeleteOptions) (HTTPPollerResponse, error) {
+func (client *VirtualNetworkTapsClient) BeginDelete(ctx context.Context, resourceGroupName string, tapName string, options *VirtualNetworkTapsBeginDeleteOptions) (VirtualNetworkTapsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, tapName, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return VirtualNetworkTapsDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := VirtualNetworkTapsDeletePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("VirtualNetworkTapsClient.Delete", "location", resp, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return VirtualNetworkTapsDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &virtualNetworkTapsDeletePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkTapsDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeDelete creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *VirtualNetworkTapsClient) ResumeDelete(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeDelete creates a new VirtualNetworkTapsDeletePoller from the specified resume token.
+// token - The value must come from a previous call to VirtualNetworkTapsDeletePoller.ResumeToken().
+func (client *VirtualNetworkTapsClient) ResumeDelete(ctx context.Context, token string) (VirtualNetworkTapsDeletePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworkTapsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return VirtualNetworkTapsDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &virtualNetworkTapsDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return VirtualNetworkTapsDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := VirtualNetworkTapsDeletePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkTapsDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -243,17 +243,17 @@ func (client *VirtualNetworkTapsClient) deleteHandleError(resp *azcore.Response)
 
 // Get - Gets information about the specified virtual network tap.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualNetworkTapsClient) Get(ctx context.Context, resourceGroupName string, tapName string, options *VirtualNetworkTapsGetOptions) (VirtualNetworkTapResponse, error) {
+func (client *VirtualNetworkTapsClient) Get(ctx context.Context, resourceGroupName string, tapName string, options *VirtualNetworkTapsGetOptions) (VirtualNetworkTapsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, tapName, options)
 	if err != nil {
-		return VirtualNetworkTapResponse{}, err
+		return VirtualNetworkTapsGetResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return VirtualNetworkTapResponse{}, err
+		return VirtualNetworkTapsGetResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return VirtualNetworkTapResponse{}, client.getHandleError(resp)
+		return VirtualNetworkTapsGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -286,12 +286,12 @@ func (client *VirtualNetworkTapsClient) getCreateRequest(ctx context.Context, re
 }
 
 // getHandleResponse handles the Get response.
-func (client *VirtualNetworkTapsClient) getHandleResponse(resp *azcore.Response) (VirtualNetworkTapResponse, error) {
-	var val *VirtualNetworkTap
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return VirtualNetworkTapResponse{}, err
+func (client *VirtualNetworkTapsClient) getHandleResponse(resp *azcore.Response) (VirtualNetworkTapsGetResponse, error) {
+	result := VirtualNetworkTapsGetResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.VirtualNetworkTap); err != nil {
+		return VirtualNetworkTapsGetResponse{}, err
 	}
-	return VirtualNetworkTapResponse{RawResponse: resp.Response, VirtualNetworkTap: val}, nil
+	return result, nil
 }
 
 // getHandleError handles the Get error response.
@@ -309,18 +309,15 @@ func (client *VirtualNetworkTapsClient) getHandleError(resp *azcore.Response) er
 
 // ListAll - Gets all the VirtualNetworkTaps in a subscription.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualNetworkTapsClient) ListAll(options *VirtualNetworkTapsListAllOptions) VirtualNetworkTapListResultPager {
-	return &virtualNetworkTapListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *VirtualNetworkTapsClient) ListAll(options *VirtualNetworkTapsListAllOptions) VirtualNetworkTapsListAllPager {
+	return &virtualNetworkTapsListAllPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listAllCreateRequest(ctx, options)
 		},
-		responder: client.listAllHandleResponse,
-		errorer:   client.listAllHandleError,
-		advancer: func(ctx context.Context, resp VirtualNetworkTapListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp VirtualNetworkTapsListAllResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.VirtualNetworkTapListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -344,12 +341,12 @@ func (client *VirtualNetworkTapsClient) listAllCreateRequest(ctx context.Context
 }
 
 // listAllHandleResponse handles the ListAll response.
-func (client *VirtualNetworkTapsClient) listAllHandleResponse(resp *azcore.Response) (VirtualNetworkTapListResultResponse, error) {
-	var val *VirtualNetworkTapListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return VirtualNetworkTapListResultResponse{}, err
+func (client *VirtualNetworkTapsClient) listAllHandleResponse(resp *azcore.Response) (VirtualNetworkTapsListAllResponse, error) {
+	result := VirtualNetworkTapsListAllResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.VirtualNetworkTapListResult); err != nil {
+		return VirtualNetworkTapsListAllResponse{}, err
 	}
-	return VirtualNetworkTapListResultResponse{RawResponse: resp.Response, VirtualNetworkTapListResult: val}, nil
+	return result, nil
 }
 
 // listAllHandleError handles the ListAll error response.
@@ -367,18 +364,15 @@ func (client *VirtualNetworkTapsClient) listAllHandleError(resp *azcore.Response
 
 // ListByResourceGroup - Gets all the VirtualNetworkTaps in a subscription.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualNetworkTapsClient) ListByResourceGroup(resourceGroupName string, options *VirtualNetworkTapsListByResourceGroupOptions) VirtualNetworkTapListResultPager {
-	return &virtualNetworkTapListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *VirtualNetworkTapsClient) ListByResourceGroup(resourceGroupName string, options *VirtualNetworkTapsListByResourceGroupOptions) VirtualNetworkTapsListByResourceGroupPager {
+	return &virtualNetworkTapsListByResourceGroupPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
 		},
-		responder: client.listByResourceGroupHandleResponse,
-		errorer:   client.listByResourceGroupHandleError,
-		advancer: func(ctx context.Context, resp VirtualNetworkTapListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp VirtualNetworkTapsListByResourceGroupResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.VirtualNetworkTapListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -406,12 +400,12 @@ func (client *VirtualNetworkTapsClient) listByResourceGroupCreateRequest(ctx con
 }
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
-func (client *VirtualNetworkTapsClient) listByResourceGroupHandleResponse(resp *azcore.Response) (VirtualNetworkTapListResultResponse, error) {
-	var val *VirtualNetworkTapListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return VirtualNetworkTapListResultResponse{}, err
+func (client *VirtualNetworkTapsClient) listByResourceGroupHandleResponse(resp *azcore.Response) (VirtualNetworkTapsListByResourceGroupResponse, error) {
+	result := VirtualNetworkTapsListByResourceGroupResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.VirtualNetworkTapListResult); err != nil {
+		return VirtualNetworkTapsListByResourceGroupResponse{}, err
 	}
-	return VirtualNetworkTapListResultResponse{RawResponse: resp.Response, VirtualNetworkTapListResult: val}, nil
+	return result, nil
 }
 
 // listByResourceGroupHandleError handles the ListByResourceGroup error response.
@@ -429,17 +423,17 @@ func (client *VirtualNetworkTapsClient) listByResourceGroupHandleError(resp *azc
 
 // UpdateTags - Updates an VirtualNetworkTap tags.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualNetworkTapsClient) UpdateTags(ctx context.Context, resourceGroupName string, tapName string, tapParameters TagsObject, options *VirtualNetworkTapsUpdateTagsOptions) (VirtualNetworkTapResponse, error) {
+func (client *VirtualNetworkTapsClient) UpdateTags(ctx context.Context, resourceGroupName string, tapName string, tapParameters TagsObject, options *VirtualNetworkTapsUpdateTagsOptions) (VirtualNetworkTapsUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, tapName, tapParameters, options)
 	if err != nil {
-		return VirtualNetworkTapResponse{}, err
+		return VirtualNetworkTapsUpdateTagsResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return VirtualNetworkTapResponse{}, err
+		return VirtualNetworkTapsUpdateTagsResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return VirtualNetworkTapResponse{}, client.updateTagsHandleError(resp)
+		return VirtualNetworkTapsUpdateTagsResponse{}, client.updateTagsHandleError(resp)
 	}
 	return client.updateTagsHandleResponse(resp)
 }
@@ -472,12 +466,12 @@ func (client *VirtualNetworkTapsClient) updateTagsCreateRequest(ctx context.Cont
 }
 
 // updateTagsHandleResponse handles the UpdateTags response.
-func (client *VirtualNetworkTapsClient) updateTagsHandleResponse(resp *azcore.Response) (VirtualNetworkTapResponse, error) {
-	var val *VirtualNetworkTap
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return VirtualNetworkTapResponse{}, err
+func (client *VirtualNetworkTapsClient) updateTagsHandleResponse(resp *azcore.Response) (VirtualNetworkTapsUpdateTagsResponse, error) {
+	result := VirtualNetworkTapsUpdateTagsResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.VirtualNetworkTap); err != nil {
+		return VirtualNetworkTapsUpdateTagsResponse{}, err
 	}
-	return VirtualNetworkTapResponse{RawResponse: resp.Response, VirtualNetworkTap: val}, nil
+	return result, nil
 }
 
 // updateTagsHandleError handles the UpdateTags error response.

@@ -32,18 +32,15 @@ func NewAzureFirewallFqdnTagsClient(con *armcore.Connection, subscriptionID stri
 
 // ListAll - Gets all the Azure Firewall FQDN Tags in a subscription.
 // If the operation fails it returns the *CloudError error type.
-func (client *AzureFirewallFqdnTagsClient) ListAll(options *AzureFirewallFqdnTagsListAllOptions) AzureFirewallFqdnTagListResultPager {
-	return &azureFirewallFqdnTagListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *AzureFirewallFqdnTagsClient) ListAll(options *AzureFirewallFqdnTagsListAllOptions) AzureFirewallFqdnTagsListAllPager {
+	return &azureFirewallFqdnTagsListAllPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listAllCreateRequest(ctx, options)
 		},
-		responder: client.listAllHandleResponse,
-		errorer:   client.listAllHandleError,
-		advancer: func(ctx context.Context, resp AzureFirewallFqdnTagListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp AzureFirewallFqdnTagsListAllResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.AzureFirewallFqdnTagListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -67,12 +64,12 @@ func (client *AzureFirewallFqdnTagsClient) listAllCreateRequest(ctx context.Cont
 }
 
 // listAllHandleResponse handles the ListAll response.
-func (client *AzureFirewallFqdnTagsClient) listAllHandleResponse(resp *azcore.Response) (AzureFirewallFqdnTagListResultResponse, error) {
-	var val *AzureFirewallFqdnTagListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return AzureFirewallFqdnTagListResultResponse{}, err
+func (client *AzureFirewallFqdnTagsClient) listAllHandleResponse(resp *azcore.Response) (AzureFirewallFqdnTagsListAllResponse, error) {
+	result := AzureFirewallFqdnTagsListAllResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.AzureFirewallFqdnTagListResult); err != nil {
+		return AzureFirewallFqdnTagsListAllResponse{}, err
 	}
-	return AzureFirewallFqdnTagListResultResponse{RawResponse: resp.Response, AzureFirewallFqdnTagListResult: val}, nil
+	return result, nil
 }
 
 // listAllHandleError handles the ListAll error response.

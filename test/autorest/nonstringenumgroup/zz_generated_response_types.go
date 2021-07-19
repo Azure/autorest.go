@@ -9,27 +9,52 @@ package nonstringenumgroup
 
 import "net/http"
 
-// FloatEnumResponse is the response envelope for operations that return a FloatEnum type.
-type FloatEnumResponse struct {
+// FloatGetResponse contains the response from method Float.Get.
+type FloatGetResponse struct {
+	FloatGetResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
 
+// FloatGetResult contains the result from method Float.Get.
+type FloatGetResult struct {
 	// List of float enums
 	Value *FloatEnum
 }
 
-// IntEnumResponse is the response envelope for operations that return a IntEnum type.
-type IntEnumResponse struct {
+// FloatPutResponse contains the response from method Float.Put.
+type FloatPutResponse struct {
+	FloatPutResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
 
+// FloatPutResult contains the result from method Float.Put.
+type FloatPutResult struct {
+	Value *string
+}
+
+// IntGetResponse contains the response from method Int.Get.
+type IntGetResponse struct {
+	IntGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// IntGetResult contains the result from method Int.Get.
+type IntGetResult struct {
 	// List of integer enums
 	Value *IntEnum
 }
 
-// StringResponse is the response envelope for operations that return a string type.
-type StringResponse struct {
+// IntPutResponse contains the response from method Int.Put.
+type IntPutResponse struct {
+	IntPutResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-	Value       *string
+}
+
+// IntPutResult contains the result from method Int.Put.
+type IntPutResult struct {
+	Value *string
 }

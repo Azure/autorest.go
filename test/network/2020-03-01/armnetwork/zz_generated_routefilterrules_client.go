@@ -33,47 +33,47 @@ func NewRouteFilterRulesClient(con *armcore.Connection, subscriptionID string) *
 
 // BeginCreateOrUpdate - Creates or updates a route in the specified route filter.
 // If the operation fails it returns the *CloudError error type.
-func (client *RouteFilterRulesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, routeFilterName string, ruleName string, routeFilterRuleParameters RouteFilterRule, options *RouteFilterRulesBeginCreateOrUpdateOptions) (RouteFilterRulePollerResponse, error) {
+func (client *RouteFilterRulesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, routeFilterName string, ruleName string, routeFilterRuleParameters RouteFilterRule, options *RouteFilterRulesBeginCreateOrUpdateOptions) (RouteFilterRulesCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, routeFilterName, ruleName, routeFilterRuleParameters, options)
 	if err != nil {
-		return RouteFilterRulePollerResponse{}, err
+		return RouteFilterRulesCreateOrUpdatePollerResponse{}, err
 	}
-	result := RouteFilterRulePollerResponse{
+	result := RouteFilterRulesCreateOrUpdatePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("RouteFilterRulesClient.CreateOrUpdate", "azure-async-operation", resp, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return RouteFilterRulePollerResponse{}, err
+		return RouteFilterRulesCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &routeFilterRulePoller{
+	poller := &routeFilterRulesCreateOrUpdatePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (RouteFilterRuleResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (RouteFilterRulesCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new RouteFilterRulePoller from the specified resume token.
-// token - The value must come from a previous call to RouteFilterRulePoller.ResumeToken().
-func (client *RouteFilterRulesClient) ResumeCreateOrUpdate(ctx context.Context, token string) (RouteFilterRulePollerResponse, error) {
+// ResumeCreateOrUpdate creates a new RouteFilterRulesCreateOrUpdatePoller from the specified resume token.
+// token - The value must come from a previous call to RouteFilterRulesCreateOrUpdatePoller.ResumeToken().
+func (client *RouteFilterRulesClient) ResumeCreateOrUpdate(ctx context.Context, token string) (RouteFilterRulesCreateOrUpdatePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("RouteFilterRulesClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return RouteFilterRulePollerResponse{}, err
+		return RouteFilterRulesCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &routeFilterRulePoller{
+	poller := &routeFilterRulesCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return RouteFilterRulePollerResponse{}, err
+		return RouteFilterRulesCreateOrUpdatePollerResponse{}, err
 	}
-	result := RouteFilterRulePollerResponse{
+	result := RouteFilterRulesCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (RouteFilterRuleResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (RouteFilterRulesCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -142,47 +142,47 @@ func (client *RouteFilterRulesClient) createOrUpdateHandleError(resp *azcore.Res
 
 // BeginDelete - Deletes the specified rule from a route filter.
 // If the operation fails it returns the *CloudError error type.
-func (client *RouteFilterRulesClient) BeginDelete(ctx context.Context, resourceGroupName string, routeFilterName string, ruleName string, options *RouteFilterRulesBeginDeleteOptions) (HTTPPollerResponse, error) {
+func (client *RouteFilterRulesClient) BeginDelete(ctx context.Context, resourceGroupName string, routeFilterName string, ruleName string, options *RouteFilterRulesBeginDeleteOptions) (RouteFilterRulesDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, routeFilterName, ruleName, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return RouteFilterRulesDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := RouteFilterRulesDeletePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("RouteFilterRulesClient.Delete", "location", resp, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return RouteFilterRulesDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &routeFilterRulesDeletePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (RouteFilterRulesDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeDelete creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *RouteFilterRulesClient) ResumeDelete(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeDelete creates a new RouteFilterRulesDeletePoller from the specified resume token.
+// token - The value must come from a previous call to RouteFilterRulesDeletePoller.ResumeToken().
+func (client *RouteFilterRulesClient) ResumeDelete(ctx context.Context, token string) (RouteFilterRulesDeletePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("RouteFilterRulesClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return RouteFilterRulesDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &routeFilterRulesDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return RouteFilterRulesDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := RouteFilterRulesDeletePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (RouteFilterRulesDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -251,17 +251,17 @@ func (client *RouteFilterRulesClient) deleteHandleError(resp *azcore.Response) e
 
 // Get - Gets the specified rule from a route filter.
 // If the operation fails it returns the *CloudError error type.
-func (client *RouteFilterRulesClient) Get(ctx context.Context, resourceGroupName string, routeFilterName string, ruleName string, options *RouteFilterRulesGetOptions) (RouteFilterRuleResponse, error) {
+func (client *RouteFilterRulesClient) Get(ctx context.Context, resourceGroupName string, routeFilterName string, ruleName string, options *RouteFilterRulesGetOptions) (RouteFilterRulesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, routeFilterName, ruleName, options)
 	if err != nil {
-		return RouteFilterRuleResponse{}, err
+		return RouteFilterRulesGetResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return RouteFilterRuleResponse{}, err
+		return RouteFilterRulesGetResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return RouteFilterRuleResponse{}, client.getHandleError(resp)
+		return RouteFilterRulesGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -298,12 +298,12 @@ func (client *RouteFilterRulesClient) getCreateRequest(ctx context.Context, reso
 }
 
 // getHandleResponse handles the Get response.
-func (client *RouteFilterRulesClient) getHandleResponse(resp *azcore.Response) (RouteFilterRuleResponse, error) {
-	var val *RouteFilterRule
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return RouteFilterRuleResponse{}, err
+func (client *RouteFilterRulesClient) getHandleResponse(resp *azcore.Response) (RouteFilterRulesGetResponse, error) {
+	result := RouteFilterRulesGetResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.RouteFilterRule); err != nil {
+		return RouteFilterRulesGetResponse{}, err
 	}
-	return RouteFilterRuleResponse{RawResponse: resp.Response, RouteFilterRule: val}, nil
+	return result, nil
 }
 
 // getHandleError handles the Get error response.
@@ -321,18 +321,15 @@ func (client *RouteFilterRulesClient) getHandleError(resp *azcore.Response) erro
 
 // ListByRouteFilter - Gets all RouteFilterRules in a route filter.
 // If the operation fails it returns the *CloudError error type.
-func (client *RouteFilterRulesClient) ListByRouteFilter(resourceGroupName string, routeFilterName string, options *RouteFilterRulesListByRouteFilterOptions) RouteFilterRuleListResultPager {
-	return &routeFilterRuleListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *RouteFilterRulesClient) ListByRouteFilter(resourceGroupName string, routeFilterName string, options *RouteFilterRulesListByRouteFilterOptions) RouteFilterRulesListByRouteFilterPager {
+	return &routeFilterRulesListByRouteFilterPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByRouteFilterCreateRequest(ctx, resourceGroupName, routeFilterName, options)
 		},
-		responder: client.listByRouteFilterHandleResponse,
-		errorer:   client.listByRouteFilterHandleError,
-		advancer: func(ctx context.Context, resp RouteFilterRuleListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp RouteFilterRulesListByRouteFilterResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.RouteFilterRuleListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -364,12 +361,12 @@ func (client *RouteFilterRulesClient) listByRouteFilterCreateRequest(ctx context
 }
 
 // listByRouteFilterHandleResponse handles the ListByRouteFilter response.
-func (client *RouteFilterRulesClient) listByRouteFilterHandleResponse(resp *azcore.Response) (RouteFilterRuleListResultResponse, error) {
-	var val *RouteFilterRuleListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return RouteFilterRuleListResultResponse{}, err
+func (client *RouteFilterRulesClient) listByRouteFilterHandleResponse(resp *azcore.Response) (RouteFilterRulesListByRouteFilterResponse, error) {
+	result := RouteFilterRulesListByRouteFilterResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.RouteFilterRuleListResult); err != nil {
+		return RouteFilterRulesListByRouteFilterResponse{}, err
 	}
-	return RouteFilterRuleListResultResponse{RawResponse: resp.Response, RouteFilterRuleListResult: val}, nil
+	return result, nil
 }
 
 // listByRouteFilterHandleError handles the ListByRouteFilter error response.

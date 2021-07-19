@@ -31,19 +31,19 @@ func NewParameterGroupingClient(con *Connection) *ParameterGroupingClient {
 
 // PostMultiParamGroups - Post parameters from multiple different parameter groups
 // If the operation fails it returns the *Error error type.
-func (client *ParameterGroupingClient) PostMultiParamGroups(ctx context.Context, firstParameterGroup *FirstParameterGroup, parameterGroupingPostMultiParamGroupsSecondParamGroup *ParameterGroupingPostMultiParamGroupsSecondParamGroup) (*http.Response, error) {
+func (client *ParameterGroupingClient) PostMultiParamGroups(ctx context.Context, firstParameterGroup *FirstParameterGroup, parameterGroupingPostMultiParamGroupsSecondParamGroup *ParameterGroupingPostMultiParamGroupsSecondParamGroup) (ParameterGroupingPostMultiParamGroupsResponse, error) {
 	req, err := client.postMultiParamGroupsCreateRequest(ctx, firstParameterGroup, parameterGroupingPostMultiParamGroupsSecondParamGroup)
 	if err != nil {
-		return nil, err
+		return ParameterGroupingPostMultiParamGroupsResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return ParameterGroupingPostMultiParamGroupsResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.postMultiParamGroupsHandleError(resp)
+		return ParameterGroupingPostMultiParamGroupsResponse{}, client.postMultiParamGroupsHandleError(resp)
 	}
-	return resp.Response, nil
+	return ParameterGroupingPostMultiParamGroupsResponse{RawResponse: resp.Response}, nil
 }
 
 // postMultiParamGroupsCreateRequest creates the PostMultiParamGroups request.
@@ -87,19 +87,19 @@ func (client *ParameterGroupingClient) postMultiParamGroupsHandleError(resp *azc
 
 // PostOptional - Post a bunch of optional parameters grouped
 // If the operation fails it returns the *Error error type.
-func (client *ParameterGroupingClient) PostOptional(ctx context.Context, options *ParameterGroupingPostOptionalParameters) (*http.Response, error) {
+func (client *ParameterGroupingClient) PostOptional(ctx context.Context, options *ParameterGroupingPostOptionalParameters) (ParameterGroupingPostOptionalResponse, error) {
 	req, err := client.postOptionalCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return ParameterGroupingPostOptionalResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return ParameterGroupingPostOptionalResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.postOptionalHandleError(resp)
+		return ParameterGroupingPostOptionalResponse{}, client.postOptionalHandleError(resp)
 	}
-	return resp.Response, nil
+	return ParameterGroupingPostOptionalResponse{RawResponse: resp.Response}, nil
 }
 
 // postOptionalCreateRequest creates the PostOptional request.
@@ -137,19 +137,19 @@ func (client *ParameterGroupingClient) postOptionalHandleError(resp *azcore.Resp
 
 // PostRequired - Post a bunch of required parameters grouped
 // If the operation fails it returns the *Error error type.
-func (client *ParameterGroupingClient) PostRequired(ctx context.Context, parameterGroupingPostRequiredParameters ParameterGroupingPostRequiredParameters) (*http.Response, error) {
+func (client *ParameterGroupingClient) PostRequired(ctx context.Context, parameterGroupingPostRequiredParameters ParameterGroupingPostRequiredParameters) (ParameterGroupingPostRequiredResponse, error) {
 	req, err := client.postRequiredCreateRequest(ctx, parameterGroupingPostRequiredParameters)
 	if err != nil {
-		return nil, err
+		return ParameterGroupingPostRequiredResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return ParameterGroupingPostRequiredResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.postRequiredHandleError(resp)
+		return ParameterGroupingPostRequiredResponse{}, client.postRequiredHandleError(resp)
 	}
-	return resp.Response, nil
+	return ParameterGroupingPostRequiredResponse{RawResponse: resp.Response}, nil
 }
 
 // postRequiredCreateRequest creates the PostRequired request.
@@ -191,19 +191,19 @@ func (client *ParameterGroupingClient) postRequiredHandleError(resp *azcore.Resp
 
 // PostSharedParameterGroupObject - Post parameters with a shared parameter group object
 // If the operation fails it returns the *Error error type.
-func (client *ParameterGroupingClient) PostSharedParameterGroupObject(ctx context.Context, options *FirstParameterGroup) (*http.Response, error) {
+func (client *ParameterGroupingClient) PostSharedParameterGroupObject(ctx context.Context, options *FirstParameterGroup) (ParameterGroupingPostSharedParameterGroupObjectResponse, error) {
 	req, err := client.postSharedParameterGroupObjectCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return ParameterGroupingPostSharedParameterGroupObjectResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return ParameterGroupingPostSharedParameterGroupObjectResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.postSharedParameterGroupObjectHandleError(resp)
+		return ParameterGroupingPostSharedParameterGroupObjectResponse{}, client.postSharedParameterGroupObjectHandleError(resp)
 	}
-	return resp.Response, nil
+	return ParameterGroupingPostSharedParameterGroupObjectResponse{RawResponse: resp.Response}, nil
 }
 
 // postSharedParameterGroupObjectCreateRequest creates the PostSharedParameterGroupObject request.

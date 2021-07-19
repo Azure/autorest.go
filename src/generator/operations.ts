@@ -5,11 +5,11 @@
 
 import { Session } from '@autorest/extension-base';
 import { comment, KnownMediaType } from '@azure-tools/codegen';
-import { ArraySchema, ByteArraySchema, ChoiceSchema, CodeModel, ConstantSchema, DateTimeSchema, DictionarySchema, GroupProperty, ImplementationLocation, NumberSchema, Operation, Parameter, Property, Protocols, Response, Schema, SchemaResponse, SchemaType } from '@autorest/codemodel';
+import { ArraySchema, ByteArraySchema, ChoiceSchema, CodeModel, ConstantSchema, DateTimeSchema, DictionarySchema, GroupProperty, ImplementationLocation, NumberSchema, ObjectSchema, Operation, Parameter, Property, Protocols, Response, Schema, SchemaResponse, SchemaType } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
-import { aggregateParameters, getResponse, internalPagerTypeName, internalPollerTypeName, isArraySchema, isPageableOperation, isSchemaResponse, isTypePassedByValue, PagerInfo, PollerInfo, isLROOperation, commentLength } from '../common/helpers';
+import { aggregateParameters, getSchemaResponse, internalPagerTypeName, internalPollerTypeName, isArraySchema, isMultiRespOperation, isPageableOperation, isSchemaResponse, isTypePassedByValue, PagerInfo, PollerInfo, isLROOperation, commentLength } from '../common/helpers';
 import { OperationNaming } from '../transform/namer';
-import { contentPreamble, formatParameterTypeName, formatStatusCodes, getStatusCodes, hasDescription, hasSchemaResponse, skipURLEncoding, sortAscending, getCreateRequestParameters, getCreateRequestParametersSig, getMethodParameters, getParamName, formatParamValue, dateFormat, datetimeRFC1123Format, datetimeRFC3339Format, sortParametersByRequired } from './helpers';
+import { contentPreamble, formatParameterTypeName, formatStatusCodes, getFinalResponseEnvelopeName, getResponseEnvelope, getResponseEnvelopeName, getResultFieldName, getStatusCodes, hasDescription, hasResultEnvelope, hasSchemaResponse, skipURLEncoding, sortAscending, getCreateRequestParameters, getCreateRequestParametersSig, getMethodParameters, getParamName, formatParamValue, dateFormat, datetimeRFC1123Format, datetimeRFC3339Format, sortParametersByRequired } from './helpers';
 import { ImportManager } from './imports';
 
 // represents the generated content for an operation group
@@ -47,15 +47,18 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       if (isLROOperation(op)) {
         // generate Begin and Resume methods
         opText += generateLROBeginMethod(op, imports, isARM);
-        opText += generateLROResumeMethod(op, imports, isARM);
+        opText += generateLROResumeMethod(op, isARM);
       }
       opText += generateOperation(op, imports);
       opText += createProtocolRequest(session.model, op, imports);
-      if (!isLROOperation(op)) {
-        // LRO responses are handled elsewhere
+      if (!isLROOperation(op) || isPageableOperation(op)) {
+        // LRO responses are handled elsewhere, with the exception of pageable LROs
         opText += createProtocolResponse(op, imports);
       }
-      opText += createProtocolErrHandler(op, imports);
+      if (!op.language.go!.headAsBoolean) {
+        // HEAD requests never return a response body so there's no error to unmarshal
+        opText += createProtocolErrHandler(op, imports);
+      }
     }
     // stitch it all together
     let text = await contentPreamble(session);
@@ -196,52 +199,31 @@ function formatHeaderResponseValue(propName: string, header: string, schema: Sch
   return text;
 }
 
-function generateMultiRespComment(op: Operation): string {
-  const returnTypes = new Array<string>();
-  for (const response of values(op.responses)) {
-    // the operation might contain a mix of schemas and non-schema responses
-    if (isSchemaResponse(response)) {
-      returnTypes.push(`*${response.schema.language.go!.responseType.name}`);
-    }
-  }
-  return `// Possible return types are ${returnTypes.join(', ')}\n`;
-}
-
 function getZeroReturnValue(op: Operation, apiType: 'api' | 'op' | 'handler'): string {
-  if (!op.responses) {
-    // no responses return *http.Response
-    return 'nil';
-  }
-  if (isMultiRespOperation(op)) {
-    // multi-response APIs return interface{}
-    return 'nil';
-  }
-  const schemaResponse = getResponse(op);
-  let returnType = 'nil';
+  let returnType = `${getResponseEnvelopeName(op)}{}`;
   if (isLROOperation(op)) {
     if (apiType === 'op') {
       // the operation returns an *azcore.Response
       returnType = 'nil';
-    } else if (apiType === 'api') {
-      returnType = 'HTTPPollerResponse{}';
-      if (schemaResponse !== undefined) {
-        returnType = `${schemaResponse.schema.language.go!.lroResponseType.language.go!.name}{}`;
-      }
-    } else {
-      returnType = 'nil';
-      if (schemaResponse !== undefined) {
-        returnType = `${schemaResponse.schema.language.go!.responseType.name}{}`;
-      }
+    } else if (apiType === 'handler' && isPageableOperation(op)) {
+      returnType = `${getFinalResponseEnvelopeName(op)}{}`;
     }
-  } else if (schemaResponse !== undefined) {
-    // simple schema response
-    returnType = `${schemaResponse.schema.language.go!.responseType.name}{}`;
-  } else if (op.language.go!.headAsBoolean === true) {
-    // NOTE: this case must come after the hasSchemaResponse() check to properly handle
-    //       the intersection of head-as-boolean with modeled response headers
-    returnType = 'BooleanResponse{}';
   }
   return returnType
+}
+
+// returns true if the response contains any headers
+function responseHasHeaders(op: Operation): boolean {
+  const resultEnv = hasResultEnvelope(op);
+  if (!resultEnv) {
+    return false;
+  }
+  for (const prop of values((<ObjectSchema>resultEnv.schema).properties)) {
+    if (prop.language.go!.fromHeader) {
+      return true;
+    }
+  }
+  return false;
 }
 
 function generateOperation(op: Operation, imports: ImportManager): string {
@@ -257,9 +239,6 @@ function generateOperation(op: Operation, imports: ImportManager): string {
   if (hasDescription(op.language.go!)) {
     text += `${comment(`${op.language.go!.name} - ${op.language.go!.description}`, "//", undefined, commentLength)}\n`;
   }
-  if (isMultiRespOperation(op)) {
-    text += generateMultiRespComment(op);
-  }
   let opName = op.language.go!.name;
   if (isLROOperation(op)) {
     opName = info.protocolNaming.internalMethod;
@@ -270,14 +249,13 @@ function generateOperation(op: Operation, imports: ImportManager): string {
   if (isPageableOperation(op) && !isLROOperation(op)) {
     imports.add('context');
     text += `\treturn &${internalPagerTypeName(<PagerInfo>op.language.go!.pageableType)}{\n`;
-    text += `\t\tpipeline: client.con.Pipeline(),\n`;
+    text += `\t\tclient: client,\n`;
     text += `\t\trequester: func(ctx context.Context) (*azcore.Request, error) {\n`;
     text += `\t\t\treturn client.${info.protocolNaming.requestMethod}(${reqParams})\n`;
     text += '\t\t},\n';
-    text += `\t\tresponder: client.${info.protocolNaming.responseMethod},\n`;
-    text += `\t\terrorer:   client.${info.protocolNaming.errorMethod},\n`;
-    const pager = <PagerInfo>op.language.go!.pageableType;
-    text += `\t\tadvancer: func(ctx context.Context, resp ${pager.respEnv}) (*azcore.Request, error) {\n`;
+    text += `\t\tadvancer: func(ctx context.Context, resp ${getResponseEnvelopeName(op)}) (*azcore.Request, error) {\n`;
+    const nextLink = op.language.go!.paging.nextLinkName;
+    const response = getResultFieldName(op);
     if (op.language.go!.paging.member) {
       const nextOpParams = getCreateRequestParametersSig(op.language.go!.paging.nextLinkOperation).split(',');
       // keep the parameter names from the name/type tuples and find nextLink param
@@ -285,17 +263,16 @@ function generateOperation(op: Operation, imports: ImportManager): string {
         const paramName = nextOpParams[i].trim().split(' ')[0];
         const paramType = nextOpParams[i].trim().split(' ')[1];
         if (paramName.startsWith('next') && paramType === 'string') {
-          nextOpParams[i] = `*resp.${pager.respField}.${pager.nextLink}`;
+          nextOpParams[i] = `*resp.${response}.${nextLink}`;
         } else {
           nextOpParams[i] = paramName;
         }
       }
       text += `\t\t\treturn client.${op.language.go!.paging.member}CreateRequest(${nextOpParams.join(', ')})\n`;
     } else {
-      text += `\t\t\treturn azcore.NewRequest(ctx, http.MethodGet, *resp.${pager.respField}.${pager.nextLink})\n`;
+      text += `\t\t\treturn azcore.NewRequest(ctx, http.MethodGet, *resp.${response}.${nextLink})\n`;
     }
-    text += `\t\t},\n`;
-    text += `\t\tstatusCodes: []int{${formatStatusCodes(statusCodes)}},\n`;
+    text += '\t\t},\n';
     text += `\t}\n`;
     text += '}\n\n';
     return text;
@@ -309,27 +286,27 @@ function generateOperation(op: Operation, imports: ImportManager): string {
   text += `\tif err != nil {\n`;
   text += `\t\treturn ${zeroResp}, err\n`;
   text += `\t}\n`;
-  // HAB with schema response is handled in protocol responder
-  if (op.language.go!.headAsBoolean === true && op.responses && getResponse(op) === undefined) {
-    let respEnv = 'BooleanResponse';
+  // HAB with headers response is handled in protocol responder
+  if (op.language.go!.headAsBoolean && !responseHasHeaders(op)) {
+    text += `\tresult := ${getResponseEnvelopeName(op)}{RawResponse: resp.Response}\n`;
     text += '\tif resp.StatusCode >= 200 && resp.StatusCode < 300 {\n';
-    text += `\t\treturn ${respEnv}{RawResponse: resp.Response, Success: true}, nil\n`;
-    text += '\t} else if resp.StatusCode >= 400 && resp.StatusCode < 500 {\n';
-    text += `\t\treturn ${respEnv}{RawResponse: resp.Response, Success: false}, nil\n`;
-    text += '\t} else {\n';
-    text += `\t\treturn ${zeroResp}, client.${info.protocolNaming.errorMethod}(resp)\n`;
+    text += '\t\tresult.Success = true\n';
     text += '\t}\n';
+    text += '\treturn result, nil\n';
   } else {
-    text += `\tif !resp.HasStatusCode(${formatStatusCodes(statusCodes)}) {\n`;
-    text += `\t\treturn ${zeroResp}, client.${info.protocolNaming.errorMethod}(resp)\n`;
-    text += '\t}\n';
+    // for complex HAB the status code check isn't applicable
+    if (!op.language.go!.headAsBoolean) {
+      text += `\tif !resp.HasStatusCode(${formatStatusCodes(statusCodes)}) {\n`;
+      text += `\t\treturn ${zeroResp}, client.${info.protocolNaming.errorMethod}(resp)\n`;
+      text += '\t}\n';
+    }
     if (isLROOperation(op)) {
       text += '\t return resp, nil\n';
     } else if (needsResponseHandler(op)) {
       // also cheating here as at present the only param to the responder is an azcore.Response
       text += `\treturn client.${info.protocolNaming.responseMethod}(resp)\n`;
     } else {
-      text += '\treturn resp.Response, nil\n';
+      text += `\treturn ${getResponseEnvelopeName(op)}{RawResponse: resp.Response}, nil\n`;
     }
   }
   text += '}\n\n';
@@ -670,22 +647,19 @@ function isArrayOfDatesForMarshalling(schema: Schema): boolean {
 }
 
 function needsResponseHandler(op: Operation): boolean {
-  return hasSchemaResponse(op) || (isLROOperation(op) && hasSchemaResponse(op)) || isPageableOperation(op);
+  return hasSchemaResponse(op) || responseHasHeaders(op) || (isLROOperation(op) && hasResultEnvelope(op) !== undefined) || isPageableOperation(op);
 }
 
-function generateResponseUnmarshaller(op: Operation, response: Response, imports: ImportManager): string {
+function generateResponseUnmarshaller(op: Operation, response: SchemaResponse, unmarshalTarget: string): string {
   let unmarshallerText = '';
   const zeroValue = getZeroReturnValue(op, 'handler');
-  if (!isSchemaResponse(response)) {
-    throw new Error(`generateResponseUnmarshaller() called for operation that doesn't return a schema`);
-  } else if (response.schema.type === SchemaType.DateTime || response.schema.type === SchemaType.UnixTime || response.schema.type === SchemaType.Date) {
+  if (response.schema.type === SchemaType.DateTime || response.schema.type === SchemaType.UnixTime || response.schema.type === SchemaType.Date) {
     // use the designated time type for unmarshalling
     unmarshallerText += `\tvar aux *${response.schema.language.go!.internalTimeType}\n`;
     unmarshallerText += `\tif err := resp.UnmarshalAs${getMediaType(response.protocol)}(&aux); err != nil {\n`;
     unmarshallerText += `\t\treturn ${zeroValue}, err\n`;
     unmarshallerText += '\t}\n';
-    const resp = `${response.schema.language.go!.responseType.name}{RawResponse: resp.Response, ${response.schema.language.go!.responseType.value}: (*time.Time)(aux)}`;
-    unmarshallerText += `\treturn ${resp}, nil\n`;
+    unmarshallerText += `\tresult.${getResultFieldName(op)} = (*time.Time)(aux)\n`;
     return unmarshallerText;
   } else if (isArrayOfDateTime(response.schema) || isArrayOfDate(response.schema)) {
     // unmarshalling arrays of date/time is a little more involved
@@ -697,8 +671,7 @@ function generateResponseUnmarshaller(op: Operation, response: Response, imports
     unmarshallerText += '\tfor i := 0; i < len(aux); i++ {\n';
     unmarshallerText += '\t\tcp[i] = (*time.Time)(aux[i])\n';
     unmarshallerText += '\t}\n';
-    const resp = `${response.schema.language.go!.responseType.name}{RawResponse: resp.Response, ${response.schema.language.go!.responseType.value}: cp}`;
-    unmarshallerText += `\treturn ${resp}, nil\n`;
+    unmarshallerText += `\tresult.${getResultFieldName(op)} = cp\n`;
     return unmarshallerText;
   } else if (isMapOfDateTime(response.schema) || isMapOfDate(response.schema)) {
     unmarshallerText += `\taux := map[string]*${(<DictionarySchema>response.schema).elementType.language.go!.internalTimeType}{}\n`;
@@ -709,67 +682,14 @@ function generateResponseUnmarshaller(op: Operation, response: Response, imports
     unmarshallerText += `\tfor k, v := range aux {\n`;
     unmarshallerText += `\t\tcp[k] = (*time.Time)(v)\n`;
     unmarshallerText += `\t}\n`;
-    const resp = `${response.schema.language.go!.responseType.name}{RawResponse: resp.Response, ${response.schema.language.go!.responseType.value}: cp}`;
-    unmarshallerText += `\treturn ${resp}, nil\n`;
+    unmarshallerText += `\tresult.${getResultFieldName(op)} = cp\n`;
     return unmarshallerText;
   }
-  const schemaResponse = <SchemaResponse>response;
   const mediaType = getMediaType(response.protocol);
-  const headerVals = new Array<Property>();
-  for (const prop of values(<Array<Property>>schemaResponse.schema.language.go!.properties)) {
-    if (prop.language.go!.fromHeader) {
-      headerVals.push(prop);
-    }
-  }
-  const addHeaderVals = function () {
-    for (const headerVal of values(headerVals)) {
-      unmarshallerText += formatHeaderResponseValue(headerVal.language.go!.name, headerVal.language.go!.fromHeader, headerVal.schema, imports, 'result', `${response.schema.language.go!.responseType.name}{}`);
-    }
-  };
-  if (op.language.go!.headAsBoolean === true) {
-    unmarshallerText += `\tresult := ${schemaResponse.schema.language.go!.responseType.name}{RawResponse: resp.Response}\n`;
-    unmarshallerText += '\tif resp.StatusCode >= 200 && resp.StatusCode < 300 {\n';
-    unmarshallerText += '\t\tresult.Success = true\n';
+  if (mediaType === 'JSON' || mediaType === 'XML') {
+    unmarshallerText += `\tif err := resp.UnmarshalAs${getMediaFormat(response.schema, mediaType, `&${unmarshalTarget}`)}; err != nil {\n`;
+    unmarshallerText += `\t\treturn ${zeroValue}, err\n`;
     unmarshallerText += '\t}\n';
-    addHeaderVals();
-    unmarshallerText += '\treturn result, nil\n';
-  } else if (mediaType === 'JSON' || mediaType === 'XML') {
-    const unmarshalInto = function (target: string) {
-      unmarshallerText += `\tif err := resp.UnmarshalAs${getMediaFormat(response.schema, mediaType, `&${target}`)}; err != nil {\n`;
-      unmarshallerText += `\t\treturn ${zeroValue}, err\n`;
-      unmarshallerText += '\t}\n';
-    };
-    // when unmarshalling a wrapped XML array or discriminated type, unmarshal into the response envelope
-    if ((mediaType === 'XML' && schemaResponse.schema.type === SchemaType.Array) || schemaResponse.schema.language.go!.discriminatorInterface) {
-      unmarshallerText += `\tresult := ${schemaResponse.schema.language.go!.responseType.name}{RawResponse: resp.Response}\n`;
-      unmarshalInto('result');
-      addHeaderVals();
-      unmarshallerText += `\treturn result, nil\n`;
-    } else {
-      // unmarshall the result into a temp, this is to avoid allocating the response envelope on the heap
-      let pointer = '*';
-      if (schemaResponse.schema.language.go!.responseType.byValue === true) {
-        pointer = '';
-      }
-      unmarshallerText += `\tvar val ${pointer}${schemaResponse.schema.language.go!.name}\n`;
-      unmarshalInto('val');
-      if (headerVals.length === 0) {
-        unmarshallerText += `return ${schemaResponse.schema.language.go!.responseType.name}{RawResponse: resp.Response, ${schemaResponse.schema.language.go!.responseType.value}: val}, nil\n`;
-      } else {
-        unmarshallerText += `\tresult := ${schemaResponse.schema.language.go!.responseType.name}{RawResponse: resp.Response, ${schemaResponse.schema.language.go!.responseType.value}: val}\n`;
-        addHeaderVals();
-        unmarshallerText += `\treturn result, nil\n`;
-      }
-    }
-  } else {
-    // nothing to unmarshall, check if any headers need to be populated
-    if (headerVals.length === 0) {
-      unmarshallerText += `\treturn ${schemaResponse.schema.language.go!.responseType.name}{RawResponse: resp.Response}, nil\n`;
-    } else {
-      unmarshallerText += `\tresult := ${schemaResponse.schema.language.go!.responseType.name}{RawResponse: resp.Response}\n`;
-      addHeaderVals();
-      unmarshallerText += '\treturn result, nil\n';
-    }
   }
   return unmarshallerText;
 }
@@ -783,23 +703,61 @@ function createProtocolResponse(op: Operation, imports: ImportManager): string {
   const clientName = op.language.go!.clientName;
   let text = `${comment(name, '// ')} handles the ${info.name} response.\n`;
   text += `func (client *${clientName}) ${name}(resp *azcore.Response) (${generateReturnsInfo(op, 'handler').join(', ')}) {\n`;
+  const addHeaders = function (props?: Property[]) {
+    const headerVals = new Array<Property>();
+    for (const prop of values(props)) {
+      if (prop.language.go!.fromHeader) {
+        headerVals.push(prop);
+      }
+    }
+    for (const headerVal of values(headerVals)) {
+      text += formatHeaderResponseValue(headerVal.language.go!.name, headerVal.language.go!.fromHeader, headerVal.schema, imports, 'result', `${getResponseEnvelopeName(op)}{}`);
+    }
+  }
   if (!isMultiRespOperation(op)) {
-    const schemaResponse = getResponse(op);
-    text += generateResponseUnmarshaller(op, schemaResponse!, imports);
+    let respEnv = getResponseEnvelopeName(op);
+    if (isLROOperation(op)) {
+      respEnv = getFinalResponseEnvelopeName(op);
+    }
+    text += `\tresult := ${respEnv}{RawResponse: resp.Response}\n`;
+    // we know there's a result envelope at this point
+    const resultEnv = hasResultEnvelope(op);
+    addHeaders((<ObjectSchema>resultEnv!.schema).properties);
+    const schemaResponse = getSchemaResponse(op);
+    if (op.language.go!.headAsBoolean === true) {
+      text += '\tif resp.StatusCode >= 200 && resp.StatusCode < 300 {\n';
+      text += '\t\tresult.Success = true\n';
+      text += '\t}\n';
+    } else if (schemaResponse) {
+      // when unmarshalling a wrapped XML array or discriminated type, unmarshal into the response envelope
+      let target = `result.${getResultFieldName(op)}`
+      if ((getMediaType(schemaResponse.protocol) === 'XML' && schemaResponse.schema.type === SchemaType.Array) || schemaResponse.schema.language.go!.discriminatorInterface) {
+        target = 'result';
+      }
+      text += generateResponseUnmarshaller(op, schemaResponse, target);
+    }
+    text += '\treturn result, nil\n';
   } else {
     imports.add('fmt');
+    text += `\tresult := ${getResponseEnvelopeName(op)}{RawResponse: resp.Response}\n`;
+    // unmarshal any header values
+    const respEnv = getResponseEnvelope(op);
+    addHeaders(respEnv.properties);
     text += '\tswitch resp.StatusCode {\n';
     for (const response of values(op.responses)) {
+      text += `\tcase ${formatStatusCodes(response.protocol.http!.statusCodes)}:\n`
       if (!isSchemaResponse(response)) {
         // the operation contains a mix of schemas and non-schema responses
         continue;
       }
-      text += `\tcase ${formatStatusCodes(response.protocol.http!.statusCodes)}:\n`
-      text += generateResponseUnmarshaller(op, response, imports);
+      text += `\tvar val ${response.schema.language.go!.name}\n`;
+      text += generateResponseUnmarshaller(op, response, 'val');
+      text += `\tresult.Value = val\n`;
     }
     text += '\tdefault:\n';
-    text += `\t\treturn nil, fmt.Errorf("unhandled HTTP status code %d", resp.StatusCode)\n`;
+    text += `\t\treturn ${getZeroReturnValue(op, 'handler')}, fmt.Errorf("unhandled HTTP status code %d", resp.StatusCode)\n`;
     text += '\t}\n';
+    text += '\treturn result, nil\n';
   }
   text += '}\n\n';
   return text;
@@ -1008,24 +966,16 @@ function getAPIParametersSig(op: Operation, imports: ImportManager): string {
 //    op - for the operation
 // handler - for the response handler
 function generateReturnsInfo(op: Operation, apiType: 'api' | 'op' | 'handler'): string[] {
-  if (!op.responses) {
-    return ['*http.Response', 'error'];
-  }
-  if (isMultiRespOperation(op)) {
-    return ['interface{}', 'error'];
-  }
-  const schemaResponse = getResponse(op);
-  let returnType = '*http.Response';
+  let returnType = getResponseEnvelopeName(op);
   if (isLROOperation(op)) {
     switch (apiType) {
       case 'handler':
         // we only have a handler for operations that return a schema
-        returnType = schemaResponse!.schema.language.go!.responseType.name;
-        break;
-      case 'api':
-        returnType = 'HTTPPollerResponse';
-        if (schemaResponse !== undefined) {
-          returnType = schemaResponse.schema.language.go!.lroResponseType.language.go!.name;
+        if (isPageableOperation(op)) {
+          // we need to consult the final response type name
+          returnType = getFinalResponseEnvelopeName(op);
+        } else {
+          throw new Error(`handler being generated for non-pageable LRO ${op.language.go!.name} which is unexpected`);
         }
         break;
       case 'op':
@@ -1034,22 +984,11 @@ function generateReturnsInfo(op: Operation, apiType: 'api' | 'op' | 'handler'): 
     }
   } else if (isPageableOperation(op)) {
     switch (apiType) {
-      case 'handler':
-        // pageable operations always return a schema
-        returnType = schemaResponse!.schema.language.go!.responseType.name;
-        break;
       case 'api':
       case 'op':
         // pager operations don't return an error
-        return [op.language.go!.pageableType.name];
+        return [(<PagerInfo>op.language.go!.pageableType).name];
     }
-  } else if (schemaResponse !== undefined) {
-    // simple schema response
-    returnType = schemaResponse.schema.language.go!.responseType.name;
-  } else if (op.language.go!.headAsBoolean === true) {
-    // NOTE: this case must come after the hasSchemaResponse() check to properly handle
-    //       the intersection of head-as-boolean with modeled response headers
-    return ['BooleanResponse', 'error'];
   }
   return [returnType, 'error'];
 }
@@ -1075,12 +1014,7 @@ function generateLROBeginMethod(op: Operation, imports: ImportManager, isARM: bo
   text += `\tif err != nil {\n`;
   text += `\t\treturn ${zeroResp}, err\n`;
   text += `\t}\n`;
-  const schemaResponse = getResponse(op);
-  if (schemaResponse === undefined) {
-    text += '\tresult := HTTPPollerResponse{\n';
-  } else {
-    text += `\tresult := ${schemaResponse.schema.language.go!.lroResponseType.language.go!.name}{\n`;
-  }
+  text += `\tresult := ${getResponseEnvelopeName(op)}{\n`;
   text += '\t\tRawResponse: resp.Response,\n';
   text += '\t}\n';
   if (isARM) {
@@ -1097,16 +1031,14 @@ function generateLROBeginMethod(op: Operation, imports: ImportManager, isARM: bo
   text += '\tif err != nil {\n';
   text += `\t\treturn ${zeroResp}, err\n`;
   text += '\t}\n';
-  text += emitPoller(op, imports);
+  text += emitPoller(op);
   text += '\tresult.Poller = poller\n';
   // determine the poller response based on the name and whether is is a pageable operation
-  let pollerResponse = '*http.Response';
+  let pollerResp = getFinalResponseEnvelopeName(op);
   if (isPageableOperation(op)) {
-    pollerResponse = op.language.go!.pageableType.name;
-  } else if (schemaResponse !== undefined) {
-    pollerResponse = schemaResponse.schema.language.go!.responseType.name;
+    pollerResp = (<PagerInfo>op.language.go!.pageableType).name;
   }
-  text += `\tresult.PollUntilDone = func(ctx context.Context, frequency time.Duration) (${pollerResponse}, error) {\n`;
+  text += `\tresult.PollUntilDone = func(ctx context.Context, frequency time.Duration) (${pollerResp}, error) {\n`;
   text += `\t\treturn poller.pollUntilDone(ctx, frequency)\n`;
   text += `\t}\n`;
   text += `\treturn result, nil\n`;
@@ -1115,7 +1047,7 @@ function generateLROBeginMethod(op: Operation, imports: ImportManager, isARM: bo
   return text;
 }
 
-function generateLROResumeMethod(op: Operation, imports: ImportManager, isARM: boolean): string {
+function generateLROResumeMethod(op: Operation, isARM: boolean): string {
   const info = <OperationNaming>op.language.go!;
   const clientName = op.language.go!.clientName;
   const returns = generateReturnsInfo(op, 'api');
@@ -1131,28 +1063,21 @@ function generateLROResumeMethod(op: Operation, imports: ImportManager, isARM: b
   text += '\tif err != nil {\n';
   text += `\t\treturn ${zeroResp}, err\n`;
   text += '\t}\n';
-  text += emitPoller(op, imports);
+  text += emitPoller(op);
   text += '\tresp, err := poller.Poll(ctx)\n';
   text += '\tif err != nil {\n';
   text += `\t\treturn ${zeroResp}, err\n`;
   text += '\t}\n';
-  const schemaResponse = getResponse(op);
-  if (schemaResponse === undefined) {
-    text += '\tresult := HTTPPollerResponse{\n';
-  } else {
-    text += `\tresult := ${schemaResponse.schema.language.go!.lroResponseType.language.go!.name}{\n`;
-  }
+  text += `\tresult := ${getResponseEnvelopeName(op)}{\n`;
   text += '\t\tRawResponse: resp,\n';
   text += '\t}\n';
   text += '\tresult.Poller = poller\n';
   // determine the poller response based on the name and whether is is a pageable operation
-  let pollerResponse = '*http.Response';
+  let pollerResp = getFinalResponseEnvelopeName(op);
   if (isPageableOperation(op)) {
-    pollerResponse = op.language.go!.pageableType.name;
-  } else if (schemaResponse !== undefined) {
-    pollerResponse = schemaResponse.schema.language.go!.responseType.name;
+    pollerResp = (<PagerInfo>op.language.go!.pageableType).name;
   }
-  text += `\tresult.PollUntilDone = func(ctx context.Context, frequency time.Duration) (${pollerResponse}, error) {\n`;
+  text += `\tresult.PollUntilDone = func(ctx context.Context, frequency time.Duration) (${pollerResp}, error) {\n`;
   text += `\t\treturn poller.pollUntilDone(ctx, frequency)\n`;
   text += `\t}\n`;
   text += `\treturn result, nil\n`;
@@ -1161,48 +1086,12 @@ function generateLROResumeMethod(op: Operation, imports: ImportManager, isARM: b
   return text;
 }
 
-function emitPoller(op: Operation, imports: ImportManager): string {
+function emitPoller(op: Operation): string {
   let text = `\tpoller := &${internalPollerTypeName(<PollerInfo>op.language.go!.pollerType)}{\n`;
   text += '\t\tpt: pt,\n';
   if (isPageableOperation(op)) {
-    const statusCodes = getStatusCodes(op);
-    if (statusCodes.indexOf('200') < 0) {
-      statusCodes.push('200');
-    }
-    if (statusCodes.indexOf('204') < 0) {
-      statusCodes.push('204');
-    }
-    statusCodes.sort();
-    text += `\t\terrHandler: func(resp *azcore.Response) error {\n`;
-    text += `\t\t\tif resp.HasStatusCode(${formatStatusCodes(statusCodes)}) {\n`;
-    text += `\t\t\t\treturn nil\n`;
-    text += '\t\t\t}\n';
-    const info = <OperationNaming>op.language.go!;
-    text += `\t\t\treturn client.${info.protocolNaming.errorMethod}(resp)\n`;
-    text += '\t\t},\n';
-    const schemaResponse = getResponse(op);
-    text += `\t\trespHandler: func(resp *azcore.Response) (${schemaResponse!.schema.language.go!.responseType.name}, error) {\n`;
-    text += generateResponseUnmarshaller(op, schemaResponse!, imports);
-    text += '\t\t},\n';
-    text += `\t\tstatusCodes: []int{${formatStatusCodes(statusCodes)}},\n`;
+    text += '\t\tclient: client,\n';
   }
   text += '\t}\n';
   return text;
-}
-
-// returns true if the operation returns multiple response types
-function isMultiRespOperation(op: Operation): boolean {
-  // treat LROs as single-response ops
-  if (!op.responses || op.responses.length === 1 || isLROOperation(op)) {
-    return false;
-  }
-  // count the number of distinct schemas returned by this operation
-  const schemaResponses = new Array<SchemaResponse>();
-  for (const response of values(op.responses)) {
-    // perform the comparison by name as some responses have different objects for the same underlying response type
-    if (isSchemaResponse(response) && !values(schemaResponses).where(sr => sr.schema.language.go!.name === response.schema.language.go!.name).any()) {
-      schemaResponses.push(response);
-    }
-  }
-  return schemaResponses.length > 1;
 }

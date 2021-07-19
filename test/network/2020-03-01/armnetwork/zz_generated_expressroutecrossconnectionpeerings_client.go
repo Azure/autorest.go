@@ -33,47 +33,47 @@ func NewExpressRouteCrossConnectionPeeringsClient(con *armcore.Connection, subsc
 
 // BeginCreateOrUpdate - Creates or updates a peering in the specified ExpressRouteCrossConnection.
 // If the operation fails it returns the *CloudError error type.
-func (client *ExpressRouteCrossConnectionPeeringsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, peeringParameters ExpressRouteCrossConnectionPeering, options *ExpressRouteCrossConnectionPeeringsBeginCreateOrUpdateOptions) (ExpressRouteCrossConnectionPeeringPollerResponse, error) {
+func (client *ExpressRouteCrossConnectionPeeringsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, peeringParameters ExpressRouteCrossConnectionPeering, options *ExpressRouteCrossConnectionPeeringsBeginCreateOrUpdateOptions) (ExpressRouteCrossConnectionPeeringsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, crossConnectionName, peeringName, peeringParameters, options)
 	if err != nil {
-		return ExpressRouteCrossConnectionPeeringPollerResponse{}, err
+		return ExpressRouteCrossConnectionPeeringsCreateOrUpdatePollerResponse{}, err
 	}
-	result := ExpressRouteCrossConnectionPeeringPollerResponse{
+	result := ExpressRouteCrossConnectionPeeringsCreateOrUpdatePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("ExpressRouteCrossConnectionPeeringsClient.CreateOrUpdate", "azure-async-operation", resp, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return ExpressRouteCrossConnectionPeeringPollerResponse{}, err
+		return ExpressRouteCrossConnectionPeeringsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &expressRouteCrossConnectionPeeringPoller{
+	poller := &expressRouteCrossConnectionPeeringsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCrossConnectionPeeringResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCrossConnectionPeeringsCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new ExpressRouteCrossConnectionPeeringPoller from the specified resume token.
-// token - The value must come from a previous call to ExpressRouteCrossConnectionPeeringPoller.ResumeToken().
-func (client *ExpressRouteCrossConnectionPeeringsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (ExpressRouteCrossConnectionPeeringPollerResponse, error) {
+// ResumeCreateOrUpdate creates a new ExpressRouteCrossConnectionPeeringsCreateOrUpdatePoller from the specified resume token.
+// token - The value must come from a previous call to ExpressRouteCrossConnectionPeeringsCreateOrUpdatePoller.ResumeToken().
+func (client *ExpressRouteCrossConnectionPeeringsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (ExpressRouteCrossConnectionPeeringsCreateOrUpdatePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("ExpressRouteCrossConnectionPeeringsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return ExpressRouteCrossConnectionPeeringPollerResponse{}, err
+		return ExpressRouteCrossConnectionPeeringsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &expressRouteCrossConnectionPeeringPoller{
+	poller := &expressRouteCrossConnectionPeeringsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return ExpressRouteCrossConnectionPeeringPollerResponse{}, err
+		return ExpressRouteCrossConnectionPeeringsCreateOrUpdatePollerResponse{}, err
 	}
-	result := ExpressRouteCrossConnectionPeeringPollerResponse{
+	result := ExpressRouteCrossConnectionPeeringsCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCrossConnectionPeeringResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCrossConnectionPeeringsCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -142,47 +142,47 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) createOrUpdateHandleErr
 
 // BeginDelete - Deletes the specified peering from the ExpressRouteCrossConnection.
 // If the operation fails it returns the *CloudError error type.
-func (client *ExpressRouteCrossConnectionPeeringsClient) BeginDelete(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, options *ExpressRouteCrossConnectionPeeringsBeginDeleteOptions) (HTTPPollerResponse, error) {
+func (client *ExpressRouteCrossConnectionPeeringsClient) BeginDelete(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, options *ExpressRouteCrossConnectionPeeringsBeginDeleteOptions) (ExpressRouteCrossConnectionPeeringsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, crossConnectionName, peeringName, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return ExpressRouteCrossConnectionPeeringsDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := ExpressRouteCrossConnectionPeeringsDeletePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("ExpressRouteCrossConnectionPeeringsClient.Delete", "location", resp, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return ExpressRouteCrossConnectionPeeringsDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &expressRouteCrossConnectionPeeringsDeletePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCrossConnectionPeeringsDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeDelete creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *ExpressRouteCrossConnectionPeeringsClient) ResumeDelete(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeDelete creates a new ExpressRouteCrossConnectionPeeringsDeletePoller from the specified resume token.
+// token - The value must come from a previous call to ExpressRouteCrossConnectionPeeringsDeletePoller.ResumeToken().
+func (client *ExpressRouteCrossConnectionPeeringsClient) ResumeDelete(ctx context.Context, token string) (ExpressRouteCrossConnectionPeeringsDeletePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("ExpressRouteCrossConnectionPeeringsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return ExpressRouteCrossConnectionPeeringsDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &expressRouteCrossConnectionPeeringsDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return ExpressRouteCrossConnectionPeeringsDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := ExpressRouteCrossConnectionPeeringsDeletePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCrossConnectionPeeringsDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -251,17 +251,17 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) deleteHandleError(resp 
 
 // Get - Gets the specified peering for the ExpressRouteCrossConnection.
 // If the operation fails it returns the *CloudError error type.
-func (client *ExpressRouteCrossConnectionPeeringsClient) Get(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, options *ExpressRouteCrossConnectionPeeringsGetOptions) (ExpressRouteCrossConnectionPeeringResponse, error) {
+func (client *ExpressRouteCrossConnectionPeeringsClient) Get(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, options *ExpressRouteCrossConnectionPeeringsGetOptions) (ExpressRouteCrossConnectionPeeringsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, crossConnectionName, peeringName, options)
 	if err != nil {
-		return ExpressRouteCrossConnectionPeeringResponse{}, err
+		return ExpressRouteCrossConnectionPeeringsGetResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return ExpressRouteCrossConnectionPeeringResponse{}, err
+		return ExpressRouteCrossConnectionPeeringsGetResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return ExpressRouteCrossConnectionPeeringResponse{}, client.getHandleError(resp)
+		return ExpressRouteCrossConnectionPeeringsGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -298,12 +298,12 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) getCreateRequest(ctx co
 }
 
 // getHandleResponse handles the Get response.
-func (client *ExpressRouteCrossConnectionPeeringsClient) getHandleResponse(resp *azcore.Response) (ExpressRouteCrossConnectionPeeringResponse, error) {
-	var val *ExpressRouteCrossConnectionPeering
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ExpressRouteCrossConnectionPeeringResponse{}, err
+func (client *ExpressRouteCrossConnectionPeeringsClient) getHandleResponse(resp *azcore.Response) (ExpressRouteCrossConnectionPeeringsGetResponse, error) {
+	result := ExpressRouteCrossConnectionPeeringsGetResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.ExpressRouteCrossConnectionPeering); err != nil {
+		return ExpressRouteCrossConnectionPeeringsGetResponse{}, err
 	}
-	return ExpressRouteCrossConnectionPeeringResponse{RawResponse: resp.Response, ExpressRouteCrossConnectionPeering: val}, nil
+	return result, nil
 }
 
 // getHandleError handles the Get error response.
@@ -321,18 +321,15 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) getHandleError(resp *az
 
 // List - Gets all peerings in a specified ExpressRouteCrossConnection.
 // If the operation fails it returns the *CloudError error type.
-func (client *ExpressRouteCrossConnectionPeeringsClient) List(resourceGroupName string, crossConnectionName string, options *ExpressRouteCrossConnectionPeeringsListOptions) ExpressRouteCrossConnectionPeeringListPager {
-	return &expressRouteCrossConnectionPeeringListPager{
-		pipeline: client.con.Pipeline(),
+func (client *ExpressRouteCrossConnectionPeeringsClient) List(resourceGroupName string, crossConnectionName string, options *ExpressRouteCrossConnectionPeeringsListOptions) ExpressRouteCrossConnectionPeeringsListPager {
+	return &expressRouteCrossConnectionPeeringsListPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, crossConnectionName, options)
 		},
-		responder: client.listHandleResponse,
-		errorer:   client.listHandleError,
-		advancer: func(ctx context.Context, resp ExpressRouteCrossConnectionPeeringListResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp ExpressRouteCrossConnectionPeeringsListResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ExpressRouteCrossConnectionPeeringList.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -364,12 +361,12 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) listCreateRequest(ctx c
 }
 
 // listHandleResponse handles the List response.
-func (client *ExpressRouteCrossConnectionPeeringsClient) listHandleResponse(resp *azcore.Response) (ExpressRouteCrossConnectionPeeringListResponse, error) {
-	var val *ExpressRouteCrossConnectionPeeringList
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ExpressRouteCrossConnectionPeeringListResponse{}, err
+func (client *ExpressRouteCrossConnectionPeeringsClient) listHandleResponse(resp *azcore.Response) (ExpressRouteCrossConnectionPeeringsListResponse, error) {
+	result := ExpressRouteCrossConnectionPeeringsListResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.ExpressRouteCrossConnectionPeeringList); err != nil {
+		return ExpressRouteCrossConnectionPeeringsListResponse{}, err
 	}
-	return ExpressRouteCrossConnectionPeeringListResponse{RawResponse: resp.Response, ExpressRouteCrossConnectionPeeringList: val}, nil
+	return result, nil
 }
 
 // listHandleError handles the List error response.

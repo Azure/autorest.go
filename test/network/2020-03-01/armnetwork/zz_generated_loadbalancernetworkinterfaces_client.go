@@ -32,18 +32,15 @@ func NewLoadBalancerNetworkInterfacesClient(con *armcore.Connection, subscriptio
 
 // List - Gets associated load balancer network interfaces.
 // If the operation fails it returns the *CloudError error type.
-func (client *LoadBalancerNetworkInterfacesClient) List(resourceGroupName string, loadBalancerName string, options *LoadBalancerNetworkInterfacesListOptions) NetworkInterfaceListResultPager {
-	return &networkInterfaceListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *LoadBalancerNetworkInterfacesClient) List(resourceGroupName string, loadBalancerName string, options *LoadBalancerNetworkInterfacesListOptions) LoadBalancerNetworkInterfacesListPager {
+	return &loadBalancerNetworkInterfacesListPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, loadBalancerName, options)
 		},
-		responder: client.listHandleResponse,
-		errorer:   client.listHandleError,
-		advancer: func(ctx context.Context, resp NetworkInterfaceListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp LoadBalancerNetworkInterfacesListResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.NetworkInterfaceListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -75,12 +72,12 @@ func (client *LoadBalancerNetworkInterfacesClient) listCreateRequest(ctx context
 }
 
 // listHandleResponse handles the List response.
-func (client *LoadBalancerNetworkInterfacesClient) listHandleResponse(resp *azcore.Response) (NetworkInterfaceListResultResponse, error) {
-	var val *NetworkInterfaceListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return NetworkInterfaceListResultResponse{}, err
+func (client *LoadBalancerNetworkInterfacesClient) listHandleResponse(resp *azcore.Response) (LoadBalancerNetworkInterfacesListResponse, error) {
+	result := LoadBalancerNetworkInterfacesListResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.NetworkInterfaceListResult); err != nil {
+		return LoadBalancerNetworkInterfacesListResponse{}, err
 	}
-	return NetworkInterfaceListResultResponse{RawResponse: resp.Response, NetworkInterfaceListResult: val}, nil
+	return result, nil
 }
 
 // listHandleError handles the List error response.

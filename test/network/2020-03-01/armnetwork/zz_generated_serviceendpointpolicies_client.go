@@ -33,47 +33,47 @@ func NewServiceEndpointPoliciesClient(con *armcore.Connection, subscriptionID st
 
 // BeginCreateOrUpdate - Creates or updates a service Endpoint Policies.
 // If the operation fails it returns the *CloudError error type.
-func (client *ServiceEndpointPoliciesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, parameters ServiceEndpointPolicy, options *ServiceEndpointPoliciesBeginCreateOrUpdateOptions) (ServiceEndpointPolicyPollerResponse, error) {
+func (client *ServiceEndpointPoliciesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, parameters ServiceEndpointPolicy, options *ServiceEndpointPoliciesBeginCreateOrUpdateOptions) (ServiceEndpointPoliciesCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, serviceEndpointPolicyName, parameters, options)
 	if err != nil {
-		return ServiceEndpointPolicyPollerResponse{}, err
+		return ServiceEndpointPoliciesCreateOrUpdatePollerResponse{}, err
 	}
-	result := ServiceEndpointPolicyPollerResponse{
+	result := ServiceEndpointPoliciesCreateOrUpdatePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("ServiceEndpointPoliciesClient.CreateOrUpdate", "azure-async-operation", resp, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return ServiceEndpointPolicyPollerResponse{}, err
+		return ServiceEndpointPoliciesCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &serviceEndpointPolicyPoller{
+	poller := &serviceEndpointPoliciesCreateOrUpdatePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ServiceEndpointPolicyResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ServiceEndpointPoliciesCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new ServiceEndpointPolicyPoller from the specified resume token.
-// token - The value must come from a previous call to ServiceEndpointPolicyPoller.ResumeToken().
-func (client *ServiceEndpointPoliciesClient) ResumeCreateOrUpdate(ctx context.Context, token string) (ServiceEndpointPolicyPollerResponse, error) {
+// ResumeCreateOrUpdate creates a new ServiceEndpointPoliciesCreateOrUpdatePoller from the specified resume token.
+// token - The value must come from a previous call to ServiceEndpointPoliciesCreateOrUpdatePoller.ResumeToken().
+func (client *ServiceEndpointPoliciesClient) ResumeCreateOrUpdate(ctx context.Context, token string) (ServiceEndpointPoliciesCreateOrUpdatePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("ServiceEndpointPoliciesClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return ServiceEndpointPolicyPollerResponse{}, err
+		return ServiceEndpointPoliciesCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &serviceEndpointPolicyPoller{
+	poller := &serviceEndpointPoliciesCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return ServiceEndpointPolicyPollerResponse{}, err
+		return ServiceEndpointPoliciesCreateOrUpdatePollerResponse{}, err
 	}
-	result := ServiceEndpointPolicyPollerResponse{
+	result := ServiceEndpointPoliciesCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ServiceEndpointPolicyResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ServiceEndpointPoliciesCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -138,47 +138,47 @@ func (client *ServiceEndpointPoliciesClient) createOrUpdateHandleError(resp *azc
 
 // BeginDelete - Deletes the specified service endpoint policy.
 // If the operation fails it returns the *CloudError error type.
-func (client *ServiceEndpointPoliciesClient) BeginDelete(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, options *ServiceEndpointPoliciesBeginDeleteOptions) (HTTPPollerResponse, error) {
+func (client *ServiceEndpointPoliciesClient) BeginDelete(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, options *ServiceEndpointPoliciesBeginDeleteOptions) (ServiceEndpointPoliciesDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, serviceEndpointPolicyName, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return ServiceEndpointPoliciesDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := ServiceEndpointPoliciesDeletePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("ServiceEndpointPoliciesClient.Delete", "location", resp, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return ServiceEndpointPoliciesDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &serviceEndpointPoliciesDeletePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ServiceEndpointPoliciesDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeDelete creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *ServiceEndpointPoliciesClient) ResumeDelete(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeDelete creates a new ServiceEndpointPoliciesDeletePoller from the specified resume token.
+// token - The value must come from a previous call to ServiceEndpointPoliciesDeletePoller.ResumeToken().
+func (client *ServiceEndpointPoliciesClient) ResumeDelete(ctx context.Context, token string) (ServiceEndpointPoliciesDeletePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("ServiceEndpointPoliciesClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return ServiceEndpointPoliciesDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &serviceEndpointPoliciesDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return ServiceEndpointPoliciesDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := ServiceEndpointPoliciesDeletePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ServiceEndpointPoliciesDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -243,17 +243,17 @@ func (client *ServiceEndpointPoliciesClient) deleteHandleError(resp *azcore.Resp
 
 // Get - Gets the specified service Endpoint Policies in a specified resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *ServiceEndpointPoliciesClient) Get(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, options *ServiceEndpointPoliciesGetOptions) (ServiceEndpointPolicyResponse, error) {
+func (client *ServiceEndpointPoliciesClient) Get(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, options *ServiceEndpointPoliciesGetOptions) (ServiceEndpointPoliciesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, serviceEndpointPolicyName, options)
 	if err != nil {
-		return ServiceEndpointPolicyResponse{}, err
+		return ServiceEndpointPoliciesGetResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return ServiceEndpointPolicyResponse{}, err
+		return ServiceEndpointPoliciesGetResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return ServiceEndpointPolicyResponse{}, client.getHandleError(resp)
+		return ServiceEndpointPoliciesGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -289,12 +289,12 @@ func (client *ServiceEndpointPoliciesClient) getCreateRequest(ctx context.Contex
 }
 
 // getHandleResponse handles the Get response.
-func (client *ServiceEndpointPoliciesClient) getHandleResponse(resp *azcore.Response) (ServiceEndpointPolicyResponse, error) {
-	var val *ServiceEndpointPolicy
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ServiceEndpointPolicyResponse{}, err
+func (client *ServiceEndpointPoliciesClient) getHandleResponse(resp *azcore.Response) (ServiceEndpointPoliciesGetResponse, error) {
+	result := ServiceEndpointPoliciesGetResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.ServiceEndpointPolicy); err != nil {
+		return ServiceEndpointPoliciesGetResponse{}, err
 	}
-	return ServiceEndpointPolicyResponse{RawResponse: resp.Response, ServiceEndpointPolicy: val}, nil
+	return result, nil
 }
 
 // getHandleError handles the Get error response.
@@ -312,18 +312,15 @@ func (client *ServiceEndpointPoliciesClient) getHandleError(resp *azcore.Respons
 
 // List - Gets all the service endpoint policies in a subscription.
 // If the operation fails it returns the *CloudError error type.
-func (client *ServiceEndpointPoliciesClient) List(options *ServiceEndpointPoliciesListOptions) ServiceEndpointPolicyListResultPager {
-	return &serviceEndpointPolicyListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *ServiceEndpointPoliciesClient) List(options *ServiceEndpointPoliciesListOptions) ServiceEndpointPoliciesListPager {
+	return &serviceEndpointPoliciesListPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, options)
 		},
-		responder: client.listHandleResponse,
-		errorer:   client.listHandleError,
-		advancer: func(ctx context.Context, resp ServiceEndpointPolicyListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp ServiceEndpointPoliciesListResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ServiceEndpointPolicyListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -347,12 +344,12 @@ func (client *ServiceEndpointPoliciesClient) listCreateRequest(ctx context.Conte
 }
 
 // listHandleResponse handles the List response.
-func (client *ServiceEndpointPoliciesClient) listHandleResponse(resp *azcore.Response) (ServiceEndpointPolicyListResultResponse, error) {
-	var val *ServiceEndpointPolicyListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ServiceEndpointPolicyListResultResponse{}, err
+func (client *ServiceEndpointPoliciesClient) listHandleResponse(resp *azcore.Response) (ServiceEndpointPoliciesListResponse, error) {
+	result := ServiceEndpointPoliciesListResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.ServiceEndpointPolicyListResult); err != nil {
+		return ServiceEndpointPoliciesListResponse{}, err
 	}
-	return ServiceEndpointPolicyListResultResponse{RawResponse: resp.Response, ServiceEndpointPolicyListResult: val}, nil
+	return result, nil
 }
 
 // listHandleError handles the List error response.
@@ -370,18 +367,15 @@ func (client *ServiceEndpointPoliciesClient) listHandleError(resp *azcore.Respon
 
 // ListByResourceGroup - Gets all service endpoint Policies in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *ServiceEndpointPoliciesClient) ListByResourceGroup(resourceGroupName string, options *ServiceEndpointPoliciesListByResourceGroupOptions) ServiceEndpointPolicyListResultPager {
-	return &serviceEndpointPolicyListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *ServiceEndpointPoliciesClient) ListByResourceGroup(resourceGroupName string, options *ServiceEndpointPoliciesListByResourceGroupOptions) ServiceEndpointPoliciesListByResourceGroupPager {
+	return &serviceEndpointPoliciesListByResourceGroupPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
 		},
-		responder: client.listByResourceGroupHandleResponse,
-		errorer:   client.listByResourceGroupHandleError,
-		advancer: func(ctx context.Context, resp ServiceEndpointPolicyListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp ServiceEndpointPoliciesListByResourceGroupResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ServiceEndpointPolicyListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -409,12 +403,12 @@ func (client *ServiceEndpointPoliciesClient) listByResourceGroupCreateRequest(ct
 }
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
-func (client *ServiceEndpointPoliciesClient) listByResourceGroupHandleResponse(resp *azcore.Response) (ServiceEndpointPolicyListResultResponse, error) {
-	var val *ServiceEndpointPolicyListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ServiceEndpointPolicyListResultResponse{}, err
+func (client *ServiceEndpointPoliciesClient) listByResourceGroupHandleResponse(resp *azcore.Response) (ServiceEndpointPoliciesListByResourceGroupResponse, error) {
+	result := ServiceEndpointPoliciesListByResourceGroupResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.ServiceEndpointPolicyListResult); err != nil {
+		return ServiceEndpointPoliciesListByResourceGroupResponse{}, err
 	}
-	return ServiceEndpointPolicyListResultResponse{RawResponse: resp.Response, ServiceEndpointPolicyListResult: val}, nil
+	return result, nil
 }
 
 // listByResourceGroupHandleError handles the ListByResourceGroup error response.
@@ -432,17 +426,17 @@ func (client *ServiceEndpointPoliciesClient) listByResourceGroupHandleError(resp
 
 // UpdateTags - Updates tags of a service endpoint policy.
 // If the operation fails it returns the *CloudError error type.
-func (client *ServiceEndpointPoliciesClient) UpdateTags(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, parameters TagsObject, options *ServiceEndpointPoliciesUpdateTagsOptions) (ServiceEndpointPolicyResponse, error) {
+func (client *ServiceEndpointPoliciesClient) UpdateTags(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, parameters TagsObject, options *ServiceEndpointPoliciesUpdateTagsOptions) (ServiceEndpointPoliciesUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, serviceEndpointPolicyName, parameters, options)
 	if err != nil {
-		return ServiceEndpointPolicyResponse{}, err
+		return ServiceEndpointPoliciesUpdateTagsResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return ServiceEndpointPolicyResponse{}, err
+		return ServiceEndpointPoliciesUpdateTagsResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return ServiceEndpointPolicyResponse{}, client.updateTagsHandleError(resp)
+		return ServiceEndpointPoliciesUpdateTagsResponse{}, client.updateTagsHandleError(resp)
 	}
 	return client.updateTagsHandleResponse(resp)
 }
@@ -475,12 +469,12 @@ func (client *ServiceEndpointPoliciesClient) updateTagsCreateRequest(ctx context
 }
 
 // updateTagsHandleResponse handles the UpdateTags response.
-func (client *ServiceEndpointPoliciesClient) updateTagsHandleResponse(resp *azcore.Response) (ServiceEndpointPolicyResponse, error) {
-	var val *ServiceEndpointPolicy
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ServiceEndpointPolicyResponse{}, err
+func (client *ServiceEndpointPoliciesClient) updateTagsHandleResponse(resp *azcore.Response) (ServiceEndpointPoliciesUpdateTagsResponse, error) {
+	result := ServiceEndpointPoliciesUpdateTagsResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.ServiceEndpointPolicy); err != nil {
+		return ServiceEndpointPoliciesUpdateTagsResponse{}, err
 	}
-	return ServiceEndpointPolicyResponse{RawResponse: resp.Response, ServiceEndpointPolicy: val}, nil
+	return result, nil
 }
 
 // updateTagsHandleError handles the UpdateTags error response.

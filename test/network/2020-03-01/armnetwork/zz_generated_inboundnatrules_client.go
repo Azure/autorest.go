@@ -33,47 +33,47 @@ func NewInboundNatRulesClient(con *armcore.Connection, subscriptionID string) *I
 
 // BeginCreateOrUpdate - Creates or updates a load balancer inbound nat rule.
 // If the operation fails it returns the *CloudError error type.
-func (client *InboundNatRulesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, inboundNatRuleParameters InboundNatRule, options *InboundNatRulesBeginCreateOrUpdateOptions) (InboundNatRulePollerResponse, error) {
+func (client *InboundNatRulesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, inboundNatRuleParameters InboundNatRule, options *InboundNatRulesBeginCreateOrUpdateOptions) (InboundNatRulesCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, loadBalancerName, inboundNatRuleName, inboundNatRuleParameters, options)
 	if err != nil {
-		return InboundNatRulePollerResponse{}, err
+		return InboundNatRulesCreateOrUpdatePollerResponse{}, err
 	}
-	result := InboundNatRulePollerResponse{
+	result := InboundNatRulesCreateOrUpdatePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("InboundNatRulesClient.CreateOrUpdate", "azure-async-operation", resp, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return InboundNatRulePollerResponse{}, err
+		return InboundNatRulesCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &inboundNatRulePoller{
+	poller := &inboundNatRulesCreateOrUpdatePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (InboundNatRuleResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (InboundNatRulesCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new InboundNatRulePoller from the specified resume token.
-// token - The value must come from a previous call to InboundNatRulePoller.ResumeToken().
-func (client *InboundNatRulesClient) ResumeCreateOrUpdate(ctx context.Context, token string) (InboundNatRulePollerResponse, error) {
+// ResumeCreateOrUpdate creates a new InboundNatRulesCreateOrUpdatePoller from the specified resume token.
+// token - The value must come from a previous call to InboundNatRulesCreateOrUpdatePoller.ResumeToken().
+func (client *InboundNatRulesClient) ResumeCreateOrUpdate(ctx context.Context, token string) (InboundNatRulesCreateOrUpdatePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("InboundNatRulesClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return InboundNatRulePollerResponse{}, err
+		return InboundNatRulesCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &inboundNatRulePoller{
+	poller := &inboundNatRulesCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return InboundNatRulePollerResponse{}, err
+		return InboundNatRulesCreateOrUpdatePollerResponse{}, err
 	}
-	result := InboundNatRulePollerResponse{
+	result := InboundNatRulesCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (InboundNatRuleResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (InboundNatRulesCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -142,47 +142,47 @@ func (client *InboundNatRulesClient) createOrUpdateHandleError(resp *azcore.Resp
 
 // BeginDelete - Deletes the specified load balancer inbound nat rule.
 // If the operation fails it returns the *CloudError error type.
-func (client *InboundNatRulesClient) BeginDelete(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, options *InboundNatRulesBeginDeleteOptions) (HTTPPollerResponse, error) {
+func (client *InboundNatRulesClient) BeginDelete(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, options *InboundNatRulesBeginDeleteOptions) (InboundNatRulesDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, loadBalancerName, inboundNatRuleName, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return InboundNatRulesDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := InboundNatRulesDeletePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("InboundNatRulesClient.Delete", "location", resp, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return InboundNatRulesDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &inboundNatRulesDeletePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (InboundNatRulesDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeDelete creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *InboundNatRulesClient) ResumeDelete(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeDelete creates a new InboundNatRulesDeletePoller from the specified resume token.
+// token - The value must come from a previous call to InboundNatRulesDeletePoller.ResumeToken().
+func (client *InboundNatRulesClient) ResumeDelete(ctx context.Context, token string) (InboundNatRulesDeletePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("InboundNatRulesClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return InboundNatRulesDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &inboundNatRulesDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return InboundNatRulesDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := InboundNatRulesDeletePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (InboundNatRulesDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -251,17 +251,17 @@ func (client *InboundNatRulesClient) deleteHandleError(resp *azcore.Response) er
 
 // Get - Gets the specified load balancer inbound nat rule.
 // If the operation fails it returns the *CloudError error type.
-func (client *InboundNatRulesClient) Get(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, options *InboundNatRulesGetOptions) (InboundNatRuleResponse, error) {
+func (client *InboundNatRulesClient) Get(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, options *InboundNatRulesGetOptions) (InboundNatRulesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, loadBalancerName, inboundNatRuleName, options)
 	if err != nil {
-		return InboundNatRuleResponse{}, err
+		return InboundNatRulesGetResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return InboundNatRuleResponse{}, err
+		return InboundNatRulesGetResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return InboundNatRuleResponse{}, client.getHandleError(resp)
+		return InboundNatRulesGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -301,12 +301,12 @@ func (client *InboundNatRulesClient) getCreateRequest(ctx context.Context, resou
 }
 
 // getHandleResponse handles the Get response.
-func (client *InboundNatRulesClient) getHandleResponse(resp *azcore.Response) (InboundNatRuleResponse, error) {
-	var val *InboundNatRule
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return InboundNatRuleResponse{}, err
+func (client *InboundNatRulesClient) getHandleResponse(resp *azcore.Response) (InboundNatRulesGetResponse, error) {
+	result := InboundNatRulesGetResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.InboundNatRule); err != nil {
+		return InboundNatRulesGetResponse{}, err
 	}
-	return InboundNatRuleResponse{RawResponse: resp.Response, InboundNatRule: val}, nil
+	return result, nil
 }
 
 // getHandleError handles the Get error response.
@@ -324,18 +324,15 @@ func (client *InboundNatRulesClient) getHandleError(resp *azcore.Response) error
 
 // List - Gets all the inbound nat rules in a load balancer.
 // If the operation fails it returns the *CloudError error type.
-func (client *InboundNatRulesClient) List(resourceGroupName string, loadBalancerName string, options *InboundNatRulesListOptions) InboundNatRuleListResultPager {
-	return &inboundNatRuleListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *InboundNatRulesClient) List(resourceGroupName string, loadBalancerName string, options *InboundNatRulesListOptions) InboundNatRulesListPager {
+	return &inboundNatRulesListPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, loadBalancerName, options)
 		},
-		responder: client.listHandleResponse,
-		errorer:   client.listHandleError,
-		advancer: func(ctx context.Context, resp InboundNatRuleListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp InboundNatRulesListResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.InboundNatRuleListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -367,12 +364,12 @@ func (client *InboundNatRulesClient) listCreateRequest(ctx context.Context, reso
 }
 
 // listHandleResponse handles the List response.
-func (client *InboundNatRulesClient) listHandleResponse(resp *azcore.Response) (InboundNatRuleListResultResponse, error) {
-	var val *InboundNatRuleListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return InboundNatRuleListResultResponse{}, err
+func (client *InboundNatRulesClient) listHandleResponse(resp *azcore.Response) (InboundNatRulesListResponse, error) {
+	result := InboundNatRulesListResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.InboundNatRuleListResult); err != nil {
+		return InboundNatRulesListResponse{}, err
 	}
-	return InboundNatRuleListResultResponse{RawResponse: resp.Response, InboundNatRuleListResult: val}, nil
+	return result, nil
 }
 
 // listHandleError handles the List error response.

@@ -24,47 +24,47 @@ type datasetClient struct {
 
 // BeginCreateOrUpdateDataset - Creates or updates a dataset.
 // If the operation fails it returns the *CloudError error type.
-func (client *datasetClient) BeginCreateOrUpdateDataset(ctx context.Context, datasetName string, dataset DatasetResource, options *DatasetBeginCreateOrUpdateDatasetOptions) (DatasetResourcePollerResponse, error) {
+func (client *datasetClient) BeginCreateOrUpdateDataset(ctx context.Context, datasetName string, dataset DatasetResource, options *DatasetBeginCreateOrUpdateDatasetOptions) (DatasetCreateOrUpdateDatasetPollerResponse, error) {
 	resp, err := client.createOrUpdateDataset(ctx, datasetName, dataset, options)
 	if err != nil {
-		return DatasetResourcePollerResponse{}, err
+		return DatasetCreateOrUpdateDatasetPollerResponse{}, err
 	}
-	result := DatasetResourcePollerResponse{
+	result := DatasetCreateOrUpdateDatasetPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := azcore.NewLROPoller("datasetClient.CreateOrUpdateDataset", resp, client.con.Pipeline(), client.createOrUpdateDatasetHandleError)
 	if err != nil {
-		return DatasetResourcePollerResponse{}, err
+		return DatasetCreateOrUpdateDatasetPollerResponse{}, err
 	}
-	poller := &datasetResourcePoller{
+	poller := &datasetCreateOrUpdateDatasetPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DatasetResourceResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DatasetCreateOrUpdateDatasetResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeCreateOrUpdateDataset creates a new DatasetResourcePoller from the specified resume token.
-// token - The value must come from a previous call to DatasetResourcePoller.ResumeToken().
-func (client *datasetClient) ResumeCreateOrUpdateDataset(ctx context.Context, token string) (DatasetResourcePollerResponse, error) {
+// ResumeCreateOrUpdateDataset creates a new DatasetCreateOrUpdateDatasetPoller from the specified resume token.
+// token - The value must come from a previous call to DatasetCreateOrUpdateDatasetPoller.ResumeToken().
+func (client *datasetClient) ResumeCreateOrUpdateDataset(ctx context.Context, token string) (DatasetCreateOrUpdateDatasetPollerResponse, error) {
 	pt, err := azcore.NewLROPollerFromResumeToken("datasetClient.CreateOrUpdateDataset", token, client.con.Pipeline(), client.createOrUpdateDatasetHandleError)
 	if err != nil {
-		return DatasetResourcePollerResponse{}, err
+		return DatasetCreateOrUpdateDatasetPollerResponse{}, err
 	}
-	poller := &datasetResourcePoller{
+	poller := &datasetCreateOrUpdateDatasetPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return DatasetResourcePollerResponse{}, err
+		return DatasetCreateOrUpdateDatasetPollerResponse{}, err
 	}
-	result := DatasetResourcePollerResponse{
+	result := DatasetCreateOrUpdateDatasetPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DatasetResourceResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DatasetCreateOrUpdateDatasetResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -124,47 +124,47 @@ func (client *datasetClient) createOrUpdateDatasetHandleError(resp *azcore.Respo
 
 // BeginDeleteDataset - Deletes a dataset.
 // If the operation fails it returns the *CloudError error type.
-func (client *datasetClient) BeginDeleteDataset(ctx context.Context, datasetName string, options *DatasetBeginDeleteDatasetOptions) (HTTPPollerResponse, error) {
+func (client *datasetClient) BeginDeleteDataset(ctx context.Context, datasetName string, options *DatasetBeginDeleteDatasetOptions) (DatasetDeleteDatasetPollerResponse, error) {
 	resp, err := client.deleteDataset(ctx, datasetName, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return DatasetDeleteDatasetPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := DatasetDeleteDatasetPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := azcore.NewLROPoller("datasetClient.DeleteDataset", resp, client.con.Pipeline(), client.deleteDatasetHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return DatasetDeleteDatasetPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &datasetDeleteDatasetPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DatasetDeleteDatasetResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeDeleteDataset creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *datasetClient) ResumeDeleteDataset(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeDeleteDataset creates a new DatasetDeleteDatasetPoller from the specified resume token.
+// token - The value must come from a previous call to DatasetDeleteDatasetPoller.ResumeToken().
+func (client *datasetClient) ResumeDeleteDataset(ctx context.Context, token string) (DatasetDeleteDatasetPollerResponse, error) {
 	pt, err := azcore.NewLROPollerFromResumeToken("datasetClient.DeleteDataset", token, client.con.Pipeline(), client.deleteDatasetHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return DatasetDeleteDatasetPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &datasetDeleteDatasetPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return DatasetDeleteDatasetPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := DatasetDeleteDatasetPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DatasetDeleteDatasetResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -221,17 +221,17 @@ func (client *datasetClient) deleteDatasetHandleError(resp *azcore.Response) err
 
 // GetDataset - Gets a dataset.
 // If the operation fails it returns the *CloudError error type.
-func (client *datasetClient) GetDataset(ctx context.Context, datasetName string, options *DatasetGetDatasetOptions) (DatasetResourceResponse, error) {
+func (client *datasetClient) GetDataset(ctx context.Context, datasetName string, options *DatasetGetDatasetOptions) (DatasetGetDatasetResponse, error) {
 	req, err := client.getDatasetCreateRequest(ctx, datasetName, options)
 	if err != nil {
-		return DatasetResourceResponse{}, err
+		return DatasetGetDatasetResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return DatasetResourceResponse{}, err
+		return DatasetGetDatasetResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusNotModified) {
-		return DatasetResourceResponse{}, client.getDatasetHandleError(resp)
+		return DatasetGetDatasetResponse{}, client.getDatasetHandleError(resp)
 	}
 	return client.getDatasetHandleResponse(resp)
 }
@@ -259,12 +259,12 @@ func (client *datasetClient) getDatasetCreateRequest(ctx context.Context, datase
 }
 
 // getDatasetHandleResponse handles the GetDataset response.
-func (client *datasetClient) getDatasetHandleResponse(resp *azcore.Response) (DatasetResourceResponse, error) {
-	var val *DatasetResource
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return DatasetResourceResponse{}, err
+func (client *datasetClient) getDatasetHandleResponse(resp *azcore.Response) (DatasetGetDatasetResponse, error) {
+	result := DatasetGetDatasetResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.DatasetResource); err != nil {
+		return DatasetGetDatasetResponse{}, err
 	}
-	return DatasetResourceResponse{RawResponse: resp.Response, DatasetResource: val}, nil
+	return result, nil
 }
 
 // getDatasetHandleError handles the GetDataset error response.
@@ -282,18 +282,15 @@ func (client *datasetClient) getDatasetHandleError(resp *azcore.Response) error 
 
 // GetDatasetsByWorkspace - Lists datasets.
 // If the operation fails it returns the *CloudError error type.
-func (client *datasetClient) GetDatasetsByWorkspace(options *DatasetGetDatasetsByWorkspaceOptions) DatasetListResponsePager {
-	return &datasetListResponsePager{
-		pipeline: client.con.Pipeline(),
+func (client *datasetClient) GetDatasetsByWorkspace(options *DatasetGetDatasetsByWorkspaceOptions) DatasetGetDatasetsByWorkspacePager {
+	return &datasetGetDatasetsByWorkspacePager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.getDatasetsByWorkspaceCreateRequest(ctx, options)
 		},
-		responder: client.getDatasetsByWorkspaceHandleResponse,
-		errorer:   client.getDatasetsByWorkspaceHandleError,
-		advancer: func(ctx context.Context, resp DatasetListResponseResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp DatasetGetDatasetsByWorkspaceResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.DatasetListResponse.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -313,12 +310,12 @@ func (client *datasetClient) getDatasetsByWorkspaceCreateRequest(ctx context.Con
 }
 
 // getDatasetsByWorkspaceHandleResponse handles the GetDatasetsByWorkspace response.
-func (client *datasetClient) getDatasetsByWorkspaceHandleResponse(resp *azcore.Response) (DatasetListResponseResponse, error) {
-	var val *DatasetListResponse
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return DatasetListResponseResponse{}, err
+func (client *datasetClient) getDatasetsByWorkspaceHandleResponse(resp *azcore.Response) (DatasetGetDatasetsByWorkspaceResponse, error) {
+	result := DatasetGetDatasetsByWorkspaceResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.DatasetListResponse); err != nil {
+		return DatasetGetDatasetsByWorkspaceResponse{}, err
 	}
-	return DatasetListResponseResponse{RawResponse: resp.Response, DatasetListResponse: val}, nil
+	return result, nil
 }
 
 // getDatasetsByWorkspaceHandleError handles the GetDatasetsByWorkspace error response.
@@ -336,47 +333,47 @@ func (client *datasetClient) getDatasetsByWorkspaceHandleError(resp *azcore.Resp
 
 // BeginRenameDataset - Renames a dataset.
 // If the operation fails it returns the *CloudError error type.
-func (client *datasetClient) BeginRenameDataset(ctx context.Context, datasetName string, request ArtifactRenameRequest, options *DatasetBeginRenameDatasetOptions) (HTTPPollerResponse, error) {
+func (client *datasetClient) BeginRenameDataset(ctx context.Context, datasetName string, request ArtifactRenameRequest, options *DatasetBeginRenameDatasetOptions) (DatasetRenameDatasetPollerResponse, error) {
 	resp, err := client.renameDataset(ctx, datasetName, request, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return DatasetRenameDatasetPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := DatasetRenameDatasetPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := azcore.NewLROPoller("datasetClient.RenameDataset", resp, client.con.Pipeline(), client.renameDatasetHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return DatasetRenameDatasetPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &datasetRenameDatasetPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DatasetRenameDatasetResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeRenameDataset creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *datasetClient) ResumeRenameDataset(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeRenameDataset creates a new DatasetRenameDatasetPoller from the specified resume token.
+// token - The value must come from a previous call to DatasetRenameDatasetPoller.ResumeToken().
+func (client *datasetClient) ResumeRenameDataset(ctx context.Context, token string) (DatasetRenameDatasetPollerResponse, error) {
 	pt, err := azcore.NewLROPollerFromResumeToken("datasetClient.RenameDataset", token, client.con.Pipeline(), client.renameDatasetHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return DatasetRenameDatasetPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &datasetRenameDatasetPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return DatasetRenameDatasetPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := DatasetRenameDatasetPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DatasetRenameDatasetResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil

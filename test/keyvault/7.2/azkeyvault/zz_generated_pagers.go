@@ -10,49 +10,29 @@ package azkeyvault
 import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"net/http"
 	"reflect"
 )
 
-// CertificateIssuerListResultPager provides iteration over CertificateIssuerListResult pages.
-type CertificateIssuerListResultPager interface {
+type KeyVaultClientGetCertificateIssuersPager interface {
 	azcore.Pager
-
-	// PageResponse returns the current CertificateIssuerListResultResponse.
-	PageResponse() CertificateIssuerListResultResponse
+	// PageResponse returns the current KeyVaultClientGetCertificateIssuersResponse.
+	PageResponse() KeyVaultClientGetCertificateIssuersResponse
 }
 
-type certificateIssuerListResultCreateRequest func(context.Context) (*azcore.Request, error)
-
-type certificateIssuerListResultHandleError func(*azcore.Response) error
-
-type certificateIssuerListResultHandleResponse func(*azcore.Response) (CertificateIssuerListResultResponse, error)
-
-type certificateIssuerListResultAdvancePage func(context.Context, CertificateIssuerListResultResponse) (*azcore.Request, error)
-
-type certificateIssuerListResultPager struct {
-	// the pipeline for making the request
-	pipeline azcore.Pipeline
-	// creates the initial request (non-LRO case)
-	requester certificateIssuerListResultCreateRequest
-	// callback for handling response errors
-	errorer certificateIssuerListResultHandleError
-	// callback for handling the HTTP response
-	responder certificateIssuerListResultHandleResponse
-	// callback for advancing to the next page
-	advancer certificateIssuerListResultAdvancePage
-	// contains the current response
-	current CertificateIssuerListResultResponse
-	// status codes for successful retrieval
-	statusCodes []int
-	// any error encountered
-	err error
+type keyVaultClientGetCertificateIssuersPager struct {
+	client    *KeyVaultClient
+	current   KeyVaultClientGetCertificateIssuersResponse
+	err       error
+	requester func(context.Context) (*azcore.Request, error)
+	advancer  func(context.Context, KeyVaultClientGetCertificateIssuersResponse) (*azcore.Request, error)
 }
 
-func (p *certificateIssuerListResultPager) Err() error {
+func (p *keyVaultClientGetCertificateIssuersPager) Err() error {
 	return p.err
 }
 
-func (p *certificateIssuerListResultPager) NextPage(ctx context.Context) bool {
+func (p *keyVaultClientGetCertificateIssuersPager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -67,16 +47,16 @@ func (p *certificateIssuerListResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	resp, err := p.pipeline.Do(req)
+	resp, err := p.client.con.Pipeline().Do(req)
 	if err != nil {
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(p.statusCodes...) {
-		p.err = p.errorer(resp)
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.client.getCertificateIssuersHandleError(resp)
 		return false
 	}
-	result, err := p.responder(resp)
+	result, err := p.client.getCertificateIssuersHandleResponse(resp)
 	if err != nil {
 		p.err = err
 		return false
@@ -85,50 +65,29 @@ func (p *certificateIssuerListResultPager) NextPage(ctx context.Context) bool {
 	return true
 }
 
-func (p *certificateIssuerListResultPager) PageResponse() CertificateIssuerListResultResponse {
+func (p *keyVaultClientGetCertificateIssuersPager) PageResponse() KeyVaultClientGetCertificateIssuersResponse {
 	return p.current
 }
 
-// CertificateListResultPager provides iteration over CertificateListResult pages.
-type CertificateListResultPager interface {
+type KeyVaultClientGetCertificateVersionsPager interface {
 	azcore.Pager
-
-	// PageResponse returns the current CertificateListResultResponse.
-	PageResponse() CertificateListResultResponse
+	// PageResponse returns the current KeyVaultClientGetCertificateVersionsResponse.
+	PageResponse() KeyVaultClientGetCertificateVersionsResponse
 }
 
-type certificateListResultCreateRequest func(context.Context) (*azcore.Request, error)
-
-type certificateListResultHandleError func(*azcore.Response) error
-
-type certificateListResultHandleResponse func(*azcore.Response) (CertificateListResultResponse, error)
-
-type certificateListResultAdvancePage func(context.Context, CertificateListResultResponse) (*azcore.Request, error)
-
-type certificateListResultPager struct {
-	// the pipeline for making the request
-	pipeline azcore.Pipeline
-	// creates the initial request (non-LRO case)
-	requester certificateListResultCreateRequest
-	// callback for handling response errors
-	errorer certificateListResultHandleError
-	// callback for handling the HTTP response
-	responder certificateListResultHandleResponse
-	// callback for advancing to the next page
-	advancer certificateListResultAdvancePage
-	// contains the current response
-	current CertificateListResultResponse
-	// status codes for successful retrieval
-	statusCodes []int
-	// any error encountered
-	err error
+type keyVaultClientGetCertificateVersionsPager struct {
+	client    *KeyVaultClient
+	current   KeyVaultClientGetCertificateVersionsResponse
+	err       error
+	requester func(context.Context) (*azcore.Request, error)
+	advancer  func(context.Context, KeyVaultClientGetCertificateVersionsResponse) (*azcore.Request, error)
 }
 
-func (p *certificateListResultPager) Err() error {
+func (p *keyVaultClientGetCertificateVersionsPager) Err() error {
 	return p.err
 }
 
-func (p *certificateListResultPager) NextPage(ctx context.Context) bool {
+func (p *keyVaultClientGetCertificateVersionsPager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -143,16 +102,16 @@ func (p *certificateListResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	resp, err := p.pipeline.Do(req)
+	resp, err := p.client.con.Pipeline().Do(req)
 	if err != nil {
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(p.statusCodes...) {
-		p.err = p.errorer(resp)
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.client.getCertificateVersionsHandleError(resp)
 		return false
 	}
-	result, err := p.responder(resp)
+	result, err := p.client.getCertificateVersionsHandleResponse(resp)
 	if err != nil {
 		p.err = err
 		return false
@@ -161,50 +120,84 @@ func (p *certificateListResultPager) NextPage(ctx context.Context) bool {
 	return true
 }
 
-func (p *certificateListResultPager) PageResponse() CertificateListResultResponse {
+func (p *keyVaultClientGetCertificateVersionsPager) PageResponse() KeyVaultClientGetCertificateVersionsResponse {
 	return p.current
 }
 
-// DeletedCertificateListResultPager provides iteration over DeletedCertificateListResult pages.
-type DeletedCertificateListResultPager interface {
+type KeyVaultClientGetCertificatesPager interface {
 	azcore.Pager
-
-	// PageResponse returns the current DeletedCertificateListResultResponse.
-	PageResponse() DeletedCertificateListResultResponse
+	// PageResponse returns the current KeyVaultClientGetCertificatesResponse.
+	PageResponse() KeyVaultClientGetCertificatesResponse
 }
 
-type deletedCertificateListResultCreateRequest func(context.Context) (*azcore.Request, error)
-
-type deletedCertificateListResultHandleError func(*azcore.Response) error
-
-type deletedCertificateListResultHandleResponse func(*azcore.Response) (DeletedCertificateListResultResponse, error)
-
-type deletedCertificateListResultAdvancePage func(context.Context, DeletedCertificateListResultResponse) (*azcore.Request, error)
-
-type deletedCertificateListResultPager struct {
-	// the pipeline for making the request
-	pipeline azcore.Pipeline
-	// creates the initial request (non-LRO case)
-	requester deletedCertificateListResultCreateRequest
-	// callback for handling response errors
-	errorer deletedCertificateListResultHandleError
-	// callback for handling the HTTP response
-	responder deletedCertificateListResultHandleResponse
-	// callback for advancing to the next page
-	advancer deletedCertificateListResultAdvancePage
-	// contains the current response
-	current DeletedCertificateListResultResponse
-	// status codes for successful retrieval
-	statusCodes []int
-	// any error encountered
-	err error
+type keyVaultClientGetCertificatesPager struct {
+	client    *KeyVaultClient
+	current   KeyVaultClientGetCertificatesResponse
+	err       error
+	requester func(context.Context) (*azcore.Request, error)
+	advancer  func(context.Context, KeyVaultClientGetCertificatesResponse) (*azcore.Request, error)
 }
 
-func (p *deletedCertificateListResultPager) Err() error {
+func (p *keyVaultClientGetCertificatesPager) Err() error {
 	return p.err
 }
 
-func (p *deletedCertificateListResultPager) NextPage(ctx context.Context) bool {
+func (p *keyVaultClientGetCertificatesPager) NextPage(ctx context.Context) bool {
+	var req *azcore.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		if p.current.CertificateListResult.NextLink == nil || len(*p.current.CertificateListResult.NextLink) == 0 {
+			return false
+		}
+		req, err = p.advancer(ctx, p.current)
+	} else {
+		req, err = p.requester(ctx)
+	}
+	if err != nil {
+		p.err = err
+		return false
+	}
+	resp, err := p.client.con.Pipeline().Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.client.getCertificatesHandleError(resp)
+		return false
+	}
+	result, err := p.client.getCertificatesHandleResponse(resp)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	p.current = result
+	return true
+}
+
+func (p *keyVaultClientGetCertificatesPager) PageResponse() KeyVaultClientGetCertificatesResponse {
+	return p.current
+}
+
+type KeyVaultClientGetDeletedCertificatesPager interface {
+	azcore.Pager
+	// PageResponse returns the current KeyVaultClientGetDeletedCertificatesResponse.
+	PageResponse() KeyVaultClientGetDeletedCertificatesResponse
+}
+
+type keyVaultClientGetDeletedCertificatesPager struct {
+	client    *KeyVaultClient
+	current   KeyVaultClientGetDeletedCertificatesResponse
+	err       error
+	requester func(context.Context) (*azcore.Request, error)
+	advancer  func(context.Context, KeyVaultClientGetDeletedCertificatesResponse) (*azcore.Request, error)
+}
+
+func (p *keyVaultClientGetDeletedCertificatesPager) Err() error {
+	return p.err
+}
+
+func (p *keyVaultClientGetDeletedCertificatesPager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -219,16 +212,16 @@ func (p *deletedCertificateListResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	resp, err := p.pipeline.Do(req)
+	resp, err := p.client.con.Pipeline().Do(req)
 	if err != nil {
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(p.statusCodes...) {
-		p.err = p.errorer(resp)
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.client.getDeletedCertificatesHandleError(resp)
 		return false
 	}
-	result, err := p.responder(resp)
+	result, err := p.client.getDeletedCertificatesHandleResponse(resp)
 	if err != nil {
 		p.err = err
 		return false
@@ -237,50 +230,29 @@ func (p *deletedCertificateListResultPager) NextPage(ctx context.Context) bool {
 	return true
 }
 
-func (p *deletedCertificateListResultPager) PageResponse() DeletedCertificateListResultResponse {
+func (p *keyVaultClientGetDeletedCertificatesPager) PageResponse() KeyVaultClientGetDeletedCertificatesResponse {
 	return p.current
 }
 
-// DeletedKeyListResultPager provides iteration over DeletedKeyListResult pages.
-type DeletedKeyListResultPager interface {
+type KeyVaultClientGetDeletedKeysPager interface {
 	azcore.Pager
-
-	// PageResponse returns the current DeletedKeyListResultResponse.
-	PageResponse() DeletedKeyListResultResponse
+	// PageResponse returns the current KeyVaultClientGetDeletedKeysResponse.
+	PageResponse() KeyVaultClientGetDeletedKeysResponse
 }
 
-type deletedKeyListResultCreateRequest func(context.Context) (*azcore.Request, error)
-
-type deletedKeyListResultHandleError func(*azcore.Response) error
-
-type deletedKeyListResultHandleResponse func(*azcore.Response) (DeletedKeyListResultResponse, error)
-
-type deletedKeyListResultAdvancePage func(context.Context, DeletedKeyListResultResponse) (*azcore.Request, error)
-
-type deletedKeyListResultPager struct {
-	// the pipeline for making the request
-	pipeline azcore.Pipeline
-	// creates the initial request (non-LRO case)
-	requester deletedKeyListResultCreateRequest
-	// callback for handling response errors
-	errorer deletedKeyListResultHandleError
-	// callback for handling the HTTP response
-	responder deletedKeyListResultHandleResponse
-	// callback for advancing to the next page
-	advancer deletedKeyListResultAdvancePage
-	// contains the current response
-	current DeletedKeyListResultResponse
-	// status codes for successful retrieval
-	statusCodes []int
-	// any error encountered
-	err error
+type keyVaultClientGetDeletedKeysPager struct {
+	client    *KeyVaultClient
+	current   KeyVaultClientGetDeletedKeysResponse
+	err       error
+	requester func(context.Context) (*azcore.Request, error)
+	advancer  func(context.Context, KeyVaultClientGetDeletedKeysResponse) (*azcore.Request, error)
 }
 
-func (p *deletedKeyListResultPager) Err() error {
+func (p *keyVaultClientGetDeletedKeysPager) Err() error {
 	return p.err
 }
 
-func (p *deletedKeyListResultPager) NextPage(ctx context.Context) bool {
+func (p *keyVaultClientGetDeletedKeysPager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -295,16 +267,16 @@ func (p *deletedKeyListResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	resp, err := p.pipeline.Do(req)
+	resp, err := p.client.con.Pipeline().Do(req)
 	if err != nil {
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(p.statusCodes...) {
-		p.err = p.errorer(resp)
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.client.getDeletedKeysHandleError(resp)
 		return false
 	}
-	result, err := p.responder(resp)
+	result, err := p.client.getDeletedKeysHandleResponse(resp)
 	if err != nil {
 		p.err = err
 		return false
@@ -313,50 +285,29 @@ func (p *deletedKeyListResultPager) NextPage(ctx context.Context) bool {
 	return true
 }
 
-func (p *deletedKeyListResultPager) PageResponse() DeletedKeyListResultResponse {
+func (p *keyVaultClientGetDeletedKeysPager) PageResponse() KeyVaultClientGetDeletedKeysResponse {
 	return p.current
 }
 
-// DeletedSasDefinitionListResultPager provides iteration over DeletedSasDefinitionListResult pages.
-type DeletedSasDefinitionListResultPager interface {
+type KeyVaultClientGetDeletedSasDefinitionsPager interface {
 	azcore.Pager
-
-	// PageResponse returns the current DeletedSasDefinitionListResultResponse.
-	PageResponse() DeletedSasDefinitionListResultResponse
+	// PageResponse returns the current KeyVaultClientGetDeletedSasDefinitionsResponse.
+	PageResponse() KeyVaultClientGetDeletedSasDefinitionsResponse
 }
 
-type deletedSasDefinitionListResultCreateRequest func(context.Context) (*azcore.Request, error)
-
-type deletedSasDefinitionListResultHandleError func(*azcore.Response) error
-
-type deletedSasDefinitionListResultHandleResponse func(*azcore.Response) (DeletedSasDefinitionListResultResponse, error)
-
-type deletedSasDefinitionListResultAdvancePage func(context.Context, DeletedSasDefinitionListResultResponse) (*azcore.Request, error)
-
-type deletedSasDefinitionListResultPager struct {
-	// the pipeline for making the request
-	pipeline azcore.Pipeline
-	// creates the initial request (non-LRO case)
-	requester deletedSasDefinitionListResultCreateRequest
-	// callback for handling response errors
-	errorer deletedSasDefinitionListResultHandleError
-	// callback for handling the HTTP response
-	responder deletedSasDefinitionListResultHandleResponse
-	// callback for advancing to the next page
-	advancer deletedSasDefinitionListResultAdvancePage
-	// contains the current response
-	current DeletedSasDefinitionListResultResponse
-	// status codes for successful retrieval
-	statusCodes []int
-	// any error encountered
-	err error
+type keyVaultClientGetDeletedSasDefinitionsPager struct {
+	client    *KeyVaultClient
+	current   KeyVaultClientGetDeletedSasDefinitionsResponse
+	err       error
+	requester func(context.Context) (*azcore.Request, error)
+	advancer  func(context.Context, KeyVaultClientGetDeletedSasDefinitionsResponse) (*azcore.Request, error)
 }
 
-func (p *deletedSasDefinitionListResultPager) Err() error {
+func (p *keyVaultClientGetDeletedSasDefinitionsPager) Err() error {
 	return p.err
 }
 
-func (p *deletedSasDefinitionListResultPager) NextPage(ctx context.Context) bool {
+func (p *keyVaultClientGetDeletedSasDefinitionsPager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -371,16 +322,16 @@ func (p *deletedSasDefinitionListResultPager) NextPage(ctx context.Context) bool
 		p.err = err
 		return false
 	}
-	resp, err := p.pipeline.Do(req)
+	resp, err := p.client.con.Pipeline().Do(req)
 	if err != nil {
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(p.statusCodes...) {
-		p.err = p.errorer(resp)
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.client.getDeletedSasDefinitionsHandleError(resp)
 		return false
 	}
-	result, err := p.responder(resp)
+	result, err := p.client.getDeletedSasDefinitionsHandleResponse(resp)
 	if err != nil {
 		p.err = err
 		return false
@@ -389,50 +340,29 @@ func (p *deletedSasDefinitionListResultPager) NextPage(ctx context.Context) bool
 	return true
 }
 
-func (p *deletedSasDefinitionListResultPager) PageResponse() DeletedSasDefinitionListResultResponse {
+func (p *keyVaultClientGetDeletedSasDefinitionsPager) PageResponse() KeyVaultClientGetDeletedSasDefinitionsResponse {
 	return p.current
 }
 
-// DeletedSecretListResultPager provides iteration over DeletedSecretListResult pages.
-type DeletedSecretListResultPager interface {
+type KeyVaultClientGetDeletedSecretsPager interface {
 	azcore.Pager
-
-	// PageResponse returns the current DeletedSecretListResultResponse.
-	PageResponse() DeletedSecretListResultResponse
+	// PageResponse returns the current KeyVaultClientGetDeletedSecretsResponse.
+	PageResponse() KeyVaultClientGetDeletedSecretsResponse
 }
 
-type deletedSecretListResultCreateRequest func(context.Context) (*azcore.Request, error)
-
-type deletedSecretListResultHandleError func(*azcore.Response) error
-
-type deletedSecretListResultHandleResponse func(*azcore.Response) (DeletedSecretListResultResponse, error)
-
-type deletedSecretListResultAdvancePage func(context.Context, DeletedSecretListResultResponse) (*azcore.Request, error)
-
-type deletedSecretListResultPager struct {
-	// the pipeline for making the request
-	pipeline azcore.Pipeline
-	// creates the initial request (non-LRO case)
-	requester deletedSecretListResultCreateRequest
-	// callback for handling response errors
-	errorer deletedSecretListResultHandleError
-	// callback for handling the HTTP response
-	responder deletedSecretListResultHandleResponse
-	// callback for advancing to the next page
-	advancer deletedSecretListResultAdvancePage
-	// contains the current response
-	current DeletedSecretListResultResponse
-	// status codes for successful retrieval
-	statusCodes []int
-	// any error encountered
-	err error
+type keyVaultClientGetDeletedSecretsPager struct {
+	client    *KeyVaultClient
+	current   KeyVaultClientGetDeletedSecretsResponse
+	err       error
+	requester func(context.Context) (*azcore.Request, error)
+	advancer  func(context.Context, KeyVaultClientGetDeletedSecretsResponse) (*azcore.Request, error)
 }
 
-func (p *deletedSecretListResultPager) Err() error {
+func (p *keyVaultClientGetDeletedSecretsPager) Err() error {
 	return p.err
 }
 
-func (p *deletedSecretListResultPager) NextPage(ctx context.Context) bool {
+func (p *keyVaultClientGetDeletedSecretsPager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -447,16 +377,16 @@ func (p *deletedSecretListResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	resp, err := p.pipeline.Do(req)
+	resp, err := p.client.con.Pipeline().Do(req)
 	if err != nil {
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(p.statusCodes...) {
-		p.err = p.errorer(resp)
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.client.getDeletedSecretsHandleError(resp)
 		return false
 	}
-	result, err := p.responder(resp)
+	result, err := p.client.getDeletedSecretsHandleResponse(resp)
 	if err != nil {
 		p.err = err
 		return false
@@ -465,50 +395,29 @@ func (p *deletedSecretListResultPager) NextPage(ctx context.Context) bool {
 	return true
 }
 
-func (p *deletedSecretListResultPager) PageResponse() DeletedSecretListResultResponse {
+func (p *keyVaultClientGetDeletedSecretsPager) PageResponse() KeyVaultClientGetDeletedSecretsResponse {
 	return p.current
 }
 
-// DeletedStorageListResultPager provides iteration over DeletedStorageListResult pages.
-type DeletedStorageListResultPager interface {
+type KeyVaultClientGetDeletedStorageAccountsPager interface {
 	azcore.Pager
-
-	// PageResponse returns the current DeletedStorageListResultResponse.
-	PageResponse() DeletedStorageListResultResponse
+	// PageResponse returns the current KeyVaultClientGetDeletedStorageAccountsResponse.
+	PageResponse() KeyVaultClientGetDeletedStorageAccountsResponse
 }
 
-type deletedStorageListResultCreateRequest func(context.Context) (*azcore.Request, error)
-
-type deletedStorageListResultHandleError func(*azcore.Response) error
-
-type deletedStorageListResultHandleResponse func(*azcore.Response) (DeletedStorageListResultResponse, error)
-
-type deletedStorageListResultAdvancePage func(context.Context, DeletedStorageListResultResponse) (*azcore.Request, error)
-
-type deletedStorageListResultPager struct {
-	// the pipeline for making the request
-	pipeline azcore.Pipeline
-	// creates the initial request (non-LRO case)
-	requester deletedStorageListResultCreateRequest
-	// callback for handling response errors
-	errorer deletedStorageListResultHandleError
-	// callback for handling the HTTP response
-	responder deletedStorageListResultHandleResponse
-	// callback for advancing to the next page
-	advancer deletedStorageListResultAdvancePage
-	// contains the current response
-	current DeletedStorageListResultResponse
-	// status codes for successful retrieval
-	statusCodes []int
-	// any error encountered
-	err error
+type keyVaultClientGetDeletedStorageAccountsPager struct {
+	client    *KeyVaultClient
+	current   KeyVaultClientGetDeletedStorageAccountsResponse
+	err       error
+	requester func(context.Context) (*azcore.Request, error)
+	advancer  func(context.Context, KeyVaultClientGetDeletedStorageAccountsResponse) (*azcore.Request, error)
 }
 
-func (p *deletedStorageListResultPager) Err() error {
+func (p *keyVaultClientGetDeletedStorageAccountsPager) Err() error {
 	return p.err
 }
 
-func (p *deletedStorageListResultPager) NextPage(ctx context.Context) bool {
+func (p *keyVaultClientGetDeletedStorageAccountsPager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -523,16 +432,16 @@ func (p *deletedStorageListResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	resp, err := p.pipeline.Do(req)
+	resp, err := p.client.con.Pipeline().Do(req)
 	if err != nil {
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(p.statusCodes...) {
-		p.err = p.errorer(resp)
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.client.getDeletedStorageAccountsHandleError(resp)
 		return false
 	}
-	result, err := p.responder(resp)
+	result, err := p.client.getDeletedStorageAccountsHandleResponse(resp)
 	if err != nil {
 		p.err = err
 		return false
@@ -541,50 +450,29 @@ func (p *deletedStorageListResultPager) NextPage(ctx context.Context) bool {
 	return true
 }
 
-func (p *deletedStorageListResultPager) PageResponse() DeletedStorageListResultResponse {
+func (p *keyVaultClientGetDeletedStorageAccountsPager) PageResponse() KeyVaultClientGetDeletedStorageAccountsResponse {
 	return p.current
 }
 
-// KeyListResultPager provides iteration over KeyListResult pages.
-type KeyListResultPager interface {
+type KeyVaultClientGetKeyVersionsPager interface {
 	azcore.Pager
-
-	// PageResponse returns the current KeyListResultResponse.
-	PageResponse() KeyListResultResponse
+	// PageResponse returns the current KeyVaultClientGetKeyVersionsResponse.
+	PageResponse() KeyVaultClientGetKeyVersionsResponse
 }
 
-type keyListResultCreateRequest func(context.Context) (*azcore.Request, error)
-
-type keyListResultHandleError func(*azcore.Response) error
-
-type keyListResultHandleResponse func(*azcore.Response) (KeyListResultResponse, error)
-
-type keyListResultAdvancePage func(context.Context, KeyListResultResponse) (*azcore.Request, error)
-
-type keyListResultPager struct {
-	// the pipeline for making the request
-	pipeline azcore.Pipeline
-	// creates the initial request (non-LRO case)
-	requester keyListResultCreateRequest
-	// callback for handling response errors
-	errorer keyListResultHandleError
-	// callback for handling the HTTP response
-	responder keyListResultHandleResponse
-	// callback for advancing to the next page
-	advancer keyListResultAdvancePage
-	// contains the current response
-	current KeyListResultResponse
-	// status codes for successful retrieval
-	statusCodes []int
-	// any error encountered
-	err error
+type keyVaultClientGetKeyVersionsPager struct {
+	client    *KeyVaultClient
+	current   KeyVaultClientGetKeyVersionsResponse
+	err       error
+	requester func(context.Context) (*azcore.Request, error)
+	advancer  func(context.Context, KeyVaultClientGetKeyVersionsResponse) (*azcore.Request, error)
 }
 
-func (p *keyListResultPager) Err() error {
+func (p *keyVaultClientGetKeyVersionsPager) Err() error {
 	return p.err
 }
 
-func (p *keyListResultPager) NextPage(ctx context.Context) bool {
+func (p *keyVaultClientGetKeyVersionsPager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -599,16 +487,16 @@ func (p *keyListResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	resp, err := p.pipeline.Do(req)
+	resp, err := p.client.con.Pipeline().Do(req)
 	if err != nil {
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(p.statusCodes...) {
-		p.err = p.errorer(resp)
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.client.getKeyVersionsHandleError(resp)
 		return false
 	}
-	result, err := p.responder(resp)
+	result, err := p.client.getKeyVersionsHandleResponse(resp)
 	if err != nil {
 		p.err = err
 		return false
@@ -617,54 +505,33 @@ func (p *keyListResultPager) NextPage(ctx context.Context) bool {
 	return true
 }
 
-func (p *keyListResultPager) PageResponse() KeyListResultResponse {
+func (p *keyVaultClientGetKeyVersionsPager) PageResponse() KeyVaultClientGetKeyVersionsResponse {
 	return p.current
 }
 
-// RoleAssignmentListResultPager provides iteration over RoleAssignmentListResult pages.
-type RoleAssignmentListResultPager interface {
+type KeyVaultClientGetKeysPager interface {
 	azcore.Pager
-
-	// PageResponse returns the current RoleAssignmentListResultResponse.
-	PageResponse() RoleAssignmentListResultResponse
+	// PageResponse returns the current KeyVaultClientGetKeysResponse.
+	PageResponse() KeyVaultClientGetKeysResponse
 }
 
-type roleAssignmentListResultCreateRequest func(context.Context) (*azcore.Request, error)
-
-type roleAssignmentListResultHandleError func(*azcore.Response) error
-
-type roleAssignmentListResultHandleResponse func(*azcore.Response) (RoleAssignmentListResultResponse, error)
-
-type roleAssignmentListResultAdvancePage func(context.Context, RoleAssignmentListResultResponse) (*azcore.Request, error)
-
-type roleAssignmentListResultPager struct {
-	// the pipeline for making the request
-	pipeline azcore.Pipeline
-	// creates the initial request (non-LRO case)
-	requester roleAssignmentListResultCreateRequest
-	// callback for handling response errors
-	errorer roleAssignmentListResultHandleError
-	// callback for handling the HTTP response
-	responder roleAssignmentListResultHandleResponse
-	// callback for advancing to the next page
-	advancer roleAssignmentListResultAdvancePage
-	// contains the current response
-	current RoleAssignmentListResultResponse
-	// status codes for successful retrieval
-	statusCodes []int
-	// any error encountered
-	err error
+type keyVaultClientGetKeysPager struct {
+	client    *KeyVaultClient
+	current   KeyVaultClientGetKeysResponse
+	err       error
+	requester func(context.Context) (*azcore.Request, error)
+	advancer  func(context.Context, KeyVaultClientGetKeysResponse) (*azcore.Request, error)
 }
 
-func (p *roleAssignmentListResultPager) Err() error {
+func (p *keyVaultClientGetKeysPager) Err() error {
 	return p.err
 }
 
-func (p *roleAssignmentListResultPager) NextPage(ctx context.Context) bool {
+func (p *keyVaultClientGetKeysPager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
-		if p.current.RoleAssignmentListResult.NextLink == nil || len(*p.current.RoleAssignmentListResult.NextLink) == 0 {
+		if p.current.KeyListResult.NextLink == nil || len(*p.current.KeyListResult.NextLink) == 0 {
 			return false
 		}
 		req, err = p.advancer(ctx, p.current)
@@ -675,92 +542,16 @@ func (p *roleAssignmentListResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	resp, err := p.pipeline.Do(req)
+	resp, err := p.client.con.Pipeline().Do(req)
 	if err != nil {
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(p.statusCodes...) {
-		p.err = p.errorer(resp)
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.client.getKeysHandleError(resp)
 		return false
 	}
-	result, err := p.responder(resp)
-	if err != nil {
-		p.err = err
-		return false
-	}
-	p.current = result
-	return true
-}
-
-func (p *roleAssignmentListResultPager) PageResponse() RoleAssignmentListResultResponse {
-	return p.current
-}
-
-// RoleDefinitionListResultPager provides iteration over RoleDefinitionListResult pages.
-type RoleDefinitionListResultPager interface {
-	azcore.Pager
-
-	// PageResponse returns the current RoleDefinitionListResultResponse.
-	PageResponse() RoleDefinitionListResultResponse
-}
-
-type roleDefinitionListResultCreateRequest func(context.Context) (*azcore.Request, error)
-
-type roleDefinitionListResultHandleError func(*azcore.Response) error
-
-type roleDefinitionListResultHandleResponse func(*azcore.Response) (RoleDefinitionListResultResponse, error)
-
-type roleDefinitionListResultAdvancePage func(context.Context, RoleDefinitionListResultResponse) (*azcore.Request, error)
-
-type roleDefinitionListResultPager struct {
-	// the pipeline for making the request
-	pipeline azcore.Pipeline
-	// creates the initial request (non-LRO case)
-	requester roleDefinitionListResultCreateRequest
-	// callback for handling response errors
-	errorer roleDefinitionListResultHandleError
-	// callback for handling the HTTP response
-	responder roleDefinitionListResultHandleResponse
-	// callback for advancing to the next page
-	advancer roleDefinitionListResultAdvancePage
-	// contains the current response
-	current RoleDefinitionListResultResponse
-	// status codes for successful retrieval
-	statusCodes []int
-	// any error encountered
-	err error
-}
-
-func (p *roleDefinitionListResultPager) Err() error {
-	return p.err
-}
-
-func (p *roleDefinitionListResultPager) NextPage(ctx context.Context) bool {
-	var req *azcore.Request
-	var err error
-	if !reflect.ValueOf(p.current).IsZero() {
-		if p.current.RoleDefinitionListResult.NextLink == nil || len(*p.current.RoleDefinitionListResult.NextLink) == 0 {
-			return false
-		}
-		req, err = p.advancer(ctx, p.current)
-	} else {
-		req, err = p.requester(ctx)
-	}
-	if err != nil {
-		p.err = err
-		return false
-	}
-	resp, err := p.pipeline.Do(req)
-	if err != nil {
-		p.err = err
-		return false
-	}
-	if !resp.HasStatusCode(p.statusCodes...) {
-		p.err = p.errorer(resp)
-		return false
-	}
-	result, err := p.responder(resp)
+	result, err := p.client.getKeysHandleResponse(resp)
 	if err != nil {
 		p.err = err
 		return false
@@ -769,50 +560,29 @@ func (p *roleDefinitionListResultPager) NextPage(ctx context.Context) bool {
 	return true
 }
 
-func (p *roleDefinitionListResultPager) PageResponse() RoleDefinitionListResultResponse {
+func (p *keyVaultClientGetKeysPager) PageResponse() KeyVaultClientGetKeysResponse {
 	return p.current
 }
 
-// SasDefinitionListResultPager provides iteration over SasDefinitionListResult pages.
-type SasDefinitionListResultPager interface {
+type KeyVaultClientGetSasDefinitionsPager interface {
 	azcore.Pager
-
-	// PageResponse returns the current SasDefinitionListResultResponse.
-	PageResponse() SasDefinitionListResultResponse
+	// PageResponse returns the current KeyVaultClientGetSasDefinitionsResponse.
+	PageResponse() KeyVaultClientGetSasDefinitionsResponse
 }
 
-type sasDefinitionListResultCreateRequest func(context.Context) (*azcore.Request, error)
-
-type sasDefinitionListResultHandleError func(*azcore.Response) error
-
-type sasDefinitionListResultHandleResponse func(*azcore.Response) (SasDefinitionListResultResponse, error)
-
-type sasDefinitionListResultAdvancePage func(context.Context, SasDefinitionListResultResponse) (*azcore.Request, error)
-
-type sasDefinitionListResultPager struct {
-	// the pipeline for making the request
-	pipeline azcore.Pipeline
-	// creates the initial request (non-LRO case)
-	requester sasDefinitionListResultCreateRequest
-	// callback for handling response errors
-	errorer sasDefinitionListResultHandleError
-	// callback for handling the HTTP response
-	responder sasDefinitionListResultHandleResponse
-	// callback for advancing to the next page
-	advancer sasDefinitionListResultAdvancePage
-	// contains the current response
-	current SasDefinitionListResultResponse
-	// status codes for successful retrieval
-	statusCodes []int
-	// any error encountered
-	err error
+type keyVaultClientGetSasDefinitionsPager struct {
+	client    *KeyVaultClient
+	current   KeyVaultClientGetSasDefinitionsResponse
+	err       error
+	requester func(context.Context) (*azcore.Request, error)
+	advancer  func(context.Context, KeyVaultClientGetSasDefinitionsResponse) (*azcore.Request, error)
 }
 
-func (p *sasDefinitionListResultPager) Err() error {
+func (p *keyVaultClientGetSasDefinitionsPager) Err() error {
 	return p.err
 }
 
-func (p *sasDefinitionListResultPager) NextPage(ctx context.Context) bool {
+func (p *keyVaultClientGetSasDefinitionsPager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -827,16 +597,16 @@ func (p *sasDefinitionListResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	resp, err := p.pipeline.Do(req)
+	resp, err := p.client.con.Pipeline().Do(req)
 	if err != nil {
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(p.statusCodes...) {
-		p.err = p.errorer(resp)
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.client.getSasDefinitionsHandleError(resp)
 		return false
 	}
-	result, err := p.responder(resp)
+	result, err := p.client.getSasDefinitionsHandleResponse(resp)
 	if err != nil {
 		p.err = err
 		return false
@@ -845,50 +615,29 @@ func (p *sasDefinitionListResultPager) NextPage(ctx context.Context) bool {
 	return true
 }
 
-func (p *sasDefinitionListResultPager) PageResponse() SasDefinitionListResultResponse {
+func (p *keyVaultClientGetSasDefinitionsPager) PageResponse() KeyVaultClientGetSasDefinitionsResponse {
 	return p.current
 }
 
-// SecretListResultPager provides iteration over SecretListResult pages.
-type SecretListResultPager interface {
+type KeyVaultClientGetSecretVersionsPager interface {
 	azcore.Pager
-
-	// PageResponse returns the current SecretListResultResponse.
-	PageResponse() SecretListResultResponse
+	// PageResponse returns the current KeyVaultClientGetSecretVersionsResponse.
+	PageResponse() KeyVaultClientGetSecretVersionsResponse
 }
 
-type secretListResultCreateRequest func(context.Context) (*azcore.Request, error)
-
-type secretListResultHandleError func(*azcore.Response) error
-
-type secretListResultHandleResponse func(*azcore.Response) (SecretListResultResponse, error)
-
-type secretListResultAdvancePage func(context.Context, SecretListResultResponse) (*azcore.Request, error)
-
-type secretListResultPager struct {
-	// the pipeline for making the request
-	pipeline azcore.Pipeline
-	// creates the initial request (non-LRO case)
-	requester secretListResultCreateRequest
-	// callback for handling response errors
-	errorer secretListResultHandleError
-	// callback for handling the HTTP response
-	responder secretListResultHandleResponse
-	// callback for advancing to the next page
-	advancer secretListResultAdvancePage
-	// contains the current response
-	current SecretListResultResponse
-	// status codes for successful retrieval
-	statusCodes []int
-	// any error encountered
-	err error
+type keyVaultClientGetSecretVersionsPager struct {
+	client    *KeyVaultClient
+	current   KeyVaultClientGetSecretVersionsResponse
+	err       error
+	requester func(context.Context) (*azcore.Request, error)
+	advancer  func(context.Context, KeyVaultClientGetSecretVersionsResponse) (*azcore.Request, error)
 }
 
-func (p *secretListResultPager) Err() error {
+func (p *keyVaultClientGetSecretVersionsPager) Err() error {
 	return p.err
 }
 
-func (p *secretListResultPager) NextPage(ctx context.Context) bool {
+func (p *keyVaultClientGetSecretVersionsPager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -903,16 +652,16 @@ func (p *secretListResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	resp, err := p.pipeline.Do(req)
+	resp, err := p.client.con.Pipeline().Do(req)
 	if err != nil {
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(p.statusCodes...) {
-		p.err = p.errorer(resp)
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.client.getSecretVersionsHandleError(resp)
 		return false
 	}
-	result, err := p.responder(resp)
+	result, err := p.client.getSecretVersionsHandleResponse(resp)
 	if err != nil {
 		p.err = err
 		return false
@@ -921,50 +670,84 @@ func (p *secretListResultPager) NextPage(ctx context.Context) bool {
 	return true
 }
 
-func (p *secretListResultPager) PageResponse() SecretListResultResponse {
+func (p *keyVaultClientGetSecretVersionsPager) PageResponse() KeyVaultClientGetSecretVersionsResponse {
 	return p.current
 }
 
-// StorageListResultPager provides iteration over StorageListResult pages.
-type StorageListResultPager interface {
+type KeyVaultClientGetSecretsPager interface {
 	azcore.Pager
-
-	// PageResponse returns the current StorageListResultResponse.
-	PageResponse() StorageListResultResponse
+	// PageResponse returns the current KeyVaultClientGetSecretsResponse.
+	PageResponse() KeyVaultClientGetSecretsResponse
 }
 
-type storageListResultCreateRequest func(context.Context) (*azcore.Request, error)
-
-type storageListResultHandleError func(*azcore.Response) error
-
-type storageListResultHandleResponse func(*azcore.Response) (StorageListResultResponse, error)
-
-type storageListResultAdvancePage func(context.Context, StorageListResultResponse) (*azcore.Request, error)
-
-type storageListResultPager struct {
-	// the pipeline for making the request
-	pipeline azcore.Pipeline
-	// creates the initial request (non-LRO case)
-	requester storageListResultCreateRequest
-	// callback for handling response errors
-	errorer storageListResultHandleError
-	// callback for handling the HTTP response
-	responder storageListResultHandleResponse
-	// callback for advancing to the next page
-	advancer storageListResultAdvancePage
-	// contains the current response
-	current StorageListResultResponse
-	// status codes for successful retrieval
-	statusCodes []int
-	// any error encountered
-	err error
+type keyVaultClientGetSecretsPager struct {
+	client    *KeyVaultClient
+	current   KeyVaultClientGetSecretsResponse
+	err       error
+	requester func(context.Context) (*azcore.Request, error)
+	advancer  func(context.Context, KeyVaultClientGetSecretsResponse) (*azcore.Request, error)
 }
 
-func (p *storageListResultPager) Err() error {
+func (p *keyVaultClientGetSecretsPager) Err() error {
 	return p.err
 }
 
-func (p *storageListResultPager) NextPage(ctx context.Context) bool {
+func (p *keyVaultClientGetSecretsPager) NextPage(ctx context.Context) bool {
+	var req *azcore.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		if p.current.SecretListResult.NextLink == nil || len(*p.current.SecretListResult.NextLink) == 0 {
+			return false
+		}
+		req, err = p.advancer(ctx, p.current)
+	} else {
+		req, err = p.requester(ctx)
+	}
+	if err != nil {
+		p.err = err
+		return false
+	}
+	resp, err := p.client.con.Pipeline().Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.client.getSecretsHandleError(resp)
+		return false
+	}
+	result, err := p.client.getSecretsHandleResponse(resp)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	p.current = result
+	return true
+}
+
+func (p *keyVaultClientGetSecretsPager) PageResponse() KeyVaultClientGetSecretsResponse {
+	return p.current
+}
+
+type KeyVaultClientGetStorageAccountsPager interface {
+	azcore.Pager
+	// PageResponse returns the current KeyVaultClientGetStorageAccountsResponse.
+	PageResponse() KeyVaultClientGetStorageAccountsResponse
+}
+
+type keyVaultClientGetStorageAccountsPager struct {
+	client    *KeyVaultClient
+	current   KeyVaultClientGetStorageAccountsResponse
+	err       error
+	requester func(context.Context) (*azcore.Request, error)
+	advancer  func(context.Context, KeyVaultClientGetStorageAccountsResponse) (*azcore.Request, error)
+}
+
+func (p *keyVaultClientGetStorageAccountsPager) Err() error {
+	return p.err
+}
+
+func (p *keyVaultClientGetStorageAccountsPager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -979,16 +762,16 @@ func (p *storageListResultPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	resp, err := p.pipeline.Do(req)
+	resp, err := p.client.con.Pipeline().Do(req)
 	if err != nil {
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(p.statusCodes...) {
-		p.err = p.errorer(resp)
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.client.getStorageAccountsHandleError(resp)
 		return false
 	}
-	result, err := p.responder(resp)
+	result, err := p.client.getStorageAccountsHandleResponse(resp)
 	if err != nil {
 		p.err = err
 		return false
@@ -997,6 +780,116 @@ func (p *storageListResultPager) NextPage(ctx context.Context) bool {
 	return true
 }
 
-func (p *storageListResultPager) PageResponse() StorageListResultResponse {
+func (p *keyVaultClientGetStorageAccountsPager) PageResponse() KeyVaultClientGetStorageAccountsResponse {
+	return p.current
+}
+
+type RoleAssignmentsListForScopePager interface {
+	azcore.Pager
+	// PageResponse returns the current RoleAssignmentsListForScopeResponse.
+	PageResponse() RoleAssignmentsListForScopeResponse
+}
+
+type roleAssignmentsListForScopePager struct {
+	client    *RoleAssignmentsClient
+	current   RoleAssignmentsListForScopeResponse
+	err       error
+	requester func(context.Context) (*azcore.Request, error)
+	advancer  func(context.Context, RoleAssignmentsListForScopeResponse) (*azcore.Request, error)
+}
+
+func (p *roleAssignmentsListForScopePager) Err() error {
+	return p.err
+}
+
+func (p *roleAssignmentsListForScopePager) NextPage(ctx context.Context) bool {
+	var req *azcore.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		if p.current.RoleAssignmentListResult.NextLink == nil || len(*p.current.RoleAssignmentListResult.NextLink) == 0 {
+			return false
+		}
+		req, err = p.advancer(ctx, p.current)
+	} else {
+		req, err = p.requester(ctx)
+	}
+	if err != nil {
+		p.err = err
+		return false
+	}
+	resp, err := p.client.con.Pipeline().Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.client.listForScopeHandleError(resp)
+		return false
+	}
+	result, err := p.client.listForScopeHandleResponse(resp)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	p.current = result
+	return true
+}
+
+func (p *roleAssignmentsListForScopePager) PageResponse() RoleAssignmentsListForScopeResponse {
+	return p.current
+}
+
+type RoleDefinitionsListPager interface {
+	azcore.Pager
+	// PageResponse returns the current RoleDefinitionsListResponse.
+	PageResponse() RoleDefinitionsListResponse
+}
+
+type roleDefinitionsListPager struct {
+	client    *RoleDefinitionsClient
+	current   RoleDefinitionsListResponse
+	err       error
+	requester func(context.Context) (*azcore.Request, error)
+	advancer  func(context.Context, RoleDefinitionsListResponse) (*azcore.Request, error)
+}
+
+func (p *roleDefinitionsListPager) Err() error {
+	return p.err
+}
+
+func (p *roleDefinitionsListPager) NextPage(ctx context.Context) bool {
+	var req *azcore.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		if p.current.RoleDefinitionListResult.NextLink == nil || len(*p.current.RoleDefinitionListResult.NextLink) == 0 {
+			return false
+		}
+		req, err = p.advancer(ctx, p.current)
+	} else {
+		req, err = p.requester(ctx)
+	}
+	if err != nil {
+		p.err = err
+		return false
+	}
+	resp, err := p.client.con.Pipeline().Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.client.listHandleError(resp)
+		return false
+	}
+	result, err := p.client.listHandleResponse(resp)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	p.current = result
+	return true
+}
+
+func (p *roleDefinitionsListPager) PageResponse() RoleDefinitionsListResponse {
 	return p.current
 }

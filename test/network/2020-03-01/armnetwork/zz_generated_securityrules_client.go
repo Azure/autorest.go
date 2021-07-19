@@ -33,47 +33,47 @@ func NewSecurityRulesClient(con *armcore.Connection, subscriptionID string) *Sec
 
 // BeginCreateOrUpdate - Creates or updates a security rule in the specified network security group.
 // If the operation fails it returns the *CloudError error type.
-func (client *SecurityRulesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, securityRuleParameters SecurityRule, options *SecurityRulesBeginCreateOrUpdateOptions) (SecurityRulePollerResponse, error) {
+func (client *SecurityRulesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, securityRuleParameters SecurityRule, options *SecurityRulesBeginCreateOrUpdateOptions) (SecurityRulesCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, networkSecurityGroupName, securityRuleName, securityRuleParameters, options)
 	if err != nil {
-		return SecurityRulePollerResponse{}, err
+		return SecurityRulesCreateOrUpdatePollerResponse{}, err
 	}
-	result := SecurityRulePollerResponse{
+	result := SecurityRulesCreateOrUpdatePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("SecurityRulesClient.CreateOrUpdate", "azure-async-operation", resp, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return SecurityRulePollerResponse{}, err
+		return SecurityRulesCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &securityRulePoller{
+	poller := &securityRulesCreateOrUpdatePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SecurityRuleResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SecurityRulesCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new SecurityRulePoller from the specified resume token.
-// token - The value must come from a previous call to SecurityRulePoller.ResumeToken().
-func (client *SecurityRulesClient) ResumeCreateOrUpdate(ctx context.Context, token string) (SecurityRulePollerResponse, error) {
+// ResumeCreateOrUpdate creates a new SecurityRulesCreateOrUpdatePoller from the specified resume token.
+// token - The value must come from a previous call to SecurityRulesCreateOrUpdatePoller.ResumeToken().
+func (client *SecurityRulesClient) ResumeCreateOrUpdate(ctx context.Context, token string) (SecurityRulesCreateOrUpdatePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("SecurityRulesClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return SecurityRulePollerResponse{}, err
+		return SecurityRulesCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &securityRulePoller{
+	poller := &securityRulesCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return SecurityRulePollerResponse{}, err
+		return SecurityRulesCreateOrUpdatePollerResponse{}, err
 	}
-	result := SecurityRulePollerResponse{
+	result := SecurityRulesCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SecurityRuleResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SecurityRulesCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -142,47 +142,47 @@ func (client *SecurityRulesClient) createOrUpdateHandleError(resp *azcore.Respon
 
 // BeginDelete - Deletes the specified network security rule.
 // If the operation fails it returns the *CloudError error type.
-func (client *SecurityRulesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, options *SecurityRulesBeginDeleteOptions) (HTTPPollerResponse, error) {
+func (client *SecurityRulesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, options *SecurityRulesBeginDeleteOptions) (SecurityRulesDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, networkSecurityGroupName, securityRuleName, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return SecurityRulesDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := SecurityRulesDeletePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("SecurityRulesClient.Delete", "location", resp, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return SecurityRulesDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &securityRulesDeletePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SecurityRulesDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeDelete creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *SecurityRulesClient) ResumeDelete(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeDelete creates a new SecurityRulesDeletePoller from the specified resume token.
+// token - The value must come from a previous call to SecurityRulesDeletePoller.ResumeToken().
+func (client *SecurityRulesClient) ResumeDelete(ctx context.Context, token string) (SecurityRulesDeletePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("SecurityRulesClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return SecurityRulesDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &securityRulesDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return SecurityRulesDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := SecurityRulesDeletePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SecurityRulesDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -251,17 +251,17 @@ func (client *SecurityRulesClient) deleteHandleError(resp *azcore.Response) erro
 
 // Get - Get the specified network security rule.
 // If the operation fails it returns the *CloudError error type.
-func (client *SecurityRulesClient) Get(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, options *SecurityRulesGetOptions) (SecurityRuleResponse, error) {
+func (client *SecurityRulesClient) Get(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, options *SecurityRulesGetOptions) (SecurityRulesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkSecurityGroupName, securityRuleName, options)
 	if err != nil {
-		return SecurityRuleResponse{}, err
+		return SecurityRulesGetResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return SecurityRuleResponse{}, err
+		return SecurityRulesGetResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return SecurityRuleResponse{}, client.getHandleError(resp)
+		return SecurityRulesGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -298,12 +298,12 @@ func (client *SecurityRulesClient) getCreateRequest(ctx context.Context, resourc
 }
 
 // getHandleResponse handles the Get response.
-func (client *SecurityRulesClient) getHandleResponse(resp *azcore.Response) (SecurityRuleResponse, error) {
-	var val *SecurityRule
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return SecurityRuleResponse{}, err
+func (client *SecurityRulesClient) getHandleResponse(resp *azcore.Response) (SecurityRulesGetResponse, error) {
+	result := SecurityRulesGetResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.SecurityRule); err != nil {
+		return SecurityRulesGetResponse{}, err
 	}
-	return SecurityRuleResponse{RawResponse: resp.Response, SecurityRule: val}, nil
+	return result, nil
 }
 
 // getHandleError handles the Get error response.
@@ -321,18 +321,15 @@ func (client *SecurityRulesClient) getHandleError(resp *azcore.Response) error {
 
 // List - Gets all security rules in a network security group.
 // If the operation fails it returns the *CloudError error type.
-func (client *SecurityRulesClient) List(resourceGroupName string, networkSecurityGroupName string, options *SecurityRulesListOptions) SecurityRuleListResultPager {
-	return &securityRuleListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *SecurityRulesClient) List(resourceGroupName string, networkSecurityGroupName string, options *SecurityRulesListOptions) SecurityRulesListPager {
+	return &securityRulesListPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, networkSecurityGroupName, options)
 		},
-		responder: client.listHandleResponse,
-		errorer:   client.listHandleError,
-		advancer: func(ctx context.Context, resp SecurityRuleListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp SecurityRulesListResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.SecurityRuleListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -364,12 +361,12 @@ func (client *SecurityRulesClient) listCreateRequest(ctx context.Context, resour
 }
 
 // listHandleResponse handles the List response.
-func (client *SecurityRulesClient) listHandleResponse(resp *azcore.Response) (SecurityRuleListResultResponse, error) {
-	var val *SecurityRuleListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return SecurityRuleListResultResponse{}, err
+func (client *SecurityRulesClient) listHandleResponse(resp *azcore.Response) (SecurityRulesListResponse, error) {
+	result := SecurityRulesListResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.SecurityRuleListResult); err != nil {
+		return SecurityRulesListResponse{}, err
 	}
-	return SecurityRuleListResultResponse{RawResponse: resp.Response, SecurityRuleListResult: val}, nil
+	return result, nil
 }
 
 // listHandleError handles the List error response.

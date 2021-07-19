@@ -9,23 +9,28 @@ package azalias
 
 import "net/http"
 
-// AliasListResponseResponse is the response envelope for operations that return a AliasListResponse type.
-type AliasListResponseResponse struct {
-	// The response model for the List API. Returns a list of all the previously created aliases.
-	AliasListResponse *AliasListResponse
-
+// AliasCreateResponse contains the response from method Alias.Create.
+type AliasCreateResponse struct {
+	AliasCreateResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// AliasesCreateResponseResponse is the response envelope for operations that return a AliasesCreateResponse type.
-type AliasesCreateResponseResponse struct {
+// AliasCreateResult contains the result from method Alias.Create.
+type AliasCreateResult struct {
+	AliasesCreateResponse
 	// AccessControlExposeHeaders contains the information returned from the Access-Control-Expose-Headers header response.
 	AccessControlExposeHeaders *string
+}
 
-	// The response model for the Alias Create API for the case when the alias was successfully created.
-	AliasesCreateResponse *AliasesCreateResponse
-
+// AliasListResponseEnvelope contains the response from method Alias.List.
+type AliasListResponseEnvelope struct {
+	AliasListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// AliasListResult contains the result from method Alias.List.
+type AliasListResult struct {
+	AliasListResponse
 }

@@ -31,19 +31,19 @@ func NewQueriesClient(con *Connection) *QueriesClient {
 
 // ArrayStringCSVEmpty - Get an empty array [] of string using the csv-array format
 // If the operation fails it returns the *Error error type.
-func (client *QueriesClient) ArrayStringCSVEmpty(ctx context.Context, options *QueriesArrayStringCSVEmptyOptions) (*http.Response, error) {
+func (client *QueriesClient) ArrayStringCSVEmpty(ctx context.Context, options *QueriesArrayStringCSVEmptyOptions) (QueriesArrayStringCSVEmptyResponse, error) {
 	req, err := client.arrayStringCSVEmptyCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return QueriesArrayStringCSVEmptyResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return QueriesArrayStringCSVEmptyResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.arrayStringCSVEmptyHandleError(resp)
+		return QueriesArrayStringCSVEmptyResponse{}, client.arrayStringCSVEmptyHandleError(resp)
 	}
-	return resp.Response, nil
+	return QueriesArrayStringCSVEmptyResponse{RawResponse: resp.Response}, nil
 }
 
 // arrayStringCSVEmptyCreateRequest creates the ArrayStringCSVEmpty request.
@@ -78,19 +78,19 @@ func (client *QueriesClient) arrayStringCSVEmptyHandleError(resp *azcore.Respons
 
 // ArrayStringCSVNull - Get a null array of string using the csv-array format
 // If the operation fails it returns the *Error error type.
-func (client *QueriesClient) ArrayStringCSVNull(ctx context.Context, options *QueriesArrayStringCSVNullOptions) (*http.Response, error) {
+func (client *QueriesClient) ArrayStringCSVNull(ctx context.Context, options *QueriesArrayStringCSVNullOptions) (QueriesArrayStringCSVNullResponse, error) {
 	req, err := client.arrayStringCSVNullCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return QueriesArrayStringCSVNullResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return QueriesArrayStringCSVNullResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.arrayStringCSVNullHandleError(resp)
+		return QueriesArrayStringCSVNullResponse{}, client.arrayStringCSVNullHandleError(resp)
 	}
-	return resp.Response, nil
+	return QueriesArrayStringCSVNullResponse{RawResponse: resp.Response}, nil
 }
 
 // arrayStringCSVNullCreateRequest creates the ArrayStringCSVNull request.
@@ -125,19 +125,19 @@ func (client *QueriesClient) arrayStringCSVNullHandleError(resp *azcore.Response
 
 // ArrayStringCSVValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
 // If the operation fails it returns the *Error error type.
-func (client *QueriesClient) ArrayStringCSVValid(ctx context.Context, options *QueriesArrayStringCSVValidOptions) (*http.Response, error) {
+func (client *QueriesClient) ArrayStringCSVValid(ctx context.Context, options *QueriesArrayStringCSVValidOptions) (QueriesArrayStringCSVValidResponse, error) {
 	req, err := client.arrayStringCSVValidCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return QueriesArrayStringCSVValidResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return QueriesArrayStringCSVValidResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.arrayStringCSVValidHandleError(resp)
+		return QueriesArrayStringCSVValidResponse{}, client.arrayStringCSVValidHandleError(resp)
 	}
-	return resp.Response, nil
+	return QueriesArrayStringCSVValidResponse{RawResponse: resp.Response}, nil
 }
 
 // arrayStringCSVValidCreateRequest creates the ArrayStringCSVValid request.
@@ -173,19 +173,19 @@ func (client *QueriesClient) arrayStringCSVValidHandleError(resp *azcore.Respons
 // ArrayStringNoCollectionFormatEmpty - Array query has no defined collection format, should default to csv. Pass in ['hello', 'nihao', 'bonjour'] for the
 // 'arrayQuery' parameter to the service
 // If the operation fails it returns the *Error error type.
-func (client *QueriesClient) ArrayStringNoCollectionFormatEmpty(ctx context.Context, options *QueriesArrayStringNoCollectionFormatEmptyOptions) (*http.Response, error) {
+func (client *QueriesClient) ArrayStringNoCollectionFormatEmpty(ctx context.Context, options *QueriesArrayStringNoCollectionFormatEmptyOptions) (QueriesArrayStringNoCollectionFormatEmptyResponse, error) {
 	req, err := client.arrayStringNoCollectionFormatEmptyCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return QueriesArrayStringNoCollectionFormatEmptyResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return QueriesArrayStringNoCollectionFormatEmptyResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.arrayStringNoCollectionFormatEmptyHandleError(resp)
+		return QueriesArrayStringNoCollectionFormatEmptyResponse{}, client.arrayStringNoCollectionFormatEmptyHandleError(resp)
 	}
-	return resp.Response, nil
+	return QueriesArrayStringNoCollectionFormatEmptyResponse{RawResponse: resp.Response}, nil
 }
 
 // arrayStringNoCollectionFormatEmptyCreateRequest creates the ArrayStringNoCollectionFormatEmpty request.
@@ -220,19 +220,19 @@ func (client *QueriesClient) arrayStringNoCollectionFormatEmptyHandleError(resp 
 
 // ArrayStringPipesValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the pipes-array format
 // If the operation fails it returns the *Error error type.
-func (client *QueriesClient) ArrayStringPipesValid(ctx context.Context, options *QueriesArrayStringPipesValidOptions) (*http.Response, error) {
+func (client *QueriesClient) ArrayStringPipesValid(ctx context.Context, options *QueriesArrayStringPipesValidOptions) (QueriesArrayStringPipesValidResponse, error) {
 	req, err := client.arrayStringPipesValidCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return QueriesArrayStringPipesValidResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return QueriesArrayStringPipesValidResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.arrayStringPipesValidHandleError(resp)
+		return QueriesArrayStringPipesValidResponse{}, client.arrayStringPipesValidHandleError(resp)
 	}
-	return resp.Response, nil
+	return QueriesArrayStringPipesValidResponse{RawResponse: resp.Response}, nil
 }
 
 // arrayStringPipesValidCreateRequest creates the ArrayStringPipesValid request.
@@ -267,19 +267,19 @@ func (client *QueriesClient) arrayStringPipesValidHandleError(resp *azcore.Respo
 
 // ArrayStringSsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the ssv-array format
 // If the operation fails it returns the *Error error type.
-func (client *QueriesClient) ArrayStringSsvValid(ctx context.Context, options *QueriesArrayStringSsvValidOptions) (*http.Response, error) {
+func (client *QueriesClient) ArrayStringSsvValid(ctx context.Context, options *QueriesArrayStringSsvValidOptions) (QueriesArrayStringSsvValidResponse, error) {
 	req, err := client.arrayStringSsvValidCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return QueriesArrayStringSsvValidResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return QueriesArrayStringSsvValidResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.arrayStringSsvValidHandleError(resp)
+		return QueriesArrayStringSsvValidResponse{}, client.arrayStringSsvValidHandleError(resp)
 	}
-	return resp.Response, nil
+	return QueriesArrayStringSsvValidResponse{RawResponse: resp.Response}, nil
 }
 
 // arrayStringSsvValidCreateRequest creates the ArrayStringSsvValid request.
@@ -314,19 +314,19 @@ func (client *QueriesClient) arrayStringSsvValidHandleError(resp *azcore.Respons
 
 // ArrayStringTsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the tsv-array format
 // If the operation fails it returns the *Error error type.
-func (client *QueriesClient) ArrayStringTsvValid(ctx context.Context, options *QueriesArrayStringTsvValidOptions) (*http.Response, error) {
+func (client *QueriesClient) ArrayStringTsvValid(ctx context.Context, options *QueriesArrayStringTsvValidOptions) (QueriesArrayStringTsvValidResponse, error) {
 	req, err := client.arrayStringTsvValidCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return QueriesArrayStringTsvValidResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return QueriesArrayStringTsvValidResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.arrayStringTsvValidHandleError(resp)
+		return QueriesArrayStringTsvValidResponse{}, client.arrayStringTsvValidHandleError(resp)
 	}
-	return resp.Response, nil
+	return QueriesArrayStringTsvValidResponse{RawResponse: resp.Response}, nil
 }
 
 // arrayStringTsvValidCreateRequest creates the ArrayStringTsvValid request.
@@ -361,19 +361,19 @@ func (client *QueriesClient) arrayStringTsvValidHandleError(resp *azcore.Respons
 
 // ByteEmpty - Get '' as byte array
 // If the operation fails it returns the *Error error type.
-func (client *QueriesClient) ByteEmpty(ctx context.Context, options *QueriesByteEmptyOptions) (*http.Response, error) {
+func (client *QueriesClient) ByteEmpty(ctx context.Context, options *QueriesByteEmptyOptions) (QueriesByteEmptyResponse, error) {
 	req, err := client.byteEmptyCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return QueriesByteEmptyResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return QueriesByteEmptyResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.byteEmptyHandleError(resp)
+		return QueriesByteEmptyResponse{}, client.byteEmptyHandleError(resp)
 	}
-	return resp.Response, nil
+	return QueriesByteEmptyResponse{RawResponse: resp.Response}, nil
 }
 
 // byteEmptyCreateRequest creates the ByteEmpty request.
@@ -406,19 +406,19 @@ func (client *QueriesClient) byteEmptyHandleError(resp *azcore.Response) error {
 
 // ByteMultiByte - Get '啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array
 // If the operation fails it returns the *Error error type.
-func (client *QueriesClient) ByteMultiByte(ctx context.Context, options *QueriesByteMultiByteOptions) (*http.Response, error) {
+func (client *QueriesClient) ByteMultiByte(ctx context.Context, options *QueriesByteMultiByteOptions) (QueriesByteMultiByteResponse, error) {
 	req, err := client.byteMultiByteCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return QueriesByteMultiByteResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return QueriesByteMultiByteResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.byteMultiByteHandleError(resp)
+		return QueriesByteMultiByteResponse{}, client.byteMultiByteHandleError(resp)
 	}
-	return resp.Response, nil
+	return QueriesByteMultiByteResponse{RawResponse: resp.Response}, nil
 }
 
 // byteMultiByteCreateRequest creates the ByteMultiByte request.
@@ -453,19 +453,19 @@ func (client *QueriesClient) byteMultiByteHandleError(resp *azcore.Response) err
 
 // ByteNull - Get null as byte array (no query parameters in uri)
 // If the operation fails it returns the *Error error type.
-func (client *QueriesClient) ByteNull(ctx context.Context, options *QueriesByteNullOptions) (*http.Response, error) {
+func (client *QueriesClient) ByteNull(ctx context.Context, options *QueriesByteNullOptions) (QueriesByteNullResponse, error) {
 	req, err := client.byteNullCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return QueriesByteNullResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return QueriesByteNullResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.byteNullHandleError(resp)
+		return QueriesByteNullResponse{}, client.byteNullHandleError(resp)
 	}
-	return resp.Response, nil
+	return QueriesByteNullResponse{RawResponse: resp.Response}, nil
 }
 
 // byteNullCreateRequest creates the ByteNull request.
@@ -500,19 +500,19 @@ func (client *QueriesClient) byteNullHandleError(resp *azcore.Response) error {
 
 // DateNull - Get null as date - this should result in no query parameters in uri
 // If the operation fails it returns the *Error error type.
-func (client *QueriesClient) DateNull(ctx context.Context, options *QueriesDateNullOptions) (*http.Response, error) {
+func (client *QueriesClient) DateNull(ctx context.Context, options *QueriesDateNullOptions) (QueriesDateNullResponse, error) {
 	req, err := client.dateNullCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return QueriesDateNullResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return QueriesDateNullResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.dateNullHandleError(resp)
+		return QueriesDateNullResponse{}, client.dateNullHandleError(resp)
 	}
-	return resp.Response, nil
+	return QueriesDateNullResponse{RawResponse: resp.Response}, nil
 }
 
 // dateNullCreateRequest creates the DateNull request.
@@ -547,19 +547,19 @@ func (client *QueriesClient) dateNullHandleError(resp *azcore.Response) error {
 
 // DateTimeNull - Get null as date-time, should result in no query parameters in uri
 // If the operation fails it returns the *Error error type.
-func (client *QueriesClient) DateTimeNull(ctx context.Context, options *QueriesDateTimeNullOptions) (*http.Response, error) {
+func (client *QueriesClient) DateTimeNull(ctx context.Context, options *QueriesDateTimeNullOptions) (QueriesDateTimeNullResponse, error) {
 	req, err := client.dateTimeNullCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return QueriesDateTimeNullResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return QueriesDateTimeNullResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.dateTimeNullHandleError(resp)
+		return QueriesDateTimeNullResponse{}, client.dateTimeNullHandleError(resp)
 	}
-	return resp.Response, nil
+	return QueriesDateTimeNullResponse{RawResponse: resp.Response}, nil
 }
 
 // dateTimeNullCreateRequest creates the DateTimeNull request.
@@ -594,19 +594,19 @@ func (client *QueriesClient) dateTimeNullHandleError(resp *azcore.Response) erro
 
 // DateTimeValid - Get '2012-01-01T01:01:01Z' as date-time
 // If the operation fails it returns the *Error error type.
-func (client *QueriesClient) DateTimeValid(ctx context.Context, options *QueriesDateTimeValidOptions) (*http.Response, error) {
+func (client *QueriesClient) DateTimeValid(ctx context.Context, options *QueriesDateTimeValidOptions) (QueriesDateTimeValidResponse, error) {
 	req, err := client.dateTimeValidCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return QueriesDateTimeValidResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return QueriesDateTimeValidResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.dateTimeValidHandleError(resp)
+		return QueriesDateTimeValidResponse{}, client.dateTimeValidHandleError(resp)
 	}
-	return resp.Response, nil
+	return QueriesDateTimeValidResponse{RawResponse: resp.Response}, nil
 }
 
 // dateTimeValidCreateRequest creates the DateTimeValid request.
@@ -639,19 +639,19 @@ func (client *QueriesClient) dateTimeValidHandleError(resp *azcore.Response) err
 
 // DateValid - Get '2012-01-01' as date
 // If the operation fails it returns the *Error error type.
-func (client *QueriesClient) DateValid(ctx context.Context, options *QueriesDateValidOptions) (*http.Response, error) {
+func (client *QueriesClient) DateValid(ctx context.Context, options *QueriesDateValidOptions) (QueriesDateValidResponse, error) {
 	req, err := client.dateValidCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return QueriesDateValidResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return QueriesDateValidResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.dateValidHandleError(resp)
+		return QueriesDateValidResponse{}, client.dateValidHandleError(resp)
 	}
-	return resp.Response, nil
+	return QueriesDateValidResponse{RawResponse: resp.Response}, nil
 }
 
 // dateValidCreateRequest creates the DateValid request.
@@ -684,19 +684,19 @@ func (client *QueriesClient) dateValidHandleError(resp *azcore.Response) error {
 
 // DoubleDecimalNegative - Get '-9999999.999' numeric value
 // If the operation fails it returns the *Error error type.
-func (client *QueriesClient) DoubleDecimalNegative(ctx context.Context, options *QueriesDoubleDecimalNegativeOptions) (*http.Response, error) {
+func (client *QueriesClient) DoubleDecimalNegative(ctx context.Context, options *QueriesDoubleDecimalNegativeOptions) (QueriesDoubleDecimalNegativeResponse, error) {
 	req, err := client.doubleDecimalNegativeCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return QueriesDoubleDecimalNegativeResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return QueriesDoubleDecimalNegativeResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.doubleDecimalNegativeHandleError(resp)
+		return QueriesDoubleDecimalNegativeResponse{}, client.doubleDecimalNegativeHandleError(resp)
 	}
-	return resp.Response, nil
+	return QueriesDoubleDecimalNegativeResponse{RawResponse: resp.Response}, nil
 }
 
 // doubleDecimalNegativeCreateRequest creates the DoubleDecimalNegative request.
@@ -729,19 +729,19 @@ func (client *QueriesClient) doubleDecimalNegativeHandleError(resp *azcore.Respo
 
 // DoubleDecimalPositive - Get '9999999.999' numeric value
 // If the operation fails it returns the *Error error type.
-func (client *QueriesClient) DoubleDecimalPositive(ctx context.Context, options *QueriesDoubleDecimalPositiveOptions) (*http.Response, error) {
+func (client *QueriesClient) DoubleDecimalPositive(ctx context.Context, options *QueriesDoubleDecimalPositiveOptions) (QueriesDoubleDecimalPositiveResponse, error) {
 	req, err := client.doubleDecimalPositiveCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return QueriesDoubleDecimalPositiveResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return QueriesDoubleDecimalPositiveResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.doubleDecimalPositiveHandleError(resp)
+		return QueriesDoubleDecimalPositiveResponse{}, client.doubleDecimalPositiveHandleError(resp)
 	}
-	return resp.Response, nil
+	return QueriesDoubleDecimalPositiveResponse{RawResponse: resp.Response}, nil
 }
 
 // doubleDecimalPositiveCreateRequest creates the DoubleDecimalPositive request.
@@ -774,19 +774,19 @@ func (client *QueriesClient) doubleDecimalPositiveHandleError(resp *azcore.Respo
 
 // DoubleNull - Get null numeric value (no query parameter)
 // If the operation fails it returns the *Error error type.
-func (client *QueriesClient) DoubleNull(ctx context.Context, options *QueriesDoubleNullOptions) (*http.Response, error) {
+func (client *QueriesClient) DoubleNull(ctx context.Context, options *QueriesDoubleNullOptions) (QueriesDoubleNullResponse, error) {
 	req, err := client.doubleNullCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return QueriesDoubleNullResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return QueriesDoubleNullResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.doubleNullHandleError(resp)
+		return QueriesDoubleNullResponse{}, client.doubleNullHandleError(resp)
 	}
-	return resp.Response, nil
+	return QueriesDoubleNullResponse{RawResponse: resp.Response}, nil
 }
 
 // doubleNullCreateRequest creates the DoubleNull request.
@@ -821,19 +821,19 @@ func (client *QueriesClient) doubleNullHandleError(resp *azcore.Response) error 
 
 // EnumNull - Get null (no query parameter in url)
 // If the operation fails it returns the *Error error type.
-func (client *QueriesClient) EnumNull(ctx context.Context, options *QueriesEnumNullOptions) (*http.Response, error) {
+func (client *QueriesClient) EnumNull(ctx context.Context, options *QueriesEnumNullOptions) (QueriesEnumNullResponse, error) {
 	req, err := client.enumNullCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return QueriesEnumNullResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return QueriesEnumNullResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.enumNullHandleError(resp)
+		return QueriesEnumNullResponse{}, client.enumNullHandleError(resp)
 	}
-	return resp.Response, nil
+	return QueriesEnumNullResponse{RawResponse: resp.Response}, nil
 }
 
 // enumNullCreateRequest creates the EnumNull request.
@@ -868,19 +868,19 @@ func (client *QueriesClient) enumNullHandleError(resp *azcore.Response) error {
 
 // EnumValid - Get using uri with query parameter 'green color'
 // If the operation fails it returns the *Error error type.
-func (client *QueriesClient) EnumValid(ctx context.Context, options *QueriesEnumValidOptions) (*http.Response, error) {
+func (client *QueriesClient) EnumValid(ctx context.Context, options *QueriesEnumValidOptions) (QueriesEnumValidResponse, error) {
 	req, err := client.enumValidCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return QueriesEnumValidResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return QueriesEnumValidResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.enumValidHandleError(resp)
+		return QueriesEnumValidResponse{}, client.enumValidHandleError(resp)
 	}
-	return resp.Response, nil
+	return QueriesEnumValidResponse{RawResponse: resp.Response}, nil
 }
 
 // enumValidCreateRequest creates the EnumValid request.
@@ -915,19 +915,19 @@ func (client *QueriesClient) enumValidHandleError(resp *azcore.Response) error {
 
 // FloatNull - Get null numeric value (no query parameter)
 // If the operation fails it returns the *Error error type.
-func (client *QueriesClient) FloatNull(ctx context.Context, options *QueriesFloatNullOptions) (*http.Response, error) {
+func (client *QueriesClient) FloatNull(ctx context.Context, options *QueriesFloatNullOptions) (QueriesFloatNullResponse, error) {
 	req, err := client.floatNullCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return QueriesFloatNullResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return QueriesFloatNullResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.floatNullHandleError(resp)
+		return QueriesFloatNullResponse{}, client.floatNullHandleError(resp)
 	}
-	return resp.Response, nil
+	return QueriesFloatNullResponse{RawResponse: resp.Response}, nil
 }
 
 // floatNullCreateRequest creates the FloatNull request.
@@ -962,19 +962,19 @@ func (client *QueriesClient) floatNullHandleError(resp *azcore.Response) error {
 
 // FloatScientificNegative - Get '-1.034E-20' numeric value
 // If the operation fails it returns the *Error error type.
-func (client *QueriesClient) FloatScientificNegative(ctx context.Context, options *QueriesFloatScientificNegativeOptions) (*http.Response, error) {
+func (client *QueriesClient) FloatScientificNegative(ctx context.Context, options *QueriesFloatScientificNegativeOptions) (QueriesFloatScientificNegativeResponse, error) {
 	req, err := client.floatScientificNegativeCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return QueriesFloatScientificNegativeResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return QueriesFloatScientificNegativeResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.floatScientificNegativeHandleError(resp)
+		return QueriesFloatScientificNegativeResponse{}, client.floatScientificNegativeHandleError(resp)
 	}
-	return resp.Response, nil
+	return QueriesFloatScientificNegativeResponse{RawResponse: resp.Response}, nil
 }
 
 // floatScientificNegativeCreateRequest creates the FloatScientificNegative request.
@@ -1007,19 +1007,19 @@ func (client *QueriesClient) floatScientificNegativeHandleError(resp *azcore.Res
 
 // FloatScientificPositive - Get '1.034E+20' numeric value
 // If the operation fails it returns the *Error error type.
-func (client *QueriesClient) FloatScientificPositive(ctx context.Context, options *QueriesFloatScientificPositiveOptions) (*http.Response, error) {
+func (client *QueriesClient) FloatScientificPositive(ctx context.Context, options *QueriesFloatScientificPositiveOptions) (QueriesFloatScientificPositiveResponse, error) {
 	req, err := client.floatScientificPositiveCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return QueriesFloatScientificPositiveResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return QueriesFloatScientificPositiveResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.floatScientificPositiveHandleError(resp)
+		return QueriesFloatScientificPositiveResponse{}, client.floatScientificPositiveHandleError(resp)
 	}
-	return resp.Response, nil
+	return QueriesFloatScientificPositiveResponse{RawResponse: resp.Response}, nil
 }
 
 // floatScientificPositiveCreateRequest creates the FloatScientificPositive request.
@@ -1052,19 +1052,19 @@ func (client *QueriesClient) floatScientificPositiveHandleError(resp *azcore.Res
 
 // GetBooleanFalse - Get false Boolean value on path
 // If the operation fails it returns the *Error error type.
-func (client *QueriesClient) GetBooleanFalse(ctx context.Context, options *QueriesGetBooleanFalseOptions) (*http.Response, error) {
+func (client *QueriesClient) GetBooleanFalse(ctx context.Context, options *QueriesGetBooleanFalseOptions) (QueriesGetBooleanFalseResponse, error) {
 	req, err := client.getBooleanFalseCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return QueriesGetBooleanFalseResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return QueriesGetBooleanFalseResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getBooleanFalseHandleError(resp)
+		return QueriesGetBooleanFalseResponse{}, client.getBooleanFalseHandleError(resp)
 	}
-	return resp.Response, nil
+	return QueriesGetBooleanFalseResponse{RawResponse: resp.Response}, nil
 }
 
 // getBooleanFalseCreateRequest creates the GetBooleanFalse request.
@@ -1097,19 +1097,19 @@ func (client *QueriesClient) getBooleanFalseHandleError(resp *azcore.Response) e
 
 // GetBooleanNull - Get null Boolean value on query (query string should be absent)
 // If the operation fails it returns the *Error error type.
-func (client *QueriesClient) GetBooleanNull(ctx context.Context, options *QueriesGetBooleanNullOptions) (*http.Response, error) {
+func (client *QueriesClient) GetBooleanNull(ctx context.Context, options *QueriesGetBooleanNullOptions) (QueriesGetBooleanNullResponse, error) {
 	req, err := client.getBooleanNullCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return QueriesGetBooleanNullResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return QueriesGetBooleanNullResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getBooleanNullHandleError(resp)
+		return QueriesGetBooleanNullResponse{}, client.getBooleanNullHandleError(resp)
 	}
-	return resp.Response, nil
+	return QueriesGetBooleanNullResponse{RawResponse: resp.Response}, nil
 }
 
 // getBooleanNullCreateRequest creates the GetBooleanNull request.
@@ -1144,19 +1144,19 @@ func (client *QueriesClient) getBooleanNullHandleError(resp *azcore.Response) er
 
 // GetBooleanTrue - Get true Boolean value on path
 // If the operation fails it returns the *Error error type.
-func (client *QueriesClient) GetBooleanTrue(ctx context.Context, options *QueriesGetBooleanTrueOptions) (*http.Response, error) {
+func (client *QueriesClient) GetBooleanTrue(ctx context.Context, options *QueriesGetBooleanTrueOptions) (QueriesGetBooleanTrueResponse, error) {
 	req, err := client.getBooleanTrueCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return QueriesGetBooleanTrueResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return QueriesGetBooleanTrueResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getBooleanTrueHandleError(resp)
+		return QueriesGetBooleanTrueResponse{}, client.getBooleanTrueHandleError(resp)
 	}
-	return resp.Response, nil
+	return QueriesGetBooleanTrueResponse{RawResponse: resp.Response}, nil
 }
 
 // getBooleanTrueCreateRequest creates the GetBooleanTrue request.
@@ -1189,19 +1189,19 @@ func (client *QueriesClient) getBooleanTrueHandleError(resp *azcore.Response) er
 
 // GetIntNegativeOneMillion - Get '-1000000' integer value
 // If the operation fails it returns the *Error error type.
-func (client *QueriesClient) GetIntNegativeOneMillion(ctx context.Context, options *QueriesGetIntNegativeOneMillionOptions) (*http.Response, error) {
+func (client *QueriesClient) GetIntNegativeOneMillion(ctx context.Context, options *QueriesGetIntNegativeOneMillionOptions) (QueriesGetIntNegativeOneMillionResponse, error) {
 	req, err := client.getIntNegativeOneMillionCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return QueriesGetIntNegativeOneMillionResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return QueriesGetIntNegativeOneMillionResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getIntNegativeOneMillionHandleError(resp)
+		return QueriesGetIntNegativeOneMillionResponse{}, client.getIntNegativeOneMillionHandleError(resp)
 	}
-	return resp.Response, nil
+	return QueriesGetIntNegativeOneMillionResponse{RawResponse: resp.Response}, nil
 }
 
 // getIntNegativeOneMillionCreateRequest creates the GetIntNegativeOneMillion request.
@@ -1234,19 +1234,19 @@ func (client *QueriesClient) getIntNegativeOneMillionHandleError(resp *azcore.Re
 
 // GetIntNull - Get null integer value (no query parameter)
 // If the operation fails it returns the *Error error type.
-func (client *QueriesClient) GetIntNull(ctx context.Context, options *QueriesGetIntNullOptions) (*http.Response, error) {
+func (client *QueriesClient) GetIntNull(ctx context.Context, options *QueriesGetIntNullOptions) (QueriesGetIntNullResponse, error) {
 	req, err := client.getIntNullCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return QueriesGetIntNullResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return QueriesGetIntNullResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getIntNullHandleError(resp)
+		return QueriesGetIntNullResponse{}, client.getIntNullHandleError(resp)
 	}
-	return resp.Response, nil
+	return QueriesGetIntNullResponse{RawResponse: resp.Response}, nil
 }
 
 // getIntNullCreateRequest creates the GetIntNull request.
@@ -1281,19 +1281,19 @@ func (client *QueriesClient) getIntNullHandleError(resp *azcore.Response) error 
 
 // GetIntOneMillion - Get '1000000' integer value
 // If the operation fails it returns the *Error error type.
-func (client *QueriesClient) GetIntOneMillion(ctx context.Context, options *QueriesGetIntOneMillionOptions) (*http.Response, error) {
+func (client *QueriesClient) GetIntOneMillion(ctx context.Context, options *QueriesGetIntOneMillionOptions) (QueriesGetIntOneMillionResponse, error) {
 	req, err := client.getIntOneMillionCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return QueriesGetIntOneMillionResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return QueriesGetIntOneMillionResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getIntOneMillionHandleError(resp)
+		return QueriesGetIntOneMillionResponse{}, client.getIntOneMillionHandleError(resp)
 	}
-	return resp.Response, nil
+	return QueriesGetIntOneMillionResponse{RawResponse: resp.Response}, nil
 }
 
 // getIntOneMillionCreateRequest creates the GetIntOneMillion request.
@@ -1326,19 +1326,19 @@ func (client *QueriesClient) getIntOneMillionHandleError(resp *azcore.Response) 
 
 // GetLongNull - Get 'null 64 bit integer value (no query param in uri)
 // If the operation fails it returns the *Error error type.
-func (client *QueriesClient) GetLongNull(ctx context.Context, options *QueriesGetLongNullOptions) (*http.Response, error) {
+func (client *QueriesClient) GetLongNull(ctx context.Context, options *QueriesGetLongNullOptions) (QueriesGetLongNullResponse, error) {
 	req, err := client.getLongNullCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return QueriesGetLongNullResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return QueriesGetLongNullResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getLongNullHandleError(resp)
+		return QueriesGetLongNullResponse{}, client.getLongNullHandleError(resp)
 	}
-	return resp.Response, nil
+	return QueriesGetLongNullResponse{RawResponse: resp.Response}, nil
 }
 
 // getLongNullCreateRequest creates the GetLongNull request.
@@ -1373,19 +1373,19 @@ func (client *QueriesClient) getLongNullHandleError(resp *azcore.Response) error
 
 // GetNegativeTenBillion - Get '-10000000000' 64 bit integer value
 // If the operation fails it returns the *Error error type.
-func (client *QueriesClient) GetNegativeTenBillion(ctx context.Context, options *QueriesGetNegativeTenBillionOptions) (*http.Response, error) {
+func (client *QueriesClient) GetNegativeTenBillion(ctx context.Context, options *QueriesGetNegativeTenBillionOptions) (QueriesGetNegativeTenBillionResponse, error) {
 	req, err := client.getNegativeTenBillionCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return QueriesGetNegativeTenBillionResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return QueriesGetNegativeTenBillionResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getNegativeTenBillionHandleError(resp)
+		return QueriesGetNegativeTenBillionResponse{}, client.getNegativeTenBillionHandleError(resp)
 	}
-	return resp.Response, nil
+	return QueriesGetNegativeTenBillionResponse{RawResponse: resp.Response}, nil
 }
 
 // getNegativeTenBillionCreateRequest creates the GetNegativeTenBillion request.
@@ -1418,19 +1418,19 @@ func (client *QueriesClient) getNegativeTenBillionHandleError(resp *azcore.Respo
 
 // GetTenBillion - Get '10000000000' 64 bit integer value
 // If the operation fails it returns the *Error error type.
-func (client *QueriesClient) GetTenBillion(ctx context.Context, options *QueriesGetTenBillionOptions) (*http.Response, error) {
+func (client *QueriesClient) GetTenBillion(ctx context.Context, options *QueriesGetTenBillionOptions) (QueriesGetTenBillionResponse, error) {
 	req, err := client.getTenBillionCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return QueriesGetTenBillionResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return QueriesGetTenBillionResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.getTenBillionHandleError(resp)
+		return QueriesGetTenBillionResponse{}, client.getTenBillionHandleError(resp)
 	}
-	return resp.Response, nil
+	return QueriesGetTenBillionResponse{RawResponse: resp.Response}, nil
 }
 
 // getTenBillionCreateRequest creates the GetTenBillion request.
@@ -1463,19 +1463,19 @@ func (client *QueriesClient) getTenBillionHandleError(resp *azcore.Response) err
 
 // StringEmpty - Get ''
 // If the operation fails it returns the *Error error type.
-func (client *QueriesClient) StringEmpty(ctx context.Context, options *QueriesStringEmptyOptions) (*http.Response, error) {
+func (client *QueriesClient) StringEmpty(ctx context.Context, options *QueriesStringEmptyOptions) (QueriesStringEmptyResponse, error) {
 	req, err := client.stringEmptyCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return QueriesStringEmptyResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return QueriesStringEmptyResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.stringEmptyHandleError(resp)
+		return QueriesStringEmptyResponse{}, client.stringEmptyHandleError(resp)
 	}
-	return resp.Response, nil
+	return QueriesStringEmptyResponse{RawResponse: resp.Response}, nil
 }
 
 // stringEmptyCreateRequest creates the StringEmpty request.
@@ -1508,19 +1508,19 @@ func (client *QueriesClient) stringEmptyHandleError(resp *azcore.Response) error
 
 // StringNull - Get null (no query parameter in url)
 // If the operation fails it returns the *Error error type.
-func (client *QueriesClient) StringNull(ctx context.Context, options *QueriesStringNullOptions) (*http.Response, error) {
+func (client *QueriesClient) StringNull(ctx context.Context, options *QueriesStringNullOptions) (QueriesStringNullResponse, error) {
 	req, err := client.stringNullCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return QueriesStringNullResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return QueriesStringNullResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.stringNullHandleError(resp)
+		return QueriesStringNullResponse{}, client.stringNullHandleError(resp)
 	}
-	return resp.Response, nil
+	return QueriesStringNullResponse{RawResponse: resp.Response}, nil
 }
 
 // stringNullCreateRequest creates the StringNull request.
@@ -1555,19 +1555,19 @@ func (client *QueriesClient) stringNullHandleError(resp *azcore.Response) error 
 
 // StringURLEncoded - Get 'begin!*'();:@ &=+$,/?#[]end
 // If the operation fails it returns the *Error error type.
-func (client *QueriesClient) StringURLEncoded(ctx context.Context, options *QueriesStringURLEncodedOptions) (*http.Response, error) {
+func (client *QueriesClient) StringURLEncoded(ctx context.Context, options *QueriesStringURLEncodedOptions) (QueriesStringURLEncodedResponse, error) {
 	req, err := client.stringURLEncodedCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return QueriesStringURLEncodedResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return QueriesStringURLEncodedResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.stringURLEncodedHandleError(resp)
+		return QueriesStringURLEncodedResponse{}, client.stringURLEncodedHandleError(resp)
 	}
-	return resp.Response, nil
+	return QueriesStringURLEncodedResponse{RawResponse: resp.Response}, nil
 }
 
 // stringURLEncodedCreateRequest creates the StringURLEncoded request.
@@ -1600,19 +1600,19 @@ func (client *QueriesClient) stringURLEncodedHandleError(resp *azcore.Response) 
 
 // StringUnicode - Get '啊齄丂狛狜隣郎隣兀﨩' multi-byte string value
 // If the operation fails it returns the *Error error type.
-func (client *QueriesClient) StringUnicode(ctx context.Context, options *QueriesStringUnicodeOptions) (*http.Response, error) {
+func (client *QueriesClient) StringUnicode(ctx context.Context, options *QueriesStringUnicodeOptions) (QueriesStringUnicodeResponse, error) {
 	req, err := client.stringUnicodeCreateRequest(ctx, options)
 	if err != nil {
-		return nil, err
+		return QueriesStringUnicodeResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return QueriesStringUnicodeResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.stringUnicodeHandleError(resp)
+		return QueriesStringUnicodeResponse{}, client.stringUnicodeHandleError(resp)
 	}
-	return resp.Response, nil
+	return QueriesStringUnicodeResponse{RawResponse: resp.Response}, nil
 }
 
 // stringUnicodeCreateRequest creates the StringUnicode request.

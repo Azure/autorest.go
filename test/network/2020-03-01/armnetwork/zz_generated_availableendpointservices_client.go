@@ -32,18 +32,15 @@ func NewAvailableEndpointServicesClient(con *armcore.Connection, subscriptionID 
 
 // List - List what values of endpoint services are available for use.
 // If the operation fails it returns the *CloudError error type.
-func (client *AvailableEndpointServicesClient) List(location string, options *AvailableEndpointServicesListOptions) EndpointServicesListResultPager {
-	return &endpointServicesListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *AvailableEndpointServicesClient) List(location string, options *AvailableEndpointServicesListOptions) AvailableEndpointServicesListPager {
+	return &availableEndpointServicesListPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, location, options)
 		},
-		responder: client.listHandleResponse,
-		errorer:   client.listHandleError,
-		advancer: func(ctx context.Context, resp EndpointServicesListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp AvailableEndpointServicesListResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.EndpointServicesListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -71,12 +68,12 @@ func (client *AvailableEndpointServicesClient) listCreateRequest(ctx context.Con
 }
 
 // listHandleResponse handles the List response.
-func (client *AvailableEndpointServicesClient) listHandleResponse(resp *azcore.Response) (EndpointServicesListResultResponse, error) {
-	var val *EndpointServicesListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return EndpointServicesListResultResponse{}, err
+func (client *AvailableEndpointServicesClient) listHandleResponse(resp *azcore.Response) (AvailableEndpointServicesListResponse, error) {
+	result := AvailableEndpointServicesListResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.EndpointServicesListResult); err != nil {
+		return AvailableEndpointServicesListResponse{}, err
 	}
-	return EndpointServicesListResultResponse{RawResponse: resp.Response, EndpointServicesListResult: val}, nil
+	return result, nil
 }
 
 // listHandleError handles the List error response.

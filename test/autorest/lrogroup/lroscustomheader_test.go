@@ -42,9 +42,8 @@ func TestBeginPost202Retry200(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	var resp *http.Response
 	for {
-		resp, err = env.Poller.Poll(ctxWithHTTPHeader())
+		_, err = env.Poller.Poll(ctxWithHTTPHeader())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -52,11 +51,11 @@ func TestBeginPost202Retry200(t *testing.T) {
 			break
 		}
 	}
-	resp, err = env.Poller.FinalResponse(context.Background())
+	resp, err := env.Poller.FinalResponse(context.Background())
 	if err != nil {
 		t.Fatalf("Unexpected error: %v", err)
 	}
-	if s := resp.StatusCode; s != http.StatusOK {
+	if s := resp.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -76,9 +75,8 @@ func TestBeginPostAsyncRetrySucceeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	var resp *http.Response
 	for {
-		resp, err = env.Poller.Poll(ctxWithHTTPHeader())
+		_, err = env.Poller.Poll(ctxWithHTTPHeader())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -86,11 +84,11 @@ func TestBeginPostAsyncRetrySucceeded(t *testing.T) {
 			break
 		}
 	}
-	resp, err = env.Poller.FinalResponse(context.Background())
+	resp, err := env.Poller.FinalResponse(context.Background())
 	if err != nil {
 		t.Fatalf("Unexpected error: %v", err)
 	}
-	if s := resp.StatusCode; s != http.StatusOK {
+	if s := resp.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -126,7 +124,7 @@ func TestBeginPut201CreatingSucceeded200(t *testing.T) {
 	if s := pr.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
-	if r := cmp.Diff(pr.Product, &Product{
+	if r := cmp.Diff(pr.Product, Product{
 		Resource: Resource{
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),
@@ -170,7 +168,7 @@ func TestBeginPutAsyncRetrySucceeded(t *testing.T) {
 	if s := pr.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
-	if r := cmp.Diff(pr.Product, &Product{
+	if r := cmp.Diff(pr.Product, Product{
 		Resource: Resource{
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),

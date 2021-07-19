@@ -24,47 +24,47 @@ type sqlScriptClient struct {
 
 // BeginCreateOrUpdateSQLScript - Creates or updates a Sql Script.
 // If the operation fails it returns the *CloudError error type.
-func (client *sqlScriptClient) BeginCreateOrUpdateSQLScript(ctx context.Context, sqlScriptName string, sqlScript SQLScriptResource, options *SQLScriptBeginCreateOrUpdateSQLScriptOptions) (SQLScriptResourcePollerResponse, error) {
+func (client *sqlScriptClient) BeginCreateOrUpdateSQLScript(ctx context.Context, sqlScriptName string, sqlScript SQLScriptResource, options *SQLScriptBeginCreateOrUpdateSQLScriptOptions) (SQLScriptCreateOrUpdateSQLScriptPollerResponse, error) {
 	resp, err := client.createOrUpdateSQLScript(ctx, sqlScriptName, sqlScript, options)
 	if err != nil {
-		return SQLScriptResourcePollerResponse{}, err
+		return SQLScriptCreateOrUpdateSQLScriptPollerResponse{}, err
 	}
-	result := SQLScriptResourcePollerResponse{
+	result := SQLScriptCreateOrUpdateSQLScriptPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := azcore.NewLROPoller("sqlScriptClient.CreateOrUpdateSQLScript", resp, client.con.Pipeline(), client.createOrUpdateSQLScriptHandleError)
 	if err != nil {
-		return SQLScriptResourcePollerResponse{}, err
+		return SQLScriptCreateOrUpdateSQLScriptPollerResponse{}, err
 	}
-	poller := &sqlScriptResourcePoller{
+	poller := &sqlScriptCreateOrUpdateSQLScriptPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SQLScriptResourceResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SQLScriptCreateOrUpdateSQLScriptResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeCreateOrUpdateSQLScript creates a new SQLScriptResourcePoller from the specified resume token.
-// token - The value must come from a previous call to SQLScriptResourcePoller.ResumeToken().
-func (client *sqlScriptClient) ResumeCreateOrUpdateSQLScript(ctx context.Context, token string) (SQLScriptResourcePollerResponse, error) {
+// ResumeCreateOrUpdateSQLScript creates a new SQLScriptCreateOrUpdateSQLScriptPoller from the specified resume token.
+// token - The value must come from a previous call to SQLScriptCreateOrUpdateSQLScriptPoller.ResumeToken().
+func (client *sqlScriptClient) ResumeCreateOrUpdateSQLScript(ctx context.Context, token string) (SQLScriptCreateOrUpdateSQLScriptPollerResponse, error) {
 	pt, err := azcore.NewLROPollerFromResumeToken("sqlScriptClient.CreateOrUpdateSQLScript", token, client.con.Pipeline(), client.createOrUpdateSQLScriptHandleError)
 	if err != nil {
-		return SQLScriptResourcePollerResponse{}, err
+		return SQLScriptCreateOrUpdateSQLScriptPollerResponse{}, err
 	}
-	poller := &sqlScriptResourcePoller{
+	poller := &sqlScriptCreateOrUpdateSQLScriptPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return SQLScriptResourcePollerResponse{}, err
+		return SQLScriptCreateOrUpdateSQLScriptPollerResponse{}, err
 	}
-	result := SQLScriptResourcePollerResponse{
+	result := SQLScriptCreateOrUpdateSQLScriptPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SQLScriptResourceResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SQLScriptCreateOrUpdateSQLScriptResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -124,47 +124,47 @@ func (client *sqlScriptClient) createOrUpdateSQLScriptHandleError(resp *azcore.R
 
 // BeginDeleteSQLScript - Deletes a Sql Script.
 // If the operation fails it returns the *CloudError error type.
-func (client *sqlScriptClient) BeginDeleteSQLScript(ctx context.Context, sqlScriptName string, options *SQLScriptBeginDeleteSQLScriptOptions) (HTTPPollerResponse, error) {
+func (client *sqlScriptClient) BeginDeleteSQLScript(ctx context.Context, sqlScriptName string, options *SQLScriptBeginDeleteSQLScriptOptions) (SQLScriptDeleteSQLScriptPollerResponse, error) {
 	resp, err := client.deleteSQLScript(ctx, sqlScriptName, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return SQLScriptDeleteSQLScriptPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := SQLScriptDeleteSQLScriptPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := azcore.NewLROPoller("sqlScriptClient.DeleteSQLScript", resp, client.con.Pipeline(), client.deleteSQLScriptHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return SQLScriptDeleteSQLScriptPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &sqlScriptDeleteSQLScriptPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SQLScriptDeleteSQLScriptResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeDeleteSQLScript creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *sqlScriptClient) ResumeDeleteSQLScript(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeDeleteSQLScript creates a new SQLScriptDeleteSQLScriptPoller from the specified resume token.
+// token - The value must come from a previous call to SQLScriptDeleteSQLScriptPoller.ResumeToken().
+func (client *sqlScriptClient) ResumeDeleteSQLScript(ctx context.Context, token string) (SQLScriptDeleteSQLScriptPollerResponse, error) {
 	pt, err := azcore.NewLROPollerFromResumeToken("sqlScriptClient.DeleteSQLScript", token, client.con.Pipeline(), client.deleteSQLScriptHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return SQLScriptDeleteSQLScriptPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &sqlScriptDeleteSQLScriptPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return SQLScriptDeleteSQLScriptPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := SQLScriptDeleteSQLScriptPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SQLScriptDeleteSQLScriptResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -221,17 +221,17 @@ func (client *sqlScriptClient) deleteSQLScriptHandleError(resp *azcore.Response)
 
 // GetSQLScript - Gets a sql script.
 // If the operation fails it returns the *CloudError error type.
-func (client *sqlScriptClient) GetSQLScript(ctx context.Context, sqlScriptName string, options *SQLScriptGetSQLScriptOptions) (SQLScriptResourceResponse, error) {
+func (client *sqlScriptClient) GetSQLScript(ctx context.Context, sqlScriptName string, options *SQLScriptGetSQLScriptOptions) (SQLScriptGetSQLScriptResponse, error) {
 	req, err := client.getSQLScriptCreateRequest(ctx, sqlScriptName, options)
 	if err != nil {
-		return SQLScriptResourceResponse{}, err
+		return SQLScriptGetSQLScriptResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return SQLScriptResourceResponse{}, err
+		return SQLScriptGetSQLScriptResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK, http.StatusNotModified) {
-		return SQLScriptResourceResponse{}, client.getSQLScriptHandleError(resp)
+		return SQLScriptGetSQLScriptResponse{}, client.getSQLScriptHandleError(resp)
 	}
 	return client.getSQLScriptHandleResponse(resp)
 }
@@ -259,12 +259,12 @@ func (client *sqlScriptClient) getSQLScriptCreateRequest(ctx context.Context, sq
 }
 
 // getSQLScriptHandleResponse handles the GetSQLScript response.
-func (client *sqlScriptClient) getSQLScriptHandleResponse(resp *azcore.Response) (SQLScriptResourceResponse, error) {
-	var val *SQLScriptResource
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return SQLScriptResourceResponse{}, err
+func (client *sqlScriptClient) getSQLScriptHandleResponse(resp *azcore.Response) (SQLScriptGetSQLScriptResponse, error) {
+	result := SQLScriptGetSQLScriptResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.SQLScriptResource); err != nil {
+		return SQLScriptGetSQLScriptResponse{}, err
 	}
-	return SQLScriptResourceResponse{RawResponse: resp.Response, SQLScriptResource: val}, nil
+	return result, nil
 }
 
 // getSQLScriptHandleError handles the GetSQLScript error response.
@@ -282,18 +282,15 @@ func (client *sqlScriptClient) getSQLScriptHandleError(resp *azcore.Response) er
 
 // GetSQLScriptsByWorkspace - Lists sql scripts.
 // If the operation fails it returns the *CloudError error type.
-func (client *sqlScriptClient) GetSQLScriptsByWorkspace(options *SQLScriptGetSQLScriptsByWorkspaceOptions) SQLScriptsListResponsePager {
-	return &sqlScriptsListResponsePager{
-		pipeline: client.con.Pipeline(),
+func (client *sqlScriptClient) GetSQLScriptsByWorkspace(options *SQLScriptGetSQLScriptsByWorkspaceOptions) SQLScriptGetSQLScriptsByWorkspacePager {
+	return &sqlScriptGetSQLScriptsByWorkspacePager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.getSQLScriptsByWorkspaceCreateRequest(ctx, options)
 		},
-		responder: client.getSQLScriptsByWorkspaceHandleResponse,
-		errorer:   client.getSQLScriptsByWorkspaceHandleError,
-		advancer: func(ctx context.Context, resp SQLScriptsListResponseResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp SQLScriptGetSQLScriptsByWorkspaceResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.SQLScriptsListResponse.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -313,12 +310,12 @@ func (client *sqlScriptClient) getSQLScriptsByWorkspaceCreateRequest(ctx context
 }
 
 // getSQLScriptsByWorkspaceHandleResponse handles the GetSQLScriptsByWorkspace response.
-func (client *sqlScriptClient) getSQLScriptsByWorkspaceHandleResponse(resp *azcore.Response) (SQLScriptsListResponseResponse, error) {
-	var val *SQLScriptsListResponse
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return SQLScriptsListResponseResponse{}, err
+func (client *sqlScriptClient) getSQLScriptsByWorkspaceHandleResponse(resp *azcore.Response) (SQLScriptGetSQLScriptsByWorkspaceResponse, error) {
+	result := SQLScriptGetSQLScriptsByWorkspaceResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.SQLScriptsListResponse); err != nil {
+		return SQLScriptGetSQLScriptsByWorkspaceResponse{}, err
 	}
-	return SQLScriptsListResponseResponse{RawResponse: resp.Response, SQLScriptsListResponse: val}, nil
+	return result, nil
 }
 
 // getSQLScriptsByWorkspaceHandleError handles the GetSQLScriptsByWorkspace error response.
@@ -336,47 +333,47 @@ func (client *sqlScriptClient) getSQLScriptsByWorkspaceHandleError(resp *azcore.
 
 // BeginRenameSQLScript - Renames a sqlScript.
 // If the operation fails it returns the *CloudError error type.
-func (client *sqlScriptClient) BeginRenameSQLScript(ctx context.Context, sqlScriptName string, request ArtifactRenameRequest, options *SQLScriptBeginRenameSQLScriptOptions) (HTTPPollerResponse, error) {
+func (client *sqlScriptClient) BeginRenameSQLScript(ctx context.Context, sqlScriptName string, request ArtifactRenameRequest, options *SQLScriptBeginRenameSQLScriptOptions) (SQLScriptRenameSQLScriptPollerResponse, error) {
 	resp, err := client.renameSQLScript(ctx, sqlScriptName, request, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return SQLScriptRenameSQLScriptPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := SQLScriptRenameSQLScriptPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := azcore.NewLROPoller("sqlScriptClient.RenameSQLScript", resp, client.con.Pipeline(), client.renameSQLScriptHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return SQLScriptRenameSQLScriptPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &sqlScriptRenameSQLScriptPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SQLScriptRenameSQLScriptResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeRenameSQLScript creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *sqlScriptClient) ResumeRenameSQLScript(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeRenameSQLScript creates a new SQLScriptRenameSQLScriptPoller from the specified resume token.
+// token - The value must come from a previous call to SQLScriptRenameSQLScriptPoller.ResumeToken().
+func (client *sqlScriptClient) ResumeRenameSQLScript(ctx context.Context, token string) (SQLScriptRenameSQLScriptPollerResponse, error) {
 	pt, err := azcore.NewLROPollerFromResumeToken("sqlScriptClient.RenameSQLScript", token, client.con.Pipeline(), client.renameSQLScriptHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return SQLScriptRenameSQLScriptPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &sqlScriptRenameSQLScriptPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return SQLScriptRenameSQLScriptPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := SQLScriptRenameSQLScriptPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SQLScriptRenameSQLScriptResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil

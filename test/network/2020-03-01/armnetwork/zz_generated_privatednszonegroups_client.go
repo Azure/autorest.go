@@ -33,47 +33,47 @@ func NewPrivateDNSZoneGroupsClient(con *armcore.Connection, subscriptionID strin
 
 // BeginCreateOrUpdate - Creates or updates a private dns zone group in the specified private endpoint.
 // If the operation fails it returns the *CloudError error type.
-func (client *PrivateDNSZoneGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, privateEndpointName string, privateDNSZoneGroupName string, parameters PrivateDNSZoneGroup, options *PrivateDNSZoneGroupsBeginCreateOrUpdateOptions) (PrivateDNSZoneGroupPollerResponse, error) {
+func (client *PrivateDNSZoneGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, privateEndpointName string, privateDNSZoneGroupName string, parameters PrivateDNSZoneGroup, options *PrivateDNSZoneGroupsBeginCreateOrUpdateOptions) (PrivateDNSZoneGroupsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, privateEndpointName, privateDNSZoneGroupName, parameters, options)
 	if err != nil {
-		return PrivateDNSZoneGroupPollerResponse{}, err
+		return PrivateDNSZoneGroupsCreateOrUpdatePollerResponse{}, err
 	}
-	result := PrivateDNSZoneGroupPollerResponse{
+	result := PrivateDNSZoneGroupsCreateOrUpdatePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("PrivateDNSZoneGroupsClient.CreateOrUpdate", "azure-async-operation", resp, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return PrivateDNSZoneGroupPollerResponse{}, err
+		return PrivateDNSZoneGroupsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &privateDNSZoneGroupPoller{
+	poller := &privateDNSZoneGroupsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PrivateDNSZoneGroupResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PrivateDNSZoneGroupsCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new PrivateDNSZoneGroupPoller from the specified resume token.
-// token - The value must come from a previous call to PrivateDNSZoneGroupPoller.ResumeToken().
-func (client *PrivateDNSZoneGroupsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (PrivateDNSZoneGroupPollerResponse, error) {
+// ResumeCreateOrUpdate creates a new PrivateDNSZoneGroupsCreateOrUpdatePoller from the specified resume token.
+// token - The value must come from a previous call to PrivateDNSZoneGroupsCreateOrUpdatePoller.ResumeToken().
+func (client *PrivateDNSZoneGroupsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (PrivateDNSZoneGroupsCreateOrUpdatePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("PrivateDNSZoneGroupsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return PrivateDNSZoneGroupPollerResponse{}, err
+		return PrivateDNSZoneGroupsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &privateDNSZoneGroupPoller{
+	poller := &privateDNSZoneGroupsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return PrivateDNSZoneGroupPollerResponse{}, err
+		return PrivateDNSZoneGroupsCreateOrUpdatePollerResponse{}, err
 	}
-	result := PrivateDNSZoneGroupPollerResponse{
+	result := PrivateDNSZoneGroupsCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PrivateDNSZoneGroupResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PrivateDNSZoneGroupsCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -142,47 +142,47 @@ func (client *PrivateDNSZoneGroupsClient) createOrUpdateHandleError(resp *azcore
 
 // BeginDelete - Deletes the specified private dns zone group.
 // If the operation fails it returns the *CloudError error type.
-func (client *PrivateDNSZoneGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, privateEndpointName string, privateDNSZoneGroupName string, options *PrivateDNSZoneGroupsBeginDeleteOptions) (HTTPPollerResponse, error) {
+func (client *PrivateDNSZoneGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, privateEndpointName string, privateDNSZoneGroupName string, options *PrivateDNSZoneGroupsBeginDeleteOptions) (PrivateDNSZoneGroupsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, privateEndpointName, privateDNSZoneGroupName, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return PrivateDNSZoneGroupsDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := PrivateDNSZoneGroupsDeletePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("PrivateDNSZoneGroupsClient.Delete", "location", resp, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return PrivateDNSZoneGroupsDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &privateDNSZoneGroupsDeletePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PrivateDNSZoneGroupsDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeDelete creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *PrivateDNSZoneGroupsClient) ResumeDelete(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeDelete creates a new PrivateDNSZoneGroupsDeletePoller from the specified resume token.
+// token - The value must come from a previous call to PrivateDNSZoneGroupsDeletePoller.ResumeToken().
+func (client *PrivateDNSZoneGroupsClient) ResumeDelete(ctx context.Context, token string) (PrivateDNSZoneGroupsDeletePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("PrivateDNSZoneGroupsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return PrivateDNSZoneGroupsDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &privateDNSZoneGroupsDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return PrivateDNSZoneGroupsDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := PrivateDNSZoneGroupsDeletePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PrivateDNSZoneGroupsDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -251,17 +251,17 @@ func (client *PrivateDNSZoneGroupsClient) deleteHandleError(resp *azcore.Respons
 
 // Get - Gets the private dns zone group resource by specified private dns zone group name.
 // If the operation fails it returns the *CloudError error type.
-func (client *PrivateDNSZoneGroupsClient) Get(ctx context.Context, resourceGroupName string, privateEndpointName string, privateDNSZoneGroupName string, options *PrivateDNSZoneGroupsGetOptions) (PrivateDNSZoneGroupResponse, error) {
+func (client *PrivateDNSZoneGroupsClient) Get(ctx context.Context, resourceGroupName string, privateEndpointName string, privateDNSZoneGroupName string, options *PrivateDNSZoneGroupsGetOptions) (PrivateDNSZoneGroupsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, privateEndpointName, privateDNSZoneGroupName, options)
 	if err != nil {
-		return PrivateDNSZoneGroupResponse{}, err
+		return PrivateDNSZoneGroupsGetResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return PrivateDNSZoneGroupResponse{}, err
+		return PrivateDNSZoneGroupsGetResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return PrivateDNSZoneGroupResponse{}, client.getHandleError(resp)
+		return PrivateDNSZoneGroupsGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -298,12 +298,12 @@ func (client *PrivateDNSZoneGroupsClient) getCreateRequest(ctx context.Context, 
 }
 
 // getHandleResponse handles the Get response.
-func (client *PrivateDNSZoneGroupsClient) getHandleResponse(resp *azcore.Response) (PrivateDNSZoneGroupResponse, error) {
-	var val *PrivateDNSZoneGroup
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return PrivateDNSZoneGroupResponse{}, err
+func (client *PrivateDNSZoneGroupsClient) getHandleResponse(resp *azcore.Response) (PrivateDNSZoneGroupsGetResponse, error) {
+	result := PrivateDNSZoneGroupsGetResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.PrivateDNSZoneGroup); err != nil {
+		return PrivateDNSZoneGroupsGetResponse{}, err
 	}
-	return PrivateDNSZoneGroupResponse{RawResponse: resp.Response, PrivateDNSZoneGroup: val}, nil
+	return result, nil
 }
 
 // getHandleError handles the Get error response.
@@ -321,18 +321,15 @@ func (client *PrivateDNSZoneGroupsClient) getHandleError(resp *azcore.Response) 
 
 // List - Gets all private dns zone groups in a private endpoint.
 // If the operation fails it returns the *Error error type.
-func (client *PrivateDNSZoneGroupsClient) List(privateEndpointName string, resourceGroupName string, options *PrivateDNSZoneGroupsListOptions) PrivateDNSZoneGroupListResultPager {
-	return &privateDNSZoneGroupListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *PrivateDNSZoneGroupsClient) List(privateEndpointName string, resourceGroupName string, options *PrivateDNSZoneGroupsListOptions) PrivateDNSZoneGroupsListPager {
+	return &privateDNSZoneGroupsListPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, privateEndpointName, resourceGroupName, options)
 		},
-		responder: client.listHandleResponse,
-		errorer:   client.listHandleError,
-		advancer: func(ctx context.Context, resp PrivateDNSZoneGroupListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp PrivateDNSZoneGroupsListResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.PrivateDNSZoneGroupListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -364,12 +361,12 @@ func (client *PrivateDNSZoneGroupsClient) listCreateRequest(ctx context.Context,
 }
 
 // listHandleResponse handles the List response.
-func (client *PrivateDNSZoneGroupsClient) listHandleResponse(resp *azcore.Response) (PrivateDNSZoneGroupListResultResponse, error) {
-	var val *PrivateDNSZoneGroupListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return PrivateDNSZoneGroupListResultResponse{}, err
+func (client *PrivateDNSZoneGroupsClient) listHandleResponse(resp *azcore.Response) (PrivateDNSZoneGroupsListResponse, error) {
+	result := PrivateDNSZoneGroupsListResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.PrivateDNSZoneGroupListResult); err != nil {
+		return PrivateDNSZoneGroupsListResponse{}, err
 	}
-	return PrivateDNSZoneGroupListResultResponse{RawResponse: resp.Response, PrivateDNSZoneGroupListResult: val}, nil
+	return result, nil
 }
 
 // listHandleError handles the List error response.

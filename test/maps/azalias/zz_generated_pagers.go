@@ -10,49 +10,29 @@ package azalias
 import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"net/http"
 	"reflect"
 )
 
-// AliasListResponsePager provides iteration over AliasListResponse pages.
-type AliasListResponsePager interface {
+type AliasListPager interface {
 	azcore.Pager
-
-	// PageResponse returns the current AliasListResponseResponse.
-	PageResponse() AliasListResponseResponse
+	// PageResponse returns the current AliasListResponseEnvelope.
+	PageResponse() AliasListResponseEnvelope
 }
 
-type aliasListResponseCreateRequest func(context.Context) (*azcore.Request, error)
-
-type aliasListResponseHandleError func(*azcore.Response) error
-
-type aliasListResponseHandleResponse func(*azcore.Response) (AliasListResponseResponse, error)
-
-type aliasListResponseAdvancePage func(context.Context, AliasListResponseResponse) (*azcore.Request, error)
-
-type aliasListResponsePager struct {
-	// the pipeline for making the request
-	pipeline azcore.Pipeline
-	// creates the initial request (non-LRO case)
-	requester aliasListResponseCreateRequest
-	// callback for handling response errors
-	errorer aliasListResponseHandleError
-	// callback for handling the HTTP response
-	responder aliasListResponseHandleResponse
-	// callback for advancing to the next page
-	advancer aliasListResponseAdvancePage
-	// contains the current response
-	current AliasListResponseResponse
-	// status codes for successful retrieval
-	statusCodes []int
-	// any error encountered
-	err error
+type aliasListPager struct {
+	client    *aliasClient
+	current   AliasListResponseEnvelope
+	err       error
+	requester func(context.Context) (*azcore.Request, error)
+	advancer  func(context.Context, AliasListResponseEnvelope) (*azcore.Request, error)
 }
 
-func (p *aliasListResponsePager) Err() error {
+func (p *aliasListPager) Err() error {
 	return p.err
 }
 
-func (p *aliasListResponsePager) NextPage(ctx context.Context) bool {
+func (p *aliasListPager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -67,16 +47,16 @@ func (p *aliasListResponsePager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	resp, err := p.pipeline.Do(req)
+	resp, err := p.client.con.Pipeline().Do(req)
 	if err != nil {
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(p.statusCodes...) {
-		p.err = p.errorer(resp)
+	if !resp.HasStatusCode(http.StatusOK) {
+		p.err = p.client.listHandleError(resp)
 		return false
 	}
-	result, err := p.responder(resp)
+	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
 		p.err = err
 		return false
@@ -85,6 +65,6 @@ func (p *aliasListResponsePager) NextPage(ctx context.Context) bool {
 	return true
 }
 
-func (p *aliasListResponsePager) PageResponse() AliasListResponseResponse {
+func (p *aliasListPager) PageResponse() AliasListResponseEnvelope {
 	return p.current
 }

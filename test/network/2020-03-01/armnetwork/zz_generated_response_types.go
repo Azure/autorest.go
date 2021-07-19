@@ -13,2999 +13,7253 @@ import (
 	"time"
 )
 
-// ApplicationGatewayAvailableSSLOptionsResponse is the response envelope for operations that return a ApplicationGatewayAvailableSSLOptions type.
-type ApplicationGatewayAvailableSSLOptionsResponse struct {
-	// Response for ApplicationGatewayAvailableSslOptions API service call.
-	ApplicationGatewayAvailableSSLOptions *ApplicationGatewayAvailableSSLOptions
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ApplicationGatewayAvailableSSLPredefinedPoliciesResponse is the response envelope for operations that return a ApplicationGatewayAvailableSSLPredefinedPolicies
-// type.
-type ApplicationGatewayAvailableSSLPredefinedPoliciesResponse struct {
-	// Response for ApplicationGatewayAvailableSslOptions API service call.
-	ApplicationGatewayAvailableSSLPredefinedPolicies *ApplicationGatewayAvailableSSLPredefinedPolicies
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ApplicationGatewayAvailableWafRuleSetsResultResponse is the response envelope for operations that return a ApplicationGatewayAvailableWafRuleSetsResult
-// type.
-type ApplicationGatewayAvailableWafRuleSetsResultResponse struct {
-	// Response for ApplicationGatewayAvailableWafRuleSets API service call.
-	ApplicationGatewayAvailableWafRuleSetsResult *ApplicationGatewayAvailableWafRuleSetsResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ApplicationGatewayBackendHealthOnDemandPollerResponse is the response envelope for operations that asynchronously return a ApplicationGatewayBackendHealthOnDemand
-// type.
-type ApplicationGatewayBackendHealthOnDemandPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ApplicationGatewayBackendHealthOnDemandResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller ApplicationGatewayBackendHealthOnDemandPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ApplicationGatewayBackendHealthOnDemandResponse is the response envelope for operations that return a ApplicationGatewayBackendHealthOnDemand type.
-type ApplicationGatewayBackendHealthOnDemandResponse struct {
-	// Result of on demand test probe.
-	ApplicationGatewayBackendHealthOnDemand *ApplicationGatewayBackendHealthOnDemand
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ApplicationGatewayBackendHealthPollerResponse is the response envelope for operations that asynchronously return a ApplicationGatewayBackendHealth type.
-type ApplicationGatewayBackendHealthPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ApplicationGatewayBackendHealthResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller ApplicationGatewayBackendHealthPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ApplicationGatewayBackendHealthResponse is the response envelope for operations that return a ApplicationGatewayBackendHealth type.
-type ApplicationGatewayBackendHealthResponse struct {
-	// Response for ApplicationGatewayBackendHealth API service call.
-	ApplicationGatewayBackendHealth *ApplicationGatewayBackendHealth
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ApplicationGatewayListResultResponse is the response envelope for operations that return a ApplicationGatewayListResult type.
-type ApplicationGatewayListResultResponse struct {
-	// Response for ListApplicationGateways API service call.
-	ApplicationGatewayListResult *ApplicationGatewayListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ApplicationGatewayPollerResponse is the response envelope for operations that asynchronously return a ApplicationGateway type.
-type ApplicationGatewayPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ApplicationGatewayResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller ApplicationGatewayPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ApplicationGatewayResponse is the response envelope for operations that return a ApplicationGateway type.
-type ApplicationGatewayResponse struct {
-	// Application gateway resource.
-	ApplicationGateway *ApplicationGateway
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ApplicationGatewaySSLPredefinedPolicyResponse is the response envelope for operations that return a ApplicationGatewaySSLPredefinedPolicy type.
-type ApplicationGatewaySSLPredefinedPolicyResponse struct {
-	// An Ssl predefined policy.
-	ApplicationGatewaySSLPredefinedPolicy *ApplicationGatewaySSLPredefinedPolicy
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ApplicationSecurityGroupListResultResponse is the response envelope for operations that return a ApplicationSecurityGroupListResult type.
-type ApplicationSecurityGroupListResultResponse struct {
-	// A list of application security groups.
-	ApplicationSecurityGroupListResult *ApplicationSecurityGroupListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ApplicationSecurityGroupPollerResponse is the response envelope for operations that asynchronously return a ApplicationSecurityGroup type.
-type ApplicationSecurityGroupPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ApplicationSecurityGroupResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller ApplicationSecurityGroupPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ApplicationSecurityGroupResponse is the response envelope for operations that return a ApplicationSecurityGroup type.
-type ApplicationSecurityGroupResponse struct {
-	// An application security group in a resource group.
-	ApplicationSecurityGroup *ApplicationSecurityGroup
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// AuthorizationListResultResponse is the response envelope for operations that return a AuthorizationListResult type.
-type AuthorizationListResultResponse struct {
-	// Response for ListAuthorizations API service call retrieves all authorizations that belongs to an ExpressRouteCircuit.
-	AuthorizationListResult *AuthorizationListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// AutoApprovedPrivateLinkServicesResultResponse is the response envelope for operations that return a AutoApprovedPrivateLinkServicesResult type.
-type AutoApprovedPrivateLinkServicesResultResponse struct {
-	// An array of private link service id that can be linked to a private end point with auto approved.
-	AutoApprovedPrivateLinkServicesResult *AutoApprovedPrivateLinkServicesResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// AvailableDelegationsResultResponse is the response envelope for operations that return a AvailableDelegationsResult type.
-type AvailableDelegationsResultResponse struct {
-	// An array of available delegations.
-	AvailableDelegationsResult *AvailableDelegationsResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// AvailablePrivateEndpointTypesResultResponse is the response envelope for operations that return a AvailablePrivateEndpointTypesResult type.
-type AvailablePrivateEndpointTypesResultResponse struct {
-	// An array of available PrivateEndpoint types.
-	AvailablePrivateEndpointTypesResult *AvailablePrivateEndpointTypesResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// AvailableProvidersListPollerResponse is the response envelope for operations that asynchronously return a AvailableProvidersList type.
-type AvailableProvidersListPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (AvailableProvidersListResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller AvailableProvidersListPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// AvailableProvidersListResponse is the response envelope for operations that return a AvailableProvidersList type.
-type AvailableProvidersListResponse struct {
-	// List of available countries with details.
-	AvailableProvidersList *AvailableProvidersList
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// AvailableServiceAliasesResultResponse is the response envelope for operations that return a AvailableServiceAliasesResult type.
-type AvailableServiceAliasesResultResponse struct {
-	// An array of available service aliases.
-	AvailableServiceAliasesResult *AvailableServiceAliasesResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// AzureFirewallFqdnTagListResultResponse is the response envelope for operations that return a AzureFirewallFqdnTagListResult type.
-type AzureFirewallFqdnTagListResultResponse struct {
-	// Response for ListAzureFirewallFqdnTags API service call.
-	AzureFirewallFqdnTagListResult *AzureFirewallFqdnTagListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// AzureFirewallListResultResponse is the response envelope for operations that return a AzureFirewallListResult type.
-type AzureFirewallListResultResponse struct {
-	// Response for ListAzureFirewalls API service call.
-	AzureFirewallListResult *AzureFirewallListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// AzureFirewallPollerResponse is the response envelope for operations that asynchronously return a AzureFirewall type.
-type AzureFirewallPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (AzureFirewallResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller AzureFirewallPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// AzureFirewallResponse is the response envelope for operations that return a AzureFirewall type.
-type AzureFirewallResponse struct {
-	// Azure Firewall resource.
-	AzureFirewall *AzureFirewall
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// AzureReachabilityReportPollerResponse is the response envelope for operations that asynchronously return a AzureReachabilityReport type.
-type AzureReachabilityReportPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (AzureReachabilityReportResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller AzureReachabilityReportPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// AzureReachabilityReportResponse is the response envelope for operations that return a AzureReachabilityReport type.
-type AzureReachabilityReportResponse struct {
-	// Azure reachability report details.
-	AzureReachabilityReport *AzureReachabilityReport
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// BackendAddressPoolResponse is the response envelope for operations that return a BackendAddressPool type.
-type BackendAddressPoolResponse struct {
-	// Pool of backend IP addresses.
-	BackendAddressPool *BackendAddressPool
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// BastionActiveSessionListResultPagerPollerResponse is the response envelope for operations that asynchronously return a BastionActiveSessionListResultPager
-// type.
-type BastionActiveSessionListResultPagerPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (BastionActiveSessionListResultPager, error)
-
-	// Poller contains an initialized poller.
-	Poller BastionActiveSessionListResultPagerPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// BastionActiveSessionListResultResponse is the response envelope for operations that return a BastionActiveSessionListResult type.
-type BastionActiveSessionListResultResponse struct {
-	// Response for GetActiveSessions.
-	BastionActiveSessionListResult *BastionActiveSessionListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// BastionHostListResultResponse is the response envelope for operations that return a BastionHostListResult type.
-type BastionHostListResultResponse struct {
-	// Response for ListBastionHosts API service call.
-	BastionHostListResult *BastionHostListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// BastionHostPollerResponse is the response envelope for operations that asynchronously return a BastionHost type.
-type BastionHostPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (BastionHostResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller BastionHostPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// BastionHostResponse is the response envelope for operations that return a BastionHost type.
-type BastionHostResponse struct {
-	// Bastion Host resource.
-	BastionHost *BastionHost
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// BastionSessionDeleteResultResponse is the response envelope for operations that return a BastionSessionDeleteResult type.
-type BastionSessionDeleteResultResponse struct {
-	// Response for DisconnectActiveSessions.
-	BastionSessionDeleteResult *BastionSessionDeleteResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// BastionShareableLinkListResultPagerPollerResponse is the response envelope for operations that asynchronously return a BastionShareableLinkListResultPager
-// type.
-type BastionShareableLinkListResultPagerPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (BastionShareableLinkListResultPager, error)
-
-	// Poller contains an initialized poller.
-	Poller BastionShareableLinkListResultPagerPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// BastionShareableLinkListResultResponse is the response envelope for operations that return a BastionShareableLinkListResult type.
-type BastionShareableLinkListResultResponse struct {
-	// Response for all the Bastion Shareable Link endpoints.
-	BastionShareableLinkListResult *BastionShareableLinkListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// BgpPeerStatusListResultPollerResponse is the response envelope for operations that asynchronously return a BgpPeerStatusListResult type.
-type BgpPeerStatusListResultPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (BgpPeerStatusListResultResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller BgpPeerStatusListResultPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// BgpPeerStatusListResultResponse is the response envelope for operations that return a BgpPeerStatusListResult type.
-type BgpPeerStatusListResultResponse struct {
-	// Response for list BGP peer status API service call.
-	BgpPeerStatusListResult *BgpPeerStatusListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// BgpServiceCommunityListResultResponse is the response envelope for operations that return a BgpServiceCommunityListResult type.
-type BgpServiceCommunityListResultResponse struct {
-	// Response for the ListServiceCommunity API service call.
-	BgpServiceCommunityListResult *BgpServiceCommunityListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ConnectionMonitorListResultResponse is the response envelope for operations that return a ConnectionMonitorListResult type.
-type ConnectionMonitorListResultResponse struct {
-	// List of connection monitors.
-	ConnectionMonitorListResult *ConnectionMonitorListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ConnectionMonitorQueryResultPollerResponse is the response envelope for operations that asynchronously return a ConnectionMonitorQueryResult type.
-type ConnectionMonitorQueryResultPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ConnectionMonitorQueryResultResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller ConnectionMonitorQueryResultPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ConnectionMonitorQueryResultResponse is the response envelope for operations that return a ConnectionMonitorQueryResult type.
-type ConnectionMonitorQueryResultResponse struct {
-	// List of connection states snapshots.
-	ConnectionMonitorQueryResult *ConnectionMonitorQueryResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ConnectionMonitorResultPollerResponse is the response envelope for operations that asynchronously return a ConnectionMonitorResult type.
-type ConnectionMonitorResultPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ConnectionMonitorResultResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller ConnectionMonitorResultPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ConnectionMonitorResultResponse is the response envelope for operations that return a ConnectionMonitorResult type.
-type ConnectionMonitorResultResponse struct {
-	// Information about the connection monitor.
-	ConnectionMonitorResult *ConnectionMonitorResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ConnectionResetSharedKeyPollerResponse is the response envelope for operations that asynchronously return a ConnectionResetSharedKey type.
-type ConnectionResetSharedKeyPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ConnectionResetSharedKeyResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller ConnectionResetSharedKeyPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ConnectionResetSharedKeyResponse is the response envelope for operations that return a ConnectionResetSharedKey type.
-type ConnectionResetSharedKeyResponse struct {
-	// The virtual network connection reset shared key.
-	ConnectionResetSharedKey *ConnectionResetSharedKey
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ConnectionSharedKeyPollerResponse is the response envelope for operations that asynchronously return a ConnectionSharedKey type.
-type ConnectionSharedKeyPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ConnectionSharedKeyResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller ConnectionSharedKeyPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ConnectionSharedKeyResponse is the response envelope for operations that return a ConnectionSharedKey type.
-type ConnectionSharedKeyResponse struct {
-	// Response for GetConnectionSharedKey API service call.
-	ConnectionSharedKey *ConnectionSharedKey
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ConnectivityInformationPollerResponse is the response envelope for operations that asynchronously return a ConnectivityInformation type.
-type ConnectivityInformationPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ConnectivityInformationResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller ConnectivityInformationPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ConnectivityInformationResponse is the response envelope for operations that return a ConnectivityInformation type.
-type ConnectivityInformationResponse struct {
-	// Information on the connectivity status.
-	ConnectivityInformation *ConnectivityInformation
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// DNSNameAvailabilityResultResponse is the response envelope for operations that return a DNSNameAvailabilityResult type.
-type DNSNameAvailabilityResultResponse struct {
-	// Response for the CheckDnsNameAvailability API service call.
-	DNSNameAvailabilityResult *DNSNameAvailabilityResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// DdosCustomPolicyPollerResponse is the response envelope for operations that asynchronously return a DdosCustomPolicy type.
-type DdosCustomPolicyPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (DdosCustomPolicyResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller DdosCustomPolicyPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// DdosCustomPolicyResponse is the response envelope for operations that return a DdosCustomPolicy type.
-type DdosCustomPolicyResponse struct {
-	// A DDoS custom policy in a resource group.
-	DdosCustomPolicy *DdosCustomPolicy
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// DdosProtectionPlanListResultResponse is the response envelope for operations that return a DdosProtectionPlanListResult type.
-type DdosProtectionPlanListResultResponse struct {
-	// A list of DDoS protection plans.
-	DdosProtectionPlanListResult *DdosProtectionPlanListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// DdosProtectionPlanPollerResponse is the response envelope for operations that asynchronously return a DdosProtectionPlan type.
-type DdosProtectionPlanPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (DdosProtectionPlanResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller DdosProtectionPlanPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// DdosProtectionPlanResponse is the response envelope for operations that return a DdosProtectionPlan type.
-type DdosProtectionPlanResponse struct {
-	// A DDoS protection plan in a resource group.
-	DdosProtectionPlan *DdosProtectionPlan
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// EffectiveNetworkSecurityGroupListResultPollerResponse is the response envelope for operations that asynchronously return a EffectiveNetworkSecurityGroupListResult
-// type.
-type EffectiveNetworkSecurityGroupListResultPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (EffectiveNetworkSecurityGroupListResultResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller EffectiveNetworkSecurityGroupListResultPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// EffectiveNetworkSecurityGroupListResultResponse is the response envelope for operations that return a EffectiveNetworkSecurityGroupListResult type.
-type EffectiveNetworkSecurityGroupListResultResponse struct {
-	// Response for list effective network security groups API service call.
-	EffectiveNetworkSecurityGroupListResult *EffectiveNetworkSecurityGroupListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// EffectiveRouteListResultPollerResponse is the response envelope for operations that asynchronously return a EffectiveRouteListResult type.
-type EffectiveRouteListResultPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (EffectiveRouteListResultResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller EffectiveRouteListResultPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// EffectiveRouteListResultResponse is the response envelope for operations that return a EffectiveRouteListResult type.
-type EffectiveRouteListResultResponse struct {
-	// Response for list effective route API service call.
-	EffectiveRouteListResult *EffectiveRouteListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// EndpointServicesListResultResponse is the response envelope for operations that return a EndpointServicesListResult type.
-type EndpointServicesListResultResponse struct {
-	// Response for the ListAvailableEndpointServices API service call.
-	EndpointServicesListResult *EndpointServicesListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ExpressRouteCircuitAuthorizationPollerResponse is the response envelope for operations that asynchronously return a ExpressRouteCircuitAuthorization
-// type.
-type ExpressRouteCircuitAuthorizationPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitAuthorizationResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller ExpressRouteCircuitAuthorizationPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ExpressRouteCircuitAuthorizationResponse is the response envelope for operations that return a ExpressRouteCircuitAuthorization type.
-type ExpressRouteCircuitAuthorizationResponse struct {
-	// Authorization in an ExpressRouteCircuit resource.
-	ExpressRouteCircuitAuthorization *ExpressRouteCircuitAuthorization
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ExpressRouteCircuitConnectionListResultResponse is the response envelope for operations that return a ExpressRouteCircuitConnectionListResult type.
-type ExpressRouteCircuitConnectionListResultResponse struct {
-	// Response for ListConnections API service call retrieves all global reach connections that belongs to a Private Peering for an ExpressRouteCircuit.
-	ExpressRouteCircuitConnectionListResult *ExpressRouteCircuitConnectionListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ExpressRouteCircuitConnectionPollerResponse is the response envelope for operations that asynchronously return a ExpressRouteCircuitConnection type.
-type ExpressRouteCircuitConnectionPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitConnectionResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller ExpressRouteCircuitConnectionPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ExpressRouteCircuitConnectionResponse is the response envelope for operations that return a ExpressRouteCircuitConnection type.
-type ExpressRouteCircuitConnectionResponse struct {
-	// Express Route Circuit Connection in an ExpressRouteCircuitPeering resource.
-	ExpressRouteCircuitConnection *ExpressRouteCircuitConnection
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ExpressRouteCircuitListResultResponse is the response envelope for operations that return a ExpressRouteCircuitListResult type.
-type ExpressRouteCircuitListResultResponse struct {
-	// Response for ListExpressRouteCircuit API service call.
-	ExpressRouteCircuitListResult *ExpressRouteCircuitListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ExpressRouteCircuitPeeringListResultResponse is the response envelope for operations that return a ExpressRouteCircuitPeeringListResult type.
-type ExpressRouteCircuitPeeringListResultResponse struct {
-	// Response for ListPeering API service call retrieves all peerings that belong to an ExpressRouteCircuit.
-	ExpressRouteCircuitPeeringListResult *ExpressRouteCircuitPeeringListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ExpressRouteCircuitPeeringPollerResponse is the response envelope for operations that asynchronously return a ExpressRouteCircuitPeering type.
-type ExpressRouteCircuitPeeringPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitPeeringResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller ExpressRouteCircuitPeeringPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ExpressRouteCircuitPeeringResponse is the response envelope for operations that return a ExpressRouteCircuitPeering type.
-type ExpressRouteCircuitPeeringResponse struct {
-	// Peering in an ExpressRouteCircuit resource.
-	ExpressRouteCircuitPeering *ExpressRouteCircuitPeering
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ExpressRouteCircuitPollerResponse is the response envelope for operations that asynchronously return a ExpressRouteCircuit type.
-type ExpressRouteCircuitPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller ExpressRouteCircuitPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ExpressRouteCircuitResponse is the response envelope for operations that return a ExpressRouteCircuit type.
-type ExpressRouteCircuitResponse struct {
-	// ExpressRouteCircuit resource.
-	ExpressRouteCircuit *ExpressRouteCircuit
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ExpressRouteCircuitStatsResponse is the response envelope for operations that return a ExpressRouteCircuitStats type.
-type ExpressRouteCircuitStatsResponse struct {
-	// Contains stats associated with the peering.
-	ExpressRouteCircuitStats *ExpressRouteCircuitStats
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ExpressRouteCircuitsArpTableListResultPollerResponse is the response envelope for operations that asynchronously return a ExpressRouteCircuitsArpTableListResult
-// type.
-type ExpressRouteCircuitsArpTableListResultPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitsArpTableListResultResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller ExpressRouteCircuitsArpTableListResultPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ExpressRouteCircuitsArpTableListResultResponse is the response envelope for operations that return a ExpressRouteCircuitsArpTableListResult type.
-type ExpressRouteCircuitsArpTableListResultResponse struct {
-	// Response for ListArpTable associated with the Express Route Circuits API.
-	ExpressRouteCircuitsArpTableListResult *ExpressRouteCircuitsArpTableListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ExpressRouteCircuitsRoutesTableListResultPollerResponse is the response envelope for operations that asynchronously return a ExpressRouteCircuitsRoutesTableListResult
-// type.
-type ExpressRouteCircuitsRoutesTableListResultPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitsRoutesTableListResultResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller ExpressRouteCircuitsRoutesTableListResultPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ExpressRouteCircuitsRoutesTableListResultResponse is the response envelope for operations that return a ExpressRouteCircuitsRoutesTableListResult type.
-type ExpressRouteCircuitsRoutesTableListResultResponse struct {
-	// Response for ListRoutesTable associated with the Express Route Circuits API.
-	ExpressRouteCircuitsRoutesTableListResult *ExpressRouteCircuitsRoutesTableListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ExpressRouteCircuitsRoutesTableSummaryListResultPollerResponse is the response envelope for operations that asynchronously return a ExpressRouteCircuitsRoutesTableSummaryListResult
-// type.
-type ExpressRouteCircuitsRoutesTableSummaryListResultPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitsRoutesTableSummaryListResultResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller ExpressRouteCircuitsRoutesTableSummaryListResultPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ExpressRouteCircuitsRoutesTableSummaryListResultResponse is the response envelope for operations that return a ExpressRouteCircuitsRoutesTableSummaryListResult
-// type.
-type ExpressRouteCircuitsRoutesTableSummaryListResultResponse struct {
-	// Response for ListRoutesTable associated with the Express Route Circuits API.
-	ExpressRouteCircuitsRoutesTableSummaryListResult *ExpressRouteCircuitsRoutesTableSummaryListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ExpressRouteConnectionListResponse is the response envelope for operations that return a ExpressRouteConnectionList type.
-type ExpressRouteConnectionListResponse struct {
-	// ExpressRouteConnection list.
-	ExpressRouteConnectionList *ExpressRouteConnectionList
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ExpressRouteConnectionPollerResponse is the response envelope for operations that asynchronously return a ExpressRouteConnection type.
-type ExpressRouteConnectionPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteConnectionResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller ExpressRouteConnectionPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ExpressRouteConnectionResponse is the response envelope for operations that return a ExpressRouteConnection type.
-type ExpressRouteConnectionResponse struct {
-	// ExpressRouteConnection resource.
-	ExpressRouteConnection *ExpressRouteConnection
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ExpressRouteCrossConnectionListResultResponse is the response envelope for operations that return a ExpressRouteCrossConnectionListResult type.
-type ExpressRouteCrossConnectionListResultResponse struct {
-	// Response for ListExpressRouteCrossConnection API service call.
-	ExpressRouteCrossConnectionListResult *ExpressRouteCrossConnectionListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ExpressRouteCrossConnectionPeeringListResponse is the response envelope for operations that return a ExpressRouteCrossConnectionPeeringList type.
-type ExpressRouteCrossConnectionPeeringListResponse struct {
-	// Response for ListPeering API service call retrieves all peerings that belong to an ExpressRouteCrossConnection.
-	ExpressRouteCrossConnectionPeeringList *ExpressRouteCrossConnectionPeeringList
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ExpressRouteCrossConnectionPeeringPollerResponse is the response envelope for operations that asynchronously return a ExpressRouteCrossConnectionPeering
-// type.
-type ExpressRouteCrossConnectionPeeringPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCrossConnectionPeeringResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller ExpressRouteCrossConnectionPeeringPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ExpressRouteCrossConnectionPeeringResponse is the response envelope for operations that return a ExpressRouteCrossConnectionPeering type.
-type ExpressRouteCrossConnectionPeeringResponse struct {
-	// Peering in an ExpressRoute Cross Connection resource.
-	ExpressRouteCrossConnectionPeering *ExpressRouteCrossConnectionPeering
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ExpressRouteCrossConnectionPollerResponse is the response envelope for operations that asynchronously return a ExpressRouteCrossConnection type.
-type ExpressRouteCrossConnectionPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCrossConnectionResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller ExpressRouteCrossConnectionPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ExpressRouteCrossConnectionResponse is the response envelope for operations that return a ExpressRouteCrossConnection type.
-type ExpressRouteCrossConnectionResponse struct {
-	// ExpressRouteCrossConnection resource.
-	ExpressRouteCrossConnection *ExpressRouteCrossConnection
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ExpressRouteCrossConnectionsRoutesTableSummaryListResultPollerResponse is the response envelope for operations that asynchronously return a ExpressRouteCrossConnectionsRoutesTableSummaryListResult
-// type.
-type ExpressRouteCrossConnectionsRoutesTableSummaryListResultPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCrossConnectionsRoutesTableSummaryListResultResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller ExpressRouteCrossConnectionsRoutesTableSummaryListResultPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ExpressRouteCrossConnectionsRoutesTableSummaryListResultResponse is the response envelope for operations that return a ExpressRouteCrossConnectionsRoutesTableSummaryListResult
-// type.
-type ExpressRouteCrossConnectionsRoutesTableSummaryListResultResponse struct {
-	// Response for ListRoutesTable associated with the Express Route Cross Connections.
-	ExpressRouteCrossConnectionsRoutesTableSummaryListResult *ExpressRouteCrossConnectionsRoutesTableSummaryListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ExpressRouteGatewayListResponse is the response envelope for operations that return a ExpressRouteGatewayList type.
-type ExpressRouteGatewayListResponse struct {
-	// List of ExpressRoute gateways.
-	ExpressRouteGatewayList *ExpressRouteGatewayList
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ExpressRouteGatewayPollerResponse is the response envelope for operations that asynchronously return a ExpressRouteGateway type.
-type ExpressRouteGatewayPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteGatewayResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller ExpressRouteGatewayPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ExpressRouteGatewayResponse is the response envelope for operations that return a ExpressRouteGateway type.
-type ExpressRouteGatewayResponse struct {
-	// ExpressRoute gateway resource.
-	ExpressRouteGateway *ExpressRouteGateway
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ExpressRouteLinkListResultResponse is the response envelope for operations that return a ExpressRouteLinkListResult type.
-type ExpressRouteLinkListResultResponse struct {
-	// Response for ListExpressRouteLinks API service call.
-	ExpressRouteLinkListResult *ExpressRouteLinkListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ExpressRouteLinkResponse is the response envelope for operations that return a ExpressRouteLink type.
-type ExpressRouteLinkResponse struct {
-	// ExpressRouteLink child resource definition.
-	ExpressRouteLink *ExpressRouteLink
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ExpressRoutePortListResultResponse is the response envelope for operations that return a ExpressRoutePortListResult type.
-type ExpressRoutePortListResultResponse struct {
-	// Response for ListExpressRoutePorts API service call.
-	ExpressRoutePortListResult *ExpressRoutePortListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ExpressRoutePortPollerResponse is the response envelope for operations that asynchronously return a ExpressRoutePort type.
-type ExpressRoutePortPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRoutePortResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller ExpressRoutePortPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ExpressRoutePortResponse is the response envelope for operations that return a ExpressRoutePort type.
-type ExpressRoutePortResponse struct {
-	// ExpressRoutePort resource definition.
-	ExpressRoutePort *ExpressRoutePort
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ExpressRoutePortsLocationListResultResponse is the response envelope for operations that return a ExpressRoutePortsLocationListResult type.
-type ExpressRoutePortsLocationListResultResponse struct {
-	// Response for ListExpressRoutePortsLocations API service call.
-	ExpressRoutePortsLocationListResult *ExpressRoutePortsLocationListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ExpressRoutePortsLocationResponse is the response envelope for operations that return a ExpressRoutePortsLocation type.
-type ExpressRoutePortsLocationResponse struct {
-	// Definition of the ExpressRoutePorts peering location resource.
-	ExpressRoutePortsLocation *ExpressRoutePortsLocation
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ExpressRouteServiceProviderListResultResponse is the response envelope for operations that return a ExpressRouteServiceProviderListResult type.
-type ExpressRouteServiceProviderListResultResponse struct {
-	// Response for the ListExpressRouteServiceProvider API service call.
-	ExpressRouteServiceProviderListResult *ExpressRouteServiceProviderListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// FirewallPolicyListResultResponse is the response envelope for operations that return a FirewallPolicyListResult type.
-type FirewallPolicyListResultResponse struct {
-	// Response for ListFirewallPolicies API service call.
-	FirewallPolicyListResult *FirewallPolicyListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// FirewallPolicyPollerResponse is the response envelope for operations that asynchronously return a FirewallPolicy type.
-type FirewallPolicyPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (FirewallPolicyResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller FirewallPolicyPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// FirewallPolicyResponse is the response envelope for operations that return a FirewallPolicy type.
-type FirewallPolicyResponse struct {
-	// FirewallPolicy Resource.
-	FirewallPolicy *FirewallPolicy
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// FirewallPolicyRuleGroupListResultResponse is the response envelope for operations that return a FirewallPolicyRuleGroupListResult type.
-type FirewallPolicyRuleGroupListResultResponse struct {
-	// Response for ListFirewallPolicyRuleGroups API service call.
-	FirewallPolicyRuleGroupListResult *FirewallPolicyRuleGroupListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// FirewallPolicyRuleGroupPollerResponse is the response envelope for operations that asynchronously return a FirewallPolicyRuleGroup type.
-type FirewallPolicyRuleGroupPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (FirewallPolicyRuleGroupResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller FirewallPolicyRuleGroupPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// FirewallPolicyRuleGroupResponse is the response envelope for operations that return a FirewallPolicyRuleGroup type.
-type FirewallPolicyRuleGroupResponse struct {
-	// Rule Group resource.
-	FirewallPolicyRuleGroup *FirewallPolicyRuleGroup
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// FlowLogInformationPollerResponse is the response envelope for operations that asynchronously return a FlowLogInformation type.
-type FlowLogInformationPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (FlowLogInformationResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller FlowLogInformationPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// FlowLogInformationResponse is the response envelope for operations that return a FlowLogInformation type.
-type FlowLogInformationResponse struct {
-	// Information on the configuration of flow log and traffic analytics (optional) .
-	FlowLogInformation *FlowLogInformation
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// FlowLogListResultResponse is the response envelope for operations that return a FlowLogListResult type.
-type FlowLogListResultResponse struct {
-	// List of flow logs.
-	FlowLogListResult *FlowLogListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// FlowLogPollerResponse is the response envelope for operations that asynchronously return a FlowLog type.
-type FlowLogPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (FlowLogResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller FlowLogPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// FlowLogResponse is the response envelope for operations that return a FlowLog type.
-type FlowLogResponse struct {
-	// A flow log resource.
-	FlowLog *FlowLog
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// FrontendIPConfigurationResponse is the response envelope for operations that return a FrontendIPConfiguration type.
-type FrontendIPConfigurationResponse struct {
-	// Frontend IP address of the load balancer.
-	FrontendIPConfiguration *FrontendIPConfiguration
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// GatewayRouteListResultPollerResponse is the response envelope for operations that asynchronously return a GatewayRouteListResult type.
-type GatewayRouteListResultPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (GatewayRouteListResultResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller GatewayRouteListResultPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// GatewayRouteListResultResponse is the response envelope for operations that return a GatewayRouteListResult type.
-type GatewayRouteListResultResponse struct {
-	// List of virtual network gateway routes.
-	GatewayRouteListResult *GatewayRouteListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// HTTPPollerResponse contains the asynchronous HTTP response from the call to the service endpoint.
-type HTTPPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (*http.Response, error)
-
-	// Poller contains an initialized poller.
-	Poller HTTPPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// HubVirtualNetworkConnectionResponse is the response envelope for operations that return a HubVirtualNetworkConnection type.
-type HubVirtualNetworkConnectionResponse struct {
-	// HubVirtualNetworkConnection Resource.
-	HubVirtualNetworkConnection *HubVirtualNetworkConnection
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// IPAddressAvailabilityResultResponse is the response envelope for operations that return a IPAddressAvailabilityResult type.
-type IPAddressAvailabilityResultResponse struct {
-	// Response for CheckIPAddressAvailability API service call.
-	IPAddressAvailabilityResult *IPAddressAvailabilityResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// IPAllocationListResultResponse is the response envelope for operations that return a IPAllocationListResult type.
-type IPAllocationListResultResponse struct {
-	// Response for the ListIpAllocations API service call.
-	IPAllocationListResult *IPAllocationListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// IPAllocationPollerResponse is the response envelope for operations that asynchronously return a IPAllocation type.
-type IPAllocationPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (IPAllocationResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller IPAllocationPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// IPAllocationResponse is the response envelope for operations that return a IPAllocation type.
-type IPAllocationResponse struct {
-	// IpAllocation resource.
-	IPAllocation *IPAllocation
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// IPGroupListResultResponse is the response envelope for operations that return a IPGroupListResult type.
-type IPGroupListResultResponse struct {
-	// Response for the ListIpGroups API service call.
-	IPGroupListResult *IPGroupListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// IPGroupPollerResponse is the response envelope for operations that asynchronously return a IPGroup type.
-type IPGroupPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (IPGroupResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller IPGroupPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// IPGroupResponse is the response envelope for operations that return a IPGroup type.
-type IPGroupResponse struct {
-	// The IpGroups resource information.
-	IPGroup *IPGroup
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// InboundNatRuleListResultResponse is the response envelope for operations that return a InboundNatRuleListResult type.
-type InboundNatRuleListResultResponse struct {
-	// Response for ListInboundNatRule API service call.
-	InboundNatRuleListResult *InboundNatRuleListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// InboundNatRulePollerResponse is the response envelope for operations that asynchronously return a InboundNatRule type.
-type InboundNatRulePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (InboundNatRuleResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller InboundNatRulePoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// InboundNatRuleResponse is the response envelope for operations that return a InboundNatRule type.
-type InboundNatRuleResponse struct {
-	// Inbound NAT rule of the load balancer.
-	InboundNatRule *InboundNatRule
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ListHubVirtualNetworkConnectionsResultResponse is the response envelope for operations that return a ListHubVirtualNetworkConnectionsResult type.
-type ListHubVirtualNetworkConnectionsResultResponse struct {
-	// List of HubVirtualNetworkConnections and a URL nextLink to get the next set of results.
-	ListHubVirtualNetworkConnectionsResult *ListHubVirtualNetworkConnectionsResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ListP2SVPNGatewaysResultResponse is the response envelope for operations that return a ListP2SVPNGatewaysResult type.
-type ListP2SVPNGatewaysResultResponse struct {
-	// Result of the request to list P2SVpnGateways. It contains a list of P2SVpnGateways and a URL nextLink to get the next set of results.
-	ListP2SVPNGatewaysResult *ListP2SVPNGatewaysResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ListVPNConnectionsResultResponse is the response envelope for operations that return a ListVPNConnectionsResult type.
-type ListVPNConnectionsResultResponse struct {
-	// Result of the request to list all vpn connections to a virtual wan vpn gateway. It contains a list of Vpn Connections and a URL nextLink to get the next
-	// set of results.
-	ListVPNConnectionsResult *ListVPNConnectionsResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ListVPNGatewaysResultResponse is the response envelope for operations that return a ListVPNGatewaysResult type.
-type ListVPNGatewaysResultResponse struct {
-	// Result of the request to list VpnGateways. It contains a list of VpnGateways and a URL nextLink to get the next set of results.
-	ListVPNGatewaysResult *ListVPNGatewaysResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ListVPNServerConfigurationsResultResponse is the response envelope for operations that return a ListVPNServerConfigurationsResult type.
-type ListVPNServerConfigurationsResultResponse struct {
-	// Result of the request to list all VpnServerConfigurations. It contains a list of VpnServerConfigurations and a URL nextLink to get the next set of results.
-	ListVPNServerConfigurationsResult *ListVPNServerConfigurationsResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ListVPNSiteLinkConnectionsResultResponse is the response envelope for operations that return a ListVPNSiteLinkConnectionsResult type.
-type ListVPNSiteLinkConnectionsResultResponse struct {
-	// Result of the request to list all vpn connections to a virtual wan vpn gateway. It contains a list of Vpn Connections and a URL nextLink to get the next
-	// set of results.
-	ListVPNSiteLinkConnectionsResult *ListVPNSiteLinkConnectionsResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ListVPNSiteLinksResultResponse is the response envelope for operations that return a ListVPNSiteLinksResult type.
-type ListVPNSiteLinksResultResponse struct {
-	// Result of the request to list VpnSiteLinks. It contains a list of VpnSiteLinks and a URL nextLink to get the next set of results.
-	ListVPNSiteLinksResult *ListVPNSiteLinksResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ListVPNSitesResultResponse is the response envelope for operations that return a ListVPNSitesResult type.
-type ListVPNSitesResultResponse struct {
-	// Result of the request to list VpnSites. It contains a list of VpnSites and a URL nextLink to get the next set of results.
-	ListVPNSitesResult *ListVPNSitesResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ListVirtualHubRouteTableV2SResultResponse is the response envelope for operations that return a ListVirtualHubRouteTableV2SResult type.
-type ListVirtualHubRouteTableV2SResultResponse struct {
-	// List of VirtualHubRouteTableV2s and a URL nextLink to get the next set of results.
-	ListVirtualHubRouteTableV2SResult *ListVirtualHubRouteTableV2SResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ListVirtualHubsResultResponse is the response envelope for operations that return a ListVirtualHubsResult type.
-type ListVirtualHubsResultResponse struct {
-	// Result of the request to list VirtualHubs. It contains a list of VirtualHubs and a URL nextLink to get the next set of results.
-	ListVirtualHubsResult *ListVirtualHubsResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ListVirtualWANsResultResponse is the response envelope for operations that return a ListVirtualWANsResult type.
-type ListVirtualWANsResultResponse struct {
-	// Result of the request to list VirtualWANs. It contains a list of VirtualWANs and a URL nextLink to get the next set of results.
-	ListVirtualWANsResult *ListVirtualWANsResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// LoadBalancerBackendAddressPoolListResultResponse is the response envelope for operations that return a LoadBalancerBackendAddressPoolListResult type.
-type LoadBalancerBackendAddressPoolListResultResponse struct {
-	// Response for ListBackendAddressPool API service call.
-	LoadBalancerBackendAddressPoolListResult *LoadBalancerBackendAddressPoolListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// LoadBalancerFrontendIPConfigurationListResultResponse is the response envelope for operations that return a LoadBalancerFrontendIPConfigurationListResult
-// type.
-type LoadBalancerFrontendIPConfigurationListResultResponse struct {
-	// Response for ListFrontendIPConfiguration API service call.
-	LoadBalancerFrontendIPConfigurationListResult *LoadBalancerFrontendIPConfigurationListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// LoadBalancerListResultResponse is the response envelope for operations that return a LoadBalancerListResult type.
-type LoadBalancerListResultResponse struct {
-	// Response for ListLoadBalancers API service call.
-	LoadBalancerListResult *LoadBalancerListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// LoadBalancerLoadBalancingRuleListResultResponse is the response envelope for operations that return a LoadBalancerLoadBalancingRuleListResult type.
-type LoadBalancerLoadBalancingRuleListResultResponse struct {
-	// Response for ListLoadBalancingRule API service call.
-	LoadBalancerLoadBalancingRuleListResult *LoadBalancerLoadBalancingRuleListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// LoadBalancerOutboundRuleListResultResponse is the response envelope for operations that return a LoadBalancerOutboundRuleListResult type.
-type LoadBalancerOutboundRuleListResultResponse struct {
-	// Response for ListOutboundRule API service call.
-	LoadBalancerOutboundRuleListResult *LoadBalancerOutboundRuleListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// LoadBalancerPollerResponse is the response envelope for operations that asynchronously return a LoadBalancer type.
-type LoadBalancerPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (LoadBalancerResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller LoadBalancerPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// LoadBalancerProbeListResultResponse is the response envelope for operations that return a LoadBalancerProbeListResult type.
-type LoadBalancerProbeListResultResponse struct {
-	// Response for ListProbe API service call.
-	LoadBalancerProbeListResult *LoadBalancerProbeListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// LoadBalancerResponse is the response envelope for operations that return a LoadBalancer type.
-type LoadBalancerResponse struct {
-	// LoadBalancer resource.
-	LoadBalancer *LoadBalancer
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// LoadBalancingRuleResponse is the response envelope for operations that return a LoadBalancingRule type.
-type LoadBalancingRuleResponse struct {
-	// A load balancing rule for a load balancer.
-	LoadBalancingRule *LoadBalancingRule
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// LocalNetworkGatewayListResultResponse is the response envelope for operations that return a LocalNetworkGatewayListResult type.
-type LocalNetworkGatewayListResultResponse struct {
-	// Response for ListLocalNetworkGateways API service call.
-	LocalNetworkGatewayListResult *LocalNetworkGatewayListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// LocalNetworkGatewayPollerResponse is the response envelope for operations that asynchronously return a LocalNetworkGateway type.
-type LocalNetworkGatewayPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (LocalNetworkGatewayResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller LocalNetworkGatewayPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// LocalNetworkGatewayResponse is the response envelope for operations that return a LocalNetworkGateway type.
-type LocalNetworkGatewayResponse struct {
-	// A common class for general resource information.
-	LocalNetworkGateway *LocalNetworkGateway
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// NatGatewayListResultResponse is the response envelope for operations that return a NatGatewayListResult type.
-type NatGatewayListResultResponse struct {
-	// Response for ListNatGateways API service call.
-	NatGatewayListResult *NatGatewayListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// NatGatewayPollerResponse is the response envelope for operations that asynchronously return a NatGateway type.
-type NatGatewayPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (NatGatewayResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller NatGatewayPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// NatGatewayResponse is the response envelope for operations that return a NatGateway type.
-type NatGatewayResponse struct {
-	// Nat Gateway resource.
-	NatGateway *NatGateway
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// NetworkConfigurationDiagnosticResponsePollerResponse is the response envelope for operations that asynchronously return a NetworkConfigurationDiagnosticResponse
-// type.
-type NetworkConfigurationDiagnosticResponsePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkConfigurationDiagnosticResponseResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller NetworkConfigurationDiagnosticResponsePoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// NetworkConfigurationDiagnosticResponseResponse is the response envelope for operations that return a NetworkConfigurationDiagnosticResponse type.
-type NetworkConfigurationDiagnosticResponseResponse struct {
-	// Results of network configuration diagnostic on the target resource.
-	NetworkConfigurationDiagnosticResponse *NetworkConfigurationDiagnosticResponse
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// NetworkInterfaceIPConfigurationListResultResponse is the response envelope for operations that return a NetworkInterfaceIPConfigurationListResult type.
-type NetworkInterfaceIPConfigurationListResultResponse struct {
-	// Response for list ip configurations API service call.
-	NetworkInterfaceIPConfigurationListResult *NetworkInterfaceIPConfigurationListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// NetworkInterfaceIPConfigurationResponse is the response envelope for operations that return a NetworkInterfaceIPConfiguration type.
-type NetworkInterfaceIPConfigurationResponse struct {
-	// IPConfiguration in a network interface.
-	NetworkInterfaceIPConfiguration *NetworkInterfaceIPConfiguration
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// NetworkInterfaceListResultResponse is the response envelope for operations that return a NetworkInterfaceListResult type.
-type NetworkInterfaceListResultResponse struct {
-	// Response for the ListNetworkInterface API service call.
-	NetworkInterfaceListResult *NetworkInterfaceListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// NetworkInterfaceLoadBalancerListResultResponse is the response envelope for operations that return a NetworkInterfaceLoadBalancerListResult type.
-type NetworkInterfaceLoadBalancerListResultResponse struct {
-	// Response for list ip configurations API service call.
-	NetworkInterfaceLoadBalancerListResult *NetworkInterfaceLoadBalancerListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// NetworkInterfacePollerResponse is the response envelope for operations that asynchronously return a NetworkInterface type.
-type NetworkInterfacePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkInterfaceResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller NetworkInterfacePoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// NetworkInterfaceResponse is the response envelope for operations that return a NetworkInterface type.
-type NetworkInterfaceResponse struct {
-	// A network interface in a resource group.
-	NetworkInterface *NetworkInterface
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// NetworkInterfaceTapConfigurationListResultResponse is the response envelope for operations that return a NetworkInterfaceTapConfigurationListResult type.
-type NetworkInterfaceTapConfigurationListResultResponse struct {
-	// Response for list tap configurations API service call.
-	NetworkInterfaceTapConfigurationListResult *NetworkInterfaceTapConfigurationListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// NetworkInterfaceTapConfigurationPollerResponse is the response envelope for operations that asynchronously return a NetworkInterfaceTapConfiguration
-// type.
-type NetworkInterfaceTapConfigurationPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkInterfaceTapConfigurationResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller NetworkInterfaceTapConfigurationPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// NetworkInterfaceTapConfigurationResponse is the response envelope for operations that return a NetworkInterfaceTapConfiguration type.
-type NetworkInterfaceTapConfigurationResponse struct {
-	// Tap configuration in a Network Interface.
-	NetworkInterfaceTapConfiguration *NetworkInterfaceTapConfiguration
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// NetworkProfileListResultResponse is the response envelope for operations that return a NetworkProfileListResult type.
-type NetworkProfileListResultResponse struct {
-	// Response for ListNetworkProfiles API service call.
-	NetworkProfileListResult *NetworkProfileListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// NetworkProfileResponse is the response envelope for operations that return a NetworkProfile type.
-type NetworkProfileResponse struct {
-	// Network profile resource.
-	NetworkProfile *NetworkProfile
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// NetworkSecurityGroupListResultResponse is the response envelope for operations that return a NetworkSecurityGroupListResult type.
-type NetworkSecurityGroupListResultResponse struct {
-	// Response for ListNetworkSecurityGroups API service call.
-	NetworkSecurityGroupListResult *NetworkSecurityGroupListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// NetworkSecurityGroupPollerResponse is the response envelope for operations that asynchronously return a NetworkSecurityGroup type.
-type NetworkSecurityGroupPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkSecurityGroupResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller NetworkSecurityGroupPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// NetworkSecurityGroupResponse is the response envelope for operations that return a NetworkSecurityGroup type.
-type NetworkSecurityGroupResponse struct {
-	// NetworkSecurityGroup resource.
-	NetworkSecurityGroup *NetworkSecurityGroup
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// NetworkVirtualApplianceListResultResponse is the response envelope for operations that return a NetworkVirtualApplianceListResult type.
-type NetworkVirtualApplianceListResultResponse struct {
-	// Response for ListNetworkVirtualAppliances API service call.
-	NetworkVirtualApplianceListResult *NetworkVirtualApplianceListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// NetworkVirtualAppliancePollerResponse is the response envelope for operations that asynchronously return a NetworkVirtualAppliance type.
-type NetworkVirtualAppliancePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkVirtualApplianceResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller NetworkVirtualAppliancePoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// NetworkVirtualApplianceResponse is the response envelope for operations that return a NetworkVirtualAppliance type.
-type NetworkVirtualApplianceResponse struct {
-	// NetworkVirtualAppliance Resource.
-	NetworkVirtualAppliance *NetworkVirtualAppliance
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// NetworkWatcherListResultResponse is the response envelope for operations that return a NetworkWatcherListResult type.
-type NetworkWatcherListResultResponse struct {
-	// Response for ListNetworkWatchers API service call.
-	NetworkWatcherListResult *NetworkWatcherListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// NetworkWatcherResponse is the response envelope for operations that return a NetworkWatcher type.
-type NetworkWatcherResponse struct {
-	// Network watcher in a resource group.
-	NetworkWatcher *NetworkWatcher
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// NextHopResultPollerResponse is the response envelope for operations that asynchronously return a NextHopResult type.
-type NextHopResultPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (NextHopResultResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller NextHopResultPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// NextHopResultResponse is the response envelope for operations that return a NextHopResult type.
-type NextHopResultResponse struct {
-	// The information about next hop from the specified VM.
-	NextHopResult *NextHopResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// OperationListResultResponse is the response envelope for operations that return a OperationListResult type.
-type OperationListResultResponse struct {
-	// Result of the request to list Network operations. It contains a list of operations and a URL link to get the next set of results.
-	OperationListResult *OperationListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// OutboundRuleResponse is the response envelope for operations that return a OutboundRule type.
-type OutboundRuleResponse struct {
-	// Outbound rule of the load balancer.
-	OutboundRule *OutboundRule
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// P2SVPNConnectionHealthPollerResponse is the response envelope for operations that asynchronously return a P2SVPNConnectionHealth type.
-type P2SVPNConnectionHealthPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (P2SVPNConnectionHealthResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller P2SVPNConnectionHealthPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// P2SVPNConnectionHealthResponse is the response envelope for operations that return a P2SVPNConnectionHealth type.
-type P2SVPNConnectionHealthResponse struct {
-	// P2S Vpn connection detailed health written to sas url.
-	P2SVPNConnectionHealth *P2SVPNConnectionHealth
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// P2SVPNGatewayPollerResponse is the response envelope for operations that asynchronously return a P2SVPNGateway type.
-type P2SVPNGatewayPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (P2SVPNGatewayResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller P2SVPNGatewayPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// P2SVPNGatewayResponse is the response envelope for operations that return a P2SVPNGateway type.
-type P2SVPNGatewayResponse struct {
-	// P2SVpnGateway Resource.
-	P2SVPNGateway *P2SVPNGateway
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PacketCaptureListResultResponse is the response envelope for operations that return a PacketCaptureListResult type.
-type PacketCaptureListResultResponse struct {
-	// List of packet capture sessions.
-	PacketCaptureListResult *PacketCaptureListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PacketCaptureQueryStatusResultPollerResponse is the response envelope for operations that asynchronously return a PacketCaptureQueryStatusResult type.
-type PacketCaptureQueryStatusResultPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (PacketCaptureQueryStatusResultResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller PacketCaptureQueryStatusResultPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PacketCaptureQueryStatusResultResponse is the response envelope for operations that return a PacketCaptureQueryStatusResult type.
-type PacketCaptureQueryStatusResultResponse struct {
-	// Status of packet capture session.
-	PacketCaptureQueryStatusResult *PacketCaptureQueryStatusResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PacketCaptureResultPollerResponse is the response envelope for operations that asynchronously return a PacketCaptureResult type.
-type PacketCaptureResultPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (PacketCaptureResultResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller PacketCaptureResultPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PacketCaptureResultResponse is the response envelope for operations that return a PacketCaptureResult type.
-type PacketCaptureResultResponse struct {
-	// Information about packet capture session.
-	PacketCaptureResult *PacketCaptureResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PeerExpressRouteCircuitConnectionListResultResponse is the response envelope for operations that return a PeerExpressRouteCircuitConnectionListResult
-// type.
-type PeerExpressRouteCircuitConnectionListResultResponse struct {
-	// Response for ListPeeredConnections API service call retrieves all global reach peer circuit connections that belongs to a Private Peering for an ExpressRouteCircuit.
-	PeerExpressRouteCircuitConnectionListResult *PeerExpressRouteCircuitConnectionListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PeerExpressRouteCircuitConnectionResponse is the response envelope for operations that return a PeerExpressRouteCircuitConnection type.
-type PeerExpressRouteCircuitConnectionResponse struct {
-	// Peer Express Route Circuit Connection in an ExpressRouteCircuitPeering resource.
-	PeerExpressRouteCircuitConnection *PeerExpressRouteCircuitConnection
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PrivateDNSZoneGroupListResultResponse is the response envelope for operations that return a PrivateDNSZoneGroupListResult type.
-type PrivateDNSZoneGroupListResultResponse struct {
-	// Response for the ListPrivateDnsZoneGroups API service call.
-	PrivateDNSZoneGroupListResult *PrivateDNSZoneGroupListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PrivateDNSZoneGroupPollerResponse is the response envelope for operations that asynchronously return a PrivateDNSZoneGroup type.
-type PrivateDNSZoneGroupPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (PrivateDNSZoneGroupResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller PrivateDNSZoneGroupPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PrivateDNSZoneGroupResponse is the response envelope for operations that return a PrivateDNSZoneGroup type.
-type PrivateDNSZoneGroupResponse struct {
-	// Private dns zone group resource.
-	PrivateDNSZoneGroup *PrivateDNSZoneGroup
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PrivateEndpointConnectionListResultResponse is the response envelope for operations that return a PrivateEndpointConnectionListResult type.
-type PrivateEndpointConnectionListResultResponse struct {
-	// Response for the ListPrivateEndpointConnection API service call.
-	PrivateEndpointConnectionListResult *PrivateEndpointConnectionListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PrivateEndpointConnectionResponse is the response envelope for operations that return a PrivateEndpointConnection type.
-type PrivateEndpointConnectionResponse struct {
-	// PrivateEndpointConnection resource.
-	PrivateEndpointConnection *PrivateEndpointConnection
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PrivateEndpointListResultResponse is the response envelope for operations that return a PrivateEndpointListResult type.
-type PrivateEndpointListResultResponse struct {
-	// Response for the ListPrivateEndpoints API service call.
-	PrivateEndpointListResult *PrivateEndpointListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PrivateEndpointPollerResponse is the response envelope for operations that asynchronously return a PrivateEndpoint type.
-type PrivateEndpointPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (PrivateEndpointResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller PrivateEndpointPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PrivateEndpointResponse is the response envelope for operations that return a PrivateEndpoint type.
-type PrivateEndpointResponse struct {
-	// Private endpoint resource.
-	PrivateEndpoint *PrivateEndpoint
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PrivateLinkServiceListResultResponse is the response envelope for operations that return a PrivateLinkServiceListResult type.
-type PrivateLinkServiceListResultResponse struct {
-	// Response for the ListPrivateLinkService API service call.
-	PrivateLinkServiceListResult *PrivateLinkServiceListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PrivateLinkServicePollerResponse is the response envelope for operations that asynchronously return a PrivateLinkService type.
-type PrivateLinkServicePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (PrivateLinkServiceResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller PrivateLinkServicePoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PrivateLinkServiceResponse is the response envelope for operations that return a PrivateLinkService type.
-type PrivateLinkServiceResponse struct {
-	// Private link service resource.
-	PrivateLinkService *PrivateLinkService
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PrivateLinkServiceVisibilityPollerResponse is the response envelope for operations that asynchronously return a PrivateLinkServiceVisibility type.
-type PrivateLinkServiceVisibilityPollerResponse struct {
+// ApplicationGatewaysBackendHealthOnDemandPollerResponse contains the response from method ApplicationGateways.BackendHealthOnDemand.
+type ApplicationGatewaysBackendHealthOnDemandPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (PrivateLinkServiceVisibilityResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (ApplicationGatewaysBackendHealthOnDemandResponse, error)
 
 	// Poller contains an initialized poller.
-	Poller PrivateLinkServiceVisibilityPoller
+	Poller ApplicationGatewaysBackendHealthOnDemandPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PrivateLinkServiceVisibilityResponse is the response envelope for operations that return a PrivateLinkServiceVisibility type.
-type PrivateLinkServiceVisibilityResponse struct {
-	// Response for the CheckPrivateLinkServiceVisibility API service call.
-	PrivateLinkServiceVisibility *PrivateLinkServiceVisibility
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ProbeResponse is the response envelope for operations that return a Probe type.
-type ProbeResponse struct {
-	// A load balancer probe.
-	Probe *Probe
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PublicIPAddressListResultResponse is the response envelope for operations that return a PublicIPAddressListResult type.
-type PublicIPAddressListResultResponse struct {
-	// Response for ListPublicIpAddresses API service call.
-	PublicIPAddressListResult *PublicIPAddressListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PublicIPAddressPollerResponse is the response envelope for operations that asynchronously return a PublicIPAddress type.
-type PublicIPAddressPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (PublicIPAddressResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller PublicIPAddressPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PublicIPAddressResponse is the response envelope for operations that return a PublicIPAddress type.
-type PublicIPAddressResponse struct {
-	// Public IP address resource.
-	PublicIPAddress *PublicIPAddress
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PublicIPPrefixListResultResponse is the response envelope for operations that return a PublicIPPrefixListResult type.
-type PublicIPPrefixListResultResponse struct {
-	// Response for ListPublicIpPrefixes API service call.
-	PublicIPPrefixListResult *PublicIPPrefixListResult
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PublicIPPrefixPollerResponse is the response envelope for operations that asynchronously return a PublicIPPrefix type.
-type PublicIPPrefixPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (PublicIPPrefixResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller PublicIPPrefixPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// PublicIPPrefixResponse is the response envelope for operations that return a PublicIPPrefix type.
-type PublicIPPrefixResponse struct {
-	// Public IP prefix resource.
-	PublicIPPrefix *PublicIPPrefix
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// ResourceNavigationLinksListResultResponse is the response envelope for operations that return a ResourceNavigationLinksListResult type.
-type ResourceNavigationLinksListResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Response for ResourceNavigationLinks_List operation.
-	ResourceNavigationLinksListResult *ResourceNavigationLinksListResult
-}
-
-// RouteFilterListResultResponse is the response envelope for operations that return a RouteFilterListResult type.
-type RouteFilterListResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Response for the ListRouteFilters API service call.
-	RouteFilterListResult *RouteFilterListResult
-}
-
-// RouteFilterPollerResponse is the response envelope for operations that asynchronously return a RouteFilter type.
-type RouteFilterPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (RouteFilterResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller RouteFilterPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// RouteFilterResponse is the response envelope for operations that return a RouteFilter type.
-type RouteFilterResponse struct {
+// ApplicationGatewaysBackendHealthOnDemandResponse contains the response from method ApplicationGateways.BackendHealthOnDemand.
+type ApplicationGatewaysBackendHealthOnDemandResponse struct {
+	ApplicationGatewaysBackendHealthOnDemandResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// Route Filter Resource.
-	RouteFilter *RouteFilter
 }
-
-// RouteFilterRuleListResultResponse is the response envelope for operations that return a RouteFilterRuleListResult type.
-type RouteFilterRuleListResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 
-	// Response for the ListRouteFilterRules API service call.
-	RouteFilterRuleListResult *RouteFilterRuleListResult
+// ApplicationGatewaysBackendHealthOnDemandResult contains the result from method ApplicationGateways.BackendHealthOnDemand.
+type ApplicationGatewaysBackendHealthOnDemandResult struct {
+	ApplicationGatewayBackendHealthOnDemand
 }
 
-// RouteFilterRulePollerResponse is the response envelope for operations that asynchronously return a RouteFilterRule type.
-type RouteFilterRulePollerResponse struct {
+// ApplicationGatewaysBackendHealthPollerResponse contains the response from method ApplicationGateways.BackendHealth.
+type ApplicationGatewaysBackendHealthPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (RouteFilterRuleResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (ApplicationGatewaysBackendHealthResponse, error)
 
 	// Poller contains an initialized poller.
-	Poller RouteFilterRulePoller
+	Poller ApplicationGatewaysBackendHealthPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// RouteFilterRuleResponse is the response envelope for operations that return a RouteFilterRule type.
-type RouteFilterRuleResponse struct {
+// ApplicationGatewaysBackendHealthResponse contains the response from method ApplicationGateways.BackendHealth.
+type ApplicationGatewaysBackendHealthResponse struct {
+	ApplicationGatewaysBackendHealthResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// Route Filter Rule Resource.
-	RouteFilterRule *RouteFilterRule
 }
-
-// RouteListResultResponse is the response envelope for operations that return a RouteListResult type.
-type RouteListResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 
-	// Response for the ListRoute API service call.
-	RouteListResult *RouteListResult
+// ApplicationGatewaysBackendHealthResult contains the result from method ApplicationGateways.BackendHealth.
+type ApplicationGatewaysBackendHealthResult struct {
+	ApplicationGatewayBackendHealth
 }
 
-// RoutePollerResponse is the response envelope for operations that asynchronously return a Route type.
-type RoutePollerResponse struct {
+// ApplicationGatewaysCreateOrUpdatePollerResponse contains the response from method ApplicationGateways.CreateOrUpdate.
+type ApplicationGatewaysCreateOrUpdatePollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (RouteResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (ApplicationGatewaysCreateOrUpdateResponse, error)
 
 	// Poller contains an initialized poller.
-	Poller RoutePoller
+	Poller ApplicationGatewaysCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// RouteResponse is the response envelope for operations that return a Route type.
-type RouteResponse struct {
+// ApplicationGatewaysCreateOrUpdateResponse contains the response from method ApplicationGateways.CreateOrUpdate.
+type ApplicationGatewaysCreateOrUpdateResponse struct {
+	ApplicationGatewaysCreateOrUpdateResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// Route resource.
-	Route *Route
 }
-
-// RouteTableListResultResponse is the response envelope for operations that return a RouteTableListResult type.
-type RouteTableListResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 
-	// Response for the ListRouteTable API service call.
-	RouteTableListResult *RouteTableListResult
+// ApplicationGatewaysCreateOrUpdateResult contains the result from method ApplicationGateways.CreateOrUpdate.
+type ApplicationGatewaysCreateOrUpdateResult struct {
+	ApplicationGateway
 }
 
-// RouteTablePollerResponse is the response envelope for operations that asynchronously return a RouteTable type.
-type RouteTablePollerResponse struct {
+// ApplicationGatewaysDeletePollerResponse contains the response from method ApplicationGateways.Delete.
+type ApplicationGatewaysDeletePollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (RouteTableResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (ApplicationGatewaysDeleteResponse, error)
 
 	// Poller contains an initialized poller.
-	Poller RouteTablePoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
+	Poller ApplicationGatewaysDeletePoller
 
-// RouteTableResponse is the response envelope for operations that return a RouteTable type.
-type RouteTableResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// Route table resource.
-	RouteTable *RouteTable
 }
-
-// SecurityGroupViewResultPollerResponse is the response envelope for operations that asynchronously return a SecurityGroupViewResult type.
-type SecurityGroupViewResultPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (SecurityGroupViewResultResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller SecurityGroupViewResultPoller
 
+// ApplicationGatewaysDeleteResponse contains the response from method ApplicationGateways.Delete.
+type ApplicationGatewaysDeleteResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// SecurityGroupViewResultResponse is the response envelope for operations that return a SecurityGroupViewResult type.
-type SecurityGroupViewResultResponse struct {
+// ApplicationGatewaysGetResponse contains the response from method ApplicationGateways.Get.
+type ApplicationGatewaysGetResponse struct {
+	ApplicationGatewaysGetResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// The information about security rules applied to the specified VM.
-	SecurityGroupViewResult *SecurityGroupViewResult
 }
-
-// SecurityPartnerProviderListResultResponse is the response envelope for operations that return a SecurityPartnerProviderListResult type.
-type SecurityPartnerProviderListResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 
-	// Response for ListSecurityPartnerProviders API service call.
-	SecurityPartnerProviderListResult *SecurityPartnerProviderListResult
+// ApplicationGatewaysGetResult contains the result from method ApplicationGateways.Get.
+type ApplicationGatewaysGetResult struct {
+	ApplicationGateway
 }
-
-// SecurityPartnerProviderPollerResponse is the response envelope for operations that asynchronously return a SecurityPartnerProvider type.
-type SecurityPartnerProviderPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (SecurityPartnerProviderResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller SecurityPartnerProviderPoller
 
+// ApplicationGatewaysGetSSLPredefinedPolicyResponse contains the response from method ApplicationGateways.GetSSLPredefinedPolicy.
+type ApplicationGatewaysGetSSLPredefinedPolicyResponse struct {
+	ApplicationGatewaysGetSSLPredefinedPolicyResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
-
-// SecurityPartnerProviderResponse is the response envelope for operations that return a SecurityPartnerProvider type.
-type SecurityPartnerProviderResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 
-	// Security Partner Provider resource.
-	SecurityPartnerProvider *SecurityPartnerProvider
+// ApplicationGatewaysGetSSLPredefinedPolicyResult contains the result from method ApplicationGateways.GetSSLPredefinedPolicy.
+type ApplicationGatewaysGetSSLPredefinedPolicyResult struct {
+	ApplicationGatewaySSLPredefinedPolicy
 }
 
-// SecurityRuleListResultResponse is the response envelope for operations that return a SecurityRuleListResult type.
-type SecurityRuleListResultResponse struct {
+// ApplicationGatewaysListAllResponse contains the response from method ApplicationGateways.ListAll.
+type ApplicationGatewaysListAllResponse struct {
+	ApplicationGatewaysListAllResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// Response for ListSecurityRule API service call. Retrieves all security rules that belongs to a network security group.
-	SecurityRuleListResult *SecurityRuleListResult
 }
-
-// SecurityRulePollerResponse is the response envelope for operations that asynchronously return a SecurityRule type.
-type SecurityRulePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (SecurityRuleResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller SecurityRulePoller
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+// ApplicationGatewaysListAllResult contains the result from method ApplicationGateways.ListAll.
+type ApplicationGatewaysListAllResult struct {
+	ApplicationGatewayListResult
 }
 
-// SecurityRuleResponse is the response envelope for operations that return a SecurityRule type.
-type SecurityRuleResponse struct {
+// ApplicationGatewaysListAvailableRequestHeadersResponse contains the response from method ApplicationGateways.ListAvailableRequestHeaders.
+type ApplicationGatewaysListAvailableRequestHeadersResponse struct {
+	ApplicationGatewaysListAvailableRequestHeadersResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// Network security rule.
-	SecurityRule *SecurityRule
 }
 
-// ServiceAssociationLinksListResultResponse is the response envelope for operations that return a ServiceAssociationLinksListResult type.
-type ServiceAssociationLinksListResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Response for ServiceAssociationLinks_List operation.
-	ServiceAssociationLinksListResult *ServiceAssociationLinksListResult
+// ApplicationGatewaysListAvailableRequestHeadersResult contains the result from method ApplicationGateways.ListAvailableRequestHeaders.
+type ApplicationGatewaysListAvailableRequestHeadersResult struct {
+	// Response for ApplicationGatewayAvailableRequestHeaders API service call.
+	StringArray []*string
 }
 
-// ServiceEndpointPolicyDefinitionListResultResponse is the response envelope for operations that return a ServiceEndpointPolicyDefinitionListResult type.
-type ServiceEndpointPolicyDefinitionListResultResponse struct {
+// ApplicationGatewaysListAvailableResponseHeadersResponse contains the response from method ApplicationGateways.ListAvailableResponseHeaders.
+type ApplicationGatewaysListAvailableResponseHeadersResponse struct {
+	ApplicationGatewaysListAvailableResponseHeadersResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// Response for ListServiceEndpointPolicyDefinition API service call. Retrieves all service endpoint policy definition that belongs to a service endpoint
-	// policy.
-	ServiceEndpointPolicyDefinitionListResult *ServiceEndpointPolicyDefinitionListResult
 }
-
-// ServiceEndpointPolicyDefinitionPollerResponse is the response envelope for operations that asynchronously return a ServiceEndpointPolicyDefinition type.
-type ServiceEndpointPolicyDefinitionPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ServiceEndpointPolicyDefinitionResponse, error)
-
-	// Poller contains an initialized poller.
-	Poller ServiceEndpointPolicyDefinitionPoller
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+// ApplicationGatewaysListAvailableResponseHeadersResult contains the result from method ApplicationGateways.ListAvailableResponseHeaders.
+type ApplicationGatewaysListAvailableResponseHeadersResult struct {
+	// Response for ApplicationGatewayAvailableResponseHeaders API service call.
+	StringArray []*string
 }
 
-// ServiceEndpointPolicyDefinitionResponse is the response envelope for operations that return a ServiceEndpointPolicyDefinition type.
-type ServiceEndpointPolicyDefinitionResponse struct {
+// ApplicationGatewaysListAvailableSSLOptionsResponse contains the response from method ApplicationGateways.ListAvailableSSLOptions.
+type ApplicationGatewaysListAvailableSSLOptionsResponse struct {
+	ApplicationGatewaysListAvailableSSLOptionsResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// Service Endpoint policy definitions.
-	ServiceEndpointPolicyDefinition *ServiceEndpointPolicyDefinition
 }
-
-// ServiceEndpointPolicyListResultResponse is the response envelope for operations that return a ServiceEndpointPolicyListResult type.
-type ServiceEndpointPolicyListResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 
-	// Response for ListServiceEndpointPolicies API service call.
-	ServiceEndpointPolicyListResult *ServiceEndpointPolicyListResult
+// ApplicationGatewaysListAvailableSSLOptionsResult contains the result from method ApplicationGateways.ListAvailableSSLOptions.
+type ApplicationGatewaysListAvailableSSLOptionsResult struct {
+	ApplicationGatewayAvailableSSLOptions
 }
-
-// ServiceEndpointPolicyPollerResponse is the response envelope for operations that asynchronously return a ServiceEndpointPolicy type.
-type ServiceEndpointPolicyPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ServiceEndpointPolicyResponse, error)
 
-	// Poller contains an initialized poller.
-	Poller ServiceEndpointPolicyPoller
-
+// ApplicationGatewaysListAvailableSSLPredefinedPoliciesResponse contains the response from method ApplicationGateways.ListAvailableSSLPredefinedPolicies.
+type ApplicationGatewaysListAvailableSSLPredefinedPoliciesResponse struct {
+	ApplicationGatewaysListAvailableSSLPredefinedPoliciesResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
-
-// ServiceEndpointPolicyResponse is the response envelope for operations that return a ServiceEndpointPolicy type.
-type ServiceEndpointPolicyResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 
-	// Service End point policy resource.
-	ServiceEndpointPolicy *ServiceEndpointPolicy
+// ApplicationGatewaysListAvailableSSLPredefinedPoliciesResult contains the result from method ApplicationGateways.ListAvailableSSLPredefinedPolicies.
+type ApplicationGatewaysListAvailableSSLPredefinedPoliciesResult struct {
+	ApplicationGatewayAvailableSSLPredefinedPolicies
 }
 
-// ServiceTagsListResultResponse is the response envelope for operations that return a ServiceTagsListResult type.
-type ServiceTagsListResultResponse struct {
+// ApplicationGatewaysListAvailableServerVariablesResponse contains the response from method ApplicationGateways.ListAvailableServerVariables.
+type ApplicationGatewaysListAvailableServerVariablesResponse struct {
+	ApplicationGatewaysListAvailableServerVariablesResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// Response for the ListServiceTags API service call.
-	ServiceTagsListResult *ServiceTagsListResult
 }
-
-// StringArrayResponse is the response envelope for operations that return a []*string type.
-type StringArrayResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 
+// ApplicationGatewaysListAvailableServerVariablesResult contains the result from method ApplicationGateways.ListAvailableServerVariables.
+type ApplicationGatewaysListAvailableServerVariablesResult struct {
 	// Response for ApplicationGatewayAvailableServerVariables API service call.
 	StringArray []*string
 }
 
-// StringPollerResponse is the response envelope for operations that asynchronously return a string type.
-type StringPollerResponse struct {
+// ApplicationGatewaysListAvailableWafRuleSetsResponse contains the response from method ApplicationGateways.ListAvailableWafRuleSets.
+type ApplicationGatewaysListAvailableWafRuleSetsResponse struct {
+	ApplicationGatewaysListAvailableWafRuleSetsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ApplicationGatewaysListAvailableWafRuleSetsResult contains the result from method ApplicationGateways.ListAvailableWafRuleSets.
+type ApplicationGatewaysListAvailableWafRuleSetsResult struct {
+	ApplicationGatewayAvailableWafRuleSetsResult
+}
+
+// ApplicationGatewaysListResponse contains the response from method ApplicationGateways.List.
+type ApplicationGatewaysListResponse struct {
+	ApplicationGatewaysListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ApplicationGatewaysListResult contains the result from method ApplicationGateways.List.
+type ApplicationGatewaysListResult struct {
+	ApplicationGatewayListResult
+}
+
+// ApplicationGatewaysStartPollerResponse contains the response from method ApplicationGateways.Start.
+type ApplicationGatewaysStartPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (StringResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (ApplicationGatewaysStartResponse, error)
 
 	// Poller contains an initialized poller.
-	Poller StringPoller
+	Poller ApplicationGatewaysStartPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// StringResponse is the response envelope for operations that return a string type.
-type StringResponse struct {
+// ApplicationGatewaysStartResponse contains the response from method ApplicationGateways.Start.
+type ApplicationGatewaysStartResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-	Value       *string
 }
 
-// SubnetListResultResponse is the response envelope for operations that return a SubnetListResult type.
-type SubnetListResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Response for ListSubnets API service callRetrieves all subnet that belongs to a virtual network.
-	SubnetListResult *SubnetListResult
-}
-
-// SubnetPollerResponse is the response envelope for operations that asynchronously return a Subnet type.
-type SubnetPollerResponse struct {
+// ApplicationGatewaysStopPollerResponse contains the response from method ApplicationGateways.Stop.
+type ApplicationGatewaysStopPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (SubnetResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (ApplicationGatewaysStopResponse, error)
 
 	// Poller contains an initialized poller.
-	Poller SubnetPoller
+	Poller ApplicationGatewaysStopPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// SubnetResponse is the response envelope for operations that return a Subnet type.
-type SubnetResponse struct {
+// ApplicationGatewaysStopResponse contains the response from method ApplicationGateways.Stop.
+type ApplicationGatewaysStopResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// Subnet in a virtual network resource.
-	Subnet *Subnet
 }
 
-// TopologyResponse is the response envelope for operations that return a Topology type.
-type TopologyResponse struct {
+// ApplicationGatewaysUpdateTagsResponse contains the response from method ApplicationGateways.UpdateTags.
+type ApplicationGatewaysUpdateTagsResponse struct {
+	ApplicationGatewaysUpdateTagsResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// Topology of the specified resource group.
-	Topology *Topology
 }
 
-// TroubleshootingResultPollerResponse is the response envelope for operations that asynchronously return a TroubleshootingResult type.
-type TroubleshootingResultPollerResponse struct {
+// ApplicationGatewaysUpdateTagsResult contains the result from method ApplicationGateways.UpdateTags.
+type ApplicationGatewaysUpdateTagsResult struct {
+	ApplicationGateway
+}
+
+// ApplicationSecurityGroupsCreateOrUpdatePollerResponse contains the response from method ApplicationSecurityGroups.CreateOrUpdate.
+type ApplicationSecurityGroupsCreateOrUpdatePollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (TroubleshootingResultResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (ApplicationSecurityGroupsCreateOrUpdateResponse, error)
 
 	// Poller contains an initialized poller.
-	Poller TroubleshootingResultPoller
+	Poller ApplicationSecurityGroupsCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// TroubleshootingResultResponse is the response envelope for operations that return a TroubleshootingResult type.
-type TroubleshootingResultResponse struct {
+// ApplicationSecurityGroupsCreateOrUpdateResponse contains the response from method ApplicationSecurityGroups.CreateOrUpdate.
+type ApplicationSecurityGroupsCreateOrUpdateResponse struct {
+	ApplicationSecurityGroupsCreateOrUpdateResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// Troubleshooting information gained from specified resource.
-	TroubleshootingResult *TroubleshootingResult
 }
 
-// UsagesListResultResponse is the response envelope for operations that return a UsagesListResult type.
-type UsagesListResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// The list usages operation response.
-	UsagesListResult *UsagesListResult
+// ApplicationSecurityGroupsCreateOrUpdateResult contains the result from method ApplicationSecurityGroups.CreateOrUpdate.
+type ApplicationSecurityGroupsCreateOrUpdateResult struct {
+	ApplicationSecurityGroup
 }
 
-// VPNClientConnectionHealthDetailListResultPollerResponse is the response envelope for operations that asynchronously return a VPNClientConnectionHealthDetailListResult
-// type.
-type VPNClientConnectionHealthDetailListResultPollerResponse struct {
+// ApplicationSecurityGroupsDeletePollerResponse contains the response from method ApplicationSecurityGroups.Delete.
+type ApplicationSecurityGroupsDeletePollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VPNClientConnectionHealthDetailListResultResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (ApplicationSecurityGroupsDeleteResponse, error)
 
 	// Poller contains an initialized poller.
-	Poller VPNClientConnectionHealthDetailListResultPoller
+	Poller ApplicationSecurityGroupsDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// VPNClientConnectionHealthDetailListResultResponse is the response envelope for operations that return a VPNClientConnectionHealthDetailListResult type.
-type VPNClientConnectionHealthDetailListResultResponse struct {
+// ApplicationSecurityGroupsDeleteResponse contains the response from method ApplicationSecurityGroups.Delete.
+type ApplicationSecurityGroupsDeleteResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// List of virtual network gateway vpn client connection health.
-	VPNClientConnectionHealthDetailListResult *VPNClientConnectionHealthDetailListResult
 }
 
-// VPNClientIPsecParametersPollerResponse is the response envelope for operations that asynchronously return a VPNClientIPsecParameters type.
-type VPNClientIPsecParametersPollerResponse struct {
+// ApplicationSecurityGroupsGetResponse contains the response from method ApplicationSecurityGroups.Get.
+type ApplicationSecurityGroupsGetResponse struct {
+	ApplicationSecurityGroupsGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ApplicationSecurityGroupsGetResult contains the result from method ApplicationSecurityGroups.Get.
+type ApplicationSecurityGroupsGetResult struct {
+	ApplicationSecurityGroup
+}
+
+// ApplicationSecurityGroupsListAllResponse contains the response from method ApplicationSecurityGroups.ListAll.
+type ApplicationSecurityGroupsListAllResponse struct {
+	ApplicationSecurityGroupsListAllResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ApplicationSecurityGroupsListAllResult contains the result from method ApplicationSecurityGroups.ListAll.
+type ApplicationSecurityGroupsListAllResult struct {
+	ApplicationSecurityGroupListResult
+}
+
+// ApplicationSecurityGroupsListResponse contains the response from method ApplicationSecurityGroups.List.
+type ApplicationSecurityGroupsListResponse struct {
+	ApplicationSecurityGroupsListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ApplicationSecurityGroupsListResult contains the result from method ApplicationSecurityGroups.List.
+type ApplicationSecurityGroupsListResult struct {
+	ApplicationSecurityGroupListResult
+}
+
+// ApplicationSecurityGroupsUpdateTagsResponse contains the response from method ApplicationSecurityGroups.UpdateTags.
+type ApplicationSecurityGroupsUpdateTagsResponse struct {
+	ApplicationSecurityGroupsUpdateTagsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ApplicationSecurityGroupsUpdateTagsResult contains the result from method ApplicationSecurityGroups.UpdateTags.
+type ApplicationSecurityGroupsUpdateTagsResult struct {
+	ApplicationSecurityGroup
+}
+
+// AvailableDelegationsListResponse contains the response from method AvailableDelegations.List.
+type AvailableDelegationsListResponse struct {
+	AvailableDelegationsListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// AvailableDelegationsListResult contains the result from method AvailableDelegations.List.
+type AvailableDelegationsListResult struct {
+	AvailableDelegationsResult
+}
+
+// AvailableEndpointServicesListResponse contains the response from method AvailableEndpointServices.List.
+type AvailableEndpointServicesListResponse struct {
+	AvailableEndpointServicesListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// AvailableEndpointServicesListResult contains the result from method AvailableEndpointServices.List.
+type AvailableEndpointServicesListResult struct {
+	EndpointServicesListResult
+}
+
+// AvailablePrivateEndpointTypesListByResourceGroupResponse contains the response from method AvailablePrivateEndpointTypes.ListByResourceGroup.
+type AvailablePrivateEndpointTypesListByResourceGroupResponse struct {
+	AvailablePrivateEndpointTypesListByResourceGroupResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// AvailablePrivateEndpointTypesListByResourceGroupResult contains the result from method AvailablePrivateEndpointTypes.ListByResourceGroup.
+type AvailablePrivateEndpointTypesListByResourceGroupResult struct {
+	AvailablePrivateEndpointTypesResult
+}
+
+// AvailablePrivateEndpointTypesListResponse contains the response from method AvailablePrivateEndpointTypes.List.
+type AvailablePrivateEndpointTypesListResponse struct {
+	AvailablePrivateEndpointTypesListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// AvailablePrivateEndpointTypesListResult contains the result from method AvailablePrivateEndpointTypes.List.
+type AvailablePrivateEndpointTypesListResult struct {
+	AvailablePrivateEndpointTypesResult
+}
+
+// AvailableResourceGroupDelegationsListResponse contains the response from method AvailableResourceGroupDelegations.List.
+type AvailableResourceGroupDelegationsListResponse struct {
+	AvailableResourceGroupDelegationsListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// AvailableResourceGroupDelegationsListResult contains the result from method AvailableResourceGroupDelegations.List.
+type AvailableResourceGroupDelegationsListResult struct {
+	AvailableDelegationsResult
+}
+
+// AvailableServiceAliasesListByResourceGroupResponse contains the response from method AvailableServiceAliases.ListByResourceGroup.
+type AvailableServiceAliasesListByResourceGroupResponse struct {
+	AvailableServiceAliasesListByResourceGroupResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// AvailableServiceAliasesListByResourceGroupResult contains the result from method AvailableServiceAliases.ListByResourceGroup.
+type AvailableServiceAliasesListByResourceGroupResult struct {
+	AvailableServiceAliasesResult
+}
+
+// AvailableServiceAliasesListResponse contains the response from method AvailableServiceAliases.List.
+type AvailableServiceAliasesListResponse struct {
+	AvailableServiceAliasesListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// AvailableServiceAliasesListResult contains the result from method AvailableServiceAliases.List.
+type AvailableServiceAliasesListResult struct {
+	AvailableServiceAliasesResult
+}
+
+// AzureFirewallFqdnTagsListAllResponse contains the response from method AzureFirewallFqdnTags.ListAll.
+type AzureFirewallFqdnTagsListAllResponse struct {
+	AzureFirewallFqdnTagsListAllResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// AzureFirewallFqdnTagsListAllResult contains the result from method AzureFirewallFqdnTags.ListAll.
+type AzureFirewallFqdnTagsListAllResult struct {
+	AzureFirewallFqdnTagListResult
+}
+
+// AzureFirewallsCreateOrUpdatePollerResponse contains the response from method AzureFirewalls.CreateOrUpdate.
+type AzureFirewallsCreateOrUpdatePollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VPNClientIPsecParametersResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (AzureFirewallsCreateOrUpdateResponse, error)
 
 	// Poller contains an initialized poller.
-	Poller VPNClientIPsecParametersPoller
+	Poller AzureFirewallsCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// VPNClientIPsecParametersResponse is the response envelope for operations that return a VPNClientIPsecParameters type.
-type VPNClientIPsecParametersResponse struct {
+// AzureFirewallsCreateOrUpdateResponse contains the response from method AzureFirewalls.CreateOrUpdate.
+type AzureFirewallsCreateOrUpdateResponse struct {
+	AzureFirewallsCreateOrUpdateResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// An IPSec parameters for a virtual network gateway P2S connection.
-	VPNClientIPsecParameters *VPNClientIPsecParameters
 }
 
-// VPNConnectionPollerResponse is the response envelope for operations that asynchronously return a VPNConnection type.
-type VPNConnectionPollerResponse struct {
+// AzureFirewallsCreateOrUpdateResult contains the result from method AzureFirewalls.CreateOrUpdate.
+type AzureFirewallsCreateOrUpdateResult struct {
+	AzureFirewall
+}
+
+// AzureFirewallsDeletePollerResponse contains the response from method AzureFirewalls.Delete.
+type AzureFirewallsDeletePollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VPNConnectionResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (AzureFirewallsDeleteResponse, error)
 
 	// Poller contains an initialized poller.
-	Poller VPNConnectionPoller
+	Poller AzureFirewallsDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// VPNConnectionResponse is the response envelope for operations that return a VPNConnection type.
-type VPNConnectionResponse struct {
+// AzureFirewallsDeleteResponse contains the response from method AzureFirewalls.Delete.
+type AzureFirewallsDeleteResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// VpnConnection Resource.
-	VPNConnection *VPNConnection
 }
 
-// VPNGatewayPollerResponse is the response envelope for operations that asynchronously return a VPNGateway type.
-type VPNGatewayPollerResponse struct {
+// AzureFirewallsGetResponse contains the response from method AzureFirewalls.Get.
+type AzureFirewallsGetResponse struct {
+	AzureFirewallsGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// AzureFirewallsGetResult contains the result from method AzureFirewalls.Get.
+type AzureFirewallsGetResult struct {
+	AzureFirewall
+}
+
+// AzureFirewallsListAllResponse contains the response from method AzureFirewalls.ListAll.
+type AzureFirewallsListAllResponse struct {
+	AzureFirewallsListAllResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// AzureFirewallsListAllResult contains the result from method AzureFirewalls.ListAll.
+type AzureFirewallsListAllResult struct {
+	AzureFirewallListResult
+}
+
+// AzureFirewallsListResponse contains the response from method AzureFirewalls.List.
+type AzureFirewallsListResponse struct {
+	AzureFirewallsListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// AzureFirewallsListResult contains the result from method AzureFirewalls.List.
+type AzureFirewallsListResult struct {
+	AzureFirewallListResult
+}
+
+// AzureFirewallsUpdateTagsPollerResponse contains the response from method AzureFirewalls.UpdateTags.
+type AzureFirewallsUpdateTagsPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VPNGatewayResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (AzureFirewallsUpdateTagsResponse, error)
 
 	// Poller contains an initialized poller.
-	Poller VPNGatewayPoller
+	Poller AzureFirewallsUpdateTagsPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// VPNGatewayResponse is the response envelope for operations that return a VPNGateway type.
-type VPNGatewayResponse struct {
+// AzureFirewallsUpdateTagsResponse contains the response from method AzureFirewalls.UpdateTags.
+type AzureFirewallsUpdateTagsResponse struct {
+	AzureFirewallsUpdateTagsResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// VpnGateway Resource.
-	VPNGateway *VPNGateway
 }
 
-// VPNProfileResponsePollerResponse is the response envelope for operations that asynchronously return a VPNProfileResponse type.
-type VPNProfileResponsePollerResponse struct {
+// AzureFirewallsUpdateTagsResult contains the result from method AzureFirewalls.UpdateTags.
+type AzureFirewallsUpdateTagsResult struct {
+	AzureFirewall
+}
+
+// BastionHostsCreateOrUpdatePollerResponse contains the response from method BastionHosts.CreateOrUpdate.
+type BastionHostsCreateOrUpdatePollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VPNProfileResponseResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (BastionHostsCreateOrUpdateResponse, error)
 
 	// Poller contains an initialized poller.
-	Poller VPNProfileResponsePoller
+	Poller BastionHostsCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// VPNProfileResponseResponse is the response envelope for operations that return a VPNProfileResponse type.
-type VPNProfileResponseResponse struct {
+// BastionHostsCreateOrUpdateResponse contains the response from method BastionHosts.CreateOrUpdate.
+type BastionHostsCreateOrUpdateResponse struct {
+	BastionHostsCreateOrUpdateResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// Vpn Profile Response for package generation.
-	VPNProfileResponse *VPNProfileResponse
 }
 
-// VPNServerConfigurationPollerResponse is the response envelope for operations that asynchronously return a VPNServerConfiguration type.
-type VPNServerConfigurationPollerResponse struct {
+// BastionHostsCreateOrUpdateResult contains the result from method BastionHosts.CreateOrUpdate.
+type BastionHostsCreateOrUpdateResult struct {
+	BastionHost
+}
+
+// BastionHostsDeletePollerResponse contains the response from method BastionHosts.Delete.
+type BastionHostsDeletePollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VPNServerConfigurationResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (BastionHostsDeleteResponse, error)
 
 	// Poller contains an initialized poller.
-	Poller VPNServerConfigurationPoller
+	Poller BastionHostsDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// VPNServerConfigurationResponse is the response envelope for operations that return a VPNServerConfiguration type.
-type VPNServerConfigurationResponse struct {
+// BastionHostsDeleteResponse contains the response from method BastionHosts.Delete.
+type BastionHostsDeleteResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// VpnServerConfiguration Resource.
-	VPNServerConfiguration *VPNServerConfiguration
 }
 
-// VPNServerConfigurationsResponsePollerResponse is the response envelope for operations that asynchronously return a VPNServerConfigurationsResponse type.
-type VPNServerConfigurationsResponsePollerResponse struct {
+// BastionHostsGetResponse contains the response from method BastionHosts.Get.
+type BastionHostsGetResponse struct {
+	BastionHostsGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// BastionHostsGetResult contains the result from method BastionHosts.Get.
+type BastionHostsGetResult struct {
+	BastionHost
+}
+
+// BastionHostsListByResourceGroupResponse contains the response from method BastionHosts.ListByResourceGroup.
+type BastionHostsListByResourceGroupResponse struct {
+	BastionHostsListByResourceGroupResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// BastionHostsListByResourceGroupResult contains the result from method BastionHosts.ListByResourceGroup.
+type BastionHostsListByResourceGroupResult struct {
+	BastionHostListResult
+}
+
+// BastionHostsListResponse contains the response from method BastionHosts.List.
+type BastionHostsListResponse struct {
+	BastionHostsListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// BastionHostsListResult contains the result from method BastionHosts.List.
+type BastionHostsListResult struct {
+	BastionHostListResult
+}
+
+// BgpServiceCommunitiesListResponse contains the response from method BgpServiceCommunities.List.
+type BgpServiceCommunitiesListResponse struct {
+	BgpServiceCommunitiesListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// BgpServiceCommunitiesListResult contains the result from method BgpServiceCommunities.List.
+type BgpServiceCommunitiesListResult struct {
+	BgpServiceCommunityListResult
+}
+
+// ConnectionMonitorsCreateOrUpdatePollerResponse contains the response from method ConnectionMonitors.CreateOrUpdate.
+type ConnectionMonitorsCreateOrUpdatePollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VPNServerConfigurationsResponseResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (ConnectionMonitorsCreateOrUpdateResponse, error)
 
 	// Poller contains an initialized poller.
-	Poller VPNServerConfigurationsResponsePoller
+	Poller ConnectionMonitorsCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// VPNServerConfigurationsResponseResponse is the response envelope for operations that return a VPNServerConfigurationsResponse type.
-type VPNServerConfigurationsResponseResponse struct {
+// ConnectionMonitorsCreateOrUpdateResponse contains the response from method ConnectionMonitors.CreateOrUpdate.
+type ConnectionMonitorsCreateOrUpdateResponse struct {
+	ConnectionMonitorsCreateOrUpdateResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// VpnServerConfigurations list associated with VirtualWan Response.
-	VPNServerConfigurationsResponse *VPNServerConfigurationsResponse
 }
 
-// VPNSiteLinkConnectionResponse is the response envelope for operations that return a VPNSiteLinkConnection type.
-type VPNSiteLinkConnectionResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// VpnSiteLinkConnection Resource.
-	VPNSiteLinkConnection *VPNSiteLinkConnection
+// ConnectionMonitorsCreateOrUpdateResult contains the result from method ConnectionMonitors.CreateOrUpdate.
+type ConnectionMonitorsCreateOrUpdateResult struct {
+	ConnectionMonitorResult
 }
 
-// VPNSiteLinkResponse is the response envelope for operations that return a VPNSiteLink type.
-type VPNSiteLinkResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// VpnSiteLink Resource.
-	VPNSiteLink *VPNSiteLink
-}
-
-// VPNSitePollerResponse is the response envelope for operations that asynchronously return a VPNSite type.
-type VPNSitePollerResponse struct {
+// ConnectionMonitorsDeletePollerResponse contains the response from method ConnectionMonitors.Delete.
+type ConnectionMonitorsDeletePollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VPNSiteResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (ConnectionMonitorsDeleteResponse, error)
 
 	// Poller contains an initialized poller.
-	Poller VPNSitePoller
+	Poller ConnectionMonitorsDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// VPNSiteResponse is the response envelope for operations that return a VPNSite type.
-type VPNSiteResponse struct {
+// ConnectionMonitorsDeleteResponse contains the response from method ConnectionMonitors.Delete.
+type ConnectionMonitorsDeleteResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// VpnSite Resource.
-	VPNSite *VPNSite
 }
 
-// VerificationIPFlowResultPollerResponse is the response envelope for operations that asynchronously return a VerificationIPFlowResult type.
-type VerificationIPFlowResultPollerResponse struct {
+// ConnectionMonitorsGetResponse contains the response from method ConnectionMonitors.Get.
+type ConnectionMonitorsGetResponse struct {
+	ConnectionMonitorsGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ConnectionMonitorsGetResult contains the result from method ConnectionMonitors.Get.
+type ConnectionMonitorsGetResult struct {
+	ConnectionMonitorResult
+}
+
+// ConnectionMonitorsListResponse contains the response from method ConnectionMonitors.List.
+type ConnectionMonitorsListResponse struct {
+	ConnectionMonitorsListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ConnectionMonitorsListResult contains the result from method ConnectionMonitors.List.
+type ConnectionMonitorsListResult struct {
+	ConnectionMonitorListResult
+}
+
+// ConnectionMonitorsQueryPollerResponse contains the response from method ConnectionMonitors.Query.
+type ConnectionMonitorsQueryPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VerificationIPFlowResultResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (ConnectionMonitorsQueryResponse, error)
 
 	// Poller contains an initialized poller.
-	Poller VerificationIPFlowResultPoller
+	Poller ConnectionMonitorsQueryPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// VerificationIPFlowResultResponse is the response envelope for operations that return a VerificationIPFlowResult type.
-type VerificationIPFlowResultResponse struct {
+// ConnectionMonitorsQueryResponse contains the response from method ConnectionMonitors.Query.
+type ConnectionMonitorsQueryResponse struct {
+	ConnectionMonitorsQueryResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// Results of IP flow verification on the target resource.
-	VerificationIPFlowResult *VerificationIPFlowResult
 }
 
-// VirtualHubPollerResponse is the response envelope for operations that asynchronously return a VirtualHub type.
-type VirtualHubPollerResponse struct {
+// ConnectionMonitorsQueryResult contains the result from method ConnectionMonitors.Query.
+type ConnectionMonitorsQueryResult struct {
+	ConnectionMonitorQueryResult
+}
+
+// ConnectionMonitorsStartPollerResponse contains the response from method ConnectionMonitors.Start.
+type ConnectionMonitorsStartPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualHubResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (ConnectionMonitorsStartResponse, error)
 
 	// Poller contains an initialized poller.
-	Poller VirtualHubPoller
+	Poller ConnectionMonitorsStartPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// VirtualHubResponse is the response envelope for operations that return a VirtualHub type.
-type VirtualHubResponse struct {
+// ConnectionMonitorsStartResponse contains the response from method ConnectionMonitors.Start.
+type ConnectionMonitorsStartResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// VirtualHub Resource.
-	VirtualHub *VirtualHub
 }
 
-// VirtualHubRouteTableV2PollerResponse is the response envelope for operations that asynchronously return a VirtualHubRouteTableV2 type.
-type VirtualHubRouteTableV2PollerResponse struct {
+// ConnectionMonitorsStopPollerResponse contains the response from method ConnectionMonitors.Stop.
+type ConnectionMonitorsStopPollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualHubRouteTableV2Response, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (ConnectionMonitorsStopResponse, error)
 
 	// Poller contains an initialized poller.
-	Poller VirtualHubRouteTableV2Poller
+	Poller ConnectionMonitorsStopPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// VirtualHubRouteTableV2Response is the response envelope for operations that return a VirtualHubRouteTableV2 type.
-type VirtualHubRouteTableV2Response struct {
+// ConnectionMonitorsStopResponse contains the response from method ConnectionMonitors.Stop.
+type ConnectionMonitorsStopResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// VirtualHubRouteTableV2 Resource.
-	VirtualHubRouteTableV2 *VirtualHubRouteTableV2
 }
 
-// VirtualNetworkGatewayConnectionListResultResponse is the response envelope for operations that return a VirtualNetworkGatewayConnectionListResult type.
-type VirtualNetworkGatewayConnectionListResultResponse struct {
+// ConnectionMonitorsUpdateTagsResponse contains the response from method ConnectionMonitors.UpdateTags.
+type ConnectionMonitorsUpdateTagsResponse struct {
+	ConnectionMonitorsUpdateTagsResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// Response for the ListVirtualNetworkGatewayConnections API service call.
-	VirtualNetworkGatewayConnectionListResult *VirtualNetworkGatewayConnectionListResult
 }
 
-// VirtualNetworkGatewayConnectionPollerResponse is the response envelope for operations that asynchronously return a VirtualNetworkGatewayConnection type.
-type VirtualNetworkGatewayConnectionPollerResponse struct {
+// ConnectionMonitorsUpdateTagsResult contains the result from method ConnectionMonitors.UpdateTags.
+type ConnectionMonitorsUpdateTagsResult struct {
+	ConnectionMonitorResult
+}
+
+// DdosCustomPoliciesCreateOrUpdatePollerResponse contains the response from method DdosCustomPolicies.CreateOrUpdate.
+type DdosCustomPoliciesCreateOrUpdatePollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewayConnectionResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (DdosCustomPoliciesCreateOrUpdateResponse, error)
 
 	// Poller contains an initialized poller.
-	Poller VirtualNetworkGatewayConnectionPoller
+	Poller DdosCustomPoliciesCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// VirtualNetworkGatewayConnectionResponse is the response envelope for operations that return a VirtualNetworkGatewayConnection type.
-type VirtualNetworkGatewayConnectionResponse struct {
+// DdosCustomPoliciesCreateOrUpdateResponse contains the response from method DdosCustomPolicies.CreateOrUpdate.
+type DdosCustomPoliciesCreateOrUpdateResponse struct {
+	DdosCustomPoliciesCreateOrUpdateResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// A common class for general resource information.
-	VirtualNetworkGatewayConnection *VirtualNetworkGatewayConnection
 }
 
-// VirtualNetworkGatewayListConnectionsResultResponse is the response envelope for operations that return a VirtualNetworkGatewayListConnectionsResult type.
-type VirtualNetworkGatewayListConnectionsResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Response for the VirtualNetworkGatewayListConnections API service call.
-	VirtualNetworkGatewayListConnectionsResult *VirtualNetworkGatewayListConnectionsResult
+// DdosCustomPoliciesCreateOrUpdateResult contains the result from method DdosCustomPolicies.CreateOrUpdate.
+type DdosCustomPoliciesCreateOrUpdateResult struct {
+	DdosCustomPolicy
 }
 
-// VirtualNetworkGatewayListResultResponse is the response envelope for operations that return a VirtualNetworkGatewayListResult type.
-type VirtualNetworkGatewayListResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Response for the ListVirtualNetworkGateways API service call.
-	VirtualNetworkGatewayListResult *VirtualNetworkGatewayListResult
-}
-
-// VirtualNetworkGatewayPollerResponse is the response envelope for operations that asynchronously return a VirtualNetworkGateway type.
-type VirtualNetworkGatewayPollerResponse struct {
+// DdosCustomPoliciesDeletePollerResponse contains the response from method DdosCustomPolicies.Delete.
+type DdosCustomPoliciesDeletePollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewayResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (DdosCustomPoliciesDeleteResponse, error)
 
 	// Poller contains an initialized poller.
-	Poller VirtualNetworkGatewayPoller
+	Poller DdosCustomPoliciesDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// VirtualNetworkGatewayResponse is the response envelope for operations that return a VirtualNetworkGateway type.
-type VirtualNetworkGatewayResponse struct {
+// DdosCustomPoliciesDeleteResponse contains the response from method DdosCustomPolicies.Delete.
+type DdosCustomPoliciesDeleteResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// A common class for general resource information.
-	VirtualNetworkGateway *VirtualNetworkGateway
 }
 
-// VirtualNetworkListResultResponse is the response envelope for operations that return a VirtualNetworkListResult type.
-type VirtualNetworkListResultResponse struct {
+// DdosCustomPoliciesGetResponse contains the response from method DdosCustomPolicies.Get.
+type DdosCustomPoliciesGetResponse struct {
+	DdosCustomPoliciesGetResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// Response for the ListVirtualNetworks API service call.
-	VirtualNetworkListResult *VirtualNetworkListResult
 }
 
-// VirtualNetworkListUsageResultResponse is the response envelope for operations that return a VirtualNetworkListUsageResult type.
-type VirtualNetworkListUsageResultResponse struct {
+// DdosCustomPoliciesGetResult contains the result from method DdosCustomPolicies.Get.
+type DdosCustomPoliciesGetResult struct {
+	DdosCustomPolicy
+}
+
+// DdosCustomPoliciesUpdateTagsResponse contains the response from method DdosCustomPolicies.UpdateTags.
+type DdosCustomPoliciesUpdateTagsResponse struct {
+	DdosCustomPoliciesUpdateTagsResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// Response for the virtual networks GetUsage API service call.
-	VirtualNetworkListUsageResult *VirtualNetworkListUsageResult
 }
 
-// VirtualNetworkPeeringListResultResponse is the response envelope for operations that return a VirtualNetworkPeeringListResult type.
-type VirtualNetworkPeeringListResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Response for ListSubnets API service call. Retrieves all subnets that belong to a virtual network.
-	VirtualNetworkPeeringListResult *VirtualNetworkPeeringListResult
+// DdosCustomPoliciesUpdateTagsResult contains the result from method DdosCustomPolicies.UpdateTags.
+type DdosCustomPoliciesUpdateTagsResult struct {
+	DdosCustomPolicy
 }
 
-// VirtualNetworkPeeringPollerResponse is the response envelope for operations that asynchronously return a VirtualNetworkPeering type.
-type VirtualNetworkPeeringPollerResponse struct {
+// DdosProtectionPlansCreateOrUpdatePollerResponse contains the response from method DdosProtectionPlans.CreateOrUpdate.
+type DdosProtectionPlansCreateOrUpdatePollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkPeeringResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (DdosProtectionPlansCreateOrUpdateResponse, error)
 
 	// Poller contains an initialized poller.
-	Poller VirtualNetworkPeeringPoller
+	Poller DdosProtectionPlansCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// VirtualNetworkPeeringResponse is the response envelope for operations that return a VirtualNetworkPeering type.
-type VirtualNetworkPeeringResponse struct {
+// DdosProtectionPlansCreateOrUpdateResponse contains the response from method DdosProtectionPlans.CreateOrUpdate.
+type DdosProtectionPlansCreateOrUpdateResponse struct {
+	DdosProtectionPlansCreateOrUpdateResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// Peerings in a virtual network resource.
-	VirtualNetworkPeering *VirtualNetworkPeering
 }
 
-// VirtualNetworkPollerResponse is the response envelope for operations that asynchronously return a VirtualNetwork type.
-type VirtualNetworkPollerResponse struct {
+// DdosProtectionPlansCreateOrUpdateResult contains the result from method DdosProtectionPlans.CreateOrUpdate.
+type DdosProtectionPlansCreateOrUpdateResult struct {
+	DdosProtectionPlan
+}
+
+// DdosProtectionPlansDeletePollerResponse contains the response from method DdosProtectionPlans.Delete.
+type DdosProtectionPlansDeletePollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (DdosProtectionPlansDeleteResponse, error)
 
 	// Poller contains an initialized poller.
-	Poller VirtualNetworkPoller
+	Poller DdosProtectionPlansDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// VirtualNetworkResponse is the response envelope for operations that return a VirtualNetwork type.
-type VirtualNetworkResponse struct {
+// DdosProtectionPlansDeleteResponse contains the response from method DdosProtectionPlans.Delete.
+type DdosProtectionPlansDeleteResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// Virtual Network resource.
-	VirtualNetwork *VirtualNetwork
 }
 
-// VirtualNetworkTapListResultResponse is the response envelope for operations that return a VirtualNetworkTapListResult type.
-type VirtualNetworkTapListResultResponse struct {
+// DdosProtectionPlansGetResponse contains the response from method DdosProtectionPlans.Get.
+type DdosProtectionPlansGetResponse struct {
+	DdosProtectionPlansGetResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// Response for ListVirtualNetworkTap API service call.
-	VirtualNetworkTapListResult *VirtualNetworkTapListResult
 }
 
-// VirtualNetworkTapPollerResponse is the response envelope for operations that asynchronously return a VirtualNetworkTap type.
-type VirtualNetworkTapPollerResponse struct {
+// DdosProtectionPlansGetResult contains the result from method DdosProtectionPlans.Get.
+type DdosProtectionPlansGetResult struct {
+	DdosProtectionPlan
+}
+
+// DdosProtectionPlansListByResourceGroupResponse contains the response from method DdosProtectionPlans.ListByResourceGroup.
+type DdosProtectionPlansListByResourceGroupResponse struct {
+	DdosProtectionPlansListByResourceGroupResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// DdosProtectionPlansListByResourceGroupResult contains the result from method DdosProtectionPlans.ListByResourceGroup.
+type DdosProtectionPlansListByResourceGroupResult struct {
+	DdosProtectionPlanListResult
+}
+
+// DdosProtectionPlansListResponse contains the response from method DdosProtectionPlans.List.
+type DdosProtectionPlansListResponse struct {
+	DdosProtectionPlansListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// DdosProtectionPlansListResult contains the result from method DdosProtectionPlans.List.
+type DdosProtectionPlansListResult struct {
+	DdosProtectionPlanListResult
+}
+
+// DdosProtectionPlansUpdateTagsResponse contains the response from method DdosProtectionPlans.UpdateTags.
+type DdosProtectionPlansUpdateTagsResponse struct {
+	DdosProtectionPlansUpdateTagsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// DdosProtectionPlansUpdateTagsResult contains the result from method DdosProtectionPlans.UpdateTags.
+type DdosProtectionPlansUpdateTagsResult struct {
+	DdosProtectionPlan
+}
+
+// DefaultSecurityRulesGetResponse contains the response from method DefaultSecurityRules.Get.
+type DefaultSecurityRulesGetResponse struct {
+	DefaultSecurityRulesGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// DefaultSecurityRulesGetResult contains the result from method DefaultSecurityRules.Get.
+type DefaultSecurityRulesGetResult struct {
+	SecurityRule
+}
+
+// DefaultSecurityRulesListResponse contains the response from method DefaultSecurityRules.List.
+type DefaultSecurityRulesListResponse struct {
+	DefaultSecurityRulesListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// DefaultSecurityRulesListResult contains the result from method DefaultSecurityRules.List.
+type DefaultSecurityRulesListResult struct {
+	SecurityRuleListResult
+}
+
+// ExpressRouteCircuitAuthorizationsCreateOrUpdatePollerResponse contains the response from method ExpressRouteCircuitAuthorizations.CreateOrUpdate.
+type ExpressRouteCircuitAuthorizationsCreateOrUpdatePollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkTapResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitAuthorizationsCreateOrUpdateResponse, error)
 
 	// Poller contains an initialized poller.
-	Poller VirtualNetworkTapPoller
+	Poller ExpressRouteCircuitAuthorizationsCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// VirtualNetworkTapResponse is the response envelope for operations that return a VirtualNetworkTap type.
-type VirtualNetworkTapResponse struct {
+// ExpressRouteCircuitAuthorizationsCreateOrUpdateResponse contains the response from method ExpressRouteCircuitAuthorizations.CreateOrUpdate.
+type ExpressRouteCircuitAuthorizationsCreateOrUpdateResponse struct {
+	ExpressRouteCircuitAuthorizationsCreateOrUpdateResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// Virtual Network Tap resource.
-	VirtualNetworkTap *VirtualNetworkTap
 }
 
-// VirtualRouterListResultResponse is the response envelope for operations that return a VirtualRouterListResult type.
-type VirtualRouterListResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Response for ListVirtualRouters API service call.
-	VirtualRouterListResult *VirtualRouterListResult
+// ExpressRouteCircuitAuthorizationsCreateOrUpdateResult contains the result from method ExpressRouteCircuitAuthorizations.CreateOrUpdate.
+type ExpressRouteCircuitAuthorizationsCreateOrUpdateResult struct {
+	ExpressRouteCircuitAuthorization
 }
 
-// VirtualRouterPeeringListResultResponse is the response envelope for operations that return a VirtualRouterPeeringListResult type.
-type VirtualRouterPeeringListResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Response for ListVirtualRouterPeerings API service call.
-	VirtualRouterPeeringListResult *VirtualRouterPeeringListResult
-}
-
-// VirtualRouterPeeringPollerResponse is the response envelope for operations that asynchronously return a VirtualRouterPeering type.
-type VirtualRouterPeeringPollerResponse struct {
+// ExpressRouteCircuitAuthorizationsDeletePollerResponse contains the response from method ExpressRouteCircuitAuthorizations.Delete.
+type ExpressRouteCircuitAuthorizationsDeletePollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualRouterPeeringResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitAuthorizationsDeleteResponse, error)
 
 	// Poller contains an initialized poller.
-	Poller VirtualRouterPeeringPoller
+	Poller ExpressRouteCircuitAuthorizationsDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// VirtualRouterPeeringResponse is the response envelope for operations that return a VirtualRouterPeering type.
-type VirtualRouterPeeringResponse struct {
+// ExpressRouteCircuitAuthorizationsDeleteResponse contains the response from method ExpressRouteCircuitAuthorizations.Delete.
+type ExpressRouteCircuitAuthorizationsDeleteResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// Virtual Router Peering resource.
-	VirtualRouterPeering *VirtualRouterPeering
 }
 
-// VirtualRouterPollerResponse is the response envelope for operations that asynchronously return a VirtualRouter type.
-type VirtualRouterPollerResponse struct {
+// ExpressRouteCircuitAuthorizationsGetResponse contains the response from method ExpressRouteCircuitAuthorizations.Get.
+type ExpressRouteCircuitAuthorizationsGetResponse struct {
+	ExpressRouteCircuitAuthorizationsGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteCircuitAuthorizationsGetResult contains the result from method ExpressRouteCircuitAuthorizations.Get.
+type ExpressRouteCircuitAuthorizationsGetResult struct {
+	ExpressRouteCircuitAuthorization
+}
+
+// ExpressRouteCircuitAuthorizationsListResponse contains the response from method ExpressRouteCircuitAuthorizations.List.
+type ExpressRouteCircuitAuthorizationsListResponse struct {
+	ExpressRouteCircuitAuthorizationsListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteCircuitAuthorizationsListResult contains the result from method ExpressRouteCircuitAuthorizations.List.
+type ExpressRouteCircuitAuthorizationsListResult struct {
+	AuthorizationListResult
+}
+
+// ExpressRouteCircuitConnectionsCreateOrUpdatePollerResponse contains the response from method ExpressRouteCircuitConnections.CreateOrUpdate.
+type ExpressRouteCircuitConnectionsCreateOrUpdatePollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualRouterResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitConnectionsCreateOrUpdateResponse, error)
 
 	// Poller contains an initialized poller.
-	Poller VirtualRouterPoller
+	Poller ExpressRouteCircuitConnectionsCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// VirtualRouterResponse is the response envelope for operations that return a VirtualRouter type.
-type VirtualRouterResponse struct {
+// ExpressRouteCircuitConnectionsCreateOrUpdateResponse contains the response from method ExpressRouteCircuitConnections.CreateOrUpdate.
+type ExpressRouteCircuitConnectionsCreateOrUpdateResponse struct {
+	ExpressRouteCircuitConnectionsCreateOrUpdateResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// VirtualRouter Resource.
-	VirtualRouter *VirtualRouter
 }
 
-// VirtualWANPollerResponse is the response envelope for operations that asynchronously return a VirtualWAN type.
-type VirtualWANPollerResponse struct {
+// ExpressRouteCircuitConnectionsCreateOrUpdateResult contains the result from method ExpressRouteCircuitConnections.CreateOrUpdate.
+type ExpressRouteCircuitConnectionsCreateOrUpdateResult struct {
+	ExpressRouteCircuitConnection
+}
+
+// ExpressRouteCircuitConnectionsDeletePollerResponse contains the response from method ExpressRouteCircuitConnections.Delete.
+type ExpressRouteCircuitConnectionsDeletePollerResponse struct {
 	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualWANResponse, error)
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitConnectionsDeleteResponse, error)
 
 	// Poller contains an initialized poller.
-	Poller VirtualWANPoller
+	Poller ExpressRouteCircuitConnectionsDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// VirtualWANResponse is the response envelope for operations that return a VirtualWAN type.
-type VirtualWANResponse struct {
+// ExpressRouteCircuitConnectionsDeleteResponse contains the response from method ExpressRouteCircuitConnections.Delete.
+type ExpressRouteCircuitConnectionsDeleteResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// VirtualWAN Resource.
-	VirtualWAN *VirtualWAN
 }
 
-// VirtualWanSecurityProvidersResponse is the response envelope for operations that return a VirtualWanSecurityProviders type.
-type VirtualWanSecurityProvidersResponse struct {
+// ExpressRouteCircuitConnectionsGetResponse contains the response from method ExpressRouteCircuitConnections.Get.
+type ExpressRouteCircuitConnectionsGetResponse struct {
+	ExpressRouteCircuitConnectionsGetResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-
-	// Collection of SecurityProviders.
-	VirtualWanSecurityProviders *VirtualWanSecurityProviders
 }
 
-// WebApplicationFirewallPolicyListResultResponse is the response envelope for operations that return a WebApplicationFirewallPolicyListResult type.
-type WebApplicationFirewallPolicyListResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
-	// Result of the request to list WebApplicationFirewallPolicies. It contains a list of WebApplicationFirewallPolicy objects and a URL link to get the next
-	// set of results.
-	WebApplicationFirewallPolicyListResult *WebApplicationFirewallPolicyListResult
+// ExpressRouteCircuitConnectionsGetResult contains the result from method ExpressRouteCircuitConnections.Get.
+type ExpressRouteCircuitConnectionsGetResult struct {
+	ExpressRouteCircuitConnection
 }
 
-// WebApplicationFirewallPolicyResponse is the response envelope for operations that return a WebApplicationFirewallPolicy type.
-type WebApplicationFirewallPolicyResponse struct {
+// ExpressRouteCircuitConnectionsListResponse contains the response from method ExpressRouteCircuitConnections.List.
+type ExpressRouteCircuitConnectionsListResponse struct {
+	ExpressRouteCircuitConnectionsListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
 
-	// Defines web application firewall policy.
-	WebApplicationFirewallPolicy *WebApplicationFirewallPolicy
+// ExpressRouteCircuitConnectionsListResult contains the result from method ExpressRouteCircuitConnections.List.
+type ExpressRouteCircuitConnectionsListResult struct {
+	ExpressRouteCircuitConnectionListResult
+}
+
+// ExpressRouteCircuitPeeringsCreateOrUpdatePollerResponse contains the response from method ExpressRouteCircuitPeerings.CreateOrUpdate.
+type ExpressRouteCircuitPeeringsCreateOrUpdatePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitPeeringsCreateOrUpdateResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller ExpressRouteCircuitPeeringsCreateOrUpdatePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteCircuitPeeringsCreateOrUpdateResponse contains the response from method ExpressRouteCircuitPeerings.CreateOrUpdate.
+type ExpressRouteCircuitPeeringsCreateOrUpdateResponse struct {
+	ExpressRouteCircuitPeeringsCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteCircuitPeeringsCreateOrUpdateResult contains the result from method ExpressRouteCircuitPeerings.CreateOrUpdate.
+type ExpressRouteCircuitPeeringsCreateOrUpdateResult struct {
+	ExpressRouteCircuitPeering
+}
+
+// ExpressRouteCircuitPeeringsDeletePollerResponse contains the response from method ExpressRouteCircuitPeerings.Delete.
+type ExpressRouteCircuitPeeringsDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitPeeringsDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller ExpressRouteCircuitPeeringsDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteCircuitPeeringsDeleteResponse contains the response from method ExpressRouteCircuitPeerings.Delete.
+type ExpressRouteCircuitPeeringsDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteCircuitPeeringsGetResponse contains the response from method ExpressRouteCircuitPeerings.Get.
+type ExpressRouteCircuitPeeringsGetResponse struct {
+	ExpressRouteCircuitPeeringsGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteCircuitPeeringsGetResult contains the result from method ExpressRouteCircuitPeerings.Get.
+type ExpressRouteCircuitPeeringsGetResult struct {
+	ExpressRouteCircuitPeering
+}
+
+// ExpressRouteCircuitPeeringsListResponse contains the response from method ExpressRouteCircuitPeerings.List.
+type ExpressRouteCircuitPeeringsListResponse struct {
+	ExpressRouteCircuitPeeringsListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteCircuitPeeringsListResult contains the result from method ExpressRouteCircuitPeerings.List.
+type ExpressRouteCircuitPeeringsListResult struct {
+	ExpressRouteCircuitPeeringListResult
+}
+
+// ExpressRouteCircuitsCreateOrUpdatePollerResponse contains the response from method ExpressRouteCircuits.CreateOrUpdate.
+type ExpressRouteCircuitsCreateOrUpdatePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitsCreateOrUpdateResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller ExpressRouteCircuitsCreateOrUpdatePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteCircuitsCreateOrUpdateResponse contains the response from method ExpressRouteCircuits.CreateOrUpdate.
+type ExpressRouteCircuitsCreateOrUpdateResponse struct {
+	ExpressRouteCircuitsCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteCircuitsCreateOrUpdateResult contains the result from method ExpressRouteCircuits.CreateOrUpdate.
+type ExpressRouteCircuitsCreateOrUpdateResult struct {
+	ExpressRouteCircuit
+}
+
+// ExpressRouteCircuitsDeletePollerResponse contains the response from method ExpressRouteCircuits.Delete.
+type ExpressRouteCircuitsDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitsDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller ExpressRouteCircuitsDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteCircuitsDeleteResponse contains the response from method ExpressRouteCircuits.Delete.
+type ExpressRouteCircuitsDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteCircuitsGetPeeringStatsResponse contains the response from method ExpressRouteCircuits.GetPeeringStats.
+type ExpressRouteCircuitsGetPeeringStatsResponse struct {
+	ExpressRouteCircuitsGetPeeringStatsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteCircuitsGetPeeringStatsResult contains the result from method ExpressRouteCircuits.GetPeeringStats.
+type ExpressRouteCircuitsGetPeeringStatsResult struct {
+	ExpressRouteCircuitStats
+}
+
+// ExpressRouteCircuitsGetResponse contains the response from method ExpressRouteCircuits.Get.
+type ExpressRouteCircuitsGetResponse struct {
+	ExpressRouteCircuitsGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteCircuitsGetResult contains the result from method ExpressRouteCircuits.Get.
+type ExpressRouteCircuitsGetResult struct {
+	ExpressRouteCircuit
+}
+
+// ExpressRouteCircuitsGetStatsResponse contains the response from method ExpressRouteCircuits.GetStats.
+type ExpressRouteCircuitsGetStatsResponse struct {
+	ExpressRouteCircuitsGetStatsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteCircuitsGetStatsResult contains the result from method ExpressRouteCircuits.GetStats.
+type ExpressRouteCircuitsGetStatsResult struct {
+	ExpressRouteCircuitStats
+}
+
+// ExpressRouteCircuitsListAllResponse contains the response from method ExpressRouteCircuits.ListAll.
+type ExpressRouteCircuitsListAllResponse struct {
+	ExpressRouteCircuitsListAllResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteCircuitsListAllResult contains the result from method ExpressRouteCircuits.ListAll.
+type ExpressRouteCircuitsListAllResult struct {
+	ExpressRouteCircuitListResult
+}
+
+// ExpressRouteCircuitsListArpTablePollerResponse contains the response from method ExpressRouteCircuits.ListArpTable.
+type ExpressRouteCircuitsListArpTablePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitsListArpTableResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller ExpressRouteCircuitsListArpTablePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteCircuitsListArpTableResponse contains the response from method ExpressRouteCircuits.ListArpTable.
+type ExpressRouteCircuitsListArpTableResponse struct {
+	ExpressRouteCircuitsListArpTableResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteCircuitsListArpTableResult contains the result from method ExpressRouteCircuits.ListArpTable.
+type ExpressRouteCircuitsListArpTableResult struct {
+	ExpressRouteCircuitsArpTableListResult
+}
+
+// ExpressRouteCircuitsListResponse contains the response from method ExpressRouteCircuits.List.
+type ExpressRouteCircuitsListResponse struct {
+	ExpressRouteCircuitsListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteCircuitsListResult contains the result from method ExpressRouteCircuits.List.
+type ExpressRouteCircuitsListResult struct {
+	ExpressRouteCircuitListResult
+}
+
+// ExpressRouteCircuitsListRoutesTablePollerResponse contains the response from method ExpressRouteCircuits.ListRoutesTable.
+type ExpressRouteCircuitsListRoutesTablePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitsListRoutesTableResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller ExpressRouteCircuitsListRoutesTablePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteCircuitsListRoutesTableResponse contains the response from method ExpressRouteCircuits.ListRoutesTable.
+type ExpressRouteCircuitsListRoutesTableResponse struct {
+	ExpressRouteCircuitsListRoutesTableResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteCircuitsListRoutesTableResult contains the result from method ExpressRouteCircuits.ListRoutesTable.
+type ExpressRouteCircuitsListRoutesTableResult struct {
+	ExpressRouteCircuitsRoutesTableListResult
+}
+
+// ExpressRouteCircuitsListRoutesTableSummaryPollerResponse contains the response from method ExpressRouteCircuits.ListRoutesTableSummary.
+type ExpressRouteCircuitsListRoutesTableSummaryPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitsListRoutesTableSummaryResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller ExpressRouteCircuitsListRoutesTableSummaryPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteCircuitsListRoutesTableSummaryResponse contains the response from method ExpressRouteCircuits.ListRoutesTableSummary.
+type ExpressRouteCircuitsListRoutesTableSummaryResponse struct {
+	ExpressRouteCircuitsListRoutesTableSummaryResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteCircuitsListRoutesTableSummaryResult contains the result from method ExpressRouteCircuits.ListRoutesTableSummary.
+type ExpressRouteCircuitsListRoutesTableSummaryResult struct {
+	ExpressRouteCircuitsRoutesTableSummaryListResult
+}
+
+// ExpressRouteCircuitsUpdateTagsResponse contains the response from method ExpressRouteCircuits.UpdateTags.
+type ExpressRouteCircuitsUpdateTagsResponse struct {
+	ExpressRouteCircuitsUpdateTagsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteCircuitsUpdateTagsResult contains the result from method ExpressRouteCircuits.UpdateTags.
+type ExpressRouteCircuitsUpdateTagsResult struct {
+	ExpressRouteCircuit
+}
+
+// ExpressRouteConnectionsCreateOrUpdatePollerResponse contains the response from method ExpressRouteConnections.CreateOrUpdate.
+type ExpressRouteConnectionsCreateOrUpdatePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteConnectionsCreateOrUpdateResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller ExpressRouteConnectionsCreateOrUpdatePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteConnectionsCreateOrUpdateResponse contains the response from method ExpressRouteConnections.CreateOrUpdate.
+type ExpressRouteConnectionsCreateOrUpdateResponse struct {
+	ExpressRouteConnectionsCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteConnectionsCreateOrUpdateResult contains the result from method ExpressRouteConnections.CreateOrUpdate.
+type ExpressRouteConnectionsCreateOrUpdateResult struct {
+	ExpressRouteConnection
+}
+
+// ExpressRouteConnectionsDeletePollerResponse contains the response from method ExpressRouteConnections.Delete.
+type ExpressRouteConnectionsDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteConnectionsDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller ExpressRouteConnectionsDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteConnectionsDeleteResponse contains the response from method ExpressRouteConnections.Delete.
+type ExpressRouteConnectionsDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteConnectionsGetResponse contains the response from method ExpressRouteConnections.Get.
+type ExpressRouteConnectionsGetResponse struct {
+	ExpressRouteConnectionsGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteConnectionsGetResult contains the result from method ExpressRouteConnections.Get.
+type ExpressRouteConnectionsGetResult struct {
+	ExpressRouteConnection
+}
+
+// ExpressRouteConnectionsListResponse contains the response from method ExpressRouteConnections.List.
+type ExpressRouteConnectionsListResponse struct {
+	ExpressRouteConnectionsListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteConnectionsListResult contains the result from method ExpressRouteConnections.List.
+type ExpressRouteConnectionsListResult struct {
+	ExpressRouteConnectionList
+}
+
+// ExpressRouteCrossConnectionPeeringsCreateOrUpdatePollerResponse contains the response from method ExpressRouteCrossConnectionPeerings.CreateOrUpdate.
+type ExpressRouteCrossConnectionPeeringsCreateOrUpdatePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCrossConnectionPeeringsCreateOrUpdateResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller ExpressRouteCrossConnectionPeeringsCreateOrUpdatePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteCrossConnectionPeeringsCreateOrUpdateResponse contains the response from method ExpressRouteCrossConnectionPeerings.CreateOrUpdate.
+type ExpressRouteCrossConnectionPeeringsCreateOrUpdateResponse struct {
+	ExpressRouteCrossConnectionPeeringsCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteCrossConnectionPeeringsCreateOrUpdateResult contains the result from method ExpressRouteCrossConnectionPeerings.CreateOrUpdate.
+type ExpressRouteCrossConnectionPeeringsCreateOrUpdateResult struct {
+	ExpressRouteCrossConnectionPeering
+}
+
+// ExpressRouteCrossConnectionPeeringsDeletePollerResponse contains the response from method ExpressRouteCrossConnectionPeerings.Delete.
+type ExpressRouteCrossConnectionPeeringsDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCrossConnectionPeeringsDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller ExpressRouteCrossConnectionPeeringsDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteCrossConnectionPeeringsDeleteResponse contains the response from method ExpressRouteCrossConnectionPeerings.Delete.
+type ExpressRouteCrossConnectionPeeringsDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteCrossConnectionPeeringsGetResponse contains the response from method ExpressRouteCrossConnectionPeerings.Get.
+type ExpressRouteCrossConnectionPeeringsGetResponse struct {
+	ExpressRouteCrossConnectionPeeringsGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteCrossConnectionPeeringsGetResult contains the result from method ExpressRouteCrossConnectionPeerings.Get.
+type ExpressRouteCrossConnectionPeeringsGetResult struct {
+	ExpressRouteCrossConnectionPeering
+}
+
+// ExpressRouteCrossConnectionPeeringsListResponse contains the response from method ExpressRouteCrossConnectionPeerings.List.
+type ExpressRouteCrossConnectionPeeringsListResponse struct {
+	ExpressRouteCrossConnectionPeeringsListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteCrossConnectionPeeringsListResult contains the result from method ExpressRouteCrossConnectionPeerings.List.
+type ExpressRouteCrossConnectionPeeringsListResult struct {
+	ExpressRouteCrossConnectionPeeringList
+}
+
+// ExpressRouteCrossConnectionsCreateOrUpdatePollerResponse contains the response from method ExpressRouteCrossConnections.CreateOrUpdate.
+type ExpressRouteCrossConnectionsCreateOrUpdatePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCrossConnectionsCreateOrUpdateResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller ExpressRouteCrossConnectionsCreateOrUpdatePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteCrossConnectionsCreateOrUpdateResponse contains the response from method ExpressRouteCrossConnections.CreateOrUpdate.
+type ExpressRouteCrossConnectionsCreateOrUpdateResponse struct {
+	ExpressRouteCrossConnectionsCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteCrossConnectionsCreateOrUpdateResult contains the result from method ExpressRouteCrossConnections.CreateOrUpdate.
+type ExpressRouteCrossConnectionsCreateOrUpdateResult struct {
+	ExpressRouteCrossConnection
+}
+
+// ExpressRouteCrossConnectionsGetResponse contains the response from method ExpressRouteCrossConnections.Get.
+type ExpressRouteCrossConnectionsGetResponse struct {
+	ExpressRouteCrossConnectionsGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteCrossConnectionsGetResult contains the result from method ExpressRouteCrossConnections.Get.
+type ExpressRouteCrossConnectionsGetResult struct {
+	ExpressRouteCrossConnection
+}
+
+// ExpressRouteCrossConnectionsListArpTablePollerResponse contains the response from method ExpressRouteCrossConnections.ListArpTable.
+type ExpressRouteCrossConnectionsListArpTablePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCrossConnectionsListArpTableResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller ExpressRouteCrossConnectionsListArpTablePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteCrossConnectionsListArpTableResponse contains the response from method ExpressRouteCrossConnections.ListArpTable.
+type ExpressRouteCrossConnectionsListArpTableResponse struct {
+	ExpressRouteCrossConnectionsListArpTableResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteCrossConnectionsListArpTableResult contains the result from method ExpressRouteCrossConnections.ListArpTable.
+type ExpressRouteCrossConnectionsListArpTableResult struct {
+	ExpressRouteCircuitsArpTableListResult
+}
+
+// ExpressRouteCrossConnectionsListByResourceGroupResponse contains the response from method ExpressRouteCrossConnections.ListByResourceGroup.
+type ExpressRouteCrossConnectionsListByResourceGroupResponse struct {
+	ExpressRouteCrossConnectionsListByResourceGroupResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteCrossConnectionsListByResourceGroupResult contains the result from method ExpressRouteCrossConnections.ListByResourceGroup.
+type ExpressRouteCrossConnectionsListByResourceGroupResult struct {
+	ExpressRouteCrossConnectionListResult
+}
+
+// ExpressRouteCrossConnectionsListResponse contains the response from method ExpressRouteCrossConnections.List.
+type ExpressRouteCrossConnectionsListResponse struct {
+	ExpressRouteCrossConnectionsListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteCrossConnectionsListResult contains the result from method ExpressRouteCrossConnections.List.
+type ExpressRouteCrossConnectionsListResult struct {
+	ExpressRouteCrossConnectionListResult
+}
+
+// ExpressRouteCrossConnectionsListRoutesTablePollerResponse contains the response from method ExpressRouteCrossConnections.ListRoutesTable.
+type ExpressRouteCrossConnectionsListRoutesTablePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCrossConnectionsListRoutesTableResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller ExpressRouteCrossConnectionsListRoutesTablePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteCrossConnectionsListRoutesTableResponse contains the response from method ExpressRouteCrossConnections.ListRoutesTable.
+type ExpressRouteCrossConnectionsListRoutesTableResponse struct {
+	ExpressRouteCrossConnectionsListRoutesTableResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteCrossConnectionsListRoutesTableResult contains the result from method ExpressRouteCrossConnections.ListRoutesTable.
+type ExpressRouteCrossConnectionsListRoutesTableResult struct {
+	ExpressRouteCircuitsRoutesTableListResult
+}
+
+// ExpressRouteCrossConnectionsListRoutesTableSummaryPollerResponse contains the response from method ExpressRouteCrossConnections.ListRoutesTableSummary.
+type ExpressRouteCrossConnectionsListRoutesTableSummaryPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCrossConnectionsListRoutesTableSummaryResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller ExpressRouteCrossConnectionsListRoutesTableSummaryPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteCrossConnectionsListRoutesTableSummaryResponse contains the response from method ExpressRouteCrossConnections.ListRoutesTableSummary.
+type ExpressRouteCrossConnectionsListRoutesTableSummaryResponse struct {
+	ExpressRouteCrossConnectionsListRoutesTableSummaryResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteCrossConnectionsListRoutesTableSummaryResult contains the result from method ExpressRouteCrossConnections.ListRoutesTableSummary.
+type ExpressRouteCrossConnectionsListRoutesTableSummaryResult struct {
+	ExpressRouteCrossConnectionsRoutesTableSummaryListResult
+}
+
+// ExpressRouteCrossConnectionsUpdateTagsResponse contains the response from method ExpressRouteCrossConnections.UpdateTags.
+type ExpressRouteCrossConnectionsUpdateTagsResponse struct {
+	ExpressRouteCrossConnectionsUpdateTagsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteCrossConnectionsUpdateTagsResult contains the result from method ExpressRouteCrossConnections.UpdateTags.
+type ExpressRouteCrossConnectionsUpdateTagsResult struct {
+	ExpressRouteCrossConnection
+}
+
+// ExpressRouteGatewaysCreateOrUpdatePollerResponse contains the response from method ExpressRouteGateways.CreateOrUpdate.
+type ExpressRouteGatewaysCreateOrUpdatePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteGatewaysCreateOrUpdateResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller ExpressRouteGatewaysCreateOrUpdatePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteGatewaysCreateOrUpdateResponse contains the response from method ExpressRouteGateways.CreateOrUpdate.
+type ExpressRouteGatewaysCreateOrUpdateResponse struct {
+	ExpressRouteGatewaysCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteGatewaysCreateOrUpdateResult contains the result from method ExpressRouteGateways.CreateOrUpdate.
+type ExpressRouteGatewaysCreateOrUpdateResult struct {
+	ExpressRouteGateway
+}
+
+// ExpressRouteGatewaysDeletePollerResponse contains the response from method ExpressRouteGateways.Delete.
+type ExpressRouteGatewaysDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteGatewaysDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller ExpressRouteGatewaysDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteGatewaysDeleteResponse contains the response from method ExpressRouteGateways.Delete.
+type ExpressRouteGatewaysDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteGatewaysGetResponse contains the response from method ExpressRouteGateways.Get.
+type ExpressRouteGatewaysGetResponse struct {
+	ExpressRouteGatewaysGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteGatewaysGetResult contains the result from method ExpressRouteGateways.Get.
+type ExpressRouteGatewaysGetResult struct {
+	ExpressRouteGateway
+}
+
+// ExpressRouteGatewaysListByResourceGroupResponse contains the response from method ExpressRouteGateways.ListByResourceGroup.
+type ExpressRouteGatewaysListByResourceGroupResponse struct {
+	ExpressRouteGatewaysListByResourceGroupResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteGatewaysListByResourceGroupResult contains the result from method ExpressRouteGateways.ListByResourceGroup.
+type ExpressRouteGatewaysListByResourceGroupResult struct {
+	ExpressRouteGatewayList
+}
+
+// ExpressRouteGatewaysListBySubscriptionResponse contains the response from method ExpressRouteGateways.ListBySubscription.
+type ExpressRouteGatewaysListBySubscriptionResponse struct {
+	ExpressRouteGatewaysListBySubscriptionResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteGatewaysListBySubscriptionResult contains the result from method ExpressRouteGateways.ListBySubscription.
+type ExpressRouteGatewaysListBySubscriptionResult struct {
+	ExpressRouteGatewayList
+}
+
+// ExpressRouteLinksGetResponse contains the response from method ExpressRouteLinks.Get.
+type ExpressRouteLinksGetResponse struct {
+	ExpressRouteLinksGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteLinksGetResult contains the result from method ExpressRouteLinks.Get.
+type ExpressRouteLinksGetResult struct {
+	ExpressRouteLink
+}
+
+// ExpressRouteLinksListResponse contains the response from method ExpressRouteLinks.List.
+type ExpressRouteLinksListResponse struct {
+	ExpressRouteLinksListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteLinksListResult contains the result from method ExpressRouteLinks.List.
+type ExpressRouteLinksListResult struct {
+	ExpressRouteLinkListResult
+}
+
+// ExpressRoutePortsCreateOrUpdatePollerResponse contains the response from method ExpressRoutePorts.CreateOrUpdate.
+type ExpressRoutePortsCreateOrUpdatePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRoutePortsCreateOrUpdateResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller ExpressRoutePortsCreateOrUpdatePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRoutePortsCreateOrUpdateResponse contains the response from method ExpressRoutePorts.CreateOrUpdate.
+type ExpressRoutePortsCreateOrUpdateResponse struct {
+	ExpressRoutePortsCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRoutePortsCreateOrUpdateResult contains the result from method ExpressRoutePorts.CreateOrUpdate.
+type ExpressRoutePortsCreateOrUpdateResult struct {
+	ExpressRoutePort
+}
+
+// ExpressRoutePortsDeletePollerResponse contains the response from method ExpressRoutePorts.Delete.
+type ExpressRoutePortsDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRoutePortsDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller ExpressRoutePortsDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRoutePortsDeleteResponse contains the response from method ExpressRoutePorts.Delete.
+type ExpressRoutePortsDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRoutePortsGetResponse contains the response from method ExpressRoutePorts.Get.
+type ExpressRoutePortsGetResponse struct {
+	ExpressRoutePortsGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRoutePortsGetResult contains the result from method ExpressRoutePorts.Get.
+type ExpressRoutePortsGetResult struct {
+	ExpressRoutePort
+}
+
+// ExpressRoutePortsListByResourceGroupResponse contains the response from method ExpressRoutePorts.ListByResourceGroup.
+type ExpressRoutePortsListByResourceGroupResponse struct {
+	ExpressRoutePortsListByResourceGroupResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRoutePortsListByResourceGroupResult contains the result from method ExpressRoutePorts.ListByResourceGroup.
+type ExpressRoutePortsListByResourceGroupResult struct {
+	ExpressRoutePortListResult
+}
+
+// ExpressRoutePortsListResponse contains the response from method ExpressRoutePorts.List.
+type ExpressRoutePortsListResponse struct {
+	ExpressRoutePortsListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRoutePortsListResult contains the result from method ExpressRoutePorts.List.
+type ExpressRoutePortsListResult struct {
+	ExpressRoutePortListResult
+}
+
+// ExpressRoutePortsLocationsGetResponse contains the response from method ExpressRoutePortsLocations.Get.
+type ExpressRoutePortsLocationsGetResponse struct {
+	ExpressRoutePortsLocationsGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRoutePortsLocationsGetResult contains the result from method ExpressRoutePortsLocations.Get.
+type ExpressRoutePortsLocationsGetResult struct {
+	ExpressRoutePortsLocation
+}
+
+// ExpressRoutePortsLocationsListResponse contains the response from method ExpressRoutePortsLocations.List.
+type ExpressRoutePortsLocationsListResponse struct {
+	ExpressRoutePortsLocationsListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRoutePortsLocationsListResult contains the result from method ExpressRoutePortsLocations.List.
+type ExpressRoutePortsLocationsListResult struct {
+	ExpressRoutePortsLocationListResult
+}
+
+// ExpressRoutePortsUpdateTagsResponse contains the response from method ExpressRoutePorts.UpdateTags.
+type ExpressRoutePortsUpdateTagsResponse struct {
+	ExpressRoutePortsUpdateTagsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRoutePortsUpdateTagsResult contains the result from method ExpressRoutePorts.UpdateTags.
+type ExpressRoutePortsUpdateTagsResult struct {
+	ExpressRoutePort
+}
+
+// ExpressRouteServiceProvidersListResponse contains the response from method ExpressRouteServiceProviders.List.
+type ExpressRouteServiceProvidersListResponse struct {
+	ExpressRouteServiceProvidersListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ExpressRouteServiceProvidersListResult contains the result from method ExpressRouteServiceProviders.List.
+type ExpressRouteServiceProvidersListResult struct {
+	ExpressRouteServiceProviderListResult
+}
+
+// FirewallPoliciesCreateOrUpdatePollerResponse contains the response from method FirewallPolicies.CreateOrUpdate.
+type FirewallPoliciesCreateOrUpdatePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (FirewallPoliciesCreateOrUpdateResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller FirewallPoliciesCreateOrUpdatePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// FirewallPoliciesCreateOrUpdateResponse contains the response from method FirewallPolicies.CreateOrUpdate.
+type FirewallPoliciesCreateOrUpdateResponse struct {
+	FirewallPoliciesCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// FirewallPoliciesCreateOrUpdateResult contains the result from method FirewallPolicies.CreateOrUpdate.
+type FirewallPoliciesCreateOrUpdateResult struct {
+	FirewallPolicy
+}
+
+// FirewallPoliciesDeletePollerResponse contains the response from method FirewallPolicies.Delete.
+type FirewallPoliciesDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (FirewallPoliciesDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller FirewallPoliciesDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// FirewallPoliciesDeleteResponse contains the response from method FirewallPolicies.Delete.
+type FirewallPoliciesDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// FirewallPoliciesGetResponse contains the response from method FirewallPolicies.Get.
+type FirewallPoliciesGetResponse struct {
+	FirewallPoliciesGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// FirewallPoliciesGetResult contains the result from method FirewallPolicies.Get.
+type FirewallPoliciesGetResult struct {
+	FirewallPolicy
+}
+
+// FirewallPoliciesListAllResponse contains the response from method FirewallPolicies.ListAll.
+type FirewallPoliciesListAllResponse struct {
+	FirewallPoliciesListAllResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// FirewallPoliciesListAllResult contains the result from method FirewallPolicies.ListAll.
+type FirewallPoliciesListAllResult struct {
+	FirewallPolicyListResult
+}
+
+// FirewallPoliciesListResponse contains the response from method FirewallPolicies.List.
+type FirewallPoliciesListResponse struct {
+	FirewallPoliciesListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// FirewallPoliciesListResult contains the result from method FirewallPolicies.List.
+type FirewallPoliciesListResult struct {
+	FirewallPolicyListResult
+}
+
+// FirewallPolicyRuleGroupsCreateOrUpdatePollerResponse contains the response from method FirewallPolicyRuleGroups.CreateOrUpdate.
+type FirewallPolicyRuleGroupsCreateOrUpdatePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (FirewallPolicyRuleGroupsCreateOrUpdateResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller FirewallPolicyRuleGroupsCreateOrUpdatePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// FirewallPolicyRuleGroupsCreateOrUpdateResponse contains the response from method FirewallPolicyRuleGroups.CreateOrUpdate.
+type FirewallPolicyRuleGroupsCreateOrUpdateResponse struct {
+	FirewallPolicyRuleGroupsCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// FirewallPolicyRuleGroupsCreateOrUpdateResult contains the result from method FirewallPolicyRuleGroups.CreateOrUpdate.
+type FirewallPolicyRuleGroupsCreateOrUpdateResult struct {
+	FirewallPolicyRuleGroup
+}
+
+// FirewallPolicyRuleGroupsDeletePollerResponse contains the response from method FirewallPolicyRuleGroups.Delete.
+type FirewallPolicyRuleGroupsDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (FirewallPolicyRuleGroupsDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller FirewallPolicyRuleGroupsDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// FirewallPolicyRuleGroupsDeleteResponse contains the response from method FirewallPolicyRuleGroups.Delete.
+type FirewallPolicyRuleGroupsDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// FirewallPolicyRuleGroupsGetResponse contains the response from method FirewallPolicyRuleGroups.Get.
+type FirewallPolicyRuleGroupsGetResponse struct {
+	FirewallPolicyRuleGroupsGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// FirewallPolicyRuleGroupsGetResult contains the result from method FirewallPolicyRuleGroups.Get.
+type FirewallPolicyRuleGroupsGetResult struct {
+	FirewallPolicyRuleGroup
+}
+
+// FirewallPolicyRuleGroupsListResponse contains the response from method FirewallPolicyRuleGroups.List.
+type FirewallPolicyRuleGroupsListResponse struct {
+	FirewallPolicyRuleGroupsListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// FirewallPolicyRuleGroupsListResult contains the result from method FirewallPolicyRuleGroups.List.
+type FirewallPolicyRuleGroupsListResult struct {
+	FirewallPolicyRuleGroupListResult
+}
+
+// FlowLogsCreateOrUpdatePollerResponse contains the response from method FlowLogs.CreateOrUpdate.
+type FlowLogsCreateOrUpdatePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (FlowLogsCreateOrUpdateResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller FlowLogsCreateOrUpdatePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// FlowLogsCreateOrUpdateResponse contains the response from method FlowLogs.CreateOrUpdate.
+type FlowLogsCreateOrUpdateResponse struct {
+	FlowLogsCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// FlowLogsCreateOrUpdateResult contains the result from method FlowLogs.CreateOrUpdate.
+type FlowLogsCreateOrUpdateResult struct {
+	FlowLog
+}
+
+// FlowLogsDeletePollerResponse contains the response from method FlowLogs.Delete.
+type FlowLogsDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (FlowLogsDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller FlowLogsDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// FlowLogsDeleteResponse contains the response from method FlowLogs.Delete.
+type FlowLogsDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// FlowLogsGetResponse contains the response from method FlowLogs.Get.
+type FlowLogsGetResponse struct {
+	FlowLogsGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// FlowLogsGetResult contains the result from method FlowLogs.Get.
+type FlowLogsGetResult struct {
+	FlowLog
+}
+
+// FlowLogsListResponse contains the response from method FlowLogs.List.
+type FlowLogsListResponse struct {
+	FlowLogsListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// FlowLogsListResult contains the result from method FlowLogs.List.
+type FlowLogsListResult struct {
+	FlowLogListResult
+}
+
+// HubVirtualNetworkConnectionsGetResponse contains the response from method HubVirtualNetworkConnections.Get.
+type HubVirtualNetworkConnectionsGetResponse struct {
+	HubVirtualNetworkConnectionsGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HubVirtualNetworkConnectionsGetResult contains the result from method HubVirtualNetworkConnections.Get.
+type HubVirtualNetworkConnectionsGetResult struct {
+	HubVirtualNetworkConnection
+}
+
+// HubVirtualNetworkConnectionsListResponse contains the response from method HubVirtualNetworkConnections.List.
+type HubVirtualNetworkConnectionsListResponse struct {
+	HubVirtualNetworkConnectionsListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// HubVirtualNetworkConnectionsListResult contains the result from method HubVirtualNetworkConnections.List.
+type HubVirtualNetworkConnectionsListResult struct {
+	ListHubVirtualNetworkConnectionsResult
+}
+
+// IPAllocationsCreateOrUpdatePollerResponse contains the response from method IPAllocations.CreateOrUpdate.
+type IPAllocationsCreateOrUpdatePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (IPAllocationsCreateOrUpdateResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller IPAllocationsCreateOrUpdatePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// IPAllocationsCreateOrUpdateResponse contains the response from method IPAllocations.CreateOrUpdate.
+type IPAllocationsCreateOrUpdateResponse struct {
+	IPAllocationsCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// IPAllocationsCreateOrUpdateResult contains the result from method IPAllocations.CreateOrUpdate.
+type IPAllocationsCreateOrUpdateResult struct {
+	IPAllocation
+}
+
+// IPAllocationsDeletePollerResponse contains the response from method IPAllocations.Delete.
+type IPAllocationsDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (IPAllocationsDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller IPAllocationsDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// IPAllocationsDeleteResponse contains the response from method IPAllocations.Delete.
+type IPAllocationsDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// IPAllocationsGetResponse contains the response from method IPAllocations.Get.
+type IPAllocationsGetResponse struct {
+	IPAllocationsGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// IPAllocationsGetResult contains the result from method IPAllocations.Get.
+type IPAllocationsGetResult struct {
+	IPAllocation
+}
+
+// IPAllocationsListByResourceGroupResponse contains the response from method IPAllocations.ListByResourceGroup.
+type IPAllocationsListByResourceGroupResponse struct {
+	IPAllocationsListByResourceGroupResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// IPAllocationsListByResourceGroupResult contains the result from method IPAllocations.ListByResourceGroup.
+type IPAllocationsListByResourceGroupResult struct {
+	IPAllocationListResult
+}
+
+// IPAllocationsListResponse contains the response from method IPAllocations.List.
+type IPAllocationsListResponse struct {
+	IPAllocationsListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// IPAllocationsListResult contains the result from method IPAllocations.List.
+type IPAllocationsListResult struct {
+	IPAllocationListResult
+}
+
+// IPAllocationsUpdateTagsResponse contains the response from method IPAllocations.UpdateTags.
+type IPAllocationsUpdateTagsResponse struct {
+	IPAllocationsUpdateTagsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// IPAllocationsUpdateTagsResult contains the result from method IPAllocations.UpdateTags.
+type IPAllocationsUpdateTagsResult struct {
+	IPAllocation
+}
+
+// IPGroupsCreateOrUpdatePollerResponse contains the response from method IPGroups.CreateOrUpdate.
+type IPGroupsCreateOrUpdatePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (IPGroupsCreateOrUpdateResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller IPGroupsCreateOrUpdatePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// IPGroupsCreateOrUpdateResponse contains the response from method IPGroups.CreateOrUpdate.
+type IPGroupsCreateOrUpdateResponse struct {
+	IPGroupsCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// IPGroupsCreateOrUpdateResult contains the result from method IPGroups.CreateOrUpdate.
+type IPGroupsCreateOrUpdateResult struct {
+	IPGroup
+}
+
+// IPGroupsDeletePollerResponse contains the response from method IPGroups.Delete.
+type IPGroupsDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (IPGroupsDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller IPGroupsDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// IPGroupsDeleteResponse contains the response from method IPGroups.Delete.
+type IPGroupsDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// IPGroupsGetResponse contains the response from method IPGroups.Get.
+type IPGroupsGetResponse struct {
+	IPGroupsGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// IPGroupsGetResult contains the result from method IPGroups.Get.
+type IPGroupsGetResult struct {
+	IPGroup
+}
+
+// IPGroupsListByResourceGroupResponse contains the response from method IPGroups.ListByResourceGroup.
+type IPGroupsListByResourceGroupResponse struct {
+	IPGroupsListByResourceGroupResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// IPGroupsListByResourceGroupResult contains the result from method IPGroups.ListByResourceGroup.
+type IPGroupsListByResourceGroupResult struct {
+	IPGroupListResult
+}
+
+// IPGroupsListResponse contains the response from method IPGroups.List.
+type IPGroupsListResponse struct {
+	IPGroupsListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// IPGroupsListResult contains the result from method IPGroups.List.
+type IPGroupsListResult struct {
+	IPGroupListResult
+}
+
+// IPGroupsUpdateGroupsResponse contains the response from method IPGroups.UpdateGroups.
+type IPGroupsUpdateGroupsResponse struct {
+	IPGroupsUpdateGroupsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// IPGroupsUpdateGroupsResult contains the result from method IPGroups.UpdateGroups.
+type IPGroupsUpdateGroupsResult struct {
+	IPGroup
+}
+
+// InboundNatRulesCreateOrUpdatePollerResponse contains the response from method InboundNatRules.CreateOrUpdate.
+type InboundNatRulesCreateOrUpdatePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (InboundNatRulesCreateOrUpdateResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller InboundNatRulesCreateOrUpdatePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// InboundNatRulesCreateOrUpdateResponse contains the response from method InboundNatRules.CreateOrUpdate.
+type InboundNatRulesCreateOrUpdateResponse struct {
+	InboundNatRulesCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// InboundNatRulesCreateOrUpdateResult contains the result from method InboundNatRules.CreateOrUpdate.
+type InboundNatRulesCreateOrUpdateResult struct {
+	InboundNatRule
+}
+
+// InboundNatRulesDeletePollerResponse contains the response from method InboundNatRules.Delete.
+type InboundNatRulesDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (InboundNatRulesDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller InboundNatRulesDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// InboundNatRulesDeleteResponse contains the response from method InboundNatRules.Delete.
+type InboundNatRulesDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// InboundNatRulesGetResponse contains the response from method InboundNatRules.Get.
+type InboundNatRulesGetResponse struct {
+	InboundNatRulesGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// InboundNatRulesGetResult contains the result from method InboundNatRules.Get.
+type InboundNatRulesGetResult struct {
+	InboundNatRule
+}
+
+// InboundNatRulesListResponse contains the response from method InboundNatRules.List.
+type InboundNatRulesListResponse struct {
+	InboundNatRulesListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// InboundNatRulesListResult contains the result from method InboundNatRules.List.
+type InboundNatRulesListResult struct {
+	InboundNatRuleListResult
+}
+
+// LoadBalancerBackendAddressPoolsGetResponse contains the response from method LoadBalancerBackendAddressPools.Get.
+type LoadBalancerBackendAddressPoolsGetResponse struct {
+	LoadBalancerBackendAddressPoolsGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LoadBalancerBackendAddressPoolsGetResult contains the result from method LoadBalancerBackendAddressPools.Get.
+type LoadBalancerBackendAddressPoolsGetResult struct {
+	BackendAddressPool
+}
+
+// LoadBalancerBackendAddressPoolsListResponse contains the response from method LoadBalancerBackendAddressPools.List.
+type LoadBalancerBackendAddressPoolsListResponse struct {
+	LoadBalancerBackendAddressPoolsListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LoadBalancerBackendAddressPoolsListResult contains the result from method LoadBalancerBackendAddressPools.List.
+type LoadBalancerBackendAddressPoolsListResult struct {
+	LoadBalancerBackendAddressPoolListResult
+}
+
+// LoadBalancerFrontendIPConfigurationsGetResponse contains the response from method LoadBalancerFrontendIPConfigurations.Get.
+type LoadBalancerFrontendIPConfigurationsGetResponse struct {
+	LoadBalancerFrontendIPConfigurationsGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LoadBalancerFrontendIPConfigurationsGetResult contains the result from method LoadBalancerFrontendIPConfigurations.Get.
+type LoadBalancerFrontendIPConfigurationsGetResult struct {
+	FrontendIPConfiguration
+}
+
+// LoadBalancerFrontendIPConfigurationsListResponse contains the response from method LoadBalancerFrontendIPConfigurations.List.
+type LoadBalancerFrontendIPConfigurationsListResponse struct {
+	LoadBalancerFrontendIPConfigurationsListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LoadBalancerFrontendIPConfigurationsListResult contains the result from method LoadBalancerFrontendIPConfigurations.List.
+type LoadBalancerFrontendIPConfigurationsListResult struct {
+	LoadBalancerFrontendIPConfigurationListResult
+}
+
+// LoadBalancerLoadBalancingRulesGetResponse contains the response from method LoadBalancerLoadBalancingRules.Get.
+type LoadBalancerLoadBalancingRulesGetResponse struct {
+	LoadBalancerLoadBalancingRulesGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LoadBalancerLoadBalancingRulesGetResult contains the result from method LoadBalancerLoadBalancingRules.Get.
+type LoadBalancerLoadBalancingRulesGetResult struct {
+	LoadBalancingRule
+}
+
+// LoadBalancerLoadBalancingRulesListResponse contains the response from method LoadBalancerLoadBalancingRules.List.
+type LoadBalancerLoadBalancingRulesListResponse struct {
+	LoadBalancerLoadBalancingRulesListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LoadBalancerLoadBalancingRulesListResult contains the result from method LoadBalancerLoadBalancingRules.List.
+type LoadBalancerLoadBalancingRulesListResult struct {
+	LoadBalancerLoadBalancingRuleListResult
+}
+
+// LoadBalancerNetworkInterfacesListResponse contains the response from method LoadBalancerNetworkInterfaces.List.
+type LoadBalancerNetworkInterfacesListResponse struct {
+	LoadBalancerNetworkInterfacesListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LoadBalancerNetworkInterfacesListResult contains the result from method LoadBalancerNetworkInterfaces.List.
+type LoadBalancerNetworkInterfacesListResult struct {
+	NetworkInterfaceListResult
+}
+
+// LoadBalancerOutboundRulesGetResponse contains the response from method LoadBalancerOutboundRules.Get.
+type LoadBalancerOutboundRulesGetResponse struct {
+	LoadBalancerOutboundRulesGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LoadBalancerOutboundRulesGetResult contains the result from method LoadBalancerOutboundRules.Get.
+type LoadBalancerOutboundRulesGetResult struct {
+	OutboundRule
+}
+
+// LoadBalancerOutboundRulesListResponse contains the response from method LoadBalancerOutboundRules.List.
+type LoadBalancerOutboundRulesListResponse struct {
+	LoadBalancerOutboundRulesListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LoadBalancerOutboundRulesListResult contains the result from method LoadBalancerOutboundRules.List.
+type LoadBalancerOutboundRulesListResult struct {
+	LoadBalancerOutboundRuleListResult
+}
+
+// LoadBalancerProbesGetResponse contains the response from method LoadBalancerProbes.Get.
+type LoadBalancerProbesGetResponse struct {
+	LoadBalancerProbesGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LoadBalancerProbesGetResult contains the result from method LoadBalancerProbes.Get.
+type LoadBalancerProbesGetResult struct {
+	Probe
+}
+
+// LoadBalancerProbesListResponse contains the response from method LoadBalancerProbes.List.
+type LoadBalancerProbesListResponse struct {
+	LoadBalancerProbesListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LoadBalancerProbesListResult contains the result from method LoadBalancerProbes.List.
+type LoadBalancerProbesListResult struct {
+	LoadBalancerProbeListResult
+}
+
+// LoadBalancersCreateOrUpdatePollerResponse contains the response from method LoadBalancers.CreateOrUpdate.
+type LoadBalancersCreateOrUpdatePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LoadBalancersCreateOrUpdateResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LoadBalancersCreateOrUpdatePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LoadBalancersCreateOrUpdateResponse contains the response from method LoadBalancers.CreateOrUpdate.
+type LoadBalancersCreateOrUpdateResponse struct {
+	LoadBalancersCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LoadBalancersCreateOrUpdateResult contains the result from method LoadBalancers.CreateOrUpdate.
+type LoadBalancersCreateOrUpdateResult struct {
+	LoadBalancer
+}
+
+// LoadBalancersDeletePollerResponse contains the response from method LoadBalancers.Delete.
+type LoadBalancersDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LoadBalancersDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LoadBalancersDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LoadBalancersDeleteResponse contains the response from method LoadBalancers.Delete.
+type LoadBalancersDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LoadBalancersGetResponse contains the response from method LoadBalancers.Get.
+type LoadBalancersGetResponse struct {
+	LoadBalancersGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LoadBalancersGetResult contains the result from method LoadBalancers.Get.
+type LoadBalancersGetResult struct {
+	LoadBalancer
+}
+
+// LoadBalancersListAllResponse contains the response from method LoadBalancers.ListAll.
+type LoadBalancersListAllResponse struct {
+	LoadBalancersListAllResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LoadBalancersListAllResult contains the result from method LoadBalancers.ListAll.
+type LoadBalancersListAllResult struct {
+	LoadBalancerListResult
+}
+
+// LoadBalancersListResponse contains the response from method LoadBalancers.List.
+type LoadBalancersListResponse struct {
+	LoadBalancersListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LoadBalancersListResult contains the result from method LoadBalancers.List.
+type LoadBalancersListResult struct {
+	LoadBalancerListResult
+}
+
+// LoadBalancersUpdateTagsResponse contains the response from method LoadBalancers.UpdateTags.
+type LoadBalancersUpdateTagsResponse struct {
+	LoadBalancersUpdateTagsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LoadBalancersUpdateTagsResult contains the result from method LoadBalancers.UpdateTags.
+type LoadBalancersUpdateTagsResult struct {
+	LoadBalancer
+}
+
+// LocalNetworkGatewaysCreateOrUpdatePollerResponse contains the response from method LocalNetworkGateways.CreateOrUpdate.
+type LocalNetworkGatewaysCreateOrUpdatePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LocalNetworkGatewaysCreateOrUpdateResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LocalNetworkGatewaysCreateOrUpdatePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LocalNetworkGatewaysCreateOrUpdateResponse contains the response from method LocalNetworkGateways.CreateOrUpdate.
+type LocalNetworkGatewaysCreateOrUpdateResponse struct {
+	LocalNetworkGatewaysCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LocalNetworkGatewaysCreateOrUpdateResult contains the result from method LocalNetworkGateways.CreateOrUpdate.
+type LocalNetworkGatewaysCreateOrUpdateResult struct {
+	LocalNetworkGateway
+}
+
+// LocalNetworkGatewaysDeletePollerResponse contains the response from method LocalNetworkGateways.Delete.
+type LocalNetworkGatewaysDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (LocalNetworkGatewaysDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller LocalNetworkGatewaysDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LocalNetworkGatewaysDeleteResponse contains the response from method LocalNetworkGateways.Delete.
+type LocalNetworkGatewaysDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LocalNetworkGatewaysGetResponse contains the response from method LocalNetworkGateways.Get.
+type LocalNetworkGatewaysGetResponse struct {
+	LocalNetworkGatewaysGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LocalNetworkGatewaysGetResult contains the result from method LocalNetworkGateways.Get.
+type LocalNetworkGatewaysGetResult struct {
+	LocalNetworkGateway
+}
+
+// LocalNetworkGatewaysListResponse contains the response from method LocalNetworkGateways.List.
+type LocalNetworkGatewaysListResponse struct {
+	LocalNetworkGatewaysListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LocalNetworkGatewaysListResult contains the result from method LocalNetworkGateways.List.
+type LocalNetworkGatewaysListResult struct {
+	LocalNetworkGatewayListResult
+}
+
+// LocalNetworkGatewaysUpdateTagsResponse contains the response from method LocalNetworkGateways.UpdateTags.
+type LocalNetworkGatewaysUpdateTagsResponse struct {
+	LocalNetworkGatewaysUpdateTagsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LocalNetworkGatewaysUpdateTagsResult contains the result from method LocalNetworkGateways.UpdateTags.
+type LocalNetworkGatewaysUpdateTagsResult struct {
+	LocalNetworkGateway
+}
+
+// NatGatewaysCreateOrUpdatePollerResponse contains the response from method NatGateways.CreateOrUpdate.
+type NatGatewaysCreateOrUpdatePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (NatGatewaysCreateOrUpdateResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller NatGatewaysCreateOrUpdatePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NatGatewaysCreateOrUpdateResponse contains the response from method NatGateways.CreateOrUpdate.
+type NatGatewaysCreateOrUpdateResponse struct {
+	NatGatewaysCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NatGatewaysCreateOrUpdateResult contains the result from method NatGateways.CreateOrUpdate.
+type NatGatewaysCreateOrUpdateResult struct {
+	NatGateway
+}
+
+// NatGatewaysDeletePollerResponse contains the response from method NatGateways.Delete.
+type NatGatewaysDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (NatGatewaysDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller NatGatewaysDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NatGatewaysDeleteResponse contains the response from method NatGateways.Delete.
+type NatGatewaysDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NatGatewaysGetResponse contains the response from method NatGateways.Get.
+type NatGatewaysGetResponse struct {
+	NatGatewaysGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NatGatewaysGetResult contains the result from method NatGateways.Get.
+type NatGatewaysGetResult struct {
+	NatGateway
+}
+
+// NatGatewaysListAllResponse contains the response from method NatGateways.ListAll.
+type NatGatewaysListAllResponse struct {
+	NatGatewaysListAllResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NatGatewaysListAllResult contains the result from method NatGateways.ListAll.
+type NatGatewaysListAllResult struct {
+	NatGatewayListResult
+}
+
+// NatGatewaysListResponse contains the response from method NatGateways.List.
+type NatGatewaysListResponse struct {
+	NatGatewaysListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NatGatewaysListResult contains the result from method NatGateways.List.
+type NatGatewaysListResult struct {
+	NatGatewayListResult
+}
+
+// NatGatewaysUpdateTagsResponse contains the response from method NatGateways.UpdateTags.
+type NatGatewaysUpdateTagsResponse struct {
+	NatGatewaysUpdateTagsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NatGatewaysUpdateTagsResult contains the result from method NatGateways.UpdateTags.
+type NatGatewaysUpdateTagsResult struct {
+	NatGateway
+}
+
+// NetworkInterfaceIPConfigurationsGetResponse contains the response from method NetworkInterfaceIPConfigurations.Get.
+type NetworkInterfaceIPConfigurationsGetResponse struct {
+	NetworkInterfaceIPConfigurationsGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkInterfaceIPConfigurationsGetResult contains the result from method NetworkInterfaceIPConfigurations.Get.
+type NetworkInterfaceIPConfigurationsGetResult struct {
+	NetworkInterfaceIPConfiguration
+}
+
+// NetworkInterfaceIPConfigurationsListResponse contains the response from method NetworkInterfaceIPConfigurations.List.
+type NetworkInterfaceIPConfigurationsListResponse struct {
+	NetworkInterfaceIPConfigurationsListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkInterfaceIPConfigurationsListResult contains the result from method NetworkInterfaceIPConfigurations.List.
+type NetworkInterfaceIPConfigurationsListResult struct {
+	NetworkInterfaceIPConfigurationListResult
+}
+
+// NetworkInterfaceLoadBalancersListResponse contains the response from method NetworkInterfaceLoadBalancers.List.
+type NetworkInterfaceLoadBalancersListResponse struct {
+	NetworkInterfaceLoadBalancersListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkInterfaceLoadBalancersListResult contains the result from method NetworkInterfaceLoadBalancers.List.
+type NetworkInterfaceLoadBalancersListResult struct {
+	NetworkInterfaceLoadBalancerListResult
+}
+
+// NetworkInterfaceTapConfigurationsCreateOrUpdatePollerResponse contains the response from method NetworkInterfaceTapConfigurations.CreateOrUpdate.
+type NetworkInterfaceTapConfigurationsCreateOrUpdatePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkInterfaceTapConfigurationsCreateOrUpdateResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller NetworkInterfaceTapConfigurationsCreateOrUpdatePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkInterfaceTapConfigurationsCreateOrUpdateResponse contains the response from method NetworkInterfaceTapConfigurations.CreateOrUpdate.
+type NetworkInterfaceTapConfigurationsCreateOrUpdateResponse struct {
+	NetworkInterfaceTapConfigurationsCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkInterfaceTapConfigurationsCreateOrUpdateResult contains the result from method NetworkInterfaceTapConfigurations.CreateOrUpdate.
+type NetworkInterfaceTapConfigurationsCreateOrUpdateResult struct {
+	NetworkInterfaceTapConfiguration
+}
+
+// NetworkInterfaceTapConfigurationsDeletePollerResponse contains the response from method NetworkInterfaceTapConfigurations.Delete.
+type NetworkInterfaceTapConfigurationsDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkInterfaceTapConfigurationsDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller NetworkInterfaceTapConfigurationsDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkInterfaceTapConfigurationsDeleteResponse contains the response from method NetworkInterfaceTapConfigurations.Delete.
+type NetworkInterfaceTapConfigurationsDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkInterfaceTapConfigurationsGetResponse contains the response from method NetworkInterfaceTapConfigurations.Get.
+type NetworkInterfaceTapConfigurationsGetResponse struct {
+	NetworkInterfaceTapConfigurationsGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkInterfaceTapConfigurationsGetResult contains the result from method NetworkInterfaceTapConfigurations.Get.
+type NetworkInterfaceTapConfigurationsGetResult struct {
+	NetworkInterfaceTapConfiguration
+}
+
+// NetworkInterfaceTapConfigurationsListResponse contains the response from method NetworkInterfaceTapConfigurations.List.
+type NetworkInterfaceTapConfigurationsListResponse struct {
+	NetworkInterfaceTapConfigurationsListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkInterfaceTapConfigurationsListResult contains the result from method NetworkInterfaceTapConfigurations.List.
+type NetworkInterfaceTapConfigurationsListResult struct {
+	NetworkInterfaceTapConfigurationListResult
+}
+
+// NetworkInterfacesCreateOrUpdatePollerResponse contains the response from method NetworkInterfaces.CreateOrUpdate.
+type NetworkInterfacesCreateOrUpdatePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkInterfacesCreateOrUpdateResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller NetworkInterfacesCreateOrUpdatePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkInterfacesCreateOrUpdateResponse contains the response from method NetworkInterfaces.CreateOrUpdate.
+type NetworkInterfacesCreateOrUpdateResponse struct {
+	NetworkInterfacesCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkInterfacesCreateOrUpdateResult contains the result from method NetworkInterfaces.CreateOrUpdate.
+type NetworkInterfacesCreateOrUpdateResult struct {
+	NetworkInterface
+}
+
+// NetworkInterfacesDeletePollerResponse contains the response from method NetworkInterfaces.Delete.
+type NetworkInterfacesDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkInterfacesDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller NetworkInterfacesDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkInterfacesDeleteResponse contains the response from method NetworkInterfaces.Delete.
+type NetworkInterfacesDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkInterfacesGetEffectiveRouteTablePollerResponse contains the response from method NetworkInterfaces.GetEffectiveRouteTable.
+type NetworkInterfacesGetEffectiveRouteTablePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkInterfacesGetEffectiveRouteTableResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller NetworkInterfacesGetEffectiveRouteTablePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkInterfacesGetEffectiveRouteTableResponse contains the response from method NetworkInterfaces.GetEffectiveRouteTable.
+type NetworkInterfacesGetEffectiveRouteTableResponse struct {
+	NetworkInterfacesGetEffectiveRouteTableResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkInterfacesGetEffectiveRouteTableResult contains the result from method NetworkInterfaces.GetEffectiveRouteTable.
+type NetworkInterfacesGetEffectiveRouteTableResult struct {
+	EffectiveRouteListResult
+}
+
+// NetworkInterfacesGetResponse contains the response from method NetworkInterfaces.Get.
+type NetworkInterfacesGetResponse struct {
+	NetworkInterfacesGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkInterfacesGetResult contains the result from method NetworkInterfaces.Get.
+type NetworkInterfacesGetResult struct {
+	NetworkInterface
+}
+
+// NetworkInterfacesGetVirtualMachineScaleSetIPConfigurationResponse contains the response from method NetworkInterfaces.GetVirtualMachineScaleSetIPConfiguration.
+type NetworkInterfacesGetVirtualMachineScaleSetIPConfigurationResponse struct {
+	NetworkInterfacesGetVirtualMachineScaleSetIPConfigurationResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkInterfacesGetVirtualMachineScaleSetIPConfigurationResult contains the result from method NetworkInterfaces.GetVirtualMachineScaleSetIPConfiguration.
+type NetworkInterfacesGetVirtualMachineScaleSetIPConfigurationResult struct {
+	NetworkInterfaceIPConfiguration
+}
+
+// NetworkInterfacesGetVirtualMachineScaleSetNetworkInterfaceResponse contains the response from method NetworkInterfaces.GetVirtualMachineScaleSetNetworkInterface.
+type NetworkInterfacesGetVirtualMachineScaleSetNetworkInterfaceResponse struct {
+	NetworkInterfacesGetVirtualMachineScaleSetNetworkInterfaceResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkInterfacesGetVirtualMachineScaleSetNetworkInterfaceResult contains the result from method NetworkInterfaces.GetVirtualMachineScaleSetNetworkInterface.
+type NetworkInterfacesGetVirtualMachineScaleSetNetworkInterfaceResult struct {
+	NetworkInterface
+}
+
+// NetworkInterfacesListAllResponse contains the response from method NetworkInterfaces.ListAll.
+type NetworkInterfacesListAllResponse struct {
+	NetworkInterfacesListAllResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkInterfacesListAllResult contains the result from method NetworkInterfaces.ListAll.
+type NetworkInterfacesListAllResult struct {
+	NetworkInterfaceListResult
+}
+
+// NetworkInterfacesListEffectiveNetworkSecurityGroupsPollerResponse contains the response from method NetworkInterfaces.ListEffectiveNetworkSecurityGroups.
+type NetworkInterfacesListEffectiveNetworkSecurityGroupsPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkInterfacesListEffectiveNetworkSecurityGroupsResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller NetworkInterfacesListEffectiveNetworkSecurityGroupsPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkInterfacesListEffectiveNetworkSecurityGroupsResponse contains the response from method NetworkInterfaces.ListEffectiveNetworkSecurityGroups.
+type NetworkInterfacesListEffectiveNetworkSecurityGroupsResponse struct {
+	NetworkInterfacesListEffectiveNetworkSecurityGroupsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkInterfacesListEffectiveNetworkSecurityGroupsResult contains the result from method NetworkInterfaces.ListEffectiveNetworkSecurityGroups.
+type NetworkInterfacesListEffectiveNetworkSecurityGroupsResult struct {
+	EffectiveNetworkSecurityGroupListResult
+}
+
+// NetworkInterfacesListResponse contains the response from method NetworkInterfaces.List.
+type NetworkInterfacesListResponse struct {
+	NetworkInterfacesListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkInterfacesListResult contains the result from method NetworkInterfaces.List.
+type NetworkInterfacesListResult struct {
+	NetworkInterfaceListResult
+}
+
+// NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsResponse contains the response from method NetworkInterfaces.ListVirtualMachineScaleSetIPConfigurations.
+type NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsResponse struct {
+	NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsResult contains the result from method NetworkInterfaces.ListVirtualMachineScaleSetIPConfigurations.
+type NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsResult struct {
+	NetworkInterfaceIPConfigurationListResult
+}
+
+// NetworkInterfacesListVirtualMachineScaleSetNetworkInterfacesResponse contains the response from method NetworkInterfaces.ListVirtualMachineScaleSetNetworkInterfaces.
+type NetworkInterfacesListVirtualMachineScaleSetNetworkInterfacesResponse struct {
+	NetworkInterfacesListVirtualMachineScaleSetNetworkInterfacesResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkInterfacesListVirtualMachineScaleSetNetworkInterfacesResult contains the result from method NetworkInterfaces.ListVirtualMachineScaleSetNetworkInterfaces.
+type NetworkInterfacesListVirtualMachineScaleSetNetworkInterfacesResult struct {
+	NetworkInterfaceListResult
+}
+
+// NetworkInterfacesListVirtualMachineScaleSetVMNetworkInterfacesResponse contains the response from method NetworkInterfaces.ListVirtualMachineScaleSetVMNetworkInterfaces.
+type NetworkInterfacesListVirtualMachineScaleSetVMNetworkInterfacesResponse struct {
+	NetworkInterfacesListVirtualMachineScaleSetVMNetworkInterfacesResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkInterfacesListVirtualMachineScaleSetVMNetworkInterfacesResult contains the result from method NetworkInterfaces.ListVirtualMachineScaleSetVMNetworkInterfaces.
+type NetworkInterfacesListVirtualMachineScaleSetVMNetworkInterfacesResult struct {
+	NetworkInterfaceListResult
+}
+
+// NetworkInterfacesUpdateTagsResponse contains the response from method NetworkInterfaces.UpdateTags.
+type NetworkInterfacesUpdateTagsResponse struct {
+	NetworkInterfacesUpdateTagsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkInterfacesUpdateTagsResult contains the result from method NetworkInterfaces.UpdateTags.
+type NetworkInterfacesUpdateTagsResult struct {
+	NetworkInterface
+}
+
+// NetworkManagementClientCheckDNSNameAvailabilityResponse contains the response from method NetworkManagementClient.CheckDNSNameAvailability.
+type NetworkManagementClientCheckDNSNameAvailabilityResponse struct {
+	NetworkManagementClientCheckDNSNameAvailabilityResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkManagementClientCheckDNSNameAvailabilityResult contains the result from method NetworkManagementClient.CheckDNSNameAvailability.
+type NetworkManagementClientCheckDNSNameAvailabilityResult struct {
+	DNSNameAvailabilityResult
+}
+
+// NetworkManagementClientDeleteBastionShareableLinkPollerResponse contains the response from method NetworkManagementClient.DeleteBastionShareableLink.
+type NetworkManagementClientDeleteBastionShareableLinkPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkManagementClientDeleteBastionShareableLinkResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller NetworkManagementClientDeleteBastionShareableLinkPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkManagementClientDeleteBastionShareableLinkResponse contains the response from method NetworkManagementClient.DeleteBastionShareableLink.
+type NetworkManagementClientDeleteBastionShareableLinkResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkManagementClientDisconnectActiveSessionsResponse contains the response from method NetworkManagementClient.DisconnectActiveSessions.
+type NetworkManagementClientDisconnectActiveSessionsResponse struct {
+	NetworkManagementClientDisconnectActiveSessionsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkManagementClientDisconnectActiveSessionsResult contains the result from method NetworkManagementClient.DisconnectActiveSessions.
+type NetworkManagementClientDisconnectActiveSessionsResult struct {
+	BastionSessionDeleteResult
+}
+
+// NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePollerResponse contains the response from method NetworkManagementClient.Generatevirtualwanvpnserverconfigurationvpnprofile.
+type NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofileResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofileResponse contains the response from method NetworkManagementClient.Generatevirtualwanvpnserverconfigurationvpnprofile.
+type NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofileResponse struct {
+	NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofileResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofileResult contains the result from method NetworkManagementClient.Generatevirtualwanvpnserverconfigurationvpnprofile.
+type NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofileResult struct {
+	VPNProfileResponse
+}
+
+// NetworkManagementClientGetActiveSessionsPollerResponse contains the response from method NetworkManagementClient.GetActiveSessions.
+type NetworkManagementClientGetActiveSessionsPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkManagementClientGetActiveSessionsPager, error)
+
+	// Poller contains an initialized poller.
+	Poller NetworkManagementClientGetActiveSessionsPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkManagementClientGetActiveSessionsResponse contains the response from method NetworkManagementClient.GetActiveSessions.
+type NetworkManagementClientGetActiveSessionsResponse struct {
+	NetworkManagementClientGetActiveSessionsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkManagementClientGetActiveSessionsResult contains the result from method NetworkManagementClient.GetActiveSessions.
+type NetworkManagementClientGetActiveSessionsResult struct {
+	BastionActiveSessionListResult
+}
+
+// NetworkManagementClientGetBastionShareableLinkResponse contains the response from method NetworkManagementClient.GetBastionShareableLink.
+type NetworkManagementClientGetBastionShareableLinkResponse struct {
+	NetworkManagementClientGetBastionShareableLinkResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkManagementClientGetBastionShareableLinkResult contains the result from method NetworkManagementClient.GetBastionShareableLink.
+type NetworkManagementClientGetBastionShareableLinkResult struct {
+	BastionShareableLinkListResult
+}
+
+// NetworkManagementClientPutBastionShareableLinkPollerResponse contains the response from method NetworkManagementClient.PutBastionShareableLink.
+type NetworkManagementClientPutBastionShareableLinkPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkManagementClientPutBastionShareableLinkPager, error)
+
+	// Poller contains an initialized poller.
+	Poller NetworkManagementClientPutBastionShareableLinkPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkManagementClientPutBastionShareableLinkResponse contains the response from method NetworkManagementClient.PutBastionShareableLink.
+type NetworkManagementClientPutBastionShareableLinkResponse struct {
+	NetworkManagementClientPutBastionShareableLinkResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkManagementClientPutBastionShareableLinkResult contains the result from method NetworkManagementClient.PutBastionShareableLink.
+type NetworkManagementClientPutBastionShareableLinkResult struct {
+	BastionShareableLinkListResult
+}
+
+// NetworkManagementClientSupportedSecurityProvidersResponse contains the response from method NetworkManagementClient.SupportedSecurityProviders.
+type NetworkManagementClientSupportedSecurityProvidersResponse struct {
+	NetworkManagementClientSupportedSecurityProvidersResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkManagementClientSupportedSecurityProvidersResult contains the result from method NetworkManagementClient.SupportedSecurityProviders.
+type NetworkManagementClientSupportedSecurityProvidersResult struct {
+	VirtualWanSecurityProviders
+}
+
+// NetworkProfilesCreateOrUpdateResponse contains the response from method NetworkProfiles.CreateOrUpdate.
+type NetworkProfilesCreateOrUpdateResponse struct {
+	NetworkProfilesCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkProfilesCreateOrUpdateResult contains the result from method NetworkProfiles.CreateOrUpdate.
+type NetworkProfilesCreateOrUpdateResult struct {
+	NetworkProfile
+}
+
+// NetworkProfilesDeletePollerResponse contains the response from method NetworkProfiles.Delete.
+type NetworkProfilesDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkProfilesDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller NetworkProfilesDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkProfilesDeleteResponse contains the response from method NetworkProfiles.Delete.
+type NetworkProfilesDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkProfilesGetResponse contains the response from method NetworkProfiles.Get.
+type NetworkProfilesGetResponse struct {
+	NetworkProfilesGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkProfilesGetResult contains the result from method NetworkProfiles.Get.
+type NetworkProfilesGetResult struct {
+	NetworkProfile
+}
+
+// NetworkProfilesListAllResponse contains the response from method NetworkProfiles.ListAll.
+type NetworkProfilesListAllResponse struct {
+	NetworkProfilesListAllResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkProfilesListAllResult contains the result from method NetworkProfiles.ListAll.
+type NetworkProfilesListAllResult struct {
+	NetworkProfileListResult
+}
+
+// NetworkProfilesListResponse contains the response from method NetworkProfiles.List.
+type NetworkProfilesListResponse struct {
+	NetworkProfilesListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkProfilesListResult contains the result from method NetworkProfiles.List.
+type NetworkProfilesListResult struct {
+	NetworkProfileListResult
+}
+
+// NetworkProfilesUpdateTagsResponse contains the response from method NetworkProfiles.UpdateTags.
+type NetworkProfilesUpdateTagsResponse struct {
+	NetworkProfilesUpdateTagsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkProfilesUpdateTagsResult contains the result from method NetworkProfiles.UpdateTags.
+type NetworkProfilesUpdateTagsResult struct {
+	NetworkProfile
+}
+
+// NetworkSecurityGroupsCreateOrUpdatePollerResponse contains the response from method NetworkSecurityGroups.CreateOrUpdate.
+type NetworkSecurityGroupsCreateOrUpdatePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkSecurityGroupsCreateOrUpdateResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller NetworkSecurityGroupsCreateOrUpdatePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkSecurityGroupsCreateOrUpdateResponse contains the response from method NetworkSecurityGroups.CreateOrUpdate.
+type NetworkSecurityGroupsCreateOrUpdateResponse struct {
+	NetworkSecurityGroupsCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkSecurityGroupsCreateOrUpdateResult contains the result from method NetworkSecurityGroups.CreateOrUpdate.
+type NetworkSecurityGroupsCreateOrUpdateResult struct {
+	NetworkSecurityGroup
+}
+
+// NetworkSecurityGroupsDeletePollerResponse contains the response from method NetworkSecurityGroups.Delete.
+type NetworkSecurityGroupsDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkSecurityGroupsDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller NetworkSecurityGroupsDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkSecurityGroupsDeleteResponse contains the response from method NetworkSecurityGroups.Delete.
+type NetworkSecurityGroupsDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkSecurityGroupsGetResponse contains the response from method NetworkSecurityGroups.Get.
+type NetworkSecurityGroupsGetResponse struct {
+	NetworkSecurityGroupsGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkSecurityGroupsGetResult contains the result from method NetworkSecurityGroups.Get.
+type NetworkSecurityGroupsGetResult struct {
+	NetworkSecurityGroup
+}
+
+// NetworkSecurityGroupsListAllResponse contains the response from method NetworkSecurityGroups.ListAll.
+type NetworkSecurityGroupsListAllResponse struct {
+	NetworkSecurityGroupsListAllResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkSecurityGroupsListAllResult contains the result from method NetworkSecurityGroups.ListAll.
+type NetworkSecurityGroupsListAllResult struct {
+	NetworkSecurityGroupListResult
+}
+
+// NetworkSecurityGroupsListResponse contains the response from method NetworkSecurityGroups.List.
+type NetworkSecurityGroupsListResponse struct {
+	NetworkSecurityGroupsListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkSecurityGroupsListResult contains the result from method NetworkSecurityGroups.List.
+type NetworkSecurityGroupsListResult struct {
+	NetworkSecurityGroupListResult
+}
+
+// NetworkSecurityGroupsUpdateTagsResponse contains the response from method NetworkSecurityGroups.UpdateTags.
+type NetworkSecurityGroupsUpdateTagsResponse struct {
+	NetworkSecurityGroupsUpdateTagsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkSecurityGroupsUpdateTagsResult contains the result from method NetworkSecurityGroups.UpdateTags.
+type NetworkSecurityGroupsUpdateTagsResult struct {
+	NetworkSecurityGroup
+}
+
+// NetworkVirtualAppliancesCreateOrUpdatePollerResponse contains the response from method NetworkVirtualAppliances.CreateOrUpdate.
+type NetworkVirtualAppliancesCreateOrUpdatePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkVirtualAppliancesCreateOrUpdateResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller NetworkVirtualAppliancesCreateOrUpdatePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkVirtualAppliancesCreateOrUpdateResponse contains the response from method NetworkVirtualAppliances.CreateOrUpdate.
+type NetworkVirtualAppliancesCreateOrUpdateResponse struct {
+	NetworkVirtualAppliancesCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkVirtualAppliancesCreateOrUpdateResult contains the result from method NetworkVirtualAppliances.CreateOrUpdate.
+type NetworkVirtualAppliancesCreateOrUpdateResult struct {
+	NetworkVirtualAppliance
+}
+
+// NetworkVirtualAppliancesDeletePollerResponse contains the response from method NetworkVirtualAppliances.Delete.
+type NetworkVirtualAppliancesDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkVirtualAppliancesDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller NetworkVirtualAppliancesDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkVirtualAppliancesDeleteResponse contains the response from method NetworkVirtualAppliances.Delete.
+type NetworkVirtualAppliancesDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkVirtualAppliancesGetResponse contains the response from method NetworkVirtualAppliances.Get.
+type NetworkVirtualAppliancesGetResponse struct {
+	NetworkVirtualAppliancesGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkVirtualAppliancesGetResult contains the result from method NetworkVirtualAppliances.Get.
+type NetworkVirtualAppliancesGetResult struct {
+	NetworkVirtualAppliance
+}
+
+// NetworkVirtualAppliancesListByResourceGroupResponse contains the response from method NetworkVirtualAppliances.ListByResourceGroup.
+type NetworkVirtualAppliancesListByResourceGroupResponse struct {
+	NetworkVirtualAppliancesListByResourceGroupResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkVirtualAppliancesListByResourceGroupResult contains the result from method NetworkVirtualAppliances.ListByResourceGroup.
+type NetworkVirtualAppliancesListByResourceGroupResult struct {
+	NetworkVirtualApplianceListResult
+}
+
+// NetworkVirtualAppliancesListResponse contains the response from method NetworkVirtualAppliances.List.
+type NetworkVirtualAppliancesListResponse struct {
+	NetworkVirtualAppliancesListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkVirtualAppliancesListResult contains the result from method NetworkVirtualAppliances.List.
+type NetworkVirtualAppliancesListResult struct {
+	NetworkVirtualApplianceListResult
+}
+
+// NetworkVirtualAppliancesUpdateTagsResponse contains the response from method NetworkVirtualAppliances.UpdateTags.
+type NetworkVirtualAppliancesUpdateTagsResponse struct {
+	NetworkVirtualAppliancesUpdateTagsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkVirtualAppliancesUpdateTagsResult contains the result from method NetworkVirtualAppliances.UpdateTags.
+type NetworkVirtualAppliancesUpdateTagsResult struct {
+	NetworkVirtualAppliance
+}
+
+// NetworkWatchersCheckConnectivityPollerResponse contains the response from method NetworkWatchers.CheckConnectivity.
+type NetworkWatchersCheckConnectivityPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkWatchersCheckConnectivityResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller NetworkWatchersCheckConnectivityPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkWatchersCheckConnectivityResponse contains the response from method NetworkWatchers.CheckConnectivity.
+type NetworkWatchersCheckConnectivityResponse struct {
+	NetworkWatchersCheckConnectivityResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkWatchersCheckConnectivityResult contains the result from method NetworkWatchers.CheckConnectivity.
+type NetworkWatchersCheckConnectivityResult struct {
+	ConnectivityInformation
+}
+
+// NetworkWatchersCreateOrUpdateResponse contains the response from method NetworkWatchers.CreateOrUpdate.
+type NetworkWatchersCreateOrUpdateResponse struct {
+	NetworkWatchersCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkWatchersCreateOrUpdateResult contains the result from method NetworkWatchers.CreateOrUpdate.
+type NetworkWatchersCreateOrUpdateResult struct {
+	NetworkWatcher
+}
+
+// NetworkWatchersDeletePollerResponse contains the response from method NetworkWatchers.Delete.
+type NetworkWatchersDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkWatchersDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller NetworkWatchersDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkWatchersDeleteResponse contains the response from method NetworkWatchers.Delete.
+type NetworkWatchersDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkWatchersGetAzureReachabilityReportPollerResponse contains the response from method NetworkWatchers.GetAzureReachabilityReport.
+type NetworkWatchersGetAzureReachabilityReportPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkWatchersGetAzureReachabilityReportResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller NetworkWatchersGetAzureReachabilityReportPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkWatchersGetAzureReachabilityReportResponse contains the response from method NetworkWatchers.GetAzureReachabilityReport.
+type NetworkWatchersGetAzureReachabilityReportResponse struct {
+	NetworkWatchersGetAzureReachabilityReportResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkWatchersGetAzureReachabilityReportResult contains the result from method NetworkWatchers.GetAzureReachabilityReport.
+type NetworkWatchersGetAzureReachabilityReportResult struct {
+	AzureReachabilityReport
+}
+
+// NetworkWatchersGetFlowLogStatusPollerResponse contains the response from method NetworkWatchers.GetFlowLogStatus.
+type NetworkWatchersGetFlowLogStatusPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkWatchersGetFlowLogStatusResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller NetworkWatchersGetFlowLogStatusPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkWatchersGetFlowLogStatusResponse contains the response from method NetworkWatchers.GetFlowLogStatus.
+type NetworkWatchersGetFlowLogStatusResponse struct {
+	NetworkWatchersGetFlowLogStatusResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkWatchersGetFlowLogStatusResult contains the result from method NetworkWatchers.GetFlowLogStatus.
+type NetworkWatchersGetFlowLogStatusResult struct {
+	FlowLogInformation
+}
+
+// NetworkWatchersGetNetworkConfigurationDiagnosticPollerResponse contains the response from method NetworkWatchers.GetNetworkConfigurationDiagnostic.
+type NetworkWatchersGetNetworkConfigurationDiagnosticPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkWatchersGetNetworkConfigurationDiagnosticResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller NetworkWatchersGetNetworkConfigurationDiagnosticPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkWatchersGetNetworkConfigurationDiagnosticResponse contains the response from method NetworkWatchers.GetNetworkConfigurationDiagnostic.
+type NetworkWatchersGetNetworkConfigurationDiagnosticResponse struct {
+	NetworkWatchersGetNetworkConfigurationDiagnosticResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkWatchersGetNetworkConfigurationDiagnosticResult contains the result from method NetworkWatchers.GetNetworkConfigurationDiagnostic.
+type NetworkWatchersGetNetworkConfigurationDiagnosticResult struct {
+	NetworkConfigurationDiagnosticResponse
+}
+
+// NetworkWatchersGetNextHopPollerResponse contains the response from method NetworkWatchers.GetNextHop.
+type NetworkWatchersGetNextHopPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkWatchersGetNextHopResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller NetworkWatchersGetNextHopPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkWatchersGetNextHopResponse contains the response from method NetworkWatchers.GetNextHop.
+type NetworkWatchersGetNextHopResponse struct {
+	NetworkWatchersGetNextHopResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkWatchersGetNextHopResult contains the result from method NetworkWatchers.GetNextHop.
+type NetworkWatchersGetNextHopResult struct {
+	NextHopResult
+}
+
+// NetworkWatchersGetResponse contains the response from method NetworkWatchers.Get.
+type NetworkWatchersGetResponse struct {
+	NetworkWatchersGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkWatchersGetResult contains the result from method NetworkWatchers.Get.
+type NetworkWatchersGetResult struct {
+	NetworkWatcher
+}
+
+// NetworkWatchersGetTopologyResponse contains the response from method NetworkWatchers.GetTopology.
+type NetworkWatchersGetTopologyResponse struct {
+	NetworkWatchersGetTopologyResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkWatchersGetTopologyResult contains the result from method NetworkWatchers.GetTopology.
+type NetworkWatchersGetTopologyResult struct {
+	Topology
+}
+
+// NetworkWatchersGetTroubleshootingPollerResponse contains the response from method NetworkWatchers.GetTroubleshooting.
+type NetworkWatchersGetTroubleshootingPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkWatchersGetTroubleshootingResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller NetworkWatchersGetTroubleshootingPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkWatchersGetTroubleshootingResponse contains the response from method NetworkWatchers.GetTroubleshooting.
+type NetworkWatchersGetTroubleshootingResponse struct {
+	NetworkWatchersGetTroubleshootingResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkWatchersGetTroubleshootingResult contains the result from method NetworkWatchers.GetTroubleshooting.
+type NetworkWatchersGetTroubleshootingResult struct {
+	TroubleshootingResult
+}
+
+// NetworkWatchersGetTroubleshootingResultPollerResponse contains the response from method NetworkWatchers.GetTroubleshootingResult.
+type NetworkWatchersGetTroubleshootingResultPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkWatchersGetTroubleshootingResultResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller NetworkWatchersGetTroubleshootingResultPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkWatchersGetTroubleshootingResultResponse contains the response from method NetworkWatchers.GetTroubleshootingResult.
+type NetworkWatchersGetTroubleshootingResultResponse struct {
+	NetworkWatchersGetTroubleshootingResultResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkWatchersGetTroubleshootingResultResult contains the result from method NetworkWatchers.GetTroubleshootingResult.
+type NetworkWatchersGetTroubleshootingResultResult struct {
+	TroubleshootingResult
+}
+
+// NetworkWatchersGetVMSecurityRulesPollerResponse contains the response from method NetworkWatchers.GetVMSecurityRules.
+type NetworkWatchersGetVMSecurityRulesPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkWatchersGetVMSecurityRulesResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller NetworkWatchersGetVMSecurityRulesPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkWatchersGetVMSecurityRulesResponse contains the response from method NetworkWatchers.GetVMSecurityRules.
+type NetworkWatchersGetVMSecurityRulesResponse struct {
+	NetworkWatchersGetVMSecurityRulesResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkWatchersGetVMSecurityRulesResult contains the result from method NetworkWatchers.GetVMSecurityRules.
+type NetworkWatchersGetVMSecurityRulesResult struct {
+	SecurityGroupViewResult
+}
+
+// NetworkWatchersListAllResponse contains the response from method NetworkWatchers.ListAll.
+type NetworkWatchersListAllResponse struct {
+	NetworkWatchersListAllResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkWatchersListAllResult contains the result from method NetworkWatchers.ListAll.
+type NetworkWatchersListAllResult struct {
+	NetworkWatcherListResult
+}
+
+// NetworkWatchersListAvailableProvidersPollerResponse contains the response from method NetworkWatchers.ListAvailableProviders.
+type NetworkWatchersListAvailableProvidersPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkWatchersListAvailableProvidersResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller NetworkWatchersListAvailableProvidersPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkWatchersListAvailableProvidersResponse contains the response from method NetworkWatchers.ListAvailableProviders.
+type NetworkWatchersListAvailableProvidersResponse struct {
+	NetworkWatchersListAvailableProvidersResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkWatchersListAvailableProvidersResult contains the result from method NetworkWatchers.ListAvailableProviders.
+type NetworkWatchersListAvailableProvidersResult struct {
+	AvailableProvidersList
+}
+
+// NetworkWatchersListResponse contains the response from method NetworkWatchers.List.
+type NetworkWatchersListResponse struct {
+	NetworkWatchersListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkWatchersListResult contains the result from method NetworkWatchers.List.
+type NetworkWatchersListResult struct {
+	NetworkWatcherListResult
+}
+
+// NetworkWatchersSetFlowLogConfigurationPollerResponse contains the response from method NetworkWatchers.SetFlowLogConfiguration.
+type NetworkWatchersSetFlowLogConfigurationPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkWatchersSetFlowLogConfigurationResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller NetworkWatchersSetFlowLogConfigurationPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkWatchersSetFlowLogConfigurationResponse contains the response from method NetworkWatchers.SetFlowLogConfiguration.
+type NetworkWatchersSetFlowLogConfigurationResponse struct {
+	NetworkWatchersSetFlowLogConfigurationResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkWatchersSetFlowLogConfigurationResult contains the result from method NetworkWatchers.SetFlowLogConfiguration.
+type NetworkWatchersSetFlowLogConfigurationResult struct {
+	FlowLogInformation
+}
+
+// NetworkWatchersUpdateTagsResponse contains the response from method NetworkWatchers.UpdateTags.
+type NetworkWatchersUpdateTagsResponse struct {
+	NetworkWatchersUpdateTagsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkWatchersUpdateTagsResult contains the result from method NetworkWatchers.UpdateTags.
+type NetworkWatchersUpdateTagsResult struct {
+	NetworkWatcher
+}
+
+// NetworkWatchersVerifyIPFlowPollerResponse contains the response from method NetworkWatchers.VerifyIPFlow.
+type NetworkWatchersVerifyIPFlowPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkWatchersVerifyIPFlowResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller NetworkWatchersVerifyIPFlowPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkWatchersVerifyIPFlowResponse contains the response from method NetworkWatchers.VerifyIPFlow.
+type NetworkWatchersVerifyIPFlowResponse struct {
+	NetworkWatchersVerifyIPFlowResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// NetworkWatchersVerifyIPFlowResult contains the result from method NetworkWatchers.VerifyIPFlow.
+type NetworkWatchersVerifyIPFlowResult struct {
+	VerificationIPFlowResult
+}
+
+// OperationsListResponse contains the response from method Operations.List.
+type OperationsListResponse struct {
+	OperationsListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// OperationsListResult contains the result from method Operations.List.
+type OperationsListResult struct {
+	OperationListResult
+}
+
+// P2SVPNGatewaysCreateOrUpdatePollerResponse contains the response from method P2SVPNGateways.CreateOrUpdate.
+type P2SVPNGatewaysCreateOrUpdatePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (P2SVPNGatewaysCreateOrUpdateResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller P2SVPNGatewaysCreateOrUpdatePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// P2SVPNGatewaysCreateOrUpdateResponse contains the response from method P2SVPNGateways.CreateOrUpdate.
+type P2SVPNGatewaysCreateOrUpdateResponse struct {
+	P2SVPNGatewaysCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// P2SVPNGatewaysCreateOrUpdateResult contains the result from method P2SVPNGateways.CreateOrUpdate.
+type P2SVPNGatewaysCreateOrUpdateResult struct {
+	P2SVPNGateway
+}
+
+// P2SVPNGatewaysDeletePollerResponse contains the response from method P2SVPNGateways.Delete.
+type P2SVPNGatewaysDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (P2SVPNGatewaysDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller P2SVPNGatewaysDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// P2SVPNGatewaysDeleteResponse contains the response from method P2SVPNGateways.Delete.
+type P2SVPNGatewaysDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// P2SVPNGatewaysDisconnectP2SVPNConnectionsPollerResponse contains the response from method P2SVPNGateways.DisconnectP2SVPNConnections.
+type P2SVPNGatewaysDisconnectP2SVPNConnectionsPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (P2SVPNGatewaysDisconnectP2SVPNConnectionsResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller P2SVPNGatewaysDisconnectP2SVPNConnectionsPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// P2SVPNGatewaysDisconnectP2SVPNConnectionsResponse contains the response from method P2SVPNGateways.DisconnectP2SVPNConnections.
+type P2SVPNGatewaysDisconnectP2SVPNConnectionsResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// P2SVPNGatewaysGenerateVPNProfilePollerResponse contains the response from method P2SVPNGateways.GenerateVPNProfile.
+type P2SVPNGatewaysGenerateVPNProfilePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (P2SVPNGatewaysGenerateVPNProfileResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller P2SVPNGatewaysGenerateVPNProfilePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// P2SVPNGatewaysGenerateVPNProfileResponse contains the response from method P2SVPNGateways.GenerateVPNProfile.
+type P2SVPNGatewaysGenerateVPNProfileResponse struct {
+	P2SVPNGatewaysGenerateVPNProfileResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// P2SVPNGatewaysGenerateVPNProfileResult contains the result from method P2SVPNGateways.GenerateVPNProfile.
+type P2SVPNGatewaysGenerateVPNProfileResult struct {
+	VPNProfileResponse
+}
+
+// P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedPollerResponse contains the response from method P2SVPNGateways.GetP2SVPNConnectionHealthDetailed.
+type P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedResponse contains the response from method P2SVPNGateways.GetP2SVPNConnectionHealthDetailed.
+type P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedResponse struct {
+	P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedResult contains the result from method P2SVPNGateways.GetP2SVPNConnectionHealthDetailed.
+type P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedResult struct {
+	P2SVPNConnectionHealth
+}
+
+// P2SVPNGatewaysGetP2SVPNConnectionHealthPollerResponse contains the response from method P2SVPNGateways.GetP2SVPNConnectionHealth.
+type P2SVPNGatewaysGetP2SVPNConnectionHealthPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (P2SVPNGatewaysGetP2SVPNConnectionHealthResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller P2SVPNGatewaysGetP2SVPNConnectionHealthPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// P2SVPNGatewaysGetP2SVPNConnectionHealthResponse contains the response from method P2SVPNGateways.GetP2SVPNConnectionHealth.
+type P2SVPNGatewaysGetP2SVPNConnectionHealthResponse struct {
+	P2SVPNGatewaysGetP2SVPNConnectionHealthResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// P2SVPNGatewaysGetP2SVPNConnectionHealthResult contains the result from method P2SVPNGateways.GetP2SVPNConnectionHealth.
+type P2SVPNGatewaysGetP2SVPNConnectionHealthResult struct {
+	P2SVPNGateway
+}
+
+// P2SVPNGatewaysGetResponse contains the response from method P2SVPNGateways.Get.
+type P2SVPNGatewaysGetResponse struct {
+	P2SVPNGatewaysGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// P2SVPNGatewaysGetResult contains the result from method P2SVPNGateways.Get.
+type P2SVPNGatewaysGetResult struct {
+	P2SVPNGateway
+}
+
+// P2SVPNGatewaysListByResourceGroupResponse contains the response from method P2SVPNGateways.ListByResourceGroup.
+type P2SVPNGatewaysListByResourceGroupResponse struct {
+	P2SVPNGatewaysListByResourceGroupResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// P2SVPNGatewaysListByResourceGroupResult contains the result from method P2SVPNGateways.ListByResourceGroup.
+type P2SVPNGatewaysListByResourceGroupResult struct {
+	ListP2SVPNGatewaysResult
+}
+
+// P2SVPNGatewaysListResponse contains the response from method P2SVPNGateways.List.
+type P2SVPNGatewaysListResponse struct {
+	P2SVPNGatewaysListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// P2SVPNGatewaysListResult contains the result from method P2SVPNGateways.List.
+type P2SVPNGatewaysListResult struct {
+	ListP2SVPNGatewaysResult
+}
+
+// P2SVPNGatewaysUpdateTagsResponse contains the response from method P2SVPNGateways.UpdateTags.
+type P2SVPNGatewaysUpdateTagsResponse struct {
+	P2SVPNGatewaysUpdateTagsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// P2SVPNGatewaysUpdateTagsResult contains the result from method P2SVPNGateways.UpdateTags.
+type P2SVPNGatewaysUpdateTagsResult struct {
+	P2SVPNGateway
+}
+
+// PacketCapturesCreatePollerResponse contains the response from method PacketCaptures.Create.
+type PacketCapturesCreatePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (PacketCapturesCreateResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller PacketCapturesCreatePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PacketCapturesCreateResponse contains the response from method PacketCaptures.Create.
+type PacketCapturesCreateResponse struct {
+	PacketCapturesCreateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PacketCapturesCreateResult contains the result from method PacketCaptures.Create.
+type PacketCapturesCreateResult struct {
+	PacketCaptureResult
+}
+
+// PacketCapturesDeletePollerResponse contains the response from method PacketCaptures.Delete.
+type PacketCapturesDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (PacketCapturesDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller PacketCapturesDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PacketCapturesDeleteResponse contains the response from method PacketCaptures.Delete.
+type PacketCapturesDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PacketCapturesGetResponse contains the response from method PacketCaptures.Get.
+type PacketCapturesGetResponse struct {
+	PacketCapturesGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PacketCapturesGetResult contains the result from method PacketCaptures.Get.
+type PacketCapturesGetResult struct {
+	PacketCaptureResult
+}
+
+// PacketCapturesGetStatusPollerResponse contains the response from method PacketCaptures.GetStatus.
+type PacketCapturesGetStatusPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (PacketCapturesGetStatusResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller PacketCapturesGetStatusPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PacketCapturesGetStatusResponse contains the response from method PacketCaptures.GetStatus.
+type PacketCapturesGetStatusResponse struct {
+	PacketCapturesGetStatusResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PacketCapturesGetStatusResult contains the result from method PacketCaptures.GetStatus.
+type PacketCapturesGetStatusResult struct {
+	PacketCaptureQueryStatusResult
+}
+
+// PacketCapturesListResponse contains the response from method PacketCaptures.List.
+type PacketCapturesListResponse struct {
+	PacketCapturesListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PacketCapturesListResult contains the result from method PacketCaptures.List.
+type PacketCapturesListResult struct {
+	PacketCaptureListResult
+}
+
+// PacketCapturesStopPollerResponse contains the response from method PacketCaptures.Stop.
+type PacketCapturesStopPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (PacketCapturesStopResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller PacketCapturesStopPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PacketCapturesStopResponse contains the response from method PacketCaptures.Stop.
+type PacketCapturesStopResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PeerExpressRouteCircuitConnectionsGetResponse contains the response from method PeerExpressRouteCircuitConnections.Get.
+type PeerExpressRouteCircuitConnectionsGetResponse struct {
+	PeerExpressRouteCircuitConnectionsGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PeerExpressRouteCircuitConnectionsGetResult contains the result from method PeerExpressRouteCircuitConnections.Get.
+type PeerExpressRouteCircuitConnectionsGetResult struct {
+	PeerExpressRouteCircuitConnection
+}
+
+// PeerExpressRouteCircuitConnectionsListResponse contains the response from method PeerExpressRouteCircuitConnections.List.
+type PeerExpressRouteCircuitConnectionsListResponse struct {
+	PeerExpressRouteCircuitConnectionsListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PeerExpressRouteCircuitConnectionsListResult contains the result from method PeerExpressRouteCircuitConnections.List.
+type PeerExpressRouteCircuitConnectionsListResult struct {
+	PeerExpressRouteCircuitConnectionListResult
+}
+
+// PrivateDNSZoneGroupsCreateOrUpdatePollerResponse contains the response from method PrivateDNSZoneGroups.CreateOrUpdate.
+type PrivateDNSZoneGroupsCreateOrUpdatePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (PrivateDNSZoneGroupsCreateOrUpdateResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller PrivateDNSZoneGroupsCreateOrUpdatePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PrivateDNSZoneGroupsCreateOrUpdateResponse contains the response from method PrivateDNSZoneGroups.CreateOrUpdate.
+type PrivateDNSZoneGroupsCreateOrUpdateResponse struct {
+	PrivateDNSZoneGroupsCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PrivateDNSZoneGroupsCreateOrUpdateResult contains the result from method PrivateDNSZoneGroups.CreateOrUpdate.
+type PrivateDNSZoneGroupsCreateOrUpdateResult struct {
+	PrivateDNSZoneGroup
+}
+
+// PrivateDNSZoneGroupsDeletePollerResponse contains the response from method PrivateDNSZoneGroups.Delete.
+type PrivateDNSZoneGroupsDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (PrivateDNSZoneGroupsDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller PrivateDNSZoneGroupsDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PrivateDNSZoneGroupsDeleteResponse contains the response from method PrivateDNSZoneGroups.Delete.
+type PrivateDNSZoneGroupsDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PrivateDNSZoneGroupsGetResponse contains the response from method PrivateDNSZoneGroups.Get.
+type PrivateDNSZoneGroupsGetResponse struct {
+	PrivateDNSZoneGroupsGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PrivateDNSZoneGroupsGetResult contains the result from method PrivateDNSZoneGroups.Get.
+type PrivateDNSZoneGroupsGetResult struct {
+	PrivateDNSZoneGroup
+}
+
+// PrivateDNSZoneGroupsListResponse contains the response from method PrivateDNSZoneGroups.List.
+type PrivateDNSZoneGroupsListResponse struct {
+	PrivateDNSZoneGroupsListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PrivateDNSZoneGroupsListResult contains the result from method PrivateDNSZoneGroups.List.
+type PrivateDNSZoneGroupsListResult struct {
+	PrivateDNSZoneGroupListResult
+}
+
+// PrivateEndpointsCreateOrUpdatePollerResponse contains the response from method PrivateEndpoints.CreateOrUpdate.
+type PrivateEndpointsCreateOrUpdatePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (PrivateEndpointsCreateOrUpdateResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller PrivateEndpointsCreateOrUpdatePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PrivateEndpointsCreateOrUpdateResponse contains the response from method PrivateEndpoints.CreateOrUpdate.
+type PrivateEndpointsCreateOrUpdateResponse struct {
+	PrivateEndpointsCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PrivateEndpointsCreateOrUpdateResult contains the result from method PrivateEndpoints.CreateOrUpdate.
+type PrivateEndpointsCreateOrUpdateResult struct {
+	PrivateEndpoint
+}
+
+// PrivateEndpointsDeletePollerResponse contains the response from method PrivateEndpoints.Delete.
+type PrivateEndpointsDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (PrivateEndpointsDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller PrivateEndpointsDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PrivateEndpointsDeleteResponse contains the response from method PrivateEndpoints.Delete.
+type PrivateEndpointsDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PrivateEndpointsGetResponse contains the response from method PrivateEndpoints.Get.
+type PrivateEndpointsGetResponse struct {
+	PrivateEndpointsGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PrivateEndpointsGetResult contains the result from method PrivateEndpoints.Get.
+type PrivateEndpointsGetResult struct {
+	PrivateEndpoint
+}
+
+// PrivateEndpointsListBySubscriptionResponse contains the response from method PrivateEndpoints.ListBySubscription.
+type PrivateEndpointsListBySubscriptionResponse struct {
+	PrivateEndpointsListBySubscriptionResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PrivateEndpointsListBySubscriptionResult contains the result from method PrivateEndpoints.ListBySubscription.
+type PrivateEndpointsListBySubscriptionResult struct {
+	PrivateEndpointListResult
+}
+
+// PrivateEndpointsListResponse contains the response from method PrivateEndpoints.List.
+type PrivateEndpointsListResponse struct {
+	PrivateEndpointsListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PrivateEndpointsListResult contains the result from method PrivateEndpoints.List.
+type PrivateEndpointsListResult struct {
+	PrivateEndpointListResult
+}
+
+// PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupPollerResponse contains the response from method PrivateLinkServices.CheckPrivateLinkServiceVisibilityByResourceGroup.
+type PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupResponse contains the response from method PrivateLinkServices.CheckPrivateLinkServiceVisibilityByResourceGroup.
+type PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupResponse struct {
+	PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupResult contains the result from method PrivateLinkServices.CheckPrivateLinkServiceVisibilityByResourceGroup.
+type PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupResult struct {
+	PrivateLinkServiceVisibility
+}
+
+// PrivateLinkServicesCheckPrivateLinkServiceVisibilityPollerResponse contains the response from method PrivateLinkServices.CheckPrivateLinkServiceVisibility.
+type PrivateLinkServicesCheckPrivateLinkServiceVisibilityPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (PrivateLinkServicesCheckPrivateLinkServiceVisibilityResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller PrivateLinkServicesCheckPrivateLinkServiceVisibilityPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PrivateLinkServicesCheckPrivateLinkServiceVisibilityResponse contains the response from method PrivateLinkServices.CheckPrivateLinkServiceVisibility.
+type PrivateLinkServicesCheckPrivateLinkServiceVisibilityResponse struct {
+	PrivateLinkServicesCheckPrivateLinkServiceVisibilityResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PrivateLinkServicesCheckPrivateLinkServiceVisibilityResult contains the result from method PrivateLinkServices.CheckPrivateLinkServiceVisibility.
+type PrivateLinkServicesCheckPrivateLinkServiceVisibilityResult struct {
+	PrivateLinkServiceVisibility
+}
+
+// PrivateLinkServicesCreateOrUpdatePollerResponse contains the response from method PrivateLinkServices.CreateOrUpdate.
+type PrivateLinkServicesCreateOrUpdatePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (PrivateLinkServicesCreateOrUpdateResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller PrivateLinkServicesCreateOrUpdatePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PrivateLinkServicesCreateOrUpdateResponse contains the response from method PrivateLinkServices.CreateOrUpdate.
+type PrivateLinkServicesCreateOrUpdateResponse struct {
+	PrivateLinkServicesCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PrivateLinkServicesCreateOrUpdateResult contains the result from method PrivateLinkServices.CreateOrUpdate.
+type PrivateLinkServicesCreateOrUpdateResult struct {
+	PrivateLinkService
+}
+
+// PrivateLinkServicesDeletePollerResponse contains the response from method PrivateLinkServices.Delete.
+type PrivateLinkServicesDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (PrivateLinkServicesDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller PrivateLinkServicesDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PrivateLinkServicesDeletePrivateEndpointConnectionPollerResponse contains the response from method PrivateLinkServices.DeletePrivateEndpointConnection.
+type PrivateLinkServicesDeletePrivateEndpointConnectionPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (PrivateLinkServicesDeletePrivateEndpointConnectionResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller PrivateLinkServicesDeletePrivateEndpointConnectionPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PrivateLinkServicesDeletePrivateEndpointConnectionResponse contains the response from method PrivateLinkServices.DeletePrivateEndpointConnection.
+type PrivateLinkServicesDeletePrivateEndpointConnectionResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PrivateLinkServicesDeleteResponse contains the response from method PrivateLinkServices.Delete.
+type PrivateLinkServicesDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PrivateLinkServicesGetPrivateEndpointConnectionResponse contains the response from method PrivateLinkServices.GetPrivateEndpointConnection.
+type PrivateLinkServicesGetPrivateEndpointConnectionResponse struct {
+	PrivateLinkServicesGetPrivateEndpointConnectionResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PrivateLinkServicesGetPrivateEndpointConnectionResult contains the result from method PrivateLinkServices.GetPrivateEndpointConnection.
+type PrivateLinkServicesGetPrivateEndpointConnectionResult struct {
+	PrivateEndpointConnection
+}
+
+// PrivateLinkServicesGetResponse contains the response from method PrivateLinkServices.Get.
+type PrivateLinkServicesGetResponse struct {
+	PrivateLinkServicesGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PrivateLinkServicesGetResult contains the result from method PrivateLinkServices.Get.
+type PrivateLinkServicesGetResult struct {
+	PrivateLinkService
+}
+
+// PrivateLinkServicesListAutoApprovedPrivateLinkServicesByResourceGroupResponse contains the response from method PrivateLinkServices.ListAutoApprovedPrivateLinkServicesByResourceGroup.
+type PrivateLinkServicesListAutoApprovedPrivateLinkServicesByResourceGroupResponse struct {
+	PrivateLinkServicesListAutoApprovedPrivateLinkServicesByResourceGroupResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PrivateLinkServicesListAutoApprovedPrivateLinkServicesByResourceGroupResult contains the result from method PrivateLinkServices.ListAutoApprovedPrivateLinkServicesByResourceGroup.
+type PrivateLinkServicesListAutoApprovedPrivateLinkServicesByResourceGroupResult struct {
+	AutoApprovedPrivateLinkServicesResult
+}
+
+// PrivateLinkServicesListAutoApprovedPrivateLinkServicesResponse contains the response from method PrivateLinkServices.ListAutoApprovedPrivateLinkServices.
+type PrivateLinkServicesListAutoApprovedPrivateLinkServicesResponse struct {
+	PrivateLinkServicesListAutoApprovedPrivateLinkServicesResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PrivateLinkServicesListAutoApprovedPrivateLinkServicesResult contains the result from method PrivateLinkServices.ListAutoApprovedPrivateLinkServices.
+type PrivateLinkServicesListAutoApprovedPrivateLinkServicesResult struct {
+	AutoApprovedPrivateLinkServicesResult
+}
+
+// PrivateLinkServicesListBySubscriptionResponse contains the response from method PrivateLinkServices.ListBySubscription.
+type PrivateLinkServicesListBySubscriptionResponse struct {
+	PrivateLinkServicesListBySubscriptionResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PrivateLinkServicesListBySubscriptionResult contains the result from method PrivateLinkServices.ListBySubscription.
+type PrivateLinkServicesListBySubscriptionResult struct {
+	PrivateLinkServiceListResult
+}
+
+// PrivateLinkServicesListPrivateEndpointConnectionsResponse contains the response from method PrivateLinkServices.ListPrivateEndpointConnections.
+type PrivateLinkServicesListPrivateEndpointConnectionsResponse struct {
+	PrivateLinkServicesListPrivateEndpointConnectionsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PrivateLinkServicesListPrivateEndpointConnectionsResult contains the result from method PrivateLinkServices.ListPrivateEndpointConnections.
+type PrivateLinkServicesListPrivateEndpointConnectionsResult struct {
+	PrivateEndpointConnectionListResult
+}
+
+// PrivateLinkServicesListResponse contains the response from method PrivateLinkServices.List.
+type PrivateLinkServicesListResponse struct {
+	PrivateLinkServicesListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PrivateLinkServicesListResult contains the result from method PrivateLinkServices.List.
+type PrivateLinkServicesListResult struct {
+	PrivateLinkServiceListResult
+}
+
+// PrivateLinkServicesUpdatePrivateEndpointConnectionResponse contains the response from method PrivateLinkServices.UpdatePrivateEndpointConnection.
+type PrivateLinkServicesUpdatePrivateEndpointConnectionResponse struct {
+	PrivateLinkServicesUpdatePrivateEndpointConnectionResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PrivateLinkServicesUpdatePrivateEndpointConnectionResult contains the result from method PrivateLinkServices.UpdatePrivateEndpointConnection.
+type PrivateLinkServicesUpdatePrivateEndpointConnectionResult struct {
+	PrivateEndpointConnection
+}
+
+// PublicIPAddressesCreateOrUpdatePollerResponse contains the response from method PublicIPAddresses.CreateOrUpdate.
+type PublicIPAddressesCreateOrUpdatePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (PublicIPAddressesCreateOrUpdateResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller PublicIPAddressesCreateOrUpdatePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PublicIPAddressesCreateOrUpdateResponse contains the response from method PublicIPAddresses.CreateOrUpdate.
+type PublicIPAddressesCreateOrUpdateResponse struct {
+	PublicIPAddressesCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PublicIPAddressesCreateOrUpdateResult contains the result from method PublicIPAddresses.CreateOrUpdate.
+type PublicIPAddressesCreateOrUpdateResult struct {
+	PublicIPAddress
+}
+
+// PublicIPAddressesDeletePollerResponse contains the response from method PublicIPAddresses.Delete.
+type PublicIPAddressesDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (PublicIPAddressesDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller PublicIPAddressesDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PublicIPAddressesDeleteResponse contains the response from method PublicIPAddresses.Delete.
+type PublicIPAddressesDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PublicIPAddressesGetResponse contains the response from method PublicIPAddresses.Get.
+type PublicIPAddressesGetResponse struct {
+	PublicIPAddressesGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PublicIPAddressesGetResult contains the result from method PublicIPAddresses.Get.
+type PublicIPAddressesGetResult struct {
+	PublicIPAddress
+}
+
+// PublicIPAddressesGetVirtualMachineScaleSetPublicIPAddressResponse contains the response from method PublicIPAddresses.GetVirtualMachineScaleSetPublicIPAddress.
+type PublicIPAddressesGetVirtualMachineScaleSetPublicIPAddressResponse struct {
+	PublicIPAddressesGetVirtualMachineScaleSetPublicIPAddressResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PublicIPAddressesGetVirtualMachineScaleSetPublicIPAddressResult contains the result from method PublicIPAddresses.GetVirtualMachineScaleSetPublicIPAddress.
+type PublicIPAddressesGetVirtualMachineScaleSetPublicIPAddressResult struct {
+	PublicIPAddress
+}
+
+// PublicIPAddressesListAllResponse contains the response from method PublicIPAddresses.ListAll.
+type PublicIPAddressesListAllResponse struct {
+	PublicIPAddressesListAllResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PublicIPAddressesListAllResult contains the result from method PublicIPAddresses.ListAll.
+type PublicIPAddressesListAllResult struct {
+	PublicIPAddressListResult
+}
+
+// PublicIPAddressesListResponse contains the response from method PublicIPAddresses.List.
+type PublicIPAddressesListResponse struct {
+	PublicIPAddressesListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PublicIPAddressesListResult contains the result from method PublicIPAddresses.List.
+type PublicIPAddressesListResult struct {
+	PublicIPAddressListResult
+}
+
+// PublicIPAddressesListVirtualMachineScaleSetPublicIPAddressesResponse contains the response from method PublicIPAddresses.ListVirtualMachineScaleSetPublicIPAddresses.
+type PublicIPAddressesListVirtualMachineScaleSetPublicIPAddressesResponse struct {
+	PublicIPAddressesListVirtualMachineScaleSetPublicIPAddressesResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PublicIPAddressesListVirtualMachineScaleSetPublicIPAddressesResult contains the result from method PublicIPAddresses.ListVirtualMachineScaleSetPublicIPAddresses.
+type PublicIPAddressesListVirtualMachineScaleSetPublicIPAddressesResult struct {
+	PublicIPAddressListResult
+}
+
+// PublicIPAddressesListVirtualMachineScaleSetVMPublicIPAddressesResponse contains the response from method PublicIPAddresses.ListVirtualMachineScaleSetVMPublicIPAddresses.
+type PublicIPAddressesListVirtualMachineScaleSetVMPublicIPAddressesResponse struct {
+	PublicIPAddressesListVirtualMachineScaleSetVMPublicIPAddressesResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PublicIPAddressesListVirtualMachineScaleSetVMPublicIPAddressesResult contains the result from method PublicIPAddresses.ListVirtualMachineScaleSetVMPublicIPAddresses.
+type PublicIPAddressesListVirtualMachineScaleSetVMPublicIPAddressesResult struct {
+	PublicIPAddressListResult
+}
+
+// PublicIPAddressesUpdateTagsResponse contains the response from method PublicIPAddresses.UpdateTags.
+type PublicIPAddressesUpdateTagsResponse struct {
+	PublicIPAddressesUpdateTagsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PublicIPAddressesUpdateTagsResult contains the result from method PublicIPAddresses.UpdateTags.
+type PublicIPAddressesUpdateTagsResult struct {
+	PublicIPAddress
+}
+
+// PublicIPPrefixesCreateOrUpdatePollerResponse contains the response from method PublicIPPrefixes.CreateOrUpdate.
+type PublicIPPrefixesCreateOrUpdatePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (PublicIPPrefixesCreateOrUpdateResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller PublicIPPrefixesCreateOrUpdatePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PublicIPPrefixesCreateOrUpdateResponse contains the response from method PublicIPPrefixes.CreateOrUpdate.
+type PublicIPPrefixesCreateOrUpdateResponse struct {
+	PublicIPPrefixesCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PublicIPPrefixesCreateOrUpdateResult contains the result from method PublicIPPrefixes.CreateOrUpdate.
+type PublicIPPrefixesCreateOrUpdateResult struct {
+	PublicIPPrefix
+}
+
+// PublicIPPrefixesDeletePollerResponse contains the response from method PublicIPPrefixes.Delete.
+type PublicIPPrefixesDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (PublicIPPrefixesDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller PublicIPPrefixesDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PublicIPPrefixesDeleteResponse contains the response from method PublicIPPrefixes.Delete.
+type PublicIPPrefixesDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PublicIPPrefixesGetResponse contains the response from method PublicIPPrefixes.Get.
+type PublicIPPrefixesGetResponse struct {
+	PublicIPPrefixesGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PublicIPPrefixesGetResult contains the result from method PublicIPPrefixes.Get.
+type PublicIPPrefixesGetResult struct {
+	PublicIPPrefix
+}
+
+// PublicIPPrefixesListAllResponse contains the response from method PublicIPPrefixes.ListAll.
+type PublicIPPrefixesListAllResponse struct {
+	PublicIPPrefixesListAllResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PublicIPPrefixesListAllResult contains the result from method PublicIPPrefixes.ListAll.
+type PublicIPPrefixesListAllResult struct {
+	PublicIPPrefixListResult
+}
+
+// PublicIPPrefixesListResponse contains the response from method PublicIPPrefixes.List.
+type PublicIPPrefixesListResponse struct {
+	PublicIPPrefixesListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PublicIPPrefixesListResult contains the result from method PublicIPPrefixes.List.
+type PublicIPPrefixesListResult struct {
+	PublicIPPrefixListResult
+}
+
+// PublicIPPrefixesUpdateTagsResponse contains the response from method PublicIPPrefixes.UpdateTags.
+type PublicIPPrefixesUpdateTagsResponse struct {
+	PublicIPPrefixesUpdateTagsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PublicIPPrefixesUpdateTagsResult contains the result from method PublicIPPrefixes.UpdateTags.
+type PublicIPPrefixesUpdateTagsResult struct {
+	PublicIPPrefix
+}
+
+// ResourceNavigationLinksListResponse contains the response from method ResourceNavigationLinks.List.
+type ResourceNavigationLinksListResponse struct {
+	ResourceNavigationLinksListResultEnvelope
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ResourceNavigationLinksListResultEnvelope contains the result from method ResourceNavigationLinks.List.
+type ResourceNavigationLinksListResultEnvelope struct {
+	ResourceNavigationLinksListResult
+}
+
+// RouteFilterRulesCreateOrUpdatePollerResponse contains the response from method RouteFilterRules.CreateOrUpdate.
+type RouteFilterRulesCreateOrUpdatePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (RouteFilterRulesCreateOrUpdateResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller RouteFilterRulesCreateOrUpdatePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// RouteFilterRulesCreateOrUpdateResponse contains the response from method RouteFilterRules.CreateOrUpdate.
+type RouteFilterRulesCreateOrUpdateResponse struct {
+	RouteFilterRulesCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// RouteFilterRulesCreateOrUpdateResult contains the result from method RouteFilterRules.CreateOrUpdate.
+type RouteFilterRulesCreateOrUpdateResult struct {
+	RouteFilterRule
+}
+
+// RouteFilterRulesDeletePollerResponse contains the response from method RouteFilterRules.Delete.
+type RouteFilterRulesDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (RouteFilterRulesDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller RouteFilterRulesDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// RouteFilterRulesDeleteResponse contains the response from method RouteFilterRules.Delete.
+type RouteFilterRulesDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// RouteFilterRulesGetResponse contains the response from method RouteFilterRules.Get.
+type RouteFilterRulesGetResponse struct {
+	RouteFilterRulesGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// RouteFilterRulesGetResult contains the result from method RouteFilterRules.Get.
+type RouteFilterRulesGetResult struct {
+	RouteFilterRule
+}
+
+// RouteFilterRulesListByRouteFilterResponse contains the response from method RouteFilterRules.ListByRouteFilter.
+type RouteFilterRulesListByRouteFilterResponse struct {
+	RouteFilterRulesListByRouteFilterResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// RouteFilterRulesListByRouteFilterResult contains the result from method RouteFilterRules.ListByRouteFilter.
+type RouteFilterRulesListByRouteFilterResult struct {
+	RouteFilterRuleListResult
+}
+
+// RouteFiltersCreateOrUpdatePollerResponse contains the response from method RouteFilters.CreateOrUpdate.
+type RouteFiltersCreateOrUpdatePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (RouteFiltersCreateOrUpdateResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller RouteFiltersCreateOrUpdatePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// RouteFiltersCreateOrUpdateResponse contains the response from method RouteFilters.CreateOrUpdate.
+type RouteFiltersCreateOrUpdateResponse struct {
+	RouteFiltersCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// RouteFiltersCreateOrUpdateResult contains the result from method RouteFilters.CreateOrUpdate.
+type RouteFiltersCreateOrUpdateResult struct {
+	RouteFilter
+}
+
+// RouteFiltersDeletePollerResponse contains the response from method RouteFilters.Delete.
+type RouteFiltersDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (RouteFiltersDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller RouteFiltersDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// RouteFiltersDeleteResponse contains the response from method RouteFilters.Delete.
+type RouteFiltersDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// RouteFiltersGetResponse contains the response from method RouteFilters.Get.
+type RouteFiltersGetResponse struct {
+	RouteFiltersGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// RouteFiltersGetResult contains the result from method RouteFilters.Get.
+type RouteFiltersGetResult struct {
+	RouteFilter
+}
+
+// RouteFiltersListByResourceGroupResponse contains the response from method RouteFilters.ListByResourceGroup.
+type RouteFiltersListByResourceGroupResponse struct {
+	RouteFiltersListByResourceGroupResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// RouteFiltersListByResourceGroupResult contains the result from method RouteFilters.ListByResourceGroup.
+type RouteFiltersListByResourceGroupResult struct {
+	RouteFilterListResult
+}
+
+// RouteFiltersListResponse contains the response from method RouteFilters.List.
+type RouteFiltersListResponse struct {
+	RouteFiltersListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// RouteFiltersListResult contains the result from method RouteFilters.List.
+type RouteFiltersListResult struct {
+	RouteFilterListResult
+}
+
+// RouteFiltersUpdateTagsResponse contains the response from method RouteFilters.UpdateTags.
+type RouteFiltersUpdateTagsResponse struct {
+	RouteFiltersUpdateTagsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// RouteFiltersUpdateTagsResult contains the result from method RouteFilters.UpdateTags.
+type RouteFiltersUpdateTagsResult struct {
+	RouteFilter
+}
+
+// RouteTablesCreateOrUpdatePollerResponse contains the response from method RouteTables.CreateOrUpdate.
+type RouteTablesCreateOrUpdatePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (RouteTablesCreateOrUpdateResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller RouteTablesCreateOrUpdatePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// RouteTablesCreateOrUpdateResponse contains the response from method RouteTables.CreateOrUpdate.
+type RouteTablesCreateOrUpdateResponse struct {
+	RouteTablesCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// RouteTablesCreateOrUpdateResult contains the result from method RouteTables.CreateOrUpdate.
+type RouteTablesCreateOrUpdateResult struct {
+	RouteTable
+}
+
+// RouteTablesDeletePollerResponse contains the response from method RouteTables.Delete.
+type RouteTablesDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (RouteTablesDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller RouteTablesDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// RouteTablesDeleteResponse contains the response from method RouteTables.Delete.
+type RouteTablesDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// RouteTablesGetResponse contains the response from method RouteTables.Get.
+type RouteTablesGetResponse struct {
+	RouteTablesGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// RouteTablesGetResult contains the result from method RouteTables.Get.
+type RouteTablesGetResult struct {
+	RouteTable
+}
+
+// RouteTablesListAllResponse contains the response from method RouteTables.ListAll.
+type RouteTablesListAllResponse struct {
+	RouteTablesListAllResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// RouteTablesListAllResult contains the result from method RouteTables.ListAll.
+type RouteTablesListAllResult struct {
+	RouteTableListResult
+}
+
+// RouteTablesListResponse contains the response from method RouteTables.List.
+type RouteTablesListResponse struct {
+	RouteTablesListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// RouteTablesListResult contains the result from method RouteTables.List.
+type RouteTablesListResult struct {
+	RouteTableListResult
+}
+
+// RouteTablesUpdateTagsResponse contains the response from method RouteTables.UpdateTags.
+type RouteTablesUpdateTagsResponse struct {
+	RouteTablesUpdateTagsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// RouteTablesUpdateTagsResult contains the result from method RouteTables.UpdateTags.
+type RouteTablesUpdateTagsResult struct {
+	RouteTable
+}
+
+// RoutesCreateOrUpdatePollerResponse contains the response from method Routes.CreateOrUpdate.
+type RoutesCreateOrUpdatePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (RoutesCreateOrUpdateResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller RoutesCreateOrUpdatePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// RoutesCreateOrUpdateResponse contains the response from method Routes.CreateOrUpdate.
+type RoutesCreateOrUpdateResponse struct {
+	RoutesCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// RoutesCreateOrUpdateResult contains the result from method Routes.CreateOrUpdate.
+type RoutesCreateOrUpdateResult struct {
+	Route
+}
+
+// RoutesDeletePollerResponse contains the response from method Routes.Delete.
+type RoutesDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (RoutesDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller RoutesDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// RoutesDeleteResponse contains the response from method Routes.Delete.
+type RoutesDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// RoutesGetResponse contains the response from method Routes.Get.
+type RoutesGetResponse struct {
+	RoutesGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// RoutesGetResult contains the result from method Routes.Get.
+type RoutesGetResult struct {
+	Route
+}
+
+// RoutesListResponse contains the response from method Routes.List.
+type RoutesListResponse struct {
+	RoutesListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// RoutesListResult contains the result from method Routes.List.
+type RoutesListResult struct {
+	RouteListResult
+}
+
+// SecurityPartnerProvidersCreateOrUpdatePollerResponse contains the response from method SecurityPartnerProviders.CreateOrUpdate.
+type SecurityPartnerProvidersCreateOrUpdatePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (SecurityPartnerProvidersCreateOrUpdateResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller SecurityPartnerProvidersCreateOrUpdatePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// SecurityPartnerProvidersCreateOrUpdateResponse contains the response from method SecurityPartnerProviders.CreateOrUpdate.
+type SecurityPartnerProvidersCreateOrUpdateResponse struct {
+	SecurityPartnerProvidersCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// SecurityPartnerProvidersCreateOrUpdateResult contains the result from method SecurityPartnerProviders.CreateOrUpdate.
+type SecurityPartnerProvidersCreateOrUpdateResult struct {
+	SecurityPartnerProvider
+}
+
+// SecurityPartnerProvidersDeletePollerResponse contains the response from method SecurityPartnerProviders.Delete.
+type SecurityPartnerProvidersDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (SecurityPartnerProvidersDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller SecurityPartnerProvidersDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// SecurityPartnerProvidersDeleteResponse contains the response from method SecurityPartnerProviders.Delete.
+type SecurityPartnerProvidersDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// SecurityPartnerProvidersGetResponse contains the response from method SecurityPartnerProviders.Get.
+type SecurityPartnerProvidersGetResponse struct {
+	SecurityPartnerProvidersGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// SecurityPartnerProvidersGetResult contains the result from method SecurityPartnerProviders.Get.
+type SecurityPartnerProvidersGetResult struct {
+	SecurityPartnerProvider
+}
+
+// SecurityPartnerProvidersListByResourceGroupResponse contains the response from method SecurityPartnerProviders.ListByResourceGroup.
+type SecurityPartnerProvidersListByResourceGroupResponse struct {
+	SecurityPartnerProvidersListByResourceGroupResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// SecurityPartnerProvidersListByResourceGroupResult contains the result from method SecurityPartnerProviders.ListByResourceGroup.
+type SecurityPartnerProvidersListByResourceGroupResult struct {
+	SecurityPartnerProviderListResult
+}
+
+// SecurityPartnerProvidersListResponse contains the response from method SecurityPartnerProviders.List.
+type SecurityPartnerProvidersListResponse struct {
+	SecurityPartnerProvidersListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// SecurityPartnerProvidersListResult contains the result from method SecurityPartnerProviders.List.
+type SecurityPartnerProvidersListResult struct {
+	SecurityPartnerProviderListResult
+}
+
+// SecurityPartnerProvidersUpdateTagsResponse contains the response from method SecurityPartnerProviders.UpdateTags.
+type SecurityPartnerProvidersUpdateTagsResponse struct {
+	SecurityPartnerProvidersUpdateTagsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// SecurityPartnerProvidersUpdateTagsResult contains the result from method SecurityPartnerProviders.UpdateTags.
+type SecurityPartnerProvidersUpdateTagsResult struct {
+	SecurityPartnerProvider
+}
+
+// SecurityRulesCreateOrUpdatePollerResponse contains the response from method SecurityRules.CreateOrUpdate.
+type SecurityRulesCreateOrUpdatePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (SecurityRulesCreateOrUpdateResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller SecurityRulesCreateOrUpdatePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// SecurityRulesCreateOrUpdateResponse contains the response from method SecurityRules.CreateOrUpdate.
+type SecurityRulesCreateOrUpdateResponse struct {
+	SecurityRulesCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// SecurityRulesCreateOrUpdateResult contains the result from method SecurityRules.CreateOrUpdate.
+type SecurityRulesCreateOrUpdateResult struct {
+	SecurityRule
+}
+
+// SecurityRulesDeletePollerResponse contains the response from method SecurityRules.Delete.
+type SecurityRulesDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (SecurityRulesDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller SecurityRulesDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// SecurityRulesDeleteResponse contains the response from method SecurityRules.Delete.
+type SecurityRulesDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// SecurityRulesGetResponse contains the response from method SecurityRules.Get.
+type SecurityRulesGetResponse struct {
+	SecurityRulesGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// SecurityRulesGetResult contains the result from method SecurityRules.Get.
+type SecurityRulesGetResult struct {
+	SecurityRule
+}
+
+// SecurityRulesListResponse contains the response from method SecurityRules.List.
+type SecurityRulesListResponse struct {
+	SecurityRulesListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// SecurityRulesListResult contains the result from method SecurityRules.List.
+type SecurityRulesListResult struct {
+	SecurityRuleListResult
+}
+
+// ServiceAssociationLinksListResponse contains the response from method ServiceAssociationLinks.List.
+type ServiceAssociationLinksListResponse struct {
+	ServiceAssociationLinksListResultEnvelope
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ServiceAssociationLinksListResultEnvelope contains the result from method ServiceAssociationLinks.List.
+type ServiceAssociationLinksListResultEnvelope struct {
+	ServiceAssociationLinksListResult
+}
+
+// ServiceEndpointPoliciesCreateOrUpdatePollerResponse contains the response from method ServiceEndpointPolicies.CreateOrUpdate.
+type ServiceEndpointPoliciesCreateOrUpdatePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (ServiceEndpointPoliciesCreateOrUpdateResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller ServiceEndpointPoliciesCreateOrUpdatePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ServiceEndpointPoliciesCreateOrUpdateResponse contains the response from method ServiceEndpointPolicies.CreateOrUpdate.
+type ServiceEndpointPoliciesCreateOrUpdateResponse struct {
+	ServiceEndpointPoliciesCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ServiceEndpointPoliciesCreateOrUpdateResult contains the result from method ServiceEndpointPolicies.CreateOrUpdate.
+type ServiceEndpointPoliciesCreateOrUpdateResult struct {
+	ServiceEndpointPolicy
+}
+
+// ServiceEndpointPoliciesDeletePollerResponse contains the response from method ServiceEndpointPolicies.Delete.
+type ServiceEndpointPoliciesDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (ServiceEndpointPoliciesDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller ServiceEndpointPoliciesDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ServiceEndpointPoliciesDeleteResponse contains the response from method ServiceEndpointPolicies.Delete.
+type ServiceEndpointPoliciesDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ServiceEndpointPoliciesGetResponse contains the response from method ServiceEndpointPolicies.Get.
+type ServiceEndpointPoliciesGetResponse struct {
+	ServiceEndpointPoliciesGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ServiceEndpointPoliciesGetResult contains the result from method ServiceEndpointPolicies.Get.
+type ServiceEndpointPoliciesGetResult struct {
+	ServiceEndpointPolicy
+}
+
+// ServiceEndpointPoliciesListByResourceGroupResponse contains the response from method ServiceEndpointPolicies.ListByResourceGroup.
+type ServiceEndpointPoliciesListByResourceGroupResponse struct {
+	ServiceEndpointPoliciesListByResourceGroupResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ServiceEndpointPoliciesListByResourceGroupResult contains the result from method ServiceEndpointPolicies.ListByResourceGroup.
+type ServiceEndpointPoliciesListByResourceGroupResult struct {
+	ServiceEndpointPolicyListResult
+}
+
+// ServiceEndpointPoliciesListResponse contains the response from method ServiceEndpointPolicies.List.
+type ServiceEndpointPoliciesListResponse struct {
+	ServiceEndpointPoliciesListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ServiceEndpointPoliciesListResult contains the result from method ServiceEndpointPolicies.List.
+type ServiceEndpointPoliciesListResult struct {
+	ServiceEndpointPolicyListResult
+}
+
+// ServiceEndpointPoliciesUpdateTagsResponse contains the response from method ServiceEndpointPolicies.UpdateTags.
+type ServiceEndpointPoliciesUpdateTagsResponse struct {
+	ServiceEndpointPoliciesUpdateTagsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ServiceEndpointPoliciesUpdateTagsResult contains the result from method ServiceEndpointPolicies.UpdateTags.
+type ServiceEndpointPoliciesUpdateTagsResult struct {
+	ServiceEndpointPolicy
+}
+
+// ServiceEndpointPolicyDefinitionsCreateOrUpdatePollerResponse contains the response from method ServiceEndpointPolicyDefinitions.CreateOrUpdate.
+type ServiceEndpointPolicyDefinitionsCreateOrUpdatePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (ServiceEndpointPolicyDefinitionsCreateOrUpdateResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller ServiceEndpointPolicyDefinitionsCreateOrUpdatePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ServiceEndpointPolicyDefinitionsCreateOrUpdateResponse contains the response from method ServiceEndpointPolicyDefinitions.CreateOrUpdate.
+type ServiceEndpointPolicyDefinitionsCreateOrUpdateResponse struct {
+	ServiceEndpointPolicyDefinitionsCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ServiceEndpointPolicyDefinitionsCreateOrUpdateResult contains the result from method ServiceEndpointPolicyDefinitions.CreateOrUpdate.
+type ServiceEndpointPolicyDefinitionsCreateOrUpdateResult struct {
+	ServiceEndpointPolicyDefinition
+}
+
+// ServiceEndpointPolicyDefinitionsDeletePollerResponse contains the response from method ServiceEndpointPolicyDefinitions.Delete.
+type ServiceEndpointPolicyDefinitionsDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (ServiceEndpointPolicyDefinitionsDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller ServiceEndpointPolicyDefinitionsDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ServiceEndpointPolicyDefinitionsDeleteResponse contains the response from method ServiceEndpointPolicyDefinitions.Delete.
+type ServiceEndpointPolicyDefinitionsDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ServiceEndpointPolicyDefinitionsGetResponse contains the response from method ServiceEndpointPolicyDefinitions.Get.
+type ServiceEndpointPolicyDefinitionsGetResponse struct {
+	ServiceEndpointPolicyDefinitionsGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ServiceEndpointPolicyDefinitionsGetResult contains the result from method ServiceEndpointPolicyDefinitions.Get.
+type ServiceEndpointPolicyDefinitionsGetResult struct {
+	ServiceEndpointPolicyDefinition
+}
+
+// ServiceEndpointPolicyDefinitionsListByResourceGroupResponse contains the response from method ServiceEndpointPolicyDefinitions.ListByResourceGroup.
+type ServiceEndpointPolicyDefinitionsListByResourceGroupResponse struct {
+	ServiceEndpointPolicyDefinitionsListByResourceGroupResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ServiceEndpointPolicyDefinitionsListByResourceGroupResult contains the result from method ServiceEndpointPolicyDefinitions.ListByResourceGroup.
+type ServiceEndpointPolicyDefinitionsListByResourceGroupResult struct {
+	ServiceEndpointPolicyDefinitionListResult
+}
+
+// ServiceTagsListResponse contains the response from method ServiceTags.List.
+type ServiceTagsListResponse struct {
+	ServiceTagsListResultEnvelope
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// ServiceTagsListResultEnvelope contains the result from method ServiceTags.List.
+type ServiceTagsListResultEnvelope struct {
+	ServiceTagsListResult
+}
+
+// SubnetsCreateOrUpdatePollerResponse contains the response from method Subnets.CreateOrUpdate.
+type SubnetsCreateOrUpdatePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (SubnetsCreateOrUpdateResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller SubnetsCreateOrUpdatePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// SubnetsCreateOrUpdateResponse contains the response from method Subnets.CreateOrUpdate.
+type SubnetsCreateOrUpdateResponse struct {
+	SubnetsCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// SubnetsCreateOrUpdateResult contains the result from method Subnets.CreateOrUpdate.
+type SubnetsCreateOrUpdateResult struct {
+	Subnet
+}
+
+// SubnetsDeletePollerResponse contains the response from method Subnets.Delete.
+type SubnetsDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (SubnetsDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller SubnetsDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// SubnetsDeleteResponse contains the response from method Subnets.Delete.
+type SubnetsDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// SubnetsGetResponse contains the response from method Subnets.Get.
+type SubnetsGetResponse struct {
+	SubnetsGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// SubnetsGetResult contains the result from method Subnets.Get.
+type SubnetsGetResult struct {
+	Subnet
+}
+
+// SubnetsListResponse contains the response from method Subnets.List.
+type SubnetsListResponse struct {
+	SubnetsListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// SubnetsListResult contains the result from method Subnets.List.
+type SubnetsListResult struct {
+	SubnetListResult
+}
+
+// SubnetsPrepareNetworkPoliciesPollerResponse contains the response from method Subnets.PrepareNetworkPolicies.
+type SubnetsPrepareNetworkPoliciesPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (SubnetsPrepareNetworkPoliciesResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller SubnetsPrepareNetworkPoliciesPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// SubnetsPrepareNetworkPoliciesResponse contains the response from method Subnets.PrepareNetworkPolicies.
+type SubnetsPrepareNetworkPoliciesResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// SubnetsUnprepareNetworkPoliciesPollerResponse contains the response from method Subnets.UnprepareNetworkPolicies.
+type SubnetsUnprepareNetworkPoliciesPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (SubnetsUnprepareNetworkPoliciesResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller SubnetsUnprepareNetworkPoliciesPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// SubnetsUnprepareNetworkPoliciesResponse contains the response from method Subnets.UnprepareNetworkPolicies.
+type SubnetsUnprepareNetworkPoliciesResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// UsagesListResponse contains the response from method Usages.List.
+type UsagesListResponse struct {
+	UsagesListResultEnvelope
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// UsagesListResultEnvelope contains the result from method Usages.List.
+type UsagesListResultEnvelope struct {
+	UsagesListResult
+}
+
+// VPNConnectionsCreateOrUpdatePollerResponse contains the response from method VPNConnections.CreateOrUpdate.
+type VPNConnectionsCreateOrUpdatePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VPNConnectionsCreateOrUpdateResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VPNConnectionsCreateOrUpdatePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VPNConnectionsCreateOrUpdateResponse contains the response from method VPNConnections.CreateOrUpdate.
+type VPNConnectionsCreateOrUpdateResponse struct {
+	VPNConnectionsCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VPNConnectionsCreateOrUpdateResult contains the result from method VPNConnections.CreateOrUpdate.
+type VPNConnectionsCreateOrUpdateResult struct {
+	VPNConnection
+}
+
+// VPNConnectionsDeletePollerResponse contains the response from method VPNConnections.Delete.
+type VPNConnectionsDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VPNConnectionsDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VPNConnectionsDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VPNConnectionsDeleteResponse contains the response from method VPNConnections.Delete.
+type VPNConnectionsDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VPNConnectionsGetResponse contains the response from method VPNConnections.Get.
+type VPNConnectionsGetResponse struct {
+	VPNConnectionsGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VPNConnectionsGetResult contains the result from method VPNConnections.Get.
+type VPNConnectionsGetResult struct {
+	VPNConnection
+}
+
+// VPNConnectionsListByVPNGatewayResponse contains the response from method VPNConnections.ListByVPNGateway.
+type VPNConnectionsListByVPNGatewayResponse struct {
+	VPNConnectionsListByVPNGatewayResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VPNConnectionsListByVPNGatewayResult contains the result from method VPNConnections.ListByVPNGateway.
+type VPNConnectionsListByVPNGatewayResult struct {
+	ListVPNConnectionsResult
+}
+
+// VPNGatewaysCreateOrUpdatePollerResponse contains the response from method VPNGateways.CreateOrUpdate.
+type VPNGatewaysCreateOrUpdatePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VPNGatewaysCreateOrUpdateResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VPNGatewaysCreateOrUpdatePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VPNGatewaysCreateOrUpdateResponse contains the response from method VPNGateways.CreateOrUpdate.
+type VPNGatewaysCreateOrUpdateResponse struct {
+	VPNGatewaysCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VPNGatewaysCreateOrUpdateResult contains the result from method VPNGateways.CreateOrUpdate.
+type VPNGatewaysCreateOrUpdateResult struct {
+	VPNGateway
+}
+
+// VPNGatewaysDeletePollerResponse contains the response from method VPNGateways.Delete.
+type VPNGatewaysDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VPNGatewaysDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VPNGatewaysDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VPNGatewaysDeleteResponse contains the response from method VPNGateways.Delete.
+type VPNGatewaysDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VPNGatewaysGetResponse contains the response from method VPNGateways.Get.
+type VPNGatewaysGetResponse struct {
+	VPNGatewaysGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VPNGatewaysGetResult contains the result from method VPNGateways.Get.
+type VPNGatewaysGetResult struct {
+	VPNGateway
+}
+
+// VPNGatewaysListByResourceGroupResponse contains the response from method VPNGateways.ListByResourceGroup.
+type VPNGatewaysListByResourceGroupResponse struct {
+	VPNGatewaysListByResourceGroupResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VPNGatewaysListByResourceGroupResult contains the result from method VPNGateways.ListByResourceGroup.
+type VPNGatewaysListByResourceGroupResult struct {
+	ListVPNGatewaysResult
+}
+
+// VPNGatewaysListResponse contains the response from method VPNGateways.List.
+type VPNGatewaysListResponse struct {
+	VPNGatewaysListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VPNGatewaysListResult contains the result from method VPNGateways.List.
+type VPNGatewaysListResult struct {
+	ListVPNGatewaysResult
+}
+
+// VPNGatewaysResetPollerResponse contains the response from method VPNGateways.Reset.
+type VPNGatewaysResetPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VPNGatewaysResetResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VPNGatewaysResetPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VPNGatewaysResetResponse contains the response from method VPNGateways.Reset.
+type VPNGatewaysResetResponse struct {
+	VPNGatewaysResetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VPNGatewaysResetResult contains the result from method VPNGateways.Reset.
+type VPNGatewaysResetResult struct {
+	VPNGateway
+}
+
+// VPNGatewaysUpdateTagsResponse contains the response from method VPNGateways.UpdateTags.
+type VPNGatewaysUpdateTagsResponse struct {
+	VPNGatewaysUpdateTagsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VPNGatewaysUpdateTagsResult contains the result from method VPNGateways.UpdateTags.
+type VPNGatewaysUpdateTagsResult struct {
+	VPNGateway
+}
+
+// VPNLinkConnectionsListByVPNConnectionResponse contains the response from method VPNLinkConnections.ListByVPNConnection.
+type VPNLinkConnectionsListByVPNConnectionResponse struct {
+	VPNLinkConnectionsListByVPNConnectionResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VPNLinkConnectionsListByVPNConnectionResult contains the result from method VPNLinkConnections.ListByVPNConnection.
+type VPNLinkConnectionsListByVPNConnectionResult struct {
+	ListVPNSiteLinkConnectionsResult
+}
+
+// VPNServerConfigurationsAssociatedWithVirtualWanListPollerResponse contains the response from method VPNServerConfigurationsAssociatedWithVirtualWan.List.
+type VPNServerConfigurationsAssociatedWithVirtualWanListPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VPNServerConfigurationsAssociatedWithVirtualWanListResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VPNServerConfigurationsAssociatedWithVirtualWanListPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VPNServerConfigurationsAssociatedWithVirtualWanListResponse contains the response from method VPNServerConfigurationsAssociatedWithVirtualWan.List.
+type VPNServerConfigurationsAssociatedWithVirtualWanListResponse struct {
+	VPNServerConfigurationsAssociatedWithVirtualWanListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VPNServerConfigurationsAssociatedWithVirtualWanListResult contains the result from method VPNServerConfigurationsAssociatedWithVirtualWan.List.
+type VPNServerConfigurationsAssociatedWithVirtualWanListResult struct {
+	VPNServerConfigurationsResponse
+}
+
+// VPNServerConfigurationsCreateOrUpdatePollerResponse contains the response from method VPNServerConfigurations.CreateOrUpdate.
+type VPNServerConfigurationsCreateOrUpdatePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VPNServerConfigurationsCreateOrUpdateResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VPNServerConfigurationsCreateOrUpdatePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VPNServerConfigurationsCreateOrUpdateResponse contains the response from method VPNServerConfigurations.CreateOrUpdate.
+type VPNServerConfigurationsCreateOrUpdateResponse struct {
+	VPNServerConfigurationsCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VPNServerConfigurationsCreateOrUpdateResult contains the result from method VPNServerConfigurations.CreateOrUpdate.
+type VPNServerConfigurationsCreateOrUpdateResult struct {
+	VPNServerConfiguration
+}
+
+// VPNServerConfigurationsDeletePollerResponse contains the response from method VPNServerConfigurations.Delete.
+type VPNServerConfigurationsDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VPNServerConfigurationsDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VPNServerConfigurationsDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VPNServerConfigurationsDeleteResponse contains the response from method VPNServerConfigurations.Delete.
+type VPNServerConfigurationsDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VPNServerConfigurationsGetResponse contains the response from method VPNServerConfigurations.Get.
+type VPNServerConfigurationsGetResponse struct {
+	VPNServerConfigurationsGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VPNServerConfigurationsGetResult contains the result from method VPNServerConfigurations.Get.
+type VPNServerConfigurationsGetResult struct {
+	VPNServerConfiguration
+}
+
+// VPNServerConfigurationsListByResourceGroupResponse contains the response from method VPNServerConfigurations.ListByResourceGroup.
+type VPNServerConfigurationsListByResourceGroupResponse struct {
+	VPNServerConfigurationsListByResourceGroupResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VPNServerConfigurationsListByResourceGroupResult contains the result from method VPNServerConfigurations.ListByResourceGroup.
+type VPNServerConfigurationsListByResourceGroupResult struct {
+	ListVPNServerConfigurationsResult
+}
+
+// VPNServerConfigurationsListResponse contains the response from method VPNServerConfigurations.List.
+type VPNServerConfigurationsListResponse struct {
+	VPNServerConfigurationsListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VPNServerConfigurationsListResult contains the result from method VPNServerConfigurations.List.
+type VPNServerConfigurationsListResult struct {
+	ListVPNServerConfigurationsResult
+}
+
+// VPNServerConfigurationsUpdateTagsResponse contains the response from method VPNServerConfigurations.UpdateTags.
+type VPNServerConfigurationsUpdateTagsResponse struct {
+	VPNServerConfigurationsUpdateTagsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VPNServerConfigurationsUpdateTagsResult contains the result from method VPNServerConfigurations.UpdateTags.
+type VPNServerConfigurationsUpdateTagsResult struct {
+	VPNServerConfiguration
+}
+
+// VPNSiteLinkConnectionsGetResponse contains the response from method VPNSiteLinkConnections.Get.
+type VPNSiteLinkConnectionsGetResponse struct {
+	VPNSiteLinkConnectionsGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VPNSiteLinkConnectionsGetResult contains the result from method VPNSiteLinkConnections.Get.
+type VPNSiteLinkConnectionsGetResult struct {
+	VPNSiteLinkConnection
+}
+
+// VPNSiteLinksGetResponse contains the response from method VPNSiteLinks.Get.
+type VPNSiteLinksGetResponse struct {
+	VPNSiteLinksGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VPNSiteLinksGetResult contains the result from method VPNSiteLinks.Get.
+type VPNSiteLinksGetResult struct {
+	VPNSiteLink
+}
+
+// VPNSiteLinksListByVPNSiteResponse contains the response from method VPNSiteLinks.ListByVPNSite.
+type VPNSiteLinksListByVPNSiteResponse struct {
+	VPNSiteLinksListByVPNSiteResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VPNSiteLinksListByVPNSiteResult contains the result from method VPNSiteLinks.ListByVPNSite.
+type VPNSiteLinksListByVPNSiteResult struct {
+	ListVPNSiteLinksResult
+}
+
+// VPNSitesConfigurationDownloadPollerResponse contains the response from method VPNSitesConfiguration.Download.
+type VPNSitesConfigurationDownloadPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VPNSitesConfigurationDownloadResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VPNSitesConfigurationDownloadPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VPNSitesConfigurationDownloadResponse contains the response from method VPNSitesConfiguration.Download.
+type VPNSitesConfigurationDownloadResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VPNSitesCreateOrUpdatePollerResponse contains the response from method VPNSites.CreateOrUpdate.
+type VPNSitesCreateOrUpdatePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VPNSitesCreateOrUpdateResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VPNSitesCreateOrUpdatePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VPNSitesCreateOrUpdateResponse contains the response from method VPNSites.CreateOrUpdate.
+type VPNSitesCreateOrUpdateResponse struct {
+	VPNSitesCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VPNSitesCreateOrUpdateResult contains the result from method VPNSites.CreateOrUpdate.
+type VPNSitesCreateOrUpdateResult struct {
+	VPNSite
+}
+
+// VPNSitesDeletePollerResponse contains the response from method VPNSites.Delete.
+type VPNSitesDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VPNSitesDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VPNSitesDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VPNSitesDeleteResponse contains the response from method VPNSites.Delete.
+type VPNSitesDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VPNSitesGetResponse contains the response from method VPNSites.Get.
+type VPNSitesGetResponse struct {
+	VPNSitesGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VPNSitesGetResult contains the result from method VPNSites.Get.
+type VPNSitesGetResult struct {
+	VPNSite
+}
+
+// VPNSitesListByResourceGroupResponse contains the response from method VPNSites.ListByResourceGroup.
+type VPNSitesListByResourceGroupResponse struct {
+	VPNSitesListByResourceGroupResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VPNSitesListByResourceGroupResult contains the result from method VPNSites.ListByResourceGroup.
+type VPNSitesListByResourceGroupResult struct {
+	ListVPNSitesResult
+}
+
+// VPNSitesListResponse contains the response from method VPNSites.List.
+type VPNSitesListResponse struct {
+	VPNSitesListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VPNSitesListResult contains the result from method VPNSites.List.
+type VPNSitesListResult struct {
+	ListVPNSitesResult
+}
+
+// VPNSitesUpdateTagsResponse contains the response from method VPNSites.UpdateTags.
+type VPNSitesUpdateTagsResponse struct {
+	VPNSitesUpdateTagsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VPNSitesUpdateTagsResult contains the result from method VPNSites.UpdateTags.
+type VPNSitesUpdateTagsResult struct {
+	VPNSite
+}
+
+// VirtualHubRouteTableV2SCreateOrUpdatePollerResponse contains the response from method VirtualHubRouteTableV2S.CreateOrUpdate.
+type VirtualHubRouteTableV2SCreateOrUpdatePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualHubRouteTableV2SCreateOrUpdateResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VirtualHubRouteTableV2SCreateOrUpdatePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualHubRouteTableV2SCreateOrUpdateResponse contains the response from method VirtualHubRouteTableV2S.CreateOrUpdate.
+type VirtualHubRouteTableV2SCreateOrUpdateResponse struct {
+	VirtualHubRouteTableV2SCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualHubRouteTableV2SCreateOrUpdateResult contains the result from method VirtualHubRouteTableV2S.CreateOrUpdate.
+type VirtualHubRouteTableV2SCreateOrUpdateResult struct {
+	VirtualHubRouteTableV2
+}
+
+// VirtualHubRouteTableV2SDeletePollerResponse contains the response from method VirtualHubRouteTableV2S.Delete.
+type VirtualHubRouteTableV2SDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualHubRouteTableV2SDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VirtualHubRouteTableV2SDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualHubRouteTableV2SDeleteResponse contains the response from method VirtualHubRouteTableV2S.Delete.
+type VirtualHubRouteTableV2SDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualHubRouteTableV2SGetResponse contains the response from method VirtualHubRouteTableV2S.Get.
+type VirtualHubRouteTableV2SGetResponse struct {
+	VirtualHubRouteTableV2SGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualHubRouteTableV2SGetResult contains the result from method VirtualHubRouteTableV2S.Get.
+type VirtualHubRouteTableV2SGetResult struct {
+	VirtualHubRouteTableV2
+}
+
+// VirtualHubRouteTableV2SListResponse contains the response from method VirtualHubRouteTableV2S.List.
+type VirtualHubRouteTableV2SListResponse struct {
+	VirtualHubRouteTableV2SListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualHubRouteTableV2SListResult contains the result from method VirtualHubRouteTableV2S.List.
+type VirtualHubRouteTableV2SListResult struct {
+	ListVirtualHubRouteTableV2SResult
+}
+
+// VirtualHubsCreateOrUpdatePollerResponse contains the response from method VirtualHubs.CreateOrUpdate.
+type VirtualHubsCreateOrUpdatePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualHubsCreateOrUpdateResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VirtualHubsCreateOrUpdatePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualHubsCreateOrUpdateResponse contains the response from method VirtualHubs.CreateOrUpdate.
+type VirtualHubsCreateOrUpdateResponse struct {
+	VirtualHubsCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualHubsCreateOrUpdateResult contains the result from method VirtualHubs.CreateOrUpdate.
+type VirtualHubsCreateOrUpdateResult struct {
+	VirtualHub
+}
+
+// VirtualHubsDeletePollerResponse contains the response from method VirtualHubs.Delete.
+type VirtualHubsDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualHubsDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VirtualHubsDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualHubsDeleteResponse contains the response from method VirtualHubs.Delete.
+type VirtualHubsDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualHubsGetResponse contains the response from method VirtualHubs.Get.
+type VirtualHubsGetResponse struct {
+	VirtualHubsGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualHubsGetResult contains the result from method VirtualHubs.Get.
+type VirtualHubsGetResult struct {
+	VirtualHub
+}
+
+// VirtualHubsListByResourceGroupResponse contains the response from method VirtualHubs.ListByResourceGroup.
+type VirtualHubsListByResourceGroupResponse struct {
+	VirtualHubsListByResourceGroupResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualHubsListByResourceGroupResult contains the result from method VirtualHubs.ListByResourceGroup.
+type VirtualHubsListByResourceGroupResult struct {
+	ListVirtualHubsResult
+}
+
+// VirtualHubsListResponse contains the response from method VirtualHubs.List.
+type VirtualHubsListResponse struct {
+	VirtualHubsListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualHubsListResult contains the result from method VirtualHubs.List.
+type VirtualHubsListResult struct {
+	ListVirtualHubsResult
+}
+
+// VirtualHubsUpdateTagsResponse contains the response from method VirtualHubs.UpdateTags.
+type VirtualHubsUpdateTagsResponse struct {
+	VirtualHubsUpdateTagsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualHubsUpdateTagsResult contains the result from method VirtualHubs.UpdateTags.
+type VirtualHubsUpdateTagsResult struct {
+	VirtualHub
+}
+
+// VirtualNetworkGatewayConnectionsCreateOrUpdatePollerResponse contains the response from method VirtualNetworkGatewayConnections.CreateOrUpdate.
+type VirtualNetworkGatewayConnectionsCreateOrUpdatePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewayConnectionsCreateOrUpdateResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VirtualNetworkGatewayConnectionsCreateOrUpdatePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewayConnectionsCreateOrUpdateResponse contains the response from method VirtualNetworkGatewayConnections.CreateOrUpdate.
+type VirtualNetworkGatewayConnectionsCreateOrUpdateResponse struct {
+	VirtualNetworkGatewayConnectionsCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewayConnectionsCreateOrUpdateResult contains the result from method VirtualNetworkGatewayConnections.CreateOrUpdate.
+type VirtualNetworkGatewayConnectionsCreateOrUpdateResult struct {
+	VirtualNetworkGatewayConnection
+}
+
+// VirtualNetworkGatewayConnectionsDeletePollerResponse contains the response from method VirtualNetworkGatewayConnections.Delete.
+type VirtualNetworkGatewayConnectionsDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewayConnectionsDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VirtualNetworkGatewayConnectionsDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewayConnectionsDeleteResponse contains the response from method VirtualNetworkGatewayConnections.Delete.
+type VirtualNetworkGatewayConnectionsDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewayConnectionsGetResponse contains the response from method VirtualNetworkGatewayConnections.Get.
+type VirtualNetworkGatewayConnectionsGetResponse struct {
+	VirtualNetworkGatewayConnectionsGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewayConnectionsGetResult contains the result from method VirtualNetworkGatewayConnections.Get.
+type VirtualNetworkGatewayConnectionsGetResult struct {
+	VirtualNetworkGatewayConnection
+}
+
+// VirtualNetworkGatewayConnectionsGetSharedKeyResponse contains the response from method VirtualNetworkGatewayConnections.GetSharedKey.
+type VirtualNetworkGatewayConnectionsGetSharedKeyResponse struct {
+	VirtualNetworkGatewayConnectionsGetSharedKeyResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewayConnectionsGetSharedKeyResult contains the result from method VirtualNetworkGatewayConnections.GetSharedKey.
+type VirtualNetworkGatewayConnectionsGetSharedKeyResult struct {
+	ConnectionSharedKey
+}
+
+// VirtualNetworkGatewayConnectionsListResponse contains the response from method VirtualNetworkGatewayConnections.List.
+type VirtualNetworkGatewayConnectionsListResponse struct {
+	VirtualNetworkGatewayConnectionsListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewayConnectionsListResult contains the result from method VirtualNetworkGatewayConnections.List.
+type VirtualNetworkGatewayConnectionsListResult struct {
+	VirtualNetworkGatewayConnectionListResult
+}
+
+// VirtualNetworkGatewayConnectionsResetSharedKeyPollerResponse contains the response from method VirtualNetworkGatewayConnections.ResetSharedKey.
+type VirtualNetworkGatewayConnectionsResetSharedKeyPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewayConnectionsResetSharedKeyResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VirtualNetworkGatewayConnectionsResetSharedKeyPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewayConnectionsResetSharedKeyResponse contains the response from method VirtualNetworkGatewayConnections.ResetSharedKey.
+type VirtualNetworkGatewayConnectionsResetSharedKeyResponse struct {
+	VirtualNetworkGatewayConnectionsResetSharedKeyResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewayConnectionsResetSharedKeyResult contains the result from method VirtualNetworkGatewayConnections.ResetSharedKey.
+type VirtualNetworkGatewayConnectionsResetSharedKeyResult struct {
+	ConnectionResetSharedKey
+}
+
+// VirtualNetworkGatewayConnectionsSetSharedKeyPollerResponse contains the response from method VirtualNetworkGatewayConnections.SetSharedKey.
+type VirtualNetworkGatewayConnectionsSetSharedKeyPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewayConnectionsSetSharedKeyResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VirtualNetworkGatewayConnectionsSetSharedKeyPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewayConnectionsSetSharedKeyResponse contains the response from method VirtualNetworkGatewayConnections.SetSharedKey.
+type VirtualNetworkGatewayConnectionsSetSharedKeyResponse struct {
+	VirtualNetworkGatewayConnectionsSetSharedKeyResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewayConnectionsSetSharedKeyResult contains the result from method VirtualNetworkGatewayConnections.SetSharedKey.
+type VirtualNetworkGatewayConnectionsSetSharedKeyResult struct {
+	ConnectionSharedKey
+}
+
+// VirtualNetworkGatewayConnectionsStartPacketCapturePollerResponse contains the response from method VirtualNetworkGatewayConnections.StartPacketCapture.
+type VirtualNetworkGatewayConnectionsStartPacketCapturePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewayConnectionsStartPacketCaptureResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VirtualNetworkGatewayConnectionsStartPacketCapturePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewayConnectionsStartPacketCaptureResponse contains the response from method VirtualNetworkGatewayConnections.StartPacketCapture.
+type VirtualNetworkGatewayConnectionsStartPacketCaptureResponse struct {
+	VirtualNetworkGatewayConnectionsStartPacketCaptureResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewayConnectionsStartPacketCaptureResult contains the result from method VirtualNetworkGatewayConnections.StartPacketCapture.
+type VirtualNetworkGatewayConnectionsStartPacketCaptureResult struct {
+	Value *string
+}
+
+// VirtualNetworkGatewayConnectionsStopPacketCapturePollerResponse contains the response from method VirtualNetworkGatewayConnections.StopPacketCapture.
+type VirtualNetworkGatewayConnectionsStopPacketCapturePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewayConnectionsStopPacketCaptureResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VirtualNetworkGatewayConnectionsStopPacketCapturePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewayConnectionsStopPacketCaptureResponse contains the response from method VirtualNetworkGatewayConnections.StopPacketCapture.
+type VirtualNetworkGatewayConnectionsStopPacketCaptureResponse struct {
+	VirtualNetworkGatewayConnectionsStopPacketCaptureResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewayConnectionsStopPacketCaptureResult contains the result from method VirtualNetworkGatewayConnections.StopPacketCapture.
+type VirtualNetworkGatewayConnectionsStopPacketCaptureResult struct {
+	Value *string
+}
+
+// VirtualNetworkGatewayConnectionsUpdateTagsPollerResponse contains the response from method VirtualNetworkGatewayConnections.UpdateTags.
+type VirtualNetworkGatewayConnectionsUpdateTagsPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewayConnectionsUpdateTagsResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VirtualNetworkGatewayConnectionsUpdateTagsPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewayConnectionsUpdateTagsResponse contains the response from method VirtualNetworkGatewayConnections.UpdateTags.
+type VirtualNetworkGatewayConnectionsUpdateTagsResponse struct {
+	VirtualNetworkGatewayConnectionsUpdateTagsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewayConnectionsUpdateTagsResult contains the result from method VirtualNetworkGatewayConnections.UpdateTags.
+type VirtualNetworkGatewayConnectionsUpdateTagsResult struct {
+	VirtualNetworkGatewayConnection
+}
+
+// VirtualNetworkGatewaysCreateOrUpdatePollerResponse contains the response from method VirtualNetworkGateways.CreateOrUpdate.
+type VirtualNetworkGatewaysCreateOrUpdatePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysCreateOrUpdateResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VirtualNetworkGatewaysCreateOrUpdatePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewaysCreateOrUpdateResponse contains the response from method VirtualNetworkGateways.CreateOrUpdate.
+type VirtualNetworkGatewaysCreateOrUpdateResponse struct {
+	VirtualNetworkGatewaysCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewaysCreateOrUpdateResult contains the result from method VirtualNetworkGateways.CreateOrUpdate.
+type VirtualNetworkGatewaysCreateOrUpdateResult struct {
+	VirtualNetworkGateway
+}
+
+// VirtualNetworkGatewaysDeletePollerResponse contains the response from method VirtualNetworkGateways.Delete.
+type VirtualNetworkGatewaysDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VirtualNetworkGatewaysDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewaysDeleteResponse contains the response from method VirtualNetworkGateways.Delete.
+type VirtualNetworkGatewaysDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVPNConnectionsPollerResponse contains the response from method VirtualNetworkGateways.DisconnectVirtualNetworkGatewayVPNConnections.
+type VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVPNConnectionsPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVPNConnectionsResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVPNConnectionsPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVPNConnectionsResponse contains the response from method VirtualNetworkGateways.DisconnectVirtualNetworkGatewayVPNConnections.
+type VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVPNConnectionsResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewaysGenerateVPNProfilePollerResponse contains the response from method VirtualNetworkGateways.GenerateVPNProfile.
+type VirtualNetworkGatewaysGenerateVPNProfilePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysGenerateVPNProfileResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VirtualNetworkGatewaysGenerateVPNProfilePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewaysGenerateVPNProfileResponse contains the response from method VirtualNetworkGateways.GenerateVPNProfile.
+type VirtualNetworkGatewaysGenerateVPNProfileResponse struct {
+	VirtualNetworkGatewaysGenerateVPNProfileResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewaysGenerateVPNProfileResult contains the result from method VirtualNetworkGateways.GenerateVPNProfile.
+type VirtualNetworkGatewaysGenerateVPNProfileResult struct {
+	Value *string
+}
+
+// VirtualNetworkGatewaysGeneratevpnclientpackagePollerResponse contains the response from method VirtualNetworkGateways.Generatevpnclientpackage.
+type VirtualNetworkGatewaysGeneratevpnclientpackagePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysGeneratevpnclientpackageResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VirtualNetworkGatewaysGeneratevpnclientpackagePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewaysGeneratevpnclientpackageResponse contains the response from method VirtualNetworkGateways.Generatevpnclientpackage.
+type VirtualNetworkGatewaysGeneratevpnclientpackageResponse struct {
+	VirtualNetworkGatewaysGeneratevpnclientpackageResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewaysGeneratevpnclientpackageResult contains the result from method VirtualNetworkGateways.Generatevpnclientpackage.
+type VirtualNetworkGatewaysGeneratevpnclientpackageResult struct {
+	Value *string
+}
+
+// VirtualNetworkGatewaysGetAdvertisedRoutesPollerResponse contains the response from method VirtualNetworkGateways.GetAdvertisedRoutes.
+type VirtualNetworkGatewaysGetAdvertisedRoutesPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysGetAdvertisedRoutesResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VirtualNetworkGatewaysGetAdvertisedRoutesPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewaysGetAdvertisedRoutesResponse contains the response from method VirtualNetworkGateways.GetAdvertisedRoutes.
+type VirtualNetworkGatewaysGetAdvertisedRoutesResponse struct {
+	VirtualNetworkGatewaysGetAdvertisedRoutesResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewaysGetAdvertisedRoutesResult contains the result from method VirtualNetworkGateways.GetAdvertisedRoutes.
+type VirtualNetworkGatewaysGetAdvertisedRoutesResult struct {
+	GatewayRouteListResult
+}
+
+// VirtualNetworkGatewaysGetBgpPeerStatusPollerResponse contains the response from method VirtualNetworkGateways.GetBgpPeerStatus.
+type VirtualNetworkGatewaysGetBgpPeerStatusPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysGetBgpPeerStatusResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VirtualNetworkGatewaysGetBgpPeerStatusPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewaysGetBgpPeerStatusResponse contains the response from method VirtualNetworkGateways.GetBgpPeerStatus.
+type VirtualNetworkGatewaysGetBgpPeerStatusResponse struct {
+	VirtualNetworkGatewaysGetBgpPeerStatusResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewaysGetBgpPeerStatusResult contains the result from method VirtualNetworkGateways.GetBgpPeerStatus.
+type VirtualNetworkGatewaysGetBgpPeerStatusResult struct {
+	BgpPeerStatusListResult
+}
+
+// VirtualNetworkGatewaysGetLearnedRoutesPollerResponse contains the response from method VirtualNetworkGateways.GetLearnedRoutes.
+type VirtualNetworkGatewaysGetLearnedRoutesPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysGetLearnedRoutesResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VirtualNetworkGatewaysGetLearnedRoutesPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewaysGetLearnedRoutesResponse contains the response from method VirtualNetworkGateways.GetLearnedRoutes.
+type VirtualNetworkGatewaysGetLearnedRoutesResponse struct {
+	VirtualNetworkGatewaysGetLearnedRoutesResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewaysGetLearnedRoutesResult contains the result from method VirtualNetworkGateways.GetLearnedRoutes.
+type VirtualNetworkGatewaysGetLearnedRoutesResult struct {
+	GatewayRouteListResult
+}
+
+// VirtualNetworkGatewaysGetResponse contains the response from method VirtualNetworkGateways.Get.
+type VirtualNetworkGatewaysGetResponse struct {
+	VirtualNetworkGatewaysGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewaysGetResult contains the result from method VirtualNetworkGateways.Get.
+type VirtualNetworkGatewaysGetResult struct {
+	VirtualNetworkGateway
+}
+
+// VirtualNetworkGatewaysGetVPNProfilePackageURLPollerResponse contains the response from method VirtualNetworkGateways.GetVPNProfilePackageURL.
+type VirtualNetworkGatewaysGetVPNProfilePackageURLPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysGetVPNProfilePackageURLResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VirtualNetworkGatewaysGetVPNProfilePackageURLPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewaysGetVPNProfilePackageURLResponse contains the response from method VirtualNetworkGateways.GetVPNProfilePackageURL.
+type VirtualNetworkGatewaysGetVPNProfilePackageURLResponse struct {
+	VirtualNetworkGatewaysGetVPNProfilePackageURLResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewaysGetVPNProfilePackageURLResult contains the result from method VirtualNetworkGateways.GetVPNProfilePackageURL.
+type VirtualNetworkGatewaysGetVPNProfilePackageURLResult struct {
+	Value *string
+}
+
+// VirtualNetworkGatewaysGetVpnclientConnectionHealthPollerResponse contains the response from method VirtualNetworkGateways.GetVpnclientConnectionHealth.
+type VirtualNetworkGatewaysGetVpnclientConnectionHealthPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysGetVpnclientConnectionHealthResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VirtualNetworkGatewaysGetVpnclientConnectionHealthPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewaysGetVpnclientConnectionHealthResponse contains the response from method VirtualNetworkGateways.GetVpnclientConnectionHealth.
+type VirtualNetworkGatewaysGetVpnclientConnectionHealthResponse struct {
+	VirtualNetworkGatewaysGetVpnclientConnectionHealthResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewaysGetVpnclientConnectionHealthResult contains the result from method VirtualNetworkGateways.GetVpnclientConnectionHealth.
+type VirtualNetworkGatewaysGetVpnclientConnectionHealthResult struct {
+	VPNClientConnectionHealthDetailListResult
+}
+
+// VirtualNetworkGatewaysGetVpnclientIPSecParametersPollerResponse contains the response from method VirtualNetworkGateways.GetVpnclientIPSecParameters.
+type VirtualNetworkGatewaysGetVpnclientIPSecParametersPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysGetVpnclientIPSecParametersResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VirtualNetworkGatewaysGetVpnclientIPSecParametersPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewaysGetVpnclientIPSecParametersResponse contains the response from method VirtualNetworkGateways.GetVpnclientIPSecParameters.
+type VirtualNetworkGatewaysGetVpnclientIPSecParametersResponse struct {
+	VirtualNetworkGatewaysGetVpnclientIPSecParametersResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewaysGetVpnclientIPSecParametersResult contains the result from method VirtualNetworkGateways.GetVpnclientIPSecParameters.
+type VirtualNetworkGatewaysGetVpnclientIPSecParametersResult struct {
+	VPNClientIPsecParameters
+}
+
+// VirtualNetworkGatewaysListConnectionsResponse contains the response from method VirtualNetworkGateways.ListConnections.
+type VirtualNetworkGatewaysListConnectionsResponse struct {
+	VirtualNetworkGatewaysListConnectionsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewaysListConnectionsResult contains the result from method VirtualNetworkGateways.ListConnections.
+type VirtualNetworkGatewaysListConnectionsResult struct {
+	VirtualNetworkGatewayListConnectionsResult
+}
+
+// VirtualNetworkGatewaysListResponse contains the response from method VirtualNetworkGateways.List.
+type VirtualNetworkGatewaysListResponse struct {
+	VirtualNetworkGatewaysListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewaysListResult contains the result from method VirtualNetworkGateways.List.
+type VirtualNetworkGatewaysListResult struct {
+	VirtualNetworkGatewayListResult
+}
+
+// VirtualNetworkGatewaysResetPollerResponse contains the response from method VirtualNetworkGateways.Reset.
+type VirtualNetworkGatewaysResetPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysResetResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VirtualNetworkGatewaysResetPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewaysResetResponse contains the response from method VirtualNetworkGateways.Reset.
+type VirtualNetworkGatewaysResetResponse struct {
+	VirtualNetworkGatewaysResetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewaysResetResult contains the result from method VirtualNetworkGateways.Reset.
+type VirtualNetworkGatewaysResetResult struct {
+	VirtualNetworkGateway
+}
+
+// VirtualNetworkGatewaysResetVPNClientSharedKeyPollerResponse contains the response from method VirtualNetworkGateways.ResetVPNClientSharedKey.
+type VirtualNetworkGatewaysResetVPNClientSharedKeyPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysResetVPNClientSharedKeyResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VirtualNetworkGatewaysResetVPNClientSharedKeyPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewaysResetVPNClientSharedKeyResponse contains the response from method VirtualNetworkGateways.ResetVPNClientSharedKey.
+type VirtualNetworkGatewaysResetVPNClientSharedKeyResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewaysSetVpnclientIPSecParametersPollerResponse contains the response from method VirtualNetworkGateways.SetVpnclientIPSecParameters.
+type VirtualNetworkGatewaysSetVpnclientIPSecParametersPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysSetVpnclientIPSecParametersResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VirtualNetworkGatewaysSetVpnclientIPSecParametersPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewaysSetVpnclientIPSecParametersResponse contains the response from method VirtualNetworkGateways.SetVpnclientIPSecParameters.
+type VirtualNetworkGatewaysSetVpnclientIPSecParametersResponse struct {
+	VirtualNetworkGatewaysSetVpnclientIPSecParametersResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewaysSetVpnclientIPSecParametersResult contains the result from method VirtualNetworkGateways.SetVpnclientIPSecParameters.
+type VirtualNetworkGatewaysSetVpnclientIPSecParametersResult struct {
+	VPNClientIPsecParameters
+}
+
+// VirtualNetworkGatewaysStartPacketCapturePollerResponse contains the response from method VirtualNetworkGateways.StartPacketCapture.
+type VirtualNetworkGatewaysStartPacketCapturePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysStartPacketCaptureResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VirtualNetworkGatewaysStartPacketCapturePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewaysStartPacketCaptureResponse contains the response from method VirtualNetworkGateways.StartPacketCapture.
+type VirtualNetworkGatewaysStartPacketCaptureResponse struct {
+	VirtualNetworkGatewaysStartPacketCaptureResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewaysStartPacketCaptureResult contains the result from method VirtualNetworkGateways.StartPacketCapture.
+type VirtualNetworkGatewaysStartPacketCaptureResult struct {
+	Value *string
+}
+
+// VirtualNetworkGatewaysStopPacketCapturePollerResponse contains the response from method VirtualNetworkGateways.StopPacketCapture.
+type VirtualNetworkGatewaysStopPacketCapturePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysStopPacketCaptureResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VirtualNetworkGatewaysStopPacketCapturePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewaysStopPacketCaptureResponse contains the response from method VirtualNetworkGateways.StopPacketCapture.
+type VirtualNetworkGatewaysStopPacketCaptureResponse struct {
+	VirtualNetworkGatewaysStopPacketCaptureResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewaysStopPacketCaptureResult contains the result from method VirtualNetworkGateways.StopPacketCapture.
+type VirtualNetworkGatewaysStopPacketCaptureResult struct {
+	Value *string
+}
+
+// VirtualNetworkGatewaysSupportedVPNDevicesResponse contains the response from method VirtualNetworkGateways.SupportedVPNDevices.
+type VirtualNetworkGatewaysSupportedVPNDevicesResponse struct {
+	VirtualNetworkGatewaysSupportedVPNDevicesResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewaysSupportedVPNDevicesResult contains the result from method VirtualNetworkGateways.SupportedVPNDevices.
+type VirtualNetworkGatewaysSupportedVPNDevicesResult struct {
+	Value *string
+}
+
+// VirtualNetworkGatewaysUpdateTagsPollerResponse contains the response from method VirtualNetworkGateways.UpdateTags.
+type VirtualNetworkGatewaysUpdateTagsPollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysUpdateTagsResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VirtualNetworkGatewaysUpdateTagsPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewaysUpdateTagsResponse contains the response from method VirtualNetworkGateways.UpdateTags.
+type VirtualNetworkGatewaysUpdateTagsResponse struct {
+	VirtualNetworkGatewaysUpdateTagsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewaysUpdateTagsResult contains the result from method VirtualNetworkGateways.UpdateTags.
+type VirtualNetworkGatewaysUpdateTagsResult struct {
+	VirtualNetworkGateway
+}
+
+// VirtualNetworkGatewaysVPNDeviceConfigurationScriptResponse contains the response from method VirtualNetworkGateways.VPNDeviceConfigurationScript.
+type VirtualNetworkGatewaysVPNDeviceConfigurationScriptResponse struct {
+	VirtualNetworkGatewaysVPNDeviceConfigurationScriptResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkGatewaysVPNDeviceConfigurationScriptResult contains the result from method VirtualNetworkGateways.VPNDeviceConfigurationScript.
+type VirtualNetworkGatewaysVPNDeviceConfigurationScriptResult struct {
+	Value *string
+}
+
+// VirtualNetworkPeeringsCreateOrUpdatePollerResponse contains the response from method VirtualNetworkPeerings.CreateOrUpdate.
+type VirtualNetworkPeeringsCreateOrUpdatePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkPeeringsCreateOrUpdateResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VirtualNetworkPeeringsCreateOrUpdatePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkPeeringsCreateOrUpdateResponse contains the response from method VirtualNetworkPeerings.CreateOrUpdate.
+type VirtualNetworkPeeringsCreateOrUpdateResponse struct {
+	VirtualNetworkPeeringsCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkPeeringsCreateOrUpdateResult contains the result from method VirtualNetworkPeerings.CreateOrUpdate.
+type VirtualNetworkPeeringsCreateOrUpdateResult struct {
+	VirtualNetworkPeering
+}
+
+// VirtualNetworkPeeringsDeletePollerResponse contains the response from method VirtualNetworkPeerings.Delete.
+type VirtualNetworkPeeringsDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkPeeringsDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VirtualNetworkPeeringsDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkPeeringsDeleteResponse contains the response from method VirtualNetworkPeerings.Delete.
+type VirtualNetworkPeeringsDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkPeeringsGetResponse contains the response from method VirtualNetworkPeerings.Get.
+type VirtualNetworkPeeringsGetResponse struct {
+	VirtualNetworkPeeringsGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkPeeringsGetResult contains the result from method VirtualNetworkPeerings.Get.
+type VirtualNetworkPeeringsGetResult struct {
+	VirtualNetworkPeering
+}
+
+// VirtualNetworkPeeringsListResponse contains the response from method VirtualNetworkPeerings.List.
+type VirtualNetworkPeeringsListResponse struct {
+	VirtualNetworkPeeringsListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkPeeringsListResult contains the result from method VirtualNetworkPeerings.List.
+type VirtualNetworkPeeringsListResult struct {
+	VirtualNetworkPeeringListResult
+}
+
+// VirtualNetworkTapsCreateOrUpdatePollerResponse contains the response from method VirtualNetworkTaps.CreateOrUpdate.
+type VirtualNetworkTapsCreateOrUpdatePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkTapsCreateOrUpdateResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VirtualNetworkTapsCreateOrUpdatePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkTapsCreateOrUpdateResponse contains the response from method VirtualNetworkTaps.CreateOrUpdate.
+type VirtualNetworkTapsCreateOrUpdateResponse struct {
+	VirtualNetworkTapsCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkTapsCreateOrUpdateResult contains the result from method VirtualNetworkTaps.CreateOrUpdate.
+type VirtualNetworkTapsCreateOrUpdateResult struct {
+	VirtualNetworkTap
+}
+
+// VirtualNetworkTapsDeletePollerResponse contains the response from method VirtualNetworkTaps.Delete.
+type VirtualNetworkTapsDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkTapsDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VirtualNetworkTapsDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkTapsDeleteResponse contains the response from method VirtualNetworkTaps.Delete.
+type VirtualNetworkTapsDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkTapsGetResponse contains the response from method VirtualNetworkTaps.Get.
+type VirtualNetworkTapsGetResponse struct {
+	VirtualNetworkTapsGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkTapsGetResult contains the result from method VirtualNetworkTaps.Get.
+type VirtualNetworkTapsGetResult struct {
+	VirtualNetworkTap
+}
+
+// VirtualNetworkTapsListAllResponse contains the response from method VirtualNetworkTaps.ListAll.
+type VirtualNetworkTapsListAllResponse struct {
+	VirtualNetworkTapsListAllResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkTapsListAllResult contains the result from method VirtualNetworkTaps.ListAll.
+type VirtualNetworkTapsListAllResult struct {
+	VirtualNetworkTapListResult
+}
+
+// VirtualNetworkTapsListByResourceGroupResponse contains the response from method VirtualNetworkTaps.ListByResourceGroup.
+type VirtualNetworkTapsListByResourceGroupResponse struct {
+	VirtualNetworkTapsListByResourceGroupResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkTapsListByResourceGroupResult contains the result from method VirtualNetworkTaps.ListByResourceGroup.
+type VirtualNetworkTapsListByResourceGroupResult struct {
+	VirtualNetworkTapListResult
+}
+
+// VirtualNetworkTapsUpdateTagsResponse contains the response from method VirtualNetworkTaps.UpdateTags.
+type VirtualNetworkTapsUpdateTagsResponse struct {
+	VirtualNetworkTapsUpdateTagsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworkTapsUpdateTagsResult contains the result from method VirtualNetworkTaps.UpdateTags.
+type VirtualNetworkTapsUpdateTagsResult struct {
+	VirtualNetworkTap
+}
+
+// VirtualNetworksCheckIPAddressAvailabilityResponse contains the response from method VirtualNetworks.CheckIPAddressAvailability.
+type VirtualNetworksCheckIPAddressAvailabilityResponse struct {
+	VirtualNetworksCheckIPAddressAvailabilityResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworksCheckIPAddressAvailabilityResult contains the result from method VirtualNetworks.CheckIPAddressAvailability.
+type VirtualNetworksCheckIPAddressAvailabilityResult struct {
+	IPAddressAvailabilityResult
+}
+
+// VirtualNetworksCreateOrUpdatePollerResponse contains the response from method VirtualNetworks.CreateOrUpdate.
+type VirtualNetworksCreateOrUpdatePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworksCreateOrUpdateResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VirtualNetworksCreateOrUpdatePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworksCreateOrUpdateResponse contains the response from method VirtualNetworks.CreateOrUpdate.
+type VirtualNetworksCreateOrUpdateResponse struct {
+	VirtualNetworksCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworksCreateOrUpdateResult contains the result from method VirtualNetworks.CreateOrUpdate.
+type VirtualNetworksCreateOrUpdateResult struct {
+	VirtualNetwork
+}
+
+// VirtualNetworksDeletePollerResponse contains the response from method VirtualNetworks.Delete.
+type VirtualNetworksDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworksDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VirtualNetworksDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworksDeleteResponse contains the response from method VirtualNetworks.Delete.
+type VirtualNetworksDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworksGetResponse contains the response from method VirtualNetworks.Get.
+type VirtualNetworksGetResponse struct {
+	VirtualNetworksGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworksGetResult contains the result from method VirtualNetworks.Get.
+type VirtualNetworksGetResult struct {
+	VirtualNetwork
+}
+
+// VirtualNetworksListAllResponse contains the response from method VirtualNetworks.ListAll.
+type VirtualNetworksListAllResponse struct {
+	VirtualNetworksListAllResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworksListAllResult contains the result from method VirtualNetworks.ListAll.
+type VirtualNetworksListAllResult struct {
+	VirtualNetworkListResult
+}
+
+// VirtualNetworksListResponse contains the response from method VirtualNetworks.List.
+type VirtualNetworksListResponse struct {
+	VirtualNetworksListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworksListResult contains the result from method VirtualNetworks.List.
+type VirtualNetworksListResult struct {
+	VirtualNetworkListResult
+}
+
+// VirtualNetworksListUsageResponse contains the response from method VirtualNetworks.ListUsage.
+type VirtualNetworksListUsageResponse struct {
+	VirtualNetworksListUsageResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworksListUsageResult contains the result from method VirtualNetworks.ListUsage.
+type VirtualNetworksListUsageResult struct {
+	VirtualNetworkListUsageResult
+}
+
+// VirtualNetworksUpdateTagsResponse contains the response from method VirtualNetworks.UpdateTags.
+type VirtualNetworksUpdateTagsResponse struct {
+	VirtualNetworksUpdateTagsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualNetworksUpdateTagsResult contains the result from method VirtualNetworks.UpdateTags.
+type VirtualNetworksUpdateTagsResult struct {
+	VirtualNetwork
+}
+
+// VirtualRouterPeeringsCreateOrUpdatePollerResponse contains the response from method VirtualRouterPeerings.CreateOrUpdate.
+type VirtualRouterPeeringsCreateOrUpdatePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualRouterPeeringsCreateOrUpdateResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VirtualRouterPeeringsCreateOrUpdatePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualRouterPeeringsCreateOrUpdateResponse contains the response from method VirtualRouterPeerings.CreateOrUpdate.
+type VirtualRouterPeeringsCreateOrUpdateResponse struct {
+	VirtualRouterPeeringsCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualRouterPeeringsCreateOrUpdateResult contains the result from method VirtualRouterPeerings.CreateOrUpdate.
+type VirtualRouterPeeringsCreateOrUpdateResult struct {
+	VirtualRouterPeering
+}
+
+// VirtualRouterPeeringsDeletePollerResponse contains the response from method VirtualRouterPeerings.Delete.
+type VirtualRouterPeeringsDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualRouterPeeringsDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VirtualRouterPeeringsDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualRouterPeeringsDeleteResponse contains the response from method VirtualRouterPeerings.Delete.
+type VirtualRouterPeeringsDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualRouterPeeringsGetResponse contains the response from method VirtualRouterPeerings.Get.
+type VirtualRouterPeeringsGetResponse struct {
+	VirtualRouterPeeringsGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualRouterPeeringsGetResult contains the result from method VirtualRouterPeerings.Get.
+type VirtualRouterPeeringsGetResult struct {
+	VirtualRouterPeering
+}
+
+// VirtualRouterPeeringsListResponse contains the response from method VirtualRouterPeerings.List.
+type VirtualRouterPeeringsListResponse struct {
+	VirtualRouterPeeringsListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualRouterPeeringsListResult contains the result from method VirtualRouterPeerings.List.
+type VirtualRouterPeeringsListResult struct {
+	VirtualRouterPeeringListResult
+}
+
+// VirtualRoutersCreateOrUpdatePollerResponse contains the response from method VirtualRouters.CreateOrUpdate.
+type VirtualRoutersCreateOrUpdatePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualRoutersCreateOrUpdateResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VirtualRoutersCreateOrUpdatePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualRoutersCreateOrUpdateResponse contains the response from method VirtualRouters.CreateOrUpdate.
+type VirtualRoutersCreateOrUpdateResponse struct {
+	VirtualRoutersCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualRoutersCreateOrUpdateResult contains the result from method VirtualRouters.CreateOrUpdate.
+type VirtualRoutersCreateOrUpdateResult struct {
+	VirtualRouter
+}
+
+// VirtualRoutersDeletePollerResponse contains the response from method VirtualRouters.Delete.
+type VirtualRoutersDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualRoutersDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VirtualRoutersDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualRoutersDeleteResponse contains the response from method VirtualRouters.Delete.
+type VirtualRoutersDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualRoutersGetResponse contains the response from method VirtualRouters.Get.
+type VirtualRoutersGetResponse struct {
+	VirtualRoutersGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualRoutersGetResult contains the result from method VirtualRouters.Get.
+type VirtualRoutersGetResult struct {
+	VirtualRouter
+}
+
+// VirtualRoutersListByResourceGroupResponse contains the response from method VirtualRouters.ListByResourceGroup.
+type VirtualRoutersListByResourceGroupResponse struct {
+	VirtualRoutersListByResourceGroupResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualRoutersListByResourceGroupResult contains the result from method VirtualRouters.ListByResourceGroup.
+type VirtualRoutersListByResourceGroupResult struct {
+	VirtualRouterListResult
+}
+
+// VirtualRoutersListResponse contains the response from method VirtualRouters.List.
+type VirtualRoutersListResponse struct {
+	VirtualRoutersListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualRoutersListResult contains the result from method VirtualRouters.List.
+type VirtualRoutersListResult struct {
+	VirtualRouterListResult
+}
+
+// VirtualWansCreateOrUpdatePollerResponse contains the response from method VirtualWans.CreateOrUpdate.
+type VirtualWansCreateOrUpdatePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualWansCreateOrUpdateResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VirtualWansCreateOrUpdatePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualWansCreateOrUpdateResponse contains the response from method VirtualWans.CreateOrUpdate.
+type VirtualWansCreateOrUpdateResponse struct {
+	VirtualWansCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualWansCreateOrUpdateResult contains the result from method VirtualWans.CreateOrUpdate.
+type VirtualWansCreateOrUpdateResult struct {
+	VirtualWAN
+}
+
+// VirtualWansDeletePollerResponse contains the response from method VirtualWans.Delete.
+type VirtualWansDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualWansDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller VirtualWansDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualWansDeleteResponse contains the response from method VirtualWans.Delete.
+type VirtualWansDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualWansGetResponse contains the response from method VirtualWans.Get.
+type VirtualWansGetResponse struct {
+	VirtualWansGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualWansGetResult contains the result from method VirtualWans.Get.
+type VirtualWansGetResult struct {
+	VirtualWAN
+}
+
+// VirtualWansListByResourceGroupResponse contains the response from method VirtualWans.ListByResourceGroup.
+type VirtualWansListByResourceGroupResponse struct {
+	VirtualWansListByResourceGroupResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualWansListByResourceGroupResult contains the result from method VirtualWans.ListByResourceGroup.
+type VirtualWansListByResourceGroupResult struct {
+	ListVirtualWANsResult
+}
+
+// VirtualWansListResponse contains the response from method VirtualWans.List.
+type VirtualWansListResponse struct {
+	VirtualWansListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualWansListResult contains the result from method VirtualWans.List.
+type VirtualWansListResult struct {
+	ListVirtualWANsResult
+}
+
+// VirtualWansUpdateTagsResponse contains the response from method VirtualWans.UpdateTags.
+type VirtualWansUpdateTagsResponse struct {
+	VirtualWansUpdateTagsResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// VirtualWansUpdateTagsResult contains the result from method VirtualWans.UpdateTags.
+type VirtualWansUpdateTagsResult struct {
+	VirtualWAN
+}
+
+// WebApplicationFirewallPoliciesCreateOrUpdateResponse contains the response from method WebApplicationFirewallPolicies.CreateOrUpdate.
+type WebApplicationFirewallPoliciesCreateOrUpdateResponse struct {
+	WebApplicationFirewallPoliciesCreateOrUpdateResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// WebApplicationFirewallPoliciesCreateOrUpdateResult contains the result from method WebApplicationFirewallPolicies.CreateOrUpdate.
+type WebApplicationFirewallPoliciesCreateOrUpdateResult struct {
+	WebApplicationFirewallPolicy
+}
+
+// WebApplicationFirewallPoliciesDeletePollerResponse contains the response from method WebApplicationFirewallPolicies.Delete.
+type WebApplicationFirewallPoliciesDeletePollerResponse struct {
+	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
+	PollUntilDone func(ctx context.Context, frequency time.Duration) (WebApplicationFirewallPoliciesDeleteResponse, error)
+
+	// Poller contains an initialized poller.
+	Poller WebApplicationFirewallPoliciesDeletePoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// WebApplicationFirewallPoliciesDeleteResponse contains the response from method WebApplicationFirewallPolicies.Delete.
+type WebApplicationFirewallPoliciesDeleteResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// WebApplicationFirewallPoliciesGetResponse contains the response from method WebApplicationFirewallPolicies.Get.
+type WebApplicationFirewallPoliciesGetResponse struct {
+	WebApplicationFirewallPoliciesGetResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// WebApplicationFirewallPoliciesGetResult contains the result from method WebApplicationFirewallPolicies.Get.
+type WebApplicationFirewallPoliciesGetResult struct {
+	WebApplicationFirewallPolicy
+}
+
+// WebApplicationFirewallPoliciesListAllResponse contains the response from method WebApplicationFirewallPolicies.ListAll.
+type WebApplicationFirewallPoliciesListAllResponse struct {
+	WebApplicationFirewallPoliciesListAllResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// WebApplicationFirewallPoliciesListAllResult contains the result from method WebApplicationFirewallPolicies.ListAll.
+type WebApplicationFirewallPoliciesListAllResult struct {
+	WebApplicationFirewallPolicyListResult
+}
+
+// WebApplicationFirewallPoliciesListResponse contains the response from method WebApplicationFirewallPolicies.List.
+type WebApplicationFirewallPoliciesListResponse struct {
+	WebApplicationFirewallPoliciesListResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// WebApplicationFirewallPoliciesListResult contains the result from method WebApplicationFirewallPolicies.List.
+type WebApplicationFirewallPoliciesListResult struct {
+	WebApplicationFirewallPolicyListResult
 }

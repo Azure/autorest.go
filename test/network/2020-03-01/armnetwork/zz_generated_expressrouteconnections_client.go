@@ -33,47 +33,47 @@ func NewExpressRouteConnectionsClient(con *armcore.Connection, subscriptionID st
 
 // BeginCreateOrUpdate - Creates a connection between an ExpressRoute gateway and an ExpressRoute circuit.
 // If the operation fails it returns the *CloudError error type.
-func (client *ExpressRouteConnectionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, connectionName string, putExpressRouteConnectionParameters ExpressRouteConnection, options *ExpressRouteConnectionsBeginCreateOrUpdateOptions) (ExpressRouteConnectionPollerResponse, error) {
+func (client *ExpressRouteConnectionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, connectionName string, putExpressRouteConnectionParameters ExpressRouteConnection, options *ExpressRouteConnectionsBeginCreateOrUpdateOptions) (ExpressRouteConnectionsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, expressRouteGatewayName, connectionName, putExpressRouteConnectionParameters, options)
 	if err != nil {
-		return ExpressRouteConnectionPollerResponse{}, err
+		return ExpressRouteConnectionsCreateOrUpdatePollerResponse{}, err
 	}
-	result := ExpressRouteConnectionPollerResponse{
+	result := ExpressRouteConnectionsCreateOrUpdatePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("ExpressRouteConnectionsClient.CreateOrUpdate", "azure-async-operation", resp, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return ExpressRouteConnectionPollerResponse{}, err
+		return ExpressRouteConnectionsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &expressRouteConnectionPoller{
+	poller := &expressRouteConnectionsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteConnectionResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteConnectionsCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new ExpressRouteConnectionPoller from the specified resume token.
-// token - The value must come from a previous call to ExpressRouteConnectionPoller.ResumeToken().
-func (client *ExpressRouteConnectionsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (ExpressRouteConnectionPollerResponse, error) {
+// ResumeCreateOrUpdate creates a new ExpressRouteConnectionsCreateOrUpdatePoller from the specified resume token.
+// token - The value must come from a previous call to ExpressRouteConnectionsCreateOrUpdatePoller.ResumeToken().
+func (client *ExpressRouteConnectionsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (ExpressRouteConnectionsCreateOrUpdatePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("ExpressRouteConnectionsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return ExpressRouteConnectionPollerResponse{}, err
+		return ExpressRouteConnectionsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &expressRouteConnectionPoller{
+	poller := &expressRouteConnectionsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return ExpressRouteConnectionPollerResponse{}, err
+		return ExpressRouteConnectionsCreateOrUpdatePollerResponse{}, err
 	}
-	result := ExpressRouteConnectionPollerResponse{
+	result := ExpressRouteConnectionsCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteConnectionResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteConnectionsCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -142,47 +142,47 @@ func (client *ExpressRouteConnectionsClient) createOrUpdateHandleError(resp *azc
 
 // BeginDelete - Deletes a connection to a ExpressRoute circuit.
 // If the operation fails it returns the *CloudError error type.
-func (client *ExpressRouteConnectionsClient) BeginDelete(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, connectionName string, options *ExpressRouteConnectionsBeginDeleteOptions) (HTTPPollerResponse, error) {
+func (client *ExpressRouteConnectionsClient) BeginDelete(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, connectionName string, options *ExpressRouteConnectionsBeginDeleteOptions) (ExpressRouteConnectionsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, expressRouteGatewayName, connectionName, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return ExpressRouteConnectionsDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := ExpressRouteConnectionsDeletePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("ExpressRouteConnectionsClient.Delete", "location", resp, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return ExpressRouteConnectionsDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &expressRouteConnectionsDeletePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteConnectionsDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeDelete creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *ExpressRouteConnectionsClient) ResumeDelete(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeDelete creates a new ExpressRouteConnectionsDeletePoller from the specified resume token.
+// token - The value must come from a previous call to ExpressRouteConnectionsDeletePoller.ResumeToken().
+func (client *ExpressRouteConnectionsClient) ResumeDelete(ctx context.Context, token string) (ExpressRouteConnectionsDeletePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("ExpressRouteConnectionsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return ExpressRouteConnectionsDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &expressRouteConnectionsDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return ExpressRouteConnectionsDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := ExpressRouteConnectionsDeletePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteConnectionsDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -251,17 +251,17 @@ func (client *ExpressRouteConnectionsClient) deleteHandleError(resp *azcore.Resp
 
 // Get - Gets the specified ExpressRouteConnection.
 // If the operation fails it returns the *CloudError error type.
-func (client *ExpressRouteConnectionsClient) Get(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, connectionName string, options *ExpressRouteConnectionsGetOptions) (ExpressRouteConnectionResponse, error) {
+func (client *ExpressRouteConnectionsClient) Get(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, connectionName string, options *ExpressRouteConnectionsGetOptions) (ExpressRouteConnectionsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, expressRouteGatewayName, connectionName, options)
 	if err != nil {
-		return ExpressRouteConnectionResponse{}, err
+		return ExpressRouteConnectionsGetResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return ExpressRouteConnectionResponse{}, err
+		return ExpressRouteConnectionsGetResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return ExpressRouteConnectionResponse{}, client.getHandleError(resp)
+		return ExpressRouteConnectionsGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -298,12 +298,12 @@ func (client *ExpressRouteConnectionsClient) getCreateRequest(ctx context.Contex
 }
 
 // getHandleResponse handles the Get response.
-func (client *ExpressRouteConnectionsClient) getHandleResponse(resp *azcore.Response) (ExpressRouteConnectionResponse, error) {
-	var val *ExpressRouteConnection
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ExpressRouteConnectionResponse{}, err
+func (client *ExpressRouteConnectionsClient) getHandleResponse(resp *azcore.Response) (ExpressRouteConnectionsGetResponse, error) {
+	result := ExpressRouteConnectionsGetResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.ExpressRouteConnection); err != nil {
+		return ExpressRouteConnectionsGetResponse{}, err
 	}
-	return ExpressRouteConnectionResponse{RawResponse: resp.Response, ExpressRouteConnection: val}, nil
+	return result, nil
 }
 
 // getHandleError handles the Get error response.
@@ -321,17 +321,17 @@ func (client *ExpressRouteConnectionsClient) getHandleError(resp *azcore.Respons
 
 // List - Lists ExpressRouteConnections.
 // If the operation fails it returns the *CloudError error type.
-func (client *ExpressRouteConnectionsClient) List(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, options *ExpressRouteConnectionsListOptions) (ExpressRouteConnectionListResponse, error) {
+func (client *ExpressRouteConnectionsClient) List(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, options *ExpressRouteConnectionsListOptions) (ExpressRouteConnectionsListResponse, error) {
 	req, err := client.listCreateRequest(ctx, resourceGroupName, expressRouteGatewayName, options)
 	if err != nil {
-		return ExpressRouteConnectionListResponse{}, err
+		return ExpressRouteConnectionsListResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return ExpressRouteConnectionListResponse{}, err
+		return ExpressRouteConnectionsListResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return ExpressRouteConnectionListResponse{}, client.listHandleError(resp)
+		return ExpressRouteConnectionsListResponse{}, client.listHandleError(resp)
 	}
 	return client.listHandleResponse(resp)
 }
@@ -364,12 +364,12 @@ func (client *ExpressRouteConnectionsClient) listCreateRequest(ctx context.Conte
 }
 
 // listHandleResponse handles the List response.
-func (client *ExpressRouteConnectionsClient) listHandleResponse(resp *azcore.Response) (ExpressRouteConnectionListResponse, error) {
-	var val *ExpressRouteConnectionList
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ExpressRouteConnectionListResponse{}, err
+func (client *ExpressRouteConnectionsClient) listHandleResponse(resp *azcore.Response) (ExpressRouteConnectionsListResponse, error) {
+	result := ExpressRouteConnectionsListResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.ExpressRouteConnectionList); err != nil {
+		return ExpressRouteConnectionsListResponse{}, err
 	}
-	return ExpressRouteConnectionListResponse{RawResponse: resp.Response, ExpressRouteConnectionList: val}, nil
+	return result, nil
 }
 
 // listHandleError handles the List error response.

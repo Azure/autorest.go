@@ -9,11 +9,44 @@ package validationgroup
 
 import "net/http"
 
-// ProductResponse is the response envelope for operations that return a Product type.
-type ProductResponse struct {
-	// The product documentation.
-	Product *Product
-
+// AutoRestValidationTestGetWithConstantInPathResponse contains the response from method AutoRestValidationTest.GetWithConstantInPath.
+type AutoRestValidationTestGetWithConstantInPathResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// AutoRestValidationTestPostWithConstantInBodyResponse contains the response from method AutoRestValidationTest.PostWithConstantInBody.
+type AutoRestValidationTestPostWithConstantInBodyResponse struct {
+	AutoRestValidationTestPostWithConstantInBodyResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// AutoRestValidationTestPostWithConstantInBodyResult contains the result from method AutoRestValidationTest.PostWithConstantInBody.
+type AutoRestValidationTestPostWithConstantInBodyResult struct {
+	Product
+}
+
+// AutoRestValidationTestValidationOfBodyResponse contains the response from method AutoRestValidationTest.ValidationOfBody.
+type AutoRestValidationTestValidationOfBodyResponse struct {
+	AutoRestValidationTestValidationOfBodyResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// AutoRestValidationTestValidationOfBodyResult contains the result from method AutoRestValidationTest.ValidationOfBody.
+type AutoRestValidationTestValidationOfBodyResult struct {
+	Product
+}
+
+// AutoRestValidationTestValidationOfMethodParametersResponse contains the response from method AutoRestValidationTest.ValidationOfMethodParameters.
+type AutoRestValidationTestValidationOfMethodParametersResponse struct {
+	AutoRestValidationTestValidationOfMethodParametersResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// AutoRestValidationTestValidationOfMethodParametersResult contains the result from method AutoRestValidationTest.ValidationOfMethodParameters.
+type AutoRestValidationTestValidationOfMethodParametersResult struct {
+	Product
 }

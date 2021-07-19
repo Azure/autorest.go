@@ -31,17 +31,17 @@ func NewVirtualMachineRunCommandsClient(con *armcore.Connection, subscriptionID 
 
 // Get - Gets specific run command for a subscription in a location.
 // If the operation fails it returns a generic error.
-func (client *VirtualMachineRunCommandsClient) Get(ctx context.Context, location string, commandID string, options *VirtualMachineRunCommandsGetOptions) (RunCommandDocumentResponse, error) {
+func (client *VirtualMachineRunCommandsClient) Get(ctx context.Context, location string, commandID string, options *VirtualMachineRunCommandsGetOptions) (VirtualMachineRunCommandsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, location, commandID, options)
 	if err != nil {
-		return RunCommandDocumentResponse{}, err
+		return VirtualMachineRunCommandsGetResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return RunCommandDocumentResponse{}, err
+		return VirtualMachineRunCommandsGetResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return RunCommandDocumentResponse{}, client.getHandleError(resp)
+		return VirtualMachineRunCommandsGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -74,12 +74,12 @@ func (client *VirtualMachineRunCommandsClient) getCreateRequest(ctx context.Cont
 }
 
 // getHandleResponse handles the Get response.
-func (client *VirtualMachineRunCommandsClient) getHandleResponse(resp *azcore.Response) (RunCommandDocumentResponse, error) {
-	var val *RunCommandDocument
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return RunCommandDocumentResponse{}, err
+func (client *VirtualMachineRunCommandsClient) getHandleResponse(resp *azcore.Response) (VirtualMachineRunCommandsGetResponse, error) {
+	result := VirtualMachineRunCommandsGetResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.RunCommandDocument); err != nil {
+		return VirtualMachineRunCommandsGetResponse{}, err
 	}
-	return RunCommandDocumentResponse{RawResponse: resp.Response, RunCommandDocument: val}, nil
+	return result, nil
 }
 
 // getHandleError handles the Get error response.
@@ -96,18 +96,15 @@ func (client *VirtualMachineRunCommandsClient) getHandleError(resp *azcore.Respo
 
 // List - Lists all available run commands for a subscription in a location.
 // If the operation fails it returns a generic error.
-func (client *VirtualMachineRunCommandsClient) List(location string, options *VirtualMachineRunCommandsListOptions) RunCommandListResultPager {
-	return &runCommandListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *VirtualMachineRunCommandsClient) List(location string, options *VirtualMachineRunCommandsListOptions) VirtualMachineRunCommandsListPager {
+	return &virtualMachineRunCommandsListPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, location, options)
 		},
-		responder: client.listHandleResponse,
-		errorer:   client.listHandleError,
-		advancer: func(ctx context.Context, resp RunCommandListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp VirtualMachineRunCommandsListResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.RunCommandListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -135,12 +132,12 @@ func (client *VirtualMachineRunCommandsClient) listCreateRequest(ctx context.Con
 }
 
 // listHandleResponse handles the List response.
-func (client *VirtualMachineRunCommandsClient) listHandleResponse(resp *azcore.Response) (RunCommandListResultResponse, error) {
-	var val *RunCommandListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return RunCommandListResultResponse{}, err
+func (client *VirtualMachineRunCommandsClient) listHandleResponse(resp *azcore.Response) (VirtualMachineRunCommandsListResponse, error) {
+	result := VirtualMachineRunCommandsListResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.RunCommandListResult); err != nil {
+		return VirtualMachineRunCommandsListResponse{}, err
 	}
-	return RunCommandListResultResponse{RawResponse: resp.Response, RunCommandListResult: val}, nil
+	return result, nil
 }
 
 // listHandleError handles the List error response.

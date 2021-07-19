@@ -33,47 +33,47 @@ func NewSubnetsClient(con *armcore.Connection, subscriptionID string) *SubnetsCl
 
 // BeginCreateOrUpdate - Creates or updates a subnet in the specified virtual network.
 // If the operation fails it returns the *CloudError error type.
-func (client *SubnetsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, subnetParameters Subnet, options *SubnetsBeginCreateOrUpdateOptions) (SubnetPollerResponse, error) {
+func (client *SubnetsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, subnetParameters Subnet, options *SubnetsBeginCreateOrUpdateOptions) (SubnetsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualNetworkName, subnetName, subnetParameters, options)
 	if err != nil {
-		return SubnetPollerResponse{}, err
+		return SubnetsCreateOrUpdatePollerResponse{}, err
 	}
-	result := SubnetPollerResponse{
+	result := SubnetsCreateOrUpdatePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("SubnetsClient.CreateOrUpdate", "azure-async-operation", resp, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return SubnetPollerResponse{}, err
+		return SubnetsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &subnetPoller{
+	poller := &subnetsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SubnetResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SubnetsCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new SubnetPoller from the specified resume token.
-// token - The value must come from a previous call to SubnetPoller.ResumeToken().
-func (client *SubnetsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (SubnetPollerResponse, error) {
+// ResumeCreateOrUpdate creates a new SubnetsCreateOrUpdatePoller from the specified resume token.
+// token - The value must come from a previous call to SubnetsCreateOrUpdatePoller.ResumeToken().
+func (client *SubnetsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (SubnetsCreateOrUpdatePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("SubnetsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return SubnetPollerResponse{}, err
+		return SubnetsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &subnetPoller{
+	poller := &subnetsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return SubnetPollerResponse{}, err
+		return SubnetsCreateOrUpdatePollerResponse{}, err
 	}
-	result := SubnetPollerResponse{
+	result := SubnetsCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SubnetResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SubnetsCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -142,47 +142,47 @@ func (client *SubnetsClient) createOrUpdateHandleError(resp *azcore.Response) er
 
 // BeginDelete - Deletes the specified subnet.
 // If the operation fails it returns the *CloudError error type.
-func (client *SubnetsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, options *SubnetsBeginDeleteOptions) (HTTPPollerResponse, error) {
+func (client *SubnetsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, options *SubnetsBeginDeleteOptions) (SubnetsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, virtualNetworkName, subnetName, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return SubnetsDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := SubnetsDeletePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("SubnetsClient.Delete", "location", resp, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return SubnetsDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &subnetsDeletePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SubnetsDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeDelete creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *SubnetsClient) ResumeDelete(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeDelete creates a new SubnetsDeletePoller from the specified resume token.
+// token - The value must come from a previous call to SubnetsDeletePoller.ResumeToken().
+func (client *SubnetsClient) ResumeDelete(ctx context.Context, token string) (SubnetsDeletePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("SubnetsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return SubnetsDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &subnetsDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return SubnetsDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := SubnetsDeletePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SubnetsDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -251,17 +251,17 @@ func (client *SubnetsClient) deleteHandleError(resp *azcore.Response) error {
 
 // Get - Gets the specified subnet by virtual network and resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *SubnetsClient) Get(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, options *SubnetsGetOptions) (SubnetResponse, error) {
+func (client *SubnetsClient) Get(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, options *SubnetsGetOptions) (SubnetsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, virtualNetworkName, subnetName, options)
 	if err != nil {
-		return SubnetResponse{}, err
+		return SubnetsGetResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return SubnetResponse{}, err
+		return SubnetsGetResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return SubnetResponse{}, client.getHandleError(resp)
+		return SubnetsGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -301,12 +301,12 @@ func (client *SubnetsClient) getCreateRequest(ctx context.Context, resourceGroup
 }
 
 // getHandleResponse handles the Get response.
-func (client *SubnetsClient) getHandleResponse(resp *azcore.Response) (SubnetResponse, error) {
-	var val *Subnet
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return SubnetResponse{}, err
+func (client *SubnetsClient) getHandleResponse(resp *azcore.Response) (SubnetsGetResponse, error) {
+	result := SubnetsGetResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.Subnet); err != nil {
+		return SubnetsGetResponse{}, err
 	}
-	return SubnetResponse{RawResponse: resp.Response, Subnet: val}, nil
+	return result, nil
 }
 
 // getHandleError handles the Get error response.
@@ -324,18 +324,15 @@ func (client *SubnetsClient) getHandleError(resp *azcore.Response) error {
 
 // List - Gets all subnets in a virtual network.
 // If the operation fails it returns the *CloudError error type.
-func (client *SubnetsClient) List(resourceGroupName string, virtualNetworkName string, options *SubnetsListOptions) SubnetListResultPager {
-	return &subnetListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *SubnetsClient) List(resourceGroupName string, virtualNetworkName string, options *SubnetsListOptions) SubnetsListPager {
+	return &subnetsListPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, virtualNetworkName, options)
 		},
-		responder: client.listHandleResponse,
-		errorer:   client.listHandleError,
-		advancer: func(ctx context.Context, resp SubnetListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp SubnetsListResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.SubnetListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -367,12 +364,12 @@ func (client *SubnetsClient) listCreateRequest(ctx context.Context, resourceGrou
 }
 
 // listHandleResponse handles the List response.
-func (client *SubnetsClient) listHandleResponse(resp *azcore.Response) (SubnetListResultResponse, error) {
-	var val *SubnetListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return SubnetListResultResponse{}, err
+func (client *SubnetsClient) listHandleResponse(resp *azcore.Response) (SubnetsListResponse, error) {
+	result := SubnetsListResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.SubnetListResult); err != nil {
+		return SubnetsListResponse{}, err
 	}
-	return SubnetListResultResponse{RawResponse: resp.Response, SubnetListResult: val}, nil
+	return result, nil
 }
 
 // listHandleError handles the List error response.
@@ -390,47 +387,47 @@ func (client *SubnetsClient) listHandleError(resp *azcore.Response) error {
 
 // BeginPrepareNetworkPolicies - Prepares a subnet by applying network intent policies.
 // If the operation fails it returns the *CloudError error type.
-func (client *SubnetsClient) BeginPrepareNetworkPolicies(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, prepareNetworkPoliciesRequestParameters PrepareNetworkPoliciesRequest, options *SubnetsBeginPrepareNetworkPoliciesOptions) (HTTPPollerResponse, error) {
+func (client *SubnetsClient) BeginPrepareNetworkPolicies(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, prepareNetworkPoliciesRequestParameters PrepareNetworkPoliciesRequest, options *SubnetsBeginPrepareNetworkPoliciesOptions) (SubnetsPrepareNetworkPoliciesPollerResponse, error) {
 	resp, err := client.prepareNetworkPolicies(ctx, resourceGroupName, virtualNetworkName, subnetName, prepareNetworkPoliciesRequestParameters, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return SubnetsPrepareNetworkPoliciesPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := SubnetsPrepareNetworkPoliciesPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("SubnetsClient.PrepareNetworkPolicies", "location", resp, client.con.Pipeline(), client.prepareNetworkPoliciesHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return SubnetsPrepareNetworkPoliciesPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &subnetsPrepareNetworkPoliciesPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SubnetsPrepareNetworkPoliciesResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumePrepareNetworkPolicies creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *SubnetsClient) ResumePrepareNetworkPolicies(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumePrepareNetworkPolicies creates a new SubnetsPrepareNetworkPoliciesPoller from the specified resume token.
+// token - The value must come from a previous call to SubnetsPrepareNetworkPoliciesPoller.ResumeToken().
+func (client *SubnetsClient) ResumePrepareNetworkPolicies(ctx context.Context, token string) (SubnetsPrepareNetworkPoliciesPollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("SubnetsClient.PrepareNetworkPolicies", token, client.con.Pipeline(), client.prepareNetworkPoliciesHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return SubnetsPrepareNetworkPoliciesPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &subnetsPrepareNetworkPoliciesPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return SubnetsPrepareNetworkPoliciesPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := SubnetsPrepareNetworkPoliciesPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SubnetsPrepareNetworkPoliciesResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -499,47 +496,47 @@ func (client *SubnetsClient) prepareNetworkPoliciesHandleError(resp *azcore.Resp
 
 // BeginUnprepareNetworkPolicies - Unprepares a subnet by removing network intent policies.
 // If the operation fails it returns the *CloudError error type.
-func (client *SubnetsClient) BeginUnprepareNetworkPolicies(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, unprepareNetworkPoliciesRequestParameters UnprepareNetworkPoliciesRequest, options *SubnetsBeginUnprepareNetworkPoliciesOptions) (HTTPPollerResponse, error) {
+func (client *SubnetsClient) BeginUnprepareNetworkPolicies(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, unprepareNetworkPoliciesRequestParameters UnprepareNetworkPoliciesRequest, options *SubnetsBeginUnprepareNetworkPoliciesOptions) (SubnetsUnprepareNetworkPoliciesPollerResponse, error) {
 	resp, err := client.unprepareNetworkPolicies(ctx, resourceGroupName, virtualNetworkName, subnetName, unprepareNetworkPoliciesRequestParameters, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return SubnetsUnprepareNetworkPoliciesPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := SubnetsUnprepareNetworkPoliciesPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("SubnetsClient.UnprepareNetworkPolicies", "location", resp, client.con.Pipeline(), client.unprepareNetworkPoliciesHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return SubnetsUnprepareNetworkPoliciesPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &subnetsUnprepareNetworkPoliciesPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SubnetsUnprepareNetworkPoliciesResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeUnprepareNetworkPolicies creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *SubnetsClient) ResumeUnprepareNetworkPolicies(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeUnprepareNetworkPolicies creates a new SubnetsUnprepareNetworkPoliciesPoller from the specified resume token.
+// token - The value must come from a previous call to SubnetsUnprepareNetworkPoliciesPoller.ResumeToken().
+func (client *SubnetsClient) ResumeUnprepareNetworkPolicies(ctx context.Context, token string) (SubnetsUnprepareNetworkPoliciesPollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("SubnetsClient.UnprepareNetworkPolicies", token, client.con.Pipeline(), client.unprepareNetworkPoliciesHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return SubnetsUnprepareNetworkPoliciesPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &subnetsUnprepareNetworkPoliciesPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return SubnetsUnprepareNetworkPoliciesPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := SubnetsUnprepareNetworkPoliciesPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SubnetsUnprepareNetworkPoliciesResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil

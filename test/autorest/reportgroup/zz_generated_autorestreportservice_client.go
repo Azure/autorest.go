@@ -27,17 +27,17 @@ func NewAutoRestReportServiceClient(con *Connection) *AutoRestReportServiceClien
 
 // GetOptionalReport - Get optional test coverage report
 // If the operation fails it returns the *Error error type.
-func (client *AutoRestReportServiceClient) GetOptionalReport(ctx context.Context, options *AutoRestReportServiceGetOptionalReportOptions) (MapOfInt32Response, error) {
+func (client *AutoRestReportServiceClient) GetOptionalReport(ctx context.Context, options *AutoRestReportServiceGetOptionalReportOptions) (AutoRestReportServiceGetOptionalReportResponse, error) {
 	req, err := client.getOptionalReportCreateRequest(ctx, options)
 	if err != nil {
-		return MapOfInt32Response{}, err
+		return AutoRestReportServiceGetOptionalReportResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return MapOfInt32Response{}, err
+		return AutoRestReportServiceGetOptionalReportResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return MapOfInt32Response{}, client.getOptionalReportHandleError(resp)
+		return AutoRestReportServiceGetOptionalReportResponse{}, client.getOptionalReportHandleError(resp)
 	}
 	return client.getOptionalReportHandleResponse(resp)
 }
@@ -60,12 +60,12 @@ func (client *AutoRestReportServiceClient) getOptionalReportCreateRequest(ctx co
 }
 
 // getOptionalReportHandleResponse handles the GetOptionalReport response.
-func (client *AutoRestReportServiceClient) getOptionalReportHandleResponse(resp *azcore.Response) (MapOfInt32Response, error) {
-	var val map[string]*int32
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return MapOfInt32Response{}, err
+func (client *AutoRestReportServiceClient) getOptionalReportHandleResponse(resp *azcore.Response) (AutoRestReportServiceGetOptionalReportResponse, error) {
+	result := AutoRestReportServiceGetOptionalReportResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.Value); err != nil {
+		return AutoRestReportServiceGetOptionalReportResponse{}, err
 	}
-	return MapOfInt32Response{RawResponse: resp.Response, Value: val}, nil
+	return result, nil
 }
 
 // getOptionalReportHandleError handles the GetOptionalReport error response.
@@ -83,17 +83,17 @@ func (client *AutoRestReportServiceClient) getOptionalReportHandleError(resp *az
 
 // GetReport - Get test coverage report
 // If the operation fails it returns the *Error error type.
-func (client *AutoRestReportServiceClient) GetReport(ctx context.Context, options *AutoRestReportServiceGetReportOptions) (MapOfInt32Response, error) {
+func (client *AutoRestReportServiceClient) GetReport(ctx context.Context, options *AutoRestReportServiceGetReportOptions) (AutoRestReportServiceGetReportResponse, error) {
 	req, err := client.getReportCreateRequest(ctx, options)
 	if err != nil {
-		return MapOfInt32Response{}, err
+		return AutoRestReportServiceGetReportResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return MapOfInt32Response{}, err
+		return AutoRestReportServiceGetReportResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return MapOfInt32Response{}, client.getReportHandleError(resp)
+		return AutoRestReportServiceGetReportResponse{}, client.getReportHandleError(resp)
 	}
 	return client.getReportHandleResponse(resp)
 }
@@ -116,12 +116,12 @@ func (client *AutoRestReportServiceClient) getReportCreateRequest(ctx context.Co
 }
 
 // getReportHandleResponse handles the GetReport response.
-func (client *AutoRestReportServiceClient) getReportHandleResponse(resp *azcore.Response) (MapOfInt32Response, error) {
-	var val map[string]*int32
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return MapOfInt32Response{}, err
+func (client *AutoRestReportServiceClient) getReportHandleResponse(resp *azcore.Response) (AutoRestReportServiceGetReportResponse, error) {
+	result := AutoRestReportServiceGetReportResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.Value); err != nil {
+		return AutoRestReportServiceGetReportResponse{}, err
 	}
-	return MapOfInt32Response{RawResponse: resp.Response, Value: val}, nil
+	return result, nil
 }
 
 // getReportHandleError handles the GetReport error response.

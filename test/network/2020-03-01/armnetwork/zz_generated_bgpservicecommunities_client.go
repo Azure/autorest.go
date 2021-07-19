@@ -32,18 +32,15 @@ func NewBgpServiceCommunitiesClient(con *armcore.Connection, subscriptionID stri
 
 // List - Gets all the available bgp service communities.
 // If the operation fails it returns the *CloudError error type.
-func (client *BgpServiceCommunitiesClient) List(options *BgpServiceCommunitiesListOptions) BgpServiceCommunityListResultPager {
-	return &bgpServiceCommunityListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *BgpServiceCommunitiesClient) List(options *BgpServiceCommunitiesListOptions) BgpServiceCommunitiesListPager {
+	return &bgpServiceCommunitiesListPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, options)
 		},
-		responder: client.listHandleResponse,
-		errorer:   client.listHandleError,
-		advancer: func(ctx context.Context, resp BgpServiceCommunityListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp BgpServiceCommunitiesListResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.BgpServiceCommunityListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -67,12 +64,12 @@ func (client *BgpServiceCommunitiesClient) listCreateRequest(ctx context.Context
 }
 
 // listHandleResponse handles the List response.
-func (client *BgpServiceCommunitiesClient) listHandleResponse(resp *azcore.Response) (BgpServiceCommunityListResultResponse, error) {
-	var val *BgpServiceCommunityListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return BgpServiceCommunityListResultResponse{}, err
+func (client *BgpServiceCommunitiesClient) listHandleResponse(resp *azcore.Response) (BgpServiceCommunitiesListResponse, error) {
+	result := BgpServiceCommunitiesListResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.BgpServiceCommunityListResult); err != nil {
+		return BgpServiceCommunitiesListResponse{}, err
 	}
-	return BgpServiceCommunityListResultResponse{RawResponse: resp.Response, BgpServiceCommunityListResult: val}, nil
+	return result, nil
 }
 
 // listHandleError handles the List error response.

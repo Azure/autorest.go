@@ -29,47 +29,47 @@ func NewLROSADsClient(con *Connection) *LROSADsClient {
 
 // BeginDelete202NonRetry400 - Long running delete request, service returns a 202 with a location header
 // If the operation fails it returns the *CloudError error type.
-func (client *LROSADsClient) BeginDelete202NonRetry400(ctx context.Context, options *LROSADsBeginDelete202NonRetry400Options) (HTTPPollerResponse, error) {
+func (client *LROSADsClient) BeginDelete202NonRetry400(ctx context.Context, options *LROSADsBeginDelete202NonRetry400Options) (LROSADsDelete202NonRetry400PollerResponse, error) {
 	resp, err := client.delete202NonRetry400(ctx, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsDelete202NonRetry400PollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := LROSADsDelete202NonRetry400PollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("LROSADsClient.Delete202NonRetry400", "", resp, client.con.Pipeline(), client.delete202NonRetry400HandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsDelete202NonRetry400PollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &lrosaDsDelete202NonRetry400Poller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsDelete202NonRetry400Response, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeDelete202NonRetry400 creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *LROSADsClient) ResumeDelete202NonRetry400(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeDelete202NonRetry400 creates a new LROSADsDelete202NonRetry400Poller from the specified resume token.
+// token - The value must come from a previous call to LROSADsDelete202NonRetry400Poller.ResumeToken().
+func (client *LROSADsClient) ResumeDelete202NonRetry400(ctx context.Context, token string) (LROSADsDelete202NonRetry400PollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("LROSADsClient.Delete202NonRetry400", token, client.con.Pipeline(), client.delete202NonRetry400HandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsDelete202NonRetry400PollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &lrosaDsDelete202NonRetry400Poller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsDelete202NonRetry400PollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := LROSADsDelete202NonRetry400PollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsDelete202NonRetry400Response, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -120,47 +120,47 @@ func (client *LROSADsClient) delete202NonRetry400HandleError(resp *azcore.Respon
 // BeginDelete202RetryInvalidHeader - Long running delete request, service returns a 202 to the initial request receing a reponse with an invalid 'Location'
 // and 'Retry-After' headers
 // If the operation fails it returns the *CloudError error type.
-func (client *LROSADsClient) BeginDelete202RetryInvalidHeader(ctx context.Context, options *LROSADsBeginDelete202RetryInvalidHeaderOptions) (HTTPPollerResponse, error) {
+func (client *LROSADsClient) BeginDelete202RetryInvalidHeader(ctx context.Context, options *LROSADsBeginDelete202RetryInvalidHeaderOptions) (LROSADsDelete202RetryInvalidHeaderPollerResponse, error) {
 	resp, err := client.delete202RetryInvalidHeader(ctx, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsDelete202RetryInvalidHeaderPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := LROSADsDelete202RetryInvalidHeaderPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("LROSADsClient.Delete202RetryInvalidHeader", "", resp, client.con.Pipeline(), client.delete202RetryInvalidHeaderHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsDelete202RetryInvalidHeaderPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &lrosaDsDelete202RetryInvalidHeaderPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsDelete202RetryInvalidHeaderResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeDelete202RetryInvalidHeader creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *LROSADsClient) ResumeDelete202RetryInvalidHeader(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeDelete202RetryInvalidHeader creates a new LROSADsDelete202RetryInvalidHeaderPoller from the specified resume token.
+// token - The value must come from a previous call to LROSADsDelete202RetryInvalidHeaderPoller.ResumeToken().
+func (client *LROSADsClient) ResumeDelete202RetryInvalidHeader(ctx context.Context, token string) (LROSADsDelete202RetryInvalidHeaderPollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("LROSADsClient.Delete202RetryInvalidHeader", token, client.con.Pipeline(), client.delete202RetryInvalidHeaderHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsDelete202RetryInvalidHeaderPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &lrosaDsDelete202RetryInvalidHeaderPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsDelete202RetryInvalidHeaderPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := LROSADsDelete202RetryInvalidHeaderPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsDelete202RetryInvalidHeaderResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -211,47 +211,47 @@ func (client *LROSADsClient) delete202RetryInvalidHeaderHandleError(resp *azcore
 
 // BeginDelete204Succeeded - Long running delete request, service returns a 204 to the initial request, indicating success.
 // If the operation fails it returns the *CloudError error type.
-func (client *LROSADsClient) BeginDelete204Succeeded(ctx context.Context, options *LROSADsBeginDelete204SucceededOptions) (HTTPPollerResponse, error) {
+func (client *LROSADsClient) BeginDelete204Succeeded(ctx context.Context, options *LROSADsBeginDelete204SucceededOptions) (LROSADsDelete204SucceededPollerResponse, error) {
 	resp, err := client.delete204Succeeded(ctx, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsDelete204SucceededPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := LROSADsDelete204SucceededPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("LROSADsClient.Delete204Succeeded", "", resp, client.con.Pipeline(), client.delete204SucceededHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsDelete204SucceededPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &lrosaDsDelete204SucceededPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsDelete204SucceededResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeDelete204Succeeded creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *LROSADsClient) ResumeDelete204Succeeded(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeDelete204Succeeded creates a new LROSADsDelete204SucceededPoller from the specified resume token.
+// token - The value must come from a previous call to LROSADsDelete204SucceededPoller.ResumeToken().
+func (client *LROSADsClient) ResumeDelete204Succeeded(ctx context.Context, token string) (LROSADsDelete204SucceededPollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("LROSADsClient.Delete204Succeeded", token, client.con.Pipeline(), client.delete204SucceededHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsDelete204SucceededPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &lrosaDsDelete204SucceededPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsDelete204SucceededPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := LROSADsDelete204SucceededPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsDelete204SucceededResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -302,47 +302,47 @@ func (client *LROSADsClient) delete204SucceededHandleError(resp *azcore.Response
 // BeginDeleteAsyncRelativeRetry400 - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation
 // header for operation status
 // If the operation fails it returns the *CloudError error type.
-func (client *LROSADsClient) BeginDeleteAsyncRelativeRetry400(ctx context.Context, options *LROSADsBeginDeleteAsyncRelativeRetry400Options) (HTTPPollerResponse, error) {
+func (client *LROSADsClient) BeginDeleteAsyncRelativeRetry400(ctx context.Context, options *LROSADsBeginDeleteAsyncRelativeRetry400Options) (LROSADsDeleteAsyncRelativeRetry400PollerResponse, error) {
 	resp, err := client.deleteAsyncRelativeRetry400(ctx, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsDeleteAsyncRelativeRetry400PollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := LROSADsDeleteAsyncRelativeRetry400PollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("LROSADsClient.DeleteAsyncRelativeRetry400", "", resp, client.con.Pipeline(), client.deleteAsyncRelativeRetry400HandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsDeleteAsyncRelativeRetry400PollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &lrosaDsDeleteAsyncRelativeRetry400Poller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsDeleteAsyncRelativeRetry400Response, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeDeleteAsyncRelativeRetry400 creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *LROSADsClient) ResumeDeleteAsyncRelativeRetry400(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeDeleteAsyncRelativeRetry400 creates a new LROSADsDeleteAsyncRelativeRetry400Poller from the specified resume token.
+// token - The value must come from a previous call to LROSADsDeleteAsyncRelativeRetry400Poller.ResumeToken().
+func (client *LROSADsClient) ResumeDeleteAsyncRelativeRetry400(ctx context.Context, token string) (LROSADsDeleteAsyncRelativeRetry400PollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("LROSADsClient.DeleteAsyncRelativeRetry400", token, client.con.Pipeline(), client.deleteAsyncRelativeRetry400HandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsDeleteAsyncRelativeRetry400PollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &lrosaDsDeleteAsyncRelativeRetry400Poller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsDeleteAsyncRelativeRetry400PollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := LROSADsDeleteAsyncRelativeRetry400PollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsDeleteAsyncRelativeRetry400Response, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -394,47 +394,47 @@ func (client *LROSADsClient) deleteAsyncRelativeRetry400HandleError(resp *azcore
 // BeginDeleteAsyncRelativeRetryInvalidHeader - Long running delete request, service returns a 202 to the initial request. The endpoint indicated in the
 // Azure-AsyncOperation header is invalid
 // If the operation fails it returns the *CloudError error type.
-func (client *LROSADsClient) BeginDeleteAsyncRelativeRetryInvalidHeader(ctx context.Context, options *LROSADsBeginDeleteAsyncRelativeRetryInvalidHeaderOptions) (HTTPPollerResponse, error) {
+func (client *LROSADsClient) BeginDeleteAsyncRelativeRetryInvalidHeader(ctx context.Context, options *LROSADsBeginDeleteAsyncRelativeRetryInvalidHeaderOptions) (LROSADsDeleteAsyncRelativeRetryInvalidHeaderPollerResponse, error) {
 	resp, err := client.deleteAsyncRelativeRetryInvalidHeader(ctx, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsDeleteAsyncRelativeRetryInvalidHeaderPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := LROSADsDeleteAsyncRelativeRetryInvalidHeaderPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("LROSADsClient.DeleteAsyncRelativeRetryInvalidHeader", "", resp, client.con.Pipeline(), client.deleteAsyncRelativeRetryInvalidHeaderHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsDeleteAsyncRelativeRetryInvalidHeaderPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsDeleteAsyncRelativeRetryInvalidHeaderResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeDeleteAsyncRelativeRetryInvalidHeader creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *LROSADsClient) ResumeDeleteAsyncRelativeRetryInvalidHeader(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeDeleteAsyncRelativeRetryInvalidHeader creates a new LROSADsDeleteAsyncRelativeRetryInvalidHeaderPoller from the specified resume token.
+// token - The value must come from a previous call to LROSADsDeleteAsyncRelativeRetryInvalidHeaderPoller.ResumeToken().
+func (client *LROSADsClient) ResumeDeleteAsyncRelativeRetryInvalidHeader(ctx context.Context, token string) (LROSADsDeleteAsyncRelativeRetryInvalidHeaderPollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("LROSADsClient.DeleteAsyncRelativeRetryInvalidHeader", token, client.con.Pipeline(), client.deleteAsyncRelativeRetryInvalidHeaderHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsDeleteAsyncRelativeRetryInvalidHeaderPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &lrosaDsDeleteAsyncRelativeRetryInvalidHeaderPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsDeleteAsyncRelativeRetryInvalidHeaderPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := LROSADsDeleteAsyncRelativeRetryInvalidHeaderPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsDeleteAsyncRelativeRetryInvalidHeaderResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -486,47 +486,47 @@ func (client *LROSADsClient) deleteAsyncRelativeRetryInvalidHeaderHandleError(re
 // BeginDeleteAsyncRelativeRetryInvalidJSONPolling - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated
 // in the Azure-AsyncOperation header for operation status
 // If the operation fails it returns the *CloudError error type.
-func (client *LROSADsClient) BeginDeleteAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, options *LROSADsBeginDeleteAsyncRelativeRetryInvalidJSONPollingOptions) (HTTPPollerResponse, error) {
+func (client *LROSADsClient) BeginDeleteAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, options *LROSADsBeginDeleteAsyncRelativeRetryInvalidJSONPollingOptions) (LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingPollerResponse, error) {
 	resp, err := client.deleteAsyncRelativeRetryInvalidJSONPolling(ctx, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("LROSADsClient.DeleteAsyncRelativeRetryInvalidJSONPolling", "", resp, client.con.Pipeline(), client.deleteAsyncRelativeRetryInvalidJSONPollingHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeDeleteAsyncRelativeRetryInvalidJSONPolling creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *LROSADsClient) ResumeDeleteAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeDeleteAsyncRelativeRetryInvalidJSONPolling creates a new LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingPoller from the specified resume token.
+// token - The value must come from a previous call to LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingPoller.ResumeToken().
+func (client *LROSADsClient) ResumeDeleteAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, token string) (LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingPollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("LROSADsClient.DeleteAsyncRelativeRetryInvalidJSONPolling", token, client.con.Pipeline(), client.deleteAsyncRelativeRetryInvalidJSONPollingHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &lrosaDsDeleteAsyncRelativeRetryInvalidJSONPollingPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -578,47 +578,47 @@ func (client *LROSADsClient) deleteAsyncRelativeRetryInvalidJSONPollingHandleErr
 // BeginDeleteAsyncRelativeRetryNoStatus - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in the
 // Azure-AsyncOperation header for operation status
 // If the operation fails it returns the *CloudError error type.
-func (client *LROSADsClient) BeginDeleteAsyncRelativeRetryNoStatus(ctx context.Context, options *LROSADsBeginDeleteAsyncRelativeRetryNoStatusOptions) (HTTPPollerResponse, error) {
+func (client *LROSADsClient) BeginDeleteAsyncRelativeRetryNoStatus(ctx context.Context, options *LROSADsBeginDeleteAsyncRelativeRetryNoStatusOptions) (LROSADsDeleteAsyncRelativeRetryNoStatusPollerResponse, error) {
 	resp, err := client.deleteAsyncRelativeRetryNoStatus(ctx, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsDeleteAsyncRelativeRetryNoStatusPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := LROSADsDeleteAsyncRelativeRetryNoStatusPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("LROSADsClient.DeleteAsyncRelativeRetryNoStatus", "", resp, client.con.Pipeline(), client.deleteAsyncRelativeRetryNoStatusHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsDeleteAsyncRelativeRetryNoStatusPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &lrosaDsDeleteAsyncRelativeRetryNoStatusPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsDeleteAsyncRelativeRetryNoStatusResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeDeleteAsyncRelativeRetryNoStatus creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *LROSADsClient) ResumeDeleteAsyncRelativeRetryNoStatus(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeDeleteAsyncRelativeRetryNoStatus creates a new LROSADsDeleteAsyncRelativeRetryNoStatusPoller from the specified resume token.
+// token - The value must come from a previous call to LROSADsDeleteAsyncRelativeRetryNoStatusPoller.ResumeToken().
+func (client *LROSADsClient) ResumeDeleteAsyncRelativeRetryNoStatus(ctx context.Context, token string) (LROSADsDeleteAsyncRelativeRetryNoStatusPollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("LROSADsClient.DeleteAsyncRelativeRetryNoStatus", token, client.con.Pipeline(), client.deleteAsyncRelativeRetryNoStatusHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsDeleteAsyncRelativeRetryNoStatusPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &lrosaDsDeleteAsyncRelativeRetryNoStatusPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsDeleteAsyncRelativeRetryNoStatusPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := LROSADsDeleteAsyncRelativeRetryNoStatusPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsDeleteAsyncRelativeRetryNoStatusResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -669,47 +669,47 @@ func (client *LROSADsClient) deleteAsyncRelativeRetryNoStatusHandleError(resp *a
 
 // BeginDeleteNonRetry400 - Long running delete request, service returns a 400 with an error body
 // If the operation fails it returns the *CloudError error type.
-func (client *LROSADsClient) BeginDeleteNonRetry400(ctx context.Context, options *LROSADsBeginDeleteNonRetry400Options) (HTTPPollerResponse, error) {
+func (client *LROSADsClient) BeginDeleteNonRetry400(ctx context.Context, options *LROSADsBeginDeleteNonRetry400Options) (LROSADsDeleteNonRetry400PollerResponse, error) {
 	resp, err := client.deleteNonRetry400(ctx, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsDeleteNonRetry400PollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := LROSADsDeleteNonRetry400PollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("LROSADsClient.DeleteNonRetry400", "", resp, client.con.Pipeline(), client.deleteNonRetry400HandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsDeleteNonRetry400PollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &lrosaDsDeleteNonRetry400Poller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsDeleteNonRetry400Response, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeDeleteNonRetry400 creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *LROSADsClient) ResumeDeleteNonRetry400(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeDeleteNonRetry400 creates a new LROSADsDeleteNonRetry400Poller from the specified resume token.
+// token - The value must come from a previous call to LROSADsDeleteNonRetry400Poller.ResumeToken().
+func (client *LROSADsClient) ResumeDeleteNonRetry400(ctx context.Context, token string) (LROSADsDeleteNonRetry400PollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("LROSADsClient.DeleteNonRetry400", token, client.con.Pipeline(), client.deleteNonRetry400HandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsDeleteNonRetry400PollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &lrosaDsDeleteNonRetry400Poller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsDeleteNonRetry400PollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := LROSADsDeleteNonRetry400PollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsDeleteNonRetry400Response, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -759,47 +759,47 @@ func (client *LROSADsClient) deleteNonRetry400HandleError(resp *azcore.Response)
 
 // BeginPost202NoLocation - Long running post request, service returns a 202 to the initial request, without a location header.
 // If the operation fails it returns the *CloudError error type.
-func (client *LROSADsClient) BeginPost202NoLocation(ctx context.Context, options *LROSADsBeginPost202NoLocationOptions) (HTTPPollerResponse, error) {
+func (client *LROSADsClient) BeginPost202NoLocation(ctx context.Context, options *LROSADsBeginPost202NoLocationOptions) (LROSADsPost202NoLocationPollerResponse, error) {
 	resp, err := client.post202NoLocation(ctx, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsPost202NoLocationPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := LROSADsPost202NoLocationPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("LROSADsClient.Post202NoLocation", "", resp, client.con.Pipeline(), client.post202NoLocationHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsPost202NoLocationPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &lrosaDsPost202NoLocationPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsPost202NoLocationResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumePost202NoLocation creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *LROSADsClient) ResumePost202NoLocation(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumePost202NoLocation creates a new LROSADsPost202NoLocationPoller from the specified resume token.
+// token - The value must come from a previous call to LROSADsPost202NoLocationPoller.ResumeToken().
+func (client *LROSADsClient) ResumePost202NoLocation(ctx context.Context, token string) (LROSADsPost202NoLocationPollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("LROSADsClient.Post202NoLocation", token, client.con.Pipeline(), client.post202NoLocationHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsPost202NoLocationPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &lrosaDsPost202NoLocationPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsPost202NoLocationPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := LROSADsPost202NoLocationPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsPost202NoLocationResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -852,47 +852,47 @@ func (client *LROSADsClient) post202NoLocationHandleError(resp *azcore.Response)
 
 // BeginPost202NonRetry400 - Long running post request, service returns a 202 with a location header
 // If the operation fails it returns the *CloudError error type.
-func (client *LROSADsClient) BeginPost202NonRetry400(ctx context.Context, options *LROSADsBeginPost202NonRetry400Options) (HTTPPollerResponse, error) {
+func (client *LROSADsClient) BeginPost202NonRetry400(ctx context.Context, options *LROSADsBeginPost202NonRetry400Options) (LROSADsPost202NonRetry400PollerResponse, error) {
 	resp, err := client.post202NonRetry400(ctx, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsPost202NonRetry400PollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := LROSADsPost202NonRetry400PollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("LROSADsClient.Post202NonRetry400", "", resp, client.con.Pipeline(), client.post202NonRetry400HandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsPost202NonRetry400PollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &lrosaDsPost202NonRetry400Poller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsPost202NonRetry400Response, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumePost202NonRetry400 creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *LROSADsClient) ResumePost202NonRetry400(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumePost202NonRetry400 creates a new LROSADsPost202NonRetry400Poller from the specified resume token.
+// token - The value must come from a previous call to LROSADsPost202NonRetry400Poller.ResumeToken().
+func (client *LROSADsClient) ResumePost202NonRetry400(ctx context.Context, token string) (LROSADsPost202NonRetry400PollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("LROSADsClient.Post202NonRetry400", token, client.con.Pipeline(), client.post202NonRetry400HandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsPost202NonRetry400PollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &lrosaDsPost202NonRetry400Poller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsPost202NonRetry400PollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := LROSADsPost202NonRetry400PollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsPost202NonRetry400Response, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -945,47 +945,47 @@ func (client *LROSADsClient) post202NonRetry400HandleError(resp *azcore.Response
 
 // BeginPost202RetryInvalidHeader - Long running post request, service returns a 202 to the initial request, with invalid 'Location' and 'Retry-After' headers.
 // If the operation fails it returns the *CloudError error type.
-func (client *LROSADsClient) BeginPost202RetryInvalidHeader(ctx context.Context, options *LROSADsBeginPost202RetryInvalidHeaderOptions) (HTTPPollerResponse, error) {
+func (client *LROSADsClient) BeginPost202RetryInvalidHeader(ctx context.Context, options *LROSADsBeginPost202RetryInvalidHeaderOptions) (LROSADsPost202RetryInvalidHeaderPollerResponse, error) {
 	resp, err := client.post202RetryInvalidHeader(ctx, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsPost202RetryInvalidHeaderPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := LROSADsPost202RetryInvalidHeaderPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("LROSADsClient.Post202RetryInvalidHeader", "", resp, client.con.Pipeline(), client.post202RetryInvalidHeaderHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsPost202RetryInvalidHeaderPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &lrosaDsPost202RetryInvalidHeaderPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsPost202RetryInvalidHeaderResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumePost202RetryInvalidHeader creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *LROSADsClient) ResumePost202RetryInvalidHeader(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumePost202RetryInvalidHeader creates a new LROSADsPost202RetryInvalidHeaderPoller from the specified resume token.
+// token - The value must come from a previous call to LROSADsPost202RetryInvalidHeaderPoller.ResumeToken().
+func (client *LROSADsClient) ResumePost202RetryInvalidHeader(ctx context.Context, token string) (LROSADsPost202RetryInvalidHeaderPollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("LROSADsClient.Post202RetryInvalidHeader", token, client.con.Pipeline(), client.post202RetryInvalidHeaderHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsPost202RetryInvalidHeaderPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &lrosaDsPost202RetryInvalidHeaderPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsPost202RetryInvalidHeaderPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := LROSADsPost202RetryInvalidHeaderPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsPost202RetryInvalidHeaderResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -1039,47 +1039,47 @@ func (client *LROSADsClient) post202RetryInvalidHeaderHandleError(resp *azcore.R
 // BeginPostAsyncRelativeRetry400 - Long running post request, service returns a 202 to the initial request Poll the endpoint indicated in the Azure-AsyncOperation
 // header for operation status
 // If the operation fails it returns the *CloudError error type.
-func (client *LROSADsClient) BeginPostAsyncRelativeRetry400(ctx context.Context, options *LROSADsBeginPostAsyncRelativeRetry400Options) (HTTPPollerResponse, error) {
+func (client *LROSADsClient) BeginPostAsyncRelativeRetry400(ctx context.Context, options *LROSADsBeginPostAsyncRelativeRetry400Options) (LROSADsPostAsyncRelativeRetry400PollerResponse, error) {
 	resp, err := client.postAsyncRelativeRetry400(ctx, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsPostAsyncRelativeRetry400PollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := LROSADsPostAsyncRelativeRetry400PollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("LROSADsClient.PostAsyncRelativeRetry400", "", resp, client.con.Pipeline(), client.postAsyncRelativeRetry400HandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsPostAsyncRelativeRetry400PollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &lrosaDsPostAsyncRelativeRetry400Poller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsPostAsyncRelativeRetry400Response, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumePostAsyncRelativeRetry400 creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *LROSADsClient) ResumePostAsyncRelativeRetry400(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumePostAsyncRelativeRetry400 creates a new LROSADsPostAsyncRelativeRetry400Poller from the specified resume token.
+// token - The value must come from a previous call to LROSADsPostAsyncRelativeRetry400Poller.ResumeToken().
+func (client *LROSADsClient) ResumePostAsyncRelativeRetry400(ctx context.Context, token string) (LROSADsPostAsyncRelativeRetry400PollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("LROSADsClient.PostAsyncRelativeRetry400", token, client.con.Pipeline(), client.postAsyncRelativeRetry400HandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsPostAsyncRelativeRetry400PollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &lrosaDsPostAsyncRelativeRetry400Poller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsPostAsyncRelativeRetry400PollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := LROSADsPostAsyncRelativeRetry400PollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsPostAsyncRelativeRetry400Response, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -1135,47 +1135,47 @@ func (client *LROSADsClient) postAsyncRelativeRetry400HandleError(resp *azcore.R
 // The endpoint indicated in the Azure-AsyncOperation header is
 // invalid.
 // If the operation fails it returns the *CloudError error type.
-func (client *LROSADsClient) BeginPostAsyncRelativeRetryInvalidHeader(ctx context.Context, options *LROSADsBeginPostAsyncRelativeRetryInvalidHeaderOptions) (HTTPPollerResponse, error) {
+func (client *LROSADsClient) BeginPostAsyncRelativeRetryInvalidHeader(ctx context.Context, options *LROSADsBeginPostAsyncRelativeRetryInvalidHeaderOptions) (LROSADsPostAsyncRelativeRetryInvalidHeaderPollerResponse, error) {
 	resp, err := client.postAsyncRelativeRetryInvalidHeader(ctx, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsPostAsyncRelativeRetryInvalidHeaderPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := LROSADsPostAsyncRelativeRetryInvalidHeaderPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("LROSADsClient.PostAsyncRelativeRetryInvalidHeader", "", resp, client.con.Pipeline(), client.postAsyncRelativeRetryInvalidHeaderHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsPostAsyncRelativeRetryInvalidHeaderPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsPostAsyncRelativeRetryInvalidHeaderResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumePostAsyncRelativeRetryInvalidHeader creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *LROSADsClient) ResumePostAsyncRelativeRetryInvalidHeader(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumePostAsyncRelativeRetryInvalidHeader creates a new LROSADsPostAsyncRelativeRetryInvalidHeaderPoller from the specified resume token.
+// token - The value must come from a previous call to LROSADsPostAsyncRelativeRetryInvalidHeaderPoller.ResumeToken().
+func (client *LROSADsClient) ResumePostAsyncRelativeRetryInvalidHeader(ctx context.Context, token string) (LROSADsPostAsyncRelativeRetryInvalidHeaderPollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("LROSADsClient.PostAsyncRelativeRetryInvalidHeader", token, client.con.Pipeline(), client.postAsyncRelativeRetryInvalidHeaderHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsPostAsyncRelativeRetryInvalidHeaderPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &lrosaDsPostAsyncRelativeRetryInvalidHeaderPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsPostAsyncRelativeRetryInvalidHeaderPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := LROSADsPostAsyncRelativeRetryInvalidHeaderPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsPostAsyncRelativeRetryInvalidHeaderResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -1232,47 +1232,47 @@ func (client *LROSADsClient) postAsyncRelativeRetryInvalidHeaderHandleError(resp
 // ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
 // If the operation fails it returns the *CloudError error type.
-func (client *LROSADsClient) BeginPostAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, options *LROSADsBeginPostAsyncRelativeRetryInvalidJSONPollingOptions) (HTTPPollerResponse, error) {
+func (client *LROSADsClient) BeginPostAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, options *LROSADsBeginPostAsyncRelativeRetryInvalidJSONPollingOptions) (LROSADsPostAsyncRelativeRetryInvalidJSONPollingPollerResponse, error) {
 	resp, err := client.postAsyncRelativeRetryInvalidJSONPolling(ctx, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsPostAsyncRelativeRetryInvalidJSONPollingPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := LROSADsPostAsyncRelativeRetryInvalidJSONPollingPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("LROSADsClient.PostAsyncRelativeRetryInvalidJSONPolling", "", resp, client.con.Pipeline(), client.postAsyncRelativeRetryInvalidJSONPollingHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsPostAsyncRelativeRetryInvalidJSONPollingPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsPostAsyncRelativeRetryInvalidJSONPollingResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumePostAsyncRelativeRetryInvalidJSONPolling creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *LROSADsClient) ResumePostAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumePostAsyncRelativeRetryInvalidJSONPolling creates a new LROSADsPostAsyncRelativeRetryInvalidJSONPollingPoller from the specified resume token.
+// token - The value must come from a previous call to LROSADsPostAsyncRelativeRetryInvalidJSONPollingPoller.ResumeToken().
+func (client *LROSADsClient) ResumePostAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, token string) (LROSADsPostAsyncRelativeRetryInvalidJSONPollingPollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("LROSADsClient.PostAsyncRelativeRetryInvalidJSONPolling", token, client.con.Pipeline(), client.postAsyncRelativeRetryInvalidJSONPollingHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsPostAsyncRelativeRetryInvalidJSONPollingPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &lrosaDsPostAsyncRelativeRetryInvalidJSONPollingPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsPostAsyncRelativeRetryInvalidJSONPollingPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := LROSADsPostAsyncRelativeRetryInvalidJSONPollingPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsPostAsyncRelativeRetryInvalidJSONPollingResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -1329,47 +1329,47 @@ func (client *LROSADsClient) postAsyncRelativeRetryInvalidJSONPollingHandleError
 // Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
 // If the operation fails it returns the *CloudError error type.
-func (client *LROSADsClient) BeginPostAsyncRelativeRetryNoPayload(ctx context.Context, options *LROSADsBeginPostAsyncRelativeRetryNoPayloadOptions) (HTTPPollerResponse, error) {
+func (client *LROSADsClient) BeginPostAsyncRelativeRetryNoPayload(ctx context.Context, options *LROSADsBeginPostAsyncRelativeRetryNoPayloadOptions) (LROSADsPostAsyncRelativeRetryNoPayloadPollerResponse, error) {
 	resp, err := client.postAsyncRelativeRetryNoPayload(ctx, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsPostAsyncRelativeRetryNoPayloadPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := LROSADsPostAsyncRelativeRetryNoPayloadPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("LROSADsClient.PostAsyncRelativeRetryNoPayload", "", resp, client.con.Pipeline(), client.postAsyncRelativeRetryNoPayloadHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsPostAsyncRelativeRetryNoPayloadPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &lrosaDsPostAsyncRelativeRetryNoPayloadPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsPostAsyncRelativeRetryNoPayloadResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumePostAsyncRelativeRetryNoPayload creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *LROSADsClient) ResumePostAsyncRelativeRetryNoPayload(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumePostAsyncRelativeRetryNoPayload creates a new LROSADsPostAsyncRelativeRetryNoPayloadPoller from the specified resume token.
+// token - The value must come from a previous call to LROSADsPostAsyncRelativeRetryNoPayloadPoller.ResumeToken().
+func (client *LROSADsClient) ResumePostAsyncRelativeRetryNoPayload(ctx context.Context, token string) (LROSADsPostAsyncRelativeRetryNoPayloadPollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("LROSADsClient.PostAsyncRelativeRetryNoPayload", token, client.con.Pipeline(), client.postAsyncRelativeRetryNoPayloadHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsPostAsyncRelativeRetryNoPayloadPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &lrosaDsPostAsyncRelativeRetryNoPayloadPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsPostAsyncRelativeRetryNoPayloadPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := LROSADsPostAsyncRelativeRetryNoPayloadPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsPostAsyncRelativeRetryNoPayloadResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -1424,47 +1424,47 @@ func (client *LROSADsClient) postAsyncRelativeRetryNoPayloadHandleError(resp *az
 
 // BeginPostNonRetry400 - Long running post request, service returns a 400 with no error body
 // If the operation fails it returns the *CloudError error type.
-func (client *LROSADsClient) BeginPostNonRetry400(ctx context.Context, options *LROSADsBeginPostNonRetry400Options) (HTTPPollerResponse, error) {
+func (client *LROSADsClient) BeginPostNonRetry400(ctx context.Context, options *LROSADsBeginPostNonRetry400Options) (LROSADsPostNonRetry400PollerResponse, error) {
 	resp, err := client.postNonRetry400(ctx, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsPostNonRetry400PollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := LROSADsPostNonRetry400PollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("LROSADsClient.PostNonRetry400", "", resp, client.con.Pipeline(), client.postNonRetry400HandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsPostNonRetry400PollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &lrosaDsPostNonRetry400Poller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsPostNonRetry400Response, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumePostNonRetry400 creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *LROSADsClient) ResumePostNonRetry400(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumePostNonRetry400 creates a new LROSADsPostNonRetry400Poller from the specified resume token.
+// token - The value must come from a previous call to LROSADsPostNonRetry400Poller.ResumeToken().
+func (client *LROSADsClient) ResumePostNonRetry400(ctx context.Context, token string) (LROSADsPostNonRetry400PollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("LROSADsClient.PostNonRetry400", token, client.con.Pipeline(), client.postNonRetry400HandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsPostNonRetry400PollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &lrosaDsPostNonRetry400Poller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return LROSADsPostNonRetry400PollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := LROSADsPostNonRetry400PollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsPostNonRetry400Response, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -1517,47 +1517,47 @@ func (client *LROSADsClient) postNonRetry400HandleError(resp *azcore.Response) e
 
 // BeginPut200InvalidJSON - Long running put request, service returns a 200 to the initial request, with an entity that is not a valid json
 // If the operation fails it returns the *CloudError error type.
-func (client *LROSADsClient) BeginPut200InvalidJSON(ctx context.Context, options *LROSADsBeginPut200InvalidJSONOptions) (ProductPollerResponse, error) {
+func (client *LROSADsClient) BeginPut200InvalidJSON(ctx context.Context, options *LROSADsBeginPut200InvalidJSONOptions) (LROSADsPut200InvalidJSONPollerResponse, error) {
 	resp, err := client.put200InvalidJSON(ctx, options)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LROSADsPut200InvalidJSONPollerResponse{}, err
 	}
-	result := ProductPollerResponse{
+	result := LROSADsPut200InvalidJSONPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("LROSADsClient.Put200InvalidJSON", "", resp, client.con.Pipeline(), client.put200InvalidJSONHandleError)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LROSADsPut200InvalidJSONPollerResponse{}, err
 	}
-	poller := &productPoller{
+	poller := &lrosaDsPut200InvalidJSONPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsPut200InvalidJSONResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumePut200InvalidJSON creates a new ProductPoller from the specified resume token.
-// token - The value must come from a previous call to ProductPoller.ResumeToken().
-func (client *LROSADsClient) ResumePut200InvalidJSON(ctx context.Context, token string) (ProductPollerResponse, error) {
+// ResumePut200InvalidJSON creates a new LROSADsPut200InvalidJSONPoller from the specified resume token.
+// token - The value must come from a previous call to LROSADsPut200InvalidJSONPoller.ResumeToken().
+func (client *LROSADsClient) ResumePut200InvalidJSON(ctx context.Context, token string) (LROSADsPut200InvalidJSONPollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("LROSADsClient.Put200InvalidJSON", token, client.con.Pipeline(), client.put200InvalidJSONHandleError)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LROSADsPut200InvalidJSONPollerResponse{}, err
 	}
-	poller := &productPoller{
+	poller := &lrosaDsPut200InvalidJSONPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LROSADsPut200InvalidJSONPollerResponse{}, err
 	}
-	result := ProductPollerResponse{
+	result := LROSADsPut200InvalidJSONPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsPut200InvalidJSONResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -1611,47 +1611,47 @@ func (client *LROSADsClient) put200InvalidJSONHandleError(resp *azcore.Response)
 // BeginPutAsyncRelativeRetry400 - Long running put request, service returns a 200 with ProvisioningState=’Creating’. Poll the endpoint indicated in the
 // Azure-AsyncOperation header for operation status
 // If the operation fails it returns the *CloudError error type.
-func (client *LROSADsClient) BeginPutAsyncRelativeRetry400(ctx context.Context, options *LROSADsBeginPutAsyncRelativeRetry400Options) (ProductPollerResponse, error) {
+func (client *LROSADsClient) BeginPutAsyncRelativeRetry400(ctx context.Context, options *LROSADsBeginPutAsyncRelativeRetry400Options) (LROSADsPutAsyncRelativeRetry400PollerResponse, error) {
 	resp, err := client.putAsyncRelativeRetry400(ctx, options)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LROSADsPutAsyncRelativeRetry400PollerResponse{}, err
 	}
-	result := ProductPollerResponse{
+	result := LROSADsPutAsyncRelativeRetry400PollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("LROSADsClient.PutAsyncRelativeRetry400", "", resp, client.con.Pipeline(), client.putAsyncRelativeRetry400HandleError)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LROSADsPutAsyncRelativeRetry400PollerResponse{}, err
 	}
-	poller := &productPoller{
+	poller := &lrosaDsPutAsyncRelativeRetry400Poller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsPutAsyncRelativeRetry400Response, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumePutAsyncRelativeRetry400 creates a new ProductPoller from the specified resume token.
-// token - The value must come from a previous call to ProductPoller.ResumeToken().
-func (client *LROSADsClient) ResumePutAsyncRelativeRetry400(ctx context.Context, token string) (ProductPollerResponse, error) {
+// ResumePutAsyncRelativeRetry400 creates a new LROSADsPutAsyncRelativeRetry400Poller from the specified resume token.
+// token - The value must come from a previous call to LROSADsPutAsyncRelativeRetry400Poller.ResumeToken().
+func (client *LROSADsClient) ResumePutAsyncRelativeRetry400(ctx context.Context, token string) (LROSADsPutAsyncRelativeRetry400PollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("LROSADsClient.PutAsyncRelativeRetry400", token, client.con.Pipeline(), client.putAsyncRelativeRetry400HandleError)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LROSADsPutAsyncRelativeRetry400PollerResponse{}, err
 	}
-	poller := &productPoller{
+	poller := &lrosaDsPutAsyncRelativeRetry400Poller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LROSADsPutAsyncRelativeRetry400PollerResponse{}, err
 	}
-	result := ProductPollerResponse{
+	result := LROSADsPutAsyncRelativeRetry400PollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsPutAsyncRelativeRetry400Response, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -1706,47 +1706,47 @@ func (client *LROSADsClient) putAsyncRelativeRetry400HandleError(resp *azcore.Re
 // BeginPutAsyncRelativeRetryInvalidHeader - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’.
 // The endpoint indicated in the Azure-AsyncOperation header is invalid.
 // If the operation fails it returns the *CloudError error type.
-func (client *LROSADsClient) BeginPutAsyncRelativeRetryInvalidHeader(ctx context.Context, options *LROSADsBeginPutAsyncRelativeRetryInvalidHeaderOptions) (ProductPollerResponse, error) {
+func (client *LROSADsClient) BeginPutAsyncRelativeRetryInvalidHeader(ctx context.Context, options *LROSADsBeginPutAsyncRelativeRetryInvalidHeaderOptions) (LROSADsPutAsyncRelativeRetryInvalidHeaderPollerResponse, error) {
 	resp, err := client.putAsyncRelativeRetryInvalidHeader(ctx, options)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LROSADsPutAsyncRelativeRetryInvalidHeaderPollerResponse{}, err
 	}
-	result := ProductPollerResponse{
+	result := LROSADsPutAsyncRelativeRetryInvalidHeaderPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("LROSADsClient.PutAsyncRelativeRetryInvalidHeader", "", resp, client.con.Pipeline(), client.putAsyncRelativeRetryInvalidHeaderHandleError)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LROSADsPutAsyncRelativeRetryInvalidHeaderPollerResponse{}, err
 	}
-	poller := &productPoller{
+	poller := &lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsPutAsyncRelativeRetryInvalidHeaderResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumePutAsyncRelativeRetryInvalidHeader creates a new ProductPoller from the specified resume token.
-// token - The value must come from a previous call to ProductPoller.ResumeToken().
-func (client *LROSADsClient) ResumePutAsyncRelativeRetryInvalidHeader(ctx context.Context, token string) (ProductPollerResponse, error) {
+// ResumePutAsyncRelativeRetryInvalidHeader creates a new LROSADsPutAsyncRelativeRetryInvalidHeaderPoller from the specified resume token.
+// token - The value must come from a previous call to LROSADsPutAsyncRelativeRetryInvalidHeaderPoller.ResumeToken().
+func (client *LROSADsClient) ResumePutAsyncRelativeRetryInvalidHeader(ctx context.Context, token string) (LROSADsPutAsyncRelativeRetryInvalidHeaderPollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("LROSADsClient.PutAsyncRelativeRetryInvalidHeader", token, client.con.Pipeline(), client.putAsyncRelativeRetryInvalidHeaderHandleError)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LROSADsPutAsyncRelativeRetryInvalidHeaderPollerResponse{}, err
 	}
-	poller := &productPoller{
+	poller := &lrosaDsPutAsyncRelativeRetryInvalidHeaderPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LROSADsPutAsyncRelativeRetryInvalidHeaderPollerResponse{}, err
 	}
-	result := ProductPollerResponse{
+	result := LROSADsPutAsyncRelativeRetryInvalidHeaderPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsPutAsyncRelativeRetryInvalidHeaderResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -1802,47 +1802,47 @@ func (client *LROSADsClient) putAsyncRelativeRetryInvalidHeaderHandleError(resp 
 // Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
 // If the operation fails it returns the *CloudError error type.
-func (client *LROSADsClient) BeginPutAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, options *LROSADsBeginPutAsyncRelativeRetryInvalidJSONPollingOptions) (ProductPollerResponse, error) {
+func (client *LROSADsClient) BeginPutAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, options *LROSADsBeginPutAsyncRelativeRetryInvalidJSONPollingOptions) (LROSADsPutAsyncRelativeRetryInvalidJSONPollingPollerResponse, error) {
 	resp, err := client.putAsyncRelativeRetryInvalidJSONPolling(ctx, options)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LROSADsPutAsyncRelativeRetryInvalidJSONPollingPollerResponse{}, err
 	}
-	result := ProductPollerResponse{
+	result := LROSADsPutAsyncRelativeRetryInvalidJSONPollingPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("LROSADsClient.PutAsyncRelativeRetryInvalidJSONPolling", "", resp, client.con.Pipeline(), client.putAsyncRelativeRetryInvalidJSONPollingHandleError)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LROSADsPutAsyncRelativeRetryInvalidJSONPollingPollerResponse{}, err
 	}
-	poller := &productPoller{
+	poller := &lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsPutAsyncRelativeRetryInvalidJSONPollingResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumePutAsyncRelativeRetryInvalidJSONPolling creates a new ProductPoller from the specified resume token.
-// token - The value must come from a previous call to ProductPoller.ResumeToken().
-func (client *LROSADsClient) ResumePutAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, token string) (ProductPollerResponse, error) {
+// ResumePutAsyncRelativeRetryInvalidJSONPolling creates a new LROSADsPutAsyncRelativeRetryInvalidJSONPollingPoller from the specified resume token.
+// token - The value must come from a previous call to LROSADsPutAsyncRelativeRetryInvalidJSONPollingPoller.ResumeToken().
+func (client *LROSADsClient) ResumePutAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, token string) (LROSADsPutAsyncRelativeRetryInvalidJSONPollingPollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("LROSADsClient.PutAsyncRelativeRetryInvalidJSONPolling", token, client.con.Pipeline(), client.putAsyncRelativeRetryInvalidJSONPollingHandleError)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LROSADsPutAsyncRelativeRetryInvalidJSONPollingPollerResponse{}, err
 	}
-	poller := &productPoller{
+	poller := &lrosaDsPutAsyncRelativeRetryInvalidJSONPollingPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LROSADsPutAsyncRelativeRetryInvalidJSONPollingPollerResponse{}, err
 	}
-	result := ProductPollerResponse{
+	result := LROSADsPutAsyncRelativeRetryInvalidJSONPollingPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsPutAsyncRelativeRetryInvalidJSONPollingResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -1899,47 +1899,47 @@ func (client *LROSADsClient) putAsyncRelativeRetryInvalidJSONPollingHandleError(
 // Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
 // If the operation fails it returns the *CloudError error type.
-func (client *LROSADsClient) BeginPutAsyncRelativeRetryNoStatus(ctx context.Context, options *LROSADsBeginPutAsyncRelativeRetryNoStatusOptions) (ProductPollerResponse, error) {
+func (client *LROSADsClient) BeginPutAsyncRelativeRetryNoStatus(ctx context.Context, options *LROSADsBeginPutAsyncRelativeRetryNoStatusOptions) (LROSADsPutAsyncRelativeRetryNoStatusPollerResponse, error) {
 	resp, err := client.putAsyncRelativeRetryNoStatus(ctx, options)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LROSADsPutAsyncRelativeRetryNoStatusPollerResponse{}, err
 	}
-	result := ProductPollerResponse{
+	result := LROSADsPutAsyncRelativeRetryNoStatusPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("LROSADsClient.PutAsyncRelativeRetryNoStatus", "", resp, client.con.Pipeline(), client.putAsyncRelativeRetryNoStatusHandleError)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LROSADsPutAsyncRelativeRetryNoStatusPollerResponse{}, err
 	}
-	poller := &productPoller{
+	poller := &lrosaDsPutAsyncRelativeRetryNoStatusPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsPutAsyncRelativeRetryNoStatusResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumePutAsyncRelativeRetryNoStatus creates a new ProductPoller from the specified resume token.
-// token - The value must come from a previous call to ProductPoller.ResumeToken().
-func (client *LROSADsClient) ResumePutAsyncRelativeRetryNoStatus(ctx context.Context, token string) (ProductPollerResponse, error) {
+// ResumePutAsyncRelativeRetryNoStatus creates a new LROSADsPutAsyncRelativeRetryNoStatusPoller from the specified resume token.
+// token - The value must come from a previous call to LROSADsPutAsyncRelativeRetryNoStatusPoller.ResumeToken().
+func (client *LROSADsClient) ResumePutAsyncRelativeRetryNoStatus(ctx context.Context, token string) (LROSADsPutAsyncRelativeRetryNoStatusPollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("LROSADsClient.PutAsyncRelativeRetryNoStatus", token, client.con.Pipeline(), client.putAsyncRelativeRetryNoStatusHandleError)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LROSADsPutAsyncRelativeRetryNoStatusPollerResponse{}, err
 	}
-	poller := &productPoller{
+	poller := &lrosaDsPutAsyncRelativeRetryNoStatusPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LROSADsPutAsyncRelativeRetryNoStatusPollerResponse{}, err
 	}
-	result := ProductPollerResponse{
+	result := LROSADsPutAsyncRelativeRetryNoStatusPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsPutAsyncRelativeRetryNoStatusResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -1996,47 +1996,47 @@ func (client *LROSADsClient) putAsyncRelativeRetryNoStatusHandleError(resp *azco
 // Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
 // If the operation fails it returns the *CloudError error type.
-func (client *LROSADsClient) BeginPutAsyncRelativeRetryNoStatusPayload(ctx context.Context, options *LROSADsBeginPutAsyncRelativeRetryNoStatusPayloadOptions) (ProductPollerResponse, error) {
+func (client *LROSADsClient) BeginPutAsyncRelativeRetryNoStatusPayload(ctx context.Context, options *LROSADsBeginPutAsyncRelativeRetryNoStatusPayloadOptions) (LROSADsPutAsyncRelativeRetryNoStatusPayloadPollerResponse, error) {
 	resp, err := client.putAsyncRelativeRetryNoStatusPayload(ctx, options)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LROSADsPutAsyncRelativeRetryNoStatusPayloadPollerResponse{}, err
 	}
-	result := ProductPollerResponse{
+	result := LROSADsPutAsyncRelativeRetryNoStatusPayloadPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("LROSADsClient.PutAsyncRelativeRetryNoStatusPayload", "", resp, client.con.Pipeline(), client.putAsyncRelativeRetryNoStatusPayloadHandleError)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LROSADsPutAsyncRelativeRetryNoStatusPayloadPollerResponse{}, err
 	}
-	poller := &productPoller{
+	poller := &lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsPutAsyncRelativeRetryNoStatusPayloadResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumePutAsyncRelativeRetryNoStatusPayload creates a new ProductPoller from the specified resume token.
-// token - The value must come from a previous call to ProductPoller.ResumeToken().
-func (client *LROSADsClient) ResumePutAsyncRelativeRetryNoStatusPayload(ctx context.Context, token string) (ProductPollerResponse, error) {
+// ResumePutAsyncRelativeRetryNoStatusPayload creates a new LROSADsPutAsyncRelativeRetryNoStatusPayloadPoller from the specified resume token.
+// token - The value must come from a previous call to LROSADsPutAsyncRelativeRetryNoStatusPayloadPoller.ResumeToken().
+func (client *LROSADsClient) ResumePutAsyncRelativeRetryNoStatusPayload(ctx context.Context, token string) (LROSADsPutAsyncRelativeRetryNoStatusPayloadPollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("LROSADsClient.PutAsyncRelativeRetryNoStatusPayload", token, client.con.Pipeline(), client.putAsyncRelativeRetryNoStatusPayloadHandleError)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LROSADsPutAsyncRelativeRetryNoStatusPayloadPollerResponse{}, err
 	}
-	poller := &productPoller{
+	poller := &lrosaDsPutAsyncRelativeRetryNoStatusPayloadPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LROSADsPutAsyncRelativeRetryNoStatusPayloadPollerResponse{}, err
 	}
-	result := ProductPollerResponse{
+	result := LROSADsPutAsyncRelativeRetryNoStatusPayloadPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsPutAsyncRelativeRetryNoStatusPayloadResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -2091,47 +2091,47 @@ func (client *LROSADsClient) putAsyncRelativeRetryNoStatusPayloadHandleError(res
 
 // BeginPutError201NoProvisioningStatePayload - Long running put request, service returns a 201 to the initial request with no payload
 // If the operation fails it returns the *CloudError error type.
-func (client *LROSADsClient) BeginPutError201NoProvisioningStatePayload(ctx context.Context, options *LROSADsBeginPutError201NoProvisioningStatePayloadOptions) (ProductPollerResponse, error) {
+func (client *LROSADsClient) BeginPutError201NoProvisioningStatePayload(ctx context.Context, options *LROSADsBeginPutError201NoProvisioningStatePayloadOptions) (LROSADsPutError201NoProvisioningStatePayloadPollerResponse, error) {
 	resp, err := client.putError201NoProvisioningStatePayload(ctx, options)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LROSADsPutError201NoProvisioningStatePayloadPollerResponse{}, err
 	}
-	result := ProductPollerResponse{
+	result := LROSADsPutError201NoProvisioningStatePayloadPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("LROSADsClient.PutError201NoProvisioningStatePayload", "", resp, client.con.Pipeline(), client.putError201NoProvisioningStatePayloadHandleError)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LROSADsPutError201NoProvisioningStatePayloadPollerResponse{}, err
 	}
-	poller := &productPoller{
+	poller := &lrosaDsPutError201NoProvisioningStatePayloadPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsPutError201NoProvisioningStatePayloadResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumePutError201NoProvisioningStatePayload creates a new ProductPoller from the specified resume token.
-// token - The value must come from a previous call to ProductPoller.ResumeToken().
-func (client *LROSADsClient) ResumePutError201NoProvisioningStatePayload(ctx context.Context, token string) (ProductPollerResponse, error) {
+// ResumePutError201NoProvisioningStatePayload creates a new LROSADsPutError201NoProvisioningStatePayloadPoller from the specified resume token.
+// token - The value must come from a previous call to LROSADsPutError201NoProvisioningStatePayloadPoller.ResumeToken().
+func (client *LROSADsClient) ResumePutError201NoProvisioningStatePayload(ctx context.Context, token string) (LROSADsPutError201NoProvisioningStatePayloadPollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("LROSADsClient.PutError201NoProvisioningStatePayload", token, client.con.Pipeline(), client.putError201NoProvisioningStatePayloadHandleError)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LROSADsPutError201NoProvisioningStatePayloadPollerResponse{}, err
 	}
-	poller := &productPoller{
+	poller := &lrosaDsPutError201NoProvisioningStatePayloadPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LROSADsPutError201NoProvisioningStatePayloadPollerResponse{}, err
 	}
-	result := ProductPollerResponse{
+	result := LROSADsPutError201NoProvisioningStatePayloadPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsPutError201NoProvisioningStatePayloadResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -2184,47 +2184,47 @@ func (client *LROSADsClient) putError201NoProvisioningStatePayloadHandleError(re
 
 // BeginPutNonRetry201Creating400 - Long running put request, service returns a Product with 'ProvisioningState' = 'Creating' and 201 response code
 // If the operation fails it returns the *CloudError error type.
-func (client *LROSADsClient) BeginPutNonRetry201Creating400(ctx context.Context, options *LROSADsBeginPutNonRetry201Creating400Options) (ProductPollerResponse, error) {
+func (client *LROSADsClient) BeginPutNonRetry201Creating400(ctx context.Context, options *LROSADsBeginPutNonRetry201Creating400Options) (LROSADsPutNonRetry201Creating400PollerResponse, error) {
 	resp, err := client.putNonRetry201Creating400(ctx, options)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LROSADsPutNonRetry201Creating400PollerResponse{}, err
 	}
-	result := ProductPollerResponse{
+	result := LROSADsPutNonRetry201Creating400PollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("LROSADsClient.PutNonRetry201Creating400", "", resp, client.con.Pipeline(), client.putNonRetry201Creating400HandleError)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LROSADsPutNonRetry201Creating400PollerResponse{}, err
 	}
-	poller := &productPoller{
+	poller := &lrosaDsPutNonRetry201Creating400Poller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsPutNonRetry201Creating400Response, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumePutNonRetry201Creating400 creates a new ProductPoller from the specified resume token.
-// token - The value must come from a previous call to ProductPoller.ResumeToken().
-func (client *LROSADsClient) ResumePutNonRetry201Creating400(ctx context.Context, token string) (ProductPollerResponse, error) {
+// ResumePutNonRetry201Creating400 creates a new LROSADsPutNonRetry201Creating400Poller from the specified resume token.
+// token - The value must come from a previous call to LROSADsPutNonRetry201Creating400Poller.ResumeToken().
+func (client *LROSADsClient) ResumePutNonRetry201Creating400(ctx context.Context, token string) (LROSADsPutNonRetry201Creating400PollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("LROSADsClient.PutNonRetry201Creating400", token, client.con.Pipeline(), client.putNonRetry201Creating400HandleError)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LROSADsPutNonRetry201Creating400PollerResponse{}, err
 	}
-	poller := &productPoller{
+	poller := &lrosaDsPutNonRetry201Creating400Poller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LROSADsPutNonRetry201Creating400PollerResponse{}, err
 	}
-	result := ProductPollerResponse{
+	result := LROSADsPutNonRetry201Creating400PollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsPutNonRetry201Creating400Response, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -2278,47 +2278,47 @@ func (client *LROSADsClient) putNonRetry201Creating400HandleError(resp *azcore.R
 // BeginPutNonRetry201Creating400InvalidJSON - Long running put request, service returns a Product with 'ProvisioningState' = 'Creating' and 201 response
 // code
 // If the operation fails it returns the *CloudError error type.
-func (client *LROSADsClient) BeginPutNonRetry201Creating400InvalidJSON(ctx context.Context, options *LROSADsBeginPutNonRetry201Creating400InvalidJSONOptions) (ProductPollerResponse, error) {
+func (client *LROSADsClient) BeginPutNonRetry201Creating400InvalidJSON(ctx context.Context, options *LROSADsBeginPutNonRetry201Creating400InvalidJSONOptions) (LROSADsPutNonRetry201Creating400InvalidJSONPollerResponse, error) {
 	resp, err := client.putNonRetry201Creating400InvalidJSON(ctx, options)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LROSADsPutNonRetry201Creating400InvalidJSONPollerResponse{}, err
 	}
-	result := ProductPollerResponse{
+	result := LROSADsPutNonRetry201Creating400InvalidJSONPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("LROSADsClient.PutNonRetry201Creating400InvalidJSON", "", resp, client.con.Pipeline(), client.putNonRetry201Creating400InvalidJSONHandleError)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LROSADsPutNonRetry201Creating400InvalidJSONPollerResponse{}, err
 	}
-	poller := &productPoller{
+	poller := &lrosaDsPutNonRetry201Creating400InvalidJSONPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsPutNonRetry201Creating400InvalidJSONResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumePutNonRetry201Creating400InvalidJSON creates a new ProductPoller from the specified resume token.
-// token - The value must come from a previous call to ProductPoller.ResumeToken().
-func (client *LROSADsClient) ResumePutNonRetry201Creating400InvalidJSON(ctx context.Context, token string) (ProductPollerResponse, error) {
+// ResumePutNonRetry201Creating400InvalidJSON creates a new LROSADsPutNonRetry201Creating400InvalidJSONPoller from the specified resume token.
+// token - The value must come from a previous call to LROSADsPutNonRetry201Creating400InvalidJSONPoller.ResumeToken().
+func (client *LROSADsClient) ResumePutNonRetry201Creating400InvalidJSON(ctx context.Context, token string) (LROSADsPutNonRetry201Creating400InvalidJSONPollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("LROSADsClient.PutNonRetry201Creating400InvalidJSON", token, client.con.Pipeline(), client.putNonRetry201Creating400InvalidJSONHandleError)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LROSADsPutNonRetry201Creating400InvalidJSONPollerResponse{}, err
 	}
-	poller := &productPoller{
+	poller := &lrosaDsPutNonRetry201Creating400InvalidJSONPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LROSADsPutNonRetry201Creating400InvalidJSONPollerResponse{}, err
 	}
-	result := ProductPollerResponse{
+	result := LROSADsPutNonRetry201Creating400InvalidJSONPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsPutNonRetry201Creating400InvalidJSONResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -2371,47 +2371,47 @@ func (client *LROSADsClient) putNonRetry201Creating400InvalidJSONHandleError(res
 
 // BeginPutNonRetry400 - Long running put request, service returns a 400 to the initial request
 // If the operation fails it returns the *CloudError error type.
-func (client *LROSADsClient) BeginPutNonRetry400(ctx context.Context, options *LROSADsBeginPutNonRetry400Options) (ProductPollerResponse, error) {
+func (client *LROSADsClient) BeginPutNonRetry400(ctx context.Context, options *LROSADsBeginPutNonRetry400Options) (LROSADsPutNonRetry400PollerResponse, error) {
 	resp, err := client.putNonRetry400(ctx, options)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LROSADsPutNonRetry400PollerResponse{}, err
 	}
-	result := ProductPollerResponse{
+	result := LROSADsPutNonRetry400PollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("LROSADsClient.PutNonRetry400", "", resp, client.con.Pipeline(), client.putNonRetry400HandleError)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LROSADsPutNonRetry400PollerResponse{}, err
 	}
-	poller := &productPoller{
+	poller := &lrosaDsPutNonRetry400Poller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsPutNonRetry400Response, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumePutNonRetry400 creates a new ProductPoller from the specified resume token.
-// token - The value must come from a previous call to ProductPoller.ResumeToken().
-func (client *LROSADsClient) ResumePutNonRetry400(ctx context.Context, token string) (ProductPollerResponse, error) {
+// ResumePutNonRetry400 creates a new LROSADsPutNonRetry400Poller from the specified resume token.
+// token - The value must come from a previous call to LROSADsPutNonRetry400Poller.ResumeToken().
+func (client *LROSADsClient) ResumePutNonRetry400(ctx context.Context, token string) (LROSADsPutNonRetry400PollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("LROSADsClient.PutNonRetry400", token, client.con.Pipeline(), client.putNonRetry400HandleError)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LROSADsPutNonRetry400PollerResponse{}, err
 	}
-	poller := &productPoller{
+	poller := &lrosaDsPutNonRetry400Poller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return ProductPollerResponse{}, err
+		return LROSADsPutNonRetry400PollerResponse{}, err
 	}
-	result := ProductPollerResponse{
+	result := LROSADsPutNonRetry400PollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ProductResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROSADsPutNonRetry400Response, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil

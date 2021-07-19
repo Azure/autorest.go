@@ -9,9 +9,38 @@ package mediatypesgroup
 
 import "net/http"
 
-// StringResponse is the response envelope for operations that return a string type.
-type StringResponse struct {
+// MediaTypesClientAnalyzeBodyResponse contains the response from method MediaTypesClient.AnalyzeBody.
+type MediaTypesClientAnalyzeBodyResponse struct {
+	MediaTypesClientAnalyzeBodyResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-	Value       *string
+}
+
+// MediaTypesClientAnalyzeBodyResult contains the result from method MediaTypesClient.AnalyzeBody.
+type MediaTypesClientAnalyzeBodyResult struct {
+	Value *string
+}
+
+// MediaTypesClientAnalyzeBodyWithSourcePathResponse contains the response from method MediaTypesClient.AnalyzeBodyWithSourcePath.
+type MediaTypesClientAnalyzeBodyWithSourcePathResponse struct {
+	MediaTypesClientAnalyzeBodyWithSourcePathResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// MediaTypesClientAnalyzeBodyWithSourcePathResult contains the result from method MediaTypesClient.AnalyzeBodyWithSourcePath.
+type MediaTypesClientAnalyzeBodyWithSourcePathResult struct {
+	Value *string
+}
+
+// MediaTypesClientContentTypeWithEncodingResponse contains the response from method MediaTypesClient.ContentTypeWithEncoding.
+type MediaTypesClientContentTypeWithEncodingResponse struct {
+	MediaTypesClientContentTypeWithEncodingResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// MediaTypesClientContentTypeWithEncodingResult contains the result from method MediaTypesClient.ContentTypeWithEncoding.
+type MediaTypesClientContentTypeWithEncodingResult struct {
+	Value *string
 }

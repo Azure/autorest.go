@@ -31,7 +31,7 @@ func TestCreateAPInProperties(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(result.PetAPInProperties, &PetAPInProperties{
+	if r := cmp.Diff(result.PetAPInProperties, PetAPInProperties{
 		ID:     to.Int32Ptr(4),
 		Name:   to.StringPtr("Bunny"),
 		Status: to.BoolPtr(true),
@@ -66,7 +66,7 @@ func TestCreateAPInPropertiesWithAPString(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(result.PetAPInPropertiesWithAPString, &PetAPInPropertiesWithAPString{
+	if r := cmp.Diff(result.PetAPInPropertiesWithAPString, PetAPInPropertiesWithAPString{
 		ID:            to.Int32Ptr(5),
 		Name:          to.StringPtr("Funny"),
 		OdataLocation: to.StringPtr("westus"),
@@ -109,7 +109,7 @@ func TestCreateAPObject(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(result.PetAPObject, &PetAPObject{
+	if r := cmp.Diff(result.PetAPObject, PetAPObject{
 		ID:     to.Int32Ptr(2),
 		Name:   to.StringPtr("Hira"),
 		Status: to.BoolPtr(true),
@@ -146,7 +146,7 @@ func TestCreateAPString(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(result.PetAPString, &PetAPString{
+	if r := cmp.Diff(result.PetAPString, PetAPString{
 		ID:     to.Int32Ptr(3),
 		Name:   to.StringPtr("Tommy"),
 		Status: to.BoolPtr(true),
@@ -176,7 +176,7 @@ func TestCreateAPTrue(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(result.PetAPTrue, &PetAPTrue{
+	if r := cmp.Diff(result.PetAPTrue, PetAPTrue{
 		ID:     to.Int32Ptr(1),
 		Name:   to.StringPtr("Puppy"),
 		Status: to.BoolPtr(true),
@@ -210,7 +210,7 @@ func TestCreateCatAPTrue(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(result.CatAPTrue, &CatAPTrue{
+	if r := cmp.Diff(result.CatAPTrue, CatAPTrue{
 		PetAPTrue: PetAPTrue{
 			ID:     to.Int32Ptr(1),
 			Name:   to.StringPtr("Lisa"),

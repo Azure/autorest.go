@@ -33,47 +33,47 @@ func NewApplicationGatewaysClient(con *armcore.Connection, subscriptionID string
 
 // BeginBackendHealth - Gets the backend health of the specified application gateway in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *ApplicationGatewaysClient) BeginBackendHealth(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysBeginBackendHealthOptions) (ApplicationGatewayBackendHealthPollerResponse, error) {
+func (client *ApplicationGatewaysClient) BeginBackendHealth(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysBeginBackendHealthOptions) (ApplicationGatewaysBackendHealthPollerResponse, error) {
 	resp, err := client.backendHealth(ctx, resourceGroupName, applicationGatewayName, options)
 	if err != nil {
-		return ApplicationGatewayBackendHealthPollerResponse{}, err
+		return ApplicationGatewaysBackendHealthPollerResponse{}, err
 	}
-	result := ApplicationGatewayBackendHealthPollerResponse{
+	result := ApplicationGatewaysBackendHealthPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("ApplicationGatewaysClient.BackendHealth", "location", resp, client.con.Pipeline(), client.backendHealthHandleError)
 	if err != nil {
-		return ApplicationGatewayBackendHealthPollerResponse{}, err
+		return ApplicationGatewaysBackendHealthPollerResponse{}, err
 	}
-	poller := &applicationGatewayBackendHealthPoller{
+	poller := &applicationGatewaysBackendHealthPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ApplicationGatewayBackendHealthResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ApplicationGatewaysBackendHealthResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeBackendHealth creates a new ApplicationGatewayBackendHealthPoller from the specified resume token.
-// token - The value must come from a previous call to ApplicationGatewayBackendHealthPoller.ResumeToken().
-func (client *ApplicationGatewaysClient) ResumeBackendHealth(ctx context.Context, token string) (ApplicationGatewayBackendHealthPollerResponse, error) {
+// ResumeBackendHealth creates a new ApplicationGatewaysBackendHealthPoller from the specified resume token.
+// token - The value must come from a previous call to ApplicationGatewaysBackendHealthPoller.ResumeToken().
+func (client *ApplicationGatewaysClient) ResumeBackendHealth(ctx context.Context, token string) (ApplicationGatewaysBackendHealthPollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("ApplicationGatewaysClient.BackendHealth", token, client.con.Pipeline(), client.backendHealthHandleError)
 	if err != nil {
-		return ApplicationGatewayBackendHealthPollerResponse{}, err
+		return ApplicationGatewaysBackendHealthPollerResponse{}, err
 	}
-	poller := &applicationGatewayBackendHealthPoller{
+	poller := &applicationGatewaysBackendHealthPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return ApplicationGatewayBackendHealthPollerResponse{}, err
+		return ApplicationGatewaysBackendHealthPollerResponse{}, err
 	}
-	result := ApplicationGatewayBackendHealthPollerResponse{
+	result := ApplicationGatewaysBackendHealthPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ApplicationGatewayBackendHealthResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ApplicationGatewaysBackendHealthResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -142,47 +142,47 @@ func (client *ApplicationGatewaysClient) backendHealthHandleError(resp *azcore.R
 // BeginBackendHealthOnDemand - Gets the backend health for given combination of backend pool and http setting of the specified application gateway in a
 // resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *ApplicationGatewaysClient) BeginBackendHealthOnDemand(ctx context.Context, resourceGroupName string, applicationGatewayName string, probeRequest ApplicationGatewayOnDemandProbe, options *ApplicationGatewaysBeginBackendHealthOnDemandOptions) (ApplicationGatewayBackendHealthOnDemandPollerResponse, error) {
+func (client *ApplicationGatewaysClient) BeginBackendHealthOnDemand(ctx context.Context, resourceGroupName string, applicationGatewayName string, probeRequest ApplicationGatewayOnDemandProbe, options *ApplicationGatewaysBeginBackendHealthOnDemandOptions) (ApplicationGatewaysBackendHealthOnDemandPollerResponse, error) {
 	resp, err := client.backendHealthOnDemand(ctx, resourceGroupName, applicationGatewayName, probeRequest, options)
 	if err != nil {
-		return ApplicationGatewayBackendHealthOnDemandPollerResponse{}, err
+		return ApplicationGatewaysBackendHealthOnDemandPollerResponse{}, err
 	}
-	result := ApplicationGatewayBackendHealthOnDemandPollerResponse{
+	result := ApplicationGatewaysBackendHealthOnDemandPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("ApplicationGatewaysClient.BackendHealthOnDemand", "location", resp, client.con.Pipeline(), client.backendHealthOnDemandHandleError)
 	if err != nil {
-		return ApplicationGatewayBackendHealthOnDemandPollerResponse{}, err
+		return ApplicationGatewaysBackendHealthOnDemandPollerResponse{}, err
 	}
-	poller := &applicationGatewayBackendHealthOnDemandPoller{
+	poller := &applicationGatewaysBackendHealthOnDemandPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ApplicationGatewayBackendHealthOnDemandResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ApplicationGatewaysBackendHealthOnDemandResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeBackendHealthOnDemand creates a new ApplicationGatewayBackendHealthOnDemandPoller from the specified resume token.
-// token - The value must come from a previous call to ApplicationGatewayBackendHealthOnDemandPoller.ResumeToken().
-func (client *ApplicationGatewaysClient) ResumeBackendHealthOnDemand(ctx context.Context, token string) (ApplicationGatewayBackendHealthOnDemandPollerResponse, error) {
+// ResumeBackendHealthOnDemand creates a new ApplicationGatewaysBackendHealthOnDemandPoller from the specified resume token.
+// token - The value must come from a previous call to ApplicationGatewaysBackendHealthOnDemandPoller.ResumeToken().
+func (client *ApplicationGatewaysClient) ResumeBackendHealthOnDemand(ctx context.Context, token string) (ApplicationGatewaysBackendHealthOnDemandPollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("ApplicationGatewaysClient.BackendHealthOnDemand", token, client.con.Pipeline(), client.backendHealthOnDemandHandleError)
 	if err != nil {
-		return ApplicationGatewayBackendHealthOnDemandPollerResponse{}, err
+		return ApplicationGatewaysBackendHealthOnDemandPollerResponse{}, err
 	}
-	poller := &applicationGatewayBackendHealthOnDemandPoller{
+	poller := &applicationGatewaysBackendHealthOnDemandPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return ApplicationGatewayBackendHealthOnDemandPollerResponse{}, err
+		return ApplicationGatewaysBackendHealthOnDemandPollerResponse{}, err
 	}
-	result := ApplicationGatewayBackendHealthOnDemandPollerResponse{
+	result := ApplicationGatewaysBackendHealthOnDemandPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ApplicationGatewayBackendHealthOnDemandResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ApplicationGatewaysBackendHealthOnDemandResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -251,47 +251,47 @@ func (client *ApplicationGatewaysClient) backendHealthOnDemandHandleError(resp *
 
 // BeginCreateOrUpdate - Creates or updates the specified application gateway.
 // If the operation fails it returns the *CloudError error type.
-func (client *ApplicationGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, applicationGatewayName string, parameters ApplicationGateway, options *ApplicationGatewaysBeginCreateOrUpdateOptions) (ApplicationGatewayPollerResponse, error) {
+func (client *ApplicationGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, applicationGatewayName string, parameters ApplicationGateway, options *ApplicationGatewaysBeginCreateOrUpdateOptions) (ApplicationGatewaysCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, applicationGatewayName, parameters, options)
 	if err != nil {
-		return ApplicationGatewayPollerResponse{}, err
+		return ApplicationGatewaysCreateOrUpdatePollerResponse{}, err
 	}
-	result := ApplicationGatewayPollerResponse{
+	result := ApplicationGatewaysCreateOrUpdatePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("ApplicationGatewaysClient.CreateOrUpdate", "azure-async-operation", resp, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return ApplicationGatewayPollerResponse{}, err
+		return ApplicationGatewaysCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &applicationGatewayPoller{
+	poller := &applicationGatewaysCreateOrUpdatePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ApplicationGatewayResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ApplicationGatewaysCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new ApplicationGatewayPoller from the specified resume token.
-// token - The value must come from a previous call to ApplicationGatewayPoller.ResumeToken().
-func (client *ApplicationGatewaysClient) ResumeCreateOrUpdate(ctx context.Context, token string) (ApplicationGatewayPollerResponse, error) {
+// ResumeCreateOrUpdate creates a new ApplicationGatewaysCreateOrUpdatePoller from the specified resume token.
+// token - The value must come from a previous call to ApplicationGatewaysCreateOrUpdatePoller.ResumeToken().
+func (client *ApplicationGatewaysClient) ResumeCreateOrUpdate(ctx context.Context, token string) (ApplicationGatewaysCreateOrUpdatePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("ApplicationGatewaysClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return ApplicationGatewayPollerResponse{}, err
+		return ApplicationGatewaysCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &applicationGatewayPoller{
+	poller := &applicationGatewaysCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return ApplicationGatewayPollerResponse{}, err
+		return ApplicationGatewaysCreateOrUpdatePollerResponse{}, err
 	}
-	result := ApplicationGatewayPollerResponse{
+	result := ApplicationGatewaysCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ApplicationGatewayResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ApplicationGatewaysCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -356,47 +356,47 @@ func (client *ApplicationGatewaysClient) createOrUpdateHandleError(resp *azcore.
 
 // BeginDelete - Deletes the specified application gateway.
 // If the operation fails it returns the *CloudError error type.
-func (client *ApplicationGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysBeginDeleteOptions) (HTTPPollerResponse, error) {
+func (client *ApplicationGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysBeginDeleteOptions) (ApplicationGatewaysDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, applicationGatewayName, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return ApplicationGatewaysDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := ApplicationGatewaysDeletePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("ApplicationGatewaysClient.Delete", "location", resp, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return ApplicationGatewaysDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &applicationGatewaysDeletePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ApplicationGatewaysDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeDelete creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *ApplicationGatewaysClient) ResumeDelete(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeDelete creates a new ApplicationGatewaysDeletePoller from the specified resume token.
+// token - The value must come from a previous call to ApplicationGatewaysDeletePoller.ResumeToken().
+func (client *ApplicationGatewaysClient) ResumeDelete(ctx context.Context, token string) (ApplicationGatewaysDeletePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("ApplicationGatewaysClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return ApplicationGatewaysDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &applicationGatewaysDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return ApplicationGatewaysDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := ApplicationGatewaysDeletePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ApplicationGatewaysDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -461,17 +461,17 @@ func (client *ApplicationGatewaysClient) deleteHandleError(resp *azcore.Response
 
 // Get - Gets the specified application gateway.
 // If the operation fails it returns the *CloudError error type.
-func (client *ApplicationGatewaysClient) Get(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysGetOptions) (ApplicationGatewayResponse, error) {
+func (client *ApplicationGatewaysClient) Get(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysGetOptions) (ApplicationGatewaysGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, applicationGatewayName, options)
 	if err != nil {
-		return ApplicationGatewayResponse{}, err
+		return ApplicationGatewaysGetResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return ApplicationGatewayResponse{}, err
+		return ApplicationGatewaysGetResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return ApplicationGatewayResponse{}, client.getHandleError(resp)
+		return ApplicationGatewaysGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -504,12 +504,12 @@ func (client *ApplicationGatewaysClient) getCreateRequest(ctx context.Context, r
 }
 
 // getHandleResponse handles the Get response.
-func (client *ApplicationGatewaysClient) getHandleResponse(resp *azcore.Response) (ApplicationGatewayResponse, error) {
-	var val *ApplicationGateway
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ApplicationGatewayResponse{}, err
+func (client *ApplicationGatewaysClient) getHandleResponse(resp *azcore.Response) (ApplicationGatewaysGetResponse, error) {
+	result := ApplicationGatewaysGetResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.ApplicationGateway); err != nil {
+		return ApplicationGatewaysGetResponse{}, err
 	}
-	return ApplicationGatewayResponse{RawResponse: resp.Response, ApplicationGateway: val}, nil
+	return result, nil
 }
 
 // getHandleError handles the Get error response.
@@ -527,17 +527,17 @@ func (client *ApplicationGatewaysClient) getHandleError(resp *azcore.Response) e
 
 // GetSSLPredefinedPolicy - Gets Ssl predefined policy with the specified policy name.
 // If the operation fails it returns the *CloudError error type.
-func (client *ApplicationGatewaysClient) GetSSLPredefinedPolicy(ctx context.Context, predefinedPolicyName string, options *ApplicationGatewaysGetSSLPredefinedPolicyOptions) (ApplicationGatewaySSLPredefinedPolicyResponse, error) {
+func (client *ApplicationGatewaysClient) GetSSLPredefinedPolicy(ctx context.Context, predefinedPolicyName string, options *ApplicationGatewaysGetSSLPredefinedPolicyOptions) (ApplicationGatewaysGetSSLPredefinedPolicyResponse, error) {
 	req, err := client.getSSLPredefinedPolicyCreateRequest(ctx, predefinedPolicyName, options)
 	if err != nil {
-		return ApplicationGatewaySSLPredefinedPolicyResponse{}, err
+		return ApplicationGatewaysGetSSLPredefinedPolicyResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return ApplicationGatewaySSLPredefinedPolicyResponse{}, err
+		return ApplicationGatewaysGetSSLPredefinedPolicyResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return ApplicationGatewaySSLPredefinedPolicyResponse{}, client.getSSLPredefinedPolicyHandleError(resp)
+		return ApplicationGatewaysGetSSLPredefinedPolicyResponse{}, client.getSSLPredefinedPolicyHandleError(resp)
 	}
 	return client.getSSLPredefinedPolicyHandleResponse(resp)
 }
@@ -566,12 +566,12 @@ func (client *ApplicationGatewaysClient) getSSLPredefinedPolicyCreateRequest(ctx
 }
 
 // getSSLPredefinedPolicyHandleResponse handles the GetSSLPredefinedPolicy response.
-func (client *ApplicationGatewaysClient) getSSLPredefinedPolicyHandleResponse(resp *azcore.Response) (ApplicationGatewaySSLPredefinedPolicyResponse, error) {
-	var val *ApplicationGatewaySSLPredefinedPolicy
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ApplicationGatewaySSLPredefinedPolicyResponse{}, err
+func (client *ApplicationGatewaysClient) getSSLPredefinedPolicyHandleResponse(resp *azcore.Response) (ApplicationGatewaysGetSSLPredefinedPolicyResponse, error) {
+	result := ApplicationGatewaysGetSSLPredefinedPolicyResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.ApplicationGatewaySSLPredefinedPolicy); err != nil {
+		return ApplicationGatewaysGetSSLPredefinedPolicyResponse{}, err
 	}
-	return ApplicationGatewaySSLPredefinedPolicyResponse{RawResponse: resp.Response, ApplicationGatewaySSLPredefinedPolicy: val}, nil
+	return result, nil
 }
 
 // getSSLPredefinedPolicyHandleError handles the GetSSLPredefinedPolicy error response.
@@ -589,18 +589,15 @@ func (client *ApplicationGatewaysClient) getSSLPredefinedPolicyHandleError(resp 
 
 // List - Lists all application gateways in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *ApplicationGatewaysClient) List(resourceGroupName string, options *ApplicationGatewaysListOptions) ApplicationGatewayListResultPager {
-	return &applicationGatewayListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *ApplicationGatewaysClient) List(resourceGroupName string, options *ApplicationGatewaysListOptions) ApplicationGatewaysListPager {
+	return &applicationGatewaysListPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, options)
 		},
-		responder: client.listHandleResponse,
-		errorer:   client.listHandleError,
-		advancer: func(ctx context.Context, resp ApplicationGatewayListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp ApplicationGatewaysListResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ApplicationGatewayListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -628,12 +625,12 @@ func (client *ApplicationGatewaysClient) listCreateRequest(ctx context.Context, 
 }
 
 // listHandleResponse handles the List response.
-func (client *ApplicationGatewaysClient) listHandleResponse(resp *azcore.Response) (ApplicationGatewayListResultResponse, error) {
-	var val *ApplicationGatewayListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ApplicationGatewayListResultResponse{}, err
+func (client *ApplicationGatewaysClient) listHandleResponse(resp *azcore.Response) (ApplicationGatewaysListResponse, error) {
+	result := ApplicationGatewaysListResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.ApplicationGatewayListResult); err != nil {
+		return ApplicationGatewaysListResponse{}, err
 	}
-	return ApplicationGatewayListResultResponse{RawResponse: resp.Response, ApplicationGatewayListResult: val}, nil
+	return result, nil
 }
 
 // listHandleError handles the List error response.
@@ -651,18 +648,15 @@ func (client *ApplicationGatewaysClient) listHandleError(resp *azcore.Response) 
 
 // ListAll - Gets all the application gateways in a subscription.
 // If the operation fails it returns the *CloudError error type.
-func (client *ApplicationGatewaysClient) ListAll(options *ApplicationGatewaysListAllOptions) ApplicationGatewayListResultPager {
-	return &applicationGatewayListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *ApplicationGatewaysClient) ListAll(options *ApplicationGatewaysListAllOptions) ApplicationGatewaysListAllPager {
+	return &applicationGatewaysListAllPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listAllCreateRequest(ctx, options)
 		},
-		responder: client.listAllHandleResponse,
-		errorer:   client.listAllHandleError,
-		advancer: func(ctx context.Context, resp ApplicationGatewayListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp ApplicationGatewaysListAllResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ApplicationGatewayListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -686,12 +680,12 @@ func (client *ApplicationGatewaysClient) listAllCreateRequest(ctx context.Contex
 }
 
 // listAllHandleResponse handles the ListAll response.
-func (client *ApplicationGatewaysClient) listAllHandleResponse(resp *azcore.Response) (ApplicationGatewayListResultResponse, error) {
-	var val *ApplicationGatewayListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ApplicationGatewayListResultResponse{}, err
+func (client *ApplicationGatewaysClient) listAllHandleResponse(resp *azcore.Response) (ApplicationGatewaysListAllResponse, error) {
+	result := ApplicationGatewaysListAllResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.ApplicationGatewayListResult); err != nil {
+		return ApplicationGatewaysListAllResponse{}, err
 	}
-	return ApplicationGatewayListResultResponse{RawResponse: resp.Response, ApplicationGatewayListResult: val}, nil
+	return result, nil
 }
 
 // listAllHandleError handles the ListAll error response.
@@ -709,17 +703,17 @@ func (client *ApplicationGatewaysClient) listAllHandleError(resp *azcore.Respons
 
 // ListAvailableRequestHeaders - Lists all available request headers.
 // If the operation fails it returns the *Error error type.
-func (client *ApplicationGatewaysClient) ListAvailableRequestHeaders(ctx context.Context, options *ApplicationGatewaysListAvailableRequestHeadersOptions) (StringArrayResponse, error) {
+func (client *ApplicationGatewaysClient) ListAvailableRequestHeaders(ctx context.Context, options *ApplicationGatewaysListAvailableRequestHeadersOptions) (ApplicationGatewaysListAvailableRequestHeadersResponse, error) {
 	req, err := client.listAvailableRequestHeadersCreateRequest(ctx, options)
 	if err != nil {
-		return StringArrayResponse{}, err
+		return ApplicationGatewaysListAvailableRequestHeadersResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return StringArrayResponse{}, err
+		return ApplicationGatewaysListAvailableRequestHeadersResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return StringArrayResponse{}, client.listAvailableRequestHeadersHandleError(resp)
+		return ApplicationGatewaysListAvailableRequestHeadersResponse{}, client.listAvailableRequestHeadersHandleError(resp)
 	}
 	return client.listAvailableRequestHeadersHandleResponse(resp)
 }
@@ -744,12 +738,12 @@ func (client *ApplicationGatewaysClient) listAvailableRequestHeadersCreateReques
 }
 
 // listAvailableRequestHeadersHandleResponse handles the ListAvailableRequestHeaders response.
-func (client *ApplicationGatewaysClient) listAvailableRequestHeadersHandleResponse(resp *azcore.Response) (StringArrayResponse, error) {
-	var val []*string
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return StringArrayResponse{}, err
+func (client *ApplicationGatewaysClient) listAvailableRequestHeadersHandleResponse(resp *azcore.Response) (ApplicationGatewaysListAvailableRequestHeadersResponse, error) {
+	result := ApplicationGatewaysListAvailableRequestHeadersResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.StringArray); err != nil {
+		return ApplicationGatewaysListAvailableRequestHeadersResponse{}, err
 	}
-	return StringArrayResponse{RawResponse: resp.Response, StringArray: val}, nil
+	return result, nil
 }
 
 // listAvailableRequestHeadersHandleError handles the ListAvailableRequestHeaders error response.
@@ -767,17 +761,17 @@ func (client *ApplicationGatewaysClient) listAvailableRequestHeadersHandleError(
 
 // ListAvailableResponseHeaders - Lists all available response headers.
 // If the operation fails it returns the *Error error type.
-func (client *ApplicationGatewaysClient) ListAvailableResponseHeaders(ctx context.Context, options *ApplicationGatewaysListAvailableResponseHeadersOptions) (StringArrayResponse, error) {
+func (client *ApplicationGatewaysClient) ListAvailableResponseHeaders(ctx context.Context, options *ApplicationGatewaysListAvailableResponseHeadersOptions) (ApplicationGatewaysListAvailableResponseHeadersResponse, error) {
 	req, err := client.listAvailableResponseHeadersCreateRequest(ctx, options)
 	if err != nil {
-		return StringArrayResponse{}, err
+		return ApplicationGatewaysListAvailableResponseHeadersResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return StringArrayResponse{}, err
+		return ApplicationGatewaysListAvailableResponseHeadersResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return StringArrayResponse{}, client.listAvailableResponseHeadersHandleError(resp)
+		return ApplicationGatewaysListAvailableResponseHeadersResponse{}, client.listAvailableResponseHeadersHandleError(resp)
 	}
 	return client.listAvailableResponseHeadersHandleResponse(resp)
 }
@@ -802,12 +796,12 @@ func (client *ApplicationGatewaysClient) listAvailableResponseHeadersCreateReque
 }
 
 // listAvailableResponseHeadersHandleResponse handles the ListAvailableResponseHeaders response.
-func (client *ApplicationGatewaysClient) listAvailableResponseHeadersHandleResponse(resp *azcore.Response) (StringArrayResponse, error) {
-	var val []*string
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return StringArrayResponse{}, err
+func (client *ApplicationGatewaysClient) listAvailableResponseHeadersHandleResponse(resp *azcore.Response) (ApplicationGatewaysListAvailableResponseHeadersResponse, error) {
+	result := ApplicationGatewaysListAvailableResponseHeadersResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.StringArray); err != nil {
+		return ApplicationGatewaysListAvailableResponseHeadersResponse{}, err
 	}
-	return StringArrayResponse{RawResponse: resp.Response, StringArray: val}, nil
+	return result, nil
 }
 
 // listAvailableResponseHeadersHandleError handles the ListAvailableResponseHeaders error response.
@@ -825,17 +819,17 @@ func (client *ApplicationGatewaysClient) listAvailableResponseHeadersHandleError
 
 // ListAvailableSSLOptions - Lists available Ssl options for configuring Ssl policy.
 // If the operation fails it returns the *CloudError error type.
-func (client *ApplicationGatewaysClient) ListAvailableSSLOptions(ctx context.Context, options *ApplicationGatewaysListAvailableSSLOptionsOptions) (ApplicationGatewayAvailableSSLOptionsResponse, error) {
+func (client *ApplicationGatewaysClient) ListAvailableSSLOptions(ctx context.Context, options *ApplicationGatewaysListAvailableSSLOptionsOptions) (ApplicationGatewaysListAvailableSSLOptionsResponse, error) {
 	req, err := client.listAvailableSSLOptionsCreateRequest(ctx, options)
 	if err != nil {
-		return ApplicationGatewayAvailableSSLOptionsResponse{}, err
+		return ApplicationGatewaysListAvailableSSLOptionsResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return ApplicationGatewayAvailableSSLOptionsResponse{}, err
+		return ApplicationGatewaysListAvailableSSLOptionsResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return ApplicationGatewayAvailableSSLOptionsResponse{}, client.listAvailableSSLOptionsHandleError(resp)
+		return ApplicationGatewaysListAvailableSSLOptionsResponse{}, client.listAvailableSSLOptionsHandleError(resp)
 	}
 	return client.listAvailableSSLOptionsHandleResponse(resp)
 }
@@ -860,12 +854,12 @@ func (client *ApplicationGatewaysClient) listAvailableSSLOptionsCreateRequest(ct
 }
 
 // listAvailableSSLOptionsHandleResponse handles the ListAvailableSSLOptions response.
-func (client *ApplicationGatewaysClient) listAvailableSSLOptionsHandleResponse(resp *azcore.Response) (ApplicationGatewayAvailableSSLOptionsResponse, error) {
-	var val *ApplicationGatewayAvailableSSLOptions
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ApplicationGatewayAvailableSSLOptionsResponse{}, err
+func (client *ApplicationGatewaysClient) listAvailableSSLOptionsHandleResponse(resp *azcore.Response) (ApplicationGatewaysListAvailableSSLOptionsResponse, error) {
+	result := ApplicationGatewaysListAvailableSSLOptionsResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.ApplicationGatewayAvailableSSLOptions); err != nil {
+		return ApplicationGatewaysListAvailableSSLOptionsResponse{}, err
 	}
-	return ApplicationGatewayAvailableSSLOptionsResponse{RawResponse: resp.Response, ApplicationGatewayAvailableSSLOptions: val}, nil
+	return result, nil
 }
 
 // listAvailableSSLOptionsHandleError handles the ListAvailableSSLOptions error response.
@@ -883,18 +877,15 @@ func (client *ApplicationGatewaysClient) listAvailableSSLOptionsHandleError(resp
 
 // ListAvailableSSLPredefinedPolicies - Lists all SSL predefined policies for configuring Ssl policy.
 // If the operation fails it returns the *CloudError error type.
-func (client *ApplicationGatewaysClient) ListAvailableSSLPredefinedPolicies(options *ApplicationGatewaysListAvailableSSLPredefinedPoliciesOptions) ApplicationGatewayAvailableSSLPredefinedPoliciesPager {
-	return &applicationGatewayAvailableSSLPredefinedPoliciesPager{
-		pipeline: client.con.Pipeline(),
+func (client *ApplicationGatewaysClient) ListAvailableSSLPredefinedPolicies(options *ApplicationGatewaysListAvailableSSLPredefinedPoliciesOptions) ApplicationGatewaysListAvailableSSLPredefinedPoliciesPager {
+	return &applicationGatewaysListAvailableSSLPredefinedPoliciesPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listAvailableSSLPredefinedPoliciesCreateRequest(ctx, options)
 		},
-		responder: client.listAvailableSSLPredefinedPoliciesHandleResponse,
-		errorer:   client.listAvailableSSLPredefinedPoliciesHandleError,
-		advancer: func(ctx context.Context, resp ApplicationGatewayAvailableSSLPredefinedPoliciesResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp ApplicationGatewaysListAvailableSSLPredefinedPoliciesResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ApplicationGatewayAvailableSSLPredefinedPolicies.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -918,12 +909,12 @@ func (client *ApplicationGatewaysClient) listAvailableSSLPredefinedPoliciesCreat
 }
 
 // listAvailableSSLPredefinedPoliciesHandleResponse handles the ListAvailableSSLPredefinedPolicies response.
-func (client *ApplicationGatewaysClient) listAvailableSSLPredefinedPoliciesHandleResponse(resp *azcore.Response) (ApplicationGatewayAvailableSSLPredefinedPoliciesResponse, error) {
-	var val *ApplicationGatewayAvailableSSLPredefinedPolicies
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ApplicationGatewayAvailableSSLPredefinedPoliciesResponse{}, err
+func (client *ApplicationGatewaysClient) listAvailableSSLPredefinedPoliciesHandleResponse(resp *azcore.Response) (ApplicationGatewaysListAvailableSSLPredefinedPoliciesResponse, error) {
+	result := ApplicationGatewaysListAvailableSSLPredefinedPoliciesResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.ApplicationGatewayAvailableSSLPredefinedPolicies); err != nil {
+		return ApplicationGatewaysListAvailableSSLPredefinedPoliciesResponse{}, err
 	}
-	return ApplicationGatewayAvailableSSLPredefinedPoliciesResponse{RawResponse: resp.Response, ApplicationGatewayAvailableSSLPredefinedPolicies: val}, nil
+	return result, nil
 }
 
 // listAvailableSSLPredefinedPoliciesHandleError handles the ListAvailableSSLPredefinedPolicies error response.
@@ -941,17 +932,17 @@ func (client *ApplicationGatewaysClient) listAvailableSSLPredefinedPoliciesHandl
 
 // ListAvailableServerVariables - Lists all available server variables.
 // If the operation fails it returns the *Error error type.
-func (client *ApplicationGatewaysClient) ListAvailableServerVariables(ctx context.Context, options *ApplicationGatewaysListAvailableServerVariablesOptions) (StringArrayResponse, error) {
+func (client *ApplicationGatewaysClient) ListAvailableServerVariables(ctx context.Context, options *ApplicationGatewaysListAvailableServerVariablesOptions) (ApplicationGatewaysListAvailableServerVariablesResponse, error) {
 	req, err := client.listAvailableServerVariablesCreateRequest(ctx, options)
 	if err != nil {
-		return StringArrayResponse{}, err
+		return ApplicationGatewaysListAvailableServerVariablesResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return StringArrayResponse{}, err
+		return ApplicationGatewaysListAvailableServerVariablesResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return StringArrayResponse{}, client.listAvailableServerVariablesHandleError(resp)
+		return ApplicationGatewaysListAvailableServerVariablesResponse{}, client.listAvailableServerVariablesHandleError(resp)
 	}
 	return client.listAvailableServerVariablesHandleResponse(resp)
 }
@@ -976,12 +967,12 @@ func (client *ApplicationGatewaysClient) listAvailableServerVariablesCreateReque
 }
 
 // listAvailableServerVariablesHandleResponse handles the ListAvailableServerVariables response.
-func (client *ApplicationGatewaysClient) listAvailableServerVariablesHandleResponse(resp *azcore.Response) (StringArrayResponse, error) {
-	var val []*string
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return StringArrayResponse{}, err
+func (client *ApplicationGatewaysClient) listAvailableServerVariablesHandleResponse(resp *azcore.Response) (ApplicationGatewaysListAvailableServerVariablesResponse, error) {
+	result := ApplicationGatewaysListAvailableServerVariablesResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.StringArray); err != nil {
+		return ApplicationGatewaysListAvailableServerVariablesResponse{}, err
 	}
-	return StringArrayResponse{RawResponse: resp.Response, StringArray: val}, nil
+	return result, nil
 }
 
 // listAvailableServerVariablesHandleError handles the ListAvailableServerVariables error response.
@@ -999,17 +990,17 @@ func (client *ApplicationGatewaysClient) listAvailableServerVariablesHandleError
 
 // ListAvailableWafRuleSets - Lists all available web application firewall rule sets.
 // If the operation fails it returns the *CloudError error type.
-func (client *ApplicationGatewaysClient) ListAvailableWafRuleSets(ctx context.Context, options *ApplicationGatewaysListAvailableWafRuleSetsOptions) (ApplicationGatewayAvailableWafRuleSetsResultResponse, error) {
+func (client *ApplicationGatewaysClient) ListAvailableWafRuleSets(ctx context.Context, options *ApplicationGatewaysListAvailableWafRuleSetsOptions) (ApplicationGatewaysListAvailableWafRuleSetsResponse, error) {
 	req, err := client.listAvailableWafRuleSetsCreateRequest(ctx, options)
 	if err != nil {
-		return ApplicationGatewayAvailableWafRuleSetsResultResponse{}, err
+		return ApplicationGatewaysListAvailableWafRuleSetsResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return ApplicationGatewayAvailableWafRuleSetsResultResponse{}, err
+		return ApplicationGatewaysListAvailableWafRuleSetsResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return ApplicationGatewayAvailableWafRuleSetsResultResponse{}, client.listAvailableWafRuleSetsHandleError(resp)
+		return ApplicationGatewaysListAvailableWafRuleSetsResponse{}, client.listAvailableWafRuleSetsHandleError(resp)
 	}
 	return client.listAvailableWafRuleSetsHandleResponse(resp)
 }
@@ -1034,12 +1025,12 @@ func (client *ApplicationGatewaysClient) listAvailableWafRuleSetsCreateRequest(c
 }
 
 // listAvailableWafRuleSetsHandleResponse handles the ListAvailableWafRuleSets response.
-func (client *ApplicationGatewaysClient) listAvailableWafRuleSetsHandleResponse(resp *azcore.Response) (ApplicationGatewayAvailableWafRuleSetsResultResponse, error) {
-	var val *ApplicationGatewayAvailableWafRuleSetsResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ApplicationGatewayAvailableWafRuleSetsResultResponse{}, err
+func (client *ApplicationGatewaysClient) listAvailableWafRuleSetsHandleResponse(resp *azcore.Response) (ApplicationGatewaysListAvailableWafRuleSetsResponse, error) {
+	result := ApplicationGatewaysListAvailableWafRuleSetsResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.ApplicationGatewayAvailableWafRuleSetsResult); err != nil {
+		return ApplicationGatewaysListAvailableWafRuleSetsResponse{}, err
 	}
-	return ApplicationGatewayAvailableWafRuleSetsResultResponse{RawResponse: resp.Response, ApplicationGatewayAvailableWafRuleSetsResult: val}, nil
+	return result, nil
 }
 
 // listAvailableWafRuleSetsHandleError handles the ListAvailableWafRuleSets error response.
@@ -1057,47 +1048,47 @@ func (client *ApplicationGatewaysClient) listAvailableWafRuleSetsHandleError(res
 
 // BeginStart - Starts the specified application gateway.
 // If the operation fails it returns the *CloudError error type.
-func (client *ApplicationGatewaysClient) BeginStart(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysBeginStartOptions) (HTTPPollerResponse, error) {
+func (client *ApplicationGatewaysClient) BeginStart(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysBeginStartOptions) (ApplicationGatewaysStartPollerResponse, error) {
 	resp, err := client.start(ctx, resourceGroupName, applicationGatewayName, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return ApplicationGatewaysStartPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := ApplicationGatewaysStartPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("ApplicationGatewaysClient.Start", "location", resp, client.con.Pipeline(), client.startHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return ApplicationGatewaysStartPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &applicationGatewaysStartPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ApplicationGatewaysStartResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeStart creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *ApplicationGatewaysClient) ResumeStart(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeStart creates a new ApplicationGatewaysStartPoller from the specified resume token.
+// token - The value must come from a previous call to ApplicationGatewaysStartPoller.ResumeToken().
+func (client *ApplicationGatewaysClient) ResumeStart(ctx context.Context, token string) (ApplicationGatewaysStartPollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("ApplicationGatewaysClient.Start", token, client.con.Pipeline(), client.startHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return ApplicationGatewaysStartPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &applicationGatewaysStartPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return ApplicationGatewaysStartPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := ApplicationGatewaysStartPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ApplicationGatewaysStartResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -1162,47 +1153,47 @@ func (client *ApplicationGatewaysClient) startHandleError(resp *azcore.Response)
 
 // BeginStop - Stops the specified application gateway in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *ApplicationGatewaysClient) BeginStop(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysBeginStopOptions) (HTTPPollerResponse, error) {
+func (client *ApplicationGatewaysClient) BeginStop(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysBeginStopOptions) (ApplicationGatewaysStopPollerResponse, error) {
 	resp, err := client.stop(ctx, resourceGroupName, applicationGatewayName, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return ApplicationGatewaysStopPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := ApplicationGatewaysStopPollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("ApplicationGatewaysClient.Stop", "location", resp, client.con.Pipeline(), client.stopHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return ApplicationGatewaysStopPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &applicationGatewaysStopPoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ApplicationGatewaysStopResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeStop creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *ApplicationGatewaysClient) ResumeStop(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeStop creates a new ApplicationGatewaysStopPoller from the specified resume token.
+// token - The value must come from a previous call to ApplicationGatewaysStopPoller.ResumeToken().
+func (client *ApplicationGatewaysClient) ResumeStop(ctx context.Context, token string) (ApplicationGatewaysStopPollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("ApplicationGatewaysClient.Stop", token, client.con.Pipeline(), client.stopHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return ApplicationGatewaysStopPollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &applicationGatewaysStopPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return ApplicationGatewaysStopPollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := ApplicationGatewaysStopPollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ApplicationGatewaysStopResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -1267,17 +1258,17 @@ func (client *ApplicationGatewaysClient) stopHandleError(resp *azcore.Response) 
 
 // UpdateTags - Updates the specified application gateway tags.
 // If the operation fails it returns the *CloudError error type.
-func (client *ApplicationGatewaysClient) UpdateTags(ctx context.Context, resourceGroupName string, applicationGatewayName string, parameters TagsObject, options *ApplicationGatewaysUpdateTagsOptions) (ApplicationGatewayResponse, error) {
+func (client *ApplicationGatewaysClient) UpdateTags(ctx context.Context, resourceGroupName string, applicationGatewayName string, parameters TagsObject, options *ApplicationGatewaysUpdateTagsOptions) (ApplicationGatewaysUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, applicationGatewayName, parameters, options)
 	if err != nil {
-		return ApplicationGatewayResponse{}, err
+		return ApplicationGatewaysUpdateTagsResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return ApplicationGatewayResponse{}, err
+		return ApplicationGatewaysUpdateTagsResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return ApplicationGatewayResponse{}, client.updateTagsHandleError(resp)
+		return ApplicationGatewaysUpdateTagsResponse{}, client.updateTagsHandleError(resp)
 	}
 	return client.updateTagsHandleResponse(resp)
 }
@@ -1310,12 +1301,12 @@ func (client *ApplicationGatewaysClient) updateTagsCreateRequest(ctx context.Con
 }
 
 // updateTagsHandleResponse handles the UpdateTags response.
-func (client *ApplicationGatewaysClient) updateTagsHandleResponse(resp *azcore.Response) (ApplicationGatewayResponse, error) {
-	var val *ApplicationGateway
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ApplicationGatewayResponse{}, err
+func (client *ApplicationGatewaysClient) updateTagsHandleResponse(resp *azcore.Response) (ApplicationGatewaysUpdateTagsResponse, error) {
+	result := ApplicationGatewaysUpdateTagsResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.ApplicationGateway); err != nil {
+		return ApplicationGatewaysUpdateTagsResponse{}, err
 	}
-	return ApplicationGatewayResponse{RawResponse: resp.Response, ApplicationGateway: val}, nil
+	return result, nil
 }
 
 // updateTagsHandleError handles the UpdateTags error response.

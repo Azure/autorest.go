@@ -32,18 +32,15 @@ func NewAvailablePrivateEndpointTypesClient(con *armcore.Connection, subscriptio
 
 // List - Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region.
 // If the operation fails it returns the *CloudError error type.
-func (client *AvailablePrivateEndpointTypesClient) List(location string, options *AvailablePrivateEndpointTypesListOptions) AvailablePrivateEndpointTypesResultPager {
-	return &availablePrivateEndpointTypesResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *AvailablePrivateEndpointTypesClient) List(location string, options *AvailablePrivateEndpointTypesListOptions) AvailablePrivateEndpointTypesListPager {
+	return &availablePrivateEndpointTypesListPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, location, options)
 		},
-		responder: client.listHandleResponse,
-		errorer:   client.listHandleError,
-		advancer: func(ctx context.Context, resp AvailablePrivateEndpointTypesResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp AvailablePrivateEndpointTypesListResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.AvailablePrivateEndpointTypesResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -71,12 +68,12 @@ func (client *AvailablePrivateEndpointTypesClient) listCreateRequest(ctx context
 }
 
 // listHandleResponse handles the List response.
-func (client *AvailablePrivateEndpointTypesClient) listHandleResponse(resp *azcore.Response) (AvailablePrivateEndpointTypesResultResponse, error) {
-	var val *AvailablePrivateEndpointTypesResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return AvailablePrivateEndpointTypesResultResponse{}, err
+func (client *AvailablePrivateEndpointTypesClient) listHandleResponse(resp *azcore.Response) (AvailablePrivateEndpointTypesListResponse, error) {
+	result := AvailablePrivateEndpointTypesListResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.AvailablePrivateEndpointTypesResult); err != nil {
+		return AvailablePrivateEndpointTypesListResponse{}, err
 	}
-	return AvailablePrivateEndpointTypesResultResponse{RawResponse: resp.Response, AvailablePrivateEndpointTypesResult: val}, nil
+	return result, nil
 }
 
 // listHandleError handles the List error response.
@@ -94,18 +91,15 @@ func (client *AvailablePrivateEndpointTypesClient) listHandleError(resp *azcore.
 
 // ListByResourceGroup - Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region.
 // If the operation fails it returns the *CloudError error type.
-func (client *AvailablePrivateEndpointTypesClient) ListByResourceGroup(location string, resourceGroupName string, options *AvailablePrivateEndpointTypesListByResourceGroupOptions) AvailablePrivateEndpointTypesResultPager {
-	return &availablePrivateEndpointTypesResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *AvailablePrivateEndpointTypesClient) ListByResourceGroup(location string, resourceGroupName string, options *AvailablePrivateEndpointTypesListByResourceGroupOptions) AvailablePrivateEndpointTypesListByResourceGroupPager {
+	return &availablePrivateEndpointTypesListByResourceGroupPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, location, resourceGroupName, options)
 		},
-		responder: client.listByResourceGroupHandleResponse,
-		errorer:   client.listByResourceGroupHandleError,
-		advancer: func(ctx context.Context, resp AvailablePrivateEndpointTypesResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp AvailablePrivateEndpointTypesListByResourceGroupResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.AvailablePrivateEndpointTypesResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -137,12 +131,12 @@ func (client *AvailablePrivateEndpointTypesClient) listByResourceGroupCreateRequ
 }
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
-func (client *AvailablePrivateEndpointTypesClient) listByResourceGroupHandleResponse(resp *azcore.Response) (AvailablePrivateEndpointTypesResultResponse, error) {
-	var val *AvailablePrivateEndpointTypesResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return AvailablePrivateEndpointTypesResultResponse{}, err
+func (client *AvailablePrivateEndpointTypesClient) listByResourceGroupHandleResponse(resp *azcore.Response) (AvailablePrivateEndpointTypesListByResourceGroupResponse, error) {
+	result := AvailablePrivateEndpointTypesListByResourceGroupResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.AvailablePrivateEndpointTypesResult); err != nil {
+		return AvailablePrivateEndpointTypesListByResourceGroupResponse{}, err
 	}
-	return AvailablePrivateEndpointTypesResultResponse{RawResponse: resp.Response, AvailablePrivateEndpointTypesResult: val}, nil
+	return result, nil
 }
 
 // listByResourceGroupHandleError handles the ListByResourceGroup error response.

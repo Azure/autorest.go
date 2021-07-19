@@ -32,17 +32,17 @@ func NewDefaultSecurityRulesClient(con *armcore.Connection, subscriptionID strin
 
 // Get - Get the specified default network security rule.
 // If the operation fails it returns the *CloudError error type.
-func (client *DefaultSecurityRulesClient) Get(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, defaultSecurityRuleName string, options *DefaultSecurityRulesGetOptions) (SecurityRuleResponse, error) {
+func (client *DefaultSecurityRulesClient) Get(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, defaultSecurityRuleName string, options *DefaultSecurityRulesGetOptions) (DefaultSecurityRulesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkSecurityGroupName, defaultSecurityRuleName, options)
 	if err != nil {
-		return SecurityRuleResponse{}, err
+		return DefaultSecurityRulesGetResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return SecurityRuleResponse{}, err
+		return DefaultSecurityRulesGetResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return SecurityRuleResponse{}, client.getHandleError(resp)
+		return DefaultSecurityRulesGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -79,12 +79,12 @@ func (client *DefaultSecurityRulesClient) getCreateRequest(ctx context.Context, 
 }
 
 // getHandleResponse handles the Get response.
-func (client *DefaultSecurityRulesClient) getHandleResponse(resp *azcore.Response) (SecurityRuleResponse, error) {
-	var val *SecurityRule
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return SecurityRuleResponse{}, err
+func (client *DefaultSecurityRulesClient) getHandleResponse(resp *azcore.Response) (DefaultSecurityRulesGetResponse, error) {
+	result := DefaultSecurityRulesGetResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.SecurityRule); err != nil {
+		return DefaultSecurityRulesGetResponse{}, err
 	}
-	return SecurityRuleResponse{RawResponse: resp.Response, SecurityRule: val}, nil
+	return result, nil
 }
 
 // getHandleError handles the Get error response.
@@ -102,18 +102,15 @@ func (client *DefaultSecurityRulesClient) getHandleError(resp *azcore.Response) 
 
 // List - Gets all default security rules in a network security group.
 // If the operation fails it returns the *CloudError error type.
-func (client *DefaultSecurityRulesClient) List(resourceGroupName string, networkSecurityGroupName string, options *DefaultSecurityRulesListOptions) SecurityRuleListResultPager {
-	return &securityRuleListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *DefaultSecurityRulesClient) List(resourceGroupName string, networkSecurityGroupName string, options *DefaultSecurityRulesListOptions) DefaultSecurityRulesListPager {
+	return &defaultSecurityRulesListPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, networkSecurityGroupName, options)
 		},
-		responder: client.listHandleResponse,
-		errorer:   client.listHandleError,
-		advancer: func(ctx context.Context, resp SecurityRuleListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp DefaultSecurityRulesListResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.SecurityRuleListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -145,12 +142,12 @@ func (client *DefaultSecurityRulesClient) listCreateRequest(ctx context.Context,
 }
 
 // listHandleResponse handles the List response.
-func (client *DefaultSecurityRulesClient) listHandleResponse(resp *azcore.Response) (SecurityRuleListResultResponse, error) {
-	var val *SecurityRuleListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return SecurityRuleListResultResponse{}, err
+func (client *DefaultSecurityRulesClient) listHandleResponse(resp *azcore.Response) (DefaultSecurityRulesListResponse, error) {
+	result := DefaultSecurityRulesListResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.SecurityRuleListResult); err != nil {
+		return DefaultSecurityRulesListResponse{}, err
 	}
-	return SecurityRuleListResultResponse{RawResponse: resp.Response, SecurityRuleListResult: val}, nil
+	return result, nil
 }
 
 // listHandleError handles the List error response.

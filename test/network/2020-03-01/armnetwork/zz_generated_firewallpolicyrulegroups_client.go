@@ -33,47 +33,47 @@ func NewFirewallPolicyRuleGroupsClient(con *armcore.Connection, subscriptionID s
 
 // BeginCreateOrUpdate - Creates or updates the specified FirewallPolicyRuleGroup.
 // If the operation fails it returns the *CloudError error type.
-func (client *FirewallPolicyRuleGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, firewallPolicyName string, ruleGroupName string, parameters FirewallPolicyRuleGroup, options *FirewallPolicyRuleGroupsBeginCreateOrUpdateOptions) (FirewallPolicyRuleGroupPollerResponse, error) {
+func (client *FirewallPolicyRuleGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, firewallPolicyName string, ruleGroupName string, parameters FirewallPolicyRuleGroup, options *FirewallPolicyRuleGroupsBeginCreateOrUpdateOptions) (FirewallPolicyRuleGroupsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, firewallPolicyName, ruleGroupName, parameters, options)
 	if err != nil {
-		return FirewallPolicyRuleGroupPollerResponse{}, err
+		return FirewallPolicyRuleGroupsCreateOrUpdatePollerResponse{}, err
 	}
-	result := FirewallPolicyRuleGroupPollerResponse{
+	result := FirewallPolicyRuleGroupsCreateOrUpdatePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("FirewallPolicyRuleGroupsClient.CreateOrUpdate", "azure-async-operation", resp, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return FirewallPolicyRuleGroupPollerResponse{}, err
+		return FirewallPolicyRuleGroupsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &firewallPolicyRuleGroupPoller{
+	poller := &firewallPolicyRuleGroupsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (FirewallPolicyRuleGroupResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (FirewallPolicyRuleGroupsCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new FirewallPolicyRuleGroupPoller from the specified resume token.
-// token - The value must come from a previous call to FirewallPolicyRuleGroupPoller.ResumeToken().
-func (client *FirewallPolicyRuleGroupsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (FirewallPolicyRuleGroupPollerResponse, error) {
+// ResumeCreateOrUpdate creates a new FirewallPolicyRuleGroupsCreateOrUpdatePoller from the specified resume token.
+// token - The value must come from a previous call to FirewallPolicyRuleGroupsCreateOrUpdatePoller.ResumeToken().
+func (client *FirewallPolicyRuleGroupsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (FirewallPolicyRuleGroupsCreateOrUpdatePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("FirewallPolicyRuleGroupsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
 	if err != nil {
-		return FirewallPolicyRuleGroupPollerResponse{}, err
+		return FirewallPolicyRuleGroupsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &firewallPolicyRuleGroupPoller{
+	poller := &firewallPolicyRuleGroupsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return FirewallPolicyRuleGroupPollerResponse{}, err
+		return FirewallPolicyRuleGroupsCreateOrUpdatePollerResponse{}, err
 	}
-	result := FirewallPolicyRuleGroupPollerResponse{
+	result := FirewallPolicyRuleGroupsCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (FirewallPolicyRuleGroupResponse, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (FirewallPolicyRuleGroupsCreateOrUpdateResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -142,47 +142,47 @@ func (client *FirewallPolicyRuleGroupsClient) createOrUpdateHandleError(resp *az
 
 // BeginDelete - Deletes the specified FirewallPolicyRuleGroup.
 // If the operation fails it returns the *CloudError error type.
-func (client *FirewallPolicyRuleGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, firewallPolicyName string, ruleGroupName string, options *FirewallPolicyRuleGroupsBeginDeleteOptions) (HTTPPollerResponse, error) {
+func (client *FirewallPolicyRuleGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, firewallPolicyName string, ruleGroupName string, options *FirewallPolicyRuleGroupsBeginDeleteOptions) (FirewallPolicyRuleGroupsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, firewallPolicyName, ruleGroupName, options)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return FirewallPolicyRuleGroupsDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := FirewallPolicyRuleGroupsDeletePollerResponse{
 		RawResponse: resp.Response,
 	}
 	pt, err := armcore.NewLROPoller("FirewallPolicyRuleGroupsClient.Delete", "location", resp, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return FirewallPolicyRuleGroupsDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &firewallPolicyRuleGroupsDeletePoller{
 		pt: pt,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (FirewallPolicyRuleGroupsDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
 
-// ResumeDelete creates a new HTTPPoller from the specified resume token.
-// token - The value must come from a previous call to HTTPPoller.ResumeToken().
-func (client *FirewallPolicyRuleGroupsClient) ResumeDelete(ctx context.Context, token string) (HTTPPollerResponse, error) {
+// ResumeDelete creates a new FirewallPolicyRuleGroupsDeletePoller from the specified resume token.
+// token - The value must come from a previous call to FirewallPolicyRuleGroupsDeletePoller.ResumeToken().
+func (client *FirewallPolicyRuleGroupsClient) ResumeDelete(ctx context.Context, token string) (FirewallPolicyRuleGroupsDeletePollerResponse, error) {
 	pt, err := armcore.NewLROPollerFromResumeToken("FirewallPolicyRuleGroupsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return FirewallPolicyRuleGroupsDeletePollerResponse{}, err
 	}
-	poller := &httpPoller{
+	poller := &firewallPolicyRuleGroupsDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
 	if err != nil {
-		return HTTPPollerResponse{}, err
+		return FirewallPolicyRuleGroupsDeletePollerResponse{}, err
 	}
-	result := HTTPPollerResponse{
+	result := FirewallPolicyRuleGroupsDeletePollerResponse{
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (*http.Response, error) {
+	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (FirewallPolicyRuleGroupsDeleteResponse, error) {
 		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
@@ -251,17 +251,17 @@ func (client *FirewallPolicyRuleGroupsClient) deleteHandleError(resp *azcore.Res
 
 // Get - Gets the specified FirewallPolicyRuleGroup.
 // If the operation fails it returns the *CloudError error type.
-func (client *FirewallPolicyRuleGroupsClient) Get(ctx context.Context, resourceGroupName string, firewallPolicyName string, ruleGroupName string, options *FirewallPolicyRuleGroupsGetOptions) (FirewallPolicyRuleGroupResponse, error) {
+func (client *FirewallPolicyRuleGroupsClient) Get(ctx context.Context, resourceGroupName string, firewallPolicyName string, ruleGroupName string, options *FirewallPolicyRuleGroupsGetOptions) (FirewallPolicyRuleGroupsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, firewallPolicyName, ruleGroupName, options)
 	if err != nil {
-		return FirewallPolicyRuleGroupResponse{}, err
+		return FirewallPolicyRuleGroupsGetResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return FirewallPolicyRuleGroupResponse{}, err
+		return FirewallPolicyRuleGroupsGetResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return FirewallPolicyRuleGroupResponse{}, client.getHandleError(resp)
+		return FirewallPolicyRuleGroupsGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -298,12 +298,12 @@ func (client *FirewallPolicyRuleGroupsClient) getCreateRequest(ctx context.Conte
 }
 
 // getHandleResponse handles the Get response.
-func (client *FirewallPolicyRuleGroupsClient) getHandleResponse(resp *azcore.Response) (FirewallPolicyRuleGroupResponse, error) {
-	var val *FirewallPolicyRuleGroup
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return FirewallPolicyRuleGroupResponse{}, err
+func (client *FirewallPolicyRuleGroupsClient) getHandleResponse(resp *azcore.Response) (FirewallPolicyRuleGroupsGetResponse, error) {
+	result := FirewallPolicyRuleGroupsGetResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.FirewallPolicyRuleGroup); err != nil {
+		return FirewallPolicyRuleGroupsGetResponse{}, err
 	}
-	return FirewallPolicyRuleGroupResponse{RawResponse: resp.Response, FirewallPolicyRuleGroup: val}, nil
+	return result, nil
 }
 
 // getHandleError handles the Get error response.
@@ -321,18 +321,15 @@ func (client *FirewallPolicyRuleGroupsClient) getHandleError(resp *azcore.Respon
 
 // List - Lists all FirewallPolicyRuleGroups in a FirewallPolicy resource.
 // If the operation fails it returns the *CloudError error type.
-func (client *FirewallPolicyRuleGroupsClient) List(resourceGroupName string, firewallPolicyName string, options *FirewallPolicyRuleGroupsListOptions) FirewallPolicyRuleGroupListResultPager {
-	return &firewallPolicyRuleGroupListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *FirewallPolicyRuleGroupsClient) List(resourceGroupName string, firewallPolicyName string, options *FirewallPolicyRuleGroupsListOptions) FirewallPolicyRuleGroupsListPager {
+	return &firewallPolicyRuleGroupsListPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, firewallPolicyName, options)
 		},
-		responder: client.listHandleResponse,
-		errorer:   client.listHandleError,
-		advancer: func(ctx context.Context, resp FirewallPolicyRuleGroupListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp FirewallPolicyRuleGroupsListResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.FirewallPolicyRuleGroupListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -364,12 +361,12 @@ func (client *FirewallPolicyRuleGroupsClient) listCreateRequest(ctx context.Cont
 }
 
 // listHandleResponse handles the List response.
-func (client *FirewallPolicyRuleGroupsClient) listHandleResponse(resp *azcore.Response) (FirewallPolicyRuleGroupListResultResponse, error) {
-	var val *FirewallPolicyRuleGroupListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return FirewallPolicyRuleGroupListResultResponse{}, err
+func (client *FirewallPolicyRuleGroupsClient) listHandleResponse(resp *azcore.Response) (FirewallPolicyRuleGroupsListResponse, error) {
+	result := FirewallPolicyRuleGroupsListResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.FirewallPolicyRuleGroupListResult); err != nil {
+		return FirewallPolicyRuleGroupsListResponse{}, err
 	}
-	return FirewallPolicyRuleGroupListResultResponse{RawResponse: resp.Response, FirewallPolicyRuleGroupListResult: val}, nil
+	return result, nil
 }
 
 // listHandleError handles the List error response.

@@ -26,7 +26,7 @@ func TestHeaderCustomRequestID(t *testing.T) {
 	if err != nil {
 		t.Fatalf("CustomRequestID: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -37,7 +37,7 @@ func TestHeaderParamBool(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamBool: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 
@@ -45,7 +45,7 @@ func TestHeaderParamBool(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamBool: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -56,7 +56,7 @@ func TestHeaderParamByte(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamByte: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -71,7 +71,7 @@ func TestHeaderParamDate(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamDate: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -86,7 +86,7 @@ func TestHeaderParamDatetime(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamDatetime: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -101,7 +101,7 @@ func TestHeaderParamDatetimeRFC1123(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamDatetimeRFC1123: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -112,7 +112,7 @@ func TestHeaderParamDouble(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamDouble: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 
@@ -120,7 +120,7 @@ func TestHeaderParamDouble(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamDouble: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -131,7 +131,7 @@ func TestHeaderParamDuration(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamDuration: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -143,7 +143,7 @@ func TestHeaderParamEnum(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamEnum: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 
@@ -151,7 +151,7 @@ func TestHeaderParamEnum(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamEnum: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -162,7 +162,7 @@ func TestHeaderParamEnum(t *testing.T) {
 // 	if err != nil {
 // 		t.Fatalf("ParamExistingKey: %v", err)
 // 	}
-// 	if s := result.StatusCode; s != http.StatusOK {
+// 	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 //		t.Fatalf("unexpected status code %d", s)
 //	}
 // }
@@ -173,7 +173,7 @@ func TestHeaderParamFloat(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamFloat: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 
@@ -181,7 +181,7 @@ func TestHeaderParamFloat(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamFloat: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -192,7 +192,7 @@ func TestHeaderParamInteger(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamInteger: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 
@@ -200,7 +200,7 @@ func TestHeaderParamInteger(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamInteger: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -211,7 +211,7 @@ func TestHeaderParamLong(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamLong: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 
@@ -219,7 +219,7 @@ func TestHeaderParamLong(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamLong: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -230,7 +230,7 @@ func TestHeaderParamProtectedKey(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamProtectedKey: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -242,7 +242,7 @@ func TestHeaderParamString(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamString: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 
@@ -250,7 +250,7 @@ func TestHeaderParamString(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamString: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 
@@ -259,7 +259,7 @@ func TestHeaderParamString(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamString: %v", err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }

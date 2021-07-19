@@ -32,17 +32,17 @@ func NewNetworkInterfaceIPConfigurationsClient(con *armcore.Connection, subscrip
 
 // Get - Gets the specified network interface ip configuration.
 // If the operation fails it returns the *CloudError error type.
-func (client *NetworkInterfaceIPConfigurationsClient) Get(ctx context.Context, resourceGroupName string, networkInterfaceName string, ipConfigurationName string, options *NetworkInterfaceIPConfigurationsGetOptions) (NetworkInterfaceIPConfigurationResponse, error) {
+func (client *NetworkInterfaceIPConfigurationsClient) Get(ctx context.Context, resourceGroupName string, networkInterfaceName string, ipConfigurationName string, options *NetworkInterfaceIPConfigurationsGetOptions) (NetworkInterfaceIPConfigurationsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkInterfaceName, ipConfigurationName, options)
 	if err != nil {
-		return NetworkInterfaceIPConfigurationResponse{}, err
+		return NetworkInterfaceIPConfigurationsGetResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return NetworkInterfaceIPConfigurationResponse{}, err
+		return NetworkInterfaceIPConfigurationsGetResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return NetworkInterfaceIPConfigurationResponse{}, client.getHandleError(resp)
+		return NetworkInterfaceIPConfigurationsGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -79,12 +79,12 @@ func (client *NetworkInterfaceIPConfigurationsClient) getCreateRequest(ctx conte
 }
 
 // getHandleResponse handles the Get response.
-func (client *NetworkInterfaceIPConfigurationsClient) getHandleResponse(resp *azcore.Response) (NetworkInterfaceIPConfigurationResponse, error) {
-	var val *NetworkInterfaceIPConfiguration
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return NetworkInterfaceIPConfigurationResponse{}, err
+func (client *NetworkInterfaceIPConfigurationsClient) getHandleResponse(resp *azcore.Response) (NetworkInterfaceIPConfigurationsGetResponse, error) {
+	result := NetworkInterfaceIPConfigurationsGetResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.NetworkInterfaceIPConfiguration); err != nil {
+		return NetworkInterfaceIPConfigurationsGetResponse{}, err
 	}
-	return NetworkInterfaceIPConfigurationResponse{RawResponse: resp.Response, NetworkInterfaceIPConfiguration: val}, nil
+	return result, nil
 }
 
 // getHandleError handles the Get error response.
@@ -102,18 +102,15 @@ func (client *NetworkInterfaceIPConfigurationsClient) getHandleError(resp *azcor
 
 // List - Get all ip configurations in a network interface.
 // If the operation fails it returns the *CloudError error type.
-func (client *NetworkInterfaceIPConfigurationsClient) List(resourceGroupName string, networkInterfaceName string, options *NetworkInterfaceIPConfigurationsListOptions) NetworkInterfaceIPConfigurationListResultPager {
-	return &networkInterfaceIPConfigurationListResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *NetworkInterfaceIPConfigurationsClient) List(resourceGroupName string, networkInterfaceName string, options *NetworkInterfaceIPConfigurationsListOptions) NetworkInterfaceIPConfigurationsListPager {
+	return &networkInterfaceIPConfigurationsListPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, networkInterfaceName, options)
 		},
-		responder: client.listHandleResponse,
-		errorer:   client.listHandleError,
-		advancer: func(ctx context.Context, resp NetworkInterfaceIPConfigurationListResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp NetworkInterfaceIPConfigurationsListResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.NetworkInterfaceIPConfigurationListResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -145,12 +142,12 @@ func (client *NetworkInterfaceIPConfigurationsClient) listCreateRequest(ctx cont
 }
 
 // listHandleResponse handles the List response.
-func (client *NetworkInterfaceIPConfigurationsClient) listHandleResponse(resp *azcore.Response) (NetworkInterfaceIPConfigurationListResultResponse, error) {
-	var val *NetworkInterfaceIPConfigurationListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return NetworkInterfaceIPConfigurationListResultResponse{}, err
+func (client *NetworkInterfaceIPConfigurationsClient) listHandleResponse(resp *azcore.Response) (NetworkInterfaceIPConfigurationsListResponse, error) {
+	result := NetworkInterfaceIPConfigurationsListResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.NetworkInterfaceIPConfigurationListResult); err != nil {
+		return NetworkInterfaceIPConfigurationsListResponse{}, err
 	}
-	return NetworkInterfaceIPConfigurationListResultResponse{RawResponse: resp.Response, NetworkInterfaceIPConfigurationListResult: val}, nil
+	return result, nil
 }
 
 // listHandleError handles the List error response.

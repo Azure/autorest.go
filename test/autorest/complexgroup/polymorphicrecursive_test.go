@@ -26,7 +26,7 @@ func TestGetValid(t *testing.T) {
 	}
 	sawBday := time.Date(1900, time.January, 5, 1, 0, 0, 0, time.UTC)
 	sharkBday := time.Date(2012, time.January, 5, 1, 0, 0, 0, time.UTC)
-	if r := cmp.Diff(result.Fish, &Salmon{
+	if r := cmp.Diff(result.FishClassification, &Salmon{
 		Fish: Fish{
 			Fishtype: to.StringPtr("salmon"),
 			Length:   to.Float32Ptr(1),
@@ -198,7 +198,7 @@ func TestPutValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.StatusCode; s != http.StatusOK {
+	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }

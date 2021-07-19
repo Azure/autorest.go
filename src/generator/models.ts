@@ -91,21 +91,16 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
 function generateStructs(imports: ImportManager, objects?: ObjectSchema[]): StructDef[] {
   const structTypes = new Array<StructDef>();
   for (const obj of values(objects)) {
-    const props = new Array<Property>();
-    // add immediate properties
-    for (const prop of values(obj.properties)) {
-      props.push(prop);
-    }
-    const structDef = generateStruct(imports, obj.language.go!, props);
+    const structDef = generateStruct(imports, obj.language.go!, obj.properties);
     // now add the parent type
     let parentType: ObjectSchema | undefined;
     for (const parent of values(obj.parents?.immediate)) {
       if (isObjectSchema(parent)) {
         parentType = parent;
-        structDef.ComposedOf.push(parent);
+        structDef.ComposedOf.push(parent.language.go!.name);
       }
     }
-    structDef.ComposedOf.sort((a: ObjectSchema, b: ObjectSchema) => { return sortAscending(a.language.go!.name, b.language.go!.name); });
+    structDef.ComposedOf.sort();
     if (obj.language.go!.errorType) {
       // add Error() method
       let text = `func (e ${obj.language.go!.name}) Error() string {\n`;

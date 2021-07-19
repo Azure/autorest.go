@@ -23,17 +23,17 @@ type bigDataPoolsClient struct {
 
 // Get - Get Big Data Pool
 // If the operation fails it returns the *ErrorContract error type.
-func (client *bigDataPoolsClient) Get(ctx context.Context, bigDataPoolName string, options *BigDataPoolsGetOptions) (BigDataPoolResourceInfoResponse, error) {
+func (client *bigDataPoolsClient) Get(ctx context.Context, bigDataPoolName string, options *BigDataPoolsGetOptions) (BigDataPoolsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, bigDataPoolName, options)
 	if err != nil {
-		return BigDataPoolResourceInfoResponse{}, err
+		return BigDataPoolsGetResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return BigDataPoolResourceInfoResponse{}, err
+		return BigDataPoolsGetResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return BigDataPoolResourceInfoResponse{}, client.getHandleError(resp)
+		return BigDataPoolsGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -58,12 +58,12 @@ func (client *bigDataPoolsClient) getCreateRequest(ctx context.Context, bigDataP
 }
 
 // getHandleResponse handles the Get response.
-func (client *bigDataPoolsClient) getHandleResponse(resp *azcore.Response) (BigDataPoolResourceInfoResponse, error) {
-	var val *BigDataPoolResourceInfo
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return BigDataPoolResourceInfoResponse{}, err
+func (client *bigDataPoolsClient) getHandleResponse(resp *azcore.Response) (BigDataPoolsGetResponse, error) {
+	result := BigDataPoolsGetResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.BigDataPoolResourceInfo); err != nil {
+		return BigDataPoolsGetResponse{}, err
 	}
-	return BigDataPoolResourceInfoResponse{RawResponse: resp.Response, BigDataPoolResourceInfo: val}, nil
+	return result, nil
 }
 
 // getHandleError handles the Get error response.
@@ -81,17 +81,17 @@ func (client *bigDataPoolsClient) getHandleError(resp *azcore.Response) error {
 
 // List - List Big Data Pools
 // If the operation fails it returns the *ErrorContract error type.
-func (client *bigDataPoolsClient) List(ctx context.Context, options *BigDataPoolsListOptions) (BigDataPoolResourceInfoListResultResponse, error) {
+func (client *bigDataPoolsClient) List(ctx context.Context, options *BigDataPoolsListOptions) (BigDataPoolsListResponse, error) {
 	req, err := client.listCreateRequest(ctx, options)
 	if err != nil {
-		return BigDataPoolResourceInfoListResultResponse{}, err
+		return BigDataPoolsListResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return BigDataPoolResourceInfoListResultResponse{}, err
+		return BigDataPoolsListResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return BigDataPoolResourceInfoListResultResponse{}, client.listHandleError(resp)
+		return BigDataPoolsListResponse{}, client.listHandleError(resp)
 	}
 	return client.listHandleResponse(resp)
 }
@@ -112,12 +112,12 @@ func (client *bigDataPoolsClient) listCreateRequest(ctx context.Context, options
 }
 
 // listHandleResponse handles the List response.
-func (client *bigDataPoolsClient) listHandleResponse(resp *azcore.Response) (BigDataPoolResourceInfoListResultResponse, error) {
-	var val *BigDataPoolResourceInfoListResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return BigDataPoolResourceInfoListResultResponse{}, err
+func (client *bigDataPoolsClient) listHandleResponse(resp *azcore.Response) (BigDataPoolsListResponse, error) {
+	result := BigDataPoolsListResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.BigDataPoolResourceInfoListResult); err != nil {
+		return BigDataPoolsListResponse{}, err
 	}
-	return BigDataPoolResourceInfoListResultResponse{RawResponse: resp.Response, BigDataPoolResourceInfoListResult: val}, nil
+	return result, nil
 }
 
 // listHandleError handles the List error response.

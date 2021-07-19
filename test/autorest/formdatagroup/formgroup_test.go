@@ -24,10 +24,10 @@ func TestUploadFile(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if resp.StatusCode != http.StatusOK {
+	if resp.RawResponse.StatusCode != http.StatusOK {
 		t.Fatal("unexpected status code")
 	}
-	b, err := ioutil.ReadAll(resp.Body)
+	b, err := ioutil.ReadAll(resp.RawResponse.Body)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -43,10 +43,10 @@ func TestUploadFileViaBody(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if resp.StatusCode != http.StatusOK {
+	if resp.RawResponse.StatusCode != http.StatusOK {
 		t.Fatal("unexpected status code")
 	}
-	b, err := ioutil.ReadAll(resp.Body)
+	b, err := ioutil.ReadAll(resp.RawResponse.Body)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -67,7 +67,7 @@ func TestUploadFiles(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if resp.StatusCode != http.StatusOK {
+	if resp.RawResponse.StatusCode != http.StatusOK {
 		t.Fatal("unexpected status code")
 	}
 	// TODO: verify response body

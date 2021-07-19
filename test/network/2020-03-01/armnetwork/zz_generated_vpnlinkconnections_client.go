@@ -32,18 +32,15 @@ func NewVPNLinkConnectionsClient(con *armcore.Connection, subscriptionID string)
 
 // ListByVPNConnection - Retrieves all vpn site link connections for a particular virtual wan vpn gateway vpn connection.
 // If the operation fails it returns the *CloudError error type.
-func (client *VPNLinkConnectionsClient) ListByVPNConnection(resourceGroupName string, gatewayName string, connectionName string, options *VPNLinkConnectionsListByVPNConnectionOptions) ListVPNSiteLinkConnectionsResultPager {
-	return &listVPNSiteLinkConnectionsResultPager{
-		pipeline: client.con.Pipeline(),
+func (client *VPNLinkConnectionsClient) ListByVPNConnection(resourceGroupName string, gatewayName string, connectionName string, options *VPNLinkConnectionsListByVPNConnectionOptions) VPNLinkConnectionsListByVPNConnectionPager {
+	return &vpnLinkConnectionsListByVPNConnectionPager{
+		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByVPNConnectionCreateRequest(ctx, resourceGroupName, gatewayName, connectionName, options)
 		},
-		responder: client.listByVPNConnectionHandleResponse,
-		errorer:   client.listByVPNConnectionHandleError,
-		advancer: func(ctx context.Context, resp ListVPNSiteLinkConnectionsResultResponse) (*azcore.Request, error) {
+		advancer: func(ctx context.Context, resp VPNLinkConnectionsListByVPNConnectionResponse) (*azcore.Request, error) {
 			return azcore.NewRequest(ctx, http.MethodGet, *resp.ListVPNSiteLinkConnectionsResult.NextLink)
 		},
-		statusCodes: []int{http.StatusOK},
 	}
 }
 
@@ -79,12 +76,12 @@ func (client *VPNLinkConnectionsClient) listByVPNConnectionCreateRequest(ctx con
 }
 
 // listByVPNConnectionHandleResponse handles the ListByVPNConnection response.
-func (client *VPNLinkConnectionsClient) listByVPNConnectionHandleResponse(resp *azcore.Response) (ListVPNSiteLinkConnectionsResultResponse, error) {
-	var val *ListVPNSiteLinkConnectionsResult
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return ListVPNSiteLinkConnectionsResultResponse{}, err
+func (client *VPNLinkConnectionsClient) listByVPNConnectionHandleResponse(resp *azcore.Response) (VPNLinkConnectionsListByVPNConnectionResponse, error) {
+	result := VPNLinkConnectionsListByVPNConnectionResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.ListVPNSiteLinkConnectionsResult); err != nil {
+		return VPNLinkConnectionsListByVPNConnectionResponse{}, err
 	}
-	return ListVPNSiteLinkConnectionsResultResponse{RawResponse: resp.Response, ListVPNSiteLinkConnectionsResult: val}, nil
+	return result, nil
 }
 
 // listByVPNConnectionHandleError handles the ListByVPNConnection error response.

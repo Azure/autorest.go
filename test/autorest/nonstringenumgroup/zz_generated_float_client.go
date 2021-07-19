@@ -27,17 +27,17 @@ func NewFloatClient(con *Connection) *FloatClient {
 
 // Get - Get a float enum
 // If the operation fails it returns a generic error.
-func (client *FloatClient) Get(ctx context.Context, options *FloatGetOptions) (FloatEnumResponse, error) {
+func (client *FloatClient) Get(ctx context.Context, options *FloatGetOptions) (FloatGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
-		return FloatEnumResponse{}, err
+		return FloatGetResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return FloatEnumResponse{}, err
+		return FloatGetResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return FloatEnumResponse{}, client.getHandleError(resp)
+		return FloatGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -55,12 +55,12 @@ func (client *FloatClient) getCreateRequest(ctx context.Context, options *FloatG
 }
 
 // getHandleResponse handles the Get response.
-func (client *FloatClient) getHandleResponse(resp *azcore.Response) (FloatEnumResponse, error) {
-	var val *FloatEnum
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return FloatEnumResponse{}, err
+func (client *FloatClient) getHandleResponse(resp *azcore.Response) (FloatGetResponse, error) {
+	result := FloatGetResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.Value); err != nil {
+		return FloatGetResponse{}, err
 	}
-	return FloatEnumResponse{RawResponse: resp.Response, Value: val}, nil
+	return result, nil
 }
 
 // getHandleError handles the Get error response.
@@ -77,17 +77,17 @@ func (client *FloatClient) getHandleError(resp *azcore.Response) error {
 
 // Put - Put a float enum
 // If the operation fails it returns a generic error.
-func (client *FloatClient) Put(ctx context.Context, options *FloatPutOptions) (StringResponse, error) {
+func (client *FloatClient) Put(ctx context.Context, options *FloatPutOptions) (FloatPutResponse, error) {
 	req, err := client.putCreateRequest(ctx, options)
 	if err != nil {
-		return StringResponse{}, err
+		return FloatPutResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return StringResponse{}, err
+		return FloatPutResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return StringResponse{}, client.putHandleError(resp)
+		return FloatPutResponse{}, client.putHandleError(resp)
 	}
 	return client.putHandleResponse(resp)
 }
@@ -108,12 +108,12 @@ func (client *FloatClient) putCreateRequest(ctx context.Context, options *FloatP
 }
 
 // putHandleResponse handles the Put response.
-func (client *FloatClient) putHandleResponse(resp *azcore.Response) (StringResponse, error) {
-	var val *string
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return StringResponse{}, err
+func (client *FloatClient) putHandleResponse(resp *azcore.Response) (FloatPutResponse, error) {
+	result := FloatPutResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.Value); err != nil {
+		return FloatPutResponse{}, err
 	}
-	return StringResponse{RawResponse: resp.Response, Value: val}, nil
+	return result, nil
 }
 
 // putHandleError handles the Put error response.

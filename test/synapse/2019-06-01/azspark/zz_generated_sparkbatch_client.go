@@ -23,19 +23,19 @@ type sparkBatchClient struct {
 
 // CancelSparkBatchJob - Cancels a running spark batch job.
 // If the operation fails it returns a generic error.
-func (client *sparkBatchClient) CancelSparkBatchJob(ctx context.Context, batchID int32, options *SparkBatchCancelSparkBatchJobOptions) (*http.Response, error) {
+func (client *sparkBatchClient) CancelSparkBatchJob(ctx context.Context, batchID int32, options *SparkBatchCancelSparkBatchJobOptions) (SparkBatchCancelSparkBatchJobResponse, error) {
 	req, err := client.cancelSparkBatchJobCreateRequest(ctx, batchID, options)
 	if err != nil {
-		return nil, err
+		return SparkBatchCancelSparkBatchJobResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return nil, err
+		return SparkBatchCancelSparkBatchJobResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return nil, client.cancelSparkBatchJobHandleError(resp)
+		return SparkBatchCancelSparkBatchJobResponse{}, client.cancelSparkBatchJobHandleError(resp)
 	}
-	return resp.Response, nil
+	return SparkBatchCancelSparkBatchJobResponse{RawResponse: resp.Response}, nil
 }
 
 // cancelSparkBatchJobCreateRequest creates the CancelSparkBatchJob request.
@@ -64,17 +64,17 @@ func (client *sparkBatchClient) cancelSparkBatchJobHandleError(resp *azcore.Resp
 
 // CreateSparkBatchJob - Create new spark batch job.
 // If the operation fails it returns a generic error.
-func (client *sparkBatchClient) CreateSparkBatchJob(ctx context.Context, sparkBatchJobOptions SparkBatchJobOptions, options *SparkBatchCreateSparkBatchJobOptions) (SparkBatchJobResponse, error) {
+func (client *sparkBatchClient) CreateSparkBatchJob(ctx context.Context, sparkBatchJobOptions SparkBatchJobOptions, options *SparkBatchCreateSparkBatchJobOptions) (SparkBatchCreateSparkBatchJobResponse, error) {
 	req, err := client.createSparkBatchJobCreateRequest(ctx, sparkBatchJobOptions, options)
 	if err != nil {
-		return SparkBatchJobResponse{}, err
+		return SparkBatchCreateSparkBatchJobResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return SparkBatchJobResponse{}, err
+		return SparkBatchCreateSparkBatchJobResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return SparkBatchJobResponse{}, client.createSparkBatchJobHandleError(resp)
+		return SparkBatchCreateSparkBatchJobResponse{}, client.createSparkBatchJobHandleError(resp)
 	}
 	return client.createSparkBatchJobHandleResponse(resp)
 }
@@ -97,12 +97,12 @@ func (client *sparkBatchClient) createSparkBatchJobCreateRequest(ctx context.Con
 }
 
 // createSparkBatchJobHandleResponse handles the CreateSparkBatchJob response.
-func (client *sparkBatchClient) createSparkBatchJobHandleResponse(resp *azcore.Response) (SparkBatchJobResponse, error) {
-	var val *SparkBatchJob
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return SparkBatchJobResponse{}, err
+func (client *sparkBatchClient) createSparkBatchJobHandleResponse(resp *azcore.Response) (SparkBatchCreateSparkBatchJobResponse, error) {
+	result := SparkBatchCreateSparkBatchJobResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.SparkBatchJob); err != nil {
+		return SparkBatchCreateSparkBatchJobResponse{}, err
 	}
-	return SparkBatchJobResponse{RawResponse: resp.Response, SparkBatchJob: val}, nil
+	return result, nil
 }
 
 // createSparkBatchJobHandleError handles the CreateSparkBatchJob error response.
@@ -119,17 +119,17 @@ func (client *sparkBatchClient) createSparkBatchJobHandleError(resp *azcore.Resp
 
 // GetSparkBatchJob - Gets a single spark batch job.
 // If the operation fails it returns a generic error.
-func (client *sparkBatchClient) GetSparkBatchJob(ctx context.Context, batchID int32, options *SparkBatchGetSparkBatchJobOptions) (SparkBatchJobResponse, error) {
+func (client *sparkBatchClient) GetSparkBatchJob(ctx context.Context, batchID int32, options *SparkBatchGetSparkBatchJobOptions) (SparkBatchGetSparkBatchJobResponse, error) {
 	req, err := client.getSparkBatchJobCreateRequest(ctx, batchID, options)
 	if err != nil {
-		return SparkBatchJobResponse{}, err
+		return SparkBatchGetSparkBatchJobResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return SparkBatchJobResponse{}, err
+		return SparkBatchGetSparkBatchJobResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return SparkBatchJobResponse{}, client.getSparkBatchJobHandleError(resp)
+		return SparkBatchGetSparkBatchJobResponse{}, client.getSparkBatchJobHandleError(resp)
 	}
 	return client.getSparkBatchJobHandleResponse(resp)
 }
@@ -153,12 +153,12 @@ func (client *sparkBatchClient) getSparkBatchJobCreateRequest(ctx context.Contex
 }
 
 // getSparkBatchJobHandleResponse handles the GetSparkBatchJob response.
-func (client *sparkBatchClient) getSparkBatchJobHandleResponse(resp *azcore.Response) (SparkBatchJobResponse, error) {
-	var val *SparkBatchJob
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return SparkBatchJobResponse{}, err
+func (client *sparkBatchClient) getSparkBatchJobHandleResponse(resp *azcore.Response) (SparkBatchGetSparkBatchJobResponse, error) {
+	result := SparkBatchGetSparkBatchJobResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.SparkBatchJob); err != nil {
+		return SparkBatchGetSparkBatchJobResponse{}, err
 	}
-	return SparkBatchJobResponse{RawResponse: resp.Response, SparkBatchJob: val}, nil
+	return result, nil
 }
 
 // getSparkBatchJobHandleError handles the GetSparkBatchJob error response.
@@ -175,17 +175,17 @@ func (client *sparkBatchClient) getSparkBatchJobHandleError(resp *azcore.Respons
 
 // GetSparkBatchJobs - List all spark batch jobs which are running under a particular spark pool.
 // If the operation fails it returns a generic error.
-func (client *sparkBatchClient) GetSparkBatchJobs(ctx context.Context, options *SparkBatchGetSparkBatchJobsOptions) (SparkBatchJobCollectionResponse, error) {
+func (client *sparkBatchClient) GetSparkBatchJobs(ctx context.Context, options *SparkBatchGetSparkBatchJobsOptions) (SparkBatchGetSparkBatchJobsResponse, error) {
 	req, err := client.getSparkBatchJobsCreateRequest(ctx, options)
 	if err != nil {
-		return SparkBatchJobCollectionResponse{}, err
+		return SparkBatchGetSparkBatchJobsResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return SparkBatchJobCollectionResponse{}, err
+		return SparkBatchGetSparkBatchJobsResponse{}, err
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		return SparkBatchJobCollectionResponse{}, client.getSparkBatchJobsHandleError(resp)
+		return SparkBatchGetSparkBatchJobsResponse{}, client.getSparkBatchJobsHandleError(resp)
 	}
 	return client.getSparkBatchJobsHandleResponse(resp)
 }
@@ -214,12 +214,12 @@ func (client *sparkBatchClient) getSparkBatchJobsCreateRequest(ctx context.Conte
 }
 
 // getSparkBatchJobsHandleResponse handles the GetSparkBatchJobs response.
-func (client *sparkBatchClient) getSparkBatchJobsHandleResponse(resp *azcore.Response) (SparkBatchJobCollectionResponse, error) {
-	var val *SparkBatchJobCollection
-	if err := resp.UnmarshalAsJSON(&val); err != nil {
-		return SparkBatchJobCollectionResponse{}, err
+func (client *sparkBatchClient) getSparkBatchJobsHandleResponse(resp *azcore.Response) (SparkBatchGetSparkBatchJobsResponse, error) {
+	result := SparkBatchGetSparkBatchJobsResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.SparkBatchJobCollection); err != nil {
+		return SparkBatchGetSparkBatchJobsResponse{}, err
 	}
-	return SparkBatchJobCollectionResponse{RawResponse: resp.Response, SparkBatchJobCollection: val}, nil
+	return result, nil
 }
 
 // getSparkBatchJobsHandleError handles the GetSparkBatchJobs error response.

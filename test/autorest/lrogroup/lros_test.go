@@ -8,6 +8,7 @@ import (
 	"errors"
 	"net/http"
 	"net/http/cookiejar"
+	"reflect"
 	"testing"
 	"time"
 
@@ -114,7 +115,7 @@ func TestLROBeginDelete204Succeeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := res.StatusCode; s != http.StatusNoContent {
+	if s := res.RawResponse.StatusCode; s != http.StatusNoContent {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -138,7 +139,7 @@ func TestLROBeginDeleteAsyncNoHeaderInRetry(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := res.StatusCode; s != http.StatusOK {
+	if s := res.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -162,7 +163,7 @@ func TestLROBeginDeleteAsyncNoRetrySucceeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := res.StatusCode; s != http.StatusOK {
+	if s := res.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -186,7 +187,7 @@ func TestLROBeginDeleteAsyncRetryFailed(t *testing.T) {
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
-	if res != nil {
+	if !reflect.ValueOf(res).IsZero() {
 		t.Fatal("expected a nil response from the polling operation")
 	}
 	var cloudErr *CloudError
@@ -220,7 +221,7 @@ func TestLROBeginDeleteAsyncRetrySucceeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := res.StatusCode; s != http.StatusOK {
+	if s := res.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -244,7 +245,7 @@ func TestLROBeginDeleteAsyncRetrycanceled(t *testing.T) {
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
-	if res != nil {
+	if !reflect.ValueOf(res).IsZero() {
 		t.Fatal("expected a nil response from the polling operation")
 	}
 	var cloudErr *CloudError
@@ -278,7 +279,7 @@ func TestLROBeginDeleteNoHeaderInRetry(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := res.StatusCode; s != http.StatusNoContent {
+	if s := res.RawResponse.StatusCode; s != http.StatusNoContent {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -363,7 +364,7 @@ func TestLROBeginPost200WithPayload(t *testing.T) {
 	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
-	if r := cmp.Diff(pollResp.SKU, &SKU{
+	if r := cmp.Diff(pollResp.SKU, SKU{
 		ID:   to.StringPtr("1"),
 		Name: to.StringPtr("product"),
 	}); r != "" {
@@ -448,7 +449,7 @@ func TestLROBeginPost202Retry200(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := res.StatusCode; s != http.StatusOK {
+	if s := res.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
@@ -475,7 +476,7 @@ func TestLROBeginPostAsyncNoRetrySucceeded(t *testing.T) {
 	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
-	if r := cmp.Diff(pollResp.Product, &Product{
+	if r := cmp.Diff(pollResp.Product, Product{
 		Resource: Resource{
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),
@@ -507,7 +508,7 @@ func TestLROBeginPostAsyncRetryFailed(t *testing.T) {
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
-	if res != nil {
+	if !reflect.ValueOf(res).IsZero() {
 		t.Fatal("expected a nil response from the polling operation")
 	}
 	var cloudErr *CloudError
@@ -544,7 +545,7 @@ func TestLROBeginPostAsyncRetrySucceeded(t *testing.T) {
 	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
-	if r := cmp.Diff(pollResp.Product, &Product{
+	if r := cmp.Diff(pollResp.Product, Product{
 		Resource: Resource{
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),
@@ -576,7 +577,7 @@ func TestLROBeginPostAsyncRetrycanceled(t *testing.T) {
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
-	if res != nil {
+	if !reflect.ValueOf(res).IsZero() {
 		t.Fatal("expected a nil response from the polling operation")
 	}
 	var cloudErr *CloudError
@@ -613,7 +614,7 @@ func TestLROBeginPostDoubleHeadersFinalAzureHeaderGet(t *testing.T) {
 	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
-	if r := cmp.Diff(pollResp.Product, &Product{
+	if r := cmp.Diff(pollResp.Product, Product{
 		Resource: Resource{
 			ID: to.StringPtr("100"),
 		},
@@ -644,7 +645,7 @@ func TestLROBeginPostDoubleHeadersFinalAzureHeaderGetDefault(t *testing.T) {
 	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
-	if r := cmp.Diff(pollResp.Product, &Product{
+	if r := cmp.Diff(pollResp.Product, Product{
 		Resource: Resource{
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),
@@ -676,7 +677,7 @@ func TestLROBeginPostDoubleHeadersFinalLocationGet(t *testing.T) {
 	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
-	if r := cmp.Diff(pollResp.Product, &Product{
+	if r := cmp.Diff(pollResp.Product, Product{
 		Resource: Resource{
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),
@@ -731,7 +732,7 @@ func TestLROBeginPut200Succeeded(t *testing.T) {
 	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
-	if r := cmp.Diff(pollResp.Product, &Product{
+	if r := cmp.Diff(pollResp.Product, Product{
 		Resource: Resource{
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),
@@ -762,7 +763,7 @@ func TestLROBeginPut200SucceededNoState(t *testing.T) {
 	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
-	if r := cmp.Diff(pollResp.Product, &Product{
+	if r := cmp.Diff(pollResp.Product, Product{
 		Resource: Resource{
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),
@@ -795,7 +796,7 @@ func TestLROBeginPut200UpdatingSucceeded204(t *testing.T) {
 	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
-	if r := cmp.Diff(pollResp.Product, &Product{
+	if r := cmp.Diff(pollResp.Product, Product{
 		Resource: Resource{
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),
@@ -857,7 +858,7 @@ func TestLROBeginPut201CreatingSucceeded200(t *testing.T) {
 	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
-	if r := cmp.Diff(pollResp.Product, &Product{
+	if r := cmp.Diff(pollResp.Product, Product{
 		Resource: Resource{
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),
@@ -892,7 +893,7 @@ func TestLROBeginPut202Retry200(t *testing.T) {
 	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
-	if r := cmp.Diff(pollResp.Product, &Product{
+	if r := cmp.Diff(pollResp.Product, Product{
 		Resource: Resource{
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),
@@ -924,7 +925,7 @@ func TestLROBeginPutAsyncNoHeaderInRetry(t *testing.T) {
 	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
-	if r := cmp.Diff(pollResp.Product, &Product{
+	if r := cmp.Diff(pollResp.Product, Product{
 		Resource: Resource{
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),
@@ -959,7 +960,7 @@ func TestLROBeginPutAsyncNoRetrySucceeded(t *testing.T) {
 	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
-	if r := cmp.Diff(pollResp.Product, &Product{
+	if r := cmp.Diff(pollResp.Product, Product{
 		Resource: Resource{
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),
@@ -991,8 +992,8 @@ func TestLROBeginPutAsyncNoRetrycanceled(t *testing.T) {
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
-	if r := cmp.Diff(res, ProductResponse{}); r != "" {
-		t.Fatal(r)
+	if !reflect.ValueOf(res).IsZero() {
+		t.Fatal("expected a nil response from the polling operation")
 	}
 	var cloudErr *CloudError
 	if !errors.As(err, &cloudErr) {
@@ -1028,7 +1029,7 @@ func TestLROBeginPutAsyncNonResource(t *testing.T) {
 	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
-	if r := cmp.Diff(pollResp.SKU, &SKU{
+	if r := cmp.Diff(pollResp.SKU, SKU{
 		ID:   to.StringPtr("100"),
 		Name: to.StringPtr("sku"),
 	}); r != "" {
@@ -1055,8 +1056,8 @@ func TestLROBeginPutAsyncRetryFailed(t *testing.T) {
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
-	if r := cmp.Diff(res, ProductResponse{}); r != "" {
-		t.Fatal(r)
+	if !reflect.ValueOf(res).IsZero() {
+		t.Fatal("expected a nil response from the polling operation")
 	}
 	var cloudErr *CloudError
 	if !errors.As(err, &cloudErr) {
@@ -1092,7 +1093,7 @@ func TestLROBeginPutAsyncRetrySucceeded(t *testing.T) {
 	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
-	if r := cmp.Diff(pollResp.Product, &Product{
+	if r := cmp.Diff(pollResp.Product, Product{
 		Resource: Resource{
 			ID:   to.StringPtr("100"),
 			Name: to.StringPtr("foo"),
@@ -1127,7 +1128,7 @@ func TestLROBeginPutAsyncSubResource(t *testing.T) {
 	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
-	if r := cmp.Diff(pollResp.SubProduct, &SubProduct{
+	if r := cmp.Diff(pollResp.SubProduct, SubProduct{
 		SubResource: SubResource{
 			ID: to.StringPtr("100"),
 		},
@@ -1162,7 +1163,7 @@ func TestLROBeginPutNoHeaderInRetry(t *testing.T) {
 	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
-	if r := cmp.Diff(pollResp.Product, &Product{
+	if r := cmp.Diff(pollResp.Product, Product{
 		Resource: Resource{
 			ID: to.StringPtr("100"),
 		},
@@ -1197,7 +1198,7 @@ func TestLROBeginPutNonResource(t *testing.T) {
 	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
-	if r := cmp.Diff(pollResp.SKU, &SKU{
+	if r := cmp.Diff(pollResp.SKU, SKU{
 		ID:   to.StringPtr("100"),
 		Name: to.StringPtr("sku"),
 	}); r != "" {
@@ -1228,7 +1229,7 @@ func TestLROBeginPutSubResource(t *testing.T) {
 	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
-	if r := cmp.Diff(pollResp.SubProduct, &SubProduct{
+	if r := cmp.Diff(pollResp.SubProduct, SubProduct{
 		SubResource: SubResource{
 			ID: to.StringPtr("100"),
 		},
