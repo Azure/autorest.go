@@ -2,7 +2,7 @@ trigger: none
 pr: none
 
 variables:
-  NodeVersion: '12.x'
+  NodeVersion: '14.x'
   goTestPath: '$(system.defaultWorkingDirectory)/test'
   GOBIN: '$(system.defaultWorkingDirectory)/bin/go'
 
