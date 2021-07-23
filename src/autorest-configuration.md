@@ -68,4 +68,19 @@ help-content:
       - key: export-clients
         type: boolean
         description: Indicates if generated clients are to be exported.  Default to true for ARM, false for data-plane.
+      - key: header-text
+        description: Text to include as a header comment in generated files (magic strings:MICROSOFT_MIT, MICROSOFT_APACHE, MICROSOFT_MIT_NO_VERSION, MICROSOFT_APACHE_NO_VERSION, MICROSOFT_MIT_NO_CODEGEN)
+        type: string
+      - key: output-folder
+        description: Target folder for generated artifacts.
+        type: string
+      - key: openapi-type
+        description: "Open API Type: 'arm' or 'data-plane'."
+        type: string
+      - key: azure-arm
+        description: Generate code in Azure flavor.
+        type: boolean
+      - key: head-as-boolean
+        description: With this flag, HEAD calls to non-existent resources (404) will not raise an error. Instead, if the resource exists, we return `true`, else `false`. Forced to be `true` if `--azure-arm` is set, otherwise defaults to `false`.
+        type: boolean
 ```
