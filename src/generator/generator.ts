@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { serialize } from '@azure-tools/codegen';
-import { Host, startSession } from '@autorest/extension-base';
+import { Host, Session, startSession } from '@autorest/extension-base';
 import { codeModelSchema, CodeModel } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
 import { generateOperations } from './operations';
@@ -18,14 +18,15 @@ import { generatePollers } from './pollers';
 import { generatePolymorphicHelpers } from './polymorphics';
 import { generateGoModFile } from './gomod';
 import { generateXMLAdditionalPropsHelpers } from './xmlAdditionalProps';
+import { writeCodeModelOnCrash } from '../common/crash';
 
 // The generator emits Go source code files to disk.
 export async function protocolGen(host: Host) {
   const debug = await host.GetValue('debug') || false;
-
+  let session: Session<CodeModel> | null = null;
   try {
     // get the code model from the core
-    const session = await startSession<CodeModel>(host, codeModelSchema);
+    session = await startSession<CodeModel>(host, codeModelSchema);
     const operations = await generateOperations(session);
     let filePrefix = await session.getValue('file-prefix', '');
     // if a file prefix was specified, ensure it's properly snaked
@@ -86,6 +87,8 @@ export async function protocolGen(host: Host) {
     if (debug) {
       console.error(`${__filename} - FAILURE  ${JSON.stringify(E)} ${E.stack}`);
     }
+    writeCodeModelOnCrash (host, session);
+
     throw E;
   }
 }

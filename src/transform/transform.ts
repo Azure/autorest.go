@@ -11,13 +11,15 @@ import { aggregateParameters, getSchemaResponse, hasAdditionalProperties, isMult
 import { namer, protocolMethods } from './namer';
 import { fromString } from 'html-to-text';
 import { Converter } from 'showdown';
+import { writeCodeModelOnCrash } from '../common/crash';
 
 // The transformer adds Go-specific information to the code model.
 export async function transform(host: Host) {
   const debug = await host.GetValue('debug') || false;
+  let session: Session<CodeModel> | null = null;
 
   try {
-    const session = await startSession<CodeModel>(host, {}, codeModelSchema);
+    session = await startSession<CodeModel>(host, {}, codeModelSchema);
 
     // run the namer first, so that any transformations are applied on proper names
     await namer(session);
@@ -30,6 +32,8 @@ export async function transform(host: Host) {
     if (debug) {
       console.error(`${__filename} - FAILURE  ${JSON.stringify(E)} ${E.stack}`);
     }
+    writeCodeModelOnCrash (host, session);
+
     throw E;
   }
 }
