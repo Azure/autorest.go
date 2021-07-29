@@ -82,7 +82,7 @@ for (namespace in goMappings) {
     // for each swagger run the autorest command to generate code based on the swagger for the relevant namespace and output to the /generated directory
     const entry = goMappings[namespace];
     const inputFile = swaggerDir + entry[0];
-    let extraParams = ['--export-clients'];
+    let extraParams = ['--export-clients', '--go-version=0.1'];
     if (entry.length > 1) {
         extraParams = extraParams.concat(entry.slice());
     }
