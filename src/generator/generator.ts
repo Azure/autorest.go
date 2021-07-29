@@ -41,7 +41,8 @@ export async function protocolGen(host: Host) {
       host.WriteFile(`${filePrefix}${op.name.toLowerCase()}_client.go`, op.content, undefined, 'source-file-go');
     }
 
-    const constants = await generateConstants(session);
+    const version = await session.getValue("go-version", "<version>");
+    const constants = await generateConstants(session, version);
     host.WriteFile(`${filePrefix}constants.go`, constants, undefined, 'source-file-go');
 
     const models = await generateModels(session);
