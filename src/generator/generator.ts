@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { serialize } from '@azure-tools/codegen';
-import { Host, startSession } from '@autorest/extension-base';
+import { Host, startSession, Session } from '@autorest/extension-base';
 import { codeModelSchema, CodeModel } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
 import { generateOperations } from './operations';
@@ -19,6 +19,14 @@ import { generatePolymorphicHelpers } from './polymorphics';
 import { generateGoModFile } from './gomod';
 import { generateXMLAdditionalPropsHelpers } from './xmlAdditionalProps';
 
+async function getGoVersion (session: Session<CodeModel>): Promise<string> {
+  const version = await session.getValue("go-version", "");
+  if (version !== "") {
+    return version;
+  }
+  throw new Error("--go-version is a required parameter");
+}
+
 // The generator emits Go source code files to disk.
 export async function protocolGen(host: Host) {
   const debug = await host.GetValue('debug') || false;
@@ -26,6 +34,8 @@ export async function protocolGen(host: Host) {
   try {
     // get the code model from the core
     const session = await startSession<CodeModel>(host, codeModelSchema);
+    const version = await getGoVersion(session);
+
     const operations = await generateOperations(session);
     let filePrefix = await session.getValue('file-prefix', '');
     // if a file prefix was specified, ensure it's properly snaked
@@ -41,7 +51,6 @@ export async function protocolGen(host: Host) {
       host.WriteFile(`${filePrefix}${op.name.toLowerCase()}_client.go`, op.content, undefined, 'source-file-go');
     }
 
-    const version = await session.getValue("go-version", "<version>");
     const constants = await generateConstants(session, version);
     host.WriteFile(`${filePrefix}constants.go`, constants, undefined, 'source-file-go');
 
