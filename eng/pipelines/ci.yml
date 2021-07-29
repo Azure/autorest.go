@@ -128,7 +128,10 @@ jobs:
           popd
         displayName: 'Run Acceptance Tests'
 
-      - script: npm test
+      - pwsh: |
+          pushd ./src
+          npm test
+          popd
         displayName: 'Run Unit Tests'
 
       - task: PublishTestResults@2
