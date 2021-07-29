@@ -15,7 +15,7 @@ describe('parameter ordering', () => {
         });
         
         params.sort(sortParametersByRequired);
-        expect(params[0].required).toBe(true);
+        expect(params[0].required).toBe(false);
         expect(params[1].required).toBe(true);
         expect(params[2].required).toBe(false);
         expect(params[3].required).toBe(false);
