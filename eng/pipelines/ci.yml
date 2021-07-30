@@ -128,11 +128,9 @@ jobs:
           popd
         displayName: 'Run Acceptance Tests'
 
-      - pwsh: |
-          pushd ./src
-          npm test
-          popd
+      - pwsh: npm test
         displayName: 'Run Unit Tests'
+        workingDirectory: $(System.DefaultWorkingDirectory)/src
 
       - task: PublishTestResults@2
         inputs:
