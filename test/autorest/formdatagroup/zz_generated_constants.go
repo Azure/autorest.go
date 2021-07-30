@@ -7,4 +7,4 @@
 
 package formdatagroup
 
-const telemetryInfo = "azsdk-go-formdatagroup/<version>"
+const telemetryInfo = "azsdk-go-formdatagroup/v0.1"

@@ -7,4 +7,4 @@
 
 package bytegroup
 
-const telemetryInfo = "azsdk-go-bytegroup/<version>"
+const telemetryInfo = "azsdk-go-bytegroup/v0.1"

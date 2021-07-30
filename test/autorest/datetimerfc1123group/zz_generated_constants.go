@@ -7,4 +7,4 @@
 
 package datetimerfc1123group
 
-const telemetryInfo = "azsdk-go-datetimerfc1123group/<version>"
+const telemetryInfo = "azsdk-go-datetimerfc1123group/v0.1"

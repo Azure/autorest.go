@@ -7,4 +7,4 @@
 
 package complexmodelgroup
 
-const telemetryInfo = "azsdk-go-complexmodelgroup/<version>"
+const telemetryInfo = "azsdk-go-complexmodelgroup/v0.1"

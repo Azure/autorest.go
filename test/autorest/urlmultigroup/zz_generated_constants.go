@@ -7,4 +7,4 @@
 
 package urlmultigroup
 
-const telemetryInfo = "azsdk-go-urlmultigroup/<version>"
+const telemetryInfo = "azsdk-go-urlmultigroup/v0.1"

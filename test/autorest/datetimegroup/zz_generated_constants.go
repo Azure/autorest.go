@@ -7,4 +7,4 @@
 
 package datetimegroup
 
-const telemetryInfo = "azsdk-go-datetimegroup/<version>"
+const telemetryInfo = "azsdk-go-datetimegroup/v0.1"

@@ -7,4 +7,4 @@
 
 package custombaseurlgroup
 
-const telemetryInfo = "azsdk-go-custombaseurlgroup/<version>"
+const telemetryInfo = "azsdk-go-custombaseurlgroup/v0.1"

@@ -7,7 +7,7 @@
 
 package headergroup
 
-const telemetryInfo = "azsdk-go-headergroup/<version>"
+const telemetryInfo = "azsdk-go-headergroup/v0.1"
 
 type GreyscaleColors string
 

@@ -7,4 +7,4 @@
 
 package headgroup
 
-const telemetryInfo = "azsdk-go-headgroup/<version>"
+const telemetryInfo = "azsdk-go-headgroup/v0.1"

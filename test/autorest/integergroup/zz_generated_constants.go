@@ -7,4 +7,4 @@
 
 package integergroup
 
-const telemetryInfo = "azsdk-go-integergroup/<version>"
+const telemetryInfo = "azsdk-go-integergroup/v0.1"

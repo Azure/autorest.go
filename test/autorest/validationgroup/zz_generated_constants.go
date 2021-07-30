@@ -7,4 +7,4 @@
 
 package validationgroup
 
-const telemetryInfo = "azsdk-go-validationgroup/<version>"
+const telemetryInfo = "azsdk-go-validationgroup/v0.1"
