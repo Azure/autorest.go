@@ -19,12 +19,12 @@ import { generatePolymorphicHelpers } from './polymorphics';
 import { generateGoModFile } from './gomod';
 import { generateXMLAdditionalPropsHelpers } from './xmlAdditionalProps';
 
-async function getGoVersion (session: Session<CodeModel>): Promise<string> {
-  const version = await session.getValue("go-version", "");
+async function getModuleVersion(session: Session<CodeModel>): Promise<string> {
+  const version = await session.getValue('module-version', '');
   if (version !== "") {
     return version;
   }
-  throw new Error("--go-version is a required parameter");
+  throw new Error('--module-version is a required parameter');
 }
 
 // The generator emits Go source code files to disk.
@@ -34,7 +34,7 @@ export async function protocolGen(host: Host) {
   try {
     // get the code model from the core
     const session = await startSession<CodeModel>(host, codeModelSchema);
-    const version = await getGoVersion(session);
+    const version = await getModuleVersion(session);
 
     const operations = await generateOperations(session);
     let filePrefix = await session.getValue('file-prefix', '');
