@@ -7,4 +7,4 @@
 
 package morecustombaseurigroup
 
-const telemetryInfo = "azsdk-go-morecustombaseurigroup/<version>"
+const telemetryInfo = "azsdk-go-morecustombaseurigroup/v0.1"

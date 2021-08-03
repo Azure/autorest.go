@@ -7,7 +7,7 @@
 
 package paginggroup
 
-const telemetryInfo = "azsdk-go-paginggroup/<version>"
+const telemetryInfo = "azsdk-go-paginggroup/v0.1"
 
 // OperationResultStatus - The status of the request
 type OperationResultStatus string

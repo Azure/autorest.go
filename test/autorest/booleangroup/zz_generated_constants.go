@@ -7,4 +7,4 @@
 
 package booleangroup
 
-const telemetryInfo = "azsdk-go-booleangroup/<version>"
+const telemetryInfo = "azsdk-go-booleangroup/v0.1"

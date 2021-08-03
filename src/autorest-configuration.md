@@ -68,4 +68,7 @@ help-content:
       - key: export-clients
         type: boolean
         description: Indicates if generated clients are to be exported.  Default to true for ARM, false for data-plane.
+      - key: module-version
+        description: Semantic version to include in generated telemetryInfo constant without the leading 'v' (e.g. 1.2.3).
+        type: string
 ```

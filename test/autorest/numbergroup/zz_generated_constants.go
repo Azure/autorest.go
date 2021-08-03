@@ -7,4 +7,4 @@
 
 package numbergroup
 
-const telemetryInfo = "azsdk-go-numbergroup/<version>"
+const telemetryInfo = "azsdk-go-numbergroup/v0.1"

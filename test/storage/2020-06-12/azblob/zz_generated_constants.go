@@ -7,7 +7,7 @@
 
 package azblob
 
-const telemetryInfo = "azsdk-go-azblob/<version>"
+const telemetryInfo = "azsdk-go-azblob/v0.1"
 
 type AccessTier string
 

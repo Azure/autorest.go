@@ -7,7 +7,7 @@
 
 package stringgroup
 
-const telemetryInfo = "azsdk-go-stringgroup/<version>"
+const telemetryInfo = "azsdk-go-stringgroup/v0.1"
 
 // Colors - Referenced Color Enum Description.
 type Colors string
