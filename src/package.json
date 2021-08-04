@@ -1,6 +1,6 @@
 {
   "name": "@autorest/go",
-  "version": "4.0.0-preview.24",
+  "version": "4.0.0-preview.25",
   "description": "AutoRest Go Generator",
   "main": "dist/exports.js",
   "typings": "dist/exports.d.ts",
