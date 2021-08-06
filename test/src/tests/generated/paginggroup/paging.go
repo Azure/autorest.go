@@ -617,6 +617,7 @@ func (client PagingClient) GetMultiplePagesLROPreparer(ctx context.Context, clie
 // http.Response Body if it receives an error.
 func (client PagingClient) GetMultiplePagesLROSender(req *http.Request) (future PagingGetMultiplePagesLROFuture, err error) {
 	var resp *http.Response
+	future.FutureAPI = &azure.Future{}
 	resp, err = client.Send(req, autorest.DoRetryForStatusCodes(client.RetryAttempts, client.RetryDuration, autorest.StatusCodesForRetry...))
 	if err != nil {
 		return
