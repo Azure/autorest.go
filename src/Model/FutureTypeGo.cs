@@ -123,5 +123,18 @@ namespace AutoRest.Go.Model
         {
             return Name.GetHashCode();
         }
+
+        public override bool IsWrapperType
+        {
+            get
+            {
+                if (ResultType is CompositeTypeGo ctg)
+                {
+                    // propagate the result's wrapper status
+                    return ctg.IsWrapperType;
+                }
+                return base.IsWrapperType;
+            }
+        }
     }
 }

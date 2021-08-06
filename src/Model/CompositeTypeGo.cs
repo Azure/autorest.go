@@ -117,7 +117,7 @@ namespace AutoRest.Go.Model
 
         public PropertyGo AdditionalPropertiesField => AllProperties.FirstOrDefault(p => p.ModelType is DictionaryTypeGo dictionaryType && dictionaryType.SupportsAdditionalProperties);
 
-        public bool IsWrapperType { get; }
+        public virtual bool IsWrapperType { get; }
 
         public IModelType BaseType { get; }
 
