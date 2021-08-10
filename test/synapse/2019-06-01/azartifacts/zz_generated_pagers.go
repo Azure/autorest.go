@@ -14,13 +14,8 @@ import (
 	"reflect"
 )
 
-type DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspacePager interface {
-	azcore.Pager
-	// PageResponse returns the current DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspaceResponse.
-	PageResponse() DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspaceResponse
-}
-
-type dataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspacePager struct {
+// DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspacePager provides operations for iterating over paged responses.
+type DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspacePager struct {
 	client    *dataFlowDebugSessionClient
 	current   DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspaceResponse
 	err       error
@@ -28,11 +23,14 @@ type dataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspacePager struct {
 	advancer  func(context.Context, DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspaceResponse) (*azcore.Request, error)
 }
 
-func (p *dataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspacePager) Err() error {
+// Err returns the last error encountered while paging.
+func (p *DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspacePager) Err() error {
 	return p.err
 }
 
-func (p *dataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspacePager) NextPage(ctx context.Context) bool {
+// NextPage returns true if the pager advanced to the next page.
+// Returns false if there are no more pages or an error occurred.
+func (p *DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspacePager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -65,17 +63,13 @@ func (p *dataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspacePager) NextPag
 	return true
 }
 
-func (p *dataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspacePager) PageResponse() DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspaceResponse {
+// PageResponse returns the current DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspaceResponse page.
+func (p *DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspacePager) PageResponse() DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspaceResponse {
 	return p.current
 }
 
-type DataFlowGetDataFlowsByWorkspacePager interface {
-	azcore.Pager
-	// PageResponse returns the current DataFlowGetDataFlowsByWorkspaceResponse.
-	PageResponse() DataFlowGetDataFlowsByWorkspaceResponse
-}
-
-type dataFlowGetDataFlowsByWorkspacePager struct {
+// DataFlowGetDataFlowsByWorkspacePager provides operations for iterating over paged responses.
+type DataFlowGetDataFlowsByWorkspacePager struct {
 	client    *dataFlowClient
 	current   DataFlowGetDataFlowsByWorkspaceResponse
 	err       error
@@ -83,11 +77,14 @@ type dataFlowGetDataFlowsByWorkspacePager struct {
 	advancer  func(context.Context, DataFlowGetDataFlowsByWorkspaceResponse) (*azcore.Request, error)
 }
 
-func (p *dataFlowGetDataFlowsByWorkspacePager) Err() error {
+// Err returns the last error encountered while paging.
+func (p *DataFlowGetDataFlowsByWorkspacePager) Err() error {
 	return p.err
 }
 
-func (p *dataFlowGetDataFlowsByWorkspacePager) NextPage(ctx context.Context) bool {
+// NextPage returns true if the pager advanced to the next page.
+// Returns false if there are no more pages or an error occurred.
+func (p *DataFlowGetDataFlowsByWorkspacePager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -120,17 +117,13 @@ func (p *dataFlowGetDataFlowsByWorkspacePager) NextPage(ctx context.Context) boo
 	return true
 }
 
-func (p *dataFlowGetDataFlowsByWorkspacePager) PageResponse() DataFlowGetDataFlowsByWorkspaceResponse {
+// PageResponse returns the current DataFlowGetDataFlowsByWorkspaceResponse page.
+func (p *DataFlowGetDataFlowsByWorkspacePager) PageResponse() DataFlowGetDataFlowsByWorkspaceResponse {
 	return p.current
 }
 
-type DatasetGetDatasetsByWorkspacePager interface {
-	azcore.Pager
-	// PageResponse returns the current DatasetGetDatasetsByWorkspaceResponse.
-	PageResponse() DatasetGetDatasetsByWorkspaceResponse
-}
-
-type datasetGetDatasetsByWorkspacePager struct {
+// DatasetGetDatasetsByWorkspacePager provides operations for iterating over paged responses.
+type DatasetGetDatasetsByWorkspacePager struct {
 	client    *datasetClient
 	current   DatasetGetDatasetsByWorkspaceResponse
 	err       error
@@ -138,11 +131,14 @@ type datasetGetDatasetsByWorkspacePager struct {
 	advancer  func(context.Context, DatasetGetDatasetsByWorkspaceResponse) (*azcore.Request, error)
 }
 
-func (p *datasetGetDatasetsByWorkspacePager) Err() error {
+// Err returns the last error encountered while paging.
+func (p *DatasetGetDatasetsByWorkspacePager) Err() error {
 	return p.err
 }
 
-func (p *datasetGetDatasetsByWorkspacePager) NextPage(ctx context.Context) bool {
+// NextPage returns true if the pager advanced to the next page.
+// Returns false if there are no more pages or an error occurred.
+func (p *DatasetGetDatasetsByWorkspacePager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -175,17 +171,13 @@ func (p *datasetGetDatasetsByWorkspacePager) NextPage(ctx context.Context) bool 
 	return true
 }
 
-func (p *datasetGetDatasetsByWorkspacePager) PageResponse() DatasetGetDatasetsByWorkspaceResponse {
+// PageResponse returns the current DatasetGetDatasetsByWorkspaceResponse page.
+func (p *DatasetGetDatasetsByWorkspacePager) PageResponse() DatasetGetDatasetsByWorkspaceResponse {
 	return p.current
 }
 
-type LibraryListPager interface {
-	azcore.Pager
-	// PageResponse returns the current LibraryListResponseEnvelope.
-	PageResponse() LibraryListResponseEnvelope
-}
-
-type libraryListPager struct {
+// LibraryListPager provides operations for iterating over paged responses.
+type LibraryListPager struct {
 	client    *libraryClient
 	current   LibraryListResponseEnvelope
 	err       error
@@ -193,11 +185,14 @@ type libraryListPager struct {
 	advancer  func(context.Context, LibraryListResponseEnvelope) (*azcore.Request, error)
 }
 
-func (p *libraryListPager) Err() error {
+// Err returns the last error encountered while paging.
+func (p *LibraryListPager) Err() error {
 	return p.err
 }
 
-func (p *libraryListPager) NextPage(ctx context.Context) bool {
+// NextPage returns true if the pager advanced to the next page.
+// Returns false if there are no more pages or an error occurred.
+func (p *LibraryListPager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -230,17 +225,13 @@ func (p *libraryListPager) NextPage(ctx context.Context) bool {
 	return true
 }
 
-func (p *libraryListPager) PageResponse() LibraryListResponseEnvelope {
+// PageResponse returns the current LibraryListResponseEnvelope page.
+func (p *LibraryListPager) PageResponse() LibraryListResponseEnvelope {
 	return p.current
 }
 
-type LinkedServiceGetLinkedServicesByWorkspacePager interface {
-	azcore.Pager
-	// PageResponse returns the current LinkedServiceGetLinkedServicesByWorkspaceResponse.
-	PageResponse() LinkedServiceGetLinkedServicesByWorkspaceResponse
-}
-
-type linkedServiceGetLinkedServicesByWorkspacePager struct {
+// LinkedServiceGetLinkedServicesByWorkspacePager provides operations for iterating over paged responses.
+type LinkedServiceGetLinkedServicesByWorkspacePager struct {
 	client    *linkedServiceClient
 	current   LinkedServiceGetLinkedServicesByWorkspaceResponse
 	err       error
@@ -248,11 +239,14 @@ type linkedServiceGetLinkedServicesByWorkspacePager struct {
 	advancer  func(context.Context, LinkedServiceGetLinkedServicesByWorkspaceResponse) (*azcore.Request, error)
 }
 
-func (p *linkedServiceGetLinkedServicesByWorkspacePager) Err() error {
+// Err returns the last error encountered while paging.
+func (p *LinkedServiceGetLinkedServicesByWorkspacePager) Err() error {
 	return p.err
 }
 
-func (p *linkedServiceGetLinkedServicesByWorkspacePager) NextPage(ctx context.Context) bool {
+// NextPage returns true if the pager advanced to the next page.
+// Returns false if there are no more pages or an error occurred.
+func (p *LinkedServiceGetLinkedServicesByWorkspacePager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -285,17 +279,13 @@ func (p *linkedServiceGetLinkedServicesByWorkspacePager) NextPage(ctx context.Co
 	return true
 }
 
-func (p *linkedServiceGetLinkedServicesByWorkspacePager) PageResponse() LinkedServiceGetLinkedServicesByWorkspaceResponse {
+// PageResponse returns the current LinkedServiceGetLinkedServicesByWorkspaceResponse page.
+func (p *LinkedServiceGetLinkedServicesByWorkspacePager) PageResponse() LinkedServiceGetLinkedServicesByWorkspaceResponse {
 	return p.current
 }
 
-type NotebookGetNotebookSummaryByWorkSpacePager interface {
-	azcore.Pager
-	// PageResponse returns the current NotebookGetNotebookSummaryByWorkSpaceResponse.
-	PageResponse() NotebookGetNotebookSummaryByWorkSpaceResponse
-}
-
-type notebookGetNotebookSummaryByWorkSpacePager struct {
+// NotebookGetNotebookSummaryByWorkSpacePager provides operations for iterating over paged responses.
+type NotebookGetNotebookSummaryByWorkSpacePager struct {
 	client    *notebookClient
 	current   NotebookGetNotebookSummaryByWorkSpaceResponse
 	err       error
@@ -303,11 +293,14 @@ type notebookGetNotebookSummaryByWorkSpacePager struct {
 	advancer  func(context.Context, NotebookGetNotebookSummaryByWorkSpaceResponse) (*azcore.Request, error)
 }
 
-func (p *notebookGetNotebookSummaryByWorkSpacePager) Err() error {
+// Err returns the last error encountered while paging.
+func (p *NotebookGetNotebookSummaryByWorkSpacePager) Err() error {
 	return p.err
 }
 
-func (p *notebookGetNotebookSummaryByWorkSpacePager) NextPage(ctx context.Context) bool {
+// NextPage returns true if the pager advanced to the next page.
+// Returns false if there are no more pages or an error occurred.
+func (p *NotebookGetNotebookSummaryByWorkSpacePager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -340,17 +333,13 @@ func (p *notebookGetNotebookSummaryByWorkSpacePager) NextPage(ctx context.Contex
 	return true
 }
 
-func (p *notebookGetNotebookSummaryByWorkSpacePager) PageResponse() NotebookGetNotebookSummaryByWorkSpaceResponse {
+// PageResponse returns the current NotebookGetNotebookSummaryByWorkSpaceResponse page.
+func (p *NotebookGetNotebookSummaryByWorkSpacePager) PageResponse() NotebookGetNotebookSummaryByWorkSpaceResponse {
 	return p.current
 }
 
-type NotebookGetNotebooksByWorkspacePager interface {
-	azcore.Pager
-	// PageResponse returns the current NotebookGetNotebooksByWorkspaceResponse.
-	PageResponse() NotebookGetNotebooksByWorkspaceResponse
-}
-
-type notebookGetNotebooksByWorkspacePager struct {
+// NotebookGetNotebooksByWorkspacePager provides operations for iterating over paged responses.
+type NotebookGetNotebooksByWorkspacePager struct {
 	client    *notebookClient
 	current   NotebookGetNotebooksByWorkspaceResponse
 	err       error
@@ -358,11 +347,14 @@ type notebookGetNotebooksByWorkspacePager struct {
 	advancer  func(context.Context, NotebookGetNotebooksByWorkspaceResponse) (*azcore.Request, error)
 }
 
-func (p *notebookGetNotebooksByWorkspacePager) Err() error {
+// Err returns the last error encountered while paging.
+func (p *NotebookGetNotebooksByWorkspacePager) Err() error {
 	return p.err
 }
 
-func (p *notebookGetNotebooksByWorkspacePager) NextPage(ctx context.Context) bool {
+// NextPage returns true if the pager advanced to the next page.
+// Returns false if there are no more pages or an error occurred.
+func (p *NotebookGetNotebooksByWorkspacePager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -395,17 +387,13 @@ func (p *notebookGetNotebooksByWorkspacePager) NextPage(ctx context.Context) boo
 	return true
 }
 
-func (p *notebookGetNotebooksByWorkspacePager) PageResponse() NotebookGetNotebooksByWorkspaceResponse {
+// PageResponse returns the current NotebookGetNotebooksByWorkspaceResponse page.
+func (p *NotebookGetNotebooksByWorkspacePager) PageResponse() NotebookGetNotebooksByWorkspaceResponse {
 	return p.current
 }
 
-type PipelineGetPipelinesByWorkspacePager interface {
-	azcore.Pager
-	// PageResponse returns the current PipelineGetPipelinesByWorkspaceResponse.
-	PageResponse() PipelineGetPipelinesByWorkspaceResponse
-}
-
-type pipelineGetPipelinesByWorkspacePager struct {
+// PipelineGetPipelinesByWorkspacePager provides operations for iterating over paged responses.
+type PipelineGetPipelinesByWorkspacePager struct {
 	client    *pipelineClient
 	current   PipelineGetPipelinesByWorkspaceResponse
 	err       error
@@ -413,11 +401,14 @@ type pipelineGetPipelinesByWorkspacePager struct {
 	advancer  func(context.Context, PipelineGetPipelinesByWorkspaceResponse) (*azcore.Request, error)
 }
 
-func (p *pipelineGetPipelinesByWorkspacePager) Err() error {
+// Err returns the last error encountered while paging.
+func (p *PipelineGetPipelinesByWorkspacePager) Err() error {
 	return p.err
 }
 
-func (p *pipelineGetPipelinesByWorkspacePager) NextPage(ctx context.Context) bool {
+// NextPage returns true if the pager advanced to the next page.
+// Returns false if there are no more pages or an error occurred.
+func (p *PipelineGetPipelinesByWorkspacePager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -450,17 +441,13 @@ func (p *pipelineGetPipelinesByWorkspacePager) NextPage(ctx context.Context) boo
 	return true
 }
 
-func (p *pipelineGetPipelinesByWorkspacePager) PageResponse() PipelineGetPipelinesByWorkspaceResponse {
+// PageResponse returns the current PipelineGetPipelinesByWorkspaceResponse page.
+func (p *PipelineGetPipelinesByWorkspacePager) PageResponse() PipelineGetPipelinesByWorkspaceResponse {
 	return p.current
 }
 
-type SQLScriptGetSQLScriptsByWorkspacePager interface {
-	azcore.Pager
-	// PageResponse returns the current SQLScriptGetSQLScriptsByWorkspaceResponse.
-	PageResponse() SQLScriptGetSQLScriptsByWorkspaceResponse
-}
-
-type sqlScriptGetSQLScriptsByWorkspacePager struct {
+// SQLScriptGetSQLScriptsByWorkspacePager provides operations for iterating over paged responses.
+type SQLScriptGetSQLScriptsByWorkspacePager struct {
 	client    *sqlScriptClient
 	current   SQLScriptGetSQLScriptsByWorkspaceResponse
 	err       error
@@ -468,11 +455,14 @@ type sqlScriptGetSQLScriptsByWorkspacePager struct {
 	advancer  func(context.Context, SQLScriptGetSQLScriptsByWorkspaceResponse) (*azcore.Request, error)
 }
 
-func (p *sqlScriptGetSQLScriptsByWorkspacePager) Err() error {
+// Err returns the last error encountered while paging.
+func (p *SQLScriptGetSQLScriptsByWorkspacePager) Err() error {
 	return p.err
 }
 
-func (p *sqlScriptGetSQLScriptsByWorkspacePager) NextPage(ctx context.Context) bool {
+// NextPage returns true if the pager advanced to the next page.
+// Returns false if there are no more pages or an error occurred.
+func (p *SQLScriptGetSQLScriptsByWorkspacePager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -505,17 +495,13 @@ func (p *sqlScriptGetSQLScriptsByWorkspacePager) NextPage(ctx context.Context) b
 	return true
 }
 
-func (p *sqlScriptGetSQLScriptsByWorkspacePager) PageResponse() SQLScriptGetSQLScriptsByWorkspaceResponse {
+// PageResponse returns the current SQLScriptGetSQLScriptsByWorkspaceResponse page.
+func (p *SQLScriptGetSQLScriptsByWorkspacePager) PageResponse() SQLScriptGetSQLScriptsByWorkspaceResponse {
 	return p.current
 }
 
-type SparkJobDefinitionGetSparkJobDefinitionsByWorkspacePager interface {
-	azcore.Pager
-	// PageResponse returns the current SparkJobDefinitionGetSparkJobDefinitionsByWorkspaceResponse.
-	PageResponse() SparkJobDefinitionGetSparkJobDefinitionsByWorkspaceResponse
-}
-
-type sparkJobDefinitionGetSparkJobDefinitionsByWorkspacePager struct {
+// SparkJobDefinitionGetSparkJobDefinitionsByWorkspacePager provides operations for iterating over paged responses.
+type SparkJobDefinitionGetSparkJobDefinitionsByWorkspacePager struct {
 	client    *sparkJobDefinitionClient
 	current   SparkJobDefinitionGetSparkJobDefinitionsByWorkspaceResponse
 	err       error
@@ -523,11 +509,14 @@ type sparkJobDefinitionGetSparkJobDefinitionsByWorkspacePager struct {
 	advancer  func(context.Context, SparkJobDefinitionGetSparkJobDefinitionsByWorkspaceResponse) (*azcore.Request, error)
 }
 
-func (p *sparkJobDefinitionGetSparkJobDefinitionsByWorkspacePager) Err() error {
+// Err returns the last error encountered while paging.
+func (p *SparkJobDefinitionGetSparkJobDefinitionsByWorkspacePager) Err() error {
 	return p.err
 }
 
-func (p *sparkJobDefinitionGetSparkJobDefinitionsByWorkspacePager) NextPage(ctx context.Context) bool {
+// NextPage returns true if the pager advanced to the next page.
+// Returns false if there are no more pages or an error occurred.
+func (p *SparkJobDefinitionGetSparkJobDefinitionsByWorkspacePager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -560,17 +549,13 @@ func (p *sparkJobDefinitionGetSparkJobDefinitionsByWorkspacePager) NextPage(ctx 
 	return true
 }
 
-func (p *sparkJobDefinitionGetSparkJobDefinitionsByWorkspacePager) PageResponse() SparkJobDefinitionGetSparkJobDefinitionsByWorkspaceResponse {
+// PageResponse returns the current SparkJobDefinitionGetSparkJobDefinitionsByWorkspaceResponse page.
+func (p *SparkJobDefinitionGetSparkJobDefinitionsByWorkspacePager) PageResponse() SparkJobDefinitionGetSparkJobDefinitionsByWorkspaceResponse {
 	return p.current
 }
 
-type TriggerGetTriggersByWorkspacePager interface {
-	azcore.Pager
-	// PageResponse returns the current TriggerGetTriggersByWorkspaceResponse.
-	PageResponse() TriggerGetTriggersByWorkspaceResponse
-}
-
-type triggerGetTriggersByWorkspacePager struct {
+// TriggerGetTriggersByWorkspacePager provides operations for iterating over paged responses.
+type TriggerGetTriggersByWorkspacePager struct {
 	client    *triggerClient
 	current   TriggerGetTriggersByWorkspaceResponse
 	err       error
@@ -578,11 +563,14 @@ type triggerGetTriggersByWorkspacePager struct {
 	advancer  func(context.Context, TriggerGetTriggersByWorkspaceResponse) (*azcore.Request, error)
 }
 
-func (p *triggerGetTriggersByWorkspacePager) Err() error {
+// Err returns the last error encountered while paging.
+func (p *TriggerGetTriggersByWorkspacePager) Err() error {
 	return p.err
 }
 
-func (p *triggerGetTriggersByWorkspacePager) NextPage(ctx context.Context) bool {
+// NextPage returns true if the pager advanced to the next page.
+// Returns false if there are no more pages or an error occurred.
+func (p *TriggerGetTriggersByWorkspacePager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -615,6 +603,7 @@ func (p *triggerGetTriggersByWorkspacePager) NextPage(ctx context.Context) bool 
 	return true
 }
 
-func (p *triggerGetTriggersByWorkspacePager) PageResponse() TriggerGetTriggersByWorkspaceResponse {
+// PageResponse returns the current TriggerGetTriggersByWorkspaceResponse page.
+func (p *TriggerGetTriggersByWorkspacePager) PageResponse() TriggerGetTriggersByWorkspaceResponse {
 	return p.current
 }

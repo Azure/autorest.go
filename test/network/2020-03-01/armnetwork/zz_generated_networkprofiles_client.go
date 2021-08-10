@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // NetworkProfilesClient contains the methods for the NetworkProfiles group.
@@ -111,12 +110,8 @@ func (client *NetworkProfilesClient) BeginDelete(ctx context.Context, resourceGr
 	if err != nil {
 		return NetworkProfilesDeletePollerResponse{}, err
 	}
-	poller := &networkProfilesDeletePoller{
+	result.Poller = &NetworkProfilesDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkProfilesDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -128,7 +123,7 @@ func (client *NetworkProfilesClient) ResumeDelete(ctx context.Context, token str
 	if err != nil {
 		return NetworkProfilesDeletePollerResponse{}, err
 	}
-	poller := &networkProfilesDeletePoller{
+	poller := &NetworkProfilesDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -136,12 +131,10 @@ func (client *NetworkProfilesClient) ResumeDelete(ctx context.Context, token str
 		return NetworkProfilesDeletePollerResponse{}, err
 	}
 	result := NetworkProfilesDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkProfilesDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -273,8 +266,8 @@ func (client *NetworkProfilesClient) getHandleError(resp *azcore.Response) error
 
 // List - Gets all network profiles in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *NetworkProfilesClient) List(resourceGroupName string, options *NetworkProfilesListOptions) NetworkProfilesListPager {
-	return &networkProfilesListPager{
+func (client *NetworkProfilesClient) List(resourceGroupName string, options *NetworkProfilesListOptions) *NetworkProfilesListPager {
+	return &NetworkProfilesListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, options)
@@ -332,8 +325,8 @@ func (client *NetworkProfilesClient) listHandleError(resp *azcore.Response) erro
 
 // ListAll - Gets all the network profiles in a subscription.
 // If the operation fails it returns the *CloudError error type.
-func (client *NetworkProfilesClient) ListAll(options *NetworkProfilesListAllOptions) NetworkProfilesListAllPager {
-	return &networkProfilesListAllPager{
+func (client *NetworkProfilesClient) ListAll(options *NetworkProfilesListAllOptions) *NetworkProfilesListAllPager {
+	return &NetworkProfilesListAllPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listAllCreateRequest(ctx, options)

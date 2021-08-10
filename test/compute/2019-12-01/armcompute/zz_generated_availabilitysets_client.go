@@ -216,8 +216,8 @@ func (client *AvailabilitySetsClient) getHandleError(resp *azcore.Response) erro
 
 // List - Lists all availability sets in a resource group.
 // If the operation fails it returns a generic error.
-func (client *AvailabilitySetsClient) List(resourceGroupName string, options *AvailabilitySetsListOptions) AvailabilitySetsListPager {
-	return &availabilitySetsListPager{
+func (client *AvailabilitySetsClient) List(resourceGroupName string, options *AvailabilitySetsListOptions) *AvailabilitySetsListPager {
+	return &AvailabilitySetsListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, options)
@@ -339,8 +339,8 @@ func (client *AvailabilitySetsClient) listAvailableSizesHandleError(resp *azcore
 
 // ListBySubscription - Lists all availability sets in a subscription.
 // If the operation fails it returns a generic error.
-func (client *AvailabilitySetsClient) ListBySubscription(options *AvailabilitySetsListBySubscriptionOptions) AvailabilitySetsListBySubscriptionPager {
-	return &availabilitySetsListBySubscriptionPager{
+func (client *AvailabilitySetsClient) ListBySubscription(options *AvailabilitySetsListBySubscriptionOptions) *AvailabilitySetsListBySubscriptionPager {
+	return &AvailabilitySetsListBySubscriptionPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listBySubscriptionCreateRequest(ctx, options)

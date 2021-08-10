@@ -16,7 +16,6 @@ import (
 	"net/url"
 	"strconv"
 	"strings"
-	"time"
 )
 
 // VirtualMachineScaleSetVMsClient contains the methods for the VirtualMachineScaleSetVMs group.
@@ -47,12 +46,8 @@ func (client *VirtualMachineScaleSetVMsClient) BeginDeallocate(ctx context.Conte
 	if err != nil {
 		return VirtualMachineScaleSetVMsDeallocatePollerResponse{}, err
 	}
-	poller := &virtualMachineScaleSetVMsDeallocatePoller{
+	result.Poller = &VirtualMachineScaleSetVMsDeallocatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetVMsDeallocateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -64,7 +59,7 @@ func (client *VirtualMachineScaleSetVMsClient) ResumeDeallocate(ctx context.Cont
 	if err != nil {
 		return VirtualMachineScaleSetVMsDeallocatePollerResponse{}, err
 	}
-	poller := &virtualMachineScaleSetVMsDeallocatePoller{
+	poller := &VirtualMachineScaleSetVMsDeallocatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -72,12 +67,10 @@ func (client *VirtualMachineScaleSetVMsClient) ResumeDeallocate(ctx context.Cont
 		return VirtualMachineScaleSetVMsDeallocatePollerResponse{}, err
 	}
 	result := VirtualMachineScaleSetVMsDeallocatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetVMsDeallocateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -156,12 +149,8 @@ func (client *VirtualMachineScaleSetVMsClient) BeginDelete(ctx context.Context, 
 	if err != nil {
 		return VirtualMachineScaleSetVMsDeletePollerResponse{}, err
 	}
-	poller := &virtualMachineScaleSetVMsDeletePoller{
+	result.Poller = &VirtualMachineScaleSetVMsDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetVMsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -173,7 +162,7 @@ func (client *VirtualMachineScaleSetVMsClient) ResumeDelete(ctx context.Context,
 	if err != nil {
 		return VirtualMachineScaleSetVMsDeletePollerResponse{}, err
 	}
-	poller := &virtualMachineScaleSetVMsDeletePoller{
+	poller := &VirtualMachineScaleSetVMsDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -181,12 +170,10 @@ func (client *VirtualMachineScaleSetVMsClient) ResumeDelete(ctx context.Context,
 		return VirtualMachineScaleSetVMsDeletePollerResponse{}, err
 	}
 	result := VirtualMachineScaleSetVMsDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetVMsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -392,8 +379,8 @@ func (client *VirtualMachineScaleSetVMsClient) getInstanceViewHandleError(resp *
 
 // List - Gets a list of all virtual machines in a VM scale sets.
 // If the operation fails it returns a generic error.
-func (client *VirtualMachineScaleSetVMsClient) List(resourceGroupName string, virtualMachineScaleSetName string, options *VirtualMachineScaleSetVMsListOptions) VirtualMachineScaleSetVMsListPager {
-	return &virtualMachineScaleSetVMsListPager{
+func (client *VirtualMachineScaleSetVMsClient) List(resourceGroupName string, virtualMachineScaleSetName string, options *VirtualMachineScaleSetVMsListOptions) *VirtualMachineScaleSetVMsListPager {
+	return &VirtualMachineScaleSetVMsListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, virtualMachineScaleSetName, options)
@@ -476,12 +463,8 @@ func (client *VirtualMachineScaleSetVMsClient) BeginPerformMaintenance(ctx conte
 	if err != nil {
 		return VirtualMachineScaleSetVMsPerformMaintenancePollerResponse{}, err
 	}
-	poller := &virtualMachineScaleSetVMsPerformMaintenancePoller{
+	result.Poller = &VirtualMachineScaleSetVMsPerformMaintenancePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetVMsPerformMaintenanceResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -493,7 +476,7 @@ func (client *VirtualMachineScaleSetVMsClient) ResumePerformMaintenance(ctx cont
 	if err != nil {
 		return VirtualMachineScaleSetVMsPerformMaintenancePollerResponse{}, err
 	}
-	poller := &virtualMachineScaleSetVMsPerformMaintenancePoller{
+	poller := &VirtualMachineScaleSetVMsPerformMaintenancePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -501,12 +484,10 @@ func (client *VirtualMachineScaleSetVMsClient) ResumePerformMaintenance(ctx cont
 		return VirtualMachineScaleSetVMsPerformMaintenancePollerResponse{}, err
 	}
 	result := VirtualMachineScaleSetVMsPerformMaintenancePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetVMsPerformMaintenanceResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -586,12 +567,8 @@ func (client *VirtualMachineScaleSetVMsClient) BeginPowerOff(ctx context.Context
 	if err != nil {
 		return VirtualMachineScaleSetVMsPowerOffPollerResponse{}, err
 	}
-	poller := &virtualMachineScaleSetVMsPowerOffPoller{
+	result.Poller = &VirtualMachineScaleSetVMsPowerOffPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetVMsPowerOffResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -603,7 +580,7 @@ func (client *VirtualMachineScaleSetVMsClient) ResumePowerOff(ctx context.Contex
 	if err != nil {
 		return VirtualMachineScaleSetVMsPowerOffPollerResponse{}, err
 	}
-	poller := &virtualMachineScaleSetVMsPowerOffPoller{
+	poller := &VirtualMachineScaleSetVMsPowerOffPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -611,12 +588,10 @@ func (client *VirtualMachineScaleSetVMsClient) ResumePowerOff(ctx context.Contex
 		return VirtualMachineScaleSetVMsPowerOffPollerResponse{}, err
 	}
 	result := VirtualMachineScaleSetVMsPowerOffPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetVMsPowerOffResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -698,12 +673,8 @@ func (client *VirtualMachineScaleSetVMsClient) BeginRedeploy(ctx context.Context
 	if err != nil {
 		return VirtualMachineScaleSetVMsRedeployPollerResponse{}, err
 	}
-	poller := &virtualMachineScaleSetVMsRedeployPoller{
+	result.Poller = &VirtualMachineScaleSetVMsRedeployPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetVMsRedeployResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -715,7 +686,7 @@ func (client *VirtualMachineScaleSetVMsClient) ResumeRedeploy(ctx context.Contex
 	if err != nil {
 		return VirtualMachineScaleSetVMsRedeployPollerResponse{}, err
 	}
-	poller := &virtualMachineScaleSetVMsRedeployPoller{
+	poller := &VirtualMachineScaleSetVMsRedeployPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -723,12 +694,10 @@ func (client *VirtualMachineScaleSetVMsClient) ResumeRedeploy(ctx context.Contex
 		return VirtualMachineScaleSetVMsRedeployPollerResponse{}, err
 	}
 	result := VirtualMachineScaleSetVMsRedeployPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetVMsRedeployResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -805,12 +774,8 @@ func (client *VirtualMachineScaleSetVMsClient) BeginReimage(ctx context.Context,
 	if err != nil {
 		return VirtualMachineScaleSetVMsReimagePollerResponse{}, err
 	}
-	poller := &virtualMachineScaleSetVMsReimagePoller{
+	result.Poller = &VirtualMachineScaleSetVMsReimagePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetVMsReimageResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -822,7 +787,7 @@ func (client *VirtualMachineScaleSetVMsClient) ResumeReimage(ctx context.Context
 	if err != nil {
 		return VirtualMachineScaleSetVMsReimagePollerResponse{}, err
 	}
-	poller := &virtualMachineScaleSetVMsReimagePoller{
+	poller := &VirtualMachineScaleSetVMsReimagePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -830,12 +795,10 @@ func (client *VirtualMachineScaleSetVMsClient) ResumeReimage(ctx context.Context
 		return VirtualMachineScaleSetVMsReimagePollerResponse{}, err
 	}
 	result := VirtualMachineScaleSetVMsReimagePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetVMsReimageResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -916,12 +879,8 @@ func (client *VirtualMachineScaleSetVMsClient) BeginReimageAll(ctx context.Conte
 	if err != nil {
 		return VirtualMachineScaleSetVMsReimageAllPollerResponse{}, err
 	}
-	poller := &virtualMachineScaleSetVMsReimageAllPoller{
+	result.Poller = &VirtualMachineScaleSetVMsReimageAllPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetVMsReimageAllResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -933,7 +892,7 @@ func (client *VirtualMachineScaleSetVMsClient) ResumeReimageAll(ctx context.Cont
 	if err != nil {
 		return VirtualMachineScaleSetVMsReimageAllPollerResponse{}, err
 	}
-	poller := &virtualMachineScaleSetVMsReimageAllPoller{
+	poller := &VirtualMachineScaleSetVMsReimageAllPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -941,12 +900,10 @@ func (client *VirtualMachineScaleSetVMsClient) ResumeReimageAll(ctx context.Cont
 		return VirtualMachineScaleSetVMsReimageAllPollerResponse{}, err
 	}
 	result := VirtualMachineScaleSetVMsReimageAllPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetVMsReimageAllResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -1024,12 +981,8 @@ func (client *VirtualMachineScaleSetVMsClient) BeginRestart(ctx context.Context,
 	if err != nil {
 		return VirtualMachineScaleSetVMsRestartPollerResponse{}, err
 	}
-	poller := &virtualMachineScaleSetVMsRestartPoller{
+	result.Poller = &VirtualMachineScaleSetVMsRestartPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetVMsRestartResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -1041,7 +994,7 @@ func (client *VirtualMachineScaleSetVMsClient) ResumeRestart(ctx context.Context
 	if err != nil {
 		return VirtualMachineScaleSetVMsRestartPollerResponse{}, err
 	}
-	poller := &virtualMachineScaleSetVMsRestartPoller{
+	poller := &VirtualMachineScaleSetVMsRestartPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -1049,12 +1002,10 @@ func (client *VirtualMachineScaleSetVMsClient) ResumeRestart(ctx context.Context
 		return VirtualMachineScaleSetVMsRestartPollerResponse{}, err
 	}
 	result := VirtualMachineScaleSetVMsRestartPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetVMsRestartResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -1131,12 +1082,8 @@ func (client *VirtualMachineScaleSetVMsClient) BeginRunCommand(ctx context.Conte
 	if err != nil {
 		return VirtualMachineScaleSetVMsRunCommandPollerResponse{}, err
 	}
-	poller := &virtualMachineScaleSetVMsRunCommandPoller{
+	result.Poller = &VirtualMachineScaleSetVMsRunCommandPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetVMsRunCommandResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -1148,7 +1095,7 @@ func (client *VirtualMachineScaleSetVMsClient) ResumeRunCommand(ctx context.Cont
 	if err != nil {
 		return VirtualMachineScaleSetVMsRunCommandPollerResponse{}, err
 	}
-	poller := &virtualMachineScaleSetVMsRunCommandPoller{
+	poller := &VirtualMachineScaleSetVMsRunCommandPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -1156,12 +1103,10 @@ func (client *VirtualMachineScaleSetVMsClient) ResumeRunCommand(ctx context.Cont
 		return VirtualMachineScaleSetVMsRunCommandPollerResponse{}, err
 	}
 	result := VirtualMachineScaleSetVMsRunCommandPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetVMsRunCommandResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -1299,12 +1244,8 @@ func (client *VirtualMachineScaleSetVMsClient) BeginStart(ctx context.Context, r
 	if err != nil {
 		return VirtualMachineScaleSetVMsStartPollerResponse{}, err
 	}
-	poller := &virtualMachineScaleSetVMsStartPoller{
+	result.Poller = &VirtualMachineScaleSetVMsStartPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetVMsStartResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -1316,7 +1257,7 @@ func (client *VirtualMachineScaleSetVMsClient) ResumeStart(ctx context.Context, 
 	if err != nil {
 		return VirtualMachineScaleSetVMsStartPollerResponse{}, err
 	}
-	poller := &virtualMachineScaleSetVMsStartPoller{
+	poller := &VirtualMachineScaleSetVMsStartPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -1324,12 +1265,10 @@ func (client *VirtualMachineScaleSetVMsClient) ResumeStart(ctx context.Context, 
 		return VirtualMachineScaleSetVMsStartPollerResponse{}, err
 	}
 	result := VirtualMachineScaleSetVMsStartPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetVMsStartResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -1406,12 +1345,8 @@ func (client *VirtualMachineScaleSetVMsClient) BeginUpdate(ctx context.Context, 
 	if err != nil {
 		return VirtualMachineScaleSetVMsUpdatePollerResponse{}, err
 	}
-	poller := &virtualMachineScaleSetVMsUpdatePoller{
+	result.Poller = &VirtualMachineScaleSetVMsUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetVMsUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -1423,7 +1358,7 @@ func (client *VirtualMachineScaleSetVMsClient) ResumeUpdate(ctx context.Context,
 	if err != nil {
 		return VirtualMachineScaleSetVMsUpdatePollerResponse{}, err
 	}
-	poller := &virtualMachineScaleSetVMsUpdatePoller{
+	poller := &VirtualMachineScaleSetVMsUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -1431,12 +1366,10 @@ func (client *VirtualMachineScaleSetVMsClient) ResumeUpdate(ctx context.Context,
 		return VirtualMachineScaleSetVMsUpdatePollerResponse{}, err
 	}
 	result := VirtualMachineScaleSetVMsUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetVMsUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 

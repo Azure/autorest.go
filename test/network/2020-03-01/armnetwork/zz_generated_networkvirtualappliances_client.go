@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // NetworkVirtualAppliancesClient contains the methods for the NetworkVirtualAppliances group.
@@ -45,12 +44,8 @@ func (client *NetworkVirtualAppliancesClient) BeginCreateOrUpdate(ctx context.Co
 	if err != nil {
 		return NetworkVirtualAppliancesCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &networkVirtualAppliancesCreateOrUpdatePoller{
+	result.Poller = &NetworkVirtualAppliancesCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkVirtualAppliancesCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *NetworkVirtualAppliancesClient) ResumeCreateOrUpdate(ctx context.C
 	if err != nil {
 		return NetworkVirtualAppliancesCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &networkVirtualAppliancesCreateOrUpdatePoller{
+	poller := &NetworkVirtualAppliancesCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *NetworkVirtualAppliancesClient) ResumeCreateOrUpdate(ctx context.C
 		return NetworkVirtualAppliancesCreateOrUpdatePollerResponse{}, err
 	}
 	result := NetworkVirtualAppliancesCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkVirtualAppliancesCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -150,12 +143,8 @@ func (client *NetworkVirtualAppliancesClient) BeginDelete(ctx context.Context, r
 	if err != nil {
 		return NetworkVirtualAppliancesDeletePollerResponse{}, err
 	}
-	poller := &networkVirtualAppliancesDeletePoller{
+	result.Poller = &NetworkVirtualAppliancesDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkVirtualAppliancesDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -167,7 +156,7 @@ func (client *NetworkVirtualAppliancesClient) ResumeDelete(ctx context.Context, 
 	if err != nil {
 		return NetworkVirtualAppliancesDeletePollerResponse{}, err
 	}
-	poller := &networkVirtualAppliancesDeletePoller{
+	poller := &NetworkVirtualAppliancesDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -175,12 +164,10 @@ func (client *NetworkVirtualAppliancesClient) ResumeDelete(ctx context.Context, 
 		return NetworkVirtualAppliancesDeletePollerResponse{}, err
 	}
 	result := NetworkVirtualAppliancesDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkVirtualAppliancesDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -312,8 +299,8 @@ func (client *NetworkVirtualAppliancesClient) getHandleError(resp *azcore.Respon
 
 // List - Gets all Network Virtual Appliances in a subscription.
 // If the operation fails it returns the *CloudError error type.
-func (client *NetworkVirtualAppliancesClient) List(options *NetworkVirtualAppliancesListOptions) NetworkVirtualAppliancesListPager {
-	return &networkVirtualAppliancesListPager{
+func (client *NetworkVirtualAppliancesClient) List(options *NetworkVirtualAppliancesListOptions) *NetworkVirtualAppliancesListPager {
+	return &NetworkVirtualAppliancesListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, options)
@@ -367,8 +354,8 @@ func (client *NetworkVirtualAppliancesClient) listHandleError(resp *azcore.Respo
 
 // ListByResourceGroup - Lists all Network Virtual Appliances in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *NetworkVirtualAppliancesClient) ListByResourceGroup(resourceGroupName string, options *NetworkVirtualAppliancesListByResourceGroupOptions) NetworkVirtualAppliancesListByResourceGroupPager {
-	return &networkVirtualAppliancesListByResourceGroupPager{
+func (client *NetworkVirtualAppliancesClient) ListByResourceGroup(resourceGroupName string, options *NetworkVirtualAppliancesListByResourceGroupOptions) *NetworkVirtualAppliancesListByResourceGroupPager {
+	return &NetworkVirtualAppliancesListByResourceGroupPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)

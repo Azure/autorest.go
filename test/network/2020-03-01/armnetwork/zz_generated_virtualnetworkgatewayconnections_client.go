@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // VirtualNetworkGatewayConnectionsClient contains the methods for the VirtualNetworkGatewayConnections group.
@@ -45,12 +44,8 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginCreateOrUpdate(ctx co
 	if err != nil {
 		return VirtualNetworkGatewayConnectionsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &virtualNetworkGatewayConnectionsCreateOrUpdatePoller{
+	result.Poller = &VirtualNetworkGatewayConnectionsCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewayConnectionsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) ResumeCreateOrUpdate(ctx c
 	if err != nil {
 		return VirtualNetworkGatewayConnectionsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &virtualNetworkGatewayConnectionsCreateOrUpdatePoller{
+	poller := &VirtualNetworkGatewayConnectionsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *VirtualNetworkGatewayConnectionsClient) ResumeCreateOrUpdate(ctx c
 		return VirtualNetworkGatewayConnectionsCreateOrUpdatePollerResponse{}, err
 	}
 	result := VirtualNetworkGatewayConnectionsCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewayConnectionsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -150,12 +143,8 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginDelete(ctx context.Co
 	if err != nil {
 		return VirtualNetworkGatewayConnectionsDeletePollerResponse{}, err
 	}
-	poller := &virtualNetworkGatewayConnectionsDeletePoller{
+	result.Poller = &VirtualNetworkGatewayConnectionsDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewayConnectionsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -167,7 +156,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) ResumeDelete(ctx context.C
 	if err != nil {
 		return VirtualNetworkGatewayConnectionsDeletePollerResponse{}, err
 	}
-	poller := &virtualNetworkGatewayConnectionsDeletePoller{
+	poller := &VirtualNetworkGatewayConnectionsDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -175,12 +164,10 @@ func (client *VirtualNetworkGatewayConnectionsClient) ResumeDelete(ctx context.C
 		return VirtualNetworkGatewayConnectionsDeletePollerResponse{}, err
 	}
 	result := VirtualNetworkGatewayConnectionsDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewayConnectionsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -376,8 +363,8 @@ func (client *VirtualNetworkGatewayConnectionsClient) getSharedKeyHandleError(re
 
 // List - The List VirtualNetworkGatewayConnections operation retrieves all the virtual network gateways connections created.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualNetworkGatewayConnectionsClient) List(resourceGroupName string, options *VirtualNetworkGatewayConnectionsListOptions) VirtualNetworkGatewayConnectionsListPager {
-	return &virtualNetworkGatewayConnectionsListPager{
+func (client *VirtualNetworkGatewayConnectionsClient) List(resourceGroupName string, options *VirtualNetworkGatewayConnectionsListOptions) *VirtualNetworkGatewayConnectionsListPager {
+	return &VirtualNetworkGatewayConnectionsListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, options)
@@ -449,12 +436,8 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginResetSharedKey(ctx co
 	if err != nil {
 		return VirtualNetworkGatewayConnectionsResetSharedKeyPollerResponse{}, err
 	}
-	poller := &virtualNetworkGatewayConnectionsResetSharedKeyPoller{
+	result.Poller = &VirtualNetworkGatewayConnectionsResetSharedKeyPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewayConnectionsResetSharedKeyResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -466,7 +449,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) ResumeResetSharedKey(ctx c
 	if err != nil {
 		return VirtualNetworkGatewayConnectionsResetSharedKeyPollerResponse{}, err
 	}
-	poller := &virtualNetworkGatewayConnectionsResetSharedKeyPoller{
+	poller := &VirtualNetworkGatewayConnectionsResetSharedKeyPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -474,12 +457,10 @@ func (client *VirtualNetworkGatewayConnectionsClient) ResumeResetSharedKey(ctx c
 		return VirtualNetworkGatewayConnectionsResetSharedKeyPollerResponse{}, err
 	}
 	result := VirtualNetworkGatewayConnectionsResetSharedKeyPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewayConnectionsResetSharedKeyResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -558,12 +539,8 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginSetSharedKey(ctx cont
 	if err != nil {
 		return VirtualNetworkGatewayConnectionsSetSharedKeyPollerResponse{}, err
 	}
-	poller := &virtualNetworkGatewayConnectionsSetSharedKeyPoller{
+	result.Poller = &VirtualNetworkGatewayConnectionsSetSharedKeyPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewayConnectionsSetSharedKeyResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -575,7 +552,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) ResumeSetSharedKey(ctx con
 	if err != nil {
 		return VirtualNetworkGatewayConnectionsSetSharedKeyPollerResponse{}, err
 	}
-	poller := &virtualNetworkGatewayConnectionsSetSharedKeyPoller{
+	poller := &VirtualNetworkGatewayConnectionsSetSharedKeyPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -583,12 +560,10 @@ func (client *VirtualNetworkGatewayConnectionsClient) ResumeSetSharedKey(ctx con
 		return VirtualNetworkGatewayConnectionsSetSharedKeyPollerResponse{}, err
 	}
 	result := VirtualNetworkGatewayConnectionsSetSharedKeyPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewayConnectionsSetSharedKeyResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -665,12 +640,8 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginStartPacketCapture(ct
 	if err != nil {
 		return VirtualNetworkGatewayConnectionsStartPacketCapturePollerResponse{}, err
 	}
-	poller := &virtualNetworkGatewayConnectionsStartPacketCapturePoller{
+	result.Poller = &VirtualNetworkGatewayConnectionsStartPacketCapturePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewayConnectionsStartPacketCaptureResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -682,7 +653,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) ResumeStartPacketCapture(c
 	if err != nil {
 		return VirtualNetworkGatewayConnectionsStartPacketCapturePollerResponse{}, err
 	}
-	poller := &virtualNetworkGatewayConnectionsStartPacketCapturePoller{
+	poller := &VirtualNetworkGatewayConnectionsStartPacketCapturePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -690,12 +661,10 @@ func (client *VirtualNetworkGatewayConnectionsClient) ResumeStartPacketCapture(c
 		return VirtualNetworkGatewayConnectionsStartPacketCapturePollerResponse{}, err
 	}
 	result := VirtualNetworkGatewayConnectionsStartPacketCapturePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewayConnectionsStartPacketCaptureResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -773,12 +742,8 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginStopPacketCapture(ctx
 	if err != nil {
 		return VirtualNetworkGatewayConnectionsStopPacketCapturePollerResponse{}, err
 	}
-	poller := &virtualNetworkGatewayConnectionsStopPacketCapturePoller{
+	result.Poller = &VirtualNetworkGatewayConnectionsStopPacketCapturePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewayConnectionsStopPacketCaptureResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -790,7 +755,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) ResumeStopPacketCapture(ct
 	if err != nil {
 		return VirtualNetworkGatewayConnectionsStopPacketCapturePollerResponse{}, err
 	}
-	poller := &virtualNetworkGatewayConnectionsStopPacketCapturePoller{
+	poller := &VirtualNetworkGatewayConnectionsStopPacketCapturePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -798,12 +763,10 @@ func (client *VirtualNetworkGatewayConnectionsClient) ResumeStopPacketCapture(ct
 		return VirtualNetworkGatewayConnectionsStopPacketCapturePollerResponse{}, err
 	}
 	result := VirtualNetworkGatewayConnectionsStopPacketCapturePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewayConnectionsStopPacketCaptureResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -878,12 +841,8 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginUpdateTags(ctx contex
 	if err != nil {
 		return VirtualNetworkGatewayConnectionsUpdateTagsPollerResponse{}, err
 	}
-	poller := &virtualNetworkGatewayConnectionsUpdateTagsPoller{
+	result.Poller = &VirtualNetworkGatewayConnectionsUpdateTagsPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewayConnectionsUpdateTagsResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -895,7 +854,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) ResumeUpdateTags(ctx conte
 	if err != nil {
 		return VirtualNetworkGatewayConnectionsUpdateTagsPollerResponse{}, err
 	}
-	poller := &virtualNetworkGatewayConnectionsUpdateTagsPoller{
+	poller := &VirtualNetworkGatewayConnectionsUpdateTagsPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -903,12 +862,10 @@ func (client *VirtualNetworkGatewayConnectionsClient) ResumeUpdateTags(ctx conte
 		return VirtualNetworkGatewayConnectionsUpdateTagsPollerResponse{}, err
 	}
 	result := VirtualNetworkGatewayConnectionsUpdateTagsPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewayConnectionsUpdateTagsResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 

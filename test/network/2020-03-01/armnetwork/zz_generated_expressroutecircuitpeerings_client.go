@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // ExpressRouteCircuitPeeringsClient contains the methods for the ExpressRouteCircuitPeerings group.
@@ -45,12 +44,8 @@ func (client *ExpressRouteCircuitPeeringsClient) BeginCreateOrUpdate(ctx context
 	if err != nil {
 		return ExpressRouteCircuitPeeringsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &expressRouteCircuitPeeringsCreateOrUpdatePoller{
+	result.Poller = &ExpressRouteCircuitPeeringsCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitPeeringsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *ExpressRouteCircuitPeeringsClient) ResumeCreateOrUpdate(ctx contex
 	if err != nil {
 		return ExpressRouteCircuitPeeringsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &expressRouteCircuitPeeringsCreateOrUpdatePoller{
+	poller := &ExpressRouteCircuitPeeringsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *ExpressRouteCircuitPeeringsClient) ResumeCreateOrUpdate(ctx contex
 		return ExpressRouteCircuitPeeringsCreateOrUpdatePollerResponse{}, err
 	}
 	result := ExpressRouteCircuitPeeringsCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitPeeringsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -154,12 +147,8 @@ func (client *ExpressRouteCircuitPeeringsClient) BeginDelete(ctx context.Context
 	if err != nil {
 		return ExpressRouteCircuitPeeringsDeletePollerResponse{}, err
 	}
-	poller := &expressRouteCircuitPeeringsDeletePoller{
+	result.Poller = &ExpressRouteCircuitPeeringsDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitPeeringsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -171,7 +160,7 @@ func (client *ExpressRouteCircuitPeeringsClient) ResumeDelete(ctx context.Contex
 	if err != nil {
 		return ExpressRouteCircuitPeeringsDeletePollerResponse{}, err
 	}
-	poller := &expressRouteCircuitPeeringsDeletePoller{
+	poller := &ExpressRouteCircuitPeeringsDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -179,12 +168,10 @@ func (client *ExpressRouteCircuitPeeringsClient) ResumeDelete(ctx context.Contex
 		return ExpressRouteCircuitPeeringsDeletePollerResponse{}, err
 	}
 	result := ExpressRouteCircuitPeeringsDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitPeeringsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -321,8 +308,8 @@ func (client *ExpressRouteCircuitPeeringsClient) getHandleError(resp *azcore.Res
 
 // List - Gets all peerings in a specified express route circuit.
 // If the operation fails it returns the *CloudError error type.
-func (client *ExpressRouteCircuitPeeringsClient) List(resourceGroupName string, circuitName string, options *ExpressRouteCircuitPeeringsListOptions) ExpressRouteCircuitPeeringsListPager {
-	return &expressRouteCircuitPeeringsListPager{
+func (client *ExpressRouteCircuitPeeringsClient) List(resourceGroupName string, circuitName string, options *ExpressRouteCircuitPeeringsListOptions) *ExpressRouteCircuitPeeringsListPager {
+	return &ExpressRouteCircuitPeeringsListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, circuitName, options)

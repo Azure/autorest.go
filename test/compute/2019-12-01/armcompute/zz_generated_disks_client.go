@@ -15,7 +15,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // DisksClient contains the methods for the Disks group.
@@ -44,12 +43,8 @@ func (client *DisksClient) BeginCreateOrUpdate(ctx context.Context, resourceGrou
 	if err != nil {
 		return DisksCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &disksCreateOrUpdatePoller{
+	result.Poller = &DisksCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DisksCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -61,7 +56,7 @@ func (client *DisksClient) ResumeCreateOrUpdate(ctx context.Context, token strin
 	if err != nil {
 		return DisksCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &disksCreateOrUpdatePoller{
+	poller := &DisksCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -69,12 +64,10 @@ func (client *DisksClient) ResumeCreateOrUpdate(ctx context.Context, token strin
 		return DisksCreateOrUpdatePollerResponse{}, err
 	}
 	result := DisksCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DisksCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -148,12 +141,8 @@ func (client *DisksClient) BeginDelete(ctx context.Context, resourceGroupName st
 	if err != nil {
 		return DisksDeletePollerResponse{}, err
 	}
-	poller := &disksDeletePoller{
+	result.Poller = &DisksDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DisksDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -165,7 +154,7 @@ func (client *DisksClient) ResumeDelete(ctx context.Context, token string) (Disk
 	if err != nil {
 		return DisksDeletePollerResponse{}, err
 	}
-	poller := &disksDeletePoller{
+	poller := &DisksDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -173,12 +162,10 @@ func (client *DisksClient) ResumeDelete(ctx context.Context, token string) (Disk
 		return DisksDeletePollerResponse{}, err
 	}
 	result := DisksDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DisksDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -316,12 +303,8 @@ func (client *DisksClient) BeginGrantAccess(ctx context.Context, resourceGroupNa
 	if err != nil {
 		return DisksGrantAccessPollerResponse{}, err
 	}
-	poller := &disksGrantAccessPoller{
+	result.Poller = &DisksGrantAccessPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DisksGrantAccessResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -333,7 +316,7 @@ func (client *DisksClient) ResumeGrantAccess(ctx context.Context, token string) 
 	if err != nil {
 		return DisksGrantAccessPollerResponse{}, err
 	}
-	poller := &disksGrantAccessPoller{
+	poller := &DisksGrantAccessPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -341,12 +324,10 @@ func (client *DisksClient) ResumeGrantAccess(ctx context.Context, token string) 
 		return DisksGrantAccessPollerResponse{}, err
 	}
 	result := DisksGrantAccessPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DisksGrantAccessResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -408,8 +389,8 @@ func (client *DisksClient) grantAccessHandleError(resp *azcore.Response) error {
 
 // List - Lists all the disks under a subscription.
 // If the operation fails it returns a generic error.
-func (client *DisksClient) List(options *DisksListOptions) DisksListPager {
-	return &disksListPager{
+func (client *DisksClient) List(options *DisksListOptions) *DisksListPager {
+	return &DisksListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, options)
@@ -462,8 +443,8 @@ func (client *DisksClient) listHandleError(resp *azcore.Response) error {
 
 // ListByResourceGroup - Lists all the disks under a resource group.
 // If the operation fails it returns a generic error.
-func (client *DisksClient) ListByResourceGroup(resourceGroupName string, options *DisksListByResourceGroupOptions) DisksListByResourceGroupPager {
-	return &disksListByResourceGroupPager{
+func (client *DisksClient) ListByResourceGroup(resourceGroupName string, options *DisksListByResourceGroupOptions) *DisksListByResourceGroupPager {
+	return &DisksListByResourceGroupPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
@@ -532,12 +513,8 @@ func (client *DisksClient) BeginRevokeAccess(ctx context.Context, resourceGroupN
 	if err != nil {
 		return DisksRevokeAccessPollerResponse{}, err
 	}
-	poller := &disksRevokeAccessPoller{
+	result.Poller = &DisksRevokeAccessPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DisksRevokeAccessResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -549,7 +526,7 @@ func (client *DisksClient) ResumeRevokeAccess(ctx context.Context, token string)
 	if err != nil {
 		return DisksRevokeAccessPollerResponse{}, err
 	}
-	poller := &disksRevokeAccessPoller{
+	poller := &DisksRevokeAccessPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -557,12 +534,10 @@ func (client *DisksClient) ResumeRevokeAccess(ctx context.Context, token string)
 		return DisksRevokeAccessPollerResponse{}, err
 	}
 	result := DisksRevokeAccessPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DisksRevokeAccessResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -635,12 +610,8 @@ func (client *DisksClient) BeginUpdate(ctx context.Context, resourceGroupName st
 	if err != nil {
 		return DisksUpdatePollerResponse{}, err
 	}
-	poller := &disksUpdatePoller{
+	result.Poller = &DisksUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DisksUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -652,7 +623,7 @@ func (client *DisksClient) ResumeUpdate(ctx context.Context, token string) (Disk
 	if err != nil {
 		return DisksUpdatePollerResponse{}, err
 	}
-	poller := &disksUpdatePoller{
+	poller := &DisksUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -660,12 +631,10 @@ func (client *DisksClient) ResumeUpdate(ctx context.Context, token string) (Disk
 		return DisksUpdatePollerResponse{}, err
 	}
 	result := DisksUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DisksUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 

@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // GalleriesClient contains the methods for the Galleries group.
@@ -45,12 +44,8 @@ func (client *GalleriesClient) BeginCreateOrUpdate(ctx context.Context, resource
 	if err != nil {
 		return GalleriesCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &galleriesCreateOrUpdatePoller{
+	result.Poller = &GalleriesCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (GalleriesCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *GalleriesClient) ResumeCreateOrUpdate(ctx context.Context, token s
 	if err != nil {
 		return GalleriesCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &galleriesCreateOrUpdatePoller{
+	poller := &GalleriesCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *GalleriesClient) ResumeCreateOrUpdate(ctx context.Context, token s
 		return GalleriesCreateOrUpdatePollerResponse{}, err
 	}
 	result := GalleriesCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (GalleriesCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -150,12 +143,8 @@ func (client *GalleriesClient) BeginDelete(ctx context.Context, resourceGroupNam
 	if err != nil {
 		return GalleriesDeletePollerResponse{}, err
 	}
-	poller := &galleriesDeletePoller{
+	result.Poller = &GalleriesDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (GalleriesDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -167,7 +156,7 @@ func (client *GalleriesClient) ResumeDelete(ctx context.Context, token string) (
 	if err != nil {
 		return GalleriesDeletePollerResponse{}, err
 	}
-	poller := &galleriesDeletePoller{
+	poller := &GalleriesDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -175,12 +164,10 @@ func (client *GalleriesClient) ResumeDelete(ctx context.Context, token string) (
 		return GalleriesDeletePollerResponse{}, err
 	}
 	result := GalleriesDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (GalleriesDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -309,8 +296,8 @@ func (client *GalleriesClient) getHandleError(resp *azcore.Response) error {
 
 // List - List galleries under a subscription.
 // If the operation fails it returns the *CloudError error type.
-func (client *GalleriesClient) List(options *GalleriesListOptions) GalleriesListPager {
-	return &galleriesListPager{
+func (client *GalleriesClient) List(options *GalleriesListOptions) *GalleriesListPager {
+	return &GalleriesListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, options)
@@ -364,8 +351,8 @@ func (client *GalleriesClient) listHandleError(resp *azcore.Response) error {
 
 // ListByResourceGroup - List galleries under a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *GalleriesClient) ListByResourceGroup(resourceGroupName string, options *GalleriesListByResourceGroupOptions) GalleriesListByResourceGroupPager {
-	return &galleriesListByResourceGroupPager{
+func (client *GalleriesClient) ListByResourceGroup(resourceGroupName string, options *GalleriesListByResourceGroupOptions) *GalleriesListByResourceGroupPager {
+	return &GalleriesListByResourceGroupPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
@@ -435,12 +422,8 @@ func (client *GalleriesClient) BeginUpdate(ctx context.Context, resourceGroupNam
 	if err != nil {
 		return GalleriesUpdatePollerResponse{}, err
 	}
-	poller := &galleriesUpdatePoller{
+	result.Poller = &GalleriesUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (GalleriesUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -452,7 +435,7 @@ func (client *GalleriesClient) ResumeUpdate(ctx context.Context, token string) (
 	if err != nil {
 		return GalleriesUpdatePollerResponse{}, err
 	}
-	poller := &galleriesUpdatePoller{
+	poller := &GalleriesUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -460,12 +443,10 @@ func (client *GalleriesClient) ResumeUpdate(ctx context.Context, token string) (
 		return GalleriesUpdatePollerResponse{}, err
 	}
 	result := GalleriesUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (GalleriesUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 

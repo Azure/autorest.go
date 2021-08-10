@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // WebApplicationFirewallPoliciesClient contains the methods for the WebApplicationFirewallPolicies group.
@@ -111,12 +110,8 @@ func (client *WebApplicationFirewallPoliciesClient) BeginDelete(ctx context.Cont
 	if err != nil {
 		return WebApplicationFirewallPoliciesDeletePollerResponse{}, err
 	}
-	poller := &webApplicationFirewallPoliciesDeletePoller{
+	result.Poller = &WebApplicationFirewallPoliciesDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (WebApplicationFirewallPoliciesDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -128,7 +123,7 @@ func (client *WebApplicationFirewallPoliciesClient) ResumeDelete(ctx context.Con
 	if err != nil {
 		return WebApplicationFirewallPoliciesDeletePollerResponse{}, err
 	}
-	poller := &webApplicationFirewallPoliciesDeletePoller{
+	poller := &WebApplicationFirewallPoliciesDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -136,12 +131,10 @@ func (client *WebApplicationFirewallPoliciesClient) ResumeDelete(ctx context.Con
 		return WebApplicationFirewallPoliciesDeletePollerResponse{}, err
 	}
 	result := WebApplicationFirewallPoliciesDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (WebApplicationFirewallPoliciesDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -270,8 +263,8 @@ func (client *WebApplicationFirewallPoliciesClient) getHandleError(resp *azcore.
 
 // List - Lists all of the protection policies within a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *WebApplicationFirewallPoliciesClient) List(resourceGroupName string, options *WebApplicationFirewallPoliciesListOptions) WebApplicationFirewallPoliciesListPager {
-	return &webApplicationFirewallPoliciesListPager{
+func (client *WebApplicationFirewallPoliciesClient) List(resourceGroupName string, options *WebApplicationFirewallPoliciesListOptions) *WebApplicationFirewallPoliciesListPager {
+	return &WebApplicationFirewallPoliciesListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, options)
@@ -329,8 +322,8 @@ func (client *WebApplicationFirewallPoliciesClient) listHandleError(resp *azcore
 
 // ListAll - Gets all the WAF policies in a subscription.
 // If the operation fails it returns the *CloudError error type.
-func (client *WebApplicationFirewallPoliciesClient) ListAll(options *WebApplicationFirewallPoliciesListAllOptions) WebApplicationFirewallPoliciesListAllPager {
-	return &webApplicationFirewallPoliciesListAllPager{
+func (client *WebApplicationFirewallPoliciesClient) ListAll(options *WebApplicationFirewallPoliciesListAllOptions) *WebApplicationFirewallPoliciesListAllPager {
+	return &WebApplicationFirewallPoliciesListAllPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listAllCreateRequest(ctx, options)

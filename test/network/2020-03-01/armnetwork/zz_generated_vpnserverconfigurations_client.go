@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // VPNServerConfigurationsClient contains the methods for the VPNServerConfigurations group.
@@ -45,12 +44,8 @@ func (client *VPNServerConfigurationsClient) BeginCreateOrUpdate(ctx context.Con
 	if err != nil {
 		return VPNServerConfigurationsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &vpnServerConfigurationsCreateOrUpdatePoller{
+	result.Poller = &VPNServerConfigurationsCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VPNServerConfigurationsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *VPNServerConfigurationsClient) ResumeCreateOrUpdate(ctx context.Co
 	if err != nil {
 		return VPNServerConfigurationsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &vpnServerConfigurationsCreateOrUpdatePoller{
+	poller := &VPNServerConfigurationsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *VPNServerConfigurationsClient) ResumeCreateOrUpdate(ctx context.Co
 		return VPNServerConfigurationsCreateOrUpdatePollerResponse{}, err
 	}
 	result := VPNServerConfigurationsCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VPNServerConfigurationsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -150,12 +143,8 @@ func (client *VPNServerConfigurationsClient) BeginDelete(ctx context.Context, re
 	if err != nil {
 		return VPNServerConfigurationsDeletePollerResponse{}, err
 	}
-	poller := &vpnServerConfigurationsDeletePoller{
+	result.Poller = &VPNServerConfigurationsDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VPNServerConfigurationsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -167,7 +156,7 @@ func (client *VPNServerConfigurationsClient) ResumeDelete(ctx context.Context, t
 	if err != nil {
 		return VPNServerConfigurationsDeletePollerResponse{}, err
 	}
-	poller := &vpnServerConfigurationsDeletePoller{
+	poller := &VPNServerConfigurationsDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -175,12 +164,10 @@ func (client *VPNServerConfigurationsClient) ResumeDelete(ctx context.Context, t
 		return VPNServerConfigurationsDeletePollerResponse{}, err
 	}
 	result := VPNServerConfigurationsDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VPNServerConfigurationsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -309,8 +296,8 @@ func (client *VPNServerConfigurationsClient) getHandleError(resp *azcore.Respons
 
 // List - Lists all the VpnServerConfigurations in a subscription.
 // If the operation fails it returns the *CloudError error type.
-func (client *VPNServerConfigurationsClient) List(options *VPNServerConfigurationsListOptions) VPNServerConfigurationsListPager {
-	return &vpnServerConfigurationsListPager{
+func (client *VPNServerConfigurationsClient) List(options *VPNServerConfigurationsListOptions) *VPNServerConfigurationsListPager {
+	return &VPNServerConfigurationsListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, options)
@@ -364,8 +351,8 @@ func (client *VPNServerConfigurationsClient) listHandleError(resp *azcore.Respon
 
 // ListByResourceGroup - Lists all the vpnServerConfigurations in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *VPNServerConfigurationsClient) ListByResourceGroup(resourceGroupName string, options *VPNServerConfigurationsListByResourceGroupOptions) VPNServerConfigurationsListByResourceGroupPager {
-	return &vpnServerConfigurationsListByResourceGroupPager{
+func (client *VPNServerConfigurationsClient) ListByResourceGroup(resourceGroupName string, options *VPNServerConfigurationsListByResourceGroupOptions) *VPNServerConfigurationsListByResourceGroupPager {
+	return &VPNServerConfigurationsListByResourceGroupPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)

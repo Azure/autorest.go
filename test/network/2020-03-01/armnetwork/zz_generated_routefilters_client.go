@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // RouteFiltersClient contains the methods for the RouteFilters group.
@@ -45,12 +44,8 @@ func (client *RouteFiltersClient) BeginCreateOrUpdate(ctx context.Context, resou
 	if err != nil {
 		return RouteFiltersCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &routeFiltersCreateOrUpdatePoller{
+	result.Poller = &RouteFiltersCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (RouteFiltersCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *RouteFiltersClient) ResumeCreateOrUpdate(ctx context.Context, toke
 	if err != nil {
 		return RouteFiltersCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &routeFiltersCreateOrUpdatePoller{
+	poller := &RouteFiltersCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *RouteFiltersClient) ResumeCreateOrUpdate(ctx context.Context, toke
 		return RouteFiltersCreateOrUpdatePollerResponse{}, err
 	}
 	result := RouteFiltersCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (RouteFiltersCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -150,12 +143,8 @@ func (client *RouteFiltersClient) BeginDelete(ctx context.Context, resourceGroup
 	if err != nil {
 		return RouteFiltersDeletePollerResponse{}, err
 	}
-	poller := &routeFiltersDeletePoller{
+	result.Poller = &RouteFiltersDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (RouteFiltersDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -167,7 +156,7 @@ func (client *RouteFiltersClient) ResumeDelete(ctx context.Context, token string
 	if err != nil {
 		return RouteFiltersDeletePollerResponse{}, err
 	}
-	poller := &routeFiltersDeletePoller{
+	poller := &RouteFiltersDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -175,12 +164,10 @@ func (client *RouteFiltersClient) ResumeDelete(ctx context.Context, token string
 		return RouteFiltersDeletePollerResponse{}, err
 	}
 	result := RouteFiltersDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (RouteFiltersDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -312,8 +299,8 @@ func (client *RouteFiltersClient) getHandleError(resp *azcore.Response) error {
 
 // List - Gets all route filters in a subscription.
 // If the operation fails it returns the *CloudError error type.
-func (client *RouteFiltersClient) List(options *RouteFiltersListOptions) RouteFiltersListPager {
-	return &routeFiltersListPager{
+func (client *RouteFiltersClient) List(options *RouteFiltersListOptions) *RouteFiltersListPager {
+	return &RouteFiltersListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, options)
@@ -367,8 +354,8 @@ func (client *RouteFiltersClient) listHandleError(resp *azcore.Response) error {
 
 // ListByResourceGroup - Gets all route filters in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *RouteFiltersClient) ListByResourceGroup(resourceGroupName string, options *RouteFiltersListByResourceGroupOptions) RouteFiltersListByResourceGroupPager {
-	return &routeFiltersListByResourceGroupPager{
+func (client *RouteFiltersClient) ListByResourceGroup(resourceGroupName string, options *RouteFiltersListByResourceGroupOptions) *RouteFiltersListByResourceGroupPager {
+	return &RouteFiltersListByResourceGroupPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)

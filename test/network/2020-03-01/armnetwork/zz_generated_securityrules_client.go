@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // SecurityRulesClient contains the methods for the SecurityRules group.
@@ -45,12 +44,8 @@ func (client *SecurityRulesClient) BeginCreateOrUpdate(ctx context.Context, reso
 	if err != nil {
 		return SecurityRulesCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &securityRulesCreateOrUpdatePoller{
+	result.Poller = &SecurityRulesCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SecurityRulesCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *SecurityRulesClient) ResumeCreateOrUpdate(ctx context.Context, tok
 	if err != nil {
 		return SecurityRulesCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &securityRulesCreateOrUpdatePoller{
+	poller := &SecurityRulesCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *SecurityRulesClient) ResumeCreateOrUpdate(ctx context.Context, tok
 		return SecurityRulesCreateOrUpdatePollerResponse{}, err
 	}
 	result := SecurityRulesCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SecurityRulesCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -154,12 +147,8 @@ func (client *SecurityRulesClient) BeginDelete(ctx context.Context, resourceGrou
 	if err != nil {
 		return SecurityRulesDeletePollerResponse{}, err
 	}
-	poller := &securityRulesDeletePoller{
+	result.Poller = &SecurityRulesDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SecurityRulesDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -171,7 +160,7 @@ func (client *SecurityRulesClient) ResumeDelete(ctx context.Context, token strin
 	if err != nil {
 		return SecurityRulesDeletePollerResponse{}, err
 	}
-	poller := &securityRulesDeletePoller{
+	poller := &SecurityRulesDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -179,12 +168,10 @@ func (client *SecurityRulesClient) ResumeDelete(ctx context.Context, token strin
 		return SecurityRulesDeletePollerResponse{}, err
 	}
 	result := SecurityRulesDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SecurityRulesDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -321,8 +308,8 @@ func (client *SecurityRulesClient) getHandleError(resp *azcore.Response) error {
 
 // List - Gets all security rules in a network security group.
 // If the operation fails it returns the *CloudError error type.
-func (client *SecurityRulesClient) List(resourceGroupName string, networkSecurityGroupName string, options *SecurityRulesListOptions) SecurityRulesListPager {
-	return &securityRulesListPager{
+func (client *SecurityRulesClient) List(resourceGroupName string, networkSecurityGroupName string, options *SecurityRulesListOptions) *SecurityRulesListPager {
+	return &SecurityRulesListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, networkSecurityGroupName, options)

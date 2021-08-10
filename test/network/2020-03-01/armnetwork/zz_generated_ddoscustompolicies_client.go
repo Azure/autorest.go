@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // DdosCustomPoliciesClient contains the methods for the DdosCustomPolicies group.
@@ -45,12 +44,8 @@ func (client *DdosCustomPoliciesClient) BeginCreateOrUpdate(ctx context.Context,
 	if err != nil {
 		return DdosCustomPoliciesCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &ddosCustomPoliciesCreateOrUpdatePoller{
+	result.Poller = &DdosCustomPoliciesCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DdosCustomPoliciesCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *DdosCustomPoliciesClient) ResumeCreateOrUpdate(ctx context.Context
 	if err != nil {
 		return DdosCustomPoliciesCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &ddosCustomPoliciesCreateOrUpdatePoller{
+	poller := &DdosCustomPoliciesCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *DdosCustomPoliciesClient) ResumeCreateOrUpdate(ctx context.Context
 		return DdosCustomPoliciesCreateOrUpdatePollerResponse{}, err
 	}
 	result := DdosCustomPoliciesCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DdosCustomPoliciesCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -150,12 +143,8 @@ func (client *DdosCustomPoliciesClient) BeginDelete(ctx context.Context, resourc
 	if err != nil {
 		return DdosCustomPoliciesDeletePollerResponse{}, err
 	}
-	poller := &ddosCustomPoliciesDeletePoller{
+	result.Poller = &DdosCustomPoliciesDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DdosCustomPoliciesDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -167,7 +156,7 @@ func (client *DdosCustomPoliciesClient) ResumeDelete(ctx context.Context, token 
 	if err != nil {
 		return DdosCustomPoliciesDeletePollerResponse{}, err
 	}
-	poller := &ddosCustomPoliciesDeletePoller{
+	poller := &DdosCustomPoliciesDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -175,12 +164,10 @@ func (client *DdosCustomPoliciesClient) ResumeDelete(ctx context.Context, token 
 		return DdosCustomPoliciesDeletePollerResponse{}, err
 	}
 	result := DdosCustomPoliciesDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DdosCustomPoliciesDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 

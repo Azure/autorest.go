@@ -15,7 +15,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // LogAnalyticsClient contains the methods for the LogAnalytics group.
@@ -44,12 +43,8 @@ func (client *LogAnalyticsClient) BeginExportRequestRateByInterval(ctx context.C
 	if err != nil {
 		return LogAnalyticsExportRequestRateByIntervalPollerResponse{}, err
 	}
-	poller := &logAnalyticsExportRequestRateByIntervalPoller{
+	result.Poller = &LogAnalyticsExportRequestRateByIntervalPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LogAnalyticsExportRequestRateByIntervalResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -61,7 +56,7 @@ func (client *LogAnalyticsClient) ResumeExportRequestRateByInterval(ctx context.
 	if err != nil {
 		return LogAnalyticsExportRequestRateByIntervalPollerResponse{}, err
 	}
-	poller := &logAnalyticsExportRequestRateByIntervalPoller{
+	poller := &LogAnalyticsExportRequestRateByIntervalPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -69,12 +64,10 @@ func (client *LogAnalyticsClient) ResumeExportRequestRateByInterval(ctx context.
 		return LogAnalyticsExportRequestRateByIntervalPollerResponse{}, err
 	}
 	result := LogAnalyticsExportRequestRateByIntervalPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LogAnalyticsExportRequestRateByIntervalResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -144,12 +137,8 @@ func (client *LogAnalyticsClient) BeginExportThrottledRequests(ctx context.Conte
 	if err != nil {
 		return LogAnalyticsExportThrottledRequestsPollerResponse{}, err
 	}
-	poller := &logAnalyticsExportThrottledRequestsPoller{
+	result.Poller = &LogAnalyticsExportThrottledRequestsPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LogAnalyticsExportThrottledRequestsResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -161,7 +150,7 @@ func (client *LogAnalyticsClient) ResumeExportThrottledRequests(ctx context.Cont
 	if err != nil {
 		return LogAnalyticsExportThrottledRequestsPollerResponse{}, err
 	}
-	poller := &logAnalyticsExportThrottledRequestsPoller{
+	poller := &LogAnalyticsExportThrottledRequestsPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -169,12 +158,10 @@ func (client *LogAnalyticsClient) ResumeExportThrottledRequests(ctx context.Cont
 		return LogAnalyticsExportThrottledRequestsPollerResponse{}, err
 	}
 	result := LogAnalyticsExportThrottledRequestsPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LogAnalyticsExportThrottledRequestsResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 

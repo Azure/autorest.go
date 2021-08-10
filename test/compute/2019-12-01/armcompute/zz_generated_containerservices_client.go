@@ -15,7 +15,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // ContainerServicesClient contains the methods for the ContainerServices group.
@@ -44,12 +43,8 @@ func (client *ContainerServicesClient) BeginCreateOrUpdate(ctx context.Context, 
 	if err != nil {
 		return ContainerServicesCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &containerServicesCreateOrUpdatePoller{
+	result.Poller = &ContainerServicesCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ContainerServicesCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -61,7 +56,7 @@ func (client *ContainerServicesClient) ResumeCreateOrUpdate(ctx context.Context,
 	if err != nil {
 		return ContainerServicesCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &containerServicesCreateOrUpdatePoller{
+	poller := &ContainerServicesCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -69,12 +64,10 @@ func (client *ContainerServicesClient) ResumeCreateOrUpdate(ctx context.Context,
 		return ContainerServicesCreateOrUpdatePollerResponse{}, err
 	}
 	result := ContainerServicesCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ContainerServicesCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -151,12 +144,8 @@ func (client *ContainerServicesClient) BeginDelete(ctx context.Context, resource
 	if err != nil {
 		return ContainerServicesDeletePollerResponse{}, err
 	}
-	poller := &containerServicesDeletePoller{
+	result.Poller = &ContainerServicesDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ContainerServicesDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -168,7 +157,7 @@ func (client *ContainerServicesClient) ResumeDelete(ctx context.Context, token s
 	if err != nil {
 		return ContainerServicesDeletePollerResponse{}, err
 	}
-	poller := &containerServicesDeletePoller{
+	poller := &ContainerServicesDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -176,12 +165,10 @@ func (client *ContainerServicesClient) ResumeDelete(ctx context.Context, token s
 		return ContainerServicesDeletePollerResponse{}, err
 	}
 	result := ContainerServicesDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ContainerServicesDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -314,8 +301,8 @@ func (client *ContainerServicesClient) getHandleError(resp *azcore.Response) err
 // number of masters and agents, and FQDNs of
 // masters and agents.
 // If the operation fails it returns a generic error.
-func (client *ContainerServicesClient) List(options *ContainerServicesListOptions) ContainerServicesListPager {
-	return &containerServicesListPager{
+func (client *ContainerServicesClient) List(options *ContainerServicesListOptions) *ContainerServicesListPager {
+	return &ContainerServicesListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, options)
@@ -370,8 +357,8 @@ func (client *ContainerServicesClient) listHandleError(resp *azcore.Response) er
 // service including state, orchestrator, number of masters and
 // agents, and FQDNs of masters and agents.
 // If the operation fails it returns a generic error.
-func (client *ContainerServicesClient) ListByResourceGroup(resourceGroupName string, options *ContainerServicesListByResourceGroupOptions) ContainerServicesListByResourceGroupPager {
-	return &containerServicesListByResourceGroupPager{
+func (client *ContainerServicesClient) ListByResourceGroup(resourceGroupName string, options *ContainerServicesListByResourceGroupOptions) *ContainerServicesListByResourceGroupPager {
+	return &ContainerServicesListByResourceGroupPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)

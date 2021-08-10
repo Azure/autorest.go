@@ -222,8 +222,8 @@ func (client *RoleDefinitionsClient) getHandleError(resp *azcore.Response) error
 
 // List - Get all role definitions that are applicable at scope and above.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *RoleDefinitionsClient) List(vaultBaseURL string, scope string, options *RoleDefinitionsListOptions) RoleDefinitionsListPager {
-	return &roleDefinitionsListPager{
+func (client *RoleDefinitionsClient) List(vaultBaseURL string, scope string, options *RoleDefinitionsListOptions) *RoleDefinitionsListPager {
+	return &RoleDefinitionsListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, vaultBaseURL, scope, options)

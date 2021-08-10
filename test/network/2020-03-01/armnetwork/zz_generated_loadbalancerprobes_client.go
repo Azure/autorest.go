@@ -102,8 +102,8 @@ func (client *LoadBalancerProbesClient) getHandleError(resp *azcore.Response) er
 
 // List - Gets all the load balancer probes.
 // If the operation fails it returns the *CloudError error type.
-func (client *LoadBalancerProbesClient) List(resourceGroupName string, loadBalancerName string, options *LoadBalancerProbesListOptions) LoadBalancerProbesListPager {
-	return &loadBalancerProbesListPager{
+func (client *LoadBalancerProbesClient) List(resourceGroupName string, loadBalancerName string, options *LoadBalancerProbesListOptions) *LoadBalancerProbesListPager {
+	return &LoadBalancerProbesListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, loadBalancerName, options)

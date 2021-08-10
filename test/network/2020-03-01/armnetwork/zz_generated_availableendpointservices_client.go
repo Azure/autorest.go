@@ -32,8 +32,8 @@ func NewAvailableEndpointServicesClient(con *armcore.Connection, subscriptionID 
 
 // List - List what values of endpoint services are available for use.
 // If the operation fails it returns the *CloudError error type.
-func (client *AvailableEndpointServicesClient) List(location string, options *AvailableEndpointServicesListOptions) AvailableEndpointServicesListPager {
-	return &availableEndpointServicesListPager{
+func (client *AvailableEndpointServicesClient) List(location string, options *AvailableEndpointServicesListOptions) *AvailableEndpointServicesListPager {
+	return &AvailableEndpointServicesListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, location, options)

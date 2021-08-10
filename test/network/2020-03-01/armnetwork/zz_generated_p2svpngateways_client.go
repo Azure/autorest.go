@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // P2SVPNGatewaysClient contains the methods for the P2SVPNGateways group.
@@ -45,12 +44,8 @@ func (client *P2SVPNGatewaysClient) BeginCreateOrUpdate(ctx context.Context, res
 	if err != nil {
 		return P2SVPNGatewaysCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &p2SVPNGatewaysCreateOrUpdatePoller{
+	result.Poller = &P2SVPNGatewaysCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (P2SVPNGatewaysCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *P2SVPNGatewaysClient) ResumeCreateOrUpdate(ctx context.Context, to
 	if err != nil {
 		return P2SVPNGatewaysCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &p2SVPNGatewaysCreateOrUpdatePoller{
+	poller := &P2SVPNGatewaysCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *P2SVPNGatewaysClient) ResumeCreateOrUpdate(ctx context.Context, to
 		return P2SVPNGatewaysCreateOrUpdatePollerResponse{}, err
 	}
 	result := P2SVPNGatewaysCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (P2SVPNGatewaysCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -150,12 +143,8 @@ func (client *P2SVPNGatewaysClient) BeginDelete(ctx context.Context, resourceGro
 	if err != nil {
 		return P2SVPNGatewaysDeletePollerResponse{}, err
 	}
-	poller := &p2SVPNGatewaysDeletePoller{
+	result.Poller = &P2SVPNGatewaysDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (P2SVPNGatewaysDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -167,7 +156,7 @@ func (client *P2SVPNGatewaysClient) ResumeDelete(ctx context.Context, token stri
 	if err != nil {
 		return P2SVPNGatewaysDeletePollerResponse{}, err
 	}
-	poller := &p2SVPNGatewaysDeletePoller{
+	poller := &P2SVPNGatewaysDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -175,12 +164,10 @@ func (client *P2SVPNGatewaysClient) ResumeDelete(ctx context.Context, token stri
 		return P2SVPNGatewaysDeletePollerResponse{}, err
 	}
 	result := P2SVPNGatewaysDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (P2SVPNGatewaysDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -255,12 +242,8 @@ func (client *P2SVPNGatewaysClient) BeginDisconnectP2SVPNConnections(ctx context
 	if err != nil {
 		return P2SVPNGatewaysDisconnectP2SVPNConnectionsPollerResponse{}, err
 	}
-	poller := &p2SVPNGatewaysDisconnectP2SVPNConnectionsPoller{
+	result.Poller = &P2SVPNGatewaysDisconnectP2SVPNConnectionsPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (P2SVPNGatewaysDisconnectP2SVPNConnectionsResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -272,7 +255,7 @@ func (client *P2SVPNGatewaysClient) ResumeDisconnectP2SVPNConnections(ctx contex
 	if err != nil {
 		return P2SVPNGatewaysDisconnectP2SVPNConnectionsPollerResponse{}, err
 	}
-	poller := &p2SVPNGatewaysDisconnectP2SVPNConnectionsPoller{
+	poller := &P2SVPNGatewaysDisconnectP2SVPNConnectionsPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -280,12 +263,10 @@ func (client *P2SVPNGatewaysClient) ResumeDisconnectP2SVPNConnections(ctx contex
 		return P2SVPNGatewaysDisconnectP2SVPNConnectionsPollerResponse{}, err
 	}
 	result := P2SVPNGatewaysDisconnectP2SVPNConnectionsPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (P2SVPNGatewaysDisconnectP2SVPNConnectionsResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -360,12 +341,8 @@ func (client *P2SVPNGatewaysClient) BeginGenerateVPNProfile(ctx context.Context,
 	if err != nil {
 		return P2SVPNGatewaysGenerateVPNProfilePollerResponse{}, err
 	}
-	poller := &p2SVPNGatewaysGenerateVPNProfilePoller{
+	result.Poller = &P2SVPNGatewaysGenerateVPNProfilePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (P2SVPNGatewaysGenerateVPNProfileResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -377,7 +354,7 @@ func (client *P2SVPNGatewaysClient) ResumeGenerateVPNProfile(ctx context.Context
 	if err != nil {
 		return P2SVPNGatewaysGenerateVPNProfilePollerResponse{}, err
 	}
-	poller := &p2SVPNGatewaysGenerateVPNProfilePoller{
+	poller := &P2SVPNGatewaysGenerateVPNProfilePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -385,12 +362,10 @@ func (client *P2SVPNGatewaysClient) ResumeGenerateVPNProfile(ctx context.Context
 		return P2SVPNGatewaysGenerateVPNProfilePollerResponse{}, err
 	}
 	result := P2SVPNGatewaysGenerateVPNProfilePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (P2SVPNGatewaysGenerateVPNProfileResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -531,12 +506,8 @@ func (client *P2SVPNGatewaysClient) BeginGetP2SVPNConnectionHealth(ctx context.C
 	if err != nil {
 		return P2SVPNGatewaysGetP2SVPNConnectionHealthPollerResponse{}, err
 	}
-	poller := &p2SVPNGatewaysGetP2SVPNConnectionHealthPoller{
+	result.Poller = &P2SVPNGatewaysGetP2SVPNConnectionHealthPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (P2SVPNGatewaysGetP2SVPNConnectionHealthResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -548,7 +519,7 @@ func (client *P2SVPNGatewaysClient) ResumeGetP2SVPNConnectionHealth(ctx context.
 	if err != nil {
 		return P2SVPNGatewaysGetP2SVPNConnectionHealthPollerResponse{}, err
 	}
-	poller := &p2SVPNGatewaysGetP2SVPNConnectionHealthPoller{
+	poller := &P2SVPNGatewaysGetP2SVPNConnectionHealthPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -556,12 +527,10 @@ func (client *P2SVPNGatewaysClient) ResumeGetP2SVPNConnectionHealth(ctx context.
 		return P2SVPNGatewaysGetP2SVPNConnectionHealthPollerResponse{}, err
 	}
 	result := P2SVPNGatewaysGetP2SVPNConnectionHealthPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (P2SVPNGatewaysGetP2SVPNConnectionHealthResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -637,12 +606,8 @@ func (client *P2SVPNGatewaysClient) BeginGetP2SVPNConnectionHealthDetailed(ctx c
 	if err != nil {
 		return P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedPollerResponse{}, err
 	}
-	poller := &p2SVPNGatewaysGetP2SVPNConnectionHealthDetailedPoller{
+	result.Poller = &P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -654,7 +619,7 @@ func (client *P2SVPNGatewaysClient) ResumeGetP2SVPNConnectionHealthDetailed(ctx 
 	if err != nil {
 		return P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedPollerResponse{}, err
 	}
-	poller := &p2SVPNGatewaysGetP2SVPNConnectionHealthDetailedPoller{
+	poller := &P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -662,12 +627,10 @@ func (client *P2SVPNGatewaysClient) ResumeGetP2SVPNConnectionHealthDetailed(ctx 
 		return P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedPollerResponse{}, err
 	}
 	result := P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -731,8 +694,8 @@ func (client *P2SVPNGatewaysClient) getP2SVPNConnectionHealthDetailedHandleError
 
 // List - Lists all the P2SVpnGateways in a subscription.
 // If the operation fails it returns the *CloudError error type.
-func (client *P2SVPNGatewaysClient) List(options *P2SVPNGatewaysListOptions) P2SVPNGatewaysListPager {
-	return &p2SVPNGatewaysListPager{
+func (client *P2SVPNGatewaysClient) List(options *P2SVPNGatewaysListOptions) *P2SVPNGatewaysListPager {
+	return &P2SVPNGatewaysListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, options)
@@ -786,8 +749,8 @@ func (client *P2SVPNGatewaysClient) listHandleError(resp *azcore.Response) error
 
 // ListByResourceGroup - Lists all the P2SVpnGateways in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *P2SVPNGatewaysClient) ListByResourceGroup(resourceGroupName string, options *P2SVPNGatewaysListByResourceGroupOptions) P2SVPNGatewaysListByResourceGroupPager {
-	return &p2SVPNGatewaysListByResourceGroupPager{
+func (client *P2SVPNGatewaysClient) ListByResourceGroup(resourceGroupName string, options *P2SVPNGatewaysListByResourceGroupOptions) *P2SVPNGatewaysListByResourceGroupPager {
+	return &P2SVPNGatewaysListByResourceGroupPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)

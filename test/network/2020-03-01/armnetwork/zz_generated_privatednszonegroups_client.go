@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // PrivateDNSZoneGroupsClient contains the methods for the PrivateDNSZoneGroups group.
@@ -45,12 +44,8 @@ func (client *PrivateDNSZoneGroupsClient) BeginCreateOrUpdate(ctx context.Contex
 	if err != nil {
 		return PrivateDNSZoneGroupsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &privateDNSZoneGroupsCreateOrUpdatePoller{
+	result.Poller = &PrivateDNSZoneGroupsCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PrivateDNSZoneGroupsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *PrivateDNSZoneGroupsClient) ResumeCreateOrUpdate(ctx context.Conte
 	if err != nil {
 		return PrivateDNSZoneGroupsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &privateDNSZoneGroupsCreateOrUpdatePoller{
+	poller := &PrivateDNSZoneGroupsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *PrivateDNSZoneGroupsClient) ResumeCreateOrUpdate(ctx context.Conte
 		return PrivateDNSZoneGroupsCreateOrUpdatePollerResponse{}, err
 	}
 	result := PrivateDNSZoneGroupsCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PrivateDNSZoneGroupsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -154,12 +147,8 @@ func (client *PrivateDNSZoneGroupsClient) BeginDelete(ctx context.Context, resou
 	if err != nil {
 		return PrivateDNSZoneGroupsDeletePollerResponse{}, err
 	}
-	poller := &privateDNSZoneGroupsDeletePoller{
+	result.Poller = &PrivateDNSZoneGroupsDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PrivateDNSZoneGroupsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -171,7 +160,7 @@ func (client *PrivateDNSZoneGroupsClient) ResumeDelete(ctx context.Context, toke
 	if err != nil {
 		return PrivateDNSZoneGroupsDeletePollerResponse{}, err
 	}
-	poller := &privateDNSZoneGroupsDeletePoller{
+	poller := &PrivateDNSZoneGroupsDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -179,12 +168,10 @@ func (client *PrivateDNSZoneGroupsClient) ResumeDelete(ctx context.Context, toke
 		return PrivateDNSZoneGroupsDeletePollerResponse{}, err
 	}
 	result := PrivateDNSZoneGroupsDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PrivateDNSZoneGroupsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -321,8 +308,8 @@ func (client *PrivateDNSZoneGroupsClient) getHandleError(resp *azcore.Response) 
 
 // List - Gets all private dns zone groups in a private endpoint.
 // If the operation fails it returns the *Error error type.
-func (client *PrivateDNSZoneGroupsClient) List(privateEndpointName string, resourceGroupName string, options *PrivateDNSZoneGroupsListOptions) PrivateDNSZoneGroupsListPager {
-	return &privateDNSZoneGroupsListPager{
+func (client *PrivateDNSZoneGroupsClient) List(privateEndpointName string, resourceGroupName string, options *PrivateDNSZoneGroupsListOptions) *PrivateDNSZoneGroupsListPager {
+	return &PrivateDNSZoneGroupsListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, privateEndpointName, resourceGroupName, options)

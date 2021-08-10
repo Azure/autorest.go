@@ -32,8 +32,8 @@ func NewUsagesClient(con *armcore.Connection, subscriptionID string) *UsagesClie
 
 // List - List network usages for a subscription.
 // If the operation fails it returns the *CloudError error type.
-func (client *UsagesClient) List(location string, options *UsagesListOptions) UsagesListPager {
-	return &usagesListPager{
+func (client *UsagesClient) List(location string, options *UsagesListOptions) *UsagesListPager {
+	return &UsagesListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, location, options)

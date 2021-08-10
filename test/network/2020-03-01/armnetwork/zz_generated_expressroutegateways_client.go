@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // ExpressRouteGatewaysClient contains the methods for the ExpressRouteGateways group.
@@ -45,12 +44,8 @@ func (client *ExpressRouteGatewaysClient) BeginCreateOrUpdate(ctx context.Contex
 	if err != nil {
 		return ExpressRouteGatewaysCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &expressRouteGatewaysCreateOrUpdatePoller{
+	result.Poller = &ExpressRouteGatewaysCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteGatewaysCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *ExpressRouteGatewaysClient) ResumeCreateOrUpdate(ctx context.Conte
 	if err != nil {
 		return ExpressRouteGatewaysCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &expressRouteGatewaysCreateOrUpdatePoller{
+	poller := &ExpressRouteGatewaysCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *ExpressRouteGatewaysClient) ResumeCreateOrUpdate(ctx context.Conte
 		return ExpressRouteGatewaysCreateOrUpdatePollerResponse{}, err
 	}
 	result := ExpressRouteGatewaysCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteGatewaysCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -151,12 +144,8 @@ func (client *ExpressRouteGatewaysClient) BeginDelete(ctx context.Context, resou
 	if err != nil {
 		return ExpressRouteGatewaysDeletePollerResponse{}, err
 	}
-	poller := &expressRouteGatewaysDeletePoller{
+	result.Poller = &ExpressRouteGatewaysDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteGatewaysDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -168,7 +157,7 @@ func (client *ExpressRouteGatewaysClient) ResumeDelete(ctx context.Context, toke
 	if err != nil {
 		return ExpressRouteGatewaysDeletePollerResponse{}, err
 	}
-	poller := &expressRouteGatewaysDeletePoller{
+	poller := &ExpressRouteGatewaysDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -176,12 +165,10 @@ func (client *ExpressRouteGatewaysClient) ResumeDelete(ctx context.Context, toke
 		return ExpressRouteGatewaysDeletePollerResponse{}, err
 	}
 	result := ExpressRouteGatewaysDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteGatewaysDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 

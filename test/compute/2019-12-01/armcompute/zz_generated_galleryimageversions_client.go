@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // GalleryImageVersionsClient contains the methods for the GalleryImageVersions group.
@@ -45,12 +44,8 @@ func (client *GalleryImageVersionsClient) BeginCreateOrUpdate(ctx context.Contex
 	if err != nil {
 		return GalleryImageVersionsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &galleryImageVersionsCreateOrUpdatePoller{
+	result.Poller = &GalleryImageVersionsCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (GalleryImageVersionsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *GalleryImageVersionsClient) ResumeCreateOrUpdate(ctx context.Conte
 	if err != nil {
 		return GalleryImageVersionsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &galleryImageVersionsCreateOrUpdatePoller{
+	poller := &GalleryImageVersionsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *GalleryImageVersionsClient) ResumeCreateOrUpdate(ctx context.Conte
 		return GalleryImageVersionsCreateOrUpdatePollerResponse{}, err
 	}
 	result := GalleryImageVersionsCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (GalleryImageVersionsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -158,12 +151,8 @@ func (client *GalleryImageVersionsClient) BeginDelete(ctx context.Context, resou
 	if err != nil {
 		return GalleryImageVersionsDeletePollerResponse{}, err
 	}
-	poller := &galleryImageVersionsDeletePoller{
+	result.Poller = &GalleryImageVersionsDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (GalleryImageVersionsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -175,7 +164,7 @@ func (client *GalleryImageVersionsClient) ResumeDelete(ctx context.Context, toke
 	if err != nil {
 		return GalleryImageVersionsDeletePollerResponse{}, err
 	}
-	poller := &galleryImageVersionsDeletePoller{
+	poller := &GalleryImageVersionsDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -183,12 +172,10 @@ func (client *GalleryImageVersionsClient) ResumeDelete(ctx context.Context, toke
 		return GalleryImageVersionsDeletePollerResponse{}, err
 	}
 	result := GalleryImageVersionsDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (GalleryImageVersionsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -336,8 +323,8 @@ func (client *GalleryImageVersionsClient) getHandleError(resp *azcore.Response) 
 
 // ListByGalleryImage - List gallery Image Versions in a gallery Image Definition.
 // If the operation fails it returns the *CloudError error type.
-func (client *GalleryImageVersionsClient) ListByGalleryImage(resourceGroupName string, galleryName string, galleryImageName string, options *GalleryImageVersionsListByGalleryImageOptions) GalleryImageVersionsListByGalleryImagePager {
-	return &galleryImageVersionsListByGalleryImagePager{
+func (client *GalleryImageVersionsClient) ListByGalleryImage(resourceGroupName string, galleryName string, galleryImageName string, options *GalleryImageVersionsListByGalleryImageOptions) *GalleryImageVersionsListByGalleryImagePager {
+	return &GalleryImageVersionsListByGalleryImagePager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByGalleryImageCreateRequest(ctx, resourceGroupName, galleryName, galleryImageName, options)
@@ -415,12 +402,8 @@ func (client *GalleryImageVersionsClient) BeginUpdate(ctx context.Context, resou
 	if err != nil {
 		return GalleryImageVersionsUpdatePollerResponse{}, err
 	}
-	poller := &galleryImageVersionsUpdatePoller{
+	result.Poller = &GalleryImageVersionsUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (GalleryImageVersionsUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -432,7 +415,7 @@ func (client *GalleryImageVersionsClient) ResumeUpdate(ctx context.Context, toke
 	if err != nil {
 		return GalleryImageVersionsUpdatePollerResponse{}, err
 	}
-	poller := &galleryImageVersionsUpdatePoller{
+	poller := &GalleryImageVersionsUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -440,12 +423,10 @@ func (client *GalleryImageVersionsClient) ResumeUpdate(ctx context.Context, toke
 		return GalleryImageVersionsUpdatePollerResponse{}, err
 	}
 	result := GalleryImageVersionsUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (GalleryImageVersionsUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 

@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // FlowLogsClient contains the methods for the FlowLogs group.
@@ -45,12 +44,8 @@ func (client *FlowLogsClient) BeginCreateOrUpdate(ctx context.Context, resourceG
 	if err != nil {
 		return FlowLogsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &flowLogsCreateOrUpdatePoller{
+	result.Poller = &FlowLogsCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (FlowLogsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *FlowLogsClient) ResumeCreateOrUpdate(ctx context.Context, token st
 	if err != nil {
 		return FlowLogsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &flowLogsCreateOrUpdatePoller{
+	poller := &FlowLogsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *FlowLogsClient) ResumeCreateOrUpdate(ctx context.Context, token st
 		return FlowLogsCreateOrUpdatePollerResponse{}, err
 	}
 	result := FlowLogsCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (FlowLogsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -154,12 +147,8 @@ func (client *FlowLogsClient) BeginDelete(ctx context.Context, resourceGroupName
 	if err != nil {
 		return FlowLogsDeletePollerResponse{}, err
 	}
-	poller := &flowLogsDeletePoller{
+	result.Poller = &FlowLogsDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (FlowLogsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -171,7 +160,7 @@ func (client *FlowLogsClient) ResumeDelete(ctx context.Context, token string) (F
 	if err != nil {
 		return FlowLogsDeletePollerResponse{}, err
 	}
-	poller := &flowLogsDeletePoller{
+	poller := &FlowLogsDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -179,12 +168,10 @@ func (client *FlowLogsClient) ResumeDelete(ctx context.Context, token string) (F
 		return FlowLogsDeletePollerResponse{}, err
 	}
 	result := FlowLogsDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (FlowLogsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -321,8 +308,8 @@ func (client *FlowLogsClient) getHandleError(resp *azcore.Response) error {
 
 // List - Lists all flow log resources for the specified Network Watcher.
 // If the operation fails it returns the *ErrorResponse error type.
-func (client *FlowLogsClient) List(resourceGroupName string, networkWatcherName string, options *FlowLogsListOptions) FlowLogsListPager {
-	return &flowLogsListPager{
+func (client *FlowLogsClient) List(resourceGroupName string, networkWatcherName string, options *FlowLogsListOptions) *FlowLogsListPager {
+	return &FlowLogsListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, networkWatcherName, options)

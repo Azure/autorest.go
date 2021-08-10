@@ -16,7 +16,6 @@ import (
 	"net/url"
 	"strconv"
 	"strings"
-	"time"
 )
 
 type pipelineClient struct {
@@ -37,12 +36,8 @@ func (client *pipelineClient) BeginCreateOrUpdatePipeline(ctx context.Context, p
 	if err != nil {
 		return PipelineCreateOrUpdatePipelinePollerResponse{}, err
 	}
-	poller := &pipelineCreateOrUpdatePipelinePoller{
+	result.Poller = &PipelineCreateOrUpdatePipelinePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PipelineCreateOrUpdatePipelineResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -54,7 +49,7 @@ func (client *pipelineClient) ResumeCreateOrUpdatePipeline(ctx context.Context, 
 	if err != nil {
 		return PipelineCreateOrUpdatePipelinePollerResponse{}, err
 	}
-	poller := &pipelineCreateOrUpdatePipelinePoller{
+	poller := &PipelineCreateOrUpdatePipelinePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -62,12 +57,10 @@ func (client *pipelineClient) ResumeCreateOrUpdatePipeline(ctx context.Context, 
 		return PipelineCreateOrUpdatePipelinePollerResponse{}, err
 	}
 	result := PipelineCreateOrUpdatePipelinePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PipelineCreateOrUpdatePipelineResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -207,12 +200,8 @@ func (client *pipelineClient) BeginDeletePipeline(ctx context.Context, pipelineN
 	if err != nil {
 		return PipelineDeletePipelinePollerResponse{}, err
 	}
-	poller := &pipelineDeletePipelinePoller{
+	result.Poller = &PipelineDeletePipelinePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PipelineDeletePipelineResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -224,7 +213,7 @@ func (client *pipelineClient) ResumeDeletePipeline(ctx context.Context, token st
 	if err != nil {
 		return PipelineDeletePipelinePollerResponse{}, err
 	}
-	poller := &pipelineDeletePipelinePoller{
+	poller := &PipelineDeletePipelinePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -232,12 +221,10 @@ func (client *pipelineClient) ResumeDeletePipeline(ctx context.Context, token st
 		return PipelineDeletePipelinePollerResponse{}, err
 	}
 	result := PipelineDeletePipelinePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PipelineDeletePipelineResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -353,8 +340,8 @@ func (client *pipelineClient) getPipelineHandleError(resp *azcore.Response) erro
 
 // GetPipelinesByWorkspace - Lists pipelines.
 // If the operation fails it returns the *CloudError error type.
-func (client *pipelineClient) GetPipelinesByWorkspace(options *PipelineGetPipelinesByWorkspaceOptions) PipelineGetPipelinesByWorkspacePager {
-	return &pipelineGetPipelinesByWorkspacePager{
+func (client *pipelineClient) GetPipelinesByWorkspace(options *PipelineGetPipelinesByWorkspaceOptions) *PipelineGetPipelinesByWorkspacePager {
+	return &PipelineGetPipelinesByWorkspacePager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.getPipelinesByWorkspaceCreateRequest(ctx, options)
@@ -416,12 +403,8 @@ func (client *pipelineClient) BeginRenamePipeline(ctx context.Context, pipelineN
 	if err != nil {
 		return PipelineRenamePipelinePollerResponse{}, err
 	}
-	poller := &pipelineRenamePipelinePoller{
+	result.Poller = &PipelineRenamePipelinePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PipelineRenamePipelineResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -433,7 +416,7 @@ func (client *pipelineClient) ResumeRenamePipeline(ctx context.Context, token st
 	if err != nil {
 		return PipelineRenamePipelinePollerResponse{}, err
 	}
-	poller := &pipelineRenamePipelinePoller{
+	poller := &PipelineRenamePipelinePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -441,12 +424,10 @@ func (client *pipelineClient) ResumeRenamePipeline(ctx context.Context, token st
 		return PipelineRenamePipelinePollerResponse{}, err
 	}
 	result := PipelineRenamePipelinePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PipelineRenamePipelineResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 

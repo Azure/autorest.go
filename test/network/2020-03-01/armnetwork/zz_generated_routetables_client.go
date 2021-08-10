@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // RouteTablesClient contains the methods for the RouteTables group.
@@ -45,12 +44,8 @@ func (client *RouteTablesClient) BeginCreateOrUpdate(ctx context.Context, resour
 	if err != nil {
 		return RouteTablesCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &routeTablesCreateOrUpdatePoller{
+	result.Poller = &RouteTablesCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (RouteTablesCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *RouteTablesClient) ResumeCreateOrUpdate(ctx context.Context, token
 	if err != nil {
 		return RouteTablesCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &routeTablesCreateOrUpdatePoller{
+	poller := &RouteTablesCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *RouteTablesClient) ResumeCreateOrUpdate(ctx context.Context, token
 		return RouteTablesCreateOrUpdatePollerResponse{}, err
 	}
 	result := RouteTablesCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (RouteTablesCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -150,12 +143,8 @@ func (client *RouteTablesClient) BeginDelete(ctx context.Context, resourceGroupN
 	if err != nil {
 		return RouteTablesDeletePollerResponse{}, err
 	}
-	poller := &routeTablesDeletePoller{
+	result.Poller = &RouteTablesDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (RouteTablesDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -167,7 +156,7 @@ func (client *RouteTablesClient) ResumeDelete(ctx context.Context, token string)
 	if err != nil {
 		return RouteTablesDeletePollerResponse{}, err
 	}
-	poller := &routeTablesDeletePoller{
+	poller := &RouteTablesDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -175,12 +164,10 @@ func (client *RouteTablesClient) ResumeDelete(ctx context.Context, token string)
 		return RouteTablesDeletePollerResponse{}, err
 	}
 	result := RouteTablesDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (RouteTablesDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -312,8 +299,8 @@ func (client *RouteTablesClient) getHandleError(resp *azcore.Response) error {
 
 // List - Gets all route tables in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *RouteTablesClient) List(resourceGroupName string, options *RouteTablesListOptions) RouteTablesListPager {
-	return &routeTablesListPager{
+func (client *RouteTablesClient) List(resourceGroupName string, options *RouteTablesListOptions) *RouteTablesListPager {
+	return &RouteTablesListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, options)
@@ -371,8 +358,8 @@ func (client *RouteTablesClient) listHandleError(resp *azcore.Response) error {
 
 // ListAll - Gets all route tables in a subscription.
 // If the operation fails it returns the *CloudError error type.
-func (client *RouteTablesClient) ListAll(options *RouteTablesListAllOptions) RouteTablesListAllPager {
-	return &routeTablesListAllPager{
+func (client *RouteTablesClient) ListAll(options *RouteTablesListAllOptions) *RouteTablesListAllPager {
+	return &RouteTablesListAllPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listAllCreateRequest(ctx, options)

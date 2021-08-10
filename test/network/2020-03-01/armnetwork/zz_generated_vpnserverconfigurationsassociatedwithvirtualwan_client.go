@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // VPNServerConfigurationsAssociatedWithVirtualWanClient contains the methods for the VPNServerConfigurationsAssociatedWithVirtualWan group.
@@ -45,12 +44,8 @@ func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) BeginList(c
 	if err != nil {
 		return VPNServerConfigurationsAssociatedWithVirtualWanListPollerResponse{}, err
 	}
-	poller := &vpnServerConfigurationsAssociatedWithVirtualWanListPoller{
+	result.Poller = &VPNServerConfigurationsAssociatedWithVirtualWanListPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VPNServerConfigurationsAssociatedWithVirtualWanListResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) ResumeList(
 	if err != nil {
 		return VPNServerConfigurationsAssociatedWithVirtualWanListPollerResponse{}, err
 	}
-	poller := &vpnServerConfigurationsAssociatedWithVirtualWanListPoller{
+	poller := &VPNServerConfigurationsAssociatedWithVirtualWanListPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) ResumeList(
 		return VPNServerConfigurationsAssociatedWithVirtualWanListPollerResponse{}, err
 	}
 	result := VPNServerConfigurationsAssociatedWithVirtualWanListPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VPNServerConfigurationsAssociatedWithVirtualWanListResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 

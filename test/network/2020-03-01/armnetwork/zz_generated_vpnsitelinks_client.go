@@ -102,8 +102,8 @@ func (client *VPNSiteLinksClient) getHandleError(resp *azcore.Response) error {
 
 // ListByVPNSite - Lists all the vpnSiteLinks in a resource group for a vpn site.
 // If the operation fails it returns the *CloudError error type.
-func (client *VPNSiteLinksClient) ListByVPNSite(resourceGroupName string, vpnSiteName string, options *VPNSiteLinksListByVPNSiteOptions) VPNSiteLinksListByVPNSitePager {
-	return &vpnSiteLinksListByVPNSitePager{
+func (client *VPNSiteLinksClient) ListByVPNSite(resourceGroupName string, vpnSiteName string, options *VPNSiteLinksListByVPNSiteOptions) *VPNSiteLinksListByVPNSitePager {
+	return &VPNSiteLinksListByVPNSitePager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByVPNSiteCreateRequest(ctx, resourceGroupName, vpnSiteName, options)

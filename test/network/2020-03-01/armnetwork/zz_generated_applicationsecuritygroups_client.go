@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // ApplicationSecurityGroupsClient contains the methods for the ApplicationSecurityGroups group.
@@ -45,12 +44,8 @@ func (client *ApplicationSecurityGroupsClient) BeginCreateOrUpdate(ctx context.C
 	if err != nil {
 		return ApplicationSecurityGroupsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &applicationSecurityGroupsCreateOrUpdatePoller{
+	result.Poller = &ApplicationSecurityGroupsCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ApplicationSecurityGroupsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *ApplicationSecurityGroupsClient) ResumeCreateOrUpdate(ctx context.
 	if err != nil {
 		return ApplicationSecurityGroupsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &applicationSecurityGroupsCreateOrUpdatePoller{
+	poller := &ApplicationSecurityGroupsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *ApplicationSecurityGroupsClient) ResumeCreateOrUpdate(ctx context.
 		return ApplicationSecurityGroupsCreateOrUpdatePollerResponse{}, err
 	}
 	result := ApplicationSecurityGroupsCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ApplicationSecurityGroupsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -150,12 +143,8 @@ func (client *ApplicationSecurityGroupsClient) BeginDelete(ctx context.Context, 
 	if err != nil {
 		return ApplicationSecurityGroupsDeletePollerResponse{}, err
 	}
-	poller := &applicationSecurityGroupsDeletePoller{
+	result.Poller = &ApplicationSecurityGroupsDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ApplicationSecurityGroupsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -167,7 +156,7 @@ func (client *ApplicationSecurityGroupsClient) ResumeDelete(ctx context.Context,
 	if err != nil {
 		return ApplicationSecurityGroupsDeletePollerResponse{}, err
 	}
-	poller := &applicationSecurityGroupsDeletePoller{
+	poller := &ApplicationSecurityGroupsDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -175,12 +164,10 @@ func (client *ApplicationSecurityGroupsClient) ResumeDelete(ctx context.Context,
 		return ApplicationSecurityGroupsDeletePollerResponse{}, err
 	}
 	result := ApplicationSecurityGroupsDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ApplicationSecurityGroupsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -309,8 +296,8 @@ func (client *ApplicationSecurityGroupsClient) getHandleError(resp *azcore.Respo
 
 // List - Gets all the application security groups in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *ApplicationSecurityGroupsClient) List(resourceGroupName string, options *ApplicationSecurityGroupsListOptions) ApplicationSecurityGroupsListPager {
-	return &applicationSecurityGroupsListPager{
+func (client *ApplicationSecurityGroupsClient) List(resourceGroupName string, options *ApplicationSecurityGroupsListOptions) *ApplicationSecurityGroupsListPager {
+	return &ApplicationSecurityGroupsListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, options)
@@ -368,8 +355,8 @@ func (client *ApplicationSecurityGroupsClient) listHandleError(resp *azcore.Resp
 
 // ListAll - Gets all application security groups in a subscription.
 // If the operation fails it returns the *CloudError error type.
-func (client *ApplicationSecurityGroupsClient) ListAll(options *ApplicationSecurityGroupsListAllOptions) ApplicationSecurityGroupsListAllPager {
-	return &applicationSecurityGroupsListAllPager{
+func (client *ApplicationSecurityGroupsClient) ListAll(options *ApplicationSecurityGroupsListAllOptions) *ApplicationSecurityGroupsListAllPager {
+	return &ApplicationSecurityGroupsListAllPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listAllCreateRequest(ctx, options)

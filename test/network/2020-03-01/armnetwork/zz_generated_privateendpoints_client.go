@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // PrivateEndpointsClient contains the methods for the PrivateEndpoints group.
@@ -45,12 +44,8 @@ func (client *PrivateEndpointsClient) BeginCreateOrUpdate(ctx context.Context, r
 	if err != nil {
 		return PrivateEndpointsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &privateEndpointsCreateOrUpdatePoller{
+	result.Poller = &PrivateEndpointsCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PrivateEndpointsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *PrivateEndpointsClient) ResumeCreateOrUpdate(ctx context.Context, 
 	if err != nil {
 		return PrivateEndpointsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &privateEndpointsCreateOrUpdatePoller{
+	poller := &PrivateEndpointsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *PrivateEndpointsClient) ResumeCreateOrUpdate(ctx context.Context, 
 		return PrivateEndpointsCreateOrUpdatePollerResponse{}, err
 	}
 	result := PrivateEndpointsCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PrivateEndpointsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -150,12 +143,8 @@ func (client *PrivateEndpointsClient) BeginDelete(ctx context.Context, resourceG
 	if err != nil {
 		return PrivateEndpointsDeletePollerResponse{}, err
 	}
-	poller := &privateEndpointsDeletePoller{
+	result.Poller = &PrivateEndpointsDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PrivateEndpointsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -167,7 +156,7 @@ func (client *PrivateEndpointsClient) ResumeDelete(ctx context.Context, token st
 	if err != nil {
 		return PrivateEndpointsDeletePollerResponse{}, err
 	}
-	poller := &privateEndpointsDeletePoller{
+	poller := &PrivateEndpointsDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -175,12 +164,10 @@ func (client *PrivateEndpointsClient) ResumeDelete(ctx context.Context, token st
 		return PrivateEndpointsDeletePollerResponse{}, err
 	}
 	result := PrivateEndpointsDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PrivateEndpointsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -312,8 +299,8 @@ func (client *PrivateEndpointsClient) getHandleError(resp *azcore.Response) erro
 
 // List - Gets all private endpoints in a resource group.
 // If the operation fails it returns the *Error error type.
-func (client *PrivateEndpointsClient) List(resourceGroupName string, options *PrivateEndpointsListOptions) PrivateEndpointsListPager {
-	return &privateEndpointsListPager{
+func (client *PrivateEndpointsClient) List(resourceGroupName string, options *PrivateEndpointsListOptions) *PrivateEndpointsListPager {
+	return &PrivateEndpointsListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, options)
@@ -371,8 +358,8 @@ func (client *PrivateEndpointsClient) listHandleError(resp *azcore.Response) err
 
 // ListBySubscription - Gets all private endpoints in a subscription.
 // If the operation fails it returns the *Error error type.
-func (client *PrivateEndpointsClient) ListBySubscription(options *PrivateEndpointsListBySubscriptionOptions) PrivateEndpointsListBySubscriptionPager {
-	return &privateEndpointsListBySubscriptionPager{
+func (client *PrivateEndpointsClient) ListBySubscription(options *PrivateEndpointsListBySubscriptionOptions) *PrivateEndpointsListBySubscriptionPager {
+	return &PrivateEndpointsListBySubscriptionPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listBySubscriptionCreateRequest(ctx, options)

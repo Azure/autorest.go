@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // VirtualNetworkPeeringsClient contains the methods for the VirtualNetworkPeerings group.
@@ -45,12 +44,8 @@ func (client *VirtualNetworkPeeringsClient) BeginCreateOrUpdate(ctx context.Cont
 	if err != nil {
 		return VirtualNetworkPeeringsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &virtualNetworkPeeringsCreateOrUpdatePoller{
+	result.Poller = &VirtualNetworkPeeringsCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkPeeringsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *VirtualNetworkPeeringsClient) ResumeCreateOrUpdate(ctx context.Con
 	if err != nil {
 		return VirtualNetworkPeeringsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &virtualNetworkPeeringsCreateOrUpdatePoller{
+	poller := &VirtualNetworkPeeringsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *VirtualNetworkPeeringsClient) ResumeCreateOrUpdate(ctx context.Con
 		return VirtualNetworkPeeringsCreateOrUpdatePollerResponse{}, err
 	}
 	result := VirtualNetworkPeeringsCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkPeeringsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -154,12 +147,8 @@ func (client *VirtualNetworkPeeringsClient) BeginDelete(ctx context.Context, res
 	if err != nil {
 		return VirtualNetworkPeeringsDeletePollerResponse{}, err
 	}
-	poller := &virtualNetworkPeeringsDeletePoller{
+	result.Poller = &VirtualNetworkPeeringsDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkPeeringsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -171,7 +160,7 @@ func (client *VirtualNetworkPeeringsClient) ResumeDelete(ctx context.Context, to
 	if err != nil {
 		return VirtualNetworkPeeringsDeletePollerResponse{}, err
 	}
-	poller := &virtualNetworkPeeringsDeletePoller{
+	poller := &VirtualNetworkPeeringsDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -179,12 +168,10 @@ func (client *VirtualNetworkPeeringsClient) ResumeDelete(ctx context.Context, to
 		return VirtualNetworkPeeringsDeletePollerResponse{}, err
 	}
 	result := VirtualNetworkPeeringsDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkPeeringsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -321,8 +308,8 @@ func (client *VirtualNetworkPeeringsClient) getHandleError(resp *azcore.Response
 
 // List - Gets all virtual network peerings in a virtual network.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualNetworkPeeringsClient) List(resourceGroupName string, virtualNetworkName string, options *VirtualNetworkPeeringsListOptions) VirtualNetworkPeeringsListPager {
-	return &virtualNetworkPeeringsListPager{
+func (client *VirtualNetworkPeeringsClient) List(resourceGroupName string, virtualNetworkName string, options *VirtualNetworkPeeringsListOptions) *VirtualNetworkPeeringsListPager {
+	return &VirtualNetworkPeeringsListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, virtualNetworkName, options)

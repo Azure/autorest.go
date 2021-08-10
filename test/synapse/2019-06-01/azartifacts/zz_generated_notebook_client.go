@@ -15,7 +15,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 type notebookClient struct {
@@ -36,12 +35,8 @@ func (client *notebookClient) BeginCreateOrUpdateNotebook(ctx context.Context, n
 	if err != nil {
 		return NotebookCreateOrUpdateNotebookPollerResponse{}, err
 	}
-	poller := &notebookCreateOrUpdateNotebookPoller{
+	result.Poller = &NotebookCreateOrUpdateNotebookPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NotebookCreateOrUpdateNotebookResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -53,7 +48,7 @@ func (client *notebookClient) ResumeCreateOrUpdateNotebook(ctx context.Context, 
 	if err != nil {
 		return NotebookCreateOrUpdateNotebookPollerResponse{}, err
 	}
-	poller := &notebookCreateOrUpdateNotebookPoller{
+	poller := &NotebookCreateOrUpdateNotebookPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -61,12 +56,10 @@ func (client *notebookClient) ResumeCreateOrUpdateNotebook(ctx context.Context, 
 		return NotebookCreateOrUpdateNotebookPollerResponse{}, err
 	}
 	result := NotebookCreateOrUpdateNotebookPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NotebookCreateOrUpdateNotebookResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -136,12 +129,8 @@ func (client *notebookClient) BeginDeleteNotebook(ctx context.Context, notebookN
 	if err != nil {
 		return NotebookDeleteNotebookPollerResponse{}, err
 	}
-	poller := &notebookDeleteNotebookPoller{
+	result.Poller = &NotebookDeleteNotebookPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NotebookDeleteNotebookResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -153,7 +142,7 @@ func (client *notebookClient) ResumeDeleteNotebook(ctx context.Context, token st
 	if err != nil {
 		return NotebookDeleteNotebookPollerResponse{}, err
 	}
-	poller := &notebookDeleteNotebookPoller{
+	poller := &NotebookDeleteNotebookPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -161,12 +150,10 @@ func (client *notebookClient) ResumeDeleteNotebook(ctx context.Context, token st
 		return NotebookDeleteNotebookPollerResponse{}, err
 	}
 	result := NotebookDeleteNotebookPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NotebookDeleteNotebookResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -282,8 +269,8 @@ func (client *notebookClient) getNotebookHandleError(resp *azcore.Response) erro
 
 // GetNotebookSummaryByWorkSpace - Lists a summary of Notebooks.
 // If the operation fails it returns the *CloudError error type.
-func (client *notebookClient) GetNotebookSummaryByWorkSpace(options *NotebookGetNotebookSummaryByWorkSpaceOptions) NotebookGetNotebookSummaryByWorkSpacePager {
-	return &notebookGetNotebookSummaryByWorkSpacePager{
+func (client *notebookClient) GetNotebookSummaryByWorkSpace(options *NotebookGetNotebookSummaryByWorkSpaceOptions) *NotebookGetNotebookSummaryByWorkSpacePager {
+	return &NotebookGetNotebookSummaryByWorkSpacePager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.getNotebookSummaryByWorkSpaceCreateRequest(ctx, options)
@@ -333,8 +320,8 @@ func (client *notebookClient) getNotebookSummaryByWorkSpaceHandleError(resp *azc
 
 // GetNotebooksByWorkspace - Lists Notebooks.
 // If the operation fails it returns the *CloudError error type.
-func (client *notebookClient) GetNotebooksByWorkspace(options *NotebookGetNotebooksByWorkspaceOptions) NotebookGetNotebooksByWorkspacePager {
-	return &notebookGetNotebooksByWorkspacePager{
+func (client *notebookClient) GetNotebooksByWorkspace(options *NotebookGetNotebooksByWorkspaceOptions) *NotebookGetNotebooksByWorkspacePager {
+	return &NotebookGetNotebooksByWorkspacePager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.getNotebooksByWorkspaceCreateRequest(ctx, options)
@@ -396,12 +383,8 @@ func (client *notebookClient) BeginRenameNotebook(ctx context.Context, notebookN
 	if err != nil {
 		return NotebookRenameNotebookPollerResponse{}, err
 	}
-	poller := &notebookRenameNotebookPoller{
+	result.Poller = &NotebookRenameNotebookPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NotebookRenameNotebookResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -413,7 +396,7 @@ func (client *notebookClient) ResumeRenameNotebook(ctx context.Context, token st
 	if err != nil {
 		return NotebookRenameNotebookPollerResponse{}, err
 	}
-	poller := &notebookRenameNotebookPoller{
+	poller := &NotebookRenameNotebookPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -421,12 +404,10 @@ func (client *notebookClient) ResumeRenameNotebook(ctx context.Context, token st
 		return NotebookRenameNotebookPollerResponse{}, err
 	}
 	result := NotebookRenameNotebookPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NotebookRenameNotebookResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 

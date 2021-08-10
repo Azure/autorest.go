@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // NetworkInterfacesClient contains the methods for the NetworkInterfaces group.
@@ -45,12 +44,8 @@ func (client *NetworkInterfacesClient) BeginCreateOrUpdate(ctx context.Context, 
 	if err != nil {
 		return NetworkInterfacesCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &networkInterfacesCreateOrUpdatePoller{
+	result.Poller = &NetworkInterfacesCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkInterfacesCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *NetworkInterfacesClient) ResumeCreateOrUpdate(ctx context.Context,
 	if err != nil {
 		return NetworkInterfacesCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &networkInterfacesCreateOrUpdatePoller{
+	poller := &NetworkInterfacesCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *NetworkInterfacesClient) ResumeCreateOrUpdate(ctx context.Context,
 		return NetworkInterfacesCreateOrUpdatePollerResponse{}, err
 	}
 	result := NetworkInterfacesCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkInterfacesCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -150,12 +143,8 @@ func (client *NetworkInterfacesClient) BeginDelete(ctx context.Context, resource
 	if err != nil {
 		return NetworkInterfacesDeletePollerResponse{}, err
 	}
-	poller := &networkInterfacesDeletePoller{
+	result.Poller = &NetworkInterfacesDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkInterfacesDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -167,7 +156,7 @@ func (client *NetworkInterfacesClient) ResumeDelete(ctx context.Context, token s
 	if err != nil {
 		return NetworkInterfacesDeletePollerResponse{}, err
 	}
-	poller := &networkInterfacesDeletePoller{
+	poller := &NetworkInterfacesDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -175,12 +164,10 @@ func (client *NetworkInterfacesClient) ResumeDelete(ctx context.Context, token s
 		return NetworkInterfacesDeletePollerResponse{}, err
 	}
 	result := NetworkInterfacesDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkInterfacesDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -324,12 +311,8 @@ func (client *NetworkInterfacesClient) BeginGetEffectiveRouteTable(ctx context.C
 	if err != nil {
 		return NetworkInterfacesGetEffectiveRouteTablePollerResponse{}, err
 	}
-	poller := &networkInterfacesGetEffectiveRouteTablePoller{
+	result.Poller = &NetworkInterfacesGetEffectiveRouteTablePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkInterfacesGetEffectiveRouteTableResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -341,7 +324,7 @@ func (client *NetworkInterfacesClient) ResumeGetEffectiveRouteTable(ctx context.
 	if err != nil {
 		return NetworkInterfacesGetEffectiveRouteTablePollerResponse{}, err
 	}
-	poller := &networkInterfacesGetEffectiveRouteTablePoller{
+	poller := &NetworkInterfacesGetEffectiveRouteTablePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -349,12 +332,10 @@ func (client *NetworkInterfacesClient) ResumeGetEffectiveRouteTable(ctx context.
 		return NetworkInterfacesGetEffectiveRouteTablePollerResponse{}, err
 	}
 	result := NetworkInterfacesGetEffectiveRouteTablePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkInterfacesGetEffectiveRouteTableResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -575,8 +556,8 @@ func (client *NetworkInterfacesClient) getVirtualMachineScaleSetNetworkInterface
 
 // List - Gets all network interfaces in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *NetworkInterfacesClient) List(resourceGroupName string, options *NetworkInterfacesListOptions) NetworkInterfacesListPager {
-	return &networkInterfacesListPager{
+func (client *NetworkInterfacesClient) List(resourceGroupName string, options *NetworkInterfacesListOptions) *NetworkInterfacesListPager {
+	return &NetworkInterfacesListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, options)
@@ -634,8 +615,8 @@ func (client *NetworkInterfacesClient) listHandleError(resp *azcore.Response) er
 
 // ListAll - Gets all network interfaces in a subscription.
 // If the operation fails it returns the *CloudError error type.
-func (client *NetworkInterfacesClient) ListAll(options *NetworkInterfacesListAllOptions) NetworkInterfacesListAllPager {
-	return &networkInterfacesListAllPager{
+func (client *NetworkInterfacesClient) ListAll(options *NetworkInterfacesListAllOptions) *NetworkInterfacesListAllPager {
+	return &NetworkInterfacesListAllPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listAllCreateRequest(ctx, options)
@@ -701,12 +682,8 @@ func (client *NetworkInterfacesClient) BeginListEffectiveNetworkSecurityGroups(c
 	if err != nil {
 		return NetworkInterfacesListEffectiveNetworkSecurityGroupsPollerResponse{}, err
 	}
-	poller := &networkInterfacesListEffectiveNetworkSecurityGroupsPoller{
+	result.Poller = &NetworkInterfacesListEffectiveNetworkSecurityGroupsPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkInterfacesListEffectiveNetworkSecurityGroupsResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -718,7 +695,7 @@ func (client *NetworkInterfacesClient) ResumeListEffectiveNetworkSecurityGroups(
 	if err != nil {
 		return NetworkInterfacesListEffectiveNetworkSecurityGroupsPollerResponse{}, err
 	}
-	poller := &networkInterfacesListEffectiveNetworkSecurityGroupsPoller{
+	poller := &NetworkInterfacesListEffectiveNetworkSecurityGroupsPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -726,12 +703,10 @@ func (client *NetworkInterfacesClient) ResumeListEffectiveNetworkSecurityGroups(
 		return NetworkInterfacesListEffectiveNetworkSecurityGroupsPollerResponse{}, err
 	}
 	result := NetworkInterfacesListEffectiveNetworkSecurityGroupsPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkInterfacesListEffectiveNetworkSecurityGroupsResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -794,8 +769,8 @@ func (client *NetworkInterfacesClient) listEffectiveNetworkSecurityGroupsHandleE
 
 // ListVirtualMachineScaleSetIPConfigurations - Get the specified network interface ip configuration in a virtual machine scale set.
 // If the operation fails it returns the *CloudError error type.
-func (client *NetworkInterfacesClient) ListVirtualMachineScaleSetIPConfigurations(resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, options *NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsOptions) NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsPager {
-	return &networkInterfacesListVirtualMachineScaleSetIPConfigurationsPager{
+func (client *NetworkInterfacesClient) ListVirtualMachineScaleSetIPConfigurations(resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, options *NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsOptions) *NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsPager {
+	return &NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listVirtualMachineScaleSetIPConfigurationsCreateRequest(ctx, resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, options)
@@ -868,8 +843,8 @@ func (client *NetworkInterfacesClient) listVirtualMachineScaleSetIPConfiguration
 
 // ListVirtualMachineScaleSetNetworkInterfaces - Gets all network interfaces in a virtual machine scale set.
 // If the operation fails it returns the *CloudError error type.
-func (client *NetworkInterfacesClient) ListVirtualMachineScaleSetNetworkInterfaces(resourceGroupName string, virtualMachineScaleSetName string, options *NetworkInterfacesListVirtualMachineScaleSetNetworkInterfacesOptions) NetworkInterfacesListVirtualMachineScaleSetNetworkInterfacesPager {
-	return &networkInterfacesListVirtualMachineScaleSetNetworkInterfacesPager{
+func (client *NetworkInterfacesClient) ListVirtualMachineScaleSetNetworkInterfaces(resourceGroupName string, virtualMachineScaleSetName string, options *NetworkInterfacesListVirtualMachineScaleSetNetworkInterfacesOptions) *NetworkInterfacesListVirtualMachineScaleSetNetworkInterfacesPager {
+	return &NetworkInterfacesListVirtualMachineScaleSetNetworkInterfacesPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listVirtualMachineScaleSetNetworkInterfacesCreateRequest(ctx, resourceGroupName, virtualMachineScaleSetName, options)
@@ -931,8 +906,8 @@ func (client *NetworkInterfacesClient) listVirtualMachineScaleSetNetworkInterfac
 
 // ListVirtualMachineScaleSetVMNetworkInterfaces - Gets information about all network interfaces in a virtual machine in a virtual machine scale set.
 // If the operation fails it returns the *CloudError error type.
-func (client *NetworkInterfacesClient) ListVirtualMachineScaleSetVMNetworkInterfaces(resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, options *NetworkInterfacesListVirtualMachineScaleSetVMNetworkInterfacesOptions) NetworkInterfacesListVirtualMachineScaleSetVMNetworkInterfacesPager {
-	return &networkInterfacesListVirtualMachineScaleSetVMNetworkInterfacesPager{
+func (client *NetworkInterfacesClient) ListVirtualMachineScaleSetVMNetworkInterfaces(resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, options *NetworkInterfacesListVirtualMachineScaleSetVMNetworkInterfacesOptions) *NetworkInterfacesListVirtualMachineScaleSetVMNetworkInterfacesPager {
+	return &NetworkInterfacesListVirtualMachineScaleSetVMNetworkInterfacesPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listVirtualMachineScaleSetVMNetworkInterfacesCreateRequest(ctx, resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, options)

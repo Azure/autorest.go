@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // VPNConnectionsClient contains the methods for the VPNConnections group.
@@ -45,12 +44,8 @@ func (client *VPNConnectionsClient) BeginCreateOrUpdate(ctx context.Context, res
 	if err != nil {
 		return VPNConnectionsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &vpnConnectionsCreateOrUpdatePoller{
+	result.Poller = &VPNConnectionsCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VPNConnectionsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *VPNConnectionsClient) ResumeCreateOrUpdate(ctx context.Context, to
 	if err != nil {
 		return VPNConnectionsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &vpnConnectionsCreateOrUpdatePoller{
+	poller := &VPNConnectionsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *VPNConnectionsClient) ResumeCreateOrUpdate(ctx context.Context, to
 		return VPNConnectionsCreateOrUpdatePollerResponse{}, err
 	}
 	result := VPNConnectionsCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VPNConnectionsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -154,12 +147,8 @@ func (client *VPNConnectionsClient) BeginDelete(ctx context.Context, resourceGro
 	if err != nil {
 		return VPNConnectionsDeletePollerResponse{}, err
 	}
-	poller := &vpnConnectionsDeletePoller{
+	result.Poller = &VPNConnectionsDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VPNConnectionsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -171,7 +160,7 @@ func (client *VPNConnectionsClient) ResumeDelete(ctx context.Context, token stri
 	if err != nil {
 		return VPNConnectionsDeletePollerResponse{}, err
 	}
-	poller := &vpnConnectionsDeletePoller{
+	poller := &VPNConnectionsDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -179,12 +168,10 @@ func (client *VPNConnectionsClient) ResumeDelete(ctx context.Context, token stri
 		return VPNConnectionsDeletePollerResponse{}, err
 	}
 	result := VPNConnectionsDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VPNConnectionsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -321,8 +308,8 @@ func (client *VPNConnectionsClient) getHandleError(resp *azcore.Response) error 
 
 // ListByVPNGateway - Retrieves all vpn connections for a particular virtual wan vpn gateway.
 // If the operation fails it returns the *CloudError error type.
-func (client *VPNConnectionsClient) ListByVPNGateway(resourceGroupName string, gatewayName string, options *VPNConnectionsListByVPNGatewayOptions) VPNConnectionsListByVPNGatewayPager {
-	return &vpnConnectionsListByVPNGatewayPager{
+func (client *VPNConnectionsClient) ListByVPNGateway(resourceGroupName string, gatewayName string, options *VPNConnectionsListByVPNGatewayOptions) *VPNConnectionsListByVPNGatewayPager {
+	return &VPNConnectionsListByVPNGatewayPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByVPNGatewayCreateRequest(ctx, resourceGroupName, gatewayName, options)

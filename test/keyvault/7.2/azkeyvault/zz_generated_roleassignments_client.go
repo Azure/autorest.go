@@ -222,8 +222,8 @@ func (client *RoleAssignmentsClient) getHandleError(resp *azcore.Response) error
 
 // ListForScope - Gets role assignments for a scope.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *RoleAssignmentsClient) ListForScope(vaultBaseURL string, scope string, options *RoleAssignmentsListForScopeOptions) RoleAssignmentsListForScopePager {
-	return &roleAssignmentsListForScopePager{
+func (client *RoleAssignmentsClient) ListForScope(vaultBaseURL string, scope string, options *RoleAssignmentsListForScopeOptions) *RoleAssignmentsListForScopePager {
+	return &RoleAssignmentsListForScopePager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listForScopeCreateRequest(ctx, vaultBaseURL, scope, options)

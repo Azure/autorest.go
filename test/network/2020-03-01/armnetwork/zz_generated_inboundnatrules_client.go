@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // InboundNatRulesClient contains the methods for the InboundNatRules group.
@@ -45,12 +44,8 @@ func (client *InboundNatRulesClient) BeginCreateOrUpdate(ctx context.Context, re
 	if err != nil {
 		return InboundNatRulesCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &inboundNatRulesCreateOrUpdatePoller{
+	result.Poller = &InboundNatRulesCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (InboundNatRulesCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *InboundNatRulesClient) ResumeCreateOrUpdate(ctx context.Context, t
 	if err != nil {
 		return InboundNatRulesCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &inboundNatRulesCreateOrUpdatePoller{
+	poller := &InboundNatRulesCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *InboundNatRulesClient) ResumeCreateOrUpdate(ctx context.Context, t
 		return InboundNatRulesCreateOrUpdatePollerResponse{}, err
 	}
 	result := InboundNatRulesCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (InboundNatRulesCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -154,12 +147,8 @@ func (client *InboundNatRulesClient) BeginDelete(ctx context.Context, resourceGr
 	if err != nil {
 		return InboundNatRulesDeletePollerResponse{}, err
 	}
-	poller := &inboundNatRulesDeletePoller{
+	result.Poller = &InboundNatRulesDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (InboundNatRulesDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -171,7 +160,7 @@ func (client *InboundNatRulesClient) ResumeDelete(ctx context.Context, token str
 	if err != nil {
 		return InboundNatRulesDeletePollerResponse{}, err
 	}
-	poller := &inboundNatRulesDeletePoller{
+	poller := &InboundNatRulesDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -179,12 +168,10 @@ func (client *InboundNatRulesClient) ResumeDelete(ctx context.Context, token str
 		return InboundNatRulesDeletePollerResponse{}, err
 	}
 	result := InboundNatRulesDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (InboundNatRulesDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -324,8 +311,8 @@ func (client *InboundNatRulesClient) getHandleError(resp *azcore.Response) error
 
 // List - Gets all the inbound nat rules in a load balancer.
 // If the operation fails it returns the *CloudError error type.
-func (client *InboundNatRulesClient) List(resourceGroupName string, loadBalancerName string, options *InboundNatRulesListOptions) InboundNatRulesListPager {
-	return &inboundNatRulesListPager{
+func (client *InboundNatRulesClient) List(resourceGroupName string, loadBalancerName string, options *InboundNatRulesListOptions) *InboundNatRulesListPager {
+	return &InboundNatRulesListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, loadBalancerName, options)

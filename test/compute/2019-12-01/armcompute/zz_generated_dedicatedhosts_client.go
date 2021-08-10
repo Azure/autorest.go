@@ -15,7 +15,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // DedicatedHostsClient contains the methods for the DedicatedHosts group.
@@ -44,12 +43,8 @@ func (client *DedicatedHostsClient) BeginCreateOrUpdate(ctx context.Context, res
 	if err != nil {
 		return DedicatedHostsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &dedicatedHostsCreateOrUpdatePoller{
+	result.Poller = &DedicatedHostsCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DedicatedHostsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -61,7 +56,7 @@ func (client *DedicatedHostsClient) ResumeCreateOrUpdate(ctx context.Context, to
 	if err != nil {
 		return DedicatedHostsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &dedicatedHostsCreateOrUpdatePoller{
+	poller := &DedicatedHostsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -69,12 +64,10 @@ func (client *DedicatedHostsClient) ResumeCreateOrUpdate(ctx context.Context, to
 		return DedicatedHostsCreateOrUpdatePollerResponse{}, err
 	}
 	result := DedicatedHostsCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DedicatedHostsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -152,12 +145,8 @@ func (client *DedicatedHostsClient) BeginDelete(ctx context.Context, resourceGro
 	if err != nil {
 		return DedicatedHostsDeletePollerResponse{}, err
 	}
-	poller := &dedicatedHostsDeletePoller{
+	result.Poller = &DedicatedHostsDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DedicatedHostsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -169,7 +158,7 @@ func (client *DedicatedHostsClient) ResumeDelete(ctx context.Context, token stri
 	if err != nil {
 		return DedicatedHostsDeletePollerResponse{}, err
 	}
-	poller := &dedicatedHostsDeletePoller{
+	poller := &DedicatedHostsDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -177,12 +166,10 @@ func (client *DedicatedHostsClient) ResumeDelete(ctx context.Context, token stri
 		return DedicatedHostsDeletePollerResponse{}, err
 	}
 	result := DedicatedHostsDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DedicatedHostsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -320,8 +307,8 @@ func (client *DedicatedHostsClient) getHandleError(resp *azcore.Response) error 
 // ListByHostGroup - Lists all of the dedicated hosts in the specified dedicated host group. Use the nextLink property in the response to get the next page
 // of dedicated hosts.
 // If the operation fails it returns a generic error.
-func (client *DedicatedHostsClient) ListByHostGroup(resourceGroupName string, hostGroupName string, options *DedicatedHostsListByHostGroupOptions) DedicatedHostsListByHostGroupPager {
-	return &dedicatedHostsListByHostGroupPager{
+func (client *DedicatedHostsClient) ListByHostGroup(resourceGroupName string, hostGroupName string, options *DedicatedHostsListByHostGroupOptions) *DedicatedHostsListByHostGroupPager {
+	return &DedicatedHostsListByHostGroupPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByHostGroupCreateRequest(ctx, resourceGroupName, hostGroupName, options)
@@ -394,12 +381,8 @@ func (client *DedicatedHostsClient) BeginUpdate(ctx context.Context, resourceGro
 	if err != nil {
 		return DedicatedHostsUpdatePollerResponse{}, err
 	}
-	poller := &dedicatedHostsUpdatePoller{
+	result.Poller = &DedicatedHostsUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DedicatedHostsUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -411,7 +394,7 @@ func (client *DedicatedHostsClient) ResumeUpdate(ctx context.Context, token stri
 	if err != nil {
 		return DedicatedHostsUpdatePollerResponse{}, err
 	}
-	poller := &dedicatedHostsUpdatePoller{
+	poller := &DedicatedHostsUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -419,12 +402,10 @@ func (client *DedicatedHostsClient) ResumeUpdate(ctx context.Context, token stri
 		return DedicatedHostsUpdatePollerResponse{}, err
 	}
 	result := DedicatedHostsUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DedicatedHostsUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 

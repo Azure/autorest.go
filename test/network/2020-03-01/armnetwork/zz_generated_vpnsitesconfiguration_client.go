@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // VPNSitesConfigurationClient contains the methods for the VPNSitesConfiguration group.
@@ -45,12 +44,8 @@ func (client *VPNSitesConfigurationClient) BeginDownload(ctx context.Context, re
 	if err != nil {
 		return VPNSitesConfigurationDownloadPollerResponse{}, err
 	}
-	poller := &vpnSitesConfigurationDownloadPoller{
+	result.Poller = &VPNSitesConfigurationDownloadPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VPNSitesConfigurationDownloadResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *VPNSitesConfigurationClient) ResumeDownload(ctx context.Context, t
 	if err != nil {
 		return VPNSitesConfigurationDownloadPollerResponse{}, err
 	}
-	poller := &vpnSitesConfigurationDownloadPoller{
+	poller := &VPNSitesConfigurationDownloadPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *VPNSitesConfigurationClient) ResumeDownload(ctx context.Context, t
 		return VPNSitesConfigurationDownloadPollerResponse{}, err
 	}
 	result := VPNSitesConfigurationDownloadPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VPNSitesConfigurationDownloadResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 

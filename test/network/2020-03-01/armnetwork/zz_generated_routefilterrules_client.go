@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // RouteFilterRulesClient contains the methods for the RouteFilterRules group.
@@ -45,12 +44,8 @@ func (client *RouteFilterRulesClient) BeginCreateOrUpdate(ctx context.Context, r
 	if err != nil {
 		return RouteFilterRulesCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &routeFilterRulesCreateOrUpdatePoller{
+	result.Poller = &RouteFilterRulesCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (RouteFilterRulesCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *RouteFilterRulesClient) ResumeCreateOrUpdate(ctx context.Context, 
 	if err != nil {
 		return RouteFilterRulesCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &routeFilterRulesCreateOrUpdatePoller{
+	poller := &RouteFilterRulesCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *RouteFilterRulesClient) ResumeCreateOrUpdate(ctx context.Context, 
 		return RouteFilterRulesCreateOrUpdatePollerResponse{}, err
 	}
 	result := RouteFilterRulesCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (RouteFilterRulesCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -154,12 +147,8 @@ func (client *RouteFilterRulesClient) BeginDelete(ctx context.Context, resourceG
 	if err != nil {
 		return RouteFilterRulesDeletePollerResponse{}, err
 	}
-	poller := &routeFilterRulesDeletePoller{
+	result.Poller = &RouteFilterRulesDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (RouteFilterRulesDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -171,7 +160,7 @@ func (client *RouteFilterRulesClient) ResumeDelete(ctx context.Context, token st
 	if err != nil {
 		return RouteFilterRulesDeletePollerResponse{}, err
 	}
-	poller := &routeFilterRulesDeletePoller{
+	poller := &RouteFilterRulesDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -179,12 +168,10 @@ func (client *RouteFilterRulesClient) ResumeDelete(ctx context.Context, token st
 		return RouteFilterRulesDeletePollerResponse{}, err
 	}
 	result := RouteFilterRulesDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (RouteFilterRulesDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -321,8 +308,8 @@ func (client *RouteFilterRulesClient) getHandleError(resp *azcore.Response) erro
 
 // ListByRouteFilter - Gets all RouteFilterRules in a route filter.
 // If the operation fails it returns the *CloudError error type.
-func (client *RouteFilterRulesClient) ListByRouteFilter(resourceGroupName string, routeFilterName string, options *RouteFilterRulesListByRouteFilterOptions) RouteFilterRulesListByRouteFilterPager {
-	return &routeFilterRulesListByRouteFilterPager{
+func (client *RouteFilterRulesClient) ListByRouteFilter(resourceGroupName string, routeFilterName string, options *RouteFilterRulesListByRouteFilterOptions) *RouteFilterRulesListByRouteFilterPager {
+	return &RouteFilterRulesListByRouteFilterPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByRouteFilterCreateRequest(ctx, resourceGroupName, routeFilterName, options)

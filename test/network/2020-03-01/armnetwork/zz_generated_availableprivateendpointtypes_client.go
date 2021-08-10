@@ -32,8 +32,8 @@ func NewAvailablePrivateEndpointTypesClient(con *armcore.Connection, subscriptio
 
 // List - Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region.
 // If the operation fails it returns the *CloudError error type.
-func (client *AvailablePrivateEndpointTypesClient) List(location string, options *AvailablePrivateEndpointTypesListOptions) AvailablePrivateEndpointTypesListPager {
-	return &availablePrivateEndpointTypesListPager{
+func (client *AvailablePrivateEndpointTypesClient) List(location string, options *AvailablePrivateEndpointTypesListOptions) *AvailablePrivateEndpointTypesListPager {
+	return &AvailablePrivateEndpointTypesListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, location, options)
@@ -91,8 +91,8 @@ func (client *AvailablePrivateEndpointTypesClient) listHandleError(resp *azcore.
 
 // ListByResourceGroup - Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region.
 // If the operation fails it returns the *CloudError error type.
-func (client *AvailablePrivateEndpointTypesClient) ListByResourceGroup(location string, resourceGroupName string, options *AvailablePrivateEndpointTypesListByResourceGroupOptions) AvailablePrivateEndpointTypesListByResourceGroupPager {
-	return &availablePrivateEndpointTypesListByResourceGroupPager{
+func (client *AvailablePrivateEndpointTypesClient) ListByResourceGroup(location string, resourceGroupName string, options *AvailablePrivateEndpointTypesListByResourceGroupOptions) *AvailablePrivateEndpointTypesListByResourceGroupPager {
+	return &AvailablePrivateEndpointTypesListByResourceGroupPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, location, resourceGroupName, options)

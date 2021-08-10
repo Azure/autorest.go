@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // ConnectionMonitorsClient contains the methods for the ConnectionMonitors group.
@@ -45,12 +44,8 @@ func (client *ConnectionMonitorsClient) BeginCreateOrUpdate(ctx context.Context,
 	if err != nil {
 		return ConnectionMonitorsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &connectionMonitorsCreateOrUpdatePoller{
+	result.Poller = &ConnectionMonitorsCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ConnectionMonitorsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *ConnectionMonitorsClient) ResumeCreateOrUpdate(ctx context.Context
 	if err != nil {
 		return ConnectionMonitorsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &connectionMonitorsCreateOrUpdatePoller{
+	poller := &ConnectionMonitorsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *ConnectionMonitorsClient) ResumeCreateOrUpdate(ctx context.Context
 		return ConnectionMonitorsCreateOrUpdatePollerResponse{}, err
 	}
 	result := ConnectionMonitorsCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ConnectionMonitorsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -154,12 +147,8 @@ func (client *ConnectionMonitorsClient) BeginDelete(ctx context.Context, resourc
 	if err != nil {
 		return ConnectionMonitorsDeletePollerResponse{}, err
 	}
-	poller := &connectionMonitorsDeletePoller{
+	result.Poller = &ConnectionMonitorsDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ConnectionMonitorsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -171,7 +160,7 @@ func (client *ConnectionMonitorsClient) ResumeDelete(ctx context.Context, token 
 	if err != nil {
 		return ConnectionMonitorsDeletePollerResponse{}, err
 	}
-	poller := &connectionMonitorsDeletePoller{
+	poller := &ConnectionMonitorsDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -179,12 +168,10 @@ func (client *ConnectionMonitorsClient) ResumeDelete(ctx context.Context, token 
 		return ConnectionMonitorsDeletePollerResponse{}, err
 	}
 	result := ConnectionMonitorsDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ConnectionMonitorsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -399,12 +386,8 @@ func (client *ConnectionMonitorsClient) BeginQuery(ctx context.Context, resource
 	if err != nil {
 		return ConnectionMonitorsQueryPollerResponse{}, err
 	}
-	poller := &connectionMonitorsQueryPoller{
+	result.Poller = &ConnectionMonitorsQueryPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ConnectionMonitorsQueryResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -416,7 +399,7 @@ func (client *ConnectionMonitorsClient) ResumeQuery(ctx context.Context, token s
 	if err != nil {
 		return ConnectionMonitorsQueryPollerResponse{}, err
 	}
-	poller := &connectionMonitorsQueryPoller{
+	poller := &ConnectionMonitorsQueryPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -424,12 +407,10 @@ func (client *ConnectionMonitorsClient) ResumeQuery(ctx context.Context, token s
 		return ConnectionMonitorsQueryPollerResponse{}, err
 	}
 	result := ConnectionMonitorsQueryPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ConnectionMonitorsQueryResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -508,12 +489,8 @@ func (client *ConnectionMonitorsClient) BeginStart(ctx context.Context, resource
 	if err != nil {
 		return ConnectionMonitorsStartPollerResponse{}, err
 	}
-	poller := &connectionMonitorsStartPoller{
+	result.Poller = &ConnectionMonitorsStartPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ConnectionMonitorsStartResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -525,7 +502,7 @@ func (client *ConnectionMonitorsClient) ResumeStart(ctx context.Context, token s
 	if err != nil {
 		return ConnectionMonitorsStartPollerResponse{}, err
 	}
-	poller := &connectionMonitorsStartPoller{
+	poller := &ConnectionMonitorsStartPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -533,12 +510,10 @@ func (client *ConnectionMonitorsClient) ResumeStart(ctx context.Context, token s
 		return ConnectionMonitorsStartPollerResponse{}, err
 	}
 	result := ConnectionMonitorsStartPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ConnectionMonitorsStartResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -617,12 +592,8 @@ func (client *ConnectionMonitorsClient) BeginStop(ctx context.Context, resourceG
 	if err != nil {
 		return ConnectionMonitorsStopPollerResponse{}, err
 	}
-	poller := &connectionMonitorsStopPoller{
+	result.Poller = &ConnectionMonitorsStopPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ConnectionMonitorsStopResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -634,7 +605,7 @@ func (client *ConnectionMonitorsClient) ResumeStop(ctx context.Context, token st
 	if err != nil {
 		return ConnectionMonitorsStopPollerResponse{}, err
 	}
-	poller := &connectionMonitorsStopPoller{
+	poller := &ConnectionMonitorsStopPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -642,12 +613,10 @@ func (client *ConnectionMonitorsClient) ResumeStop(ctx context.Context, token st
 		return ConnectionMonitorsStopPollerResponse{}, err
 	}
 	result := ConnectionMonitorsStopPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ConnectionMonitorsStopResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 

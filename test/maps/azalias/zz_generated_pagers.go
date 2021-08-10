@@ -14,13 +14,8 @@ import (
 	"reflect"
 )
 
-type AliasListPager interface {
-	azcore.Pager
-	// PageResponse returns the current AliasListResponseEnvelope.
-	PageResponse() AliasListResponseEnvelope
-}
-
-type aliasListPager struct {
+// AliasListPager provides operations for iterating over paged responses.
+type AliasListPager struct {
 	client    *aliasClient
 	current   AliasListResponseEnvelope
 	err       error
@@ -28,11 +23,14 @@ type aliasListPager struct {
 	advancer  func(context.Context, AliasListResponseEnvelope) (*azcore.Request, error)
 }
 
-func (p *aliasListPager) Err() error {
+// Err returns the last error encountered while paging.
+func (p *AliasListPager) Err() error {
 	return p.err
 }
 
-func (p *aliasListPager) NextPage(ctx context.Context) bool {
+// NextPage returns true if the pager advanced to the next page.
+// Returns false if there are no more pages or an error occurred.
+func (p *AliasListPager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -65,6 +63,7 @@ func (p *aliasListPager) NextPage(ctx context.Context) bool {
 	return true
 }
 
-func (p *aliasListPager) PageResponse() AliasListResponseEnvelope {
+// PageResponse returns the current AliasListResponseEnvelope page.
+func (p *AliasListPager) PageResponse() AliasListResponseEnvelope {
 	return p.current
 }

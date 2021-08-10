@@ -15,7 +15,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 type sqlScriptClient struct {
@@ -36,12 +35,8 @@ func (client *sqlScriptClient) BeginCreateOrUpdateSQLScript(ctx context.Context,
 	if err != nil {
 		return SQLScriptCreateOrUpdateSQLScriptPollerResponse{}, err
 	}
-	poller := &sqlScriptCreateOrUpdateSQLScriptPoller{
+	result.Poller = &SQLScriptCreateOrUpdateSQLScriptPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SQLScriptCreateOrUpdateSQLScriptResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -53,7 +48,7 @@ func (client *sqlScriptClient) ResumeCreateOrUpdateSQLScript(ctx context.Context
 	if err != nil {
 		return SQLScriptCreateOrUpdateSQLScriptPollerResponse{}, err
 	}
-	poller := &sqlScriptCreateOrUpdateSQLScriptPoller{
+	poller := &SQLScriptCreateOrUpdateSQLScriptPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -61,12 +56,10 @@ func (client *sqlScriptClient) ResumeCreateOrUpdateSQLScript(ctx context.Context
 		return SQLScriptCreateOrUpdateSQLScriptPollerResponse{}, err
 	}
 	result := SQLScriptCreateOrUpdateSQLScriptPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SQLScriptCreateOrUpdateSQLScriptResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -136,12 +129,8 @@ func (client *sqlScriptClient) BeginDeleteSQLScript(ctx context.Context, sqlScri
 	if err != nil {
 		return SQLScriptDeleteSQLScriptPollerResponse{}, err
 	}
-	poller := &sqlScriptDeleteSQLScriptPoller{
+	result.Poller = &SQLScriptDeleteSQLScriptPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SQLScriptDeleteSQLScriptResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -153,7 +142,7 @@ func (client *sqlScriptClient) ResumeDeleteSQLScript(ctx context.Context, token 
 	if err != nil {
 		return SQLScriptDeleteSQLScriptPollerResponse{}, err
 	}
-	poller := &sqlScriptDeleteSQLScriptPoller{
+	poller := &SQLScriptDeleteSQLScriptPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -161,12 +150,10 @@ func (client *sqlScriptClient) ResumeDeleteSQLScript(ctx context.Context, token 
 		return SQLScriptDeleteSQLScriptPollerResponse{}, err
 	}
 	result := SQLScriptDeleteSQLScriptPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SQLScriptDeleteSQLScriptResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -282,8 +269,8 @@ func (client *sqlScriptClient) getSQLScriptHandleError(resp *azcore.Response) er
 
 // GetSQLScriptsByWorkspace - Lists sql scripts.
 // If the operation fails it returns the *CloudError error type.
-func (client *sqlScriptClient) GetSQLScriptsByWorkspace(options *SQLScriptGetSQLScriptsByWorkspaceOptions) SQLScriptGetSQLScriptsByWorkspacePager {
-	return &sqlScriptGetSQLScriptsByWorkspacePager{
+func (client *sqlScriptClient) GetSQLScriptsByWorkspace(options *SQLScriptGetSQLScriptsByWorkspaceOptions) *SQLScriptGetSQLScriptsByWorkspacePager {
+	return &SQLScriptGetSQLScriptsByWorkspacePager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.getSQLScriptsByWorkspaceCreateRequest(ctx, options)
@@ -345,12 +332,8 @@ func (client *sqlScriptClient) BeginRenameSQLScript(ctx context.Context, sqlScri
 	if err != nil {
 		return SQLScriptRenameSQLScriptPollerResponse{}, err
 	}
-	poller := &sqlScriptRenameSQLScriptPoller{
+	result.Poller = &SQLScriptRenameSQLScriptPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SQLScriptRenameSQLScriptResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -362,7 +345,7 @@ func (client *sqlScriptClient) ResumeRenameSQLScript(ctx context.Context, token 
 	if err != nil {
 		return SQLScriptRenameSQLScriptPollerResponse{}, err
 	}
-	poller := &sqlScriptRenameSQLScriptPoller{
+	poller := &SQLScriptRenameSQLScriptPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -370,12 +353,10 @@ func (client *sqlScriptClient) ResumeRenameSQLScript(ctx context.Context, token 
 		return SQLScriptRenameSQLScriptPollerResponse{}, err
 	}
 	result := SQLScriptRenameSQLScriptPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SQLScriptRenameSQLScriptResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 

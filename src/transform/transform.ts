@@ -994,22 +994,12 @@ function createLROResponseEnvelope(codeModel: CodeModel, group: OperationGroup, 
   const outerRespEnv = newObject(outerRespEnvName, `${outerRespEnvName} contains the response from method ${group.language.go!.name}.${op.language.go!.name}.`);
   outerRespEnv.language.go!.responseType = true;
   outerRespEnv.language.go!.isLRO = true;
+  outerRespEnv.language.go!.pollerInfo = poller;
   outerRespEnv.properties = new Array<Property>();
   outerRespEnv.properties.push(createRawResponseProp());
-  // create PollUntilDone
-  let pollerRespType = op.language.go!.responseEnv.language.go!.name;
-  if (isPageableOperation(op)) {
-    pollerRespType = (<PagerInfo>op.language.go!.pageableType).name;
-  }
-  const pollerFunc = newObject(`func(ctx context.Context, frequency time.Duration) (${pollerRespType}, error)`, 'PollUntilDone');
-  const pollUntilDone = newProperty('PollUntilDone', 'PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received',
-    pollerFunc);
-  pollUntilDone.language.go!.byValue = true;
-  outerRespEnv.properties.push(pollUntilDone);
   // create Poller
   const pollerType = newObject(pollerName, 'poller');
   const pollerProp = newProperty('Poller', 'Poller contains an initialized poller.', pollerType);
-  pollerProp.language.go!.byValue = true;
   outerRespEnv.properties.push(pollerProp);
   responseEnvelopes.push(outerRespEnv);
   // move the inner response envelope created earlier

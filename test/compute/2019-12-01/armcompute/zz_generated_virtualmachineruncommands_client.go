@@ -96,8 +96,8 @@ func (client *VirtualMachineRunCommandsClient) getHandleError(resp *azcore.Respo
 
 // List - Lists all available run commands for a subscription in a location.
 // If the operation fails it returns a generic error.
-func (client *VirtualMachineRunCommandsClient) List(location string, options *VirtualMachineRunCommandsListOptions) VirtualMachineRunCommandsListPager {
-	return &virtualMachineRunCommandsListPager{
+func (client *VirtualMachineRunCommandsClient) List(location string, options *VirtualMachineRunCommandsListOptions) *VirtualMachineRunCommandsListPager {
+	return &VirtualMachineRunCommandsListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, location, options)

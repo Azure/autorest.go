@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // SecurityPartnerProvidersClient contains the methods for the SecurityPartnerProviders group.
@@ -45,12 +44,8 @@ func (client *SecurityPartnerProvidersClient) BeginCreateOrUpdate(ctx context.Co
 	if err != nil {
 		return SecurityPartnerProvidersCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &securityPartnerProvidersCreateOrUpdatePoller{
+	result.Poller = &SecurityPartnerProvidersCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SecurityPartnerProvidersCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *SecurityPartnerProvidersClient) ResumeCreateOrUpdate(ctx context.C
 	if err != nil {
 		return SecurityPartnerProvidersCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &securityPartnerProvidersCreateOrUpdatePoller{
+	poller := &SecurityPartnerProvidersCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *SecurityPartnerProvidersClient) ResumeCreateOrUpdate(ctx context.C
 		return SecurityPartnerProvidersCreateOrUpdatePollerResponse{}, err
 	}
 	result := SecurityPartnerProvidersCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SecurityPartnerProvidersCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -150,12 +143,8 @@ func (client *SecurityPartnerProvidersClient) BeginDelete(ctx context.Context, r
 	if err != nil {
 		return SecurityPartnerProvidersDeletePollerResponse{}, err
 	}
-	poller := &securityPartnerProvidersDeletePoller{
+	result.Poller = &SecurityPartnerProvidersDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SecurityPartnerProvidersDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -167,7 +156,7 @@ func (client *SecurityPartnerProvidersClient) ResumeDelete(ctx context.Context, 
 	if err != nil {
 		return SecurityPartnerProvidersDeletePollerResponse{}, err
 	}
-	poller := &securityPartnerProvidersDeletePoller{
+	poller := &SecurityPartnerProvidersDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -175,12 +164,10 @@ func (client *SecurityPartnerProvidersClient) ResumeDelete(ctx context.Context, 
 		return SecurityPartnerProvidersDeletePollerResponse{}, err
 	}
 	result := SecurityPartnerProvidersDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SecurityPartnerProvidersDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -309,8 +296,8 @@ func (client *SecurityPartnerProvidersClient) getHandleError(resp *azcore.Respon
 
 // List - Gets all the Security Partner Providers in a subscription.
 // If the operation fails it returns the *CloudError error type.
-func (client *SecurityPartnerProvidersClient) List(options *SecurityPartnerProvidersListOptions) SecurityPartnerProvidersListPager {
-	return &securityPartnerProvidersListPager{
+func (client *SecurityPartnerProvidersClient) List(options *SecurityPartnerProvidersListOptions) *SecurityPartnerProvidersListPager {
+	return &SecurityPartnerProvidersListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, options)
@@ -364,8 +351,8 @@ func (client *SecurityPartnerProvidersClient) listHandleError(resp *azcore.Respo
 
 // ListByResourceGroup - Lists all Security Partner Providers in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *SecurityPartnerProvidersClient) ListByResourceGroup(resourceGroupName string, options *SecurityPartnerProvidersListByResourceGroupOptions) SecurityPartnerProvidersListByResourceGroupPager {
-	return &securityPartnerProvidersListByResourceGroupPager{
+func (client *SecurityPartnerProvidersClient) ListByResourceGroup(resourceGroupName string, options *SecurityPartnerProvidersListByResourceGroupOptions) *SecurityPartnerProvidersListByResourceGroupPager {
+	return &SecurityPartnerProvidersListByResourceGroupPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)

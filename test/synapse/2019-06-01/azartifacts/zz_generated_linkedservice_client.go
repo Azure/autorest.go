@@ -15,7 +15,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 type linkedServiceClient struct {
@@ -36,12 +35,8 @@ func (client *linkedServiceClient) BeginCreateOrUpdateLinkedService(ctx context.
 	if err != nil {
 		return LinkedServiceCreateOrUpdateLinkedServicePollerResponse{}, err
 	}
-	poller := &linkedServiceCreateOrUpdateLinkedServicePoller{
+	result.Poller = &LinkedServiceCreateOrUpdateLinkedServicePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LinkedServiceCreateOrUpdateLinkedServiceResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -53,7 +48,7 @@ func (client *linkedServiceClient) ResumeCreateOrUpdateLinkedService(ctx context
 	if err != nil {
 		return LinkedServiceCreateOrUpdateLinkedServicePollerResponse{}, err
 	}
-	poller := &linkedServiceCreateOrUpdateLinkedServicePoller{
+	poller := &LinkedServiceCreateOrUpdateLinkedServicePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -61,12 +56,10 @@ func (client *linkedServiceClient) ResumeCreateOrUpdateLinkedService(ctx context
 		return LinkedServiceCreateOrUpdateLinkedServicePollerResponse{}, err
 	}
 	result := LinkedServiceCreateOrUpdateLinkedServicePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LinkedServiceCreateOrUpdateLinkedServiceResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -136,12 +129,8 @@ func (client *linkedServiceClient) BeginDeleteLinkedService(ctx context.Context,
 	if err != nil {
 		return LinkedServiceDeleteLinkedServicePollerResponse{}, err
 	}
-	poller := &linkedServiceDeleteLinkedServicePoller{
+	result.Poller = &LinkedServiceDeleteLinkedServicePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LinkedServiceDeleteLinkedServiceResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -153,7 +142,7 @@ func (client *linkedServiceClient) ResumeDeleteLinkedService(ctx context.Context
 	if err != nil {
 		return LinkedServiceDeleteLinkedServicePollerResponse{}, err
 	}
-	poller := &linkedServiceDeleteLinkedServicePoller{
+	poller := &LinkedServiceDeleteLinkedServicePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -161,12 +150,10 @@ func (client *linkedServiceClient) ResumeDeleteLinkedService(ctx context.Context
 		return LinkedServiceDeleteLinkedServicePollerResponse{}, err
 	}
 	result := LinkedServiceDeleteLinkedServicePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LinkedServiceDeleteLinkedServiceResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -282,8 +269,8 @@ func (client *linkedServiceClient) getLinkedServiceHandleError(resp *azcore.Resp
 
 // GetLinkedServicesByWorkspace - Lists linked services.
 // If the operation fails it returns the *CloudError error type.
-func (client *linkedServiceClient) GetLinkedServicesByWorkspace(options *LinkedServiceGetLinkedServicesByWorkspaceOptions) LinkedServiceGetLinkedServicesByWorkspacePager {
-	return &linkedServiceGetLinkedServicesByWorkspacePager{
+func (client *linkedServiceClient) GetLinkedServicesByWorkspace(options *LinkedServiceGetLinkedServicesByWorkspaceOptions) *LinkedServiceGetLinkedServicesByWorkspacePager {
+	return &LinkedServiceGetLinkedServicesByWorkspacePager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.getLinkedServicesByWorkspaceCreateRequest(ctx, options)
@@ -345,12 +332,8 @@ func (client *linkedServiceClient) BeginRenameLinkedService(ctx context.Context,
 	if err != nil {
 		return LinkedServiceRenameLinkedServicePollerResponse{}, err
 	}
-	poller := &linkedServiceRenameLinkedServicePoller{
+	result.Poller = &LinkedServiceRenameLinkedServicePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LinkedServiceRenameLinkedServiceResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -362,7 +345,7 @@ func (client *linkedServiceClient) ResumeRenameLinkedService(ctx context.Context
 	if err != nil {
 		return LinkedServiceRenameLinkedServicePollerResponse{}, err
 	}
-	poller := &linkedServiceRenameLinkedServicePoller{
+	poller := &LinkedServiceRenameLinkedServicePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -370,12 +353,10 @@ func (client *linkedServiceClient) ResumeRenameLinkedService(ctx context.Context
 		return LinkedServiceRenameLinkedServicePollerResponse{}, err
 	}
 	result := LinkedServiceRenameLinkedServicePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LinkedServiceRenameLinkedServiceResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 

@@ -102,8 +102,8 @@ func (client *LoadBalancerOutboundRulesClient) getHandleError(resp *azcore.Respo
 
 // List - Gets all the outbound rules in a load balancer.
 // If the operation fails it returns the *CloudError error type.
-func (client *LoadBalancerOutboundRulesClient) List(resourceGroupName string, loadBalancerName string, options *LoadBalancerOutboundRulesListOptions) LoadBalancerOutboundRulesListPager {
-	return &loadBalancerOutboundRulesListPager{
+func (client *LoadBalancerOutboundRulesClient) List(resourceGroupName string, loadBalancerName string, options *LoadBalancerOutboundRulesListOptions) *LoadBalancerOutboundRulesListPager {
+	return &LoadBalancerOutboundRulesListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, loadBalancerName, options)

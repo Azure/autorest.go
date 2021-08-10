@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // VirtualNetworkTapsClient contains the methods for the VirtualNetworkTaps group.
@@ -45,12 +44,8 @@ func (client *VirtualNetworkTapsClient) BeginCreateOrUpdate(ctx context.Context,
 	if err != nil {
 		return VirtualNetworkTapsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &virtualNetworkTapsCreateOrUpdatePoller{
+	result.Poller = &VirtualNetworkTapsCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkTapsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *VirtualNetworkTapsClient) ResumeCreateOrUpdate(ctx context.Context
 	if err != nil {
 		return VirtualNetworkTapsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &virtualNetworkTapsCreateOrUpdatePoller{
+	poller := &VirtualNetworkTapsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *VirtualNetworkTapsClient) ResumeCreateOrUpdate(ctx context.Context
 		return VirtualNetworkTapsCreateOrUpdatePollerResponse{}, err
 	}
 	result := VirtualNetworkTapsCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkTapsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -150,12 +143,8 @@ func (client *VirtualNetworkTapsClient) BeginDelete(ctx context.Context, resourc
 	if err != nil {
 		return VirtualNetworkTapsDeletePollerResponse{}, err
 	}
-	poller := &virtualNetworkTapsDeletePoller{
+	result.Poller = &VirtualNetworkTapsDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkTapsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -167,7 +156,7 @@ func (client *VirtualNetworkTapsClient) ResumeDelete(ctx context.Context, token 
 	if err != nil {
 		return VirtualNetworkTapsDeletePollerResponse{}, err
 	}
-	poller := &virtualNetworkTapsDeletePoller{
+	poller := &VirtualNetworkTapsDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -175,12 +164,10 @@ func (client *VirtualNetworkTapsClient) ResumeDelete(ctx context.Context, token 
 		return VirtualNetworkTapsDeletePollerResponse{}, err
 	}
 	result := VirtualNetworkTapsDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkTapsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -309,8 +296,8 @@ func (client *VirtualNetworkTapsClient) getHandleError(resp *azcore.Response) er
 
 // ListAll - Gets all the VirtualNetworkTaps in a subscription.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualNetworkTapsClient) ListAll(options *VirtualNetworkTapsListAllOptions) VirtualNetworkTapsListAllPager {
-	return &virtualNetworkTapsListAllPager{
+func (client *VirtualNetworkTapsClient) ListAll(options *VirtualNetworkTapsListAllOptions) *VirtualNetworkTapsListAllPager {
+	return &VirtualNetworkTapsListAllPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listAllCreateRequest(ctx, options)
@@ -364,8 +351,8 @@ func (client *VirtualNetworkTapsClient) listAllHandleError(resp *azcore.Response
 
 // ListByResourceGroup - Gets all the VirtualNetworkTaps in a subscription.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualNetworkTapsClient) ListByResourceGroup(resourceGroupName string, options *VirtualNetworkTapsListByResourceGroupOptions) VirtualNetworkTapsListByResourceGroupPager {
-	return &virtualNetworkTapsListByResourceGroupPager{
+func (client *VirtualNetworkTapsClient) ListByResourceGroup(resourceGroupName string, options *VirtualNetworkTapsListByResourceGroupOptions) *VirtualNetworkTapsListByResourceGroupPager {
+	return &VirtualNetworkTapsListByResourceGroupPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)

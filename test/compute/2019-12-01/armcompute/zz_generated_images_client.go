@@ -15,7 +15,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // ImagesClient contains the methods for the Images group.
@@ -44,12 +43,8 @@ func (client *ImagesClient) BeginCreateOrUpdate(ctx context.Context, resourceGro
 	if err != nil {
 		return ImagesCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &imagesCreateOrUpdatePoller{
+	result.Poller = &ImagesCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ImagesCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -61,7 +56,7 @@ func (client *ImagesClient) ResumeCreateOrUpdate(ctx context.Context, token stri
 	if err != nil {
 		return ImagesCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &imagesCreateOrUpdatePoller{
+	poller := &ImagesCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -69,12 +64,10 @@ func (client *ImagesClient) ResumeCreateOrUpdate(ctx context.Context, token stri
 		return ImagesCreateOrUpdatePollerResponse{}, err
 	}
 	result := ImagesCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ImagesCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -148,12 +141,8 @@ func (client *ImagesClient) BeginDelete(ctx context.Context, resourceGroupName s
 	if err != nil {
 		return ImagesDeletePollerResponse{}, err
 	}
-	poller := &imagesDeletePoller{
+	result.Poller = &ImagesDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ImagesDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -165,7 +154,7 @@ func (client *ImagesClient) ResumeDelete(ctx context.Context, token string) (Ima
 	if err != nil {
 		return ImagesDeletePollerResponse{}, err
 	}
-	poller := &imagesDeletePoller{
+	poller := &ImagesDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -173,12 +162,10 @@ func (client *ImagesClient) ResumeDelete(ctx context.Context, token string) (Ima
 		return ImagesDeletePollerResponse{}, err
 	}
 	result := ImagesDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ImagesDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -308,8 +295,8 @@ func (client *ImagesClient) getHandleError(resp *azcore.Response) error {
 // List - Gets the list of Images in the subscription. Use nextLink property in the response to get the next page of Images. Do this till nextLink is null
 // to fetch all the Images.
 // If the operation fails it returns a generic error.
-func (client *ImagesClient) List(options *ImagesListOptions) ImagesListPager {
-	return &imagesListPager{
+func (client *ImagesClient) List(options *ImagesListOptions) *ImagesListPager {
+	return &ImagesListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, options)
@@ -362,8 +349,8 @@ func (client *ImagesClient) listHandleError(resp *azcore.Response) error {
 
 // ListByResourceGroup - Gets the list of images under a resource group.
 // If the operation fails it returns a generic error.
-func (client *ImagesClient) ListByResourceGroup(resourceGroupName string, options *ImagesListByResourceGroupOptions) ImagesListByResourceGroupPager {
-	return &imagesListByResourceGroupPager{
+func (client *ImagesClient) ListByResourceGroup(resourceGroupName string, options *ImagesListByResourceGroupOptions) *ImagesListByResourceGroupPager {
+	return &ImagesListByResourceGroupPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
@@ -432,12 +419,8 @@ func (client *ImagesClient) BeginUpdate(ctx context.Context, resourceGroupName s
 	if err != nil {
 		return ImagesUpdatePollerResponse{}, err
 	}
-	poller := &imagesUpdatePoller{
+	result.Poller = &ImagesUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ImagesUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -449,7 +432,7 @@ func (client *ImagesClient) ResumeUpdate(ctx context.Context, token string) (Ima
 	if err != nil {
 		return ImagesUpdatePollerResponse{}, err
 	}
-	poller := &imagesUpdatePoller{
+	poller := &ImagesUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -457,12 +440,10 @@ func (client *ImagesClient) ResumeUpdate(ctx context.Context, token string) (Ima
 		return ImagesUpdatePollerResponse{}, err
 	}
 	result := ImagesUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ImagesUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 

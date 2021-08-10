@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // NetworkSecurityGroupsClient contains the methods for the NetworkSecurityGroups group.
@@ -45,12 +44,8 @@ func (client *NetworkSecurityGroupsClient) BeginCreateOrUpdate(ctx context.Conte
 	if err != nil {
 		return NetworkSecurityGroupsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &networkSecurityGroupsCreateOrUpdatePoller{
+	result.Poller = &NetworkSecurityGroupsCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkSecurityGroupsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *NetworkSecurityGroupsClient) ResumeCreateOrUpdate(ctx context.Cont
 	if err != nil {
 		return NetworkSecurityGroupsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &networkSecurityGroupsCreateOrUpdatePoller{
+	poller := &NetworkSecurityGroupsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *NetworkSecurityGroupsClient) ResumeCreateOrUpdate(ctx context.Cont
 		return NetworkSecurityGroupsCreateOrUpdatePollerResponse{}, err
 	}
 	result := NetworkSecurityGroupsCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkSecurityGroupsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -150,12 +143,8 @@ func (client *NetworkSecurityGroupsClient) BeginDelete(ctx context.Context, reso
 	if err != nil {
 		return NetworkSecurityGroupsDeletePollerResponse{}, err
 	}
-	poller := &networkSecurityGroupsDeletePoller{
+	result.Poller = &NetworkSecurityGroupsDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkSecurityGroupsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -167,7 +156,7 @@ func (client *NetworkSecurityGroupsClient) ResumeDelete(ctx context.Context, tok
 	if err != nil {
 		return NetworkSecurityGroupsDeletePollerResponse{}, err
 	}
-	poller := &networkSecurityGroupsDeletePoller{
+	poller := &NetworkSecurityGroupsDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -175,12 +164,10 @@ func (client *NetworkSecurityGroupsClient) ResumeDelete(ctx context.Context, tok
 		return NetworkSecurityGroupsDeletePollerResponse{}, err
 	}
 	result := NetworkSecurityGroupsDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkSecurityGroupsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -312,8 +299,8 @@ func (client *NetworkSecurityGroupsClient) getHandleError(resp *azcore.Response)
 
 // List - Gets all network security groups in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *NetworkSecurityGroupsClient) List(resourceGroupName string, options *NetworkSecurityGroupsListOptions) NetworkSecurityGroupsListPager {
-	return &networkSecurityGroupsListPager{
+func (client *NetworkSecurityGroupsClient) List(resourceGroupName string, options *NetworkSecurityGroupsListOptions) *NetworkSecurityGroupsListPager {
+	return &NetworkSecurityGroupsListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, options)
@@ -371,8 +358,8 @@ func (client *NetworkSecurityGroupsClient) listHandleError(resp *azcore.Response
 
 // ListAll - Gets all network security groups in a subscription.
 // If the operation fails it returns the *CloudError error type.
-func (client *NetworkSecurityGroupsClient) ListAll(options *NetworkSecurityGroupsListAllOptions) NetworkSecurityGroupsListAllPager {
-	return &networkSecurityGroupsListAllPager{
+func (client *NetworkSecurityGroupsClient) ListAll(options *NetworkSecurityGroupsListAllOptions) *NetworkSecurityGroupsListAllPager {
+	return &NetworkSecurityGroupsListAllPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listAllCreateRequest(ctx, options)

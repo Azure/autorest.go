@@ -806,8 +806,8 @@ func (client *containerClient) getPropertiesHandleError(resp *azcore.Response) e
 
 // ListBlobFlatSegment - [Update] The List Blobs operation returns a list of the blobs under the specified container
 // If the operation fails it returns the *StorageError error type.
-func (client *containerClient) ListBlobFlatSegment(options *ContainerListBlobFlatSegmentOptions) ContainerListBlobFlatSegmentPager {
-	return &containerListBlobFlatSegmentPager{
+func (client *containerClient) ListBlobFlatSegment(options *ContainerListBlobFlatSegmentOptions) *ContainerListBlobFlatSegmentPager {
+	return &ContainerListBlobFlatSegmentPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listBlobFlatSegmentCreateRequest(ctx, options)
@@ -895,8 +895,8 @@ func (client *containerClient) listBlobFlatSegmentHandleError(resp *azcore.Respo
 
 // ListBlobHierarchySegment - [Update] The List Blobs operation returns a list of the blobs under the specified container
 // If the operation fails it returns the *StorageError error type.
-func (client *containerClient) ListBlobHierarchySegment(delimiter string, options *ContainerListBlobHierarchySegmentOptions) ContainerListBlobHierarchySegmentPager {
-	return &containerListBlobHierarchySegmentPager{
+func (client *containerClient) ListBlobHierarchySegment(delimiter string, options *ContainerListBlobHierarchySegmentOptions) *ContainerListBlobHierarchySegmentPager {
+	return &ContainerListBlobHierarchySegmentPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listBlobHierarchySegmentCreateRequest(ctx, delimiter, options)

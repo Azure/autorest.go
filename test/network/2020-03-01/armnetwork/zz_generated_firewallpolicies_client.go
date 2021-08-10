@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // FirewallPoliciesClient contains the methods for the FirewallPolicies group.
@@ -45,12 +44,8 @@ func (client *FirewallPoliciesClient) BeginCreateOrUpdate(ctx context.Context, r
 	if err != nil {
 		return FirewallPoliciesCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &firewallPoliciesCreateOrUpdatePoller{
+	result.Poller = &FirewallPoliciesCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (FirewallPoliciesCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *FirewallPoliciesClient) ResumeCreateOrUpdate(ctx context.Context, 
 	if err != nil {
 		return FirewallPoliciesCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &firewallPoliciesCreateOrUpdatePoller{
+	poller := &FirewallPoliciesCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *FirewallPoliciesClient) ResumeCreateOrUpdate(ctx context.Context, 
 		return FirewallPoliciesCreateOrUpdatePollerResponse{}, err
 	}
 	result := FirewallPoliciesCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (FirewallPoliciesCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -150,12 +143,8 @@ func (client *FirewallPoliciesClient) BeginDelete(ctx context.Context, resourceG
 	if err != nil {
 		return FirewallPoliciesDeletePollerResponse{}, err
 	}
-	poller := &firewallPoliciesDeletePoller{
+	result.Poller = &FirewallPoliciesDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (FirewallPoliciesDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -167,7 +156,7 @@ func (client *FirewallPoliciesClient) ResumeDelete(ctx context.Context, token st
 	if err != nil {
 		return FirewallPoliciesDeletePollerResponse{}, err
 	}
-	poller := &firewallPoliciesDeletePoller{
+	poller := &FirewallPoliciesDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -175,12 +164,10 @@ func (client *FirewallPoliciesClient) ResumeDelete(ctx context.Context, token st
 		return FirewallPoliciesDeletePollerResponse{}, err
 	}
 	result := FirewallPoliciesDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (FirewallPoliciesDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -312,8 +299,8 @@ func (client *FirewallPoliciesClient) getHandleError(resp *azcore.Response) erro
 
 // List - Lists all Firewall Policies in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *FirewallPoliciesClient) List(resourceGroupName string, options *FirewallPoliciesListOptions) FirewallPoliciesListPager {
-	return &firewallPoliciesListPager{
+func (client *FirewallPoliciesClient) List(resourceGroupName string, options *FirewallPoliciesListOptions) *FirewallPoliciesListPager {
+	return &FirewallPoliciesListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, options)
@@ -371,8 +358,8 @@ func (client *FirewallPoliciesClient) listHandleError(resp *azcore.Response) err
 
 // ListAll - Gets all the Firewall Policies in a subscription.
 // If the operation fails it returns the *CloudError error type.
-func (client *FirewallPoliciesClient) ListAll(options *FirewallPoliciesListAllOptions) FirewallPoliciesListAllPager {
-	return &firewallPoliciesListAllPager{
+func (client *FirewallPoliciesClient) ListAll(options *FirewallPoliciesListAllOptions) *FirewallPoliciesListAllPager {
+	return &FirewallPoliciesListAllPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listAllCreateRequest(ctx, options)

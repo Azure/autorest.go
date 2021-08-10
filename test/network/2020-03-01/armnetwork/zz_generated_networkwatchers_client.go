@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // NetworkWatchersClient contains the methods for the NetworkWatchers group.
@@ -46,12 +45,8 @@ func (client *NetworkWatchersClient) BeginCheckConnectivity(ctx context.Context,
 	if err != nil {
 		return NetworkWatchersCheckConnectivityPollerResponse{}, err
 	}
-	poller := &networkWatchersCheckConnectivityPoller{
+	result.Poller = &NetworkWatchersCheckConnectivityPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkWatchersCheckConnectivityResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -63,7 +58,7 @@ func (client *NetworkWatchersClient) ResumeCheckConnectivity(ctx context.Context
 	if err != nil {
 		return NetworkWatchersCheckConnectivityPollerResponse{}, err
 	}
-	poller := &networkWatchersCheckConnectivityPoller{
+	poller := &NetworkWatchersCheckConnectivityPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -71,12 +66,10 @@ func (client *NetworkWatchersClient) ResumeCheckConnectivity(ctx context.Context
 		return NetworkWatchersCheckConnectivityPollerResponse{}, err
 	}
 	result := NetworkWatchersCheckConnectivityPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkWatchersCheckConnectivityResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -218,12 +211,8 @@ func (client *NetworkWatchersClient) BeginDelete(ctx context.Context, resourceGr
 	if err != nil {
 		return NetworkWatchersDeletePollerResponse{}, err
 	}
-	poller := &networkWatchersDeletePoller{
+	result.Poller = &NetworkWatchersDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkWatchersDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -235,7 +224,7 @@ func (client *NetworkWatchersClient) ResumeDelete(ctx context.Context, token str
 	if err != nil {
 		return NetworkWatchersDeletePollerResponse{}, err
 	}
-	poller := &networkWatchersDeletePoller{
+	poller := &NetworkWatchersDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -243,12 +232,10 @@ func (client *NetworkWatchersClient) ResumeDelete(ctx context.Context, token str
 		return NetworkWatchersDeletePollerResponse{}, err
 	}
 	result := NetworkWatchersDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkWatchersDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -390,12 +377,8 @@ func (client *NetworkWatchersClient) BeginGetAzureReachabilityReport(ctx context
 	if err != nil {
 		return NetworkWatchersGetAzureReachabilityReportPollerResponse{}, err
 	}
-	poller := &networkWatchersGetAzureReachabilityReportPoller{
+	result.Poller = &NetworkWatchersGetAzureReachabilityReportPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkWatchersGetAzureReachabilityReportResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -407,7 +390,7 @@ func (client *NetworkWatchersClient) ResumeGetAzureReachabilityReport(ctx contex
 	if err != nil {
 		return NetworkWatchersGetAzureReachabilityReportPollerResponse{}, err
 	}
-	poller := &networkWatchersGetAzureReachabilityReportPoller{
+	poller := &NetworkWatchersGetAzureReachabilityReportPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -415,12 +398,10 @@ func (client *NetworkWatchersClient) ResumeGetAzureReachabilityReport(ctx contex
 		return NetworkWatchersGetAzureReachabilityReportPollerResponse{}, err
 	}
 	result := NetworkWatchersGetAzureReachabilityReportPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkWatchersGetAzureReachabilityReportResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -496,12 +477,8 @@ func (client *NetworkWatchersClient) BeginGetFlowLogStatus(ctx context.Context, 
 	if err != nil {
 		return NetworkWatchersGetFlowLogStatusPollerResponse{}, err
 	}
-	poller := &networkWatchersGetFlowLogStatusPoller{
+	result.Poller = &NetworkWatchersGetFlowLogStatusPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkWatchersGetFlowLogStatusResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -513,7 +490,7 @@ func (client *NetworkWatchersClient) ResumeGetFlowLogStatus(ctx context.Context,
 	if err != nil {
 		return NetworkWatchersGetFlowLogStatusPollerResponse{}, err
 	}
-	poller := &networkWatchersGetFlowLogStatusPoller{
+	poller := &NetworkWatchersGetFlowLogStatusPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -521,12 +498,10 @@ func (client *NetworkWatchersClient) ResumeGetFlowLogStatus(ctx context.Context,
 		return NetworkWatchersGetFlowLogStatusPollerResponse{}, err
 	}
 	result := NetworkWatchersGetFlowLogStatusPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkWatchersGetFlowLogStatusResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -605,12 +580,8 @@ func (client *NetworkWatchersClient) BeginGetNetworkConfigurationDiagnostic(ctx 
 	if err != nil {
 		return NetworkWatchersGetNetworkConfigurationDiagnosticPollerResponse{}, err
 	}
-	poller := &networkWatchersGetNetworkConfigurationDiagnosticPoller{
+	result.Poller = &NetworkWatchersGetNetworkConfigurationDiagnosticPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkWatchersGetNetworkConfigurationDiagnosticResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -622,7 +593,7 @@ func (client *NetworkWatchersClient) ResumeGetNetworkConfigurationDiagnostic(ctx
 	if err != nil {
 		return NetworkWatchersGetNetworkConfigurationDiagnosticPollerResponse{}, err
 	}
-	poller := &networkWatchersGetNetworkConfigurationDiagnosticPoller{
+	poller := &NetworkWatchersGetNetworkConfigurationDiagnosticPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -630,12 +601,10 @@ func (client *NetworkWatchersClient) ResumeGetNetworkConfigurationDiagnostic(ctx
 		return NetworkWatchersGetNetworkConfigurationDiagnosticPollerResponse{}, err
 	}
 	result := NetworkWatchersGetNetworkConfigurationDiagnosticPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkWatchersGetNetworkConfigurationDiagnosticResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -714,12 +683,8 @@ func (client *NetworkWatchersClient) BeginGetNextHop(ctx context.Context, resour
 	if err != nil {
 		return NetworkWatchersGetNextHopPollerResponse{}, err
 	}
-	poller := &networkWatchersGetNextHopPoller{
+	result.Poller = &NetworkWatchersGetNextHopPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkWatchersGetNextHopResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -731,7 +696,7 @@ func (client *NetworkWatchersClient) ResumeGetNextHop(ctx context.Context, token
 	if err != nil {
 		return NetworkWatchersGetNextHopPollerResponse{}, err
 	}
-	poller := &networkWatchersGetNextHopPoller{
+	poller := &NetworkWatchersGetNextHopPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -739,12 +704,10 @@ func (client *NetworkWatchersClient) ResumeGetNextHop(ctx context.Context, token
 		return NetworkWatchersGetNextHopPollerResponse{}, err
 	}
 	result := NetworkWatchersGetNextHopPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkWatchersGetNextHopResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -885,12 +848,8 @@ func (client *NetworkWatchersClient) BeginGetTroubleshooting(ctx context.Context
 	if err != nil {
 		return NetworkWatchersGetTroubleshootingPollerResponse{}, err
 	}
-	poller := &networkWatchersGetTroubleshootingPoller{
+	result.Poller = &NetworkWatchersGetTroubleshootingPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkWatchersGetTroubleshootingResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -902,7 +861,7 @@ func (client *NetworkWatchersClient) ResumeGetTroubleshooting(ctx context.Contex
 	if err != nil {
 		return NetworkWatchersGetTroubleshootingPollerResponse{}, err
 	}
-	poller := &networkWatchersGetTroubleshootingPoller{
+	poller := &NetworkWatchersGetTroubleshootingPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -910,12 +869,10 @@ func (client *NetworkWatchersClient) ResumeGetTroubleshooting(ctx context.Contex
 		return NetworkWatchersGetTroubleshootingPollerResponse{}, err
 	}
 	result := NetworkWatchersGetTroubleshootingPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkWatchersGetTroubleshootingResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -990,12 +947,8 @@ func (client *NetworkWatchersClient) BeginGetTroubleshootingResult(ctx context.C
 	if err != nil {
 		return NetworkWatchersGetTroubleshootingResultPollerResponse{}, err
 	}
-	poller := &networkWatchersGetTroubleshootingResultPoller{
+	result.Poller = &NetworkWatchersGetTroubleshootingResultPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkWatchersGetTroubleshootingResultResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -1007,7 +960,7 @@ func (client *NetworkWatchersClient) ResumeGetTroubleshootingResult(ctx context.
 	if err != nil {
 		return NetworkWatchersGetTroubleshootingResultPollerResponse{}, err
 	}
-	poller := &networkWatchersGetTroubleshootingResultPoller{
+	poller := &NetworkWatchersGetTroubleshootingResultPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -1015,12 +968,10 @@ func (client *NetworkWatchersClient) ResumeGetTroubleshootingResult(ctx context.
 		return NetworkWatchersGetTroubleshootingResultPollerResponse{}, err
 	}
 	result := NetworkWatchersGetTroubleshootingResultPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkWatchersGetTroubleshootingResultResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -1095,12 +1046,8 @@ func (client *NetworkWatchersClient) BeginGetVMSecurityRules(ctx context.Context
 	if err != nil {
 		return NetworkWatchersGetVMSecurityRulesPollerResponse{}, err
 	}
-	poller := &networkWatchersGetVMSecurityRulesPoller{
+	result.Poller = &NetworkWatchersGetVMSecurityRulesPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkWatchersGetVMSecurityRulesResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -1112,7 +1059,7 @@ func (client *NetworkWatchersClient) ResumeGetVMSecurityRules(ctx context.Contex
 	if err != nil {
 		return NetworkWatchersGetVMSecurityRulesPollerResponse{}, err
 	}
-	poller := &networkWatchersGetVMSecurityRulesPoller{
+	poller := &NetworkWatchersGetVMSecurityRulesPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -1120,12 +1067,10 @@ func (client *NetworkWatchersClient) ResumeGetVMSecurityRules(ctx context.Contex
 		return NetworkWatchersGetVMSecurityRulesPollerResponse{}, err
 	}
 	result := NetworkWatchersGetVMSecurityRulesPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkWatchersGetVMSecurityRulesResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -1321,12 +1266,8 @@ func (client *NetworkWatchersClient) BeginListAvailableProviders(ctx context.Con
 	if err != nil {
 		return NetworkWatchersListAvailableProvidersPollerResponse{}, err
 	}
-	poller := &networkWatchersListAvailableProvidersPoller{
+	result.Poller = &NetworkWatchersListAvailableProvidersPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkWatchersListAvailableProvidersResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -1338,7 +1279,7 @@ func (client *NetworkWatchersClient) ResumeListAvailableProviders(ctx context.Co
 	if err != nil {
 		return NetworkWatchersListAvailableProvidersPollerResponse{}, err
 	}
-	poller := &networkWatchersListAvailableProvidersPoller{
+	poller := &NetworkWatchersListAvailableProvidersPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -1346,12 +1287,10 @@ func (client *NetworkWatchersClient) ResumeListAvailableProviders(ctx context.Co
 		return NetworkWatchersListAvailableProvidersPollerResponse{}, err
 	}
 	result := NetworkWatchersListAvailableProvidersPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkWatchersListAvailableProvidersResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -1427,12 +1366,8 @@ func (client *NetworkWatchersClient) BeginSetFlowLogConfiguration(ctx context.Co
 	if err != nil {
 		return NetworkWatchersSetFlowLogConfigurationPollerResponse{}, err
 	}
-	poller := &networkWatchersSetFlowLogConfigurationPoller{
+	result.Poller = &NetworkWatchersSetFlowLogConfigurationPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkWatchersSetFlowLogConfigurationResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -1444,7 +1379,7 @@ func (client *NetworkWatchersClient) ResumeSetFlowLogConfiguration(ctx context.C
 	if err != nil {
 		return NetworkWatchersSetFlowLogConfigurationPollerResponse{}, err
 	}
-	poller := &networkWatchersSetFlowLogConfigurationPoller{
+	poller := &NetworkWatchersSetFlowLogConfigurationPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -1452,12 +1387,10 @@ func (client *NetworkWatchersClient) ResumeSetFlowLogConfiguration(ctx context.C
 		return NetworkWatchersSetFlowLogConfigurationPollerResponse{}, err
 	}
 	result := NetworkWatchersSetFlowLogConfigurationPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkWatchersSetFlowLogConfigurationResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -1598,12 +1531,8 @@ func (client *NetworkWatchersClient) BeginVerifyIPFlow(ctx context.Context, reso
 	if err != nil {
 		return NetworkWatchersVerifyIPFlowPollerResponse{}, err
 	}
-	poller := &networkWatchersVerifyIPFlowPoller{
+	result.Poller = &NetworkWatchersVerifyIPFlowPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkWatchersVerifyIPFlowResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -1615,7 +1544,7 @@ func (client *NetworkWatchersClient) ResumeVerifyIPFlow(ctx context.Context, tok
 	if err != nil {
 		return NetworkWatchersVerifyIPFlowPollerResponse{}, err
 	}
-	poller := &networkWatchersVerifyIPFlowPoller{
+	poller := &NetworkWatchersVerifyIPFlowPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -1623,12 +1552,10 @@ func (client *NetworkWatchersClient) ResumeVerifyIPFlow(ctx context.Context, tok
 		return NetworkWatchersVerifyIPFlowPollerResponse{}, err
 	}
 	result := NetworkWatchersVerifyIPFlowPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkWatchersVerifyIPFlowResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 

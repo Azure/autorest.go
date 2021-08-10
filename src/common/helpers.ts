@@ -5,7 +5,6 @@
 
 import { ArraySchema, DictionarySchema, ObjectSchema, Operation, Parameter, Response, Schema, SchemaResponse, SchemaType } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
-import { ensureNameCase } from '../transform/namer';
 
 // variable to be used to determine comment length when calling comment from @azure-tools
 export const commentLength = 150;
@@ -47,11 +46,6 @@ export interface PagerInfo {
   op: Operation;
 }
 
-// returns the type name of the internal pager type
-export function internalPagerTypeName(pi: PagerInfo): string {
-  return ensureNameCase(pi.name, true);
-}
-
 // returns true if the operation is pageable
 export function isPageableOperation(op: Operation): boolean {
   return op.language.go!.paging && op.language.go!.paging.nextLinkName !== null;
@@ -60,11 +54,6 @@ export function isPageableOperation(op: Operation): boolean {
 export interface PollerInfo {
   name: string;
   op: Operation;
-}
-
-// returns the type name of the internal poller type
-export function internalPollerTypeName(pi: PollerInfo): string {
-  return ensureNameCase(pi.name, true);
 }
 
 // returns true if the operation is a long-running operation

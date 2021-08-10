@@ -32,8 +32,8 @@ func NewAvailableDelegationsClient(con *armcore.Connection, subscriptionID strin
 
 // List - Gets all of the available subnet delegations for this subscription in this region.
 // If the operation fails it returns the *CloudError error type.
-func (client *AvailableDelegationsClient) List(location string, options *AvailableDelegationsListOptions) AvailableDelegationsListPager {
-	return &availableDelegationsListPager{
+func (client *AvailableDelegationsClient) List(location string, options *AvailableDelegationsListOptions) *AvailableDelegationsListPager {
+	return &AvailableDelegationsListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, location, options)

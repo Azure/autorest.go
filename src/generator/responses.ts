@@ -7,8 +7,8 @@ import { Session } from '@autorest/extension-base';
 import { comment } from '@azure-tools/codegen';
 import { CodeModel, ObjectSchema, Property } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
-import { commentLength, isObjectSchema } from '../common/helpers';
-import { contentPreamble, sortAscending } from './helpers';
+import { commentLength, isObjectSchema, PagerInfo, PollerInfo } from '../common/helpers';
+import { contentPreamble, getFinalResponseEnvelopeName, sortAscending } from './helpers';
 import { ImportManager } from './imports';
 import { generateStruct, StructDef, StructMethod } from './structs';
 
@@ -23,6 +23,9 @@ export async function generateResponses(session: Session<CodeModel>): Promise<st
   const structs = new Array<StructDef>();
   for (const respEnv of values(responseEnvelopes)) {
     const respType = generateStruct(imports, respEnv.language.go!, respEnv.properties);
+    if (respEnv.language.go!.isLRO) {
+      generatePollUntilDoneForResponse(respType);
+    }
     structs.push(respType);
     // if the response envelope contains a result envelope, generate that too
     if (respEnv.language.go!.resultEnv) {
@@ -85,4 +88,53 @@ function generateUnmarshallerForResultEnvelope(structDef: StructDef) {
   unmarshaller += '\treturn nil\n';
   unmarshaller += '}\n\n';
   structDef.Methods.push({ name: 'UnmarshalJSON', desc: `UnmarshalJSON implements the json.Unmarshaller interface for type ${structDef.Language.name}.`, text: unmarshaller });
+}
+
+function generatePollUntilDoneForResponse(structDef: StructDef) {
+  const pagedResponse = (<PollerInfo>structDef.Language.pollerInfo).op.language.go!.pageableType;
+  const respType = getResponseType(<PollerInfo>structDef.Language.pollerInfo);
+  let pollUntilDone = `func (l ${structDef.Language.name}) PollUntilDone(ctx context.Context, freq time.Duration) (`;
+  if (pagedResponse) {
+    pollUntilDone += '*';
+  }
+  pollUntilDone += `${respType}, error) {\n`;
+  pollUntilDone += `\trespType := `;
+  if (pagedResponse) {
+    pollUntilDone += '&';
+  }
+  pollUntilDone += `${respType}{}\n`;
+  const finalRespEnv = <ObjectSchema>structDef.Language.pollerInfo.op.language.go!.finalResponseEnv;
+  const resultEnv = <Property>finalRespEnv.language.go!.resultEnv;
+  if (resultEnv) {
+    // the operation returns a model of some sort, probe further
+    const resultProp = <Property>resultEnv.language.go!.resultField;
+    let current = '';
+    if (pagedResponse) {
+      current = '.current';
+    }
+    pollUntilDone += `\tresp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType${current}.${resultProp.language.go!.name})\n`;
+  } else {
+    // the operation doesn't return a model
+    pollUntilDone += `\tresp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)\n`;
+  }
+  pollUntilDone += '\tif err != nil {\n';
+  pollUntilDone += '\t\treturn respType, err\n';
+  pollUntilDone += '\t}\n';
+  if (pagedResponse) {
+    pollUntilDone += '\trespType.current.RawResponse = resp\n';
+    pollUntilDone += '\trespType.client = l.Poller.client\n';
+  } else {
+    pollUntilDone += '\trespType.RawResponse = resp\n';
+  }
+  pollUntilDone += '\treturn respType, nil\n';
+  pollUntilDone += '}\n\n';
+  structDef.Methods.push({ name: 'PollUntilDone', desc: 'PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.', text: pollUntilDone });
+}
+
+function getResponseType(poller: PollerInfo): string {
+  // check for pager must come first
+  if (poller.op.language.go!.pageableType) {
+    return (<PagerInfo>poller.op.language.go!.pageableType).name;
+  }
+  return getFinalResponseEnvelopeName(poller.op);
 }

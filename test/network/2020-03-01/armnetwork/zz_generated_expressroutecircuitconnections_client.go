@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // ExpressRouteCircuitConnectionsClient contains the methods for the ExpressRouteCircuitConnections group.
@@ -45,12 +44,8 @@ func (client *ExpressRouteCircuitConnectionsClient) BeginCreateOrUpdate(ctx cont
 	if err != nil {
 		return ExpressRouteCircuitConnectionsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &expressRouteCircuitConnectionsCreateOrUpdatePoller{
+	result.Poller = &ExpressRouteCircuitConnectionsCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitConnectionsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *ExpressRouteCircuitConnectionsClient) ResumeCreateOrUpdate(ctx con
 	if err != nil {
 		return ExpressRouteCircuitConnectionsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &expressRouteCircuitConnectionsCreateOrUpdatePoller{
+	poller := &ExpressRouteCircuitConnectionsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *ExpressRouteCircuitConnectionsClient) ResumeCreateOrUpdate(ctx con
 		return ExpressRouteCircuitConnectionsCreateOrUpdatePollerResponse{}, err
 	}
 	result := ExpressRouteCircuitConnectionsCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitConnectionsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -158,12 +151,8 @@ func (client *ExpressRouteCircuitConnectionsClient) BeginDelete(ctx context.Cont
 	if err != nil {
 		return ExpressRouteCircuitConnectionsDeletePollerResponse{}, err
 	}
-	poller := &expressRouteCircuitConnectionsDeletePoller{
+	result.Poller = &ExpressRouteCircuitConnectionsDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitConnectionsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -175,7 +164,7 @@ func (client *ExpressRouteCircuitConnectionsClient) ResumeDelete(ctx context.Con
 	if err != nil {
 		return ExpressRouteCircuitConnectionsDeletePollerResponse{}, err
 	}
-	poller := &expressRouteCircuitConnectionsDeletePoller{
+	poller := &ExpressRouteCircuitConnectionsDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -183,12 +172,10 @@ func (client *ExpressRouteCircuitConnectionsClient) ResumeDelete(ctx context.Con
 		return ExpressRouteCircuitConnectionsDeletePollerResponse{}, err
 	}
 	result := ExpressRouteCircuitConnectionsDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitConnectionsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -333,8 +320,8 @@ func (client *ExpressRouteCircuitConnectionsClient) getHandleError(resp *azcore.
 
 // List - Gets all global reach connections associated with a private peering in an express route circuit.
 // If the operation fails it returns the *CloudError error type.
-func (client *ExpressRouteCircuitConnectionsClient) List(resourceGroupName string, circuitName string, peeringName string, options *ExpressRouteCircuitConnectionsListOptions) ExpressRouteCircuitConnectionsListPager {
-	return &expressRouteCircuitConnectionsListPager{
+func (client *ExpressRouteCircuitConnectionsClient) List(resourceGroupName string, circuitName string, peeringName string, options *ExpressRouteCircuitConnectionsListOptions) *ExpressRouteCircuitConnectionsListPager {
+	return &ExpressRouteCircuitConnectionsListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, circuitName, peeringName, options)

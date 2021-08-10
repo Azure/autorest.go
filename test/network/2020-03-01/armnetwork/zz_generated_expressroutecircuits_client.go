@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // ExpressRouteCircuitsClient contains the methods for the ExpressRouteCircuits group.
@@ -45,12 +44,8 @@ func (client *ExpressRouteCircuitsClient) BeginCreateOrUpdate(ctx context.Contex
 	if err != nil {
 		return ExpressRouteCircuitsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &expressRouteCircuitsCreateOrUpdatePoller{
+	result.Poller = &ExpressRouteCircuitsCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *ExpressRouteCircuitsClient) ResumeCreateOrUpdate(ctx context.Conte
 	if err != nil {
 		return ExpressRouteCircuitsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &expressRouteCircuitsCreateOrUpdatePoller{
+	poller := &ExpressRouteCircuitsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *ExpressRouteCircuitsClient) ResumeCreateOrUpdate(ctx context.Conte
 		return ExpressRouteCircuitsCreateOrUpdatePollerResponse{}, err
 	}
 	result := ExpressRouteCircuitsCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -150,12 +143,8 @@ func (client *ExpressRouteCircuitsClient) BeginDelete(ctx context.Context, resou
 	if err != nil {
 		return ExpressRouteCircuitsDeletePollerResponse{}, err
 	}
-	poller := &expressRouteCircuitsDeletePoller{
+	result.Poller = &ExpressRouteCircuitsDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -167,7 +156,7 @@ func (client *ExpressRouteCircuitsClient) ResumeDelete(ctx context.Context, toke
 	if err != nil {
 		return ExpressRouteCircuitsDeletePollerResponse{}, err
 	}
-	poller := &expressRouteCircuitsDeletePoller{
+	poller := &ExpressRouteCircuitsDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -175,12 +164,10 @@ func (client *ExpressRouteCircuitsClient) ResumeDelete(ctx context.Context, toke
 		return ExpressRouteCircuitsDeletePollerResponse{}, err
 	}
 	result := ExpressRouteCircuitsDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -445,8 +432,8 @@ func (client *ExpressRouteCircuitsClient) getStatsHandleError(resp *azcore.Respo
 
 // List - Gets all the express route circuits in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *ExpressRouteCircuitsClient) List(resourceGroupName string, options *ExpressRouteCircuitsListOptions) ExpressRouteCircuitsListPager {
-	return &expressRouteCircuitsListPager{
+func (client *ExpressRouteCircuitsClient) List(resourceGroupName string, options *ExpressRouteCircuitsListOptions) *ExpressRouteCircuitsListPager {
+	return &ExpressRouteCircuitsListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, options)
@@ -504,8 +491,8 @@ func (client *ExpressRouteCircuitsClient) listHandleError(resp *azcore.Response)
 
 // ListAll - Gets all the express route circuits in a subscription.
 // If the operation fails it returns the *CloudError error type.
-func (client *ExpressRouteCircuitsClient) ListAll(options *ExpressRouteCircuitsListAllOptions) ExpressRouteCircuitsListAllPager {
-	return &expressRouteCircuitsListAllPager{
+func (client *ExpressRouteCircuitsClient) ListAll(options *ExpressRouteCircuitsListAllOptions) *ExpressRouteCircuitsListAllPager {
+	return &ExpressRouteCircuitsListAllPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listAllCreateRequest(ctx, options)
@@ -571,12 +558,8 @@ func (client *ExpressRouteCircuitsClient) BeginListArpTable(ctx context.Context,
 	if err != nil {
 		return ExpressRouteCircuitsListArpTablePollerResponse{}, err
 	}
-	poller := &expressRouteCircuitsListArpTablePoller{
+	result.Poller = &ExpressRouteCircuitsListArpTablePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitsListArpTableResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -588,7 +571,7 @@ func (client *ExpressRouteCircuitsClient) ResumeListArpTable(ctx context.Context
 	if err != nil {
 		return ExpressRouteCircuitsListArpTablePollerResponse{}, err
 	}
-	poller := &expressRouteCircuitsListArpTablePoller{
+	poller := &ExpressRouteCircuitsListArpTablePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -596,12 +579,10 @@ func (client *ExpressRouteCircuitsClient) ResumeListArpTable(ctx context.Context
 		return ExpressRouteCircuitsListArpTablePollerResponse{}, err
 	}
 	result := ExpressRouteCircuitsListArpTablePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitsListArpTableResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -684,12 +665,8 @@ func (client *ExpressRouteCircuitsClient) BeginListRoutesTable(ctx context.Conte
 	if err != nil {
 		return ExpressRouteCircuitsListRoutesTablePollerResponse{}, err
 	}
-	poller := &expressRouteCircuitsListRoutesTablePoller{
+	result.Poller = &ExpressRouteCircuitsListRoutesTablePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitsListRoutesTableResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -701,7 +678,7 @@ func (client *ExpressRouteCircuitsClient) ResumeListRoutesTable(ctx context.Cont
 	if err != nil {
 		return ExpressRouteCircuitsListRoutesTablePollerResponse{}, err
 	}
-	poller := &expressRouteCircuitsListRoutesTablePoller{
+	poller := &ExpressRouteCircuitsListRoutesTablePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -709,12 +686,10 @@ func (client *ExpressRouteCircuitsClient) ResumeListRoutesTable(ctx context.Cont
 		return ExpressRouteCircuitsListRoutesTablePollerResponse{}, err
 	}
 	result := ExpressRouteCircuitsListRoutesTablePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitsListRoutesTableResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -797,12 +772,8 @@ func (client *ExpressRouteCircuitsClient) BeginListRoutesTableSummary(ctx contex
 	if err != nil {
 		return ExpressRouteCircuitsListRoutesTableSummaryPollerResponse{}, err
 	}
-	poller := &expressRouteCircuitsListRoutesTableSummaryPoller{
+	result.Poller = &ExpressRouteCircuitsListRoutesTableSummaryPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitsListRoutesTableSummaryResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -814,7 +785,7 @@ func (client *ExpressRouteCircuitsClient) ResumeListRoutesTableSummary(ctx conte
 	if err != nil {
 		return ExpressRouteCircuitsListRoutesTableSummaryPollerResponse{}, err
 	}
-	poller := &expressRouteCircuitsListRoutesTableSummaryPoller{
+	poller := &ExpressRouteCircuitsListRoutesTableSummaryPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -822,12 +793,10 @@ func (client *ExpressRouteCircuitsClient) ResumeListRoutesTableSummary(ctx conte
 		return ExpressRouteCircuitsListRoutesTableSummaryPollerResponse{}, err
 	}
 	result := ExpressRouteCircuitsListRoutesTableSummaryPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitsListRoutesTableSummaryResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 

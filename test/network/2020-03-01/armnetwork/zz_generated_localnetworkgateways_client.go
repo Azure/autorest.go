@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // LocalNetworkGatewaysClient contains the methods for the LocalNetworkGateways group.
@@ -45,12 +44,8 @@ func (client *LocalNetworkGatewaysClient) BeginCreateOrUpdate(ctx context.Contex
 	if err != nil {
 		return LocalNetworkGatewaysCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &localNetworkGatewaysCreateOrUpdatePoller{
+	result.Poller = &LocalNetworkGatewaysCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LocalNetworkGatewaysCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *LocalNetworkGatewaysClient) ResumeCreateOrUpdate(ctx context.Conte
 	if err != nil {
 		return LocalNetworkGatewaysCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &localNetworkGatewaysCreateOrUpdatePoller{
+	poller := &LocalNetworkGatewaysCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *LocalNetworkGatewaysClient) ResumeCreateOrUpdate(ctx context.Conte
 		return LocalNetworkGatewaysCreateOrUpdatePollerResponse{}, err
 	}
 	result := LocalNetworkGatewaysCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LocalNetworkGatewaysCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -150,12 +143,8 @@ func (client *LocalNetworkGatewaysClient) BeginDelete(ctx context.Context, resou
 	if err != nil {
 		return LocalNetworkGatewaysDeletePollerResponse{}, err
 	}
-	poller := &localNetworkGatewaysDeletePoller{
+	result.Poller = &LocalNetworkGatewaysDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LocalNetworkGatewaysDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -167,7 +156,7 @@ func (client *LocalNetworkGatewaysClient) ResumeDelete(ctx context.Context, toke
 	if err != nil {
 		return LocalNetworkGatewaysDeletePollerResponse{}, err
 	}
-	poller := &localNetworkGatewaysDeletePoller{
+	poller := &LocalNetworkGatewaysDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -175,12 +164,10 @@ func (client *LocalNetworkGatewaysClient) ResumeDelete(ctx context.Context, toke
 		return LocalNetworkGatewaysDeletePollerResponse{}, err
 	}
 	result := LocalNetworkGatewaysDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LocalNetworkGatewaysDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -309,8 +296,8 @@ func (client *LocalNetworkGatewaysClient) getHandleError(resp *azcore.Response) 
 
 // List - Gets all the local network gateways in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *LocalNetworkGatewaysClient) List(resourceGroupName string, options *LocalNetworkGatewaysListOptions) LocalNetworkGatewaysListPager {
-	return &localNetworkGatewaysListPager{
+func (client *LocalNetworkGatewaysClient) List(resourceGroupName string, options *LocalNetworkGatewaysListOptions) *LocalNetworkGatewaysListPager {
+	return &LocalNetworkGatewaysListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, options)

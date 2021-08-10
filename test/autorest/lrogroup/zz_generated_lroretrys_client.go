@@ -13,7 +13,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
-	"time"
 )
 
 // LRORetrysClient contains the methods for the LRORetrys group.
@@ -42,12 +41,8 @@ func (client *LRORetrysClient) BeginDelete202Retry200(ctx context.Context, optio
 	if err != nil {
 		return LRORetrysDelete202Retry200PollerResponse{}, err
 	}
-	poller := &lroRetrysDelete202Retry200Poller{
+	result.Poller = &LRORetrysDelete202Retry200Poller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LRORetrysDelete202Retry200Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -59,7 +54,7 @@ func (client *LRORetrysClient) ResumeDelete202Retry200(ctx context.Context, toke
 	if err != nil {
 		return LRORetrysDelete202Retry200PollerResponse{}, err
 	}
-	poller := &lroRetrysDelete202Retry200Poller{
+	poller := &LRORetrysDelete202Retry200Poller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -67,12 +62,10 @@ func (client *LRORetrysClient) ResumeDelete202Retry200(ctx context.Context, toke
 		return LRORetrysDelete202Retry200PollerResponse{}, err
 	}
 	result := LRORetrysDelete202Retry200PollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LRORetrysDelete202Retry200Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -134,12 +127,8 @@ func (client *LRORetrysClient) BeginDeleteAsyncRelativeRetrySucceeded(ctx contex
 	if err != nil {
 		return LRORetrysDeleteAsyncRelativeRetrySucceededPollerResponse{}, err
 	}
-	poller := &lroRetrysDeleteAsyncRelativeRetrySucceededPoller{
+	result.Poller = &LRORetrysDeleteAsyncRelativeRetrySucceededPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LRORetrysDeleteAsyncRelativeRetrySucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -151,7 +140,7 @@ func (client *LRORetrysClient) ResumeDeleteAsyncRelativeRetrySucceeded(ctx conte
 	if err != nil {
 		return LRORetrysDeleteAsyncRelativeRetrySucceededPollerResponse{}, err
 	}
-	poller := &lroRetrysDeleteAsyncRelativeRetrySucceededPoller{
+	poller := &LRORetrysDeleteAsyncRelativeRetrySucceededPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -159,12 +148,10 @@ func (client *LRORetrysClient) ResumeDeleteAsyncRelativeRetrySucceeded(ctx conte
 		return LRORetrysDeleteAsyncRelativeRetrySucceededPollerResponse{}, err
 	}
 	result := LRORetrysDeleteAsyncRelativeRetrySucceededPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LRORetrysDeleteAsyncRelativeRetrySucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -227,12 +214,8 @@ func (client *LRORetrysClient) BeginDeleteProvisioning202Accepted200Succeeded(ct
 	if err != nil {
 		return LRORetrysDeleteProvisioning202Accepted200SucceededPollerResponse{}, err
 	}
-	poller := &lroRetrysDeleteProvisioning202Accepted200SucceededPoller{
+	result.Poller = &LRORetrysDeleteProvisioning202Accepted200SucceededPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LRORetrysDeleteProvisioning202Accepted200SucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -244,7 +227,7 @@ func (client *LRORetrysClient) ResumeDeleteProvisioning202Accepted200Succeeded(c
 	if err != nil {
 		return LRORetrysDeleteProvisioning202Accepted200SucceededPollerResponse{}, err
 	}
-	poller := &lroRetrysDeleteProvisioning202Accepted200SucceededPoller{
+	poller := &LRORetrysDeleteProvisioning202Accepted200SucceededPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -252,12 +235,10 @@ func (client *LRORetrysClient) ResumeDeleteProvisioning202Accepted200Succeeded(c
 		return LRORetrysDeleteProvisioning202Accepted200SucceededPollerResponse{}, err
 	}
 	result := LRORetrysDeleteProvisioning202Accepted200SucceededPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LRORetrysDeleteProvisioning202Accepted200SucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -320,12 +301,8 @@ func (client *LRORetrysClient) BeginPost202Retry200(ctx context.Context, options
 	if err != nil {
 		return LRORetrysPost202Retry200PollerResponse{}, err
 	}
-	poller := &lroRetrysPost202Retry200Poller{
+	result.Poller = &LRORetrysPost202Retry200Poller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LRORetrysPost202Retry200Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -337,7 +314,7 @@ func (client *LRORetrysClient) ResumePost202Retry200(ctx context.Context, token 
 	if err != nil {
 		return LRORetrysPost202Retry200PollerResponse{}, err
 	}
-	poller := &lroRetrysPost202Retry200Poller{
+	poller := &LRORetrysPost202Retry200Poller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -345,12 +322,10 @@ func (client *LRORetrysClient) ResumePost202Retry200(ctx context.Context, token 
 		return LRORetrysPost202Retry200PollerResponse{}, err
 	}
 	result := LRORetrysPost202Retry200PollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LRORetrysPost202Retry200Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -416,12 +391,8 @@ func (client *LRORetrysClient) BeginPostAsyncRelativeRetrySucceeded(ctx context.
 	if err != nil {
 		return LRORetrysPostAsyncRelativeRetrySucceededPollerResponse{}, err
 	}
-	poller := &lroRetrysPostAsyncRelativeRetrySucceededPoller{
+	result.Poller = &LRORetrysPostAsyncRelativeRetrySucceededPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LRORetrysPostAsyncRelativeRetrySucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -433,7 +404,7 @@ func (client *LRORetrysClient) ResumePostAsyncRelativeRetrySucceeded(ctx context
 	if err != nil {
 		return LRORetrysPostAsyncRelativeRetrySucceededPollerResponse{}, err
 	}
-	poller := &lroRetrysPostAsyncRelativeRetrySucceededPoller{
+	poller := &LRORetrysPostAsyncRelativeRetrySucceededPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -441,12 +412,10 @@ func (client *LRORetrysClient) ResumePostAsyncRelativeRetrySucceeded(ctx context
 		return LRORetrysPostAsyncRelativeRetrySucceededPollerResponse{}, err
 	}
 	result := LRORetrysPostAsyncRelativeRetrySucceededPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LRORetrysPostAsyncRelativeRetrySucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -513,12 +482,8 @@ func (client *LRORetrysClient) BeginPut201CreatingSucceeded200(ctx context.Conte
 	if err != nil {
 		return LRORetrysPut201CreatingSucceeded200PollerResponse{}, err
 	}
-	poller := &lroRetrysPut201CreatingSucceeded200Poller{
+	result.Poller = &LRORetrysPut201CreatingSucceeded200Poller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LRORetrysPut201CreatingSucceeded200Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -530,7 +495,7 @@ func (client *LRORetrysClient) ResumePut201CreatingSucceeded200(ctx context.Cont
 	if err != nil {
 		return LRORetrysPut201CreatingSucceeded200PollerResponse{}, err
 	}
-	poller := &lroRetrysPut201CreatingSucceeded200Poller{
+	poller := &LRORetrysPut201CreatingSucceeded200Poller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -538,12 +503,10 @@ func (client *LRORetrysClient) ResumePut201CreatingSucceeded200(ctx context.Cont
 		return LRORetrysPut201CreatingSucceeded200PollerResponse{}, err
 	}
 	result := LRORetrysPut201CreatingSucceeded200PollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LRORetrysPut201CreatingSucceeded200Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -610,12 +573,8 @@ func (client *LRORetrysClient) BeginPutAsyncRelativeRetrySucceeded(ctx context.C
 	if err != nil {
 		return LRORetrysPutAsyncRelativeRetrySucceededPollerResponse{}, err
 	}
-	poller := &lroRetrysPutAsyncRelativeRetrySucceededPoller{
+	result.Poller = &LRORetrysPutAsyncRelativeRetrySucceededPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LRORetrysPutAsyncRelativeRetrySucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -627,7 +586,7 @@ func (client *LRORetrysClient) ResumePutAsyncRelativeRetrySucceeded(ctx context.
 	if err != nil {
 		return LRORetrysPutAsyncRelativeRetrySucceededPollerResponse{}, err
 	}
-	poller := &lroRetrysPutAsyncRelativeRetrySucceededPoller{
+	poller := &LRORetrysPutAsyncRelativeRetrySucceededPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -635,12 +594,10 @@ func (client *LRORetrysClient) ResumePutAsyncRelativeRetrySucceeded(ctx context.
 		return LRORetrysPutAsyncRelativeRetrySucceededPollerResponse{}, err
 	}
 	result := LRORetrysPutAsyncRelativeRetrySucceededPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LRORetrysPutAsyncRelativeRetrySucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
