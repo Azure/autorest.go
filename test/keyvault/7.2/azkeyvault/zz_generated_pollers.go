@@ -24,7 +24,7 @@ func (p *HSMSecurityDomainDownloadPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -67,7 +67,7 @@ func (p *HSMSecurityDomainUploadPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -110,7 +110,7 @@ func (p *KeyVaultClientFullBackupPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -153,7 +153,7 @@ func (p *KeyVaultClientFullRestoreOperationPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -196,7 +196,7 @@ func (p *KeyVaultClientSelectiveKeyRestoreOperationPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.

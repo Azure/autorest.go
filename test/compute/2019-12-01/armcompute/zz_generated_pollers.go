@@ -24,7 +24,7 @@ func (p *ContainerServicesCreateOrUpdatePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -67,7 +67,7 @@ func (p *ContainerServicesDeletePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -110,7 +110,7 @@ func (p *DedicatedHostsCreateOrUpdatePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -153,7 +153,7 @@ func (p *DedicatedHostsDeletePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -196,7 +196,7 @@ func (p *DedicatedHostsUpdatePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -239,7 +239,7 @@ func (p *DiskEncryptionSetsCreateOrUpdatePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -282,7 +282,7 @@ func (p *DiskEncryptionSetsDeletePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -325,7 +325,7 @@ func (p *DiskEncryptionSetsUpdatePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -368,7 +368,7 @@ func (p *DisksCreateOrUpdatePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -411,7 +411,7 @@ func (p *DisksDeletePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -454,7 +454,7 @@ func (p *DisksGrantAccessPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -497,7 +497,7 @@ func (p *DisksRevokeAccessPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -540,7 +540,7 @@ func (p *DisksUpdatePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -583,7 +583,7 @@ func (p *GalleriesCreateOrUpdatePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -626,7 +626,7 @@ func (p *GalleriesDeletePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -669,7 +669,7 @@ func (p *GalleriesUpdatePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -712,7 +712,7 @@ func (p *GalleryApplicationVersionsCreateOrUpdatePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -755,7 +755,7 @@ func (p *GalleryApplicationVersionsDeletePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -798,7 +798,7 @@ func (p *GalleryApplicationVersionsUpdatePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -841,7 +841,7 @@ func (p *GalleryApplicationsCreateOrUpdatePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -884,7 +884,7 @@ func (p *GalleryApplicationsDeletePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -927,7 +927,7 @@ func (p *GalleryApplicationsUpdatePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -970,7 +970,7 @@ func (p *GalleryImageVersionsCreateOrUpdatePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -1013,7 +1013,7 @@ func (p *GalleryImageVersionsDeletePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -1056,7 +1056,7 @@ func (p *GalleryImageVersionsUpdatePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -1099,7 +1099,7 @@ func (p *GalleryImagesCreateOrUpdatePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -1142,7 +1142,7 @@ func (p *GalleryImagesDeletePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -1185,7 +1185,7 @@ func (p *GalleryImagesUpdatePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -1228,7 +1228,7 @@ func (p *ImagesCreateOrUpdatePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -1271,7 +1271,7 @@ func (p *ImagesDeletePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -1314,7 +1314,7 @@ func (p *ImagesUpdatePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -1357,7 +1357,7 @@ func (p *LogAnalyticsExportRequestRateByIntervalPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -1400,7 +1400,7 @@ func (p *LogAnalyticsExportThrottledRequestsPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -1443,7 +1443,7 @@ func (p *SnapshotsCreateOrUpdatePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -1486,7 +1486,7 @@ func (p *SnapshotsDeletePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -1529,7 +1529,7 @@ func (p *SnapshotsGrantAccessPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -1572,7 +1572,7 @@ func (p *SnapshotsRevokeAccessPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -1615,7 +1615,7 @@ func (p *SnapshotsUpdatePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -1658,7 +1658,7 @@ func (p *VirtualMachineExtensionsCreateOrUpdatePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -1701,7 +1701,7 @@ func (p *VirtualMachineExtensionsDeletePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -1744,7 +1744,7 @@ func (p *VirtualMachineExtensionsUpdatePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -1787,7 +1787,7 @@ func (p *VirtualMachineScaleSetExtensionsCreateOrUpdatePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -1830,7 +1830,7 @@ func (p *VirtualMachineScaleSetExtensionsDeletePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -1873,7 +1873,7 @@ func (p *VirtualMachineScaleSetExtensionsUpdatePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -1916,7 +1916,7 @@ func (p *VirtualMachineScaleSetRollingUpgradesCancelPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -1959,7 +1959,7 @@ func (p *VirtualMachineScaleSetRollingUpgradesStartExtensionUpgradePoller) Done(
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -2002,7 +2002,7 @@ func (p *VirtualMachineScaleSetRollingUpgradesStartOSUpgradePoller) Done() bool 
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -2045,7 +2045,7 @@ func (p *VirtualMachineScaleSetVMExtensionsCreateOrUpdatePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -2088,7 +2088,7 @@ func (p *VirtualMachineScaleSetVMExtensionsDeletePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -2131,7 +2131,7 @@ func (p *VirtualMachineScaleSetVMExtensionsUpdatePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -2174,7 +2174,7 @@ func (p *VirtualMachineScaleSetVMsDeallocatePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -2217,7 +2217,7 @@ func (p *VirtualMachineScaleSetVMsDeletePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -2260,7 +2260,7 @@ func (p *VirtualMachineScaleSetVMsPerformMaintenancePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -2303,7 +2303,7 @@ func (p *VirtualMachineScaleSetVMsPowerOffPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -2346,7 +2346,7 @@ func (p *VirtualMachineScaleSetVMsRedeployPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -2389,7 +2389,7 @@ func (p *VirtualMachineScaleSetVMsReimageAllPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -2432,7 +2432,7 @@ func (p *VirtualMachineScaleSetVMsReimagePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -2475,7 +2475,7 @@ func (p *VirtualMachineScaleSetVMsRestartPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -2518,7 +2518,7 @@ func (p *VirtualMachineScaleSetVMsRunCommandPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -2561,7 +2561,7 @@ func (p *VirtualMachineScaleSetVMsStartPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -2604,7 +2604,7 @@ func (p *VirtualMachineScaleSetVMsUpdatePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -2647,7 +2647,7 @@ func (p *VirtualMachineScaleSetsCreateOrUpdatePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -2690,7 +2690,7 @@ func (p *VirtualMachineScaleSetsDeallocatePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -2733,7 +2733,7 @@ func (p *VirtualMachineScaleSetsDeleteInstancesPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -2776,7 +2776,7 @@ func (p *VirtualMachineScaleSetsDeletePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -2819,7 +2819,7 @@ func (p *VirtualMachineScaleSetsPerformMaintenancePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -2862,7 +2862,7 @@ func (p *VirtualMachineScaleSetsPowerOffPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -2905,7 +2905,7 @@ func (p *VirtualMachineScaleSetsRedeployPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -2948,7 +2948,7 @@ func (p *VirtualMachineScaleSetsReimageAllPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -2991,7 +2991,7 @@ func (p *VirtualMachineScaleSetsReimagePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -3034,7 +3034,7 @@ func (p *VirtualMachineScaleSetsRestartPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -3077,7 +3077,7 @@ func (p *VirtualMachineScaleSetsSetOrchestrationServiceStatePoller) Done() bool 
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -3120,7 +3120,7 @@ func (p *VirtualMachineScaleSetsStartPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -3163,7 +3163,7 @@ func (p *VirtualMachineScaleSetsUpdateInstancesPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -3206,7 +3206,7 @@ func (p *VirtualMachineScaleSetsUpdatePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -3249,7 +3249,7 @@ func (p *VirtualMachinesCapturePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -3292,7 +3292,7 @@ func (p *VirtualMachinesConvertToManagedDisksPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -3335,7 +3335,7 @@ func (p *VirtualMachinesCreateOrUpdatePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -3378,7 +3378,7 @@ func (p *VirtualMachinesDeallocatePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -3421,7 +3421,7 @@ func (p *VirtualMachinesDeletePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -3464,7 +3464,7 @@ func (p *VirtualMachinesPerformMaintenancePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -3507,7 +3507,7 @@ func (p *VirtualMachinesPowerOffPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -3550,7 +3550,7 @@ func (p *VirtualMachinesReapplyPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -3593,7 +3593,7 @@ func (p *VirtualMachinesRedeployPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -3636,7 +3636,7 @@ func (p *VirtualMachinesReimagePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -3679,7 +3679,7 @@ func (p *VirtualMachinesRestartPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -3722,7 +3722,7 @@ func (p *VirtualMachinesRunCommandPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -3765,7 +3765,7 @@ func (p *VirtualMachinesStartPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -3808,7 +3808,7 @@ func (p *VirtualMachinesUpdatePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.

@@ -46,7 +46,7 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
     bodyText += '// Done returns true if the LRO has reached a terminal state.\n';
     bodyText += `func (p *${poller.name}) Done() bool {\n\treturn p.pt.Done()\n}\n\n`;
     bodyText += '// Poll fetches the latest state of the LRO.  It returns an HTTP response or error.\n';
-    bodyText += `// If the LRO has completed successfully, the poller's state is update and the HTTP\n`;
+    bodyText += `// If the LRO has completed successfully, the poller's state is updated and the HTTP\n`;
     bodyText += '// response is returned.\n';
     bodyText += `// If the LRO has completed with failure or was cancelled, the poller's state is\n`;
     bodyText += '// updated and the error is returned.\n';

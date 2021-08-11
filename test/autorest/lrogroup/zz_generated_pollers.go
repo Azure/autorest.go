@@ -24,7 +24,7 @@ func (p *LRORetrysDelete202Retry200Poller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -67,7 +67,7 @@ func (p *LRORetrysDeleteAsyncRelativeRetrySucceededPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -110,7 +110,7 @@ func (p *LRORetrysDeleteProvisioning202Accepted200SucceededPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -153,7 +153,7 @@ func (p *LRORetrysPost202Retry200Poller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -196,7 +196,7 @@ func (p *LRORetrysPostAsyncRelativeRetrySucceededPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -239,7 +239,7 @@ func (p *LRORetrysPut201CreatingSucceeded200Poller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -282,7 +282,7 @@ func (p *LRORetrysPutAsyncRelativeRetrySucceededPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -325,7 +325,7 @@ func (p *LROSADsDelete202NonRetry400Poller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -368,7 +368,7 @@ func (p *LROSADsDelete202RetryInvalidHeaderPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -411,7 +411,7 @@ func (p *LROSADsDelete204SucceededPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -454,7 +454,7 @@ func (p *LROSADsDeleteAsyncRelativeRetry400Poller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -497,7 +497,7 @@ func (p *LROSADsDeleteAsyncRelativeRetryInvalidHeaderPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -540,7 +540,7 @@ func (p *LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -583,7 +583,7 @@ func (p *LROSADsDeleteAsyncRelativeRetryNoStatusPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -626,7 +626,7 @@ func (p *LROSADsDeleteNonRetry400Poller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -669,7 +669,7 @@ func (p *LROSADsPost202NoLocationPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -712,7 +712,7 @@ func (p *LROSADsPost202NonRetry400Poller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -755,7 +755,7 @@ func (p *LROSADsPost202RetryInvalidHeaderPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -798,7 +798,7 @@ func (p *LROSADsPostAsyncRelativeRetry400Poller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -841,7 +841,7 @@ func (p *LROSADsPostAsyncRelativeRetryInvalidHeaderPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -884,7 +884,7 @@ func (p *LROSADsPostAsyncRelativeRetryInvalidJSONPollingPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -927,7 +927,7 @@ func (p *LROSADsPostAsyncRelativeRetryNoPayloadPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -970,7 +970,7 @@ func (p *LROSADsPostNonRetry400Poller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -1013,7 +1013,7 @@ func (p *LROSADsPut200InvalidJSONPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -1056,7 +1056,7 @@ func (p *LROSADsPutAsyncRelativeRetry400Poller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -1099,7 +1099,7 @@ func (p *LROSADsPutAsyncRelativeRetryInvalidHeaderPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -1142,7 +1142,7 @@ func (p *LROSADsPutAsyncRelativeRetryInvalidJSONPollingPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -1185,7 +1185,7 @@ func (p *LROSADsPutAsyncRelativeRetryNoStatusPayloadPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -1228,7 +1228,7 @@ func (p *LROSADsPutAsyncRelativeRetryNoStatusPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -1271,7 +1271,7 @@ func (p *LROSADsPutError201NoProvisioningStatePayloadPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -1314,7 +1314,7 @@ func (p *LROSADsPutNonRetry201Creating400InvalidJSONPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -1357,7 +1357,7 @@ func (p *LROSADsPutNonRetry201Creating400Poller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -1400,7 +1400,7 @@ func (p *LROSADsPutNonRetry400Poller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -1443,7 +1443,7 @@ func (p *LROsCustomHeaderPost202Retry200Poller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -1486,7 +1486,7 @@ func (p *LROsCustomHeaderPostAsyncRetrySucceededPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -1529,7 +1529,7 @@ func (p *LROsCustomHeaderPut201CreatingSucceeded200Poller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -1572,7 +1572,7 @@ func (p *LROsCustomHeaderPutAsyncRetrySucceededPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -1615,7 +1615,7 @@ func (p *LROsDelete202NoRetry204Poller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -1658,7 +1658,7 @@ func (p *LROsDelete202Retry200Poller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -1701,7 +1701,7 @@ func (p *LROsDelete204SucceededPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -1744,7 +1744,7 @@ func (p *LROsDeleteAsyncNoHeaderInRetryPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -1787,7 +1787,7 @@ func (p *LROsDeleteAsyncNoRetrySucceededPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -1830,7 +1830,7 @@ func (p *LROsDeleteAsyncRetryFailedPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -1873,7 +1873,7 @@ func (p *LROsDeleteAsyncRetrySucceededPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -1916,7 +1916,7 @@ func (p *LROsDeleteAsyncRetrycanceledPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -1959,7 +1959,7 @@ func (p *LROsDeleteNoHeaderInRetryPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -2002,7 +2002,7 @@ func (p *LROsDeleteProvisioning202Accepted200SucceededPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -2045,7 +2045,7 @@ func (p *LROsDeleteProvisioning202DeletingFailed200Poller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -2088,7 +2088,7 @@ func (p *LROsDeleteProvisioning202Deletingcanceled200Poller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -2131,7 +2131,7 @@ func (p *LROsPost200WithPayloadPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -2174,7 +2174,7 @@ func (p *LROsPost202ListPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -2217,7 +2217,7 @@ func (p *LROsPost202NoRetry204Poller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -2260,7 +2260,7 @@ func (p *LROsPost202Retry200Poller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -2303,7 +2303,7 @@ func (p *LROsPostAsyncNoRetrySucceededPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -2346,7 +2346,7 @@ func (p *LROsPostAsyncRetryFailedPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -2389,7 +2389,7 @@ func (p *LROsPostAsyncRetrySucceededPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -2432,7 +2432,7 @@ func (p *LROsPostAsyncRetrycanceledPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -2475,7 +2475,7 @@ func (p *LROsPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -2518,7 +2518,7 @@ func (p *LROsPostDoubleHeadersFinalAzureHeaderGetPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -2561,7 +2561,7 @@ func (p *LROsPostDoubleHeadersFinalLocationGetPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -2604,7 +2604,7 @@ func (p *LROsPut200Acceptedcanceled200Poller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -2647,7 +2647,7 @@ func (p *LROsPut200SucceededNoStatePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -2690,7 +2690,7 @@ func (p *LROsPut200SucceededPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -2733,7 +2733,7 @@ func (p *LROsPut200UpdatingSucceeded204Poller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -2776,7 +2776,7 @@ func (p *LROsPut201CreatingFailed200Poller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -2819,7 +2819,7 @@ func (p *LROsPut201CreatingSucceeded200Poller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -2862,7 +2862,7 @@ func (p *LROsPut201SucceededPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -2905,7 +2905,7 @@ func (p *LROsPut202Retry200Poller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -2948,7 +2948,7 @@ func (p *LROsPutAsyncNoHeaderInRetryPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -2991,7 +2991,7 @@ func (p *LROsPutAsyncNoRetrySucceededPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -3034,7 +3034,7 @@ func (p *LROsPutAsyncNoRetrycanceledPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -3077,7 +3077,7 @@ func (p *LROsPutAsyncNonResourcePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -3120,7 +3120,7 @@ func (p *LROsPutAsyncRetryFailedPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -3163,7 +3163,7 @@ func (p *LROsPutAsyncRetrySucceededPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -3206,7 +3206,7 @@ func (p *LROsPutAsyncSubResourcePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -3249,7 +3249,7 @@ func (p *LROsPutNoHeaderInRetryPoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -3292,7 +3292,7 @@ func (p *LROsPutNonResourcePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
@@ -3335,7 +3335,7 @@ func (p *LROsPutSubResourcePoller) Done() bool {
 }
 
 // Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is update and the HTTP
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
