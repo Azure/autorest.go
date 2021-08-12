@@ -48,28 +48,6 @@ func (client *LROsCustomHeaderClient) BeginPost202Retry200(ctx context.Context, 
 	return result, nil
 }
 
-// ResumePost202Retry200 creates a new LROsCustomHeaderPost202Retry200Poller from the specified resume token.
-// token - The value must come from a previous call to LROsCustomHeaderPost202Retry200Poller.ResumeToken().
-func (client *LROsCustomHeaderClient) ResumePost202Retry200(ctx context.Context, token string) (LROsCustomHeaderPost202Retry200PollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("LROsCustomHeaderClient.Post202Retry200", token, client.con.Pipeline(), client.post202Retry200HandleError)
-	if err != nil {
-		return LROsCustomHeaderPost202Retry200PollerResponse{}, err
-	}
-	poller := &LROsCustomHeaderPost202Retry200Poller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return LROsCustomHeaderPost202Retry200PollerResponse{}, err
-	}
-	result := LROsCustomHeaderPost202Retry200PollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // Post202Retry200 - x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 is required message header for all requests. Long running post request,
 // service returns a 202 to the initial request, with 'Location' and
 // 'Retry-After' headers, Polls return a 200 with a response body after success
@@ -136,28 +114,6 @@ func (client *LROsCustomHeaderClient) BeginPostAsyncRetrySucceeded(ctx context.C
 	result.Poller = &LROsCustomHeaderPostAsyncRetrySucceededPoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumePostAsyncRetrySucceeded creates a new LROsCustomHeaderPostAsyncRetrySucceededPoller from the specified resume token.
-// token - The value must come from a previous call to LROsCustomHeaderPostAsyncRetrySucceededPoller.ResumeToken().
-func (client *LROsCustomHeaderClient) ResumePostAsyncRetrySucceeded(ctx context.Context, token string) (LROsCustomHeaderPostAsyncRetrySucceededPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("LROsCustomHeaderClient.PostAsyncRetrySucceeded", token, client.con.Pipeline(), client.postAsyncRetrySucceededHandleError)
-	if err != nil {
-		return LROsCustomHeaderPostAsyncRetrySucceededPollerResponse{}, err
-	}
-	poller := &LROsCustomHeaderPostAsyncRetrySucceededPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return LROsCustomHeaderPostAsyncRetrySucceededPollerResponse{}, err
-	}
-	result := LROsCustomHeaderPostAsyncRetrySucceededPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 
@@ -230,28 +186,6 @@ func (client *LROsCustomHeaderClient) BeginPut201CreatingSucceeded200(ctx contex
 	return result, nil
 }
 
-// ResumePut201CreatingSucceeded200 creates a new LROsCustomHeaderPut201CreatingSucceeded200Poller from the specified resume token.
-// token - The value must come from a previous call to LROsCustomHeaderPut201CreatingSucceeded200Poller.ResumeToken().
-func (client *LROsCustomHeaderClient) ResumePut201CreatingSucceeded200(ctx context.Context, token string) (LROsCustomHeaderPut201CreatingSucceeded200PollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("LROsCustomHeaderClient.Put201CreatingSucceeded200", token, client.con.Pipeline(), client.put201CreatingSucceeded200HandleError)
-	if err != nil {
-		return LROsCustomHeaderPut201CreatingSucceeded200PollerResponse{}, err
-	}
-	poller := &LROsCustomHeaderPut201CreatingSucceeded200Poller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return LROsCustomHeaderPut201CreatingSucceeded200PollerResponse{}, err
-	}
-	result := LROsCustomHeaderPut201CreatingSucceeded200PollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // Put201CreatingSucceeded200 - x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 is required message header for all requests. Long running
 // put request, service returns a 201 to the initial request, with an entity that
 // contains ProvisioningState=’Creating’. Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
@@ -318,28 +252,6 @@ func (client *LROsCustomHeaderClient) BeginPutAsyncRetrySucceeded(ctx context.Co
 	result.Poller = &LROsCustomHeaderPutAsyncRetrySucceededPoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumePutAsyncRetrySucceeded creates a new LROsCustomHeaderPutAsyncRetrySucceededPoller from the specified resume token.
-// token - The value must come from a previous call to LROsCustomHeaderPutAsyncRetrySucceededPoller.ResumeToken().
-func (client *LROsCustomHeaderClient) ResumePutAsyncRetrySucceeded(ctx context.Context, token string) (LROsCustomHeaderPutAsyncRetrySucceededPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("LROsCustomHeaderClient.PutAsyncRetrySucceeded", token, client.con.Pipeline(), client.putAsyncRetrySucceededHandleError)
-	if err != nil {
-		return LROsCustomHeaderPutAsyncRetrySucceededPollerResponse{}, err
-	}
-	poller := &LROsCustomHeaderPutAsyncRetrySucceededPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return LROsCustomHeaderPutAsyncRetrySucceededPollerResponse{}, err
-	}
-	result := LROsCustomHeaderPutAsyncRetrySucceededPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

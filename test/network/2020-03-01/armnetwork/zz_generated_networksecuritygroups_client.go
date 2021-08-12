@@ -50,28 +50,6 @@ func (client *NetworkSecurityGroupsClient) BeginCreateOrUpdate(ctx context.Conte
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new NetworkSecurityGroupsCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to NetworkSecurityGroupsCreateOrUpdatePoller.ResumeToken().
-func (client *NetworkSecurityGroupsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (NetworkSecurityGroupsCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("NetworkSecurityGroupsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return NetworkSecurityGroupsCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &NetworkSecurityGroupsCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return NetworkSecurityGroupsCreateOrUpdatePollerResponse{}, err
-	}
-	result := NetworkSecurityGroupsCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Creates or updates a network security group in the specified resource group.
 // If the operation fails it returns the *CloudError error type.
 func (client *NetworkSecurityGroupsClient) createOrUpdate(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, parameters NetworkSecurityGroup, options *NetworkSecurityGroupsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -146,28 +124,6 @@ func (client *NetworkSecurityGroupsClient) BeginDelete(ctx context.Context, reso
 	result.Poller = &NetworkSecurityGroupsDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new NetworkSecurityGroupsDeletePoller from the specified resume token.
-// token - The value must come from a previous call to NetworkSecurityGroupsDeletePoller.ResumeToken().
-func (client *NetworkSecurityGroupsClient) ResumeDelete(ctx context.Context, token string) (NetworkSecurityGroupsDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("NetworkSecurityGroupsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return NetworkSecurityGroupsDeletePollerResponse{}, err
-	}
-	poller := &NetworkSecurityGroupsDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return NetworkSecurityGroupsDeletePollerResponse{}, err
-	}
-	result := NetworkSecurityGroupsDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

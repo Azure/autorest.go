@@ -50,28 +50,6 @@ func (client *IPAllocationsClient) BeginCreateOrUpdate(ctx context.Context, reso
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new IPAllocationsCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to IPAllocationsCreateOrUpdatePoller.ResumeToken().
-func (client *IPAllocationsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (IPAllocationsCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("IPAllocationsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return IPAllocationsCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &IPAllocationsCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return IPAllocationsCreateOrUpdatePollerResponse{}, err
-	}
-	result := IPAllocationsCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Creates or updates an IpAllocation in the specified resource group.
 // If the operation fails it returns the *CloudError error type.
 func (client *IPAllocationsClient) createOrUpdate(ctx context.Context, resourceGroupName string, ipAllocationName string, parameters IPAllocation, options *IPAllocationsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -146,28 +124,6 @@ func (client *IPAllocationsClient) BeginDelete(ctx context.Context, resourceGrou
 	result.Poller = &IPAllocationsDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new IPAllocationsDeletePoller from the specified resume token.
-// token - The value must come from a previous call to IPAllocationsDeletePoller.ResumeToken().
-func (client *IPAllocationsClient) ResumeDelete(ctx context.Context, token string) (IPAllocationsDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("IPAllocationsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return IPAllocationsDeletePollerResponse{}, err
-	}
-	poller := &IPAllocationsDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return IPAllocationsDeletePollerResponse{}, err
-	}
-	result := IPAllocationsDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

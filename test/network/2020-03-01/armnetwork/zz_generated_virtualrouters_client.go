@@ -50,28 +50,6 @@ func (client *VirtualRoutersClient) BeginCreateOrUpdate(ctx context.Context, res
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new VirtualRoutersCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to VirtualRoutersCreateOrUpdatePoller.ResumeToken().
-func (client *VirtualRoutersClient) ResumeCreateOrUpdate(ctx context.Context, token string) (VirtualRoutersCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualRoutersClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return VirtualRoutersCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &VirtualRoutersCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualRoutersCreateOrUpdatePollerResponse{}, err
-	}
-	result := VirtualRoutersCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Creates or updates the specified Virtual Router.
 // If the operation fails it returns the *Error error type.
 func (client *VirtualRoutersClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualRouterName string, parameters VirtualRouter, options *VirtualRoutersBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -146,28 +124,6 @@ func (client *VirtualRoutersClient) BeginDelete(ctx context.Context, resourceGro
 	result.Poller = &VirtualRoutersDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new VirtualRoutersDeletePoller from the specified resume token.
-// token - The value must come from a previous call to VirtualRoutersDeletePoller.ResumeToken().
-func (client *VirtualRoutersClient) ResumeDelete(ctx context.Context, token string) (VirtualRoutersDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualRoutersClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return VirtualRoutersDeletePollerResponse{}, err
-	}
-	poller := &VirtualRoutersDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualRoutersDeletePollerResponse{}, err
-	}
-	result := VirtualRoutersDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

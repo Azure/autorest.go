@@ -50,28 +50,6 @@ func (client *VPNSitesClient) BeginCreateOrUpdate(ctx context.Context, resourceG
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new VPNSitesCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to VPNSitesCreateOrUpdatePoller.ResumeToken().
-func (client *VPNSitesClient) ResumeCreateOrUpdate(ctx context.Context, token string) (VPNSitesCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VPNSitesClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return VPNSitesCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &VPNSitesCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VPNSitesCreateOrUpdatePollerResponse{}, err
-	}
-	result := VPNSitesCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Creates a VpnSite resource if it doesn't exist else updates the existing VpnSite.
 // If the operation fails it returns the *CloudError error type.
 func (client *VPNSitesClient) createOrUpdate(ctx context.Context, resourceGroupName string, vpnSiteName string, vpnSiteParameters VPNSite, options *VPNSitesBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -146,28 +124,6 @@ func (client *VPNSitesClient) BeginDelete(ctx context.Context, resourceGroupName
 	result.Poller = &VPNSitesDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new VPNSitesDeletePoller from the specified resume token.
-// token - The value must come from a previous call to VPNSitesDeletePoller.ResumeToken().
-func (client *VPNSitesClient) ResumeDelete(ctx context.Context, token string) (VPNSitesDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VPNSitesClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return VPNSitesDeletePollerResponse{}, err
-	}
-	poller := &VPNSitesDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VPNSitesDeletePollerResponse{}, err
-	}
-	result := VPNSitesDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

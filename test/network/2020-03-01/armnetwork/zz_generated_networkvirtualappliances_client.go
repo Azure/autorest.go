@@ -50,28 +50,6 @@ func (client *NetworkVirtualAppliancesClient) BeginCreateOrUpdate(ctx context.Co
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new NetworkVirtualAppliancesCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to NetworkVirtualAppliancesCreateOrUpdatePoller.ResumeToken().
-func (client *NetworkVirtualAppliancesClient) ResumeCreateOrUpdate(ctx context.Context, token string) (NetworkVirtualAppliancesCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("NetworkVirtualAppliancesClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return NetworkVirtualAppliancesCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &NetworkVirtualAppliancesCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return NetworkVirtualAppliancesCreateOrUpdatePollerResponse{}, err
-	}
-	result := NetworkVirtualAppliancesCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Creates or updates the specified Network Virtual Appliance.
 // If the operation fails it returns the *CloudError error type.
 func (client *NetworkVirtualAppliancesClient) createOrUpdate(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, parameters NetworkVirtualAppliance, options *NetworkVirtualAppliancesBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -146,28 +124,6 @@ func (client *NetworkVirtualAppliancesClient) BeginDelete(ctx context.Context, r
 	result.Poller = &NetworkVirtualAppliancesDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new NetworkVirtualAppliancesDeletePoller from the specified resume token.
-// token - The value must come from a previous call to NetworkVirtualAppliancesDeletePoller.ResumeToken().
-func (client *NetworkVirtualAppliancesClient) ResumeDelete(ctx context.Context, token string) (NetworkVirtualAppliancesDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("NetworkVirtualAppliancesClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return NetworkVirtualAppliancesDeletePollerResponse{}, err
-	}
-	poller := &NetworkVirtualAppliancesDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return NetworkVirtualAppliancesDeletePollerResponse{}, err
-	}
-	result := NetworkVirtualAppliancesDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

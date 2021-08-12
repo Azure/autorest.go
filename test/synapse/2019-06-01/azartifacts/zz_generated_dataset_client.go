@@ -41,28 +41,6 @@ func (client *datasetClient) BeginCreateOrUpdateDataset(ctx context.Context, dat
 	return result, nil
 }
 
-// ResumeCreateOrUpdateDataset creates a new DatasetCreateOrUpdateDatasetPoller from the specified resume token.
-// token - The value must come from a previous call to DatasetCreateOrUpdateDatasetPoller.ResumeToken().
-func (client *datasetClient) ResumeCreateOrUpdateDataset(ctx context.Context, token string) (DatasetCreateOrUpdateDatasetPollerResponse, error) {
-	pt, err := azcore.NewLROPollerFromResumeToken("datasetClient.CreateOrUpdateDataset", token, client.con.Pipeline(), client.createOrUpdateDatasetHandleError)
-	if err != nil {
-		return DatasetCreateOrUpdateDatasetPollerResponse{}, err
-	}
-	poller := &DatasetCreateOrUpdateDatasetPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return DatasetCreateOrUpdateDatasetPollerResponse{}, err
-	}
-	result := DatasetCreateOrUpdateDatasetPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdateDataset - Creates or updates a dataset.
 // If the operation fails it returns the *CloudError error type.
 func (client *datasetClient) createOrUpdateDataset(ctx context.Context, datasetName string, dataset DatasetResource, options *DatasetBeginCreateOrUpdateDatasetOptions) (*azcore.Response, error) {
@@ -132,28 +110,6 @@ func (client *datasetClient) BeginDeleteDataset(ctx context.Context, datasetName
 	result.Poller = &DatasetDeleteDatasetPoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDeleteDataset creates a new DatasetDeleteDatasetPoller from the specified resume token.
-// token - The value must come from a previous call to DatasetDeleteDatasetPoller.ResumeToken().
-func (client *datasetClient) ResumeDeleteDataset(ctx context.Context, token string) (DatasetDeleteDatasetPollerResponse, error) {
-	pt, err := azcore.NewLROPollerFromResumeToken("datasetClient.DeleteDataset", token, client.con.Pipeline(), client.deleteDatasetHandleError)
-	if err != nil {
-		return DatasetDeleteDatasetPollerResponse{}, err
-	}
-	poller := &DatasetDeleteDatasetPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return DatasetDeleteDatasetPollerResponse{}, err
-	}
-	result := DatasetDeleteDatasetPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 
@@ -335,28 +291,6 @@ func (client *datasetClient) BeginRenameDataset(ctx context.Context, datasetName
 	result.Poller = &DatasetRenameDatasetPoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeRenameDataset creates a new DatasetRenameDatasetPoller from the specified resume token.
-// token - The value must come from a previous call to DatasetRenameDatasetPoller.ResumeToken().
-func (client *datasetClient) ResumeRenameDataset(ctx context.Context, token string) (DatasetRenameDatasetPollerResponse, error) {
-	pt, err := azcore.NewLROPollerFromResumeToken("datasetClient.RenameDataset", token, client.con.Pipeline(), client.renameDatasetHandleError)
-	if err != nil {
-		return DatasetRenameDatasetPollerResponse{}, err
-	}
-	poller := &DatasetRenameDatasetPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return DatasetRenameDatasetPollerResponse{}, err
-	}
-	result := DatasetRenameDatasetPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

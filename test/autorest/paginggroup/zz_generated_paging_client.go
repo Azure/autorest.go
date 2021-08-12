@@ -356,29 +356,6 @@ func (client *PagingClient) BeginGetMultiplePagesLRO(ctx context.Context, option
 	return result, nil
 }
 
-// ResumeGetMultiplePagesLRO creates a new PagingGetMultiplePagesLROPoller from the specified resume token.
-// token - The value must come from a previous call to PagingGetMultiplePagesLROPoller.ResumeToken().
-func (client *PagingClient) ResumeGetMultiplePagesLRO(ctx context.Context, token string) (PagingGetMultiplePagesLROPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("PagingClient.GetMultiplePagesLRO", token, client.con.Pipeline(), client.getMultiplePagesLROHandleError)
-	if err != nil {
-		return PagingGetMultiplePagesLROPollerResponse{}, err
-	}
-	poller := &PagingGetMultiplePagesLROPoller{
-		pt:     pt,
-		client: client,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return PagingGetMultiplePagesLROPollerResponse{}, err
-	}
-	result := PagingGetMultiplePagesLROPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // GetMultiplePagesLRO - A long-running paging operation that includes a nextLink that has 10 pages
 // If the operation fails it returns a generic error.
 func (client *PagingClient) getMultiplePagesLRO(ctx context.Context, options *PagingBeginGetMultiplePagesLROOptions) (*azcore.Response, error) {

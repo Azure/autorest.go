@@ -113,28 +113,6 @@ func (client *NetworkManagementClient) BeginDeleteBastionShareableLink(ctx conte
 	return result, nil
 }
 
-// ResumeDeleteBastionShareableLink creates a new NetworkManagementClientDeleteBastionShareableLinkPoller from the specified resume token.
-// token - The value must come from a previous call to NetworkManagementClientDeleteBastionShareableLinkPoller.ResumeToken().
-func (client *NetworkManagementClient) ResumeDeleteBastionShareableLink(ctx context.Context, token string) (NetworkManagementClientDeleteBastionShareableLinkPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("NetworkManagementClient.DeleteBastionShareableLink", token, client.con.Pipeline(), client.deleteBastionShareableLinkHandleError)
-	if err != nil {
-		return NetworkManagementClientDeleteBastionShareableLinkPollerResponse{}, err
-	}
-	poller := &NetworkManagementClientDeleteBastionShareableLinkPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return NetworkManagementClientDeleteBastionShareableLinkPollerResponse{}, err
-	}
-	result := NetworkManagementClientDeleteBastionShareableLinkPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // DeleteBastionShareableLink - Deletes the Bastion Shareable Links for all the VMs specified in the request.
 // If the operation fails it returns the *CloudError error type.
 func (client *NetworkManagementClient) deleteBastionShareableLink(ctx context.Context, resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest, options *NetworkManagementClientBeginDeleteBastionShareableLinkOptions) (*azcore.Response, error) {
@@ -276,28 +254,6 @@ func (client *NetworkManagementClient) BeginGeneratevirtualwanvpnserverconfigura
 	return result, nil
 }
 
-// ResumeGeneratevirtualwanvpnserverconfigurationvpnprofile creates a new NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePoller from the specified resume token.
-// token - The value must come from a previous call to NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePoller.ResumeToken().
-func (client *NetworkManagementClient) ResumeGeneratevirtualwanvpnserverconfigurationvpnprofile(ctx context.Context, token string) (NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("NetworkManagementClient.Generatevirtualwanvpnserverconfigurationvpnprofile", token, client.con.Pipeline(), client.generatevirtualwanvpnserverconfigurationvpnprofileHandleError)
-	if err != nil {
-		return NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePollerResponse{}, err
-	}
-	poller := &NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePollerResponse{}, err
-	}
-	result := NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // Generatevirtualwanvpnserverconfigurationvpnprofile - Generates a unique VPN profile for P2S clients for VirtualWan and associated VpnServerConfiguration
 // combination in the specified resource group.
 // If the operation fails it returns the *CloudError error type.
@@ -374,29 +330,6 @@ func (client *NetworkManagementClient) BeginGetActiveSessions(ctx context.Contex
 		pt:     pt,
 		client: client,
 	}
-	return result, nil
-}
-
-// ResumeGetActiveSessions creates a new NetworkManagementClientGetActiveSessionsPoller from the specified resume token.
-// token - The value must come from a previous call to NetworkManagementClientGetActiveSessionsPoller.ResumeToken().
-func (client *NetworkManagementClient) ResumeGetActiveSessions(ctx context.Context, token string) (NetworkManagementClientGetActiveSessionsPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("NetworkManagementClient.GetActiveSessions", token, client.con.Pipeline(), client.getActiveSessionsHandleError)
-	if err != nil {
-		return NetworkManagementClientGetActiveSessionsPollerResponse{}, err
-	}
-	poller := &NetworkManagementClientGetActiveSessionsPoller{
-		pt:     pt,
-		client: client,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return NetworkManagementClientGetActiveSessionsPollerResponse{}, err
-	}
-	result := NetworkManagementClientGetActiveSessionsPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 
@@ -547,29 +480,6 @@ func (client *NetworkManagementClient) BeginPutBastionShareableLink(ctx context.
 		pt:     pt,
 		client: client,
 	}
-	return result, nil
-}
-
-// ResumePutBastionShareableLink creates a new NetworkManagementClientPutBastionShareableLinkPoller from the specified resume token.
-// token - The value must come from a previous call to NetworkManagementClientPutBastionShareableLinkPoller.ResumeToken().
-func (client *NetworkManagementClient) ResumePutBastionShareableLink(ctx context.Context, token string) (NetworkManagementClientPutBastionShareableLinkPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("NetworkManagementClient.PutBastionShareableLink", token, client.con.Pipeline(), client.putBastionShareableLinkHandleError)
-	if err != nil {
-		return NetworkManagementClientPutBastionShareableLinkPollerResponse{}, err
-	}
-	poller := &NetworkManagementClientPutBastionShareableLinkPoller{
-		pt:     pt,
-		client: client,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return NetworkManagementClientPutBastionShareableLinkPollerResponse{}, err
-	}
-	result := NetworkManagementClientPutBastionShareableLinkPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

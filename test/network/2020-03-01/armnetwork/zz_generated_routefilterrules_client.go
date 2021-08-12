@@ -50,28 +50,6 @@ func (client *RouteFilterRulesClient) BeginCreateOrUpdate(ctx context.Context, r
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new RouteFilterRulesCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to RouteFilterRulesCreateOrUpdatePoller.ResumeToken().
-func (client *RouteFilterRulesClient) ResumeCreateOrUpdate(ctx context.Context, token string) (RouteFilterRulesCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("RouteFilterRulesClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return RouteFilterRulesCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &RouteFilterRulesCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return RouteFilterRulesCreateOrUpdatePollerResponse{}, err
-	}
-	result := RouteFilterRulesCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Creates or updates a route in the specified route filter.
 // If the operation fails it returns the *CloudError error type.
 func (client *RouteFilterRulesClient) createOrUpdate(ctx context.Context, resourceGroupName string, routeFilterName string, ruleName string, routeFilterRuleParameters RouteFilterRule, options *RouteFilterRulesBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -150,28 +128,6 @@ func (client *RouteFilterRulesClient) BeginDelete(ctx context.Context, resourceG
 	result.Poller = &RouteFilterRulesDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new RouteFilterRulesDeletePoller from the specified resume token.
-// token - The value must come from a previous call to RouteFilterRulesDeletePoller.ResumeToken().
-func (client *RouteFilterRulesClient) ResumeDelete(ctx context.Context, token string) (RouteFilterRulesDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("RouteFilterRulesClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return RouteFilterRulesDeletePollerResponse{}, err
-	}
-	poller := &RouteFilterRulesDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return RouteFilterRulesDeletePollerResponse{}, err
-	}
-	result := RouteFilterRulesDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

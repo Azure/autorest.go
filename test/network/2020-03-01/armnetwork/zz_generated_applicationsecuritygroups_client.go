@@ -50,28 +50,6 @@ func (client *ApplicationSecurityGroupsClient) BeginCreateOrUpdate(ctx context.C
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new ApplicationSecurityGroupsCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to ApplicationSecurityGroupsCreateOrUpdatePoller.ResumeToken().
-func (client *ApplicationSecurityGroupsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (ApplicationSecurityGroupsCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("ApplicationSecurityGroupsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return ApplicationSecurityGroupsCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &ApplicationSecurityGroupsCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return ApplicationSecurityGroupsCreateOrUpdatePollerResponse{}, err
-	}
-	result := ApplicationSecurityGroupsCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Creates or updates an application security group.
 // If the operation fails it returns the *CloudError error type.
 func (client *ApplicationSecurityGroupsClient) createOrUpdate(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string, parameters ApplicationSecurityGroup, options *ApplicationSecurityGroupsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -146,28 +124,6 @@ func (client *ApplicationSecurityGroupsClient) BeginDelete(ctx context.Context, 
 	result.Poller = &ApplicationSecurityGroupsDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new ApplicationSecurityGroupsDeletePoller from the specified resume token.
-// token - The value must come from a previous call to ApplicationSecurityGroupsDeletePoller.ResumeToken().
-func (client *ApplicationSecurityGroupsClient) ResumeDelete(ctx context.Context, token string) (ApplicationSecurityGroupsDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("ApplicationSecurityGroupsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return ApplicationSecurityGroupsDeletePollerResponse{}, err
-	}
-	poller := &ApplicationSecurityGroupsDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return ApplicationSecurityGroupsDeletePollerResponse{}, err
-	}
-	result := ApplicationSecurityGroupsDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

@@ -50,28 +50,6 @@ func (client *VirtualHubsClient) BeginCreateOrUpdate(ctx context.Context, resour
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new VirtualHubsCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to VirtualHubsCreateOrUpdatePoller.ResumeToken().
-func (client *VirtualHubsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (VirtualHubsCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualHubsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return VirtualHubsCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &VirtualHubsCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualHubsCreateOrUpdatePollerResponse{}, err
-	}
-	result := VirtualHubsCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Creates a VirtualHub resource if it doesn't exist else updates the existing VirtualHub.
 // If the operation fails it returns the *CloudError error type.
 func (client *VirtualHubsClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualHubName string, virtualHubParameters VirtualHub, options *VirtualHubsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -146,28 +124,6 @@ func (client *VirtualHubsClient) BeginDelete(ctx context.Context, resourceGroupN
 	result.Poller = &VirtualHubsDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new VirtualHubsDeletePoller from the specified resume token.
-// token - The value must come from a previous call to VirtualHubsDeletePoller.ResumeToken().
-func (client *VirtualHubsClient) ResumeDelete(ctx context.Context, token string) (VirtualHubsDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualHubsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return VirtualHubsDeletePollerResponse{}, err
-	}
-	poller := &VirtualHubsDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualHubsDeletePollerResponse{}, err
-	}
-	result := VirtualHubsDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

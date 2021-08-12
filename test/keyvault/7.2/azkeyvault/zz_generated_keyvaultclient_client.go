@@ -1049,28 +1049,6 @@ func (client *KeyVaultClient) BeginFullBackup(ctx context.Context, vaultBaseURL 
 	return result, nil
 }
 
-// ResumeFullBackup creates a new KeyVaultClientFullBackupPoller from the specified resume token.
-// token - The value must come from a previous call to KeyVaultClientFullBackupPoller.ResumeToken().
-func (client *KeyVaultClient) ResumeFullBackup(ctx context.Context, token string) (KeyVaultClientFullBackupPollerResponse, error) {
-	pt, err := azcore.NewLROPollerFromResumeToken("KeyVaultClient.FullBackup", token, client.con.Pipeline(), client.fullBackupHandleError)
-	if err != nil {
-		return KeyVaultClientFullBackupPollerResponse{}, err
-	}
-	poller := &KeyVaultClientFullBackupPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return KeyVaultClientFullBackupPollerResponse{}, err
-	}
-	result := KeyVaultClientFullBackupPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // FullBackup - Creates a full backup using a user-provided SAS token to an Azure blob storage container.
 // If the operation fails it returns the *KeyVaultError error type.
 func (client *KeyVaultClient) fullBackup(ctx context.Context, vaultBaseURL string, options *KeyVaultClientBeginFullBackupOptions) (*azcore.Response, error) {
@@ -1198,28 +1176,6 @@ func (client *KeyVaultClient) BeginFullRestoreOperation(ctx context.Context, vau
 	result.Poller = &KeyVaultClientFullRestoreOperationPoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeFullRestoreOperation creates a new KeyVaultClientFullRestoreOperationPoller from the specified resume token.
-// token - The value must come from a previous call to KeyVaultClientFullRestoreOperationPoller.ResumeToken().
-func (client *KeyVaultClient) ResumeFullRestoreOperation(ctx context.Context, token string) (KeyVaultClientFullRestoreOperationPollerResponse, error) {
-	pt, err := azcore.NewLROPollerFromResumeToken("KeyVaultClient.FullRestoreOperation", token, client.con.Pipeline(), client.fullRestoreOperationHandleError)
-	if err != nil {
-		return KeyVaultClientFullRestoreOperationPollerResponse{}, err
-	}
-	poller := &KeyVaultClientFullRestoreOperationPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return KeyVaultClientFullRestoreOperationPollerResponse{}, err
-	}
-	result := KeyVaultClientFullRestoreOperationPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 
@@ -4047,28 +4003,6 @@ func (client *KeyVaultClient) BeginSelectiveKeyRestoreOperation(ctx context.Cont
 	result.Poller = &KeyVaultClientSelectiveKeyRestoreOperationPoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeSelectiveKeyRestoreOperation creates a new KeyVaultClientSelectiveKeyRestoreOperationPoller from the specified resume token.
-// token - The value must come from a previous call to KeyVaultClientSelectiveKeyRestoreOperationPoller.ResumeToken().
-func (client *KeyVaultClient) ResumeSelectiveKeyRestoreOperation(ctx context.Context, token string) (KeyVaultClientSelectiveKeyRestoreOperationPollerResponse, error) {
-	pt, err := azcore.NewLROPollerFromResumeToken("KeyVaultClient.SelectiveKeyRestoreOperation", token, client.con.Pipeline(), client.selectiveKeyRestoreOperationHandleError)
-	if err != nil {
-		return KeyVaultClientSelectiveKeyRestoreOperationPollerResponse{}, err
-	}
-	poller := &KeyVaultClientSelectiveKeyRestoreOperationPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return KeyVaultClientSelectiveKeyRestoreOperationPollerResponse{}, err
-	}
-	result := KeyVaultClientSelectiveKeyRestoreOperationPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

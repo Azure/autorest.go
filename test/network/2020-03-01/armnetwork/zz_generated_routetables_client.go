@@ -50,28 +50,6 @@ func (client *RouteTablesClient) BeginCreateOrUpdate(ctx context.Context, resour
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new RouteTablesCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to RouteTablesCreateOrUpdatePoller.ResumeToken().
-func (client *RouteTablesClient) ResumeCreateOrUpdate(ctx context.Context, token string) (RouteTablesCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("RouteTablesClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return RouteTablesCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &RouteTablesCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return RouteTablesCreateOrUpdatePollerResponse{}, err
-	}
-	result := RouteTablesCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Create or updates a route table in a specified resource group.
 // If the operation fails it returns the *CloudError error type.
 func (client *RouteTablesClient) createOrUpdate(ctx context.Context, resourceGroupName string, routeTableName string, parameters RouteTable, options *RouteTablesBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -146,28 +124,6 @@ func (client *RouteTablesClient) BeginDelete(ctx context.Context, resourceGroupN
 	result.Poller = &RouteTablesDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new RouteTablesDeletePoller from the specified resume token.
-// token - The value must come from a previous call to RouteTablesDeletePoller.ResumeToken().
-func (client *RouteTablesClient) ResumeDelete(ctx context.Context, token string) (RouteTablesDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("RouteTablesClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return RouteTablesDeletePollerResponse{}, err
-	}
-	poller := &RouteTablesDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return RouteTablesDeletePollerResponse{}, err
-	}
-	result := RouteTablesDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

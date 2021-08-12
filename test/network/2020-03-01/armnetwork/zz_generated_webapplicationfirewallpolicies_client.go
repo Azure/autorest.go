@@ -116,28 +116,6 @@ func (client *WebApplicationFirewallPoliciesClient) BeginDelete(ctx context.Cont
 	return result, nil
 }
 
-// ResumeDelete creates a new WebApplicationFirewallPoliciesDeletePoller from the specified resume token.
-// token - The value must come from a previous call to WebApplicationFirewallPoliciesDeletePoller.ResumeToken().
-func (client *WebApplicationFirewallPoliciesClient) ResumeDelete(ctx context.Context, token string) (WebApplicationFirewallPoliciesDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("WebApplicationFirewallPoliciesClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return WebApplicationFirewallPoliciesDeletePollerResponse{}, err
-	}
-	poller := &WebApplicationFirewallPoliciesDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return WebApplicationFirewallPoliciesDeletePollerResponse{}, err
-	}
-	result := WebApplicationFirewallPoliciesDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // Delete - Deletes Policy.
 // If the operation fails it returns the *CloudError error type.
 func (client *WebApplicationFirewallPoliciesClient) deleteOperation(ctx context.Context, resourceGroupName string, policyName string, options *WebApplicationFirewallPoliciesBeginDeleteOptions) (*azcore.Response, error) {

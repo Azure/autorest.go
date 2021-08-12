@@ -50,28 +50,6 @@ func (client *ServiceEndpointPolicyDefinitionsClient) BeginCreateOrUpdate(ctx co
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new ServiceEndpointPolicyDefinitionsCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to ServiceEndpointPolicyDefinitionsCreateOrUpdatePoller.ResumeToken().
-func (client *ServiceEndpointPolicyDefinitionsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (ServiceEndpointPolicyDefinitionsCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("ServiceEndpointPolicyDefinitionsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return ServiceEndpointPolicyDefinitionsCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &ServiceEndpointPolicyDefinitionsCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return ServiceEndpointPolicyDefinitionsCreateOrUpdatePollerResponse{}, err
-	}
-	result := ServiceEndpointPolicyDefinitionsCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Creates or updates a service endpoint policy definition in the specified service endpoint policy.
 // If the operation fails it returns the *CloudError error type.
 func (client *ServiceEndpointPolicyDefinitionsClient) createOrUpdate(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, serviceEndpointPolicyDefinitionName string, serviceEndpointPolicyDefinitions ServiceEndpointPolicyDefinition, options *ServiceEndpointPolicyDefinitionsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -150,28 +128,6 @@ func (client *ServiceEndpointPolicyDefinitionsClient) BeginDelete(ctx context.Co
 	result.Poller = &ServiceEndpointPolicyDefinitionsDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new ServiceEndpointPolicyDefinitionsDeletePoller from the specified resume token.
-// token - The value must come from a previous call to ServiceEndpointPolicyDefinitionsDeletePoller.ResumeToken().
-func (client *ServiceEndpointPolicyDefinitionsClient) ResumeDelete(ctx context.Context, token string) (ServiceEndpointPolicyDefinitionsDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("ServiceEndpointPolicyDefinitionsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return ServiceEndpointPolicyDefinitionsDeletePollerResponse{}, err
-	}
-	poller := &ServiceEndpointPolicyDefinitionsDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return ServiceEndpointPolicyDefinitionsDeletePollerResponse{}, err
-	}
-	result := ServiceEndpointPolicyDefinitionsDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

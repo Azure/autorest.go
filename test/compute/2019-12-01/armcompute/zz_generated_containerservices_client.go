@@ -49,28 +49,6 @@ func (client *ContainerServicesClient) BeginCreateOrUpdate(ctx context.Context, 
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new ContainerServicesCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to ContainerServicesCreateOrUpdatePoller.ResumeToken().
-func (client *ContainerServicesClient) ResumeCreateOrUpdate(ctx context.Context, token string) (ContainerServicesCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("ContainerServicesClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return ContainerServicesCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &ContainerServicesCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return ContainerServicesCreateOrUpdatePollerResponse{}, err
-	}
-	result := ContainerServicesCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Creates or updates a container service with the specified configuration of orchestrator, masters, and agents.
 // If the operation fails it returns a generic error.
 func (client *ContainerServicesClient) createOrUpdate(ctx context.Context, resourceGroupName string, containerServiceName string, parameters ContainerService, options *ContainerServicesBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -147,28 +125,6 @@ func (client *ContainerServicesClient) BeginDelete(ctx context.Context, resource
 	result.Poller = &ContainerServicesDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new ContainerServicesDeletePoller from the specified resume token.
-// token - The value must come from a previous call to ContainerServicesDeletePoller.ResumeToken().
-func (client *ContainerServicesClient) ResumeDelete(ctx context.Context, token string) (ContainerServicesDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("ContainerServicesClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return ContainerServicesDeletePollerResponse{}, err
-	}
-	poller := &ContainerServicesDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return ContainerServicesDeletePollerResponse{}, err
-	}
-	result := ContainerServicesDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

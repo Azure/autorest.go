@@ -50,28 +50,6 @@ func (client *NatGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resour
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new NatGatewaysCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to NatGatewaysCreateOrUpdatePoller.ResumeToken().
-func (client *NatGatewaysClient) ResumeCreateOrUpdate(ctx context.Context, token string) (NatGatewaysCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("NatGatewaysClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return NatGatewaysCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &NatGatewaysCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return NatGatewaysCreateOrUpdatePollerResponse{}, err
-	}
-	result := NatGatewaysCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Creates or updates a nat gateway.
 // If the operation fails it returns the *CloudError error type.
 func (client *NatGatewaysClient) createOrUpdate(ctx context.Context, resourceGroupName string, natGatewayName string, parameters NatGateway, options *NatGatewaysBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -146,28 +124,6 @@ func (client *NatGatewaysClient) BeginDelete(ctx context.Context, resourceGroupN
 	result.Poller = &NatGatewaysDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new NatGatewaysDeletePoller from the specified resume token.
-// token - The value must come from a previous call to NatGatewaysDeletePoller.ResumeToken().
-func (client *NatGatewaysClient) ResumeDelete(ctx context.Context, token string) (NatGatewaysDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("NatGatewaysClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return NatGatewaysDeletePollerResponse{}, err
-	}
-	poller := &NatGatewaysDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return NatGatewaysDeletePollerResponse{}, err
-	}
-	result := NatGatewaysDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

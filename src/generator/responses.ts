@@ -8,7 +8,7 @@ import { comment } from '@azure-tools/codegen';
 import { CodeModel, ObjectSchema, Property } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
 import { commentLength, isObjectSchema, PagerInfo, PollerInfo } from '../common/helpers';
-import { contentPreamble, getFinalResponseEnvelopeName, sortAscending } from './helpers';
+import { contentPreamble, emitPoller, getFinalResponseEnvelopeName, sortAscending } from './helpers';
 import { ImportManager } from './imports';
 import { generateStruct, StructDef, StructMethod } from './structs';
 
@@ -25,6 +25,7 @@ export async function generateResponses(session: Session<CodeModel>): Promise<st
     const respType = generateStruct(imports, respEnv.language.go!, respEnv.properties);
     if (respEnv.language.go!.isLRO) {
       generatePollUntilDoneForResponse(respType);
+      generateResumeForResponse(respType, session.model.language.go!.openApiType === 'arm', imports);
     }
     structs.push(respType);
     // if the response envelope contains a result envelope, generate that too
@@ -129,6 +130,34 @@ function generatePollUntilDoneForResponse(structDef: StructDef) {
   pollUntilDone += '\treturn respType, nil\n';
   pollUntilDone += '}\n\n';
   structDef.Methods.push({ name: 'PollUntilDone', desc: 'PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.', text: pollUntilDone });
+}
+
+function generateResumeForResponse(structDef: StructDef, isARM: boolean, imports: ImportManager) {
+  const pollerInfo = <PollerInfo>structDef.Language.pollerInfo;
+  const clientName = pollerInfo.op.language.go!.clientName;
+  const apiMethod = pollerInfo.op.language.go!.name;
+  const errorMethod = pollerInfo.op.language.go!.protocolNaming.errorMethod;
+  let resume = `func (l *${structDef.Language.name}) Resume(ctx context.Context, client *${clientName}, token string) error {`;
+  if (isARM) {
+    imports.add('github.com/Azure/azure-sdk-for-go/sdk/armcore');
+    resume += `\tpt, err := armcore.NewLROPollerFromResumeToken("${clientName}.${apiMethod}", token, client.con.Pipeline(), client.${errorMethod})\n`;
+  } else {
+    imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
+    resume += `\tpt, err := azcore.NewLROPollerFromResumeToken("${clientName}.${apiMethod}",token, client.con.Pipeline(), client.${errorMethod})\n`;
+  }
+  resume += '\tif err != nil {\n';
+  resume += `\t\treturn err\n`;
+  resume += '\t}\n';
+  resume += `\tpoller := ${emitPoller(pollerInfo.op)}`;
+  resume += '\tresp, err := poller.Poll(ctx)\n';
+  resume += '\tif err != nil {\n';
+  resume += `\t\treturn err\n`;
+  resume += '\t}\n';
+  resume += `\tl.Poller = poller\n`;
+  resume += '\tl.RawResponse = resp\n';
+  resume += `\treturn nil\n`;
+  resume += '}\n\n';
+  structDef.Methods.push({ name: 'Resume', desc: `Resume rehydrates a ${structDef.Language.name} from the provided client and resume token.`, text: resume });
 }
 
 function getResponseType(poller: PollerInfo): string {

@@ -9,6 +9,7 @@ package azkeyvault
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"time"
 )
@@ -43,6 +44,24 @@ func (l HSMSecurityDomainDownloadPollerResponse) PollUntilDone(ctx context.Conte
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a HSMSecurityDomainDownloadPollerResponse from the provided client and resume token.
+func (l *HSMSecurityDomainDownloadPollerResponse) Resume(ctx context.Context, client *HSMSecurityDomainClient, token string) error {
+	pt, err := azcore.NewLROPollerFromResumeToken("HSMSecurityDomainClient.Download", token, client.con.Pipeline(), client.downloadHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &HSMSecurityDomainDownloadPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // HSMSecurityDomainDownloadResponse contains the response from method HSMSecurityDomain.Download.
@@ -99,6 +118,24 @@ func (l HSMSecurityDomainUploadPollerResponse) PollUntilDone(ctx context.Context
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a HSMSecurityDomainUploadPollerResponse from the provided client and resume token.
+func (l *HSMSecurityDomainUploadPollerResponse) Resume(ctx context.Context, client *HSMSecurityDomainClient, token string) error {
+	pt, err := azcore.NewLROPollerFromResumeToken("HSMSecurityDomainClient.Upload", token, client.con.Pipeline(), client.uploadHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &HSMSecurityDomainUploadPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // HSMSecurityDomainUploadResponse contains the response from method HSMSecurityDomain.Upload.
@@ -325,6 +362,24 @@ func (l KeyVaultClientFullBackupPollerResponse) PollUntilDone(ctx context.Contex
 	return respType, nil
 }
 
+// Resume rehydrates a KeyVaultClientFullBackupPollerResponse from the provided client and resume token.
+func (l *KeyVaultClientFullBackupPollerResponse) Resume(ctx context.Context, client *KeyVaultClient, token string) error {
+	pt, err := azcore.NewLROPollerFromResumeToken("KeyVaultClient.FullBackup", token, client.con.Pipeline(), client.fullBackupHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &KeyVaultClientFullBackupPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // KeyVaultClientFullBackupResponse contains the response from method KeyVaultClient.FullBackup.
 type KeyVaultClientFullBackupResponse struct {
 	KeyVaultClientFullBackupResult
@@ -367,6 +422,24 @@ func (l KeyVaultClientFullRestoreOperationPollerResponse) PollUntilDone(ctx cont
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a KeyVaultClientFullRestoreOperationPollerResponse from the provided client and resume token.
+func (l *KeyVaultClientFullRestoreOperationPollerResponse) Resume(ctx context.Context, client *KeyVaultClient, token string) error {
+	pt, err := azcore.NewLROPollerFromResumeToken("KeyVaultClient.FullRestoreOperation", token, client.con.Pipeline(), client.fullRestoreOperationHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &KeyVaultClientFullRestoreOperationPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // KeyVaultClientFullRestoreOperationResponse contains the response from method KeyVaultClient.FullRestoreOperation.
@@ -927,6 +1000,24 @@ func (l KeyVaultClientSelectiveKeyRestoreOperationPollerResponse) PollUntilDone(
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a KeyVaultClientSelectiveKeyRestoreOperationPollerResponse from the provided client and resume token.
+func (l *KeyVaultClientSelectiveKeyRestoreOperationPollerResponse) Resume(ctx context.Context, client *KeyVaultClient, token string) error {
+	pt, err := azcore.NewLROPollerFromResumeToken("KeyVaultClient.SelectiveKeyRestoreOperation", token, client.con.Pipeline(), client.selectiveKeyRestoreOperationHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &KeyVaultClientSelectiveKeyRestoreOperationPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // KeyVaultClientSelectiveKeyRestoreOperationResponse contains the response from method KeyVaultClient.SelectiveKeyRestoreOperation.

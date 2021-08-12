@@ -50,28 +50,6 @@ func (client *PacketCapturesClient) BeginCreate(ctx context.Context, resourceGro
 	return result, nil
 }
 
-// ResumeCreate creates a new PacketCapturesCreatePoller from the specified resume token.
-// token - The value must come from a previous call to PacketCapturesCreatePoller.ResumeToken().
-func (client *PacketCapturesClient) ResumeCreate(ctx context.Context, token string) (PacketCapturesCreatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("PacketCapturesClient.Create", token, client.con.Pipeline(), client.createHandleError)
-	if err != nil {
-		return PacketCapturesCreatePollerResponse{}, err
-	}
-	poller := &PacketCapturesCreatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return PacketCapturesCreatePollerResponse{}, err
-	}
-	result := PacketCapturesCreatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // Create - Create and start a packet capture on the specified VM.
 // If the operation fails it returns the *ErrorResponse error type.
 func (client *PacketCapturesClient) create(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, parameters PacketCapture, options *PacketCapturesBeginCreateOptions) (*azcore.Response, error) {
@@ -150,28 +128,6 @@ func (client *PacketCapturesClient) BeginDelete(ctx context.Context, resourceGro
 	result.Poller = &PacketCapturesDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new PacketCapturesDeletePoller from the specified resume token.
-// token - The value must come from a previous call to PacketCapturesDeletePoller.ResumeToken().
-func (client *PacketCapturesClient) ResumeDelete(ctx context.Context, token string) (PacketCapturesDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("PacketCapturesClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return PacketCapturesDeletePollerResponse{}, err
-	}
-	poller := &PacketCapturesDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return PacketCapturesDeletePollerResponse{}, err
-	}
-	result := PacketCapturesDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 
@@ -326,28 +282,6 @@ func (client *PacketCapturesClient) BeginGetStatus(ctx context.Context, resource
 	return result, nil
 }
 
-// ResumeGetStatus creates a new PacketCapturesGetStatusPoller from the specified resume token.
-// token - The value must come from a previous call to PacketCapturesGetStatusPoller.ResumeToken().
-func (client *PacketCapturesClient) ResumeGetStatus(ctx context.Context, token string) (PacketCapturesGetStatusPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("PacketCapturesClient.GetStatus", token, client.con.Pipeline(), client.getStatusHandleError)
-	if err != nil {
-		return PacketCapturesGetStatusPollerResponse{}, err
-	}
-	poller := &PacketCapturesGetStatusPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return PacketCapturesGetStatusPollerResponse{}, err
-	}
-	result := PacketCapturesGetStatusPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // GetStatus - Query the status of a running packet capture session.
 // If the operation fails it returns the *ErrorResponse error type.
 func (client *PacketCapturesClient) getStatus(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, options *PacketCapturesBeginGetStatusOptions) (*azcore.Response, error) {
@@ -492,28 +426,6 @@ func (client *PacketCapturesClient) BeginStop(ctx context.Context, resourceGroup
 	result.Poller = &PacketCapturesStopPoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeStop creates a new PacketCapturesStopPoller from the specified resume token.
-// token - The value must come from a previous call to PacketCapturesStopPoller.ResumeToken().
-func (client *PacketCapturesClient) ResumeStop(ctx context.Context, token string) (PacketCapturesStopPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("PacketCapturesClient.Stop", token, client.con.Pipeline(), client.stopHandleError)
-	if err != nil {
-		return PacketCapturesStopPollerResponse{}, err
-	}
-	poller := &PacketCapturesStopPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return PacketCapturesStopPollerResponse{}, err
-	}
-	result := PacketCapturesStopPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

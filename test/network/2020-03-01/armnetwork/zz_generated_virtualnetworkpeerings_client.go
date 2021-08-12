@@ -50,28 +50,6 @@ func (client *VirtualNetworkPeeringsClient) BeginCreateOrUpdate(ctx context.Cont
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new VirtualNetworkPeeringsCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to VirtualNetworkPeeringsCreateOrUpdatePoller.ResumeToken().
-func (client *VirtualNetworkPeeringsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (VirtualNetworkPeeringsCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworkPeeringsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return VirtualNetworkPeeringsCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &VirtualNetworkPeeringsCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualNetworkPeeringsCreateOrUpdatePollerResponse{}, err
-	}
-	result := VirtualNetworkPeeringsCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Creates or updates a peering in the specified virtual network.
 // If the operation fails it returns the *CloudError error type.
 func (client *VirtualNetworkPeeringsClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkName string, virtualNetworkPeeringName string, virtualNetworkPeeringParameters VirtualNetworkPeering, options *VirtualNetworkPeeringsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -150,28 +128,6 @@ func (client *VirtualNetworkPeeringsClient) BeginDelete(ctx context.Context, res
 	result.Poller = &VirtualNetworkPeeringsDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new VirtualNetworkPeeringsDeletePoller from the specified resume token.
-// token - The value must come from a previous call to VirtualNetworkPeeringsDeletePoller.ResumeToken().
-func (client *VirtualNetworkPeeringsClient) ResumeDelete(ctx context.Context, token string) (VirtualNetworkPeeringsDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworkPeeringsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return VirtualNetworkPeeringsDeletePollerResponse{}, err
-	}
-	poller := &VirtualNetworkPeeringsDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualNetworkPeeringsDeletePollerResponse{}, err
-	}
-	result := VirtualNetworkPeeringsDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

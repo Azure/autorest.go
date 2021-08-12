@@ -49,28 +49,6 @@ func (client *ImagesClient) BeginCreateOrUpdate(ctx context.Context, resourceGro
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new ImagesCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to ImagesCreateOrUpdatePoller.ResumeToken().
-func (client *ImagesClient) ResumeCreateOrUpdate(ctx context.Context, token string) (ImagesCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("ImagesClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return ImagesCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &ImagesCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return ImagesCreateOrUpdatePollerResponse{}, err
-	}
-	result := ImagesCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Create or update an image.
 // If the operation fails it returns a generic error.
 func (client *ImagesClient) createOrUpdate(ctx context.Context, resourceGroupName string, imageName string, parameters Image, options *ImagesBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -144,28 +122,6 @@ func (client *ImagesClient) BeginDelete(ctx context.Context, resourceGroupName s
 	result.Poller = &ImagesDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new ImagesDeletePoller from the specified resume token.
-// token - The value must come from a previous call to ImagesDeletePoller.ResumeToken().
-func (client *ImagesClient) ResumeDelete(ctx context.Context, token string) (ImagesDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("ImagesClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return ImagesDeletePollerResponse{}, err
-	}
-	poller := &ImagesDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return ImagesDeletePollerResponse{}, err
-	}
-	result := ImagesDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 
@@ -422,28 +378,6 @@ func (client *ImagesClient) BeginUpdate(ctx context.Context, resourceGroupName s
 	result.Poller = &ImagesUpdatePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeUpdate creates a new ImagesUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to ImagesUpdatePoller.ResumeToken().
-func (client *ImagesClient) ResumeUpdate(ctx context.Context, token string) (ImagesUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("ImagesClient.Update", token, client.con.Pipeline(), client.updateHandleError)
-	if err != nil {
-		return ImagesUpdatePollerResponse{}, err
-	}
-	poller := &ImagesUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return ImagesUpdatePollerResponse{}, err
-	}
-	result := ImagesUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

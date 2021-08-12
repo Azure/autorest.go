@@ -50,28 +50,6 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) BeginCreateOrUpdate(ctx
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new ExpressRouteCrossConnectionPeeringsCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to ExpressRouteCrossConnectionPeeringsCreateOrUpdatePoller.ResumeToken().
-func (client *ExpressRouteCrossConnectionPeeringsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (ExpressRouteCrossConnectionPeeringsCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("ExpressRouteCrossConnectionPeeringsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return ExpressRouteCrossConnectionPeeringsCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &ExpressRouteCrossConnectionPeeringsCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return ExpressRouteCrossConnectionPeeringsCreateOrUpdatePollerResponse{}, err
-	}
-	result := ExpressRouteCrossConnectionPeeringsCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Creates or updates a peering in the specified ExpressRouteCrossConnection.
 // If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteCrossConnectionPeeringsClient) createOrUpdate(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, peeringParameters ExpressRouteCrossConnectionPeering, options *ExpressRouteCrossConnectionPeeringsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -150,28 +128,6 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) BeginDelete(ctx context
 	result.Poller = &ExpressRouteCrossConnectionPeeringsDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new ExpressRouteCrossConnectionPeeringsDeletePoller from the specified resume token.
-// token - The value must come from a previous call to ExpressRouteCrossConnectionPeeringsDeletePoller.ResumeToken().
-func (client *ExpressRouteCrossConnectionPeeringsClient) ResumeDelete(ctx context.Context, token string) (ExpressRouteCrossConnectionPeeringsDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("ExpressRouteCrossConnectionPeeringsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return ExpressRouteCrossConnectionPeeringsDeletePollerResponse{}, err
-	}
-	poller := &ExpressRouteCrossConnectionPeeringsDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return ExpressRouteCrossConnectionPeeringsDeletePollerResponse{}, err
-	}
-	result := ExpressRouteCrossConnectionPeeringsDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

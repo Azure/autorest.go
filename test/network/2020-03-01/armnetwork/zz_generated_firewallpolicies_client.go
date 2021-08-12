@@ -50,28 +50,6 @@ func (client *FirewallPoliciesClient) BeginCreateOrUpdate(ctx context.Context, r
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new FirewallPoliciesCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to FirewallPoliciesCreateOrUpdatePoller.ResumeToken().
-func (client *FirewallPoliciesClient) ResumeCreateOrUpdate(ctx context.Context, token string) (FirewallPoliciesCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("FirewallPoliciesClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return FirewallPoliciesCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &FirewallPoliciesCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return FirewallPoliciesCreateOrUpdatePollerResponse{}, err
-	}
-	result := FirewallPoliciesCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Creates or updates the specified Firewall Policy.
 // If the operation fails it returns the *CloudError error type.
 func (client *FirewallPoliciesClient) createOrUpdate(ctx context.Context, resourceGroupName string, firewallPolicyName string, parameters FirewallPolicy, options *FirewallPoliciesBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -146,28 +124,6 @@ func (client *FirewallPoliciesClient) BeginDelete(ctx context.Context, resourceG
 	result.Poller = &FirewallPoliciesDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new FirewallPoliciesDeletePoller from the specified resume token.
-// token - The value must come from a previous call to FirewallPoliciesDeletePoller.ResumeToken().
-func (client *FirewallPoliciesClient) ResumeDelete(ctx context.Context, token string) (FirewallPoliciesDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("FirewallPoliciesClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return FirewallPoliciesDeletePollerResponse{}, err
-	}
-	poller := &FirewallPoliciesDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return FirewallPoliciesDeletePollerResponse{}, err
-	}
-	result := FirewallPoliciesDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

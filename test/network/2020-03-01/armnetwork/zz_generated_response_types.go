@@ -9,6 +9,7 @@ package armnetwork
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"net/http"
 	"time"
 )
@@ -31,6 +32,24 @@ func (l ApplicationGatewaysBackendHealthOnDemandPollerResponse) PollUntilDone(ct
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a ApplicationGatewaysBackendHealthOnDemandPollerResponse from the provided client and resume token.
+func (l *ApplicationGatewaysBackendHealthOnDemandPollerResponse) Resume(ctx context.Context, client *ApplicationGatewaysClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("ApplicationGatewaysClient.BackendHealthOnDemand", token, client.con.Pipeline(), client.backendHealthOnDemandHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &ApplicationGatewaysBackendHealthOnDemandPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // ApplicationGatewaysBackendHealthOnDemandResponse contains the response from method ApplicationGateways.BackendHealthOnDemand.
@@ -65,6 +84,24 @@ func (l ApplicationGatewaysBackendHealthPollerResponse) PollUntilDone(ctx contex
 	return respType, nil
 }
 
+// Resume rehydrates a ApplicationGatewaysBackendHealthPollerResponse from the provided client and resume token.
+func (l *ApplicationGatewaysBackendHealthPollerResponse) Resume(ctx context.Context, client *ApplicationGatewaysClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("ApplicationGatewaysClient.BackendHealth", token, client.con.Pipeline(), client.backendHealthHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &ApplicationGatewaysBackendHealthPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // ApplicationGatewaysBackendHealthResponse contains the response from method ApplicationGateways.BackendHealth.
 type ApplicationGatewaysBackendHealthResponse struct {
 	ApplicationGatewaysBackendHealthResult
@@ -97,6 +134,24 @@ func (l ApplicationGatewaysCreateOrUpdatePollerResponse) PollUntilDone(ctx conte
 	return respType, nil
 }
 
+// Resume rehydrates a ApplicationGatewaysCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *ApplicationGatewaysCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *ApplicationGatewaysClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("ApplicationGatewaysClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &ApplicationGatewaysCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // ApplicationGatewaysCreateOrUpdateResponse contains the response from method ApplicationGateways.CreateOrUpdate.
 type ApplicationGatewaysCreateOrUpdateResponse struct {
 	ApplicationGatewaysCreateOrUpdateResult
@@ -127,6 +182,24 @@ func (l ApplicationGatewaysDeletePollerResponse) PollUntilDone(ctx context.Conte
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a ApplicationGatewaysDeletePollerResponse from the provided client and resume token.
+func (l *ApplicationGatewaysDeletePollerResponse) Resume(ctx context.Context, client *ApplicationGatewaysClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("ApplicationGatewaysClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &ApplicationGatewaysDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // ApplicationGatewaysDeleteResponse contains the response from method ApplicationGateways.Delete.
@@ -278,6 +351,24 @@ func (l ApplicationGatewaysStartPollerResponse) PollUntilDone(ctx context.Contex
 	return respType, nil
 }
 
+// Resume rehydrates a ApplicationGatewaysStartPollerResponse from the provided client and resume token.
+func (l *ApplicationGatewaysStartPollerResponse) Resume(ctx context.Context, client *ApplicationGatewaysClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("ApplicationGatewaysClient.Start", token, client.con.Pipeline(), client.startHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &ApplicationGatewaysStartPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // ApplicationGatewaysStartResponse contains the response from method ApplicationGateways.Start.
 type ApplicationGatewaysStartResponse struct {
 	// RawResponse contains the underlying HTTP response.
@@ -302,6 +393,24 @@ func (l ApplicationGatewaysStopPollerResponse) PollUntilDone(ctx context.Context
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a ApplicationGatewaysStopPollerResponse from the provided client and resume token.
+func (l *ApplicationGatewaysStopPollerResponse) Resume(ctx context.Context, client *ApplicationGatewaysClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("ApplicationGatewaysClient.Stop", token, client.con.Pipeline(), client.stopHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &ApplicationGatewaysStopPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // ApplicationGatewaysStopResponse contains the response from method ApplicationGateways.Stop.
@@ -342,6 +451,24 @@ func (l ApplicationSecurityGroupsCreateOrUpdatePollerResponse) PollUntilDone(ctx
 	return respType, nil
 }
 
+// Resume rehydrates a ApplicationSecurityGroupsCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *ApplicationSecurityGroupsCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *ApplicationSecurityGroupsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("ApplicationSecurityGroupsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &ApplicationSecurityGroupsCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // ApplicationSecurityGroupsCreateOrUpdateResponse contains the response from method ApplicationSecurityGroups.CreateOrUpdate.
 type ApplicationSecurityGroupsCreateOrUpdateResponse struct {
 	ApplicationSecurityGroupsCreateOrUpdateResult
@@ -372,6 +499,24 @@ func (l ApplicationSecurityGroupsDeletePollerResponse) PollUntilDone(ctx context
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a ApplicationSecurityGroupsDeletePollerResponse from the provided client and resume token.
+func (l *ApplicationSecurityGroupsDeletePollerResponse) Resume(ctx context.Context, client *ApplicationSecurityGroupsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("ApplicationSecurityGroupsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &ApplicationSecurityGroupsDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // ApplicationSecurityGroupsDeleteResponse contains the response from method ApplicationSecurityGroups.Delete.
@@ -544,6 +689,24 @@ func (l AzureFirewallsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Co
 	return respType, nil
 }
 
+// Resume rehydrates a AzureFirewallsCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *AzureFirewallsCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *AzureFirewallsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("AzureFirewallsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &AzureFirewallsCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // AzureFirewallsCreateOrUpdateResponse contains the response from method AzureFirewalls.CreateOrUpdate.
 type AzureFirewallsCreateOrUpdateResponse struct {
 	AzureFirewallsCreateOrUpdateResult
@@ -574,6 +737,24 @@ func (l AzureFirewallsDeletePollerResponse) PollUntilDone(ctx context.Context, f
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a AzureFirewallsDeletePollerResponse from the provided client and resume token.
+func (l *AzureFirewallsDeletePollerResponse) Resume(ctx context.Context, client *AzureFirewallsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("AzureFirewallsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &AzureFirewallsDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // AzureFirewallsDeleteResponse contains the response from method AzureFirewalls.Delete.
@@ -638,6 +819,24 @@ func (l AzureFirewallsUpdateTagsPollerResponse) PollUntilDone(ctx context.Contex
 	return respType, nil
 }
 
+// Resume rehydrates a AzureFirewallsUpdateTagsPollerResponse from the provided client and resume token.
+func (l *AzureFirewallsUpdateTagsPollerResponse) Resume(ctx context.Context, client *AzureFirewallsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("AzureFirewallsClient.UpdateTags", token, client.con.Pipeline(), client.updateTagsHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &AzureFirewallsUpdateTagsPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // AzureFirewallsUpdateTagsResponse contains the response from method AzureFirewalls.UpdateTags.
 type AzureFirewallsUpdateTagsResponse struct {
 	AzureFirewallsUpdateTagsResult
@@ -670,6 +869,24 @@ func (l BastionHostsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Cont
 	return respType, nil
 }
 
+// Resume rehydrates a BastionHostsCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *BastionHostsCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *BastionHostsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("BastionHostsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &BastionHostsCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // BastionHostsCreateOrUpdateResponse contains the response from method BastionHosts.CreateOrUpdate.
 type BastionHostsCreateOrUpdateResponse struct {
 	BastionHostsCreateOrUpdateResult
@@ -700,6 +917,24 @@ func (l BastionHostsDeletePollerResponse) PollUntilDone(ctx context.Context, fre
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a BastionHostsDeletePollerResponse from the provided client and resume token.
+func (l *BastionHostsDeletePollerResponse) Resume(ctx context.Context, client *BastionHostsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("BastionHostsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &BastionHostsDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // BastionHostsDeleteResponse contains the response from method BastionHosts.Delete.
@@ -776,6 +1011,24 @@ func (l ConnectionMonitorsCreateOrUpdatePollerResponse) PollUntilDone(ctx contex
 	return respType, nil
 }
 
+// Resume rehydrates a ConnectionMonitorsCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *ConnectionMonitorsCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *ConnectionMonitorsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("ConnectionMonitorsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &ConnectionMonitorsCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // ConnectionMonitorsCreateOrUpdateResponse contains the response from method ConnectionMonitors.CreateOrUpdate.
 type ConnectionMonitorsCreateOrUpdateResponse struct {
 	ConnectionMonitorsCreateOrUpdateResult
@@ -806,6 +1059,24 @@ func (l ConnectionMonitorsDeletePollerResponse) PollUntilDone(ctx context.Contex
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a ConnectionMonitorsDeletePollerResponse from the provided client and resume token.
+func (l *ConnectionMonitorsDeletePollerResponse) Resume(ctx context.Context, client *ConnectionMonitorsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("ConnectionMonitorsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &ConnectionMonitorsDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // ConnectionMonitorsDeleteResponse contains the response from method ConnectionMonitors.Delete.
@@ -858,6 +1129,24 @@ func (l ConnectionMonitorsQueryPollerResponse) PollUntilDone(ctx context.Context
 	return respType, nil
 }
 
+// Resume rehydrates a ConnectionMonitorsQueryPollerResponse from the provided client and resume token.
+func (l *ConnectionMonitorsQueryPollerResponse) Resume(ctx context.Context, client *ConnectionMonitorsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("ConnectionMonitorsClient.Query", token, client.con.Pipeline(), client.queryHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &ConnectionMonitorsQueryPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // ConnectionMonitorsQueryResponse contains the response from method ConnectionMonitors.Query.
 type ConnectionMonitorsQueryResponse struct {
 	ConnectionMonitorsQueryResult
@@ -890,6 +1179,24 @@ func (l ConnectionMonitorsStartPollerResponse) PollUntilDone(ctx context.Context
 	return respType, nil
 }
 
+// Resume rehydrates a ConnectionMonitorsStartPollerResponse from the provided client and resume token.
+func (l *ConnectionMonitorsStartPollerResponse) Resume(ctx context.Context, client *ConnectionMonitorsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("ConnectionMonitorsClient.Start", token, client.con.Pipeline(), client.startHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &ConnectionMonitorsStartPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // ConnectionMonitorsStartResponse contains the response from method ConnectionMonitors.Start.
 type ConnectionMonitorsStartResponse struct {
 	// RawResponse contains the underlying HTTP response.
@@ -914,6 +1221,24 @@ func (l ConnectionMonitorsStopPollerResponse) PollUntilDone(ctx context.Context,
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a ConnectionMonitorsStopPollerResponse from the provided client and resume token.
+func (l *ConnectionMonitorsStopPollerResponse) Resume(ctx context.Context, client *ConnectionMonitorsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("ConnectionMonitorsClient.Stop", token, client.con.Pipeline(), client.stopHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &ConnectionMonitorsStopPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // ConnectionMonitorsStopResponse contains the response from method ConnectionMonitors.Stop.
@@ -954,6 +1279,24 @@ func (l DdosCustomPoliciesCreateOrUpdatePollerResponse) PollUntilDone(ctx contex
 	return respType, nil
 }
 
+// Resume rehydrates a DdosCustomPoliciesCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *DdosCustomPoliciesCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *DdosCustomPoliciesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("DdosCustomPoliciesClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &DdosCustomPoliciesCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // DdosCustomPoliciesCreateOrUpdateResponse contains the response from method DdosCustomPolicies.CreateOrUpdate.
 type DdosCustomPoliciesCreateOrUpdateResponse struct {
 	DdosCustomPoliciesCreateOrUpdateResult
@@ -984,6 +1327,24 @@ func (l DdosCustomPoliciesDeletePollerResponse) PollUntilDone(ctx context.Contex
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a DdosCustomPoliciesDeletePollerResponse from the provided client and resume token.
+func (l *DdosCustomPoliciesDeletePollerResponse) Resume(ctx context.Context, client *DdosCustomPoliciesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("DdosCustomPoliciesClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &DdosCustomPoliciesDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // DdosCustomPoliciesDeleteResponse contains the response from method DdosCustomPolicies.Delete.
@@ -1036,6 +1397,24 @@ func (l DdosProtectionPlansCreateOrUpdatePollerResponse) PollUntilDone(ctx conte
 	return respType, nil
 }
 
+// Resume rehydrates a DdosProtectionPlansCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *DdosProtectionPlansCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *DdosProtectionPlansClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("DdosProtectionPlansClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &DdosProtectionPlansCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // DdosProtectionPlansCreateOrUpdateResponse contains the response from method DdosProtectionPlans.CreateOrUpdate.
 type DdosProtectionPlansCreateOrUpdateResponse struct {
 	DdosProtectionPlansCreateOrUpdateResult
@@ -1066,6 +1445,24 @@ func (l DdosProtectionPlansDeletePollerResponse) PollUntilDone(ctx context.Conte
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a DdosProtectionPlansDeletePollerResponse from the provided client and resume token.
+func (l *DdosProtectionPlansDeletePollerResponse) Resume(ctx context.Context, client *DdosProtectionPlansClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("DdosProtectionPlansClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &DdosProtectionPlansDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // DdosProtectionPlansDeleteResponse contains the response from method DdosProtectionPlans.Delete.
@@ -1166,6 +1563,24 @@ func (l ExpressRouteCircuitAuthorizationsCreateOrUpdatePollerResponse) PollUntil
 	return respType, nil
 }
 
+// Resume rehydrates a ExpressRouteCircuitAuthorizationsCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *ExpressRouteCircuitAuthorizationsCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *ExpressRouteCircuitAuthorizationsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("ExpressRouteCircuitAuthorizationsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &ExpressRouteCircuitAuthorizationsCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // ExpressRouteCircuitAuthorizationsCreateOrUpdateResponse contains the response from method ExpressRouteCircuitAuthorizations.CreateOrUpdate.
 type ExpressRouteCircuitAuthorizationsCreateOrUpdateResponse struct {
 	ExpressRouteCircuitAuthorizationsCreateOrUpdateResult
@@ -1196,6 +1611,24 @@ func (l ExpressRouteCircuitAuthorizationsDeletePollerResponse) PollUntilDone(ctx
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a ExpressRouteCircuitAuthorizationsDeletePollerResponse from the provided client and resume token.
+func (l *ExpressRouteCircuitAuthorizationsDeletePollerResponse) Resume(ctx context.Context, client *ExpressRouteCircuitAuthorizationsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("ExpressRouteCircuitAuthorizationsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &ExpressRouteCircuitAuthorizationsDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // ExpressRouteCircuitAuthorizationsDeleteResponse contains the response from method ExpressRouteCircuitAuthorizations.Delete.
@@ -1248,6 +1681,24 @@ func (l ExpressRouteCircuitConnectionsCreateOrUpdatePollerResponse) PollUntilDon
 	return respType, nil
 }
 
+// Resume rehydrates a ExpressRouteCircuitConnectionsCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *ExpressRouteCircuitConnectionsCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *ExpressRouteCircuitConnectionsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("ExpressRouteCircuitConnectionsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &ExpressRouteCircuitConnectionsCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // ExpressRouteCircuitConnectionsCreateOrUpdateResponse contains the response from method ExpressRouteCircuitConnections.CreateOrUpdate.
 type ExpressRouteCircuitConnectionsCreateOrUpdateResponse struct {
 	ExpressRouteCircuitConnectionsCreateOrUpdateResult
@@ -1278,6 +1729,24 @@ func (l ExpressRouteCircuitConnectionsDeletePollerResponse) PollUntilDone(ctx co
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a ExpressRouteCircuitConnectionsDeletePollerResponse from the provided client and resume token.
+func (l *ExpressRouteCircuitConnectionsDeletePollerResponse) Resume(ctx context.Context, client *ExpressRouteCircuitConnectionsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("ExpressRouteCircuitConnectionsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &ExpressRouteCircuitConnectionsDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // ExpressRouteCircuitConnectionsDeleteResponse contains the response from method ExpressRouteCircuitConnections.Delete.
@@ -1330,6 +1799,24 @@ func (l ExpressRouteCircuitPeeringsCreateOrUpdatePollerResponse) PollUntilDone(c
 	return respType, nil
 }
 
+// Resume rehydrates a ExpressRouteCircuitPeeringsCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *ExpressRouteCircuitPeeringsCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *ExpressRouteCircuitPeeringsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("ExpressRouteCircuitPeeringsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &ExpressRouteCircuitPeeringsCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // ExpressRouteCircuitPeeringsCreateOrUpdateResponse contains the response from method ExpressRouteCircuitPeerings.CreateOrUpdate.
 type ExpressRouteCircuitPeeringsCreateOrUpdateResponse struct {
 	ExpressRouteCircuitPeeringsCreateOrUpdateResult
@@ -1360,6 +1847,24 @@ func (l ExpressRouteCircuitPeeringsDeletePollerResponse) PollUntilDone(ctx conte
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a ExpressRouteCircuitPeeringsDeletePollerResponse from the provided client and resume token.
+func (l *ExpressRouteCircuitPeeringsDeletePollerResponse) Resume(ctx context.Context, client *ExpressRouteCircuitPeeringsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("ExpressRouteCircuitPeeringsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &ExpressRouteCircuitPeeringsDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // ExpressRouteCircuitPeeringsDeleteResponse contains the response from method ExpressRouteCircuitPeerings.Delete.
@@ -1412,6 +1917,24 @@ func (l ExpressRouteCircuitsCreateOrUpdatePollerResponse) PollUntilDone(ctx cont
 	return respType, nil
 }
 
+// Resume rehydrates a ExpressRouteCircuitsCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *ExpressRouteCircuitsCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *ExpressRouteCircuitsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("ExpressRouteCircuitsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &ExpressRouteCircuitsCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // ExpressRouteCircuitsCreateOrUpdateResponse contains the response from method ExpressRouteCircuits.CreateOrUpdate.
 type ExpressRouteCircuitsCreateOrUpdateResponse struct {
 	ExpressRouteCircuitsCreateOrUpdateResult
@@ -1442,6 +1965,24 @@ func (l ExpressRouteCircuitsDeletePollerResponse) PollUntilDone(ctx context.Cont
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a ExpressRouteCircuitsDeletePollerResponse from the provided client and resume token.
+func (l *ExpressRouteCircuitsDeletePollerResponse) Resume(ctx context.Context, client *ExpressRouteCircuitsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("ExpressRouteCircuitsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &ExpressRouteCircuitsDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // ExpressRouteCircuitsDeleteResponse contains the response from method ExpressRouteCircuits.Delete.
@@ -1518,6 +2059,24 @@ func (l ExpressRouteCircuitsListArpTablePollerResponse) PollUntilDone(ctx contex
 	return respType, nil
 }
 
+// Resume rehydrates a ExpressRouteCircuitsListArpTablePollerResponse from the provided client and resume token.
+func (l *ExpressRouteCircuitsListArpTablePollerResponse) Resume(ctx context.Context, client *ExpressRouteCircuitsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("ExpressRouteCircuitsClient.ListArpTable", token, client.con.Pipeline(), client.listArpTableHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &ExpressRouteCircuitsListArpTablePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // ExpressRouteCircuitsListArpTableResponse contains the response from method ExpressRouteCircuits.ListArpTable.
 type ExpressRouteCircuitsListArpTableResponse struct {
 	ExpressRouteCircuitsListArpTableResult
@@ -1562,6 +2121,24 @@ func (l ExpressRouteCircuitsListRoutesTablePollerResponse) PollUntilDone(ctx con
 	return respType, nil
 }
 
+// Resume rehydrates a ExpressRouteCircuitsListRoutesTablePollerResponse from the provided client and resume token.
+func (l *ExpressRouteCircuitsListRoutesTablePollerResponse) Resume(ctx context.Context, client *ExpressRouteCircuitsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("ExpressRouteCircuitsClient.ListRoutesTable", token, client.con.Pipeline(), client.listRoutesTableHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &ExpressRouteCircuitsListRoutesTablePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // ExpressRouteCircuitsListRoutesTableResponse contains the response from method ExpressRouteCircuits.ListRoutesTable.
 type ExpressRouteCircuitsListRoutesTableResponse struct {
 	ExpressRouteCircuitsListRoutesTableResult
@@ -1592,6 +2169,24 @@ func (l ExpressRouteCircuitsListRoutesTableSummaryPollerResponse) PollUntilDone(
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a ExpressRouteCircuitsListRoutesTableSummaryPollerResponse from the provided client and resume token.
+func (l *ExpressRouteCircuitsListRoutesTableSummaryPollerResponse) Resume(ctx context.Context, client *ExpressRouteCircuitsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("ExpressRouteCircuitsClient.ListRoutesTableSummary", token, client.con.Pipeline(), client.listRoutesTableSummaryHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &ExpressRouteCircuitsListRoutesTableSummaryPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // ExpressRouteCircuitsListRoutesTableSummaryResponse contains the response from method ExpressRouteCircuits.ListRoutesTableSummary.
@@ -1638,6 +2233,24 @@ func (l ExpressRouteConnectionsCreateOrUpdatePollerResponse) PollUntilDone(ctx c
 	return respType, nil
 }
 
+// Resume rehydrates a ExpressRouteConnectionsCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *ExpressRouteConnectionsCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *ExpressRouteConnectionsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("ExpressRouteConnectionsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &ExpressRouteConnectionsCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // ExpressRouteConnectionsCreateOrUpdateResponse contains the response from method ExpressRouteConnections.CreateOrUpdate.
 type ExpressRouteConnectionsCreateOrUpdateResponse struct {
 	ExpressRouteConnectionsCreateOrUpdateResult
@@ -1668,6 +2281,24 @@ func (l ExpressRouteConnectionsDeletePollerResponse) PollUntilDone(ctx context.C
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a ExpressRouteConnectionsDeletePollerResponse from the provided client and resume token.
+func (l *ExpressRouteConnectionsDeletePollerResponse) Resume(ctx context.Context, client *ExpressRouteConnectionsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("ExpressRouteConnectionsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &ExpressRouteConnectionsDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // ExpressRouteConnectionsDeleteResponse contains the response from method ExpressRouteConnections.Delete.
@@ -1720,6 +2351,24 @@ func (l ExpressRouteCrossConnectionPeeringsCreateOrUpdatePollerResponse) PollUnt
 	return respType, nil
 }
 
+// Resume rehydrates a ExpressRouteCrossConnectionPeeringsCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *ExpressRouteCrossConnectionPeeringsCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *ExpressRouteCrossConnectionPeeringsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("ExpressRouteCrossConnectionPeeringsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &ExpressRouteCrossConnectionPeeringsCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // ExpressRouteCrossConnectionPeeringsCreateOrUpdateResponse contains the response from method ExpressRouteCrossConnectionPeerings.CreateOrUpdate.
 type ExpressRouteCrossConnectionPeeringsCreateOrUpdateResponse struct {
 	ExpressRouteCrossConnectionPeeringsCreateOrUpdateResult
@@ -1750,6 +2399,24 @@ func (l ExpressRouteCrossConnectionPeeringsDeletePollerResponse) PollUntilDone(c
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a ExpressRouteCrossConnectionPeeringsDeletePollerResponse from the provided client and resume token.
+func (l *ExpressRouteCrossConnectionPeeringsDeletePollerResponse) Resume(ctx context.Context, client *ExpressRouteCrossConnectionPeeringsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("ExpressRouteCrossConnectionPeeringsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &ExpressRouteCrossConnectionPeeringsDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // ExpressRouteCrossConnectionPeeringsDeleteResponse contains the response from method ExpressRouteCrossConnectionPeerings.Delete.
@@ -1802,6 +2469,24 @@ func (l ExpressRouteCrossConnectionsCreateOrUpdatePollerResponse) PollUntilDone(
 	return respType, nil
 }
 
+// Resume rehydrates a ExpressRouteCrossConnectionsCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *ExpressRouteCrossConnectionsCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *ExpressRouteCrossConnectionsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("ExpressRouteCrossConnectionsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &ExpressRouteCrossConnectionsCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // ExpressRouteCrossConnectionsCreateOrUpdateResponse contains the response from method ExpressRouteCrossConnections.CreateOrUpdate.
 type ExpressRouteCrossConnectionsCreateOrUpdateResponse struct {
 	ExpressRouteCrossConnectionsCreateOrUpdateResult
@@ -1844,6 +2529,24 @@ func (l ExpressRouteCrossConnectionsListArpTablePollerResponse) PollUntilDone(ct
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a ExpressRouteCrossConnectionsListArpTablePollerResponse from the provided client and resume token.
+func (l *ExpressRouteCrossConnectionsListArpTablePollerResponse) Resume(ctx context.Context, client *ExpressRouteCrossConnectionsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("ExpressRouteCrossConnectionsClient.ListArpTable", token, client.con.Pipeline(), client.listArpTableHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &ExpressRouteCrossConnectionsListArpTablePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // ExpressRouteCrossConnectionsListArpTableResponse contains the response from method ExpressRouteCrossConnections.ListArpTable.
@@ -1902,6 +2605,24 @@ func (l ExpressRouteCrossConnectionsListRoutesTablePollerResponse) PollUntilDone
 	return respType, nil
 }
 
+// Resume rehydrates a ExpressRouteCrossConnectionsListRoutesTablePollerResponse from the provided client and resume token.
+func (l *ExpressRouteCrossConnectionsListRoutesTablePollerResponse) Resume(ctx context.Context, client *ExpressRouteCrossConnectionsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("ExpressRouteCrossConnectionsClient.ListRoutesTable", token, client.con.Pipeline(), client.listRoutesTableHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &ExpressRouteCrossConnectionsListRoutesTablePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // ExpressRouteCrossConnectionsListRoutesTableResponse contains the response from method ExpressRouteCrossConnections.ListRoutesTable.
 type ExpressRouteCrossConnectionsListRoutesTableResponse struct {
 	ExpressRouteCrossConnectionsListRoutesTableResult
@@ -1932,6 +2653,24 @@ func (l ExpressRouteCrossConnectionsListRoutesTableSummaryPollerResponse) PollUn
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a ExpressRouteCrossConnectionsListRoutesTableSummaryPollerResponse from the provided client and resume token.
+func (l *ExpressRouteCrossConnectionsListRoutesTableSummaryPollerResponse) Resume(ctx context.Context, client *ExpressRouteCrossConnectionsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("ExpressRouteCrossConnectionsClient.ListRoutesTableSummary", token, client.con.Pipeline(), client.listRoutesTableSummaryHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &ExpressRouteCrossConnectionsListRoutesTableSummaryPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // ExpressRouteCrossConnectionsListRoutesTableSummaryResponse contains the response from method ExpressRouteCrossConnections.ListRoutesTableSummary.
@@ -1978,6 +2717,24 @@ func (l ExpressRouteGatewaysCreateOrUpdatePollerResponse) PollUntilDone(ctx cont
 	return respType, nil
 }
 
+// Resume rehydrates a ExpressRouteGatewaysCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *ExpressRouteGatewaysCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *ExpressRouteGatewaysClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("ExpressRouteGatewaysClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &ExpressRouteGatewaysCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // ExpressRouteGatewaysCreateOrUpdateResponse contains the response from method ExpressRouteGateways.CreateOrUpdate.
 type ExpressRouteGatewaysCreateOrUpdateResponse struct {
 	ExpressRouteGatewaysCreateOrUpdateResult
@@ -2008,6 +2765,24 @@ func (l ExpressRouteGatewaysDeletePollerResponse) PollUntilDone(ctx context.Cont
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a ExpressRouteGatewaysDeletePollerResponse from the provided client and resume token.
+func (l *ExpressRouteGatewaysDeletePollerResponse) Resume(ctx context.Context, client *ExpressRouteGatewaysClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("ExpressRouteGatewaysClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &ExpressRouteGatewaysDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // ExpressRouteGatewaysDeleteResponse contains the response from method ExpressRouteGateways.Delete.
@@ -2096,6 +2871,24 @@ func (l ExpressRoutePortsCreateOrUpdatePollerResponse) PollUntilDone(ctx context
 	return respType, nil
 }
 
+// Resume rehydrates a ExpressRoutePortsCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *ExpressRoutePortsCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *ExpressRoutePortsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("ExpressRoutePortsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &ExpressRoutePortsCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // ExpressRoutePortsCreateOrUpdateResponse contains the response from method ExpressRoutePorts.CreateOrUpdate.
 type ExpressRoutePortsCreateOrUpdateResponse struct {
 	ExpressRoutePortsCreateOrUpdateResult
@@ -2126,6 +2919,24 @@ func (l ExpressRoutePortsDeletePollerResponse) PollUntilDone(ctx context.Context
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a ExpressRoutePortsDeletePollerResponse from the provided client and resume token.
+func (l *ExpressRoutePortsDeletePollerResponse) Resume(ctx context.Context, client *ExpressRoutePortsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("ExpressRoutePortsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &ExpressRoutePortsDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // ExpressRoutePortsDeleteResponse contains the response from method ExpressRoutePorts.Delete.
@@ -2238,6 +3049,24 @@ func (l FirewallPoliciesCreateOrUpdatePollerResponse) PollUntilDone(ctx context.
 	return respType, nil
 }
 
+// Resume rehydrates a FirewallPoliciesCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *FirewallPoliciesCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *FirewallPoliciesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("FirewallPoliciesClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &FirewallPoliciesCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // FirewallPoliciesCreateOrUpdateResponse contains the response from method FirewallPolicies.CreateOrUpdate.
 type FirewallPoliciesCreateOrUpdateResponse struct {
 	FirewallPoliciesCreateOrUpdateResult
@@ -2268,6 +3097,24 @@ func (l FirewallPoliciesDeletePollerResponse) PollUntilDone(ctx context.Context,
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a FirewallPoliciesDeletePollerResponse from the provided client and resume token.
+func (l *FirewallPoliciesDeletePollerResponse) Resume(ctx context.Context, client *FirewallPoliciesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("FirewallPoliciesClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &FirewallPoliciesDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // FirewallPoliciesDeleteResponse contains the response from method FirewallPolicies.Delete.
@@ -2332,6 +3179,24 @@ func (l FirewallPolicyRuleGroupsCreateOrUpdatePollerResponse) PollUntilDone(ctx 
 	return respType, nil
 }
 
+// Resume rehydrates a FirewallPolicyRuleGroupsCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *FirewallPolicyRuleGroupsCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *FirewallPolicyRuleGroupsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("FirewallPolicyRuleGroupsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &FirewallPolicyRuleGroupsCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // FirewallPolicyRuleGroupsCreateOrUpdateResponse contains the response from method FirewallPolicyRuleGroups.CreateOrUpdate.
 type FirewallPolicyRuleGroupsCreateOrUpdateResponse struct {
 	FirewallPolicyRuleGroupsCreateOrUpdateResult
@@ -2362,6 +3227,24 @@ func (l FirewallPolicyRuleGroupsDeletePollerResponse) PollUntilDone(ctx context.
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a FirewallPolicyRuleGroupsDeletePollerResponse from the provided client and resume token.
+func (l *FirewallPolicyRuleGroupsDeletePollerResponse) Resume(ctx context.Context, client *FirewallPolicyRuleGroupsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("FirewallPolicyRuleGroupsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &FirewallPolicyRuleGroupsDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // FirewallPolicyRuleGroupsDeleteResponse contains the response from method FirewallPolicyRuleGroups.Delete.
@@ -2414,6 +3297,24 @@ func (l FlowLogsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context,
 	return respType, nil
 }
 
+// Resume rehydrates a FlowLogsCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *FlowLogsCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *FlowLogsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("FlowLogsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &FlowLogsCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // FlowLogsCreateOrUpdateResponse contains the response from method FlowLogs.CreateOrUpdate.
 type FlowLogsCreateOrUpdateResponse struct {
 	FlowLogsCreateOrUpdateResult
@@ -2444,6 +3345,24 @@ func (l FlowLogsDeletePollerResponse) PollUntilDone(ctx context.Context, freq ti
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a FlowLogsDeletePollerResponse from the provided client and resume token.
+func (l *FlowLogsDeletePollerResponse) Resume(ctx context.Context, client *FlowLogsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("FlowLogsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &FlowLogsDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // FlowLogsDeleteResponse contains the response from method FlowLogs.Delete.
@@ -2520,6 +3439,24 @@ func (l IPAllocationsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Con
 	return respType, nil
 }
 
+// Resume rehydrates a IPAllocationsCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *IPAllocationsCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *IPAllocationsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("IPAllocationsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &IPAllocationsCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // IPAllocationsCreateOrUpdateResponse contains the response from method IPAllocations.CreateOrUpdate.
 type IPAllocationsCreateOrUpdateResponse struct {
 	IPAllocationsCreateOrUpdateResult
@@ -2550,6 +3487,24 @@ func (l IPAllocationsDeletePollerResponse) PollUntilDone(ctx context.Context, fr
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a IPAllocationsDeletePollerResponse from the provided client and resume token.
+func (l *IPAllocationsDeletePollerResponse) Resume(ctx context.Context, client *IPAllocationsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("IPAllocationsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &IPAllocationsDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // IPAllocationsDeleteResponse contains the response from method IPAllocations.Delete.
@@ -2626,6 +3581,24 @@ func (l IPGroupsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context,
 	return respType, nil
 }
 
+// Resume rehydrates a IPGroupsCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *IPGroupsCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *IPGroupsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("IPGroupsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &IPGroupsCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // IPGroupsCreateOrUpdateResponse contains the response from method IPGroups.CreateOrUpdate.
 type IPGroupsCreateOrUpdateResponse struct {
 	IPGroupsCreateOrUpdateResult
@@ -2656,6 +3629,24 @@ func (l IPGroupsDeletePollerResponse) PollUntilDone(ctx context.Context, freq ti
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a IPGroupsDeletePollerResponse from the provided client and resume token.
+func (l *IPGroupsDeletePollerResponse) Resume(ctx context.Context, client *IPGroupsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("IPGroupsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &IPGroupsDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // IPGroupsDeleteResponse contains the response from method IPGroups.Delete.
@@ -2732,6 +3723,24 @@ func (l InboundNatRulesCreateOrUpdatePollerResponse) PollUntilDone(ctx context.C
 	return respType, nil
 }
 
+// Resume rehydrates a InboundNatRulesCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *InboundNatRulesCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *InboundNatRulesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("InboundNatRulesClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &InboundNatRulesCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // InboundNatRulesCreateOrUpdateResponse contains the response from method InboundNatRules.CreateOrUpdate.
 type InboundNatRulesCreateOrUpdateResponse struct {
 	InboundNatRulesCreateOrUpdateResult
@@ -2762,6 +3771,24 @@ func (l InboundNatRulesDeletePollerResponse) PollUntilDone(ctx context.Context, 
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a InboundNatRulesDeletePollerResponse from the provided client and resume token.
+func (l *InboundNatRulesDeletePollerResponse) Resume(ctx context.Context, client *InboundNatRulesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("InboundNatRulesClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &InboundNatRulesDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // InboundNatRulesDeleteResponse contains the response from method InboundNatRules.Delete.
@@ -2946,6 +3973,24 @@ func (l LoadBalancersCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Con
 	return respType, nil
 }
 
+// Resume rehydrates a LoadBalancersCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *LoadBalancersCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *LoadBalancersClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("LoadBalancersClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &LoadBalancersCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // LoadBalancersCreateOrUpdateResponse contains the response from method LoadBalancers.CreateOrUpdate.
 type LoadBalancersCreateOrUpdateResponse struct {
 	LoadBalancersCreateOrUpdateResult
@@ -2976,6 +4021,24 @@ func (l LoadBalancersDeletePollerResponse) PollUntilDone(ctx context.Context, fr
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a LoadBalancersDeletePollerResponse from the provided client and resume token.
+func (l *LoadBalancersDeletePollerResponse) Resume(ctx context.Context, client *LoadBalancersClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("LoadBalancersClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &LoadBalancersDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // LoadBalancersDeleteResponse contains the response from method LoadBalancers.Delete.
@@ -3052,6 +4115,24 @@ func (l LocalNetworkGatewaysCreateOrUpdatePollerResponse) PollUntilDone(ctx cont
 	return respType, nil
 }
 
+// Resume rehydrates a LocalNetworkGatewaysCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *LocalNetworkGatewaysCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *LocalNetworkGatewaysClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("LocalNetworkGatewaysClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &LocalNetworkGatewaysCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // LocalNetworkGatewaysCreateOrUpdateResponse contains the response from method LocalNetworkGateways.CreateOrUpdate.
 type LocalNetworkGatewaysCreateOrUpdateResponse struct {
 	LocalNetworkGatewaysCreateOrUpdateResult
@@ -3082,6 +4163,24 @@ func (l LocalNetworkGatewaysDeletePollerResponse) PollUntilDone(ctx context.Cont
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a LocalNetworkGatewaysDeletePollerResponse from the provided client and resume token.
+func (l *LocalNetworkGatewaysDeletePollerResponse) Resume(ctx context.Context, client *LocalNetworkGatewaysClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("LocalNetworkGatewaysClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &LocalNetworkGatewaysDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // LocalNetworkGatewaysDeleteResponse contains the response from method LocalNetworkGateways.Delete.
@@ -3146,6 +4245,24 @@ func (l NatGatewaysCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Conte
 	return respType, nil
 }
 
+// Resume rehydrates a NatGatewaysCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *NatGatewaysCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *NatGatewaysClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("NatGatewaysClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &NatGatewaysCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // NatGatewaysCreateOrUpdateResponse contains the response from method NatGateways.CreateOrUpdate.
 type NatGatewaysCreateOrUpdateResponse struct {
 	NatGatewaysCreateOrUpdateResult
@@ -3176,6 +4293,24 @@ func (l NatGatewaysDeletePollerResponse) PollUntilDone(ctx context.Context, freq
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a NatGatewaysDeletePollerResponse from the provided client and resume token.
+func (l *NatGatewaysDeletePollerResponse) Resume(ctx context.Context, client *NatGatewaysClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("NatGatewaysClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &NatGatewaysDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // NatGatewaysDeleteResponse contains the response from method NatGateways.Delete.
@@ -3288,6 +4423,24 @@ func (l NetworkInterfaceTapConfigurationsCreateOrUpdatePollerResponse) PollUntil
 	return respType, nil
 }
 
+// Resume rehydrates a NetworkInterfaceTapConfigurationsCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *NetworkInterfaceTapConfigurationsCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *NetworkInterfaceTapConfigurationsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("NetworkInterfaceTapConfigurationsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &NetworkInterfaceTapConfigurationsCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // NetworkInterfaceTapConfigurationsCreateOrUpdateResponse contains the response from method NetworkInterfaceTapConfigurations.CreateOrUpdate.
 type NetworkInterfaceTapConfigurationsCreateOrUpdateResponse struct {
 	NetworkInterfaceTapConfigurationsCreateOrUpdateResult
@@ -3318,6 +4471,24 @@ func (l NetworkInterfaceTapConfigurationsDeletePollerResponse) PollUntilDone(ctx
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a NetworkInterfaceTapConfigurationsDeletePollerResponse from the provided client and resume token.
+func (l *NetworkInterfaceTapConfigurationsDeletePollerResponse) Resume(ctx context.Context, client *NetworkInterfaceTapConfigurationsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("NetworkInterfaceTapConfigurationsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &NetworkInterfaceTapConfigurationsDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // NetworkInterfaceTapConfigurationsDeleteResponse contains the response from method NetworkInterfaceTapConfigurations.Delete.
@@ -3370,6 +4541,24 @@ func (l NetworkInterfacesCreateOrUpdatePollerResponse) PollUntilDone(ctx context
 	return respType, nil
 }
 
+// Resume rehydrates a NetworkInterfacesCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *NetworkInterfacesCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *NetworkInterfacesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("NetworkInterfacesClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &NetworkInterfacesCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // NetworkInterfacesCreateOrUpdateResponse contains the response from method NetworkInterfaces.CreateOrUpdate.
 type NetworkInterfacesCreateOrUpdateResponse struct {
 	NetworkInterfacesCreateOrUpdateResult
@@ -3402,6 +4591,24 @@ func (l NetworkInterfacesDeletePollerResponse) PollUntilDone(ctx context.Context
 	return respType, nil
 }
 
+// Resume rehydrates a NetworkInterfacesDeletePollerResponse from the provided client and resume token.
+func (l *NetworkInterfacesDeletePollerResponse) Resume(ctx context.Context, client *NetworkInterfacesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("NetworkInterfacesClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &NetworkInterfacesDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // NetworkInterfacesDeleteResponse contains the response from method NetworkInterfaces.Delete.
 type NetworkInterfacesDeleteResponse struct {
 	// RawResponse contains the underlying HTTP response.
@@ -3426,6 +4633,24 @@ func (l NetworkInterfacesGetEffectiveRouteTablePollerResponse) PollUntilDone(ctx
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a NetworkInterfacesGetEffectiveRouteTablePollerResponse from the provided client and resume token.
+func (l *NetworkInterfacesGetEffectiveRouteTablePollerResponse) Resume(ctx context.Context, client *NetworkInterfacesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("NetworkInterfacesClient.GetEffectiveRouteTable", token, client.con.Pipeline(), client.getEffectiveRouteTableHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &NetworkInterfacesGetEffectiveRouteTablePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // NetworkInterfacesGetEffectiveRouteTableResponse contains the response from method NetworkInterfaces.GetEffectiveRouteTable.
@@ -3506,6 +4731,24 @@ func (l NetworkInterfacesListEffectiveNetworkSecurityGroupsPollerResponse) PollU
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a NetworkInterfacesListEffectiveNetworkSecurityGroupsPollerResponse from the provided client and resume token.
+func (l *NetworkInterfacesListEffectiveNetworkSecurityGroupsPollerResponse) Resume(ctx context.Context, client *NetworkInterfacesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("NetworkInterfacesClient.ListEffectiveNetworkSecurityGroups", token, client.con.Pipeline(), client.listEffectiveNetworkSecurityGroupsHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &NetworkInterfacesListEffectiveNetworkSecurityGroupsPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // NetworkInterfacesListEffectiveNetworkSecurityGroupsResponse contains the response from method NetworkInterfaces.ListEffectiveNetworkSecurityGroups.
@@ -3612,6 +4855,24 @@ func (l NetworkManagementClientDeleteBastionShareableLinkPollerResponse) PollUnt
 	return respType, nil
 }
 
+// Resume rehydrates a NetworkManagementClientDeleteBastionShareableLinkPollerResponse from the provided client and resume token.
+func (l *NetworkManagementClientDeleteBastionShareableLinkPollerResponse) Resume(ctx context.Context, client *NetworkManagementClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("NetworkManagementClient.DeleteBastionShareableLink", token, client.con.Pipeline(), client.deleteBastionShareableLinkHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &NetworkManagementClientDeleteBastionShareableLinkPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // NetworkManagementClientDeleteBastionShareableLinkResponse contains the response from method NetworkManagementClient.DeleteBastionShareableLink.
 type NetworkManagementClientDeleteBastionShareableLinkResponse struct {
 	// RawResponse contains the underlying HTTP response.
@@ -3650,6 +4911,24 @@ func (l NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofil
 	return respType, nil
 }
 
+// Resume rehydrates a NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePollerResponse from the provided client and resume token.
+func (l *NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePollerResponse) Resume(ctx context.Context, client *NetworkManagementClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("NetworkManagementClient.Generatevirtualwanvpnserverconfigurationvpnprofile", token, client.con.Pipeline(), client.generatevirtualwanvpnserverconfigurationvpnprofileHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofileResponse contains the response from method NetworkManagementClient.Generatevirtualwanvpnserverconfigurationvpnprofile.
 type NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofileResponse struct {
 	NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofileResult
@@ -3681,6 +4960,25 @@ func (l NetworkManagementClientGetActiveSessionsPollerResponse) PollUntilDone(ct
 	respType.current.RawResponse = resp
 	respType.client = l.Poller.client
 	return respType, nil
+}
+
+// Resume rehydrates a NetworkManagementClientGetActiveSessionsPollerResponse from the provided client and resume token.
+func (l *NetworkManagementClientGetActiveSessionsPollerResponse) Resume(ctx context.Context, client *NetworkManagementClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("NetworkManagementClient.GetActiveSessions", token, client.con.Pipeline(), client.getActiveSessionsHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &NetworkManagementClientGetActiveSessionsPoller{
+		pt:     pt,
+		client: client,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // NetworkManagementClientGetActiveSessionsResponse contains the response from method NetworkManagementClient.GetActiveSessions.
@@ -3726,6 +5024,25 @@ func (l NetworkManagementClientPutBastionShareableLinkPollerResponse) PollUntilD
 	respType.current.RawResponse = resp
 	respType.client = l.Poller.client
 	return respType, nil
+}
+
+// Resume rehydrates a NetworkManagementClientPutBastionShareableLinkPollerResponse from the provided client and resume token.
+func (l *NetworkManagementClientPutBastionShareableLinkPollerResponse) Resume(ctx context.Context, client *NetworkManagementClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("NetworkManagementClient.PutBastionShareableLink", token, client.con.Pipeline(), client.putBastionShareableLinkHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &NetworkManagementClientPutBastionShareableLinkPoller{
+		pt:     pt,
+		client: client,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // NetworkManagementClientPutBastionShareableLinkResponse contains the response from method NetworkManagementClient.PutBastionShareableLink.
@@ -3782,6 +5099,24 @@ func (l NetworkProfilesDeletePollerResponse) PollUntilDone(ctx context.Context, 
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a NetworkProfilesDeletePollerResponse from the provided client and resume token.
+func (l *NetworkProfilesDeletePollerResponse) Resume(ctx context.Context, client *NetworkProfilesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("NetworkProfilesClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &NetworkProfilesDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // NetworkProfilesDeleteResponse contains the response from method NetworkProfiles.Delete.
@@ -3858,6 +5193,24 @@ func (l NetworkSecurityGroupsCreateOrUpdatePollerResponse) PollUntilDone(ctx con
 	return respType, nil
 }
 
+// Resume rehydrates a NetworkSecurityGroupsCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *NetworkSecurityGroupsCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *NetworkSecurityGroupsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("NetworkSecurityGroupsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &NetworkSecurityGroupsCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // NetworkSecurityGroupsCreateOrUpdateResponse contains the response from method NetworkSecurityGroups.CreateOrUpdate.
 type NetworkSecurityGroupsCreateOrUpdateResponse struct {
 	NetworkSecurityGroupsCreateOrUpdateResult
@@ -3888,6 +5241,24 @@ func (l NetworkSecurityGroupsDeletePollerResponse) PollUntilDone(ctx context.Con
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a NetworkSecurityGroupsDeletePollerResponse from the provided client and resume token.
+func (l *NetworkSecurityGroupsDeletePollerResponse) Resume(ctx context.Context, client *NetworkSecurityGroupsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("NetworkSecurityGroupsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &NetworkSecurityGroupsDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // NetworkSecurityGroupsDeleteResponse contains the response from method NetworkSecurityGroups.Delete.
@@ -3964,6 +5335,24 @@ func (l NetworkVirtualAppliancesCreateOrUpdatePollerResponse) PollUntilDone(ctx 
 	return respType, nil
 }
 
+// Resume rehydrates a NetworkVirtualAppliancesCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *NetworkVirtualAppliancesCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *NetworkVirtualAppliancesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("NetworkVirtualAppliancesClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &NetworkVirtualAppliancesCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // NetworkVirtualAppliancesCreateOrUpdateResponse contains the response from method NetworkVirtualAppliances.CreateOrUpdate.
 type NetworkVirtualAppliancesCreateOrUpdateResponse struct {
 	NetworkVirtualAppliancesCreateOrUpdateResult
@@ -3994,6 +5383,24 @@ func (l NetworkVirtualAppliancesDeletePollerResponse) PollUntilDone(ctx context.
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a NetworkVirtualAppliancesDeletePollerResponse from the provided client and resume token.
+func (l *NetworkVirtualAppliancesDeletePollerResponse) Resume(ctx context.Context, client *NetworkVirtualAppliancesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("NetworkVirtualAppliancesClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &NetworkVirtualAppliancesDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // NetworkVirtualAppliancesDeleteResponse contains the response from method NetworkVirtualAppliances.Delete.
@@ -4070,6 +5477,24 @@ func (l NetworkWatchersCheckConnectivityPollerResponse) PollUntilDone(ctx contex
 	return respType, nil
 }
 
+// Resume rehydrates a NetworkWatchersCheckConnectivityPollerResponse from the provided client and resume token.
+func (l *NetworkWatchersCheckConnectivityPollerResponse) Resume(ctx context.Context, client *NetworkWatchersClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("NetworkWatchersClient.CheckConnectivity", token, client.con.Pipeline(), client.checkConnectivityHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &NetworkWatchersCheckConnectivityPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // NetworkWatchersCheckConnectivityResponse contains the response from method NetworkWatchers.CheckConnectivity.
 type NetworkWatchersCheckConnectivityResponse struct {
 	NetworkWatchersCheckConnectivityResult
@@ -4114,6 +5539,24 @@ func (l NetworkWatchersDeletePollerResponse) PollUntilDone(ctx context.Context, 
 	return respType, nil
 }
 
+// Resume rehydrates a NetworkWatchersDeletePollerResponse from the provided client and resume token.
+func (l *NetworkWatchersDeletePollerResponse) Resume(ctx context.Context, client *NetworkWatchersClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("NetworkWatchersClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &NetworkWatchersDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // NetworkWatchersDeleteResponse contains the response from method NetworkWatchers.Delete.
 type NetworkWatchersDeleteResponse struct {
 	// RawResponse contains the underlying HTTP response.
@@ -4138,6 +5581,24 @@ func (l NetworkWatchersGetAzureReachabilityReportPollerResponse) PollUntilDone(c
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a NetworkWatchersGetAzureReachabilityReportPollerResponse from the provided client and resume token.
+func (l *NetworkWatchersGetAzureReachabilityReportPollerResponse) Resume(ctx context.Context, client *NetworkWatchersClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("NetworkWatchersClient.GetAzureReachabilityReport", token, client.con.Pipeline(), client.getAzureReachabilityReportHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &NetworkWatchersGetAzureReachabilityReportPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // NetworkWatchersGetAzureReachabilityReportResponse contains the response from method NetworkWatchers.GetAzureReachabilityReport.
@@ -4172,6 +5633,24 @@ func (l NetworkWatchersGetFlowLogStatusPollerResponse) PollUntilDone(ctx context
 	return respType, nil
 }
 
+// Resume rehydrates a NetworkWatchersGetFlowLogStatusPollerResponse from the provided client and resume token.
+func (l *NetworkWatchersGetFlowLogStatusPollerResponse) Resume(ctx context.Context, client *NetworkWatchersClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("NetworkWatchersClient.GetFlowLogStatus", token, client.con.Pipeline(), client.getFlowLogStatusHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &NetworkWatchersGetFlowLogStatusPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // NetworkWatchersGetFlowLogStatusResponse contains the response from method NetworkWatchers.GetFlowLogStatus.
 type NetworkWatchersGetFlowLogStatusResponse struct {
 	NetworkWatchersGetFlowLogStatusResult
@@ -4204,6 +5683,24 @@ func (l NetworkWatchersGetNetworkConfigurationDiagnosticPollerResponse) PollUnti
 	return respType, nil
 }
 
+// Resume rehydrates a NetworkWatchersGetNetworkConfigurationDiagnosticPollerResponse from the provided client and resume token.
+func (l *NetworkWatchersGetNetworkConfigurationDiagnosticPollerResponse) Resume(ctx context.Context, client *NetworkWatchersClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("NetworkWatchersClient.GetNetworkConfigurationDiagnostic", token, client.con.Pipeline(), client.getNetworkConfigurationDiagnosticHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &NetworkWatchersGetNetworkConfigurationDiagnosticPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // NetworkWatchersGetNetworkConfigurationDiagnosticResponse contains the response from method NetworkWatchers.GetNetworkConfigurationDiagnostic.
 type NetworkWatchersGetNetworkConfigurationDiagnosticResponse struct {
 	NetworkWatchersGetNetworkConfigurationDiagnosticResult
@@ -4234,6 +5731,24 @@ func (l NetworkWatchersGetNextHopPollerResponse) PollUntilDone(ctx context.Conte
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a NetworkWatchersGetNextHopPollerResponse from the provided client and resume token.
+func (l *NetworkWatchersGetNextHopPollerResponse) Resume(ctx context.Context, client *NetworkWatchersClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("NetworkWatchersClient.GetNextHop", token, client.con.Pipeline(), client.getNextHopHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &NetworkWatchersGetNextHopPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // NetworkWatchersGetNextHopResponse contains the response from method NetworkWatchers.GetNextHop.
@@ -4292,6 +5807,24 @@ func (l NetworkWatchersGetTroubleshootingPollerResponse) PollUntilDone(ctx conte
 	return respType, nil
 }
 
+// Resume rehydrates a NetworkWatchersGetTroubleshootingPollerResponse from the provided client and resume token.
+func (l *NetworkWatchersGetTroubleshootingPollerResponse) Resume(ctx context.Context, client *NetworkWatchersClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("NetworkWatchersClient.GetTroubleshooting", token, client.con.Pipeline(), client.getTroubleshootingHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &NetworkWatchersGetTroubleshootingPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // NetworkWatchersGetTroubleshootingResponse contains the response from method NetworkWatchers.GetTroubleshooting.
 type NetworkWatchersGetTroubleshootingResponse struct {
 	NetworkWatchersGetTroubleshootingResult
@@ -4324,6 +5857,24 @@ func (l NetworkWatchersGetTroubleshootingResultPollerResponse) PollUntilDone(ctx
 	return respType, nil
 }
 
+// Resume rehydrates a NetworkWatchersGetTroubleshootingResultPollerResponse from the provided client and resume token.
+func (l *NetworkWatchersGetTroubleshootingResultPollerResponse) Resume(ctx context.Context, client *NetworkWatchersClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("NetworkWatchersClient.GetTroubleshootingResult", token, client.con.Pipeline(), client.getTroubleshootingResultHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &NetworkWatchersGetTroubleshootingResultPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // NetworkWatchersGetTroubleshootingResultResponse contains the response from method NetworkWatchers.GetTroubleshootingResult.
 type NetworkWatchersGetTroubleshootingResultResponse struct {
 	NetworkWatchersGetTroubleshootingResultResult
@@ -4354,6 +5905,24 @@ func (l NetworkWatchersGetVMSecurityRulesPollerResponse) PollUntilDone(ctx conte
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a NetworkWatchersGetVMSecurityRulesPollerResponse from the provided client and resume token.
+func (l *NetworkWatchersGetVMSecurityRulesPollerResponse) Resume(ctx context.Context, client *NetworkWatchersClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("NetworkWatchersClient.GetVMSecurityRules", token, client.con.Pipeline(), client.getVMSecurityRulesHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &NetworkWatchersGetVMSecurityRulesPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // NetworkWatchersGetVMSecurityRulesResponse contains the response from method NetworkWatchers.GetVMSecurityRules.
@@ -4400,6 +5969,24 @@ func (l NetworkWatchersListAvailableProvidersPollerResponse) PollUntilDone(ctx c
 	return respType, nil
 }
 
+// Resume rehydrates a NetworkWatchersListAvailableProvidersPollerResponse from the provided client and resume token.
+func (l *NetworkWatchersListAvailableProvidersPollerResponse) Resume(ctx context.Context, client *NetworkWatchersClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("NetworkWatchersClient.ListAvailableProviders", token, client.con.Pipeline(), client.listAvailableProvidersHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &NetworkWatchersListAvailableProvidersPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // NetworkWatchersListAvailableProvidersResponse contains the response from method NetworkWatchers.ListAvailableProviders.
 type NetworkWatchersListAvailableProvidersResponse struct {
 	NetworkWatchersListAvailableProvidersResult
@@ -4442,6 +6029,24 @@ func (l NetworkWatchersSetFlowLogConfigurationPollerResponse) PollUntilDone(ctx 
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a NetworkWatchersSetFlowLogConfigurationPollerResponse from the provided client and resume token.
+func (l *NetworkWatchersSetFlowLogConfigurationPollerResponse) Resume(ctx context.Context, client *NetworkWatchersClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("NetworkWatchersClient.SetFlowLogConfiguration", token, client.con.Pipeline(), client.setFlowLogConfigurationHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &NetworkWatchersSetFlowLogConfigurationPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // NetworkWatchersSetFlowLogConfigurationResponse contains the response from method NetworkWatchers.SetFlowLogConfiguration.
@@ -4488,6 +6093,24 @@ func (l NetworkWatchersVerifyIPFlowPollerResponse) PollUntilDone(ctx context.Con
 	return respType, nil
 }
 
+// Resume rehydrates a NetworkWatchersVerifyIPFlowPollerResponse from the provided client and resume token.
+func (l *NetworkWatchersVerifyIPFlowPollerResponse) Resume(ctx context.Context, client *NetworkWatchersClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("NetworkWatchersClient.VerifyIPFlow", token, client.con.Pipeline(), client.verifyIPFlowHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &NetworkWatchersVerifyIPFlowPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // NetworkWatchersVerifyIPFlowResponse contains the response from method NetworkWatchers.VerifyIPFlow.
 type NetworkWatchersVerifyIPFlowResponse struct {
 	NetworkWatchersVerifyIPFlowResult
@@ -4532,6 +6155,24 @@ func (l P2SVPNGatewaysCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Co
 	return respType, nil
 }
 
+// Resume rehydrates a P2SVPNGatewaysCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *P2SVPNGatewaysCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *P2SVPNGatewaysClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("P2SVPNGatewaysClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &P2SVPNGatewaysCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // P2SVPNGatewaysCreateOrUpdateResponse contains the response from method P2SVPNGateways.CreateOrUpdate.
 type P2SVPNGatewaysCreateOrUpdateResponse struct {
 	P2SVPNGatewaysCreateOrUpdateResult
@@ -4564,6 +6205,24 @@ func (l P2SVPNGatewaysDeletePollerResponse) PollUntilDone(ctx context.Context, f
 	return respType, nil
 }
 
+// Resume rehydrates a P2SVPNGatewaysDeletePollerResponse from the provided client and resume token.
+func (l *P2SVPNGatewaysDeletePollerResponse) Resume(ctx context.Context, client *P2SVPNGatewaysClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("P2SVPNGatewaysClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &P2SVPNGatewaysDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // P2SVPNGatewaysDeleteResponse contains the response from method P2SVPNGateways.Delete.
 type P2SVPNGatewaysDeleteResponse struct {
 	// RawResponse contains the underlying HTTP response.
@@ -4590,6 +6249,24 @@ func (l P2SVPNGatewaysDisconnectP2SVPNConnectionsPollerResponse) PollUntilDone(c
 	return respType, nil
 }
 
+// Resume rehydrates a P2SVPNGatewaysDisconnectP2SVPNConnectionsPollerResponse from the provided client and resume token.
+func (l *P2SVPNGatewaysDisconnectP2SVPNConnectionsPollerResponse) Resume(ctx context.Context, client *P2SVPNGatewaysClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("P2SVPNGatewaysClient.DisconnectP2SVPNConnections", token, client.con.Pipeline(), client.disconnectP2SVPNConnectionsHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &P2SVPNGatewaysDisconnectP2SVPNConnectionsPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // P2SVPNGatewaysDisconnectP2SVPNConnectionsResponse contains the response from method P2SVPNGateways.DisconnectP2SVPNConnections.
 type P2SVPNGatewaysDisconnectP2SVPNConnectionsResponse struct {
 	// RawResponse contains the underlying HTTP response.
@@ -4614,6 +6291,24 @@ func (l P2SVPNGatewaysGenerateVPNProfilePollerResponse) PollUntilDone(ctx contex
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a P2SVPNGatewaysGenerateVPNProfilePollerResponse from the provided client and resume token.
+func (l *P2SVPNGatewaysGenerateVPNProfilePollerResponse) Resume(ctx context.Context, client *P2SVPNGatewaysClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("P2SVPNGatewaysClient.GenerateVPNProfile", token, client.con.Pipeline(), client.generateVPNProfileHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &P2SVPNGatewaysGenerateVPNProfilePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // P2SVPNGatewaysGenerateVPNProfileResponse contains the response from method P2SVPNGateways.GenerateVPNProfile.
@@ -4648,6 +6343,24 @@ func (l P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedPollerResponse) PollUntil
 	return respType, nil
 }
 
+// Resume rehydrates a P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedPollerResponse from the provided client and resume token.
+func (l *P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedPollerResponse) Resume(ctx context.Context, client *P2SVPNGatewaysClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("P2SVPNGatewaysClient.GetP2SVPNConnectionHealthDetailed", token, client.con.Pipeline(), client.getP2SVPNConnectionHealthDetailedHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedResponse contains the response from method P2SVPNGateways.GetP2SVPNConnectionHealthDetailed.
 type P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedResponse struct {
 	P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedResult
@@ -4678,6 +6391,24 @@ func (l P2SVPNGatewaysGetP2SVPNConnectionHealthPollerResponse) PollUntilDone(ctx
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a P2SVPNGatewaysGetP2SVPNConnectionHealthPollerResponse from the provided client and resume token.
+func (l *P2SVPNGatewaysGetP2SVPNConnectionHealthPollerResponse) Resume(ctx context.Context, client *P2SVPNGatewaysClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("P2SVPNGatewaysClient.GetP2SVPNConnectionHealth", token, client.con.Pipeline(), client.getP2SVPNConnectionHealthHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &P2SVPNGatewaysGetP2SVPNConnectionHealthPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // P2SVPNGatewaysGetP2SVPNConnectionHealthResponse contains the response from method P2SVPNGateways.GetP2SVPNConnectionHealth.
@@ -4760,6 +6491,24 @@ func (l PacketCapturesCreatePollerResponse) PollUntilDone(ctx context.Context, f
 	return respType, nil
 }
 
+// Resume rehydrates a PacketCapturesCreatePollerResponse from the provided client and resume token.
+func (l *PacketCapturesCreatePollerResponse) Resume(ctx context.Context, client *PacketCapturesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("PacketCapturesClient.Create", token, client.con.Pipeline(), client.createHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &PacketCapturesCreatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // PacketCapturesCreateResponse contains the response from method PacketCaptures.Create.
 type PacketCapturesCreateResponse struct {
 	PacketCapturesCreateResult
@@ -4790,6 +6539,24 @@ func (l PacketCapturesDeletePollerResponse) PollUntilDone(ctx context.Context, f
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a PacketCapturesDeletePollerResponse from the provided client and resume token.
+func (l *PacketCapturesDeletePollerResponse) Resume(ctx context.Context, client *PacketCapturesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("PacketCapturesClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &PacketCapturesDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // PacketCapturesDeleteResponse contains the response from method PacketCaptures.Delete.
@@ -4828,6 +6595,24 @@ func (l PacketCapturesGetStatusPollerResponse) PollUntilDone(ctx context.Context
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a PacketCapturesGetStatusPollerResponse from the provided client and resume token.
+func (l *PacketCapturesGetStatusPollerResponse) Resume(ctx context.Context, client *PacketCapturesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("PacketCapturesClient.GetStatus", token, client.con.Pipeline(), client.getStatusHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &PacketCapturesGetStatusPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // PacketCapturesGetStatusResponse contains the response from method PacketCaptures.GetStatus.
@@ -4872,6 +6657,24 @@ func (l PacketCapturesStopPollerResponse) PollUntilDone(ctx context.Context, fre
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a PacketCapturesStopPollerResponse from the provided client and resume token.
+func (l *PacketCapturesStopPollerResponse) Resume(ctx context.Context, client *PacketCapturesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("PacketCapturesClient.Stop", token, client.con.Pipeline(), client.stopHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &PacketCapturesStopPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // PacketCapturesStopResponse contains the response from method PacketCaptures.Stop.
@@ -4924,6 +6727,24 @@ func (l PrivateDNSZoneGroupsCreateOrUpdatePollerResponse) PollUntilDone(ctx cont
 	return respType, nil
 }
 
+// Resume rehydrates a PrivateDNSZoneGroupsCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *PrivateDNSZoneGroupsCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *PrivateDNSZoneGroupsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("PrivateDNSZoneGroupsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &PrivateDNSZoneGroupsCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // PrivateDNSZoneGroupsCreateOrUpdateResponse contains the response from method PrivateDNSZoneGroups.CreateOrUpdate.
 type PrivateDNSZoneGroupsCreateOrUpdateResponse struct {
 	PrivateDNSZoneGroupsCreateOrUpdateResult
@@ -4954,6 +6775,24 @@ func (l PrivateDNSZoneGroupsDeletePollerResponse) PollUntilDone(ctx context.Cont
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a PrivateDNSZoneGroupsDeletePollerResponse from the provided client and resume token.
+func (l *PrivateDNSZoneGroupsDeletePollerResponse) Resume(ctx context.Context, client *PrivateDNSZoneGroupsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("PrivateDNSZoneGroupsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &PrivateDNSZoneGroupsDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // PrivateDNSZoneGroupsDeleteResponse contains the response from method PrivateDNSZoneGroups.Delete.
@@ -5006,6 +6845,24 @@ func (l PrivateEndpointsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.
 	return respType, nil
 }
 
+// Resume rehydrates a PrivateEndpointsCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *PrivateEndpointsCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *PrivateEndpointsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("PrivateEndpointsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &PrivateEndpointsCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // PrivateEndpointsCreateOrUpdateResponse contains the response from method PrivateEndpoints.CreateOrUpdate.
 type PrivateEndpointsCreateOrUpdateResponse struct {
 	PrivateEndpointsCreateOrUpdateResult
@@ -5036,6 +6893,24 @@ func (l PrivateEndpointsDeletePollerResponse) PollUntilDone(ctx context.Context,
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a PrivateEndpointsDeletePollerResponse from the provided client and resume token.
+func (l *PrivateEndpointsDeletePollerResponse) Resume(ctx context.Context, client *PrivateEndpointsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("PrivateEndpointsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &PrivateEndpointsDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // PrivateEndpointsDeleteResponse contains the response from method PrivateEndpoints.Delete.
@@ -5100,6 +6975,24 @@ func (l PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupPolle
 	return respType, nil
 }
 
+// Resume rehydrates a PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupPollerResponse from the provided client and resume token.
+func (l *PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupPollerResponse) Resume(ctx context.Context, client *PrivateLinkServicesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("PrivateLinkServicesClient.CheckPrivateLinkServiceVisibilityByResourceGroup", token, client.con.Pipeline(), client.checkPrivateLinkServiceVisibilityByResourceGroupHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupResponse contains the response from method PrivateLinkServices.CheckPrivateLinkServiceVisibilityByResourceGroup.
 type PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupResponse struct {
 	PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupResult
@@ -5130,6 +7023,24 @@ func (l PrivateLinkServicesCheckPrivateLinkServiceVisibilityPollerResponse) Poll
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a PrivateLinkServicesCheckPrivateLinkServiceVisibilityPollerResponse from the provided client and resume token.
+func (l *PrivateLinkServicesCheckPrivateLinkServiceVisibilityPollerResponse) Resume(ctx context.Context, client *PrivateLinkServicesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("PrivateLinkServicesClient.CheckPrivateLinkServiceVisibility", token, client.con.Pipeline(), client.checkPrivateLinkServiceVisibilityHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &PrivateLinkServicesCheckPrivateLinkServiceVisibilityPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // PrivateLinkServicesCheckPrivateLinkServiceVisibilityResponse contains the response from method PrivateLinkServices.CheckPrivateLinkServiceVisibility.
@@ -5164,6 +7075,24 @@ func (l PrivateLinkServicesCreateOrUpdatePollerResponse) PollUntilDone(ctx conte
 	return respType, nil
 }
 
+// Resume rehydrates a PrivateLinkServicesCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *PrivateLinkServicesCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *PrivateLinkServicesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("PrivateLinkServicesClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &PrivateLinkServicesCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // PrivateLinkServicesCreateOrUpdateResponse contains the response from method PrivateLinkServices.CreateOrUpdate.
 type PrivateLinkServicesCreateOrUpdateResponse struct {
 	PrivateLinkServicesCreateOrUpdateResult
@@ -5196,6 +7125,24 @@ func (l PrivateLinkServicesDeletePollerResponse) PollUntilDone(ctx context.Conte
 	return respType, nil
 }
 
+// Resume rehydrates a PrivateLinkServicesDeletePollerResponse from the provided client and resume token.
+func (l *PrivateLinkServicesDeletePollerResponse) Resume(ctx context.Context, client *PrivateLinkServicesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("PrivateLinkServicesClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &PrivateLinkServicesDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // PrivateLinkServicesDeletePrivateEndpointConnectionPollerResponse contains the response from method PrivateLinkServices.DeletePrivateEndpointConnection.
 type PrivateLinkServicesDeletePrivateEndpointConnectionPollerResponse struct {
 	// Poller contains an initialized poller.
@@ -5214,6 +7161,24 @@ func (l PrivateLinkServicesDeletePrivateEndpointConnectionPollerResponse) PollUn
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a PrivateLinkServicesDeletePrivateEndpointConnectionPollerResponse from the provided client and resume token.
+func (l *PrivateLinkServicesDeletePrivateEndpointConnectionPollerResponse) Resume(ctx context.Context, client *PrivateLinkServicesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("PrivateLinkServicesClient.DeletePrivateEndpointConnection", token, client.con.Pipeline(), client.deletePrivateEndpointConnectionHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &PrivateLinkServicesDeletePrivateEndpointConnectionPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // PrivateLinkServicesDeletePrivateEndpointConnectionResponse contains the response from method PrivateLinkServices.DeletePrivateEndpointConnection.
@@ -5344,6 +7309,24 @@ func (l PublicIPAddressesCreateOrUpdatePollerResponse) PollUntilDone(ctx context
 	return respType, nil
 }
 
+// Resume rehydrates a PublicIPAddressesCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *PublicIPAddressesCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *PublicIPAddressesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("PublicIPAddressesClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &PublicIPAddressesCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // PublicIPAddressesCreateOrUpdateResponse contains the response from method PublicIPAddresses.CreateOrUpdate.
 type PublicIPAddressesCreateOrUpdateResponse struct {
 	PublicIPAddressesCreateOrUpdateResult
@@ -5374,6 +7357,24 @@ func (l PublicIPAddressesDeletePollerResponse) PollUntilDone(ctx context.Context
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a PublicIPAddressesDeletePollerResponse from the provided client and resume token.
+func (l *PublicIPAddressesDeletePollerResponse) Resume(ctx context.Context, client *PublicIPAddressesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("PublicIPAddressesClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &PublicIPAddressesDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // PublicIPAddressesDeleteResponse contains the response from method PublicIPAddresses.Delete.
@@ -5486,6 +7487,24 @@ func (l PublicIPPrefixesCreateOrUpdatePollerResponse) PollUntilDone(ctx context.
 	return respType, nil
 }
 
+// Resume rehydrates a PublicIPPrefixesCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *PublicIPPrefixesCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *PublicIPPrefixesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("PublicIPPrefixesClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &PublicIPPrefixesCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // PublicIPPrefixesCreateOrUpdateResponse contains the response from method PublicIPPrefixes.CreateOrUpdate.
 type PublicIPPrefixesCreateOrUpdateResponse struct {
 	PublicIPPrefixesCreateOrUpdateResult
@@ -5516,6 +7535,24 @@ func (l PublicIPPrefixesDeletePollerResponse) PollUntilDone(ctx context.Context,
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a PublicIPPrefixesDeletePollerResponse from the provided client and resume token.
+func (l *PublicIPPrefixesDeletePollerResponse) Resume(ctx context.Context, client *PublicIPPrefixesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("PublicIPPrefixesClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &PublicIPPrefixesDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // PublicIPPrefixesDeleteResponse contains the response from method PublicIPPrefixes.Delete.
@@ -5604,6 +7641,24 @@ func (l RouteFilterRulesCreateOrUpdatePollerResponse) PollUntilDone(ctx context.
 	return respType, nil
 }
 
+// Resume rehydrates a RouteFilterRulesCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *RouteFilterRulesCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *RouteFilterRulesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("RouteFilterRulesClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &RouteFilterRulesCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // RouteFilterRulesCreateOrUpdateResponse contains the response from method RouteFilterRules.CreateOrUpdate.
 type RouteFilterRulesCreateOrUpdateResponse struct {
 	RouteFilterRulesCreateOrUpdateResult
@@ -5634,6 +7689,24 @@ func (l RouteFilterRulesDeletePollerResponse) PollUntilDone(ctx context.Context,
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a RouteFilterRulesDeletePollerResponse from the provided client and resume token.
+func (l *RouteFilterRulesDeletePollerResponse) Resume(ctx context.Context, client *RouteFilterRulesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("RouteFilterRulesClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &RouteFilterRulesDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // RouteFilterRulesDeleteResponse contains the response from method RouteFilterRules.Delete.
@@ -5686,6 +7759,24 @@ func (l RouteFiltersCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Cont
 	return respType, nil
 }
 
+// Resume rehydrates a RouteFiltersCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *RouteFiltersCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *RouteFiltersClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("RouteFiltersClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &RouteFiltersCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // RouteFiltersCreateOrUpdateResponse contains the response from method RouteFilters.CreateOrUpdate.
 type RouteFiltersCreateOrUpdateResponse struct {
 	RouteFiltersCreateOrUpdateResult
@@ -5716,6 +7807,24 @@ func (l RouteFiltersDeletePollerResponse) PollUntilDone(ctx context.Context, fre
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a RouteFiltersDeletePollerResponse from the provided client and resume token.
+func (l *RouteFiltersDeletePollerResponse) Resume(ctx context.Context, client *RouteFiltersClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("RouteFiltersClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &RouteFiltersDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // RouteFiltersDeleteResponse contains the response from method RouteFilters.Delete.
@@ -5792,6 +7901,24 @@ func (l RouteTablesCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Conte
 	return respType, nil
 }
 
+// Resume rehydrates a RouteTablesCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *RouteTablesCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *RouteTablesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("RouteTablesClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &RouteTablesCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // RouteTablesCreateOrUpdateResponse contains the response from method RouteTables.CreateOrUpdate.
 type RouteTablesCreateOrUpdateResponse struct {
 	RouteTablesCreateOrUpdateResult
@@ -5822,6 +7949,24 @@ func (l RouteTablesDeletePollerResponse) PollUntilDone(ctx context.Context, freq
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a RouteTablesDeletePollerResponse from the provided client and resume token.
+func (l *RouteTablesDeletePollerResponse) Resume(ctx context.Context, client *RouteTablesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("RouteTablesClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &RouteTablesDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // RouteTablesDeleteResponse contains the response from method RouteTables.Delete.
@@ -5898,6 +8043,24 @@ func (l RoutesCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, f
 	return respType, nil
 }
 
+// Resume rehydrates a RoutesCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *RoutesCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *RoutesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("RoutesClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &RoutesCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // RoutesCreateOrUpdateResponse contains the response from method Routes.CreateOrUpdate.
 type RoutesCreateOrUpdateResponse struct {
 	RoutesCreateOrUpdateResult
@@ -5928,6 +8091,24 @@ func (l RoutesDeletePollerResponse) PollUntilDone(ctx context.Context, freq time
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a RoutesDeletePollerResponse from the provided client and resume token.
+func (l *RoutesDeletePollerResponse) Resume(ctx context.Context, client *RoutesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("RoutesClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &RoutesDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // RoutesDeleteResponse contains the response from method Routes.Delete.
@@ -5980,6 +8161,24 @@ func (l SecurityPartnerProvidersCreateOrUpdatePollerResponse) PollUntilDone(ctx 
 	return respType, nil
 }
 
+// Resume rehydrates a SecurityPartnerProvidersCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *SecurityPartnerProvidersCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *SecurityPartnerProvidersClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("SecurityPartnerProvidersClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &SecurityPartnerProvidersCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // SecurityPartnerProvidersCreateOrUpdateResponse contains the response from method SecurityPartnerProviders.CreateOrUpdate.
 type SecurityPartnerProvidersCreateOrUpdateResponse struct {
 	SecurityPartnerProvidersCreateOrUpdateResult
@@ -6010,6 +8209,24 @@ func (l SecurityPartnerProvidersDeletePollerResponse) PollUntilDone(ctx context.
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a SecurityPartnerProvidersDeletePollerResponse from the provided client and resume token.
+func (l *SecurityPartnerProvidersDeletePollerResponse) Resume(ctx context.Context, client *SecurityPartnerProvidersClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("SecurityPartnerProvidersClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &SecurityPartnerProvidersDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // SecurityPartnerProvidersDeleteResponse contains the response from method SecurityPartnerProviders.Delete.
@@ -6086,6 +8303,24 @@ func (l SecurityRulesCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Con
 	return respType, nil
 }
 
+// Resume rehydrates a SecurityRulesCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *SecurityRulesCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *SecurityRulesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("SecurityRulesClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &SecurityRulesCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // SecurityRulesCreateOrUpdateResponse contains the response from method SecurityRules.CreateOrUpdate.
 type SecurityRulesCreateOrUpdateResponse struct {
 	SecurityRulesCreateOrUpdateResult
@@ -6116,6 +8351,24 @@ func (l SecurityRulesDeletePollerResponse) PollUntilDone(ctx context.Context, fr
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a SecurityRulesDeletePollerResponse from the provided client and resume token.
+func (l *SecurityRulesDeletePollerResponse) Resume(ctx context.Context, client *SecurityRulesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("SecurityRulesClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &SecurityRulesDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // SecurityRulesDeleteResponse contains the response from method SecurityRules.Delete.
@@ -6180,6 +8433,24 @@ func (l ServiceEndpointPoliciesCreateOrUpdatePollerResponse) PollUntilDone(ctx c
 	return respType, nil
 }
 
+// Resume rehydrates a ServiceEndpointPoliciesCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *ServiceEndpointPoliciesCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *ServiceEndpointPoliciesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("ServiceEndpointPoliciesClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &ServiceEndpointPoliciesCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // ServiceEndpointPoliciesCreateOrUpdateResponse contains the response from method ServiceEndpointPolicies.CreateOrUpdate.
 type ServiceEndpointPoliciesCreateOrUpdateResponse struct {
 	ServiceEndpointPoliciesCreateOrUpdateResult
@@ -6210,6 +8481,24 @@ func (l ServiceEndpointPoliciesDeletePollerResponse) PollUntilDone(ctx context.C
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a ServiceEndpointPoliciesDeletePollerResponse from the provided client and resume token.
+func (l *ServiceEndpointPoliciesDeletePollerResponse) Resume(ctx context.Context, client *ServiceEndpointPoliciesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("ServiceEndpointPoliciesClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &ServiceEndpointPoliciesDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // ServiceEndpointPoliciesDeleteResponse contains the response from method ServiceEndpointPolicies.Delete.
@@ -6286,6 +8575,24 @@ func (l ServiceEndpointPolicyDefinitionsCreateOrUpdatePollerResponse) PollUntilD
 	return respType, nil
 }
 
+// Resume rehydrates a ServiceEndpointPolicyDefinitionsCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *ServiceEndpointPolicyDefinitionsCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *ServiceEndpointPolicyDefinitionsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("ServiceEndpointPolicyDefinitionsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &ServiceEndpointPolicyDefinitionsCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // ServiceEndpointPolicyDefinitionsCreateOrUpdateResponse contains the response from method ServiceEndpointPolicyDefinitions.CreateOrUpdate.
 type ServiceEndpointPolicyDefinitionsCreateOrUpdateResponse struct {
 	ServiceEndpointPolicyDefinitionsCreateOrUpdateResult
@@ -6316,6 +8623,24 @@ func (l ServiceEndpointPolicyDefinitionsDeletePollerResponse) PollUntilDone(ctx 
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a ServiceEndpointPolicyDefinitionsDeletePollerResponse from the provided client and resume token.
+func (l *ServiceEndpointPolicyDefinitionsDeletePollerResponse) Resume(ctx context.Context, client *ServiceEndpointPolicyDefinitionsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("ServiceEndpointPolicyDefinitionsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &ServiceEndpointPolicyDefinitionsDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // ServiceEndpointPolicyDefinitionsDeleteResponse contains the response from method ServiceEndpointPolicyDefinitions.Delete.
@@ -6380,6 +8705,24 @@ func (l SubnetsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, 
 	return respType, nil
 }
 
+// Resume rehydrates a SubnetsCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *SubnetsCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *SubnetsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("SubnetsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &SubnetsCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // SubnetsCreateOrUpdateResponse contains the response from method Subnets.CreateOrUpdate.
 type SubnetsCreateOrUpdateResponse struct {
 	SubnetsCreateOrUpdateResult
@@ -6410,6 +8753,24 @@ func (l SubnetsDeletePollerResponse) PollUntilDone(ctx context.Context, freq tim
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a SubnetsDeletePollerResponse from the provided client and resume token.
+func (l *SubnetsDeletePollerResponse) Resume(ctx context.Context, client *SubnetsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("SubnetsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &SubnetsDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // SubnetsDeleteResponse contains the response from method Subnets.Delete.
@@ -6462,6 +8823,24 @@ func (l SubnetsPrepareNetworkPoliciesPollerResponse) PollUntilDone(ctx context.C
 	return respType, nil
 }
 
+// Resume rehydrates a SubnetsPrepareNetworkPoliciesPollerResponse from the provided client and resume token.
+func (l *SubnetsPrepareNetworkPoliciesPollerResponse) Resume(ctx context.Context, client *SubnetsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("SubnetsClient.PrepareNetworkPolicies", token, client.con.Pipeline(), client.prepareNetworkPoliciesHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &SubnetsPrepareNetworkPoliciesPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // SubnetsPrepareNetworkPoliciesResponse contains the response from method Subnets.PrepareNetworkPolicies.
 type SubnetsPrepareNetworkPoliciesResponse struct {
 	// RawResponse contains the underlying HTTP response.
@@ -6486,6 +8865,24 @@ func (l SubnetsUnprepareNetworkPoliciesPollerResponse) PollUntilDone(ctx context
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a SubnetsUnprepareNetworkPoliciesPollerResponse from the provided client and resume token.
+func (l *SubnetsUnprepareNetworkPoliciesPollerResponse) Resume(ctx context.Context, client *SubnetsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("SubnetsClient.UnprepareNetworkPolicies", token, client.con.Pipeline(), client.unprepareNetworkPoliciesHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &SubnetsUnprepareNetworkPoliciesPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // SubnetsUnprepareNetworkPoliciesResponse contains the response from method Subnets.UnprepareNetworkPolicies.
@@ -6526,6 +8923,24 @@ func (l VPNConnectionsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Co
 	return respType, nil
 }
 
+// Resume rehydrates a VPNConnectionsCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *VPNConnectionsCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *VPNConnectionsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VPNConnectionsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VPNConnectionsCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VPNConnectionsCreateOrUpdateResponse contains the response from method VPNConnections.CreateOrUpdate.
 type VPNConnectionsCreateOrUpdateResponse struct {
 	VPNConnectionsCreateOrUpdateResult
@@ -6556,6 +8971,24 @@ func (l VPNConnectionsDeletePollerResponse) PollUntilDone(ctx context.Context, f
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a VPNConnectionsDeletePollerResponse from the provided client and resume token.
+func (l *VPNConnectionsDeletePollerResponse) Resume(ctx context.Context, client *VPNConnectionsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VPNConnectionsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VPNConnectionsDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // VPNConnectionsDeleteResponse contains the response from method VPNConnections.Delete.
@@ -6608,6 +9041,24 @@ func (l VPNGatewaysCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Conte
 	return respType, nil
 }
 
+// Resume rehydrates a VPNGatewaysCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *VPNGatewaysCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *VPNGatewaysClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VPNGatewaysClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VPNGatewaysCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VPNGatewaysCreateOrUpdateResponse contains the response from method VPNGateways.CreateOrUpdate.
 type VPNGatewaysCreateOrUpdateResponse struct {
 	VPNGatewaysCreateOrUpdateResult
@@ -6638,6 +9089,24 @@ func (l VPNGatewaysDeletePollerResponse) PollUntilDone(ctx context.Context, freq
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a VPNGatewaysDeletePollerResponse from the provided client and resume token.
+func (l *VPNGatewaysDeletePollerResponse) Resume(ctx context.Context, client *VPNGatewaysClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VPNGatewaysClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VPNGatewaysDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // VPNGatewaysDeleteResponse contains the response from method VPNGateways.Delete.
@@ -6702,6 +9171,24 @@ func (l VPNGatewaysResetPollerResponse) PollUntilDone(ctx context.Context, freq 
 	return respType, nil
 }
 
+// Resume rehydrates a VPNGatewaysResetPollerResponse from the provided client and resume token.
+func (l *VPNGatewaysResetPollerResponse) Resume(ctx context.Context, client *VPNGatewaysClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VPNGatewaysClient.Reset", token, client.con.Pipeline(), client.resetHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VPNGatewaysResetPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VPNGatewaysResetResponse contains the response from method VPNGateways.Reset.
 type VPNGatewaysResetResponse struct {
 	VPNGatewaysResetResult
@@ -6758,6 +9245,24 @@ func (l VPNServerConfigurationsAssociatedWithVirtualWanListPollerResponse) PollU
 	return respType, nil
 }
 
+// Resume rehydrates a VPNServerConfigurationsAssociatedWithVirtualWanListPollerResponse from the provided client and resume token.
+func (l *VPNServerConfigurationsAssociatedWithVirtualWanListPollerResponse) Resume(ctx context.Context, client *VPNServerConfigurationsAssociatedWithVirtualWanClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VPNServerConfigurationsAssociatedWithVirtualWanClient.List", token, client.con.Pipeline(), client.listHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VPNServerConfigurationsAssociatedWithVirtualWanListPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VPNServerConfigurationsAssociatedWithVirtualWanListResponse contains the response from method VPNServerConfigurationsAssociatedWithVirtualWan.List.
 type VPNServerConfigurationsAssociatedWithVirtualWanListResponse struct {
 	VPNServerConfigurationsAssociatedWithVirtualWanListResult
@@ -6790,6 +9295,24 @@ func (l VPNServerConfigurationsCreateOrUpdatePollerResponse) PollUntilDone(ctx c
 	return respType, nil
 }
 
+// Resume rehydrates a VPNServerConfigurationsCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *VPNServerConfigurationsCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *VPNServerConfigurationsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VPNServerConfigurationsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VPNServerConfigurationsCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VPNServerConfigurationsCreateOrUpdateResponse contains the response from method VPNServerConfigurations.CreateOrUpdate.
 type VPNServerConfigurationsCreateOrUpdateResponse struct {
 	VPNServerConfigurationsCreateOrUpdateResult
@@ -6820,6 +9343,24 @@ func (l VPNServerConfigurationsDeletePollerResponse) PollUntilDone(ctx context.C
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a VPNServerConfigurationsDeletePollerResponse from the provided client and resume token.
+func (l *VPNServerConfigurationsDeletePollerResponse) Resume(ctx context.Context, client *VPNServerConfigurationsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VPNServerConfigurationsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VPNServerConfigurationsDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // VPNServerConfigurationsDeleteResponse contains the response from method VPNServerConfigurations.Delete.
@@ -6932,6 +9473,24 @@ func (l VPNSitesConfigurationDownloadPollerResponse) PollUntilDone(ctx context.C
 	return respType, nil
 }
 
+// Resume rehydrates a VPNSitesConfigurationDownloadPollerResponse from the provided client and resume token.
+func (l *VPNSitesConfigurationDownloadPollerResponse) Resume(ctx context.Context, client *VPNSitesConfigurationClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VPNSitesConfigurationClient.Download", token, client.con.Pipeline(), client.downloadHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VPNSitesConfigurationDownloadPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VPNSitesConfigurationDownloadResponse contains the response from method VPNSitesConfiguration.Download.
 type VPNSitesConfigurationDownloadResponse struct {
 	// RawResponse contains the underlying HTTP response.
@@ -6956,6 +9515,24 @@ func (l VPNSitesCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context,
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a VPNSitesCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *VPNSitesCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *VPNSitesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VPNSitesClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VPNSitesCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // VPNSitesCreateOrUpdateResponse contains the response from method VPNSites.CreateOrUpdate.
@@ -6988,6 +9565,24 @@ func (l VPNSitesDeletePollerResponse) PollUntilDone(ctx context.Context, freq ti
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a VPNSitesDeletePollerResponse from the provided client and resume token.
+func (l *VPNSitesDeletePollerResponse) Resume(ctx context.Context, client *VPNSitesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VPNSitesClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VPNSitesDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // VPNSitesDeleteResponse contains the response from method VPNSites.Delete.
@@ -7064,6 +9659,24 @@ func (l VirtualHubRouteTableV2SCreateOrUpdatePollerResponse) PollUntilDone(ctx c
 	return respType, nil
 }
 
+// Resume rehydrates a VirtualHubRouteTableV2SCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *VirtualHubRouteTableV2SCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *VirtualHubRouteTableV2SClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualHubRouteTableV2SClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualHubRouteTableV2SCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VirtualHubRouteTableV2SCreateOrUpdateResponse contains the response from method VirtualHubRouteTableV2S.CreateOrUpdate.
 type VirtualHubRouteTableV2SCreateOrUpdateResponse struct {
 	VirtualHubRouteTableV2SCreateOrUpdateResult
@@ -7094,6 +9707,24 @@ func (l VirtualHubRouteTableV2SDeletePollerResponse) PollUntilDone(ctx context.C
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a VirtualHubRouteTableV2SDeletePollerResponse from the provided client and resume token.
+func (l *VirtualHubRouteTableV2SDeletePollerResponse) Resume(ctx context.Context, client *VirtualHubRouteTableV2SClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualHubRouteTableV2SClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualHubRouteTableV2SDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // VirtualHubRouteTableV2SDeleteResponse contains the response from method VirtualHubRouteTableV2S.Delete.
@@ -7146,6 +9777,24 @@ func (l VirtualHubsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Conte
 	return respType, nil
 }
 
+// Resume rehydrates a VirtualHubsCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *VirtualHubsCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *VirtualHubsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualHubsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualHubsCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VirtualHubsCreateOrUpdateResponse contains the response from method VirtualHubs.CreateOrUpdate.
 type VirtualHubsCreateOrUpdateResponse struct {
 	VirtualHubsCreateOrUpdateResult
@@ -7176,6 +9825,24 @@ func (l VirtualHubsDeletePollerResponse) PollUntilDone(ctx context.Context, freq
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a VirtualHubsDeletePollerResponse from the provided client and resume token.
+func (l *VirtualHubsDeletePollerResponse) Resume(ctx context.Context, client *VirtualHubsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualHubsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualHubsDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // VirtualHubsDeleteResponse contains the response from method VirtualHubs.Delete.
@@ -7252,6 +9919,24 @@ func (l VirtualNetworkGatewayConnectionsCreateOrUpdatePollerResponse) PollUntilD
 	return respType, nil
 }
 
+// Resume rehydrates a VirtualNetworkGatewayConnectionsCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *VirtualNetworkGatewayConnectionsCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewayConnectionsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworkGatewayConnectionsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualNetworkGatewayConnectionsCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VirtualNetworkGatewayConnectionsCreateOrUpdateResponse contains the response from method VirtualNetworkGatewayConnections.CreateOrUpdate.
 type VirtualNetworkGatewayConnectionsCreateOrUpdateResponse struct {
 	VirtualNetworkGatewayConnectionsCreateOrUpdateResult
@@ -7282,6 +9967,24 @@ func (l VirtualNetworkGatewayConnectionsDeletePollerResponse) PollUntilDone(ctx 
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a VirtualNetworkGatewayConnectionsDeletePollerResponse from the provided client and resume token.
+func (l *VirtualNetworkGatewayConnectionsDeletePollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewayConnectionsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworkGatewayConnectionsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualNetworkGatewayConnectionsDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // VirtualNetworkGatewayConnectionsDeleteResponse contains the response from method VirtualNetworkGatewayConnections.Delete.
@@ -7346,6 +10049,24 @@ func (l VirtualNetworkGatewayConnectionsResetSharedKeyPollerResponse) PollUntilD
 	return respType, nil
 }
 
+// Resume rehydrates a VirtualNetworkGatewayConnectionsResetSharedKeyPollerResponse from the provided client and resume token.
+func (l *VirtualNetworkGatewayConnectionsResetSharedKeyPollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewayConnectionsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworkGatewayConnectionsClient.ResetSharedKey", token, client.con.Pipeline(), client.resetSharedKeyHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualNetworkGatewayConnectionsResetSharedKeyPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VirtualNetworkGatewayConnectionsResetSharedKeyResponse contains the response from method VirtualNetworkGatewayConnections.ResetSharedKey.
 type VirtualNetworkGatewayConnectionsResetSharedKeyResponse struct {
 	VirtualNetworkGatewayConnectionsResetSharedKeyResult
@@ -7376,6 +10097,24 @@ func (l VirtualNetworkGatewayConnectionsSetSharedKeyPollerResponse) PollUntilDon
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a VirtualNetworkGatewayConnectionsSetSharedKeyPollerResponse from the provided client and resume token.
+func (l *VirtualNetworkGatewayConnectionsSetSharedKeyPollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewayConnectionsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworkGatewayConnectionsClient.SetSharedKey", token, client.con.Pipeline(), client.setSharedKeyHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualNetworkGatewayConnectionsSetSharedKeyPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // VirtualNetworkGatewayConnectionsSetSharedKeyResponse contains the response from method VirtualNetworkGatewayConnections.SetSharedKey.
@@ -7410,6 +10149,24 @@ func (l VirtualNetworkGatewayConnectionsStartPacketCapturePollerResponse) PollUn
 	return respType, nil
 }
 
+// Resume rehydrates a VirtualNetworkGatewayConnectionsStartPacketCapturePollerResponse from the provided client and resume token.
+func (l *VirtualNetworkGatewayConnectionsStartPacketCapturePollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewayConnectionsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworkGatewayConnectionsClient.StartPacketCapture", token, client.con.Pipeline(), client.startPacketCaptureHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualNetworkGatewayConnectionsStartPacketCapturePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VirtualNetworkGatewayConnectionsStartPacketCaptureResponse contains the response from method VirtualNetworkGatewayConnections.StartPacketCapture.
 type VirtualNetworkGatewayConnectionsStartPacketCaptureResponse struct {
 	VirtualNetworkGatewayConnectionsStartPacketCaptureResult
@@ -7440,6 +10197,24 @@ func (l VirtualNetworkGatewayConnectionsStopPacketCapturePollerResponse) PollUnt
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a VirtualNetworkGatewayConnectionsStopPacketCapturePollerResponse from the provided client and resume token.
+func (l *VirtualNetworkGatewayConnectionsStopPacketCapturePollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewayConnectionsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworkGatewayConnectionsClient.StopPacketCapture", token, client.con.Pipeline(), client.stopPacketCaptureHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualNetworkGatewayConnectionsStopPacketCapturePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // VirtualNetworkGatewayConnectionsStopPacketCaptureResponse contains the response from method VirtualNetworkGatewayConnections.StopPacketCapture.
@@ -7474,6 +10249,24 @@ func (l VirtualNetworkGatewayConnectionsUpdateTagsPollerResponse) PollUntilDone(
 	return respType, nil
 }
 
+// Resume rehydrates a VirtualNetworkGatewayConnectionsUpdateTagsPollerResponse from the provided client and resume token.
+func (l *VirtualNetworkGatewayConnectionsUpdateTagsPollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewayConnectionsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworkGatewayConnectionsClient.UpdateTags", token, client.con.Pipeline(), client.updateTagsHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualNetworkGatewayConnectionsUpdateTagsPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VirtualNetworkGatewayConnectionsUpdateTagsResponse contains the response from method VirtualNetworkGatewayConnections.UpdateTags.
 type VirtualNetworkGatewayConnectionsUpdateTagsResponse struct {
 	VirtualNetworkGatewayConnectionsUpdateTagsResult
@@ -7504,6 +10297,24 @@ func (l VirtualNetworkGatewaysCreateOrUpdatePollerResponse) PollUntilDone(ctx co
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a VirtualNetworkGatewaysCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *VirtualNetworkGatewaysCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewaysClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworkGatewaysClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualNetworkGatewaysCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // VirtualNetworkGatewaysCreateOrUpdateResponse contains the response from method VirtualNetworkGateways.CreateOrUpdate.
@@ -7538,6 +10349,24 @@ func (l VirtualNetworkGatewaysDeletePollerResponse) PollUntilDone(ctx context.Co
 	return respType, nil
 }
 
+// Resume rehydrates a VirtualNetworkGatewaysDeletePollerResponse from the provided client and resume token.
+func (l *VirtualNetworkGatewaysDeletePollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewaysClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworkGatewaysClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualNetworkGatewaysDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VirtualNetworkGatewaysDeleteResponse contains the response from method VirtualNetworkGateways.Delete.
 type VirtualNetworkGatewaysDeleteResponse struct {
 	// RawResponse contains the underlying HTTP response.
@@ -7564,6 +10393,24 @@ func (l VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVPNConnectionsPolle
 	return respType, nil
 }
 
+// Resume rehydrates a VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVPNConnectionsPollerResponse from the provided client and resume token.
+func (l *VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVPNConnectionsPollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewaysClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworkGatewaysClient.DisconnectVirtualNetworkGatewayVPNConnections", token, client.con.Pipeline(), client.disconnectVirtualNetworkGatewayVPNConnectionsHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVPNConnectionsPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVPNConnectionsResponse contains the response from method VirtualNetworkGateways.DisconnectVirtualNetworkGatewayVPNConnections.
 type VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVPNConnectionsResponse struct {
 	// RawResponse contains the underlying HTTP response.
@@ -7588,6 +10435,24 @@ func (l VirtualNetworkGatewaysGenerateVPNProfilePollerResponse) PollUntilDone(ct
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a VirtualNetworkGatewaysGenerateVPNProfilePollerResponse from the provided client and resume token.
+func (l *VirtualNetworkGatewaysGenerateVPNProfilePollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewaysClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworkGatewaysClient.GenerateVPNProfile", token, client.con.Pipeline(), client.generateVPNProfileHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualNetworkGatewaysGenerateVPNProfilePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // VirtualNetworkGatewaysGenerateVPNProfileResponse contains the response from method VirtualNetworkGateways.GenerateVPNProfile.
@@ -7622,6 +10487,24 @@ func (l VirtualNetworkGatewaysGeneratevpnclientpackagePollerResponse) PollUntilD
 	return respType, nil
 }
 
+// Resume rehydrates a VirtualNetworkGatewaysGeneratevpnclientpackagePollerResponse from the provided client and resume token.
+func (l *VirtualNetworkGatewaysGeneratevpnclientpackagePollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewaysClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworkGatewaysClient.Generatevpnclientpackage", token, client.con.Pipeline(), client.generatevpnclientpackageHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualNetworkGatewaysGeneratevpnclientpackagePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VirtualNetworkGatewaysGeneratevpnclientpackageResponse contains the response from method VirtualNetworkGateways.Generatevpnclientpackage.
 type VirtualNetworkGatewaysGeneratevpnclientpackageResponse struct {
 	VirtualNetworkGatewaysGeneratevpnclientpackageResult
@@ -7652,6 +10535,24 @@ func (l VirtualNetworkGatewaysGetAdvertisedRoutesPollerResponse) PollUntilDone(c
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a VirtualNetworkGatewaysGetAdvertisedRoutesPollerResponse from the provided client and resume token.
+func (l *VirtualNetworkGatewaysGetAdvertisedRoutesPollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewaysClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworkGatewaysClient.GetAdvertisedRoutes", token, client.con.Pipeline(), client.getAdvertisedRoutesHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualNetworkGatewaysGetAdvertisedRoutesPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // VirtualNetworkGatewaysGetAdvertisedRoutesResponse contains the response from method VirtualNetworkGateways.GetAdvertisedRoutes.
@@ -7686,6 +10587,24 @@ func (l VirtualNetworkGatewaysGetBgpPeerStatusPollerResponse) PollUntilDone(ctx 
 	return respType, nil
 }
 
+// Resume rehydrates a VirtualNetworkGatewaysGetBgpPeerStatusPollerResponse from the provided client and resume token.
+func (l *VirtualNetworkGatewaysGetBgpPeerStatusPollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewaysClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworkGatewaysClient.GetBgpPeerStatus", token, client.con.Pipeline(), client.getBgpPeerStatusHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualNetworkGatewaysGetBgpPeerStatusPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VirtualNetworkGatewaysGetBgpPeerStatusResponse contains the response from method VirtualNetworkGateways.GetBgpPeerStatus.
 type VirtualNetworkGatewaysGetBgpPeerStatusResponse struct {
 	VirtualNetworkGatewaysGetBgpPeerStatusResult
@@ -7716,6 +10635,24 @@ func (l VirtualNetworkGatewaysGetLearnedRoutesPollerResponse) PollUntilDone(ctx 
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a VirtualNetworkGatewaysGetLearnedRoutesPollerResponse from the provided client and resume token.
+func (l *VirtualNetworkGatewaysGetLearnedRoutesPollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewaysClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworkGatewaysClient.GetLearnedRoutes", token, client.con.Pipeline(), client.getLearnedRoutesHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualNetworkGatewaysGetLearnedRoutesPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // VirtualNetworkGatewaysGetLearnedRoutesResponse contains the response from method VirtualNetworkGateways.GetLearnedRoutes.
@@ -7762,6 +10699,24 @@ func (l VirtualNetworkGatewaysGetVPNProfilePackageURLPollerResponse) PollUntilDo
 	return respType, nil
 }
 
+// Resume rehydrates a VirtualNetworkGatewaysGetVPNProfilePackageURLPollerResponse from the provided client and resume token.
+func (l *VirtualNetworkGatewaysGetVPNProfilePackageURLPollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewaysClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworkGatewaysClient.GetVPNProfilePackageURL", token, client.con.Pipeline(), client.getVPNProfilePackageURLHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualNetworkGatewaysGetVPNProfilePackageURLPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VirtualNetworkGatewaysGetVPNProfilePackageURLResponse contains the response from method VirtualNetworkGateways.GetVPNProfilePackageURL.
 type VirtualNetworkGatewaysGetVPNProfilePackageURLResponse struct {
 	VirtualNetworkGatewaysGetVPNProfilePackageURLResult
@@ -7794,6 +10749,24 @@ func (l VirtualNetworkGatewaysGetVpnclientConnectionHealthPollerResponse) PollUn
 	return respType, nil
 }
 
+// Resume rehydrates a VirtualNetworkGatewaysGetVpnclientConnectionHealthPollerResponse from the provided client and resume token.
+func (l *VirtualNetworkGatewaysGetVpnclientConnectionHealthPollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewaysClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworkGatewaysClient.GetVpnclientConnectionHealth", token, client.con.Pipeline(), client.getVpnclientConnectionHealthHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualNetworkGatewaysGetVpnclientConnectionHealthPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VirtualNetworkGatewaysGetVpnclientConnectionHealthResponse contains the response from method VirtualNetworkGateways.GetVpnclientConnectionHealth.
 type VirtualNetworkGatewaysGetVpnclientConnectionHealthResponse struct {
 	VirtualNetworkGatewaysGetVpnclientConnectionHealthResult
@@ -7824,6 +10797,24 @@ func (l VirtualNetworkGatewaysGetVpnclientIPSecParametersPollerResponse) PollUnt
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a VirtualNetworkGatewaysGetVpnclientIPSecParametersPollerResponse from the provided client and resume token.
+func (l *VirtualNetworkGatewaysGetVpnclientIPSecParametersPollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewaysClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworkGatewaysClient.GetVpnclientIPSecParameters", token, client.con.Pipeline(), client.getVpnclientIPSecParametersHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualNetworkGatewaysGetVpnclientIPSecParametersPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // VirtualNetworkGatewaysGetVpnclientIPSecParametersResponse contains the response from method VirtualNetworkGateways.GetVpnclientIPSecParameters.
@@ -7882,6 +10873,24 @@ func (l VirtualNetworkGatewaysResetPollerResponse) PollUntilDone(ctx context.Con
 	return respType, nil
 }
 
+// Resume rehydrates a VirtualNetworkGatewaysResetPollerResponse from the provided client and resume token.
+func (l *VirtualNetworkGatewaysResetPollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewaysClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworkGatewaysClient.Reset", token, client.con.Pipeline(), client.resetHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualNetworkGatewaysResetPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VirtualNetworkGatewaysResetResponse contains the response from method VirtualNetworkGateways.Reset.
 type VirtualNetworkGatewaysResetResponse struct {
 	VirtualNetworkGatewaysResetResult
@@ -7914,6 +10923,24 @@ func (l VirtualNetworkGatewaysResetVPNClientSharedKeyPollerResponse) PollUntilDo
 	return respType, nil
 }
 
+// Resume rehydrates a VirtualNetworkGatewaysResetVPNClientSharedKeyPollerResponse from the provided client and resume token.
+func (l *VirtualNetworkGatewaysResetVPNClientSharedKeyPollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewaysClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworkGatewaysClient.ResetVPNClientSharedKey", token, client.con.Pipeline(), client.resetVPNClientSharedKeyHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualNetworkGatewaysResetVPNClientSharedKeyPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VirtualNetworkGatewaysResetVPNClientSharedKeyResponse contains the response from method VirtualNetworkGateways.ResetVPNClientSharedKey.
 type VirtualNetworkGatewaysResetVPNClientSharedKeyResponse struct {
 	// RawResponse contains the underlying HTTP response.
@@ -7938,6 +10965,24 @@ func (l VirtualNetworkGatewaysSetVpnclientIPSecParametersPollerResponse) PollUnt
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a VirtualNetworkGatewaysSetVpnclientIPSecParametersPollerResponse from the provided client and resume token.
+func (l *VirtualNetworkGatewaysSetVpnclientIPSecParametersPollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewaysClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworkGatewaysClient.SetVpnclientIPSecParameters", token, client.con.Pipeline(), client.setVpnclientIPSecParametersHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualNetworkGatewaysSetVpnclientIPSecParametersPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // VirtualNetworkGatewaysSetVpnclientIPSecParametersResponse contains the response from method VirtualNetworkGateways.SetVpnclientIPSecParameters.
@@ -7972,6 +11017,24 @@ func (l VirtualNetworkGatewaysStartPacketCapturePollerResponse) PollUntilDone(ct
 	return respType, nil
 }
 
+// Resume rehydrates a VirtualNetworkGatewaysStartPacketCapturePollerResponse from the provided client and resume token.
+func (l *VirtualNetworkGatewaysStartPacketCapturePollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewaysClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworkGatewaysClient.StartPacketCapture", token, client.con.Pipeline(), client.startPacketCaptureHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualNetworkGatewaysStartPacketCapturePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VirtualNetworkGatewaysStartPacketCaptureResponse contains the response from method VirtualNetworkGateways.StartPacketCapture.
 type VirtualNetworkGatewaysStartPacketCaptureResponse struct {
 	VirtualNetworkGatewaysStartPacketCaptureResult
@@ -8002,6 +11065,24 @@ func (l VirtualNetworkGatewaysStopPacketCapturePollerResponse) PollUntilDone(ctx
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a VirtualNetworkGatewaysStopPacketCapturePollerResponse from the provided client and resume token.
+func (l *VirtualNetworkGatewaysStopPacketCapturePollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewaysClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworkGatewaysClient.StopPacketCapture", token, client.con.Pipeline(), client.stopPacketCaptureHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualNetworkGatewaysStopPacketCapturePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // VirtualNetworkGatewaysStopPacketCaptureResponse contains the response from method VirtualNetworkGateways.StopPacketCapture.
@@ -8048,6 +11129,24 @@ func (l VirtualNetworkGatewaysUpdateTagsPollerResponse) PollUntilDone(ctx contex
 	return respType, nil
 }
 
+// Resume rehydrates a VirtualNetworkGatewaysUpdateTagsPollerResponse from the provided client and resume token.
+func (l *VirtualNetworkGatewaysUpdateTagsPollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewaysClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworkGatewaysClient.UpdateTags", token, client.con.Pipeline(), client.updateTagsHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualNetworkGatewaysUpdateTagsPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VirtualNetworkGatewaysUpdateTagsResponse contains the response from method VirtualNetworkGateways.UpdateTags.
 type VirtualNetworkGatewaysUpdateTagsResponse struct {
 	VirtualNetworkGatewaysUpdateTagsResult
@@ -8092,6 +11191,24 @@ func (l VirtualNetworkPeeringsCreateOrUpdatePollerResponse) PollUntilDone(ctx co
 	return respType, nil
 }
 
+// Resume rehydrates a VirtualNetworkPeeringsCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *VirtualNetworkPeeringsCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *VirtualNetworkPeeringsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworkPeeringsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualNetworkPeeringsCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VirtualNetworkPeeringsCreateOrUpdateResponse contains the response from method VirtualNetworkPeerings.CreateOrUpdate.
 type VirtualNetworkPeeringsCreateOrUpdateResponse struct {
 	VirtualNetworkPeeringsCreateOrUpdateResult
@@ -8122,6 +11239,24 @@ func (l VirtualNetworkPeeringsDeletePollerResponse) PollUntilDone(ctx context.Co
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a VirtualNetworkPeeringsDeletePollerResponse from the provided client and resume token.
+func (l *VirtualNetworkPeeringsDeletePollerResponse) Resume(ctx context.Context, client *VirtualNetworkPeeringsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworkPeeringsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualNetworkPeeringsDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // VirtualNetworkPeeringsDeleteResponse contains the response from method VirtualNetworkPeerings.Delete.
@@ -8174,6 +11309,24 @@ func (l VirtualNetworkTapsCreateOrUpdatePollerResponse) PollUntilDone(ctx contex
 	return respType, nil
 }
 
+// Resume rehydrates a VirtualNetworkTapsCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *VirtualNetworkTapsCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *VirtualNetworkTapsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworkTapsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualNetworkTapsCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VirtualNetworkTapsCreateOrUpdateResponse contains the response from method VirtualNetworkTaps.CreateOrUpdate.
 type VirtualNetworkTapsCreateOrUpdateResponse struct {
 	VirtualNetworkTapsCreateOrUpdateResult
@@ -8204,6 +11357,24 @@ func (l VirtualNetworkTapsDeletePollerResponse) PollUntilDone(ctx context.Contex
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a VirtualNetworkTapsDeletePollerResponse from the provided client and resume token.
+func (l *VirtualNetworkTapsDeletePollerResponse) Resume(ctx context.Context, client *VirtualNetworkTapsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworkTapsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualNetworkTapsDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // VirtualNetworkTapsDeleteResponse contains the response from method VirtualNetworkTaps.Delete.
@@ -8292,6 +11463,24 @@ func (l VirtualNetworksCreateOrUpdatePollerResponse) PollUntilDone(ctx context.C
 	return respType, nil
 }
 
+// Resume rehydrates a VirtualNetworksCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *VirtualNetworksCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *VirtualNetworksClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworksClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualNetworksCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VirtualNetworksCreateOrUpdateResponse contains the response from method VirtualNetworks.CreateOrUpdate.
 type VirtualNetworksCreateOrUpdateResponse struct {
 	VirtualNetworksCreateOrUpdateResult
@@ -8322,6 +11511,24 @@ func (l VirtualNetworksDeletePollerResponse) PollUntilDone(ctx context.Context, 
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a VirtualNetworksDeletePollerResponse from the provided client and resume token.
+func (l *VirtualNetworksDeletePollerResponse) Resume(ctx context.Context, client *VirtualNetworksClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworksClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualNetworksDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // VirtualNetworksDeleteResponse contains the response from method VirtualNetworks.Delete.
@@ -8410,6 +11617,24 @@ func (l VirtualRouterPeeringsCreateOrUpdatePollerResponse) PollUntilDone(ctx con
 	return respType, nil
 }
 
+// Resume rehydrates a VirtualRouterPeeringsCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *VirtualRouterPeeringsCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *VirtualRouterPeeringsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualRouterPeeringsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualRouterPeeringsCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VirtualRouterPeeringsCreateOrUpdateResponse contains the response from method VirtualRouterPeerings.CreateOrUpdate.
 type VirtualRouterPeeringsCreateOrUpdateResponse struct {
 	VirtualRouterPeeringsCreateOrUpdateResult
@@ -8440,6 +11665,24 @@ func (l VirtualRouterPeeringsDeletePollerResponse) PollUntilDone(ctx context.Con
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a VirtualRouterPeeringsDeletePollerResponse from the provided client and resume token.
+func (l *VirtualRouterPeeringsDeletePollerResponse) Resume(ctx context.Context, client *VirtualRouterPeeringsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualRouterPeeringsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualRouterPeeringsDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // VirtualRouterPeeringsDeleteResponse contains the response from method VirtualRouterPeerings.Delete.
@@ -8492,6 +11735,24 @@ func (l VirtualRoutersCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Co
 	return respType, nil
 }
 
+// Resume rehydrates a VirtualRoutersCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *VirtualRoutersCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *VirtualRoutersClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualRoutersClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualRoutersCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VirtualRoutersCreateOrUpdateResponse contains the response from method VirtualRouters.CreateOrUpdate.
 type VirtualRoutersCreateOrUpdateResponse struct {
 	VirtualRoutersCreateOrUpdateResult
@@ -8522,6 +11783,24 @@ func (l VirtualRoutersDeletePollerResponse) PollUntilDone(ctx context.Context, f
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a VirtualRoutersDeletePollerResponse from the provided client and resume token.
+func (l *VirtualRoutersDeletePollerResponse) Resume(ctx context.Context, client *VirtualRoutersClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualRoutersClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualRoutersDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // VirtualRoutersDeleteResponse contains the response from method VirtualRouters.Delete.
@@ -8586,6 +11865,24 @@ func (l VirtualWansCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Conte
 	return respType, nil
 }
 
+// Resume rehydrates a VirtualWansCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *VirtualWansCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *VirtualWansClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualWansClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualWansCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VirtualWansCreateOrUpdateResponse contains the response from method VirtualWans.CreateOrUpdate.
 type VirtualWansCreateOrUpdateResponse struct {
 	VirtualWansCreateOrUpdateResult
@@ -8616,6 +11913,24 @@ func (l VirtualWansDeletePollerResponse) PollUntilDone(ctx context.Context, freq
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a VirtualWansDeletePollerResponse from the provided client and resume token.
+func (l *VirtualWansDeletePollerResponse) Resume(ctx context.Context, client *VirtualWansClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualWansClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualWansDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // VirtualWansDeleteResponse contains the response from method VirtualWans.Delete.
@@ -8702,6 +12017,24 @@ func (l WebApplicationFirewallPoliciesDeletePollerResponse) PollUntilDone(ctx co
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a WebApplicationFirewallPoliciesDeletePollerResponse from the provided client and resume token.
+func (l *WebApplicationFirewallPoliciesDeletePollerResponse) Resume(ctx context.Context, client *WebApplicationFirewallPoliciesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("WebApplicationFirewallPoliciesClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &WebApplicationFirewallPoliciesDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // WebApplicationFirewallPoliciesDeleteResponse contains the response from method WebApplicationFirewallPolicies.Delete.

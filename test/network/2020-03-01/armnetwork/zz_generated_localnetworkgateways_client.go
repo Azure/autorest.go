@@ -50,28 +50,6 @@ func (client *LocalNetworkGatewaysClient) BeginCreateOrUpdate(ctx context.Contex
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new LocalNetworkGatewaysCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to LocalNetworkGatewaysCreateOrUpdatePoller.ResumeToken().
-func (client *LocalNetworkGatewaysClient) ResumeCreateOrUpdate(ctx context.Context, token string) (LocalNetworkGatewaysCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("LocalNetworkGatewaysClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return LocalNetworkGatewaysCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &LocalNetworkGatewaysCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return LocalNetworkGatewaysCreateOrUpdatePollerResponse{}, err
-	}
-	result := LocalNetworkGatewaysCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Creates or updates a local network gateway in the specified resource group.
 // If the operation fails it returns the *CloudError error type.
 func (client *LocalNetworkGatewaysClient) createOrUpdate(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, parameters LocalNetworkGateway, options *LocalNetworkGatewaysBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -146,28 +124,6 @@ func (client *LocalNetworkGatewaysClient) BeginDelete(ctx context.Context, resou
 	result.Poller = &LocalNetworkGatewaysDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new LocalNetworkGatewaysDeletePoller from the specified resume token.
-// token - The value must come from a previous call to LocalNetworkGatewaysDeletePoller.ResumeToken().
-func (client *LocalNetworkGatewaysClient) ResumeDelete(ctx context.Context, token string) (LocalNetworkGatewaysDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("LocalNetworkGatewaysClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return LocalNetworkGatewaysDeletePollerResponse{}, err
-	}
-	poller := &LocalNetworkGatewaysDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return LocalNetworkGatewaysDeletePollerResponse{}, err
-	}
-	result := LocalNetworkGatewaysDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

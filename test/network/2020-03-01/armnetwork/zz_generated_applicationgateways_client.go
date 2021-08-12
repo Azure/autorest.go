@@ -50,28 +50,6 @@ func (client *ApplicationGatewaysClient) BeginBackendHealth(ctx context.Context,
 	return result, nil
 }
 
-// ResumeBackendHealth creates a new ApplicationGatewaysBackendHealthPoller from the specified resume token.
-// token - The value must come from a previous call to ApplicationGatewaysBackendHealthPoller.ResumeToken().
-func (client *ApplicationGatewaysClient) ResumeBackendHealth(ctx context.Context, token string) (ApplicationGatewaysBackendHealthPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("ApplicationGatewaysClient.BackendHealth", token, client.con.Pipeline(), client.backendHealthHandleError)
-	if err != nil {
-		return ApplicationGatewaysBackendHealthPollerResponse{}, err
-	}
-	poller := &ApplicationGatewaysBackendHealthPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return ApplicationGatewaysBackendHealthPollerResponse{}, err
-	}
-	result := ApplicationGatewaysBackendHealthPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // BackendHealth - Gets the backend health of the specified application gateway in a resource group.
 // If the operation fails it returns the *CloudError error type.
 func (client *ApplicationGatewaysClient) backendHealth(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysBeginBackendHealthOptions) (*azcore.Response, error) {
@@ -150,28 +128,6 @@ func (client *ApplicationGatewaysClient) BeginBackendHealthOnDemand(ctx context.
 	result.Poller = &ApplicationGatewaysBackendHealthOnDemandPoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeBackendHealthOnDemand creates a new ApplicationGatewaysBackendHealthOnDemandPoller from the specified resume token.
-// token - The value must come from a previous call to ApplicationGatewaysBackendHealthOnDemandPoller.ResumeToken().
-func (client *ApplicationGatewaysClient) ResumeBackendHealthOnDemand(ctx context.Context, token string) (ApplicationGatewaysBackendHealthOnDemandPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("ApplicationGatewaysClient.BackendHealthOnDemand", token, client.con.Pipeline(), client.backendHealthOnDemandHandleError)
-	if err != nil {
-		return ApplicationGatewaysBackendHealthOnDemandPollerResponse{}, err
-	}
-	poller := &ApplicationGatewaysBackendHealthOnDemandPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return ApplicationGatewaysBackendHealthOnDemandPollerResponse{}, err
-	}
-	result := ApplicationGatewaysBackendHealthOnDemandPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 
@@ -256,28 +212,6 @@ func (client *ApplicationGatewaysClient) BeginCreateOrUpdate(ctx context.Context
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new ApplicationGatewaysCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to ApplicationGatewaysCreateOrUpdatePoller.ResumeToken().
-func (client *ApplicationGatewaysClient) ResumeCreateOrUpdate(ctx context.Context, token string) (ApplicationGatewaysCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("ApplicationGatewaysClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return ApplicationGatewaysCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &ApplicationGatewaysCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return ApplicationGatewaysCreateOrUpdatePollerResponse{}, err
-	}
-	result := ApplicationGatewaysCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Creates or updates the specified application gateway.
 // If the operation fails it returns the *CloudError error type.
 func (client *ApplicationGatewaysClient) createOrUpdate(ctx context.Context, resourceGroupName string, applicationGatewayName string, parameters ApplicationGateway, options *ApplicationGatewaysBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -352,28 +286,6 @@ func (client *ApplicationGatewaysClient) BeginDelete(ctx context.Context, resour
 	result.Poller = &ApplicationGatewaysDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new ApplicationGatewaysDeletePoller from the specified resume token.
-// token - The value must come from a previous call to ApplicationGatewaysDeletePoller.ResumeToken().
-func (client *ApplicationGatewaysClient) ResumeDelete(ctx context.Context, token string) (ApplicationGatewaysDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("ApplicationGatewaysClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return ApplicationGatewaysDeletePollerResponse{}, err
-	}
-	poller := &ApplicationGatewaysDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return ApplicationGatewaysDeletePollerResponse{}, err
-	}
-	result := ApplicationGatewaysDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 
@@ -1041,28 +953,6 @@ func (client *ApplicationGatewaysClient) BeginStart(ctx context.Context, resourc
 	return result, nil
 }
 
-// ResumeStart creates a new ApplicationGatewaysStartPoller from the specified resume token.
-// token - The value must come from a previous call to ApplicationGatewaysStartPoller.ResumeToken().
-func (client *ApplicationGatewaysClient) ResumeStart(ctx context.Context, token string) (ApplicationGatewaysStartPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("ApplicationGatewaysClient.Start", token, client.con.Pipeline(), client.startHandleError)
-	if err != nil {
-		return ApplicationGatewaysStartPollerResponse{}, err
-	}
-	poller := &ApplicationGatewaysStartPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return ApplicationGatewaysStartPollerResponse{}, err
-	}
-	result := ApplicationGatewaysStartPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // Start - Starts the specified application gateway.
 // If the operation fails it returns the *CloudError error type.
 func (client *ApplicationGatewaysClient) start(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysBeginStartOptions) (*azcore.Response, error) {
@@ -1137,28 +1027,6 @@ func (client *ApplicationGatewaysClient) BeginStop(ctx context.Context, resource
 	result.Poller = &ApplicationGatewaysStopPoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeStop creates a new ApplicationGatewaysStopPoller from the specified resume token.
-// token - The value must come from a previous call to ApplicationGatewaysStopPoller.ResumeToken().
-func (client *ApplicationGatewaysClient) ResumeStop(ctx context.Context, token string) (ApplicationGatewaysStopPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("ApplicationGatewaysClient.Stop", token, client.con.Pipeline(), client.stopHandleError)
-	if err != nil {
-		return ApplicationGatewaysStopPollerResponse{}, err
-	}
-	poller := &ApplicationGatewaysStopPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return ApplicationGatewaysStopPollerResponse{}, err
-	}
-	result := ApplicationGatewaysStopPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

@@ -49,28 +49,6 @@ func (client *DedicatedHostsClient) BeginCreateOrUpdate(ctx context.Context, res
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new DedicatedHostsCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to DedicatedHostsCreateOrUpdatePoller.ResumeToken().
-func (client *DedicatedHostsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (DedicatedHostsCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("DedicatedHostsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return DedicatedHostsCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &DedicatedHostsCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return DedicatedHostsCreateOrUpdatePollerResponse{}, err
-	}
-	result := DedicatedHostsCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Create or update a dedicated host .
 // If the operation fails it returns a generic error.
 func (client *DedicatedHostsClient) createOrUpdate(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, parameters DedicatedHost, options *DedicatedHostsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -148,28 +126,6 @@ func (client *DedicatedHostsClient) BeginDelete(ctx context.Context, resourceGro
 	result.Poller = &DedicatedHostsDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new DedicatedHostsDeletePoller from the specified resume token.
-// token - The value must come from a previous call to DedicatedHostsDeletePoller.ResumeToken().
-func (client *DedicatedHostsClient) ResumeDelete(ctx context.Context, token string) (DedicatedHostsDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("DedicatedHostsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return DedicatedHostsDeletePollerResponse{}, err
-	}
-	poller := &DedicatedHostsDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return DedicatedHostsDeletePollerResponse{}, err
-	}
-	result := DedicatedHostsDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 
@@ -384,28 +340,6 @@ func (client *DedicatedHostsClient) BeginUpdate(ctx context.Context, resourceGro
 	result.Poller = &DedicatedHostsUpdatePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeUpdate creates a new DedicatedHostsUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to DedicatedHostsUpdatePoller.ResumeToken().
-func (client *DedicatedHostsClient) ResumeUpdate(ctx context.Context, token string) (DedicatedHostsUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("DedicatedHostsClient.Update", token, client.con.Pipeline(), client.updateHandleError)
-	if err != nil {
-		return DedicatedHostsUpdatePollerResponse{}, err
-	}
-	poller := &DedicatedHostsUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return DedicatedHostsUpdatePollerResponse{}, err
-	}
-	result := DedicatedHostsUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

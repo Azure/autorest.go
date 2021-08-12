@@ -50,28 +50,6 @@ func (client *NetworkInterfaceTapConfigurationsClient) BeginCreateOrUpdate(ctx c
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new NetworkInterfaceTapConfigurationsCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to NetworkInterfaceTapConfigurationsCreateOrUpdatePoller.ResumeToken().
-func (client *NetworkInterfaceTapConfigurationsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (NetworkInterfaceTapConfigurationsCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("NetworkInterfaceTapConfigurationsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return NetworkInterfaceTapConfigurationsCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &NetworkInterfaceTapConfigurationsCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return NetworkInterfaceTapConfigurationsCreateOrUpdatePollerResponse{}, err
-	}
-	result := NetworkInterfaceTapConfigurationsCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Creates or updates a Tap configuration in the specified NetworkInterface.
 // If the operation fails it returns the *CloudError error type.
 func (client *NetworkInterfaceTapConfigurationsClient) createOrUpdate(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, tapConfigurationParameters NetworkInterfaceTapConfiguration, options *NetworkInterfaceTapConfigurationsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -150,28 +128,6 @@ func (client *NetworkInterfaceTapConfigurationsClient) BeginDelete(ctx context.C
 	result.Poller = &NetworkInterfaceTapConfigurationsDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new NetworkInterfaceTapConfigurationsDeletePoller from the specified resume token.
-// token - The value must come from a previous call to NetworkInterfaceTapConfigurationsDeletePoller.ResumeToken().
-func (client *NetworkInterfaceTapConfigurationsClient) ResumeDelete(ctx context.Context, token string) (NetworkInterfaceTapConfigurationsDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("NetworkInterfaceTapConfigurationsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return NetworkInterfaceTapConfigurationsDeletePollerResponse{}, err
-	}
-	poller := &NetworkInterfaceTapConfigurationsDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return NetworkInterfaceTapConfigurationsDeletePollerResponse{}, err
-	}
-	result := NetworkInterfaceTapConfigurationsDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

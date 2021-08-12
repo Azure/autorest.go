@@ -50,28 +50,6 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) BeginCreateOrUpdate(ctx 
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new VirtualMachineScaleSetVMExtensionsCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to VirtualMachineScaleSetVMExtensionsCreateOrUpdatePoller.ResumeToken().
-func (client *VirtualMachineScaleSetVMExtensionsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (VirtualMachineScaleSetVMExtensionsCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetVMExtensionsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return VirtualMachineScaleSetVMExtensionsCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &VirtualMachineScaleSetVMExtensionsCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualMachineScaleSetVMExtensionsCreateOrUpdatePollerResponse{}, err
-	}
-	result := VirtualMachineScaleSetVMExtensionsCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - The operation to create or update the VMSS VM extension.
 // If the operation fails it returns the *CloudError error type.
 func (client *VirtualMachineScaleSetVMExtensionsClient) createOrUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, vmExtensionName string, extensionParameters VirtualMachineExtension, options *VirtualMachineScaleSetVMExtensionsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -154,28 +132,6 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) BeginDelete(ctx context.
 	result.Poller = &VirtualMachineScaleSetVMExtensionsDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new VirtualMachineScaleSetVMExtensionsDeletePoller from the specified resume token.
-// token - The value must come from a previous call to VirtualMachineScaleSetVMExtensionsDeletePoller.ResumeToken().
-func (client *VirtualMachineScaleSetVMExtensionsClient) ResumeDelete(ctx context.Context, token string) (VirtualMachineScaleSetVMExtensionsDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetVMExtensionsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return VirtualMachineScaleSetVMExtensionsDeletePollerResponse{}, err
-	}
-	poller := &VirtualMachineScaleSetVMExtensionsDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualMachineScaleSetVMExtensionsDeletePollerResponse{}, err
-	}
-	result := VirtualMachineScaleSetVMExtensionsDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 
@@ -411,28 +367,6 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) BeginUpdate(ctx context.
 	result.Poller = &VirtualMachineScaleSetVMExtensionsUpdatePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeUpdate creates a new VirtualMachineScaleSetVMExtensionsUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to VirtualMachineScaleSetVMExtensionsUpdatePoller.ResumeToken().
-func (client *VirtualMachineScaleSetVMExtensionsClient) ResumeUpdate(ctx context.Context, token string) (VirtualMachineScaleSetVMExtensionsUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetVMExtensionsClient.Update", token, client.con.Pipeline(), client.updateHandleError)
-	if err != nil {
-		return VirtualMachineScaleSetVMExtensionsUpdatePollerResponse{}, err
-	}
-	poller := &VirtualMachineScaleSetVMExtensionsUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualMachineScaleSetVMExtensionsUpdatePollerResponse{}, err
-	}
-	result := VirtualMachineScaleSetVMExtensionsUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

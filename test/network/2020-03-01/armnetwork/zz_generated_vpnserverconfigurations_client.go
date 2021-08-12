@@ -50,28 +50,6 @@ func (client *VPNServerConfigurationsClient) BeginCreateOrUpdate(ctx context.Con
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new VPNServerConfigurationsCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to VPNServerConfigurationsCreateOrUpdatePoller.ResumeToken().
-func (client *VPNServerConfigurationsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (VPNServerConfigurationsCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VPNServerConfigurationsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return VPNServerConfigurationsCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &VPNServerConfigurationsCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VPNServerConfigurationsCreateOrUpdatePollerResponse{}, err
-	}
-	result := VPNServerConfigurationsCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Creates a VpnServerConfiguration resource if it doesn't exist else updates the existing VpnServerConfiguration.
 // If the operation fails it returns the *CloudError error type.
 func (client *VPNServerConfigurationsClient) createOrUpdate(ctx context.Context, resourceGroupName string, vpnServerConfigurationName string, vpnServerConfigurationParameters VPNServerConfiguration, options *VPNServerConfigurationsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -146,28 +124,6 @@ func (client *VPNServerConfigurationsClient) BeginDelete(ctx context.Context, re
 	result.Poller = &VPNServerConfigurationsDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new VPNServerConfigurationsDeletePoller from the specified resume token.
-// token - The value must come from a previous call to VPNServerConfigurationsDeletePoller.ResumeToken().
-func (client *VPNServerConfigurationsClient) ResumeDelete(ctx context.Context, token string) (VPNServerConfigurationsDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VPNServerConfigurationsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return VPNServerConfigurationsDeletePollerResponse{}, err
-	}
-	poller := &VPNServerConfigurationsDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VPNServerConfigurationsDeletePollerResponse{}, err
-	}
-	result := VPNServerConfigurationsDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

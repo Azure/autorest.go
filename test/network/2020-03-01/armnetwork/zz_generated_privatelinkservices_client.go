@@ -50,28 +50,6 @@ func (client *PrivateLinkServicesClient) BeginCheckPrivateLinkServiceVisibility(
 	return result, nil
 }
 
-// ResumeCheckPrivateLinkServiceVisibility creates a new PrivateLinkServicesCheckPrivateLinkServiceVisibilityPoller from the specified resume token.
-// token - The value must come from a previous call to PrivateLinkServicesCheckPrivateLinkServiceVisibilityPoller.ResumeToken().
-func (client *PrivateLinkServicesClient) ResumeCheckPrivateLinkServiceVisibility(ctx context.Context, token string) (PrivateLinkServicesCheckPrivateLinkServiceVisibilityPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("PrivateLinkServicesClient.CheckPrivateLinkServiceVisibility", token, client.con.Pipeline(), client.checkPrivateLinkServiceVisibilityHandleError)
-	if err != nil {
-		return PrivateLinkServicesCheckPrivateLinkServiceVisibilityPollerResponse{}, err
-	}
-	poller := &PrivateLinkServicesCheckPrivateLinkServiceVisibilityPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return PrivateLinkServicesCheckPrivateLinkServiceVisibilityPollerResponse{}, err
-	}
-	result := PrivateLinkServicesCheckPrivateLinkServiceVisibilityPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CheckPrivateLinkServiceVisibility - Checks whether the subscription is visible to private link service.
 // If the operation fails it returns the *CloudError error type.
 func (client *PrivateLinkServicesClient) checkPrivateLinkServiceVisibility(ctx context.Context, location string, parameters CheckPrivateLinkServiceVisibilityRequest, options *PrivateLinkServicesBeginCheckPrivateLinkServiceVisibilityOptions) (*azcore.Response, error) {
@@ -143,28 +121,6 @@ func (client *PrivateLinkServicesClient) BeginCheckPrivateLinkServiceVisibilityB
 	result.Poller = &PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupPoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeCheckPrivateLinkServiceVisibilityByResourceGroup creates a new PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupPoller from the specified resume token.
-// token - The value must come from a previous call to PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupPoller.ResumeToken().
-func (client *PrivateLinkServicesClient) ResumeCheckPrivateLinkServiceVisibilityByResourceGroup(ctx context.Context, token string) (PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("PrivateLinkServicesClient.CheckPrivateLinkServiceVisibilityByResourceGroup", token, client.con.Pipeline(), client.checkPrivateLinkServiceVisibilityByResourceGroupHandleError)
-	if err != nil {
-		return PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupPollerResponse{}, err
-	}
-	poller := &PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupPollerResponse{}, err
-	}
-	result := PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 
@@ -245,28 +201,6 @@ func (client *PrivateLinkServicesClient) BeginCreateOrUpdate(ctx context.Context
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new PrivateLinkServicesCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to PrivateLinkServicesCreateOrUpdatePoller.ResumeToken().
-func (client *PrivateLinkServicesClient) ResumeCreateOrUpdate(ctx context.Context, token string) (PrivateLinkServicesCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("PrivateLinkServicesClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return PrivateLinkServicesCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &PrivateLinkServicesCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return PrivateLinkServicesCreateOrUpdatePollerResponse{}, err
-	}
-	result := PrivateLinkServicesCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Creates or updates an private link service in the specified resource group.
 // If the operation fails it returns the *Error error type.
 func (client *PrivateLinkServicesClient) createOrUpdate(ctx context.Context, resourceGroupName string, serviceName string, parameters PrivateLinkService, options *PrivateLinkServicesBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -344,28 +278,6 @@ func (client *PrivateLinkServicesClient) BeginDelete(ctx context.Context, resour
 	return result, nil
 }
 
-// ResumeDelete creates a new PrivateLinkServicesDeletePoller from the specified resume token.
-// token - The value must come from a previous call to PrivateLinkServicesDeletePoller.ResumeToken().
-func (client *PrivateLinkServicesClient) ResumeDelete(ctx context.Context, token string) (PrivateLinkServicesDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("PrivateLinkServicesClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return PrivateLinkServicesDeletePollerResponse{}, err
-	}
-	poller := &PrivateLinkServicesDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return PrivateLinkServicesDeletePollerResponse{}, err
-	}
-	result := PrivateLinkServicesDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // Delete - Deletes the specified private link service.
 // If the operation fails it returns the *Error error type.
 func (client *PrivateLinkServicesClient) deleteOperation(ctx context.Context, resourceGroupName string, serviceName string, options *PrivateLinkServicesBeginDeleteOptions) (*azcore.Response, error) {
@@ -440,28 +352,6 @@ func (client *PrivateLinkServicesClient) BeginDeletePrivateEndpointConnection(ct
 	result.Poller = &PrivateLinkServicesDeletePrivateEndpointConnectionPoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDeletePrivateEndpointConnection creates a new PrivateLinkServicesDeletePrivateEndpointConnectionPoller from the specified resume token.
-// token - The value must come from a previous call to PrivateLinkServicesDeletePrivateEndpointConnectionPoller.ResumeToken().
-func (client *PrivateLinkServicesClient) ResumeDeletePrivateEndpointConnection(ctx context.Context, token string) (PrivateLinkServicesDeletePrivateEndpointConnectionPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("PrivateLinkServicesClient.DeletePrivateEndpointConnection", token, client.con.Pipeline(), client.deletePrivateEndpointConnectionHandleError)
-	if err != nil {
-		return PrivateLinkServicesDeletePrivateEndpointConnectionPollerResponse{}, err
-	}
-	poller := &PrivateLinkServicesDeletePrivateEndpointConnectionPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return PrivateLinkServicesDeletePrivateEndpointConnectionPollerResponse{}, err
-	}
-	result := PrivateLinkServicesDeletePrivateEndpointConnectionPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

@@ -105,28 +105,6 @@ func (client *VirtualMachineScaleSetsClient) BeginCreateOrUpdate(ctx context.Con
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new VirtualMachineScaleSetsCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to VirtualMachineScaleSetsCreateOrUpdatePoller.ResumeToken().
-func (client *VirtualMachineScaleSetsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (VirtualMachineScaleSetsCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return VirtualMachineScaleSetsCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &VirtualMachineScaleSetsCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualMachineScaleSetsCreateOrUpdatePollerResponse{}, err
-	}
-	result := VirtualMachineScaleSetsCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Create or update a VM scale set.
 // If the operation fails it returns a generic error.
 func (client *VirtualMachineScaleSetsClient) createOrUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters VirtualMachineScaleSet, options *VirtualMachineScaleSetsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -202,28 +180,6 @@ func (client *VirtualMachineScaleSetsClient) BeginDeallocate(ctx context.Context
 	result.Poller = &VirtualMachineScaleSetsDeallocatePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDeallocate creates a new VirtualMachineScaleSetsDeallocatePoller from the specified resume token.
-// token - The value must come from a previous call to VirtualMachineScaleSetsDeallocatePoller.ResumeToken().
-func (client *VirtualMachineScaleSetsClient) ResumeDeallocate(ctx context.Context, token string) (VirtualMachineScaleSetsDeallocatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetsClient.Deallocate", token, client.con.Pipeline(), client.deallocateHandleError)
-	if err != nil {
-		return VirtualMachineScaleSetsDeallocatePollerResponse{}, err
-	}
-	poller := &VirtualMachineScaleSetsDeallocatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualMachineScaleSetsDeallocatePollerResponse{}, err
-	}
-	result := VirtualMachineScaleSetsDeallocatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 
@@ -307,28 +263,6 @@ func (client *VirtualMachineScaleSetsClient) BeginDelete(ctx context.Context, re
 	return result, nil
 }
 
-// ResumeDelete creates a new VirtualMachineScaleSetsDeletePoller from the specified resume token.
-// token - The value must come from a previous call to VirtualMachineScaleSetsDeletePoller.ResumeToken().
-func (client *VirtualMachineScaleSetsClient) ResumeDelete(ctx context.Context, token string) (VirtualMachineScaleSetsDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return VirtualMachineScaleSetsDeletePollerResponse{}, err
-	}
-	poller := &VirtualMachineScaleSetsDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualMachineScaleSetsDeletePollerResponse{}, err
-	}
-	result := VirtualMachineScaleSetsDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // Delete - Deletes a VM scale set.
 // If the operation fails it returns a generic error.
 func (client *VirtualMachineScaleSetsClient) deleteOperation(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsBeginDeleteOptions) (*azcore.Response, error) {
@@ -401,28 +335,6 @@ func (client *VirtualMachineScaleSetsClient) BeginDeleteInstances(ctx context.Co
 	result.Poller = &VirtualMachineScaleSetsDeleteInstancesPoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDeleteInstances creates a new VirtualMachineScaleSetsDeleteInstancesPoller from the specified resume token.
-// token - The value must come from a previous call to VirtualMachineScaleSetsDeleteInstancesPoller.ResumeToken().
-func (client *VirtualMachineScaleSetsClient) ResumeDeleteInstances(ctx context.Context, token string) (VirtualMachineScaleSetsDeleteInstancesPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetsClient.DeleteInstances", token, client.con.Pipeline(), client.deleteInstancesHandleError)
-	if err != nil {
-		return VirtualMachineScaleSetsDeleteInstancesPollerResponse{}, err
-	}
-	poller := &VirtualMachineScaleSetsDeleteInstancesPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualMachineScaleSetsDeleteInstancesPollerResponse{}, err
-	}
-	result := VirtualMachineScaleSetsDeleteInstancesPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 
@@ -938,28 +850,6 @@ func (client *VirtualMachineScaleSetsClient) BeginPerformMaintenance(ctx context
 	return result, nil
 }
 
-// ResumePerformMaintenance creates a new VirtualMachineScaleSetsPerformMaintenancePoller from the specified resume token.
-// token - The value must come from a previous call to VirtualMachineScaleSetsPerformMaintenancePoller.ResumeToken().
-func (client *VirtualMachineScaleSetsClient) ResumePerformMaintenance(ctx context.Context, token string) (VirtualMachineScaleSetsPerformMaintenancePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetsClient.PerformMaintenance", token, client.con.Pipeline(), client.performMaintenanceHandleError)
-	if err != nil {
-		return VirtualMachineScaleSetsPerformMaintenancePollerResponse{}, err
-	}
-	poller := &VirtualMachineScaleSetsPerformMaintenancePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualMachineScaleSetsPerformMaintenancePollerResponse{}, err
-	}
-	result := VirtualMachineScaleSetsPerformMaintenancePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // PerformMaintenance - Perform maintenance on one or more virtual machines in a VM scale set. Operation on instances which are not eligible for perform
 // maintenance will be failed. Please refer to best practices for more
 // details: https://docs.microsoft.com/en-us/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-maintenance-notifications
@@ -1039,28 +929,6 @@ func (client *VirtualMachineScaleSetsClient) BeginPowerOff(ctx context.Context, 
 	result.Poller = &VirtualMachineScaleSetsPowerOffPoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumePowerOff creates a new VirtualMachineScaleSetsPowerOffPoller from the specified resume token.
-// token - The value must come from a previous call to VirtualMachineScaleSetsPowerOffPoller.ResumeToken().
-func (client *VirtualMachineScaleSetsClient) ResumePowerOff(ctx context.Context, token string) (VirtualMachineScaleSetsPowerOffPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetsClient.PowerOff", token, client.con.Pipeline(), client.powerOffHandleError)
-	if err != nil {
-		return VirtualMachineScaleSetsPowerOffPollerResponse{}, err
-	}
-	poller := &VirtualMachineScaleSetsPowerOffPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualMachineScaleSetsPowerOffPollerResponse{}, err
-	}
-	result := VirtualMachineScaleSetsPowerOffPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 
@@ -1147,28 +1015,6 @@ func (client *VirtualMachineScaleSetsClient) BeginRedeploy(ctx context.Context, 
 	return result, nil
 }
 
-// ResumeRedeploy creates a new VirtualMachineScaleSetsRedeployPoller from the specified resume token.
-// token - The value must come from a previous call to VirtualMachineScaleSetsRedeployPoller.ResumeToken().
-func (client *VirtualMachineScaleSetsClient) ResumeRedeploy(ctx context.Context, token string) (VirtualMachineScaleSetsRedeployPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetsClient.Redeploy", token, client.con.Pipeline(), client.redeployHandleError)
-	if err != nil {
-		return VirtualMachineScaleSetsRedeployPollerResponse{}, err
-	}
-	poller := &VirtualMachineScaleSetsRedeployPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualMachineScaleSetsRedeployPollerResponse{}, err
-	}
-	result := VirtualMachineScaleSetsRedeployPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // Redeploy - Shuts down all the virtual machines in the virtual machine scale set, moves them to a new node, and powers them back on.
 // If the operation fails it returns a generic error.
 func (client *VirtualMachineScaleSetsClient) redeploy(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsBeginRedeployOptions) (*azcore.Response, error) {
@@ -1246,28 +1092,6 @@ func (client *VirtualMachineScaleSetsClient) BeginReimage(ctx context.Context, r
 	result.Poller = &VirtualMachineScaleSetsReimagePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeReimage creates a new VirtualMachineScaleSetsReimagePoller from the specified resume token.
-// token - The value must come from a previous call to VirtualMachineScaleSetsReimagePoller.ResumeToken().
-func (client *VirtualMachineScaleSetsClient) ResumeReimage(ctx context.Context, token string) (VirtualMachineScaleSetsReimagePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetsClient.Reimage", token, client.con.Pipeline(), client.reimageHandleError)
-	if err != nil {
-		return VirtualMachineScaleSetsReimagePollerResponse{}, err
-	}
-	poller := &VirtualMachineScaleSetsReimagePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualMachineScaleSetsReimagePollerResponse{}, err
-	}
-	result := VirtualMachineScaleSetsReimagePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 
@@ -1352,28 +1176,6 @@ func (client *VirtualMachineScaleSetsClient) BeginReimageAll(ctx context.Context
 	return result, nil
 }
 
-// ResumeReimageAll creates a new VirtualMachineScaleSetsReimageAllPoller from the specified resume token.
-// token - The value must come from a previous call to VirtualMachineScaleSetsReimageAllPoller.ResumeToken().
-func (client *VirtualMachineScaleSetsClient) ResumeReimageAll(ctx context.Context, token string) (VirtualMachineScaleSetsReimageAllPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetsClient.ReimageAll", token, client.con.Pipeline(), client.reimageAllHandleError)
-	if err != nil {
-		return VirtualMachineScaleSetsReimageAllPollerResponse{}, err
-	}
-	poller := &VirtualMachineScaleSetsReimageAllPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualMachineScaleSetsReimageAllPollerResponse{}, err
-	}
-	result := VirtualMachineScaleSetsReimageAllPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // ReimageAll - Reimages all the disks ( including data disks ) in the virtual machines in a VM scale set. This operation is only supported for managed
 // disks.
 // If the operation fails it returns a generic error.
@@ -1450,28 +1252,6 @@ func (client *VirtualMachineScaleSetsClient) BeginRestart(ctx context.Context, r
 	result.Poller = &VirtualMachineScaleSetsRestartPoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeRestart creates a new VirtualMachineScaleSetsRestartPoller from the specified resume token.
-// token - The value must come from a previous call to VirtualMachineScaleSetsRestartPoller.ResumeToken().
-func (client *VirtualMachineScaleSetsClient) ResumeRestart(ctx context.Context, token string) (VirtualMachineScaleSetsRestartPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetsClient.Restart", token, client.con.Pipeline(), client.restartHandleError)
-	if err != nil {
-		return VirtualMachineScaleSetsRestartPollerResponse{}, err
-	}
-	poller := &VirtualMachineScaleSetsRestartPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualMachineScaleSetsRestartPollerResponse{}, err
-	}
-	result := VirtualMachineScaleSetsRestartPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 
@@ -1553,28 +1333,6 @@ func (client *VirtualMachineScaleSetsClient) BeginSetOrchestrationServiceState(c
 	return result, nil
 }
 
-// ResumeSetOrchestrationServiceState creates a new VirtualMachineScaleSetsSetOrchestrationServiceStatePoller from the specified resume token.
-// token - The value must come from a previous call to VirtualMachineScaleSetsSetOrchestrationServiceStatePoller.ResumeToken().
-func (client *VirtualMachineScaleSetsClient) ResumeSetOrchestrationServiceState(ctx context.Context, token string) (VirtualMachineScaleSetsSetOrchestrationServiceStatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetsClient.SetOrchestrationServiceState", token, client.con.Pipeline(), client.setOrchestrationServiceStateHandleError)
-	if err != nil {
-		return VirtualMachineScaleSetsSetOrchestrationServiceStatePollerResponse{}, err
-	}
-	poller := &VirtualMachineScaleSetsSetOrchestrationServiceStatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualMachineScaleSetsSetOrchestrationServiceStatePollerResponse{}, err
-	}
-	result := VirtualMachineScaleSetsSetOrchestrationServiceStatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // SetOrchestrationServiceState - Changes ServiceState property for a given service
 // If the operation fails it returns a generic error.
 func (client *VirtualMachineScaleSetsClient) setOrchestrationServiceState(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters OrchestrationServiceStateInput, options *VirtualMachineScaleSetsBeginSetOrchestrationServiceStateOptions) (*azcore.Response, error) {
@@ -1647,28 +1405,6 @@ func (client *VirtualMachineScaleSetsClient) BeginStart(ctx context.Context, res
 	result.Poller = &VirtualMachineScaleSetsStartPoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeStart creates a new VirtualMachineScaleSetsStartPoller from the specified resume token.
-// token - The value must come from a previous call to VirtualMachineScaleSetsStartPoller.ResumeToken().
-func (client *VirtualMachineScaleSetsClient) ResumeStart(ctx context.Context, token string) (VirtualMachineScaleSetsStartPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetsClient.Start", token, client.con.Pipeline(), client.startHandleError)
-	if err != nil {
-		return VirtualMachineScaleSetsStartPollerResponse{}, err
-	}
-	poller := &VirtualMachineScaleSetsStartPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualMachineScaleSetsStartPollerResponse{}, err
-	}
-	result := VirtualMachineScaleSetsStartPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 
@@ -1750,28 +1486,6 @@ func (client *VirtualMachineScaleSetsClient) BeginUpdate(ctx context.Context, re
 	return result, nil
 }
 
-// ResumeUpdate creates a new VirtualMachineScaleSetsUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to VirtualMachineScaleSetsUpdatePoller.ResumeToken().
-func (client *VirtualMachineScaleSetsClient) ResumeUpdate(ctx context.Context, token string) (VirtualMachineScaleSetsUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetsClient.Update", token, client.con.Pipeline(), client.updateHandleError)
-	if err != nil {
-		return VirtualMachineScaleSetsUpdatePollerResponse{}, err
-	}
-	poller := &VirtualMachineScaleSetsUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualMachineScaleSetsUpdatePollerResponse{}, err
-	}
-	result := VirtualMachineScaleSetsUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // Update - Update a VM scale set.
 // If the operation fails it returns a generic error.
 func (client *VirtualMachineScaleSetsClient) update(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters VirtualMachineScaleSetUpdate, options *VirtualMachineScaleSetsBeginUpdateOptions) (*azcore.Response, error) {
@@ -1845,28 +1559,6 @@ func (client *VirtualMachineScaleSetsClient) BeginUpdateInstances(ctx context.Co
 	result.Poller = &VirtualMachineScaleSetsUpdateInstancesPoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeUpdateInstances creates a new VirtualMachineScaleSetsUpdateInstancesPoller from the specified resume token.
-// token - The value must come from a previous call to VirtualMachineScaleSetsUpdateInstancesPoller.ResumeToken().
-func (client *VirtualMachineScaleSetsClient) ResumeUpdateInstances(ctx context.Context, token string) (VirtualMachineScaleSetsUpdateInstancesPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetsClient.UpdateInstances", token, client.con.Pipeline(), client.updateInstancesHandleError)
-	if err != nil {
-		return VirtualMachineScaleSetsUpdateInstancesPollerResponse{}, err
-	}
-	poller := &VirtualMachineScaleSetsUpdateInstancesPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualMachineScaleSetsUpdateInstancesPollerResponse{}, err
-	}
-	result := VirtualMachineScaleSetsUpdateInstancesPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

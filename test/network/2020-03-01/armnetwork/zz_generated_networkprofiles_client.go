@@ -116,28 +116,6 @@ func (client *NetworkProfilesClient) BeginDelete(ctx context.Context, resourceGr
 	return result, nil
 }
 
-// ResumeDelete creates a new NetworkProfilesDeletePoller from the specified resume token.
-// token - The value must come from a previous call to NetworkProfilesDeletePoller.ResumeToken().
-func (client *NetworkProfilesClient) ResumeDelete(ctx context.Context, token string) (NetworkProfilesDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("NetworkProfilesClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return NetworkProfilesDeletePollerResponse{}, err
-	}
-	poller := &NetworkProfilesDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return NetworkProfilesDeletePollerResponse{}, err
-	}
-	result := NetworkProfilesDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // Delete - Deletes the specified network profile.
 // If the operation fails it returns the *CloudError error type.
 func (client *NetworkProfilesClient) deleteOperation(ctx context.Context, resourceGroupName string, networkProfileName string, options *NetworkProfilesBeginDeleteOptions) (*azcore.Response, error) {
