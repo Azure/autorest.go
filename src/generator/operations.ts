@@ -7,7 +7,7 @@ import { Session } from '@autorest/extension-base';
 import { comment, KnownMediaType } from '@azure-tools/codegen';
 import { ArraySchema, ByteArraySchema, ChoiceSchema, CodeModel, ConstantSchema, DateTimeSchema, DictionarySchema, GroupProperty, ImplementationLocation, NumberSchema, ObjectSchema, Operation, Parameter, Property, Protocols, Response, Schema, SchemaResponse, SchemaType } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
-import { aggregateParameters, getSchemaResponse, internalPagerTypeName, internalPollerTypeName, isArraySchema, isMultiRespOperation, isPageableOperation, isSchemaResponse, isTypePassedByValue, PagerInfo, PollerInfo, isLROOperation, commentLength } from '../common/helpers';
+import { aggregateParameters, getSchemaResponse, isArraySchema, isMultiRespOperation, isPageableOperation, isSchemaResponse, isTypePassedByValue, PagerInfo, PollerInfo, isLROOperation, commentLength } from '../common/helpers';
 import { OperationNaming } from '../transform/namer';
 import { contentPreamble, formatParameterTypeName, formatStatusCodes, getFinalResponseEnvelopeName, getResponseEnvelope, getResponseEnvelopeName, getResultFieldName, getStatusCodes, hasDescription, hasResultEnvelope, hasSchemaResponse, skipURLEncoding, sortAscending, getCreateRequestParameters, getCreateRequestParametersSig, getMethodParameters, getParamName, formatParamValue, dateFormat, datetimeRFC1123Format, datetimeRFC3339Format, sortParametersByRequired } from './helpers';
 import { ImportManager } from './imports';
@@ -248,7 +248,7 @@ function generateOperation(op: Operation, imports: ImportManager): string {
   const statusCodes = getStatusCodes(op);
   if (isPageableOperation(op) && !isLROOperation(op)) {
     imports.add('context');
-    text += `\treturn &${internalPagerTypeName(<PagerInfo>op.language.go!.pageableType)}{\n`;
+    text += `\treturn &${(<PagerInfo>op.language.go!.pageableType).name}{\n`;
     text += `\t\tclient: client,\n`;
     text += `\t\trequester: func(ctx context.Context) (*azcore.Request, error) {\n`;
     text += `\t\t\treturn client.${info.protocolNaming.requestMethod}(${reqParams})\n`;
@@ -987,7 +987,7 @@ function generateReturnsInfo(op: Operation, apiType: 'api' | 'op' | 'handler'): 
       case 'api':
       case 'op':
         // pager operations don't return an error
-        return [(<PagerInfo>op.language.go!.pageableType).name];
+        return [`*${(<PagerInfo>op.language.go!.pageableType).name}`];
     }
   }
   return [returnType, 'error'];
@@ -1001,7 +1001,6 @@ function generateLROBeginMethod(op: Operation, imports: ImportManager, isARM: bo
   if (isARM) {
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/armcore');
   }
-  imports.add('time');
   let text = '';
   if (hasDescription(op.language.go!)) {
     text += `${comment(`Begin${op.language.go!.name} - ${op.language.go!.description}`, "//", undefined, commentLength)}\n`;
@@ -1031,16 +1030,7 @@ function generateLROBeginMethod(op: Operation, imports: ImportManager, isARM: bo
   text += '\tif err != nil {\n';
   text += `\t\treturn ${zeroResp}, err\n`;
   text += '\t}\n';
-  text += emitPoller(op);
-  text += '\tresult.Poller = poller\n';
-  // determine the poller response based on the name and whether is is a pageable operation
-  let pollerResp = getFinalResponseEnvelopeName(op);
-  if (isPageableOperation(op)) {
-    pollerResp = (<PagerInfo>op.language.go!.pageableType).name;
-  }
-  text += `\tresult.PollUntilDone = func(ctx context.Context, frequency time.Duration) (${pollerResp}, error) {\n`;
-  text += `\t\treturn poller.pollUntilDone(ctx, frequency)\n`;
-  text += `\t}\n`;
+  text += `\tresult.Poller = ${emitPoller(op)}`;
   text += `\treturn result, nil\n`;
   // closing braces
   text += '}\n\n';
@@ -1063,23 +1053,16 @@ function generateLROResumeMethod(op: Operation, isARM: boolean): string {
   text += '\tif err != nil {\n';
   text += `\t\treturn ${zeroResp}, err\n`;
   text += '\t}\n';
-  text += emitPoller(op);
+  text += `\tpoller := ${emitPoller(op)}`;
   text += '\tresp, err := poller.Poll(ctx)\n';
   text += '\tif err != nil {\n';
   text += `\t\treturn ${zeroResp}, err\n`;
   text += '\t}\n';
   text += `\tresult := ${getResponseEnvelopeName(op)}{\n`;
+  text += `\t\tPoller: poller,\n`;
   text += '\t\tRawResponse: resp,\n';
   text += '\t}\n';
   text += '\tresult.Poller = poller\n';
-  // determine the poller response based on the name and whether is is a pageable operation
-  let pollerResp = getFinalResponseEnvelopeName(op);
-  if (isPageableOperation(op)) {
-    pollerResp = (<PagerInfo>op.language.go!.pageableType).name;
-  }
-  text += `\tresult.PollUntilDone = func(ctx context.Context, frequency time.Duration) (${pollerResp}, error) {\n`;
-  text += `\t\treturn poller.pollUntilDone(ctx, frequency)\n`;
-  text += `\t}\n`;
   text += `\treturn result, nil\n`;
   // closing braces
   text += '}\n\n';
@@ -1087,7 +1070,7 @@ function generateLROResumeMethod(op: Operation, isARM: boolean): string {
 }
 
 function emitPoller(op: Operation): string {
-  let text = `\tpoller := &${internalPollerTypeName(<PollerInfo>op.language.go!.pollerType)}{\n`;
+  let text = `&${(<PollerInfo>op.language.go!.pollerType).name} {\n`;
   text += '\t\tpt: pt,\n';
   if (isPageableOperation(op)) {
     text += '\t\tclient: client,\n';

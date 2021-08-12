@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // BastionHostsClient contains the methods for the BastionHosts group.
@@ -45,12 +44,8 @@ func (client *BastionHostsClient) BeginCreateOrUpdate(ctx context.Context, resou
 	if err != nil {
 		return BastionHostsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &bastionHostsCreateOrUpdatePoller{
+	result.Poller = &BastionHostsCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (BastionHostsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *BastionHostsClient) ResumeCreateOrUpdate(ctx context.Context, toke
 	if err != nil {
 		return BastionHostsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &bastionHostsCreateOrUpdatePoller{
+	poller := &BastionHostsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *BastionHostsClient) ResumeCreateOrUpdate(ctx context.Context, toke
 		return BastionHostsCreateOrUpdatePollerResponse{}, err
 	}
 	result := BastionHostsCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (BastionHostsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -150,12 +143,8 @@ func (client *BastionHostsClient) BeginDelete(ctx context.Context, resourceGroup
 	if err != nil {
 		return BastionHostsDeletePollerResponse{}, err
 	}
-	poller := &bastionHostsDeletePoller{
+	result.Poller = &BastionHostsDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (BastionHostsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -167,7 +156,7 @@ func (client *BastionHostsClient) ResumeDelete(ctx context.Context, token string
 	if err != nil {
 		return BastionHostsDeletePollerResponse{}, err
 	}
-	poller := &bastionHostsDeletePoller{
+	poller := &BastionHostsDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -175,12 +164,10 @@ func (client *BastionHostsClient) ResumeDelete(ctx context.Context, token string
 		return BastionHostsDeletePollerResponse{}, err
 	}
 	result := BastionHostsDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (BastionHostsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -309,8 +296,8 @@ func (client *BastionHostsClient) getHandleError(resp *azcore.Response) error {
 
 // List - Lists all Bastion Hosts in a subscription.
 // If the operation fails it returns the *CloudError error type.
-func (client *BastionHostsClient) List(options *BastionHostsListOptions) BastionHostsListPager {
-	return &bastionHostsListPager{
+func (client *BastionHostsClient) List(options *BastionHostsListOptions) *BastionHostsListPager {
+	return &BastionHostsListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, options)
@@ -364,8 +351,8 @@ func (client *BastionHostsClient) listHandleError(resp *azcore.Response) error {
 
 // ListByResourceGroup - Lists all Bastion Hosts in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *BastionHostsClient) ListByResourceGroup(resourceGroupName string, options *BastionHostsListByResourceGroupOptions) BastionHostsListByResourceGroupPager {
-	return &bastionHostsListByResourceGroupPager{
+func (client *BastionHostsClient) ListByResourceGroup(resourceGroupName string, options *BastionHostsListByResourceGroupOptions) *BastionHostsListByResourceGroupPager {
+	return &BastionHostsListByResourceGroupPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)

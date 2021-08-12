@@ -13,7 +13,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 	"strings"
-	"time"
 )
 
 // HSMSecurityDomainClient contains the methods for the HSMSecurityDomain group.
@@ -41,12 +40,8 @@ func (client *HSMSecurityDomainClient) BeginDownload(ctx context.Context, vaultB
 	if err != nil {
 		return HSMSecurityDomainDownloadPollerResponse{}, err
 	}
-	poller := &hsmSecurityDomainDownloadPoller{
+	result.Poller = &HSMSecurityDomainDownloadPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (HSMSecurityDomainDownloadResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -58,7 +53,7 @@ func (client *HSMSecurityDomainClient) ResumeDownload(ctx context.Context, token
 	if err != nil {
 		return HSMSecurityDomainDownloadPollerResponse{}, err
 	}
-	poller := &hsmSecurityDomainDownloadPoller{
+	poller := &HSMSecurityDomainDownloadPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -66,12 +61,10 @@ func (client *HSMSecurityDomainClient) ResumeDownload(ctx context.Context, token
 		return HSMSecurityDomainDownloadPollerResponse{}, err
 	}
 	result := HSMSecurityDomainDownloadPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (HSMSecurityDomainDownloadResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -245,12 +238,8 @@ func (client *HSMSecurityDomainClient) BeginUpload(ctx context.Context, vaultBas
 	if err != nil {
 		return HSMSecurityDomainUploadPollerResponse{}, err
 	}
-	poller := &hsmSecurityDomainUploadPoller{
+	result.Poller = &HSMSecurityDomainUploadPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (HSMSecurityDomainUploadResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -262,7 +251,7 @@ func (client *HSMSecurityDomainClient) ResumeUpload(ctx context.Context, token s
 	if err != nil {
 		return HSMSecurityDomainUploadPollerResponse{}, err
 	}
-	poller := &hsmSecurityDomainUploadPoller{
+	poller := &HSMSecurityDomainUploadPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -270,12 +259,10 @@ func (client *HSMSecurityDomainClient) ResumeUpload(ctx context.Context, token s
 		return HSMSecurityDomainUploadPollerResponse{}, err
 	}
 	result := HSMSecurityDomainUploadPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (HSMSecurityDomainUploadResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 

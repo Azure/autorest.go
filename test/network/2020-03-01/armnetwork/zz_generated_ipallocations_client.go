@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // IPAllocationsClient contains the methods for the IPAllocations group.
@@ -45,12 +44,8 @@ func (client *IPAllocationsClient) BeginCreateOrUpdate(ctx context.Context, reso
 	if err != nil {
 		return IPAllocationsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &ipAllocationsCreateOrUpdatePoller{
+	result.Poller = &IPAllocationsCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (IPAllocationsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *IPAllocationsClient) ResumeCreateOrUpdate(ctx context.Context, tok
 	if err != nil {
 		return IPAllocationsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &ipAllocationsCreateOrUpdatePoller{
+	poller := &IPAllocationsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *IPAllocationsClient) ResumeCreateOrUpdate(ctx context.Context, tok
 		return IPAllocationsCreateOrUpdatePollerResponse{}, err
 	}
 	result := IPAllocationsCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (IPAllocationsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -150,12 +143,8 @@ func (client *IPAllocationsClient) BeginDelete(ctx context.Context, resourceGrou
 	if err != nil {
 		return IPAllocationsDeletePollerResponse{}, err
 	}
-	poller := &ipAllocationsDeletePoller{
+	result.Poller = &IPAllocationsDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (IPAllocationsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -167,7 +156,7 @@ func (client *IPAllocationsClient) ResumeDelete(ctx context.Context, token strin
 	if err != nil {
 		return IPAllocationsDeletePollerResponse{}, err
 	}
-	poller := &ipAllocationsDeletePoller{
+	poller := &IPAllocationsDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -175,12 +164,10 @@ func (client *IPAllocationsClient) ResumeDelete(ctx context.Context, token strin
 		return IPAllocationsDeletePollerResponse{}, err
 	}
 	result := IPAllocationsDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (IPAllocationsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -312,8 +299,8 @@ func (client *IPAllocationsClient) getHandleError(resp *azcore.Response) error {
 
 // List - Gets all IpAllocations in a subscription.
 // If the operation fails it returns the *CloudError error type.
-func (client *IPAllocationsClient) List(options *IPAllocationsListOptions) IPAllocationsListPager {
-	return &ipAllocationsListPager{
+func (client *IPAllocationsClient) List(options *IPAllocationsListOptions) *IPAllocationsListPager {
+	return &IPAllocationsListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, options)
@@ -367,8 +354,8 @@ func (client *IPAllocationsClient) listHandleError(resp *azcore.Response) error 
 
 // ListByResourceGroup - Gets all IpAllocations in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *IPAllocationsClient) ListByResourceGroup(resourceGroupName string, options *IPAllocationsListByResourceGroupOptions) IPAllocationsListByResourceGroupPager {
-	return &ipAllocationsListByResourceGroupPager{
+func (client *IPAllocationsClient) ListByResourceGroup(resourceGroupName string, options *IPAllocationsListByResourceGroupOptions) *IPAllocationsListByResourceGroupPager {
+	return &IPAllocationsListByResourceGroupPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)

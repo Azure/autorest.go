@@ -15,7 +15,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // SnapshotsClient contains the methods for the Snapshots group.
@@ -44,12 +43,8 @@ func (client *SnapshotsClient) BeginCreateOrUpdate(ctx context.Context, resource
 	if err != nil {
 		return SnapshotsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &snapshotsCreateOrUpdatePoller{
+	result.Poller = &SnapshotsCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SnapshotsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -61,7 +56,7 @@ func (client *SnapshotsClient) ResumeCreateOrUpdate(ctx context.Context, token s
 	if err != nil {
 		return SnapshotsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &snapshotsCreateOrUpdatePoller{
+	poller := &SnapshotsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -69,12 +64,10 @@ func (client *SnapshotsClient) ResumeCreateOrUpdate(ctx context.Context, token s
 		return SnapshotsCreateOrUpdatePollerResponse{}, err
 	}
 	result := SnapshotsCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SnapshotsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -148,12 +141,8 @@ func (client *SnapshotsClient) BeginDelete(ctx context.Context, resourceGroupNam
 	if err != nil {
 		return SnapshotsDeletePollerResponse{}, err
 	}
-	poller := &snapshotsDeletePoller{
+	result.Poller = &SnapshotsDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SnapshotsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -165,7 +154,7 @@ func (client *SnapshotsClient) ResumeDelete(ctx context.Context, token string) (
 	if err != nil {
 		return SnapshotsDeletePollerResponse{}, err
 	}
-	poller := &snapshotsDeletePoller{
+	poller := &SnapshotsDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -173,12 +162,10 @@ func (client *SnapshotsClient) ResumeDelete(ctx context.Context, token string) (
 		return SnapshotsDeletePollerResponse{}, err
 	}
 	result := SnapshotsDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SnapshotsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -316,12 +303,8 @@ func (client *SnapshotsClient) BeginGrantAccess(ctx context.Context, resourceGro
 	if err != nil {
 		return SnapshotsGrantAccessPollerResponse{}, err
 	}
-	poller := &snapshotsGrantAccessPoller{
+	result.Poller = &SnapshotsGrantAccessPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SnapshotsGrantAccessResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -333,7 +316,7 @@ func (client *SnapshotsClient) ResumeGrantAccess(ctx context.Context, token stri
 	if err != nil {
 		return SnapshotsGrantAccessPollerResponse{}, err
 	}
-	poller := &snapshotsGrantAccessPoller{
+	poller := &SnapshotsGrantAccessPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -341,12 +324,10 @@ func (client *SnapshotsClient) ResumeGrantAccess(ctx context.Context, token stri
 		return SnapshotsGrantAccessPollerResponse{}, err
 	}
 	result := SnapshotsGrantAccessPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SnapshotsGrantAccessResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -408,8 +389,8 @@ func (client *SnapshotsClient) grantAccessHandleError(resp *azcore.Response) err
 
 // List - Lists snapshots under a subscription.
 // If the operation fails it returns a generic error.
-func (client *SnapshotsClient) List(options *SnapshotsListOptions) SnapshotsListPager {
-	return &snapshotsListPager{
+func (client *SnapshotsClient) List(options *SnapshotsListOptions) *SnapshotsListPager {
+	return &SnapshotsListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, options)
@@ -462,8 +443,8 @@ func (client *SnapshotsClient) listHandleError(resp *azcore.Response) error {
 
 // ListByResourceGroup - Lists snapshots under a resource group.
 // If the operation fails it returns a generic error.
-func (client *SnapshotsClient) ListByResourceGroup(resourceGroupName string, options *SnapshotsListByResourceGroupOptions) SnapshotsListByResourceGroupPager {
-	return &snapshotsListByResourceGroupPager{
+func (client *SnapshotsClient) ListByResourceGroup(resourceGroupName string, options *SnapshotsListByResourceGroupOptions) *SnapshotsListByResourceGroupPager {
+	return &SnapshotsListByResourceGroupPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
@@ -532,12 +513,8 @@ func (client *SnapshotsClient) BeginRevokeAccess(ctx context.Context, resourceGr
 	if err != nil {
 		return SnapshotsRevokeAccessPollerResponse{}, err
 	}
-	poller := &snapshotsRevokeAccessPoller{
+	result.Poller = &SnapshotsRevokeAccessPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SnapshotsRevokeAccessResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -549,7 +526,7 @@ func (client *SnapshotsClient) ResumeRevokeAccess(ctx context.Context, token str
 	if err != nil {
 		return SnapshotsRevokeAccessPollerResponse{}, err
 	}
-	poller := &snapshotsRevokeAccessPoller{
+	poller := &SnapshotsRevokeAccessPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -557,12 +534,10 @@ func (client *SnapshotsClient) ResumeRevokeAccess(ctx context.Context, token str
 		return SnapshotsRevokeAccessPollerResponse{}, err
 	}
 	result := SnapshotsRevokeAccessPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SnapshotsRevokeAccessResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -635,12 +610,8 @@ func (client *SnapshotsClient) BeginUpdate(ctx context.Context, resourceGroupNam
 	if err != nil {
 		return SnapshotsUpdatePollerResponse{}, err
 	}
-	poller := &snapshotsUpdatePoller{
+	result.Poller = &SnapshotsUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SnapshotsUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -652,7 +623,7 @@ func (client *SnapshotsClient) ResumeUpdate(ctx context.Context, token string) (
 	if err != nil {
 		return SnapshotsUpdatePollerResponse{}, err
 	}
-	poller := &snapshotsUpdatePoller{
+	poller := &SnapshotsUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -660,12 +631,10 @@ func (client *SnapshotsClient) ResumeUpdate(ctx context.Context, token string) (
 		return SnapshotsUpdatePollerResponse{}, err
 	}
 	result := SnapshotsUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SnapshotsUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 

@@ -102,8 +102,8 @@ func (client *LoadBalancerBackendAddressPoolsClient) getHandleError(resp *azcore
 
 // List - Gets all the load balancer backed address pools.
 // If the operation fails it returns the *CloudError error type.
-func (client *LoadBalancerBackendAddressPoolsClient) List(resourceGroupName string, loadBalancerName string, options *LoadBalancerBackendAddressPoolsListOptions) LoadBalancerBackendAddressPoolsListPager {
-	return &loadBalancerBackendAddressPoolsListPager{
+func (client *LoadBalancerBackendAddressPoolsClient) List(resourceGroupName string, loadBalancerName string, options *LoadBalancerBackendAddressPoolsListOptions) *LoadBalancerBackendAddressPoolsListPager {
+	return &LoadBalancerBackendAddressPoolsListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, loadBalancerName, options)

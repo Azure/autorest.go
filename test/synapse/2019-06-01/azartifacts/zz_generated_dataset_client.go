@@ -15,7 +15,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 type datasetClient struct {
@@ -36,12 +35,8 @@ func (client *datasetClient) BeginCreateOrUpdateDataset(ctx context.Context, dat
 	if err != nil {
 		return DatasetCreateOrUpdateDatasetPollerResponse{}, err
 	}
-	poller := &datasetCreateOrUpdateDatasetPoller{
+	result.Poller = &DatasetCreateOrUpdateDatasetPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DatasetCreateOrUpdateDatasetResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -53,7 +48,7 @@ func (client *datasetClient) ResumeCreateOrUpdateDataset(ctx context.Context, to
 	if err != nil {
 		return DatasetCreateOrUpdateDatasetPollerResponse{}, err
 	}
-	poller := &datasetCreateOrUpdateDatasetPoller{
+	poller := &DatasetCreateOrUpdateDatasetPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -61,12 +56,10 @@ func (client *datasetClient) ResumeCreateOrUpdateDataset(ctx context.Context, to
 		return DatasetCreateOrUpdateDatasetPollerResponse{}, err
 	}
 	result := DatasetCreateOrUpdateDatasetPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DatasetCreateOrUpdateDatasetResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -136,12 +129,8 @@ func (client *datasetClient) BeginDeleteDataset(ctx context.Context, datasetName
 	if err != nil {
 		return DatasetDeleteDatasetPollerResponse{}, err
 	}
-	poller := &datasetDeleteDatasetPoller{
+	result.Poller = &DatasetDeleteDatasetPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DatasetDeleteDatasetResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -153,7 +142,7 @@ func (client *datasetClient) ResumeDeleteDataset(ctx context.Context, token stri
 	if err != nil {
 		return DatasetDeleteDatasetPollerResponse{}, err
 	}
-	poller := &datasetDeleteDatasetPoller{
+	poller := &DatasetDeleteDatasetPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -161,12 +150,10 @@ func (client *datasetClient) ResumeDeleteDataset(ctx context.Context, token stri
 		return DatasetDeleteDatasetPollerResponse{}, err
 	}
 	result := DatasetDeleteDatasetPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DatasetDeleteDatasetResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -282,8 +269,8 @@ func (client *datasetClient) getDatasetHandleError(resp *azcore.Response) error 
 
 // GetDatasetsByWorkspace - Lists datasets.
 // If the operation fails it returns the *CloudError error type.
-func (client *datasetClient) GetDatasetsByWorkspace(options *DatasetGetDatasetsByWorkspaceOptions) DatasetGetDatasetsByWorkspacePager {
-	return &datasetGetDatasetsByWorkspacePager{
+func (client *datasetClient) GetDatasetsByWorkspace(options *DatasetGetDatasetsByWorkspaceOptions) *DatasetGetDatasetsByWorkspacePager {
+	return &DatasetGetDatasetsByWorkspacePager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.getDatasetsByWorkspaceCreateRequest(ctx, options)
@@ -345,12 +332,8 @@ func (client *datasetClient) BeginRenameDataset(ctx context.Context, datasetName
 	if err != nil {
 		return DatasetRenameDatasetPollerResponse{}, err
 	}
-	poller := &datasetRenameDatasetPoller{
+	result.Poller = &DatasetRenameDatasetPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DatasetRenameDatasetResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -362,7 +345,7 @@ func (client *datasetClient) ResumeRenameDataset(ctx context.Context, token stri
 	if err != nil {
 		return DatasetRenameDatasetPollerResponse{}, err
 	}
-	poller := &datasetRenameDatasetPoller{
+	poller := &DatasetRenameDatasetPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -370,12 +353,10 @@ func (client *datasetClient) ResumeRenameDataset(ctx context.Context, token stri
 		return DatasetRenameDatasetPollerResponse{}, err
 	}
 	result := DatasetRenameDatasetPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DatasetRenameDatasetResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 

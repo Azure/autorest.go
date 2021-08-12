@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // ApplicationGatewaysClient contains the methods for the ApplicationGateways group.
@@ -45,12 +44,8 @@ func (client *ApplicationGatewaysClient) BeginBackendHealth(ctx context.Context,
 	if err != nil {
 		return ApplicationGatewaysBackendHealthPollerResponse{}, err
 	}
-	poller := &applicationGatewaysBackendHealthPoller{
+	result.Poller = &ApplicationGatewaysBackendHealthPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ApplicationGatewaysBackendHealthResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *ApplicationGatewaysClient) ResumeBackendHealth(ctx context.Context
 	if err != nil {
 		return ApplicationGatewaysBackendHealthPollerResponse{}, err
 	}
-	poller := &applicationGatewaysBackendHealthPoller{
+	poller := &ApplicationGatewaysBackendHealthPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *ApplicationGatewaysClient) ResumeBackendHealth(ctx context.Context
 		return ApplicationGatewaysBackendHealthPollerResponse{}, err
 	}
 	result := ApplicationGatewaysBackendHealthPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ApplicationGatewaysBackendHealthResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -154,12 +147,8 @@ func (client *ApplicationGatewaysClient) BeginBackendHealthOnDemand(ctx context.
 	if err != nil {
 		return ApplicationGatewaysBackendHealthOnDemandPollerResponse{}, err
 	}
-	poller := &applicationGatewaysBackendHealthOnDemandPoller{
+	result.Poller = &ApplicationGatewaysBackendHealthOnDemandPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ApplicationGatewaysBackendHealthOnDemandResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -171,7 +160,7 @@ func (client *ApplicationGatewaysClient) ResumeBackendHealthOnDemand(ctx context
 	if err != nil {
 		return ApplicationGatewaysBackendHealthOnDemandPollerResponse{}, err
 	}
-	poller := &applicationGatewaysBackendHealthOnDemandPoller{
+	poller := &ApplicationGatewaysBackendHealthOnDemandPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -179,12 +168,10 @@ func (client *ApplicationGatewaysClient) ResumeBackendHealthOnDemand(ctx context
 		return ApplicationGatewaysBackendHealthOnDemandPollerResponse{}, err
 	}
 	result := ApplicationGatewaysBackendHealthOnDemandPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ApplicationGatewaysBackendHealthOnDemandResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -263,12 +250,8 @@ func (client *ApplicationGatewaysClient) BeginCreateOrUpdate(ctx context.Context
 	if err != nil {
 		return ApplicationGatewaysCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &applicationGatewaysCreateOrUpdatePoller{
+	result.Poller = &ApplicationGatewaysCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ApplicationGatewaysCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -280,7 +263,7 @@ func (client *ApplicationGatewaysClient) ResumeCreateOrUpdate(ctx context.Contex
 	if err != nil {
 		return ApplicationGatewaysCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &applicationGatewaysCreateOrUpdatePoller{
+	poller := &ApplicationGatewaysCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -288,12 +271,10 @@ func (client *ApplicationGatewaysClient) ResumeCreateOrUpdate(ctx context.Contex
 		return ApplicationGatewaysCreateOrUpdatePollerResponse{}, err
 	}
 	result := ApplicationGatewaysCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ApplicationGatewaysCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -368,12 +349,8 @@ func (client *ApplicationGatewaysClient) BeginDelete(ctx context.Context, resour
 	if err != nil {
 		return ApplicationGatewaysDeletePollerResponse{}, err
 	}
-	poller := &applicationGatewaysDeletePoller{
+	result.Poller = &ApplicationGatewaysDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ApplicationGatewaysDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -385,7 +362,7 @@ func (client *ApplicationGatewaysClient) ResumeDelete(ctx context.Context, token
 	if err != nil {
 		return ApplicationGatewaysDeletePollerResponse{}, err
 	}
-	poller := &applicationGatewaysDeletePoller{
+	poller := &ApplicationGatewaysDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -393,12 +370,10 @@ func (client *ApplicationGatewaysClient) ResumeDelete(ctx context.Context, token
 		return ApplicationGatewaysDeletePollerResponse{}, err
 	}
 	result := ApplicationGatewaysDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ApplicationGatewaysDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -589,8 +564,8 @@ func (client *ApplicationGatewaysClient) getSSLPredefinedPolicyHandleError(resp 
 
 // List - Lists all application gateways in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *ApplicationGatewaysClient) List(resourceGroupName string, options *ApplicationGatewaysListOptions) ApplicationGatewaysListPager {
-	return &applicationGatewaysListPager{
+func (client *ApplicationGatewaysClient) List(resourceGroupName string, options *ApplicationGatewaysListOptions) *ApplicationGatewaysListPager {
+	return &ApplicationGatewaysListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, options)
@@ -648,8 +623,8 @@ func (client *ApplicationGatewaysClient) listHandleError(resp *azcore.Response) 
 
 // ListAll - Gets all the application gateways in a subscription.
 // If the operation fails it returns the *CloudError error type.
-func (client *ApplicationGatewaysClient) ListAll(options *ApplicationGatewaysListAllOptions) ApplicationGatewaysListAllPager {
-	return &applicationGatewaysListAllPager{
+func (client *ApplicationGatewaysClient) ListAll(options *ApplicationGatewaysListAllOptions) *ApplicationGatewaysListAllPager {
+	return &ApplicationGatewaysListAllPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listAllCreateRequest(ctx, options)
@@ -877,8 +852,8 @@ func (client *ApplicationGatewaysClient) listAvailableSSLOptionsHandleError(resp
 
 // ListAvailableSSLPredefinedPolicies - Lists all SSL predefined policies for configuring Ssl policy.
 // If the operation fails it returns the *CloudError error type.
-func (client *ApplicationGatewaysClient) ListAvailableSSLPredefinedPolicies(options *ApplicationGatewaysListAvailableSSLPredefinedPoliciesOptions) ApplicationGatewaysListAvailableSSLPredefinedPoliciesPager {
-	return &applicationGatewaysListAvailableSSLPredefinedPoliciesPager{
+func (client *ApplicationGatewaysClient) ListAvailableSSLPredefinedPolicies(options *ApplicationGatewaysListAvailableSSLPredefinedPoliciesOptions) *ApplicationGatewaysListAvailableSSLPredefinedPoliciesPager {
+	return &ApplicationGatewaysListAvailableSSLPredefinedPoliciesPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listAvailableSSLPredefinedPoliciesCreateRequest(ctx, options)
@@ -1060,12 +1035,8 @@ func (client *ApplicationGatewaysClient) BeginStart(ctx context.Context, resourc
 	if err != nil {
 		return ApplicationGatewaysStartPollerResponse{}, err
 	}
-	poller := &applicationGatewaysStartPoller{
+	result.Poller = &ApplicationGatewaysStartPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ApplicationGatewaysStartResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -1077,7 +1048,7 @@ func (client *ApplicationGatewaysClient) ResumeStart(ctx context.Context, token 
 	if err != nil {
 		return ApplicationGatewaysStartPollerResponse{}, err
 	}
-	poller := &applicationGatewaysStartPoller{
+	poller := &ApplicationGatewaysStartPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -1085,12 +1056,10 @@ func (client *ApplicationGatewaysClient) ResumeStart(ctx context.Context, token 
 		return ApplicationGatewaysStartPollerResponse{}, err
 	}
 	result := ApplicationGatewaysStartPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ApplicationGatewaysStartResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -1165,12 +1134,8 @@ func (client *ApplicationGatewaysClient) BeginStop(ctx context.Context, resource
 	if err != nil {
 		return ApplicationGatewaysStopPollerResponse{}, err
 	}
-	poller := &applicationGatewaysStopPoller{
+	result.Poller = &ApplicationGatewaysStopPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ApplicationGatewaysStopResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -1182,7 +1147,7 @@ func (client *ApplicationGatewaysClient) ResumeStop(ctx context.Context, token s
 	if err != nil {
 		return ApplicationGatewaysStopPollerResponse{}, err
 	}
-	poller := &applicationGatewaysStopPoller{
+	poller := &ApplicationGatewaysStopPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -1190,12 +1155,10 @@ func (client *ApplicationGatewaysClient) ResumeStop(ctx context.Context, token s
 		return ApplicationGatewaysStopPollerResponse{}, err
 	}
 	result := ApplicationGatewaysStopPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ApplicationGatewaysStopResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 

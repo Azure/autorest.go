@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // PublicIPPrefixesClient contains the methods for the PublicIPPrefixes group.
@@ -45,12 +44,8 @@ func (client *PublicIPPrefixesClient) BeginCreateOrUpdate(ctx context.Context, r
 	if err != nil {
 		return PublicIPPrefixesCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &publicIPPrefixesCreateOrUpdatePoller{
+	result.Poller = &PublicIPPrefixesCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PublicIPPrefixesCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *PublicIPPrefixesClient) ResumeCreateOrUpdate(ctx context.Context, 
 	if err != nil {
 		return PublicIPPrefixesCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &publicIPPrefixesCreateOrUpdatePoller{
+	poller := &PublicIPPrefixesCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *PublicIPPrefixesClient) ResumeCreateOrUpdate(ctx context.Context, 
 		return PublicIPPrefixesCreateOrUpdatePollerResponse{}, err
 	}
 	result := PublicIPPrefixesCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PublicIPPrefixesCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -150,12 +143,8 @@ func (client *PublicIPPrefixesClient) BeginDelete(ctx context.Context, resourceG
 	if err != nil {
 		return PublicIPPrefixesDeletePollerResponse{}, err
 	}
-	poller := &publicIPPrefixesDeletePoller{
+	result.Poller = &PublicIPPrefixesDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PublicIPPrefixesDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -167,7 +156,7 @@ func (client *PublicIPPrefixesClient) ResumeDelete(ctx context.Context, token st
 	if err != nil {
 		return PublicIPPrefixesDeletePollerResponse{}, err
 	}
-	poller := &publicIPPrefixesDeletePoller{
+	poller := &PublicIPPrefixesDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -175,12 +164,10 @@ func (client *PublicIPPrefixesClient) ResumeDelete(ctx context.Context, token st
 		return PublicIPPrefixesDeletePollerResponse{}, err
 	}
 	result := PublicIPPrefixesDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PublicIPPrefixesDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -312,8 +299,8 @@ func (client *PublicIPPrefixesClient) getHandleError(resp *azcore.Response) erro
 
 // List - Gets all public IP prefixes in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *PublicIPPrefixesClient) List(resourceGroupName string, options *PublicIPPrefixesListOptions) PublicIPPrefixesListPager {
-	return &publicIPPrefixesListPager{
+func (client *PublicIPPrefixesClient) List(resourceGroupName string, options *PublicIPPrefixesListOptions) *PublicIPPrefixesListPager {
+	return &PublicIPPrefixesListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, options)
@@ -371,8 +358,8 @@ func (client *PublicIPPrefixesClient) listHandleError(resp *azcore.Response) err
 
 // ListAll - Gets all the public IP prefixes in a subscription.
 // If the operation fails it returns the *CloudError error type.
-func (client *PublicIPPrefixesClient) ListAll(options *PublicIPPrefixesListAllOptions) PublicIPPrefixesListAllPager {
-	return &publicIPPrefixesListAllPager{
+func (client *PublicIPPrefixesClient) ListAll(options *PublicIPPrefixesListAllOptions) *PublicIPPrefixesListAllPager {
+	return &PublicIPPrefixesListAllPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listAllCreateRequest(ctx, options)

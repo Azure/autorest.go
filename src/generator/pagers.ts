@@ -6,7 +6,7 @@
 import { Session } from '@autorest/extension-base';
 import { CodeModel } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
-import { internalPagerTypeName, isLROOperation, PagerInfo } from '../common/helpers';
+import { isLROOperation, PagerInfo } from '../common/helpers';
 import { contentPreamble, getResponseEnvelopeName, getResultFieldName, getStatusCodes, formatStatusCodes, sortAscending, getFinalResponseEnvelopeName } from './helpers';
 import { ImportManager } from './imports';
 
@@ -32,15 +32,9 @@ export async function generatePagers(session: Session<CodeModel>): Promise<strin
     if (isLROOperation(pager.op)) {
       respEnv = getFinalResponseEnvelopeName(pager.op);
     }
-    // create pager interface
-    text += `type ${pager.name} interface {\n`;
-    text += '\tazcore.Pager\n';
-    text += `\t// PageResponse returns the current ${respEnv}.\n`;
-    text += `\tPageResponse() ${respEnv}\n`;
-    text += '}\n\n';
-    // now create internal pager type
-    const internalPager = internalPagerTypeName(pager);
-    text += `type ${internalPager} struct {\n`;
+    // create pager type
+    text += `// ${pager.name} provides operations for iterating over paged responses.\n`;
+    text += `type ${pager.name} struct {\n`;
     text += `\tclient *${pager.op.language.go!.clientName}\n`;
     text += `\tcurrent ${respEnv}\n`;
     text += '\terr error\n';
@@ -51,9 +45,12 @@ export async function generatePagers(session: Session<CodeModel>): Promise<strin
       text += `\tadvancer func(context.Context, ${respEnv}) (*azcore.Request, error)\n`;
     }
     text += '}\n\n';
-    // internal pager methods
-    text += `func (p *${internalPager}) Err() error {\n\treturn p.err\n}\n\n`;
-    text += `func (p *${internalPager}) NextPage(ctx context.Context) bool {\n`;
+    // pager methods
+    text += '// Err returns the last error encountered while paging.\n';
+    text += `func (p *${pager.name}) Err() error {\n\treturn p.err\n}\n\n`;
+    text += '// NextPage returns true if the pager advanced to the next page.\n'
+    text += '// Returns false if there are no more pages or an error occurred.\n';
+    text += `func (p *${pager.name}) NextPage(ctx context.Context) bool {\n`;
     if (isLROOperation(pager.op)) {
       text += '\tif !p.second {\n';
       text += '\t\tp.second = true\n';
@@ -90,7 +87,8 @@ export async function generatePagers(session: Session<CodeModel>): Promise<strin
     text += '\tif err != nil {\n\t\tp.err = err\n\t\treturn false\n\t}\n';
     text += '\tp.current = result\n\treturn true\n';
     text += '}\n\n';
-    text += `func (p *${internalPager}) PageResponse() ${respEnv} {\n\treturn p.current\n}\n\n`;
+    text += `// PageResponse returns the current ${respEnv} page.\n`;
+    text += `func (p *${pager.name}) PageResponse() ${respEnv} {\n\treturn p.current\n}\n\n`;
   }
   return text;
 }

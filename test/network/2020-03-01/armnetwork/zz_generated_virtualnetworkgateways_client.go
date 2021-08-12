@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // VirtualNetworkGatewaysClient contains the methods for the VirtualNetworkGateways group.
@@ -45,12 +44,8 @@ func (client *VirtualNetworkGatewaysClient) BeginCreateOrUpdate(ctx context.Cont
 	if err != nil {
 		return VirtualNetworkGatewaysCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &virtualNetworkGatewaysCreateOrUpdatePoller{
+	result.Poller = &VirtualNetworkGatewaysCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *VirtualNetworkGatewaysClient) ResumeCreateOrUpdate(ctx context.Con
 	if err != nil {
 		return VirtualNetworkGatewaysCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &virtualNetworkGatewaysCreateOrUpdatePoller{
+	poller := &VirtualNetworkGatewaysCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *VirtualNetworkGatewaysClient) ResumeCreateOrUpdate(ctx context.Con
 		return VirtualNetworkGatewaysCreateOrUpdatePollerResponse{}, err
 	}
 	result := VirtualNetworkGatewaysCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -150,12 +143,8 @@ func (client *VirtualNetworkGatewaysClient) BeginDelete(ctx context.Context, res
 	if err != nil {
 		return VirtualNetworkGatewaysDeletePollerResponse{}, err
 	}
-	poller := &virtualNetworkGatewaysDeletePoller{
+	result.Poller = &VirtualNetworkGatewaysDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -167,7 +156,7 @@ func (client *VirtualNetworkGatewaysClient) ResumeDelete(ctx context.Context, to
 	if err != nil {
 		return VirtualNetworkGatewaysDeletePollerResponse{}, err
 	}
-	poller := &virtualNetworkGatewaysDeletePoller{
+	poller := &VirtualNetworkGatewaysDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -175,12 +164,10 @@ func (client *VirtualNetworkGatewaysClient) ResumeDelete(ctx context.Context, to
 		return VirtualNetworkGatewaysDeletePollerResponse{}, err
 	}
 	result := VirtualNetworkGatewaysDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -255,12 +242,8 @@ func (client *VirtualNetworkGatewaysClient) BeginDisconnectVirtualNetworkGateway
 	if err != nil {
 		return VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVPNConnectionsPollerResponse{}, err
 	}
-	poller := &virtualNetworkGatewaysDisconnectVirtualNetworkGatewayVPNConnectionsPoller{
+	result.Poller = &VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVPNConnectionsPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVPNConnectionsResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -272,7 +255,7 @@ func (client *VirtualNetworkGatewaysClient) ResumeDisconnectVirtualNetworkGatewa
 	if err != nil {
 		return VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVPNConnectionsPollerResponse{}, err
 	}
-	poller := &virtualNetworkGatewaysDisconnectVirtualNetworkGatewayVPNConnectionsPoller{
+	poller := &VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVPNConnectionsPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -280,12 +263,10 @@ func (client *VirtualNetworkGatewaysClient) ResumeDisconnectVirtualNetworkGatewa
 		return VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVPNConnectionsPollerResponse{}, err
 	}
 	result := VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVPNConnectionsPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVPNConnectionsResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -361,12 +342,8 @@ func (client *VirtualNetworkGatewaysClient) BeginGenerateVPNProfile(ctx context.
 	if err != nil {
 		return VirtualNetworkGatewaysGenerateVPNProfilePollerResponse{}, err
 	}
-	poller := &virtualNetworkGatewaysGenerateVPNProfilePoller{
+	result.Poller = &VirtualNetworkGatewaysGenerateVPNProfilePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysGenerateVPNProfileResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -378,7 +355,7 @@ func (client *VirtualNetworkGatewaysClient) ResumeGenerateVPNProfile(ctx context
 	if err != nil {
 		return VirtualNetworkGatewaysGenerateVPNProfilePollerResponse{}, err
 	}
-	poller := &virtualNetworkGatewaysGenerateVPNProfilePoller{
+	poller := &VirtualNetworkGatewaysGenerateVPNProfilePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -386,12 +363,10 @@ func (client *VirtualNetworkGatewaysClient) ResumeGenerateVPNProfile(ctx context
 		return VirtualNetworkGatewaysGenerateVPNProfilePollerResponse{}, err
 	}
 	result := VirtualNetworkGatewaysGenerateVPNProfilePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysGenerateVPNProfileResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -467,12 +442,8 @@ func (client *VirtualNetworkGatewaysClient) BeginGeneratevpnclientpackage(ctx co
 	if err != nil {
 		return VirtualNetworkGatewaysGeneratevpnclientpackagePollerResponse{}, err
 	}
-	poller := &virtualNetworkGatewaysGeneratevpnclientpackagePoller{
+	result.Poller = &VirtualNetworkGatewaysGeneratevpnclientpackagePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysGeneratevpnclientpackageResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -484,7 +455,7 @@ func (client *VirtualNetworkGatewaysClient) ResumeGeneratevpnclientpackage(ctx c
 	if err != nil {
 		return VirtualNetworkGatewaysGeneratevpnclientpackagePollerResponse{}, err
 	}
-	poller := &virtualNetworkGatewaysGeneratevpnclientpackagePoller{
+	poller := &VirtualNetworkGatewaysGeneratevpnclientpackagePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -492,12 +463,10 @@ func (client *VirtualNetworkGatewaysClient) ResumeGeneratevpnclientpackage(ctx c
 		return VirtualNetworkGatewaysGeneratevpnclientpackagePollerResponse{}, err
 	}
 	result := VirtualNetworkGatewaysGeneratevpnclientpackagePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysGeneratevpnclientpackageResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -638,12 +607,8 @@ func (client *VirtualNetworkGatewaysClient) BeginGetAdvertisedRoutes(ctx context
 	if err != nil {
 		return VirtualNetworkGatewaysGetAdvertisedRoutesPollerResponse{}, err
 	}
-	poller := &virtualNetworkGatewaysGetAdvertisedRoutesPoller{
+	result.Poller = &VirtualNetworkGatewaysGetAdvertisedRoutesPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysGetAdvertisedRoutesResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -655,7 +620,7 @@ func (client *VirtualNetworkGatewaysClient) ResumeGetAdvertisedRoutes(ctx contex
 	if err != nil {
 		return VirtualNetworkGatewaysGetAdvertisedRoutesPollerResponse{}, err
 	}
-	poller := &virtualNetworkGatewaysGetAdvertisedRoutesPoller{
+	poller := &VirtualNetworkGatewaysGetAdvertisedRoutesPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -663,12 +628,10 @@ func (client *VirtualNetworkGatewaysClient) ResumeGetAdvertisedRoutes(ctx contex
 		return VirtualNetworkGatewaysGetAdvertisedRoutesPollerResponse{}, err
 	}
 	result := VirtualNetworkGatewaysGetAdvertisedRoutesPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysGetAdvertisedRoutesResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -744,12 +707,8 @@ func (client *VirtualNetworkGatewaysClient) BeginGetBgpPeerStatus(ctx context.Co
 	if err != nil {
 		return VirtualNetworkGatewaysGetBgpPeerStatusPollerResponse{}, err
 	}
-	poller := &virtualNetworkGatewaysGetBgpPeerStatusPoller{
+	result.Poller = &VirtualNetworkGatewaysGetBgpPeerStatusPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysGetBgpPeerStatusResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -761,7 +720,7 @@ func (client *VirtualNetworkGatewaysClient) ResumeGetBgpPeerStatus(ctx context.C
 	if err != nil {
 		return VirtualNetworkGatewaysGetBgpPeerStatusPollerResponse{}, err
 	}
-	poller := &virtualNetworkGatewaysGetBgpPeerStatusPoller{
+	poller := &VirtualNetworkGatewaysGetBgpPeerStatusPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -769,12 +728,10 @@ func (client *VirtualNetworkGatewaysClient) ResumeGetBgpPeerStatus(ctx context.C
 		return VirtualNetworkGatewaysGetBgpPeerStatusPollerResponse{}, err
 	}
 	result := VirtualNetworkGatewaysGetBgpPeerStatusPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysGetBgpPeerStatusResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -852,12 +809,8 @@ func (client *VirtualNetworkGatewaysClient) BeginGetLearnedRoutes(ctx context.Co
 	if err != nil {
 		return VirtualNetworkGatewaysGetLearnedRoutesPollerResponse{}, err
 	}
-	poller := &virtualNetworkGatewaysGetLearnedRoutesPoller{
+	result.Poller = &VirtualNetworkGatewaysGetLearnedRoutesPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysGetLearnedRoutesResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -869,7 +822,7 @@ func (client *VirtualNetworkGatewaysClient) ResumeGetLearnedRoutes(ctx context.C
 	if err != nil {
 		return VirtualNetworkGatewaysGetLearnedRoutesPollerResponse{}, err
 	}
-	poller := &virtualNetworkGatewaysGetLearnedRoutesPoller{
+	poller := &VirtualNetworkGatewaysGetLearnedRoutesPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -877,12 +830,10 @@ func (client *VirtualNetworkGatewaysClient) ResumeGetLearnedRoutes(ctx context.C
 		return VirtualNetworkGatewaysGetLearnedRoutesPollerResponse{}, err
 	}
 	result := VirtualNetworkGatewaysGetLearnedRoutesPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysGetLearnedRoutesResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -958,12 +909,8 @@ func (client *VirtualNetworkGatewaysClient) BeginGetVPNProfilePackageURL(ctx con
 	if err != nil {
 		return VirtualNetworkGatewaysGetVPNProfilePackageURLPollerResponse{}, err
 	}
-	poller := &virtualNetworkGatewaysGetVPNProfilePackageURLPoller{
+	result.Poller = &VirtualNetworkGatewaysGetVPNProfilePackageURLPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysGetVPNProfilePackageURLResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -975,7 +922,7 @@ func (client *VirtualNetworkGatewaysClient) ResumeGetVPNProfilePackageURL(ctx co
 	if err != nil {
 		return VirtualNetworkGatewaysGetVPNProfilePackageURLPollerResponse{}, err
 	}
-	poller := &virtualNetworkGatewaysGetVPNProfilePackageURLPoller{
+	poller := &VirtualNetworkGatewaysGetVPNProfilePackageURLPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -983,12 +930,10 @@ func (client *VirtualNetworkGatewaysClient) ResumeGetVPNProfilePackageURL(ctx co
 		return VirtualNetworkGatewaysGetVPNProfilePackageURLPollerResponse{}, err
 	}
 	result := VirtualNetworkGatewaysGetVPNProfilePackageURLPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysGetVPNProfilePackageURLResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -1065,12 +1010,8 @@ func (client *VirtualNetworkGatewaysClient) BeginGetVpnclientConnectionHealth(ct
 	if err != nil {
 		return VirtualNetworkGatewaysGetVpnclientConnectionHealthPollerResponse{}, err
 	}
-	poller := &virtualNetworkGatewaysGetVpnclientConnectionHealthPoller{
+	result.Poller = &VirtualNetworkGatewaysGetVpnclientConnectionHealthPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysGetVpnclientConnectionHealthResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -1082,7 +1023,7 @@ func (client *VirtualNetworkGatewaysClient) ResumeGetVpnclientConnectionHealth(c
 	if err != nil {
 		return VirtualNetworkGatewaysGetVpnclientConnectionHealthPollerResponse{}, err
 	}
-	poller := &virtualNetworkGatewaysGetVpnclientConnectionHealthPoller{
+	poller := &VirtualNetworkGatewaysGetVpnclientConnectionHealthPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -1090,12 +1031,10 @@ func (client *VirtualNetworkGatewaysClient) ResumeGetVpnclientConnectionHealth(c
 		return VirtualNetworkGatewaysGetVpnclientConnectionHealthPollerResponse{}, err
 	}
 	result := VirtualNetworkGatewaysGetVpnclientConnectionHealthPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysGetVpnclientConnectionHealthResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -1173,12 +1112,8 @@ func (client *VirtualNetworkGatewaysClient) BeginGetVpnclientIPSecParameters(ctx
 	if err != nil {
 		return VirtualNetworkGatewaysGetVpnclientIPSecParametersPollerResponse{}, err
 	}
-	poller := &virtualNetworkGatewaysGetVpnclientIPSecParametersPoller{
+	result.Poller = &VirtualNetworkGatewaysGetVpnclientIPSecParametersPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysGetVpnclientIPSecParametersResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -1190,7 +1125,7 @@ func (client *VirtualNetworkGatewaysClient) ResumeGetVpnclientIPSecParameters(ct
 	if err != nil {
 		return VirtualNetworkGatewaysGetVpnclientIPSecParametersPollerResponse{}, err
 	}
-	poller := &virtualNetworkGatewaysGetVpnclientIPSecParametersPoller{
+	poller := &VirtualNetworkGatewaysGetVpnclientIPSecParametersPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -1198,12 +1133,10 @@ func (client *VirtualNetworkGatewaysClient) ResumeGetVpnclientIPSecParameters(ct
 		return VirtualNetworkGatewaysGetVpnclientIPSecParametersPollerResponse{}, err
 	}
 	result := VirtualNetworkGatewaysGetVpnclientIPSecParametersPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysGetVpnclientIPSecParametersResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -1268,8 +1201,8 @@ func (client *VirtualNetworkGatewaysClient) getVpnclientIPSecParametersHandleErr
 
 // List - Gets all virtual network gateways by resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualNetworkGatewaysClient) List(resourceGroupName string, options *VirtualNetworkGatewaysListOptions) VirtualNetworkGatewaysListPager {
-	return &virtualNetworkGatewaysListPager{
+func (client *VirtualNetworkGatewaysClient) List(resourceGroupName string, options *VirtualNetworkGatewaysListOptions) *VirtualNetworkGatewaysListPager {
+	return &VirtualNetworkGatewaysListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, options)
@@ -1327,8 +1260,8 @@ func (client *VirtualNetworkGatewaysClient) listHandleError(resp *azcore.Respons
 
 // ListConnections - Gets all the connections in a virtual network gateway.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualNetworkGatewaysClient) ListConnections(resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysListConnectionsOptions) VirtualNetworkGatewaysListConnectionsPager {
-	return &virtualNetworkGatewaysListConnectionsPager{
+func (client *VirtualNetworkGatewaysClient) ListConnections(resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysListConnectionsOptions) *VirtualNetworkGatewaysListConnectionsPager {
+	return &VirtualNetworkGatewaysListConnectionsPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listConnectionsCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, options)
@@ -1402,12 +1335,8 @@ func (client *VirtualNetworkGatewaysClient) BeginReset(ctx context.Context, reso
 	if err != nil {
 		return VirtualNetworkGatewaysResetPollerResponse{}, err
 	}
-	poller := &virtualNetworkGatewaysResetPoller{
+	result.Poller = &VirtualNetworkGatewaysResetPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysResetResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -1419,7 +1348,7 @@ func (client *VirtualNetworkGatewaysClient) ResumeReset(ctx context.Context, tok
 	if err != nil {
 		return VirtualNetworkGatewaysResetPollerResponse{}, err
 	}
-	poller := &virtualNetworkGatewaysResetPoller{
+	poller := &VirtualNetworkGatewaysResetPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -1427,12 +1356,10 @@ func (client *VirtualNetworkGatewaysClient) ResumeReset(ctx context.Context, tok
 		return VirtualNetworkGatewaysResetPollerResponse{}, err
 	}
 	result := VirtualNetworkGatewaysResetPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysResetResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -1510,12 +1437,8 @@ func (client *VirtualNetworkGatewaysClient) BeginResetVPNClientSharedKey(ctx con
 	if err != nil {
 		return VirtualNetworkGatewaysResetVPNClientSharedKeyPollerResponse{}, err
 	}
-	poller := &virtualNetworkGatewaysResetVPNClientSharedKeyPoller{
+	result.Poller = &VirtualNetworkGatewaysResetVPNClientSharedKeyPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysResetVPNClientSharedKeyResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -1527,7 +1450,7 @@ func (client *VirtualNetworkGatewaysClient) ResumeResetVPNClientSharedKey(ctx co
 	if err != nil {
 		return VirtualNetworkGatewaysResetVPNClientSharedKeyPollerResponse{}, err
 	}
-	poller := &virtualNetworkGatewaysResetVPNClientSharedKeyPoller{
+	poller := &VirtualNetworkGatewaysResetVPNClientSharedKeyPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -1535,12 +1458,10 @@ func (client *VirtualNetworkGatewaysClient) ResumeResetVPNClientSharedKey(ctx co
 		return VirtualNetworkGatewaysResetVPNClientSharedKeyPollerResponse{}, err
 	}
 	result := VirtualNetworkGatewaysResetVPNClientSharedKeyPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysResetVPNClientSharedKeyResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -1616,12 +1537,8 @@ func (client *VirtualNetworkGatewaysClient) BeginSetVpnclientIPSecParameters(ctx
 	if err != nil {
 		return VirtualNetworkGatewaysSetVpnclientIPSecParametersPollerResponse{}, err
 	}
-	poller := &virtualNetworkGatewaysSetVpnclientIPSecParametersPoller{
+	result.Poller = &VirtualNetworkGatewaysSetVpnclientIPSecParametersPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysSetVpnclientIPSecParametersResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -1633,7 +1550,7 @@ func (client *VirtualNetworkGatewaysClient) ResumeSetVpnclientIPSecParameters(ct
 	if err != nil {
 		return VirtualNetworkGatewaysSetVpnclientIPSecParametersPollerResponse{}, err
 	}
-	poller := &virtualNetworkGatewaysSetVpnclientIPSecParametersPoller{
+	poller := &VirtualNetworkGatewaysSetVpnclientIPSecParametersPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -1641,12 +1558,10 @@ func (client *VirtualNetworkGatewaysClient) ResumeSetVpnclientIPSecParameters(ct
 		return VirtualNetworkGatewaysSetVpnclientIPSecParametersPollerResponse{}, err
 	}
 	result := VirtualNetworkGatewaysSetVpnclientIPSecParametersPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysSetVpnclientIPSecParametersResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -1722,12 +1637,8 @@ func (client *VirtualNetworkGatewaysClient) BeginStartPacketCapture(ctx context.
 	if err != nil {
 		return VirtualNetworkGatewaysStartPacketCapturePollerResponse{}, err
 	}
-	poller := &virtualNetworkGatewaysStartPacketCapturePoller{
+	result.Poller = &VirtualNetworkGatewaysStartPacketCapturePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysStartPacketCaptureResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -1739,7 +1650,7 @@ func (client *VirtualNetworkGatewaysClient) ResumeStartPacketCapture(ctx context
 	if err != nil {
 		return VirtualNetworkGatewaysStartPacketCapturePollerResponse{}, err
 	}
-	poller := &virtualNetworkGatewaysStartPacketCapturePoller{
+	poller := &VirtualNetworkGatewaysStartPacketCapturePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -1747,12 +1658,10 @@ func (client *VirtualNetworkGatewaysClient) ResumeStartPacketCapture(ctx context
 		return VirtualNetworkGatewaysStartPacketCapturePollerResponse{}, err
 	}
 	result := VirtualNetworkGatewaysStartPacketCapturePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysStartPacketCaptureResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -1830,12 +1739,8 @@ func (client *VirtualNetworkGatewaysClient) BeginStopPacketCapture(ctx context.C
 	if err != nil {
 		return VirtualNetworkGatewaysStopPacketCapturePollerResponse{}, err
 	}
-	poller := &virtualNetworkGatewaysStopPacketCapturePoller{
+	result.Poller = &VirtualNetworkGatewaysStopPacketCapturePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysStopPacketCaptureResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -1847,7 +1752,7 @@ func (client *VirtualNetworkGatewaysClient) ResumeStopPacketCapture(ctx context.
 	if err != nil {
 		return VirtualNetworkGatewaysStopPacketCapturePollerResponse{}, err
 	}
-	poller := &virtualNetworkGatewaysStopPacketCapturePoller{
+	poller := &VirtualNetworkGatewaysStopPacketCapturePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -1855,12 +1760,10 @@ func (client *VirtualNetworkGatewaysClient) ResumeStopPacketCapture(ctx context.
 		return VirtualNetworkGatewaysStopPacketCapturePollerResponse{}, err
 	}
 	result := VirtualNetworkGatewaysStopPacketCapturePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysStopPacketCaptureResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -2001,12 +1904,8 @@ func (client *VirtualNetworkGatewaysClient) BeginUpdateTags(ctx context.Context,
 	if err != nil {
 		return VirtualNetworkGatewaysUpdateTagsPollerResponse{}, err
 	}
-	poller := &virtualNetworkGatewaysUpdateTagsPoller{
+	result.Poller = &VirtualNetworkGatewaysUpdateTagsPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysUpdateTagsResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -2018,7 +1917,7 @@ func (client *VirtualNetworkGatewaysClient) ResumeUpdateTags(ctx context.Context
 	if err != nil {
 		return VirtualNetworkGatewaysUpdateTagsPollerResponse{}, err
 	}
-	poller := &virtualNetworkGatewaysUpdateTagsPoller{
+	poller := &VirtualNetworkGatewaysUpdateTagsPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -2026,12 +1925,10 @@ func (client *VirtualNetworkGatewaysClient) ResumeUpdateTags(ctx context.Context
 		return VirtualNetworkGatewaysUpdateTagsPollerResponse{}, err
 	}
 	result := VirtualNetworkGatewaysUpdateTagsPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysUpdateTagsResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 

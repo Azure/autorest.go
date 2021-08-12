@@ -284,8 +284,8 @@ func (client *SSHPublicKeysClient) getHandleError(resp *azcore.Response) error {
 // ListByResourceGroup - Lists all of the SSH public keys in the specified resource group. Use the nextLink property in the response to get the next page
 // of SSH public keys.
 // If the operation fails it returns a generic error.
-func (client *SSHPublicKeysClient) ListByResourceGroup(resourceGroupName string, options *SSHPublicKeysListByResourceGroupOptions) SSHPublicKeysListByResourceGroupPager {
-	return &sshPublicKeysListByResourceGroupPager{
+func (client *SSHPublicKeysClient) ListByResourceGroup(resourceGroupName string, options *SSHPublicKeysListByResourceGroupOptions) *SSHPublicKeysListByResourceGroupPager {
+	return &SSHPublicKeysListByResourceGroupPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
@@ -343,8 +343,8 @@ func (client *SSHPublicKeysClient) listByResourceGroupHandleError(resp *azcore.R
 // ListBySubscription - Lists all of the SSH public keys in the subscription. Use the nextLink property in the response to get the next page of SSH public
 // keys.
 // If the operation fails it returns a generic error.
-func (client *SSHPublicKeysClient) ListBySubscription(options *SSHPublicKeysListBySubscriptionOptions) SSHPublicKeysListBySubscriptionPager {
-	return &sshPublicKeysListBySubscriptionPager{
+func (client *SSHPublicKeysClient) ListBySubscription(options *SSHPublicKeysListBySubscriptionOptions) *SSHPublicKeysListBySubscriptionPager {
+	return &SSHPublicKeysListBySubscriptionPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listBySubscriptionCreateRequest(ctx, options)

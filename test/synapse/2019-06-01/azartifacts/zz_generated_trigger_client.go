@@ -15,7 +15,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 type triggerClient struct {
@@ -36,12 +35,8 @@ func (client *triggerClient) BeginCreateOrUpdateTrigger(ctx context.Context, tri
 	if err != nil {
 		return TriggerCreateOrUpdateTriggerPollerResponse{}, err
 	}
-	poller := &triggerCreateOrUpdateTriggerPoller{
+	result.Poller = &TriggerCreateOrUpdateTriggerPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (TriggerCreateOrUpdateTriggerResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -53,7 +48,7 @@ func (client *triggerClient) ResumeCreateOrUpdateTrigger(ctx context.Context, to
 	if err != nil {
 		return TriggerCreateOrUpdateTriggerPollerResponse{}, err
 	}
-	poller := &triggerCreateOrUpdateTriggerPoller{
+	poller := &TriggerCreateOrUpdateTriggerPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -61,12 +56,10 @@ func (client *triggerClient) ResumeCreateOrUpdateTrigger(ctx context.Context, to
 		return TriggerCreateOrUpdateTriggerPollerResponse{}, err
 	}
 	result := TriggerCreateOrUpdateTriggerPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (TriggerCreateOrUpdateTriggerResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -136,12 +129,8 @@ func (client *triggerClient) BeginDeleteTrigger(ctx context.Context, triggerName
 	if err != nil {
 		return TriggerDeleteTriggerPollerResponse{}, err
 	}
-	poller := &triggerDeleteTriggerPoller{
+	result.Poller = &TriggerDeleteTriggerPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (TriggerDeleteTriggerResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -153,7 +142,7 @@ func (client *triggerClient) ResumeDeleteTrigger(ctx context.Context, token stri
 	if err != nil {
 		return TriggerDeleteTriggerPollerResponse{}, err
 	}
-	poller := &triggerDeleteTriggerPoller{
+	poller := &TriggerDeleteTriggerPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -161,12 +150,10 @@ func (client *triggerClient) ResumeDeleteTrigger(ctx context.Context, token stri
 		return TriggerDeleteTriggerPollerResponse{}, err
 	}
 	result := TriggerDeleteTriggerPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (TriggerDeleteTriggerResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -340,8 +327,8 @@ func (client *triggerClient) getTriggerHandleError(resp *azcore.Response) error 
 
 // GetTriggersByWorkspace - Lists triggers.
 // If the operation fails it returns the *CloudError error type.
-func (client *triggerClient) GetTriggersByWorkspace(options *TriggerGetTriggersByWorkspaceOptions) TriggerGetTriggersByWorkspacePager {
-	return &triggerGetTriggersByWorkspacePager{
+func (client *triggerClient) GetTriggersByWorkspace(options *TriggerGetTriggersByWorkspaceOptions) *TriggerGetTriggersByWorkspacePager {
+	return &TriggerGetTriggersByWorkspacePager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.getTriggersByWorkspaceCreateRequest(ctx, options)
@@ -403,12 +390,8 @@ func (client *triggerClient) BeginStartTrigger(ctx context.Context, triggerName 
 	if err != nil {
 		return TriggerStartTriggerPollerResponse{}, err
 	}
-	poller := &triggerStartTriggerPoller{
+	result.Poller = &TriggerStartTriggerPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (TriggerStartTriggerResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -420,7 +403,7 @@ func (client *triggerClient) ResumeStartTrigger(ctx context.Context, token strin
 	if err != nil {
 		return TriggerStartTriggerPollerResponse{}, err
 	}
-	poller := &triggerStartTriggerPoller{
+	poller := &TriggerStartTriggerPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -428,12 +411,10 @@ func (client *triggerClient) ResumeStartTrigger(ctx context.Context, token strin
 		return TriggerStartTriggerPollerResponse{}, err
 	}
 	result := TriggerStartTriggerPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (TriggerStartTriggerResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -500,12 +481,8 @@ func (client *triggerClient) BeginStopTrigger(ctx context.Context, triggerName s
 	if err != nil {
 		return TriggerStopTriggerPollerResponse{}, err
 	}
-	poller := &triggerStopTriggerPoller{
+	result.Poller = &TriggerStopTriggerPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (TriggerStopTriggerResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -517,7 +494,7 @@ func (client *triggerClient) ResumeStopTrigger(ctx context.Context, token string
 	if err != nil {
 		return TriggerStopTriggerPollerResponse{}, err
 	}
-	poller := &triggerStopTriggerPoller{
+	poller := &TriggerStopTriggerPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -525,12 +502,10 @@ func (client *triggerClient) ResumeStopTrigger(ctx context.Context, token string
 		return TriggerStopTriggerPollerResponse{}, err
 	}
 	result := TriggerStopTriggerPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (TriggerStopTriggerResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -597,12 +572,8 @@ func (client *triggerClient) BeginSubscribeTriggerToEvents(ctx context.Context, 
 	if err != nil {
 		return TriggerSubscribeTriggerToEventsPollerResponse{}, err
 	}
-	poller := &triggerSubscribeTriggerToEventsPoller{
+	result.Poller = &TriggerSubscribeTriggerToEventsPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (TriggerSubscribeTriggerToEventsResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -614,7 +585,7 @@ func (client *triggerClient) ResumeSubscribeTriggerToEvents(ctx context.Context,
 	if err != nil {
 		return TriggerSubscribeTriggerToEventsPollerResponse{}, err
 	}
-	poller := &triggerSubscribeTriggerToEventsPoller{
+	poller := &TriggerSubscribeTriggerToEventsPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -622,12 +593,10 @@ func (client *triggerClient) ResumeSubscribeTriggerToEvents(ctx context.Context,
 		return TriggerSubscribeTriggerToEventsPollerResponse{}, err
 	}
 	result := TriggerSubscribeTriggerToEventsPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (TriggerSubscribeTriggerToEventsResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -694,12 +663,8 @@ func (client *triggerClient) BeginUnsubscribeTriggerFromEvents(ctx context.Conte
 	if err != nil {
 		return TriggerUnsubscribeTriggerFromEventsPollerResponse{}, err
 	}
-	poller := &triggerUnsubscribeTriggerFromEventsPoller{
+	result.Poller = &TriggerUnsubscribeTriggerFromEventsPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (TriggerUnsubscribeTriggerFromEventsResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -711,7 +676,7 @@ func (client *triggerClient) ResumeUnsubscribeTriggerFromEvents(ctx context.Cont
 	if err != nil {
 		return TriggerUnsubscribeTriggerFromEventsPollerResponse{}, err
 	}
-	poller := &triggerUnsubscribeTriggerFromEventsPoller{
+	poller := &TriggerUnsubscribeTriggerFromEventsPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -719,12 +684,10 @@ func (client *triggerClient) ResumeUnsubscribeTriggerFromEvents(ctx context.Cont
 		return TriggerUnsubscribeTriggerFromEventsPollerResponse{}, err
 	}
 	result := TriggerUnsubscribeTriggerFromEventsPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (TriggerUnsubscribeTriggerFromEventsResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 

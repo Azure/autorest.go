@@ -16,7 +16,6 @@ import (
 	"net/url"
 	"strconv"
 	"strings"
-	"time"
 )
 
 // KeyVaultClient contains the methods for the KeyVaultClient group.
@@ -1044,12 +1043,8 @@ func (client *KeyVaultClient) BeginFullBackup(ctx context.Context, vaultBaseURL 
 	if err != nil {
 		return KeyVaultClientFullBackupPollerResponse{}, err
 	}
-	poller := &keyVaultClientFullBackupPoller{
+	result.Poller = &KeyVaultClientFullBackupPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (KeyVaultClientFullBackupResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -1061,7 +1056,7 @@ func (client *KeyVaultClient) ResumeFullBackup(ctx context.Context, token string
 	if err != nil {
 		return KeyVaultClientFullBackupPollerResponse{}, err
 	}
-	poller := &keyVaultClientFullBackupPoller{
+	poller := &KeyVaultClientFullBackupPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -1069,12 +1064,10 @@ func (client *KeyVaultClient) ResumeFullBackup(ctx context.Context, token string
 		return KeyVaultClientFullBackupPollerResponse{}, err
 	}
 	result := KeyVaultClientFullBackupPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (KeyVaultClientFullBackupResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -1202,12 +1195,8 @@ func (client *KeyVaultClient) BeginFullRestoreOperation(ctx context.Context, vau
 	if err != nil {
 		return KeyVaultClientFullRestoreOperationPollerResponse{}, err
 	}
-	poller := &keyVaultClientFullRestoreOperationPoller{
+	result.Poller = &KeyVaultClientFullRestoreOperationPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (KeyVaultClientFullRestoreOperationResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -1219,7 +1208,7 @@ func (client *KeyVaultClient) ResumeFullRestoreOperation(ctx context.Context, to
 	if err != nil {
 		return KeyVaultClientFullRestoreOperationPollerResponse{}, err
 	}
-	poller := &keyVaultClientFullRestoreOperationPoller{
+	poller := &KeyVaultClientFullRestoreOperationPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -1227,12 +1216,10 @@ func (client *KeyVaultClient) ResumeFullRestoreOperation(ctx context.Context, to
 		return KeyVaultClientFullRestoreOperationPollerResponse{}, err
 	}
 	result := KeyVaultClientFullRestoreOperationPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (KeyVaultClientFullRestoreOperationResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -1471,8 +1458,8 @@ func (client *KeyVaultClient) getCertificateIssuerHandleError(resp *azcore.Respo
 // GetCertificateIssuers - The GetCertificateIssuers operation returns the set of certificate issuer resources in the specified key vault. This operation
 // requires the certificates/manageissuers/getissuers permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetCertificateIssuers(vaultBaseURL string, options *KeyVaultClientGetCertificateIssuersOptions) KeyVaultClientGetCertificateIssuersPager {
-	return &keyVaultClientGetCertificateIssuersPager{
+func (client *KeyVaultClient) GetCertificateIssuers(vaultBaseURL string, options *KeyVaultClientGetCertificateIssuersOptions) *KeyVaultClientGetCertificateIssuersPager {
+	return &KeyVaultClientGetCertificateIssuersPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.getCertificateIssuersCreateRequest(ctx, vaultBaseURL, options)
@@ -1649,8 +1636,8 @@ func (client *KeyVaultClient) getCertificatePolicyHandleError(resp *azcore.Respo
 // GetCertificateVersions - The GetCertificateVersions operation returns the versions of a certificate in the specified key vault. This operation requires
 // the certificates/list permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetCertificateVersions(vaultBaseURL string, certificateName string, options *KeyVaultClientGetCertificateVersionsOptions) KeyVaultClientGetCertificateVersionsPager {
-	return &keyVaultClientGetCertificateVersionsPager{
+func (client *KeyVaultClient) GetCertificateVersions(vaultBaseURL string, certificateName string, options *KeyVaultClientGetCertificateVersionsOptions) *KeyVaultClientGetCertificateVersionsPager {
+	return &KeyVaultClientGetCertificateVersionsPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.getCertificateVersionsCreateRequest(ctx, vaultBaseURL, certificateName, options)
@@ -1710,8 +1697,8 @@ func (client *KeyVaultClient) getCertificateVersionsHandleError(resp *azcore.Res
 // GetCertificates - The GetCertificates operation returns the set of certificates resources in the specified key vault. This operation requires the certificates/list
 // permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetCertificates(vaultBaseURL string, options *KeyVaultClientGetCertificatesOptions) KeyVaultClientGetCertificatesPager {
-	return &keyVaultClientGetCertificatesPager{
+func (client *KeyVaultClient) GetCertificates(vaultBaseURL string, options *KeyVaultClientGetCertificatesOptions) *KeyVaultClientGetCertificatesPager {
+	return &KeyVaultClientGetCertificatesPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.getCertificatesCreateRequest(ctx, vaultBaseURL, options)
@@ -1833,8 +1820,8 @@ func (client *KeyVaultClient) getDeletedCertificateHandleError(resp *azcore.Resp
 // for recovery or purging. This operation includes deletion-specific
 // information. This operation requires the certificates/get/list permission. This operation can only be enabled on soft-delete enabled vaults.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetDeletedCertificates(vaultBaseURL string, options *KeyVaultClientGetDeletedCertificatesOptions) KeyVaultClientGetDeletedCertificatesPager {
-	return &keyVaultClientGetDeletedCertificatesPager{
+func (client *KeyVaultClient) GetDeletedCertificates(vaultBaseURL string, options *KeyVaultClientGetDeletedCertificatesOptions) *KeyVaultClientGetDeletedCertificatesPager {
+	return &KeyVaultClientGetDeletedCertificatesPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.getDeletedCertificatesCreateRequest(ctx, vaultBaseURL, options)
@@ -1958,8 +1945,8 @@ func (client *KeyVaultClient) getDeletedKeyHandleError(resp *azcore.Response) er
 // non soft-delete enabled vault. This operation
 // requires the keys/list permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetDeletedKeys(vaultBaseURL string, options *KeyVaultClientGetDeletedKeysOptions) KeyVaultClientGetDeletedKeysPager {
-	return &keyVaultClientGetDeletedKeysPager{
+func (client *KeyVaultClient) GetDeletedKeys(vaultBaseURL string, options *KeyVaultClientGetDeletedKeysOptions) *KeyVaultClientGetDeletedKeysPager {
+	return &KeyVaultClientGetDeletedKeysPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.getDeletedKeysCreateRequest(ctx, vaultBaseURL, options)
@@ -2080,8 +2067,8 @@ func (client *KeyVaultClient) getDeletedSasDefinitionHandleError(resp *azcore.Re
 // GetDeletedSasDefinitions - The Get Deleted Sas Definitions operation returns the SAS definitions that have been deleted for a vault enabled for soft-delete.
 // This operation requires the storage/listsas permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetDeletedSasDefinitions(vaultBaseURL string, storageAccountName string, options *KeyVaultClientGetDeletedSasDefinitionsOptions) KeyVaultClientGetDeletedSasDefinitionsPager {
-	return &keyVaultClientGetDeletedSasDefinitionsPager{
+func (client *KeyVaultClient) GetDeletedSasDefinitions(vaultBaseURL string, storageAccountName string, options *KeyVaultClientGetDeletedSasDefinitionsOptions) *KeyVaultClientGetDeletedSasDefinitionsPager {
+	return &KeyVaultClientGetDeletedSasDefinitionsPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.getDeletedSasDefinitionsCreateRequest(ctx, vaultBaseURL, storageAccountName, options)
@@ -2202,8 +2189,8 @@ func (client *KeyVaultClient) getDeletedSecretHandleError(resp *azcore.Response)
 // GetDeletedSecrets - The Get Deleted Secrets operation returns the secrets that have been deleted for a vault enabled for soft-delete. This operation
 // requires the secrets/list permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetDeletedSecrets(vaultBaseURL string, options *KeyVaultClientGetDeletedSecretsOptions) KeyVaultClientGetDeletedSecretsPager {
-	return &keyVaultClientGetDeletedSecretsPager{
+func (client *KeyVaultClient) GetDeletedSecrets(vaultBaseURL string, options *KeyVaultClientGetDeletedSecretsOptions) *KeyVaultClientGetDeletedSecretsPager {
+	return &KeyVaultClientGetDeletedSecretsPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.getDeletedSecretsCreateRequest(ctx, vaultBaseURL, options)
@@ -2320,8 +2307,8 @@ func (client *KeyVaultClient) getDeletedStorageAccountHandleError(resp *azcore.R
 // GetDeletedStorageAccounts - The Get Deleted Storage Accounts operation returns the storage accounts that have been deleted for a vault enabled for soft-delete.
 // This operation requires the storage/list permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetDeletedStorageAccounts(vaultBaseURL string, options *KeyVaultClientGetDeletedStorageAccountsOptions) KeyVaultClientGetDeletedStorageAccountsPager {
-	return &keyVaultClientGetDeletedStorageAccountsPager{
+func (client *KeyVaultClient) GetDeletedStorageAccounts(vaultBaseURL string, options *KeyVaultClientGetDeletedStorageAccountsOptions) *KeyVaultClientGetDeletedStorageAccountsPager {
+	return &KeyVaultClientGetDeletedStorageAccountsPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.getDeletedStorageAccountsCreateRequest(ctx, vaultBaseURL, options)
@@ -2441,8 +2428,8 @@ func (client *KeyVaultClient) getKeyHandleError(resp *azcore.Response) error {
 
 // GetKeyVersions - The full key identifier, attributes, and tags are provided in the response. This operation requires the keys/list permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetKeyVersions(vaultBaseURL string, keyName string, options *KeyVaultClientGetKeyVersionsOptions) KeyVaultClientGetKeyVersionsPager {
-	return &keyVaultClientGetKeyVersionsPager{
+func (client *KeyVaultClient) GetKeyVersions(vaultBaseURL string, keyName string, options *KeyVaultClientGetKeyVersionsOptions) *KeyVaultClientGetKeyVersionsPager {
+	return &KeyVaultClientGetKeyVersionsPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.getKeyVersionsCreateRequest(ctx, vaultBaseURL, keyName, options)
@@ -2504,8 +2491,8 @@ func (client *KeyVaultClient) getKeyVersionsHandleError(resp *azcore.Response) e
 // identifier, attributes, and tags are provided in the response. Individual versions of a key are not listed in the response. This operation requires the
 // keys/list permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetKeys(vaultBaseURL string, options *KeyVaultClientGetKeysOptions) KeyVaultClientGetKeysPager {
-	return &keyVaultClientGetKeysPager{
+func (client *KeyVaultClient) GetKeys(vaultBaseURL string, options *KeyVaultClientGetKeysOptions) *KeyVaultClientGetKeysPager {
+	return &KeyVaultClientGetKeysPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.getKeysCreateRequest(ctx, vaultBaseURL, options)
@@ -2624,8 +2611,8 @@ func (client *KeyVaultClient) getSasDefinitionHandleError(resp *azcore.Response)
 
 // GetSasDefinitions - List storage SAS definitions for the given storage account. This operation requires the storage/listsas permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetSasDefinitions(vaultBaseURL string, storageAccountName string, options *KeyVaultClientGetSasDefinitionsOptions) KeyVaultClientGetSasDefinitionsPager {
-	return &keyVaultClientGetSasDefinitionsPager{
+func (client *KeyVaultClient) GetSasDefinitions(vaultBaseURL string, storageAccountName string, options *KeyVaultClientGetSasDefinitionsOptions) *KeyVaultClientGetSasDefinitionsPager {
+	return &KeyVaultClientGetSasDefinitionsPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.getSasDefinitionsCreateRequest(ctx, vaultBaseURL, storageAccountName, options)
@@ -2749,8 +2736,8 @@ func (client *KeyVaultClient) getSecretHandleError(resp *azcore.Response) error 
 // GetSecretVersions - The full secret identifier and attributes are provided in the response. No values are returned for the secrets. This operations requires
 // the secrets/list permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetSecretVersions(vaultBaseURL string, secretName string, options *KeyVaultClientGetSecretVersionsOptions) KeyVaultClientGetSecretVersionsPager {
-	return &keyVaultClientGetSecretVersionsPager{
+func (client *KeyVaultClient) GetSecretVersions(vaultBaseURL string, secretName string, options *KeyVaultClientGetSecretVersionsOptions) *KeyVaultClientGetSecretVersionsPager {
+	return &KeyVaultClientGetSecretVersionsPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.getSecretVersionsCreateRequest(ctx, vaultBaseURL, secretName, options)
@@ -2811,8 +2798,8 @@ func (client *KeyVaultClient) getSecretVersionsHandleError(resp *azcore.Response
 // the response. Individual secret versions are not listed in the
 // response. This operation requires the secrets/list permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetSecrets(vaultBaseURL string, options *KeyVaultClientGetSecretsOptions) KeyVaultClientGetSecretsPager {
-	return &keyVaultClientGetSecretsPager{
+func (client *KeyVaultClient) GetSecrets(vaultBaseURL string, options *KeyVaultClientGetSecretsOptions) *KeyVaultClientGetSecretsPager {
+	return &KeyVaultClientGetSecretsPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.getSecretsCreateRequest(ctx, vaultBaseURL, options)
@@ -2927,8 +2914,8 @@ func (client *KeyVaultClient) getStorageAccountHandleError(resp *azcore.Response
 
 // GetStorageAccounts - List storage accounts managed by the specified key vault. This operation requires the storage/list permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetStorageAccounts(vaultBaseURL string, options *KeyVaultClientGetStorageAccountsOptions) KeyVaultClientGetStorageAccountsPager {
-	return &keyVaultClientGetStorageAccountsPager{
+func (client *KeyVaultClient) GetStorageAccounts(vaultBaseURL string, options *KeyVaultClientGetStorageAccountsOptions) *KeyVaultClientGetStorageAccountsPager {
+	return &KeyVaultClientGetStorageAccountsPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.getStorageAccountsCreateRequest(ctx, vaultBaseURL, options)
@@ -4057,12 +4044,8 @@ func (client *KeyVaultClient) BeginSelectiveKeyRestoreOperation(ctx context.Cont
 	if err != nil {
 		return KeyVaultClientSelectiveKeyRestoreOperationPollerResponse{}, err
 	}
-	poller := &keyVaultClientSelectiveKeyRestoreOperationPoller{
+	result.Poller = &KeyVaultClientSelectiveKeyRestoreOperationPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (KeyVaultClientSelectiveKeyRestoreOperationResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -4074,7 +4057,7 @@ func (client *KeyVaultClient) ResumeSelectiveKeyRestoreOperation(ctx context.Con
 	if err != nil {
 		return KeyVaultClientSelectiveKeyRestoreOperationPollerResponse{}, err
 	}
-	poller := &keyVaultClientSelectiveKeyRestoreOperationPoller{
+	poller := &KeyVaultClientSelectiveKeyRestoreOperationPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -4082,12 +4065,10 @@ func (client *KeyVaultClient) ResumeSelectiveKeyRestoreOperation(ctx context.Con
 		return KeyVaultClientSelectiveKeyRestoreOperationPollerResponse{}, err
 	}
 	result := KeyVaultClientSelectiveKeyRestoreOperationPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (KeyVaultClientSelectiveKeyRestoreOperationResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 

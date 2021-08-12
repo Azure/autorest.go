@@ -102,8 +102,8 @@ func (client *ExpressRouteLinksClient) getHandleError(resp *azcore.Response) err
 
 // List - Retrieve the ExpressRouteLink sub-resources of the specified ExpressRoutePort resource.
 // If the operation fails it returns the *CloudError error type.
-func (client *ExpressRouteLinksClient) List(resourceGroupName string, expressRoutePortName string, options *ExpressRouteLinksListOptions) ExpressRouteLinksListPager {
-	return &expressRouteLinksListPager{
+func (client *ExpressRouteLinksClient) List(resourceGroupName string, expressRoutePortName string, options *ExpressRouteLinksListOptions) *ExpressRouteLinksListPager {
+	return &ExpressRouteLinksListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, expressRoutePortName, options)

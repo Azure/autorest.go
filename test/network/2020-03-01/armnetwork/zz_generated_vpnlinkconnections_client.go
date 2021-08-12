@@ -32,8 +32,8 @@ func NewVPNLinkConnectionsClient(con *armcore.Connection, subscriptionID string)
 
 // ListByVPNConnection - Retrieves all vpn site link connections for a particular virtual wan vpn gateway vpn connection.
 // If the operation fails it returns the *CloudError error type.
-func (client *VPNLinkConnectionsClient) ListByVPNConnection(resourceGroupName string, gatewayName string, connectionName string, options *VPNLinkConnectionsListByVPNConnectionOptions) VPNLinkConnectionsListByVPNConnectionPager {
-	return &vpnLinkConnectionsListByVPNConnectionPager{
+func (client *VPNLinkConnectionsClient) ListByVPNConnection(resourceGroupName string, gatewayName string, connectionName string, options *VPNLinkConnectionsListByVPNConnectionOptions) *VPNLinkConnectionsListByVPNConnectionPager {
+	return &VPNLinkConnectionsListByVPNConnectionPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByVPNConnectionCreateRequest(ctx, resourceGroupName, gatewayName, connectionName, options)

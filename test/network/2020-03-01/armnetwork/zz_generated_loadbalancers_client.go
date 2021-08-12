@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // LoadBalancersClient contains the methods for the LoadBalancers group.
@@ -45,12 +44,8 @@ func (client *LoadBalancersClient) BeginCreateOrUpdate(ctx context.Context, reso
 	if err != nil {
 		return LoadBalancersCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &loadBalancersCreateOrUpdatePoller{
+	result.Poller = &LoadBalancersCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LoadBalancersCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *LoadBalancersClient) ResumeCreateOrUpdate(ctx context.Context, tok
 	if err != nil {
 		return LoadBalancersCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &loadBalancersCreateOrUpdatePoller{
+	poller := &LoadBalancersCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *LoadBalancersClient) ResumeCreateOrUpdate(ctx context.Context, tok
 		return LoadBalancersCreateOrUpdatePollerResponse{}, err
 	}
 	result := LoadBalancersCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LoadBalancersCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -150,12 +143,8 @@ func (client *LoadBalancersClient) BeginDelete(ctx context.Context, resourceGrou
 	if err != nil {
 		return LoadBalancersDeletePollerResponse{}, err
 	}
-	poller := &loadBalancersDeletePoller{
+	result.Poller = &LoadBalancersDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LoadBalancersDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -167,7 +156,7 @@ func (client *LoadBalancersClient) ResumeDelete(ctx context.Context, token strin
 	if err != nil {
 		return LoadBalancersDeletePollerResponse{}, err
 	}
-	poller := &loadBalancersDeletePoller{
+	poller := &LoadBalancersDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -175,12 +164,10 @@ func (client *LoadBalancersClient) ResumeDelete(ctx context.Context, token strin
 		return LoadBalancersDeletePollerResponse{}, err
 	}
 	result := LoadBalancersDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LoadBalancersDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -312,8 +299,8 @@ func (client *LoadBalancersClient) getHandleError(resp *azcore.Response) error {
 
 // List - Gets all the load balancers in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *LoadBalancersClient) List(resourceGroupName string, options *LoadBalancersListOptions) LoadBalancersListPager {
-	return &loadBalancersListPager{
+func (client *LoadBalancersClient) List(resourceGroupName string, options *LoadBalancersListOptions) *LoadBalancersListPager {
+	return &LoadBalancersListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, options)
@@ -371,8 +358,8 @@ func (client *LoadBalancersClient) listHandleError(resp *azcore.Response) error 
 
 // ListAll - Gets all the load balancers in a subscription.
 // If the operation fails it returns the *CloudError error type.
-func (client *LoadBalancersClient) ListAll(options *LoadBalancersListAllOptions) LoadBalancersListAllPager {
-	return &loadBalancersListAllPager{
+func (client *LoadBalancersClient) ListAll(options *LoadBalancersListAllOptions) *LoadBalancersListAllPager {
+	return &LoadBalancersListAllPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listAllCreateRequest(ctx, options)

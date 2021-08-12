@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // VirtualRouterPeeringsClient contains the methods for the VirtualRouterPeerings group.
@@ -45,12 +44,8 @@ func (client *VirtualRouterPeeringsClient) BeginCreateOrUpdate(ctx context.Conte
 	if err != nil {
 		return VirtualRouterPeeringsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &virtualRouterPeeringsCreateOrUpdatePoller{
+	result.Poller = &VirtualRouterPeeringsCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualRouterPeeringsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *VirtualRouterPeeringsClient) ResumeCreateOrUpdate(ctx context.Cont
 	if err != nil {
 		return VirtualRouterPeeringsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &virtualRouterPeeringsCreateOrUpdatePoller{
+	poller := &VirtualRouterPeeringsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *VirtualRouterPeeringsClient) ResumeCreateOrUpdate(ctx context.Cont
 		return VirtualRouterPeeringsCreateOrUpdatePollerResponse{}, err
 	}
 	result := VirtualRouterPeeringsCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualRouterPeeringsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -154,12 +147,8 @@ func (client *VirtualRouterPeeringsClient) BeginDelete(ctx context.Context, reso
 	if err != nil {
 		return VirtualRouterPeeringsDeletePollerResponse{}, err
 	}
-	poller := &virtualRouterPeeringsDeletePoller{
+	result.Poller = &VirtualRouterPeeringsDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualRouterPeeringsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -171,7 +160,7 @@ func (client *VirtualRouterPeeringsClient) ResumeDelete(ctx context.Context, tok
 	if err != nil {
 		return VirtualRouterPeeringsDeletePollerResponse{}, err
 	}
-	poller := &virtualRouterPeeringsDeletePoller{
+	poller := &VirtualRouterPeeringsDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -179,12 +168,10 @@ func (client *VirtualRouterPeeringsClient) ResumeDelete(ctx context.Context, tok
 		return VirtualRouterPeeringsDeletePollerResponse{}, err
 	}
 	result := VirtualRouterPeeringsDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualRouterPeeringsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -321,8 +308,8 @@ func (client *VirtualRouterPeeringsClient) getHandleError(resp *azcore.Response)
 
 // List - Lists all Virtual Router Peerings in a Virtual Router resource.
 // If the operation fails it returns the *Error error type.
-func (client *VirtualRouterPeeringsClient) List(resourceGroupName string, virtualRouterName string, options *VirtualRouterPeeringsListOptions) VirtualRouterPeeringsListPager {
-	return &virtualRouterPeeringsListPager{
+func (client *VirtualRouterPeeringsClient) List(resourceGroupName string, virtualRouterName string, options *VirtualRouterPeeringsListOptions) *VirtualRouterPeeringsListPager {
+	return &VirtualRouterPeeringsListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, virtualRouterName, options)

@@ -102,8 +102,8 @@ func (client *DefaultSecurityRulesClient) getHandleError(resp *azcore.Response) 
 
 // List - Gets all default security rules in a network security group.
 // If the operation fails it returns the *CloudError error type.
-func (client *DefaultSecurityRulesClient) List(resourceGroupName string, networkSecurityGroupName string, options *DefaultSecurityRulesListOptions) DefaultSecurityRulesListPager {
-	return &defaultSecurityRulesListPager{
+func (client *DefaultSecurityRulesClient) List(resourceGroupName string, networkSecurityGroupName string, options *DefaultSecurityRulesListOptions) *DefaultSecurityRulesListPager {
+	return &DefaultSecurityRulesListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, networkSecurityGroupName, options)

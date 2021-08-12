@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // VirtualHubsClient contains the methods for the VirtualHubs group.
@@ -45,12 +44,8 @@ func (client *VirtualHubsClient) BeginCreateOrUpdate(ctx context.Context, resour
 	if err != nil {
 		return VirtualHubsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &virtualHubsCreateOrUpdatePoller{
+	result.Poller = &VirtualHubsCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualHubsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *VirtualHubsClient) ResumeCreateOrUpdate(ctx context.Context, token
 	if err != nil {
 		return VirtualHubsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &virtualHubsCreateOrUpdatePoller{
+	poller := &VirtualHubsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *VirtualHubsClient) ResumeCreateOrUpdate(ctx context.Context, token
 		return VirtualHubsCreateOrUpdatePollerResponse{}, err
 	}
 	result := VirtualHubsCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualHubsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -150,12 +143,8 @@ func (client *VirtualHubsClient) BeginDelete(ctx context.Context, resourceGroupN
 	if err != nil {
 		return VirtualHubsDeletePollerResponse{}, err
 	}
-	poller := &virtualHubsDeletePoller{
+	result.Poller = &VirtualHubsDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualHubsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -167,7 +156,7 @@ func (client *VirtualHubsClient) ResumeDelete(ctx context.Context, token string)
 	if err != nil {
 		return VirtualHubsDeletePollerResponse{}, err
 	}
-	poller := &virtualHubsDeletePoller{
+	poller := &VirtualHubsDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -175,12 +164,10 @@ func (client *VirtualHubsClient) ResumeDelete(ctx context.Context, token string)
 		return VirtualHubsDeletePollerResponse{}, err
 	}
 	result := VirtualHubsDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualHubsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -309,8 +296,8 @@ func (client *VirtualHubsClient) getHandleError(resp *azcore.Response) error {
 
 // List - Lists all the VirtualHubs in a subscription.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualHubsClient) List(options *VirtualHubsListOptions) VirtualHubsListPager {
-	return &virtualHubsListPager{
+func (client *VirtualHubsClient) List(options *VirtualHubsListOptions) *VirtualHubsListPager {
+	return &VirtualHubsListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, options)
@@ -364,8 +351,8 @@ func (client *VirtualHubsClient) listHandleError(resp *azcore.Response) error {
 
 // ListByResourceGroup - Lists all the VirtualHubs in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualHubsClient) ListByResourceGroup(resourceGroupName string, options *VirtualHubsListByResourceGroupOptions) VirtualHubsListByResourceGroupPager {
-	return &virtualHubsListByResourceGroupPager{
+func (client *VirtualHubsClient) ListByResourceGroup(resourceGroupName string, options *VirtualHubsListByResourceGroupOptions) *VirtualHubsListByResourceGroupPager {
+	return &VirtualHubsListByResourceGroupPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)

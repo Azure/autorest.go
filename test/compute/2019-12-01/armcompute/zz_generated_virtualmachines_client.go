@@ -17,7 +17,6 @@ import (
 	"net/url"
 	"strconv"
 	"strings"
-	"time"
 )
 
 // VirtualMachinesClient contains the methods for the VirtualMachines group.
@@ -46,12 +45,8 @@ func (client *VirtualMachinesClient) BeginCapture(ctx context.Context, resourceG
 	if err != nil {
 		return VirtualMachinesCapturePollerResponse{}, err
 	}
-	poller := &virtualMachinesCapturePoller{
+	result.Poller = &VirtualMachinesCapturePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachinesCaptureResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -63,7 +58,7 @@ func (client *VirtualMachinesClient) ResumeCapture(ctx context.Context, token st
 	if err != nil {
 		return VirtualMachinesCapturePollerResponse{}, err
 	}
-	poller := &virtualMachinesCapturePoller{
+	poller := &VirtualMachinesCapturePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -71,12 +66,10 @@ func (client *VirtualMachinesClient) ResumeCapture(ctx context.Context, token st
 		return VirtualMachinesCapturePollerResponse{}, err
 	}
 	result := VirtualMachinesCapturePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachinesCaptureResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -154,12 +147,8 @@ func (client *VirtualMachinesClient) BeginConvertToManagedDisks(ctx context.Cont
 	if err != nil {
 		return VirtualMachinesConvertToManagedDisksPollerResponse{}, err
 	}
-	poller := &virtualMachinesConvertToManagedDisksPoller{
+	result.Poller = &VirtualMachinesConvertToManagedDisksPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachinesConvertToManagedDisksResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -171,7 +160,7 @@ func (client *VirtualMachinesClient) ResumeConvertToManagedDisks(ctx context.Con
 	if err != nil {
 		return VirtualMachinesConvertToManagedDisksPollerResponse{}, err
 	}
-	poller := &virtualMachinesConvertToManagedDisksPoller{
+	poller := &VirtualMachinesConvertToManagedDisksPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -179,12 +168,10 @@ func (client *VirtualMachinesClient) ResumeConvertToManagedDisks(ctx context.Con
 		return VirtualMachinesConvertToManagedDisksPollerResponse{}, err
 	}
 	result := VirtualMachinesConvertToManagedDisksPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachinesConvertToManagedDisksResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -261,12 +248,8 @@ func (client *VirtualMachinesClient) BeginCreateOrUpdate(ctx context.Context, re
 	if err != nil {
 		return VirtualMachinesCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &virtualMachinesCreateOrUpdatePoller{
+	result.Poller = &VirtualMachinesCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachinesCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -278,7 +261,7 @@ func (client *VirtualMachinesClient) ResumeCreateOrUpdate(ctx context.Context, t
 	if err != nil {
 		return VirtualMachinesCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &virtualMachinesCreateOrUpdatePoller{
+	poller := &VirtualMachinesCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -286,12 +269,10 @@ func (client *VirtualMachinesClient) ResumeCreateOrUpdate(ctx context.Context, t
 		return VirtualMachinesCreateOrUpdatePollerResponse{}, err
 	}
 	result := VirtualMachinesCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachinesCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -366,12 +347,8 @@ func (client *VirtualMachinesClient) BeginDeallocate(ctx context.Context, resour
 	if err != nil {
 		return VirtualMachinesDeallocatePollerResponse{}, err
 	}
-	poller := &virtualMachinesDeallocatePoller{
+	result.Poller = &VirtualMachinesDeallocatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachinesDeallocateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -383,7 +360,7 @@ func (client *VirtualMachinesClient) ResumeDeallocate(ctx context.Context, token
 	if err != nil {
 		return VirtualMachinesDeallocatePollerResponse{}, err
 	}
-	poller := &virtualMachinesDeallocatePoller{
+	poller := &VirtualMachinesDeallocatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -391,12 +368,10 @@ func (client *VirtualMachinesClient) ResumeDeallocate(ctx context.Context, token
 		return VirtualMachinesDeallocatePollerResponse{}, err
 	}
 	result := VirtualMachinesDeallocatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachinesDeallocateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -470,12 +445,8 @@ func (client *VirtualMachinesClient) BeginDelete(ctx context.Context, resourceGr
 	if err != nil {
 		return VirtualMachinesDeletePollerResponse{}, err
 	}
-	poller := &virtualMachinesDeletePoller{
+	result.Poller = &VirtualMachinesDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachinesDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -487,7 +458,7 @@ func (client *VirtualMachinesClient) ResumeDelete(ctx context.Context, token str
 	if err != nil {
 		return VirtualMachinesDeletePollerResponse{}, err
 	}
-	poller := &virtualMachinesDeletePoller{
+	poller := &VirtualMachinesDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -495,12 +466,10 @@ func (client *VirtualMachinesClient) ResumeDelete(ctx context.Context, token str
 		return VirtualMachinesDeletePollerResponse{}, err
 	}
 	result := VirtualMachinesDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachinesDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -753,8 +722,8 @@ func (client *VirtualMachinesClient) instanceViewHandleError(resp *azcore.Respon
 
 // List - Lists all of the virtual machines in the specified resource group. Use the nextLink property in the response to get the next page of virtual machines.
 // If the operation fails it returns a generic error.
-func (client *VirtualMachinesClient) List(resourceGroupName string, options *VirtualMachinesListOptions) VirtualMachinesListPager {
-	return &virtualMachinesListPager{
+func (client *VirtualMachinesClient) List(resourceGroupName string, options *VirtualMachinesListOptions) *VirtualMachinesListPager {
+	return &VirtualMachinesListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, options)
@@ -812,8 +781,8 @@ func (client *VirtualMachinesClient) listHandleError(resp *azcore.Response) erro
 // ListAll - Lists all of the virtual machines in the specified subscription. Use the nextLink property in the response to get the next page of virtual
 // machines.
 // If the operation fails it returns a generic error.
-func (client *VirtualMachinesClient) ListAll(options *VirtualMachinesListAllOptions) VirtualMachinesListAllPager {
-	return &virtualMachinesListAllPager{
+func (client *VirtualMachinesClient) ListAll(options *VirtualMachinesListAllOptions) *VirtualMachinesListAllPager {
+	return &VirtualMachinesListAllPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listAllCreateRequest(ctx, options)
@@ -934,8 +903,8 @@ func (client *VirtualMachinesClient) listAvailableSizesHandleError(resp *azcore.
 
 // ListByLocation - Gets all the virtual machines under the specified subscription for the specified location.
 // If the operation fails it returns a generic error.
-func (client *VirtualMachinesClient) ListByLocation(location string, options *VirtualMachinesListByLocationOptions) VirtualMachinesListByLocationPager {
-	return &virtualMachinesListByLocationPager{
+func (client *VirtualMachinesClient) ListByLocation(location string, options *VirtualMachinesListByLocationOptions) *VirtualMachinesListByLocationPager {
+	return &VirtualMachinesListByLocationPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByLocationCreateRequest(ctx, location, options)
@@ -1005,12 +974,8 @@ func (client *VirtualMachinesClient) BeginPerformMaintenance(ctx context.Context
 	if err != nil {
 		return VirtualMachinesPerformMaintenancePollerResponse{}, err
 	}
-	poller := &virtualMachinesPerformMaintenancePoller{
+	result.Poller = &VirtualMachinesPerformMaintenancePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachinesPerformMaintenanceResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -1022,7 +987,7 @@ func (client *VirtualMachinesClient) ResumePerformMaintenance(ctx context.Contex
 	if err != nil {
 		return VirtualMachinesPerformMaintenancePollerResponse{}, err
 	}
-	poller := &virtualMachinesPerformMaintenancePoller{
+	poller := &VirtualMachinesPerformMaintenancePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -1030,12 +995,10 @@ func (client *VirtualMachinesClient) ResumePerformMaintenance(ctx context.Contex
 		return VirtualMachinesPerformMaintenancePollerResponse{}, err
 	}
 	result := VirtualMachinesPerformMaintenancePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachinesPerformMaintenanceResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -1110,12 +1073,8 @@ func (client *VirtualMachinesClient) BeginPowerOff(ctx context.Context, resource
 	if err != nil {
 		return VirtualMachinesPowerOffPollerResponse{}, err
 	}
-	poller := &virtualMachinesPowerOffPoller{
+	result.Poller = &VirtualMachinesPowerOffPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachinesPowerOffResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -1127,7 +1086,7 @@ func (client *VirtualMachinesClient) ResumePowerOff(ctx context.Context, token s
 	if err != nil {
 		return VirtualMachinesPowerOffPollerResponse{}, err
 	}
-	poller := &virtualMachinesPowerOffPoller{
+	poller := &VirtualMachinesPowerOffPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -1135,12 +1094,10 @@ func (client *VirtualMachinesClient) ResumePowerOff(ctx context.Context, token s
 		return VirtualMachinesPowerOffPollerResponse{}, err
 	}
 	result := VirtualMachinesPowerOffPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachinesPowerOffResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -1217,12 +1174,8 @@ func (client *VirtualMachinesClient) BeginReapply(ctx context.Context, resourceG
 	if err != nil {
 		return VirtualMachinesReapplyPollerResponse{}, err
 	}
-	poller := &virtualMachinesReapplyPoller{
+	result.Poller = &VirtualMachinesReapplyPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachinesReapplyResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -1234,7 +1187,7 @@ func (client *VirtualMachinesClient) ResumeReapply(ctx context.Context, token st
 	if err != nil {
 		return VirtualMachinesReapplyPollerResponse{}, err
 	}
-	poller := &virtualMachinesReapplyPoller{
+	poller := &VirtualMachinesReapplyPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -1242,12 +1195,10 @@ func (client *VirtualMachinesClient) ResumeReapply(ctx context.Context, token st
 		return VirtualMachinesReapplyPollerResponse{}, err
 	}
 	result := VirtualMachinesReapplyPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachinesReapplyResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -1322,12 +1273,8 @@ func (client *VirtualMachinesClient) BeginRedeploy(ctx context.Context, resource
 	if err != nil {
 		return VirtualMachinesRedeployPollerResponse{}, err
 	}
-	poller := &virtualMachinesRedeployPoller{
+	result.Poller = &VirtualMachinesRedeployPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachinesRedeployResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -1339,7 +1286,7 @@ func (client *VirtualMachinesClient) ResumeRedeploy(ctx context.Context, token s
 	if err != nil {
 		return VirtualMachinesRedeployPollerResponse{}, err
 	}
-	poller := &virtualMachinesRedeployPoller{
+	poller := &VirtualMachinesRedeployPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -1347,12 +1294,10 @@ func (client *VirtualMachinesClient) ResumeRedeploy(ctx context.Context, token s
 		return VirtualMachinesRedeployPollerResponse{}, err
 	}
 	result := VirtualMachinesRedeployPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachinesRedeployResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -1425,12 +1370,8 @@ func (client *VirtualMachinesClient) BeginReimage(ctx context.Context, resourceG
 	if err != nil {
 		return VirtualMachinesReimagePollerResponse{}, err
 	}
-	poller := &virtualMachinesReimagePoller{
+	result.Poller = &VirtualMachinesReimagePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachinesReimageResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -1442,7 +1383,7 @@ func (client *VirtualMachinesClient) ResumeReimage(ctx context.Context, token st
 	if err != nil {
 		return VirtualMachinesReimagePollerResponse{}, err
 	}
-	poller := &virtualMachinesReimagePoller{
+	poller := &VirtualMachinesReimagePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -1450,12 +1391,10 @@ func (client *VirtualMachinesClient) ResumeReimage(ctx context.Context, token st
 		return VirtualMachinesReimagePollerResponse{}, err
 	}
 	result := VirtualMachinesReimagePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachinesReimageResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -1531,12 +1470,8 @@ func (client *VirtualMachinesClient) BeginRestart(ctx context.Context, resourceG
 	if err != nil {
 		return VirtualMachinesRestartPollerResponse{}, err
 	}
-	poller := &virtualMachinesRestartPoller{
+	result.Poller = &VirtualMachinesRestartPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachinesRestartResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -1548,7 +1483,7 @@ func (client *VirtualMachinesClient) ResumeRestart(ctx context.Context, token st
 	if err != nil {
 		return VirtualMachinesRestartPollerResponse{}, err
 	}
-	poller := &virtualMachinesRestartPoller{
+	poller := &VirtualMachinesRestartPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -1556,12 +1491,10 @@ func (client *VirtualMachinesClient) ResumeRestart(ctx context.Context, token st
 		return VirtualMachinesRestartPollerResponse{}, err
 	}
 	result := VirtualMachinesRestartPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachinesRestartResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -1634,12 +1567,8 @@ func (client *VirtualMachinesClient) BeginRunCommand(ctx context.Context, resour
 	if err != nil {
 		return VirtualMachinesRunCommandPollerResponse{}, err
 	}
-	poller := &virtualMachinesRunCommandPoller{
+	result.Poller = &VirtualMachinesRunCommandPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachinesRunCommandResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -1651,7 +1580,7 @@ func (client *VirtualMachinesClient) ResumeRunCommand(ctx context.Context, token
 	if err != nil {
 		return VirtualMachinesRunCommandPollerResponse{}, err
 	}
-	poller := &virtualMachinesRunCommandPoller{
+	poller := &VirtualMachinesRunCommandPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -1659,12 +1588,10 @@ func (client *VirtualMachinesClient) ResumeRunCommand(ctx context.Context, token
 		return VirtualMachinesRunCommandPollerResponse{}, err
 	}
 	result := VirtualMachinesRunCommandPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachinesRunCommandResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -1793,12 +1720,8 @@ func (client *VirtualMachinesClient) BeginStart(ctx context.Context, resourceGro
 	if err != nil {
 		return VirtualMachinesStartPollerResponse{}, err
 	}
-	poller := &virtualMachinesStartPoller{
+	result.Poller = &VirtualMachinesStartPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachinesStartResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -1810,7 +1733,7 @@ func (client *VirtualMachinesClient) ResumeStart(ctx context.Context, token stri
 	if err != nil {
 		return VirtualMachinesStartPollerResponse{}, err
 	}
-	poller := &virtualMachinesStartPoller{
+	poller := &VirtualMachinesStartPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -1818,12 +1741,10 @@ func (client *VirtualMachinesClient) ResumeStart(ctx context.Context, token stri
 		return VirtualMachinesStartPollerResponse{}, err
 	}
 	result := VirtualMachinesStartPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachinesStartResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -1896,12 +1817,8 @@ func (client *VirtualMachinesClient) BeginUpdate(ctx context.Context, resourceGr
 	if err != nil {
 		return VirtualMachinesUpdatePollerResponse{}, err
 	}
-	poller := &virtualMachinesUpdatePoller{
+	result.Poller = &VirtualMachinesUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachinesUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -1913,7 +1830,7 @@ func (client *VirtualMachinesClient) ResumeUpdate(ctx context.Context, token str
 	if err != nil {
 		return VirtualMachinesUpdatePollerResponse{}, err
 	}
-	poller := &virtualMachinesUpdatePoller{
+	poller := &VirtualMachinesUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -1921,12 +1838,10 @@ func (client *VirtualMachinesClient) ResumeUpdate(ctx context.Context, token str
 		return VirtualMachinesUpdatePollerResponse{}, err
 	}
 	result := VirtualMachinesUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachinesUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 

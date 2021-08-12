@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // ExpressRouteCrossConnectionPeeringsClient contains the methods for the ExpressRouteCrossConnectionPeerings group.
@@ -45,12 +44,8 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) BeginCreateOrUpdate(ctx
 	if err != nil {
 		return ExpressRouteCrossConnectionPeeringsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &expressRouteCrossConnectionPeeringsCreateOrUpdatePoller{
+	result.Poller = &ExpressRouteCrossConnectionPeeringsCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCrossConnectionPeeringsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) ResumeCreateOrUpdate(ct
 	if err != nil {
 		return ExpressRouteCrossConnectionPeeringsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &expressRouteCrossConnectionPeeringsCreateOrUpdatePoller{
+	poller := &ExpressRouteCrossConnectionPeeringsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) ResumeCreateOrUpdate(ct
 		return ExpressRouteCrossConnectionPeeringsCreateOrUpdatePollerResponse{}, err
 	}
 	result := ExpressRouteCrossConnectionPeeringsCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCrossConnectionPeeringsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -154,12 +147,8 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) BeginDelete(ctx context
 	if err != nil {
 		return ExpressRouteCrossConnectionPeeringsDeletePollerResponse{}, err
 	}
-	poller := &expressRouteCrossConnectionPeeringsDeletePoller{
+	result.Poller = &ExpressRouteCrossConnectionPeeringsDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCrossConnectionPeeringsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -171,7 +160,7 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) ResumeDelete(ctx contex
 	if err != nil {
 		return ExpressRouteCrossConnectionPeeringsDeletePollerResponse{}, err
 	}
-	poller := &expressRouteCrossConnectionPeeringsDeletePoller{
+	poller := &ExpressRouteCrossConnectionPeeringsDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -179,12 +168,10 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) ResumeDelete(ctx contex
 		return ExpressRouteCrossConnectionPeeringsDeletePollerResponse{}, err
 	}
 	result := ExpressRouteCrossConnectionPeeringsDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCrossConnectionPeeringsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -321,8 +308,8 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) getHandleError(resp *az
 
 // List - Gets all peerings in a specified ExpressRouteCrossConnection.
 // If the operation fails it returns the *CloudError error type.
-func (client *ExpressRouteCrossConnectionPeeringsClient) List(resourceGroupName string, crossConnectionName string, options *ExpressRouteCrossConnectionPeeringsListOptions) ExpressRouteCrossConnectionPeeringsListPager {
-	return &expressRouteCrossConnectionPeeringsListPager{
+func (client *ExpressRouteCrossConnectionPeeringsClient) List(resourceGroupName string, crossConnectionName string, options *ExpressRouteCrossConnectionPeeringsListOptions) *ExpressRouteCrossConnectionPeeringsListPager {
+	return &ExpressRouteCrossConnectionPeeringsListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, crossConnectionName, options)

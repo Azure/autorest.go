@@ -102,8 +102,8 @@ func (client *NetworkInterfaceIPConfigurationsClient) getHandleError(resp *azcor
 
 // List - Get all ip configurations in a network interface.
 // If the operation fails it returns the *CloudError error type.
-func (client *NetworkInterfaceIPConfigurationsClient) List(resourceGroupName string, networkInterfaceName string, options *NetworkInterfaceIPConfigurationsListOptions) NetworkInterfaceIPConfigurationsListPager {
-	return &networkInterfaceIPConfigurationsListPager{
+func (client *NetworkInterfaceIPConfigurationsClient) List(resourceGroupName string, networkInterfaceName string, options *NetworkInterfaceIPConfigurationsListOptions) *NetworkInterfaceIPConfigurationsListPager {
+	return &NetworkInterfaceIPConfigurationsListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, networkInterfaceName, options)

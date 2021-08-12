@@ -15,7 +15,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 type dataFlowClient struct {
@@ -36,12 +35,8 @@ func (client *dataFlowClient) BeginCreateOrUpdateDataFlow(ctx context.Context, d
 	if err != nil {
 		return DataFlowCreateOrUpdateDataFlowPollerResponse{}, err
 	}
-	poller := &dataFlowCreateOrUpdateDataFlowPoller{
+	result.Poller = &DataFlowCreateOrUpdateDataFlowPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DataFlowCreateOrUpdateDataFlowResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -53,7 +48,7 @@ func (client *dataFlowClient) ResumeCreateOrUpdateDataFlow(ctx context.Context, 
 	if err != nil {
 		return DataFlowCreateOrUpdateDataFlowPollerResponse{}, err
 	}
-	poller := &dataFlowCreateOrUpdateDataFlowPoller{
+	poller := &DataFlowCreateOrUpdateDataFlowPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -61,12 +56,10 @@ func (client *dataFlowClient) ResumeCreateOrUpdateDataFlow(ctx context.Context, 
 		return DataFlowCreateOrUpdateDataFlowPollerResponse{}, err
 	}
 	result := DataFlowCreateOrUpdateDataFlowPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DataFlowCreateOrUpdateDataFlowResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -136,12 +129,8 @@ func (client *dataFlowClient) BeginDeleteDataFlow(ctx context.Context, dataFlowN
 	if err != nil {
 		return DataFlowDeleteDataFlowPollerResponse{}, err
 	}
-	poller := &dataFlowDeleteDataFlowPoller{
+	result.Poller = &DataFlowDeleteDataFlowPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DataFlowDeleteDataFlowResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -153,7 +142,7 @@ func (client *dataFlowClient) ResumeDeleteDataFlow(ctx context.Context, token st
 	if err != nil {
 		return DataFlowDeleteDataFlowPollerResponse{}, err
 	}
-	poller := &dataFlowDeleteDataFlowPoller{
+	poller := &DataFlowDeleteDataFlowPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -161,12 +150,10 @@ func (client *dataFlowClient) ResumeDeleteDataFlow(ctx context.Context, token st
 		return DataFlowDeleteDataFlowPollerResponse{}, err
 	}
 	result := DataFlowDeleteDataFlowPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DataFlowDeleteDataFlowResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -282,8 +269,8 @@ func (client *dataFlowClient) getDataFlowHandleError(resp *azcore.Response) erro
 
 // GetDataFlowsByWorkspace - Lists data flows.
 // If the operation fails it returns the *CloudError error type.
-func (client *dataFlowClient) GetDataFlowsByWorkspace(options *DataFlowGetDataFlowsByWorkspaceOptions) DataFlowGetDataFlowsByWorkspacePager {
-	return &dataFlowGetDataFlowsByWorkspacePager{
+func (client *dataFlowClient) GetDataFlowsByWorkspace(options *DataFlowGetDataFlowsByWorkspaceOptions) *DataFlowGetDataFlowsByWorkspacePager {
+	return &DataFlowGetDataFlowsByWorkspacePager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.getDataFlowsByWorkspaceCreateRequest(ctx, options)
@@ -345,12 +332,8 @@ func (client *dataFlowClient) BeginRenameDataFlow(ctx context.Context, dataFlowN
 	if err != nil {
 		return DataFlowRenameDataFlowPollerResponse{}, err
 	}
-	poller := &dataFlowRenameDataFlowPoller{
+	result.Poller = &DataFlowRenameDataFlowPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DataFlowRenameDataFlowResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -362,7 +345,7 @@ func (client *dataFlowClient) ResumeRenameDataFlow(ctx context.Context, token st
 	if err != nil {
 		return DataFlowRenameDataFlowPollerResponse{}, err
 	}
-	poller := &dataFlowRenameDataFlowPoller{
+	poller := &DataFlowRenameDataFlowPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -370,12 +353,10 @@ func (client *dataFlowClient) ResumeRenameDataFlow(ctx context.Context, token st
 		return DataFlowRenameDataFlowPollerResponse{}, err
 	}
 	result := DataFlowRenameDataFlowPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DataFlowRenameDataFlowResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 

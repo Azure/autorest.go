@@ -102,8 +102,8 @@ func (client *LoadBalancerFrontendIPConfigurationsClient) getHandleError(resp *a
 
 // List - Gets all the load balancer frontend IP configurations.
 // If the operation fails it returns the *CloudError error type.
-func (client *LoadBalancerFrontendIPConfigurationsClient) List(resourceGroupName string, loadBalancerName string, options *LoadBalancerFrontendIPConfigurationsListOptions) LoadBalancerFrontendIPConfigurationsListPager {
-	return &loadBalancerFrontendIPConfigurationsListPager{
+func (client *LoadBalancerFrontendIPConfigurationsClient) List(resourceGroupName string, loadBalancerName string, options *LoadBalancerFrontendIPConfigurationsListOptions) *LoadBalancerFrontendIPConfigurationsListPager {
+	return &LoadBalancerFrontendIPConfigurationsListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, loadBalancerName, options)

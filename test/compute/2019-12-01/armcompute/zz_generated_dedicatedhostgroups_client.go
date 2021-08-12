@@ -218,8 +218,8 @@ func (client *DedicatedHostGroupsClient) getHandleError(resp *azcore.Response) e
 // ListByResourceGroup - Lists all of the dedicated host groups in the specified resource group. Use the nextLink property in the response to get the next
 // page of dedicated host groups.
 // If the operation fails it returns a generic error.
-func (client *DedicatedHostGroupsClient) ListByResourceGroup(resourceGroupName string, options *DedicatedHostGroupsListByResourceGroupOptions) DedicatedHostGroupsListByResourceGroupPager {
-	return &dedicatedHostGroupsListByResourceGroupPager{
+func (client *DedicatedHostGroupsClient) ListByResourceGroup(resourceGroupName string, options *DedicatedHostGroupsListByResourceGroupOptions) *DedicatedHostGroupsListByResourceGroupPager {
+	return &DedicatedHostGroupsListByResourceGroupPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
@@ -277,8 +277,8 @@ func (client *DedicatedHostGroupsClient) listByResourceGroupHandleError(resp *az
 // ListBySubscription - Lists all of the dedicated host groups in the subscription. Use the nextLink property in the response to get the next page of dedicated
 // host groups.
 // If the operation fails it returns a generic error.
-func (client *DedicatedHostGroupsClient) ListBySubscription(options *DedicatedHostGroupsListBySubscriptionOptions) DedicatedHostGroupsListBySubscriptionPager {
-	return &dedicatedHostGroupsListBySubscriptionPager{
+func (client *DedicatedHostGroupsClient) ListBySubscription(options *DedicatedHostGroupsListBySubscriptionOptions) *DedicatedHostGroupsListBySubscriptionPager {
+	return &DedicatedHostGroupsListBySubscriptionPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listBySubscriptionCreateRequest(ctx, options)

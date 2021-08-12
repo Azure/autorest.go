@@ -15,7 +15,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // VirtualMachineScaleSetExtensionsClient contains the methods for the VirtualMachineScaleSetExtensions group.
@@ -44,12 +43,8 @@ func (client *VirtualMachineScaleSetExtensionsClient) BeginCreateOrUpdate(ctx co
 	if err != nil {
 		return VirtualMachineScaleSetExtensionsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &virtualMachineScaleSetExtensionsCreateOrUpdatePoller{
+	result.Poller = &VirtualMachineScaleSetExtensionsCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetExtensionsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -61,7 +56,7 @@ func (client *VirtualMachineScaleSetExtensionsClient) ResumeCreateOrUpdate(ctx c
 	if err != nil {
 		return VirtualMachineScaleSetExtensionsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &virtualMachineScaleSetExtensionsCreateOrUpdatePoller{
+	poller := &VirtualMachineScaleSetExtensionsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -69,12 +64,10 @@ func (client *VirtualMachineScaleSetExtensionsClient) ResumeCreateOrUpdate(ctx c
 		return VirtualMachineScaleSetExtensionsCreateOrUpdatePollerResponse{}, err
 	}
 	result := VirtualMachineScaleSetExtensionsCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetExtensionsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -152,12 +145,8 @@ func (client *VirtualMachineScaleSetExtensionsClient) BeginDelete(ctx context.Co
 	if err != nil {
 		return VirtualMachineScaleSetExtensionsDeletePollerResponse{}, err
 	}
-	poller := &virtualMachineScaleSetExtensionsDeletePoller{
+	result.Poller = &VirtualMachineScaleSetExtensionsDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetExtensionsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -169,7 +158,7 @@ func (client *VirtualMachineScaleSetExtensionsClient) ResumeDelete(ctx context.C
 	if err != nil {
 		return VirtualMachineScaleSetExtensionsDeletePollerResponse{}, err
 	}
-	poller := &virtualMachineScaleSetExtensionsDeletePoller{
+	poller := &VirtualMachineScaleSetExtensionsDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -177,12 +166,10 @@ func (client *VirtualMachineScaleSetExtensionsClient) ResumeDelete(ctx context.C
 		return VirtualMachineScaleSetExtensionsDeletePollerResponse{}, err
 	}
 	result := VirtualMachineScaleSetExtensionsDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetExtensionsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -319,8 +306,8 @@ func (client *VirtualMachineScaleSetExtensionsClient) getHandleError(resp *azcor
 
 // List - Gets a list of all extensions in a VM scale set.
 // If the operation fails it returns a generic error.
-func (client *VirtualMachineScaleSetExtensionsClient) List(resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetExtensionsListOptions) VirtualMachineScaleSetExtensionsListPager {
-	return &virtualMachineScaleSetExtensionsListPager{
+func (client *VirtualMachineScaleSetExtensionsClient) List(resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetExtensionsListOptions) *VirtualMachineScaleSetExtensionsListPager {
+	return &VirtualMachineScaleSetExtensionsListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, vmScaleSetName, options)
@@ -393,12 +380,8 @@ func (client *VirtualMachineScaleSetExtensionsClient) BeginUpdate(ctx context.Co
 	if err != nil {
 		return VirtualMachineScaleSetExtensionsUpdatePollerResponse{}, err
 	}
-	poller := &virtualMachineScaleSetExtensionsUpdatePoller{
+	result.Poller = &VirtualMachineScaleSetExtensionsUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetExtensionsUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -410,7 +393,7 @@ func (client *VirtualMachineScaleSetExtensionsClient) ResumeUpdate(ctx context.C
 	if err != nil {
 		return VirtualMachineScaleSetExtensionsUpdatePollerResponse{}, err
 	}
-	poller := &virtualMachineScaleSetExtensionsUpdatePoller{
+	poller := &VirtualMachineScaleSetExtensionsUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -418,12 +401,10 @@ func (client *VirtualMachineScaleSetExtensionsClient) ResumeUpdate(ctx context.C
 		return VirtualMachineScaleSetExtensionsUpdatePollerResponse{}, err
 	}
 	result := VirtualMachineScaleSetExtensionsUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetExtensionsUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 

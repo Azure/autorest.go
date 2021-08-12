@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // FirewallPolicyRuleGroupsClient contains the methods for the FirewallPolicyRuleGroups group.
@@ -45,12 +44,8 @@ func (client *FirewallPolicyRuleGroupsClient) BeginCreateOrUpdate(ctx context.Co
 	if err != nil {
 		return FirewallPolicyRuleGroupsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &firewallPolicyRuleGroupsCreateOrUpdatePoller{
+	result.Poller = &FirewallPolicyRuleGroupsCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (FirewallPolicyRuleGroupsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *FirewallPolicyRuleGroupsClient) ResumeCreateOrUpdate(ctx context.C
 	if err != nil {
 		return FirewallPolicyRuleGroupsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &firewallPolicyRuleGroupsCreateOrUpdatePoller{
+	poller := &FirewallPolicyRuleGroupsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *FirewallPolicyRuleGroupsClient) ResumeCreateOrUpdate(ctx context.C
 		return FirewallPolicyRuleGroupsCreateOrUpdatePollerResponse{}, err
 	}
 	result := FirewallPolicyRuleGroupsCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (FirewallPolicyRuleGroupsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -154,12 +147,8 @@ func (client *FirewallPolicyRuleGroupsClient) BeginDelete(ctx context.Context, r
 	if err != nil {
 		return FirewallPolicyRuleGroupsDeletePollerResponse{}, err
 	}
-	poller := &firewallPolicyRuleGroupsDeletePoller{
+	result.Poller = &FirewallPolicyRuleGroupsDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (FirewallPolicyRuleGroupsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -171,7 +160,7 @@ func (client *FirewallPolicyRuleGroupsClient) ResumeDelete(ctx context.Context, 
 	if err != nil {
 		return FirewallPolicyRuleGroupsDeletePollerResponse{}, err
 	}
-	poller := &firewallPolicyRuleGroupsDeletePoller{
+	poller := &FirewallPolicyRuleGroupsDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -179,12 +168,10 @@ func (client *FirewallPolicyRuleGroupsClient) ResumeDelete(ctx context.Context, 
 		return FirewallPolicyRuleGroupsDeletePollerResponse{}, err
 	}
 	result := FirewallPolicyRuleGroupsDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (FirewallPolicyRuleGroupsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -321,8 +308,8 @@ func (client *FirewallPolicyRuleGroupsClient) getHandleError(resp *azcore.Respon
 
 // List - Lists all FirewallPolicyRuleGroups in a FirewallPolicy resource.
 // If the operation fails it returns the *CloudError error type.
-func (client *FirewallPolicyRuleGroupsClient) List(resourceGroupName string, firewallPolicyName string, options *FirewallPolicyRuleGroupsListOptions) FirewallPolicyRuleGroupsListPager {
-	return &firewallPolicyRuleGroupsListPager{
+func (client *FirewallPolicyRuleGroupsClient) List(resourceGroupName string, firewallPolicyName string, options *FirewallPolicyRuleGroupsListOptions) *FirewallPolicyRuleGroupsListPager {
+	return &FirewallPolicyRuleGroupsListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, firewallPolicyName, options)

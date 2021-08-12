@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // VirtualHubRouteTableV2SClient contains the methods for the VirtualHubRouteTableV2S group.
@@ -45,12 +44,8 @@ func (client *VirtualHubRouteTableV2SClient) BeginCreateOrUpdate(ctx context.Con
 	if err != nil {
 		return VirtualHubRouteTableV2SCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &virtualHubRouteTableV2SCreateOrUpdatePoller{
+	result.Poller = &VirtualHubRouteTableV2SCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualHubRouteTableV2SCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *VirtualHubRouteTableV2SClient) ResumeCreateOrUpdate(ctx context.Co
 	if err != nil {
 		return VirtualHubRouteTableV2SCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &virtualHubRouteTableV2SCreateOrUpdatePoller{
+	poller := &VirtualHubRouteTableV2SCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *VirtualHubRouteTableV2SClient) ResumeCreateOrUpdate(ctx context.Co
 		return VirtualHubRouteTableV2SCreateOrUpdatePollerResponse{}, err
 	}
 	result := VirtualHubRouteTableV2SCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualHubRouteTableV2SCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -154,12 +147,8 @@ func (client *VirtualHubRouteTableV2SClient) BeginDelete(ctx context.Context, re
 	if err != nil {
 		return VirtualHubRouteTableV2SDeletePollerResponse{}, err
 	}
-	poller := &virtualHubRouteTableV2SDeletePoller{
+	result.Poller = &VirtualHubRouteTableV2SDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualHubRouteTableV2SDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -171,7 +160,7 @@ func (client *VirtualHubRouteTableV2SClient) ResumeDelete(ctx context.Context, t
 	if err != nil {
 		return VirtualHubRouteTableV2SDeletePollerResponse{}, err
 	}
-	poller := &virtualHubRouteTableV2SDeletePoller{
+	poller := &VirtualHubRouteTableV2SDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -179,12 +168,10 @@ func (client *VirtualHubRouteTableV2SClient) ResumeDelete(ctx context.Context, t
 		return VirtualHubRouteTableV2SDeletePollerResponse{}, err
 	}
 	result := VirtualHubRouteTableV2SDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualHubRouteTableV2SDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -321,8 +308,8 @@ func (client *VirtualHubRouteTableV2SClient) getHandleError(resp *azcore.Respons
 
 // List - Retrieves the details of all VirtualHubRouteTableV2s.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualHubRouteTableV2SClient) List(resourceGroupName string, virtualHubName string, options *VirtualHubRouteTableV2SListOptions) VirtualHubRouteTableV2SListPager {
-	return &virtualHubRouteTableV2SListPager{
+func (client *VirtualHubRouteTableV2SClient) List(resourceGroupName string, virtualHubName string, options *VirtualHubRouteTableV2SListOptions) *VirtualHubRouteTableV2SListPager {
+	return &VirtualHubRouteTableV2SListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, virtualHubName, options)

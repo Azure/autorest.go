@@ -14,13 +14,8 @@ import (
 	"reflect"
 )
 
-type ContainerListBlobFlatSegmentPager interface {
-	azcore.Pager
-	// PageResponse returns the current ContainerListBlobFlatSegmentResponse.
-	PageResponse() ContainerListBlobFlatSegmentResponse
-}
-
-type containerListBlobFlatSegmentPager struct {
+// ContainerListBlobFlatSegmentPager provides operations for iterating over paged responses.
+type ContainerListBlobFlatSegmentPager struct {
 	client    *containerClient
 	current   ContainerListBlobFlatSegmentResponse
 	err       error
@@ -28,11 +23,14 @@ type containerListBlobFlatSegmentPager struct {
 	advancer  func(context.Context, ContainerListBlobFlatSegmentResponse) (*azcore.Request, error)
 }
 
-func (p *containerListBlobFlatSegmentPager) Err() error {
+// Err returns the last error encountered while paging.
+func (p *ContainerListBlobFlatSegmentPager) Err() error {
 	return p.err
 }
 
-func (p *containerListBlobFlatSegmentPager) NextPage(ctx context.Context) bool {
+// NextPage returns true if the pager advanced to the next page.
+// Returns false if there are no more pages or an error occurred.
+func (p *ContainerListBlobFlatSegmentPager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -65,17 +63,13 @@ func (p *containerListBlobFlatSegmentPager) NextPage(ctx context.Context) bool {
 	return true
 }
 
-func (p *containerListBlobFlatSegmentPager) PageResponse() ContainerListBlobFlatSegmentResponse {
+// PageResponse returns the current ContainerListBlobFlatSegmentResponse page.
+func (p *ContainerListBlobFlatSegmentPager) PageResponse() ContainerListBlobFlatSegmentResponse {
 	return p.current
 }
 
-type ContainerListBlobHierarchySegmentPager interface {
-	azcore.Pager
-	// PageResponse returns the current ContainerListBlobHierarchySegmentResponse.
-	PageResponse() ContainerListBlobHierarchySegmentResponse
-}
-
-type containerListBlobHierarchySegmentPager struct {
+// ContainerListBlobHierarchySegmentPager provides operations for iterating over paged responses.
+type ContainerListBlobHierarchySegmentPager struct {
 	client    *containerClient
 	current   ContainerListBlobHierarchySegmentResponse
 	err       error
@@ -83,11 +77,14 @@ type containerListBlobHierarchySegmentPager struct {
 	advancer  func(context.Context, ContainerListBlobHierarchySegmentResponse) (*azcore.Request, error)
 }
 
-func (p *containerListBlobHierarchySegmentPager) Err() error {
+// Err returns the last error encountered while paging.
+func (p *ContainerListBlobHierarchySegmentPager) Err() error {
 	return p.err
 }
 
-func (p *containerListBlobHierarchySegmentPager) NextPage(ctx context.Context) bool {
+// NextPage returns true if the pager advanced to the next page.
+// Returns false if there are no more pages or an error occurred.
+func (p *ContainerListBlobHierarchySegmentPager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -120,17 +117,13 @@ func (p *containerListBlobHierarchySegmentPager) NextPage(ctx context.Context) b
 	return true
 }
 
-func (p *containerListBlobHierarchySegmentPager) PageResponse() ContainerListBlobHierarchySegmentResponse {
+// PageResponse returns the current ContainerListBlobHierarchySegmentResponse page.
+func (p *ContainerListBlobHierarchySegmentPager) PageResponse() ContainerListBlobHierarchySegmentResponse {
 	return p.current
 }
 
-type ServiceListContainersSegmentPager interface {
-	azcore.Pager
-	// PageResponse returns the current ServiceListContainersSegmentResponse.
-	PageResponse() ServiceListContainersSegmentResponse
-}
-
-type serviceListContainersSegmentPager struct {
+// ServiceListContainersSegmentPager provides operations for iterating over paged responses.
+type ServiceListContainersSegmentPager struct {
 	client    *serviceClient
 	current   ServiceListContainersSegmentResponse
 	err       error
@@ -138,11 +131,14 @@ type serviceListContainersSegmentPager struct {
 	advancer  func(context.Context, ServiceListContainersSegmentResponse) (*azcore.Request, error)
 }
 
-func (p *serviceListContainersSegmentPager) Err() error {
+// Err returns the last error encountered while paging.
+func (p *ServiceListContainersSegmentPager) Err() error {
 	return p.err
 }
 
-func (p *serviceListContainersSegmentPager) NextPage(ctx context.Context) bool {
+// NextPage returns true if the pager advanced to the next page.
+// Returns false if there are no more pages or an error occurred.
+func (p *ServiceListContainersSegmentPager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -175,6 +171,7 @@ func (p *serviceListContainersSegmentPager) NextPage(ctx context.Context) bool {
 	return true
 }
 
-func (p *serviceListContainersSegmentPager) PageResponse() ServiceListContainersSegmentResponse {
+// PageResponse returns the current ServiceListContainersSegmentResponse page.
+func (p *ServiceListContainersSegmentPager) PageResponse() ServiceListContainersSegmentResponse {
 	return p.current
 }

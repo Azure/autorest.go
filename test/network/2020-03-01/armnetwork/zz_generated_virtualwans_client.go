@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // VirtualWansClient contains the methods for the VirtualWans group.
@@ -45,12 +44,8 @@ func (client *VirtualWansClient) BeginCreateOrUpdate(ctx context.Context, resour
 	if err != nil {
 		return VirtualWansCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &virtualWansCreateOrUpdatePoller{
+	result.Poller = &VirtualWansCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualWansCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *VirtualWansClient) ResumeCreateOrUpdate(ctx context.Context, token
 	if err != nil {
 		return VirtualWansCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &virtualWansCreateOrUpdatePoller{
+	poller := &VirtualWansCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *VirtualWansClient) ResumeCreateOrUpdate(ctx context.Context, token
 		return VirtualWansCreateOrUpdatePollerResponse{}, err
 	}
 	result := VirtualWansCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualWansCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -150,12 +143,8 @@ func (client *VirtualWansClient) BeginDelete(ctx context.Context, resourceGroupN
 	if err != nil {
 		return VirtualWansDeletePollerResponse{}, err
 	}
-	poller := &virtualWansDeletePoller{
+	result.Poller = &VirtualWansDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualWansDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -167,7 +156,7 @@ func (client *VirtualWansClient) ResumeDelete(ctx context.Context, token string)
 	if err != nil {
 		return VirtualWansDeletePollerResponse{}, err
 	}
-	poller := &virtualWansDeletePoller{
+	poller := &VirtualWansDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -175,12 +164,10 @@ func (client *VirtualWansClient) ResumeDelete(ctx context.Context, token string)
 		return VirtualWansDeletePollerResponse{}, err
 	}
 	result := VirtualWansDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualWansDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -309,8 +296,8 @@ func (client *VirtualWansClient) getHandleError(resp *azcore.Response) error {
 
 // List - Lists all the VirtualWANs in a subscription.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualWansClient) List(options *VirtualWansListOptions) VirtualWansListPager {
-	return &virtualWansListPager{
+func (client *VirtualWansClient) List(options *VirtualWansListOptions) *VirtualWansListPager {
+	return &VirtualWansListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, options)
@@ -364,8 +351,8 @@ func (client *VirtualWansClient) listHandleError(resp *azcore.Response) error {
 
 // ListByResourceGroup - Lists all the VirtualWANs in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualWansClient) ListByResourceGroup(resourceGroupName string, options *VirtualWansListByResourceGroupOptions) VirtualWansListByResourceGroupPager {
-	return &virtualWansListByResourceGroupPager{
+func (client *VirtualWansClient) ListByResourceGroup(resourceGroupName string, options *VirtualWansListByResourceGroupOptions) *VirtualWansListByResourceGroupPager {
+	return &VirtualWansListByResourceGroupPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)

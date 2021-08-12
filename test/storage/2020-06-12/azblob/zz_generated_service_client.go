@@ -417,8 +417,8 @@ func (client *serviceClient) getUserDelegationKeyHandleError(resp *azcore.Respon
 
 // ListContainersSegment - The List Containers Segment operation returns a list of the containers under the specified account
 // If the operation fails it returns the *StorageError error type.
-func (client *serviceClient) ListContainersSegment(options *ServiceListContainersSegmentOptions) ServiceListContainersSegmentPager {
-	return &serviceListContainersSegmentPager{
+func (client *serviceClient) ListContainersSegment(options *ServiceListContainersSegmentOptions) *ServiceListContainersSegmentPager {
+	return &ServiceListContainersSegmentPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listContainersSegmentCreateRequest(ctx, options)

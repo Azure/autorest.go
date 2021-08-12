@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // VPNGatewaysClient contains the methods for the VPNGateways group.
@@ -45,12 +44,8 @@ func (client *VPNGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resour
 	if err != nil {
 		return VPNGatewaysCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &vpnGatewaysCreateOrUpdatePoller{
+	result.Poller = &VPNGatewaysCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VPNGatewaysCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *VPNGatewaysClient) ResumeCreateOrUpdate(ctx context.Context, token
 	if err != nil {
 		return VPNGatewaysCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &vpnGatewaysCreateOrUpdatePoller{
+	poller := &VPNGatewaysCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *VPNGatewaysClient) ResumeCreateOrUpdate(ctx context.Context, token
 		return VPNGatewaysCreateOrUpdatePollerResponse{}, err
 	}
 	result := VPNGatewaysCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VPNGatewaysCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -150,12 +143,8 @@ func (client *VPNGatewaysClient) BeginDelete(ctx context.Context, resourceGroupN
 	if err != nil {
 		return VPNGatewaysDeletePollerResponse{}, err
 	}
-	poller := &vpnGatewaysDeletePoller{
+	result.Poller = &VPNGatewaysDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VPNGatewaysDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -167,7 +156,7 @@ func (client *VPNGatewaysClient) ResumeDelete(ctx context.Context, token string)
 	if err != nil {
 		return VPNGatewaysDeletePollerResponse{}, err
 	}
-	poller := &vpnGatewaysDeletePoller{
+	poller := &VPNGatewaysDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -175,12 +164,10 @@ func (client *VPNGatewaysClient) ResumeDelete(ctx context.Context, token string)
 		return VPNGatewaysDeletePollerResponse{}, err
 	}
 	result := VPNGatewaysDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VPNGatewaysDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -309,8 +296,8 @@ func (client *VPNGatewaysClient) getHandleError(resp *azcore.Response) error {
 
 // List - Lists all the VpnGateways in a subscription.
 // If the operation fails it returns the *CloudError error type.
-func (client *VPNGatewaysClient) List(options *VPNGatewaysListOptions) VPNGatewaysListPager {
-	return &vpnGatewaysListPager{
+func (client *VPNGatewaysClient) List(options *VPNGatewaysListOptions) *VPNGatewaysListPager {
+	return &VPNGatewaysListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, options)
@@ -364,8 +351,8 @@ func (client *VPNGatewaysClient) listHandleError(resp *azcore.Response) error {
 
 // ListByResourceGroup - Lists all the VpnGateways in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *VPNGatewaysClient) ListByResourceGroup(resourceGroupName string, options *VPNGatewaysListByResourceGroupOptions) VPNGatewaysListByResourceGroupPager {
-	return &vpnGatewaysListByResourceGroupPager{
+func (client *VPNGatewaysClient) ListByResourceGroup(resourceGroupName string, options *VPNGatewaysListByResourceGroupOptions) *VPNGatewaysListByResourceGroupPager {
+	return &VPNGatewaysListByResourceGroupPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
@@ -435,12 +422,8 @@ func (client *VPNGatewaysClient) BeginReset(ctx context.Context, resourceGroupNa
 	if err != nil {
 		return VPNGatewaysResetPollerResponse{}, err
 	}
-	poller := &vpnGatewaysResetPoller{
+	result.Poller = &VPNGatewaysResetPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VPNGatewaysResetResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -452,7 +435,7 @@ func (client *VPNGatewaysClient) ResumeReset(ctx context.Context, token string) 
 	if err != nil {
 		return VPNGatewaysResetPollerResponse{}, err
 	}
-	poller := &vpnGatewaysResetPoller{
+	poller := &VPNGatewaysResetPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -460,12 +443,10 @@ func (client *VPNGatewaysClient) ResumeReset(ctx context.Context, token string) 
 		return VPNGatewaysResetPollerResponse{}, err
 	}
 	result := VPNGatewaysResetPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VPNGatewaysResetResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 

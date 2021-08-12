@@ -32,8 +32,8 @@ func NewAvailableResourceGroupDelegationsClient(con *armcore.Connection, subscri
 
 // List - Gets all of the available subnet delegations for this resource group in this region.
 // If the operation fails it returns the *CloudError error type.
-func (client *AvailableResourceGroupDelegationsClient) List(location string, resourceGroupName string, options *AvailableResourceGroupDelegationsListOptions) AvailableResourceGroupDelegationsListPager {
-	return &availableResourceGroupDelegationsListPager{
+func (client *AvailableResourceGroupDelegationsClient) List(location string, resourceGroupName string, options *AvailableResourceGroupDelegationsListOptions) *AvailableResourceGroupDelegationsListPager {
+	return &AvailableResourceGroupDelegationsListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, location, resourceGroupName, options)

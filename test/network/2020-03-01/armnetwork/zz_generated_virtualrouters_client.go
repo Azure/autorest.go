@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // VirtualRoutersClient contains the methods for the VirtualRouters group.
@@ -45,12 +44,8 @@ func (client *VirtualRoutersClient) BeginCreateOrUpdate(ctx context.Context, res
 	if err != nil {
 		return VirtualRoutersCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &virtualRoutersCreateOrUpdatePoller{
+	result.Poller = &VirtualRoutersCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualRoutersCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *VirtualRoutersClient) ResumeCreateOrUpdate(ctx context.Context, to
 	if err != nil {
 		return VirtualRoutersCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &virtualRoutersCreateOrUpdatePoller{
+	poller := &VirtualRoutersCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *VirtualRoutersClient) ResumeCreateOrUpdate(ctx context.Context, to
 		return VirtualRoutersCreateOrUpdatePollerResponse{}, err
 	}
 	result := VirtualRoutersCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualRoutersCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -150,12 +143,8 @@ func (client *VirtualRoutersClient) BeginDelete(ctx context.Context, resourceGro
 	if err != nil {
 		return VirtualRoutersDeletePollerResponse{}, err
 	}
-	poller := &virtualRoutersDeletePoller{
+	result.Poller = &VirtualRoutersDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualRoutersDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -167,7 +156,7 @@ func (client *VirtualRoutersClient) ResumeDelete(ctx context.Context, token stri
 	if err != nil {
 		return VirtualRoutersDeletePollerResponse{}, err
 	}
-	poller := &virtualRoutersDeletePoller{
+	poller := &VirtualRoutersDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -175,12 +164,10 @@ func (client *VirtualRoutersClient) ResumeDelete(ctx context.Context, token stri
 		return VirtualRoutersDeletePollerResponse{}, err
 	}
 	result := VirtualRoutersDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualRoutersDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -312,8 +299,8 @@ func (client *VirtualRoutersClient) getHandleError(resp *azcore.Response) error 
 
 // List - Gets all the Virtual Routers in a subscription.
 // If the operation fails it returns the *Error error type.
-func (client *VirtualRoutersClient) List(options *VirtualRoutersListOptions) VirtualRoutersListPager {
-	return &virtualRoutersListPager{
+func (client *VirtualRoutersClient) List(options *VirtualRoutersListOptions) *VirtualRoutersListPager {
+	return &VirtualRoutersListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, options)
@@ -367,8 +354,8 @@ func (client *VirtualRoutersClient) listHandleError(resp *azcore.Response) error
 
 // ListByResourceGroup - Lists all Virtual Routers in a resource group.
 // If the operation fails it returns the *Error error type.
-func (client *VirtualRoutersClient) ListByResourceGroup(resourceGroupName string, options *VirtualRoutersListByResourceGroupOptions) VirtualRoutersListByResourceGroupPager {
-	return &virtualRoutersListByResourceGroupPager{
+func (client *VirtualRoutersClient) ListByResourceGroup(resourceGroupName string, options *VirtualRoutersListByResourceGroupOptions) *VirtualRoutersListByResourceGroupPager {
+	return &VirtualRoutersListByResourceGroupPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)

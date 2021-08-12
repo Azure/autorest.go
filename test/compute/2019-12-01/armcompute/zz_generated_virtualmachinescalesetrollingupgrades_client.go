@@ -15,7 +15,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // VirtualMachineScaleSetRollingUpgradesClient contains the methods for the VirtualMachineScaleSetRollingUpgrades group.
@@ -44,12 +43,8 @@ func (client *VirtualMachineScaleSetRollingUpgradesClient) BeginCancel(ctx conte
 	if err != nil {
 		return VirtualMachineScaleSetRollingUpgradesCancelPollerResponse{}, err
 	}
-	poller := &virtualMachineScaleSetRollingUpgradesCancelPoller{
+	result.Poller = &VirtualMachineScaleSetRollingUpgradesCancelPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetRollingUpgradesCancelResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -61,7 +56,7 @@ func (client *VirtualMachineScaleSetRollingUpgradesClient) ResumeCancel(ctx cont
 	if err != nil {
 		return VirtualMachineScaleSetRollingUpgradesCancelPollerResponse{}, err
 	}
-	poller := &virtualMachineScaleSetRollingUpgradesCancelPoller{
+	poller := &VirtualMachineScaleSetRollingUpgradesCancelPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -69,12 +64,10 @@ func (client *VirtualMachineScaleSetRollingUpgradesClient) ResumeCancel(ctx cont
 		return VirtualMachineScaleSetRollingUpgradesCancelPollerResponse{}, err
 	}
 	result := VirtualMachineScaleSetRollingUpgradesCancelPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetRollingUpgradesCancelResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -214,12 +207,8 @@ func (client *VirtualMachineScaleSetRollingUpgradesClient) BeginStartExtensionUp
 	if err != nil {
 		return VirtualMachineScaleSetRollingUpgradesStartExtensionUpgradePollerResponse{}, err
 	}
-	poller := &virtualMachineScaleSetRollingUpgradesStartExtensionUpgradePoller{
+	result.Poller = &VirtualMachineScaleSetRollingUpgradesStartExtensionUpgradePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetRollingUpgradesStartExtensionUpgradeResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -231,7 +220,7 @@ func (client *VirtualMachineScaleSetRollingUpgradesClient) ResumeStartExtensionU
 	if err != nil {
 		return VirtualMachineScaleSetRollingUpgradesStartExtensionUpgradePollerResponse{}, err
 	}
-	poller := &virtualMachineScaleSetRollingUpgradesStartExtensionUpgradePoller{
+	poller := &VirtualMachineScaleSetRollingUpgradesStartExtensionUpgradePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -239,12 +228,10 @@ func (client *VirtualMachineScaleSetRollingUpgradesClient) ResumeStartExtensionU
 		return VirtualMachineScaleSetRollingUpgradesStartExtensionUpgradePollerResponse{}, err
 	}
 	result := VirtualMachineScaleSetRollingUpgradesStartExtensionUpgradePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetRollingUpgradesStartExtensionUpgradeResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -321,12 +308,8 @@ func (client *VirtualMachineScaleSetRollingUpgradesClient) BeginStartOSUpgrade(c
 	if err != nil {
 		return VirtualMachineScaleSetRollingUpgradesStartOSUpgradePollerResponse{}, err
 	}
-	poller := &virtualMachineScaleSetRollingUpgradesStartOSUpgradePoller{
+	result.Poller = &VirtualMachineScaleSetRollingUpgradesStartOSUpgradePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetRollingUpgradesStartOSUpgradeResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -338,7 +321,7 @@ func (client *VirtualMachineScaleSetRollingUpgradesClient) ResumeStartOSUpgrade(
 	if err != nil {
 		return VirtualMachineScaleSetRollingUpgradesStartOSUpgradePollerResponse{}, err
 	}
-	poller := &virtualMachineScaleSetRollingUpgradesStartOSUpgradePoller{
+	poller := &VirtualMachineScaleSetRollingUpgradesStartOSUpgradePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -346,12 +329,10 @@ func (client *VirtualMachineScaleSetRollingUpgradesClient) ResumeStartOSUpgrade(
 		return VirtualMachineScaleSetRollingUpgradesStartOSUpgradePollerResponse{}, err
 	}
 	result := VirtualMachineScaleSetRollingUpgradesStartOSUpgradePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetRollingUpgradesStartOSUpgradeResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 

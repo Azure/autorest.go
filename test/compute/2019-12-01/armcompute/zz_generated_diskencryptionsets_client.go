@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // DiskEncryptionSetsClient contains the methods for the DiskEncryptionSets group.
@@ -45,12 +44,8 @@ func (client *DiskEncryptionSetsClient) BeginCreateOrUpdate(ctx context.Context,
 	if err != nil {
 		return DiskEncryptionSetsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &diskEncryptionSetsCreateOrUpdatePoller{
+	result.Poller = &DiskEncryptionSetsCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DiskEncryptionSetsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *DiskEncryptionSetsClient) ResumeCreateOrUpdate(ctx context.Context
 	if err != nil {
 		return DiskEncryptionSetsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &diskEncryptionSetsCreateOrUpdatePoller{
+	poller := &DiskEncryptionSetsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *DiskEncryptionSetsClient) ResumeCreateOrUpdate(ctx context.Context
 		return DiskEncryptionSetsCreateOrUpdatePollerResponse{}, err
 	}
 	result := DiskEncryptionSetsCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DiskEncryptionSetsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -150,12 +143,8 @@ func (client *DiskEncryptionSetsClient) BeginDelete(ctx context.Context, resourc
 	if err != nil {
 		return DiskEncryptionSetsDeletePollerResponse{}, err
 	}
-	poller := &diskEncryptionSetsDeletePoller{
+	result.Poller = &DiskEncryptionSetsDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DiskEncryptionSetsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -167,7 +156,7 @@ func (client *DiskEncryptionSetsClient) ResumeDelete(ctx context.Context, token 
 	if err != nil {
 		return DiskEncryptionSetsDeletePollerResponse{}, err
 	}
-	poller := &diskEncryptionSetsDeletePoller{
+	poller := &DiskEncryptionSetsDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -175,12 +164,10 @@ func (client *DiskEncryptionSetsClient) ResumeDelete(ctx context.Context, token 
 		return DiskEncryptionSetsDeletePollerResponse{}, err
 	}
 	result := DiskEncryptionSetsDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DiskEncryptionSetsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -309,8 +296,8 @@ func (client *DiskEncryptionSetsClient) getHandleError(resp *azcore.Response) er
 
 // List - Lists all the disk encryption sets under a subscription.
 // If the operation fails it returns the *CloudError error type.
-func (client *DiskEncryptionSetsClient) List(options *DiskEncryptionSetsListOptions) DiskEncryptionSetsListPager {
-	return &diskEncryptionSetsListPager{
+func (client *DiskEncryptionSetsClient) List(options *DiskEncryptionSetsListOptions) *DiskEncryptionSetsListPager {
+	return &DiskEncryptionSetsListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, options)
@@ -364,8 +351,8 @@ func (client *DiskEncryptionSetsClient) listHandleError(resp *azcore.Response) e
 
 // ListByResourceGroup - Lists all the disk encryption sets under a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *DiskEncryptionSetsClient) ListByResourceGroup(resourceGroupName string, options *DiskEncryptionSetsListByResourceGroupOptions) DiskEncryptionSetsListByResourceGroupPager {
-	return &diskEncryptionSetsListByResourceGroupPager{
+func (client *DiskEncryptionSetsClient) ListByResourceGroup(resourceGroupName string, options *DiskEncryptionSetsListByResourceGroupOptions) *DiskEncryptionSetsListByResourceGroupPager {
+	return &DiskEncryptionSetsListByResourceGroupPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
@@ -435,12 +422,8 @@ func (client *DiskEncryptionSetsClient) BeginUpdate(ctx context.Context, resourc
 	if err != nil {
 		return DiskEncryptionSetsUpdatePollerResponse{}, err
 	}
-	poller := &diskEncryptionSetsUpdatePoller{
+	result.Poller = &DiskEncryptionSetsUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DiskEncryptionSetsUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -452,7 +435,7 @@ func (client *DiskEncryptionSetsClient) ResumeUpdate(ctx context.Context, token 
 	if err != nil {
 		return DiskEncryptionSetsUpdatePollerResponse{}, err
 	}
-	poller := &diskEncryptionSetsUpdatePoller{
+	poller := &DiskEncryptionSetsUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -460,12 +443,10 @@ func (client *DiskEncryptionSetsClient) ResumeUpdate(ctx context.Context, token 
 		return DiskEncryptionSetsUpdatePollerResponse{}, err
 	}
 	result := DiskEncryptionSetsUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DiskEncryptionSetsUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 

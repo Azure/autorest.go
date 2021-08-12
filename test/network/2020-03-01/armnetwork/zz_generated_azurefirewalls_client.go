@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // AzureFirewallsClient contains the methods for the AzureFirewalls group.
@@ -45,12 +44,8 @@ func (client *AzureFirewallsClient) BeginCreateOrUpdate(ctx context.Context, res
 	if err != nil {
 		return AzureFirewallsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &azureFirewallsCreateOrUpdatePoller{
+	result.Poller = &AzureFirewallsCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (AzureFirewallsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *AzureFirewallsClient) ResumeCreateOrUpdate(ctx context.Context, to
 	if err != nil {
 		return AzureFirewallsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &azureFirewallsCreateOrUpdatePoller{
+	poller := &AzureFirewallsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *AzureFirewallsClient) ResumeCreateOrUpdate(ctx context.Context, to
 		return AzureFirewallsCreateOrUpdatePollerResponse{}, err
 	}
 	result := AzureFirewallsCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (AzureFirewallsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -150,12 +143,8 @@ func (client *AzureFirewallsClient) BeginDelete(ctx context.Context, resourceGro
 	if err != nil {
 		return AzureFirewallsDeletePollerResponse{}, err
 	}
-	poller := &azureFirewallsDeletePoller{
+	result.Poller = &AzureFirewallsDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (AzureFirewallsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -167,7 +156,7 @@ func (client *AzureFirewallsClient) ResumeDelete(ctx context.Context, token stri
 	if err != nil {
 		return AzureFirewallsDeletePollerResponse{}, err
 	}
-	poller := &azureFirewallsDeletePoller{
+	poller := &AzureFirewallsDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -175,12 +164,10 @@ func (client *AzureFirewallsClient) ResumeDelete(ctx context.Context, token stri
 		return AzureFirewallsDeletePollerResponse{}, err
 	}
 	result := AzureFirewallsDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (AzureFirewallsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -309,8 +296,8 @@ func (client *AzureFirewallsClient) getHandleError(resp *azcore.Response) error 
 
 // List - Lists all Azure Firewalls in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *AzureFirewallsClient) List(resourceGroupName string, options *AzureFirewallsListOptions) AzureFirewallsListPager {
-	return &azureFirewallsListPager{
+func (client *AzureFirewallsClient) List(resourceGroupName string, options *AzureFirewallsListOptions) *AzureFirewallsListPager {
+	return &AzureFirewallsListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, options)
@@ -368,8 +355,8 @@ func (client *AzureFirewallsClient) listHandleError(resp *azcore.Response) error
 
 // ListAll - Gets all the Azure Firewalls in a subscription.
 // If the operation fails it returns the *CloudError error type.
-func (client *AzureFirewallsClient) ListAll(options *AzureFirewallsListAllOptions) AzureFirewallsListAllPager {
-	return &azureFirewallsListAllPager{
+func (client *AzureFirewallsClient) ListAll(options *AzureFirewallsListAllOptions) *AzureFirewallsListAllPager {
+	return &AzureFirewallsListAllPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listAllCreateRequest(ctx, options)
@@ -435,12 +422,8 @@ func (client *AzureFirewallsClient) BeginUpdateTags(ctx context.Context, resourc
 	if err != nil {
 		return AzureFirewallsUpdateTagsPollerResponse{}, err
 	}
-	poller := &azureFirewallsUpdateTagsPoller{
+	result.Poller = &AzureFirewallsUpdateTagsPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (AzureFirewallsUpdateTagsResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -452,7 +435,7 @@ func (client *AzureFirewallsClient) ResumeUpdateTags(ctx context.Context, token 
 	if err != nil {
 		return AzureFirewallsUpdateTagsPollerResponse{}, err
 	}
-	poller := &azureFirewallsUpdateTagsPoller{
+	poller := &AzureFirewallsUpdateTagsPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -460,12 +443,10 @@ func (client *AzureFirewallsClient) ResumeUpdateTags(ctx context.Context, token 
 		return AzureFirewallsUpdateTagsPollerResponse{}, err
 	}
 	result := AzureFirewallsUpdateTagsPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (AzureFirewallsUpdateTagsResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 

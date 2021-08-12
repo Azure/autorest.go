@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // IPGroupsClient contains the methods for the IPGroups group.
@@ -45,12 +44,8 @@ func (client *IPGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceG
 	if err != nil {
 		return IPGroupsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &ipGroupsCreateOrUpdatePoller{
+	result.Poller = &IPGroupsCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (IPGroupsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *IPGroupsClient) ResumeCreateOrUpdate(ctx context.Context, token st
 	if err != nil {
 		return IPGroupsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &ipGroupsCreateOrUpdatePoller{
+	poller := &IPGroupsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *IPGroupsClient) ResumeCreateOrUpdate(ctx context.Context, token st
 		return IPGroupsCreateOrUpdatePollerResponse{}, err
 	}
 	result := IPGroupsCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (IPGroupsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -150,12 +143,8 @@ func (client *IPGroupsClient) BeginDelete(ctx context.Context, resourceGroupName
 	if err != nil {
 		return IPGroupsDeletePollerResponse{}, err
 	}
-	poller := &ipGroupsDeletePoller{
+	result.Poller = &IPGroupsDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (IPGroupsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -167,7 +156,7 @@ func (client *IPGroupsClient) ResumeDelete(ctx context.Context, token string) (I
 	if err != nil {
 		return IPGroupsDeletePollerResponse{}, err
 	}
-	poller := &ipGroupsDeletePoller{
+	poller := &IPGroupsDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -175,12 +164,10 @@ func (client *IPGroupsClient) ResumeDelete(ctx context.Context, token string) (I
 		return IPGroupsDeletePollerResponse{}, err
 	}
 	result := IPGroupsDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (IPGroupsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -312,8 +299,8 @@ func (client *IPGroupsClient) getHandleError(resp *azcore.Response) error {
 
 // List - Gets all IpGroups in a subscription.
 // If the operation fails it returns the *Error error type.
-func (client *IPGroupsClient) List(options *IPGroupsListOptions) IPGroupsListPager {
-	return &ipGroupsListPager{
+func (client *IPGroupsClient) List(options *IPGroupsListOptions) *IPGroupsListPager {
+	return &IPGroupsListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, options)
@@ -367,8 +354,8 @@ func (client *IPGroupsClient) listHandleError(resp *azcore.Response) error {
 
 // ListByResourceGroup - Gets all IpGroups in a resource group.
 // If the operation fails it returns the *Error error type.
-func (client *IPGroupsClient) ListByResourceGroup(resourceGroupName string, options *IPGroupsListByResourceGroupOptions) IPGroupsListByResourceGroupPager {
-	return &ipGroupsListByResourceGroupPager{
+func (client *IPGroupsClient) ListByResourceGroup(resourceGroupName string, options *IPGroupsListByResourceGroupOptions) *IPGroupsListByResourceGroupPager {
+	return &IPGroupsListByResourceGroupPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)

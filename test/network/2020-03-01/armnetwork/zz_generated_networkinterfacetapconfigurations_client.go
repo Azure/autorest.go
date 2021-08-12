@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // NetworkInterfaceTapConfigurationsClient contains the methods for the NetworkInterfaceTapConfigurations group.
@@ -45,12 +44,8 @@ func (client *NetworkInterfaceTapConfigurationsClient) BeginCreateOrUpdate(ctx c
 	if err != nil {
 		return NetworkInterfaceTapConfigurationsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &networkInterfaceTapConfigurationsCreateOrUpdatePoller{
+	result.Poller = &NetworkInterfaceTapConfigurationsCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkInterfaceTapConfigurationsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *NetworkInterfaceTapConfigurationsClient) ResumeCreateOrUpdate(ctx 
 	if err != nil {
 		return NetworkInterfaceTapConfigurationsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &networkInterfaceTapConfigurationsCreateOrUpdatePoller{
+	poller := &NetworkInterfaceTapConfigurationsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *NetworkInterfaceTapConfigurationsClient) ResumeCreateOrUpdate(ctx 
 		return NetworkInterfaceTapConfigurationsCreateOrUpdatePollerResponse{}, err
 	}
 	result := NetworkInterfaceTapConfigurationsCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkInterfaceTapConfigurationsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -154,12 +147,8 @@ func (client *NetworkInterfaceTapConfigurationsClient) BeginDelete(ctx context.C
 	if err != nil {
 		return NetworkInterfaceTapConfigurationsDeletePollerResponse{}, err
 	}
-	poller := &networkInterfaceTapConfigurationsDeletePoller{
+	result.Poller = &NetworkInterfaceTapConfigurationsDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkInterfaceTapConfigurationsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -171,7 +160,7 @@ func (client *NetworkInterfaceTapConfigurationsClient) ResumeDelete(ctx context.
 	if err != nil {
 		return NetworkInterfaceTapConfigurationsDeletePollerResponse{}, err
 	}
-	poller := &networkInterfaceTapConfigurationsDeletePoller{
+	poller := &NetworkInterfaceTapConfigurationsDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -179,12 +168,10 @@ func (client *NetworkInterfaceTapConfigurationsClient) ResumeDelete(ctx context.
 		return NetworkInterfaceTapConfigurationsDeletePollerResponse{}, err
 	}
 	result := NetworkInterfaceTapConfigurationsDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkInterfaceTapConfigurationsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -321,8 +308,8 @@ func (client *NetworkInterfaceTapConfigurationsClient) getHandleError(resp *azco
 
 // List - Get all Tap configurations in a network interface.
 // If the operation fails it returns the *CloudError error type.
-func (client *NetworkInterfaceTapConfigurationsClient) List(resourceGroupName string, networkInterfaceName string, options *NetworkInterfaceTapConfigurationsListOptions) NetworkInterfaceTapConfigurationsListPager {
-	return &networkInterfaceTapConfigurationsListPager{
+func (client *NetworkInterfaceTapConfigurationsClient) List(resourceGroupName string, networkInterfaceName string, options *NetworkInterfaceTapConfigurationsListOptions) *NetworkInterfaceTapConfigurationsListPager {
+	return &NetworkInterfaceTapConfigurationsListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, networkInterfaceName, options)

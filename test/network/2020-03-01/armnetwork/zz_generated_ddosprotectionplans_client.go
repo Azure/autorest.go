@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // DdosProtectionPlansClient contains the methods for the DdosProtectionPlans group.
@@ -45,12 +44,8 @@ func (client *DdosProtectionPlansClient) BeginCreateOrUpdate(ctx context.Context
 	if err != nil {
 		return DdosProtectionPlansCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &ddosProtectionPlansCreateOrUpdatePoller{
+	result.Poller = &DdosProtectionPlansCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DdosProtectionPlansCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *DdosProtectionPlansClient) ResumeCreateOrUpdate(ctx context.Contex
 	if err != nil {
 		return DdosProtectionPlansCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &ddosProtectionPlansCreateOrUpdatePoller{
+	poller := &DdosProtectionPlansCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *DdosProtectionPlansClient) ResumeCreateOrUpdate(ctx context.Contex
 		return DdosProtectionPlansCreateOrUpdatePollerResponse{}, err
 	}
 	result := DdosProtectionPlansCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DdosProtectionPlansCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -150,12 +143,8 @@ func (client *DdosProtectionPlansClient) BeginDelete(ctx context.Context, resour
 	if err != nil {
 		return DdosProtectionPlansDeletePollerResponse{}, err
 	}
-	poller := &ddosProtectionPlansDeletePoller{
+	result.Poller = &DdosProtectionPlansDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DdosProtectionPlansDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -167,7 +156,7 @@ func (client *DdosProtectionPlansClient) ResumeDelete(ctx context.Context, token
 	if err != nil {
 		return DdosProtectionPlansDeletePollerResponse{}, err
 	}
-	poller := &ddosProtectionPlansDeletePoller{
+	poller := &DdosProtectionPlansDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -175,12 +164,10 @@ func (client *DdosProtectionPlansClient) ResumeDelete(ctx context.Context, token
 		return DdosProtectionPlansDeletePollerResponse{}, err
 	}
 	result := DdosProtectionPlansDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DdosProtectionPlansDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -309,8 +296,8 @@ func (client *DdosProtectionPlansClient) getHandleError(resp *azcore.Response) e
 
 // List - Gets all DDoS protection plans in a subscription.
 // If the operation fails it returns the *CloudError error type.
-func (client *DdosProtectionPlansClient) List(options *DdosProtectionPlansListOptions) DdosProtectionPlansListPager {
-	return &ddosProtectionPlansListPager{
+func (client *DdosProtectionPlansClient) List(options *DdosProtectionPlansListOptions) *DdosProtectionPlansListPager {
+	return &DdosProtectionPlansListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, options)
@@ -364,8 +351,8 @@ func (client *DdosProtectionPlansClient) listHandleError(resp *azcore.Response) 
 
 // ListByResourceGroup - Gets all the DDoS protection plans in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *DdosProtectionPlansClient) ListByResourceGroup(resourceGroupName string, options *DdosProtectionPlansListByResourceGroupOptions) DdosProtectionPlansListByResourceGroupPager {
-	return &ddosProtectionPlansListByResourceGroupPager{
+func (client *DdosProtectionPlansClient) ListByResourceGroup(resourceGroupName string, options *DdosProtectionPlansListByResourceGroupOptions) *DdosProtectionPlansListByResourceGroupPager {
+	return &DdosProtectionPlansListByResourceGroupPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)

@@ -12,7 +12,6 @@ import (
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
-	"time"
 )
 
 type dataFlowDebugSessionClient struct {
@@ -87,12 +86,8 @@ func (client *dataFlowDebugSessionClient) BeginCreateDataFlowDebugSession(ctx co
 	if err != nil {
 		return DataFlowDebugSessionCreateDataFlowDebugSessionPollerResponse{}, err
 	}
-	poller := &dataFlowDebugSessionCreateDataFlowDebugSessionPoller{
+	result.Poller = &DataFlowDebugSessionCreateDataFlowDebugSessionPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DataFlowDebugSessionCreateDataFlowDebugSessionResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -104,7 +99,7 @@ func (client *dataFlowDebugSessionClient) ResumeCreateDataFlowDebugSession(ctx c
 	if err != nil {
 		return DataFlowDebugSessionCreateDataFlowDebugSessionPollerResponse{}, err
 	}
-	poller := &dataFlowDebugSessionCreateDataFlowDebugSessionPoller{
+	poller := &DataFlowDebugSessionCreateDataFlowDebugSessionPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -112,12 +107,10 @@ func (client *dataFlowDebugSessionClient) ResumeCreateDataFlowDebugSession(ctx c
 		return DataFlowDebugSessionCreateDataFlowDebugSessionPollerResponse{}, err
 	}
 	result := DataFlowDebugSessionCreateDataFlowDebugSessionPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DataFlowDebugSessionCreateDataFlowDebugSessionResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -225,12 +218,8 @@ func (client *dataFlowDebugSessionClient) BeginExecuteCommand(ctx context.Contex
 	if err != nil {
 		return DataFlowDebugSessionExecuteCommandPollerResponse{}, err
 	}
-	poller := &dataFlowDebugSessionExecuteCommandPoller{
+	result.Poller = &DataFlowDebugSessionExecuteCommandPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DataFlowDebugSessionExecuteCommandResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -242,7 +231,7 @@ func (client *dataFlowDebugSessionClient) ResumeExecuteCommand(ctx context.Conte
 	if err != nil {
 		return DataFlowDebugSessionExecuteCommandPollerResponse{}, err
 	}
-	poller := &dataFlowDebugSessionExecuteCommandPoller{
+	poller := &DataFlowDebugSessionExecuteCommandPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -250,12 +239,10 @@ func (client *dataFlowDebugSessionClient) ResumeExecuteCommand(ctx context.Conte
 		return DataFlowDebugSessionExecuteCommandPollerResponse{}, err
 	}
 	result := DataFlowDebugSessionExecuteCommandPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (DataFlowDebugSessionExecuteCommandResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -306,8 +293,8 @@ func (client *dataFlowDebugSessionClient) executeCommandHandleError(resp *azcore
 
 // QueryDataFlowDebugSessionsByWorkspace - Query all active data flow debug sessions.
 // If the operation fails it returns the *CloudError error type.
-func (client *dataFlowDebugSessionClient) QueryDataFlowDebugSessionsByWorkspace(options *DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspaceOptions) DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspacePager {
-	return &dataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspacePager{
+func (client *dataFlowDebugSessionClient) QueryDataFlowDebugSessionsByWorkspace(options *DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspaceOptions) *DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspacePager {
+	return &DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspacePager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.queryDataFlowDebugSessionsByWorkspaceCreateRequest(ctx, options)

@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // NatGatewaysClient contains the methods for the NatGateways group.
@@ -45,12 +44,8 @@ func (client *NatGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resour
 	if err != nil {
 		return NatGatewaysCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &natGatewaysCreateOrUpdatePoller{
+	result.Poller = &NatGatewaysCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NatGatewaysCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *NatGatewaysClient) ResumeCreateOrUpdate(ctx context.Context, token
 	if err != nil {
 		return NatGatewaysCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &natGatewaysCreateOrUpdatePoller{
+	poller := &NatGatewaysCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *NatGatewaysClient) ResumeCreateOrUpdate(ctx context.Context, token
 		return NatGatewaysCreateOrUpdatePollerResponse{}, err
 	}
 	result := NatGatewaysCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NatGatewaysCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -150,12 +143,8 @@ func (client *NatGatewaysClient) BeginDelete(ctx context.Context, resourceGroupN
 	if err != nil {
 		return NatGatewaysDeletePollerResponse{}, err
 	}
-	poller := &natGatewaysDeletePoller{
+	result.Poller = &NatGatewaysDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NatGatewaysDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -167,7 +156,7 @@ func (client *NatGatewaysClient) ResumeDelete(ctx context.Context, token string)
 	if err != nil {
 		return NatGatewaysDeletePollerResponse{}, err
 	}
-	poller := &natGatewaysDeletePoller{
+	poller := &NatGatewaysDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -175,12 +164,10 @@ func (client *NatGatewaysClient) ResumeDelete(ctx context.Context, token string)
 		return NatGatewaysDeletePollerResponse{}, err
 	}
 	result := NatGatewaysDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NatGatewaysDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -312,8 +299,8 @@ func (client *NatGatewaysClient) getHandleError(resp *azcore.Response) error {
 
 // List - Gets all nat gateways in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *NatGatewaysClient) List(resourceGroupName string, options *NatGatewaysListOptions) NatGatewaysListPager {
-	return &natGatewaysListPager{
+func (client *NatGatewaysClient) List(resourceGroupName string, options *NatGatewaysListOptions) *NatGatewaysListPager {
+	return &NatGatewaysListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, options)
@@ -371,8 +358,8 @@ func (client *NatGatewaysClient) listHandleError(resp *azcore.Response) error {
 
 // ListAll - Gets all the Nat Gateways in a subscription.
 // If the operation fails it returns the *CloudError error type.
-func (client *NatGatewaysClient) ListAll(options *NatGatewaysListAllOptions) NatGatewaysListAllPager {
-	return &natGatewaysListAllPager{
+func (client *NatGatewaysClient) ListAll(options *NatGatewaysListAllOptions) *NatGatewaysListAllPager {
+	return &NatGatewaysListAllPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listAllCreateRequest(ctx, options)

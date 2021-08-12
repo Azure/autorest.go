@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // ExpressRouteCircuitAuthorizationsClient contains the methods for the ExpressRouteCircuitAuthorizations group.
@@ -45,12 +44,8 @@ func (client *ExpressRouteCircuitAuthorizationsClient) BeginCreateOrUpdate(ctx c
 	if err != nil {
 		return ExpressRouteCircuitAuthorizationsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &expressRouteCircuitAuthorizationsCreateOrUpdatePoller{
+	result.Poller = &ExpressRouteCircuitAuthorizationsCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitAuthorizationsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *ExpressRouteCircuitAuthorizationsClient) ResumeCreateOrUpdate(ctx 
 	if err != nil {
 		return ExpressRouteCircuitAuthorizationsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &expressRouteCircuitAuthorizationsCreateOrUpdatePoller{
+	poller := &ExpressRouteCircuitAuthorizationsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *ExpressRouteCircuitAuthorizationsClient) ResumeCreateOrUpdate(ctx 
 		return ExpressRouteCircuitAuthorizationsCreateOrUpdatePollerResponse{}, err
 	}
 	result := ExpressRouteCircuitAuthorizationsCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitAuthorizationsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -154,12 +147,8 @@ func (client *ExpressRouteCircuitAuthorizationsClient) BeginDelete(ctx context.C
 	if err != nil {
 		return ExpressRouteCircuitAuthorizationsDeletePollerResponse{}, err
 	}
-	poller := &expressRouteCircuitAuthorizationsDeletePoller{
+	result.Poller = &ExpressRouteCircuitAuthorizationsDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitAuthorizationsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -171,7 +160,7 @@ func (client *ExpressRouteCircuitAuthorizationsClient) ResumeDelete(ctx context.
 	if err != nil {
 		return ExpressRouteCircuitAuthorizationsDeletePollerResponse{}, err
 	}
-	poller := &expressRouteCircuitAuthorizationsDeletePoller{
+	poller := &ExpressRouteCircuitAuthorizationsDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -179,12 +168,10 @@ func (client *ExpressRouteCircuitAuthorizationsClient) ResumeDelete(ctx context.
 		return ExpressRouteCircuitAuthorizationsDeletePollerResponse{}, err
 	}
 	result := ExpressRouteCircuitAuthorizationsDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitAuthorizationsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -321,8 +308,8 @@ func (client *ExpressRouteCircuitAuthorizationsClient) getHandleError(resp *azco
 
 // List - Gets all authorizations in an express route circuit.
 // If the operation fails it returns the *CloudError error type.
-func (client *ExpressRouteCircuitAuthorizationsClient) List(resourceGroupName string, circuitName string, options *ExpressRouteCircuitAuthorizationsListOptions) ExpressRouteCircuitAuthorizationsListPager {
-	return &expressRouteCircuitAuthorizationsListPager{
+func (client *ExpressRouteCircuitAuthorizationsClient) List(resourceGroupName string, circuitName string, options *ExpressRouteCircuitAuthorizationsListOptions) *ExpressRouteCircuitAuthorizationsListPager {
+	return &ExpressRouteCircuitAuthorizationsListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, circuitName, options)

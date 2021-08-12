@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // NetworkManagementClient contains the methods for the NetworkManagementClient group.
@@ -108,12 +107,8 @@ func (client *NetworkManagementClient) BeginDeleteBastionShareableLink(ctx conte
 	if err != nil {
 		return NetworkManagementClientDeleteBastionShareableLinkPollerResponse{}, err
 	}
-	poller := &networkManagementClientDeleteBastionShareableLinkPoller{
+	result.Poller = &NetworkManagementClientDeleteBastionShareableLinkPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkManagementClientDeleteBastionShareableLinkResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -125,7 +120,7 @@ func (client *NetworkManagementClient) ResumeDeleteBastionShareableLink(ctx cont
 	if err != nil {
 		return NetworkManagementClientDeleteBastionShareableLinkPollerResponse{}, err
 	}
-	poller := &networkManagementClientDeleteBastionShareableLinkPoller{
+	poller := &NetworkManagementClientDeleteBastionShareableLinkPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -133,12 +128,10 @@ func (client *NetworkManagementClient) ResumeDeleteBastionShareableLink(ctx cont
 		return NetworkManagementClientDeleteBastionShareableLinkPollerResponse{}, err
 	}
 	result := NetworkManagementClientDeleteBastionShareableLinkPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkManagementClientDeleteBastionShareableLinkResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -201,8 +194,8 @@ func (client *NetworkManagementClient) deleteBastionShareableLinkHandleError(res
 
 // DisconnectActiveSessions - Returns the list of currently active sessions on the Bastion.
 // If the operation fails it returns the *CloudError error type.
-func (client *NetworkManagementClient) DisconnectActiveSessions(resourceGroupName string, bastionHostName string, sessionIDs SessionIDs, options *NetworkManagementClientDisconnectActiveSessionsOptions) NetworkManagementClientDisconnectActiveSessionsPager {
-	return &networkManagementClientDisconnectActiveSessionsPager{
+func (client *NetworkManagementClient) DisconnectActiveSessions(resourceGroupName string, bastionHostName string, sessionIDs SessionIDs, options *NetworkManagementClientDisconnectActiveSessionsOptions) *NetworkManagementClientDisconnectActiveSessionsPager {
+	return &NetworkManagementClientDisconnectActiveSessionsPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.disconnectActiveSessionsCreateRequest(ctx, resourceGroupName, bastionHostName, sessionIDs, options)
@@ -277,12 +270,8 @@ func (client *NetworkManagementClient) BeginGeneratevirtualwanvpnserverconfigura
 	if err != nil {
 		return NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePollerResponse{}, err
 	}
-	poller := &networkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePoller{
+	result.Poller = &NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofileResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -294,7 +283,7 @@ func (client *NetworkManagementClient) ResumeGeneratevirtualwanvpnserverconfigur
 	if err != nil {
 		return NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePollerResponse{}, err
 	}
-	poller := &networkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePoller{
+	poller := &NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -302,12 +291,10 @@ func (client *NetworkManagementClient) ResumeGeneratevirtualwanvpnserverconfigur
 		return NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePollerResponse{}, err
 	}
 	result := NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofileResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -383,13 +370,9 @@ func (client *NetworkManagementClient) BeginGetActiveSessions(ctx context.Contex
 	if err != nil {
 		return NetworkManagementClientGetActiveSessionsPollerResponse{}, err
 	}
-	poller := &networkManagementClientGetActiveSessionsPoller{
+	result.Poller = &NetworkManagementClientGetActiveSessionsPoller{
 		pt:     pt,
 		client: client,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkManagementClientGetActiveSessionsPager, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -401,7 +384,7 @@ func (client *NetworkManagementClient) ResumeGetActiveSessions(ctx context.Conte
 	if err != nil {
 		return NetworkManagementClientGetActiveSessionsPollerResponse{}, err
 	}
-	poller := &networkManagementClientGetActiveSessionsPoller{
+	poller := &NetworkManagementClientGetActiveSessionsPoller{
 		pt:     pt,
 		client: client,
 	}
@@ -410,12 +393,10 @@ func (client *NetworkManagementClient) ResumeGetActiveSessions(ctx context.Conte
 		return NetworkManagementClientGetActiveSessionsPollerResponse{}, err
 	}
 	result := NetworkManagementClientGetActiveSessionsPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkManagementClientGetActiveSessionsPager, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -487,8 +468,8 @@ func (client *NetworkManagementClient) getActiveSessionsHandleError(resp *azcore
 
 // GetBastionShareableLink - Return the Bastion Shareable Links for all the VMs specified in the request.
 // If the operation fails it returns the *CloudError error type.
-func (client *NetworkManagementClient) GetBastionShareableLink(resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest, options *NetworkManagementClientGetBastionShareableLinkOptions) NetworkManagementClientGetBastionShareableLinkPager {
-	return &networkManagementClientGetBastionShareableLinkPager{
+func (client *NetworkManagementClient) GetBastionShareableLink(resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest, options *NetworkManagementClientGetBastionShareableLinkOptions) *NetworkManagementClientGetBastionShareableLinkPager {
+	return &NetworkManagementClientGetBastionShareableLinkPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.getBastionShareableLinkCreateRequest(ctx, resourceGroupName, bastionHostName, bslRequest, options)
@@ -562,13 +543,9 @@ func (client *NetworkManagementClient) BeginPutBastionShareableLink(ctx context.
 	if err != nil {
 		return NetworkManagementClientPutBastionShareableLinkPollerResponse{}, err
 	}
-	poller := &networkManagementClientPutBastionShareableLinkPoller{
+	result.Poller = &NetworkManagementClientPutBastionShareableLinkPoller{
 		pt:     pt,
 		client: client,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkManagementClientPutBastionShareableLinkPager, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -580,7 +557,7 @@ func (client *NetworkManagementClient) ResumePutBastionShareableLink(ctx context
 	if err != nil {
 		return NetworkManagementClientPutBastionShareableLinkPollerResponse{}, err
 	}
-	poller := &networkManagementClientPutBastionShareableLinkPoller{
+	poller := &NetworkManagementClientPutBastionShareableLinkPoller{
 		pt:     pt,
 		client: client,
 	}
@@ -589,12 +566,10 @@ func (client *NetworkManagementClient) ResumePutBastionShareableLink(ctx context
 		return NetworkManagementClientPutBastionShareableLinkPollerResponse{}, err
 	}
 	result := NetworkManagementClientPutBastionShareableLinkPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (NetworkManagementClientPutBastionShareableLinkPager, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 

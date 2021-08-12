@@ -102,8 +102,8 @@ func (client *HubVirtualNetworkConnectionsClient) getHandleError(resp *azcore.Re
 
 // List - Retrieves the details of all HubVirtualNetworkConnections.
 // If the operation fails it returns the *CloudError error type.
-func (client *HubVirtualNetworkConnectionsClient) List(resourceGroupName string, virtualHubName string, options *HubVirtualNetworkConnectionsListOptions) HubVirtualNetworkConnectionsListPager {
-	return &hubVirtualNetworkConnectionsListPager{
+func (client *HubVirtualNetworkConnectionsClient) List(resourceGroupName string, virtualHubName string, options *HubVirtualNetworkConnectionsListOptions) *HubVirtualNetworkConnectionsListPager {
+	return &HubVirtualNetworkConnectionsListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, virtualHubName, options)

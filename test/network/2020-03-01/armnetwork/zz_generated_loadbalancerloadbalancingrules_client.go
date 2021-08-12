@@ -102,8 +102,8 @@ func (client *LoadBalancerLoadBalancingRulesClient) getHandleError(resp *azcore.
 
 // List - Gets all the load balancing rules in a load balancer.
 // If the operation fails it returns the *CloudError error type.
-func (client *LoadBalancerLoadBalancingRulesClient) List(resourceGroupName string, loadBalancerName string, options *LoadBalancerLoadBalancingRulesListOptions) LoadBalancerLoadBalancingRulesListPager {
-	return &loadBalancerLoadBalancingRulesListPager{
+func (client *LoadBalancerLoadBalancingRulesClient) List(resourceGroupName string, loadBalancerName string, options *LoadBalancerLoadBalancingRulesListOptions) *LoadBalancerLoadBalancingRulesListPager {
+	return &LoadBalancerLoadBalancingRulesListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, loadBalancerName, options)

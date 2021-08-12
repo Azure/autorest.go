@@ -13,7 +13,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
-	"time"
 )
 
 // LROsCustomHeaderClient contains the methods for the LROsCustomHeader group.
@@ -43,12 +42,8 @@ func (client *LROsCustomHeaderClient) BeginPost202Retry200(ctx context.Context, 
 	if err != nil {
 		return LROsCustomHeaderPost202Retry200PollerResponse{}, err
 	}
-	poller := &lrOsCustomHeaderPost202Retry200Poller{
+	result.Poller = &LROsCustomHeaderPost202Retry200Poller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsCustomHeaderPost202Retry200Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -60,7 +55,7 @@ func (client *LROsCustomHeaderClient) ResumePost202Retry200(ctx context.Context,
 	if err != nil {
 		return LROsCustomHeaderPost202Retry200PollerResponse{}, err
 	}
-	poller := &lrOsCustomHeaderPost202Retry200Poller{
+	poller := &LROsCustomHeaderPost202Retry200Poller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -68,12 +63,10 @@ func (client *LROsCustomHeaderClient) ResumePost202Retry200(ctx context.Context,
 		return LROsCustomHeaderPost202Retry200PollerResponse{}, err
 	}
 	result := LROsCustomHeaderPost202Retry200PollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsCustomHeaderPost202Retry200Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -140,12 +133,8 @@ func (client *LROsCustomHeaderClient) BeginPostAsyncRetrySucceeded(ctx context.C
 	if err != nil {
 		return LROsCustomHeaderPostAsyncRetrySucceededPollerResponse{}, err
 	}
-	poller := &lrOsCustomHeaderPostAsyncRetrySucceededPoller{
+	result.Poller = &LROsCustomHeaderPostAsyncRetrySucceededPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsCustomHeaderPostAsyncRetrySucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -157,7 +146,7 @@ func (client *LROsCustomHeaderClient) ResumePostAsyncRetrySucceeded(ctx context.
 	if err != nil {
 		return LROsCustomHeaderPostAsyncRetrySucceededPollerResponse{}, err
 	}
-	poller := &lrOsCustomHeaderPostAsyncRetrySucceededPoller{
+	poller := &LROsCustomHeaderPostAsyncRetrySucceededPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -165,12 +154,10 @@ func (client *LROsCustomHeaderClient) ResumePostAsyncRetrySucceeded(ctx context.
 		return LROsCustomHeaderPostAsyncRetrySucceededPollerResponse{}, err
 	}
 	result := LROsCustomHeaderPostAsyncRetrySucceededPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsCustomHeaderPostAsyncRetrySucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -237,12 +224,8 @@ func (client *LROsCustomHeaderClient) BeginPut201CreatingSucceeded200(ctx contex
 	if err != nil {
 		return LROsCustomHeaderPut201CreatingSucceeded200PollerResponse{}, err
 	}
-	poller := &lrOsCustomHeaderPut201CreatingSucceeded200Poller{
+	result.Poller = &LROsCustomHeaderPut201CreatingSucceeded200Poller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsCustomHeaderPut201CreatingSucceeded200Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -254,7 +237,7 @@ func (client *LROsCustomHeaderClient) ResumePut201CreatingSucceeded200(ctx conte
 	if err != nil {
 		return LROsCustomHeaderPut201CreatingSucceeded200PollerResponse{}, err
 	}
-	poller := &lrOsCustomHeaderPut201CreatingSucceeded200Poller{
+	poller := &LROsCustomHeaderPut201CreatingSucceeded200Poller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -262,12 +245,10 @@ func (client *LROsCustomHeaderClient) ResumePut201CreatingSucceeded200(ctx conte
 		return LROsCustomHeaderPut201CreatingSucceeded200PollerResponse{}, err
 	}
 	result := LROsCustomHeaderPut201CreatingSucceeded200PollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsCustomHeaderPut201CreatingSucceeded200Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -334,12 +315,8 @@ func (client *LROsCustomHeaderClient) BeginPutAsyncRetrySucceeded(ctx context.Co
 	if err != nil {
 		return LROsCustomHeaderPutAsyncRetrySucceededPollerResponse{}, err
 	}
-	poller := &lrOsCustomHeaderPutAsyncRetrySucceededPoller{
+	result.Poller = &LROsCustomHeaderPutAsyncRetrySucceededPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsCustomHeaderPutAsyncRetrySucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -351,7 +328,7 @@ func (client *LROsCustomHeaderClient) ResumePutAsyncRetrySucceeded(ctx context.C
 	if err != nil {
 		return LROsCustomHeaderPutAsyncRetrySucceededPollerResponse{}, err
 	}
-	poller := &lrOsCustomHeaderPutAsyncRetrySucceededPoller{
+	poller := &LROsCustomHeaderPutAsyncRetrySucceededPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -359,12 +336,10 @@ func (client *LROsCustomHeaderClient) ResumePutAsyncRetrySucceeded(ctx context.C
 		return LROsCustomHeaderPutAsyncRetrySucceededPollerResponse{}, err
 	}
 	result := LROsCustomHeaderPutAsyncRetrySucceededPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsCustomHeaderPutAsyncRetrySucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 

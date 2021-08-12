@@ -107,8 +107,8 @@ func (client *aliasClient) createHandleError(resp *azcore.Response) error {
 // null, "lastUpdatedTimestamp":
 // "2020-02-18T19:53:33.123Z" } ] }
 // If the operation fails it returns a generic error.
-func (client *aliasClient) List(options *AliasListOptions) AliasListPager {
-	return &aliasListPager{
+func (client *aliasClient) List(options *AliasListOptions) *AliasListPager {
+	return &AliasListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, options)

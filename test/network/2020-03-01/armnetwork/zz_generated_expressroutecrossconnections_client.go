@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // ExpressRouteCrossConnectionsClient contains the methods for the ExpressRouteCrossConnections group.
@@ -45,12 +44,8 @@ func (client *ExpressRouteCrossConnectionsClient) BeginCreateOrUpdate(ctx contex
 	if err != nil {
 		return ExpressRouteCrossConnectionsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &expressRouteCrossConnectionsCreateOrUpdatePoller{
+	result.Poller = &ExpressRouteCrossConnectionsCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCrossConnectionsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *ExpressRouteCrossConnectionsClient) ResumeCreateOrUpdate(ctx conte
 	if err != nil {
 		return ExpressRouteCrossConnectionsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &expressRouteCrossConnectionsCreateOrUpdatePoller{
+	poller := &ExpressRouteCrossConnectionsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *ExpressRouteCrossConnectionsClient) ResumeCreateOrUpdate(ctx conte
 		return ExpressRouteCrossConnectionsCreateOrUpdatePollerResponse{}, err
 	}
 	result := ExpressRouteCrossConnectionsCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCrossConnectionsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -204,8 +197,8 @@ func (client *ExpressRouteCrossConnectionsClient) getHandleError(resp *azcore.Re
 
 // List - Retrieves all the ExpressRouteCrossConnections in a subscription.
 // If the operation fails it returns the *CloudError error type.
-func (client *ExpressRouteCrossConnectionsClient) List(options *ExpressRouteCrossConnectionsListOptions) ExpressRouteCrossConnectionsListPager {
-	return &expressRouteCrossConnectionsListPager{
+func (client *ExpressRouteCrossConnectionsClient) List(options *ExpressRouteCrossConnectionsListOptions) *ExpressRouteCrossConnectionsListPager {
+	return &ExpressRouteCrossConnectionsListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, options)
@@ -271,12 +264,8 @@ func (client *ExpressRouteCrossConnectionsClient) BeginListArpTable(ctx context.
 	if err != nil {
 		return ExpressRouteCrossConnectionsListArpTablePollerResponse{}, err
 	}
-	poller := &expressRouteCrossConnectionsListArpTablePoller{
+	result.Poller = &ExpressRouteCrossConnectionsListArpTablePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCrossConnectionsListArpTableResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -288,7 +277,7 @@ func (client *ExpressRouteCrossConnectionsClient) ResumeListArpTable(ctx context
 	if err != nil {
 		return ExpressRouteCrossConnectionsListArpTablePollerResponse{}, err
 	}
-	poller := &expressRouteCrossConnectionsListArpTablePoller{
+	poller := &ExpressRouteCrossConnectionsListArpTablePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -296,12 +285,10 @@ func (client *ExpressRouteCrossConnectionsClient) ResumeListArpTable(ctx context
 		return ExpressRouteCrossConnectionsListArpTablePollerResponse{}, err
 	}
 	result := ExpressRouteCrossConnectionsListArpTablePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCrossConnectionsListArpTableResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -372,8 +359,8 @@ func (client *ExpressRouteCrossConnectionsClient) listArpTableHandleError(resp *
 
 // ListByResourceGroup - Retrieves all the ExpressRouteCrossConnections in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *ExpressRouteCrossConnectionsClient) ListByResourceGroup(resourceGroupName string, options *ExpressRouteCrossConnectionsListByResourceGroupOptions) ExpressRouteCrossConnectionsListByResourceGroupPager {
-	return &expressRouteCrossConnectionsListByResourceGroupPager{
+func (client *ExpressRouteCrossConnectionsClient) ListByResourceGroup(resourceGroupName string, options *ExpressRouteCrossConnectionsListByResourceGroupOptions) *ExpressRouteCrossConnectionsListByResourceGroupPager {
+	return &ExpressRouteCrossConnectionsListByResourceGroupPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
@@ -443,12 +430,8 @@ func (client *ExpressRouteCrossConnectionsClient) BeginListRoutesTable(ctx conte
 	if err != nil {
 		return ExpressRouteCrossConnectionsListRoutesTablePollerResponse{}, err
 	}
-	poller := &expressRouteCrossConnectionsListRoutesTablePoller{
+	result.Poller = &ExpressRouteCrossConnectionsListRoutesTablePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCrossConnectionsListRoutesTableResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -460,7 +443,7 @@ func (client *ExpressRouteCrossConnectionsClient) ResumeListRoutesTable(ctx cont
 	if err != nil {
 		return ExpressRouteCrossConnectionsListRoutesTablePollerResponse{}, err
 	}
-	poller := &expressRouteCrossConnectionsListRoutesTablePoller{
+	poller := &ExpressRouteCrossConnectionsListRoutesTablePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -468,12 +451,10 @@ func (client *ExpressRouteCrossConnectionsClient) ResumeListRoutesTable(ctx cont
 		return ExpressRouteCrossConnectionsListRoutesTablePollerResponse{}, err
 	}
 	result := ExpressRouteCrossConnectionsListRoutesTablePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCrossConnectionsListRoutesTableResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -556,12 +537,8 @@ func (client *ExpressRouteCrossConnectionsClient) BeginListRoutesTableSummary(ct
 	if err != nil {
 		return ExpressRouteCrossConnectionsListRoutesTableSummaryPollerResponse{}, err
 	}
-	poller := &expressRouteCrossConnectionsListRoutesTableSummaryPoller{
+	result.Poller = &ExpressRouteCrossConnectionsListRoutesTableSummaryPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCrossConnectionsListRoutesTableSummaryResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -573,7 +550,7 @@ func (client *ExpressRouteCrossConnectionsClient) ResumeListRoutesTableSummary(c
 	if err != nil {
 		return ExpressRouteCrossConnectionsListRoutesTableSummaryPollerResponse{}, err
 	}
-	poller := &expressRouteCrossConnectionsListRoutesTableSummaryPoller{
+	poller := &ExpressRouteCrossConnectionsListRoutesTableSummaryPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -581,12 +558,10 @@ func (client *ExpressRouteCrossConnectionsClient) ResumeListRoutesTableSummary(c
 		return ExpressRouteCrossConnectionsListRoutesTableSummaryPollerResponse{}, err
 	}
 	result := ExpressRouteCrossConnectionsListRoutesTableSummaryPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRouteCrossConnectionsListRoutesTableSummaryResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 

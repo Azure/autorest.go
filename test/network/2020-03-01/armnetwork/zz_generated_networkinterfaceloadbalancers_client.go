@@ -32,8 +32,8 @@ func NewNetworkInterfaceLoadBalancersClient(con *armcore.Connection, subscriptio
 
 // List - List all load balancers in a network interface.
 // If the operation fails it returns the *CloudError error type.
-func (client *NetworkInterfaceLoadBalancersClient) List(resourceGroupName string, networkInterfaceName string, options *NetworkInterfaceLoadBalancersListOptions) NetworkInterfaceLoadBalancersListPager {
-	return &networkInterfaceLoadBalancersListPager{
+func (client *NetworkInterfaceLoadBalancersClient) List(resourceGroupName string, networkInterfaceName string, options *NetworkInterfaceLoadBalancersListOptions) *NetworkInterfaceLoadBalancersListPager {
+	return &NetworkInterfaceLoadBalancersListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, networkInterfaceName, options)

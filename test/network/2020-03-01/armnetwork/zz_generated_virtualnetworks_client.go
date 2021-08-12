@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // VirtualNetworksClient contains the methods for the VirtualNetworks group.
@@ -112,12 +111,8 @@ func (client *VirtualNetworksClient) BeginCreateOrUpdate(ctx context.Context, re
 	if err != nil {
 		return VirtualNetworksCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &virtualNetworksCreateOrUpdatePoller{
+	result.Poller = &VirtualNetworksCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworksCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -129,7 +124,7 @@ func (client *VirtualNetworksClient) ResumeCreateOrUpdate(ctx context.Context, t
 	if err != nil {
 		return VirtualNetworksCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &virtualNetworksCreateOrUpdatePoller{
+	poller := &VirtualNetworksCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -137,12 +132,10 @@ func (client *VirtualNetworksClient) ResumeCreateOrUpdate(ctx context.Context, t
 		return VirtualNetworksCreateOrUpdatePollerResponse{}, err
 	}
 	result := VirtualNetworksCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworksCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -217,12 +210,8 @@ func (client *VirtualNetworksClient) BeginDelete(ctx context.Context, resourceGr
 	if err != nil {
 		return VirtualNetworksDeletePollerResponse{}, err
 	}
-	poller := &virtualNetworksDeletePoller{
+	result.Poller = &VirtualNetworksDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworksDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -234,7 +223,7 @@ func (client *VirtualNetworksClient) ResumeDelete(ctx context.Context, token str
 	if err != nil {
 		return VirtualNetworksDeletePollerResponse{}, err
 	}
-	poller := &virtualNetworksDeletePoller{
+	poller := &VirtualNetworksDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -242,12 +231,10 @@ func (client *VirtualNetworksClient) ResumeDelete(ctx context.Context, token str
 		return VirtualNetworksDeletePollerResponse{}, err
 	}
 	result := VirtualNetworksDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualNetworksDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -379,8 +366,8 @@ func (client *VirtualNetworksClient) getHandleError(resp *azcore.Response) error
 
 // List - Gets all virtual networks in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualNetworksClient) List(resourceGroupName string, options *VirtualNetworksListOptions) VirtualNetworksListPager {
-	return &virtualNetworksListPager{
+func (client *VirtualNetworksClient) List(resourceGroupName string, options *VirtualNetworksListOptions) *VirtualNetworksListPager {
+	return &VirtualNetworksListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, options)
@@ -438,8 +425,8 @@ func (client *VirtualNetworksClient) listHandleError(resp *azcore.Response) erro
 
 // ListAll - Gets all virtual networks in a subscription.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualNetworksClient) ListAll(options *VirtualNetworksListAllOptions) VirtualNetworksListAllPager {
-	return &virtualNetworksListAllPager{
+func (client *VirtualNetworksClient) ListAll(options *VirtualNetworksListAllOptions) *VirtualNetworksListAllPager {
+	return &VirtualNetworksListAllPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listAllCreateRequest(ctx, options)
@@ -493,8 +480,8 @@ func (client *VirtualNetworksClient) listAllHandleError(resp *azcore.Response) e
 
 // ListUsage - Lists usage stats.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualNetworksClient) ListUsage(resourceGroupName string, virtualNetworkName string, options *VirtualNetworksListUsageOptions) VirtualNetworksListUsagePager {
-	return &virtualNetworksListUsagePager{
+func (client *VirtualNetworksClient) ListUsage(resourceGroupName string, virtualNetworkName string, options *VirtualNetworksListUsageOptions) *VirtualNetworksListUsagePager {
+	return &VirtualNetworksListUsagePager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listUsageCreateRequest(ctx, resourceGroupName, virtualNetworkName, options)

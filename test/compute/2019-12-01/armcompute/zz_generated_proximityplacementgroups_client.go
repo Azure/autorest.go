@@ -219,8 +219,8 @@ func (client *ProximityPlacementGroupsClient) getHandleError(resp *azcore.Respon
 
 // ListByResourceGroup - Lists all proximity placement groups in a resource group.
 // If the operation fails it returns a generic error.
-func (client *ProximityPlacementGroupsClient) ListByResourceGroup(resourceGroupName string, options *ProximityPlacementGroupsListByResourceGroupOptions) ProximityPlacementGroupsListByResourceGroupPager {
-	return &proximityPlacementGroupsListByResourceGroupPager{
+func (client *ProximityPlacementGroupsClient) ListByResourceGroup(resourceGroupName string, options *ProximityPlacementGroupsListByResourceGroupOptions) *ProximityPlacementGroupsListByResourceGroupPager {
+	return &ProximityPlacementGroupsListByResourceGroupPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
@@ -277,8 +277,8 @@ func (client *ProximityPlacementGroupsClient) listByResourceGroupHandleError(res
 
 // ListBySubscription - Lists all proximity placement groups in a subscription.
 // If the operation fails it returns a generic error.
-func (client *ProximityPlacementGroupsClient) ListBySubscription(options *ProximityPlacementGroupsListBySubscriptionOptions) ProximityPlacementGroupsListBySubscriptionPager {
-	return &proximityPlacementGroupsListBySubscriptionPager{
+func (client *ProximityPlacementGroupsClient) ListBySubscription(options *ProximityPlacementGroupsListBySubscriptionOptions) *ProximityPlacementGroupsListBySubscriptionPager {
+	return &ProximityPlacementGroupsListBySubscriptionPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listBySubscriptionCreateRequest(ctx, options)

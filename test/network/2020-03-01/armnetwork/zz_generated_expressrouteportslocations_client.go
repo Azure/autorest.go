@@ -95,8 +95,8 @@ func (client *ExpressRoutePortsLocationsClient) getHandleError(resp *azcore.Resp
 // List - Retrieves all ExpressRoutePort peering locations. Does not return available bandwidths for each location. Available bandwidths can only be obtained
 // when retrieving a specific peering location.
 // If the operation fails it returns the *CloudError error type.
-func (client *ExpressRoutePortsLocationsClient) List(options *ExpressRoutePortsLocationsListOptions) ExpressRoutePortsLocationsListPager {
-	return &expressRoutePortsLocationsListPager{
+func (client *ExpressRoutePortsLocationsClient) List(options *ExpressRoutePortsLocationsListOptions) *ExpressRoutePortsLocationsListPager {
+	return &ExpressRoutePortsLocationsListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, options)

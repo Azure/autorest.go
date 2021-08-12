@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // ExpressRoutePortsClient contains the methods for the ExpressRoutePorts group.
@@ -45,12 +44,8 @@ func (client *ExpressRoutePortsClient) BeginCreateOrUpdate(ctx context.Context, 
 	if err != nil {
 		return ExpressRoutePortsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &expressRoutePortsCreateOrUpdatePoller{
+	result.Poller = &ExpressRoutePortsCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRoutePortsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *ExpressRoutePortsClient) ResumeCreateOrUpdate(ctx context.Context,
 	if err != nil {
 		return ExpressRoutePortsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &expressRoutePortsCreateOrUpdatePoller{
+	poller := &ExpressRoutePortsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *ExpressRoutePortsClient) ResumeCreateOrUpdate(ctx context.Context,
 		return ExpressRoutePortsCreateOrUpdatePollerResponse{}, err
 	}
 	result := ExpressRoutePortsCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRoutePortsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -150,12 +143,8 @@ func (client *ExpressRoutePortsClient) BeginDelete(ctx context.Context, resource
 	if err != nil {
 		return ExpressRoutePortsDeletePollerResponse{}, err
 	}
-	poller := &expressRoutePortsDeletePoller{
+	result.Poller = &ExpressRoutePortsDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRoutePortsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -167,7 +156,7 @@ func (client *ExpressRoutePortsClient) ResumeDelete(ctx context.Context, token s
 	if err != nil {
 		return ExpressRoutePortsDeletePollerResponse{}, err
 	}
-	poller := &expressRoutePortsDeletePoller{
+	poller := &ExpressRoutePortsDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -175,12 +164,10 @@ func (client *ExpressRoutePortsClient) ResumeDelete(ctx context.Context, token s
 		return ExpressRoutePortsDeletePollerResponse{}, err
 	}
 	result := ExpressRoutePortsDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ExpressRoutePortsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -309,8 +296,8 @@ func (client *ExpressRoutePortsClient) getHandleError(resp *azcore.Response) err
 
 // List - List all the ExpressRoutePort resources in the specified subscription.
 // If the operation fails it returns the *CloudError error type.
-func (client *ExpressRoutePortsClient) List(options *ExpressRoutePortsListOptions) ExpressRoutePortsListPager {
-	return &expressRoutePortsListPager{
+func (client *ExpressRoutePortsClient) List(options *ExpressRoutePortsListOptions) *ExpressRoutePortsListPager {
+	return &ExpressRoutePortsListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, options)
@@ -364,8 +351,8 @@ func (client *ExpressRoutePortsClient) listHandleError(resp *azcore.Response) er
 
 // ListByResourceGroup - List all the ExpressRoutePort resources in the specified resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *ExpressRoutePortsClient) ListByResourceGroup(resourceGroupName string, options *ExpressRoutePortsListByResourceGroupOptions) ExpressRoutePortsListByResourceGroupPager {
-	return &expressRoutePortsListByResourceGroupPager{
+func (client *ExpressRoutePortsClient) ListByResourceGroup(resourceGroupName string, options *ExpressRoutePortsListByResourceGroupOptions) *ExpressRoutePortsListByResourceGroupPager {
+	return &ExpressRoutePortsListByResourceGroupPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)

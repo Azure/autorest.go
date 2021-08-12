@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // ServiceEndpointPolicyDefinitionsClient contains the methods for the ServiceEndpointPolicyDefinitions group.
@@ -45,12 +44,8 @@ func (client *ServiceEndpointPolicyDefinitionsClient) BeginCreateOrUpdate(ctx co
 	if err != nil {
 		return ServiceEndpointPolicyDefinitionsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &serviceEndpointPolicyDefinitionsCreateOrUpdatePoller{
+	result.Poller = &ServiceEndpointPolicyDefinitionsCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ServiceEndpointPolicyDefinitionsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *ServiceEndpointPolicyDefinitionsClient) ResumeCreateOrUpdate(ctx c
 	if err != nil {
 		return ServiceEndpointPolicyDefinitionsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &serviceEndpointPolicyDefinitionsCreateOrUpdatePoller{
+	poller := &ServiceEndpointPolicyDefinitionsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *ServiceEndpointPolicyDefinitionsClient) ResumeCreateOrUpdate(ctx c
 		return ServiceEndpointPolicyDefinitionsCreateOrUpdatePollerResponse{}, err
 	}
 	result := ServiceEndpointPolicyDefinitionsCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ServiceEndpointPolicyDefinitionsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -154,12 +147,8 @@ func (client *ServiceEndpointPolicyDefinitionsClient) BeginDelete(ctx context.Co
 	if err != nil {
 		return ServiceEndpointPolicyDefinitionsDeletePollerResponse{}, err
 	}
-	poller := &serviceEndpointPolicyDefinitionsDeletePoller{
+	result.Poller = &ServiceEndpointPolicyDefinitionsDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ServiceEndpointPolicyDefinitionsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -171,7 +160,7 @@ func (client *ServiceEndpointPolicyDefinitionsClient) ResumeDelete(ctx context.C
 	if err != nil {
 		return ServiceEndpointPolicyDefinitionsDeletePollerResponse{}, err
 	}
-	poller := &serviceEndpointPolicyDefinitionsDeletePoller{
+	poller := &ServiceEndpointPolicyDefinitionsDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -179,12 +168,10 @@ func (client *ServiceEndpointPolicyDefinitionsClient) ResumeDelete(ctx context.C
 		return ServiceEndpointPolicyDefinitionsDeletePollerResponse{}, err
 	}
 	result := ServiceEndpointPolicyDefinitionsDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (ServiceEndpointPolicyDefinitionsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -321,8 +308,8 @@ func (client *ServiceEndpointPolicyDefinitionsClient) getHandleError(resp *azcor
 
 // ListByResourceGroup - Gets all service endpoint policy definitions in a service end point policy.
 // If the operation fails it returns the *CloudError error type.
-func (client *ServiceEndpointPolicyDefinitionsClient) ListByResourceGroup(resourceGroupName string, serviceEndpointPolicyName string, options *ServiceEndpointPolicyDefinitionsListByResourceGroupOptions) ServiceEndpointPolicyDefinitionsListByResourceGroupPager {
-	return &serviceEndpointPolicyDefinitionsListByResourceGroupPager{
+func (client *ServiceEndpointPolicyDefinitionsClient) ListByResourceGroup(resourceGroupName string, serviceEndpointPolicyName string, options *ServiceEndpointPolicyDefinitionsListByResourceGroupOptions) *ServiceEndpointPolicyDefinitionsListByResourceGroupPager {
+	return &ServiceEndpointPolicyDefinitionsListByResourceGroupPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, serviceEndpointPolicyName, options)

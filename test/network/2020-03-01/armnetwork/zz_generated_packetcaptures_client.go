@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // PacketCapturesClient contains the methods for the PacketCaptures group.
@@ -45,12 +44,8 @@ func (client *PacketCapturesClient) BeginCreate(ctx context.Context, resourceGro
 	if err != nil {
 		return PacketCapturesCreatePollerResponse{}, err
 	}
-	poller := &packetCapturesCreatePoller{
+	result.Poller = &PacketCapturesCreatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PacketCapturesCreateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *PacketCapturesClient) ResumeCreate(ctx context.Context, token stri
 	if err != nil {
 		return PacketCapturesCreatePollerResponse{}, err
 	}
-	poller := &packetCapturesCreatePoller{
+	poller := &PacketCapturesCreatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *PacketCapturesClient) ResumeCreate(ctx context.Context, token stri
 		return PacketCapturesCreatePollerResponse{}, err
 	}
 	result := PacketCapturesCreatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PacketCapturesCreateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -154,12 +147,8 @@ func (client *PacketCapturesClient) BeginDelete(ctx context.Context, resourceGro
 	if err != nil {
 		return PacketCapturesDeletePollerResponse{}, err
 	}
-	poller := &packetCapturesDeletePoller{
+	result.Poller = &PacketCapturesDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PacketCapturesDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -171,7 +160,7 @@ func (client *PacketCapturesClient) ResumeDelete(ctx context.Context, token stri
 	if err != nil {
 		return PacketCapturesDeletePollerResponse{}, err
 	}
-	poller := &packetCapturesDeletePoller{
+	poller := &PacketCapturesDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -179,12 +168,10 @@ func (client *PacketCapturesClient) ResumeDelete(ctx context.Context, token stri
 		return PacketCapturesDeletePollerResponse{}, err
 	}
 	result := PacketCapturesDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PacketCapturesDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -333,12 +320,8 @@ func (client *PacketCapturesClient) BeginGetStatus(ctx context.Context, resource
 	if err != nil {
 		return PacketCapturesGetStatusPollerResponse{}, err
 	}
-	poller := &packetCapturesGetStatusPoller{
+	result.Poller = &PacketCapturesGetStatusPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PacketCapturesGetStatusResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -350,7 +333,7 @@ func (client *PacketCapturesClient) ResumeGetStatus(ctx context.Context, token s
 	if err != nil {
 		return PacketCapturesGetStatusPollerResponse{}, err
 	}
-	poller := &packetCapturesGetStatusPoller{
+	poller := &PacketCapturesGetStatusPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -358,12 +341,10 @@ func (client *PacketCapturesClient) ResumeGetStatus(ctx context.Context, token s
 		return PacketCapturesGetStatusPollerResponse{}, err
 	}
 	result := PacketCapturesGetStatusPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PacketCapturesGetStatusResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -508,12 +489,8 @@ func (client *PacketCapturesClient) BeginStop(ctx context.Context, resourceGroup
 	if err != nil {
 		return PacketCapturesStopPollerResponse{}, err
 	}
-	poller := &packetCapturesStopPoller{
+	result.Poller = &PacketCapturesStopPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PacketCapturesStopResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -525,7 +502,7 @@ func (client *PacketCapturesClient) ResumeStop(ctx context.Context, token string
 	if err != nil {
 		return PacketCapturesStopPollerResponse{}, err
 	}
-	poller := &packetCapturesStopPoller{
+	poller := &PacketCapturesStopPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -533,12 +510,10 @@ func (client *PacketCapturesClient) ResumeStop(ctx context.Context, token string
 		return PacketCapturesStopPollerResponse{}, err
 	}
 	result := PacketCapturesStopPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PacketCapturesStopResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 

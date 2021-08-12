@@ -15,14 +15,22 @@ import (
 
 // ApplicationGatewaysBackendHealthOnDemandPollerResponse contains the response from method ApplicationGateways.BackendHealthOnDemand.
 type ApplicationGatewaysBackendHealthOnDemandPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ApplicationGatewaysBackendHealthOnDemandResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller ApplicationGatewaysBackendHealthOnDemandPoller
+	Poller *ApplicationGatewaysBackendHealthOnDemandPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l ApplicationGatewaysBackendHealthOnDemandPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ApplicationGatewaysBackendHealthOnDemandResponse, error) {
+	respType := ApplicationGatewaysBackendHealthOnDemandResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.ApplicationGatewayBackendHealthOnDemand)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ApplicationGatewaysBackendHealthOnDemandResponse contains the response from method ApplicationGateways.BackendHealthOnDemand.
@@ -39,14 +47,22 @@ type ApplicationGatewaysBackendHealthOnDemandResult struct {
 
 // ApplicationGatewaysBackendHealthPollerResponse contains the response from method ApplicationGateways.BackendHealth.
 type ApplicationGatewaysBackendHealthPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ApplicationGatewaysBackendHealthResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller ApplicationGatewaysBackendHealthPoller
+	Poller *ApplicationGatewaysBackendHealthPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l ApplicationGatewaysBackendHealthPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ApplicationGatewaysBackendHealthResponse, error) {
+	respType := ApplicationGatewaysBackendHealthResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.ApplicationGatewayBackendHealth)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ApplicationGatewaysBackendHealthResponse contains the response from method ApplicationGateways.BackendHealth.
@@ -63,14 +79,22 @@ type ApplicationGatewaysBackendHealthResult struct {
 
 // ApplicationGatewaysCreateOrUpdatePollerResponse contains the response from method ApplicationGateways.CreateOrUpdate.
 type ApplicationGatewaysCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ApplicationGatewaysCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller ApplicationGatewaysCreateOrUpdatePoller
+	Poller *ApplicationGatewaysCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l ApplicationGatewaysCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ApplicationGatewaysCreateOrUpdateResponse, error) {
+	respType := ApplicationGatewaysCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.ApplicationGateway)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ApplicationGatewaysCreateOrUpdateResponse contains the response from method ApplicationGateways.CreateOrUpdate.
@@ -87,14 +111,22 @@ type ApplicationGatewaysCreateOrUpdateResult struct {
 
 // ApplicationGatewaysDeletePollerResponse contains the response from method ApplicationGateways.Delete.
 type ApplicationGatewaysDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ApplicationGatewaysDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller ApplicationGatewaysDeletePoller
+	Poller *ApplicationGatewaysDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l ApplicationGatewaysDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ApplicationGatewaysDeleteResponse, error) {
+	respType := ApplicationGatewaysDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ApplicationGatewaysDeleteResponse contains the response from method ApplicationGateways.Delete.
@@ -228,14 +260,22 @@ type ApplicationGatewaysListResult struct {
 
 // ApplicationGatewaysStartPollerResponse contains the response from method ApplicationGateways.Start.
 type ApplicationGatewaysStartPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ApplicationGatewaysStartResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller ApplicationGatewaysStartPoller
+	Poller *ApplicationGatewaysStartPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l ApplicationGatewaysStartPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ApplicationGatewaysStartResponse, error) {
+	respType := ApplicationGatewaysStartResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ApplicationGatewaysStartResponse contains the response from method ApplicationGateways.Start.
@@ -246,14 +286,22 @@ type ApplicationGatewaysStartResponse struct {
 
 // ApplicationGatewaysStopPollerResponse contains the response from method ApplicationGateways.Stop.
 type ApplicationGatewaysStopPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ApplicationGatewaysStopResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller ApplicationGatewaysStopPoller
+	Poller *ApplicationGatewaysStopPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l ApplicationGatewaysStopPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ApplicationGatewaysStopResponse, error) {
+	respType := ApplicationGatewaysStopResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ApplicationGatewaysStopResponse contains the response from method ApplicationGateways.Stop.
@@ -276,14 +324,22 @@ type ApplicationGatewaysUpdateTagsResult struct {
 
 // ApplicationSecurityGroupsCreateOrUpdatePollerResponse contains the response from method ApplicationSecurityGroups.CreateOrUpdate.
 type ApplicationSecurityGroupsCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ApplicationSecurityGroupsCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller ApplicationSecurityGroupsCreateOrUpdatePoller
+	Poller *ApplicationSecurityGroupsCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l ApplicationSecurityGroupsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ApplicationSecurityGroupsCreateOrUpdateResponse, error) {
+	respType := ApplicationSecurityGroupsCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.ApplicationSecurityGroup)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ApplicationSecurityGroupsCreateOrUpdateResponse contains the response from method ApplicationSecurityGroups.CreateOrUpdate.
@@ -300,14 +356,22 @@ type ApplicationSecurityGroupsCreateOrUpdateResult struct {
 
 // ApplicationSecurityGroupsDeletePollerResponse contains the response from method ApplicationSecurityGroups.Delete.
 type ApplicationSecurityGroupsDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ApplicationSecurityGroupsDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller ApplicationSecurityGroupsDeletePoller
+	Poller *ApplicationSecurityGroupsDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l ApplicationSecurityGroupsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ApplicationSecurityGroupsDeleteResponse, error) {
+	respType := ApplicationSecurityGroupsDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ApplicationSecurityGroupsDeleteResponse contains the response from method ApplicationSecurityGroups.Delete.
@@ -462,14 +526,22 @@ type AzureFirewallFqdnTagsListAllResult struct {
 
 // AzureFirewallsCreateOrUpdatePollerResponse contains the response from method AzureFirewalls.CreateOrUpdate.
 type AzureFirewallsCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (AzureFirewallsCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller AzureFirewallsCreateOrUpdatePoller
+	Poller *AzureFirewallsCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l AzureFirewallsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (AzureFirewallsCreateOrUpdateResponse, error) {
+	respType := AzureFirewallsCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.AzureFirewall)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // AzureFirewallsCreateOrUpdateResponse contains the response from method AzureFirewalls.CreateOrUpdate.
@@ -486,14 +558,22 @@ type AzureFirewallsCreateOrUpdateResult struct {
 
 // AzureFirewallsDeletePollerResponse contains the response from method AzureFirewalls.Delete.
 type AzureFirewallsDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (AzureFirewallsDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller AzureFirewallsDeletePoller
+	Poller *AzureFirewallsDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l AzureFirewallsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (AzureFirewallsDeleteResponse, error) {
+	respType := AzureFirewallsDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // AzureFirewallsDeleteResponse contains the response from method AzureFirewalls.Delete.
@@ -540,14 +620,22 @@ type AzureFirewallsListResult struct {
 
 // AzureFirewallsUpdateTagsPollerResponse contains the response from method AzureFirewalls.UpdateTags.
 type AzureFirewallsUpdateTagsPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (AzureFirewallsUpdateTagsResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller AzureFirewallsUpdateTagsPoller
+	Poller *AzureFirewallsUpdateTagsPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l AzureFirewallsUpdateTagsPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (AzureFirewallsUpdateTagsResponse, error) {
+	respType := AzureFirewallsUpdateTagsResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.AzureFirewall)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // AzureFirewallsUpdateTagsResponse contains the response from method AzureFirewalls.UpdateTags.
@@ -564,14 +652,22 @@ type AzureFirewallsUpdateTagsResult struct {
 
 // BastionHostsCreateOrUpdatePollerResponse contains the response from method BastionHosts.CreateOrUpdate.
 type BastionHostsCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (BastionHostsCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller BastionHostsCreateOrUpdatePoller
+	Poller *BastionHostsCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l BastionHostsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (BastionHostsCreateOrUpdateResponse, error) {
+	respType := BastionHostsCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.BastionHost)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // BastionHostsCreateOrUpdateResponse contains the response from method BastionHosts.CreateOrUpdate.
@@ -588,14 +684,22 @@ type BastionHostsCreateOrUpdateResult struct {
 
 // BastionHostsDeletePollerResponse contains the response from method BastionHosts.Delete.
 type BastionHostsDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (BastionHostsDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller BastionHostsDeletePoller
+	Poller *BastionHostsDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l BastionHostsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (BastionHostsDeleteResponse, error) {
+	respType := BastionHostsDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // BastionHostsDeleteResponse contains the response from method BastionHosts.Delete.
@@ -654,14 +758,22 @@ type BgpServiceCommunitiesListResult struct {
 
 // ConnectionMonitorsCreateOrUpdatePollerResponse contains the response from method ConnectionMonitors.CreateOrUpdate.
 type ConnectionMonitorsCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ConnectionMonitorsCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller ConnectionMonitorsCreateOrUpdatePoller
+	Poller *ConnectionMonitorsCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l ConnectionMonitorsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ConnectionMonitorsCreateOrUpdateResponse, error) {
+	respType := ConnectionMonitorsCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.ConnectionMonitorResult)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ConnectionMonitorsCreateOrUpdateResponse contains the response from method ConnectionMonitors.CreateOrUpdate.
@@ -678,14 +790,22 @@ type ConnectionMonitorsCreateOrUpdateResult struct {
 
 // ConnectionMonitorsDeletePollerResponse contains the response from method ConnectionMonitors.Delete.
 type ConnectionMonitorsDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ConnectionMonitorsDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller ConnectionMonitorsDeletePoller
+	Poller *ConnectionMonitorsDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l ConnectionMonitorsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ConnectionMonitorsDeleteResponse, error) {
+	respType := ConnectionMonitorsDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ConnectionMonitorsDeleteResponse contains the response from method ConnectionMonitors.Delete.
@@ -720,14 +840,22 @@ type ConnectionMonitorsListResult struct {
 
 // ConnectionMonitorsQueryPollerResponse contains the response from method ConnectionMonitors.Query.
 type ConnectionMonitorsQueryPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ConnectionMonitorsQueryResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller ConnectionMonitorsQueryPoller
+	Poller *ConnectionMonitorsQueryPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l ConnectionMonitorsQueryPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ConnectionMonitorsQueryResponse, error) {
+	respType := ConnectionMonitorsQueryResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.ConnectionMonitorQueryResult)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ConnectionMonitorsQueryResponse contains the response from method ConnectionMonitors.Query.
@@ -744,14 +872,22 @@ type ConnectionMonitorsQueryResult struct {
 
 // ConnectionMonitorsStartPollerResponse contains the response from method ConnectionMonitors.Start.
 type ConnectionMonitorsStartPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ConnectionMonitorsStartResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller ConnectionMonitorsStartPoller
+	Poller *ConnectionMonitorsStartPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l ConnectionMonitorsStartPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ConnectionMonitorsStartResponse, error) {
+	respType := ConnectionMonitorsStartResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ConnectionMonitorsStartResponse contains the response from method ConnectionMonitors.Start.
@@ -762,14 +898,22 @@ type ConnectionMonitorsStartResponse struct {
 
 // ConnectionMonitorsStopPollerResponse contains the response from method ConnectionMonitors.Stop.
 type ConnectionMonitorsStopPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ConnectionMonitorsStopResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller ConnectionMonitorsStopPoller
+	Poller *ConnectionMonitorsStopPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l ConnectionMonitorsStopPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ConnectionMonitorsStopResponse, error) {
+	respType := ConnectionMonitorsStopResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ConnectionMonitorsStopResponse contains the response from method ConnectionMonitors.Stop.
@@ -792,14 +936,22 @@ type ConnectionMonitorsUpdateTagsResult struct {
 
 // DdosCustomPoliciesCreateOrUpdatePollerResponse contains the response from method DdosCustomPolicies.CreateOrUpdate.
 type DdosCustomPoliciesCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (DdosCustomPoliciesCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller DdosCustomPoliciesCreateOrUpdatePoller
+	Poller *DdosCustomPoliciesCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l DdosCustomPoliciesCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (DdosCustomPoliciesCreateOrUpdateResponse, error) {
+	respType := DdosCustomPoliciesCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.DdosCustomPolicy)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // DdosCustomPoliciesCreateOrUpdateResponse contains the response from method DdosCustomPolicies.CreateOrUpdate.
@@ -816,14 +968,22 @@ type DdosCustomPoliciesCreateOrUpdateResult struct {
 
 // DdosCustomPoliciesDeletePollerResponse contains the response from method DdosCustomPolicies.Delete.
 type DdosCustomPoliciesDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (DdosCustomPoliciesDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller DdosCustomPoliciesDeletePoller
+	Poller *DdosCustomPoliciesDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l DdosCustomPoliciesDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (DdosCustomPoliciesDeleteResponse, error) {
+	respType := DdosCustomPoliciesDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // DdosCustomPoliciesDeleteResponse contains the response from method DdosCustomPolicies.Delete.
@@ -858,14 +1018,22 @@ type DdosCustomPoliciesUpdateTagsResult struct {
 
 // DdosProtectionPlansCreateOrUpdatePollerResponse contains the response from method DdosProtectionPlans.CreateOrUpdate.
 type DdosProtectionPlansCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (DdosProtectionPlansCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller DdosProtectionPlansCreateOrUpdatePoller
+	Poller *DdosProtectionPlansCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l DdosProtectionPlansCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (DdosProtectionPlansCreateOrUpdateResponse, error) {
+	respType := DdosProtectionPlansCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.DdosProtectionPlan)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // DdosProtectionPlansCreateOrUpdateResponse contains the response from method DdosProtectionPlans.CreateOrUpdate.
@@ -882,14 +1050,22 @@ type DdosProtectionPlansCreateOrUpdateResult struct {
 
 // DdosProtectionPlansDeletePollerResponse contains the response from method DdosProtectionPlans.Delete.
 type DdosProtectionPlansDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (DdosProtectionPlansDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller DdosProtectionPlansDeletePoller
+	Poller *DdosProtectionPlansDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l DdosProtectionPlansDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (DdosProtectionPlansDeleteResponse, error) {
+	respType := DdosProtectionPlansDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // DdosProtectionPlansDeleteResponse contains the response from method DdosProtectionPlans.Delete.
@@ -972,14 +1148,22 @@ type DefaultSecurityRulesListResult struct {
 
 // ExpressRouteCircuitAuthorizationsCreateOrUpdatePollerResponse contains the response from method ExpressRouteCircuitAuthorizations.CreateOrUpdate.
 type ExpressRouteCircuitAuthorizationsCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitAuthorizationsCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller ExpressRouteCircuitAuthorizationsCreateOrUpdatePoller
+	Poller *ExpressRouteCircuitAuthorizationsCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l ExpressRouteCircuitAuthorizationsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ExpressRouteCircuitAuthorizationsCreateOrUpdateResponse, error) {
+	respType := ExpressRouteCircuitAuthorizationsCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.ExpressRouteCircuitAuthorization)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ExpressRouteCircuitAuthorizationsCreateOrUpdateResponse contains the response from method ExpressRouteCircuitAuthorizations.CreateOrUpdate.
@@ -996,14 +1180,22 @@ type ExpressRouteCircuitAuthorizationsCreateOrUpdateResult struct {
 
 // ExpressRouteCircuitAuthorizationsDeletePollerResponse contains the response from method ExpressRouteCircuitAuthorizations.Delete.
 type ExpressRouteCircuitAuthorizationsDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitAuthorizationsDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller ExpressRouteCircuitAuthorizationsDeletePoller
+	Poller *ExpressRouteCircuitAuthorizationsDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l ExpressRouteCircuitAuthorizationsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ExpressRouteCircuitAuthorizationsDeleteResponse, error) {
+	respType := ExpressRouteCircuitAuthorizationsDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ExpressRouteCircuitAuthorizationsDeleteResponse contains the response from method ExpressRouteCircuitAuthorizations.Delete.
@@ -1038,14 +1230,22 @@ type ExpressRouteCircuitAuthorizationsListResult struct {
 
 // ExpressRouteCircuitConnectionsCreateOrUpdatePollerResponse contains the response from method ExpressRouteCircuitConnections.CreateOrUpdate.
 type ExpressRouteCircuitConnectionsCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitConnectionsCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller ExpressRouteCircuitConnectionsCreateOrUpdatePoller
+	Poller *ExpressRouteCircuitConnectionsCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l ExpressRouteCircuitConnectionsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ExpressRouteCircuitConnectionsCreateOrUpdateResponse, error) {
+	respType := ExpressRouteCircuitConnectionsCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.ExpressRouteCircuitConnection)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ExpressRouteCircuitConnectionsCreateOrUpdateResponse contains the response from method ExpressRouteCircuitConnections.CreateOrUpdate.
@@ -1062,14 +1262,22 @@ type ExpressRouteCircuitConnectionsCreateOrUpdateResult struct {
 
 // ExpressRouteCircuitConnectionsDeletePollerResponse contains the response from method ExpressRouteCircuitConnections.Delete.
 type ExpressRouteCircuitConnectionsDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitConnectionsDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller ExpressRouteCircuitConnectionsDeletePoller
+	Poller *ExpressRouteCircuitConnectionsDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l ExpressRouteCircuitConnectionsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ExpressRouteCircuitConnectionsDeleteResponse, error) {
+	respType := ExpressRouteCircuitConnectionsDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ExpressRouteCircuitConnectionsDeleteResponse contains the response from method ExpressRouteCircuitConnections.Delete.
@@ -1104,14 +1312,22 @@ type ExpressRouteCircuitConnectionsListResult struct {
 
 // ExpressRouteCircuitPeeringsCreateOrUpdatePollerResponse contains the response from method ExpressRouteCircuitPeerings.CreateOrUpdate.
 type ExpressRouteCircuitPeeringsCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitPeeringsCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller ExpressRouteCircuitPeeringsCreateOrUpdatePoller
+	Poller *ExpressRouteCircuitPeeringsCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l ExpressRouteCircuitPeeringsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ExpressRouteCircuitPeeringsCreateOrUpdateResponse, error) {
+	respType := ExpressRouteCircuitPeeringsCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.ExpressRouteCircuitPeering)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ExpressRouteCircuitPeeringsCreateOrUpdateResponse contains the response from method ExpressRouteCircuitPeerings.CreateOrUpdate.
@@ -1128,14 +1344,22 @@ type ExpressRouteCircuitPeeringsCreateOrUpdateResult struct {
 
 // ExpressRouteCircuitPeeringsDeletePollerResponse contains the response from method ExpressRouteCircuitPeerings.Delete.
 type ExpressRouteCircuitPeeringsDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitPeeringsDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller ExpressRouteCircuitPeeringsDeletePoller
+	Poller *ExpressRouteCircuitPeeringsDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l ExpressRouteCircuitPeeringsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ExpressRouteCircuitPeeringsDeleteResponse, error) {
+	respType := ExpressRouteCircuitPeeringsDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ExpressRouteCircuitPeeringsDeleteResponse contains the response from method ExpressRouteCircuitPeerings.Delete.
@@ -1170,14 +1394,22 @@ type ExpressRouteCircuitPeeringsListResult struct {
 
 // ExpressRouteCircuitsCreateOrUpdatePollerResponse contains the response from method ExpressRouteCircuits.CreateOrUpdate.
 type ExpressRouteCircuitsCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitsCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller ExpressRouteCircuitsCreateOrUpdatePoller
+	Poller *ExpressRouteCircuitsCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l ExpressRouteCircuitsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ExpressRouteCircuitsCreateOrUpdateResponse, error) {
+	respType := ExpressRouteCircuitsCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.ExpressRouteCircuit)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ExpressRouteCircuitsCreateOrUpdateResponse contains the response from method ExpressRouteCircuits.CreateOrUpdate.
@@ -1194,14 +1426,22 @@ type ExpressRouteCircuitsCreateOrUpdateResult struct {
 
 // ExpressRouteCircuitsDeletePollerResponse contains the response from method ExpressRouteCircuits.Delete.
 type ExpressRouteCircuitsDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitsDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller ExpressRouteCircuitsDeletePoller
+	Poller *ExpressRouteCircuitsDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l ExpressRouteCircuitsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ExpressRouteCircuitsDeleteResponse, error) {
+	respType := ExpressRouteCircuitsDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ExpressRouteCircuitsDeleteResponse contains the response from method ExpressRouteCircuits.Delete.
@@ -1260,14 +1500,22 @@ type ExpressRouteCircuitsListAllResult struct {
 
 // ExpressRouteCircuitsListArpTablePollerResponse contains the response from method ExpressRouteCircuits.ListArpTable.
 type ExpressRouteCircuitsListArpTablePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitsListArpTableResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller ExpressRouteCircuitsListArpTablePoller
+	Poller *ExpressRouteCircuitsListArpTablePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l ExpressRouteCircuitsListArpTablePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ExpressRouteCircuitsListArpTableResponse, error) {
+	respType := ExpressRouteCircuitsListArpTableResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.ExpressRouteCircuitsArpTableListResult)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ExpressRouteCircuitsListArpTableResponse contains the response from method ExpressRouteCircuits.ListArpTable.
@@ -1296,14 +1544,22 @@ type ExpressRouteCircuitsListResult struct {
 
 // ExpressRouteCircuitsListRoutesTablePollerResponse contains the response from method ExpressRouteCircuits.ListRoutesTable.
 type ExpressRouteCircuitsListRoutesTablePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitsListRoutesTableResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller ExpressRouteCircuitsListRoutesTablePoller
+	Poller *ExpressRouteCircuitsListRoutesTablePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l ExpressRouteCircuitsListRoutesTablePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ExpressRouteCircuitsListRoutesTableResponse, error) {
+	respType := ExpressRouteCircuitsListRoutesTableResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.ExpressRouteCircuitsRoutesTableListResult)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ExpressRouteCircuitsListRoutesTableResponse contains the response from method ExpressRouteCircuits.ListRoutesTable.
@@ -1320,14 +1576,22 @@ type ExpressRouteCircuitsListRoutesTableResult struct {
 
 // ExpressRouteCircuitsListRoutesTableSummaryPollerResponse contains the response from method ExpressRouteCircuits.ListRoutesTableSummary.
 type ExpressRouteCircuitsListRoutesTableSummaryPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCircuitsListRoutesTableSummaryResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller ExpressRouteCircuitsListRoutesTableSummaryPoller
+	Poller *ExpressRouteCircuitsListRoutesTableSummaryPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l ExpressRouteCircuitsListRoutesTableSummaryPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ExpressRouteCircuitsListRoutesTableSummaryResponse, error) {
+	respType := ExpressRouteCircuitsListRoutesTableSummaryResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.ExpressRouteCircuitsRoutesTableSummaryListResult)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ExpressRouteCircuitsListRoutesTableSummaryResponse contains the response from method ExpressRouteCircuits.ListRoutesTableSummary.
@@ -1356,14 +1620,22 @@ type ExpressRouteCircuitsUpdateTagsResult struct {
 
 // ExpressRouteConnectionsCreateOrUpdatePollerResponse contains the response from method ExpressRouteConnections.CreateOrUpdate.
 type ExpressRouteConnectionsCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteConnectionsCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller ExpressRouteConnectionsCreateOrUpdatePoller
+	Poller *ExpressRouteConnectionsCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l ExpressRouteConnectionsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ExpressRouteConnectionsCreateOrUpdateResponse, error) {
+	respType := ExpressRouteConnectionsCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.ExpressRouteConnection)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ExpressRouteConnectionsCreateOrUpdateResponse contains the response from method ExpressRouteConnections.CreateOrUpdate.
@@ -1380,14 +1652,22 @@ type ExpressRouteConnectionsCreateOrUpdateResult struct {
 
 // ExpressRouteConnectionsDeletePollerResponse contains the response from method ExpressRouteConnections.Delete.
 type ExpressRouteConnectionsDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteConnectionsDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller ExpressRouteConnectionsDeletePoller
+	Poller *ExpressRouteConnectionsDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l ExpressRouteConnectionsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ExpressRouteConnectionsDeleteResponse, error) {
+	respType := ExpressRouteConnectionsDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ExpressRouteConnectionsDeleteResponse contains the response from method ExpressRouteConnections.Delete.
@@ -1422,14 +1702,22 @@ type ExpressRouteConnectionsListResult struct {
 
 // ExpressRouteCrossConnectionPeeringsCreateOrUpdatePollerResponse contains the response from method ExpressRouteCrossConnectionPeerings.CreateOrUpdate.
 type ExpressRouteCrossConnectionPeeringsCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCrossConnectionPeeringsCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller ExpressRouteCrossConnectionPeeringsCreateOrUpdatePoller
+	Poller *ExpressRouteCrossConnectionPeeringsCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l ExpressRouteCrossConnectionPeeringsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ExpressRouteCrossConnectionPeeringsCreateOrUpdateResponse, error) {
+	respType := ExpressRouteCrossConnectionPeeringsCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.ExpressRouteCrossConnectionPeering)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ExpressRouteCrossConnectionPeeringsCreateOrUpdateResponse contains the response from method ExpressRouteCrossConnectionPeerings.CreateOrUpdate.
@@ -1446,14 +1734,22 @@ type ExpressRouteCrossConnectionPeeringsCreateOrUpdateResult struct {
 
 // ExpressRouteCrossConnectionPeeringsDeletePollerResponse contains the response from method ExpressRouteCrossConnectionPeerings.Delete.
 type ExpressRouteCrossConnectionPeeringsDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCrossConnectionPeeringsDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller ExpressRouteCrossConnectionPeeringsDeletePoller
+	Poller *ExpressRouteCrossConnectionPeeringsDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l ExpressRouteCrossConnectionPeeringsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ExpressRouteCrossConnectionPeeringsDeleteResponse, error) {
+	respType := ExpressRouteCrossConnectionPeeringsDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ExpressRouteCrossConnectionPeeringsDeleteResponse contains the response from method ExpressRouteCrossConnectionPeerings.Delete.
@@ -1488,14 +1784,22 @@ type ExpressRouteCrossConnectionPeeringsListResult struct {
 
 // ExpressRouteCrossConnectionsCreateOrUpdatePollerResponse contains the response from method ExpressRouteCrossConnections.CreateOrUpdate.
 type ExpressRouteCrossConnectionsCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCrossConnectionsCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller ExpressRouteCrossConnectionsCreateOrUpdatePoller
+	Poller *ExpressRouteCrossConnectionsCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l ExpressRouteCrossConnectionsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ExpressRouteCrossConnectionsCreateOrUpdateResponse, error) {
+	respType := ExpressRouteCrossConnectionsCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.ExpressRouteCrossConnection)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ExpressRouteCrossConnectionsCreateOrUpdateResponse contains the response from method ExpressRouteCrossConnections.CreateOrUpdate.
@@ -1524,14 +1828,22 @@ type ExpressRouteCrossConnectionsGetResult struct {
 
 // ExpressRouteCrossConnectionsListArpTablePollerResponse contains the response from method ExpressRouteCrossConnections.ListArpTable.
 type ExpressRouteCrossConnectionsListArpTablePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCrossConnectionsListArpTableResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller ExpressRouteCrossConnectionsListArpTablePoller
+	Poller *ExpressRouteCrossConnectionsListArpTablePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l ExpressRouteCrossConnectionsListArpTablePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ExpressRouteCrossConnectionsListArpTableResponse, error) {
+	respType := ExpressRouteCrossConnectionsListArpTableResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.ExpressRouteCircuitsArpTableListResult)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ExpressRouteCrossConnectionsListArpTableResponse contains the response from method ExpressRouteCrossConnections.ListArpTable.
@@ -1572,14 +1884,22 @@ type ExpressRouteCrossConnectionsListResult struct {
 
 // ExpressRouteCrossConnectionsListRoutesTablePollerResponse contains the response from method ExpressRouteCrossConnections.ListRoutesTable.
 type ExpressRouteCrossConnectionsListRoutesTablePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCrossConnectionsListRoutesTableResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller ExpressRouteCrossConnectionsListRoutesTablePoller
+	Poller *ExpressRouteCrossConnectionsListRoutesTablePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l ExpressRouteCrossConnectionsListRoutesTablePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ExpressRouteCrossConnectionsListRoutesTableResponse, error) {
+	respType := ExpressRouteCrossConnectionsListRoutesTableResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.ExpressRouteCircuitsRoutesTableListResult)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ExpressRouteCrossConnectionsListRoutesTableResponse contains the response from method ExpressRouteCrossConnections.ListRoutesTable.
@@ -1596,14 +1916,22 @@ type ExpressRouteCrossConnectionsListRoutesTableResult struct {
 
 // ExpressRouteCrossConnectionsListRoutesTableSummaryPollerResponse contains the response from method ExpressRouteCrossConnections.ListRoutesTableSummary.
 type ExpressRouteCrossConnectionsListRoutesTableSummaryPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteCrossConnectionsListRoutesTableSummaryResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller ExpressRouteCrossConnectionsListRoutesTableSummaryPoller
+	Poller *ExpressRouteCrossConnectionsListRoutesTableSummaryPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l ExpressRouteCrossConnectionsListRoutesTableSummaryPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ExpressRouteCrossConnectionsListRoutesTableSummaryResponse, error) {
+	respType := ExpressRouteCrossConnectionsListRoutesTableSummaryResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.ExpressRouteCrossConnectionsRoutesTableSummaryListResult)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ExpressRouteCrossConnectionsListRoutesTableSummaryResponse contains the response from method ExpressRouteCrossConnections.ListRoutesTableSummary.
@@ -1632,14 +1960,22 @@ type ExpressRouteCrossConnectionsUpdateTagsResult struct {
 
 // ExpressRouteGatewaysCreateOrUpdatePollerResponse contains the response from method ExpressRouteGateways.CreateOrUpdate.
 type ExpressRouteGatewaysCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteGatewaysCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller ExpressRouteGatewaysCreateOrUpdatePoller
+	Poller *ExpressRouteGatewaysCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l ExpressRouteGatewaysCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ExpressRouteGatewaysCreateOrUpdateResponse, error) {
+	respType := ExpressRouteGatewaysCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.ExpressRouteGateway)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ExpressRouteGatewaysCreateOrUpdateResponse contains the response from method ExpressRouteGateways.CreateOrUpdate.
@@ -1656,14 +1992,22 @@ type ExpressRouteGatewaysCreateOrUpdateResult struct {
 
 // ExpressRouteGatewaysDeletePollerResponse contains the response from method ExpressRouteGateways.Delete.
 type ExpressRouteGatewaysDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRouteGatewaysDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller ExpressRouteGatewaysDeletePoller
+	Poller *ExpressRouteGatewaysDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l ExpressRouteGatewaysDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ExpressRouteGatewaysDeleteResponse, error) {
+	respType := ExpressRouteGatewaysDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ExpressRouteGatewaysDeleteResponse contains the response from method ExpressRouteGateways.Delete.
@@ -1734,14 +2078,22 @@ type ExpressRouteLinksListResult struct {
 
 // ExpressRoutePortsCreateOrUpdatePollerResponse contains the response from method ExpressRoutePorts.CreateOrUpdate.
 type ExpressRoutePortsCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRoutePortsCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller ExpressRoutePortsCreateOrUpdatePoller
+	Poller *ExpressRoutePortsCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l ExpressRoutePortsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ExpressRoutePortsCreateOrUpdateResponse, error) {
+	respType := ExpressRoutePortsCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.ExpressRoutePort)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ExpressRoutePortsCreateOrUpdateResponse contains the response from method ExpressRoutePorts.CreateOrUpdate.
@@ -1758,14 +2110,22 @@ type ExpressRoutePortsCreateOrUpdateResult struct {
 
 // ExpressRoutePortsDeletePollerResponse contains the response from method ExpressRoutePorts.Delete.
 type ExpressRoutePortsDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ExpressRoutePortsDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller ExpressRoutePortsDeletePoller
+	Poller *ExpressRoutePortsDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l ExpressRoutePortsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ExpressRoutePortsDeleteResponse, error) {
+	respType := ExpressRoutePortsDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ExpressRoutePortsDeleteResponse contains the response from method ExpressRoutePorts.Delete.
@@ -1860,14 +2220,22 @@ type ExpressRouteServiceProvidersListResult struct {
 
 // FirewallPoliciesCreateOrUpdatePollerResponse contains the response from method FirewallPolicies.CreateOrUpdate.
 type FirewallPoliciesCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (FirewallPoliciesCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller FirewallPoliciesCreateOrUpdatePoller
+	Poller *FirewallPoliciesCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l FirewallPoliciesCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (FirewallPoliciesCreateOrUpdateResponse, error) {
+	respType := FirewallPoliciesCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.FirewallPolicy)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // FirewallPoliciesCreateOrUpdateResponse contains the response from method FirewallPolicies.CreateOrUpdate.
@@ -1884,14 +2252,22 @@ type FirewallPoliciesCreateOrUpdateResult struct {
 
 // FirewallPoliciesDeletePollerResponse contains the response from method FirewallPolicies.Delete.
 type FirewallPoliciesDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (FirewallPoliciesDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller FirewallPoliciesDeletePoller
+	Poller *FirewallPoliciesDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l FirewallPoliciesDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (FirewallPoliciesDeleteResponse, error) {
+	respType := FirewallPoliciesDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // FirewallPoliciesDeleteResponse contains the response from method FirewallPolicies.Delete.
@@ -1938,14 +2314,22 @@ type FirewallPoliciesListResult struct {
 
 // FirewallPolicyRuleGroupsCreateOrUpdatePollerResponse contains the response from method FirewallPolicyRuleGroups.CreateOrUpdate.
 type FirewallPolicyRuleGroupsCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (FirewallPolicyRuleGroupsCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller FirewallPolicyRuleGroupsCreateOrUpdatePoller
+	Poller *FirewallPolicyRuleGroupsCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l FirewallPolicyRuleGroupsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (FirewallPolicyRuleGroupsCreateOrUpdateResponse, error) {
+	respType := FirewallPolicyRuleGroupsCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.FirewallPolicyRuleGroup)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // FirewallPolicyRuleGroupsCreateOrUpdateResponse contains the response from method FirewallPolicyRuleGroups.CreateOrUpdate.
@@ -1962,14 +2346,22 @@ type FirewallPolicyRuleGroupsCreateOrUpdateResult struct {
 
 // FirewallPolicyRuleGroupsDeletePollerResponse contains the response from method FirewallPolicyRuleGroups.Delete.
 type FirewallPolicyRuleGroupsDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (FirewallPolicyRuleGroupsDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller FirewallPolicyRuleGroupsDeletePoller
+	Poller *FirewallPolicyRuleGroupsDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l FirewallPolicyRuleGroupsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (FirewallPolicyRuleGroupsDeleteResponse, error) {
+	respType := FirewallPolicyRuleGroupsDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // FirewallPolicyRuleGroupsDeleteResponse contains the response from method FirewallPolicyRuleGroups.Delete.
@@ -2004,14 +2396,22 @@ type FirewallPolicyRuleGroupsListResult struct {
 
 // FlowLogsCreateOrUpdatePollerResponse contains the response from method FlowLogs.CreateOrUpdate.
 type FlowLogsCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (FlowLogsCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller FlowLogsCreateOrUpdatePoller
+	Poller *FlowLogsCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l FlowLogsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (FlowLogsCreateOrUpdateResponse, error) {
+	respType := FlowLogsCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.FlowLog)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // FlowLogsCreateOrUpdateResponse contains the response from method FlowLogs.CreateOrUpdate.
@@ -2028,14 +2428,22 @@ type FlowLogsCreateOrUpdateResult struct {
 
 // FlowLogsDeletePollerResponse contains the response from method FlowLogs.Delete.
 type FlowLogsDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (FlowLogsDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller FlowLogsDeletePoller
+	Poller *FlowLogsDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l FlowLogsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (FlowLogsDeleteResponse, error) {
+	respType := FlowLogsDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // FlowLogsDeleteResponse contains the response from method FlowLogs.Delete.
@@ -2094,14 +2502,22 @@ type HubVirtualNetworkConnectionsListResult struct {
 
 // IPAllocationsCreateOrUpdatePollerResponse contains the response from method IPAllocations.CreateOrUpdate.
 type IPAllocationsCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (IPAllocationsCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller IPAllocationsCreateOrUpdatePoller
+	Poller *IPAllocationsCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l IPAllocationsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (IPAllocationsCreateOrUpdateResponse, error) {
+	respType := IPAllocationsCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.IPAllocation)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // IPAllocationsCreateOrUpdateResponse contains the response from method IPAllocations.CreateOrUpdate.
@@ -2118,14 +2534,22 @@ type IPAllocationsCreateOrUpdateResult struct {
 
 // IPAllocationsDeletePollerResponse contains the response from method IPAllocations.Delete.
 type IPAllocationsDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (IPAllocationsDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller IPAllocationsDeletePoller
+	Poller *IPAllocationsDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l IPAllocationsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (IPAllocationsDeleteResponse, error) {
+	respType := IPAllocationsDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // IPAllocationsDeleteResponse contains the response from method IPAllocations.Delete.
@@ -2184,14 +2608,22 @@ type IPAllocationsUpdateTagsResult struct {
 
 // IPGroupsCreateOrUpdatePollerResponse contains the response from method IPGroups.CreateOrUpdate.
 type IPGroupsCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (IPGroupsCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller IPGroupsCreateOrUpdatePoller
+	Poller *IPGroupsCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l IPGroupsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (IPGroupsCreateOrUpdateResponse, error) {
+	respType := IPGroupsCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.IPGroup)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // IPGroupsCreateOrUpdateResponse contains the response from method IPGroups.CreateOrUpdate.
@@ -2208,14 +2640,22 @@ type IPGroupsCreateOrUpdateResult struct {
 
 // IPGroupsDeletePollerResponse contains the response from method IPGroups.Delete.
 type IPGroupsDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (IPGroupsDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller IPGroupsDeletePoller
+	Poller *IPGroupsDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l IPGroupsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (IPGroupsDeleteResponse, error) {
+	respType := IPGroupsDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // IPGroupsDeleteResponse contains the response from method IPGroups.Delete.
@@ -2274,14 +2714,22 @@ type IPGroupsUpdateGroupsResult struct {
 
 // InboundNatRulesCreateOrUpdatePollerResponse contains the response from method InboundNatRules.CreateOrUpdate.
 type InboundNatRulesCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (InboundNatRulesCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller InboundNatRulesCreateOrUpdatePoller
+	Poller *InboundNatRulesCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l InboundNatRulesCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (InboundNatRulesCreateOrUpdateResponse, error) {
+	respType := InboundNatRulesCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.InboundNatRule)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // InboundNatRulesCreateOrUpdateResponse contains the response from method InboundNatRules.CreateOrUpdate.
@@ -2298,14 +2746,22 @@ type InboundNatRulesCreateOrUpdateResult struct {
 
 // InboundNatRulesDeletePollerResponse contains the response from method InboundNatRules.Delete.
 type InboundNatRulesDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (InboundNatRulesDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller InboundNatRulesDeletePoller
+	Poller *InboundNatRulesDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l InboundNatRulesDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (InboundNatRulesDeleteResponse, error) {
+	respType := InboundNatRulesDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // InboundNatRulesDeleteResponse contains the response from method InboundNatRules.Delete.
@@ -2472,14 +2928,22 @@ type LoadBalancerProbesListResult struct {
 
 // LoadBalancersCreateOrUpdatePollerResponse contains the response from method LoadBalancers.CreateOrUpdate.
 type LoadBalancersCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (LoadBalancersCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller LoadBalancersCreateOrUpdatePoller
+	Poller *LoadBalancersCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l LoadBalancersCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LoadBalancersCreateOrUpdateResponse, error) {
+	respType := LoadBalancersCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.LoadBalancer)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // LoadBalancersCreateOrUpdateResponse contains the response from method LoadBalancers.CreateOrUpdate.
@@ -2496,14 +2960,22 @@ type LoadBalancersCreateOrUpdateResult struct {
 
 // LoadBalancersDeletePollerResponse contains the response from method LoadBalancers.Delete.
 type LoadBalancersDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (LoadBalancersDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller LoadBalancersDeletePoller
+	Poller *LoadBalancersDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l LoadBalancersDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LoadBalancersDeleteResponse, error) {
+	respType := LoadBalancersDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // LoadBalancersDeleteResponse contains the response from method LoadBalancers.Delete.
@@ -2562,14 +3034,22 @@ type LoadBalancersUpdateTagsResult struct {
 
 // LocalNetworkGatewaysCreateOrUpdatePollerResponse contains the response from method LocalNetworkGateways.CreateOrUpdate.
 type LocalNetworkGatewaysCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (LocalNetworkGatewaysCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller LocalNetworkGatewaysCreateOrUpdatePoller
+	Poller *LocalNetworkGatewaysCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l LocalNetworkGatewaysCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LocalNetworkGatewaysCreateOrUpdateResponse, error) {
+	respType := LocalNetworkGatewaysCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.LocalNetworkGateway)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // LocalNetworkGatewaysCreateOrUpdateResponse contains the response from method LocalNetworkGateways.CreateOrUpdate.
@@ -2586,14 +3066,22 @@ type LocalNetworkGatewaysCreateOrUpdateResult struct {
 
 // LocalNetworkGatewaysDeletePollerResponse contains the response from method LocalNetworkGateways.Delete.
 type LocalNetworkGatewaysDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (LocalNetworkGatewaysDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller LocalNetworkGatewaysDeletePoller
+	Poller *LocalNetworkGatewaysDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l LocalNetworkGatewaysDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LocalNetworkGatewaysDeleteResponse, error) {
+	respType := LocalNetworkGatewaysDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // LocalNetworkGatewaysDeleteResponse contains the response from method LocalNetworkGateways.Delete.
@@ -2640,14 +3128,22 @@ type LocalNetworkGatewaysUpdateTagsResult struct {
 
 // NatGatewaysCreateOrUpdatePollerResponse contains the response from method NatGateways.CreateOrUpdate.
 type NatGatewaysCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (NatGatewaysCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller NatGatewaysCreateOrUpdatePoller
+	Poller *NatGatewaysCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l NatGatewaysCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NatGatewaysCreateOrUpdateResponse, error) {
+	respType := NatGatewaysCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.NatGateway)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // NatGatewaysCreateOrUpdateResponse contains the response from method NatGateways.CreateOrUpdate.
@@ -2664,14 +3160,22 @@ type NatGatewaysCreateOrUpdateResult struct {
 
 // NatGatewaysDeletePollerResponse contains the response from method NatGateways.Delete.
 type NatGatewaysDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (NatGatewaysDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller NatGatewaysDeletePoller
+	Poller *NatGatewaysDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l NatGatewaysDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NatGatewaysDeleteResponse, error) {
+	respType := NatGatewaysDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // NatGatewaysDeleteResponse contains the response from method NatGateways.Delete.
@@ -2766,14 +3270,22 @@ type NetworkInterfaceLoadBalancersListResult struct {
 
 // NetworkInterfaceTapConfigurationsCreateOrUpdatePollerResponse contains the response from method NetworkInterfaceTapConfigurations.CreateOrUpdate.
 type NetworkInterfaceTapConfigurationsCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkInterfaceTapConfigurationsCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller NetworkInterfaceTapConfigurationsCreateOrUpdatePoller
+	Poller *NetworkInterfaceTapConfigurationsCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l NetworkInterfaceTapConfigurationsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkInterfaceTapConfigurationsCreateOrUpdateResponse, error) {
+	respType := NetworkInterfaceTapConfigurationsCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.NetworkInterfaceTapConfiguration)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // NetworkInterfaceTapConfigurationsCreateOrUpdateResponse contains the response from method NetworkInterfaceTapConfigurations.CreateOrUpdate.
@@ -2790,14 +3302,22 @@ type NetworkInterfaceTapConfigurationsCreateOrUpdateResult struct {
 
 // NetworkInterfaceTapConfigurationsDeletePollerResponse contains the response from method NetworkInterfaceTapConfigurations.Delete.
 type NetworkInterfaceTapConfigurationsDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkInterfaceTapConfigurationsDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller NetworkInterfaceTapConfigurationsDeletePoller
+	Poller *NetworkInterfaceTapConfigurationsDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l NetworkInterfaceTapConfigurationsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkInterfaceTapConfigurationsDeleteResponse, error) {
+	respType := NetworkInterfaceTapConfigurationsDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // NetworkInterfaceTapConfigurationsDeleteResponse contains the response from method NetworkInterfaceTapConfigurations.Delete.
@@ -2832,14 +3352,22 @@ type NetworkInterfaceTapConfigurationsListResult struct {
 
 // NetworkInterfacesCreateOrUpdatePollerResponse contains the response from method NetworkInterfaces.CreateOrUpdate.
 type NetworkInterfacesCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkInterfacesCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller NetworkInterfacesCreateOrUpdatePoller
+	Poller *NetworkInterfacesCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l NetworkInterfacesCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkInterfacesCreateOrUpdateResponse, error) {
+	respType := NetworkInterfacesCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.NetworkInterface)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // NetworkInterfacesCreateOrUpdateResponse contains the response from method NetworkInterfaces.CreateOrUpdate.
@@ -2856,14 +3384,22 @@ type NetworkInterfacesCreateOrUpdateResult struct {
 
 // NetworkInterfacesDeletePollerResponse contains the response from method NetworkInterfaces.Delete.
 type NetworkInterfacesDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkInterfacesDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller NetworkInterfacesDeletePoller
+	Poller *NetworkInterfacesDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l NetworkInterfacesDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkInterfacesDeleteResponse, error) {
+	respType := NetworkInterfacesDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // NetworkInterfacesDeleteResponse contains the response from method NetworkInterfaces.Delete.
@@ -2874,14 +3410,22 @@ type NetworkInterfacesDeleteResponse struct {
 
 // NetworkInterfacesGetEffectiveRouteTablePollerResponse contains the response from method NetworkInterfaces.GetEffectiveRouteTable.
 type NetworkInterfacesGetEffectiveRouteTablePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkInterfacesGetEffectiveRouteTableResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller NetworkInterfacesGetEffectiveRouteTablePoller
+	Poller *NetworkInterfacesGetEffectiveRouteTablePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l NetworkInterfacesGetEffectiveRouteTablePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkInterfacesGetEffectiveRouteTableResponse, error) {
+	respType := NetworkInterfacesGetEffectiveRouteTableResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.EffectiveRouteListResult)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // NetworkInterfacesGetEffectiveRouteTableResponse contains the response from method NetworkInterfaces.GetEffectiveRouteTable.
@@ -2946,14 +3490,22 @@ type NetworkInterfacesListAllResult struct {
 
 // NetworkInterfacesListEffectiveNetworkSecurityGroupsPollerResponse contains the response from method NetworkInterfaces.ListEffectiveNetworkSecurityGroups.
 type NetworkInterfacesListEffectiveNetworkSecurityGroupsPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkInterfacesListEffectiveNetworkSecurityGroupsResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller NetworkInterfacesListEffectiveNetworkSecurityGroupsPoller
+	Poller *NetworkInterfacesListEffectiveNetworkSecurityGroupsPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l NetworkInterfacesListEffectiveNetworkSecurityGroupsPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkInterfacesListEffectiveNetworkSecurityGroupsResponse, error) {
+	respType := NetworkInterfacesListEffectiveNetworkSecurityGroupsResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.EffectiveNetworkSecurityGroupListResult)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // NetworkInterfacesListEffectiveNetworkSecurityGroupsResponse contains the response from method NetworkInterfaces.ListEffectiveNetworkSecurityGroups.
@@ -3042,14 +3594,22 @@ type NetworkManagementClientCheckDNSNameAvailabilityResult struct {
 
 // NetworkManagementClientDeleteBastionShareableLinkPollerResponse contains the response from method NetworkManagementClient.DeleteBastionShareableLink.
 type NetworkManagementClientDeleteBastionShareableLinkPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkManagementClientDeleteBastionShareableLinkResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller NetworkManagementClientDeleteBastionShareableLinkPoller
+	Poller *NetworkManagementClientDeleteBastionShareableLinkPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l NetworkManagementClientDeleteBastionShareableLinkPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkManagementClientDeleteBastionShareableLinkResponse, error) {
+	respType := NetworkManagementClientDeleteBastionShareableLinkResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // NetworkManagementClientDeleteBastionShareableLinkResponse contains the response from method NetworkManagementClient.DeleteBastionShareableLink.
@@ -3072,14 +3632,22 @@ type NetworkManagementClientDisconnectActiveSessionsResult struct {
 
 // NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePollerResponse contains the response from method NetworkManagementClient.Generatevirtualwanvpnserverconfigurationvpnprofile.
 type NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofileResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePoller
+	Poller *NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofileResponse, error) {
+	respType := NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofileResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.VPNProfileResponse)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofileResponse contains the response from method NetworkManagementClient.Generatevirtualwanvpnserverconfigurationvpnprofile.
@@ -3096,14 +3664,23 @@ type NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofileRe
 
 // NetworkManagementClientGetActiveSessionsPollerResponse contains the response from method NetworkManagementClient.GetActiveSessions.
 type NetworkManagementClientGetActiveSessionsPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkManagementClientGetActiveSessionsPager, error)
-
 	// Poller contains an initialized poller.
-	Poller NetworkManagementClientGetActiveSessionsPoller
+	Poller *NetworkManagementClientGetActiveSessionsPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l NetworkManagementClientGetActiveSessionsPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (*NetworkManagementClientGetActiveSessionsPager, error) {
+	respType := &NetworkManagementClientGetActiveSessionsPager{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.current.BastionActiveSessionListResult)
+	if err != nil {
+		return respType, err
+	}
+	respType.current.RawResponse = resp
+	respType.client = l.Poller.client
+	return respType, nil
 }
 
 // NetworkManagementClientGetActiveSessionsResponse contains the response from method NetworkManagementClient.GetActiveSessions.
@@ -3132,14 +3709,23 @@ type NetworkManagementClientGetBastionShareableLinkResult struct {
 
 // NetworkManagementClientPutBastionShareableLinkPollerResponse contains the response from method NetworkManagementClient.PutBastionShareableLink.
 type NetworkManagementClientPutBastionShareableLinkPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkManagementClientPutBastionShareableLinkPager, error)
-
 	// Poller contains an initialized poller.
-	Poller NetworkManagementClientPutBastionShareableLinkPoller
+	Poller *NetworkManagementClientPutBastionShareableLinkPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l NetworkManagementClientPutBastionShareableLinkPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (*NetworkManagementClientPutBastionShareableLinkPager, error) {
+	respType := &NetworkManagementClientPutBastionShareableLinkPager{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.current.BastionShareableLinkListResult)
+	if err != nil {
+		return respType, err
+	}
+	respType.current.RawResponse = resp
+	respType.client = l.Poller.client
+	return respType, nil
 }
 
 // NetworkManagementClientPutBastionShareableLinkResponse contains the response from method NetworkManagementClient.PutBastionShareableLink.
@@ -3180,14 +3766,22 @@ type NetworkProfilesCreateOrUpdateResult struct {
 
 // NetworkProfilesDeletePollerResponse contains the response from method NetworkProfiles.Delete.
 type NetworkProfilesDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkProfilesDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller NetworkProfilesDeletePoller
+	Poller *NetworkProfilesDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l NetworkProfilesDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkProfilesDeleteResponse, error) {
+	respType := NetworkProfilesDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // NetworkProfilesDeleteResponse contains the response from method NetworkProfiles.Delete.
@@ -3246,14 +3840,22 @@ type NetworkProfilesUpdateTagsResult struct {
 
 // NetworkSecurityGroupsCreateOrUpdatePollerResponse contains the response from method NetworkSecurityGroups.CreateOrUpdate.
 type NetworkSecurityGroupsCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkSecurityGroupsCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller NetworkSecurityGroupsCreateOrUpdatePoller
+	Poller *NetworkSecurityGroupsCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l NetworkSecurityGroupsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkSecurityGroupsCreateOrUpdateResponse, error) {
+	respType := NetworkSecurityGroupsCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.NetworkSecurityGroup)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // NetworkSecurityGroupsCreateOrUpdateResponse contains the response from method NetworkSecurityGroups.CreateOrUpdate.
@@ -3270,14 +3872,22 @@ type NetworkSecurityGroupsCreateOrUpdateResult struct {
 
 // NetworkSecurityGroupsDeletePollerResponse contains the response from method NetworkSecurityGroups.Delete.
 type NetworkSecurityGroupsDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkSecurityGroupsDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller NetworkSecurityGroupsDeletePoller
+	Poller *NetworkSecurityGroupsDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l NetworkSecurityGroupsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkSecurityGroupsDeleteResponse, error) {
+	respType := NetworkSecurityGroupsDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // NetworkSecurityGroupsDeleteResponse contains the response from method NetworkSecurityGroups.Delete.
@@ -3336,14 +3946,22 @@ type NetworkSecurityGroupsUpdateTagsResult struct {
 
 // NetworkVirtualAppliancesCreateOrUpdatePollerResponse contains the response from method NetworkVirtualAppliances.CreateOrUpdate.
 type NetworkVirtualAppliancesCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkVirtualAppliancesCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller NetworkVirtualAppliancesCreateOrUpdatePoller
+	Poller *NetworkVirtualAppliancesCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l NetworkVirtualAppliancesCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkVirtualAppliancesCreateOrUpdateResponse, error) {
+	respType := NetworkVirtualAppliancesCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.NetworkVirtualAppliance)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // NetworkVirtualAppliancesCreateOrUpdateResponse contains the response from method NetworkVirtualAppliances.CreateOrUpdate.
@@ -3360,14 +3978,22 @@ type NetworkVirtualAppliancesCreateOrUpdateResult struct {
 
 // NetworkVirtualAppliancesDeletePollerResponse contains the response from method NetworkVirtualAppliances.Delete.
 type NetworkVirtualAppliancesDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkVirtualAppliancesDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller NetworkVirtualAppliancesDeletePoller
+	Poller *NetworkVirtualAppliancesDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l NetworkVirtualAppliancesDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkVirtualAppliancesDeleteResponse, error) {
+	respType := NetworkVirtualAppliancesDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // NetworkVirtualAppliancesDeleteResponse contains the response from method NetworkVirtualAppliances.Delete.
@@ -3426,14 +4052,22 @@ type NetworkVirtualAppliancesUpdateTagsResult struct {
 
 // NetworkWatchersCheckConnectivityPollerResponse contains the response from method NetworkWatchers.CheckConnectivity.
 type NetworkWatchersCheckConnectivityPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkWatchersCheckConnectivityResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller NetworkWatchersCheckConnectivityPoller
+	Poller *NetworkWatchersCheckConnectivityPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l NetworkWatchersCheckConnectivityPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkWatchersCheckConnectivityResponse, error) {
+	respType := NetworkWatchersCheckConnectivityResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.ConnectivityInformation)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // NetworkWatchersCheckConnectivityResponse contains the response from method NetworkWatchers.CheckConnectivity.
@@ -3462,14 +4096,22 @@ type NetworkWatchersCreateOrUpdateResult struct {
 
 // NetworkWatchersDeletePollerResponse contains the response from method NetworkWatchers.Delete.
 type NetworkWatchersDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkWatchersDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller NetworkWatchersDeletePoller
+	Poller *NetworkWatchersDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l NetworkWatchersDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkWatchersDeleteResponse, error) {
+	respType := NetworkWatchersDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // NetworkWatchersDeleteResponse contains the response from method NetworkWatchers.Delete.
@@ -3480,14 +4122,22 @@ type NetworkWatchersDeleteResponse struct {
 
 // NetworkWatchersGetAzureReachabilityReportPollerResponse contains the response from method NetworkWatchers.GetAzureReachabilityReport.
 type NetworkWatchersGetAzureReachabilityReportPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkWatchersGetAzureReachabilityReportResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller NetworkWatchersGetAzureReachabilityReportPoller
+	Poller *NetworkWatchersGetAzureReachabilityReportPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l NetworkWatchersGetAzureReachabilityReportPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkWatchersGetAzureReachabilityReportResponse, error) {
+	respType := NetworkWatchersGetAzureReachabilityReportResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.AzureReachabilityReport)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // NetworkWatchersGetAzureReachabilityReportResponse contains the response from method NetworkWatchers.GetAzureReachabilityReport.
@@ -3504,14 +4154,22 @@ type NetworkWatchersGetAzureReachabilityReportResult struct {
 
 // NetworkWatchersGetFlowLogStatusPollerResponse contains the response from method NetworkWatchers.GetFlowLogStatus.
 type NetworkWatchersGetFlowLogStatusPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkWatchersGetFlowLogStatusResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller NetworkWatchersGetFlowLogStatusPoller
+	Poller *NetworkWatchersGetFlowLogStatusPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l NetworkWatchersGetFlowLogStatusPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkWatchersGetFlowLogStatusResponse, error) {
+	respType := NetworkWatchersGetFlowLogStatusResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.FlowLogInformation)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // NetworkWatchersGetFlowLogStatusResponse contains the response from method NetworkWatchers.GetFlowLogStatus.
@@ -3528,14 +4186,22 @@ type NetworkWatchersGetFlowLogStatusResult struct {
 
 // NetworkWatchersGetNetworkConfigurationDiagnosticPollerResponse contains the response from method NetworkWatchers.GetNetworkConfigurationDiagnostic.
 type NetworkWatchersGetNetworkConfigurationDiagnosticPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkWatchersGetNetworkConfigurationDiagnosticResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller NetworkWatchersGetNetworkConfigurationDiagnosticPoller
+	Poller *NetworkWatchersGetNetworkConfigurationDiagnosticPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l NetworkWatchersGetNetworkConfigurationDiagnosticPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkWatchersGetNetworkConfigurationDiagnosticResponse, error) {
+	respType := NetworkWatchersGetNetworkConfigurationDiagnosticResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.NetworkConfigurationDiagnosticResponse)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // NetworkWatchersGetNetworkConfigurationDiagnosticResponse contains the response from method NetworkWatchers.GetNetworkConfigurationDiagnostic.
@@ -3552,14 +4218,22 @@ type NetworkWatchersGetNetworkConfigurationDiagnosticResult struct {
 
 // NetworkWatchersGetNextHopPollerResponse contains the response from method NetworkWatchers.GetNextHop.
 type NetworkWatchersGetNextHopPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkWatchersGetNextHopResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller NetworkWatchersGetNextHopPoller
+	Poller *NetworkWatchersGetNextHopPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l NetworkWatchersGetNextHopPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkWatchersGetNextHopResponse, error) {
+	respType := NetworkWatchersGetNextHopResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.NextHopResult)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // NetworkWatchersGetNextHopResponse contains the response from method NetworkWatchers.GetNextHop.
@@ -3600,14 +4274,22 @@ type NetworkWatchersGetTopologyResult struct {
 
 // NetworkWatchersGetTroubleshootingPollerResponse contains the response from method NetworkWatchers.GetTroubleshooting.
 type NetworkWatchersGetTroubleshootingPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkWatchersGetTroubleshootingResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller NetworkWatchersGetTroubleshootingPoller
+	Poller *NetworkWatchersGetTroubleshootingPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l NetworkWatchersGetTroubleshootingPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkWatchersGetTroubleshootingResponse, error) {
+	respType := NetworkWatchersGetTroubleshootingResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.TroubleshootingResult)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // NetworkWatchersGetTroubleshootingResponse contains the response from method NetworkWatchers.GetTroubleshooting.
@@ -3624,14 +4306,22 @@ type NetworkWatchersGetTroubleshootingResult struct {
 
 // NetworkWatchersGetTroubleshootingResultPollerResponse contains the response from method NetworkWatchers.GetTroubleshootingResult.
 type NetworkWatchersGetTroubleshootingResultPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkWatchersGetTroubleshootingResultResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller NetworkWatchersGetTroubleshootingResultPoller
+	Poller *NetworkWatchersGetTroubleshootingResultPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l NetworkWatchersGetTroubleshootingResultPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkWatchersGetTroubleshootingResultResponse, error) {
+	respType := NetworkWatchersGetTroubleshootingResultResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.TroubleshootingResult)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // NetworkWatchersGetTroubleshootingResultResponse contains the response from method NetworkWatchers.GetTroubleshootingResult.
@@ -3648,14 +4338,22 @@ type NetworkWatchersGetTroubleshootingResultResult struct {
 
 // NetworkWatchersGetVMSecurityRulesPollerResponse contains the response from method NetworkWatchers.GetVMSecurityRules.
 type NetworkWatchersGetVMSecurityRulesPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkWatchersGetVMSecurityRulesResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller NetworkWatchersGetVMSecurityRulesPoller
+	Poller *NetworkWatchersGetVMSecurityRulesPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l NetworkWatchersGetVMSecurityRulesPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkWatchersGetVMSecurityRulesResponse, error) {
+	respType := NetworkWatchersGetVMSecurityRulesResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.SecurityGroupViewResult)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // NetworkWatchersGetVMSecurityRulesResponse contains the response from method NetworkWatchers.GetVMSecurityRules.
@@ -3684,14 +4382,22 @@ type NetworkWatchersListAllResult struct {
 
 // NetworkWatchersListAvailableProvidersPollerResponse contains the response from method NetworkWatchers.ListAvailableProviders.
 type NetworkWatchersListAvailableProvidersPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkWatchersListAvailableProvidersResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller NetworkWatchersListAvailableProvidersPoller
+	Poller *NetworkWatchersListAvailableProvidersPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l NetworkWatchersListAvailableProvidersPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkWatchersListAvailableProvidersResponse, error) {
+	respType := NetworkWatchersListAvailableProvidersResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.AvailableProvidersList)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // NetworkWatchersListAvailableProvidersResponse contains the response from method NetworkWatchers.ListAvailableProviders.
@@ -3720,14 +4426,22 @@ type NetworkWatchersListResult struct {
 
 // NetworkWatchersSetFlowLogConfigurationPollerResponse contains the response from method NetworkWatchers.SetFlowLogConfiguration.
 type NetworkWatchersSetFlowLogConfigurationPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkWatchersSetFlowLogConfigurationResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller NetworkWatchersSetFlowLogConfigurationPoller
+	Poller *NetworkWatchersSetFlowLogConfigurationPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l NetworkWatchersSetFlowLogConfigurationPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkWatchersSetFlowLogConfigurationResponse, error) {
+	respType := NetworkWatchersSetFlowLogConfigurationResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.FlowLogInformation)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // NetworkWatchersSetFlowLogConfigurationResponse contains the response from method NetworkWatchers.SetFlowLogConfiguration.
@@ -3756,14 +4470,22 @@ type NetworkWatchersUpdateTagsResult struct {
 
 // NetworkWatchersVerifyIPFlowPollerResponse contains the response from method NetworkWatchers.VerifyIPFlow.
 type NetworkWatchersVerifyIPFlowPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (NetworkWatchersVerifyIPFlowResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller NetworkWatchersVerifyIPFlowPoller
+	Poller *NetworkWatchersVerifyIPFlowPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l NetworkWatchersVerifyIPFlowPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkWatchersVerifyIPFlowResponse, error) {
+	respType := NetworkWatchersVerifyIPFlowResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.VerificationIPFlowResult)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // NetworkWatchersVerifyIPFlowResponse contains the response from method NetworkWatchers.VerifyIPFlow.
@@ -3792,14 +4514,22 @@ type OperationsListResult struct {
 
 // P2SVPNGatewaysCreateOrUpdatePollerResponse contains the response from method P2SVPNGateways.CreateOrUpdate.
 type P2SVPNGatewaysCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (P2SVPNGatewaysCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller P2SVPNGatewaysCreateOrUpdatePoller
+	Poller *P2SVPNGatewaysCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l P2SVPNGatewaysCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (P2SVPNGatewaysCreateOrUpdateResponse, error) {
+	respType := P2SVPNGatewaysCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.P2SVPNGateway)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // P2SVPNGatewaysCreateOrUpdateResponse contains the response from method P2SVPNGateways.CreateOrUpdate.
@@ -3816,14 +4546,22 @@ type P2SVPNGatewaysCreateOrUpdateResult struct {
 
 // P2SVPNGatewaysDeletePollerResponse contains the response from method P2SVPNGateways.Delete.
 type P2SVPNGatewaysDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (P2SVPNGatewaysDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller P2SVPNGatewaysDeletePoller
+	Poller *P2SVPNGatewaysDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l P2SVPNGatewaysDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (P2SVPNGatewaysDeleteResponse, error) {
+	respType := P2SVPNGatewaysDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // P2SVPNGatewaysDeleteResponse contains the response from method P2SVPNGateways.Delete.
@@ -3834,14 +4572,22 @@ type P2SVPNGatewaysDeleteResponse struct {
 
 // P2SVPNGatewaysDisconnectP2SVPNConnectionsPollerResponse contains the response from method P2SVPNGateways.DisconnectP2SVPNConnections.
 type P2SVPNGatewaysDisconnectP2SVPNConnectionsPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (P2SVPNGatewaysDisconnectP2SVPNConnectionsResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller P2SVPNGatewaysDisconnectP2SVPNConnectionsPoller
+	Poller *P2SVPNGatewaysDisconnectP2SVPNConnectionsPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l P2SVPNGatewaysDisconnectP2SVPNConnectionsPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (P2SVPNGatewaysDisconnectP2SVPNConnectionsResponse, error) {
+	respType := P2SVPNGatewaysDisconnectP2SVPNConnectionsResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // P2SVPNGatewaysDisconnectP2SVPNConnectionsResponse contains the response from method P2SVPNGateways.DisconnectP2SVPNConnections.
@@ -3852,14 +4598,22 @@ type P2SVPNGatewaysDisconnectP2SVPNConnectionsResponse struct {
 
 // P2SVPNGatewaysGenerateVPNProfilePollerResponse contains the response from method P2SVPNGateways.GenerateVPNProfile.
 type P2SVPNGatewaysGenerateVPNProfilePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (P2SVPNGatewaysGenerateVPNProfileResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller P2SVPNGatewaysGenerateVPNProfilePoller
+	Poller *P2SVPNGatewaysGenerateVPNProfilePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l P2SVPNGatewaysGenerateVPNProfilePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (P2SVPNGatewaysGenerateVPNProfileResponse, error) {
+	respType := P2SVPNGatewaysGenerateVPNProfileResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.VPNProfileResponse)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // P2SVPNGatewaysGenerateVPNProfileResponse contains the response from method P2SVPNGateways.GenerateVPNProfile.
@@ -3876,14 +4630,22 @@ type P2SVPNGatewaysGenerateVPNProfileResult struct {
 
 // P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedPollerResponse contains the response from method P2SVPNGateways.GetP2SVPNConnectionHealthDetailed.
 type P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedPoller
+	Poller *P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedResponse, error) {
+	respType := P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.P2SVPNConnectionHealth)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedResponse contains the response from method P2SVPNGateways.GetP2SVPNConnectionHealthDetailed.
@@ -3900,14 +4662,22 @@ type P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedResult struct {
 
 // P2SVPNGatewaysGetP2SVPNConnectionHealthPollerResponse contains the response from method P2SVPNGateways.GetP2SVPNConnectionHealth.
 type P2SVPNGatewaysGetP2SVPNConnectionHealthPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (P2SVPNGatewaysGetP2SVPNConnectionHealthResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller P2SVPNGatewaysGetP2SVPNConnectionHealthPoller
+	Poller *P2SVPNGatewaysGetP2SVPNConnectionHealthPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l P2SVPNGatewaysGetP2SVPNConnectionHealthPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (P2SVPNGatewaysGetP2SVPNConnectionHealthResponse, error) {
+	respType := P2SVPNGatewaysGetP2SVPNConnectionHealthResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.P2SVPNGateway)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // P2SVPNGatewaysGetP2SVPNConnectionHealthResponse contains the response from method P2SVPNGateways.GetP2SVPNConnectionHealth.
@@ -3972,14 +4742,22 @@ type P2SVPNGatewaysUpdateTagsResult struct {
 
 // PacketCapturesCreatePollerResponse contains the response from method PacketCaptures.Create.
 type PacketCapturesCreatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (PacketCapturesCreateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller PacketCapturesCreatePoller
+	Poller *PacketCapturesCreatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l PacketCapturesCreatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (PacketCapturesCreateResponse, error) {
+	respType := PacketCapturesCreateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.PacketCaptureResult)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // PacketCapturesCreateResponse contains the response from method PacketCaptures.Create.
@@ -3996,14 +4774,22 @@ type PacketCapturesCreateResult struct {
 
 // PacketCapturesDeletePollerResponse contains the response from method PacketCaptures.Delete.
 type PacketCapturesDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (PacketCapturesDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller PacketCapturesDeletePoller
+	Poller *PacketCapturesDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l PacketCapturesDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (PacketCapturesDeleteResponse, error) {
+	respType := PacketCapturesDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // PacketCapturesDeleteResponse contains the response from method PacketCaptures.Delete.
@@ -4026,14 +4812,22 @@ type PacketCapturesGetResult struct {
 
 // PacketCapturesGetStatusPollerResponse contains the response from method PacketCaptures.GetStatus.
 type PacketCapturesGetStatusPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (PacketCapturesGetStatusResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller PacketCapturesGetStatusPoller
+	Poller *PacketCapturesGetStatusPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l PacketCapturesGetStatusPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (PacketCapturesGetStatusResponse, error) {
+	respType := PacketCapturesGetStatusResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.PacketCaptureQueryStatusResult)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // PacketCapturesGetStatusResponse contains the response from method PacketCaptures.GetStatus.
@@ -4062,14 +4856,22 @@ type PacketCapturesListResult struct {
 
 // PacketCapturesStopPollerResponse contains the response from method PacketCaptures.Stop.
 type PacketCapturesStopPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (PacketCapturesStopResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller PacketCapturesStopPoller
+	Poller *PacketCapturesStopPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l PacketCapturesStopPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (PacketCapturesStopResponse, error) {
+	respType := PacketCapturesStopResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // PacketCapturesStopResponse contains the response from method PacketCaptures.Stop.
@@ -4104,14 +4906,22 @@ type PeerExpressRouteCircuitConnectionsListResult struct {
 
 // PrivateDNSZoneGroupsCreateOrUpdatePollerResponse contains the response from method PrivateDNSZoneGroups.CreateOrUpdate.
 type PrivateDNSZoneGroupsCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (PrivateDNSZoneGroupsCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller PrivateDNSZoneGroupsCreateOrUpdatePoller
+	Poller *PrivateDNSZoneGroupsCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l PrivateDNSZoneGroupsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (PrivateDNSZoneGroupsCreateOrUpdateResponse, error) {
+	respType := PrivateDNSZoneGroupsCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.PrivateDNSZoneGroup)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // PrivateDNSZoneGroupsCreateOrUpdateResponse contains the response from method PrivateDNSZoneGroups.CreateOrUpdate.
@@ -4128,14 +4938,22 @@ type PrivateDNSZoneGroupsCreateOrUpdateResult struct {
 
 // PrivateDNSZoneGroupsDeletePollerResponse contains the response from method PrivateDNSZoneGroups.Delete.
 type PrivateDNSZoneGroupsDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (PrivateDNSZoneGroupsDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller PrivateDNSZoneGroupsDeletePoller
+	Poller *PrivateDNSZoneGroupsDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l PrivateDNSZoneGroupsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (PrivateDNSZoneGroupsDeleteResponse, error) {
+	respType := PrivateDNSZoneGroupsDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // PrivateDNSZoneGroupsDeleteResponse contains the response from method PrivateDNSZoneGroups.Delete.
@@ -4170,14 +4988,22 @@ type PrivateDNSZoneGroupsListResult struct {
 
 // PrivateEndpointsCreateOrUpdatePollerResponse contains the response from method PrivateEndpoints.CreateOrUpdate.
 type PrivateEndpointsCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (PrivateEndpointsCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller PrivateEndpointsCreateOrUpdatePoller
+	Poller *PrivateEndpointsCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l PrivateEndpointsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (PrivateEndpointsCreateOrUpdateResponse, error) {
+	respType := PrivateEndpointsCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.PrivateEndpoint)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // PrivateEndpointsCreateOrUpdateResponse contains the response from method PrivateEndpoints.CreateOrUpdate.
@@ -4194,14 +5020,22 @@ type PrivateEndpointsCreateOrUpdateResult struct {
 
 // PrivateEndpointsDeletePollerResponse contains the response from method PrivateEndpoints.Delete.
 type PrivateEndpointsDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (PrivateEndpointsDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller PrivateEndpointsDeletePoller
+	Poller *PrivateEndpointsDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l PrivateEndpointsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (PrivateEndpointsDeleteResponse, error) {
+	respType := PrivateEndpointsDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // PrivateEndpointsDeleteResponse contains the response from method PrivateEndpoints.Delete.
@@ -4248,14 +5082,22 @@ type PrivateEndpointsListResult struct {
 
 // PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupPollerResponse contains the response from method PrivateLinkServices.CheckPrivateLinkServiceVisibilityByResourceGroup.
 type PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupPoller
+	Poller *PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupResponse, error) {
+	respType := PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.PrivateLinkServiceVisibility)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupResponse contains the response from method PrivateLinkServices.CheckPrivateLinkServiceVisibilityByResourceGroup.
@@ -4272,14 +5114,22 @@ type PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupResult s
 
 // PrivateLinkServicesCheckPrivateLinkServiceVisibilityPollerResponse contains the response from method PrivateLinkServices.CheckPrivateLinkServiceVisibility.
 type PrivateLinkServicesCheckPrivateLinkServiceVisibilityPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (PrivateLinkServicesCheckPrivateLinkServiceVisibilityResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller PrivateLinkServicesCheckPrivateLinkServiceVisibilityPoller
+	Poller *PrivateLinkServicesCheckPrivateLinkServiceVisibilityPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l PrivateLinkServicesCheckPrivateLinkServiceVisibilityPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (PrivateLinkServicesCheckPrivateLinkServiceVisibilityResponse, error) {
+	respType := PrivateLinkServicesCheckPrivateLinkServiceVisibilityResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.PrivateLinkServiceVisibility)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // PrivateLinkServicesCheckPrivateLinkServiceVisibilityResponse contains the response from method PrivateLinkServices.CheckPrivateLinkServiceVisibility.
@@ -4296,14 +5146,22 @@ type PrivateLinkServicesCheckPrivateLinkServiceVisibilityResult struct {
 
 // PrivateLinkServicesCreateOrUpdatePollerResponse contains the response from method PrivateLinkServices.CreateOrUpdate.
 type PrivateLinkServicesCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (PrivateLinkServicesCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller PrivateLinkServicesCreateOrUpdatePoller
+	Poller *PrivateLinkServicesCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l PrivateLinkServicesCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (PrivateLinkServicesCreateOrUpdateResponse, error) {
+	respType := PrivateLinkServicesCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.PrivateLinkService)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // PrivateLinkServicesCreateOrUpdateResponse contains the response from method PrivateLinkServices.CreateOrUpdate.
@@ -4320,26 +5178,42 @@ type PrivateLinkServicesCreateOrUpdateResult struct {
 
 // PrivateLinkServicesDeletePollerResponse contains the response from method PrivateLinkServices.Delete.
 type PrivateLinkServicesDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (PrivateLinkServicesDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller PrivateLinkServicesDeletePoller
+	Poller *PrivateLinkServicesDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l PrivateLinkServicesDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (PrivateLinkServicesDeleteResponse, error) {
+	respType := PrivateLinkServicesDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
 // PrivateLinkServicesDeletePrivateEndpointConnectionPollerResponse contains the response from method PrivateLinkServices.DeletePrivateEndpointConnection.
 type PrivateLinkServicesDeletePrivateEndpointConnectionPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (PrivateLinkServicesDeletePrivateEndpointConnectionResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller PrivateLinkServicesDeletePrivateEndpointConnectionPoller
+	Poller *PrivateLinkServicesDeletePrivateEndpointConnectionPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l PrivateLinkServicesDeletePrivateEndpointConnectionPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (PrivateLinkServicesDeletePrivateEndpointConnectionResponse, error) {
+	respType := PrivateLinkServicesDeletePrivateEndpointConnectionResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // PrivateLinkServicesDeletePrivateEndpointConnectionResponse contains the response from method PrivateLinkServices.DeletePrivateEndpointConnection.
@@ -4452,14 +5326,22 @@ type PrivateLinkServicesUpdatePrivateEndpointConnectionResult struct {
 
 // PublicIPAddressesCreateOrUpdatePollerResponse contains the response from method PublicIPAddresses.CreateOrUpdate.
 type PublicIPAddressesCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (PublicIPAddressesCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller PublicIPAddressesCreateOrUpdatePoller
+	Poller *PublicIPAddressesCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l PublicIPAddressesCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (PublicIPAddressesCreateOrUpdateResponse, error) {
+	respType := PublicIPAddressesCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.PublicIPAddress)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // PublicIPAddressesCreateOrUpdateResponse contains the response from method PublicIPAddresses.CreateOrUpdate.
@@ -4476,14 +5358,22 @@ type PublicIPAddressesCreateOrUpdateResult struct {
 
 // PublicIPAddressesDeletePollerResponse contains the response from method PublicIPAddresses.Delete.
 type PublicIPAddressesDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (PublicIPAddressesDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller PublicIPAddressesDeletePoller
+	Poller *PublicIPAddressesDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l PublicIPAddressesDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (PublicIPAddressesDeleteResponse, error) {
+	respType := PublicIPAddressesDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // PublicIPAddressesDeleteResponse contains the response from method PublicIPAddresses.Delete.
@@ -4578,14 +5468,22 @@ type PublicIPAddressesUpdateTagsResult struct {
 
 // PublicIPPrefixesCreateOrUpdatePollerResponse contains the response from method PublicIPPrefixes.CreateOrUpdate.
 type PublicIPPrefixesCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (PublicIPPrefixesCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller PublicIPPrefixesCreateOrUpdatePoller
+	Poller *PublicIPPrefixesCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l PublicIPPrefixesCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (PublicIPPrefixesCreateOrUpdateResponse, error) {
+	respType := PublicIPPrefixesCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.PublicIPPrefix)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // PublicIPPrefixesCreateOrUpdateResponse contains the response from method PublicIPPrefixes.CreateOrUpdate.
@@ -4602,14 +5500,22 @@ type PublicIPPrefixesCreateOrUpdateResult struct {
 
 // PublicIPPrefixesDeletePollerResponse contains the response from method PublicIPPrefixes.Delete.
 type PublicIPPrefixesDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (PublicIPPrefixesDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller PublicIPPrefixesDeletePoller
+	Poller *PublicIPPrefixesDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l PublicIPPrefixesDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (PublicIPPrefixesDeleteResponse, error) {
+	respType := PublicIPPrefixesDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // PublicIPPrefixesDeleteResponse contains the response from method PublicIPPrefixes.Delete.
@@ -4680,14 +5586,22 @@ type ResourceNavigationLinksListResultEnvelope struct {
 
 // RouteFilterRulesCreateOrUpdatePollerResponse contains the response from method RouteFilterRules.CreateOrUpdate.
 type RouteFilterRulesCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (RouteFilterRulesCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller RouteFilterRulesCreateOrUpdatePoller
+	Poller *RouteFilterRulesCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l RouteFilterRulesCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (RouteFilterRulesCreateOrUpdateResponse, error) {
+	respType := RouteFilterRulesCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.RouteFilterRule)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // RouteFilterRulesCreateOrUpdateResponse contains the response from method RouteFilterRules.CreateOrUpdate.
@@ -4704,14 +5618,22 @@ type RouteFilterRulesCreateOrUpdateResult struct {
 
 // RouteFilterRulesDeletePollerResponse contains the response from method RouteFilterRules.Delete.
 type RouteFilterRulesDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (RouteFilterRulesDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller RouteFilterRulesDeletePoller
+	Poller *RouteFilterRulesDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l RouteFilterRulesDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (RouteFilterRulesDeleteResponse, error) {
+	respType := RouteFilterRulesDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // RouteFilterRulesDeleteResponse contains the response from method RouteFilterRules.Delete.
@@ -4746,14 +5668,22 @@ type RouteFilterRulesListByRouteFilterResult struct {
 
 // RouteFiltersCreateOrUpdatePollerResponse contains the response from method RouteFilters.CreateOrUpdate.
 type RouteFiltersCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (RouteFiltersCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller RouteFiltersCreateOrUpdatePoller
+	Poller *RouteFiltersCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l RouteFiltersCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (RouteFiltersCreateOrUpdateResponse, error) {
+	respType := RouteFiltersCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.RouteFilter)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // RouteFiltersCreateOrUpdateResponse contains the response from method RouteFilters.CreateOrUpdate.
@@ -4770,14 +5700,22 @@ type RouteFiltersCreateOrUpdateResult struct {
 
 // RouteFiltersDeletePollerResponse contains the response from method RouteFilters.Delete.
 type RouteFiltersDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (RouteFiltersDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller RouteFiltersDeletePoller
+	Poller *RouteFiltersDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l RouteFiltersDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (RouteFiltersDeleteResponse, error) {
+	respType := RouteFiltersDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // RouteFiltersDeleteResponse contains the response from method RouteFilters.Delete.
@@ -4836,14 +5774,22 @@ type RouteFiltersUpdateTagsResult struct {
 
 // RouteTablesCreateOrUpdatePollerResponse contains the response from method RouteTables.CreateOrUpdate.
 type RouteTablesCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (RouteTablesCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller RouteTablesCreateOrUpdatePoller
+	Poller *RouteTablesCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l RouteTablesCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (RouteTablesCreateOrUpdateResponse, error) {
+	respType := RouteTablesCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.RouteTable)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // RouteTablesCreateOrUpdateResponse contains the response from method RouteTables.CreateOrUpdate.
@@ -4860,14 +5806,22 @@ type RouteTablesCreateOrUpdateResult struct {
 
 // RouteTablesDeletePollerResponse contains the response from method RouteTables.Delete.
 type RouteTablesDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (RouteTablesDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller RouteTablesDeletePoller
+	Poller *RouteTablesDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l RouteTablesDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (RouteTablesDeleteResponse, error) {
+	respType := RouteTablesDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // RouteTablesDeleteResponse contains the response from method RouteTables.Delete.
@@ -4926,14 +5880,22 @@ type RouteTablesUpdateTagsResult struct {
 
 // RoutesCreateOrUpdatePollerResponse contains the response from method Routes.CreateOrUpdate.
 type RoutesCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (RoutesCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller RoutesCreateOrUpdatePoller
+	Poller *RoutesCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l RoutesCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (RoutesCreateOrUpdateResponse, error) {
+	respType := RoutesCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Route)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // RoutesCreateOrUpdateResponse contains the response from method Routes.CreateOrUpdate.
@@ -4950,14 +5912,22 @@ type RoutesCreateOrUpdateResult struct {
 
 // RoutesDeletePollerResponse contains the response from method Routes.Delete.
 type RoutesDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (RoutesDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller RoutesDeletePoller
+	Poller *RoutesDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l RoutesDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (RoutesDeleteResponse, error) {
+	respType := RoutesDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // RoutesDeleteResponse contains the response from method Routes.Delete.
@@ -4992,14 +5962,22 @@ type RoutesListResult struct {
 
 // SecurityPartnerProvidersCreateOrUpdatePollerResponse contains the response from method SecurityPartnerProviders.CreateOrUpdate.
 type SecurityPartnerProvidersCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (SecurityPartnerProvidersCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller SecurityPartnerProvidersCreateOrUpdatePoller
+	Poller *SecurityPartnerProvidersCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l SecurityPartnerProvidersCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (SecurityPartnerProvidersCreateOrUpdateResponse, error) {
+	respType := SecurityPartnerProvidersCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.SecurityPartnerProvider)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // SecurityPartnerProvidersCreateOrUpdateResponse contains the response from method SecurityPartnerProviders.CreateOrUpdate.
@@ -5016,14 +5994,22 @@ type SecurityPartnerProvidersCreateOrUpdateResult struct {
 
 // SecurityPartnerProvidersDeletePollerResponse contains the response from method SecurityPartnerProviders.Delete.
 type SecurityPartnerProvidersDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (SecurityPartnerProvidersDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller SecurityPartnerProvidersDeletePoller
+	Poller *SecurityPartnerProvidersDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l SecurityPartnerProvidersDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (SecurityPartnerProvidersDeleteResponse, error) {
+	respType := SecurityPartnerProvidersDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // SecurityPartnerProvidersDeleteResponse contains the response from method SecurityPartnerProviders.Delete.
@@ -5082,14 +6068,22 @@ type SecurityPartnerProvidersUpdateTagsResult struct {
 
 // SecurityRulesCreateOrUpdatePollerResponse contains the response from method SecurityRules.CreateOrUpdate.
 type SecurityRulesCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (SecurityRulesCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller SecurityRulesCreateOrUpdatePoller
+	Poller *SecurityRulesCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l SecurityRulesCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (SecurityRulesCreateOrUpdateResponse, error) {
+	respType := SecurityRulesCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.SecurityRule)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // SecurityRulesCreateOrUpdateResponse contains the response from method SecurityRules.CreateOrUpdate.
@@ -5106,14 +6100,22 @@ type SecurityRulesCreateOrUpdateResult struct {
 
 // SecurityRulesDeletePollerResponse contains the response from method SecurityRules.Delete.
 type SecurityRulesDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (SecurityRulesDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller SecurityRulesDeletePoller
+	Poller *SecurityRulesDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l SecurityRulesDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (SecurityRulesDeleteResponse, error) {
+	respType := SecurityRulesDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // SecurityRulesDeleteResponse contains the response from method SecurityRules.Delete.
@@ -5160,14 +6162,22 @@ type ServiceAssociationLinksListResultEnvelope struct {
 
 // ServiceEndpointPoliciesCreateOrUpdatePollerResponse contains the response from method ServiceEndpointPolicies.CreateOrUpdate.
 type ServiceEndpointPoliciesCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ServiceEndpointPoliciesCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller ServiceEndpointPoliciesCreateOrUpdatePoller
+	Poller *ServiceEndpointPoliciesCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l ServiceEndpointPoliciesCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ServiceEndpointPoliciesCreateOrUpdateResponse, error) {
+	respType := ServiceEndpointPoliciesCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.ServiceEndpointPolicy)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ServiceEndpointPoliciesCreateOrUpdateResponse contains the response from method ServiceEndpointPolicies.CreateOrUpdate.
@@ -5184,14 +6194,22 @@ type ServiceEndpointPoliciesCreateOrUpdateResult struct {
 
 // ServiceEndpointPoliciesDeletePollerResponse contains the response from method ServiceEndpointPolicies.Delete.
 type ServiceEndpointPoliciesDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ServiceEndpointPoliciesDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller ServiceEndpointPoliciesDeletePoller
+	Poller *ServiceEndpointPoliciesDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l ServiceEndpointPoliciesDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ServiceEndpointPoliciesDeleteResponse, error) {
+	respType := ServiceEndpointPoliciesDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ServiceEndpointPoliciesDeleteResponse contains the response from method ServiceEndpointPolicies.Delete.
@@ -5250,14 +6268,22 @@ type ServiceEndpointPoliciesUpdateTagsResult struct {
 
 // ServiceEndpointPolicyDefinitionsCreateOrUpdatePollerResponse contains the response from method ServiceEndpointPolicyDefinitions.CreateOrUpdate.
 type ServiceEndpointPolicyDefinitionsCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ServiceEndpointPolicyDefinitionsCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller ServiceEndpointPolicyDefinitionsCreateOrUpdatePoller
+	Poller *ServiceEndpointPolicyDefinitionsCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l ServiceEndpointPolicyDefinitionsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ServiceEndpointPolicyDefinitionsCreateOrUpdateResponse, error) {
+	respType := ServiceEndpointPolicyDefinitionsCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.ServiceEndpointPolicyDefinition)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ServiceEndpointPolicyDefinitionsCreateOrUpdateResponse contains the response from method ServiceEndpointPolicyDefinitions.CreateOrUpdate.
@@ -5274,14 +6300,22 @@ type ServiceEndpointPolicyDefinitionsCreateOrUpdateResult struct {
 
 // ServiceEndpointPolicyDefinitionsDeletePollerResponse contains the response from method ServiceEndpointPolicyDefinitions.Delete.
 type ServiceEndpointPolicyDefinitionsDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (ServiceEndpointPolicyDefinitionsDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller ServiceEndpointPolicyDefinitionsDeletePoller
+	Poller *ServiceEndpointPolicyDefinitionsDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l ServiceEndpointPolicyDefinitionsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ServiceEndpointPolicyDefinitionsDeleteResponse, error) {
+	respType := ServiceEndpointPolicyDefinitionsDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // ServiceEndpointPolicyDefinitionsDeleteResponse contains the response from method ServiceEndpointPolicyDefinitions.Delete.
@@ -5328,14 +6362,22 @@ type ServiceTagsListResultEnvelope struct {
 
 // SubnetsCreateOrUpdatePollerResponse contains the response from method Subnets.CreateOrUpdate.
 type SubnetsCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (SubnetsCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller SubnetsCreateOrUpdatePoller
+	Poller *SubnetsCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l SubnetsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (SubnetsCreateOrUpdateResponse, error) {
+	respType := SubnetsCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Subnet)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // SubnetsCreateOrUpdateResponse contains the response from method Subnets.CreateOrUpdate.
@@ -5352,14 +6394,22 @@ type SubnetsCreateOrUpdateResult struct {
 
 // SubnetsDeletePollerResponse contains the response from method Subnets.Delete.
 type SubnetsDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (SubnetsDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller SubnetsDeletePoller
+	Poller *SubnetsDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l SubnetsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (SubnetsDeleteResponse, error) {
+	respType := SubnetsDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // SubnetsDeleteResponse contains the response from method Subnets.Delete.
@@ -5394,14 +6444,22 @@ type SubnetsListResult struct {
 
 // SubnetsPrepareNetworkPoliciesPollerResponse contains the response from method Subnets.PrepareNetworkPolicies.
 type SubnetsPrepareNetworkPoliciesPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (SubnetsPrepareNetworkPoliciesResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller SubnetsPrepareNetworkPoliciesPoller
+	Poller *SubnetsPrepareNetworkPoliciesPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l SubnetsPrepareNetworkPoliciesPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (SubnetsPrepareNetworkPoliciesResponse, error) {
+	respType := SubnetsPrepareNetworkPoliciesResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // SubnetsPrepareNetworkPoliciesResponse contains the response from method Subnets.PrepareNetworkPolicies.
@@ -5412,14 +6470,22 @@ type SubnetsPrepareNetworkPoliciesResponse struct {
 
 // SubnetsUnprepareNetworkPoliciesPollerResponse contains the response from method Subnets.UnprepareNetworkPolicies.
 type SubnetsUnprepareNetworkPoliciesPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (SubnetsUnprepareNetworkPoliciesResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller SubnetsUnprepareNetworkPoliciesPoller
+	Poller *SubnetsUnprepareNetworkPoliciesPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l SubnetsUnprepareNetworkPoliciesPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (SubnetsUnprepareNetworkPoliciesResponse, error) {
+	respType := SubnetsUnprepareNetworkPoliciesResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // SubnetsUnprepareNetworkPoliciesResponse contains the response from method Subnets.UnprepareNetworkPolicies.
@@ -5442,14 +6508,22 @@ type UsagesListResultEnvelope struct {
 
 // VPNConnectionsCreateOrUpdatePollerResponse contains the response from method VPNConnections.CreateOrUpdate.
 type VPNConnectionsCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VPNConnectionsCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller VPNConnectionsCreateOrUpdatePoller
+	Poller *VPNConnectionsCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l VPNConnectionsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VPNConnectionsCreateOrUpdateResponse, error) {
+	respType := VPNConnectionsCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.VPNConnection)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VPNConnectionsCreateOrUpdateResponse contains the response from method VPNConnections.CreateOrUpdate.
@@ -5466,14 +6540,22 @@ type VPNConnectionsCreateOrUpdateResult struct {
 
 // VPNConnectionsDeletePollerResponse contains the response from method VPNConnections.Delete.
 type VPNConnectionsDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VPNConnectionsDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller VPNConnectionsDeletePoller
+	Poller *VPNConnectionsDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l VPNConnectionsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VPNConnectionsDeleteResponse, error) {
+	respType := VPNConnectionsDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VPNConnectionsDeleteResponse contains the response from method VPNConnections.Delete.
@@ -5508,14 +6590,22 @@ type VPNConnectionsListByVPNGatewayResult struct {
 
 // VPNGatewaysCreateOrUpdatePollerResponse contains the response from method VPNGateways.CreateOrUpdate.
 type VPNGatewaysCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VPNGatewaysCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller VPNGatewaysCreateOrUpdatePoller
+	Poller *VPNGatewaysCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l VPNGatewaysCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VPNGatewaysCreateOrUpdateResponse, error) {
+	respType := VPNGatewaysCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.VPNGateway)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VPNGatewaysCreateOrUpdateResponse contains the response from method VPNGateways.CreateOrUpdate.
@@ -5532,14 +6622,22 @@ type VPNGatewaysCreateOrUpdateResult struct {
 
 // VPNGatewaysDeletePollerResponse contains the response from method VPNGateways.Delete.
 type VPNGatewaysDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VPNGatewaysDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller VPNGatewaysDeletePoller
+	Poller *VPNGatewaysDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l VPNGatewaysDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VPNGatewaysDeleteResponse, error) {
+	respType := VPNGatewaysDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VPNGatewaysDeleteResponse contains the response from method VPNGateways.Delete.
@@ -5586,14 +6684,22 @@ type VPNGatewaysListResult struct {
 
 // VPNGatewaysResetPollerResponse contains the response from method VPNGateways.Reset.
 type VPNGatewaysResetPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VPNGatewaysResetResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller VPNGatewaysResetPoller
+	Poller *VPNGatewaysResetPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l VPNGatewaysResetPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VPNGatewaysResetResponse, error) {
+	respType := VPNGatewaysResetResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.VPNGateway)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VPNGatewaysResetResponse contains the response from method VPNGateways.Reset.
@@ -5634,14 +6740,22 @@ type VPNLinkConnectionsListByVPNConnectionResult struct {
 
 // VPNServerConfigurationsAssociatedWithVirtualWanListPollerResponse contains the response from method VPNServerConfigurationsAssociatedWithVirtualWan.List.
 type VPNServerConfigurationsAssociatedWithVirtualWanListPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VPNServerConfigurationsAssociatedWithVirtualWanListResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller VPNServerConfigurationsAssociatedWithVirtualWanListPoller
+	Poller *VPNServerConfigurationsAssociatedWithVirtualWanListPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l VPNServerConfigurationsAssociatedWithVirtualWanListPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VPNServerConfigurationsAssociatedWithVirtualWanListResponse, error) {
+	respType := VPNServerConfigurationsAssociatedWithVirtualWanListResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.VPNServerConfigurationsResponse)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VPNServerConfigurationsAssociatedWithVirtualWanListResponse contains the response from method VPNServerConfigurationsAssociatedWithVirtualWan.List.
@@ -5658,14 +6772,22 @@ type VPNServerConfigurationsAssociatedWithVirtualWanListResult struct {
 
 // VPNServerConfigurationsCreateOrUpdatePollerResponse contains the response from method VPNServerConfigurations.CreateOrUpdate.
 type VPNServerConfigurationsCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VPNServerConfigurationsCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller VPNServerConfigurationsCreateOrUpdatePoller
+	Poller *VPNServerConfigurationsCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l VPNServerConfigurationsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VPNServerConfigurationsCreateOrUpdateResponse, error) {
+	respType := VPNServerConfigurationsCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.VPNServerConfiguration)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VPNServerConfigurationsCreateOrUpdateResponse contains the response from method VPNServerConfigurations.CreateOrUpdate.
@@ -5682,14 +6804,22 @@ type VPNServerConfigurationsCreateOrUpdateResult struct {
 
 // VPNServerConfigurationsDeletePollerResponse contains the response from method VPNServerConfigurations.Delete.
 type VPNServerConfigurationsDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VPNServerConfigurationsDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller VPNServerConfigurationsDeletePoller
+	Poller *VPNServerConfigurationsDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l VPNServerConfigurationsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VPNServerConfigurationsDeleteResponse, error) {
+	respType := VPNServerConfigurationsDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VPNServerConfigurationsDeleteResponse contains the response from method VPNServerConfigurations.Delete.
@@ -5784,14 +6914,22 @@ type VPNSiteLinksListByVPNSiteResult struct {
 
 // VPNSitesConfigurationDownloadPollerResponse contains the response from method VPNSitesConfiguration.Download.
 type VPNSitesConfigurationDownloadPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VPNSitesConfigurationDownloadResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller VPNSitesConfigurationDownloadPoller
+	Poller *VPNSitesConfigurationDownloadPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l VPNSitesConfigurationDownloadPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VPNSitesConfigurationDownloadResponse, error) {
+	respType := VPNSitesConfigurationDownloadResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VPNSitesConfigurationDownloadResponse contains the response from method VPNSitesConfiguration.Download.
@@ -5802,14 +6940,22 @@ type VPNSitesConfigurationDownloadResponse struct {
 
 // VPNSitesCreateOrUpdatePollerResponse contains the response from method VPNSites.CreateOrUpdate.
 type VPNSitesCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VPNSitesCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller VPNSitesCreateOrUpdatePoller
+	Poller *VPNSitesCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l VPNSitesCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VPNSitesCreateOrUpdateResponse, error) {
+	respType := VPNSitesCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.VPNSite)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VPNSitesCreateOrUpdateResponse contains the response from method VPNSites.CreateOrUpdate.
@@ -5826,14 +6972,22 @@ type VPNSitesCreateOrUpdateResult struct {
 
 // VPNSitesDeletePollerResponse contains the response from method VPNSites.Delete.
 type VPNSitesDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VPNSitesDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller VPNSitesDeletePoller
+	Poller *VPNSitesDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l VPNSitesDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VPNSitesDeleteResponse, error) {
+	respType := VPNSitesDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VPNSitesDeleteResponse contains the response from method VPNSites.Delete.
@@ -5892,14 +7046,22 @@ type VPNSitesUpdateTagsResult struct {
 
 // VirtualHubRouteTableV2SCreateOrUpdatePollerResponse contains the response from method VirtualHubRouteTableV2S.CreateOrUpdate.
 type VirtualHubRouteTableV2SCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualHubRouteTableV2SCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller VirtualHubRouteTableV2SCreateOrUpdatePoller
+	Poller *VirtualHubRouteTableV2SCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l VirtualHubRouteTableV2SCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualHubRouteTableV2SCreateOrUpdateResponse, error) {
+	respType := VirtualHubRouteTableV2SCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.VirtualHubRouteTableV2)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VirtualHubRouteTableV2SCreateOrUpdateResponse contains the response from method VirtualHubRouteTableV2S.CreateOrUpdate.
@@ -5916,14 +7078,22 @@ type VirtualHubRouteTableV2SCreateOrUpdateResult struct {
 
 // VirtualHubRouteTableV2SDeletePollerResponse contains the response from method VirtualHubRouteTableV2S.Delete.
 type VirtualHubRouteTableV2SDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualHubRouteTableV2SDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller VirtualHubRouteTableV2SDeletePoller
+	Poller *VirtualHubRouteTableV2SDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l VirtualHubRouteTableV2SDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualHubRouteTableV2SDeleteResponse, error) {
+	respType := VirtualHubRouteTableV2SDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VirtualHubRouteTableV2SDeleteResponse contains the response from method VirtualHubRouteTableV2S.Delete.
@@ -5958,14 +7128,22 @@ type VirtualHubRouteTableV2SListResult struct {
 
 // VirtualHubsCreateOrUpdatePollerResponse contains the response from method VirtualHubs.CreateOrUpdate.
 type VirtualHubsCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualHubsCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller VirtualHubsCreateOrUpdatePoller
+	Poller *VirtualHubsCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l VirtualHubsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualHubsCreateOrUpdateResponse, error) {
+	respType := VirtualHubsCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.VirtualHub)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VirtualHubsCreateOrUpdateResponse contains the response from method VirtualHubs.CreateOrUpdate.
@@ -5982,14 +7160,22 @@ type VirtualHubsCreateOrUpdateResult struct {
 
 // VirtualHubsDeletePollerResponse contains the response from method VirtualHubs.Delete.
 type VirtualHubsDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualHubsDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller VirtualHubsDeletePoller
+	Poller *VirtualHubsDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l VirtualHubsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualHubsDeleteResponse, error) {
+	respType := VirtualHubsDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VirtualHubsDeleteResponse contains the response from method VirtualHubs.Delete.
@@ -6048,14 +7234,22 @@ type VirtualHubsUpdateTagsResult struct {
 
 // VirtualNetworkGatewayConnectionsCreateOrUpdatePollerResponse contains the response from method VirtualNetworkGatewayConnections.CreateOrUpdate.
 type VirtualNetworkGatewayConnectionsCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewayConnectionsCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller VirtualNetworkGatewayConnectionsCreateOrUpdatePoller
+	Poller *VirtualNetworkGatewayConnectionsCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l VirtualNetworkGatewayConnectionsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkGatewayConnectionsCreateOrUpdateResponse, error) {
+	respType := VirtualNetworkGatewayConnectionsCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.VirtualNetworkGatewayConnection)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VirtualNetworkGatewayConnectionsCreateOrUpdateResponse contains the response from method VirtualNetworkGatewayConnections.CreateOrUpdate.
@@ -6072,14 +7266,22 @@ type VirtualNetworkGatewayConnectionsCreateOrUpdateResult struct {
 
 // VirtualNetworkGatewayConnectionsDeletePollerResponse contains the response from method VirtualNetworkGatewayConnections.Delete.
 type VirtualNetworkGatewayConnectionsDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewayConnectionsDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller VirtualNetworkGatewayConnectionsDeletePoller
+	Poller *VirtualNetworkGatewayConnectionsDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l VirtualNetworkGatewayConnectionsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkGatewayConnectionsDeleteResponse, error) {
+	respType := VirtualNetworkGatewayConnectionsDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VirtualNetworkGatewayConnectionsDeleteResponse contains the response from method VirtualNetworkGatewayConnections.Delete.
@@ -6126,14 +7328,22 @@ type VirtualNetworkGatewayConnectionsListResult struct {
 
 // VirtualNetworkGatewayConnectionsResetSharedKeyPollerResponse contains the response from method VirtualNetworkGatewayConnections.ResetSharedKey.
 type VirtualNetworkGatewayConnectionsResetSharedKeyPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewayConnectionsResetSharedKeyResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller VirtualNetworkGatewayConnectionsResetSharedKeyPoller
+	Poller *VirtualNetworkGatewayConnectionsResetSharedKeyPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l VirtualNetworkGatewayConnectionsResetSharedKeyPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkGatewayConnectionsResetSharedKeyResponse, error) {
+	respType := VirtualNetworkGatewayConnectionsResetSharedKeyResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.ConnectionResetSharedKey)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VirtualNetworkGatewayConnectionsResetSharedKeyResponse contains the response from method VirtualNetworkGatewayConnections.ResetSharedKey.
@@ -6150,14 +7360,22 @@ type VirtualNetworkGatewayConnectionsResetSharedKeyResult struct {
 
 // VirtualNetworkGatewayConnectionsSetSharedKeyPollerResponse contains the response from method VirtualNetworkGatewayConnections.SetSharedKey.
 type VirtualNetworkGatewayConnectionsSetSharedKeyPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewayConnectionsSetSharedKeyResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller VirtualNetworkGatewayConnectionsSetSharedKeyPoller
+	Poller *VirtualNetworkGatewayConnectionsSetSharedKeyPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l VirtualNetworkGatewayConnectionsSetSharedKeyPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkGatewayConnectionsSetSharedKeyResponse, error) {
+	respType := VirtualNetworkGatewayConnectionsSetSharedKeyResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.ConnectionSharedKey)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VirtualNetworkGatewayConnectionsSetSharedKeyResponse contains the response from method VirtualNetworkGatewayConnections.SetSharedKey.
@@ -6174,14 +7392,22 @@ type VirtualNetworkGatewayConnectionsSetSharedKeyResult struct {
 
 // VirtualNetworkGatewayConnectionsStartPacketCapturePollerResponse contains the response from method VirtualNetworkGatewayConnections.StartPacketCapture.
 type VirtualNetworkGatewayConnectionsStartPacketCapturePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewayConnectionsStartPacketCaptureResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller VirtualNetworkGatewayConnectionsStartPacketCapturePoller
+	Poller *VirtualNetworkGatewayConnectionsStartPacketCapturePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l VirtualNetworkGatewayConnectionsStartPacketCapturePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkGatewayConnectionsStartPacketCaptureResponse, error) {
+	respType := VirtualNetworkGatewayConnectionsStartPacketCaptureResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Value)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VirtualNetworkGatewayConnectionsStartPacketCaptureResponse contains the response from method VirtualNetworkGatewayConnections.StartPacketCapture.
@@ -6198,14 +7424,22 @@ type VirtualNetworkGatewayConnectionsStartPacketCaptureResult struct {
 
 // VirtualNetworkGatewayConnectionsStopPacketCapturePollerResponse contains the response from method VirtualNetworkGatewayConnections.StopPacketCapture.
 type VirtualNetworkGatewayConnectionsStopPacketCapturePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewayConnectionsStopPacketCaptureResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller VirtualNetworkGatewayConnectionsStopPacketCapturePoller
+	Poller *VirtualNetworkGatewayConnectionsStopPacketCapturePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l VirtualNetworkGatewayConnectionsStopPacketCapturePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkGatewayConnectionsStopPacketCaptureResponse, error) {
+	respType := VirtualNetworkGatewayConnectionsStopPacketCaptureResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Value)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VirtualNetworkGatewayConnectionsStopPacketCaptureResponse contains the response from method VirtualNetworkGatewayConnections.StopPacketCapture.
@@ -6222,14 +7456,22 @@ type VirtualNetworkGatewayConnectionsStopPacketCaptureResult struct {
 
 // VirtualNetworkGatewayConnectionsUpdateTagsPollerResponse contains the response from method VirtualNetworkGatewayConnections.UpdateTags.
 type VirtualNetworkGatewayConnectionsUpdateTagsPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewayConnectionsUpdateTagsResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller VirtualNetworkGatewayConnectionsUpdateTagsPoller
+	Poller *VirtualNetworkGatewayConnectionsUpdateTagsPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l VirtualNetworkGatewayConnectionsUpdateTagsPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkGatewayConnectionsUpdateTagsResponse, error) {
+	respType := VirtualNetworkGatewayConnectionsUpdateTagsResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.VirtualNetworkGatewayConnection)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VirtualNetworkGatewayConnectionsUpdateTagsResponse contains the response from method VirtualNetworkGatewayConnections.UpdateTags.
@@ -6246,14 +7488,22 @@ type VirtualNetworkGatewayConnectionsUpdateTagsResult struct {
 
 // VirtualNetworkGatewaysCreateOrUpdatePollerResponse contains the response from method VirtualNetworkGateways.CreateOrUpdate.
 type VirtualNetworkGatewaysCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller VirtualNetworkGatewaysCreateOrUpdatePoller
+	Poller *VirtualNetworkGatewaysCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l VirtualNetworkGatewaysCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkGatewaysCreateOrUpdateResponse, error) {
+	respType := VirtualNetworkGatewaysCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.VirtualNetworkGateway)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VirtualNetworkGatewaysCreateOrUpdateResponse contains the response from method VirtualNetworkGateways.CreateOrUpdate.
@@ -6270,14 +7520,22 @@ type VirtualNetworkGatewaysCreateOrUpdateResult struct {
 
 // VirtualNetworkGatewaysDeletePollerResponse contains the response from method VirtualNetworkGateways.Delete.
 type VirtualNetworkGatewaysDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller VirtualNetworkGatewaysDeletePoller
+	Poller *VirtualNetworkGatewaysDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l VirtualNetworkGatewaysDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkGatewaysDeleteResponse, error) {
+	respType := VirtualNetworkGatewaysDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VirtualNetworkGatewaysDeleteResponse contains the response from method VirtualNetworkGateways.Delete.
@@ -6288,14 +7546,22 @@ type VirtualNetworkGatewaysDeleteResponse struct {
 
 // VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVPNConnectionsPollerResponse contains the response from method VirtualNetworkGateways.DisconnectVirtualNetworkGatewayVPNConnections.
 type VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVPNConnectionsPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVPNConnectionsResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVPNConnectionsPoller
+	Poller *VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVPNConnectionsPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVPNConnectionsPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVPNConnectionsResponse, error) {
+	respType := VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVPNConnectionsResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVPNConnectionsResponse contains the response from method VirtualNetworkGateways.DisconnectVirtualNetworkGatewayVPNConnections.
@@ -6306,14 +7572,22 @@ type VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVPNConnectionsResponse
 
 // VirtualNetworkGatewaysGenerateVPNProfilePollerResponse contains the response from method VirtualNetworkGateways.GenerateVPNProfile.
 type VirtualNetworkGatewaysGenerateVPNProfilePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysGenerateVPNProfileResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller VirtualNetworkGatewaysGenerateVPNProfilePoller
+	Poller *VirtualNetworkGatewaysGenerateVPNProfilePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l VirtualNetworkGatewaysGenerateVPNProfilePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkGatewaysGenerateVPNProfileResponse, error) {
+	respType := VirtualNetworkGatewaysGenerateVPNProfileResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Value)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VirtualNetworkGatewaysGenerateVPNProfileResponse contains the response from method VirtualNetworkGateways.GenerateVPNProfile.
@@ -6330,14 +7604,22 @@ type VirtualNetworkGatewaysGenerateVPNProfileResult struct {
 
 // VirtualNetworkGatewaysGeneratevpnclientpackagePollerResponse contains the response from method VirtualNetworkGateways.Generatevpnclientpackage.
 type VirtualNetworkGatewaysGeneratevpnclientpackagePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysGeneratevpnclientpackageResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller VirtualNetworkGatewaysGeneratevpnclientpackagePoller
+	Poller *VirtualNetworkGatewaysGeneratevpnclientpackagePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l VirtualNetworkGatewaysGeneratevpnclientpackagePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkGatewaysGeneratevpnclientpackageResponse, error) {
+	respType := VirtualNetworkGatewaysGeneratevpnclientpackageResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Value)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VirtualNetworkGatewaysGeneratevpnclientpackageResponse contains the response from method VirtualNetworkGateways.Generatevpnclientpackage.
@@ -6354,14 +7636,22 @@ type VirtualNetworkGatewaysGeneratevpnclientpackageResult struct {
 
 // VirtualNetworkGatewaysGetAdvertisedRoutesPollerResponse contains the response from method VirtualNetworkGateways.GetAdvertisedRoutes.
 type VirtualNetworkGatewaysGetAdvertisedRoutesPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysGetAdvertisedRoutesResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller VirtualNetworkGatewaysGetAdvertisedRoutesPoller
+	Poller *VirtualNetworkGatewaysGetAdvertisedRoutesPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l VirtualNetworkGatewaysGetAdvertisedRoutesPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkGatewaysGetAdvertisedRoutesResponse, error) {
+	respType := VirtualNetworkGatewaysGetAdvertisedRoutesResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.GatewayRouteListResult)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VirtualNetworkGatewaysGetAdvertisedRoutesResponse contains the response from method VirtualNetworkGateways.GetAdvertisedRoutes.
@@ -6378,14 +7668,22 @@ type VirtualNetworkGatewaysGetAdvertisedRoutesResult struct {
 
 // VirtualNetworkGatewaysGetBgpPeerStatusPollerResponse contains the response from method VirtualNetworkGateways.GetBgpPeerStatus.
 type VirtualNetworkGatewaysGetBgpPeerStatusPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysGetBgpPeerStatusResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller VirtualNetworkGatewaysGetBgpPeerStatusPoller
+	Poller *VirtualNetworkGatewaysGetBgpPeerStatusPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l VirtualNetworkGatewaysGetBgpPeerStatusPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkGatewaysGetBgpPeerStatusResponse, error) {
+	respType := VirtualNetworkGatewaysGetBgpPeerStatusResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.BgpPeerStatusListResult)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VirtualNetworkGatewaysGetBgpPeerStatusResponse contains the response from method VirtualNetworkGateways.GetBgpPeerStatus.
@@ -6402,14 +7700,22 @@ type VirtualNetworkGatewaysGetBgpPeerStatusResult struct {
 
 // VirtualNetworkGatewaysGetLearnedRoutesPollerResponse contains the response from method VirtualNetworkGateways.GetLearnedRoutes.
 type VirtualNetworkGatewaysGetLearnedRoutesPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysGetLearnedRoutesResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller VirtualNetworkGatewaysGetLearnedRoutesPoller
+	Poller *VirtualNetworkGatewaysGetLearnedRoutesPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l VirtualNetworkGatewaysGetLearnedRoutesPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkGatewaysGetLearnedRoutesResponse, error) {
+	respType := VirtualNetworkGatewaysGetLearnedRoutesResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.GatewayRouteListResult)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VirtualNetworkGatewaysGetLearnedRoutesResponse contains the response from method VirtualNetworkGateways.GetLearnedRoutes.
@@ -6438,14 +7744,22 @@ type VirtualNetworkGatewaysGetResult struct {
 
 // VirtualNetworkGatewaysGetVPNProfilePackageURLPollerResponse contains the response from method VirtualNetworkGateways.GetVPNProfilePackageURL.
 type VirtualNetworkGatewaysGetVPNProfilePackageURLPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysGetVPNProfilePackageURLResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller VirtualNetworkGatewaysGetVPNProfilePackageURLPoller
+	Poller *VirtualNetworkGatewaysGetVPNProfilePackageURLPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l VirtualNetworkGatewaysGetVPNProfilePackageURLPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkGatewaysGetVPNProfilePackageURLResponse, error) {
+	respType := VirtualNetworkGatewaysGetVPNProfilePackageURLResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Value)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VirtualNetworkGatewaysGetVPNProfilePackageURLResponse contains the response from method VirtualNetworkGateways.GetVPNProfilePackageURL.
@@ -6462,14 +7776,22 @@ type VirtualNetworkGatewaysGetVPNProfilePackageURLResult struct {
 
 // VirtualNetworkGatewaysGetVpnclientConnectionHealthPollerResponse contains the response from method VirtualNetworkGateways.GetVpnclientConnectionHealth.
 type VirtualNetworkGatewaysGetVpnclientConnectionHealthPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysGetVpnclientConnectionHealthResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller VirtualNetworkGatewaysGetVpnclientConnectionHealthPoller
+	Poller *VirtualNetworkGatewaysGetVpnclientConnectionHealthPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l VirtualNetworkGatewaysGetVpnclientConnectionHealthPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkGatewaysGetVpnclientConnectionHealthResponse, error) {
+	respType := VirtualNetworkGatewaysGetVpnclientConnectionHealthResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.VPNClientConnectionHealthDetailListResult)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VirtualNetworkGatewaysGetVpnclientConnectionHealthResponse contains the response from method VirtualNetworkGateways.GetVpnclientConnectionHealth.
@@ -6486,14 +7808,22 @@ type VirtualNetworkGatewaysGetVpnclientConnectionHealthResult struct {
 
 // VirtualNetworkGatewaysGetVpnclientIPSecParametersPollerResponse contains the response from method VirtualNetworkGateways.GetVpnclientIPSecParameters.
 type VirtualNetworkGatewaysGetVpnclientIPSecParametersPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysGetVpnclientIPSecParametersResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller VirtualNetworkGatewaysGetVpnclientIPSecParametersPoller
+	Poller *VirtualNetworkGatewaysGetVpnclientIPSecParametersPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l VirtualNetworkGatewaysGetVpnclientIPSecParametersPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkGatewaysGetVpnclientIPSecParametersResponse, error) {
+	respType := VirtualNetworkGatewaysGetVpnclientIPSecParametersResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.VPNClientIPsecParameters)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VirtualNetworkGatewaysGetVpnclientIPSecParametersResponse contains the response from method VirtualNetworkGateways.GetVpnclientIPSecParameters.
@@ -6534,14 +7864,22 @@ type VirtualNetworkGatewaysListResult struct {
 
 // VirtualNetworkGatewaysResetPollerResponse contains the response from method VirtualNetworkGateways.Reset.
 type VirtualNetworkGatewaysResetPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysResetResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller VirtualNetworkGatewaysResetPoller
+	Poller *VirtualNetworkGatewaysResetPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l VirtualNetworkGatewaysResetPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkGatewaysResetResponse, error) {
+	respType := VirtualNetworkGatewaysResetResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.VirtualNetworkGateway)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VirtualNetworkGatewaysResetResponse contains the response from method VirtualNetworkGateways.Reset.
@@ -6558,14 +7896,22 @@ type VirtualNetworkGatewaysResetResult struct {
 
 // VirtualNetworkGatewaysResetVPNClientSharedKeyPollerResponse contains the response from method VirtualNetworkGateways.ResetVPNClientSharedKey.
 type VirtualNetworkGatewaysResetVPNClientSharedKeyPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysResetVPNClientSharedKeyResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller VirtualNetworkGatewaysResetVPNClientSharedKeyPoller
+	Poller *VirtualNetworkGatewaysResetVPNClientSharedKeyPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l VirtualNetworkGatewaysResetVPNClientSharedKeyPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkGatewaysResetVPNClientSharedKeyResponse, error) {
+	respType := VirtualNetworkGatewaysResetVPNClientSharedKeyResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VirtualNetworkGatewaysResetVPNClientSharedKeyResponse contains the response from method VirtualNetworkGateways.ResetVPNClientSharedKey.
@@ -6576,14 +7922,22 @@ type VirtualNetworkGatewaysResetVPNClientSharedKeyResponse struct {
 
 // VirtualNetworkGatewaysSetVpnclientIPSecParametersPollerResponse contains the response from method VirtualNetworkGateways.SetVpnclientIPSecParameters.
 type VirtualNetworkGatewaysSetVpnclientIPSecParametersPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysSetVpnclientIPSecParametersResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller VirtualNetworkGatewaysSetVpnclientIPSecParametersPoller
+	Poller *VirtualNetworkGatewaysSetVpnclientIPSecParametersPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l VirtualNetworkGatewaysSetVpnclientIPSecParametersPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkGatewaysSetVpnclientIPSecParametersResponse, error) {
+	respType := VirtualNetworkGatewaysSetVpnclientIPSecParametersResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.VPNClientIPsecParameters)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VirtualNetworkGatewaysSetVpnclientIPSecParametersResponse contains the response from method VirtualNetworkGateways.SetVpnclientIPSecParameters.
@@ -6600,14 +7954,22 @@ type VirtualNetworkGatewaysSetVpnclientIPSecParametersResult struct {
 
 // VirtualNetworkGatewaysStartPacketCapturePollerResponse contains the response from method VirtualNetworkGateways.StartPacketCapture.
 type VirtualNetworkGatewaysStartPacketCapturePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysStartPacketCaptureResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller VirtualNetworkGatewaysStartPacketCapturePoller
+	Poller *VirtualNetworkGatewaysStartPacketCapturePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l VirtualNetworkGatewaysStartPacketCapturePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkGatewaysStartPacketCaptureResponse, error) {
+	respType := VirtualNetworkGatewaysStartPacketCaptureResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Value)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VirtualNetworkGatewaysStartPacketCaptureResponse contains the response from method VirtualNetworkGateways.StartPacketCapture.
@@ -6624,14 +7986,22 @@ type VirtualNetworkGatewaysStartPacketCaptureResult struct {
 
 // VirtualNetworkGatewaysStopPacketCapturePollerResponse contains the response from method VirtualNetworkGateways.StopPacketCapture.
 type VirtualNetworkGatewaysStopPacketCapturePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysStopPacketCaptureResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller VirtualNetworkGatewaysStopPacketCapturePoller
+	Poller *VirtualNetworkGatewaysStopPacketCapturePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l VirtualNetworkGatewaysStopPacketCapturePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkGatewaysStopPacketCaptureResponse, error) {
+	respType := VirtualNetworkGatewaysStopPacketCaptureResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Value)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VirtualNetworkGatewaysStopPacketCaptureResponse contains the response from method VirtualNetworkGateways.StopPacketCapture.
@@ -6660,14 +8030,22 @@ type VirtualNetworkGatewaysSupportedVPNDevicesResult struct {
 
 // VirtualNetworkGatewaysUpdateTagsPollerResponse contains the response from method VirtualNetworkGateways.UpdateTags.
 type VirtualNetworkGatewaysUpdateTagsPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkGatewaysUpdateTagsResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller VirtualNetworkGatewaysUpdateTagsPoller
+	Poller *VirtualNetworkGatewaysUpdateTagsPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l VirtualNetworkGatewaysUpdateTagsPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkGatewaysUpdateTagsResponse, error) {
+	respType := VirtualNetworkGatewaysUpdateTagsResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.VirtualNetworkGateway)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VirtualNetworkGatewaysUpdateTagsResponse contains the response from method VirtualNetworkGateways.UpdateTags.
@@ -6696,14 +8074,22 @@ type VirtualNetworkGatewaysVPNDeviceConfigurationScriptResult struct {
 
 // VirtualNetworkPeeringsCreateOrUpdatePollerResponse contains the response from method VirtualNetworkPeerings.CreateOrUpdate.
 type VirtualNetworkPeeringsCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkPeeringsCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller VirtualNetworkPeeringsCreateOrUpdatePoller
+	Poller *VirtualNetworkPeeringsCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l VirtualNetworkPeeringsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkPeeringsCreateOrUpdateResponse, error) {
+	respType := VirtualNetworkPeeringsCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.VirtualNetworkPeering)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VirtualNetworkPeeringsCreateOrUpdateResponse contains the response from method VirtualNetworkPeerings.CreateOrUpdate.
@@ -6720,14 +8106,22 @@ type VirtualNetworkPeeringsCreateOrUpdateResult struct {
 
 // VirtualNetworkPeeringsDeletePollerResponse contains the response from method VirtualNetworkPeerings.Delete.
 type VirtualNetworkPeeringsDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkPeeringsDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller VirtualNetworkPeeringsDeletePoller
+	Poller *VirtualNetworkPeeringsDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l VirtualNetworkPeeringsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkPeeringsDeleteResponse, error) {
+	respType := VirtualNetworkPeeringsDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VirtualNetworkPeeringsDeleteResponse contains the response from method VirtualNetworkPeerings.Delete.
@@ -6762,14 +8156,22 @@ type VirtualNetworkPeeringsListResult struct {
 
 // VirtualNetworkTapsCreateOrUpdatePollerResponse contains the response from method VirtualNetworkTaps.CreateOrUpdate.
 type VirtualNetworkTapsCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkTapsCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller VirtualNetworkTapsCreateOrUpdatePoller
+	Poller *VirtualNetworkTapsCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l VirtualNetworkTapsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkTapsCreateOrUpdateResponse, error) {
+	respType := VirtualNetworkTapsCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.VirtualNetworkTap)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VirtualNetworkTapsCreateOrUpdateResponse contains the response from method VirtualNetworkTaps.CreateOrUpdate.
@@ -6786,14 +8188,22 @@ type VirtualNetworkTapsCreateOrUpdateResult struct {
 
 // VirtualNetworkTapsDeletePollerResponse contains the response from method VirtualNetworkTaps.Delete.
 type VirtualNetworkTapsDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworkTapsDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller VirtualNetworkTapsDeletePoller
+	Poller *VirtualNetworkTapsDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l VirtualNetworkTapsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkTapsDeleteResponse, error) {
+	respType := VirtualNetworkTapsDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VirtualNetworkTapsDeleteResponse contains the response from method VirtualNetworkTaps.Delete.
@@ -6864,14 +8274,22 @@ type VirtualNetworksCheckIPAddressAvailabilityResult struct {
 
 // VirtualNetworksCreateOrUpdatePollerResponse contains the response from method VirtualNetworks.CreateOrUpdate.
 type VirtualNetworksCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworksCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller VirtualNetworksCreateOrUpdatePoller
+	Poller *VirtualNetworksCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l VirtualNetworksCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworksCreateOrUpdateResponse, error) {
+	respType := VirtualNetworksCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.VirtualNetwork)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VirtualNetworksCreateOrUpdateResponse contains the response from method VirtualNetworks.CreateOrUpdate.
@@ -6888,14 +8306,22 @@ type VirtualNetworksCreateOrUpdateResult struct {
 
 // VirtualNetworksDeletePollerResponse contains the response from method VirtualNetworks.Delete.
 type VirtualNetworksDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualNetworksDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller VirtualNetworksDeletePoller
+	Poller *VirtualNetworksDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l VirtualNetworksDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworksDeleteResponse, error) {
+	respType := VirtualNetworksDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VirtualNetworksDeleteResponse contains the response from method VirtualNetworks.Delete.
@@ -6966,14 +8392,22 @@ type VirtualNetworksUpdateTagsResult struct {
 
 // VirtualRouterPeeringsCreateOrUpdatePollerResponse contains the response from method VirtualRouterPeerings.CreateOrUpdate.
 type VirtualRouterPeeringsCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualRouterPeeringsCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller VirtualRouterPeeringsCreateOrUpdatePoller
+	Poller *VirtualRouterPeeringsCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l VirtualRouterPeeringsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualRouterPeeringsCreateOrUpdateResponse, error) {
+	respType := VirtualRouterPeeringsCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.VirtualRouterPeering)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VirtualRouterPeeringsCreateOrUpdateResponse contains the response from method VirtualRouterPeerings.CreateOrUpdate.
@@ -6990,14 +8424,22 @@ type VirtualRouterPeeringsCreateOrUpdateResult struct {
 
 // VirtualRouterPeeringsDeletePollerResponse contains the response from method VirtualRouterPeerings.Delete.
 type VirtualRouterPeeringsDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualRouterPeeringsDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller VirtualRouterPeeringsDeletePoller
+	Poller *VirtualRouterPeeringsDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l VirtualRouterPeeringsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualRouterPeeringsDeleteResponse, error) {
+	respType := VirtualRouterPeeringsDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VirtualRouterPeeringsDeleteResponse contains the response from method VirtualRouterPeerings.Delete.
@@ -7032,14 +8474,22 @@ type VirtualRouterPeeringsListResult struct {
 
 // VirtualRoutersCreateOrUpdatePollerResponse contains the response from method VirtualRouters.CreateOrUpdate.
 type VirtualRoutersCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualRoutersCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller VirtualRoutersCreateOrUpdatePoller
+	Poller *VirtualRoutersCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l VirtualRoutersCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualRoutersCreateOrUpdateResponse, error) {
+	respType := VirtualRoutersCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.VirtualRouter)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VirtualRoutersCreateOrUpdateResponse contains the response from method VirtualRouters.CreateOrUpdate.
@@ -7056,14 +8506,22 @@ type VirtualRoutersCreateOrUpdateResult struct {
 
 // VirtualRoutersDeletePollerResponse contains the response from method VirtualRouters.Delete.
 type VirtualRoutersDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualRoutersDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller VirtualRoutersDeletePoller
+	Poller *VirtualRoutersDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l VirtualRoutersDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualRoutersDeleteResponse, error) {
+	respType := VirtualRoutersDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VirtualRoutersDeleteResponse contains the response from method VirtualRouters.Delete.
@@ -7110,14 +8568,22 @@ type VirtualRoutersListResult struct {
 
 // VirtualWansCreateOrUpdatePollerResponse contains the response from method VirtualWans.CreateOrUpdate.
 type VirtualWansCreateOrUpdatePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualWansCreateOrUpdateResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller VirtualWansCreateOrUpdatePoller
+	Poller *VirtualWansCreateOrUpdatePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l VirtualWansCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualWansCreateOrUpdateResponse, error) {
+	respType := VirtualWansCreateOrUpdateResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.VirtualWAN)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VirtualWansCreateOrUpdateResponse contains the response from method VirtualWans.CreateOrUpdate.
@@ -7134,14 +8600,22 @@ type VirtualWansCreateOrUpdateResult struct {
 
 // VirtualWansDeletePollerResponse contains the response from method VirtualWans.Delete.
 type VirtualWansDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (VirtualWansDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller VirtualWansDeletePoller
+	Poller *VirtualWansDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l VirtualWansDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualWansDeleteResponse, error) {
+	respType := VirtualWansDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // VirtualWansDeleteResponse contains the response from method VirtualWans.Delete.
@@ -7212,14 +8686,22 @@ type WebApplicationFirewallPoliciesCreateOrUpdateResult struct {
 
 // WebApplicationFirewallPoliciesDeletePollerResponse contains the response from method WebApplicationFirewallPolicies.Delete.
 type WebApplicationFirewallPoliciesDeletePollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (WebApplicationFirewallPoliciesDeleteResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller WebApplicationFirewallPoliciesDeletePoller
+	Poller *WebApplicationFirewallPoliciesDeletePoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l WebApplicationFirewallPoliciesDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (WebApplicationFirewallPoliciesDeleteResponse, error) {
+	respType := WebApplicationFirewallPoliciesDeleteResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
 }
 
 // WebApplicationFirewallPoliciesDeleteResponse contains the response from method WebApplicationFirewallPolicies.Delete.

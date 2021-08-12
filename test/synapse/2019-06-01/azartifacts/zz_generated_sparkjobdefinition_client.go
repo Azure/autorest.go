@@ -15,7 +15,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 type sparkJobDefinitionClient struct {
@@ -36,12 +35,8 @@ func (client *sparkJobDefinitionClient) BeginCreateOrUpdateSparkJobDefinition(ct
 	if err != nil {
 		return SparkJobDefinitionCreateOrUpdateSparkJobDefinitionPollerResponse{}, err
 	}
-	poller := &sparkJobDefinitionCreateOrUpdateSparkJobDefinitionPoller{
+	result.Poller = &SparkJobDefinitionCreateOrUpdateSparkJobDefinitionPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SparkJobDefinitionCreateOrUpdateSparkJobDefinitionResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -53,7 +48,7 @@ func (client *sparkJobDefinitionClient) ResumeCreateOrUpdateSparkJobDefinition(c
 	if err != nil {
 		return SparkJobDefinitionCreateOrUpdateSparkJobDefinitionPollerResponse{}, err
 	}
-	poller := &sparkJobDefinitionCreateOrUpdateSparkJobDefinitionPoller{
+	poller := &SparkJobDefinitionCreateOrUpdateSparkJobDefinitionPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -61,12 +56,10 @@ func (client *sparkJobDefinitionClient) ResumeCreateOrUpdateSparkJobDefinition(c
 		return SparkJobDefinitionCreateOrUpdateSparkJobDefinitionPollerResponse{}, err
 	}
 	result := SparkJobDefinitionCreateOrUpdateSparkJobDefinitionPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SparkJobDefinitionCreateOrUpdateSparkJobDefinitionResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -136,12 +129,8 @@ func (client *sparkJobDefinitionClient) BeginDebugSparkJobDefinition(ctx context
 	if err != nil {
 		return SparkJobDefinitionDebugSparkJobDefinitionPollerResponse{}, err
 	}
-	poller := &sparkJobDefinitionDebugSparkJobDefinitionPoller{
+	result.Poller = &SparkJobDefinitionDebugSparkJobDefinitionPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SparkJobDefinitionDebugSparkJobDefinitionResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -153,7 +142,7 @@ func (client *sparkJobDefinitionClient) ResumeDebugSparkJobDefinition(ctx contex
 	if err != nil {
 		return SparkJobDefinitionDebugSparkJobDefinitionPollerResponse{}, err
 	}
-	poller := &sparkJobDefinitionDebugSparkJobDefinitionPoller{
+	poller := &SparkJobDefinitionDebugSparkJobDefinitionPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -161,12 +150,10 @@ func (client *sparkJobDefinitionClient) ResumeDebugSparkJobDefinition(ctx contex
 		return SparkJobDefinitionDebugSparkJobDefinitionPollerResponse{}, err
 	}
 	result := SparkJobDefinitionDebugSparkJobDefinitionPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SparkJobDefinitionDebugSparkJobDefinitionResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -229,12 +216,8 @@ func (client *sparkJobDefinitionClient) BeginDeleteSparkJobDefinition(ctx contex
 	if err != nil {
 		return SparkJobDefinitionDeleteSparkJobDefinitionPollerResponse{}, err
 	}
-	poller := &sparkJobDefinitionDeleteSparkJobDefinitionPoller{
+	result.Poller = &SparkJobDefinitionDeleteSparkJobDefinitionPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SparkJobDefinitionDeleteSparkJobDefinitionResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -246,7 +229,7 @@ func (client *sparkJobDefinitionClient) ResumeDeleteSparkJobDefinition(ctx conte
 	if err != nil {
 		return SparkJobDefinitionDeleteSparkJobDefinitionPollerResponse{}, err
 	}
-	poller := &sparkJobDefinitionDeleteSparkJobDefinitionPoller{
+	poller := &SparkJobDefinitionDeleteSparkJobDefinitionPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -254,12 +237,10 @@ func (client *sparkJobDefinitionClient) ResumeDeleteSparkJobDefinition(ctx conte
 		return SparkJobDefinitionDeleteSparkJobDefinitionPollerResponse{}, err
 	}
 	result := SparkJobDefinitionDeleteSparkJobDefinitionPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SparkJobDefinitionDeleteSparkJobDefinitionResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -326,12 +307,8 @@ func (client *sparkJobDefinitionClient) BeginExecuteSparkJobDefinition(ctx conte
 	if err != nil {
 		return SparkJobDefinitionExecuteSparkJobDefinitionPollerResponse{}, err
 	}
-	poller := &sparkJobDefinitionExecuteSparkJobDefinitionPoller{
+	result.Poller = &SparkJobDefinitionExecuteSparkJobDefinitionPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SparkJobDefinitionExecuteSparkJobDefinitionResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -343,7 +320,7 @@ func (client *sparkJobDefinitionClient) ResumeExecuteSparkJobDefinition(ctx cont
 	if err != nil {
 		return SparkJobDefinitionExecuteSparkJobDefinitionPollerResponse{}, err
 	}
-	poller := &sparkJobDefinitionExecuteSparkJobDefinitionPoller{
+	poller := &SparkJobDefinitionExecuteSparkJobDefinitionPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -351,12 +328,10 @@ func (client *sparkJobDefinitionClient) ResumeExecuteSparkJobDefinition(ctx cont
 		return SparkJobDefinitionExecuteSparkJobDefinitionPollerResponse{}, err
 	}
 	result := SparkJobDefinitionExecuteSparkJobDefinitionPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SparkJobDefinitionExecuteSparkJobDefinitionResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -472,8 +447,8 @@ func (client *sparkJobDefinitionClient) getSparkJobDefinitionHandleError(resp *a
 
 // GetSparkJobDefinitionsByWorkspace - Lists spark job definitions.
 // If the operation fails it returns the *CloudError error type.
-func (client *sparkJobDefinitionClient) GetSparkJobDefinitionsByWorkspace(options *SparkJobDefinitionGetSparkJobDefinitionsByWorkspaceOptions) SparkJobDefinitionGetSparkJobDefinitionsByWorkspacePager {
-	return &sparkJobDefinitionGetSparkJobDefinitionsByWorkspacePager{
+func (client *sparkJobDefinitionClient) GetSparkJobDefinitionsByWorkspace(options *SparkJobDefinitionGetSparkJobDefinitionsByWorkspaceOptions) *SparkJobDefinitionGetSparkJobDefinitionsByWorkspacePager {
+	return &SparkJobDefinitionGetSparkJobDefinitionsByWorkspacePager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.getSparkJobDefinitionsByWorkspaceCreateRequest(ctx, options)
@@ -535,12 +510,8 @@ func (client *sparkJobDefinitionClient) BeginRenameSparkJobDefinition(ctx contex
 	if err != nil {
 		return SparkJobDefinitionRenameSparkJobDefinitionPollerResponse{}, err
 	}
-	poller := &sparkJobDefinitionRenameSparkJobDefinitionPoller{
+	result.Poller = &SparkJobDefinitionRenameSparkJobDefinitionPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SparkJobDefinitionRenameSparkJobDefinitionResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -552,7 +523,7 @@ func (client *sparkJobDefinitionClient) ResumeRenameSparkJobDefinition(ctx conte
 	if err != nil {
 		return SparkJobDefinitionRenameSparkJobDefinitionPollerResponse{}, err
 	}
-	poller := &sparkJobDefinitionRenameSparkJobDefinitionPoller{
+	poller := &SparkJobDefinitionRenameSparkJobDefinitionPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -560,12 +531,10 @@ func (client *sparkJobDefinitionClient) ResumeRenameSparkJobDefinition(ctx conte
 		return SparkJobDefinitionRenameSparkJobDefinitionPollerResponse{}, err
 	}
 	result := SparkJobDefinitionRenameSparkJobDefinitionPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SparkJobDefinitionRenameSparkJobDefinitionResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 

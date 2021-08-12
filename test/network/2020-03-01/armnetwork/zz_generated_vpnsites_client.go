@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // VPNSitesClient contains the methods for the VPNSites group.
@@ -45,12 +44,8 @@ func (client *VPNSitesClient) BeginCreateOrUpdate(ctx context.Context, resourceG
 	if err != nil {
 		return VPNSitesCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &vpnSitesCreateOrUpdatePoller{
+	result.Poller = &VPNSitesCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VPNSitesCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *VPNSitesClient) ResumeCreateOrUpdate(ctx context.Context, token st
 	if err != nil {
 		return VPNSitesCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &vpnSitesCreateOrUpdatePoller{
+	poller := &VPNSitesCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *VPNSitesClient) ResumeCreateOrUpdate(ctx context.Context, token st
 		return VPNSitesCreateOrUpdatePollerResponse{}, err
 	}
 	result := VPNSitesCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VPNSitesCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -150,12 +143,8 @@ func (client *VPNSitesClient) BeginDelete(ctx context.Context, resourceGroupName
 	if err != nil {
 		return VPNSitesDeletePollerResponse{}, err
 	}
-	poller := &vpnSitesDeletePoller{
+	result.Poller = &VPNSitesDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VPNSitesDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -167,7 +156,7 @@ func (client *VPNSitesClient) ResumeDelete(ctx context.Context, token string) (V
 	if err != nil {
 		return VPNSitesDeletePollerResponse{}, err
 	}
-	poller := &vpnSitesDeletePoller{
+	poller := &VPNSitesDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -175,12 +164,10 @@ func (client *VPNSitesClient) ResumeDelete(ctx context.Context, token string) (V
 		return VPNSitesDeletePollerResponse{}, err
 	}
 	result := VPNSitesDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VPNSitesDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -309,8 +296,8 @@ func (client *VPNSitesClient) getHandleError(resp *azcore.Response) error {
 
 // List - Lists all the VpnSites in a subscription.
 // If the operation fails it returns the *CloudError error type.
-func (client *VPNSitesClient) List(options *VPNSitesListOptions) VPNSitesListPager {
-	return &vpnSitesListPager{
+func (client *VPNSitesClient) List(options *VPNSitesListOptions) *VPNSitesListPager {
+	return &VPNSitesListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, options)
@@ -364,8 +351,8 @@ func (client *VPNSitesClient) listHandleError(resp *azcore.Response) error {
 
 // ListByResourceGroup - Lists all the vpnSites in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *VPNSitesClient) ListByResourceGroup(resourceGroupName string, options *VPNSitesListByResourceGroupOptions) VPNSitesListByResourceGroupPager {
-	return &vpnSitesListByResourceGroupPager{
+func (client *VPNSitesClient) ListByResourceGroup(resourceGroupName string, options *VPNSitesListByResourceGroupOptions) *VPNSitesListByResourceGroupPager {
+	return &VPNSitesListByResourceGroupPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)

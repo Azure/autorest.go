@@ -13,7 +13,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
-	"time"
 )
 
 // LROsClient contains the methods for the LROs group.
@@ -42,12 +41,8 @@ func (client *LROsClient) BeginDelete202NoRetry204(ctx context.Context, options 
 	if err != nil {
 		return LROsDelete202NoRetry204PollerResponse{}, err
 	}
-	poller := &lrOsDelete202NoRetry204Poller{
+	result.Poller = &LROsDelete202NoRetry204Poller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsDelete202NoRetry204Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -59,7 +54,7 @@ func (client *LROsClient) ResumeDelete202NoRetry204(ctx context.Context, token s
 	if err != nil {
 		return LROsDelete202NoRetry204PollerResponse{}, err
 	}
-	poller := &lrOsDelete202NoRetry204Poller{
+	poller := &LROsDelete202NoRetry204Poller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -67,12 +62,10 @@ func (client *LROsClient) ResumeDelete202NoRetry204(ctx context.Context, token s
 		return LROsDelete202NoRetry204PollerResponse{}, err
 	}
 	result := LROsDelete202NoRetry204PollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsDelete202NoRetry204Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -134,12 +127,8 @@ func (client *LROsClient) BeginDelete202Retry200(ctx context.Context, options *L
 	if err != nil {
 		return LROsDelete202Retry200PollerResponse{}, err
 	}
-	poller := &lrOsDelete202Retry200Poller{
+	result.Poller = &LROsDelete202Retry200Poller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsDelete202Retry200Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -151,7 +140,7 @@ func (client *LROsClient) ResumeDelete202Retry200(ctx context.Context, token str
 	if err != nil {
 		return LROsDelete202Retry200PollerResponse{}, err
 	}
-	poller := &lrOsDelete202Retry200Poller{
+	poller := &LROsDelete202Retry200Poller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -159,12 +148,10 @@ func (client *LROsClient) ResumeDelete202Retry200(ctx context.Context, token str
 		return LROsDelete202Retry200PollerResponse{}, err
 	}
 	result := LROsDelete202Retry200PollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsDelete202Retry200Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -225,12 +212,8 @@ func (client *LROsClient) BeginDelete204Succeeded(ctx context.Context, options *
 	if err != nil {
 		return LROsDelete204SucceededPollerResponse{}, err
 	}
-	poller := &lrOsDelete204SucceededPoller{
+	result.Poller = &LROsDelete204SucceededPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsDelete204SucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -242,7 +225,7 @@ func (client *LROsClient) ResumeDelete204Succeeded(ctx context.Context, token st
 	if err != nil {
 		return LROsDelete204SucceededPollerResponse{}, err
 	}
-	poller := &lrOsDelete204SucceededPoller{
+	poller := &LROsDelete204SucceededPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -250,12 +233,10 @@ func (client *LROsClient) ResumeDelete204Succeeded(ctx context.Context, token st
 		return LROsDelete204SucceededPollerResponse{}, err
 	}
 	result := LROsDelete204SucceededPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsDelete204SucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -316,12 +297,8 @@ func (client *LROsClient) BeginDeleteAsyncNoHeaderInRetry(ctx context.Context, o
 	if err != nil {
 		return LROsDeleteAsyncNoHeaderInRetryPollerResponse{}, err
 	}
-	poller := &lrOsDeleteAsyncNoHeaderInRetryPoller{
+	result.Poller = &LROsDeleteAsyncNoHeaderInRetryPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsDeleteAsyncNoHeaderInRetryResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -333,7 +310,7 @@ func (client *LROsClient) ResumeDeleteAsyncNoHeaderInRetry(ctx context.Context, 
 	if err != nil {
 		return LROsDeleteAsyncNoHeaderInRetryPollerResponse{}, err
 	}
-	poller := &lrOsDeleteAsyncNoHeaderInRetryPoller{
+	poller := &LROsDeleteAsyncNoHeaderInRetryPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -341,12 +318,10 @@ func (client *LROsClient) ResumeDeleteAsyncNoHeaderInRetry(ctx context.Context, 
 		return LROsDeleteAsyncNoHeaderInRetryPollerResponse{}, err
 	}
 	result := LROsDeleteAsyncNoHeaderInRetryPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsDeleteAsyncNoHeaderInRetryResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -408,12 +383,8 @@ func (client *LROsClient) BeginDeleteAsyncNoRetrySucceeded(ctx context.Context, 
 	if err != nil {
 		return LROsDeleteAsyncNoRetrySucceededPollerResponse{}, err
 	}
-	poller := &lrOsDeleteAsyncNoRetrySucceededPoller{
+	result.Poller = &LROsDeleteAsyncNoRetrySucceededPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsDeleteAsyncNoRetrySucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -425,7 +396,7 @@ func (client *LROsClient) ResumeDeleteAsyncNoRetrySucceeded(ctx context.Context,
 	if err != nil {
 		return LROsDeleteAsyncNoRetrySucceededPollerResponse{}, err
 	}
-	poller := &lrOsDeleteAsyncNoRetrySucceededPoller{
+	poller := &LROsDeleteAsyncNoRetrySucceededPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -433,12 +404,10 @@ func (client *LROsClient) ResumeDeleteAsyncNoRetrySucceeded(ctx context.Context,
 		return LROsDeleteAsyncNoRetrySucceededPollerResponse{}, err
 	}
 	result := LROsDeleteAsyncNoRetrySucceededPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsDeleteAsyncNoRetrySucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -500,12 +469,8 @@ func (client *LROsClient) BeginDeleteAsyncRetryFailed(ctx context.Context, optio
 	if err != nil {
 		return LROsDeleteAsyncRetryFailedPollerResponse{}, err
 	}
-	poller := &lrOsDeleteAsyncRetryFailedPoller{
+	result.Poller = &LROsDeleteAsyncRetryFailedPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsDeleteAsyncRetryFailedResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -517,7 +482,7 @@ func (client *LROsClient) ResumeDeleteAsyncRetryFailed(ctx context.Context, toke
 	if err != nil {
 		return LROsDeleteAsyncRetryFailedPollerResponse{}, err
 	}
-	poller := &lrOsDeleteAsyncRetryFailedPoller{
+	poller := &LROsDeleteAsyncRetryFailedPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -525,12 +490,10 @@ func (client *LROsClient) ResumeDeleteAsyncRetryFailed(ctx context.Context, toke
 		return LROsDeleteAsyncRetryFailedPollerResponse{}, err
 	}
 	result := LROsDeleteAsyncRetryFailedPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsDeleteAsyncRetryFailedResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -592,12 +555,8 @@ func (client *LROsClient) BeginDeleteAsyncRetrySucceeded(ctx context.Context, op
 	if err != nil {
 		return LROsDeleteAsyncRetrySucceededPollerResponse{}, err
 	}
-	poller := &lrOsDeleteAsyncRetrySucceededPoller{
+	result.Poller = &LROsDeleteAsyncRetrySucceededPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsDeleteAsyncRetrySucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -609,7 +568,7 @@ func (client *LROsClient) ResumeDeleteAsyncRetrySucceeded(ctx context.Context, t
 	if err != nil {
 		return LROsDeleteAsyncRetrySucceededPollerResponse{}, err
 	}
-	poller := &lrOsDeleteAsyncRetrySucceededPoller{
+	poller := &LROsDeleteAsyncRetrySucceededPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -617,12 +576,10 @@ func (client *LROsClient) ResumeDeleteAsyncRetrySucceeded(ctx context.Context, t
 		return LROsDeleteAsyncRetrySucceededPollerResponse{}, err
 	}
 	result := LROsDeleteAsyncRetrySucceededPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsDeleteAsyncRetrySucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -684,12 +641,8 @@ func (client *LROsClient) BeginDeleteAsyncRetrycanceled(ctx context.Context, opt
 	if err != nil {
 		return LROsDeleteAsyncRetrycanceledPollerResponse{}, err
 	}
-	poller := &lrOsDeleteAsyncRetrycanceledPoller{
+	result.Poller = &LROsDeleteAsyncRetrycanceledPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsDeleteAsyncRetrycanceledResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -701,7 +654,7 @@ func (client *LROsClient) ResumeDeleteAsyncRetrycanceled(ctx context.Context, to
 	if err != nil {
 		return LROsDeleteAsyncRetrycanceledPollerResponse{}, err
 	}
-	poller := &lrOsDeleteAsyncRetrycanceledPoller{
+	poller := &LROsDeleteAsyncRetrycanceledPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -709,12 +662,10 @@ func (client *LROsClient) ResumeDeleteAsyncRetrycanceled(ctx context.Context, to
 		return LROsDeleteAsyncRetrycanceledPollerResponse{}, err
 	}
 	result := LROsDeleteAsyncRetrycanceledPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsDeleteAsyncRetrycanceledResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -776,12 +727,8 @@ func (client *LROsClient) BeginDeleteNoHeaderInRetry(ctx context.Context, option
 	if err != nil {
 		return LROsDeleteNoHeaderInRetryPollerResponse{}, err
 	}
-	poller := &lrOsDeleteNoHeaderInRetryPoller{
+	result.Poller = &LROsDeleteNoHeaderInRetryPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsDeleteNoHeaderInRetryResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -793,7 +740,7 @@ func (client *LROsClient) ResumeDeleteNoHeaderInRetry(ctx context.Context, token
 	if err != nil {
 		return LROsDeleteNoHeaderInRetryPollerResponse{}, err
 	}
-	poller := &lrOsDeleteNoHeaderInRetryPoller{
+	poller := &LROsDeleteNoHeaderInRetryPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -801,12 +748,10 @@ func (client *LROsClient) ResumeDeleteNoHeaderInRetry(ctx context.Context, token
 		return LROsDeleteNoHeaderInRetryPollerResponse{}, err
 	}
 	result := LROsDeleteNoHeaderInRetryPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsDeleteNoHeaderInRetryResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -869,12 +814,8 @@ func (client *LROsClient) BeginDeleteProvisioning202Accepted200Succeeded(ctx con
 	if err != nil {
 		return LROsDeleteProvisioning202Accepted200SucceededPollerResponse{}, err
 	}
-	poller := &lrOsDeleteProvisioning202Accepted200SucceededPoller{
+	result.Poller = &LROsDeleteProvisioning202Accepted200SucceededPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsDeleteProvisioning202Accepted200SucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -886,7 +827,7 @@ func (client *LROsClient) ResumeDeleteProvisioning202Accepted200Succeeded(ctx co
 	if err != nil {
 		return LROsDeleteProvisioning202Accepted200SucceededPollerResponse{}, err
 	}
-	poller := &lrOsDeleteProvisioning202Accepted200SucceededPoller{
+	poller := &LROsDeleteProvisioning202Accepted200SucceededPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -894,12 +835,10 @@ func (client *LROsClient) ResumeDeleteProvisioning202Accepted200Succeeded(ctx co
 		return LROsDeleteProvisioning202Accepted200SucceededPollerResponse{}, err
 	}
 	result := LROsDeleteProvisioning202Accepted200SucceededPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsDeleteProvisioning202Accepted200SucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -963,12 +902,8 @@ func (client *LROsClient) BeginDeleteProvisioning202DeletingFailed200(ctx contex
 	if err != nil {
 		return LROsDeleteProvisioning202DeletingFailed200PollerResponse{}, err
 	}
-	poller := &lrOsDeleteProvisioning202DeletingFailed200Poller{
+	result.Poller = &LROsDeleteProvisioning202DeletingFailed200Poller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsDeleteProvisioning202DeletingFailed200Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -980,7 +915,7 @@ func (client *LROsClient) ResumeDeleteProvisioning202DeletingFailed200(ctx conte
 	if err != nil {
 		return LROsDeleteProvisioning202DeletingFailed200PollerResponse{}, err
 	}
-	poller := &lrOsDeleteProvisioning202DeletingFailed200Poller{
+	poller := &LROsDeleteProvisioning202DeletingFailed200Poller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -988,12 +923,10 @@ func (client *LROsClient) ResumeDeleteProvisioning202DeletingFailed200(ctx conte
 		return LROsDeleteProvisioning202DeletingFailed200PollerResponse{}, err
 	}
 	result := LROsDeleteProvisioning202DeletingFailed200PollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsDeleteProvisioning202DeletingFailed200Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -1057,12 +990,8 @@ func (client *LROsClient) BeginDeleteProvisioning202Deletingcanceled200(ctx cont
 	if err != nil {
 		return LROsDeleteProvisioning202Deletingcanceled200PollerResponse{}, err
 	}
-	poller := &lrOsDeleteProvisioning202Deletingcanceled200Poller{
+	result.Poller = &LROsDeleteProvisioning202Deletingcanceled200Poller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsDeleteProvisioning202Deletingcanceled200Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -1074,7 +1003,7 @@ func (client *LROsClient) ResumeDeleteProvisioning202Deletingcanceled200(ctx con
 	if err != nil {
 		return LROsDeleteProvisioning202Deletingcanceled200PollerResponse{}, err
 	}
-	poller := &lrOsDeleteProvisioning202Deletingcanceled200Poller{
+	poller := &LROsDeleteProvisioning202Deletingcanceled200Poller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -1082,12 +1011,10 @@ func (client *LROsClient) ResumeDeleteProvisioning202Deletingcanceled200(ctx con
 		return LROsDeleteProvisioning202Deletingcanceled200PollerResponse{}, err
 	}
 	result := LROsDeleteProvisioning202Deletingcanceled200PollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsDeleteProvisioning202Deletingcanceled200Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -1150,12 +1077,8 @@ func (client *LROsClient) BeginPost200WithPayload(ctx context.Context, options *
 	if err != nil {
 		return LROsPost200WithPayloadPollerResponse{}, err
 	}
-	poller := &lrOsPost200WithPayloadPoller{
+	result.Poller = &LROsPost200WithPayloadPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPost200WithPayloadResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -1167,7 +1090,7 @@ func (client *LROsClient) ResumePost200WithPayload(ctx context.Context, token st
 	if err != nil {
 		return LROsPost200WithPayloadPollerResponse{}, err
 	}
-	poller := &lrOsPost200WithPayloadPoller{
+	poller := &LROsPost200WithPayloadPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -1175,12 +1098,10 @@ func (client *LROsClient) ResumePost200WithPayload(ctx context.Context, token st
 		return LROsPost200WithPayloadPollerResponse{}, err
 	}
 	result := LROsPost200WithPayloadPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPost200WithPayloadResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -1242,12 +1163,8 @@ func (client *LROsClient) BeginPost202List(ctx context.Context, options *LROsBeg
 	if err != nil {
 		return LROsPost202ListPollerResponse{}, err
 	}
-	poller := &lrOsPost202ListPoller{
+	result.Poller = &LROsPost202ListPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPost202ListResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -1259,7 +1176,7 @@ func (client *LROsClient) ResumePost202List(ctx context.Context, token string) (
 	if err != nil {
 		return LROsPost202ListPollerResponse{}, err
 	}
-	poller := &lrOsPost202ListPoller{
+	poller := &LROsPost202ListPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -1267,12 +1184,10 @@ func (client *LROsClient) ResumePost202List(ctx context.Context, token string) (
 		return LROsPost202ListPollerResponse{}, err
 	}
 	result := LROsPost202ListPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPost202ListResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -1334,12 +1249,8 @@ func (client *LROsClient) BeginPost202NoRetry204(ctx context.Context, options *L
 	if err != nil {
 		return LROsPost202NoRetry204PollerResponse{}, err
 	}
-	poller := &lrOsPost202NoRetry204Poller{
+	result.Poller = &LROsPost202NoRetry204Poller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPost202NoRetry204Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -1351,7 +1262,7 @@ func (client *LROsClient) ResumePost202NoRetry204(ctx context.Context, token str
 	if err != nil {
 		return LROsPost202NoRetry204PollerResponse{}, err
 	}
-	poller := &lrOsPost202NoRetry204Poller{
+	poller := &LROsPost202NoRetry204Poller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -1359,12 +1270,10 @@ func (client *LROsClient) ResumePost202NoRetry204(ctx context.Context, token str
 		return LROsPost202NoRetry204PollerResponse{}, err
 	}
 	result := LROsPost202NoRetry204PollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPost202NoRetry204Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -1428,12 +1337,8 @@ func (client *LROsClient) BeginPost202Retry200(ctx context.Context, options *LRO
 	if err != nil {
 		return LROsPost202Retry200PollerResponse{}, err
 	}
-	poller := &lrOsPost202Retry200Poller{
+	result.Poller = &LROsPost202Retry200Poller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPost202Retry200Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -1445,7 +1350,7 @@ func (client *LROsClient) ResumePost202Retry200(ctx context.Context, token strin
 	if err != nil {
 		return LROsPost202Retry200PollerResponse{}, err
 	}
-	poller := &lrOsPost202Retry200Poller{
+	poller := &LROsPost202Retry200Poller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -1453,12 +1358,10 @@ func (client *LROsClient) ResumePost202Retry200(ctx context.Context, token strin
 		return LROsPost202Retry200PollerResponse{}, err
 	}
 	result := LROsPost202Retry200PollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPost202Retry200Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -1524,12 +1427,8 @@ func (client *LROsClient) BeginPostAsyncNoRetrySucceeded(ctx context.Context, op
 	if err != nil {
 		return LROsPostAsyncNoRetrySucceededPollerResponse{}, err
 	}
-	poller := &lrOsPostAsyncNoRetrySucceededPoller{
+	result.Poller = &LROsPostAsyncNoRetrySucceededPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPostAsyncNoRetrySucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -1541,7 +1440,7 @@ func (client *LROsClient) ResumePostAsyncNoRetrySucceeded(ctx context.Context, t
 	if err != nil {
 		return LROsPostAsyncNoRetrySucceededPollerResponse{}, err
 	}
-	poller := &lrOsPostAsyncNoRetrySucceededPoller{
+	poller := &LROsPostAsyncNoRetrySucceededPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -1549,12 +1448,10 @@ func (client *LROsClient) ResumePostAsyncNoRetrySucceeded(ctx context.Context, t
 		return LROsPostAsyncNoRetrySucceededPollerResponse{}, err
 	}
 	result := LROsPostAsyncNoRetrySucceededPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPostAsyncNoRetrySucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -1621,12 +1518,8 @@ func (client *LROsClient) BeginPostAsyncRetryFailed(ctx context.Context, options
 	if err != nil {
 		return LROsPostAsyncRetryFailedPollerResponse{}, err
 	}
-	poller := &lrOsPostAsyncRetryFailedPoller{
+	result.Poller = &LROsPostAsyncRetryFailedPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPostAsyncRetryFailedResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -1638,7 +1531,7 @@ func (client *LROsClient) ResumePostAsyncRetryFailed(ctx context.Context, token 
 	if err != nil {
 		return LROsPostAsyncRetryFailedPollerResponse{}, err
 	}
-	poller := &lrOsPostAsyncRetryFailedPoller{
+	poller := &LROsPostAsyncRetryFailedPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -1646,12 +1539,10 @@ func (client *LROsClient) ResumePostAsyncRetryFailed(ctx context.Context, token 
 		return LROsPostAsyncRetryFailedPollerResponse{}, err
 	}
 	result := LROsPostAsyncRetryFailedPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPostAsyncRetryFailedResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -1718,12 +1609,8 @@ func (client *LROsClient) BeginPostAsyncRetrySucceeded(ctx context.Context, opti
 	if err != nil {
 		return LROsPostAsyncRetrySucceededPollerResponse{}, err
 	}
-	poller := &lrOsPostAsyncRetrySucceededPoller{
+	result.Poller = &LROsPostAsyncRetrySucceededPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPostAsyncRetrySucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -1735,7 +1622,7 @@ func (client *LROsClient) ResumePostAsyncRetrySucceeded(ctx context.Context, tok
 	if err != nil {
 		return LROsPostAsyncRetrySucceededPollerResponse{}, err
 	}
-	poller := &lrOsPostAsyncRetrySucceededPoller{
+	poller := &LROsPostAsyncRetrySucceededPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -1743,12 +1630,10 @@ func (client *LROsClient) ResumePostAsyncRetrySucceeded(ctx context.Context, tok
 		return LROsPostAsyncRetrySucceededPollerResponse{}, err
 	}
 	result := LROsPostAsyncRetrySucceededPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPostAsyncRetrySucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -1815,12 +1700,8 @@ func (client *LROsClient) BeginPostAsyncRetrycanceled(ctx context.Context, optio
 	if err != nil {
 		return LROsPostAsyncRetrycanceledPollerResponse{}, err
 	}
-	poller := &lrOsPostAsyncRetrycanceledPoller{
+	result.Poller = &LROsPostAsyncRetrycanceledPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPostAsyncRetrycanceledResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -1832,7 +1713,7 @@ func (client *LROsClient) ResumePostAsyncRetrycanceled(ctx context.Context, toke
 	if err != nil {
 		return LROsPostAsyncRetrycanceledPollerResponse{}, err
 	}
-	poller := &lrOsPostAsyncRetrycanceledPoller{
+	poller := &LROsPostAsyncRetrycanceledPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -1840,12 +1721,10 @@ func (client *LROsClient) ResumePostAsyncRetrycanceled(ctx context.Context, toke
 		return LROsPostAsyncRetrycanceledPollerResponse{}, err
 	}
 	result := LROsPostAsyncRetrycanceledPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPostAsyncRetrycanceledResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -1911,12 +1790,8 @@ func (client *LROsClient) BeginPostDoubleHeadersFinalAzureHeaderGet(ctx context.
 	if err != nil {
 		return LROsPostDoubleHeadersFinalAzureHeaderGetPollerResponse{}, err
 	}
-	poller := &lrOsPostDoubleHeadersFinalAzureHeaderGetPoller{
+	result.Poller = &LROsPostDoubleHeadersFinalAzureHeaderGetPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPostDoubleHeadersFinalAzureHeaderGetResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -1928,7 +1803,7 @@ func (client *LROsClient) ResumePostDoubleHeadersFinalAzureHeaderGet(ctx context
 	if err != nil {
 		return LROsPostDoubleHeadersFinalAzureHeaderGetPollerResponse{}, err
 	}
-	poller := &lrOsPostDoubleHeadersFinalAzureHeaderGetPoller{
+	poller := &LROsPostDoubleHeadersFinalAzureHeaderGetPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -1936,12 +1811,10 @@ func (client *LROsClient) ResumePostDoubleHeadersFinalAzureHeaderGet(ctx context
 		return LROsPostDoubleHeadersFinalAzureHeaderGetPollerResponse{}, err
 	}
 	result := LROsPostDoubleHeadersFinalAzureHeaderGetPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPostDoubleHeadersFinalAzureHeaderGetResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -2004,12 +1877,8 @@ func (client *LROsClient) BeginPostDoubleHeadersFinalAzureHeaderGetDefault(ctx c
 	if err != nil {
 		return LROsPostDoubleHeadersFinalAzureHeaderGetDefaultPollerResponse{}, err
 	}
-	poller := &lrOsPostDoubleHeadersFinalAzureHeaderGetDefaultPoller{
+	result.Poller = &LROsPostDoubleHeadersFinalAzureHeaderGetDefaultPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPostDoubleHeadersFinalAzureHeaderGetDefaultResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -2021,7 +1890,7 @@ func (client *LROsClient) ResumePostDoubleHeadersFinalAzureHeaderGetDefault(ctx 
 	if err != nil {
 		return LROsPostDoubleHeadersFinalAzureHeaderGetDefaultPollerResponse{}, err
 	}
-	poller := &lrOsPostDoubleHeadersFinalAzureHeaderGetDefaultPoller{
+	poller := &LROsPostDoubleHeadersFinalAzureHeaderGetDefaultPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -2029,12 +1898,10 @@ func (client *LROsClient) ResumePostDoubleHeadersFinalAzureHeaderGetDefault(ctx 
 		return LROsPostDoubleHeadersFinalAzureHeaderGetDefaultPollerResponse{}, err
 	}
 	result := LROsPostDoubleHeadersFinalAzureHeaderGetDefaultPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPostDoubleHeadersFinalAzureHeaderGetDefaultResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -2097,12 +1964,8 @@ func (client *LROsClient) BeginPostDoubleHeadersFinalLocationGet(ctx context.Con
 	if err != nil {
 		return LROsPostDoubleHeadersFinalLocationGetPollerResponse{}, err
 	}
-	poller := &lrOsPostDoubleHeadersFinalLocationGetPoller{
+	result.Poller = &LROsPostDoubleHeadersFinalLocationGetPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPostDoubleHeadersFinalLocationGetResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -2114,7 +1977,7 @@ func (client *LROsClient) ResumePostDoubleHeadersFinalLocationGet(ctx context.Co
 	if err != nil {
 		return LROsPostDoubleHeadersFinalLocationGetPollerResponse{}, err
 	}
-	poller := &lrOsPostDoubleHeadersFinalLocationGetPoller{
+	poller := &LROsPostDoubleHeadersFinalLocationGetPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -2122,12 +1985,10 @@ func (client *LROsClient) ResumePostDoubleHeadersFinalLocationGet(ctx context.Co
 		return LROsPostDoubleHeadersFinalLocationGetPollerResponse{}, err
 	}
 	result := LROsPostDoubleHeadersFinalLocationGetPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPostDoubleHeadersFinalLocationGetResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -2190,12 +2051,8 @@ func (client *LROsClient) BeginPut200Acceptedcanceled200(ctx context.Context, op
 	if err != nil {
 		return LROsPut200Acceptedcanceled200PollerResponse{}, err
 	}
-	poller := &lrOsPut200Acceptedcanceled200Poller{
+	result.Poller = &LROsPut200Acceptedcanceled200Poller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPut200Acceptedcanceled200Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -2207,7 +2064,7 @@ func (client *LROsClient) ResumePut200Acceptedcanceled200(ctx context.Context, t
 	if err != nil {
 		return LROsPut200Acceptedcanceled200PollerResponse{}, err
 	}
-	poller := &lrOsPut200Acceptedcanceled200Poller{
+	poller := &LROsPut200Acceptedcanceled200Poller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -2215,12 +2072,10 @@ func (client *LROsClient) ResumePut200Acceptedcanceled200(ctx context.Context, t
 		return LROsPut200Acceptedcanceled200PollerResponse{}, err
 	}
 	result := LROsPut200Acceptedcanceled200PollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPut200Acceptedcanceled200Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -2285,12 +2140,8 @@ func (client *LROsClient) BeginPut200Succeeded(ctx context.Context, options *LRO
 	if err != nil {
 		return LROsPut200SucceededPollerResponse{}, err
 	}
-	poller := &lrOsPut200SucceededPoller{
+	result.Poller = &LROsPut200SucceededPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPut200SucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -2302,7 +2153,7 @@ func (client *LROsClient) ResumePut200Succeeded(ctx context.Context, token strin
 	if err != nil {
 		return LROsPut200SucceededPollerResponse{}, err
 	}
-	poller := &lrOsPut200SucceededPoller{
+	poller := &LROsPut200SucceededPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -2310,12 +2161,10 @@ func (client *LROsClient) ResumePut200Succeeded(ctx context.Context, token strin
 		return LROsPut200SucceededPollerResponse{}, err
 	}
 	result := LROsPut200SucceededPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPut200SucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -2378,12 +2227,8 @@ func (client *LROsClient) BeginPut200SucceededNoState(ctx context.Context, optio
 	if err != nil {
 		return LROsPut200SucceededNoStatePollerResponse{}, err
 	}
-	poller := &lrOsPut200SucceededNoStatePoller{
+	result.Poller = &LROsPut200SucceededNoStatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPut200SucceededNoStateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -2395,7 +2240,7 @@ func (client *LROsClient) ResumePut200SucceededNoState(ctx context.Context, toke
 	if err != nil {
 		return LROsPut200SucceededNoStatePollerResponse{}, err
 	}
-	poller := &lrOsPut200SucceededNoStatePoller{
+	poller := &LROsPut200SucceededNoStatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -2403,12 +2248,10 @@ func (client *LROsClient) ResumePut200SucceededNoState(ctx context.Context, toke
 		return LROsPut200SucceededNoStatePollerResponse{}, err
 	}
 	result := LROsPut200SucceededNoStatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPut200SucceededNoStateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -2473,12 +2316,8 @@ func (client *LROsClient) BeginPut200UpdatingSucceeded204(ctx context.Context, o
 	if err != nil {
 		return LROsPut200UpdatingSucceeded204PollerResponse{}, err
 	}
-	poller := &lrOsPut200UpdatingSucceeded204Poller{
+	result.Poller = &LROsPut200UpdatingSucceeded204Poller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPut200UpdatingSucceeded204Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -2490,7 +2329,7 @@ func (client *LROsClient) ResumePut200UpdatingSucceeded204(ctx context.Context, 
 	if err != nil {
 		return LROsPut200UpdatingSucceeded204PollerResponse{}, err
 	}
-	poller := &lrOsPut200UpdatingSucceeded204Poller{
+	poller := &LROsPut200UpdatingSucceeded204Poller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -2498,12 +2337,10 @@ func (client *LROsClient) ResumePut200UpdatingSucceeded204(ctx context.Context, 
 		return LROsPut200UpdatingSucceeded204PollerResponse{}, err
 	}
 	result := LROsPut200UpdatingSucceeded204PollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPut200UpdatingSucceeded204Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -2570,12 +2407,8 @@ func (client *LROsClient) BeginPut201CreatingFailed200(ctx context.Context, opti
 	if err != nil {
 		return LROsPut201CreatingFailed200PollerResponse{}, err
 	}
-	poller := &lrOsPut201CreatingFailed200Poller{
+	result.Poller = &LROsPut201CreatingFailed200Poller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPut201CreatingFailed200Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -2587,7 +2420,7 @@ func (client *LROsClient) ResumePut201CreatingFailed200(ctx context.Context, tok
 	if err != nil {
 		return LROsPut201CreatingFailed200PollerResponse{}, err
 	}
-	poller := &lrOsPut201CreatingFailed200Poller{
+	poller := &LROsPut201CreatingFailed200Poller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -2595,12 +2428,10 @@ func (client *LROsClient) ResumePut201CreatingFailed200(ctx context.Context, tok
 		return LROsPut201CreatingFailed200PollerResponse{}, err
 	}
 	result := LROsPut201CreatingFailed200PollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPut201CreatingFailed200Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -2667,12 +2498,8 @@ func (client *LROsClient) BeginPut201CreatingSucceeded200(ctx context.Context, o
 	if err != nil {
 		return LROsPut201CreatingSucceeded200PollerResponse{}, err
 	}
-	poller := &lrOsPut201CreatingSucceeded200Poller{
+	result.Poller = &LROsPut201CreatingSucceeded200Poller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPut201CreatingSucceeded200Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -2684,7 +2511,7 @@ func (client *LROsClient) ResumePut201CreatingSucceeded200(ctx context.Context, 
 	if err != nil {
 		return LROsPut201CreatingSucceeded200PollerResponse{}, err
 	}
-	poller := &lrOsPut201CreatingSucceeded200Poller{
+	poller := &LROsPut201CreatingSucceeded200Poller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -2692,12 +2519,10 @@ func (client *LROsClient) ResumePut201CreatingSucceeded200(ctx context.Context, 
 		return LROsPut201CreatingSucceeded200PollerResponse{}, err
 	}
 	result := LROsPut201CreatingSucceeded200PollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPut201CreatingSucceeded200Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -2762,12 +2587,8 @@ func (client *LROsClient) BeginPut201Succeeded(ctx context.Context, options *LRO
 	if err != nil {
 		return LROsPut201SucceededPollerResponse{}, err
 	}
-	poller := &lrOsPut201SucceededPoller{
+	result.Poller = &LROsPut201SucceededPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPut201SucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -2779,7 +2600,7 @@ func (client *LROsClient) ResumePut201Succeeded(ctx context.Context, token strin
 	if err != nil {
 		return LROsPut201SucceededPollerResponse{}, err
 	}
-	poller := &lrOsPut201SucceededPoller{
+	poller := &LROsPut201SucceededPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -2787,12 +2608,10 @@ func (client *LROsClient) ResumePut201Succeeded(ctx context.Context, token strin
 		return LROsPut201SucceededPollerResponse{}, err
 	}
 	result := LROsPut201SucceededPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPut201SucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -2856,12 +2675,8 @@ func (client *LROsClient) BeginPut202Retry200(ctx context.Context, options *LROs
 	if err != nil {
 		return LROsPut202Retry200PollerResponse{}, err
 	}
-	poller := &lrOsPut202Retry200Poller{
+	result.Poller = &LROsPut202Retry200Poller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPut202Retry200Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -2873,7 +2688,7 @@ func (client *LROsClient) ResumePut202Retry200(ctx context.Context, token string
 	if err != nil {
 		return LROsPut202Retry200PollerResponse{}, err
 	}
-	poller := &lrOsPut202Retry200Poller{
+	poller := &LROsPut202Retry200Poller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -2881,12 +2696,10 @@ func (client *LROsClient) ResumePut202Retry200(ctx context.Context, token string
 		return LROsPut202Retry200PollerResponse{}, err
 	}
 	result := LROsPut202Retry200PollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPut202Retry200Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -2951,12 +2764,8 @@ func (client *LROsClient) BeginPutAsyncNoHeaderInRetry(ctx context.Context, opti
 	if err != nil {
 		return LROsPutAsyncNoHeaderInRetryPollerResponse{}, err
 	}
-	poller := &lrOsPutAsyncNoHeaderInRetryPoller{
+	result.Poller = &LROsPutAsyncNoHeaderInRetryPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPutAsyncNoHeaderInRetryResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -2968,7 +2777,7 @@ func (client *LROsClient) ResumePutAsyncNoHeaderInRetry(ctx context.Context, tok
 	if err != nil {
 		return LROsPutAsyncNoHeaderInRetryPollerResponse{}, err
 	}
-	poller := &lrOsPutAsyncNoHeaderInRetryPoller{
+	poller := &LROsPutAsyncNoHeaderInRetryPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -2976,12 +2785,10 @@ func (client *LROsClient) ResumePutAsyncNoHeaderInRetry(ctx context.Context, tok
 		return LROsPutAsyncNoHeaderInRetryPollerResponse{}, err
 	}
 	result := LROsPutAsyncNoHeaderInRetryPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPutAsyncNoHeaderInRetryResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -3047,12 +2854,8 @@ func (client *LROsClient) BeginPutAsyncNoRetrySucceeded(ctx context.Context, opt
 	if err != nil {
 		return LROsPutAsyncNoRetrySucceededPollerResponse{}, err
 	}
-	poller := &lrOsPutAsyncNoRetrySucceededPoller{
+	result.Poller = &LROsPutAsyncNoRetrySucceededPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPutAsyncNoRetrySucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -3064,7 +2867,7 @@ func (client *LROsClient) ResumePutAsyncNoRetrySucceeded(ctx context.Context, to
 	if err != nil {
 		return LROsPutAsyncNoRetrySucceededPollerResponse{}, err
 	}
-	poller := &lrOsPutAsyncNoRetrySucceededPoller{
+	poller := &LROsPutAsyncNoRetrySucceededPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -3072,12 +2875,10 @@ func (client *LROsClient) ResumePutAsyncNoRetrySucceeded(ctx context.Context, to
 		return LROsPutAsyncNoRetrySucceededPollerResponse{}, err
 	}
 	result := LROsPutAsyncNoRetrySucceededPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPutAsyncNoRetrySucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -3144,12 +2945,8 @@ func (client *LROsClient) BeginPutAsyncNoRetrycanceled(ctx context.Context, opti
 	if err != nil {
 		return LROsPutAsyncNoRetrycanceledPollerResponse{}, err
 	}
-	poller := &lrOsPutAsyncNoRetrycanceledPoller{
+	result.Poller = &LROsPutAsyncNoRetrycanceledPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPutAsyncNoRetrycanceledResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -3161,7 +2958,7 @@ func (client *LROsClient) ResumePutAsyncNoRetrycanceled(ctx context.Context, tok
 	if err != nil {
 		return LROsPutAsyncNoRetrycanceledPollerResponse{}, err
 	}
-	poller := &lrOsPutAsyncNoRetrycanceledPoller{
+	poller := &LROsPutAsyncNoRetrycanceledPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -3169,12 +2966,10 @@ func (client *LROsClient) ResumePutAsyncNoRetrycanceled(ctx context.Context, tok
 		return LROsPutAsyncNoRetrycanceledPollerResponse{}, err
 	}
 	result := LROsPutAsyncNoRetrycanceledPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPutAsyncNoRetrycanceledResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -3239,12 +3034,8 @@ func (client *LROsClient) BeginPutAsyncNonResource(ctx context.Context, options 
 	if err != nil {
 		return LROsPutAsyncNonResourcePollerResponse{}, err
 	}
-	poller := &lrOsPutAsyncNonResourcePoller{
+	result.Poller = &LROsPutAsyncNonResourcePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPutAsyncNonResourceResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -3256,7 +3047,7 @@ func (client *LROsClient) ResumePutAsyncNonResource(ctx context.Context, token s
 	if err != nil {
 		return LROsPutAsyncNonResourcePollerResponse{}, err
 	}
-	poller := &lrOsPutAsyncNonResourcePoller{
+	poller := &LROsPutAsyncNonResourcePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -3264,12 +3055,10 @@ func (client *LROsClient) ResumePutAsyncNonResource(ctx context.Context, token s
 		return LROsPutAsyncNonResourcePollerResponse{}, err
 	}
 	result := LROsPutAsyncNonResourcePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPutAsyncNonResourceResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -3334,12 +3123,8 @@ func (client *LROsClient) BeginPutAsyncRetryFailed(ctx context.Context, options 
 	if err != nil {
 		return LROsPutAsyncRetryFailedPollerResponse{}, err
 	}
-	poller := &lrOsPutAsyncRetryFailedPoller{
+	result.Poller = &LROsPutAsyncRetryFailedPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPutAsyncRetryFailedResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -3351,7 +3136,7 @@ func (client *LROsClient) ResumePutAsyncRetryFailed(ctx context.Context, token s
 	if err != nil {
 		return LROsPutAsyncRetryFailedPollerResponse{}, err
 	}
-	poller := &lrOsPutAsyncRetryFailedPoller{
+	poller := &LROsPutAsyncRetryFailedPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -3359,12 +3144,10 @@ func (client *LROsClient) ResumePutAsyncRetryFailed(ctx context.Context, token s
 		return LROsPutAsyncRetryFailedPollerResponse{}, err
 	}
 	result := LROsPutAsyncRetryFailedPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPutAsyncRetryFailedResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -3431,12 +3214,8 @@ func (client *LROsClient) BeginPutAsyncRetrySucceeded(ctx context.Context, optio
 	if err != nil {
 		return LROsPutAsyncRetrySucceededPollerResponse{}, err
 	}
-	poller := &lrOsPutAsyncRetrySucceededPoller{
+	result.Poller = &LROsPutAsyncRetrySucceededPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPutAsyncRetrySucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -3448,7 +3227,7 @@ func (client *LROsClient) ResumePutAsyncRetrySucceeded(ctx context.Context, toke
 	if err != nil {
 		return LROsPutAsyncRetrySucceededPollerResponse{}, err
 	}
-	poller := &lrOsPutAsyncRetrySucceededPoller{
+	poller := &LROsPutAsyncRetrySucceededPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -3456,12 +3235,10 @@ func (client *LROsClient) ResumePutAsyncRetrySucceeded(ctx context.Context, toke
 		return LROsPutAsyncRetrySucceededPollerResponse{}, err
 	}
 	result := LROsPutAsyncRetrySucceededPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPutAsyncRetrySucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -3526,12 +3303,8 @@ func (client *LROsClient) BeginPutAsyncSubResource(ctx context.Context, options 
 	if err != nil {
 		return LROsPutAsyncSubResourcePollerResponse{}, err
 	}
-	poller := &lrOsPutAsyncSubResourcePoller{
+	result.Poller = &LROsPutAsyncSubResourcePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPutAsyncSubResourceResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -3543,7 +3316,7 @@ func (client *LROsClient) ResumePutAsyncSubResource(ctx context.Context, token s
 	if err != nil {
 		return LROsPutAsyncSubResourcePollerResponse{}, err
 	}
-	poller := &lrOsPutAsyncSubResourcePoller{
+	poller := &LROsPutAsyncSubResourcePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -3551,12 +3324,10 @@ func (client *LROsClient) ResumePutAsyncSubResource(ctx context.Context, token s
 		return LROsPutAsyncSubResourcePollerResponse{}, err
 	}
 	result := LROsPutAsyncSubResourcePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPutAsyncSubResourceResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -3620,12 +3391,8 @@ func (client *LROsClient) BeginPutNoHeaderInRetry(ctx context.Context, options *
 	if err != nil {
 		return LROsPutNoHeaderInRetryPollerResponse{}, err
 	}
-	poller := &lrOsPutNoHeaderInRetryPoller{
+	result.Poller = &LROsPutNoHeaderInRetryPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPutNoHeaderInRetryResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -3637,7 +3404,7 @@ func (client *LROsClient) ResumePutNoHeaderInRetry(ctx context.Context, token st
 	if err != nil {
 		return LROsPutNoHeaderInRetryPollerResponse{}, err
 	}
-	poller := &lrOsPutNoHeaderInRetryPoller{
+	poller := &LROsPutNoHeaderInRetryPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -3645,12 +3412,10 @@ func (client *LROsClient) ResumePutNoHeaderInRetry(ctx context.Context, token st
 		return LROsPutNoHeaderInRetryPollerResponse{}, err
 	}
 	result := LROsPutNoHeaderInRetryPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPutNoHeaderInRetryResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -3714,12 +3479,8 @@ func (client *LROsClient) BeginPutNonResource(ctx context.Context, options *LROs
 	if err != nil {
 		return LROsPutNonResourcePollerResponse{}, err
 	}
-	poller := &lrOsPutNonResourcePoller{
+	result.Poller = &LROsPutNonResourcePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPutNonResourceResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -3731,7 +3492,7 @@ func (client *LROsClient) ResumePutNonResource(ctx context.Context, token string
 	if err != nil {
 		return LROsPutNonResourcePollerResponse{}, err
 	}
-	poller := &lrOsPutNonResourcePoller{
+	poller := &LROsPutNonResourcePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -3739,12 +3500,10 @@ func (client *LROsClient) ResumePutNonResource(ctx context.Context, token string
 		return LROsPutNonResourcePollerResponse{}, err
 	}
 	result := LROsPutNonResourcePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPutNonResourceResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -3807,12 +3566,8 @@ func (client *LROsClient) BeginPutSubResource(ctx context.Context, options *LROs
 	if err != nil {
 		return LROsPutSubResourcePollerResponse{}, err
 	}
-	poller := &lrOsPutSubResourcePoller{
+	result.Poller = &LROsPutSubResourcePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPutSubResourceResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -3824,7 +3579,7 @@ func (client *LROsClient) ResumePutSubResource(ctx context.Context, token string
 	if err != nil {
 		return LROsPutSubResourcePollerResponse{}, err
 	}
-	poller := &lrOsPutSubResourcePoller{
+	poller := &LROsPutSubResourcePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -3832,12 +3587,10 @@ func (client *LROsClient) ResumePutSubResource(ctx context.Context, token string
 		return LROsPutSubResourcePollerResponse{}, err
 	}
 	result := LROsPutSubResourcePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPutSubResourceResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 

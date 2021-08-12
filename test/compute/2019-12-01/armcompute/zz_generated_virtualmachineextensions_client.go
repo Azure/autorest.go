@@ -15,7 +15,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // VirtualMachineExtensionsClient contains the methods for the VirtualMachineExtensions group.
@@ -44,12 +43,8 @@ func (client *VirtualMachineExtensionsClient) BeginCreateOrUpdate(ctx context.Co
 	if err != nil {
 		return VirtualMachineExtensionsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &virtualMachineExtensionsCreateOrUpdatePoller{
+	result.Poller = &VirtualMachineExtensionsCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineExtensionsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -61,7 +56,7 @@ func (client *VirtualMachineExtensionsClient) ResumeCreateOrUpdate(ctx context.C
 	if err != nil {
 		return VirtualMachineExtensionsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &virtualMachineExtensionsCreateOrUpdatePoller{
+	poller := &VirtualMachineExtensionsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -69,12 +64,10 @@ func (client *VirtualMachineExtensionsClient) ResumeCreateOrUpdate(ctx context.C
 		return VirtualMachineExtensionsCreateOrUpdatePollerResponse{}, err
 	}
 	result := VirtualMachineExtensionsCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineExtensionsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -152,12 +145,8 @@ func (client *VirtualMachineExtensionsClient) BeginDelete(ctx context.Context, r
 	if err != nil {
 		return VirtualMachineExtensionsDeletePollerResponse{}, err
 	}
-	poller := &virtualMachineExtensionsDeletePoller{
+	result.Poller = &VirtualMachineExtensionsDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineExtensionsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -169,7 +158,7 @@ func (client *VirtualMachineExtensionsClient) ResumeDelete(ctx context.Context, 
 	if err != nil {
 		return VirtualMachineExtensionsDeletePollerResponse{}, err
 	}
-	poller := &virtualMachineExtensionsDeletePoller{
+	poller := &VirtualMachineExtensionsDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -177,12 +166,10 @@ func (client *VirtualMachineExtensionsClient) ResumeDelete(ctx context.Context, 
 		return VirtualMachineExtensionsDeletePollerResponse{}, err
 	}
 	result := VirtualMachineExtensionsDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineExtensionsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -399,12 +386,8 @@ func (client *VirtualMachineExtensionsClient) BeginUpdate(ctx context.Context, r
 	if err != nil {
 		return VirtualMachineExtensionsUpdatePollerResponse{}, err
 	}
-	poller := &virtualMachineExtensionsUpdatePoller{
+	result.Poller = &VirtualMachineExtensionsUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineExtensionsUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -416,7 +399,7 @@ func (client *VirtualMachineExtensionsClient) ResumeUpdate(ctx context.Context, 
 	if err != nil {
 		return VirtualMachineExtensionsUpdatePollerResponse{}, err
 	}
-	poller := &virtualMachineExtensionsUpdatePoller{
+	poller := &VirtualMachineExtensionsUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -424,12 +407,10 @@ func (client *VirtualMachineExtensionsClient) ResumeUpdate(ctx context.Context, 
 		return VirtualMachineExtensionsUpdatePollerResponse{}, err
 	}
 	result := VirtualMachineExtensionsUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineExtensionsUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 

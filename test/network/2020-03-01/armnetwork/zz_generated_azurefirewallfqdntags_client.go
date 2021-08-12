@@ -32,8 +32,8 @@ func NewAzureFirewallFqdnTagsClient(con *armcore.Connection, subscriptionID stri
 
 // ListAll - Gets all the Azure Firewall FQDN Tags in a subscription.
 // If the operation fails it returns the *CloudError error type.
-func (client *AzureFirewallFqdnTagsClient) ListAll(options *AzureFirewallFqdnTagsListAllOptions) AzureFirewallFqdnTagsListAllPager {
-	return &azureFirewallFqdnTagsListAllPager{
+func (client *AzureFirewallFqdnTagsClient) ListAll(options *AzureFirewallFqdnTagsListAllOptions) *AzureFirewallFqdnTagsListAllPager {
+	return &AzureFirewallFqdnTagsListAllPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listAllCreateRequest(ctx, options)

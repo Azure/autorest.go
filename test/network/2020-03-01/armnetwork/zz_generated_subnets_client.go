@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // SubnetsClient contains the methods for the Subnets group.
@@ -45,12 +44,8 @@ func (client *SubnetsClient) BeginCreateOrUpdate(ctx context.Context, resourceGr
 	if err != nil {
 		return SubnetsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &subnetsCreateOrUpdatePoller{
+	result.Poller = &SubnetsCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SubnetsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *SubnetsClient) ResumeCreateOrUpdate(ctx context.Context, token str
 	if err != nil {
 		return SubnetsCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &subnetsCreateOrUpdatePoller{
+	poller := &SubnetsCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *SubnetsClient) ResumeCreateOrUpdate(ctx context.Context, token str
 		return SubnetsCreateOrUpdatePollerResponse{}, err
 	}
 	result := SubnetsCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SubnetsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -154,12 +147,8 @@ func (client *SubnetsClient) BeginDelete(ctx context.Context, resourceGroupName 
 	if err != nil {
 		return SubnetsDeletePollerResponse{}, err
 	}
-	poller := &subnetsDeletePoller{
+	result.Poller = &SubnetsDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SubnetsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -171,7 +160,7 @@ func (client *SubnetsClient) ResumeDelete(ctx context.Context, token string) (Su
 	if err != nil {
 		return SubnetsDeletePollerResponse{}, err
 	}
-	poller := &subnetsDeletePoller{
+	poller := &SubnetsDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -179,12 +168,10 @@ func (client *SubnetsClient) ResumeDelete(ctx context.Context, token string) (Su
 		return SubnetsDeletePollerResponse{}, err
 	}
 	result := SubnetsDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SubnetsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -324,8 +311,8 @@ func (client *SubnetsClient) getHandleError(resp *azcore.Response) error {
 
 // List - Gets all subnets in a virtual network.
 // If the operation fails it returns the *CloudError error type.
-func (client *SubnetsClient) List(resourceGroupName string, virtualNetworkName string, options *SubnetsListOptions) SubnetsListPager {
-	return &subnetsListPager{
+func (client *SubnetsClient) List(resourceGroupName string, virtualNetworkName string, options *SubnetsListOptions) *SubnetsListPager {
+	return &SubnetsListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, virtualNetworkName, options)
@@ -399,12 +386,8 @@ func (client *SubnetsClient) BeginPrepareNetworkPolicies(ctx context.Context, re
 	if err != nil {
 		return SubnetsPrepareNetworkPoliciesPollerResponse{}, err
 	}
-	poller := &subnetsPrepareNetworkPoliciesPoller{
+	result.Poller = &SubnetsPrepareNetworkPoliciesPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SubnetsPrepareNetworkPoliciesResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -416,7 +399,7 @@ func (client *SubnetsClient) ResumePrepareNetworkPolicies(ctx context.Context, t
 	if err != nil {
 		return SubnetsPrepareNetworkPoliciesPollerResponse{}, err
 	}
-	poller := &subnetsPrepareNetworkPoliciesPoller{
+	poller := &SubnetsPrepareNetworkPoliciesPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -424,12 +407,10 @@ func (client *SubnetsClient) ResumePrepareNetworkPolicies(ctx context.Context, t
 		return SubnetsPrepareNetworkPoliciesPollerResponse{}, err
 	}
 	result := SubnetsPrepareNetworkPoliciesPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SubnetsPrepareNetworkPoliciesResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -508,12 +489,8 @@ func (client *SubnetsClient) BeginUnprepareNetworkPolicies(ctx context.Context, 
 	if err != nil {
 		return SubnetsUnprepareNetworkPoliciesPollerResponse{}, err
 	}
-	poller := &subnetsUnprepareNetworkPoliciesPoller{
+	result.Poller = &SubnetsUnprepareNetworkPoliciesPoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SubnetsUnprepareNetworkPoliciesResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -525,7 +502,7 @@ func (client *SubnetsClient) ResumeUnprepareNetworkPolicies(ctx context.Context,
 	if err != nil {
 		return SubnetsUnprepareNetworkPoliciesPollerResponse{}, err
 	}
-	poller := &subnetsUnprepareNetworkPoliciesPoller{
+	poller := &SubnetsUnprepareNetworkPoliciesPoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -533,12 +510,10 @@ func (client *SubnetsClient) ResumeUnprepareNetworkPolicies(ctx context.Context,
 		return SubnetsUnprepareNetworkPoliciesPollerResponse{}, err
 	}
 	result := SubnetsUnprepareNetworkPoliciesPollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (SubnetsUnprepareNetworkPoliciesResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 

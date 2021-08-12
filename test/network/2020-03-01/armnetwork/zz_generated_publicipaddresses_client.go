@@ -16,7 +16,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 // PublicIPAddressesClient contains the methods for the PublicIPAddresses group.
@@ -45,12 +44,8 @@ func (client *PublicIPAddressesClient) BeginCreateOrUpdate(ctx context.Context, 
 	if err != nil {
 		return PublicIPAddressesCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &publicIPAddressesCreateOrUpdatePoller{
+	result.Poller = &PublicIPAddressesCreateOrUpdatePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PublicIPAddressesCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -62,7 +57,7 @@ func (client *PublicIPAddressesClient) ResumeCreateOrUpdate(ctx context.Context,
 	if err != nil {
 		return PublicIPAddressesCreateOrUpdatePollerResponse{}, err
 	}
-	poller := &publicIPAddressesCreateOrUpdatePoller{
+	poller := &PublicIPAddressesCreateOrUpdatePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -70,12 +65,10 @@ func (client *PublicIPAddressesClient) ResumeCreateOrUpdate(ctx context.Context,
 		return PublicIPAddressesCreateOrUpdatePollerResponse{}, err
 	}
 	result := PublicIPAddressesCreateOrUpdatePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PublicIPAddressesCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -150,12 +143,8 @@ func (client *PublicIPAddressesClient) BeginDelete(ctx context.Context, resource
 	if err != nil {
 		return PublicIPAddressesDeletePollerResponse{}, err
 	}
-	poller := &publicIPAddressesDeletePoller{
+	result.Poller = &PublicIPAddressesDeletePoller{
 		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PublicIPAddressesDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
 	}
 	return result, nil
 }
@@ -167,7 +156,7 @@ func (client *PublicIPAddressesClient) ResumeDelete(ctx context.Context, token s
 	if err != nil {
 		return PublicIPAddressesDeletePollerResponse{}, err
 	}
-	poller := &publicIPAddressesDeletePoller{
+	poller := &PublicIPAddressesDeletePoller{
 		pt: pt,
 	}
 	resp, err := poller.Poll(ctx)
@@ -175,12 +164,10 @@ func (client *PublicIPAddressesClient) ResumeDelete(ctx context.Context, token s
 		return PublicIPAddressesDeletePollerResponse{}, err
 	}
 	result := PublicIPAddressesDeletePollerResponse{
+		Poller:      poller,
 		RawResponse: resp,
 	}
 	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (PublicIPAddressesDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
 	return result, nil
 }
 
@@ -397,8 +384,8 @@ func (client *PublicIPAddressesClient) getVirtualMachineScaleSetPublicIPAddressH
 
 // List - Gets all public IP addresses in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *PublicIPAddressesClient) List(resourceGroupName string, options *PublicIPAddressesListOptions) PublicIPAddressesListPager {
-	return &publicIPAddressesListPager{
+func (client *PublicIPAddressesClient) List(resourceGroupName string, options *PublicIPAddressesListOptions) *PublicIPAddressesListPager {
+	return &PublicIPAddressesListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, options)
@@ -456,8 +443,8 @@ func (client *PublicIPAddressesClient) listHandleError(resp *azcore.Response) er
 
 // ListAll - Gets all the public IP addresses in a subscription.
 // If the operation fails it returns the *CloudError error type.
-func (client *PublicIPAddressesClient) ListAll(options *PublicIPAddressesListAllOptions) PublicIPAddressesListAllPager {
-	return &publicIPAddressesListAllPager{
+func (client *PublicIPAddressesClient) ListAll(options *PublicIPAddressesListAllOptions) *PublicIPAddressesListAllPager {
+	return &PublicIPAddressesListAllPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listAllCreateRequest(ctx, options)
@@ -511,8 +498,8 @@ func (client *PublicIPAddressesClient) listAllHandleError(resp *azcore.Response)
 
 // ListVirtualMachineScaleSetPublicIPAddresses - Gets information about all public IP addresses on a virtual machine scale set level.
 // If the operation fails it returns the *CloudError error type.
-func (client *PublicIPAddressesClient) ListVirtualMachineScaleSetPublicIPAddresses(resourceGroupName string, virtualMachineScaleSetName string, options *PublicIPAddressesListVirtualMachineScaleSetPublicIPAddressesOptions) PublicIPAddressesListVirtualMachineScaleSetPublicIPAddressesPager {
-	return &publicIPAddressesListVirtualMachineScaleSetPublicIPAddressesPager{
+func (client *PublicIPAddressesClient) ListVirtualMachineScaleSetPublicIPAddresses(resourceGroupName string, virtualMachineScaleSetName string, options *PublicIPAddressesListVirtualMachineScaleSetPublicIPAddressesOptions) *PublicIPAddressesListVirtualMachineScaleSetPublicIPAddressesPager {
+	return &PublicIPAddressesListVirtualMachineScaleSetPublicIPAddressesPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listVirtualMachineScaleSetPublicIPAddressesCreateRequest(ctx, resourceGroupName, virtualMachineScaleSetName, options)
@@ -575,8 +562,8 @@ func (client *PublicIPAddressesClient) listVirtualMachineScaleSetPublicIPAddress
 // ListVirtualMachineScaleSetVMPublicIPAddresses - Gets information about all public IP addresses in a virtual machine IP configuration in a virtual machine
 // scale set.
 // If the operation fails it returns the *CloudError error type.
-func (client *PublicIPAddressesClient) ListVirtualMachineScaleSetVMPublicIPAddresses(resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, ipConfigurationName string, options *PublicIPAddressesListVirtualMachineScaleSetVMPublicIPAddressesOptions) PublicIPAddressesListVirtualMachineScaleSetVMPublicIPAddressesPager {
-	return &publicIPAddressesListVirtualMachineScaleSetVMPublicIPAddressesPager{
+func (client *PublicIPAddressesClient) ListVirtualMachineScaleSetVMPublicIPAddresses(resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, ipConfigurationName string, options *PublicIPAddressesListVirtualMachineScaleSetVMPublicIPAddressesOptions) *PublicIPAddressesListVirtualMachineScaleSetVMPublicIPAddressesPager {
+	return &PublicIPAddressesListVirtualMachineScaleSetVMPublicIPAddressesPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listVirtualMachineScaleSetVMPublicIPAddressesCreateRequest(ctx, resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, ipConfigurationName, options)

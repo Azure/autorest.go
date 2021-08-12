@@ -14,13 +14,8 @@ import (
 	"reflect"
 )
 
-type PagingFirstResponseEmptyPager interface {
-	azcore.Pager
-	// PageResponse returns the current PagingFirstResponseEmptyResponse.
-	PageResponse() PagingFirstResponseEmptyResponse
-}
-
-type pagingFirstResponseEmptyPager struct {
+// PagingFirstResponseEmptyPager provides operations for iterating over paged responses.
+type PagingFirstResponseEmptyPager struct {
 	client    *PagingClient
 	current   PagingFirstResponseEmptyResponse
 	err       error
@@ -28,11 +23,14 @@ type pagingFirstResponseEmptyPager struct {
 	advancer  func(context.Context, PagingFirstResponseEmptyResponse) (*azcore.Request, error)
 }
 
-func (p *pagingFirstResponseEmptyPager) Err() error {
+// Err returns the last error encountered while paging.
+func (p *PagingFirstResponseEmptyPager) Err() error {
 	return p.err
 }
 
-func (p *pagingFirstResponseEmptyPager) NextPage(ctx context.Context) bool {
+// NextPage returns true if the pager advanced to the next page.
+// Returns false if there are no more pages or an error occurred.
+func (p *PagingFirstResponseEmptyPager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -65,17 +63,13 @@ func (p *pagingFirstResponseEmptyPager) NextPage(ctx context.Context) bool {
 	return true
 }
 
-func (p *pagingFirstResponseEmptyPager) PageResponse() PagingFirstResponseEmptyResponse {
+// PageResponse returns the current PagingFirstResponseEmptyResponse page.
+func (p *PagingFirstResponseEmptyPager) PageResponse() PagingFirstResponseEmptyResponse {
 	return p.current
 }
 
-type PagingGetMultiplePagesFailurePager interface {
-	azcore.Pager
-	// PageResponse returns the current PagingGetMultiplePagesFailureResponse.
-	PageResponse() PagingGetMultiplePagesFailureResponse
-}
-
-type pagingGetMultiplePagesFailurePager struct {
+// PagingGetMultiplePagesFailurePager provides operations for iterating over paged responses.
+type PagingGetMultiplePagesFailurePager struct {
 	client    *PagingClient
 	current   PagingGetMultiplePagesFailureResponse
 	err       error
@@ -83,11 +77,14 @@ type pagingGetMultiplePagesFailurePager struct {
 	advancer  func(context.Context, PagingGetMultiplePagesFailureResponse) (*azcore.Request, error)
 }
 
-func (p *pagingGetMultiplePagesFailurePager) Err() error {
+// Err returns the last error encountered while paging.
+func (p *PagingGetMultiplePagesFailurePager) Err() error {
 	return p.err
 }
 
-func (p *pagingGetMultiplePagesFailurePager) NextPage(ctx context.Context) bool {
+// NextPage returns true if the pager advanced to the next page.
+// Returns false if there are no more pages or an error occurred.
+func (p *PagingGetMultiplePagesFailurePager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -120,17 +117,13 @@ func (p *pagingGetMultiplePagesFailurePager) NextPage(ctx context.Context) bool 
 	return true
 }
 
-func (p *pagingGetMultiplePagesFailurePager) PageResponse() PagingGetMultiplePagesFailureResponse {
+// PageResponse returns the current PagingGetMultiplePagesFailureResponse page.
+func (p *PagingGetMultiplePagesFailurePager) PageResponse() PagingGetMultiplePagesFailureResponse {
 	return p.current
 }
 
-type PagingGetMultiplePagesFailureURIPager interface {
-	azcore.Pager
-	// PageResponse returns the current PagingGetMultiplePagesFailureURIResponse.
-	PageResponse() PagingGetMultiplePagesFailureURIResponse
-}
-
-type pagingGetMultiplePagesFailureURIPager struct {
+// PagingGetMultiplePagesFailureURIPager provides operations for iterating over paged responses.
+type PagingGetMultiplePagesFailureURIPager struct {
 	client    *PagingClient
 	current   PagingGetMultiplePagesFailureURIResponse
 	err       error
@@ -138,11 +131,14 @@ type pagingGetMultiplePagesFailureURIPager struct {
 	advancer  func(context.Context, PagingGetMultiplePagesFailureURIResponse) (*azcore.Request, error)
 }
 
-func (p *pagingGetMultiplePagesFailureURIPager) Err() error {
+// Err returns the last error encountered while paging.
+func (p *PagingGetMultiplePagesFailureURIPager) Err() error {
 	return p.err
 }
 
-func (p *pagingGetMultiplePagesFailureURIPager) NextPage(ctx context.Context) bool {
+// NextPage returns true if the pager advanced to the next page.
+// Returns false if there are no more pages or an error occurred.
+func (p *PagingGetMultiplePagesFailureURIPager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -175,17 +171,13 @@ func (p *pagingGetMultiplePagesFailureURIPager) NextPage(ctx context.Context) bo
 	return true
 }
 
-func (p *pagingGetMultiplePagesFailureURIPager) PageResponse() PagingGetMultiplePagesFailureURIResponse {
+// PageResponse returns the current PagingGetMultiplePagesFailureURIResponse page.
+func (p *PagingGetMultiplePagesFailureURIPager) PageResponse() PagingGetMultiplePagesFailureURIResponse {
 	return p.current
 }
 
-type PagingGetMultiplePagesFragmentNextLinkPager interface {
-	azcore.Pager
-	// PageResponse returns the current PagingGetMultiplePagesFragmentNextLinkResponse.
-	PageResponse() PagingGetMultiplePagesFragmentNextLinkResponse
-}
-
-type pagingGetMultiplePagesFragmentNextLinkPager struct {
+// PagingGetMultiplePagesFragmentNextLinkPager provides operations for iterating over paged responses.
+type PagingGetMultiplePagesFragmentNextLinkPager struct {
 	client    *PagingClient
 	current   PagingGetMultiplePagesFragmentNextLinkResponse
 	err       error
@@ -193,11 +185,14 @@ type pagingGetMultiplePagesFragmentNextLinkPager struct {
 	advancer  func(context.Context, PagingGetMultiplePagesFragmentNextLinkResponse) (*azcore.Request, error)
 }
 
-func (p *pagingGetMultiplePagesFragmentNextLinkPager) Err() error {
+// Err returns the last error encountered while paging.
+func (p *PagingGetMultiplePagesFragmentNextLinkPager) Err() error {
 	return p.err
 }
 
-func (p *pagingGetMultiplePagesFragmentNextLinkPager) NextPage(ctx context.Context) bool {
+// NextPage returns true if the pager advanced to the next page.
+// Returns false if there are no more pages or an error occurred.
+func (p *PagingGetMultiplePagesFragmentNextLinkPager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -230,17 +225,13 @@ func (p *pagingGetMultiplePagesFragmentNextLinkPager) NextPage(ctx context.Conte
 	return true
 }
 
-func (p *pagingGetMultiplePagesFragmentNextLinkPager) PageResponse() PagingGetMultiplePagesFragmentNextLinkResponse {
+// PageResponse returns the current PagingGetMultiplePagesFragmentNextLinkResponse page.
+func (p *PagingGetMultiplePagesFragmentNextLinkPager) PageResponse() PagingGetMultiplePagesFragmentNextLinkResponse {
 	return p.current
 }
 
-type PagingGetMultiplePagesFragmentWithGroupingNextLinkPager interface {
-	azcore.Pager
-	// PageResponse returns the current PagingGetMultiplePagesFragmentWithGroupingNextLinkResponse.
-	PageResponse() PagingGetMultiplePagesFragmentWithGroupingNextLinkResponse
-}
-
-type pagingGetMultiplePagesFragmentWithGroupingNextLinkPager struct {
+// PagingGetMultiplePagesFragmentWithGroupingNextLinkPager provides operations for iterating over paged responses.
+type PagingGetMultiplePagesFragmentWithGroupingNextLinkPager struct {
 	client    *PagingClient
 	current   PagingGetMultiplePagesFragmentWithGroupingNextLinkResponse
 	err       error
@@ -248,11 +239,14 @@ type pagingGetMultiplePagesFragmentWithGroupingNextLinkPager struct {
 	advancer  func(context.Context, PagingGetMultiplePagesFragmentWithGroupingNextLinkResponse) (*azcore.Request, error)
 }
 
-func (p *pagingGetMultiplePagesFragmentWithGroupingNextLinkPager) Err() error {
+// Err returns the last error encountered while paging.
+func (p *PagingGetMultiplePagesFragmentWithGroupingNextLinkPager) Err() error {
 	return p.err
 }
 
-func (p *pagingGetMultiplePagesFragmentWithGroupingNextLinkPager) NextPage(ctx context.Context) bool {
+// NextPage returns true if the pager advanced to the next page.
+// Returns false if there are no more pages or an error occurred.
+func (p *PagingGetMultiplePagesFragmentWithGroupingNextLinkPager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -285,28 +279,27 @@ func (p *pagingGetMultiplePagesFragmentWithGroupingNextLinkPager) NextPage(ctx c
 	return true
 }
 
-func (p *pagingGetMultiplePagesFragmentWithGroupingNextLinkPager) PageResponse() PagingGetMultiplePagesFragmentWithGroupingNextLinkResponse {
+// PageResponse returns the current PagingGetMultiplePagesFragmentWithGroupingNextLinkResponse page.
+func (p *PagingGetMultiplePagesFragmentWithGroupingNextLinkPager) PageResponse() PagingGetMultiplePagesFragmentWithGroupingNextLinkResponse {
 	return p.current
 }
 
-type PagingGetMultiplePagesLROPager interface {
-	azcore.Pager
-	// PageResponse returns the current PagingGetMultiplePagesLROResponse.
-	PageResponse() PagingGetMultiplePagesLROResponse
-}
-
-type pagingGetMultiplePagesLROPager struct {
+// PagingGetMultiplePagesLROPager provides operations for iterating over paged responses.
+type PagingGetMultiplePagesLROPager struct {
 	client  *PagingClient
 	current PagingGetMultiplePagesLROResponse
 	err     error
 	second  bool
 }
 
-func (p *pagingGetMultiplePagesLROPager) Err() error {
+// Err returns the last error encountered while paging.
+func (p *PagingGetMultiplePagesLROPager) Err() error {
 	return p.err
 }
 
-func (p *pagingGetMultiplePagesLROPager) NextPage(ctx context.Context) bool {
+// NextPage returns true if the pager advanced to the next page.
+// Returns false if there are no more pages or an error occurred.
+func (p *PagingGetMultiplePagesLROPager) NextPage(ctx context.Context) bool {
 	if !p.second {
 		p.second = true
 		return true
@@ -338,17 +331,13 @@ func (p *pagingGetMultiplePagesLROPager) NextPage(ctx context.Context) bool {
 	return true
 }
 
-func (p *pagingGetMultiplePagesLROPager) PageResponse() PagingGetMultiplePagesLROResponse {
+// PageResponse returns the current PagingGetMultiplePagesLROResponse page.
+func (p *PagingGetMultiplePagesLROPager) PageResponse() PagingGetMultiplePagesLROResponse {
 	return p.current
 }
 
-type PagingGetMultiplePagesPager interface {
-	azcore.Pager
-	// PageResponse returns the current PagingGetMultiplePagesResponse.
-	PageResponse() PagingGetMultiplePagesResponse
-}
-
-type pagingGetMultiplePagesPager struct {
+// PagingGetMultiplePagesPager provides operations for iterating over paged responses.
+type PagingGetMultiplePagesPager struct {
 	client    *PagingClient
 	current   PagingGetMultiplePagesResponse
 	err       error
@@ -356,11 +345,14 @@ type pagingGetMultiplePagesPager struct {
 	advancer  func(context.Context, PagingGetMultiplePagesResponse) (*azcore.Request, error)
 }
 
-func (p *pagingGetMultiplePagesPager) Err() error {
+// Err returns the last error encountered while paging.
+func (p *PagingGetMultiplePagesPager) Err() error {
 	return p.err
 }
 
-func (p *pagingGetMultiplePagesPager) NextPage(ctx context.Context) bool {
+// NextPage returns true if the pager advanced to the next page.
+// Returns false if there are no more pages or an error occurred.
+func (p *PagingGetMultiplePagesPager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -393,17 +385,13 @@ func (p *pagingGetMultiplePagesPager) NextPage(ctx context.Context) bool {
 	return true
 }
 
-func (p *pagingGetMultiplePagesPager) PageResponse() PagingGetMultiplePagesResponse {
+// PageResponse returns the current PagingGetMultiplePagesResponse page.
+func (p *PagingGetMultiplePagesPager) PageResponse() PagingGetMultiplePagesResponse {
 	return p.current
 }
 
-type PagingGetMultiplePagesRetryFirstPager interface {
-	azcore.Pager
-	// PageResponse returns the current PagingGetMultiplePagesRetryFirstResponse.
-	PageResponse() PagingGetMultiplePagesRetryFirstResponse
-}
-
-type pagingGetMultiplePagesRetryFirstPager struct {
+// PagingGetMultiplePagesRetryFirstPager provides operations for iterating over paged responses.
+type PagingGetMultiplePagesRetryFirstPager struct {
 	client    *PagingClient
 	current   PagingGetMultiplePagesRetryFirstResponse
 	err       error
@@ -411,11 +399,14 @@ type pagingGetMultiplePagesRetryFirstPager struct {
 	advancer  func(context.Context, PagingGetMultiplePagesRetryFirstResponse) (*azcore.Request, error)
 }
 
-func (p *pagingGetMultiplePagesRetryFirstPager) Err() error {
+// Err returns the last error encountered while paging.
+func (p *PagingGetMultiplePagesRetryFirstPager) Err() error {
 	return p.err
 }
 
-func (p *pagingGetMultiplePagesRetryFirstPager) NextPage(ctx context.Context) bool {
+// NextPage returns true if the pager advanced to the next page.
+// Returns false if there are no more pages or an error occurred.
+func (p *PagingGetMultiplePagesRetryFirstPager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -448,17 +439,13 @@ func (p *pagingGetMultiplePagesRetryFirstPager) NextPage(ctx context.Context) bo
 	return true
 }
 
-func (p *pagingGetMultiplePagesRetryFirstPager) PageResponse() PagingGetMultiplePagesRetryFirstResponse {
+// PageResponse returns the current PagingGetMultiplePagesRetryFirstResponse page.
+func (p *PagingGetMultiplePagesRetryFirstPager) PageResponse() PagingGetMultiplePagesRetryFirstResponse {
 	return p.current
 }
 
-type PagingGetMultiplePagesRetrySecondPager interface {
-	azcore.Pager
-	// PageResponse returns the current PagingGetMultiplePagesRetrySecondResponse.
-	PageResponse() PagingGetMultiplePagesRetrySecondResponse
-}
-
-type pagingGetMultiplePagesRetrySecondPager struct {
+// PagingGetMultiplePagesRetrySecondPager provides operations for iterating over paged responses.
+type PagingGetMultiplePagesRetrySecondPager struct {
 	client    *PagingClient
 	current   PagingGetMultiplePagesRetrySecondResponse
 	err       error
@@ -466,11 +453,14 @@ type pagingGetMultiplePagesRetrySecondPager struct {
 	advancer  func(context.Context, PagingGetMultiplePagesRetrySecondResponse) (*azcore.Request, error)
 }
 
-func (p *pagingGetMultiplePagesRetrySecondPager) Err() error {
+// Err returns the last error encountered while paging.
+func (p *PagingGetMultiplePagesRetrySecondPager) Err() error {
 	return p.err
 }
 
-func (p *pagingGetMultiplePagesRetrySecondPager) NextPage(ctx context.Context) bool {
+// NextPage returns true if the pager advanced to the next page.
+// Returns false if there are no more pages or an error occurred.
+func (p *PagingGetMultiplePagesRetrySecondPager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -503,17 +493,13 @@ func (p *pagingGetMultiplePagesRetrySecondPager) NextPage(ctx context.Context) b
 	return true
 }
 
-func (p *pagingGetMultiplePagesRetrySecondPager) PageResponse() PagingGetMultiplePagesRetrySecondResponse {
+// PageResponse returns the current PagingGetMultiplePagesRetrySecondResponse page.
+func (p *PagingGetMultiplePagesRetrySecondPager) PageResponse() PagingGetMultiplePagesRetrySecondResponse {
 	return p.current
 }
 
-type PagingGetMultiplePagesWithOffsetPager interface {
-	azcore.Pager
-	// PageResponse returns the current PagingGetMultiplePagesWithOffsetResponse.
-	PageResponse() PagingGetMultiplePagesWithOffsetResponse
-}
-
-type pagingGetMultiplePagesWithOffsetPager struct {
+// PagingGetMultiplePagesWithOffsetPager provides operations for iterating over paged responses.
+type PagingGetMultiplePagesWithOffsetPager struct {
 	client    *PagingClient
 	current   PagingGetMultiplePagesWithOffsetResponse
 	err       error
@@ -521,11 +507,14 @@ type pagingGetMultiplePagesWithOffsetPager struct {
 	advancer  func(context.Context, PagingGetMultiplePagesWithOffsetResponse) (*azcore.Request, error)
 }
 
-func (p *pagingGetMultiplePagesWithOffsetPager) Err() error {
+// Err returns the last error encountered while paging.
+func (p *PagingGetMultiplePagesWithOffsetPager) Err() error {
 	return p.err
 }
 
-func (p *pagingGetMultiplePagesWithOffsetPager) NextPage(ctx context.Context) bool {
+// NextPage returns true if the pager advanced to the next page.
+// Returns false if there are no more pages or an error occurred.
+func (p *PagingGetMultiplePagesWithOffsetPager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -558,17 +547,13 @@ func (p *pagingGetMultiplePagesWithOffsetPager) NextPage(ctx context.Context) bo
 	return true
 }
 
-func (p *pagingGetMultiplePagesWithOffsetPager) PageResponse() PagingGetMultiplePagesWithOffsetResponse {
+// PageResponse returns the current PagingGetMultiplePagesWithOffsetResponse page.
+func (p *PagingGetMultiplePagesWithOffsetPager) PageResponse() PagingGetMultiplePagesWithOffsetResponse {
 	return p.current
 }
 
-type PagingGetNoItemNamePagesPager interface {
-	azcore.Pager
-	// PageResponse returns the current PagingGetNoItemNamePagesResponse.
-	PageResponse() PagingGetNoItemNamePagesResponse
-}
-
-type pagingGetNoItemNamePagesPager struct {
+// PagingGetNoItemNamePagesPager provides operations for iterating over paged responses.
+type PagingGetNoItemNamePagesPager struct {
 	client    *PagingClient
 	current   PagingGetNoItemNamePagesResponse
 	err       error
@@ -576,11 +561,14 @@ type pagingGetNoItemNamePagesPager struct {
 	advancer  func(context.Context, PagingGetNoItemNamePagesResponse) (*azcore.Request, error)
 }
 
-func (p *pagingGetNoItemNamePagesPager) Err() error {
+// Err returns the last error encountered while paging.
+func (p *PagingGetNoItemNamePagesPager) Err() error {
 	return p.err
 }
 
-func (p *pagingGetNoItemNamePagesPager) NextPage(ctx context.Context) bool {
+// NextPage returns true if the pager advanced to the next page.
+// Returns false if there are no more pages or an error occurred.
+func (p *PagingGetNoItemNamePagesPager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -613,17 +601,13 @@ func (p *pagingGetNoItemNamePagesPager) NextPage(ctx context.Context) bool {
 	return true
 }
 
-func (p *pagingGetNoItemNamePagesPager) PageResponse() PagingGetNoItemNamePagesResponse {
+// PageResponse returns the current PagingGetNoItemNamePagesResponse page.
+func (p *PagingGetNoItemNamePagesPager) PageResponse() PagingGetNoItemNamePagesResponse {
 	return p.current
 }
 
-type PagingGetOdataMultiplePagesPager interface {
-	azcore.Pager
-	// PageResponse returns the current PagingGetOdataMultiplePagesResponse.
-	PageResponse() PagingGetOdataMultiplePagesResponse
-}
-
-type pagingGetOdataMultiplePagesPager struct {
+// PagingGetOdataMultiplePagesPager provides operations for iterating over paged responses.
+type PagingGetOdataMultiplePagesPager struct {
 	client    *PagingClient
 	current   PagingGetOdataMultiplePagesResponse
 	err       error
@@ -631,11 +615,14 @@ type pagingGetOdataMultiplePagesPager struct {
 	advancer  func(context.Context, PagingGetOdataMultiplePagesResponse) (*azcore.Request, error)
 }
 
-func (p *pagingGetOdataMultiplePagesPager) Err() error {
+// Err returns the last error encountered while paging.
+func (p *PagingGetOdataMultiplePagesPager) Err() error {
 	return p.err
 }
 
-func (p *pagingGetOdataMultiplePagesPager) NextPage(ctx context.Context) bool {
+// NextPage returns true if the pager advanced to the next page.
+// Returns false if there are no more pages or an error occurred.
+func (p *PagingGetOdataMultiplePagesPager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -668,17 +655,13 @@ func (p *pagingGetOdataMultiplePagesPager) NextPage(ctx context.Context) bool {
 	return true
 }
 
-func (p *pagingGetOdataMultiplePagesPager) PageResponse() PagingGetOdataMultiplePagesResponse {
+// PageResponse returns the current PagingGetOdataMultiplePagesResponse page.
+func (p *PagingGetOdataMultiplePagesPager) PageResponse() PagingGetOdataMultiplePagesResponse {
 	return p.current
 }
 
-type PagingGetPagingModelWithItemNameWithXMSClientNamePager interface {
-	azcore.Pager
-	// PageResponse returns the current PagingGetPagingModelWithItemNameWithXMSClientNameResponse.
-	PageResponse() PagingGetPagingModelWithItemNameWithXMSClientNameResponse
-}
-
-type pagingGetPagingModelWithItemNameWithXMSClientNamePager struct {
+// PagingGetPagingModelWithItemNameWithXMSClientNamePager provides operations for iterating over paged responses.
+type PagingGetPagingModelWithItemNameWithXMSClientNamePager struct {
 	client    *PagingClient
 	current   PagingGetPagingModelWithItemNameWithXMSClientNameResponse
 	err       error
@@ -686,11 +669,14 @@ type pagingGetPagingModelWithItemNameWithXMSClientNamePager struct {
 	advancer  func(context.Context, PagingGetPagingModelWithItemNameWithXMSClientNameResponse) (*azcore.Request, error)
 }
 
-func (p *pagingGetPagingModelWithItemNameWithXMSClientNamePager) Err() error {
+// Err returns the last error encountered while paging.
+func (p *PagingGetPagingModelWithItemNameWithXMSClientNamePager) Err() error {
 	return p.err
 }
 
-func (p *pagingGetPagingModelWithItemNameWithXMSClientNamePager) NextPage(ctx context.Context) bool {
+// NextPage returns true if the pager advanced to the next page.
+// Returns false if there are no more pages or an error occurred.
+func (p *PagingGetPagingModelWithItemNameWithXMSClientNamePager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -723,17 +709,13 @@ func (p *pagingGetPagingModelWithItemNameWithXMSClientNamePager) NextPage(ctx co
 	return true
 }
 
-func (p *pagingGetPagingModelWithItemNameWithXMSClientNamePager) PageResponse() PagingGetPagingModelWithItemNameWithXMSClientNameResponse {
+// PageResponse returns the current PagingGetPagingModelWithItemNameWithXMSClientNameResponse page.
+func (p *PagingGetPagingModelWithItemNameWithXMSClientNamePager) PageResponse() PagingGetPagingModelWithItemNameWithXMSClientNameResponse {
 	return p.current
 }
 
-type PagingGetSinglePagesFailurePager interface {
-	azcore.Pager
-	// PageResponse returns the current PagingGetSinglePagesFailureResponse.
-	PageResponse() PagingGetSinglePagesFailureResponse
-}
-
-type pagingGetSinglePagesFailurePager struct {
+// PagingGetSinglePagesFailurePager provides operations for iterating over paged responses.
+type PagingGetSinglePagesFailurePager struct {
 	client    *PagingClient
 	current   PagingGetSinglePagesFailureResponse
 	err       error
@@ -741,11 +723,14 @@ type pagingGetSinglePagesFailurePager struct {
 	advancer  func(context.Context, PagingGetSinglePagesFailureResponse) (*azcore.Request, error)
 }
 
-func (p *pagingGetSinglePagesFailurePager) Err() error {
+// Err returns the last error encountered while paging.
+func (p *PagingGetSinglePagesFailurePager) Err() error {
 	return p.err
 }
 
-func (p *pagingGetSinglePagesFailurePager) NextPage(ctx context.Context) bool {
+// NextPage returns true if the pager advanced to the next page.
+// Returns false if there are no more pages or an error occurred.
+func (p *PagingGetSinglePagesFailurePager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -778,17 +763,13 @@ func (p *pagingGetSinglePagesFailurePager) NextPage(ctx context.Context) bool {
 	return true
 }
 
-func (p *pagingGetSinglePagesFailurePager) PageResponse() PagingGetSinglePagesFailureResponse {
+// PageResponse returns the current PagingGetSinglePagesFailureResponse page.
+func (p *PagingGetSinglePagesFailurePager) PageResponse() PagingGetSinglePagesFailureResponse {
 	return p.current
 }
 
-type PagingGetSinglePagesPager interface {
-	azcore.Pager
-	// PageResponse returns the current PagingGetSinglePagesResponse.
-	PageResponse() PagingGetSinglePagesResponse
-}
-
-type pagingGetSinglePagesPager struct {
+// PagingGetSinglePagesPager provides operations for iterating over paged responses.
+type PagingGetSinglePagesPager struct {
 	client    *PagingClient
 	current   PagingGetSinglePagesResponse
 	err       error
@@ -796,11 +777,14 @@ type pagingGetSinglePagesPager struct {
 	advancer  func(context.Context, PagingGetSinglePagesResponse) (*azcore.Request, error)
 }
 
-func (p *pagingGetSinglePagesPager) Err() error {
+// Err returns the last error encountered while paging.
+func (p *PagingGetSinglePagesPager) Err() error {
 	return p.err
 }
 
-func (p *pagingGetSinglePagesPager) NextPage(ctx context.Context) bool {
+// NextPage returns true if the pager advanced to the next page.
+// Returns false if there are no more pages or an error occurred.
+func (p *PagingGetSinglePagesPager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -833,17 +817,13 @@ func (p *pagingGetSinglePagesPager) NextPage(ctx context.Context) bool {
 	return true
 }
 
-func (p *pagingGetSinglePagesPager) PageResponse() PagingGetSinglePagesResponse {
+// PageResponse returns the current PagingGetSinglePagesResponse page.
+func (p *PagingGetSinglePagesPager) PageResponse() PagingGetSinglePagesResponse {
 	return p.current
 }
 
-type PagingGetWithQueryParamsPager interface {
-	azcore.Pager
-	// PageResponse returns the current PagingGetWithQueryParamsResponse.
-	PageResponse() PagingGetWithQueryParamsResponse
-}
-
-type pagingGetWithQueryParamsPager struct {
+// PagingGetWithQueryParamsPager provides operations for iterating over paged responses.
+type PagingGetWithQueryParamsPager struct {
 	client    *PagingClient
 	current   PagingGetWithQueryParamsResponse
 	err       error
@@ -851,11 +831,14 @@ type pagingGetWithQueryParamsPager struct {
 	advancer  func(context.Context, PagingGetWithQueryParamsResponse) (*azcore.Request, error)
 }
 
-func (p *pagingGetWithQueryParamsPager) Err() error {
+// Err returns the last error encountered while paging.
+func (p *PagingGetWithQueryParamsPager) Err() error {
 	return p.err
 }
 
-func (p *pagingGetWithQueryParamsPager) NextPage(ctx context.Context) bool {
+// NextPage returns true if the pager advanced to the next page.
+// Returns false if there are no more pages or an error occurred.
+func (p *PagingGetWithQueryParamsPager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -888,17 +871,13 @@ func (p *pagingGetWithQueryParamsPager) NextPage(ctx context.Context) bool {
 	return true
 }
 
-func (p *pagingGetWithQueryParamsPager) PageResponse() PagingGetWithQueryParamsResponse {
+// PageResponse returns the current PagingGetWithQueryParamsResponse page.
+func (p *PagingGetWithQueryParamsPager) PageResponse() PagingGetWithQueryParamsResponse {
 	return p.current
 }
 
-type PagingNextFragmentPager interface {
-	azcore.Pager
-	// PageResponse returns the current PagingNextFragmentResponse.
-	PageResponse() PagingNextFragmentResponse
-}
-
-type pagingNextFragmentPager struct {
+// PagingNextFragmentPager provides operations for iterating over paged responses.
+type PagingNextFragmentPager struct {
 	client    *PagingClient
 	current   PagingNextFragmentResponse
 	err       error
@@ -906,11 +885,14 @@ type pagingNextFragmentPager struct {
 	advancer  func(context.Context, PagingNextFragmentResponse) (*azcore.Request, error)
 }
 
-func (p *pagingNextFragmentPager) Err() error {
+// Err returns the last error encountered while paging.
+func (p *PagingNextFragmentPager) Err() error {
 	return p.err
 }
 
-func (p *pagingNextFragmentPager) NextPage(ctx context.Context) bool {
+// NextPage returns true if the pager advanced to the next page.
+// Returns false if there are no more pages or an error occurred.
+func (p *PagingNextFragmentPager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -943,17 +925,13 @@ func (p *pagingNextFragmentPager) NextPage(ctx context.Context) bool {
 	return true
 }
 
-func (p *pagingNextFragmentPager) PageResponse() PagingNextFragmentResponse {
+// PageResponse returns the current PagingNextFragmentResponse page.
+func (p *PagingNextFragmentPager) PageResponse() PagingNextFragmentResponse {
 	return p.current
 }
 
-type PagingNextFragmentWithGroupingPager interface {
-	azcore.Pager
-	// PageResponse returns the current PagingNextFragmentWithGroupingResponse.
-	PageResponse() PagingNextFragmentWithGroupingResponse
-}
-
-type pagingNextFragmentWithGroupingPager struct {
+// PagingNextFragmentWithGroupingPager provides operations for iterating over paged responses.
+type PagingNextFragmentWithGroupingPager struct {
 	client    *PagingClient
 	current   PagingNextFragmentWithGroupingResponse
 	err       error
@@ -961,11 +939,14 @@ type pagingNextFragmentWithGroupingPager struct {
 	advancer  func(context.Context, PagingNextFragmentWithGroupingResponse) (*azcore.Request, error)
 }
 
-func (p *pagingNextFragmentWithGroupingPager) Err() error {
+// Err returns the last error encountered while paging.
+func (p *PagingNextFragmentWithGroupingPager) Err() error {
 	return p.err
 }
 
-func (p *pagingNextFragmentWithGroupingPager) NextPage(ctx context.Context) bool {
+// NextPage returns true if the pager advanced to the next page.
+// Returns false if there are no more pages or an error occurred.
+func (p *PagingNextFragmentWithGroupingPager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -998,6 +979,7 @@ func (p *pagingNextFragmentWithGroupingPager) NextPage(ctx context.Context) bool
 	return true
 }
 
-func (p *pagingNextFragmentWithGroupingPager) PageResponse() PagingNextFragmentWithGroupingResponse {
+// PageResponse returns the current PagingNextFragmentWithGroupingResponse page.
+func (p *PagingNextFragmentWithGroupingPager) PageResponse() PagingNextFragmentWithGroupingResponse {
 	return p.current
 }

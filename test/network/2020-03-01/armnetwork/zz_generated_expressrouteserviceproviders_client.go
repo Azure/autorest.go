@@ -32,8 +32,8 @@ func NewExpressRouteServiceProvidersClient(con *armcore.Connection, subscription
 
 // List - Gets all the available express route service providers.
 // If the operation fails it returns the *CloudError error type.
-func (client *ExpressRouteServiceProvidersClient) List(options *ExpressRouteServiceProvidersListOptions) ExpressRouteServiceProvidersListPager {
-	return &expressRouteServiceProvidersListPager{
+func (client *ExpressRouteServiceProvidersClient) List(options *ExpressRouteServiceProvidersListOptions) *ExpressRouteServiceProvidersListPager {
+	return &ExpressRouteServiceProvidersListPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
 			return client.listCreateRequest(ctx, options)

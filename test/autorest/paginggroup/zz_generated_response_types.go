@@ -75,14 +75,23 @@ type PagingGetMultiplePagesFragmentWithGroupingNextLinkResult struct {
 
 // PagingGetMultiplePagesLROPollerResponse contains the response from method Paging.GetMultiplePagesLRO.
 type PagingGetMultiplePagesLROPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (PagingGetMultiplePagesLROPager, error)
-
 	// Poller contains an initialized poller.
-	Poller PagingGetMultiplePagesLROPoller
+	Poller *PagingGetMultiplePagesLROPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l PagingGetMultiplePagesLROPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (*PagingGetMultiplePagesLROPager, error) {
+	respType := &PagingGetMultiplePagesLROPager{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.current.ProductResult)
+	if err != nil {
+		return respType, err
+	}
+	respType.current.RawResponse = resp
+	respType.client = l.Poller.client
+	return respType, nil
 }
 
 // PagingGetMultiplePagesLROResponse contains the response from method Paging.GetMultiplePagesLRO.
