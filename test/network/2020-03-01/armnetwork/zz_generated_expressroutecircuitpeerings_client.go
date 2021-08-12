@@ -50,28 +50,6 @@ func (client *ExpressRouteCircuitPeeringsClient) BeginCreateOrUpdate(ctx context
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new ExpressRouteCircuitPeeringsCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to ExpressRouteCircuitPeeringsCreateOrUpdatePoller.ResumeToken().
-func (client *ExpressRouteCircuitPeeringsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (ExpressRouteCircuitPeeringsCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("ExpressRouteCircuitPeeringsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return ExpressRouteCircuitPeeringsCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &ExpressRouteCircuitPeeringsCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return ExpressRouteCircuitPeeringsCreateOrUpdatePollerResponse{}, err
-	}
-	result := ExpressRouteCircuitPeeringsCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Creates or updates a peering in the specified express route circuits.
 // If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteCircuitPeeringsClient) createOrUpdate(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, peeringParameters ExpressRouteCircuitPeering, options *ExpressRouteCircuitPeeringsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -150,28 +128,6 @@ func (client *ExpressRouteCircuitPeeringsClient) BeginDelete(ctx context.Context
 	result.Poller = &ExpressRouteCircuitPeeringsDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new ExpressRouteCircuitPeeringsDeletePoller from the specified resume token.
-// token - The value must come from a previous call to ExpressRouteCircuitPeeringsDeletePoller.ResumeToken().
-func (client *ExpressRouteCircuitPeeringsClient) ResumeDelete(ctx context.Context, token string) (ExpressRouteCircuitPeeringsDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("ExpressRouteCircuitPeeringsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return ExpressRouteCircuitPeeringsDeletePollerResponse{}, err
-	}
-	poller := &ExpressRouteCircuitPeeringsDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return ExpressRouteCircuitPeeringsDeletePollerResponse{}, err
-	}
-	result := ExpressRouteCircuitPeeringsDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

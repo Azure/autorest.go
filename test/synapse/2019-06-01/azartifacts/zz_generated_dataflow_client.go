@@ -41,28 +41,6 @@ func (client *dataFlowClient) BeginCreateOrUpdateDataFlow(ctx context.Context, d
 	return result, nil
 }
 
-// ResumeCreateOrUpdateDataFlow creates a new DataFlowCreateOrUpdateDataFlowPoller from the specified resume token.
-// token - The value must come from a previous call to DataFlowCreateOrUpdateDataFlowPoller.ResumeToken().
-func (client *dataFlowClient) ResumeCreateOrUpdateDataFlow(ctx context.Context, token string) (DataFlowCreateOrUpdateDataFlowPollerResponse, error) {
-	pt, err := azcore.NewLROPollerFromResumeToken("dataFlowClient.CreateOrUpdateDataFlow", token, client.con.Pipeline(), client.createOrUpdateDataFlowHandleError)
-	if err != nil {
-		return DataFlowCreateOrUpdateDataFlowPollerResponse{}, err
-	}
-	poller := &DataFlowCreateOrUpdateDataFlowPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return DataFlowCreateOrUpdateDataFlowPollerResponse{}, err
-	}
-	result := DataFlowCreateOrUpdateDataFlowPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdateDataFlow - Creates or updates a data flow.
 // If the operation fails it returns the *CloudError error type.
 func (client *dataFlowClient) createOrUpdateDataFlow(ctx context.Context, dataFlowName string, dataFlow DataFlowResource, options *DataFlowBeginCreateOrUpdateDataFlowOptions) (*azcore.Response, error) {
@@ -132,28 +110,6 @@ func (client *dataFlowClient) BeginDeleteDataFlow(ctx context.Context, dataFlowN
 	result.Poller = &DataFlowDeleteDataFlowPoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDeleteDataFlow creates a new DataFlowDeleteDataFlowPoller from the specified resume token.
-// token - The value must come from a previous call to DataFlowDeleteDataFlowPoller.ResumeToken().
-func (client *dataFlowClient) ResumeDeleteDataFlow(ctx context.Context, token string) (DataFlowDeleteDataFlowPollerResponse, error) {
-	pt, err := azcore.NewLROPollerFromResumeToken("dataFlowClient.DeleteDataFlow", token, client.con.Pipeline(), client.deleteDataFlowHandleError)
-	if err != nil {
-		return DataFlowDeleteDataFlowPollerResponse{}, err
-	}
-	poller := &DataFlowDeleteDataFlowPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return DataFlowDeleteDataFlowPollerResponse{}, err
-	}
-	result := DataFlowDeleteDataFlowPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 
@@ -335,28 +291,6 @@ func (client *dataFlowClient) BeginRenameDataFlow(ctx context.Context, dataFlowN
 	result.Poller = &DataFlowRenameDataFlowPoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeRenameDataFlow creates a new DataFlowRenameDataFlowPoller from the specified resume token.
-// token - The value must come from a previous call to DataFlowRenameDataFlowPoller.ResumeToken().
-func (client *dataFlowClient) ResumeRenameDataFlow(ctx context.Context, token string) (DataFlowRenameDataFlowPollerResponse, error) {
-	pt, err := azcore.NewLROPollerFromResumeToken("dataFlowClient.RenameDataFlow", token, client.con.Pipeline(), client.renameDataFlowHandleError)
-	if err != nil {
-		return DataFlowRenameDataFlowPollerResponse{}, err
-	}
-	poller := &DataFlowRenameDataFlowPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return DataFlowRenameDataFlowPollerResponse{}, err
-	}
-	result := DataFlowRenameDataFlowPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

@@ -50,28 +50,6 @@ func (client *LoadBalancersClient) BeginCreateOrUpdate(ctx context.Context, reso
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new LoadBalancersCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to LoadBalancersCreateOrUpdatePoller.ResumeToken().
-func (client *LoadBalancersClient) ResumeCreateOrUpdate(ctx context.Context, token string) (LoadBalancersCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("LoadBalancersClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return LoadBalancersCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &LoadBalancersCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return LoadBalancersCreateOrUpdatePollerResponse{}, err
-	}
-	result := LoadBalancersCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Creates or updates a load balancer.
 // If the operation fails it returns the *CloudError error type.
 func (client *LoadBalancersClient) createOrUpdate(ctx context.Context, resourceGroupName string, loadBalancerName string, parameters LoadBalancer, options *LoadBalancersBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -146,28 +124,6 @@ func (client *LoadBalancersClient) BeginDelete(ctx context.Context, resourceGrou
 	result.Poller = &LoadBalancersDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new LoadBalancersDeletePoller from the specified resume token.
-// token - The value must come from a previous call to LoadBalancersDeletePoller.ResumeToken().
-func (client *LoadBalancersClient) ResumeDelete(ctx context.Context, token string) (LoadBalancersDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("LoadBalancersClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return LoadBalancersDeletePollerResponse{}, err
-	}
-	poller := &LoadBalancersDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return LoadBalancersDeletePollerResponse{}, err
-	}
-	result := LoadBalancersDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

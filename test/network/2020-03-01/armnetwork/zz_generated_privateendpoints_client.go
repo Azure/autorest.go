@@ -50,28 +50,6 @@ func (client *PrivateEndpointsClient) BeginCreateOrUpdate(ctx context.Context, r
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new PrivateEndpointsCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to PrivateEndpointsCreateOrUpdatePoller.ResumeToken().
-func (client *PrivateEndpointsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (PrivateEndpointsCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("PrivateEndpointsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return PrivateEndpointsCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &PrivateEndpointsCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return PrivateEndpointsCreateOrUpdatePollerResponse{}, err
-	}
-	result := PrivateEndpointsCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Creates or updates an private endpoint in the specified resource group.
 // If the operation fails it returns the *Error error type.
 func (client *PrivateEndpointsClient) createOrUpdate(ctx context.Context, resourceGroupName string, privateEndpointName string, parameters PrivateEndpoint, options *PrivateEndpointsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -146,28 +124,6 @@ func (client *PrivateEndpointsClient) BeginDelete(ctx context.Context, resourceG
 	result.Poller = &PrivateEndpointsDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new PrivateEndpointsDeletePoller from the specified resume token.
-// token - The value must come from a previous call to PrivateEndpointsDeletePoller.ResumeToken().
-func (client *PrivateEndpointsClient) ResumeDelete(ctx context.Context, token string) (PrivateEndpointsDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("PrivateEndpointsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return PrivateEndpointsDeletePollerResponse{}, err
-	}
-	poller := &PrivateEndpointsDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return PrivateEndpointsDeletePollerResponse{}, err
-	}
-	result := PrivateEndpointsDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

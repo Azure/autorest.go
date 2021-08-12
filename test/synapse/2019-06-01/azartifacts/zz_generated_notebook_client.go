@@ -41,28 +41,6 @@ func (client *notebookClient) BeginCreateOrUpdateNotebook(ctx context.Context, n
 	return result, nil
 }
 
-// ResumeCreateOrUpdateNotebook creates a new NotebookCreateOrUpdateNotebookPoller from the specified resume token.
-// token - The value must come from a previous call to NotebookCreateOrUpdateNotebookPoller.ResumeToken().
-func (client *notebookClient) ResumeCreateOrUpdateNotebook(ctx context.Context, token string) (NotebookCreateOrUpdateNotebookPollerResponse, error) {
-	pt, err := azcore.NewLROPollerFromResumeToken("notebookClient.CreateOrUpdateNotebook", token, client.con.Pipeline(), client.createOrUpdateNotebookHandleError)
-	if err != nil {
-		return NotebookCreateOrUpdateNotebookPollerResponse{}, err
-	}
-	poller := &NotebookCreateOrUpdateNotebookPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return NotebookCreateOrUpdateNotebookPollerResponse{}, err
-	}
-	result := NotebookCreateOrUpdateNotebookPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdateNotebook - Creates or updates a Note Book.
 // If the operation fails it returns the *CloudError error type.
 func (client *notebookClient) createOrUpdateNotebook(ctx context.Context, notebookName string, notebook NotebookResource, options *NotebookBeginCreateOrUpdateNotebookOptions) (*azcore.Response, error) {
@@ -132,28 +110,6 @@ func (client *notebookClient) BeginDeleteNotebook(ctx context.Context, notebookN
 	result.Poller = &NotebookDeleteNotebookPoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDeleteNotebook creates a new NotebookDeleteNotebookPoller from the specified resume token.
-// token - The value must come from a previous call to NotebookDeleteNotebookPoller.ResumeToken().
-func (client *notebookClient) ResumeDeleteNotebook(ctx context.Context, token string) (NotebookDeleteNotebookPollerResponse, error) {
-	pt, err := azcore.NewLROPollerFromResumeToken("notebookClient.DeleteNotebook", token, client.con.Pipeline(), client.deleteNotebookHandleError)
-	if err != nil {
-		return NotebookDeleteNotebookPollerResponse{}, err
-	}
-	poller := &NotebookDeleteNotebookPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return NotebookDeleteNotebookPollerResponse{}, err
-	}
-	result := NotebookDeleteNotebookPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 
@@ -386,28 +342,6 @@ func (client *notebookClient) BeginRenameNotebook(ctx context.Context, notebookN
 	result.Poller = &NotebookRenameNotebookPoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeRenameNotebook creates a new NotebookRenameNotebookPoller from the specified resume token.
-// token - The value must come from a previous call to NotebookRenameNotebookPoller.ResumeToken().
-func (client *notebookClient) ResumeRenameNotebook(ctx context.Context, token string) (NotebookRenameNotebookPollerResponse, error) {
-	pt, err := azcore.NewLROPollerFromResumeToken("notebookClient.RenameNotebook", token, client.con.Pipeline(), client.renameNotebookHandleError)
-	if err != nil {
-		return NotebookRenameNotebookPollerResponse{}, err
-	}
-	poller := &NotebookRenameNotebookPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return NotebookRenameNotebookPollerResponse{}, err
-	}
-	result := NotebookRenameNotebookPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

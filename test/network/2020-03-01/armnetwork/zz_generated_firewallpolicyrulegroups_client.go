@@ -50,28 +50,6 @@ func (client *FirewallPolicyRuleGroupsClient) BeginCreateOrUpdate(ctx context.Co
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new FirewallPolicyRuleGroupsCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to FirewallPolicyRuleGroupsCreateOrUpdatePoller.ResumeToken().
-func (client *FirewallPolicyRuleGroupsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (FirewallPolicyRuleGroupsCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("FirewallPolicyRuleGroupsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return FirewallPolicyRuleGroupsCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &FirewallPolicyRuleGroupsCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return FirewallPolicyRuleGroupsCreateOrUpdatePollerResponse{}, err
-	}
-	result := FirewallPolicyRuleGroupsCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Creates or updates the specified FirewallPolicyRuleGroup.
 // If the operation fails it returns the *CloudError error type.
 func (client *FirewallPolicyRuleGroupsClient) createOrUpdate(ctx context.Context, resourceGroupName string, firewallPolicyName string, ruleGroupName string, parameters FirewallPolicyRuleGroup, options *FirewallPolicyRuleGroupsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -150,28 +128,6 @@ func (client *FirewallPolicyRuleGroupsClient) BeginDelete(ctx context.Context, r
 	result.Poller = &FirewallPolicyRuleGroupsDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new FirewallPolicyRuleGroupsDeletePoller from the specified resume token.
-// token - The value must come from a previous call to FirewallPolicyRuleGroupsDeletePoller.ResumeToken().
-func (client *FirewallPolicyRuleGroupsClient) ResumeDelete(ctx context.Context, token string) (FirewallPolicyRuleGroupsDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("FirewallPolicyRuleGroupsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return FirewallPolicyRuleGroupsDeletePollerResponse{}, err
-	}
-	poller := &FirewallPolicyRuleGroupsDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return FirewallPolicyRuleGroupsDeletePollerResponse{}, err
-	}
-	result := FirewallPolicyRuleGroupsDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

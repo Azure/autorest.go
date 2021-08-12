@@ -50,28 +50,6 @@ func (client *InboundNatRulesClient) BeginCreateOrUpdate(ctx context.Context, re
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new InboundNatRulesCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to InboundNatRulesCreateOrUpdatePoller.ResumeToken().
-func (client *InboundNatRulesClient) ResumeCreateOrUpdate(ctx context.Context, token string) (InboundNatRulesCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("InboundNatRulesClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return InboundNatRulesCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &InboundNatRulesCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return InboundNatRulesCreateOrUpdatePollerResponse{}, err
-	}
-	result := InboundNatRulesCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Creates or updates a load balancer inbound nat rule.
 // If the operation fails it returns the *CloudError error type.
 func (client *InboundNatRulesClient) createOrUpdate(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, inboundNatRuleParameters InboundNatRule, options *InboundNatRulesBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -150,28 +128,6 @@ func (client *InboundNatRulesClient) BeginDelete(ctx context.Context, resourceGr
 	result.Poller = &InboundNatRulesDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new InboundNatRulesDeletePoller from the specified resume token.
-// token - The value must come from a previous call to InboundNatRulesDeletePoller.ResumeToken().
-func (client *InboundNatRulesClient) ResumeDelete(ctx context.Context, token string) (InboundNatRulesDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("InboundNatRulesClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return InboundNatRulesDeletePollerResponse{}, err
-	}
-	poller := &InboundNatRulesDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return InboundNatRulesDeletePollerResponse{}, err
-	}
-	result := InboundNatRulesDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

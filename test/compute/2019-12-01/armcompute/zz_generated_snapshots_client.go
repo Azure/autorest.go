@@ -49,28 +49,6 @@ func (client *SnapshotsClient) BeginCreateOrUpdate(ctx context.Context, resource
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new SnapshotsCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to SnapshotsCreateOrUpdatePoller.ResumeToken().
-func (client *SnapshotsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (SnapshotsCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("SnapshotsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return SnapshotsCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &SnapshotsCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return SnapshotsCreateOrUpdatePollerResponse{}, err
-	}
-	result := SnapshotsCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Creates or updates a snapshot.
 // If the operation fails it returns a generic error.
 func (client *SnapshotsClient) createOrUpdate(ctx context.Context, resourceGroupName string, snapshotName string, snapshot Snapshot, options *SnapshotsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -144,28 +122,6 @@ func (client *SnapshotsClient) BeginDelete(ctx context.Context, resourceGroupNam
 	result.Poller = &SnapshotsDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new SnapshotsDeletePoller from the specified resume token.
-// token - The value must come from a previous call to SnapshotsDeletePoller.ResumeToken().
-func (client *SnapshotsClient) ResumeDelete(ctx context.Context, token string) (SnapshotsDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("SnapshotsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return SnapshotsDeletePollerResponse{}, err
-	}
-	poller := &SnapshotsDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return SnapshotsDeletePollerResponse{}, err
-	}
-	result := SnapshotsDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 
@@ -306,28 +262,6 @@ func (client *SnapshotsClient) BeginGrantAccess(ctx context.Context, resourceGro
 	result.Poller = &SnapshotsGrantAccessPoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeGrantAccess creates a new SnapshotsGrantAccessPoller from the specified resume token.
-// token - The value must come from a previous call to SnapshotsGrantAccessPoller.ResumeToken().
-func (client *SnapshotsClient) ResumeGrantAccess(ctx context.Context, token string) (SnapshotsGrantAccessPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("SnapshotsClient.GrantAccess", token, client.con.Pipeline(), client.grantAccessHandleError)
-	if err != nil {
-		return SnapshotsGrantAccessPollerResponse{}, err
-	}
-	poller := &SnapshotsGrantAccessPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return SnapshotsGrantAccessPollerResponse{}, err
-	}
-	result := SnapshotsGrantAccessPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 
@@ -519,28 +453,6 @@ func (client *SnapshotsClient) BeginRevokeAccess(ctx context.Context, resourceGr
 	return result, nil
 }
 
-// ResumeRevokeAccess creates a new SnapshotsRevokeAccessPoller from the specified resume token.
-// token - The value must come from a previous call to SnapshotsRevokeAccessPoller.ResumeToken().
-func (client *SnapshotsClient) ResumeRevokeAccess(ctx context.Context, token string) (SnapshotsRevokeAccessPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("SnapshotsClient.RevokeAccess", token, client.con.Pipeline(), client.revokeAccessHandleError)
-	if err != nil {
-		return SnapshotsRevokeAccessPollerResponse{}, err
-	}
-	poller := &SnapshotsRevokeAccessPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return SnapshotsRevokeAccessPollerResponse{}, err
-	}
-	result := SnapshotsRevokeAccessPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // RevokeAccess - Revokes access to a snapshot.
 // If the operation fails it returns a generic error.
 func (client *SnapshotsClient) revokeAccess(ctx context.Context, resourceGroupName string, snapshotName string, options *SnapshotsBeginRevokeAccessOptions) (*azcore.Response, error) {
@@ -613,28 +525,6 @@ func (client *SnapshotsClient) BeginUpdate(ctx context.Context, resourceGroupNam
 	result.Poller = &SnapshotsUpdatePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeUpdate creates a new SnapshotsUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to SnapshotsUpdatePoller.ResumeToken().
-func (client *SnapshotsClient) ResumeUpdate(ctx context.Context, token string) (SnapshotsUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("SnapshotsClient.Update", token, client.con.Pipeline(), client.updateHandleError)
-	if err != nil {
-		return SnapshotsUpdatePollerResponse{}, err
-	}
-	poller := &SnapshotsUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return SnapshotsUpdatePollerResponse{}, err
-	}
-	result := SnapshotsUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

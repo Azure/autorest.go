@@ -50,28 +50,6 @@ func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) BeginList(c
 	return result, nil
 }
 
-// ResumeList creates a new VPNServerConfigurationsAssociatedWithVirtualWanListPoller from the specified resume token.
-// token - The value must come from a previous call to VPNServerConfigurationsAssociatedWithVirtualWanListPoller.ResumeToken().
-func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) ResumeList(ctx context.Context, token string) (VPNServerConfigurationsAssociatedWithVirtualWanListPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VPNServerConfigurationsAssociatedWithVirtualWanClient.List", token, client.con.Pipeline(), client.listHandleError)
-	if err != nil {
-		return VPNServerConfigurationsAssociatedWithVirtualWanListPollerResponse{}, err
-	}
-	poller := &VPNServerConfigurationsAssociatedWithVirtualWanListPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VPNServerConfigurationsAssociatedWithVirtualWanListPollerResponse{}, err
-	}
-	result := VPNServerConfigurationsAssociatedWithVirtualWanListPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // List - Gives the list of VpnServerConfigurations associated with Virtual Wan in a resource group.
 // If the operation fails it returns the *CloudError error type.
 func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) listOperation(ctx context.Context, resourceGroupName string, virtualWANName string, options *VPNServerConfigurationsAssociatedWithVirtualWanBeginListOptions) (*azcore.Response, error) {

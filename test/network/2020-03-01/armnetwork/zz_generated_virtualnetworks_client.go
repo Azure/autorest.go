@@ -117,28 +117,6 @@ func (client *VirtualNetworksClient) BeginCreateOrUpdate(ctx context.Context, re
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new VirtualNetworksCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to VirtualNetworksCreateOrUpdatePoller.ResumeToken().
-func (client *VirtualNetworksClient) ResumeCreateOrUpdate(ctx context.Context, token string) (VirtualNetworksCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworksClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return VirtualNetworksCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &VirtualNetworksCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualNetworksCreateOrUpdatePollerResponse{}, err
-	}
-	result := VirtualNetworksCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Creates or updates a virtual network in the specified resource group.
 // If the operation fails it returns the *CloudError error type.
 func (client *VirtualNetworksClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkName string, parameters VirtualNetwork, options *VirtualNetworksBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -213,28 +191,6 @@ func (client *VirtualNetworksClient) BeginDelete(ctx context.Context, resourceGr
 	result.Poller = &VirtualNetworksDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new VirtualNetworksDeletePoller from the specified resume token.
-// token - The value must come from a previous call to VirtualNetworksDeletePoller.ResumeToken().
-func (client *VirtualNetworksClient) ResumeDelete(ctx context.Context, token string) (VirtualNetworksDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworksClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return VirtualNetworksDeletePollerResponse{}, err
-	}
-	poller := &VirtualNetworksDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualNetworksDeletePollerResponse{}, err
-	}
-	result := VirtualNetworksDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

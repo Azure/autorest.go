@@ -6,7 +6,7 @@
 import { Session } from '@autorest/extension-base';
 import { values } from '@azure-tools/linq';
 import { comment } from '@azure-tools/codegen';
-import { aggregateParameters, isLROOperation, isSchemaResponse, isMultiRespOperation } from '../common/helpers';
+import { aggregateParameters, isLROOperation, isPageableOperation, isSchemaResponse, isMultiRespOperation, PollerInfo } from '../common/helpers';
 import { ArraySchema, CodeModel, DictionarySchema, Language, Parameter, Schema, SchemaType, ObjectSchema, Operation, Property, GroupProperty, ImplementationLocation, SerializationStyle, ByteArraySchema, ConstantSchema, NumberSchema, DateTimeSchema } from '@autorest/codemodel';
 import { ImportManager } from './imports';
 
@@ -360,6 +360,17 @@ export function formatStatusCodes(statusCodes: Array<string>): string {
     asHTTPStatus.push(formatStatusCode(rawCode));
   }
   return asHTTPStatus.join(', ');
+}
+
+// emits a poller declaration
+export function emitPoller(op: Operation): string {
+  let text = `&${(<PollerInfo>op.language.go!.pollerType).name} {\n`;
+  text += '\t\tpt: pt,\n';
+  if (isPageableOperation(op)) {
+    text += '\t\tclient: client,\n';
+  }
+  text += '\t}\n';
+  return text;
 }
 
 export function formatStatusCode(statusCode: string): string {

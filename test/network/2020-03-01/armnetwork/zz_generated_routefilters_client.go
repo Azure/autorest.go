@@ -50,28 +50,6 @@ func (client *RouteFiltersClient) BeginCreateOrUpdate(ctx context.Context, resou
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new RouteFiltersCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to RouteFiltersCreateOrUpdatePoller.ResumeToken().
-func (client *RouteFiltersClient) ResumeCreateOrUpdate(ctx context.Context, token string) (RouteFiltersCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("RouteFiltersClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return RouteFiltersCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &RouteFiltersCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return RouteFiltersCreateOrUpdatePollerResponse{}, err
-	}
-	result := RouteFiltersCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Creates or updates a route filter in a specified resource group.
 // If the operation fails it returns the *CloudError error type.
 func (client *RouteFiltersClient) createOrUpdate(ctx context.Context, resourceGroupName string, routeFilterName string, routeFilterParameters RouteFilter, options *RouteFiltersBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -146,28 +124,6 @@ func (client *RouteFiltersClient) BeginDelete(ctx context.Context, resourceGroup
 	result.Poller = &RouteFiltersDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new RouteFiltersDeletePoller from the specified resume token.
-// token - The value must come from a previous call to RouteFiltersDeletePoller.ResumeToken().
-func (client *RouteFiltersClient) ResumeDelete(ctx context.Context, token string) (RouteFiltersDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("RouteFiltersClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return RouteFiltersDeletePollerResponse{}, err
-	}
-	poller := &RouteFiltersDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return RouteFiltersDeletePollerResponse{}, err
-	}
-	result := RouteFiltersDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

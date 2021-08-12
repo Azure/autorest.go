@@ -50,28 +50,6 @@ func (client *VPNConnectionsClient) BeginCreateOrUpdate(ctx context.Context, res
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new VPNConnectionsCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to VPNConnectionsCreateOrUpdatePoller.ResumeToken().
-func (client *VPNConnectionsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (VPNConnectionsCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VPNConnectionsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return VPNConnectionsCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &VPNConnectionsCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VPNConnectionsCreateOrUpdatePollerResponse{}, err
-	}
-	result := VPNConnectionsCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Creates a vpn connection to a scalable vpn gateway if it doesn't exist else updates the existing connection.
 // If the operation fails it returns the *CloudError error type.
 func (client *VPNConnectionsClient) createOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, vpnConnectionParameters VPNConnection, options *VPNConnectionsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -150,28 +128,6 @@ func (client *VPNConnectionsClient) BeginDelete(ctx context.Context, resourceGro
 	result.Poller = &VPNConnectionsDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new VPNConnectionsDeletePoller from the specified resume token.
-// token - The value must come from a previous call to VPNConnectionsDeletePoller.ResumeToken().
-func (client *VPNConnectionsClient) ResumeDelete(ctx context.Context, token string) (VPNConnectionsDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VPNConnectionsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return VPNConnectionsDeletePollerResponse{}, err
-	}
-	poller := &VPNConnectionsDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VPNConnectionsDeletePollerResponse{}, err
-	}
-	result := VPNConnectionsDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

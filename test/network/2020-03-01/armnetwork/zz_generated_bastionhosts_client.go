@@ -50,28 +50,6 @@ func (client *BastionHostsClient) BeginCreateOrUpdate(ctx context.Context, resou
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new BastionHostsCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to BastionHostsCreateOrUpdatePoller.ResumeToken().
-func (client *BastionHostsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (BastionHostsCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("BastionHostsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return BastionHostsCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &BastionHostsCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return BastionHostsCreateOrUpdatePollerResponse{}, err
-	}
-	result := BastionHostsCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Creates or updates the specified Bastion Host.
 // If the operation fails it returns the *CloudError error type.
 func (client *BastionHostsClient) createOrUpdate(ctx context.Context, resourceGroupName string, bastionHostName string, parameters BastionHost, options *BastionHostsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -146,28 +124,6 @@ func (client *BastionHostsClient) BeginDelete(ctx context.Context, resourceGroup
 	result.Poller = &BastionHostsDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new BastionHostsDeletePoller from the specified resume token.
-// token - The value must come from a previous call to BastionHostsDeletePoller.ResumeToken().
-func (client *BastionHostsClient) ResumeDelete(ctx context.Context, token string) (BastionHostsDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("BastionHostsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return BastionHostsDeletePollerResponse{}, err
-	}
-	poller := &BastionHostsDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return BastionHostsDeletePollerResponse{}, err
-	}
-	result := BastionHostsDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

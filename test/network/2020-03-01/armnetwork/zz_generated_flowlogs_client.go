@@ -50,28 +50,6 @@ func (client *FlowLogsClient) BeginCreateOrUpdate(ctx context.Context, resourceG
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new FlowLogsCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to FlowLogsCreateOrUpdatePoller.ResumeToken().
-func (client *FlowLogsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (FlowLogsCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("FlowLogsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return FlowLogsCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &FlowLogsCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return FlowLogsCreateOrUpdatePollerResponse{}, err
-	}
-	result := FlowLogsCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Create or update a flow log for the specified network security group.
 // If the operation fails it returns the *ErrorResponse error type.
 func (client *FlowLogsClient) createOrUpdate(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, parameters FlowLog, options *FlowLogsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -150,28 +128,6 @@ func (client *FlowLogsClient) BeginDelete(ctx context.Context, resourceGroupName
 	result.Poller = &FlowLogsDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new FlowLogsDeletePoller from the specified resume token.
-// token - The value must come from a previous call to FlowLogsDeletePoller.ResumeToken().
-func (client *FlowLogsClient) ResumeDelete(ctx context.Context, token string) (FlowLogsDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("FlowLogsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return FlowLogsDeletePollerResponse{}, err
-	}
-	poller := &FlowLogsDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return FlowLogsDeletePollerResponse{}, err
-	}
-	result := FlowLogsDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

@@ -41,28 +41,6 @@ func (client *triggerClient) BeginCreateOrUpdateTrigger(ctx context.Context, tri
 	return result, nil
 }
 
-// ResumeCreateOrUpdateTrigger creates a new TriggerCreateOrUpdateTriggerPoller from the specified resume token.
-// token - The value must come from a previous call to TriggerCreateOrUpdateTriggerPoller.ResumeToken().
-func (client *triggerClient) ResumeCreateOrUpdateTrigger(ctx context.Context, token string) (TriggerCreateOrUpdateTriggerPollerResponse, error) {
-	pt, err := azcore.NewLROPollerFromResumeToken("triggerClient.CreateOrUpdateTrigger", token, client.con.Pipeline(), client.createOrUpdateTriggerHandleError)
-	if err != nil {
-		return TriggerCreateOrUpdateTriggerPollerResponse{}, err
-	}
-	poller := &TriggerCreateOrUpdateTriggerPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return TriggerCreateOrUpdateTriggerPollerResponse{}, err
-	}
-	result := TriggerCreateOrUpdateTriggerPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdateTrigger - Creates or updates a trigger.
 // If the operation fails it returns the *CloudError error type.
 func (client *triggerClient) createOrUpdateTrigger(ctx context.Context, triggerName string, trigger TriggerResource, options *TriggerBeginCreateOrUpdateTriggerOptions) (*azcore.Response, error) {
@@ -132,28 +110,6 @@ func (client *triggerClient) BeginDeleteTrigger(ctx context.Context, triggerName
 	result.Poller = &TriggerDeleteTriggerPoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDeleteTrigger creates a new TriggerDeleteTriggerPoller from the specified resume token.
-// token - The value must come from a previous call to TriggerDeleteTriggerPoller.ResumeToken().
-func (client *triggerClient) ResumeDeleteTrigger(ctx context.Context, token string) (TriggerDeleteTriggerPollerResponse, error) {
-	pt, err := azcore.NewLROPollerFromResumeToken("triggerClient.DeleteTrigger", token, client.con.Pipeline(), client.deleteTriggerHandleError)
-	if err != nil {
-		return TriggerDeleteTriggerPollerResponse{}, err
-	}
-	poller := &TriggerDeleteTriggerPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return TriggerDeleteTriggerPollerResponse{}, err
-	}
-	result := TriggerDeleteTriggerPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 
@@ -396,28 +352,6 @@ func (client *triggerClient) BeginStartTrigger(ctx context.Context, triggerName 
 	return result, nil
 }
 
-// ResumeStartTrigger creates a new TriggerStartTriggerPoller from the specified resume token.
-// token - The value must come from a previous call to TriggerStartTriggerPoller.ResumeToken().
-func (client *triggerClient) ResumeStartTrigger(ctx context.Context, token string) (TriggerStartTriggerPollerResponse, error) {
-	pt, err := azcore.NewLROPollerFromResumeToken("triggerClient.StartTrigger", token, client.con.Pipeline(), client.startTriggerHandleError)
-	if err != nil {
-		return TriggerStartTriggerPollerResponse{}, err
-	}
-	poller := &TriggerStartTriggerPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return TriggerStartTriggerPollerResponse{}, err
-	}
-	result := TriggerStartTriggerPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // StartTrigger - Starts a trigger.
 // If the operation fails it returns the *CloudError error type.
 func (client *triggerClient) startTrigger(ctx context.Context, triggerName string, options *TriggerBeginStartTriggerOptions) (*azcore.Response, error) {
@@ -484,28 +418,6 @@ func (client *triggerClient) BeginStopTrigger(ctx context.Context, triggerName s
 	result.Poller = &TriggerStopTriggerPoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeStopTrigger creates a new TriggerStopTriggerPoller from the specified resume token.
-// token - The value must come from a previous call to TriggerStopTriggerPoller.ResumeToken().
-func (client *triggerClient) ResumeStopTrigger(ctx context.Context, token string) (TriggerStopTriggerPollerResponse, error) {
-	pt, err := azcore.NewLROPollerFromResumeToken("triggerClient.StopTrigger", token, client.con.Pipeline(), client.stopTriggerHandleError)
-	if err != nil {
-		return TriggerStopTriggerPollerResponse{}, err
-	}
-	poller := &TriggerStopTriggerPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return TriggerStopTriggerPollerResponse{}, err
-	}
-	result := TriggerStopTriggerPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 
@@ -578,28 +490,6 @@ func (client *triggerClient) BeginSubscribeTriggerToEvents(ctx context.Context, 
 	return result, nil
 }
 
-// ResumeSubscribeTriggerToEvents creates a new TriggerSubscribeTriggerToEventsPoller from the specified resume token.
-// token - The value must come from a previous call to TriggerSubscribeTriggerToEventsPoller.ResumeToken().
-func (client *triggerClient) ResumeSubscribeTriggerToEvents(ctx context.Context, token string) (TriggerSubscribeTriggerToEventsPollerResponse, error) {
-	pt, err := azcore.NewLROPollerFromResumeToken("triggerClient.SubscribeTriggerToEvents", token, client.con.Pipeline(), client.subscribeTriggerToEventsHandleError)
-	if err != nil {
-		return TriggerSubscribeTriggerToEventsPollerResponse{}, err
-	}
-	poller := &TriggerSubscribeTriggerToEventsPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return TriggerSubscribeTriggerToEventsPollerResponse{}, err
-	}
-	result := TriggerSubscribeTriggerToEventsPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // SubscribeTriggerToEvents - Subscribe event trigger to events.
 // If the operation fails it returns the *CloudError error type.
 func (client *triggerClient) subscribeTriggerToEvents(ctx context.Context, triggerName string, options *TriggerBeginSubscribeTriggerToEventsOptions) (*azcore.Response, error) {
@@ -666,28 +556,6 @@ func (client *triggerClient) BeginUnsubscribeTriggerFromEvents(ctx context.Conte
 	result.Poller = &TriggerUnsubscribeTriggerFromEventsPoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeUnsubscribeTriggerFromEvents creates a new TriggerUnsubscribeTriggerFromEventsPoller from the specified resume token.
-// token - The value must come from a previous call to TriggerUnsubscribeTriggerFromEventsPoller.ResumeToken().
-func (client *triggerClient) ResumeUnsubscribeTriggerFromEvents(ctx context.Context, token string) (TriggerUnsubscribeTriggerFromEventsPollerResponse, error) {
-	pt, err := azcore.NewLROPollerFromResumeToken("triggerClient.UnsubscribeTriggerFromEvents", token, client.con.Pipeline(), client.unsubscribeTriggerFromEventsHandleError)
-	if err != nil {
-		return TriggerUnsubscribeTriggerFromEventsPollerResponse{}, err
-	}
-	poller := &TriggerUnsubscribeTriggerFromEventsPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return TriggerUnsubscribeTriggerFromEventsPollerResponse{}, err
-	}
-	result := TriggerUnsubscribeTriggerFromEventsPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

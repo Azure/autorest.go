@@ -50,28 +50,6 @@ func (client *ConnectionMonitorsClient) BeginCreateOrUpdate(ctx context.Context,
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new ConnectionMonitorsCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to ConnectionMonitorsCreateOrUpdatePoller.ResumeToken().
-func (client *ConnectionMonitorsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (ConnectionMonitorsCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("ConnectionMonitorsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return ConnectionMonitorsCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &ConnectionMonitorsCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return ConnectionMonitorsCreateOrUpdatePollerResponse{}, err
-	}
-	result := ConnectionMonitorsCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Create or update a connection monitor.
 // If the operation fails it returns the *ErrorResponse error type.
 func (client *ConnectionMonitorsClient) createOrUpdate(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, parameters ConnectionMonitor, options *ConnectionMonitorsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -150,28 +128,6 @@ func (client *ConnectionMonitorsClient) BeginDelete(ctx context.Context, resourc
 	result.Poller = &ConnectionMonitorsDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new ConnectionMonitorsDeletePoller from the specified resume token.
-// token - The value must come from a previous call to ConnectionMonitorsDeletePoller.ResumeToken().
-func (client *ConnectionMonitorsClient) ResumeDelete(ctx context.Context, token string) (ConnectionMonitorsDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("ConnectionMonitorsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return ConnectionMonitorsDeletePollerResponse{}, err
-	}
-	poller := &ConnectionMonitorsDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return ConnectionMonitorsDeletePollerResponse{}, err
-	}
-	result := ConnectionMonitorsDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 
@@ -392,28 +348,6 @@ func (client *ConnectionMonitorsClient) BeginQuery(ctx context.Context, resource
 	return result, nil
 }
 
-// ResumeQuery creates a new ConnectionMonitorsQueryPoller from the specified resume token.
-// token - The value must come from a previous call to ConnectionMonitorsQueryPoller.ResumeToken().
-func (client *ConnectionMonitorsClient) ResumeQuery(ctx context.Context, token string) (ConnectionMonitorsQueryPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("ConnectionMonitorsClient.Query", token, client.con.Pipeline(), client.queryHandleError)
-	if err != nil {
-		return ConnectionMonitorsQueryPollerResponse{}, err
-	}
-	poller := &ConnectionMonitorsQueryPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return ConnectionMonitorsQueryPollerResponse{}, err
-	}
-	result := ConnectionMonitorsQueryPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // Query - Query a snapshot of the most recent connection states.
 // If the operation fails it returns the *ErrorResponse error type.
 func (client *ConnectionMonitorsClient) query(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsBeginQueryOptions) (*azcore.Response, error) {
@@ -495,28 +429,6 @@ func (client *ConnectionMonitorsClient) BeginStart(ctx context.Context, resource
 	return result, nil
 }
 
-// ResumeStart creates a new ConnectionMonitorsStartPoller from the specified resume token.
-// token - The value must come from a previous call to ConnectionMonitorsStartPoller.ResumeToken().
-func (client *ConnectionMonitorsClient) ResumeStart(ctx context.Context, token string) (ConnectionMonitorsStartPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("ConnectionMonitorsClient.Start", token, client.con.Pipeline(), client.startHandleError)
-	if err != nil {
-		return ConnectionMonitorsStartPollerResponse{}, err
-	}
-	poller := &ConnectionMonitorsStartPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return ConnectionMonitorsStartPollerResponse{}, err
-	}
-	result := ConnectionMonitorsStartPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // Start - Starts the specified connection monitor.
 // If the operation fails it returns the *ErrorResponse error type.
 func (client *ConnectionMonitorsClient) start(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsBeginStartOptions) (*azcore.Response, error) {
@@ -595,28 +507,6 @@ func (client *ConnectionMonitorsClient) BeginStop(ctx context.Context, resourceG
 	result.Poller = &ConnectionMonitorsStopPoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeStop creates a new ConnectionMonitorsStopPoller from the specified resume token.
-// token - The value must come from a previous call to ConnectionMonitorsStopPoller.ResumeToken().
-func (client *ConnectionMonitorsClient) ResumeStop(ctx context.Context, token string) (ConnectionMonitorsStopPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("ConnectionMonitorsClient.Stop", token, client.con.Pipeline(), client.stopHandleError)
-	if err != nil {
-		return ConnectionMonitorsStopPollerResponse{}, err
-	}
-	poller := &ConnectionMonitorsStopPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return ConnectionMonitorsStopPollerResponse{}, err
-	}
-	result := ConnectionMonitorsStopPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

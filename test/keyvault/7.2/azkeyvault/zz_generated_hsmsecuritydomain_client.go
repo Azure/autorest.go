@@ -46,28 +46,6 @@ func (client *HSMSecurityDomainClient) BeginDownload(ctx context.Context, vaultB
 	return result, nil
 }
 
-// ResumeDownload creates a new HSMSecurityDomainDownloadPoller from the specified resume token.
-// token - The value must come from a previous call to HSMSecurityDomainDownloadPoller.ResumeToken().
-func (client *HSMSecurityDomainClient) ResumeDownload(ctx context.Context, token string) (HSMSecurityDomainDownloadPollerResponse, error) {
-	pt, err := azcore.NewLROPollerFromResumeToken("HSMSecurityDomainClient.Download", token, client.con.Pipeline(), client.downloadHandleError)
-	if err != nil {
-		return HSMSecurityDomainDownloadPollerResponse{}, err
-	}
-	poller := &HSMSecurityDomainDownloadPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return HSMSecurityDomainDownloadPollerResponse{}, err
-	}
-	result := HSMSecurityDomainDownloadPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // Download - Retrieves the Security Domain from the managed HSM. Calling this endpoint can be used to activate a provisioned managed HSM resource.
 // If the operation fails it returns the *KeyVaultError error type.
 func (client *HSMSecurityDomainClient) download(ctx context.Context, vaultBaseURL string, certificateInfoObject CertificateInfoObject, options *HSMSecurityDomainBeginDownloadOptions) (*azcore.Response, error) {
@@ -241,28 +219,6 @@ func (client *HSMSecurityDomainClient) BeginUpload(ctx context.Context, vaultBas
 	result.Poller = &HSMSecurityDomainUploadPoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeUpload creates a new HSMSecurityDomainUploadPoller from the specified resume token.
-// token - The value must come from a previous call to HSMSecurityDomainUploadPoller.ResumeToken().
-func (client *HSMSecurityDomainClient) ResumeUpload(ctx context.Context, token string) (HSMSecurityDomainUploadPollerResponse, error) {
-	pt, err := azcore.NewLROPollerFromResumeToken("HSMSecurityDomainClient.Upload", token, client.con.Pipeline(), client.uploadHandleError)
-	if err != nil {
-		return HSMSecurityDomainUploadPollerResponse{}, err
-	}
-	poller := &HSMSecurityDomainUploadPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return HSMSecurityDomainUploadPollerResponse{}, err
-	}
-	result := HSMSecurityDomainUploadPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

@@ -50,28 +50,6 @@ func (client *IPGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceG
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new IPGroupsCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to IPGroupsCreateOrUpdatePoller.ResumeToken().
-func (client *IPGroupsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (IPGroupsCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("IPGroupsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return IPGroupsCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &IPGroupsCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return IPGroupsCreateOrUpdatePollerResponse{}, err
-	}
-	result := IPGroupsCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Creates or updates an ipGroups in a specified resource group.
 // If the operation fails it returns the *Error error type.
 func (client *IPGroupsClient) createOrUpdate(ctx context.Context, resourceGroupName string, ipGroupsName string, parameters IPGroup, options *IPGroupsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -146,28 +124,6 @@ func (client *IPGroupsClient) BeginDelete(ctx context.Context, resourceGroupName
 	result.Poller = &IPGroupsDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new IPGroupsDeletePoller from the specified resume token.
-// token - The value must come from a previous call to IPGroupsDeletePoller.ResumeToken().
-func (client *IPGroupsClient) ResumeDelete(ctx context.Context, token string) (IPGroupsDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("IPGroupsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return IPGroupsDeletePollerResponse{}, err
-	}
-	poller := &IPGroupsDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return IPGroupsDeletePollerResponse{}, err
-	}
-	result := IPGroupsDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

@@ -49,28 +49,6 @@ func (client *DisksClient) BeginCreateOrUpdate(ctx context.Context, resourceGrou
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new DisksCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to DisksCreateOrUpdatePoller.ResumeToken().
-func (client *DisksClient) ResumeCreateOrUpdate(ctx context.Context, token string) (DisksCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("DisksClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return DisksCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &DisksCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return DisksCreateOrUpdatePollerResponse{}, err
-	}
-	result := DisksCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Creates or updates a disk.
 // If the operation fails it returns a generic error.
 func (client *DisksClient) createOrUpdate(ctx context.Context, resourceGroupName string, diskName string, disk Disk, options *DisksBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -144,28 +122,6 @@ func (client *DisksClient) BeginDelete(ctx context.Context, resourceGroupName st
 	result.Poller = &DisksDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new DisksDeletePoller from the specified resume token.
-// token - The value must come from a previous call to DisksDeletePoller.ResumeToken().
-func (client *DisksClient) ResumeDelete(ctx context.Context, token string) (DisksDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("DisksClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return DisksDeletePollerResponse{}, err
-	}
-	poller := &DisksDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return DisksDeletePollerResponse{}, err
-	}
-	result := DisksDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 
@@ -306,28 +262,6 @@ func (client *DisksClient) BeginGrantAccess(ctx context.Context, resourceGroupNa
 	result.Poller = &DisksGrantAccessPoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeGrantAccess creates a new DisksGrantAccessPoller from the specified resume token.
-// token - The value must come from a previous call to DisksGrantAccessPoller.ResumeToken().
-func (client *DisksClient) ResumeGrantAccess(ctx context.Context, token string) (DisksGrantAccessPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("DisksClient.GrantAccess", token, client.con.Pipeline(), client.grantAccessHandleError)
-	if err != nil {
-		return DisksGrantAccessPollerResponse{}, err
-	}
-	poller := &DisksGrantAccessPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return DisksGrantAccessPollerResponse{}, err
-	}
-	result := DisksGrantAccessPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 
@@ -519,28 +453,6 @@ func (client *DisksClient) BeginRevokeAccess(ctx context.Context, resourceGroupN
 	return result, nil
 }
 
-// ResumeRevokeAccess creates a new DisksRevokeAccessPoller from the specified resume token.
-// token - The value must come from a previous call to DisksRevokeAccessPoller.ResumeToken().
-func (client *DisksClient) ResumeRevokeAccess(ctx context.Context, token string) (DisksRevokeAccessPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("DisksClient.RevokeAccess", token, client.con.Pipeline(), client.revokeAccessHandleError)
-	if err != nil {
-		return DisksRevokeAccessPollerResponse{}, err
-	}
-	poller := &DisksRevokeAccessPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return DisksRevokeAccessPollerResponse{}, err
-	}
-	result := DisksRevokeAccessPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // RevokeAccess - Revokes access to a disk.
 // If the operation fails it returns a generic error.
 func (client *DisksClient) revokeAccess(ctx context.Context, resourceGroupName string, diskName string, options *DisksBeginRevokeAccessOptions) (*azcore.Response, error) {
@@ -613,28 +525,6 @@ func (client *DisksClient) BeginUpdate(ctx context.Context, resourceGroupName st
 	result.Poller = &DisksUpdatePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeUpdate creates a new DisksUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to DisksUpdatePoller.ResumeToken().
-func (client *DisksClient) ResumeUpdate(ctx context.Context, token string) (DisksUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("DisksClient.Update", token, client.con.Pipeline(), client.updateHandleError)
-	if err != nil {
-		return DisksUpdatePollerResponse{}, err
-	}
-	poller := &DisksUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return DisksUpdatePollerResponse{}, err
-	}
-	result := DisksUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

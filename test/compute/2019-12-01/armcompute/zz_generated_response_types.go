@@ -9,6 +9,7 @@ package armcompute
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
 	"net/http"
 	"time"
 )
@@ -111,6 +112,24 @@ func (l ContainerServicesCreateOrUpdatePollerResponse) PollUntilDone(ctx context
 	return respType, nil
 }
 
+// Resume rehydrates a ContainerServicesCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *ContainerServicesCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *ContainerServicesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("ContainerServicesClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &ContainerServicesCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // ContainerServicesCreateOrUpdateResponse contains the response from method ContainerServices.CreateOrUpdate.
 type ContainerServicesCreateOrUpdateResponse struct {
 	ContainerServicesCreateOrUpdateResult
@@ -141,6 +160,24 @@ func (l ContainerServicesDeletePollerResponse) PollUntilDone(ctx context.Context
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a ContainerServicesDeletePollerResponse from the provided client and resume token.
+func (l *ContainerServicesDeletePollerResponse) Resume(ctx context.Context, client *ContainerServicesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("ContainerServicesClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &ContainerServicesDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // ContainerServicesDeleteResponse contains the response from method ContainerServices.Delete.
@@ -271,6 +308,24 @@ func (l DedicatedHostsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Co
 	return respType, nil
 }
 
+// Resume rehydrates a DedicatedHostsCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *DedicatedHostsCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *DedicatedHostsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("DedicatedHostsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &DedicatedHostsCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // DedicatedHostsCreateOrUpdateResponse contains the response from method DedicatedHosts.CreateOrUpdate.
 type DedicatedHostsCreateOrUpdateResponse struct {
 	DedicatedHostsCreateOrUpdateResult
@@ -301,6 +356,24 @@ func (l DedicatedHostsDeletePollerResponse) PollUntilDone(ctx context.Context, f
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a DedicatedHostsDeletePollerResponse from the provided client and resume token.
+func (l *DedicatedHostsDeletePollerResponse) Resume(ctx context.Context, client *DedicatedHostsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("DedicatedHostsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &DedicatedHostsDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // DedicatedHostsDeleteResponse contains the response from method DedicatedHosts.Delete.
@@ -353,6 +426,24 @@ func (l DedicatedHostsUpdatePollerResponse) PollUntilDone(ctx context.Context, f
 	return respType, nil
 }
 
+// Resume rehydrates a DedicatedHostsUpdatePollerResponse from the provided client and resume token.
+func (l *DedicatedHostsUpdatePollerResponse) Resume(ctx context.Context, client *DedicatedHostsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("DedicatedHostsClient.Update", token, client.con.Pipeline(), client.updateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &DedicatedHostsUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // DedicatedHostsUpdateResponse contains the response from method DedicatedHosts.Update.
 type DedicatedHostsUpdateResponse struct {
 	DedicatedHostsUpdateResult
@@ -385,6 +476,24 @@ func (l DiskEncryptionSetsCreateOrUpdatePollerResponse) PollUntilDone(ctx contex
 	return respType, nil
 }
 
+// Resume rehydrates a DiskEncryptionSetsCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *DiskEncryptionSetsCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *DiskEncryptionSetsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("DiskEncryptionSetsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &DiskEncryptionSetsCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // DiskEncryptionSetsCreateOrUpdateResponse contains the response from method DiskEncryptionSets.CreateOrUpdate.
 type DiskEncryptionSetsCreateOrUpdateResponse struct {
 	DiskEncryptionSetsCreateOrUpdateResult
@@ -415,6 +524,24 @@ func (l DiskEncryptionSetsDeletePollerResponse) PollUntilDone(ctx context.Contex
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a DiskEncryptionSetsDeletePollerResponse from the provided client and resume token.
+func (l *DiskEncryptionSetsDeletePollerResponse) Resume(ctx context.Context, client *DiskEncryptionSetsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("DiskEncryptionSetsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &DiskEncryptionSetsDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // DiskEncryptionSetsDeleteResponse contains the response from method DiskEncryptionSets.Delete.
@@ -479,6 +606,24 @@ func (l DiskEncryptionSetsUpdatePollerResponse) PollUntilDone(ctx context.Contex
 	return respType, nil
 }
 
+// Resume rehydrates a DiskEncryptionSetsUpdatePollerResponse from the provided client and resume token.
+func (l *DiskEncryptionSetsUpdatePollerResponse) Resume(ctx context.Context, client *DiskEncryptionSetsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("DiskEncryptionSetsClient.Update", token, client.con.Pipeline(), client.updateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &DiskEncryptionSetsUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // DiskEncryptionSetsUpdateResponse contains the response from method DiskEncryptionSets.Update.
 type DiskEncryptionSetsUpdateResponse struct {
 	DiskEncryptionSetsUpdateResult
@@ -511,6 +656,24 @@ func (l DisksCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, fr
 	return respType, nil
 }
 
+// Resume rehydrates a DisksCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *DisksCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *DisksClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("DisksClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &DisksCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // DisksCreateOrUpdateResponse contains the response from method Disks.CreateOrUpdate.
 type DisksCreateOrUpdateResponse struct {
 	DisksCreateOrUpdateResult
@@ -541,6 +704,24 @@ func (l DisksDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a DisksDeletePollerResponse from the provided client and resume token.
+func (l *DisksDeletePollerResponse) Resume(ctx context.Context, client *DisksClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("DisksClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &DisksDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // DisksDeleteResponse contains the response from method Disks.Delete.
@@ -579,6 +760,24 @@ func (l DisksGrantAccessPollerResponse) PollUntilDone(ctx context.Context, freq 
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a DisksGrantAccessPollerResponse from the provided client and resume token.
+func (l *DisksGrantAccessPollerResponse) Resume(ctx context.Context, client *DisksClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("DisksClient.GrantAccess", token, client.con.Pipeline(), client.grantAccessHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &DisksGrantAccessPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // DisksGrantAccessResponse contains the response from method Disks.GrantAccess.
@@ -637,6 +836,24 @@ func (l DisksRevokeAccessPollerResponse) PollUntilDone(ctx context.Context, freq
 	return respType, nil
 }
 
+// Resume rehydrates a DisksRevokeAccessPollerResponse from the provided client and resume token.
+func (l *DisksRevokeAccessPollerResponse) Resume(ctx context.Context, client *DisksClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("DisksClient.RevokeAccess", token, client.con.Pipeline(), client.revokeAccessHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &DisksRevokeAccessPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // DisksRevokeAccessResponse contains the response from method Disks.RevokeAccess.
 type DisksRevokeAccessResponse struct {
 	// RawResponse contains the underlying HTTP response.
@@ -661,6 +878,24 @@ func (l DisksUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a DisksUpdatePollerResponse from the provided client and resume token.
+func (l *DisksUpdatePollerResponse) Resume(ctx context.Context, client *DisksClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("DisksClient.Update", token, client.con.Pipeline(), client.updateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &DisksUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // DisksUpdateResponse contains the response from method Disks.Update.
@@ -695,6 +930,24 @@ func (l GalleriesCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context
 	return respType, nil
 }
 
+// Resume rehydrates a GalleriesCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *GalleriesCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *GalleriesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("GalleriesClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &GalleriesCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // GalleriesCreateOrUpdateResponse contains the response from method Galleries.CreateOrUpdate.
 type GalleriesCreateOrUpdateResponse struct {
 	GalleriesCreateOrUpdateResult
@@ -725,6 +978,24 @@ func (l GalleriesDeletePollerResponse) PollUntilDone(ctx context.Context, freq t
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a GalleriesDeletePollerResponse from the provided client and resume token.
+func (l *GalleriesDeletePollerResponse) Resume(ctx context.Context, client *GalleriesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("GalleriesClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &GalleriesDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // GalleriesDeleteResponse contains the response from method Galleries.Delete.
@@ -789,6 +1060,24 @@ func (l GalleriesUpdatePollerResponse) PollUntilDone(ctx context.Context, freq t
 	return respType, nil
 }
 
+// Resume rehydrates a GalleriesUpdatePollerResponse from the provided client and resume token.
+func (l *GalleriesUpdatePollerResponse) Resume(ctx context.Context, client *GalleriesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("GalleriesClient.Update", token, client.con.Pipeline(), client.updateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &GalleriesUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // GalleriesUpdateResponse contains the response from method Galleries.Update.
 type GalleriesUpdateResponse struct {
 	GalleriesUpdateResult
@@ -821,6 +1110,24 @@ func (l GalleryApplicationVersionsCreateOrUpdatePollerResponse) PollUntilDone(ct
 	return respType, nil
 }
 
+// Resume rehydrates a GalleryApplicationVersionsCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *GalleryApplicationVersionsCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *GalleryApplicationVersionsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("GalleryApplicationVersionsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &GalleryApplicationVersionsCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // GalleryApplicationVersionsCreateOrUpdateResponse contains the response from method GalleryApplicationVersions.CreateOrUpdate.
 type GalleryApplicationVersionsCreateOrUpdateResponse struct {
 	GalleryApplicationVersionsCreateOrUpdateResult
@@ -851,6 +1158,24 @@ func (l GalleryApplicationVersionsDeletePollerResponse) PollUntilDone(ctx contex
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a GalleryApplicationVersionsDeletePollerResponse from the provided client and resume token.
+func (l *GalleryApplicationVersionsDeletePollerResponse) Resume(ctx context.Context, client *GalleryApplicationVersionsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("GalleryApplicationVersionsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &GalleryApplicationVersionsDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // GalleryApplicationVersionsDeleteResponse contains the response from method GalleryApplicationVersions.Delete.
@@ -903,6 +1228,24 @@ func (l GalleryApplicationVersionsUpdatePollerResponse) PollUntilDone(ctx contex
 	return respType, nil
 }
 
+// Resume rehydrates a GalleryApplicationVersionsUpdatePollerResponse from the provided client and resume token.
+func (l *GalleryApplicationVersionsUpdatePollerResponse) Resume(ctx context.Context, client *GalleryApplicationVersionsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("GalleryApplicationVersionsClient.Update", token, client.con.Pipeline(), client.updateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &GalleryApplicationVersionsUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // GalleryApplicationVersionsUpdateResponse contains the response from method GalleryApplicationVersions.Update.
 type GalleryApplicationVersionsUpdateResponse struct {
 	GalleryApplicationVersionsUpdateResult
@@ -935,6 +1278,24 @@ func (l GalleryApplicationsCreateOrUpdatePollerResponse) PollUntilDone(ctx conte
 	return respType, nil
 }
 
+// Resume rehydrates a GalleryApplicationsCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *GalleryApplicationsCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *GalleryApplicationsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("GalleryApplicationsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &GalleryApplicationsCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // GalleryApplicationsCreateOrUpdateResponse contains the response from method GalleryApplications.CreateOrUpdate.
 type GalleryApplicationsCreateOrUpdateResponse struct {
 	GalleryApplicationsCreateOrUpdateResult
@@ -965,6 +1326,24 @@ func (l GalleryApplicationsDeletePollerResponse) PollUntilDone(ctx context.Conte
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a GalleryApplicationsDeletePollerResponse from the provided client and resume token.
+func (l *GalleryApplicationsDeletePollerResponse) Resume(ctx context.Context, client *GalleryApplicationsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("GalleryApplicationsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &GalleryApplicationsDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // GalleryApplicationsDeleteResponse contains the response from method GalleryApplications.Delete.
@@ -1017,6 +1396,24 @@ func (l GalleryApplicationsUpdatePollerResponse) PollUntilDone(ctx context.Conte
 	return respType, nil
 }
 
+// Resume rehydrates a GalleryApplicationsUpdatePollerResponse from the provided client and resume token.
+func (l *GalleryApplicationsUpdatePollerResponse) Resume(ctx context.Context, client *GalleryApplicationsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("GalleryApplicationsClient.Update", token, client.con.Pipeline(), client.updateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &GalleryApplicationsUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // GalleryApplicationsUpdateResponse contains the response from method GalleryApplications.Update.
 type GalleryApplicationsUpdateResponse struct {
 	GalleryApplicationsUpdateResult
@@ -1049,6 +1446,24 @@ func (l GalleryImageVersionsCreateOrUpdatePollerResponse) PollUntilDone(ctx cont
 	return respType, nil
 }
 
+// Resume rehydrates a GalleryImageVersionsCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *GalleryImageVersionsCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *GalleryImageVersionsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("GalleryImageVersionsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &GalleryImageVersionsCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // GalleryImageVersionsCreateOrUpdateResponse contains the response from method GalleryImageVersions.CreateOrUpdate.
 type GalleryImageVersionsCreateOrUpdateResponse struct {
 	GalleryImageVersionsCreateOrUpdateResult
@@ -1079,6 +1494,24 @@ func (l GalleryImageVersionsDeletePollerResponse) PollUntilDone(ctx context.Cont
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a GalleryImageVersionsDeletePollerResponse from the provided client and resume token.
+func (l *GalleryImageVersionsDeletePollerResponse) Resume(ctx context.Context, client *GalleryImageVersionsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("GalleryImageVersionsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &GalleryImageVersionsDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // GalleryImageVersionsDeleteResponse contains the response from method GalleryImageVersions.Delete.
@@ -1131,6 +1564,24 @@ func (l GalleryImageVersionsUpdatePollerResponse) PollUntilDone(ctx context.Cont
 	return respType, nil
 }
 
+// Resume rehydrates a GalleryImageVersionsUpdatePollerResponse from the provided client and resume token.
+func (l *GalleryImageVersionsUpdatePollerResponse) Resume(ctx context.Context, client *GalleryImageVersionsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("GalleryImageVersionsClient.Update", token, client.con.Pipeline(), client.updateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &GalleryImageVersionsUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // GalleryImageVersionsUpdateResponse contains the response from method GalleryImageVersions.Update.
 type GalleryImageVersionsUpdateResponse struct {
 	GalleryImageVersionsUpdateResult
@@ -1163,6 +1614,24 @@ func (l GalleryImagesCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Con
 	return respType, nil
 }
 
+// Resume rehydrates a GalleryImagesCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *GalleryImagesCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *GalleryImagesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("GalleryImagesClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &GalleryImagesCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // GalleryImagesCreateOrUpdateResponse contains the response from method GalleryImages.CreateOrUpdate.
 type GalleryImagesCreateOrUpdateResponse struct {
 	GalleryImagesCreateOrUpdateResult
@@ -1193,6 +1662,24 @@ func (l GalleryImagesDeletePollerResponse) PollUntilDone(ctx context.Context, fr
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a GalleryImagesDeletePollerResponse from the provided client and resume token.
+func (l *GalleryImagesDeletePollerResponse) Resume(ctx context.Context, client *GalleryImagesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("GalleryImagesClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &GalleryImagesDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // GalleryImagesDeleteResponse contains the response from method GalleryImages.Delete.
@@ -1245,6 +1732,24 @@ func (l GalleryImagesUpdatePollerResponse) PollUntilDone(ctx context.Context, fr
 	return respType, nil
 }
 
+// Resume rehydrates a GalleryImagesUpdatePollerResponse from the provided client and resume token.
+func (l *GalleryImagesUpdatePollerResponse) Resume(ctx context.Context, client *GalleryImagesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("GalleryImagesClient.Update", token, client.con.Pipeline(), client.updateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &GalleryImagesUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // GalleryImagesUpdateResponse contains the response from method GalleryImages.Update.
 type GalleryImagesUpdateResponse struct {
 	GalleryImagesUpdateResult
@@ -1277,6 +1782,24 @@ func (l ImagesCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, f
 	return respType, nil
 }
 
+// Resume rehydrates a ImagesCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *ImagesCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *ImagesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("ImagesClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &ImagesCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // ImagesCreateOrUpdateResponse contains the response from method Images.CreateOrUpdate.
 type ImagesCreateOrUpdateResponse struct {
 	ImagesCreateOrUpdateResult
@@ -1307,6 +1830,24 @@ func (l ImagesDeletePollerResponse) PollUntilDone(ctx context.Context, freq time
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a ImagesDeletePollerResponse from the provided client and resume token.
+func (l *ImagesDeletePollerResponse) Resume(ctx context.Context, client *ImagesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("ImagesClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &ImagesDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // ImagesDeleteResponse contains the response from method Images.Delete.
@@ -1371,6 +1912,24 @@ func (l ImagesUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time
 	return respType, nil
 }
 
+// Resume rehydrates a ImagesUpdatePollerResponse from the provided client and resume token.
+func (l *ImagesUpdatePollerResponse) Resume(ctx context.Context, client *ImagesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("ImagesClient.Update", token, client.con.Pipeline(), client.updateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &ImagesUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // ImagesUpdateResponse contains the response from method Images.Update.
 type ImagesUpdateResponse struct {
 	ImagesUpdateResult
@@ -1403,6 +1962,24 @@ func (l LogAnalyticsExportRequestRateByIntervalPollerResponse) PollUntilDone(ctx
 	return respType, nil
 }
 
+// Resume rehydrates a LogAnalyticsExportRequestRateByIntervalPollerResponse from the provided client and resume token.
+func (l *LogAnalyticsExportRequestRateByIntervalPollerResponse) Resume(ctx context.Context, client *LogAnalyticsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("LogAnalyticsClient.ExportRequestRateByInterval", token, client.con.Pipeline(), client.exportRequestRateByIntervalHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &LogAnalyticsExportRequestRateByIntervalPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // LogAnalyticsExportRequestRateByIntervalResponse contains the response from method LogAnalytics.ExportRequestRateByInterval.
 type LogAnalyticsExportRequestRateByIntervalResponse struct {
 	LogAnalyticsExportRequestRateByIntervalResult
@@ -1433,6 +2010,24 @@ func (l LogAnalyticsExportThrottledRequestsPollerResponse) PollUntilDone(ctx con
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a LogAnalyticsExportThrottledRequestsPollerResponse from the provided client and resume token.
+func (l *LogAnalyticsExportThrottledRequestsPollerResponse) Resume(ctx context.Context, client *LogAnalyticsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("LogAnalyticsClient.ExportThrottledRequests", token, client.con.Pipeline(), client.exportThrottledRequestsHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &LogAnalyticsExportThrottledRequestsPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // LogAnalyticsExportThrottledRequestsResponse contains the response from method LogAnalytics.ExportThrottledRequests.
@@ -1635,6 +2230,24 @@ func (l SnapshotsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context
 	return respType, nil
 }
 
+// Resume rehydrates a SnapshotsCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *SnapshotsCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *SnapshotsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("SnapshotsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &SnapshotsCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // SnapshotsCreateOrUpdateResponse contains the response from method Snapshots.CreateOrUpdate.
 type SnapshotsCreateOrUpdateResponse struct {
 	SnapshotsCreateOrUpdateResult
@@ -1665,6 +2278,24 @@ func (l SnapshotsDeletePollerResponse) PollUntilDone(ctx context.Context, freq t
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a SnapshotsDeletePollerResponse from the provided client and resume token.
+func (l *SnapshotsDeletePollerResponse) Resume(ctx context.Context, client *SnapshotsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("SnapshotsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &SnapshotsDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // SnapshotsDeleteResponse contains the response from method Snapshots.Delete.
@@ -1703,6 +2334,24 @@ func (l SnapshotsGrantAccessPollerResponse) PollUntilDone(ctx context.Context, f
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a SnapshotsGrantAccessPollerResponse from the provided client and resume token.
+func (l *SnapshotsGrantAccessPollerResponse) Resume(ctx context.Context, client *SnapshotsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("SnapshotsClient.GrantAccess", token, client.con.Pipeline(), client.grantAccessHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &SnapshotsGrantAccessPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // SnapshotsGrantAccessResponse contains the response from method Snapshots.GrantAccess.
@@ -1761,6 +2410,24 @@ func (l SnapshotsRevokeAccessPollerResponse) PollUntilDone(ctx context.Context, 
 	return respType, nil
 }
 
+// Resume rehydrates a SnapshotsRevokeAccessPollerResponse from the provided client and resume token.
+func (l *SnapshotsRevokeAccessPollerResponse) Resume(ctx context.Context, client *SnapshotsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("SnapshotsClient.RevokeAccess", token, client.con.Pipeline(), client.revokeAccessHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &SnapshotsRevokeAccessPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // SnapshotsRevokeAccessResponse contains the response from method Snapshots.RevokeAccess.
 type SnapshotsRevokeAccessResponse struct {
 	// RawResponse contains the underlying HTTP response.
@@ -1785,6 +2452,24 @@ func (l SnapshotsUpdatePollerResponse) PollUntilDone(ctx context.Context, freq t
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a SnapshotsUpdatePollerResponse from the provided client and resume token.
+func (l *SnapshotsUpdatePollerResponse) Resume(ctx context.Context, client *SnapshotsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("SnapshotsClient.Update", token, client.con.Pipeline(), client.updateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &SnapshotsUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // SnapshotsUpdateResponse contains the response from method Snapshots.Update.
@@ -1869,6 +2554,24 @@ func (l VirtualMachineExtensionsCreateOrUpdatePollerResponse) PollUntilDone(ctx 
 	return respType, nil
 }
 
+// Resume rehydrates a VirtualMachineExtensionsCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *VirtualMachineExtensionsCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *VirtualMachineExtensionsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineExtensionsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualMachineExtensionsCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VirtualMachineExtensionsCreateOrUpdateResponse contains the response from method VirtualMachineExtensions.CreateOrUpdate.
 type VirtualMachineExtensionsCreateOrUpdateResponse struct {
 	VirtualMachineExtensionsCreateOrUpdateResult
@@ -1899,6 +2602,24 @@ func (l VirtualMachineExtensionsDeletePollerResponse) PollUntilDone(ctx context.
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a VirtualMachineExtensionsDeletePollerResponse from the provided client and resume token.
+func (l *VirtualMachineExtensionsDeletePollerResponse) Resume(ctx context.Context, client *VirtualMachineExtensionsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineExtensionsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualMachineExtensionsDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // VirtualMachineExtensionsDeleteResponse contains the response from method VirtualMachineExtensions.Delete.
@@ -1949,6 +2670,24 @@ func (l VirtualMachineExtensionsUpdatePollerResponse) PollUntilDone(ctx context.
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a VirtualMachineExtensionsUpdatePollerResponse from the provided client and resume token.
+func (l *VirtualMachineExtensionsUpdatePollerResponse) Resume(ctx context.Context, client *VirtualMachineExtensionsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineExtensionsClient.Update", token, client.con.Pipeline(), client.updateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualMachineExtensionsUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // VirtualMachineExtensionsUpdateResponse contains the response from method VirtualMachineExtensions.Update.
@@ -2071,6 +2810,24 @@ func (l VirtualMachineScaleSetExtensionsCreateOrUpdatePollerResponse) PollUntilD
 	return respType, nil
 }
 
+// Resume rehydrates a VirtualMachineScaleSetExtensionsCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *VirtualMachineScaleSetExtensionsCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetExtensionsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetExtensionsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualMachineScaleSetExtensionsCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VirtualMachineScaleSetExtensionsCreateOrUpdateResponse contains the response from method VirtualMachineScaleSetExtensions.CreateOrUpdate.
 type VirtualMachineScaleSetExtensionsCreateOrUpdateResponse struct {
 	VirtualMachineScaleSetExtensionsCreateOrUpdateResult
@@ -2101,6 +2858,24 @@ func (l VirtualMachineScaleSetExtensionsDeletePollerResponse) PollUntilDone(ctx 
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a VirtualMachineScaleSetExtensionsDeletePollerResponse from the provided client and resume token.
+func (l *VirtualMachineScaleSetExtensionsDeletePollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetExtensionsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetExtensionsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualMachineScaleSetExtensionsDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // VirtualMachineScaleSetExtensionsDeleteResponse contains the response from method VirtualMachineScaleSetExtensions.Delete.
@@ -2153,6 +2928,24 @@ func (l VirtualMachineScaleSetExtensionsUpdatePollerResponse) PollUntilDone(ctx 
 	return respType, nil
 }
 
+// Resume rehydrates a VirtualMachineScaleSetExtensionsUpdatePollerResponse from the provided client and resume token.
+func (l *VirtualMachineScaleSetExtensionsUpdatePollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetExtensionsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetExtensionsClient.Update", token, client.con.Pipeline(), client.updateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualMachineScaleSetExtensionsUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VirtualMachineScaleSetExtensionsUpdateResponse contains the response from method VirtualMachineScaleSetExtensions.Update.
 type VirtualMachineScaleSetExtensionsUpdateResponse struct {
 	VirtualMachineScaleSetExtensionsUpdateResult
@@ -2183,6 +2976,24 @@ func (l VirtualMachineScaleSetRollingUpgradesCancelPollerResponse) PollUntilDone
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a VirtualMachineScaleSetRollingUpgradesCancelPollerResponse from the provided client and resume token.
+func (l *VirtualMachineScaleSetRollingUpgradesCancelPollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetRollingUpgradesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetRollingUpgradesClient.Cancel", token, client.con.Pipeline(), client.cancelHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualMachineScaleSetRollingUpgradesCancelPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // VirtualMachineScaleSetRollingUpgradesCancelResponse contains the response from method VirtualMachineScaleSetRollingUpgrades.Cancel.
@@ -2223,6 +3034,24 @@ func (l VirtualMachineScaleSetRollingUpgradesStartExtensionUpgradePollerResponse
 	return respType, nil
 }
 
+// Resume rehydrates a VirtualMachineScaleSetRollingUpgradesStartExtensionUpgradePollerResponse from the provided client and resume token.
+func (l *VirtualMachineScaleSetRollingUpgradesStartExtensionUpgradePollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetRollingUpgradesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetRollingUpgradesClient.StartExtensionUpgrade", token, client.con.Pipeline(), client.startExtensionUpgradeHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualMachineScaleSetRollingUpgradesStartExtensionUpgradePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VirtualMachineScaleSetRollingUpgradesStartExtensionUpgradeResponse contains the response from method VirtualMachineScaleSetRollingUpgrades.StartExtensionUpgrade.
 type VirtualMachineScaleSetRollingUpgradesStartExtensionUpgradeResponse struct {
 	// RawResponse contains the underlying HTTP response.
@@ -2249,6 +3078,24 @@ func (l VirtualMachineScaleSetRollingUpgradesStartOSUpgradePollerResponse) PollU
 	return respType, nil
 }
 
+// Resume rehydrates a VirtualMachineScaleSetRollingUpgradesStartOSUpgradePollerResponse from the provided client and resume token.
+func (l *VirtualMachineScaleSetRollingUpgradesStartOSUpgradePollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetRollingUpgradesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetRollingUpgradesClient.StartOSUpgrade", token, client.con.Pipeline(), client.startOSUpgradeHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualMachineScaleSetRollingUpgradesStartOSUpgradePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VirtualMachineScaleSetRollingUpgradesStartOSUpgradeResponse contains the response from method VirtualMachineScaleSetRollingUpgrades.StartOSUpgrade.
 type VirtualMachineScaleSetRollingUpgradesStartOSUpgradeResponse struct {
 	// RawResponse contains the underlying HTTP response.
@@ -2273,6 +3120,24 @@ func (l VirtualMachineScaleSetVMExtensionsCreateOrUpdatePollerResponse) PollUnti
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a VirtualMachineScaleSetVMExtensionsCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *VirtualMachineScaleSetVMExtensionsCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetVMExtensionsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetVMExtensionsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualMachineScaleSetVMExtensionsCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // VirtualMachineScaleSetVMExtensionsCreateOrUpdateResponse contains the response from method VirtualMachineScaleSetVMExtensions.CreateOrUpdate.
@@ -2305,6 +3170,24 @@ func (l VirtualMachineScaleSetVMExtensionsDeletePollerResponse) PollUntilDone(ct
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a VirtualMachineScaleSetVMExtensionsDeletePollerResponse from the provided client and resume token.
+func (l *VirtualMachineScaleSetVMExtensionsDeletePollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetVMExtensionsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetVMExtensionsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualMachineScaleSetVMExtensionsDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // VirtualMachineScaleSetVMExtensionsDeleteResponse contains the response from method VirtualMachineScaleSetVMExtensions.Delete.
@@ -2357,6 +3240,24 @@ func (l VirtualMachineScaleSetVMExtensionsUpdatePollerResponse) PollUntilDone(ct
 	return respType, nil
 }
 
+// Resume rehydrates a VirtualMachineScaleSetVMExtensionsUpdatePollerResponse from the provided client and resume token.
+func (l *VirtualMachineScaleSetVMExtensionsUpdatePollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetVMExtensionsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetVMExtensionsClient.Update", token, client.con.Pipeline(), client.updateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualMachineScaleSetVMExtensionsUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VirtualMachineScaleSetVMExtensionsUpdateResponse contains the response from method VirtualMachineScaleSetVMExtensions.Update.
 type VirtualMachineScaleSetVMExtensionsUpdateResponse struct {
 	VirtualMachineScaleSetVMExtensionsUpdateResult
@@ -2389,6 +3290,24 @@ func (l VirtualMachineScaleSetVMsDeallocatePollerResponse) PollUntilDone(ctx con
 	return respType, nil
 }
 
+// Resume rehydrates a VirtualMachineScaleSetVMsDeallocatePollerResponse from the provided client and resume token.
+func (l *VirtualMachineScaleSetVMsDeallocatePollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetVMsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetVMsClient.Deallocate", token, client.con.Pipeline(), client.deallocateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualMachineScaleSetVMsDeallocatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VirtualMachineScaleSetVMsDeallocateResponse contains the response from method VirtualMachineScaleSetVMs.Deallocate.
 type VirtualMachineScaleSetVMsDeallocateResponse struct {
 	// RawResponse contains the underlying HTTP response.
@@ -2413,6 +3332,24 @@ func (l VirtualMachineScaleSetVMsDeletePollerResponse) PollUntilDone(ctx context
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a VirtualMachineScaleSetVMsDeletePollerResponse from the provided client and resume token.
+func (l *VirtualMachineScaleSetVMsDeletePollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetVMsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetVMsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualMachineScaleSetVMsDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // VirtualMachineScaleSetVMsDeleteResponse contains the response from method VirtualMachineScaleSetVMs.Delete.
@@ -2477,6 +3414,24 @@ func (l VirtualMachineScaleSetVMsPerformMaintenancePollerResponse) PollUntilDone
 	return respType, nil
 }
 
+// Resume rehydrates a VirtualMachineScaleSetVMsPerformMaintenancePollerResponse from the provided client and resume token.
+func (l *VirtualMachineScaleSetVMsPerformMaintenancePollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetVMsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetVMsClient.PerformMaintenance", token, client.con.Pipeline(), client.performMaintenanceHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualMachineScaleSetVMsPerformMaintenancePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VirtualMachineScaleSetVMsPerformMaintenanceResponse contains the response from method VirtualMachineScaleSetVMs.PerformMaintenance.
 type VirtualMachineScaleSetVMsPerformMaintenanceResponse struct {
 	// RawResponse contains the underlying HTTP response.
@@ -2501,6 +3456,24 @@ func (l VirtualMachineScaleSetVMsPowerOffPollerResponse) PollUntilDone(ctx conte
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a VirtualMachineScaleSetVMsPowerOffPollerResponse from the provided client and resume token.
+func (l *VirtualMachineScaleSetVMsPowerOffPollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetVMsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetVMsClient.PowerOff", token, client.con.Pipeline(), client.powerOffHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualMachineScaleSetVMsPowerOffPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // VirtualMachineScaleSetVMsPowerOffResponse contains the response from method VirtualMachineScaleSetVMs.PowerOff.
@@ -2529,6 +3502,24 @@ func (l VirtualMachineScaleSetVMsRedeployPollerResponse) PollUntilDone(ctx conte
 	return respType, nil
 }
 
+// Resume rehydrates a VirtualMachineScaleSetVMsRedeployPollerResponse from the provided client and resume token.
+func (l *VirtualMachineScaleSetVMsRedeployPollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetVMsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetVMsClient.Redeploy", token, client.con.Pipeline(), client.redeployHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualMachineScaleSetVMsRedeployPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VirtualMachineScaleSetVMsRedeployResponse contains the response from method VirtualMachineScaleSetVMs.Redeploy.
 type VirtualMachineScaleSetVMsRedeployResponse struct {
 	// RawResponse contains the underlying HTTP response.
@@ -2553,6 +3544,24 @@ func (l VirtualMachineScaleSetVMsReimageAllPollerResponse) PollUntilDone(ctx con
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a VirtualMachineScaleSetVMsReimageAllPollerResponse from the provided client and resume token.
+func (l *VirtualMachineScaleSetVMsReimageAllPollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetVMsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetVMsClient.ReimageAll", token, client.con.Pipeline(), client.reimageAllHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualMachineScaleSetVMsReimageAllPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // VirtualMachineScaleSetVMsReimageAllResponse contains the response from method VirtualMachineScaleSetVMs.ReimageAll.
@@ -2581,6 +3590,24 @@ func (l VirtualMachineScaleSetVMsReimagePollerResponse) PollUntilDone(ctx contex
 	return respType, nil
 }
 
+// Resume rehydrates a VirtualMachineScaleSetVMsReimagePollerResponse from the provided client and resume token.
+func (l *VirtualMachineScaleSetVMsReimagePollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetVMsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetVMsClient.Reimage", token, client.con.Pipeline(), client.reimageHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualMachineScaleSetVMsReimagePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VirtualMachineScaleSetVMsReimageResponse contains the response from method VirtualMachineScaleSetVMs.Reimage.
 type VirtualMachineScaleSetVMsReimageResponse struct {
 	// RawResponse contains the underlying HTTP response.
@@ -2607,6 +3634,24 @@ func (l VirtualMachineScaleSetVMsRestartPollerResponse) PollUntilDone(ctx contex
 	return respType, nil
 }
 
+// Resume rehydrates a VirtualMachineScaleSetVMsRestartPollerResponse from the provided client and resume token.
+func (l *VirtualMachineScaleSetVMsRestartPollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetVMsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetVMsClient.Restart", token, client.con.Pipeline(), client.restartHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualMachineScaleSetVMsRestartPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VirtualMachineScaleSetVMsRestartResponse contains the response from method VirtualMachineScaleSetVMs.Restart.
 type VirtualMachineScaleSetVMsRestartResponse struct {
 	// RawResponse contains the underlying HTTP response.
@@ -2631,6 +3676,24 @@ func (l VirtualMachineScaleSetVMsRunCommandPollerResponse) PollUntilDone(ctx con
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a VirtualMachineScaleSetVMsRunCommandPollerResponse from the provided client and resume token.
+func (l *VirtualMachineScaleSetVMsRunCommandPollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetVMsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetVMsClient.RunCommand", token, client.con.Pipeline(), client.runCommandHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualMachineScaleSetVMsRunCommandPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // VirtualMachineScaleSetVMsRunCommandResponse contains the response from method VirtualMachineScaleSetVMs.RunCommand.
@@ -2671,6 +3734,24 @@ func (l VirtualMachineScaleSetVMsStartPollerResponse) PollUntilDone(ctx context.
 	return respType, nil
 }
 
+// Resume rehydrates a VirtualMachineScaleSetVMsStartPollerResponse from the provided client and resume token.
+func (l *VirtualMachineScaleSetVMsStartPollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetVMsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetVMsClient.Start", token, client.con.Pipeline(), client.startHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualMachineScaleSetVMsStartPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VirtualMachineScaleSetVMsStartResponse contains the response from method VirtualMachineScaleSetVMs.Start.
 type VirtualMachineScaleSetVMsStartResponse struct {
 	// RawResponse contains the underlying HTTP response.
@@ -2695,6 +3776,24 @@ func (l VirtualMachineScaleSetVMsUpdatePollerResponse) PollUntilDone(ctx context
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a VirtualMachineScaleSetVMsUpdatePollerResponse from the provided client and resume token.
+func (l *VirtualMachineScaleSetVMsUpdatePollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetVMsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetVMsClient.Update", token, client.con.Pipeline(), client.updateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualMachineScaleSetVMsUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // VirtualMachineScaleSetVMsUpdateResponse contains the response from method VirtualMachineScaleSetVMs.Update.
@@ -2735,6 +3834,24 @@ func (l VirtualMachineScaleSetsCreateOrUpdatePollerResponse) PollUntilDone(ctx c
 	return respType, nil
 }
 
+// Resume rehydrates a VirtualMachineScaleSetsCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *VirtualMachineScaleSetsCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualMachineScaleSetsCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VirtualMachineScaleSetsCreateOrUpdateResponse contains the response from method VirtualMachineScaleSets.CreateOrUpdate.
 type VirtualMachineScaleSetsCreateOrUpdateResponse struct {
 	VirtualMachineScaleSetsCreateOrUpdateResult
@@ -2767,6 +3884,24 @@ func (l VirtualMachineScaleSetsDeallocatePollerResponse) PollUntilDone(ctx conte
 	return respType, nil
 }
 
+// Resume rehydrates a VirtualMachineScaleSetsDeallocatePollerResponse from the provided client and resume token.
+func (l *VirtualMachineScaleSetsDeallocatePollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetsClient.Deallocate", token, client.con.Pipeline(), client.deallocateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualMachineScaleSetsDeallocatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VirtualMachineScaleSetsDeallocateResponse contains the response from method VirtualMachineScaleSets.Deallocate.
 type VirtualMachineScaleSetsDeallocateResponse struct {
 	// RawResponse contains the underlying HTTP response.
@@ -2793,6 +3928,24 @@ func (l VirtualMachineScaleSetsDeleteInstancesPollerResponse) PollUntilDone(ctx 
 	return respType, nil
 }
 
+// Resume rehydrates a VirtualMachineScaleSetsDeleteInstancesPollerResponse from the provided client and resume token.
+func (l *VirtualMachineScaleSetsDeleteInstancesPollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetsClient.DeleteInstances", token, client.con.Pipeline(), client.deleteInstancesHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualMachineScaleSetsDeleteInstancesPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VirtualMachineScaleSetsDeleteInstancesResponse contains the response from method VirtualMachineScaleSets.DeleteInstances.
 type VirtualMachineScaleSetsDeleteInstancesResponse struct {
 	// RawResponse contains the underlying HTTP response.
@@ -2817,6 +3970,24 @@ func (l VirtualMachineScaleSetsDeletePollerResponse) PollUntilDone(ctx context.C
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a VirtualMachineScaleSetsDeletePollerResponse from the provided client and resume token.
+func (l *VirtualMachineScaleSetsDeletePollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualMachineScaleSetsDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // VirtualMachineScaleSetsDeleteResponse contains the response from method VirtualMachineScaleSets.Delete.
@@ -2929,6 +4100,24 @@ func (l VirtualMachineScaleSetsPerformMaintenancePollerResponse) PollUntilDone(c
 	return respType, nil
 }
 
+// Resume rehydrates a VirtualMachineScaleSetsPerformMaintenancePollerResponse from the provided client and resume token.
+func (l *VirtualMachineScaleSetsPerformMaintenancePollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetsClient.PerformMaintenance", token, client.con.Pipeline(), client.performMaintenanceHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualMachineScaleSetsPerformMaintenancePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VirtualMachineScaleSetsPerformMaintenanceResponse contains the response from method VirtualMachineScaleSets.PerformMaintenance.
 type VirtualMachineScaleSetsPerformMaintenanceResponse struct {
 	// RawResponse contains the underlying HTTP response.
@@ -2953,6 +4142,24 @@ func (l VirtualMachineScaleSetsPowerOffPollerResponse) PollUntilDone(ctx context
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a VirtualMachineScaleSetsPowerOffPollerResponse from the provided client and resume token.
+func (l *VirtualMachineScaleSetsPowerOffPollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetsClient.PowerOff", token, client.con.Pipeline(), client.powerOffHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualMachineScaleSetsPowerOffPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // VirtualMachineScaleSetsPowerOffResponse contains the response from method VirtualMachineScaleSets.PowerOff.
@@ -2981,6 +4188,24 @@ func (l VirtualMachineScaleSetsRedeployPollerResponse) PollUntilDone(ctx context
 	return respType, nil
 }
 
+// Resume rehydrates a VirtualMachineScaleSetsRedeployPollerResponse from the provided client and resume token.
+func (l *VirtualMachineScaleSetsRedeployPollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetsClient.Redeploy", token, client.con.Pipeline(), client.redeployHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualMachineScaleSetsRedeployPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VirtualMachineScaleSetsRedeployResponse contains the response from method VirtualMachineScaleSets.Redeploy.
 type VirtualMachineScaleSetsRedeployResponse struct {
 	// RawResponse contains the underlying HTTP response.
@@ -3005,6 +4230,24 @@ func (l VirtualMachineScaleSetsReimageAllPollerResponse) PollUntilDone(ctx conte
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a VirtualMachineScaleSetsReimageAllPollerResponse from the provided client and resume token.
+func (l *VirtualMachineScaleSetsReimageAllPollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetsClient.ReimageAll", token, client.con.Pipeline(), client.reimageAllHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualMachineScaleSetsReimageAllPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // VirtualMachineScaleSetsReimageAllResponse contains the response from method VirtualMachineScaleSets.ReimageAll.
@@ -3033,6 +4276,24 @@ func (l VirtualMachineScaleSetsReimagePollerResponse) PollUntilDone(ctx context.
 	return respType, nil
 }
 
+// Resume rehydrates a VirtualMachineScaleSetsReimagePollerResponse from the provided client and resume token.
+func (l *VirtualMachineScaleSetsReimagePollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetsClient.Reimage", token, client.con.Pipeline(), client.reimageHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualMachineScaleSetsReimagePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VirtualMachineScaleSetsReimageResponse contains the response from method VirtualMachineScaleSets.Reimage.
 type VirtualMachineScaleSetsReimageResponse struct {
 	// RawResponse contains the underlying HTTP response.
@@ -3057,6 +4318,24 @@ func (l VirtualMachineScaleSetsRestartPollerResponse) PollUntilDone(ctx context.
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a VirtualMachineScaleSetsRestartPollerResponse from the provided client and resume token.
+func (l *VirtualMachineScaleSetsRestartPollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetsClient.Restart", token, client.con.Pipeline(), client.restartHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualMachineScaleSetsRestartPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // VirtualMachineScaleSetsRestartResponse contains the response from method VirtualMachineScaleSets.Restart.
@@ -3085,6 +4364,24 @@ func (l VirtualMachineScaleSetsSetOrchestrationServiceStatePollerResponse) PollU
 	return respType, nil
 }
 
+// Resume rehydrates a VirtualMachineScaleSetsSetOrchestrationServiceStatePollerResponse from the provided client and resume token.
+func (l *VirtualMachineScaleSetsSetOrchestrationServiceStatePollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetsClient.SetOrchestrationServiceState", token, client.con.Pipeline(), client.setOrchestrationServiceStateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualMachineScaleSetsSetOrchestrationServiceStatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VirtualMachineScaleSetsSetOrchestrationServiceStateResponse contains the response from method VirtualMachineScaleSets.SetOrchestrationServiceState.
 type VirtualMachineScaleSetsSetOrchestrationServiceStateResponse struct {
 	// RawResponse contains the underlying HTTP response.
@@ -3109,6 +4406,24 @@ func (l VirtualMachineScaleSetsStartPollerResponse) PollUntilDone(ctx context.Co
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a VirtualMachineScaleSetsStartPollerResponse from the provided client and resume token.
+func (l *VirtualMachineScaleSetsStartPollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetsClient.Start", token, client.con.Pipeline(), client.startHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualMachineScaleSetsStartPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // VirtualMachineScaleSetsStartResponse contains the response from method VirtualMachineScaleSets.Start.
@@ -3137,6 +4452,24 @@ func (l VirtualMachineScaleSetsUpdateInstancesPollerResponse) PollUntilDone(ctx 
 	return respType, nil
 }
 
+// Resume rehydrates a VirtualMachineScaleSetsUpdateInstancesPollerResponse from the provided client and resume token.
+func (l *VirtualMachineScaleSetsUpdateInstancesPollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetsClient.UpdateInstances", token, client.con.Pipeline(), client.updateInstancesHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualMachineScaleSetsUpdateInstancesPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VirtualMachineScaleSetsUpdateInstancesResponse contains the response from method VirtualMachineScaleSets.UpdateInstances.
 type VirtualMachineScaleSetsUpdateInstancesResponse struct {
 	// RawResponse contains the underlying HTTP response.
@@ -3161,6 +4494,24 @@ func (l VirtualMachineScaleSetsUpdatePollerResponse) PollUntilDone(ctx context.C
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a VirtualMachineScaleSetsUpdatePollerResponse from the provided client and resume token.
+func (l *VirtualMachineScaleSetsUpdatePollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetsClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetsClient.Update", token, client.con.Pipeline(), client.updateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualMachineScaleSetsUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // VirtualMachineScaleSetsUpdateResponse contains the response from method VirtualMachineScaleSets.Update.
@@ -3207,6 +4558,24 @@ func (l VirtualMachinesCapturePollerResponse) PollUntilDone(ctx context.Context,
 	return respType, nil
 }
 
+// Resume rehydrates a VirtualMachinesCapturePollerResponse from the provided client and resume token.
+func (l *VirtualMachinesCapturePollerResponse) Resume(ctx context.Context, client *VirtualMachinesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachinesClient.Capture", token, client.con.Pipeline(), client.captureHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualMachinesCapturePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VirtualMachinesCaptureResponse contains the response from method VirtualMachines.Capture.
 type VirtualMachinesCaptureResponse struct {
 	VirtualMachinesCaptureResult
@@ -3239,6 +4608,24 @@ func (l VirtualMachinesConvertToManagedDisksPollerResponse) PollUntilDone(ctx co
 	return respType, nil
 }
 
+// Resume rehydrates a VirtualMachinesConvertToManagedDisksPollerResponse from the provided client and resume token.
+func (l *VirtualMachinesConvertToManagedDisksPollerResponse) Resume(ctx context.Context, client *VirtualMachinesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachinesClient.ConvertToManagedDisks", token, client.con.Pipeline(), client.convertToManagedDisksHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualMachinesConvertToManagedDisksPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VirtualMachinesConvertToManagedDisksResponse contains the response from method VirtualMachines.ConvertToManagedDisks.
 type VirtualMachinesConvertToManagedDisksResponse struct {
 	// RawResponse contains the underlying HTTP response.
@@ -3263,6 +4650,24 @@ func (l VirtualMachinesCreateOrUpdatePollerResponse) PollUntilDone(ctx context.C
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a VirtualMachinesCreateOrUpdatePollerResponse from the provided client and resume token.
+func (l *VirtualMachinesCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *VirtualMachinesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachinesClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualMachinesCreateOrUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // VirtualMachinesCreateOrUpdateResponse contains the response from method VirtualMachines.CreateOrUpdate.
@@ -3297,6 +4702,24 @@ func (l VirtualMachinesDeallocatePollerResponse) PollUntilDone(ctx context.Conte
 	return respType, nil
 }
 
+// Resume rehydrates a VirtualMachinesDeallocatePollerResponse from the provided client and resume token.
+func (l *VirtualMachinesDeallocatePollerResponse) Resume(ctx context.Context, client *VirtualMachinesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachinesClient.Deallocate", token, client.con.Pipeline(), client.deallocateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualMachinesDeallocatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VirtualMachinesDeallocateResponse contains the response from method VirtualMachines.Deallocate.
 type VirtualMachinesDeallocateResponse struct {
 	// RawResponse contains the underlying HTTP response.
@@ -3321,6 +4744,24 @@ func (l VirtualMachinesDeletePollerResponse) PollUntilDone(ctx context.Context, 
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a VirtualMachinesDeletePollerResponse from the provided client and resume token.
+func (l *VirtualMachinesDeletePollerResponse) Resume(ctx context.Context, client *VirtualMachinesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachinesClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualMachinesDeletePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // VirtualMachinesDeleteResponse contains the response from method VirtualMachines.Delete.
@@ -3427,6 +4868,24 @@ func (l VirtualMachinesPerformMaintenancePollerResponse) PollUntilDone(ctx conte
 	return respType, nil
 }
 
+// Resume rehydrates a VirtualMachinesPerformMaintenancePollerResponse from the provided client and resume token.
+func (l *VirtualMachinesPerformMaintenancePollerResponse) Resume(ctx context.Context, client *VirtualMachinesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachinesClient.PerformMaintenance", token, client.con.Pipeline(), client.performMaintenanceHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualMachinesPerformMaintenancePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VirtualMachinesPerformMaintenanceResponse contains the response from method VirtualMachines.PerformMaintenance.
 type VirtualMachinesPerformMaintenanceResponse struct {
 	// RawResponse contains the underlying HTTP response.
@@ -3451,6 +4910,24 @@ func (l VirtualMachinesPowerOffPollerResponse) PollUntilDone(ctx context.Context
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a VirtualMachinesPowerOffPollerResponse from the provided client and resume token.
+func (l *VirtualMachinesPowerOffPollerResponse) Resume(ctx context.Context, client *VirtualMachinesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachinesClient.PowerOff", token, client.con.Pipeline(), client.powerOffHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualMachinesPowerOffPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // VirtualMachinesPowerOffResponse contains the response from method VirtualMachines.PowerOff.
@@ -3479,6 +4956,24 @@ func (l VirtualMachinesReapplyPollerResponse) PollUntilDone(ctx context.Context,
 	return respType, nil
 }
 
+// Resume rehydrates a VirtualMachinesReapplyPollerResponse from the provided client and resume token.
+func (l *VirtualMachinesReapplyPollerResponse) Resume(ctx context.Context, client *VirtualMachinesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachinesClient.Reapply", token, client.con.Pipeline(), client.reapplyHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualMachinesReapplyPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VirtualMachinesReapplyResponse contains the response from method VirtualMachines.Reapply.
 type VirtualMachinesReapplyResponse struct {
 	// RawResponse contains the underlying HTTP response.
@@ -3503,6 +4998,24 @@ func (l VirtualMachinesRedeployPollerResponse) PollUntilDone(ctx context.Context
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a VirtualMachinesRedeployPollerResponse from the provided client and resume token.
+func (l *VirtualMachinesRedeployPollerResponse) Resume(ctx context.Context, client *VirtualMachinesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachinesClient.Redeploy", token, client.con.Pipeline(), client.redeployHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualMachinesRedeployPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // VirtualMachinesRedeployResponse contains the response from method VirtualMachines.Redeploy.
@@ -3531,6 +5044,24 @@ func (l VirtualMachinesReimagePollerResponse) PollUntilDone(ctx context.Context,
 	return respType, nil
 }
 
+// Resume rehydrates a VirtualMachinesReimagePollerResponse from the provided client and resume token.
+func (l *VirtualMachinesReimagePollerResponse) Resume(ctx context.Context, client *VirtualMachinesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachinesClient.Reimage", token, client.con.Pipeline(), client.reimageHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualMachinesReimagePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VirtualMachinesReimageResponse contains the response from method VirtualMachines.Reimage.
 type VirtualMachinesReimageResponse struct {
 	// RawResponse contains the underlying HTTP response.
@@ -3557,6 +5088,24 @@ func (l VirtualMachinesRestartPollerResponse) PollUntilDone(ctx context.Context,
 	return respType, nil
 }
 
+// Resume rehydrates a VirtualMachinesRestartPollerResponse from the provided client and resume token.
+func (l *VirtualMachinesRestartPollerResponse) Resume(ctx context.Context, client *VirtualMachinesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachinesClient.Restart", token, client.con.Pipeline(), client.restartHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualMachinesRestartPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VirtualMachinesRestartResponse contains the response from method VirtualMachines.Restart.
 type VirtualMachinesRestartResponse struct {
 	// RawResponse contains the underlying HTTP response.
@@ -3581,6 +5130,24 @@ func (l VirtualMachinesRunCommandPollerResponse) PollUntilDone(ctx context.Conte
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a VirtualMachinesRunCommandPollerResponse from the provided client and resume token.
+func (l *VirtualMachinesRunCommandPollerResponse) Resume(ctx context.Context, client *VirtualMachinesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachinesClient.RunCommand", token, client.con.Pipeline(), client.runCommandHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualMachinesRunCommandPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // VirtualMachinesRunCommandResponse contains the response from method VirtualMachines.RunCommand.
@@ -3621,6 +5188,24 @@ func (l VirtualMachinesStartPollerResponse) PollUntilDone(ctx context.Context, f
 	return respType, nil
 }
 
+// Resume rehydrates a VirtualMachinesStartPollerResponse from the provided client and resume token.
+func (l *VirtualMachinesStartPollerResponse) Resume(ctx context.Context, client *VirtualMachinesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachinesClient.Start", token, client.con.Pipeline(), client.startHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualMachinesStartPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
 // VirtualMachinesStartResponse contains the response from method VirtualMachines.Start.
 type VirtualMachinesStartResponse struct {
 	// RawResponse contains the underlying HTTP response.
@@ -3645,6 +5230,24 @@ func (l VirtualMachinesUpdatePollerResponse) PollUntilDone(ctx context.Context, 
 	}
 	respType.RawResponse = resp
 	return respType, nil
+}
+
+// Resume rehydrates a VirtualMachinesUpdatePollerResponse from the provided client and resume token.
+func (l *VirtualMachinesUpdatePollerResponse) Resume(ctx context.Context, client *VirtualMachinesClient, token string) error {
+	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachinesClient.Update", token, client.con.Pipeline(), client.updateHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &VirtualMachinesUpdatePoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // VirtualMachinesUpdateResponse contains the response from method VirtualMachines.Update.

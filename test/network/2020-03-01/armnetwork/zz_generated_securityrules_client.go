@@ -50,28 +50,6 @@ func (client *SecurityRulesClient) BeginCreateOrUpdate(ctx context.Context, reso
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new SecurityRulesCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to SecurityRulesCreateOrUpdatePoller.ResumeToken().
-func (client *SecurityRulesClient) ResumeCreateOrUpdate(ctx context.Context, token string) (SecurityRulesCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("SecurityRulesClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return SecurityRulesCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &SecurityRulesCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return SecurityRulesCreateOrUpdatePollerResponse{}, err
-	}
-	result := SecurityRulesCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Creates or updates a security rule in the specified network security group.
 // If the operation fails it returns the *CloudError error type.
 func (client *SecurityRulesClient) createOrUpdate(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, securityRuleParameters SecurityRule, options *SecurityRulesBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -150,28 +128,6 @@ func (client *SecurityRulesClient) BeginDelete(ctx context.Context, resourceGrou
 	result.Poller = &SecurityRulesDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new SecurityRulesDeletePoller from the specified resume token.
-// token - The value must come from a previous call to SecurityRulesDeletePoller.ResumeToken().
-func (client *SecurityRulesClient) ResumeDelete(ctx context.Context, token string) (SecurityRulesDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("SecurityRulesClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return SecurityRulesDeletePollerResponse{}, err
-	}
-	poller := &SecurityRulesDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return SecurityRulesDeletePollerResponse{}, err
-	}
-	result := SecurityRulesDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

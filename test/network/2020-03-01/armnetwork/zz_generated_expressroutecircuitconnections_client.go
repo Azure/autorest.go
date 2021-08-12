@@ -50,28 +50,6 @@ func (client *ExpressRouteCircuitConnectionsClient) BeginCreateOrUpdate(ctx cont
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new ExpressRouteCircuitConnectionsCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to ExpressRouteCircuitConnectionsCreateOrUpdatePoller.ResumeToken().
-func (client *ExpressRouteCircuitConnectionsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (ExpressRouteCircuitConnectionsCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("ExpressRouteCircuitConnectionsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return ExpressRouteCircuitConnectionsCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &ExpressRouteCircuitConnectionsCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return ExpressRouteCircuitConnectionsCreateOrUpdatePollerResponse{}, err
-	}
-	result := ExpressRouteCircuitConnectionsCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Creates or updates a Express Route Circuit Connection in the specified express route circuits.
 // If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteCircuitConnectionsClient) createOrUpdate(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, connectionName string, expressRouteCircuitConnectionParameters ExpressRouteCircuitConnection, options *ExpressRouteCircuitConnectionsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -154,28 +132,6 @@ func (client *ExpressRouteCircuitConnectionsClient) BeginDelete(ctx context.Cont
 	result.Poller = &ExpressRouteCircuitConnectionsDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new ExpressRouteCircuitConnectionsDeletePoller from the specified resume token.
-// token - The value must come from a previous call to ExpressRouteCircuitConnectionsDeletePoller.ResumeToken().
-func (client *ExpressRouteCircuitConnectionsClient) ResumeDelete(ctx context.Context, token string) (ExpressRouteCircuitConnectionsDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("ExpressRouteCircuitConnectionsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return ExpressRouteCircuitConnectionsDeletePollerResponse{}, err
-	}
-	poller := &ExpressRouteCircuitConnectionsDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return ExpressRouteCircuitConnectionsDeletePollerResponse{}, err
-	}
-	result := ExpressRouteCircuitConnectionsDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

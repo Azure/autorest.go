@@ -51,28 +51,6 @@ func (client *NetworkWatchersClient) BeginCheckConnectivity(ctx context.Context,
 	return result, nil
 }
 
-// ResumeCheckConnectivity creates a new NetworkWatchersCheckConnectivityPoller from the specified resume token.
-// token - The value must come from a previous call to NetworkWatchersCheckConnectivityPoller.ResumeToken().
-func (client *NetworkWatchersClient) ResumeCheckConnectivity(ctx context.Context, token string) (NetworkWatchersCheckConnectivityPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("NetworkWatchersClient.CheckConnectivity", token, client.con.Pipeline(), client.checkConnectivityHandleError)
-	if err != nil {
-		return NetworkWatchersCheckConnectivityPollerResponse{}, err
-	}
-	poller := &NetworkWatchersCheckConnectivityPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return NetworkWatchersCheckConnectivityPollerResponse{}, err
-	}
-	result := NetworkWatchersCheckConnectivityPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CheckConnectivity - Verifies the possibility of establishing a direct TCP connection from a virtual machine to a given endpoint including another VM
 // or an arbitrary remote server.
 // If the operation fails it returns the *ErrorResponse error type.
@@ -214,28 +192,6 @@ func (client *NetworkWatchersClient) BeginDelete(ctx context.Context, resourceGr
 	result.Poller = &NetworkWatchersDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new NetworkWatchersDeletePoller from the specified resume token.
-// token - The value must come from a previous call to NetworkWatchersDeletePoller.ResumeToken().
-func (client *NetworkWatchersClient) ResumeDelete(ctx context.Context, token string) (NetworkWatchersDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("NetworkWatchersClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return NetworkWatchersDeletePollerResponse{}, err
-	}
-	poller := &NetworkWatchersDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return NetworkWatchersDeletePollerResponse{}, err
-	}
-	result := NetworkWatchersDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 
@@ -383,28 +339,6 @@ func (client *NetworkWatchersClient) BeginGetAzureReachabilityReport(ctx context
 	return result, nil
 }
 
-// ResumeGetAzureReachabilityReport creates a new NetworkWatchersGetAzureReachabilityReportPoller from the specified resume token.
-// token - The value must come from a previous call to NetworkWatchersGetAzureReachabilityReportPoller.ResumeToken().
-func (client *NetworkWatchersClient) ResumeGetAzureReachabilityReport(ctx context.Context, token string) (NetworkWatchersGetAzureReachabilityReportPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("NetworkWatchersClient.GetAzureReachabilityReport", token, client.con.Pipeline(), client.getAzureReachabilityReportHandleError)
-	if err != nil {
-		return NetworkWatchersGetAzureReachabilityReportPollerResponse{}, err
-	}
-	poller := &NetworkWatchersGetAzureReachabilityReportPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return NetworkWatchersGetAzureReachabilityReportPollerResponse{}, err
-	}
-	result := NetworkWatchersGetAzureReachabilityReportPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // GetAzureReachabilityReport - NOTE: This feature is currently in preview and still being tested for stability. Gets the relative latency score for internet
 // service providers from a specified location to Azure regions.
 // If the operation fails it returns the *ErrorResponse error type.
@@ -480,28 +414,6 @@ func (client *NetworkWatchersClient) BeginGetFlowLogStatus(ctx context.Context, 
 	result.Poller = &NetworkWatchersGetFlowLogStatusPoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeGetFlowLogStatus creates a new NetworkWatchersGetFlowLogStatusPoller from the specified resume token.
-// token - The value must come from a previous call to NetworkWatchersGetFlowLogStatusPoller.ResumeToken().
-func (client *NetworkWatchersClient) ResumeGetFlowLogStatus(ctx context.Context, token string) (NetworkWatchersGetFlowLogStatusPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("NetworkWatchersClient.GetFlowLogStatus", token, client.con.Pipeline(), client.getFlowLogStatusHandleError)
-	if err != nil {
-		return NetworkWatchersGetFlowLogStatusPollerResponse{}, err
-	}
-	poller := &NetworkWatchersGetFlowLogStatusPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return NetworkWatchersGetFlowLogStatusPollerResponse{}, err
-	}
-	result := NetworkWatchersGetFlowLogStatusPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 
@@ -586,28 +498,6 @@ func (client *NetworkWatchersClient) BeginGetNetworkConfigurationDiagnostic(ctx 
 	return result, nil
 }
 
-// ResumeGetNetworkConfigurationDiagnostic creates a new NetworkWatchersGetNetworkConfigurationDiagnosticPoller from the specified resume token.
-// token - The value must come from a previous call to NetworkWatchersGetNetworkConfigurationDiagnosticPoller.ResumeToken().
-func (client *NetworkWatchersClient) ResumeGetNetworkConfigurationDiagnostic(ctx context.Context, token string) (NetworkWatchersGetNetworkConfigurationDiagnosticPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("NetworkWatchersClient.GetNetworkConfigurationDiagnostic", token, client.con.Pipeline(), client.getNetworkConfigurationDiagnosticHandleError)
-	if err != nil {
-		return NetworkWatchersGetNetworkConfigurationDiagnosticPollerResponse{}, err
-	}
-	poller := &NetworkWatchersGetNetworkConfigurationDiagnosticPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return NetworkWatchersGetNetworkConfigurationDiagnosticPollerResponse{}, err
-	}
-	result := NetworkWatchersGetNetworkConfigurationDiagnosticPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // GetNetworkConfigurationDiagnostic - Gets Network Configuration Diagnostic data to help customers understand and debug network behavior. It provides detailed
 // information on what security rules were applied to a specified traffic flow and
 // the result of evaluating these rules. Customers must provide details of a flow like source, destination, protocol, etc. The API returns whether traffic
@@ -686,28 +576,6 @@ func (client *NetworkWatchersClient) BeginGetNextHop(ctx context.Context, resour
 	result.Poller = &NetworkWatchersGetNextHopPoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeGetNextHop creates a new NetworkWatchersGetNextHopPoller from the specified resume token.
-// token - The value must come from a previous call to NetworkWatchersGetNextHopPoller.ResumeToken().
-func (client *NetworkWatchersClient) ResumeGetNextHop(ctx context.Context, token string) (NetworkWatchersGetNextHopPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("NetworkWatchersClient.GetNextHop", token, client.con.Pipeline(), client.getNextHopHandleError)
-	if err != nil {
-		return NetworkWatchersGetNextHopPollerResponse{}, err
-	}
-	poller := &NetworkWatchersGetNextHopPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return NetworkWatchersGetNextHopPollerResponse{}, err
-	}
-	result := NetworkWatchersGetNextHopPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 
@@ -854,28 +722,6 @@ func (client *NetworkWatchersClient) BeginGetTroubleshooting(ctx context.Context
 	return result, nil
 }
 
-// ResumeGetTroubleshooting creates a new NetworkWatchersGetTroubleshootingPoller from the specified resume token.
-// token - The value must come from a previous call to NetworkWatchersGetTroubleshootingPoller.ResumeToken().
-func (client *NetworkWatchersClient) ResumeGetTroubleshooting(ctx context.Context, token string) (NetworkWatchersGetTroubleshootingPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("NetworkWatchersClient.GetTroubleshooting", token, client.con.Pipeline(), client.getTroubleshootingHandleError)
-	if err != nil {
-		return NetworkWatchersGetTroubleshootingPollerResponse{}, err
-	}
-	poller := &NetworkWatchersGetTroubleshootingPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return NetworkWatchersGetTroubleshootingPollerResponse{}, err
-	}
-	result := NetworkWatchersGetTroubleshootingPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // GetTroubleshooting - Initiate troubleshooting on a specified resource.
 // If the operation fails it returns the *ErrorResponse error type.
 func (client *NetworkWatchersClient) getTroubleshooting(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters TroubleshootingParameters, options *NetworkWatchersBeginGetTroubleshootingOptions) (*azcore.Response, error) {
@@ -953,28 +799,6 @@ func (client *NetworkWatchersClient) BeginGetTroubleshootingResult(ctx context.C
 	return result, nil
 }
 
-// ResumeGetTroubleshootingResult creates a new NetworkWatchersGetTroubleshootingResultPoller from the specified resume token.
-// token - The value must come from a previous call to NetworkWatchersGetTroubleshootingResultPoller.ResumeToken().
-func (client *NetworkWatchersClient) ResumeGetTroubleshootingResult(ctx context.Context, token string) (NetworkWatchersGetTroubleshootingResultPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("NetworkWatchersClient.GetTroubleshootingResult", token, client.con.Pipeline(), client.getTroubleshootingResultHandleError)
-	if err != nil {
-		return NetworkWatchersGetTroubleshootingResultPollerResponse{}, err
-	}
-	poller := &NetworkWatchersGetTroubleshootingResultPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return NetworkWatchersGetTroubleshootingResultPollerResponse{}, err
-	}
-	result := NetworkWatchersGetTroubleshootingResultPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // GetTroubleshootingResult - Get the last completed troubleshooting result on a specified resource.
 // If the operation fails it returns the *ErrorResponse error type.
 func (client *NetworkWatchersClient) getTroubleshootingResult(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters QueryTroubleshootingParameters, options *NetworkWatchersBeginGetTroubleshootingResultOptions) (*azcore.Response, error) {
@@ -1049,28 +873,6 @@ func (client *NetworkWatchersClient) BeginGetVMSecurityRules(ctx context.Context
 	result.Poller = &NetworkWatchersGetVMSecurityRulesPoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeGetVMSecurityRules creates a new NetworkWatchersGetVMSecurityRulesPoller from the specified resume token.
-// token - The value must come from a previous call to NetworkWatchersGetVMSecurityRulesPoller.ResumeToken().
-func (client *NetworkWatchersClient) ResumeGetVMSecurityRules(ctx context.Context, token string) (NetworkWatchersGetVMSecurityRulesPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("NetworkWatchersClient.GetVMSecurityRules", token, client.con.Pipeline(), client.getVMSecurityRulesHandleError)
-	if err != nil {
-		return NetworkWatchersGetVMSecurityRulesPollerResponse{}, err
-	}
-	poller := &NetworkWatchersGetVMSecurityRulesPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return NetworkWatchersGetVMSecurityRulesPollerResponse{}, err
-	}
-	result := NetworkWatchersGetVMSecurityRulesPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 
@@ -1272,28 +1074,6 @@ func (client *NetworkWatchersClient) BeginListAvailableProviders(ctx context.Con
 	return result, nil
 }
 
-// ResumeListAvailableProviders creates a new NetworkWatchersListAvailableProvidersPoller from the specified resume token.
-// token - The value must come from a previous call to NetworkWatchersListAvailableProvidersPoller.ResumeToken().
-func (client *NetworkWatchersClient) ResumeListAvailableProviders(ctx context.Context, token string) (NetworkWatchersListAvailableProvidersPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("NetworkWatchersClient.ListAvailableProviders", token, client.con.Pipeline(), client.listAvailableProvidersHandleError)
-	if err != nil {
-		return NetworkWatchersListAvailableProvidersPollerResponse{}, err
-	}
-	poller := &NetworkWatchersListAvailableProvidersPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return NetworkWatchersListAvailableProvidersPollerResponse{}, err
-	}
-	result := NetworkWatchersListAvailableProvidersPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // ListAvailableProviders - NOTE: This feature is currently in preview and still being tested for stability. Lists all available internet service providers
 // for a specified Azure region.
 // If the operation fails it returns the *ErrorResponse error type.
@@ -1369,28 +1149,6 @@ func (client *NetworkWatchersClient) BeginSetFlowLogConfiguration(ctx context.Co
 	result.Poller = &NetworkWatchersSetFlowLogConfigurationPoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeSetFlowLogConfiguration creates a new NetworkWatchersSetFlowLogConfigurationPoller from the specified resume token.
-// token - The value must come from a previous call to NetworkWatchersSetFlowLogConfigurationPoller.ResumeToken().
-func (client *NetworkWatchersClient) ResumeSetFlowLogConfiguration(ctx context.Context, token string) (NetworkWatchersSetFlowLogConfigurationPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("NetworkWatchersClient.SetFlowLogConfiguration", token, client.con.Pipeline(), client.setFlowLogConfigurationHandleError)
-	if err != nil {
-		return NetworkWatchersSetFlowLogConfigurationPollerResponse{}, err
-	}
-	poller := &NetworkWatchersSetFlowLogConfigurationPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return NetworkWatchersSetFlowLogConfigurationPollerResponse{}, err
-	}
-	result := NetworkWatchersSetFlowLogConfigurationPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 
@@ -1534,28 +1292,6 @@ func (client *NetworkWatchersClient) BeginVerifyIPFlow(ctx context.Context, reso
 	result.Poller = &NetworkWatchersVerifyIPFlowPoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeVerifyIPFlow creates a new NetworkWatchersVerifyIPFlowPoller from the specified resume token.
-// token - The value must come from a previous call to NetworkWatchersVerifyIPFlowPoller.ResumeToken().
-func (client *NetworkWatchersClient) ResumeVerifyIPFlow(ctx context.Context, token string) (NetworkWatchersVerifyIPFlowPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("NetworkWatchersClient.VerifyIPFlow", token, client.con.Pipeline(), client.verifyIPFlowHandleError)
-	if err != nil {
-		return NetworkWatchersVerifyIPFlowPollerResponse{}, err
-	}
-	poller := &NetworkWatchersVerifyIPFlowPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return NetworkWatchersVerifyIPFlowPollerResponse{}, err
-	}
-	result := NetworkWatchersVerifyIPFlowPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

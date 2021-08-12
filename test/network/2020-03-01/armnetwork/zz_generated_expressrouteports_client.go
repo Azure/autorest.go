@@ -50,28 +50,6 @@ func (client *ExpressRoutePortsClient) BeginCreateOrUpdate(ctx context.Context, 
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new ExpressRoutePortsCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to ExpressRoutePortsCreateOrUpdatePoller.ResumeToken().
-func (client *ExpressRoutePortsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (ExpressRoutePortsCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("ExpressRoutePortsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return ExpressRoutePortsCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &ExpressRoutePortsCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return ExpressRoutePortsCreateOrUpdatePollerResponse{}, err
-	}
-	result := ExpressRoutePortsCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Creates or updates the specified ExpressRoutePort resource.
 // If the operation fails it returns the *CloudError error type.
 func (client *ExpressRoutePortsClient) createOrUpdate(ctx context.Context, resourceGroupName string, expressRoutePortName string, parameters ExpressRoutePort, options *ExpressRoutePortsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -146,28 +124,6 @@ func (client *ExpressRoutePortsClient) BeginDelete(ctx context.Context, resource
 	result.Poller = &ExpressRoutePortsDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new ExpressRoutePortsDeletePoller from the specified resume token.
-// token - The value must come from a previous call to ExpressRoutePortsDeletePoller.ResumeToken().
-func (client *ExpressRoutePortsClient) ResumeDelete(ctx context.Context, token string) (ExpressRoutePortsDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("ExpressRoutePortsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return ExpressRoutePortsDeletePollerResponse{}, err
-	}
-	poller := &ExpressRoutePortsDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return ExpressRoutePortsDeletePollerResponse{}, err
-	}
-	result := ExpressRoutePortsDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

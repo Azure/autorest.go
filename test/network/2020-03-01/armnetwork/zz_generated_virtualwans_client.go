@@ -50,28 +50,6 @@ func (client *VirtualWansClient) BeginCreateOrUpdate(ctx context.Context, resour
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new VirtualWansCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to VirtualWansCreateOrUpdatePoller.ResumeToken().
-func (client *VirtualWansClient) ResumeCreateOrUpdate(ctx context.Context, token string) (VirtualWansCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualWansClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return VirtualWansCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &VirtualWansCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualWansCreateOrUpdatePollerResponse{}, err
-	}
-	result := VirtualWansCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Creates a VirtualWAN resource if it doesn't exist else updates the existing VirtualWAN.
 // If the operation fails it returns the *CloudError error type.
 func (client *VirtualWansClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualWANName string, wanParameters VirtualWAN, options *VirtualWansBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -146,28 +124,6 @@ func (client *VirtualWansClient) BeginDelete(ctx context.Context, resourceGroupN
 	result.Poller = &VirtualWansDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new VirtualWansDeletePoller from the specified resume token.
-// token - The value must come from a previous call to VirtualWansDeletePoller.ResumeToken().
-func (client *VirtualWansClient) ResumeDelete(ctx context.Context, token string) (VirtualWansDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualWansClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return VirtualWansDeletePollerResponse{}, err
-	}
-	poller := &VirtualWansDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualWansDeletePollerResponse{}, err
-	}
-	result := VirtualWansDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

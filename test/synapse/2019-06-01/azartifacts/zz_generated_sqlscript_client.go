@@ -41,28 +41,6 @@ func (client *sqlScriptClient) BeginCreateOrUpdateSQLScript(ctx context.Context,
 	return result, nil
 }
 
-// ResumeCreateOrUpdateSQLScript creates a new SQLScriptCreateOrUpdateSQLScriptPoller from the specified resume token.
-// token - The value must come from a previous call to SQLScriptCreateOrUpdateSQLScriptPoller.ResumeToken().
-func (client *sqlScriptClient) ResumeCreateOrUpdateSQLScript(ctx context.Context, token string) (SQLScriptCreateOrUpdateSQLScriptPollerResponse, error) {
-	pt, err := azcore.NewLROPollerFromResumeToken("sqlScriptClient.CreateOrUpdateSQLScript", token, client.con.Pipeline(), client.createOrUpdateSQLScriptHandleError)
-	if err != nil {
-		return SQLScriptCreateOrUpdateSQLScriptPollerResponse{}, err
-	}
-	poller := &SQLScriptCreateOrUpdateSQLScriptPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return SQLScriptCreateOrUpdateSQLScriptPollerResponse{}, err
-	}
-	result := SQLScriptCreateOrUpdateSQLScriptPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdateSQLScript - Creates or updates a Sql Script.
 // If the operation fails it returns the *CloudError error type.
 func (client *sqlScriptClient) createOrUpdateSQLScript(ctx context.Context, sqlScriptName string, sqlScript SQLScriptResource, options *SQLScriptBeginCreateOrUpdateSQLScriptOptions) (*azcore.Response, error) {
@@ -132,28 +110,6 @@ func (client *sqlScriptClient) BeginDeleteSQLScript(ctx context.Context, sqlScri
 	result.Poller = &SQLScriptDeleteSQLScriptPoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDeleteSQLScript creates a new SQLScriptDeleteSQLScriptPoller from the specified resume token.
-// token - The value must come from a previous call to SQLScriptDeleteSQLScriptPoller.ResumeToken().
-func (client *sqlScriptClient) ResumeDeleteSQLScript(ctx context.Context, token string) (SQLScriptDeleteSQLScriptPollerResponse, error) {
-	pt, err := azcore.NewLROPollerFromResumeToken("sqlScriptClient.DeleteSQLScript", token, client.con.Pipeline(), client.deleteSQLScriptHandleError)
-	if err != nil {
-		return SQLScriptDeleteSQLScriptPollerResponse{}, err
-	}
-	poller := &SQLScriptDeleteSQLScriptPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return SQLScriptDeleteSQLScriptPollerResponse{}, err
-	}
-	result := SQLScriptDeleteSQLScriptPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 
@@ -335,28 +291,6 @@ func (client *sqlScriptClient) BeginRenameSQLScript(ctx context.Context, sqlScri
 	result.Poller = &SQLScriptRenameSQLScriptPoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeRenameSQLScript creates a new SQLScriptRenameSQLScriptPoller from the specified resume token.
-// token - The value must come from a previous call to SQLScriptRenameSQLScriptPoller.ResumeToken().
-func (client *sqlScriptClient) ResumeRenameSQLScript(ctx context.Context, token string) (SQLScriptRenameSQLScriptPollerResponse, error) {
-	pt, err := azcore.NewLROPollerFromResumeToken("sqlScriptClient.RenameSQLScript", token, client.con.Pipeline(), client.renameSQLScriptHandleError)
-	if err != nil {
-		return SQLScriptRenameSQLScriptPollerResponse{}, err
-	}
-	poller := &SQLScriptRenameSQLScriptPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return SQLScriptRenameSQLScriptPollerResponse{}, err
-	}
-	result := SQLScriptRenameSQLScriptPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

@@ -50,28 +50,6 @@ func (client *PrivateDNSZoneGroupsClient) BeginCreateOrUpdate(ctx context.Contex
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new PrivateDNSZoneGroupsCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to PrivateDNSZoneGroupsCreateOrUpdatePoller.ResumeToken().
-func (client *PrivateDNSZoneGroupsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (PrivateDNSZoneGroupsCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("PrivateDNSZoneGroupsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return PrivateDNSZoneGroupsCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &PrivateDNSZoneGroupsCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return PrivateDNSZoneGroupsCreateOrUpdatePollerResponse{}, err
-	}
-	result := PrivateDNSZoneGroupsCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Creates or updates a private dns zone group in the specified private endpoint.
 // If the operation fails it returns the *CloudError error type.
 func (client *PrivateDNSZoneGroupsClient) createOrUpdate(ctx context.Context, resourceGroupName string, privateEndpointName string, privateDNSZoneGroupName string, parameters PrivateDNSZoneGroup, options *PrivateDNSZoneGroupsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -150,28 +128,6 @@ func (client *PrivateDNSZoneGroupsClient) BeginDelete(ctx context.Context, resou
 	result.Poller = &PrivateDNSZoneGroupsDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new PrivateDNSZoneGroupsDeletePoller from the specified resume token.
-// token - The value must come from a previous call to PrivateDNSZoneGroupsDeletePoller.ResumeToken().
-func (client *PrivateDNSZoneGroupsClient) ResumeDelete(ctx context.Context, token string) (PrivateDNSZoneGroupsDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("PrivateDNSZoneGroupsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return PrivateDNSZoneGroupsDeletePollerResponse{}, err
-	}
-	poller := &PrivateDNSZoneGroupsDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return PrivateDNSZoneGroupsDeletePollerResponse{}, err
-	}
-	result := PrivateDNSZoneGroupsDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

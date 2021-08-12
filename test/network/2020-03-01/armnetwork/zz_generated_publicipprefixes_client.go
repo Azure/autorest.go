@@ -50,28 +50,6 @@ func (client *PublicIPPrefixesClient) BeginCreateOrUpdate(ctx context.Context, r
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new PublicIPPrefixesCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to PublicIPPrefixesCreateOrUpdatePoller.ResumeToken().
-func (client *PublicIPPrefixesClient) ResumeCreateOrUpdate(ctx context.Context, token string) (PublicIPPrefixesCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("PublicIPPrefixesClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return PublicIPPrefixesCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &PublicIPPrefixesCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return PublicIPPrefixesCreateOrUpdatePollerResponse{}, err
-	}
-	result := PublicIPPrefixesCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Creates or updates a static or dynamic public IP prefix.
 // If the operation fails it returns the *CloudError error type.
 func (client *PublicIPPrefixesClient) createOrUpdate(ctx context.Context, resourceGroupName string, publicIPPrefixName string, parameters PublicIPPrefix, options *PublicIPPrefixesBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -146,28 +124,6 @@ func (client *PublicIPPrefixesClient) BeginDelete(ctx context.Context, resourceG
 	result.Poller = &PublicIPPrefixesDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new PublicIPPrefixesDeletePoller from the specified resume token.
-// token - The value must come from a previous call to PublicIPPrefixesDeletePoller.ResumeToken().
-func (client *PublicIPPrefixesClient) ResumeDelete(ctx context.Context, token string) (PublicIPPrefixesDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("PublicIPPrefixesClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return PublicIPPrefixesDeletePollerResponse{}, err
-	}
-	poller := &PublicIPPrefixesDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return PublicIPPrefixesDeletePollerResponse{}, err
-	}
-	result := PublicIPPrefixesDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

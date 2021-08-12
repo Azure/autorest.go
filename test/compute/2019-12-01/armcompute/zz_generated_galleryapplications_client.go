@@ -50,28 +50,6 @@ func (client *GalleryApplicationsClient) BeginCreateOrUpdate(ctx context.Context
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new GalleryApplicationsCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to GalleryApplicationsCreateOrUpdatePoller.ResumeToken().
-func (client *GalleryApplicationsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (GalleryApplicationsCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("GalleryApplicationsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return GalleryApplicationsCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &GalleryApplicationsCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return GalleryApplicationsCreateOrUpdatePollerResponse{}, err
-	}
-	result := GalleryApplicationsCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Create or update a gallery Application Definition.
 // If the operation fails it returns the *CloudError error type.
 func (client *GalleryApplicationsClient) createOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplication GalleryApplication, options *GalleryApplicationsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -150,28 +128,6 @@ func (client *GalleryApplicationsClient) BeginDelete(ctx context.Context, resour
 	result.Poller = &GalleryApplicationsDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new GalleryApplicationsDeletePoller from the specified resume token.
-// token - The value must come from a previous call to GalleryApplicationsDeletePoller.ResumeToken().
-func (client *GalleryApplicationsClient) ResumeDelete(ctx context.Context, token string) (GalleryApplicationsDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("GalleryApplicationsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return GalleryApplicationsDeletePollerResponse{}, err
-	}
-	poller := &GalleryApplicationsDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return GalleryApplicationsDeletePollerResponse{}, err
-	}
-	result := GalleryApplicationsDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 
@@ -386,28 +342,6 @@ func (client *GalleryApplicationsClient) BeginUpdate(ctx context.Context, resour
 	result.Poller = &GalleryApplicationsUpdatePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeUpdate creates a new GalleryApplicationsUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to GalleryApplicationsUpdatePoller.ResumeToken().
-func (client *GalleryApplicationsClient) ResumeUpdate(ctx context.Context, token string) (GalleryApplicationsUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("GalleryApplicationsClient.Update", token, client.con.Pipeline(), client.updateHandleError)
-	if err != nil {
-		return GalleryApplicationsUpdatePollerResponse{}, err
-	}
-	poller := &GalleryApplicationsUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return GalleryApplicationsUpdatePollerResponse{}, err
-	}
-	result := GalleryApplicationsUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

@@ -51,28 +51,6 @@ func (client *VirtualMachinesClient) BeginCapture(ctx context.Context, resourceG
 	return result, nil
 }
 
-// ResumeCapture creates a new VirtualMachinesCapturePoller from the specified resume token.
-// token - The value must come from a previous call to VirtualMachinesCapturePoller.ResumeToken().
-func (client *VirtualMachinesClient) ResumeCapture(ctx context.Context, token string) (VirtualMachinesCapturePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachinesClient.Capture", token, client.con.Pipeline(), client.captureHandleError)
-	if err != nil {
-		return VirtualMachinesCapturePollerResponse{}, err
-	}
-	poller := &VirtualMachinesCapturePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualMachinesCapturePollerResponse{}, err
-	}
-	result := VirtualMachinesCapturePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // Capture - Captures the VM by copying virtual hard disks of the VM and outputs a template that can be used to create similar VMs.
 // If the operation fails it returns a generic error.
 func (client *VirtualMachinesClient) capture(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachineCaptureParameters, options *VirtualMachinesBeginCaptureOptions) (*azcore.Response, error) {
@@ -150,28 +128,6 @@ func (client *VirtualMachinesClient) BeginConvertToManagedDisks(ctx context.Cont
 	result.Poller = &VirtualMachinesConvertToManagedDisksPoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeConvertToManagedDisks creates a new VirtualMachinesConvertToManagedDisksPoller from the specified resume token.
-// token - The value must come from a previous call to VirtualMachinesConvertToManagedDisksPoller.ResumeToken().
-func (client *VirtualMachinesClient) ResumeConvertToManagedDisks(ctx context.Context, token string) (VirtualMachinesConvertToManagedDisksPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachinesClient.ConvertToManagedDisks", token, client.con.Pipeline(), client.convertToManagedDisksHandleError)
-	if err != nil {
-		return VirtualMachinesConvertToManagedDisksPollerResponse{}, err
-	}
-	poller := &VirtualMachinesConvertToManagedDisksPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualMachinesConvertToManagedDisksPollerResponse{}, err
-	}
-	result := VirtualMachinesConvertToManagedDisksPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 
@@ -254,28 +210,6 @@ func (client *VirtualMachinesClient) BeginCreateOrUpdate(ctx context.Context, re
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new VirtualMachinesCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to VirtualMachinesCreateOrUpdatePoller.ResumeToken().
-func (client *VirtualMachinesClient) ResumeCreateOrUpdate(ctx context.Context, token string) (VirtualMachinesCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachinesClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return VirtualMachinesCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &VirtualMachinesCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualMachinesCreateOrUpdatePollerResponse{}, err
-	}
-	result := VirtualMachinesCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - The operation to create or update a virtual machine. Please note some properties can be set only during virtual machine creation.
 // If the operation fails it returns a generic error.
 func (client *VirtualMachinesClient) createOrUpdate(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachine, options *VirtualMachinesBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -353,28 +287,6 @@ func (client *VirtualMachinesClient) BeginDeallocate(ctx context.Context, resour
 	return result, nil
 }
 
-// ResumeDeallocate creates a new VirtualMachinesDeallocatePoller from the specified resume token.
-// token - The value must come from a previous call to VirtualMachinesDeallocatePoller.ResumeToken().
-func (client *VirtualMachinesClient) ResumeDeallocate(ctx context.Context, token string) (VirtualMachinesDeallocatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachinesClient.Deallocate", token, client.con.Pipeline(), client.deallocateHandleError)
-	if err != nil {
-		return VirtualMachinesDeallocatePollerResponse{}, err
-	}
-	poller := &VirtualMachinesDeallocatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualMachinesDeallocatePollerResponse{}, err
-	}
-	result := VirtualMachinesDeallocatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // Deallocate - Shuts down the virtual machine and releases the compute resources. You are not billed for the compute resources that this virtual machine
 // uses.
 // If the operation fails it returns a generic error.
@@ -448,28 +360,6 @@ func (client *VirtualMachinesClient) BeginDelete(ctx context.Context, resourceGr
 	result.Poller = &VirtualMachinesDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new VirtualMachinesDeletePoller from the specified resume token.
-// token - The value must come from a previous call to VirtualMachinesDeletePoller.ResumeToken().
-func (client *VirtualMachinesClient) ResumeDelete(ctx context.Context, token string) (VirtualMachinesDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachinesClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return VirtualMachinesDeletePollerResponse{}, err
-	}
-	poller := &VirtualMachinesDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualMachinesDeletePollerResponse{}, err
-	}
-	result := VirtualMachinesDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 
@@ -980,28 +870,6 @@ func (client *VirtualMachinesClient) BeginPerformMaintenance(ctx context.Context
 	return result, nil
 }
 
-// ResumePerformMaintenance creates a new VirtualMachinesPerformMaintenancePoller from the specified resume token.
-// token - The value must come from a previous call to VirtualMachinesPerformMaintenancePoller.ResumeToken().
-func (client *VirtualMachinesClient) ResumePerformMaintenance(ctx context.Context, token string) (VirtualMachinesPerformMaintenancePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachinesClient.PerformMaintenance", token, client.con.Pipeline(), client.performMaintenanceHandleError)
-	if err != nil {
-		return VirtualMachinesPerformMaintenancePollerResponse{}, err
-	}
-	poller := &VirtualMachinesPerformMaintenancePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualMachinesPerformMaintenancePollerResponse{}, err
-	}
-	result := VirtualMachinesPerformMaintenancePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // PerformMaintenance - Shuts down the virtual machine, moves it to an already updated node, and powers it back on during the self-service phase of planned
 // maintenance.
 // If the operation fails it returns a generic error.
@@ -1076,28 +944,6 @@ func (client *VirtualMachinesClient) BeginPowerOff(ctx context.Context, resource
 	result.Poller = &VirtualMachinesPowerOffPoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumePowerOff creates a new VirtualMachinesPowerOffPoller from the specified resume token.
-// token - The value must come from a previous call to VirtualMachinesPowerOffPoller.ResumeToken().
-func (client *VirtualMachinesClient) ResumePowerOff(ctx context.Context, token string) (VirtualMachinesPowerOffPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachinesClient.PowerOff", token, client.con.Pipeline(), client.powerOffHandleError)
-	if err != nil {
-		return VirtualMachinesPowerOffPollerResponse{}, err
-	}
-	poller := &VirtualMachinesPowerOffPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualMachinesPowerOffPollerResponse{}, err
-	}
-	result := VirtualMachinesPowerOffPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 
@@ -1180,28 +1026,6 @@ func (client *VirtualMachinesClient) BeginReapply(ctx context.Context, resourceG
 	return result, nil
 }
 
-// ResumeReapply creates a new VirtualMachinesReapplyPoller from the specified resume token.
-// token - The value must come from a previous call to VirtualMachinesReapplyPoller.ResumeToken().
-func (client *VirtualMachinesClient) ResumeReapply(ctx context.Context, token string) (VirtualMachinesReapplyPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachinesClient.Reapply", token, client.con.Pipeline(), client.reapplyHandleError)
-	if err != nil {
-		return VirtualMachinesReapplyPollerResponse{}, err
-	}
-	poller := &VirtualMachinesReapplyPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualMachinesReapplyPollerResponse{}, err
-	}
-	result := VirtualMachinesReapplyPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // Reapply - The operation to reapply a virtual machine's state.
 // If the operation fails it returns the *CloudError error type.
 func (client *VirtualMachinesClient) reapply(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesBeginReapplyOptions) (*azcore.Response, error) {
@@ -1279,28 +1103,6 @@ func (client *VirtualMachinesClient) BeginRedeploy(ctx context.Context, resource
 	return result, nil
 }
 
-// ResumeRedeploy creates a new VirtualMachinesRedeployPoller from the specified resume token.
-// token - The value must come from a previous call to VirtualMachinesRedeployPoller.ResumeToken().
-func (client *VirtualMachinesClient) ResumeRedeploy(ctx context.Context, token string) (VirtualMachinesRedeployPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachinesClient.Redeploy", token, client.con.Pipeline(), client.redeployHandleError)
-	if err != nil {
-		return VirtualMachinesRedeployPollerResponse{}, err
-	}
-	poller := &VirtualMachinesRedeployPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualMachinesRedeployPollerResponse{}, err
-	}
-	result := VirtualMachinesRedeployPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // Redeploy - Shuts down the virtual machine, moves it to a new node, and powers it back on.
 // If the operation fails it returns a generic error.
 func (client *VirtualMachinesClient) redeploy(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesBeginRedeployOptions) (*azcore.Response, error) {
@@ -1373,28 +1175,6 @@ func (client *VirtualMachinesClient) BeginReimage(ctx context.Context, resourceG
 	result.Poller = &VirtualMachinesReimagePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeReimage creates a new VirtualMachinesReimagePoller from the specified resume token.
-// token - The value must come from a previous call to VirtualMachinesReimagePoller.ResumeToken().
-func (client *VirtualMachinesClient) ResumeReimage(ctx context.Context, token string) (VirtualMachinesReimagePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachinesClient.Reimage", token, client.con.Pipeline(), client.reimageHandleError)
-	if err != nil {
-		return VirtualMachinesReimagePollerResponse{}, err
-	}
-	poller := &VirtualMachinesReimagePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualMachinesReimagePollerResponse{}, err
-	}
-	result := VirtualMachinesReimagePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 
@@ -1476,28 +1256,6 @@ func (client *VirtualMachinesClient) BeginRestart(ctx context.Context, resourceG
 	return result, nil
 }
 
-// ResumeRestart creates a new VirtualMachinesRestartPoller from the specified resume token.
-// token - The value must come from a previous call to VirtualMachinesRestartPoller.ResumeToken().
-func (client *VirtualMachinesClient) ResumeRestart(ctx context.Context, token string) (VirtualMachinesRestartPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachinesClient.Restart", token, client.con.Pipeline(), client.restartHandleError)
-	if err != nil {
-		return VirtualMachinesRestartPollerResponse{}, err
-	}
-	poller := &VirtualMachinesRestartPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualMachinesRestartPollerResponse{}, err
-	}
-	result := VirtualMachinesRestartPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // Restart - The operation to restart a virtual machine.
 // If the operation fails it returns a generic error.
 func (client *VirtualMachinesClient) restart(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesBeginRestartOptions) (*azcore.Response, error) {
@@ -1570,28 +1328,6 @@ func (client *VirtualMachinesClient) BeginRunCommand(ctx context.Context, resour
 	result.Poller = &VirtualMachinesRunCommandPoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeRunCommand creates a new VirtualMachinesRunCommandPoller from the specified resume token.
-// token - The value must come from a previous call to VirtualMachinesRunCommandPoller.ResumeToken().
-func (client *VirtualMachinesClient) ResumeRunCommand(ctx context.Context, token string) (VirtualMachinesRunCommandPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachinesClient.RunCommand", token, client.con.Pipeline(), client.runCommandHandleError)
-	if err != nil {
-		return VirtualMachinesRunCommandPollerResponse{}, err
-	}
-	poller := &VirtualMachinesRunCommandPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualMachinesRunCommandPollerResponse{}, err
-	}
-	result := VirtualMachinesRunCommandPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 
@@ -1726,28 +1462,6 @@ func (client *VirtualMachinesClient) BeginStart(ctx context.Context, resourceGro
 	return result, nil
 }
 
-// ResumeStart creates a new VirtualMachinesStartPoller from the specified resume token.
-// token - The value must come from a previous call to VirtualMachinesStartPoller.ResumeToken().
-func (client *VirtualMachinesClient) ResumeStart(ctx context.Context, token string) (VirtualMachinesStartPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachinesClient.Start", token, client.con.Pipeline(), client.startHandleError)
-	if err != nil {
-		return VirtualMachinesStartPollerResponse{}, err
-	}
-	poller := &VirtualMachinesStartPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualMachinesStartPollerResponse{}, err
-	}
-	result := VirtualMachinesStartPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // Start - The operation to start a virtual machine.
 // If the operation fails it returns a generic error.
 func (client *VirtualMachinesClient) start(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesBeginStartOptions) (*azcore.Response, error) {
@@ -1820,28 +1534,6 @@ func (client *VirtualMachinesClient) BeginUpdate(ctx context.Context, resourceGr
 	result.Poller = &VirtualMachinesUpdatePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeUpdate creates a new VirtualMachinesUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to VirtualMachinesUpdatePoller.ResumeToken().
-func (client *VirtualMachinesClient) ResumeUpdate(ctx context.Context, token string) (VirtualMachinesUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachinesClient.Update", token, client.con.Pipeline(), client.updateHandleError)
-	if err != nil {
-		return VirtualMachinesUpdatePollerResponse{}, err
-	}
-	poller := &VirtualMachinesUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualMachinesUpdatePollerResponse{}, err
-	}
-	result := VirtualMachinesUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

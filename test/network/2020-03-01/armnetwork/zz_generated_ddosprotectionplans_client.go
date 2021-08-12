@@ -50,28 +50,6 @@ func (client *DdosProtectionPlansClient) BeginCreateOrUpdate(ctx context.Context
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new DdosProtectionPlansCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to DdosProtectionPlansCreateOrUpdatePoller.ResumeToken().
-func (client *DdosProtectionPlansClient) ResumeCreateOrUpdate(ctx context.Context, token string) (DdosProtectionPlansCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("DdosProtectionPlansClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return DdosProtectionPlansCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &DdosProtectionPlansCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return DdosProtectionPlansCreateOrUpdatePollerResponse{}, err
-	}
-	result := DdosProtectionPlansCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Creates or updates a DDoS protection plan.
 // If the operation fails it returns the *CloudError error type.
 func (client *DdosProtectionPlansClient) createOrUpdate(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, parameters DdosProtectionPlan, options *DdosProtectionPlansBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -146,28 +124,6 @@ func (client *DdosProtectionPlansClient) BeginDelete(ctx context.Context, resour
 	result.Poller = &DdosProtectionPlansDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new DdosProtectionPlansDeletePoller from the specified resume token.
-// token - The value must come from a previous call to DdosProtectionPlansDeletePoller.ResumeToken().
-func (client *DdosProtectionPlansClient) ResumeDelete(ctx context.Context, token string) (DdosProtectionPlansDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("DdosProtectionPlansClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return DdosProtectionPlansDeletePollerResponse{}, err
-	}
-	poller := &DdosProtectionPlansDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return DdosProtectionPlansDeletePollerResponse{}, err
-	}
-	result := DdosProtectionPlansDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

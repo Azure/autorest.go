@@ -50,28 +50,6 @@ func (client *ExpressRouteCircuitAuthorizationsClient) BeginCreateOrUpdate(ctx c
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new ExpressRouteCircuitAuthorizationsCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to ExpressRouteCircuitAuthorizationsCreateOrUpdatePoller.ResumeToken().
-func (client *ExpressRouteCircuitAuthorizationsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (ExpressRouteCircuitAuthorizationsCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("ExpressRouteCircuitAuthorizationsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return ExpressRouteCircuitAuthorizationsCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &ExpressRouteCircuitAuthorizationsCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return ExpressRouteCircuitAuthorizationsCreateOrUpdatePollerResponse{}, err
-	}
-	result := ExpressRouteCircuitAuthorizationsCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Creates or updates an authorization in the specified express route circuit.
 // If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteCircuitAuthorizationsClient) createOrUpdate(ctx context.Context, resourceGroupName string, circuitName string, authorizationName string, authorizationParameters ExpressRouteCircuitAuthorization, options *ExpressRouteCircuitAuthorizationsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -150,28 +128,6 @@ func (client *ExpressRouteCircuitAuthorizationsClient) BeginDelete(ctx context.C
 	result.Poller = &ExpressRouteCircuitAuthorizationsDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new ExpressRouteCircuitAuthorizationsDeletePoller from the specified resume token.
-// token - The value must come from a previous call to ExpressRouteCircuitAuthorizationsDeletePoller.ResumeToken().
-func (client *ExpressRouteCircuitAuthorizationsClient) ResumeDelete(ctx context.Context, token string) (ExpressRouteCircuitAuthorizationsDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("ExpressRouteCircuitAuthorizationsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return ExpressRouteCircuitAuthorizationsDeletePollerResponse{}, err
-	}
-	poller := &ExpressRouteCircuitAuthorizationsDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return ExpressRouteCircuitAuthorizationsDeletePollerResponse{}, err
-	}
-	result := ExpressRouteCircuitAuthorizationsDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

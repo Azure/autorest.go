@@ -50,28 +50,6 @@ func (client *VirtualHubRouteTableV2SClient) BeginCreateOrUpdate(ctx context.Con
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new VirtualHubRouteTableV2SCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to VirtualHubRouteTableV2SCreateOrUpdatePoller.ResumeToken().
-func (client *VirtualHubRouteTableV2SClient) ResumeCreateOrUpdate(ctx context.Context, token string) (VirtualHubRouteTableV2SCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualHubRouteTableV2SClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return VirtualHubRouteTableV2SCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &VirtualHubRouteTableV2SCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualHubRouteTableV2SCreateOrUpdatePollerResponse{}, err
-	}
-	result := VirtualHubRouteTableV2SCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Creates a VirtualHubRouteTableV2 resource if it doesn't exist else updates the existing VirtualHubRouteTableV2.
 // If the operation fails it returns the *Error error type.
 func (client *VirtualHubRouteTableV2SClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualHubName string, routeTableName string, virtualHubRouteTableV2Parameters VirtualHubRouteTableV2, options *VirtualHubRouteTableV2SBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -150,28 +128,6 @@ func (client *VirtualHubRouteTableV2SClient) BeginDelete(ctx context.Context, re
 	result.Poller = &VirtualHubRouteTableV2SDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new VirtualHubRouteTableV2SDeletePoller from the specified resume token.
-// token - The value must come from a previous call to VirtualHubRouteTableV2SDeletePoller.ResumeToken().
-func (client *VirtualHubRouteTableV2SClient) ResumeDelete(ctx context.Context, token string) (VirtualHubRouteTableV2SDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualHubRouteTableV2SClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return VirtualHubRouteTableV2SDeletePollerResponse{}, err
-	}
-	poller := &VirtualHubRouteTableV2SDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualHubRouteTableV2SDeletePollerResponse{}, err
-	}
-	result := VirtualHubRouteTableV2SDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

@@ -50,28 +50,6 @@ func (client *VPNSitesConfigurationClient) BeginDownload(ctx context.Context, re
 	return result, nil
 }
 
-// ResumeDownload creates a new VPNSitesConfigurationDownloadPoller from the specified resume token.
-// token - The value must come from a previous call to VPNSitesConfigurationDownloadPoller.ResumeToken().
-func (client *VPNSitesConfigurationClient) ResumeDownload(ctx context.Context, token string) (VPNSitesConfigurationDownloadPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VPNSitesConfigurationClient.Download", token, client.con.Pipeline(), client.downloadHandleError)
-	if err != nil {
-		return VPNSitesConfigurationDownloadPollerResponse{}, err
-	}
-	poller := &VPNSitesConfigurationDownloadPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VPNSitesConfigurationDownloadPollerResponse{}, err
-	}
-	result := VPNSitesConfigurationDownloadPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // Download - Gives the sas-url to download the configurations for vpn-sites in a resource group.
 // If the operation fails it returns the *CloudError error type.
 func (client *VPNSitesConfigurationClient) download(ctx context.Context, resourceGroupName string, virtualWANName string, request GetVPNSitesConfigurationRequest, options *VPNSitesConfigurationBeginDownloadOptions) (*azcore.Response, error) {

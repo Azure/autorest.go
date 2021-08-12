@@ -50,28 +50,6 @@ func (client *AzureFirewallsClient) BeginCreateOrUpdate(ctx context.Context, res
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new AzureFirewallsCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to AzureFirewallsCreateOrUpdatePoller.ResumeToken().
-func (client *AzureFirewallsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (AzureFirewallsCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("AzureFirewallsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return AzureFirewallsCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &AzureFirewallsCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return AzureFirewallsCreateOrUpdatePollerResponse{}, err
-	}
-	result := AzureFirewallsCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Creates or updates the specified Azure Firewall.
 // If the operation fails it returns the *CloudError error type.
 func (client *AzureFirewallsClient) createOrUpdate(ctx context.Context, resourceGroupName string, azureFirewallName string, parameters AzureFirewall, options *AzureFirewallsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -146,28 +124,6 @@ func (client *AzureFirewallsClient) BeginDelete(ctx context.Context, resourceGro
 	result.Poller = &AzureFirewallsDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new AzureFirewallsDeletePoller from the specified resume token.
-// token - The value must come from a previous call to AzureFirewallsDeletePoller.ResumeToken().
-func (client *AzureFirewallsClient) ResumeDelete(ctx context.Context, token string) (AzureFirewallsDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("AzureFirewallsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return AzureFirewallsDeletePollerResponse{}, err
-	}
-	poller := &AzureFirewallsDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return AzureFirewallsDeletePollerResponse{}, err
-	}
-	result := AzureFirewallsDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 
@@ -425,28 +381,6 @@ func (client *AzureFirewallsClient) BeginUpdateTags(ctx context.Context, resourc
 	result.Poller = &AzureFirewallsUpdateTagsPoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeUpdateTags creates a new AzureFirewallsUpdateTagsPoller from the specified resume token.
-// token - The value must come from a previous call to AzureFirewallsUpdateTagsPoller.ResumeToken().
-func (client *AzureFirewallsClient) ResumeUpdateTags(ctx context.Context, token string) (AzureFirewallsUpdateTagsPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("AzureFirewallsClient.UpdateTags", token, client.con.Pipeline(), client.updateTagsHandleError)
-	if err != nil {
-		return AzureFirewallsUpdateTagsPollerResponse{}, err
-	}
-	poller := &AzureFirewallsUpdateTagsPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return AzureFirewallsUpdateTagsPollerResponse{}, err
-	}
-	result := AzureFirewallsUpdateTagsPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

@@ -50,28 +50,6 @@ func (client *DdosCustomPoliciesClient) BeginCreateOrUpdate(ctx context.Context,
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new DdosCustomPoliciesCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to DdosCustomPoliciesCreateOrUpdatePoller.ResumeToken().
-func (client *DdosCustomPoliciesClient) ResumeCreateOrUpdate(ctx context.Context, token string) (DdosCustomPoliciesCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("DdosCustomPoliciesClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return DdosCustomPoliciesCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &DdosCustomPoliciesCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return DdosCustomPoliciesCreateOrUpdatePollerResponse{}, err
-	}
-	result := DdosCustomPoliciesCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Creates or updates a DDoS custom policy.
 // If the operation fails it returns the *CloudError error type.
 func (client *DdosCustomPoliciesClient) createOrUpdate(ctx context.Context, resourceGroupName string, ddosCustomPolicyName string, parameters DdosCustomPolicy, options *DdosCustomPoliciesBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -146,28 +124,6 @@ func (client *DdosCustomPoliciesClient) BeginDelete(ctx context.Context, resourc
 	result.Poller = &DdosCustomPoliciesDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new DdosCustomPoliciesDeletePoller from the specified resume token.
-// token - The value must come from a previous call to DdosCustomPoliciesDeletePoller.ResumeToken().
-func (client *DdosCustomPoliciesClient) ResumeDelete(ctx context.Context, token string) (DdosCustomPoliciesDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("DdosCustomPoliciesClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return DdosCustomPoliciesDeletePollerResponse{}, err
-	}
-	poller := &DdosCustomPoliciesDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return DdosCustomPoliciesDeletePollerResponse{}, err
-	}
-	result := DdosCustomPoliciesDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

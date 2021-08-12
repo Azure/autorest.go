@@ -50,28 +50,6 @@ func (client *VPNGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resour
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new VPNGatewaysCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to VPNGatewaysCreateOrUpdatePoller.ResumeToken().
-func (client *VPNGatewaysClient) ResumeCreateOrUpdate(ctx context.Context, token string) (VPNGatewaysCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VPNGatewaysClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return VPNGatewaysCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &VPNGatewaysCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VPNGatewaysCreateOrUpdatePollerResponse{}, err
-	}
-	result := VPNGatewaysCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Creates a virtual wan vpn gateway if it doesn't exist else updates the existing gateway.
 // If the operation fails it returns the *CloudError error type.
 func (client *VPNGatewaysClient) createOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, vpnGatewayParameters VPNGateway, options *VPNGatewaysBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -146,28 +124,6 @@ func (client *VPNGatewaysClient) BeginDelete(ctx context.Context, resourceGroupN
 	result.Poller = &VPNGatewaysDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new VPNGatewaysDeletePoller from the specified resume token.
-// token - The value must come from a previous call to VPNGatewaysDeletePoller.ResumeToken().
-func (client *VPNGatewaysClient) ResumeDelete(ctx context.Context, token string) (VPNGatewaysDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VPNGatewaysClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return VPNGatewaysDeletePollerResponse{}, err
-	}
-	poller := &VPNGatewaysDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VPNGatewaysDeletePollerResponse{}, err
-	}
-	result := VPNGatewaysDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 
@@ -425,28 +381,6 @@ func (client *VPNGatewaysClient) BeginReset(ctx context.Context, resourceGroupNa
 	result.Poller = &VPNGatewaysResetPoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeReset creates a new VPNGatewaysResetPoller from the specified resume token.
-// token - The value must come from a previous call to VPNGatewaysResetPoller.ResumeToken().
-func (client *VPNGatewaysClient) ResumeReset(ctx context.Context, token string) (VPNGatewaysResetPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VPNGatewaysClient.Reset", token, client.con.Pipeline(), client.resetHandleError)
-	if err != nil {
-		return VPNGatewaysResetPollerResponse{}, err
-	}
-	poller := &VPNGatewaysResetPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VPNGatewaysResetPollerResponse{}, err
-	}
-	result := VPNGatewaysResetPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

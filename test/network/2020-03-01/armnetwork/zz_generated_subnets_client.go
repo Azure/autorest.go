@@ -50,28 +50,6 @@ func (client *SubnetsClient) BeginCreateOrUpdate(ctx context.Context, resourceGr
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new SubnetsCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to SubnetsCreateOrUpdatePoller.ResumeToken().
-func (client *SubnetsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (SubnetsCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("SubnetsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return SubnetsCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &SubnetsCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return SubnetsCreateOrUpdatePollerResponse{}, err
-	}
-	result := SubnetsCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Creates or updates a subnet in the specified virtual network.
 // If the operation fails it returns the *CloudError error type.
 func (client *SubnetsClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, subnetParameters Subnet, options *SubnetsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -150,28 +128,6 @@ func (client *SubnetsClient) BeginDelete(ctx context.Context, resourceGroupName 
 	result.Poller = &SubnetsDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new SubnetsDeletePoller from the specified resume token.
-// token - The value must come from a previous call to SubnetsDeletePoller.ResumeToken().
-func (client *SubnetsClient) ResumeDelete(ctx context.Context, token string) (SubnetsDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("SubnetsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return SubnetsDeletePollerResponse{}, err
-	}
-	poller := &SubnetsDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return SubnetsDeletePollerResponse{}, err
-	}
-	result := SubnetsDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 
@@ -392,28 +348,6 @@ func (client *SubnetsClient) BeginPrepareNetworkPolicies(ctx context.Context, re
 	return result, nil
 }
 
-// ResumePrepareNetworkPolicies creates a new SubnetsPrepareNetworkPoliciesPoller from the specified resume token.
-// token - The value must come from a previous call to SubnetsPrepareNetworkPoliciesPoller.ResumeToken().
-func (client *SubnetsClient) ResumePrepareNetworkPolicies(ctx context.Context, token string) (SubnetsPrepareNetworkPoliciesPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("SubnetsClient.PrepareNetworkPolicies", token, client.con.Pipeline(), client.prepareNetworkPoliciesHandleError)
-	if err != nil {
-		return SubnetsPrepareNetworkPoliciesPollerResponse{}, err
-	}
-	poller := &SubnetsPrepareNetworkPoliciesPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return SubnetsPrepareNetworkPoliciesPollerResponse{}, err
-	}
-	result := SubnetsPrepareNetworkPoliciesPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // PrepareNetworkPolicies - Prepares a subnet by applying network intent policies.
 // If the operation fails it returns the *CloudError error type.
 func (client *SubnetsClient) prepareNetworkPolicies(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, prepareNetworkPoliciesRequestParameters PrepareNetworkPoliciesRequest, options *SubnetsBeginPrepareNetworkPoliciesOptions) (*azcore.Response, error) {
@@ -492,28 +426,6 @@ func (client *SubnetsClient) BeginUnprepareNetworkPolicies(ctx context.Context, 
 	result.Poller = &SubnetsUnprepareNetworkPoliciesPoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeUnprepareNetworkPolicies creates a new SubnetsUnprepareNetworkPoliciesPoller from the specified resume token.
-// token - The value must come from a previous call to SubnetsUnprepareNetworkPoliciesPoller.ResumeToken().
-func (client *SubnetsClient) ResumeUnprepareNetworkPolicies(ctx context.Context, token string) (SubnetsUnprepareNetworkPoliciesPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("SubnetsClient.UnprepareNetworkPolicies", token, client.con.Pipeline(), client.unprepareNetworkPoliciesHandleError)
-	if err != nil {
-		return SubnetsUnprepareNetworkPoliciesPollerResponse{}, err
-	}
-	poller := &SubnetsUnprepareNetworkPoliciesPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return SubnetsUnprepareNetworkPoliciesPollerResponse{}, err
-	}
-	result := SubnetsUnprepareNetworkPoliciesPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

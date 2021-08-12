@@ -50,28 +50,6 @@ func (client *SecurityPartnerProvidersClient) BeginCreateOrUpdate(ctx context.Co
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new SecurityPartnerProvidersCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to SecurityPartnerProvidersCreateOrUpdatePoller.ResumeToken().
-func (client *SecurityPartnerProvidersClient) ResumeCreateOrUpdate(ctx context.Context, token string) (SecurityPartnerProvidersCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("SecurityPartnerProvidersClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return SecurityPartnerProvidersCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &SecurityPartnerProvidersCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return SecurityPartnerProvidersCreateOrUpdatePollerResponse{}, err
-	}
-	result := SecurityPartnerProvidersCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Creates or updates the specified Security Partner Provider.
 // If the operation fails it returns the *CloudError error type.
 func (client *SecurityPartnerProvidersClient) createOrUpdate(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, parameters SecurityPartnerProvider, options *SecurityPartnerProvidersBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -146,28 +124,6 @@ func (client *SecurityPartnerProvidersClient) BeginDelete(ctx context.Context, r
 	result.Poller = &SecurityPartnerProvidersDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new SecurityPartnerProvidersDeletePoller from the specified resume token.
-// token - The value must come from a previous call to SecurityPartnerProvidersDeletePoller.ResumeToken().
-func (client *SecurityPartnerProvidersClient) ResumeDelete(ctx context.Context, token string) (SecurityPartnerProvidersDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("SecurityPartnerProvidersClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return SecurityPartnerProvidersDeletePollerResponse{}, err
-	}
-	poller := &SecurityPartnerProvidersDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return SecurityPartnerProvidersDeletePollerResponse{}, err
-	}
-	result := SecurityPartnerProvidersDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

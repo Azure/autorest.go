@@ -7,9 +7,9 @@ import { Session } from '@autorest/extension-base';
 import { comment, KnownMediaType } from '@azure-tools/codegen';
 import { ArraySchema, ByteArraySchema, ChoiceSchema, CodeModel, ConstantSchema, DateTimeSchema, DictionarySchema, GroupProperty, ImplementationLocation, NumberSchema, ObjectSchema, Operation, Parameter, Property, Protocols, Response, Schema, SchemaResponse, SchemaType } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
-import { aggregateParameters, getSchemaResponse, isArraySchema, isMultiRespOperation, isPageableOperation, isSchemaResponse, isTypePassedByValue, PagerInfo, PollerInfo, isLROOperation, commentLength } from '../common/helpers';
+import { aggregateParameters, getSchemaResponse, isArraySchema, isMultiRespOperation, isPageableOperation, isSchemaResponse, isTypePassedByValue, PagerInfo, isLROOperation, commentLength } from '../common/helpers';
 import { OperationNaming } from '../transform/namer';
-import { contentPreamble, formatParameterTypeName, formatStatusCodes, getFinalResponseEnvelopeName, getResponseEnvelope, getResponseEnvelopeName, getResultFieldName, getStatusCodes, hasDescription, hasResultEnvelope, hasSchemaResponse, skipURLEncoding, sortAscending, getCreateRequestParameters, getCreateRequestParametersSig, getMethodParameters, getParamName, formatParamValue, dateFormat, datetimeRFC1123Format, datetimeRFC3339Format, sortParametersByRequired } from './helpers';
+import { contentPreamble, emitPoller, formatParameterTypeName, formatStatusCodes, getFinalResponseEnvelopeName, getResponseEnvelope, getResponseEnvelopeName, getResultFieldName, getStatusCodes, hasDescription, hasResultEnvelope, hasSchemaResponse, skipURLEncoding, sortAscending, getCreateRequestParameters, getCreateRequestParametersSig, getMethodParameters, getParamName, formatParamValue, dateFormat, datetimeRFC1123Format, datetimeRFC3339Format, sortParametersByRequired } from './helpers';
 import { ImportManager } from './imports';
 
 // represents the generated content for an operation group
@@ -45,9 +45,8 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       // protocol creation can add imports to the list so
       // it must be done before the imports are written out
       if (isLROOperation(op)) {
-        // generate Begin and Resume methods
+        // generate Begin method
         opText += generateLROBeginMethod(op, imports, isARM);
-        opText += generateLROResumeMethod(op, isARM);
       }
       opText += generateOperation(op, imports);
       opText += createProtocolRequest(session.model, op, imports);
@@ -1037,44 +1036,3 @@ function generateLROBeginMethod(op: Operation, imports: ImportManager, isARM: bo
   return text;
 }
 
-function generateLROResumeMethod(op: Operation, isARM: boolean): string {
-  const info = <OperationNaming>op.language.go!;
-  const clientName = op.language.go!.clientName;
-  const returns = generateReturnsInfo(op, 'api');
-  const zeroResp = getZeroReturnValue(op, 'api');
-  let text = `// Resume${op.language.go!.name} creates a new ${op.language.go!.pollerType.name} from the specified resume token.\n`;
-  text += `// token - The value must come from a previous call to ${op.language.go!.pollerType.name}.ResumeToken().\n`;
-  text += `func (client *${clientName}) Resume${op.language.go!.name}(ctx context.Context, token string) (${returns.join(', ')}) {\n`;
-  if (isARM) {
-    text += `\tpt, err := armcore.NewLROPollerFromResumeToken("${clientName}.${op.language.go!.name}", token, client.con.Pipeline(), client.${info.protocolNaming.errorMethod})\n`;
-  } else {
-    text += `\tpt, err := azcore.NewLROPollerFromResumeToken("${clientName}.${op.language.go!.name}",token, client.con.Pipeline(), client.${info.protocolNaming.errorMethod})\n`;
-  }
-  text += '\tif err != nil {\n';
-  text += `\t\treturn ${zeroResp}, err\n`;
-  text += '\t}\n';
-  text += `\tpoller := ${emitPoller(op)}`;
-  text += '\tresp, err := poller.Poll(ctx)\n';
-  text += '\tif err != nil {\n';
-  text += `\t\treturn ${zeroResp}, err\n`;
-  text += '\t}\n';
-  text += `\tresult := ${getResponseEnvelopeName(op)}{\n`;
-  text += `\t\tPoller: poller,\n`;
-  text += '\t\tRawResponse: resp,\n';
-  text += '\t}\n';
-  text += '\tresult.Poller = poller\n';
-  text += `\treturn result, nil\n`;
-  // closing braces
-  text += '}\n\n';
-  return text;
-}
-
-function emitPoller(op: Operation): string {
-  let text = `&${(<PollerInfo>op.language.go!.pollerType).name} {\n`;
-  text += '\t\tpt: pt,\n';
-  if (isPageableOperation(op)) {
-    text += '\t\tclient: client,\n';
-  }
-  text += '\t}\n';
-  return text;
-}

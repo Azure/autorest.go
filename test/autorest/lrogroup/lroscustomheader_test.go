@@ -38,8 +38,8 @@ func TestBeginPost202Retry200(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	env, err = op.ResumePost202Retry200(ctxWithHTTPHeader(), tk)
-	if err != nil {
+	env = LROsCustomHeaderPost202Retry200PollerResponse{}
+	if err = env.Resume(ctxWithHTTPHeader(), op, tk); err != nil {
 		t.Fatal(err)
 	}
 	for {
@@ -71,8 +71,8 @@ func TestBeginPostAsyncRetrySucceeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	env, err = op.ResumePostAsyncRetrySucceeded(ctxWithHTTPHeader(), tk)
-	if err != nil {
+	env = LROsCustomHeaderPostAsyncRetrySucceededPollerResponse{}
+	if err = env.Resume(ctxWithHTTPHeader(), op, tk); err != nil {
 		t.Fatal(err)
 	}
 	for {
@@ -104,8 +104,8 @@ func TestBeginPut201CreatingSucceeded200(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	env, err = op.ResumePut201CreatingSucceeded200(ctxWithHTTPHeader(), tk)
-	if err != nil {
+	env = LROsCustomHeaderPut201CreatingSucceeded200PollerResponse{}
+	if err = env.Resume(ctxWithHTTPHeader(), op, tk); err != nil {
 		t.Fatal(err)
 	}
 	for {
@@ -148,8 +148,8 @@ func TestBeginPutAsyncRetrySucceeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	env, err = op.ResumePutAsyncRetrySucceeded(ctxWithHTTPHeader(), tk)
-	if err != nil {
+	env = LROsCustomHeaderPutAsyncRetrySucceededPollerResponse{}
+	if err = env.Resume(ctxWithHTTPHeader(), op, tk); err != nil {
 		t.Fatal(err)
 	}
 	for {

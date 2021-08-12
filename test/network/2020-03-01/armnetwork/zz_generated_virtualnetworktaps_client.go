@@ -50,28 +50,6 @@ func (client *VirtualNetworkTapsClient) BeginCreateOrUpdate(ctx context.Context,
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new VirtualNetworkTapsCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to VirtualNetworkTapsCreateOrUpdatePoller.ResumeToken().
-func (client *VirtualNetworkTapsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (VirtualNetworkTapsCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworkTapsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return VirtualNetworkTapsCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &VirtualNetworkTapsCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualNetworkTapsCreateOrUpdatePollerResponse{}, err
-	}
-	result := VirtualNetworkTapsCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Creates or updates a Virtual Network Tap.
 // If the operation fails it returns the *CloudError error type.
 func (client *VirtualNetworkTapsClient) createOrUpdate(ctx context.Context, resourceGroupName string, tapName string, parameters VirtualNetworkTap, options *VirtualNetworkTapsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -146,28 +124,6 @@ func (client *VirtualNetworkTapsClient) BeginDelete(ctx context.Context, resourc
 	result.Poller = &VirtualNetworkTapsDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new VirtualNetworkTapsDeletePoller from the specified resume token.
-// token - The value must come from a previous call to VirtualNetworkTapsDeletePoller.ResumeToken().
-func (client *VirtualNetworkTapsClient) ResumeDelete(ctx context.Context, token string) (VirtualNetworkTapsDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworkTapsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return VirtualNetworkTapsDeletePollerResponse{}, err
-	}
-	poller := &VirtualNetworkTapsDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualNetworkTapsDeletePollerResponse{}, err
-	}
-	result := VirtualNetworkTapsDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

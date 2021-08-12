@@ -50,28 +50,6 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginCreateOrUpdate(ctx co
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new VirtualNetworkGatewayConnectionsCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to VirtualNetworkGatewayConnectionsCreateOrUpdatePoller.ResumeToken().
-func (client *VirtualNetworkGatewayConnectionsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (VirtualNetworkGatewayConnectionsCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworkGatewayConnectionsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return VirtualNetworkGatewayConnectionsCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &VirtualNetworkGatewayConnectionsCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualNetworkGatewayConnectionsCreateOrUpdatePollerResponse{}, err
-	}
-	result := VirtualNetworkGatewayConnectionsCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Creates or updates a virtual network gateway connection in the specified resource group.
 // If the operation fails it returns the *CloudError error type.
 func (client *VirtualNetworkGatewayConnectionsClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, parameters VirtualNetworkGatewayConnection, options *VirtualNetworkGatewayConnectionsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -146,28 +124,6 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginDelete(ctx context.Co
 	result.Poller = &VirtualNetworkGatewayConnectionsDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new VirtualNetworkGatewayConnectionsDeletePoller from the specified resume token.
-// token - The value must come from a previous call to VirtualNetworkGatewayConnectionsDeletePoller.ResumeToken().
-func (client *VirtualNetworkGatewayConnectionsClient) ResumeDelete(ctx context.Context, token string) (VirtualNetworkGatewayConnectionsDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworkGatewayConnectionsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return VirtualNetworkGatewayConnectionsDeletePollerResponse{}, err
-	}
-	poller := &VirtualNetworkGatewayConnectionsDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualNetworkGatewayConnectionsDeletePollerResponse{}, err
-	}
-	result := VirtualNetworkGatewayConnectionsDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 
@@ -442,28 +398,6 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginResetSharedKey(ctx co
 	return result, nil
 }
 
-// ResumeResetSharedKey creates a new VirtualNetworkGatewayConnectionsResetSharedKeyPoller from the specified resume token.
-// token - The value must come from a previous call to VirtualNetworkGatewayConnectionsResetSharedKeyPoller.ResumeToken().
-func (client *VirtualNetworkGatewayConnectionsClient) ResumeResetSharedKey(ctx context.Context, token string) (VirtualNetworkGatewayConnectionsResetSharedKeyPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworkGatewayConnectionsClient.ResetSharedKey", token, client.con.Pipeline(), client.resetSharedKeyHandleError)
-	if err != nil {
-		return VirtualNetworkGatewayConnectionsResetSharedKeyPollerResponse{}, err
-	}
-	poller := &VirtualNetworkGatewayConnectionsResetSharedKeyPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualNetworkGatewayConnectionsResetSharedKeyPollerResponse{}, err
-	}
-	result := VirtualNetworkGatewayConnectionsResetSharedKeyPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // ResetSharedKey - The VirtualNetworkGatewayConnectionResetSharedKey operation resets the virtual network gateway connection shared key for passed virtual
 // network gateway connection in the specified resource group
 // through Network resource provider.
@@ -545,28 +479,6 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginSetSharedKey(ctx cont
 	return result, nil
 }
 
-// ResumeSetSharedKey creates a new VirtualNetworkGatewayConnectionsSetSharedKeyPoller from the specified resume token.
-// token - The value must come from a previous call to VirtualNetworkGatewayConnectionsSetSharedKeyPoller.ResumeToken().
-func (client *VirtualNetworkGatewayConnectionsClient) ResumeSetSharedKey(ctx context.Context, token string) (VirtualNetworkGatewayConnectionsSetSharedKeyPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworkGatewayConnectionsClient.SetSharedKey", token, client.con.Pipeline(), client.setSharedKeyHandleError)
-	if err != nil {
-		return VirtualNetworkGatewayConnectionsSetSharedKeyPollerResponse{}, err
-	}
-	poller := &VirtualNetworkGatewayConnectionsSetSharedKeyPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualNetworkGatewayConnectionsSetSharedKeyPollerResponse{}, err
-	}
-	result := VirtualNetworkGatewayConnectionsSetSharedKeyPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // SetSharedKey - The Put VirtualNetworkGatewayConnectionSharedKey operation sets the virtual network gateway connection shared key for passed virtual network
 // gateway connection in the specified resource group through
 // Network resource provider.
@@ -643,28 +555,6 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginStartPacketCapture(ct
 	result.Poller = &VirtualNetworkGatewayConnectionsStartPacketCapturePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeStartPacketCapture creates a new VirtualNetworkGatewayConnectionsStartPacketCapturePoller from the specified resume token.
-// token - The value must come from a previous call to VirtualNetworkGatewayConnectionsStartPacketCapturePoller.ResumeToken().
-func (client *VirtualNetworkGatewayConnectionsClient) ResumeStartPacketCapture(ctx context.Context, token string) (VirtualNetworkGatewayConnectionsStartPacketCapturePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworkGatewayConnectionsClient.StartPacketCapture", token, client.con.Pipeline(), client.startPacketCaptureHandleError)
-	if err != nil {
-		return VirtualNetworkGatewayConnectionsStartPacketCapturePollerResponse{}, err
-	}
-	poller := &VirtualNetworkGatewayConnectionsStartPacketCapturePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualNetworkGatewayConnectionsStartPacketCapturePollerResponse{}, err
-	}
-	result := VirtualNetworkGatewayConnectionsStartPacketCapturePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 
@@ -748,28 +638,6 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginStopPacketCapture(ctx
 	return result, nil
 }
 
-// ResumeStopPacketCapture creates a new VirtualNetworkGatewayConnectionsStopPacketCapturePoller from the specified resume token.
-// token - The value must come from a previous call to VirtualNetworkGatewayConnectionsStopPacketCapturePoller.ResumeToken().
-func (client *VirtualNetworkGatewayConnectionsClient) ResumeStopPacketCapture(ctx context.Context, token string) (VirtualNetworkGatewayConnectionsStopPacketCapturePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworkGatewayConnectionsClient.StopPacketCapture", token, client.con.Pipeline(), client.stopPacketCaptureHandleError)
-	if err != nil {
-		return VirtualNetworkGatewayConnectionsStopPacketCapturePollerResponse{}, err
-	}
-	poller := &VirtualNetworkGatewayConnectionsStopPacketCapturePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualNetworkGatewayConnectionsStopPacketCapturePollerResponse{}, err
-	}
-	result := VirtualNetworkGatewayConnectionsStopPacketCapturePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // StopPacketCapture - Stops packet capture on virtual network gateway connection in the specified resource group.
 // If the operation fails it returns the *Error error type.
 func (client *VirtualNetworkGatewayConnectionsClient) stopPacketCapture(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, parameters VPNPacketCaptureStopParameters, options *VirtualNetworkGatewayConnectionsBeginStopPacketCaptureOptions) (*azcore.Response, error) {
@@ -844,28 +712,6 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginUpdateTags(ctx contex
 	result.Poller = &VirtualNetworkGatewayConnectionsUpdateTagsPoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeUpdateTags creates a new VirtualNetworkGatewayConnectionsUpdateTagsPoller from the specified resume token.
-// token - The value must come from a previous call to VirtualNetworkGatewayConnectionsUpdateTagsPoller.ResumeToken().
-func (client *VirtualNetworkGatewayConnectionsClient) ResumeUpdateTags(ctx context.Context, token string) (VirtualNetworkGatewayConnectionsUpdateTagsPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualNetworkGatewayConnectionsClient.UpdateTags", token, client.con.Pipeline(), client.updateTagsHandleError)
-	if err != nil {
-		return VirtualNetworkGatewayConnectionsUpdateTagsPollerResponse{}, err
-	}
-	poller := &VirtualNetworkGatewayConnectionsUpdateTagsPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualNetworkGatewayConnectionsUpdateTagsPollerResponse{}, err
-	}
-	result := VirtualNetworkGatewayConnectionsUpdateTagsPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

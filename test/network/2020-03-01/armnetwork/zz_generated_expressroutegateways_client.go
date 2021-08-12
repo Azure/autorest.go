@@ -50,28 +50,6 @@ func (client *ExpressRouteGatewaysClient) BeginCreateOrUpdate(ctx context.Contex
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new ExpressRouteGatewaysCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to ExpressRouteGatewaysCreateOrUpdatePoller.ResumeToken().
-func (client *ExpressRouteGatewaysClient) ResumeCreateOrUpdate(ctx context.Context, token string) (ExpressRouteGatewaysCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("ExpressRouteGatewaysClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return ExpressRouteGatewaysCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &ExpressRouteGatewaysCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return ExpressRouteGatewaysCreateOrUpdatePollerResponse{}, err
-	}
-	result := ExpressRouteGatewaysCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Creates or updates a ExpressRoute gateway in a specified resource group.
 // If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteGatewaysClient) createOrUpdate(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, putExpressRouteGatewayParameters ExpressRouteGateway, options *ExpressRouteGatewaysBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -147,28 +125,6 @@ func (client *ExpressRouteGatewaysClient) BeginDelete(ctx context.Context, resou
 	result.Poller = &ExpressRouteGatewaysDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new ExpressRouteGatewaysDeletePoller from the specified resume token.
-// token - The value must come from a previous call to ExpressRouteGatewaysDeletePoller.ResumeToken().
-func (client *ExpressRouteGatewaysClient) ResumeDelete(ctx context.Context, token string) (ExpressRouteGatewaysDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("ExpressRouteGatewaysClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return ExpressRouteGatewaysDeletePollerResponse{}, err
-	}
-	poller := &ExpressRouteGatewaysDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return ExpressRouteGatewaysDeletePollerResponse{}, err
-	}
-	result := ExpressRouteGatewaysDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 

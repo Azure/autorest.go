@@ -50,28 +50,6 @@ func (client *NetworkInterfacesClient) BeginCreateOrUpdate(ctx context.Context, 
 	return result, nil
 }
 
-// ResumeCreateOrUpdate creates a new NetworkInterfacesCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to NetworkInterfacesCreateOrUpdatePoller.ResumeToken().
-func (client *NetworkInterfacesClient) ResumeCreateOrUpdate(ctx context.Context, token string) (NetworkInterfacesCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("NetworkInterfacesClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return NetworkInterfacesCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &NetworkInterfacesCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return NetworkInterfacesCreateOrUpdatePollerResponse{}, err
-	}
-	result := NetworkInterfacesCreateOrUpdatePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
-	return result, nil
-}
-
 // CreateOrUpdate - Creates or updates a network interface.
 // If the operation fails it returns the *CloudError error type.
 func (client *NetworkInterfacesClient) createOrUpdate(ctx context.Context, resourceGroupName string, networkInterfaceName string, parameters NetworkInterface, options *NetworkInterfacesBeginCreateOrUpdateOptions) (*azcore.Response, error) {
@@ -146,28 +124,6 @@ func (client *NetworkInterfacesClient) BeginDelete(ctx context.Context, resource
 	result.Poller = &NetworkInterfacesDeletePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeDelete creates a new NetworkInterfacesDeletePoller from the specified resume token.
-// token - The value must come from a previous call to NetworkInterfacesDeletePoller.ResumeToken().
-func (client *NetworkInterfacesClient) ResumeDelete(ctx context.Context, token string) (NetworkInterfacesDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("NetworkInterfacesClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return NetworkInterfacesDeletePollerResponse{}, err
-	}
-	poller := &NetworkInterfacesDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return NetworkInterfacesDeletePollerResponse{}, err
-	}
-	result := NetworkInterfacesDeletePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 
@@ -314,28 +270,6 @@ func (client *NetworkInterfacesClient) BeginGetEffectiveRouteTable(ctx context.C
 	result.Poller = &NetworkInterfacesGetEffectiveRouteTablePoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeGetEffectiveRouteTable creates a new NetworkInterfacesGetEffectiveRouteTablePoller from the specified resume token.
-// token - The value must come from a previous call to NetworkInterfacesGetEffectiveRouteTablePoller.ResumeToken().
-func (client *NetworkInterfacesClient) ResumeGetEffectiveRouteTable(ctx context.Context, token string) (NetworkInterfacesGetEffectiveRouteTablePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("NetworkInterfacesClient.GetEffectiveRouteTable", token, client.con.Pipeline(), client.getEffectiveRouteTableHandleError)
-	if err != nil {
-		return NetworkInterfacesGetEffectiveRouteTablePollerResponse{}, err
-	}
-	poller := &NetworkInterfacesGetEffectiveRouteTablePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return NetworkInterfacesGetEffectiveRouteTablePollerResponse{}, err
-	}
-	result := NetworkInterfacesGetEffectiveRouteTablePollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 
@@ -685,28 +619,6 @@ func (client *NetworkInterfacesClient) BeginListEffectiveNetworkSecurityGroups(c
 	result.Poller = &NetworkInterfacesListEffectiveNetworkSecurityGroupsPoller{
 		pt: pt,
 	}
-	return result, nil
-}
-
-// ResumeListEffectiveNetworkSecurityGroups creates a new NetworkInterfacesListEffectiveNetworkSecurityGroupsPoller from the specified resume token.
-// token - The value must come from a previous call to NetworkInterfacesListEffectiveNetworkSecurityGroupsPoller.ResumeToken().
-func (client *NetworkInterfacesClient) ResumeListEffectiveNetworkSecurityGroups(ctx context.Context, token string) (NetworkInterfacesListEffectiveNetworkSecurityGroupsPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("NetworkInterfacesClient.ListEffectiveNetworkSecurityGroups", token, client.con.Pipeline(), client.listEffectiveNetworkSecurityGroupsHandleError)
-	if err != nil {
-		return NetworkInterfacesListEffectiveNetworkSecurityGroupsPollerResponse{}, err
-	}
-	poller := &NetworkInterfacesListEffectiveNetworkSecurityGroupsPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return NetworkInterfacesListEffectiveNetworkSecurityGroupsPollerResponse{}, err
-	}
-	result := NetworkInterfacesListEffectiveNetworkSecurityGroupsPollerResponse{
-		Poller:      poller,
-		RawResponse: resp,
-	}
-	result.Poller = poller
 	return result, nil
 }
 
