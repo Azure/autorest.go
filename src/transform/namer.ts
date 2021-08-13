@@ -76,6 +76,8 @@ export async function namer(session: Session<CodeModel>) {
   model.language.go!.exportClients = exportClients;
   const headAsBoolean = await session.getValue('head-as-boolean', false);
   model.language.go!.headAsBoolean = headAsBoolean;
+  const groupParameters = await session.getValue('group-parameters', true);
+  model.language.go!.groupParameters = groupParameters;
 
   // pascal-case and capitzalize acronym names of objects and their fields
   for (const obj of values(model.schemas.objects)) {
@@ -134,12 +136,12 @@ export async function namer(session: Session<CodeModel>) {
           param.language.go!.name = 'endpoint';
           continue;
         }
-        const inParamGroup = param.extensions?.['x-ms-parameter-grouping'] || param.required !== true;
+        const inParamGroup = (param.extensions?.['x-ms-parameter-grouping'] && groupParameters) || param.required !== true;
         const paramDetails = <Language>param.language.go;
         // if this is part of a param group struct then don't apply param naming rules to it
         paramDetails.name = ensureNameCase(paramDetails.name, !inParamGroup);
         // fix up any param group names
-        if (param.extensions?.['x-ms-parameter-grouping']) {
+        if (param.extensions?.['x-ms-parameter-grouping'] && groupParameters) {
           if (param.extensions['x-ms-parameter-grouping'].name) {
             param.extensions['x-ms-parameter-grouping'].name = ensureNameCase(<string>param.extensions['x-ms-parameter-grouping'].name);
           } else if (param.extensions['x-ms-parameter-grouping'].postfix) {
@@ -195,7 +197,7 @@ export async function namer(session: Session<CodeModel>) {
 
   for (const globalParam of values(session.model.globalParameters)) {
     const details = <Language>globalParam.language.go;
-    const inParamGroup = globalParam.extensions?.['x-ms-parameter-grouping'];
+    const inParamGroup = globalParam.extensions?.['x-ms-parameter-grouping'] && groupParameters;
     // if this is part of a param group struct then don't apply param naming rules to it
     details.name = getEscapedReservedName(ensureNameCase(details.name, !inParamGroup), 'Param');
   }

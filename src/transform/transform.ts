@@ -390,7 +390,7 @@ function processOperationRequests(session: Session<CodeModel>) {
           opName = 'Begin' + opName;
         }
         // check for grouping
-        if (param.extensions?.['x-ms-parameter-grouping']) {
+        if (param.extensions?.['x-ms-parameter-grouping'] && <boolean>session.model.language.go!.groupParameters) {
           // this param belongs to a param group, init name with default
           let paramGroupName = `${group.language.go!.name}${opName}Parameters`;
           if (param.extensions['x-ms-parameter-grouping'].name) {

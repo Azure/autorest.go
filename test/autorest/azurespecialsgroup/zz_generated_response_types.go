@@ -99,8 +99,8 @@ type HeaderCustomNamedRequestIDResult struct {
 	FooRequestID *string
 }
 
-// OdataGetWithFilterResponse contains the response from method Odata.GetWithFilter.
-type OdataGetWithFilterResponse struct {
+// ODataGetWithFilterResponse contains the response from method OData.GetWithFilter.
+type ODataGetWithFilterResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }

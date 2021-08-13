@@ -11,14 +11,14 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/to"
 )
 
-func newOdataClient() *OdataClient {
-	return NewOdataClient(NewDefaultConnection(nil))
+func newODataClient() *ODataClient {
+	return NewODataClient(NewDefaultConnection(nil))
 }
 
 // GetWithFilter - Specify filter parameter with value '$filter=id gt 5 and name eq 'foo'&$orderby=id&$top=10'
 func TestGetWithFilter(t *testing.T) {
-	client := newOdataClient()
-	result, err := client.GetWithFilter(context.Background(), &OdataGetWithFilterOptions{
+	client := newODataClient()
+	result, err := client.GetWithFilter(context.Background(), &ODataGetWithFilterOptions{
 		Filter:  to.StringPtr("id gt 5 and name eq 'foo'"),
 		Orderby: to.StringPtr("id"),
 		Top:     to.Int32Ptr(10),

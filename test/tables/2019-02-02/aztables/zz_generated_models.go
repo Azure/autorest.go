@@ -155,18 +155,6 @@ type Metrics struct {
 	Version *string `xml:"Version"`
 }
 
-// QueryOptions contains a group of parameters for the Table.Query method.
-type QueryOptions struct {
-	// OData filter expression.
-	Filter *string
-	// Specifies the media type for the response.
-	Format *OdataMetadataFormat
-	// Select expression using OData notation. Limits the columns on each record to just those requested, e.g. "$select=PolicyAssignmentId, ResourceId".
-	Select *string
-	// Maximum number of records to return.
-	Top *int32
-}
-
 // RetentionPolicy - The retention policy.
 type RetentionPolicy struct {
 	// REQUIRED; Indicates whether a retention policy is enabled for the service.
@@ -211,6 +199,8 @@ type SignedIdentifier struct {
 
 // TableCreateOptions contains the optional parameters for the Table.Create method.
 type TableCreateOptions struct {
+	// Specifies the media type for the response.
+	Format *ODataMetadataFormat
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics logging is enabled.
 	RequestID *string
 	// Specifies whether the response should include the inserted entity in the payload. Possible values are return-no-content and return-content.
@@ -219,6 +209,8 @@ type TableCreateOptions struct {
 
 // TableDeleteEntityOptions contains the optional parameters for the Table.DeleteEntity method.
 type TableDeleteEntityOptions struct {
+	// Specifies the media type for the response.
+	Format *ODataMetadataFormat
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics logging is enabled.
 	RequestID *string
 	// The timeout parameter is expressed in seconds.
@@ -234,7 +226,7 @@ type TableDeleteOptions struct {
 // TableEntityQueryResponse - The properties for the table entity query response.
 type TableEntityQueryResponse struct {
 	// The metadata response of the table.
-	OdataMetadata *string `json:"odata.metadata,omitempty"`
+	ODataMetadata *string `json:"odata.metadata,omitempty"`
 
 	// List of table entities.
 	Value []map[string]interface{} `json:"value,omitempty"`
@@ -243,7 +235,7 @@ type TableEntityQueryResponse struct {
 // MarshalJSON implements the json.Marshaller interface for type TableEntityQueryResponse.
 func (t TableEntityQueryResponse) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	populate(objectMap, "odata.metadata", t.OdataMetadata)
+	populate(objectMap, "odata.metadata", t.ODataMetadata)
 	populate(objectMap, "value", t.Value)
 	return json.Marshal(objectMap)
 }
@@ -258,6 +250,8 @@ type TableGetAccessPolicyOptions struct {
 
 // TableInsertEntityOptions contains the optional parameters for the Table.InsertEntity method.
 type TableInsertEntityOptions struct {
+	// Specifies the media type for the response.
+	Format *ODataMetadataFormat
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics logging is enabled.
 	RequestID *string
 	// Specifies whether the response should include the inserted entity in the payload. Possible values are return-no-content and return-content.
@@ -270,6 +264,8 @@ type TableInsertEntityOptions struct {
 
 // TableMergeEntityOptions contains the optional parameters for the Table.MergeEntity method.
 type TableMergeEntityOptions struct {
+	// Specifies the media type for the response.
+	Format *ODataMetadataFormat
 	// Match condition for an entity to be updated. If specified and a matching entity is not found, an error will be raised. To force an unconditional update,
 	// set to the wildcard character (*). If not specified, an insert will be performed when no existing entity is found to update and a merge will be performed
 	// if an existing entity is found.
@@ -290,36 +286,58 @@ type TableProperties struct {
 
 // TableQueryEntitiesOptions contains the optional parameters for the Table.QueryEntities method.
 type TableQueryEntitiesOptions struct {
+	// OData filter expression.
+	Filter *string
+	// Specifies the media type for the response.
+	Format *ODataMetadataFormat
 	// An entity query continuation token from a previous call.
 	NextPartitionKey *string
 	// An entity query continuation token from a previous call.
 	NextRowKey *string
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics logging is enabled.
 	RequestID *string
+	// Select expression using OData notation. Limits the columns on each record to just those requested, e.g. "$select=PolicyAssignmentId, ResourceId".
+	Select *string
 	// The timeout parameter is expressed in seconds.
 	Timeout *int32
+	// Maximum number of records to return.
+	Top *int32
 }
 
 // TableQueryEntityWithPartitionAndRowKeyOptions contains the optional parameters for the Table.QueryEntityWithPartitionAndRowKey method.
 type TableQueryEntityWithPartitionAndRowKeyOptions struct {
+	// OData filter expression.
+	Filter *string
+	// Specifies the media type for the response.
+	Format *ODataMetadataFormat
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics logging is enabled.
 	RequestID *string
+	// Select expression using OData notation. Limits the columns on each record to just those requested, e.g. "$select=PolicyAssignmentId, ResourceId".
+	Select *string
 	// The timeout parameter is expressed in seconds.
 	Timeout *int32
 }
 
 // TableQueryOptions contains the optional parameters for the Table.Query method.
 type TableQueryOptions struct {
+	// OData filter expression.
+	Filter *string
+	// Specifies the media type for the response.
+	Format *ODataMetadataFormat
 	// A table query continuation token from a previous call.
 	NextTableName *string
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics logging is enabled.
 	RequestID *string
+	// Select expression using OData notation. Limits the columns on each record to just those requested, e.g. "$select=PolicyAssignmentId, ResourceId".
+	Select *string
+	// Maximum number of records to return.
+	Top *int32
 }
 
 // TableQueryResponse - The properties for the table query response.
 type TableQueryResponse struct {
 	// The metadata response of the table.
-	OdataMetadata *string `json:"odata.metadata,omitempty"`
+	ODataMetadata *string `json:"odata.metadata,omitempty"`
 
 	// List of tables.
 	Value []*TableResponseProperties `json:"value,omitempty"`
@@ -328,7 +346,7 @@ type TableQueryResponse struct {
 // MarshalJSON implements the json.Marshaller interface for type TableQueryResponse.
 func (t TableQueryResponse) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	populate(objectMap, "odata.metadata", t.OdataMetadata)
+	populate(objectMap, "odata.metadata", t.ODataMetadata)
 	populate(objectMap, "value", t.Value)
 	return json.Marshal(objectMap)
 }
@@ -337,19 +355,19 @@ func (t TableQueryResponse) MarshalJSON() ([]byte, error) {
 type TableResponse struct {
 	TableResponseProperties
 	// The metadata response of the table.
-	OdataMetadata *string `json:"odata.metadata,omitempty"`
+	ODataMetadata *string `json:"odata.metadata,omitempty"`
 }
 
 // TableResponseProperties - The properties for the table response.
 type TableResponseProperties struct {
 	// The edit link of the table.
-	OdataEditLink *string `json:"odata.editLink,omitempty"`
+	ODataEditLink *string `json:"odata.editLink,omitempty"`
 
 	// The id of the table.
-	OdataID *string `json:"odata.id,omitempty"`
+	ODataID *string `json:"odata.id,omitempty"`
 
 	// The odata type of the table.
-	OdataType *string `json:"odata.type,omitempty"`
+	ODataType *string `json:"odata.type,omitempty"`
 
 	// The name of the table.
 	TableName *string `json:"TableName,omitempty"`
@@ -418,6 +436,8 @@ type TableSetAccessPolicyOptions struct {
 
 // TableUpdateEntityOptions contains the optional parameters for the Table.UpdateEntity method.
 type TableUpdateEntityOptions struct {
+	// Specifies the media type for the response.
+	Format *ODataMetadataFormat
 	// Match condition for an entity to be updated. If specified and a matching entity is not found, an error will be raised. To force an unconditional update,
 	// set to the wildcard character (*). If not specified, an insert will be performed when no existing entity is found to update and a replace will be performed
 	// if an existing entity is found.
