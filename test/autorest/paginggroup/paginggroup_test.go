@@ -109,7 +109,7 @@ func TestGetMultiplePagesFragmentNextLink(t *testing.T) {
 	count := 0
 	for page.NextPage(context.Background()) {
 		resp := page.PageResponse()
-		if len(resp.OdataProductResult.Values) == 0 {
+		if len(resp.ODataProductResult.Values) == 0 {
 			t.Fatal("missing payload")
 		}
 		count++
@@ -135,7 +135,7 @@ func TestGetMultiplePagesFragmentWithGroupingNextLink(t *testing.T) {
 	count := 0
 	for page.NextPage(context.Background()) {
 		resp := page.PageResponse()
-		if len(resp.OdataProductResult.Values) == 0 {
+		if len(resp.ODataProductResult.Values) == 0 {
 			t.Fatal("missing payload")
 		}
 		count++
@@ -295,11 +295,11 @@ func TestGetNullNextLinkNamePages(t *testing.T) {
 // GetOdataMultiplePages - A paging operation that includes a nextLink in odata format that has 10 pages
 func TestGetOdataMultiplePages(t *testing.T) {
 	client := newPagingClient()
-	page := client.GetOdataMultiplePages(nil)
+	page := client.GetODataMultiplePages(nil)
 	count := 0
 	for page.NextPage(context.Background()) {
 		resp := page.PageResponse()
-		if len(resp.OdataProductResult.Values) == 0 {
+		if len(resp.ODataProductResult.Values) == 0 {
 			t.Fatal("missing payload")
 		}
 		count++

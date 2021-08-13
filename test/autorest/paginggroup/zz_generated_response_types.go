@@ -59,7 +59,7 @@ type PagingGetMultiplePagesFragmentNextLinkResponse struct {
 
 // PagingGetMultiplePagesFragmentNextLinkResult contains the result from method Paging.GetMultiplePagesFragmentNextLink.
 type PagingGetMultiplePagesFragmentNextLinkResult struct {
-	OdataProductResult
+	ODataProductResult
 }
 
 // PagingGetMultiplePagesFragmentWithGroupingNextLinkResponse contains the response from method Paging.GetMultiplePagesFragmentWithGroupingNextLink.
@@ -71,7 +71,7 @@ type PagingGetMultiplePagesFragmentWithGroupingNextLinkResponse struct {
 
 // PagingGetMultiplePagesFragmentWithGroupingNextLinkResult contains the result from method Paging.GetMultiplePagesFragmentWithGroupingNextLink.
 type PagingGetMultiplePagesFragmentWithGroupingNextLinkResult struct {
-	OdataProductResult
+	ODataProductResult
 }
 
 // PagingGetMultiplePagesLROPollerResponse contains the response from method Paging.GetMultiplePagesLRO.
@@ -198,16 +198,16 @@ type PagingGetNullNextLinkNamePagesResult struct {
 	ProductResult
 }
 
-// PagingGetOdataMultiplePagesResponse contains the response from method Paging.GetOdataMultiplePages.
-type PagingGetOdataMultiplePagesResponse struct {
-	PagingGetOdataMultiplePagesResult
+// PagingGetODataMultiplePagesResponse contains the response from method Paging.GetODataMultiplePages.
+type PagingGetODataMultiplePagesResponse struct {
+	PagingGetODataMultiplePagesResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PagingGetOdataMultiplePagesResult contains the result from method Paging.GetOdataMultiplePages.
-type PagingGetOdataMultiplePagesResult struct {
-	OdataProductResult
+// PagingGetODataMultiplePagesResult contains the result from method Paging.GetODataMultiplePages.
+type PagingGetODataMultiplePagesResult struct {
+	ODataProductResult
 }
 
 // PagingGetPagingModelWithItemNameWithXMSClientNameResponse contains the response from method Paging.GetPagingModelWithItemNameWithXMSClientName.
@@ -267,7 +267,7 @@ type PagingNextFragmentResponse struct {
 
 // PagingNextFragmentResult contains the result from method Paging.NextFragment.
 type PagingNextFragmentResult struct {
-	OdataProductResult
+	ODataProductResult
 }
 
 // PagingNextFragmentWithGroupingResponse contains the response from method Paging.NextFragmentWithGrouping.
@@ -279,7 +279,7 @@ type PagingNextFragmentWithGroupingResponse struct {
 
 // PagingNextFragmentWithGroupingResult contains the result from method Paging.NextFragmentWithGrouping.
 type PagingNextFragmentWithGroupingResult struct {
-	OdataProductResult
+	ODataProductResult
 }
 
 // PagingNextOperationWithQueryParamsResponse contains the response from method Paging.NextOperationWithQueryParams.

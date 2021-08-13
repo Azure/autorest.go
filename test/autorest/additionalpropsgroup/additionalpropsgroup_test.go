@@ -51,7 +51,7 @@ func TestCreateAPInPropertiesWithAPString(t *testing.T) {
 	result, err := client.CreateAPInPropertiesWithAPString(context.Background(), PetAPInPropertiesWithAPString{
 		ID:            to.Int32Ptr(5),
 		Name:          to.StringPtr("Funny"),
-		OdataLocation: to.StringPtr("westus"),
+		ODataLocation: to.StringPtr("westus"),
 		AdditionalProperties: map[string]*string{
 			"color": to.StringPtr("red"),
 			"city":  to.StringPtr("Seattle"),
@@ -69,7 +69,7 @@ func TestCreateAPInPropertiesWithAPString(t *testing.T) {
 	if r := cmp.Diff(result.PetAPInPropertiesWithAPString, PetAPInPropertiesWithAPString{
 		ID:            to.Int32Ptr(5),
 		Name:          to.StringPtr("Funny"),
-		OdataLocation: to.StringPtr("westus"),
+		ODataLocation: to.StringPtr("westus"),
 		Status:        to.BoolPtr(true),
 		AdditionalProperties: map[string]*string{
 			"color": to.StringPtr("red"),

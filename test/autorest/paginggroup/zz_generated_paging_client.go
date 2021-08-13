@@ -236,7 +236,7 @@ func (client *PagingClient) GetMultiplePagesFragmentNextLink(apiVersion string, 
 			return client.getMultiplePagesFragmentNextLinkCreateRequest(ctx, apiVersion, tenant, options)
 		},
 		advancer: func(ctx context.Context, resp PagingGetMultiplePagesFragmentNextLinkResponse) (*azcore.Request, error) {
-			return client.nextFragmentCreateRequest(ctx, apiVersion, tenant, *resp.OdataProductResult.OdataNextLink)
+			return client.nextFragmentCreateRequest(ctx, apiVersion, tenant, *resp.ODataProductResult.ODataNextLink)
 		},
 	}
 }
@@ -263,7 +263,7 @@ func (client *PagingClient) getMultiplePagesFragmentNextLinkCreateRequest(ctx co
 // getMultiplePagesFragmentNextLinkHandleResponse handles the GetMultiplePagesFragmentNextLink response.
 func (client *PagingClient) getMultiplePagesFragmentNextLinkHandleResponse(resp *azcore.Response) (PagingGetMultiplePagesFragmentNextLinkResponse, error) {
 	result := PagingGetMultiplePagesFragmentNextLinkResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.OdataProductResult); err != nil {
+	if err := resp.UnmarshalAsJSON(&result.ODataProductResult); err != nil {
 		return PagingGetMultiplePagesFragmentNextLinkResponse{}, err
 	}
 	return result, nil
@@ -290,7 +290,7 @@ func (client *PagingClient) GetMultiplePagesFragmentWithGroupingNextLink(customP
 			return client.getMultiplePagesFragmentWithGroupingNextLinkCreateRequest(ctx, customParameterGroup)
 		},
 		advancer: func(ctx context.Context, resp PagingGetMultiplePagesFragmentWithGroupingNextLinkResponse) (*azcore.Request, error) {
-			return client.nextFragmentWithGroupingCreateRequest(ctx, *resp.OdataProductResult.OdataNextLink, customParameterGroup)
+			return client.nextFragmentWithGroupingCreateRequest(ctx, *resp.ODataProductResult.ODataNextLink, customParameterGroup)
 		},
 	}
 }
@@ -317,7 +317,7 @@ func (client *PagingClient) getMultiplePagesFragmentWithGroupingNextLinkCreateRe
 // getMultiplePagesFragmentWithGroupingNextLinkHandleResponse handles the GetMultiplePagesFragmentWithGroupingNextLink response.
 func (client *PagingClient) getMultiplePagesFragmentWithGroupingNextLinkHandleResponse(resp *azcore.Response) (PagingGetMultiplePagesFragmentWithGroupingNextLinkResponse, error) {
 	result := PagingGetMultiplePagesFragmentWithGroupingNextLinkResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.OdataProductResult); err != nil {
+	if err := resp.UnmarshalAsJSON(&result.ODataProductResult); err != nil {
 		return PagingGetMultiplePagesFragmentWithGroupingNextLinkResponse{}, err
 	}
 	return result, nil
@@ -665,22 +665,22 @@ func (client *PagingClient) getNullNextLinkNamePagesHandleError(resp *azcore.Res
 	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
 }
 
-// GetOdataMultiplePages - A paging operation that includes a nextLink in odata format that has 10 pages
+// GetODataMultiplePages - A paging operation that includes a nextLink in odata format that has 10 pages
 // If the operation fails it returns a generic error.
-func (client *PagingClient) GetOdataMultiplePages(options *PagingGetOdataMultiplePagesOptions) *PagingGetOdataMultiplePagesPager {
-	return &PagingGetOdataMultiplePagesPager{
+func (client *PagingClient) GetODataMultiplePages(options *PagingGetODataMultiplePagesOptions) *PagingGetODataMultiplePagesPager {
+	return &PagingGetODataMultiplePagesPager{
 		client: client,
 		requester: func(ctx context.Context) (*azcore.Request, error) {
-			return client.getOdataMultiplePagesCreateRequest(ctx, options)
+			return client.getODataMultiplePagesCreateRequest(ctx, options)
 		},
-		advancer: func(ctx context.Context, resp PagingGetOdataMultiplePagesResponse) (*azcore.Request, error) {
-			return azcore.NewRequest(ctx, http.MethodGet, *resp.OdataProductResult.OdataNextLink)
+		advancer: func(ctx context.Context, resp PagingGetODataMultiplePagesResponse) (*azcore.Request, error) {
+			return azcore.NewRequest(ctx, http.MethodGet, *resp.ODataProductResult.ODataNextLink)
 		},
 	}
 }
 
-// getOdataMultiplePagesCreateRequest creates the GetOdataMultiplePages request.
-func (client *PagingClient) getOdataMultiplePagesCreateRequest(ctx context.Context, options *PagingGetOdataMultiplePagesOptions) (*azcore.Request, error) {
+// getODataMultiplePagesCreateRequest creates the GetODataMultiplePages request.
+func (client *PagingClient) getODataMultiplePagesCreateRequest(ctx context.Context, options *PagingGetODataMultiplePagesOptions) (*azcore.Request, error) {
 	urlPath := "/paging/multiple/odata"
 	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -700,17 +700,17 @@ func (client *PagingClient) getOdataMultiplePagesCreateRequest(ctx context.Conte
 	return req, nil
 }
 
-// getOdataMultiplePagesHandleResponse handles the GetOdataMultiplePages response.
-func (client *PagingClient) getOdataMultiplePagesHandleResponse(resp *azcore.Response) (PagingGetOdataMultiplePagesResponse, error) {
-	result := PagingGetOdataMultiplePagesResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.OdataProductResult); err != nil {
-		return PagingGetOdataMultiplePagesResponse{}, err
+// getODataMultiplePagesHandleResponse handles the GetODataMultiplePages response.
+func (client *PagingClient) getODataMultiplePagesHandleResponse(resp *azcore.Response) (PagingGetODataMultiplePagesResponse, error) {
+	result := PagingGetODataMultiplePagesResponse{RawResponse: resp.Response}
+	if err := resp.UnmarshalAsJSON(&result.ODataProductResult); err != nil {
+		return PagingGetODataMultiplePagesResponse{}, err
 	}
 	return result, nil
 }
 
-// getOdataMultiplePagesHandleError handles the GetOdataMultiplePages error response.
-func (client *PagingClient) getOdataMultiplePagesHandleError(resp *azcore.Response) error {
+// getODataMultiplePagesHandleError handles the GetODataMultiplePages error response.
+func (client *PagingClient) getODataMultiplePagesHandleError(resp *azcore.Response) error {
 	body, err := resp.Payload()
 	if err != nil {
 		return azcore.NewResponseError(err, resp.Response)
@@ -940,7 +940,7 @@ func (client *PagingClient) nextFragmentCreateRequest(ctx context.Context, apiVe
 // nextFragmentHandleResponse handles the NextFragment response.
 func (client *PagingClient) nextFragmentHandleResponse(resp *azcore.Response) (PagingNextFragmentResponse, error) {
 	result := PagingNextFragmentResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.OdataProductResult); err != nil {
+	if err := resp.UnmarshalAsJSON(&result.ODataProductResult); err != nil {
 		return PagingNextFragmentResponse{}, err
 	}
 	return result, nil
@@ -984,7 +984,7 @@ func (client *PagingClient) nextFragmentWithGroupingCreateRequest(ctx context.Co
 // nextFragmentWithGroupingHandleResponse handles the NextFragmentWithGrouping response.
 func (client *PagingClient) nextFragmentWithGroupingHandleResponse(resp *azcore.Response) (PagingNextFragmentWithGroupingResponse, error) {
 	result := PagingNextFragmentWithGroupingResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.OdataProductResult); err != nil {
+	if err := resp.UnmarshalAsJSON(&result.ODataProductResult); err != nil {
 		return PagingNextFragmentWithGroupingResponse{}, err
 	}
 	return result, nil

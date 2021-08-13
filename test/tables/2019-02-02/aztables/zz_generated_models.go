@@ -160,7 +160,7 @@ type QueryOptions struct {
 	// OData filter expression.
 	Filter *string
 	// Specifies the media type for the response.
-	Format *OdataMetadataFormat
+	Format *ODataMetadataFormat
 	// Select expression using OData notation. Limits the columns on each record to just those requested, e.g. "$select=PolicyAssignmentId, ResourceId".
 	Select *string
 	// Maximum number of records to return.
@@ -234,7 +234,7 @@ type TableDeleteOptions struct {
 // TableEntityQueryResponse - The properties for the table entity query response.
 type TableEntityQueryResponse struct {
 	// The metadata response of the table.
-	OdataMetadata *string `json:"odata.metadata,omitempty"`
+	ODataMetadata *string `json:"odata.metadata,omitempty"`
 
 	// List of table entities.
 	Value []map[string]interface{} `json:"value,omitempty"`
@@ -243,7 +243,7 @@ type TableEntityQueryResponse struct {
 // MarshalJSON implements the json.Marshaller interface for type TableEntityQueryResponse.
 func (t TableEntityQueryResponse) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	populate(objectMap, "odata.metadata", t.OdataMetadata)
+	populate(objectMap, "odata.metadata", t.ODataMetadata)
 	populate(objectMap, "value", t.Value)
 	return json.Marshal(objectMap)
 }
@@ -319,7 +319,7 @@ type TableQueryOptions struct {
 // TableQueryResponse - The properties for the table query response.
 type TableQueryResponse struct {
 	// The metadata response of the table.
-	OdataMetadata *string `json:"odata.metadata,omitempty"`
+	ODataMetadata *string `json:"odata.metadata,omitempty"`
 
 	// List of tables.
 	Value []*TableResponseProperties `json:"value,omitempty"`
@@ -328,7 +328,7 @@ type TableQueryResponse struct {
 // MarshalJSON implements the json.Marshaller interface for type TableQueryResponse.
 func (t TableQueryResponse) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	populate(objectMap, "odata.metadata", t.OdataMetadata)
+	populate(objectMap, "odata.metadata", t.ODataMetadata)
 	populate(objectMap, "value", t.Value)
 	return json.Marshal(objectMap)
 }
@@ -337,19 +337,19 @@ func (t TableQueryResponse) MarshalJSON() ([]byte, error) {
 type TableResponse struct {
 	TableResponseProperties
 	// The metadata response of the table.
-	OdataMetadata *string `json:"odata.metadata,omitempty"`
+	ODataMetadata *string `json:"odata.metadata,omitempty"`
 }
 
 // TableResponseProperties - The properties for the table response.
 type TableResponseProperties struct {
 	// The edit link of the table.
-	OdataEditLink *string `json:"odata.editLink,omitempty"`
+	ODataEditLink *string `json:"odata.editLink,omitempty"`
 
 	// The id of the table.
-	OdataID *string `json:"odata.id,omitempty"`
+	ODataID *string `json:"odata.id,omitempty"`
 
 	// The odata type of the table.
-	OdataType *string `json:"odata.type,omitempty"`
+	ODataType *string `json:"odata.type,omitempty"`
 
 	// The name of the table.
 	TableName *string `json:"TableName,omitempty"`

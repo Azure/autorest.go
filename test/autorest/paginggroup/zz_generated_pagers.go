@@ -196,7 +196,7 @@ func (p *PagingGetMultiplePagesFragmentNextLinkPager) NextPage(ctx context.Conte
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
-		if p.current.OdataProductResult.OdataNextLink == nil || len(*p.current.OdataProductResult.OdataNextLink) == 0 {
+		if p.current.ODataProductResult.ODataNextLink == nil || len(*p.current.ODataProductResult.ODataNextLink) == 0 {
 			return false
 		}
 		req, err = p.advancer(ctx, p.current)
@@ -250,7 +250,7 @@ func (p *PagingGetMultiplePagesFragmentWithGroupingNextLinkPager) NextPage(ctx c
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
-		if p.current.OdataProductResult.OdataNextLink == nil || len(*p.current.OdataProductResult.OdataNextLink) == 0 {
+		if p.current.ODataProductResult.ODataNextLink == nil || len(*p.current.ODataProductResult.ODataNextLink) == 0 {
 			return false
 		}
 		req, err = p.advancer(ctx, p.current)
@@ -606,27 +606,27 @@ func (p *PagingGetNoItemNamePagesPager) PageResponse() PagingGetNoItemNamePagesR
 	return p.current
 }
 
-// PagingGetOdataMultiplePagesPager provides operations for iterating over paged responses.
-type PagingGetOdataMultiplePagesPager struct {
+// PagingGetODataMultiplePagesPager provides operations for iterating over paged responses.
+type PagingGetODataMultiplePagesPager struct {
 	client    *PagingClient
-	current   PagingGetOdataMultiplePagesResponse
+	current   PagingGetODataMultiplePagesResponse
 	err       error
 	requester func(context.Context) (*azcore.Request, error)
-	advancer  func(context.Context, PagingGetOdataMultiplePagesResponse) (*azcore.Request, error)
+	advancer  func(context.Context, PagingGetODataMultiplePagesResponse) (*azcore.Request, error)
 }
 
 // Err returns the last error encountered while paging.
-func (p *PagingGetOdataMultiplePagesPager) Err() error {
+func (p *PagingGetODataMultiplePagesPager) Err() error {
 	return p.err
 }
 
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
-func (p *PagingGetOdataMultiplePagesPager) NextPage(ctx context.Context) bool {
+func (p *PagingGetODataMultiplePagesPager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
-		if p.current.OdataProductResult.OdataNextLink == nil || len(*p.current.OdataProductResult.OdataNextLink) == 0 {
+		if p.current.ODataProductResult.ODataNextLink == nil || len(*p.current.ODataProductResult.ODataNextLink) == 0 {
 			return false
 		}
 		req, err = p.advancer(ctx, p.current)
@@ -643,10 +643,10 @@ func (p *PagingGetOdataMultiplePagesPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !resp.HasStatusCode(http.StatusOK) {
-		p.err = p.client.getOdataMultiplePagesHandleError(resp)
+		p.err = p.client.getODataMultiplePagesHandleError(resp)
 		return false
 	}
-	result, err := p.client.getOdataMultiplePagesHandleResponse(resp)
+	result, err := p.client.getODataMultiplePagesHandleResponse(resp)
 	if err != nil {
 		p.err = err
 		return false
@@ -655,8 +655,8 @@ func (p *PagingGetOdataMultiplePagesPager) NextPage(ctx context.Context) bool {
 	return true
 }
 
-// PageResponse returns the current PagingGetOdataMultiplePagesResponse page.
-func (p *PagingGetOdataMultiplePagesPager) PageResponse() PagingGetOdataMultiplePagesResponse {
+// PageResponse returns the current PagingGetODataMultiplePagesResponse page.
+func (p *PagingGetODataMultiplePagesPager) PageResponse() PagingGetODataMultiplePagesResponse {
 	return p.current
 }
 
@@ -896,7 +896,7 @@ func (p *PagingNextFragmentPager) NextPage(ctx context.Context) bool {
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
-		if p.current.OdataProductResult.OdataNextLink == nil || len(*p.current.OdataProductResult.OdataNextLink) == 0 {
+		if p.current.ODataProductResult.ODataNextLink == nil || len(*p.current.ODataProductResult.ODataNextLink) == 0 {
 			return false
 		}
 		req, err = p.advancer(ctx, p.current)
@@ -950,7 +950,7 @@ func (p *PagingNextFragmentWithGroupingPager) NextPage(ctx context.Context) bool
 	var req *azcore.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
-		if p.current.OdataProductResult.OdataNextLink == nil || len(*p.current.OdataProductResult.OdataNextLink) == 0 {
+		if p.current.ODataProductResult.ODataNextLink == nil || len(*p.current.ODataProductResult.ODataNextLink) == 0 {
 			return false
 		}
 		req, err = p.advancer(ctx, p.current)
