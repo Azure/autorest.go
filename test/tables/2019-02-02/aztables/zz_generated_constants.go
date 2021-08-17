@@ -1,4 +1,5 @@
-// +build go1.13
+//go:build go1.16
+// +build go1.16
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -7,7 +8,10 @@
 
 package aztables
 
-const telemetryInfo = "azsdk-go-aztables/v0.1"
+const (
+	telemetryInfo = "azsdk-go-aztables/" + version
+	version       = "v0.1"
+)
 
 // GeoReplicationStatusType - The status of the secondary location.
 type GeoReplicationStatusType string
