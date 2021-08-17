@@ -8,7 +8,10 @@
 
 package azartifacts
 
-const telemetryInfo = "azsdk-go-azartifacts/v0.1"
+const (
+	telemetryInfo = "azsdk-go-azartifacts/" + version
+	version       = "v0.1"
+)
 
 type AvroCompressionCodec string
 

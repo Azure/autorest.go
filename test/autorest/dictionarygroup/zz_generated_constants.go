@@ -8,4 +8,7 @@
 
 package dictionarygroup
 
-const telemetryInfo = "azsdk-go-dictionarygroup/v0.1"
+const (
+	telemetryInfo = "azsdk-go-dictionarygroup/" + version
+	version       = "v0.1"
+)

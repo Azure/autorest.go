@@ -8,4 +8,7 @@
 
 package optionalgroup
 
-const telemetryInfo = "azsdk-go-optionalgroup/v0.1"
+const (
+	telemetryInfo = "azsdk-go-optionalgroup/" + version
+	version       = "v0.1"
+)

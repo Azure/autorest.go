@@ -8,4 +8,7 @@
 
 package azurereportgroup
 
-const telemetryInfo = "azsdk-go-azurereportgroup/v0.1"
+const (
+	telemetryInfo = "azsdk-go-azurereportgroup/" + version
+	version       = "v0.1"
+)

@@ -8,4 +8,7 @@
 
 package urlmultigroup
 
-const telemetryInfo = "azsdk-go-urlmultigroup/v0.1"
+const (
+	telemetryInfo = "azsdk-go-urlmultigroup/" + version
+	version       = "v0.1"
+)

@@ -8,4 +8,7 @@
 
 package migroup
 
-const telemetryInfo = "azsdk-go-migroup/v0.1"
+const (
+	telemetryInfo = "azsdk-go-migroup/" + version
+	version       = "v0.1"
+)

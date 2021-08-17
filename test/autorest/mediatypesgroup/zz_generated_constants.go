@@ -8,7 +8,10 @@
 
 package mediatypesgroup
 
-const telemetryInfo = "azsdk-go-mediatypesgroup/v0.1"
+const (
+	telemetryInfo = "azsdk-go-mediatypesgroup/" + version
+	version       = "v0.1"
+)
 
 // ContentType - Content type for upload
 type ContentType string

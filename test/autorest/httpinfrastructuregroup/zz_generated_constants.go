@@ -8,4 +8,7 @@
 
 package httpinfrastructuregroup
 
-const telemetryInfo = "azsdk-go-httpinfrastructuregroup/v0.1"
+const (
+	telemetryInfo = "azsdk-go-httpinfrastructuregroup/" + version
+	version       = "v0.1"
+)

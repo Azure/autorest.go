@@ -8,4 +8,7 @@
 
 package durationgroup
 
-const telemetryInfo = "azsdk-go-durationgroup/v0.1"
+const (
+	telemetryInfo = "azsdk-go-durationgroup/" + version
+	version       = "v0.1"
+)

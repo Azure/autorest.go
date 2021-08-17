@@ -8,7 +8,10 @@
 
 package azalias
 
-const telemetryInfo = "azsdk-go-azalias/v0.1"
+const (
+	telemetryInfo = "azsdk-go-azalias/" + version
+	version       = "v0.1"
+)
 
 type GeographicResourceLocation string
 

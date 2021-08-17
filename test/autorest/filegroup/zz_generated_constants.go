@@ -8,4 +8,7 @@
 
 package filegroup
 
-const telemetryInfo = "azsdk-go-filegroup/v0.1"
+const (
+	telemetryInfo = "azsdk-go-filegroup/" + version
+	version       = "v0.1"
+)

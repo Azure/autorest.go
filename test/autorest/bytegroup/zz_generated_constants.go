@@ -8,4 +8,7 @@
 
 package bytegroup
 
-const telemetryInfo = "azsdk-go-bytegroup/v0.1"
+const (
+	telemetryInfo = "azsdk-go-bytegroup/" + version
+	version       = "v0.1"
+)

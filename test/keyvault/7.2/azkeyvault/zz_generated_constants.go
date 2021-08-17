@@ -8,7 +8,10 @@
 
 package azkeyvault
 
-const telemetryInfo = "azsdk-go-azkeyvault/v0.1"
+const (
+	telemetryInfo = "azsdk-go-azkeyvault/" + version
+	version       = "v0.1"
+)
 
 // ActionType - The type of the action.
 type ActionType string

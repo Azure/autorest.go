@@ -8,4 +8,7 @@
 
 package errorsgroup
 
-const telemetryInfo = "azsdk-go-errorsgroup/v0.1"
+const (
+	telemetryInfo = "azsdk-go-errorsgroup/" + version
+	version       = "v0.1"
+)
