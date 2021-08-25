@@ -63,10 +63,10 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     let text = await contentPreamble(session);
     let connection = 'Connection';
     let clientName = group.language.go!.clientName;
-    if (!isARM && !forceExports) {
-      connection = connection.uncapitalize();
-    } else if (<boolean>session.model.language.go!.azureARM) {
+    if (<boolean>session.model.language.go!.azureARM) {
       connection = 'armcore.Connection';
+    } else if (!forceExports) {
+      connection = connection.uncapitalize();
     }
     const clientCtor = group.language.go!.clientCtorName;
     text += imports.text();
