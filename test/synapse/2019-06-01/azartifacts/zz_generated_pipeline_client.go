@@ -12,7 +12,8 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -31,9 +32,9 @@ func (client *pipelineClient) BeginCreateOrUpdatePipeline(ctx context.Context, p
 		return PipelineCreateOrUpdatePipelinePollerResponse{}, err
 	}
 	result := PipelineCreateOrUpdatePipelinePollerResponse{
-		RawResponse: resp.Response,
+		RawResponse: resp,
 	}
-	pt, err := azcore.NewLROPoller("pipelineClient.CreateOrUpdatePipeline", resp, client.con.Pipeline(), client.createOrUpdatePipelineHandleError)
+	pt, err := runtime.NewPoller("pipelineClient.CreateOrUpdatePipeline", resp, client.con.Pipeline(), client.createOrUpdatePipelineHandleError)
 	if err != nil {
 		return PipelineCreateOrUpdatePipelinePollerResponse{}, err
 	}
@@ -45,7 +46,7 @@ func (client *pipelineClient) BeginCreateOrUpdatePipeline(ctx context.Context, p
 
 // CreateOrUpdatePipeline - Creates or updates a pipeline.
 // If the operation fails it returns the *CloudError error type.
-func (client *pipelineClient) createOrUpdatePipeline(ctx context.Context, pipelineName string, pipeline PipelineResource, options *PipelineBeginCreateOrUpdatePipelineOptions) (*azcore.Response, error) {
+func (client *pipelineClient) createOrUpdatePipeline(ctx context.Context, pipelineName string, pipeline PipelineResource, options *PipelineBeginCreateOrUpdatePipelineOptions) (*http.Response, error) {
 	req, err := client.createOrUpdatePipelineCreateRequest(ctx, pipelineName, pipeline, options)
 	if err != nil {
 		return nil, err
@@ -54,45 +55,44 @@ func (client *pipelineClient) createOrUpdatePipeline(ctx context.Context, pipeli
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
 		return nil, client.createOrUpdatePipelineHandleError(resp)
 	}
 	return resp, nil
 }
 
 // createOrUpdatePipelineCreateRequest creates the CreateOrUpdatePipeline request.
-func (client *pipelineClient) createOrUpdatePipelineCreateRequest(ctx context.Context, pipelineName string, pipeline PipelineResource, options *PipelineBeginCreateOrUpdatePipelineOptions) (*azcore.Request, error) {
+func (client *pipelineClient) createOrUpdatePipelineCreateRequest(ctx context.Context, pipelineName string, pipeline PipelineResource, options *PipelineBeginCreateOrUpdatePipelineOptions) (*policy.Request, error) {
 	urlPath := "/pipelines/{pipelineName}"
 	if pipelineName == "" {
 		return nil, errors.New("parameter pipelineName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{pipelineName}", url.PathEscape(pipelineName))
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-06-01-preview")
-	req.URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = reqQP.Encode()
 	if options != nil && options.IfMatch != nil {
-		req.Header.Set("If-Match", *options.IfMatch)
+		req.Raw().Header.Set("If-Match", *options.IfMatch)
 	}
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(pipeline)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, pipeline)
 }
 
 // createOrUpdatePipelineHandleError handles the CreateOrUpdatePipeline error response.
-func (client *pipelineClient) createOrUpdatePipelineHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *pipelineClient) createOrUpdatePipelineHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // CreatePipelineRun - Creates a run of a pipeline.
@@ -106,25 +106,24 @@ func (client *pipelineClient) CreatePipelineRun(ctx context.Context, pipelineNam
 	if err != nil {
 		return PipelineCreatePipelineRunResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
 		return PipelineCreatePipelineRunResponse{}, client.createPipelineRunHandleError(resp)
 	}
 	return client.createPipelineRunHandleResponse(resp)
 }
 
 // createPipelineRunCreateRequest creates the CreatePipelineRun request.
-func (client *pipelineClient) createPipelineRunCreateRequest(ctx context.Context, pipelineName string, options *PipelineCreatePipelineRunOptions) (*azcore.Request, error) {
+func (client *pipelineClient) createPipelineRunCreateRequest(ctx context.Context, pipelineName string, options *PipelineCreatePipelineRunOptions) (*policy.Request, error) {
 	urlPath := "/pipelines/{pipelineName}/createRun"
 	if pipelineName == "" {
 		return nil, errors.New("parameter pipelineName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{pipelineName}", url.PathEscape(pipelineName))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-06-01-preview")
 	if options != nil && options.ReferencePipelineRunID != nil {
 		reqQP.Set("referencePipelineRunId", *options.ReferencePipelineRunID)
@@ -135,34 +134,34 @@ func (client *pipelineClient) createPipelineRunCreateRequest(ctx context.Context
 	if options != nil && options.StartActivityName != nil {
 		reqQP.Set("startActivityName", *options.StartActivityName)
 	}
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	if options != nil && options.Parameters != nil {
-		return req, req.MarshalAsJSON(options.Parameters)
+		return req, runtime.MarshalAsJSON(req, options.Parameters)
 	}
 	return req, nil
 }
 
 // createPipelineRunHandleResponse handles the CreatePipelineRun response.
-func (client *pipelineClient) createPipelineRunHandleResponse(resp *azcore.Response) (PipelineCreatePipelineRunResponse, error) {
-	result := PipelineCreatePipelineRunResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.CreateRunResponse); err != nil {
+func (client *pipelineClient) createPipelineRunHandleResponse(resp *http.Response) (PipelineCreatePipelineRunResponse, error) {
+	result := PipelineCreatePipelineRunResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.CreateRunResponse); err != nil {
 		return PipelineCreatePipelineRunResponse{}, err
 	}
 	return result, nil
 }
 
 // createPipelineRunHandleError handles the CreatePipelineRun error response.
-func (client *pipelineClient) createPipelineRunHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *pipelineClient) createPipelineRunHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BeginDeletePipeline - Deletes a pipeline.
@@ -173,9 +172,9 @@ func (client *pipelineClient) BeginDeletePipeline(ctx context.Context, pipelineN
 		return PipelineDeletePipelinePollerResponse{}, err
 	}
 	result := PipelineDeletePipelinePollerResponse{
-		RawResponse: resp.Response,
+		RawResponse: resp,
 	}
-	pt, err := azcore.NewLROPoller("pipelineClient.DeletePipeline", resp, client.con.Pipeline(), client.deletePipelineHandleError)
+	pt, err := runtime.NewPoller("pipelineClient.DeletePipeline", resp, client.con.Pipeline(), client.deletePipelineHandleError)
 	if err != nil {
 		return PipelineDeletePipelinePollerResponse{}, err
 	}
@@ -187,7 +186,7 @@ func (client *pipelineClient) BeginDeletePipeline(ctx context.Context, pipelineN
 
 // DeletePipeline - Deletes a pipeline.
 // If the operation fails it returns the *CloudError error type.
-func (client *pipelineClient) deletePipeline(ctx context.Context, pipelineName string, options *PipelineBeginDeletePipelineOptions) (*azcore.Response, error) {
+func (client *pipelineClient) deletePipeline(ctx context.Context, pipelineName string, options *PipelineBeginDeletePipelineOptions) (*http.Response, error) {
 	req, err := client.deletePipelineCreateRequest(ctx, pipelineName, options)
 	if err != nil {
 		return nil, err
@@ -196,42 +195,41 @@ func (client *pipelineClient) deletePipeline(ctx context.Context, pipelineName s
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.deletePipelineHandleError(resp)
 	}
 	return resp, nil
 }
 
 // deletePipelineCreateRequest creates the DeletePipeline request.
-func (client *pipelineClient) deletePipelineCreateRequest(ctx context.Context, pipelineName string, options *PipelineBeginDeletePipelineOptions) (*azcore.Request, error) {
+func (client *pipelineClient) deletePipelineCreateRequest(ctx context.Context, pipelineName string, options *PipelineBeginDeletePipelineOptions) (*policy.Request, error) {
 	urlPath := "/pipelines/{pipelineName}"
 	if pipelineName == "" {
 		return nil, errors.New("parameter pipelineName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{pipelineName}", url.PathEscape(pipelineName))
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-06-01-preview")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // deletePipelineHandleError handles the DeletePipeline error response.
-func (client *pipelineClient) deletePipelineHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *pipelineClient) deletePipelineHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetPipeline - Gets a pipeline.
@@ -245,54 +243,53 @@ func (client *pipelineClient) GetPipeline(ctx context.Context, pipelineName stri
 	if err != nil {
 		return PipelineGetPipelineResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusNotModified) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusNotModified) {
 		return PipelineGetPipelineResponse{}, client.getPipelineHandleError(resp)
 	}
 	return client.getPipelineHandleResponse(resp)
 }
 
 // getPipelineCreateRequest creates the GetPipeline request.
-func (client *pipelineClient) getPipelineCreateRequest(ctx context.Context, pipelineName string, options *PipelineGetPipelineOptions) (*azcore.Request, error) {
+func (client *pipelineClient) getPipelineCreateRequest(ctx context.Context, pipelineName string, options *PipelineGetPipelineOptions) (*policy.Request, error) {
 	urlPath := "/pipelines/{pipelineName}"
 	if pipelineName == "" {
 		return nil, errors.New("parameter pipelineName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{pipelineName}", url.PathEscape(pipelineName))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-06-01-preview")
-	req.URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = reqQP.Encode()
 	if options != nil && options.IfNoneMatch != nil {
-		req.Header.Set("If-None-Match", *options.IfNoneMatch)
+		req.Raw().Header.Set("If-None-Match", *options.IfNoneMatch)
 	}
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getPipelineHandleResponse handles the GetPipeline response.
-func (client *pipelineClient) getPipelineHandleResponse(resp *azcore.Response) (PipelineGetPipelineResponse, error) {
-	result := PipelineGetPipelineResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.PipelineResource); err != nil {
+func (client *pipelineClient) getPipelineHandleResponse(resp *http.Response) (PipelineGetPipelineResponse, error) {
+	result := PipelineGetPipelineResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.PipelineResource); err != nil {
 		return PipelineGetPipelineResponse{}, err
 	}
 	return result, nil
 }
 
 // getPipelineHandleError handles the GetPipeline error response.
-func (client *pipelineClient) getPipelineHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *pipelineClient) getPipelineHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetPipelinesByWorkspace - Lists pipelines.
@@ -300,50 +297,49 @@ func (client *pipelineClient) getPipelineHandleError(resp *azcore.Response) erro
 func (client *pipelineClient) GetPipelinesByWorkspace(options *PipelineGetPipelinesByWorkspaceOptions) *PipelineGetPipelinesByWorkspacePager {
 	return &PipelineGetPipelinesByWorkspacePager{
 		client: client,
-		requester: func(ctx context.Context) (*azcore.Request, error) {
+		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.getPipelinesByWorkspaceCreateRequest(ctx, options)
 		},
-		advancer: func(ctx context.Context, resp PipelineGetPipelinesByWorkspaceResponse) (*azcore.Request, error) {
-			return azcore.NewRequest(ctx, http.MethodGet, *resp.PipelineListResponse.NextLink)
+		advancer: func(ctx context.Context, resp PipelineGetPipelinesByWorkspaceResponse) (*policy.Request, error) {
+			return runtime.NewRequest(ctx, http.MethodGet, *resp.PipelineListResponse.NextLink)
 		},
 	}
 }
 
 // getPipelinesByWorkspaceCreateRequest creates the GetPipelinesByWorkspace request.
-func (client *pipelineClient) getPipelinesByWorkspaceCreateRequest(ctx context.Context, options *PipelineGetPipelinesByWorkspaceOptions) (*azcore.Request, error) {
+func (client *pipelineClient) getPipelinesByWorkspaceCreateRequest(ctx context.Context, options *PipelineGetPipelinesByWorkspaceOptions) (*policy.Request, error) {
 	urlPath := "/pipelines"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-06-01-preview")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getPipelinesByWorkspaceHandleResponse handles the GetPipelinesByWorkspace response.
-func (client *pipelineClient) getPipelinesByWorkspaceHandleResponse(resp *azcore.Response) (PipelineGetPipelinesByWorkspaceResponse, error) {
-	result := PipelineGetPipelinesByWorkspaceResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.PipelineListResponse); err != nil {
+func (client *pipelineClient) getPipelinesByWorkspaceHandleResponse(resp *http.Response) (PipelineGetPipelinesByWorkspaceResponse, error) {
+	result := PipelineGetPipelinesByWorkspaceResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.PipelineListResponse); err != nil {
 		return PipelineGetPipelinesByWorkspaceResponse{}, err
 	}
 	return result, nil
 }
 
 // getPipelinesByWorkspaceHandleError handles the GetPipelinesByWorkspace error response.
-func (client *pipelineClient) getPipelinesByWorkspaceHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *pipelineClient) getPipelinesByWorkspaceHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BeginRenamePipeline - Renames a pipeline.
@@ -354,9 +350,9 @@ func (client *pipelineClient) BeginRenamePipeline(ctx context.Context, pipelineN
 		return PipelineRenamePipelinePollerResponse{}, err
 	}
 	result := PipelineRenamePipelinePollerResponse{
-		RawResponse: resp.Response,
+		RawResponse: resp,
 	}
-	pt, err := azcore.NewLROPoller("pipelineClient.RenamePipeline", resp, client.con.Pipeline(), client.renamePipelineHandleError)
+	pt, err := runtime.NewPoller("pipelineClient.RenamePipeline", resp, client.con.Pipeline(), client.renamePipelineHandleError)
 	if err != nil {
 		return PipelineRenamePipelinePollerResponse{}, err
 	}
@@ -368,7 +364,7 @@ func (client *pipelineClient) BeginRenamePipeline(ctx context.Context, pipelineN
 
 // RenamePipeline - Renames a pipeline.
 // If the operation fails it returns the *CloudError error type.
-func (client *pipelineClient) renamePipeline(ctx context.Context, pipelineName string, request ArtifactRenameRequest, options *PipelineBeginRenamePipelineOptions) (*azcore.Response, error) {
+func (client *pipelineClient) renamePipeline(ctx context.Context, pipelineName string, request ArtifactRenameRequest, options *PipelineBeginRenamePipelineOptions) (*http.Response, error) {
 	req, err := client.renamePipelineCreateRequest(ctx, pipelineName, request, options)
 	if err != nil {
 		return nil, err
@@ -377,40 +373,39 @@ func (client *pipelineClient) renamePipeline(ctx context.Context, pipelineName s
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
 		return nil, client.renamePipelineHandleError(resp)
 	}
 	return resp, nil
 }
 
 // renamePipelineCreateRequest creates the RenamePipeline request.
-func (client *pipelineClient) renamePipelineCreateRequest(ctx context.Context, pipelineName string, request ArtifactRenameRequest, options *PipelineBeginRenamePipelineOptions) (*azcore.Request, error) {
+func (client *pipelineClient) renamePipelineCreateRequest(ctx context.Context, pipelineName string, request ArtifactRenameRequest, options *PipelineBeginRenamePipelineOptions) (*policy.Request, error) {
 	urlPath := "/pipelines/{pipelineName}/rename"
 	if pipelineName == "" {
 		return nil, errors.New("parameter pipelineName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{pipelineName}", url.PathEscape(pipelineName))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-06-01-preview")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(request)
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, request)
 }
 
 // renamePipelineHandleError handles the RenamePipeline error response.
-func (client *pipelineClient) renamePipelineHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *pipelineClient) renamePipelineHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }

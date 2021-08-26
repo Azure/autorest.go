@@ -9,8 +9,8 @@
 package paginggroup
 
 const (
-	telemetryInfo = "azsdk-go-paginggroup/" + version
-	version       = "v0.1"
+	module  = "paginggroup"
+	version = "v0.1"
 )
 
 // OperationResultStatus - The status of the request

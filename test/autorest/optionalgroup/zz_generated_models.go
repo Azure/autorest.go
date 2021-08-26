@@ -11,6 +11,7 @@ package optionalgroup
 import (
 	"encoding/json"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"io"
 	"reflect"
 )
 
@@ -171,7 +172,7 @@ type ExplicitPostRequiredStringPropertyOptions struct {
 
 // ExplicitPutOptionalBinaryBodyOptions contains the optional parameters for the Explicit.PutOptionalBinaryBody method.
 type ExplicitPutOptionalBinaryBodyOptions struct {
-	BodyParameter azcore.ReadSeekCloser
+	BodyParameter io.ReadSeekCloser
 }
 
 // ExplicitPutRequiredBinaryBodyOptions contains the optional parameters for the Explicit.PutRequiredBinaryBody method.
@@ -200,7 +201,7 @@ type ImplicitGetRequiredPathOptions struct {
 
 // ImplicitPutOptionalBinaryBodyOptions contains the optional parameters for the Implicit.PutOptionalBinaryBody method.
 type ImplicitPutOptionalBinaryBodyOptions struct {
-	BodyParameter azcore.ReadSeekCloser
+	BodyParameter io.ReadSeekCloser
 }
 
 // ImplicitPutOptionalBodyOptions contains the optional parameters for the Implicit.PutOptionalBody method.

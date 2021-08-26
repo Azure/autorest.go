@@ -11,7 +11,8 @@ package httpinfrastructuregroup
 import (
 	"context"
 	"fmt"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
@@ -37,35 +38,34 @@ func (client *HTTPSuccessClient) Delete200(ctx context.Context, options *HTTPSuc
 	if err != nil {
 		return HTTPSuccessDelete200Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HTTPSuccessDelete200Response{}, client.delete200HandleError(resp)
 	}
-	return HTTPSuccessDelete200Response{RawResponse: resp.Response}, nil
+	return HTTPSuccessDelete200Response{RawResponse: resp}, nil
 }
 
 // delete200CreateRequest creates the Delete200 request.
-func (client *HTTPSuccessClient) delete200CreateRequest(ctx context.Context, options *HTTPSuccessDelete200Options) (*azcore.Request, error) {
+func (client *HTTPSuccessClient) delete200CreateRequest(ctx context.Context, options *HTTPSuccessDelete200Options) (*policy.Request, error) {
 	urlPath := "/http/success/200"
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(true)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, true)
 }
 
 // delete200HandleError handles the Delete200 error response.
-func (client *HTTPSuccessClient) delete200HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HTTPSuccessClient) delete200HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // Delete202 - Delete true Boolean value in request returns 202 (accepted)
@@ -79,35 +79,34 @@ func (client *HTTPSuccessClient) Delete202(ctx context.Context, options *HTTPSuc
 	if err != nil {
 		return HTTPSuccessDelete202Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
 		return HTTPSuccessDelete202Response{}, client.delete202HandleError(resp)
 	}
-	return HTTPSuccessDelete202Response{RawResponse: resp.Response}, nil
+	return HTTPSuccessDelete202Response{RawResponse: resp}, nil
 }
 
 // delete202CreateRequest creates the Delete202 request.
-func (client *HTTPSuccessClient) delete202CreateRequest(ctx context.Context, options *HTTPSuccessDelete202Options) (*azcore.Request, error) {
+func (client *HTTPSuccessClient) delete202CreateRequest(ctx context.Context, options *HTTPSuccessDelete202Options) (*policy.Request, error) {
 	urlPath := "/http/success/202"
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(true)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, true)
 }
 
 // delete202HandleError handles the Delete202 error response.
-func (client *HTTPSuccessClient) delete202HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HTTPSuccessClient) delete202HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // Delete204 - Delete true Boolean value in request returns 204 (no content)
@@ -121,35 +120,34 @@ func (client *HTTPSuccessClient) Delete204(ctx context.Context, options *HTTPSuc
 	if err != nil {
 		return HTTPSuccessDelete204Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusNoContent) {
+	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
 		return HTTPSuccessDelete204Response{}, client.delete204HandleError(resp)
 	}
-	return HTTPSuccessDelete204Response{RawResponse: resp.Response}, nil
+	return HTTPSuccessDelete204Response{RawResponse: resp}, nil
 }
 
 // delete204CreateRequest creates the Delete204 request.
-func (client *HTTPSuccessClient) delete204CreateRequest(ctx context.Context, options *HTTPSuccessDelete204Options) (*azcore.Request, error) {
+func (client *HTTPSuccessClient) delete204CreateRequest(ctx context.Context, options *HTTPSuccessDelete204Options) (*policy.Request, error) {
 	urlPath := "/http/success/204"
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(true)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, true)
 }
 
 // delete204HandleError handles the Delete204 error response.
-func (client *HTTPSuccessClient) delete204HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HTTPSuccessClient) delete204HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // Get200 - Get 200 success
@@ -163,44 +161,43 @@ func (client *HTTPSuccessClient) Get200(ctx context.Context, options *HTTPSucces
 	if err != nil {
 		return HTTPSuccessGet200Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HTTPSuccessGet200Response{}, client.get200HandleError(resp)
 	}
 	return client.get200HandleResponse(resp)
 }
 
 // get200CreateRequest creates the Get200 request.
-func (client *HTTPSuccessClient) get200CreateRequest(ctx context.Context, options *HTTPSuccessGet200Options) (*azcore.Request, error) {
+func (client *HTTPSuccessClient) get200CreateRequest(ctx context.Context, options *HTTPSuccessGet200Options) (*policy.Request, error) {
 	urlPath := "/http/success/200"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // get200HandleResponse handles the Get200 response.
-func (client *HTTPSuccessClient) get200HandleResponse(resp *azcore.Response) (HTTPSuccessGet200Response, error) {
-	result := HTTPSuccessGet200Response{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.Value); err != nil {
+func (client *HTTPSuccessClient) get200HandleResponse(resp *http.Response) (HTTPSuccessGet200Response, error) {
+	result := HTTPSuccessGet200Response{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return HTTPSuccessGet200Response{}, err
 	}
 	return result, nil
 }
 
 // get200HandleError handles the Get200 error response.
-func (client *HTTPSuccessClient) get200HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HTTPSuccessClient) get200HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // Head200 - Return 200 status code if successful
@@ -214,7 +211,7 @@ func (client *HTTPSuccessClient) Head200(ctx context.Context, options *HTTPSucce
 	if err != nil {
 		return HTTPSuccessHead200Response{}, err
 	}
-	result := HTTPSuccessHead200Response{RawResponse: resp.Response}
+	result := HTTPSuccessHead200Response{RawResponse: resp}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
 		result.Success = true
 	}
@@ -222,14 +219,13 @@ func (client *HTTPSuccessClient) Head200(ctx context.Context, options *HTTPSucce
 }
 
 // head200CreateRequest creates the Head200 request.
-func (client *HTTPSuccessClient) head200CreateRequest(ctx context.Context, options *HTTPSuccessHead200Options) (*azcore.Request, error) {
+func (client *HTTPSuccessClient) head200CreateRequest(ctx context.Context, options *HTTPSuccessHead200Options) (*policy.Request, error) {
 	urlPath := "/http/success/200"
-	req, err := azcore.NewRequest(ctx, http.MethodHead, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -244,7 +240,7 @@ func (client *HTTPSuccessClient) Head204(ctx context.Context, options *HTTPSucce
 	if err != nil {
 		return HTTPSuccessHead204Response{}, err
 	}
-	result := HTTPSuccessHead204Response{RawResponse: resp.Response}
+	result := HTTPSuccessHead204Response{RawResponse: resp}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
 		result.Success = true
 	}
@@ -252,14 +248,13 @@ func (client *HTTPSuccessClient) Head204(ctx context.Context, options *HTTPSucce
 }
 
 // head204CreateRequest creates the Head204 request.
-func (client *HTTPSuccessClient) head204CreateRequest(ctx context.Context, options *HTTPSuccessHead204Options) (*azcore.Request, error) {
+func (client *HTTPSuccessClient) head204CreateRequest(ctx context.Context, options *HTTPSuccessHead204Options) (*policy.Request, error) {
 	urlPath := "/http/success/204"
-	req, err := azcore.NewRequest(ctx, http.MethodHead, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -274,7 +269,7 @@ func (client *HTTPSuccessClient) Head404(ctx context.Context, options *HTTPSucce
 	if err != nil {
 		return HTTPSuccessHead404Response{}, err
 	}
-	result := HTTPSuccessHead404Response{RawResponse: resp.Response}
+	result := HTTPSuccessHead404Response{RawResponse: resp}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
 		result.Success = true
 	}
@@ -282,14 +277,13 @@ func (client *HTTPSuccessClient) Head404(ctx context.Context, options *HTTPSucce
 }
 
 // head404CreateRequest creates the Head404 request.
-func (client *HTTPSuccessClient) head404CreateRequest(ctx context.Context, options *HTTPSuccessHead404Options) (*azcore.Request, error) {
+func (client *HTTPSuccessClient) head404CreateRequest(ctx context.Context, options *HTTPSuccessHead404Options) (*policy.Request, error) {
 	urlPath := "/http/success/404"
-	req, err := azcore.NewRequest(ctx, http.MethodHead, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -304,44 +298,43 @@ func (client *HTTPSuccessClient) Options200(ctx context.Context, options *HTTPSu
 	if err != nil {
 		return HTTPSuccessOptions200Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HTTPSuccessOptions200Response{}, client.options200HandleError(resp)
 	}
 	return client.options200HandleResponse(resp)
 }
 
 // options200CreateRequest creates the Options200 request.
-func (client *HTTPSuccessClient) options200CreateRequest(ctx context.Context, options *HTTPSuccessOptions200Options) (*azcore.Request, error) {
+func (client *HTTPSuccessClient) options200CreateRequest(ctx context.Context, options *HTTPSuccessOptions200Options) (*policy.Request, error) {
 	urlPath := "/http/success/200"
-	req, err := azcore.NewRequest(ctx, http.MethodOptions, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodOptions, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // options200HandleResponse handles the Options200 response.
-func (client *HTTPSuccessClient) options200HandleResponse(resp *azcore.Response) (HTTPSuccessOptions200Response, error) {
-	result := HTTPSuccessOptions200Response{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.Value); err != nil {
+func (client *HTTPSuccessClient) options200HandleResponse(resp *http.Response) (HTTPSuccessOptions200Response, error) {
+	result := HTTPSuccessOptions200Response{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return HTTPSuccessOptions200Response{}, err
 	}
 	return result, nil
 }
 
 // options200HandleError handles the Options200 error response.
-func (client *HTTPSuccessClient) options200HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HTTPSuccessClient) options200HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // Patch200 - Patch true Boolean value in request returning 200
@@ -355,35 +348,34 @@ func (client *HTTPSuccessClient) Patch200(ctx context.Context, options *HTTPSucc
 	if err != nil {
 		return HTTPSuccessPatch200Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HTTPSuccessPatch200Response{}, client.patch200HandleError(resp)
 	}
-	return HTTPSuccessPatch200Response{RawResponse: resp.Response}, nil
+	return HTTPSuccessPatch200Response{RawResponse: resp}, nil
 }
 
 // patch200CreateRequest creates the Patch200 request.
-func (client *HTTPSuccessClient) patch200CreateRequest(ctx context.Context, options *HTTPSuccessPatch200Options) (*azcore.Request, error) {
+func (client *HTTPSuccessClient) patch200CreateRequest(ctx context.Context, options *HTTPSuccessPatch200Options) (*policy.Request, error) {
 	urlPath := "/http/success/200"
-	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(true)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, true)
 }
 
 // patch200HandleError handles the Patch200 error response.
-func (client *HTTPSuccessClient) patch200HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HTTPSuccessClient) patch200HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // Patch202 - Patch true Boolean value in request returns 202
@@ -397,35 +389,34 @@ func (client *HTTPSuccessClient) Patch202(ctx context.Context, options *HTTPSucc
 	if err != nil {
 		return HTTPSuccessPatch202Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
 		return HTTPSuccessPatch202Response{}, client.patch202HandleError(resp)
 	}
-	return HTTPSuccessPatch202Response{RawResponse: resp.Response}, nil
+	return HTTPSuccessPatch202Response{RawResponse: resp}, nil
 }
 
 // patch202CreateRequest creates the Patch202 request.
-func (client *HTTPSuccessClient) patch202CreateRequest(ctx context.Context, options *HTTPSuccessPatch202Options) (*azcore.Request, error) {
+func (client *HTTPSuccessClient) patch202CreateRequest(ctx context.Context, options *HTTPSuccessPatch202Options) (*policy.Request, error) {
 	urlPath := "/http/success/202"
-	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(true)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, true)
 }
 
 // patch202HandleError handles the Patch202 error response.
-func (client *HTTPSuccessClient) patch202HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HTTPSuccessClient) patch202HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // Patch204 - Patch true Boolean value in request returns 204 (no content)
@@ -439,35 +430,34 @@ func (client *HTTPSuccessClient) Patch204(ctx context.Context, options *HTTPSucc
 	if err != nil {
 		return HTTPSuccessPatch204Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusNoContent) {
+	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
 		return HTTPSuccessPatch204Response{}, client.patch204HandleError(resp)
 	}
-	return HTTPSuccessPatch204Response{RawResponse: resp.Response}, nil
+	return HTTPSuccessPatch204Response{RawResponse: resp}, nil
 }
 
 // patch204CreateRequest creates the Patch204 request.
-func (client *HTTPSuccessClient) patch204CreateRequest(ctx context.Context, options *HTTPSuccessPatch204Options) (*azcore.Request, error) {
+func (client *HTTPSuccessClient) patch204CreateRequest(ctx context.Context, options *HTTPSuccessPatch204Options) (*policy.Request, error) {
 	urlPath := "/http/success/204"
-	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(true)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, true)
 }
 
 // patch204HandleError handles the Patch204 error response.
-func (client *HTTPSuccessClient) patch204HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HTTPSuccessClient) patch204HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // Post200 - Post bollean value true in request that returns a 200
@@ -481,35 +471,34 @@ func (client *HTTPSuccessClient) Post200(ctx context.Context, options *HTTPSucce
 	if err != nil {
 		return HTTPSuccessPost200Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HTTPSuccessPost200Response{}, client.post200HandleError(resp)
 	}
-	return HTTPSuccessPost200Response{RawResponse: resp.Response}, nil
+	return HTTPSuccessPost200Response{RawResponse: resp}, nil
 }
 
 // post200CreateRequest creates the Post200 request.
-func (client *HTTPSuccessClient) post200CreateRequest(ctx context.Context, options *HTTPSuccessPost200Options) (*azcore.Request, error) {
+func (client *HTTPSuccessClient) post200CreateRequest(ctx context.Context, options *HTTPSuccessPost200Options) (*policy.Request, error) {
 	urlPath := "/http/success/200"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(true)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, true)
 }
 
 // post200HandleError handles the Post200 error response.
-func (client *HTTPSuccessClient) post200HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HTTPSuccessClient) post200HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // Post201 - Post true Boolean value in request returns 201 (Created)
@@ -523,35 +512,34 @@ func (client *HTTPSuccessClient) Post201(ctx context.Context, options *HTTPSucce
 	if err != nil {
 		return HTTPSuccessPost201Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusCreated) {
+	if !runtime.HasStatusCode(resp, http.StatusCreated) {
 		return HTTPSuccessPost201Response{}, client.post201HandleError(resp)
 	}
-	return HTTPSuccessPost201Response{RawResponse: resp.Response}, nil
+	return HTTPSuccessPost201Response{RawResponse: resp}, nil
 }
 
 // post201CreateRequest creates the Post201 request.
-func (client *HTTPSuccessClient) post201CreateRequest(ctx context.Context, options *HTTPSuccessPost201Options) (*azcore.Request, error) {
+func (client *HTTPSuccessClient) post201CreateRequest(ctx context.Context, options *HTTPSuccessPost201Options) (*policy.Request, error) {
 	urlPath := "/http/success/201"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(true)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, true)
 }
 
 // post201HandleError handles the Post201 error response.
-func (client *HTTPSuccessClient) post201HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HTTPSuccessClient) post201HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // Post202 - Post true Boolean value in request returns 202 (Accepted)
@@ -565,35 +553,34 @@ func (client *HTTPSuccessClient) Post202(ctx context.Context, options *HTTPSucce
 	if err != nil {
 		return HTTPSuccessPost202Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
 		return HTTPSuccessPost202Response{}, client.post202HandleError(resp)
 	}
-	return HTTPSuccessPost202Response{RawResponse: resp.Response}, nil
+	return HTTPSuccessPost202Response{RawResponse: resp}, nil
 }
 
 // post202CreateRequest creates the Post202 request.
-func (client *HTTPSuccessClient) post202CreateRequest(ctx context.Context, options *HTTPSuccessPost202Options) (*azcore.Request, error) {
+func (client *HTTPSuccessClient) post202CreateRequest(ctx context.Context, options *HTTPSuccessPost202Options) (*policy.Request, error) {
 	urlPath := "/http/success/202"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(true)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, true)
 }
 
 // post202HandleError handles the Post202 error response.
-func (client *HTTPSuccessClient) post202HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HTTPSuccessClient) post202HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // Post204 - Post true Boolean value in request returns 204 (no content)
@@ -607,35 +594,34 @@ func (client *HTTPSuccessClient) Post204(ctx context.Context, options *HTTPSucce
 	if err != nil {
 		return HTTPSuccessPost204Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusNoContent) {
+	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
 		return HTTPSuccessPost204Response{}, client.post204HandleError(resp)
 	}
-	return HTTPSuccessPost204Response{RawResponse: resp.Response}, nil
+	return HTTPSuccessPost204Response{RawResponse: resp}, nil
 }
 
 // post204CreateRequest creates the Post204 request.
-func (client *HTTPSuccessClient) post204CreateRequest(ctx context.Context, options *HTTPSuccessPost204Options) (*azcore.Request, error) {
+func (client *HTTPSuccessClient) post204CreateRequest(ctx context.Context, options *HTTPSuccessPost204Options) (*policy.Request, error) {
 	urlPath := "/http/success/204"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(true)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, true)
 }
 
 // post204HandleError handles the Post204 error response.
-func (client *HTTPSuccessClient) post204HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HTTPSuccessClient) post204HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // Put200 - Put boolean value true returning 200 success
@@ -649,35 +635,34 @@ func (client *HTTPSuccessClient) Put200(ctx context.Context, options *HTTPSucces
 	if err != nil {
 		return HTTPSuccessPut200Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HTTPSuccessPut200Response{}, client.put200HandleError(resp)
 	}
-	return HTTPSuccessPut200Response{RawResponse: resp.Response}, nil
+	return HTTPSuccessPut200Response{RawResponse: resp}, nil
 }
 
 // put200CreateRequest creates the Put200 request.
-func (client *HTTPSuccessClient) put200CreateRequest(ctx context.Context, options *HTTPSuccessPut200Options) (*azcore.Request, error) {
+func (client *HTTPSuccessClient) put200CreateRequest(ctx context.Context, options *HTTPSuccessPut200Options) (*policy.Request, error) {
 	urlPath := "/http/success/200"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(true)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, true)
 }
 
 // put200HandleError handles the Put200 error response.
-func (client *HTTPSuccessClient) put200HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HTTPSuccessClient) put200HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // Put201 - Put true Boolean value in request returns 201
@@ -691,35 +676,34 @@ func (client *HTTPSuccessClient) Put201(ctx context.Context, options *HTTPSucces
 	if err != nil {
 		return HTTPSuccessPut201Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusCreated) {
+	if !runtime.HasStatusCode(resp, http.StatusCreated) {
 		return HTTPSuccessPut201Response{}, client.put201HandleError(resp)
 	}
-	return HTTPSuccessPut201Response{RawResponse: resp.Response}, nil
+	return HTTPSuccessPut201Response{RawResponse: resp}, nil
 }
 
 // put201CreateRequest creates the Put201 request.
-func (client *HTTPSuccessClient) put201CreateRequest(ctx context.Context, options *HTTPSuccessPut201Options) (*azcore.Request, error) {
+func (client *HTTPSuccessClient) put201CreateRequest(ctx context.Context, options *HTTPSuccessPut201Options) (*policy.Request, error) {
 	urlPath := "/http/success/201"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(true)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, true)
 }
 
 // put201HandleError handles the Put201 error response.
-func (client *HTTPSuccessClient) put201HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HTTPSuccessClient) put201HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // Put202 - Put true Boolean value in request returns 202 (Accepted)
@@ -733,35 +717,34 @@ func (client *HTTPSuccessClient) Put202(ctx context.Context, options *HTTPSucces
 	if err != nil {
 		return HTTPSuccessPut202Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
 		return HTTPSuccessPut202Response{}, client.put202HandleError(resp)
 	}
-	return HTTPSuccessPut202Response{RawResponse: resp.Response}, nil
+	return HTTPSuccessPut202Response{RawResponse: resp}, nil
 }
 
 // put202CreateRequest creates the Put202 request.
-func (client *HTTPSuccessClient) put202CreateRequest(ctx context.Context, options *HTTPSuccessPut202Options) (*azcore.Request, error) {
+func (client *HTTPSuccessClient) put202CreateRequest(ctx context.Context, options *HTTPSuccessPut202Options) (*policy.Request, error) {
 	urlPath := "/http/success/202"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(true)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, true)
 }
 
 // put202HandleError handles the Put202 error response.
-func (client *HTTPSuccessClient) put202HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HTTPSuccessClient) put202HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // Put204 - Put true Boolean value in request returns 204 (no content)
@@ -775,33 +758,32 @@ func (client *HTTPSuccessClient) Put204(ctx context.Context, options *HTTPSucces
 	if err != nil {
 		return HTTPSuccessPut204Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusNoContent) {
+	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
 		return HTTPSuccessPut204Response{}, client.put204HandleError(resp)
 	}
-	return HTTPSuccessPut204Response{RawResponse: resp.Response}, nil
+	return HTTPSuccessPut204Response{RawResponse: resp}, nil
 }
 
 // put204CreateRequest creates the Put204 request.
-func (client *HTTPSuccessClient) put204CreateRequest(ctx context.Context, options *HTTPSuccessPut204Options) (*azcore.Request, error) {
+func (client *HTTPSuccessClient) put204CreateRequest(ctx context.Context, options *HTTPSuccessPut204Options) (*policy.Request, error) {
 	urlPath := "/http/success/204"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(true)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, true)
 }
 
 // put204HandleError handles the Put204 error response.
-func (client *HTTPSuccessClient) put204HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HTTPSuccessClient) put204HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }

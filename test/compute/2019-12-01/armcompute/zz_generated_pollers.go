@@ -10,13 +10,13 @@ package armcompute
 
 import (
 	"context"
-	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 )
 
 // ContainerServicesCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type ContainerServicesCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -59,7 +59,7 @@ func (p *ContainerServicesCreateOrUpdatePoller) ResumeToken() (string, error) {
 
 // ContainerServicesDeletePoller provides polling facilities until the operation reaches a terminal state.
 type ContainerServicesDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -102,7 +102,7 @@ func (p *ContainerServicesDeletePoller) ResumeToken() (string, error) {
 
 // DedicatedHostsCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type DedicatedHostsCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -145,7 +145,7 @@ func (p *DedicatedHostsCreateOrUpdatePoller) ResumeToken() (string, error) {
 
 // DedicatedHostsDeletePoller provides polling facilities until the operation reaches a terminal state.
 type DedicatedHostsDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -188,7 +188,7 @@ func (p *DedicatedHostsDeletePoller) ResumeToken() (string, error) {
 
 // DedicatedHostsUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type DedicatedHostsUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -231,7 +231,7 @@ func (p *DedicatedHostsUpdatePoller) ResumeToken() (string, error) {
 
 // DiskEncryptionSetsCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type DiskEncryptionSetsCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -274,7 +274,7 @@ func (p *DiskEncryptionSetsCreateOrUpdatePoller) ResumeToken() (string, error) {
 
 // DiskEncryptionSetsDeletePoller provides polling facilities until the operation reaches a terminal state.
 type DiskEncryptionSetsDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -317,7 +317,7 @@ func (p *DiskEncryptionSetsDeletePoller) ResumeToken() (string, error) {
 
 // DiskEncryptionSetsUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type DiskEncryptionSetsUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -360,7 +360,7 @@ func (p *DiskEncryptionSetsUpdatePoller) ResumeToken() (string, error) {
 
 // DisksCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type DisksCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -403,7 +403,7 @@ func (p *DisksCreateOrUpdatePoller) ResumeToken() (string, error) {
 
 // DisksDeletePoller provides polling facilities until the operation reaches a terminal state.
 type DisksDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -446,7 +446,7 @@ func (p *DisksDeletePoller) ResumeToken() (string, error) {
 
 // DisksGrantAccessPoller provides polling facilities until the operation reaches a terminal state.
 type DisksGrantAccessPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -489,7 +489,7 @@ func (p *DisksGrantAccessPoller) ResumeToken() (string, error) {
 
 // DisksRevokeAccessPoller provides polling facilities until the operation reaches a terminal state.
 type DisksRevokeAccessPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -532,7 +532,7 @@ func (p *DisksRevokeAccessPoller) ResumeToken() (string, error) {
 
 // DisksUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type DisksUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -575,7 +575,7 @@ func (p *DisksUpdatePoller) ResumeToken() (string, error) {
 
 // GalleriesCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type GalleriesCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -618,7 +618,7 @@ func (p *GalleriesCreateOrUpdatePoller) ResumeToken() (string, error) {
 
 // GalleriesDeletePoller provides polling facilities until the operation reaches a terminal state.
 type GalleriesDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -661,7 +661,7 @@ func (p *GalleriesDeletePoller) ResumeToken() (string, error) {
 
 // GalleriesUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type GalleriesUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -704,7 +704,7 @@ func (p *GalleriesUpdatePoller) ResumeToken() (string, error) {
 
 // GalleryApplicationVersionsCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type GalleryApplicationVersionsCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -747,7 +747,7 @@ func (p *GalleryApplicationVersionsCreateOrUpdatePoller) ResumeToken() (string, 
 
 // GalleryApplicationVersionsDeletePoller provides polling facilities until the operation reaches a terminal state.
 type GalleryApplicationVersionsDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -790,7 +790,7 @@ func (p *GalleryApplicationVersionsDeletePoller) ResumeToken() (string, error) {
 
 // GalleryApplicationVersionsUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type GalleryApplicationVersionsUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -833,7 +833,7 @@ func (p *GalleryApplicationVersionsUpdatePoller) ResumeToken() (string, error) {
 
 // GalleryApplicationsCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type GalleryApplicationsCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -876,7 +876,7 @@ func (p *GalleryApplicationsCreateOrUpdatePoller) ResumeToken() (string, error) 
 
 // GalleryApplicationsDeletePoller provides polling facilities until the operation reaches a terminal state.
 type GalleryApplicationsDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -919,7 +919,7 @@ func (p *GalleryApplicationsDeletePoller) ResumeToken() (string, error) {
 
 // GalleryApplicationsUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type GalleryApplicationsUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -962,7 +962,7 @@ func (p *GalleryApplicationsUpdatePoller) ResumeToken() (string, error) {
 
 // GalleryImageVersionsCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type GalleryImageVersionsCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1005,7 +1005,7 @@ func (p *GalleryImageVersionsCreateOrUpdatePoller) ResumeToken() (string, error)
 
 // GalleryImageVersionsDeletePoller provides polling facilities until the operation reaches a terminal state.
 type GalleryImageVersionsDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1048,7 +1048,7 @@ func (p *GalleryImageVersionsDeletePoller) ResumeToken() (string, error) {
 
 // GalleryImageVersionsUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type GalleryImageVersionsUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1091,7 +1091,7 @@ func (p *GalleryImageVersionsUpdatePoller) ResumeToken() (string, error) {
 
 // GalleryImagesCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type GalleryImagesCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1134,7 +1134,7 @@ func (p *GalleryImagesCreateOrUpdatePoller) ResumeToken() (string, error) {
 
 // GalleryImagesDeletePoller provides polling facilities until the operation reaches a terminal state.
 type GalleryImagesDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1177,7 +1177,7 @@ func (p *GalleryImagesDeletePoller) ResumeToken() (string, error) {
 
 // GalleryImagesUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type GalleryImagesUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1220,7 +1220,7 @@ func (p *GalleryImagesUpdatePoller) ResumeToken() (string, error) {
 
 // ImagesCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type ImagesCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1263,7 +1263,7 @@ func (p *ImagesCreateOrUpdatePoller) ResumeToken() (string, error) {
 
 // ImagesDeletePoller provides polling facilities until the operation reaches a terminal state.
 type ImagesDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1306,7 +1306,7 @@ func (p *ImagesDeletePoller) ResumeToken() (string, error) {
 
 // ImagesUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type ImagesUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1349,7 +1349,7 @@ func (p *ImagesUpdatePoller) ResumeToken() (string, error) {
 
 // LogAnalyticsExportRequestRateByIntervalPoller provides polling facilities until the operation reaches a terminal state.
 type LogAnalyticsExportRequestRateByIntervalPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1392,7 +1392,7 @@ func (p *LogAnalyticsExportRequestRateByIntervalPoller) ResumeToken() (string, e
 
 // LogAnalyticsExportThrottledRequestsPoller provides polling facilities until the operation reaches a terminal state.
 type LogAnalyticsExportThrottledRequestsPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1435,7 +1435,7 @@ func (p *LogAnalyticsExportThrottledRequestsPoller) ResumeToken() (string, error
 
 // SnapshotsCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type SnapshotsCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1478,7 +1478,7 @@ func (p *SnapshotsCreateOrUpdatePoller) ResumeToken() (string, error) {
 
 // SnapshotsDeletePoller provides polling facilities until the operation reaches a terminal state.
 type SnapshotsDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1521,7 +1521,7 @@ func (p *SnapshotsDeletePoller) ResumeToken() (string, error) {
 
 // SnapshotsGrantAccessPoller provides polling facilities until the operation reaches a terminal state.
 type SnapshotsGrantAccessPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1564,7 +1564,7 @@ func (p *SnapshotsGrantAccessPoller) ResumeToken() (string, error) {
 
 // SnapshotsRevokeAccessPoller provides polling facilities until the operation reaches a terminal state.
 type SnapshotsRevokeAccessPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1607,7 +1607,7 @@ func (p *SnapshotsRevokeAccessPoller) ResumeToken() (string, error) {
 
 // SnapshotsUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type SnapshotsUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1650,7 +1650,7 @@ func (p *SnapshotsUpdatePoller) ResumeToken() (string, error) {
 
 // VirtualMachineExtensionsCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualMachineExtensionsCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1693,7 +1693,7 @@ func (p *VirtualMachineExtensionsCreateOrUpdatePoller) ResumeToken() (string, er
 
 // VirtualMachineExtensionsDeletePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualMachineExtensionsDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1736,7 +1736,7 @@ func (p *VirtualMachineExtensionsDeletePoller) ResumeToken() (string, error) {
 
 // VirtualMachineExtensionsUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualMachineExtensionsUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1779,7 +1779,7 @@ func (p *VirtualMachineExtensionsUpdatePoller) ResumeToken() (string, error) {
 
 // VirtualMachineScaleSetExtensionsCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualMachineScaleSetExtensionsCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1822,7 +1822,7 @@ func (p *VirtualMachineScaleSetExtensionsCreateOrUpdatePoller) ResumeToken() (st
 
 // VirtualMachineScaleSetExtensionsDeletePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualMachineScaleSetExtensionsDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1865,7 +1865,7 @@ func (p *VirtualMachineScaleSetExtensionsDeletePoller) ResumeToken() (string, er
 
 // VirtualMachineScaleSetExtensionsUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualMachineScaleSetExtensionsUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1908,7 +1908,7 @@ func (p *VirtualMachineScaleSetExtensionsUpdatePoller) ResumeToken() (string, er
 
 // VirtualMachineScaleSetRollingUpgradesCancelPoller provides polling facilities until the operation reaches a terminal state.
 type VirtualMachineScaleSetRollingUpgradesCancelPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1951,7 +1951,7 @@ func (p *VirtualMachineScaleSetRollingUpgradesCancelPoller) ResumeToken() (strin
 
 // VirtualMachineScaleSetRollingUpgradesStartExtensionUpgradePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualMachineScaleSetRollingUpgradesStartExtensionUpgradePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1994,7 +1994,7 @@ func (p *VirtualMachineScaleSetRollingUpgradesStartExtensionUpgradePoller) Resum
 
 // VirtualMachineScaleSetRollingUpgradesStartOSUpgradePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualMachineScaleSetRollingUpgradesStartOSUpgradePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2037,7 +2037,7 @@ func (p *VirtualMachineScaleSetRollingUpgradesStartOSUpgradePoller) ResumeToken(
 
 // VirtualMachineScaleSetVMExtensionsCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualMachineScaleSetVMExtensionsCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2080,7 +2080,7 @@ func (p *VirtualMachineScaleSetVMExtensionsCreateOrUpdatePoller) ResumeToken() (
 
 // VirtualMachineScaleSetVMExtensionsDeletePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualMachineScaleSetVMExtensionsDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2123,7 +2123,7 @@ func (p *VirtualMachineScaleSetVMExtensionsDeletePoller) ResumeToken() (string, 
 
 // VirtualMachineScaleSetVMExtensionsUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualMachineScaleSetVMExtensionsUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2166,7 +2166,7 @@ func (p *VirtualMachineScaleSetVMExtensionsUpdatePoller) ResumeToken() (string, 
 
 // VirtualMachineScaleSetVMsDeallocatePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualMachineScaleSetVMsDeallocatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2209,7 +2209,7 @@ func (p *VirtualMachineScaleSetVMsDeallocatePoller) ResumeToken() (string, error
 
 // VirtualMachineScaleSetVMsDeletePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualMachineScaleSetVMsDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2252,7 +2252,7 @@ func (p *VirtualMachineScaleSetVMsDeletePoller) ResumeToken() (string, error) {
 
 // VirtualMachineScaleSetVMsPerformMaintenancePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualMachineScaleSetVMsPerformMaintenancePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2295,7 +2295,7 @@ func (p *VirtualMachineScaleSetVMsPerformMaintenancePoller) ResumeToken() (strin
 
 // VirtualMachineScaleSetVMsPowerOffPoller provides polling facilities until the operation reaches a terminal state.
 type VirtualMachineScaleSetVMsPowerOffPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2338,7 +2338,7 @@ func (p *VirtualMachineScaleSetVMsPowerOffPoller) ResumeToken() (string, error) 
 
 // VirtualMachineScaleSetVMsRedeployPoller provides polling facilities until the operation reaches a terminal state.
 type VirtualMachineScaleSetVMsRedeployPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2381,7 +2381,7 @@ func (p *VirtualMachineScaleSetVMsRedeployPoller) ResumeToken() (string, error) 
 
 // VirtualMachineScaleSetVMsReimageAllPoller provides polling facilities until the operation reaches a terminal state.
 type VirtualMachineScaleSetVMsReimageAllPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2424,7 +2424,7 @@ func (p *VirtualMachineScaleSetVMsReimageAllPoller) ResumeToken() (string, error
 
 // VirtualMachineScaleSetVMsReimagePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualMachineScaleSetVMsReimagePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2467,7 +2467,7 @@ func (p *VirtualMachineScaleSetVMsReimagePoller) ResumeToken() (string, error) {
 
 // VirtualMachineScaleSetVMsRestartPoller provides polling facilities until the operation reaches a terminal state.
 type VirtualMachineScaleSetVMsRestartPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2510,7 +2510,7 @@ func (p *VirtualMachineScaleSetVMsRestartPoller) ResumeToken() (string, error) {
 
 // VirtualMachineScaleSetVMsRunCommandPoller provides polling facilities until the operation reaches a terminal state.
 type VirtualMachineScaleSetVMsRunCommandPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2553,7 +2553,7 @@ func (p *VirtualMachineScaleSetVMsRunCommandPoller) ResumeToken() (string, error
 
 // VirtualMachineScaleSetVMsStartPoller provides polling facilities until the operation reaches a terminal state.
 type VirtualMachineScaleSetVMsStartPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2596,7 +2596,7 @@ func (p *VirtualMachineScaleSetVMsStartPoller) ResumeToken() (string, error) {
 
 // VirtualMachineScaleSetVMsUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualMachineScaleSetVMsUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2639,7 +2639,7 @@ func (p *VirtualMachineScaleSetVMsUpdatePoller) ResumeToken() (string, error) {
 
 // VirtualMachineScaleSetsCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualMachineScaleSetsCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2682,7 +2682,7 @@ func (p *VirtualMachineScaleSetsCreateOrUpdatePoller) ResumeToken() (string, err
 
 // VirtualMachineScaleSetsDeallocatePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualMachineScaleSetsDeallocatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2725,7 +2725,7 @@ func (p *VirtualMachineScaleSetsDeallocatePoller) ResumeToken() (string, error) 
 
 // VirtualMachineScaleSetsDeleteInstancesPoller provides polling facilities until the operation reaches a terminal state.
 type VirtualMachineScaleSetsDeleteInstancesPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2768,7 +2768,7 @@ func (p *VirtualMachineScaleSetsDeleteInstancesPoller) ResumeToken() (string, er
 
 // VirtualMachineScaleSetsDeletePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualMachineScaleSetsDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2811,7 +2811,7 @@ func (p *VirtualMachineScaleSetsDeletePoller) ResumeToken() (string, error) {
 
 // VirtualMachineScaleSetsPerformMaintenancePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualMachineScaleSetsPerformMaintenancePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2854,7 +2854,7 @@ func (p *VirtualMachineScaleSetsPerformMaintenancePoller) ResumeToken() (string,
 
 // VirtualMachineScaleSetsPowerOffPoller provides polling facilities until the operation reaches a terminal state.
 type VirtualMachineScaleSetsPowerOffPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2897,7 +2897,7 @@ func (p *VirtualMachineScaleSetsPowerOffPoller) ResumeToken() (string, error) {
 
 // VirtualMachineScaleSetsRedeployPoller provides polling facilities until the operation reaches a terminal state.
 type VirtualMachineScaleSetsRedeployPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2940,7 +2940,7 @@ func (p *VirtualMachineScaleSetsRedeployPoller) ResumeToken() (string, error) {
 
 // VirtualMachineScaleSetsReimageAllPoller provides polling facilities until the operation reaches a terminal state.
 type VirtualMachineScaleSetsReimageAllPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2983,7 +2983,7 @@ func (p *VirtualMachineScaleSetsReimageAllPoller) ResumeToken() (string, error) 
 
 // VirtualMachineScaleSetsReimagePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualMachineScaleSetsReimagePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -3026,7 +3026,7 @@ func (p *VirtualMachineScaleSetsReimagePoller) ResumeToken() (string, error) {
 
 // VirtualMachineScaleSetsRestartPoller provides polling facilities until the operation reaches a terminal state.
 type VirtualMachineScaleSetsRestartPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -3069,7 +3069,7 @@ func (p *VirtualMachineScaleSetsRestartPoller) ResumeToken() (string, error) {
 
 // VirtualMachineScaleSetsSetOrchestrationServiceStatePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualMachineScaleSetsSetOrchestrationServiceStatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -3112,7 +3112,7 @@ func (p *VirtualMachineScaleSetsSetOrchestrationServiceStatePoller) ResumeToken(
 
 // VirtualMachineScaleSetsStartPoller provides polling facilities until the operation reaches a terminal state.
 type VirtualMachineScaleSetsStartPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -3155,7 +3155,7 @@ func (p *VirtualMachineScaleSetsStartPoller) ResumeToken() (string, error) {
 
 // VirtualMachineScaleSetsUpdateInstancesPoller provides polling facilities until the operation reaches a terminal state.
 type VirtualMachineScaleSetsUpdateInstancesPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -3198,7 +3198,7 @@ func (p *VirtualMachineScaleSetsUpdateInstancesPoller) ResumeToken() (string, er
 
 // VirtualMachineScaleSetsUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualMachineScaleSetsUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -3241,7 +3241,7 @@ func (p *VirtualMachineScaleSetsUpdatePoller) ResumeToken() (string, error) {
 
 // VirtualMachinesCapturePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualMachinesCapturePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -3284,7 +3284,7 @@ func (p *VirtualMachinesCapturePoller) ResumeToken() (string, error) {
 
 // VirtualMachinesConvertToManagedDisksPoller provides polling facilities until the operation reaches a terminal state.
 type VirtualMachinesConvertToManagedDisksPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -3327,7 +3327,7 @@ func (p *VirtualMachinesConvertToManagedDisksPoller) ResumeToken() (string, erro
 
 // VirtualMachinesCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualMachinesCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -3370,7 +3370,7 @@ func (p *VirtualMachinesCreateOrUpdatePoller) ResumeToken() (string, error) {
 
 // VirtualMachinesDeallocatePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualMachinesDeallocatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -3413,7 +3413,7 @@ func (p *VirtualMachinesDeallocatePoller) ResumeToken() (string, error) {
 
 // VirtualMachinesDeletePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualMachinesDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -3456,7 +3456,7 @@ func (p *VirtualMachinesDeletePoller) ResumeToken() (string, error) {
 
 // VirtualMachinesPerformMaintenancePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualMachinesPerformMaintenancePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -3499,7 +3499,7 @@ func (p *VirtualMachinesPerformMaintenancePoller) ResumeToken() (string, error) 
 
 // VirtualMachinesPowerOffPoller provides polling facilities until the operation reaches a terminal state.
 type VirtualMachinesPowerOffPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -3542,7 +3542,7 @@ func (p *VirtualMachinesPowerOffPoller) ResumeToken() (string, error) {
 
 // VirtualMachinesReapplyPoller provides polling facilities until the operation reaches a terminal state.
 type VirtualMachinesReapplyPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -3585,7 +3585,7 @@ func (p *VirtualMachinesReapplyPoller) ResumeToken() (string, error) {
 
 // VirtualMachinesRedeployPoller provides polling facilities until the operation reaches a terminal state.
 type VirtualMachinesRedeployPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -3628,7 +3628,7 @@ func (p *VirtualMachinesRedeployPoller) ResumeToken() (string, error) {
 
 // VirtualMachinesReimagePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualMachinesReimagePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -3671,7 +3671,7 @@ func (p *VirtualMachinesReimagePoller) ResumeToken() (string, error) {
 
 // VirtualMachinesRestartPoller provides polling facilities until the operation reaches a terminal state.
 type VirtualMachinesRestartPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -3714,7 +3714,7 @@ func (p *VirtualMachinesRestartPoller) ResumeToken() (string, error) {
 
 // VirtualMachinesRunCommandPoller provides polling facilities until the operation reaches a terminal state.
 type VirtualMachinesRunCommandPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -3757,7 +3757,7 @@ func (p *VirtualMachinesRunCommandPoller) ResumeToken() (string, error) {
 
 // VirtualMachinesStartPoller provides polling facilities until the operation reaches a terminal state.
 type VirtualMachinesStartPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -3800,7 +3800,7 @@ func (p *VirtualMachinesStartPoller) ResumeToken() (string, error) {
 
 // VirtualMachinesUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualMachinesUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.

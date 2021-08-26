@@ -11,7 +11,8 @@ package complexgroup
 import (
 	"context"
 	"fmt"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
@@ -37,44 +38,43 @@ func (client *ArrayClient) GetEmpty(ctx context.Context, options *ArrayGetEmptyO
 	if err != nil {
 		return ArrayGetEmptyResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetEmptyResponse{}, client.getEmptyHandleError(resp)
 	}
 	return client.getEmptyHandleResponse(resp)
 }
 
 // getEmptyCreateRequest creates the GetEmpty request.
-func (client *ArrayClient) getEmptyCreateRequest(ctx context.Context, options *ArrayGetEmptyOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getEmptyCreateRequest(ctx context.Context, options *ArrayGetEmptyOptions) (*policy.Request, error) {
 	urlPath := "/complex/array/empty"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getEmptyHandleResponse handles the GetEmpty response.
-func (client *ArrayClient) getEmptyHandleResponse(resp *azcore.Response) (ArrayGetEmptyResponse, error) {
-	result := ArrayGetEmptyResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.ArrayWrapper); err != nil {
+func (client *ArrayClient) getEmptyHandleResponse(resp *http.Response) (ArrayGetEmptyResponse, error) {
+	result := ArrayGetEmptyResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.ArrayWrapper); err != nil {
 		return ArrayGetEmptyResponse{}, err
 	}
 	return result, nil
 }
 
 // getEmptyHandleError handles the GetEmpty error response.
-func (client *ArrayClient) getEmptyHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getEmptyHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetNotProvided - Get complex types with array property while server doesn't provide a response payload
@@ -88,44 +88,43 @@ func (client *ArrayClient) GetNotProvided(ctx context.Context, options *ArrayGet
 	if err != nil {
 		return ArrayGetNotProvidedResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetNotProvidedResponse{}, client.getNotProvidedHandleError(resp)
 	}
 	return client.getNotProvidedHandleResponse(resp)
 }
 
 // getNotProvidedCreateRequest creates the GetNotProvided request.
-func (client *ArrayClient) getNotProvidedCreateRequest(ctx context.Context, options *ArrayGetNotProvidedOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getNotProvidedCreateRequest(ctx context.Context, options *ArrayGetNotProvidedOptions) (*policy.Request, error) {
 	urlPath := "/complex/array/notprovided"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getNotProvidedHandleResponse handles the GetNotProvided response.
-func (client *ArrayClient) getNotProvidedHandleResponse(resp *azcore.Response) (ArrayGetNotProvidedResponse, error) {
-	result := ArrayGetNotProvidedResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.ArrayWrapper); err != nil {
+func (client *ArrayClient) getNotProvidedHandleResponse(resp *http.Response) (ArrayGetNotProvidedResponse, error) {
+	result := ArrayGetNotProvidedResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.ArrayWrapper); err != nil {
 		return ArrayGetNotProvidedResponse{}, err
 	}
 	return result, nil
 }
 
 // getNotProvidedHandleError handles the GetNotProvided error response.
-func (client *ArrayClient) getNotProvidedHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getNotProvidedHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetValid - Get complex types with array property
@@ -139,44 +138,43 @@ func (client *ArrayClient) GetValid(ctx context.Context, options *ArrayGetValidO
 	if err != nil {
 		return ArrayGetValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetValidResponse{}, client.getValidHandleError(resp)
 	}
 	return client.getValidHandleResponse(resp)
 }
 
 // getValidCreateRequest creates the GetValid request.
-func (client *ArrayClient) getValidCreateRequest(ctx context.Context, options *ArrayGetValidOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getValidCreateRequest(ctx context.Context, options *ArrayGetValidOptions) (*policy.Request, error) {
 	urlPath := "/complex/array/valid"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getValidHandleResponse handles the GetValid response.
-func (client *ArrayClient) getValidHandleResponse(resp *azcore.Response) (ArrayGetValidResponse, error) {
-	result := ArrayGetValidResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.ArrayWrapper); err != nil {
+func (client *ArrayClient) getValidHandleResponse(resp *http.Response) (ArrayGetValidResponse, error) {
+	result := ArrayGetValidResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.ArrayWrapper); err != nil {
 		return ArrayGetValidResponse{}, err
 	}
 	return result, nil
 }
 
 // getValidHandleError handles the GetValid error response.
-func (client *ArrayClient) getValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutEmpty - Put complex types with array property which is empty
@@ -190,35 +188,34 @@ func (client *ArrayClient) PutEmpty(ctx context.Context, complexBody ArrayWrappe
 	if err != nil {
 		return ArrayPutEmptyResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayPutEmptyResponse{}, client.putEmptyHandleError(resp)
 	}
-	return ArrayPutEmptyResponse{RawResponse: resp.Response}, nil
+	return ArrayPutEmptyResponse{RawResponse: resp}, nil
 }
 
 // putEmptyCreateRequest creates the PutEmpty request.
-func (client *ArrayClient) putEmptyCreateRequest(ctx context.Context, complexBody ArrayWrapper, options *ArrayPutEmptyOptions) (*azcore.Request, error) {
+func (client *ArrayClient) putEmptyCreateRequest(ctx context.Context, complexBody ArrayWrapper, options *ArrayPutEmptyOptions) (*policy.Request, error) {
 	urlPath := "/complex/array/empty"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(complexBody)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, complexBody)
 }
 
 // putEmptyHandleError handles the PutEmpty error response.
-func (client *ArrayClient) putEmptyHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) putEmptyHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutValid - Put complex types with array property
@@ -232,33 +229,32 @@ func (client *ArrayClient) PutValid(ctx context.Context, complexBody ArrayWrappe
 	if err != nil {
 		return ArrayPutValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayPutValidResponse{}, client.putValidHandleError(resp)
 	}
-	return ArrayPutValidResponse{RawResponse: resp.Response}, nil
+	return ArrayPutValidResponse{RawResponse: resp}, nil
 }
 
 // putValidCreateRequest creates the PutValid request.
-func (client *ArrayClient) putValidCreateRequest(ctx context.Context, complexBody ArrayWrapper, options *ArrayPutValidOptions) (*azcore.Request, error) {
+func (client *ArrayClient) putValidCreateRequest(ctx context.Context, complexBody ArrayWrapper, options *ArrayPutValidOptions) (*policy.Request, error) {
 	urlPath := "/complex/array/valid"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(complexBody)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, complexBody)
 }
 
 // putValidHandleError handles the PutValid error response.
-func (client *ArrayClient) putValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) putValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }

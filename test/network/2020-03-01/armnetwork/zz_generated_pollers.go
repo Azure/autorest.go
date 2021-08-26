@@ -10,13 +10,13 @@ package armnetwork
 
 import (
 	"context"
-	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 )
 
 // ApplicationGatewaysBackendHealthOnDemandPoller provides polling facilities until the operation reaches a terminal state.
 type ApplicationGatewaysBackendHealthOnDemandPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -59,7 +59,7 @@ func (p *ApplicationGatewaysBackendHealthOnDemandPoller) ResumeToken() (string, 
 
 // ApplicationGatewaysBackendHealthPoller provides polling facilities until the operation reaches a terminal state.
 type ApplicationGatewaysBackendHealthPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -102,7 +102,7 @@ func (p *ApplicationGatewaysBackendHealthPoller) ResumeToken() (string, error) {
 
 // ApplicationGatewaysCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type ApplicationGatewaysCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -145,7 +145,7 @@ func (p *ApplicationGatewaysCreateOrUpdatePoller) ResumeToken() (string, error) 
 
 // ApplicationGatewaysDeletePoller provides polling facilities until the operation reaches a terminal state.
 type ApplicationGatewaysDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -188,7 +188,7 @@ func (p *ApplicationGatewaysDeletePoller) ResumeToken() (string, error) {
 
 // ApplicationGatewaysStartPoller provides polling facilities until the operation reaches a terminal state.
 type ApplicationGatewaysStartPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -231,7 +231,7 @@ func (p *ApplicationGatewaysStartPoller) ResumeToken() (string, error) {
 
 // ApplicationGatewaysStopPoller provides polling facilities until the operation reaches a terminal state.
 type ApplicationGatewaysStopPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -274,7 +274,7 @@ func (p *ApplicationGatewaysStopPoller) ResumeToken() (string, error) {
 
 // ApplicationSecurityGroupsCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type ApplicationSecurityGroupsCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -317,7 +317,7 @@ func (p *ApplicationSecurityGroupsCreateOrUpdatePoller) ResumeToken() (string, e
 
 // ApplicationSecurityGroupsDeletePoller provides polling facilities until the operation reaches a terminal state.
 type ApplicationSecurityGroupsDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -360,7 +360,7 @@ func (p *ApplicationSecurityGroupsDeletePoller) ResumeToken() (string, error) {
 
 // AzureFirewallsCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type AzureFirewallsCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -403,7 +403,7 @@ func (p *AzureFirewallsCreateOrUpdatePoller) ResumeToken() (string, error) {
 
 // AzureFirewallsDeletePoller provides polling facilities until the operation reaches a terminal state.
 type AzureFirewallsDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -446,7 +446,7 @@ func (p *AzureFirewallsDeletePoller) ResumeToken() (string, error) {
 
 // AzureFirewallsUpdateTagsPoller provides polling facilities until the operation reaches a terminal state.
 type AzureFirewallsUpdateTagsPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -489,7 +489,7 @@ func (p *AzureFirewallsUpdateTagsPoller) ResumeToken() (string, error) {
 
 // BastionHostsCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type BastionHostsCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -532,7 +532,7 @@ func (p *BastionHostsCreateOrUpdatePoller) ResumeToken() (string, error) {
 
 // BastionHostsDeletePoller provides polling facilities until the operation reaches a terminal state.
 type BastionHostsDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -575,7 +575,7 @@ func (p *BastionHostsDeletePoller) ResumeToken() (string, error) {
 
 // ConnectionMonitorsCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type ConnectionMonitorsCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -618,7 +618,7 @@ func (p *ConnectionMonitorsCreateOrUpdatePoller) ResumeToken() (string, error) {
 
 // ConnectionMonitorsDeletePoller provides polling facilities until the operation reaches a terminal state.
 type ConnectionMonitorsDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -661,7 +661,7 @@ func (p *ConnectionMonitorsDeletePoller) ResumeToken() (string, error) {
 
 // ConnectionMonitorsQueryPoller provides polling facilities until the operation reaches a terminal state.
 type ConnectionMonitorsQueryPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -704,7 +704,7 @@ func (p *ConnectionMonitorsQueryPoller) ResumeToken() (string, error) {
 
 // ConnectionMonitorsStartPoller provides polling facilities until the operation reaches a terminal state.
 type ConnectionMonitorsStartPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -747,7 +747,7 @@ func (p *ConnectionMonitorsStartPoller) ResumeToken() (string, error) {
 
 // ConnectionMonitorsStopPoller provides polling facilities until the operation reaches a terminal state.
 type ConnectionMonitorsStopPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -790,7 +790,7 @@ func (p *ConnectionMonitorsStopPoller) ResumeToken() (string, error) {
 
 // DdosCustomPoliciesCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type DdosCustomPoliciesCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -833,7 +833,7 @@ func (p *DdosCustomPoliciesCreateOrUpdatePoller) ResumeToken() (string, error) {
 
 // DdosCustomPoliciesDeletePoller provides polling facilities until the operation reaches a terminal state.
 type DdosCustomPoliciesDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -876,7 +876,7 @@ func (p *DdosCustomPoliciesDeletePoller) ResumeToken() (string, error) {
 
 // DdosProtectionPlansCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type DdosProtectionPlansCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -919,7 +919,7 @@ func (p *DdosProtectionPlansCreateOrUpdatePoller) ResumeToken() (string, error) 
 
 // DdosProtectionPlansDeletePoller provides polling facilities until the operation reaches a terminal state.
 type DdosProtectionPlansDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -962,7 +962,7 @@ func (p *DdosProtectionPlansDeletePoller) ResumeToken() (string, error) {
 
 // ExpressRouteCircuitAuthorizationsCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type ExpressRouteCircuitAuthorizationsCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1005,7 +1005,7 @@ func (p *ExpressRouteCircuitAuthorizationsCreateOrUpdatePoller) ResumeToken() (s
 
 // ExpressRouteCircuitAuthorizationsDeletePoller provides polling facilities until the operation reaches a terminal state.
 type ExpressRouteCircuitAuthorizationsDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1048,7 +1048,7 @@ func (p *ExpressRouteCircuitAuthorizationsDeletePoller) ResumeToken() (string, e
 
 // ExpressRouteCircuitConnectionsCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type ExpressRouteCircuitConnectionsCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1091,7 +1091,7 @@ func (p *ExpressRouteCircuitConnectionsCreateOrUpdatePoller) ResumeToken() (stri
 
 // ExpressRouteCircuitConnectionsDeletePoller provides polling facilities until the operation reaches a terminal state.
 type ExpressRouteCircuitConnectionsDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1134,7 +1134,7 @@ func (p *ExpressRouteCircuitConnectionsDeletePoller) ResumeToken() (string, erro
 
 // ExpressRouteCircuitPeeringsCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type ExpressRouteCircuitPeeringsCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1177,7 +1177,7 @@ func (p *ExpressRouteCircuitPeeringsCreateOrUpdatePoller) ResumeToken() (string,
 
 // ExpressRouteCircuitPeeringsDeletePoller provides polling facilities until the operation reaches a terminal state.
 type ExpressRouteCircuitPeeringsDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1220,7 +1220,7 @@ func (p *ExpressRouteCircuitPeeringsDeletePoller) ResumeToken() (string, error) 
 
 // ExpressRouteCircuitsCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type ExpressRouteCircuitsCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1263,7 +1263,7 @@ func (p *ExpressRouteCircuitsCreateOrUpdatePoller) ResumeToken() (string, error)
 
 // ExpressRouteCircuitsDeletePoller provides polling facilities until the operation reaches a terminal state.
 type ExpressRouteCircuitsDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1306,7 +1306,7 @@ func (p *ExpressRouteCircuitsDeletePoller) ResumeToken() (string, error) {
 
 // ExpressRouteCircuitsListArpTablePoller provides polling facilities until the operation reaches a terminal state.
 type ExpressRouteCircuitsListArpTablePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1349,7 +1349,7 @@ func (p *ExpressRouteCircuitsListArpTablePoller) ResumeToken() (string, error) {
 
 // ExpressRouteCircuitsListRoutesTablePoller provides polling facilities until the operation reaches a terminal state.
 type ExpressRouteCircuitsListRoutesTablePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1392,7 +1392,7 @@ func (p *ExpressRouteCircuitsListRoutesTablePoller) ResumeToken() (string, error
 
 // ExpressRouteCircuitsListRoutesTableSummaryPoller provides polling facilities until the operation reaches a terminal state.
 type ExpressRouteCircuitsListRoutesTableSummaryPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1435,7 +1435,7 @@ func (p *ExpressRouteCircuitsListRoutesTableSummaryPoller) ResumeToken() (string
 
 // ExpressRouteConnectionsCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type ExpressRouteConnectionsCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1478,7 +1478,7 @@ func (p *ExpressRouteConnectionsCreateOrUpdatePoller) ResumeToken() (string, err
 
 // ExpressRouteConnectionsDeletePoller provides polling facilities until the operation reaches a terminal state.
 type ExpressRouteConnectionsDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1521,7 +1521,7 @@ func (p *ExpressRouteConnectionsDeletePoller) ResumeToken() (string, error) {
 
 // ExpressRouteCrossConnectionPeeringsCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type ExpressRouteCrossConnectionPeeringsCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1564,7 +1564,7 @@ func (p *ExpressRouteCrossConnectionPeeringsCreateOrUpdatePoller) ResumeToken() 
 
 // ExpressRouteCrossConnectionPeeringsDeletePoller provides polling facilities until the operation reaches a terminal state.
 type ExpressRouteCrossConnectionPeeringsDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1607,7 +1607,7 @@ func (p *ExpressRouteCrossConnectionPeeringsDeletePoller) ResumeToken() (string,
 
 // ExpressRouteCrossConnectionsCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type ExpressRouteCrossConnectionsCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1650,7 +1650,7 @@ func (p *ExpressRouteCrossConnectionsCreateOrUpdatePoller) ResumeToken() (string
 
 // ExpressRouteCrossConnectionsListArpTablePoller provides polling facilities until the operation reaches a terminal state.
 type ExpressRouteCrossConnectionsListArpTablePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1693,7 +1693,7 @@ func (p *ExpressRouteCrossConnectionsListArpTablePoller) ResumeToken() (string, 
 
 // ExpressRouteCrossConnectionsListRoutesTablePoller provides polling facilities until the operation reaches a terminal state.
 type ExpressRouteCrossConnectionsListRoutesTablePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1736,7 +1736,7 @@ func (p *ExpressRouteCrossConnectionsListRoutesTablePoller) ResumeToken() (strin
 
 // ExpressRouteCrossConnectionsListRoutesTableSummaryPoller provides polling facilities until the operation reaches a terminal state.
 type ExpressRouteCrossConnectionsListRoutesTableSummaryPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1779,7 +1779,7 @@ func (p *ExpressRouteCrossConnectionsListRoutesTableSummaryPoller) ResumeToken()
 
 // ExpressRouteGatewaysCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type ExpressRouteGatewaysCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1822,7 +1822,7 @@ func (p *ExpressRouteGatewaysCreateOrUpdatePoller) ResumeToken() (string, error)
 
 // ExpressRouteGatewaysDeletePoller provides polling facilities until the operation reaches a terminal state.
 type ExpressRouteGatewaysDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1865,7 +1865,7 @@ func (p *ExpressRouteGatewaysDeletePoller) ResumeToken() (string, error) {
 
 // ExpressRoutePortsCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type ExpressRoutePortsCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1908,7 +1908,7 @@ func (p *ExpressRoutePortsCreateOrUpdatePoller) ResumeToken() (string, error) {
 
 // ExpressRoutePortsDeletePoller provides polling facilities until the operation reaches a terminal state.
 type ExpressRoutePortsDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1951,7 +1951,7 @@ func (p *ExpressRoutePortsDeletePoller) ResumeToken() (string, error) {
 
 // FirewallPoliciesCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type FirewallPoliciesCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1994,7 +1994,7 @@ func (p *FirewallPoliciesCreateOrUpdatePoller) ResumeToken() (string, error) {
 
 // FirewallPoliciesDeletePoller provides polling facilities until the operation reaches a terminal state.
 type FirewallPoliciesDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2037,7 +2037,7 @@ func (p *FirewallPoliciesDeletePoller) ResumeToken() (string, error) {
 
 // FirewallPolicyRuleGroupsCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type FirewallPolicyRuleGroupsCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2080,7 +2080,7 @@ func (p *FirewallPolicyRuleGroupsCreateOrUpdatePoller) ResumeToken() (string, er
 
 // FirewallPolicyRuleGroupsDeletePoller provides polling facilities until the operation reaches a terminal state.
 type FirewallPolicyRuleGroupsDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2123,7 +2123,7 @@ func (p *FirewallPolicyRuleGroupsDeletePoller) ResumeToken() (string, error) {
 
 // FlowLogsCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type FlowLogsCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2166,7 +2166,7 @@ func (p *FlowLogsCreateOrUpdatePoller) ResumeToken() (string, error) {
 
 // FlowLogsDeletePoller provides polling facilities until the operation reaches a terminal state.
 type FlowLogsDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2209,7 +2209,7 @@ func (p *FlowLogsDeletePoller) ResumeToken() (string, error) {
 
 // IPAllocationsCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type IPAllocationsCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2252,7 +2252,7 @@ func (p *IPAllocationsCreateOrUpdatePoller) ResumeToken() (string, error) {
 
 // IPAllocationsDeletePoller provides polling facilities until the operation reaches a terminal state.
 type IPAllocationsDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2295,7 +2295,7 @@ func (p *IPAllocationsDeletePoller) ResumeToken() (string, error) {
 
 // IPGroupsCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type IPGroupsCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2338,7 +2338,7 @@ func (p *IPGroupsCreateOrUpdatePoller) ResumeToken() (string, error) {
 
 // IPGroupsDeletePoller provides polling facilities until the operation reaches a terminal state.
 type IPGroupsDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2381,7 +2381,7 @@ func (p *IPGroupsDeletePoller) ResumeToken() (string, error) {
 
 // InboundNatRulesCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type InboundNatRulesCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2424,7 +2424,7 @@ func (p *InboundNatRulesCreateOrUpdatePoller) ResumeToken() (string, error) {
 
 // InboundNatRulesDeletePoller provides polling facilities until the operation reaches a terminal state.
 type InboundNatRulesDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2467,7 +2467,7 @@ func (p *InboundNatRulesDeletePoller) ResumeToken() (string, error) {
 
 // LoadBalancersCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type LoadBalancersCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2510,7 +2510,7 @@ func (p *LoadBalancersCreateOrUpdatePoller) ResumeToken() (string, error) {
 
 // LoadBalancersDeletePoller provides polling facilities until the operation reaches a terminal state.
 type LoadBalancersDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2553,7 +2553,7 @@ func (p *LoadBalancersDeletePoller) ResumeToken() (string, error) {
 
 // LocalNetworkGatewaysCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type LocalNetworkGatewaysCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2596,7 +2596,7 @@ func (p *LocalNetworkGatewaysCreateOrUpdatePoller) ResumeToken() (string, error)
 
 // LocalNetworkGatewaysDeletePoller provides polling facilities until the operation reaches a terminal state.
 type LocalNetworkGatewaysDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2639,7 +2639,7 @@ func (p *LocalNetworkGatewaysDeletePoller) ResumeToken() (string, error) {
 
 // NatGatewaysCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type NatGatewaysCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2682,7 +2682,7 @@ func (p *NatGatewaysCreateOrUpdatePoller) ResumeToken() (string, error) {
 
 // NatGatewaysDeletePoller provides polling facilities until the operation reaches a terminal state.
 type NatGatewaysDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2725,7 +2725,7 @@ func (p *NatGatewaysDeletePoller) ResumeToken() (string, error) {
 
 // NetworkInterfaceTapConfigurationsCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type NetworkInterfaceTapConfigurationsCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2768,7 +2768,7 @@ func (p *NetworkInterfaceTapConfigurationsCreateOrUpdatePoller) ResumeToken() (s
 
 // NetworkInterfaceTapConfigurationsDeletePoller provides polling facilities until the operation reaches a terminal state.
 type NetworkInterfaceTapConfigurationsDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2811,7 +2811,7 @@ func (p *NetworkInterfaceTapConfigurationsDeletePoller) ResumeToken() (string, e
 
 // NetworkInterfacesCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type NetworkInterfacesCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2854,7 +2854,7 @@ func (p *NetworkInterfacesCreateOrUpdatePoller) ResumeToken() (string, error) {
 
 // NetworkInterfacesDeletePoller provides polling facilities until the operation reaches a terminal state.
 type NetworkInterfacesDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2897,7 +2897,7 @@ func (p *NetworkInterfacesDeletePoller) ResumeToken() (string, error) {
 
 // NetworkInterfacesGetEffectiveRouteTablePoller provides polling facilities until the operation reaches a terminal state.
 type NetworkInterfacesGetEffectiveRouteTablePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2940,7 +2940,7 @@ func (p *NetworkInterfacesGetEffectiveRouteTablePoller) ResumeToken() (string, e
 
 // NetworkInterfacesListEffectiveNetworkSecurityGroupsPoller provides polling facilities until the operation reaches a terminal state.
 type NetworkInterfacesListEffectiveNetworkSecurityGroupsPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2983,7 +2983,7 @@ func (p *NetworkInterfacesListEffectiveNetworkSecurityGroupsPoller) ResumeToken(
 
 // NetworkManagementClientDeleteBastionShareableLinkPoller provides polling facilities until the operation reaches a terminal state.
 type NetworkManagementClientDeleteBastionShareableLinkPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -3026,7 +3026,7 @@ func (p *NetworkManagementClientDeleteBastionShareableLinkPoller) ResumeToken() 
 
 // NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePoller provides polling facilities until the operation reaches a terminal state.
 type NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -3069,7 +3069,7 @@ func (p *NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofi
 
 // NetworkManagementClientGetActiveSessionsPoller provides polling facilities until the operation reaches a terminal state.
 type NetworkManagementClientGetActiveSessionsPoller struct {
-	pt     *armcore.LROPoller
+	pt     *azcore.Poller
 	client *NetworkManagementClient
 }
 
@@ -3111,7 +3111,7 @@ func (p *NetworkManagementClientGetActiveSessionsPoller) ResumeToken() (string, 
 
 // NetworkManagementClientPutBastionShareableLinkPoller provides polling facilities until the operation reaches a terminal state.
 type NetworkManagementClientPutBastionShareableLinkPoller struct {
-	pt     *armcore.LROPoller
+	pt     *azcore.Poller
 	client *NetworkManagementClient
 }
 
@@ -3153,7 +3153,7 @@ func (p *NetworkManagementClientPutBastionShareableLinkPoller) ResumeToken() (st
 
 // NetworkProfilesDeletePoller provides polling facilities until the operation reaches a terminal state.
 type NetworkProfilesDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -3196,7 +3196,7 @@ func (p *NetworkProfilesDeletePoller) ResumeToken() (string, error) {
 
 // NetworkSecurityGroupsCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type NetworkSecurityGroupsCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -3239,7 +3239,7 @@ func (p *NetworkSecurityGroupsCreateOrUpdatePoller) ResumeToken() (string, error
 
 // NetworkSecurityGroupsDeletePoller provides polling facilities until the operation reaches a terminal state.
 type NetworkSecurityGroupsDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -3282,7 +3282,7 @@ func (p *NetworkSecurityGroupsDeletePoller) ResumeToken() (string, error) {
 
 // NetworkVirtualAppliancesCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type NetworkVirtualAppliancesCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -3325,7 +3325,7 @@ func (p *NetworkVirtualAppliancesCreateOrUpdatePoller) ResumeToken() (string, er
 
 // NetworkVirtualAppliancesDeletePoller provides polling facilities until the operation reaches a terminal state.
 type NetworkVirtualAppliancesDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -3368,7 +3368,7 @@ func (p *NetworkVirtualAppliancesDeletePoller) ResumeToken() (string, error) {
 
 // NetworkWatchersCheckConnectivityPoller provides polling facilities until the operation reaches a terminal state.
 type NetworkWatchersCheckConnectivityPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -3411,7 +3411,7 @@ func (p *NetworkWatchersCheckConnectivityPoller) ResumeToken() (string, error) {
 
 // NetworkWatchersDeletePoller provides polling facilities until the operation reaches a terminal state.
 type NetworkWatchersDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -3454,7 +3454,7 @@ func (p *NetworkWatchersDeletePoller) ResumeToken() (string, error) {
 
 // NetworkWatchersGetAzureReachabilityReportPoller provides polling facilities until the operation reaches a terminal state.
 type NetworkWatchersGetAzureReachabilityReportPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -3497,7 +3497,7 @@ func (p *NetworkWatchersGetAzureReachabilityReportPoller) ResumeToken() (string,
 
 // NetworkWatchersGetFlowLogStatusPoller provides polling facilities until the operation reaches a terminal state.
 type NetworkWatchersGetFlowLogStatusPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -3540,7 +3540,7 @@ func (p *NetworkWatchersGetFlowLogStatusPoller) ResumeToken() (string, error) {
 
 // NetworkWatchersGetNetworkConfigurationDiagnosticPoller provides polling facilities until the operation reaches a terminal state.
 type NetworkWatchersGetNetworkConfigurationDiagnosticPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -3583,7 +3583,7 @@ func (p *NetworkWatchersGetNetworkConfigurationDiagnosticPoller) ResumeToken() (
 
 // NetworkWatchersGetNextHopPoller provides polling facilities until the operation reaches a terminal state.
 type NetworkWatchersGetNextHopPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -3626,7 +3626,7 @@ func (p *NetworkWatchersGetNextHopPoller) ResumeToken() (string, error) {
 
 // NetworkWatchersGetTroubleshootingPoller provides polling facilities until the operation reaches a terminal state.
 type NetworkWatchersGetTroubleshootingPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -3669,7 +3669,7 @@ func (p *NetworkWatchersGetTroubleshootingPoller) ResumeToken() (string, error) 
 
 // NetworkWatchersGetTroubleshootingResultPoller provides polling facilities until the operation reaches a terminal state.
 type NetworkWatchersGetTroubleshootingResultPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -3712,7 +3712,7 @@ func (p *NetworkWatchersGetTroubleshootingResultPoller) ResumeToken() (string, e
 
 // NetworkWatchersGetVMSecurityRulesPoller provides polling facilities until the operation reaches a terminal state.
 type NetworkWatchersGetVMSecurityRulesPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -3755,7 +3755,7 @@ func (p *NetworkWatchersGetVMSecurityRulesPoller) ResumeToken() (string, error) 
 
 // NetworkWatchersListAvailableProvidersPoller provides polling facilities until the operation reaches a terminal state.
 type NetworkWatchersListAvailableProvidersPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -3798,7 +3798,7 @@ func (p *NetworkWatchersListAvailableProvidersPoller) ResumeToken() (string, err
 
 // NetworkWatchersSetFlowLogConfigurationPoller provides polling facilities until the operation reaches a terminal state.
 type NetworkWatchersSetFlowLogConfigurationPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -3841,7 +3841,7 @@ func (p *NetworkWatchersSetFlowLogConfigurationPoller) ResumeToken() (string, er
 
 // NetworkWatchersVerifyIPFlowPoller provides polling facilities until the operation reaches a terminal state.
 type NetworkWatchersVerifyIPFlowPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -3884,7 +3884,7 @@ func (p *NetworkWatchersVerifyIPFlowPoller) ResumeToken() (string, error) {
 
 // P2SVPNGatewaysCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type P2SVPNGatewaysCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -3927,7 +3927,7 @@ func (p *P2SVPNGatewaysCreateOrUpdatePoller) ResumeToken() (string, error) {
 
 // P2SVPNGatewaysDeletePoller provides polling facilities until the operation reaches a terminal state.
 type P2SVPNGatewaysDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -3970,7 +3970,7 @@ func (p *P2SVPNGatewaysDeletePoller) ResumeToken() (string, error) {
 
 // P2SVPNGatewaysDisconnectP2SVPNConnectionsPoller provides polling facilities until the operation reaches a terminal state.
 type P2SVPNGatewaysDisconnectP2SVPNConnectionsPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -4013,7 +4013,7 @@ func (p *P2SVPNGatewaysDisconnectP2SVPNConnectionsPoller) ResumeToken() (string,
 
 // P2SVPNGatewaysGenerateVPNProfilePoller provides polling facilities until the operation reaches a terminal state.
 type P2SVPNGatewaysGenerateVPNProfilePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -4056,7 +4056,7 @@ func (p *P2SVPNGatewaysGenerateVPNProfilePoller) ResumeToken() (string, error) {
 
 // P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedPoller provides polling facilities until the operation reaches a terminal state.
 type P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -4099,7 +4099,7 @@ func (p *P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedPoller) ResumeToken() (s
 
 // P2SVPNGatewaysGetP2SVPNConnectionHealthPoller provides polling facilities until the operation reaches a terminal state.
 type P2SVPNGatewaysGetP2SVPNConnectionHealthPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -4142,7 +4142,7 @@ func (p *P2SVPNGatewaysGetP2SVPNConnectionHealthPoller) ResumeToken() (string, e
 
 // PacketCapturesCreatePoller provides polling facilities until the operation reaches a terminal state.
 type PacketCapturesCreatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -4185,7 +4185,7 @@ func (p *PacketCapturesCreatePoller) ResumeToken() (string, error) {
 
 // PacketCapturesDeletePoller provides polling facilities until the operation reaches a terminal state.
 type PacketCapturesDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -4228,7 +4228,7 @@ func (p *PacketCapturesDeletePoller) ResumeToken() (string, error) {
 
 // PacketCapturesGetStatusPoller provides polling facilities until the operation reaches a terminal state.
 type PacketCapturesGetStatusPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -4271,7 +4271,7 @@ func (p *PacketCapturesGetStatusPoller) ResumeToken() (string, error) {
 
 // PacketCapturesStopPoller provides polling facilities until the operation reaches a terminal state.
 type PacketCapturesStopPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -4314,7 +4314,7 @@ func (p *PacketCapturesStopPoller) ResumeToken() (string, error) {
 
 // PrivateDNSZoneGroupsCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type PrivateDNSZoneGroupsCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -4357,7 +4357,7 @@ func (p *PrivateDNSZoneGroupsCreateOrUpdatePoller) ResumeToken() (string, error)
 
 // PrivateDNSZoneGroupsDeletePoller provides polling facilities until the operation reaches a terminal state.
 type PrivateDNSZoneGroupsDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -4400,7 +4400,7 @@ func (p *PrivateDNSZoneGroupsDeletePoller) ResumeToken() (string, error) {
 
 // PrivateEndpointsCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type PrivateEndpointsCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -4443,7 +4443,7 @@ func (p *PrivateEndpointsCreateOrUpdatePoller) ResumeToken() (string, error) {
 
 // PrivateEndpointsDeletePoller provides polling facilities until the operation reaches a terminal state.
 type PrivateEndpointsDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -4486,7 +4486,7 @@ func (p *PrivateEndpointsDeletePoller) ResumeToken() (string, error) {
 
 // PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupPoller provides polling facilities until the operation reaches a terminal state.
 type PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -4529,7 +4529,7 @@ func (p *PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupPoll
 
 // PrivateLinkServicesCheckPrivateLinkServiceVisibilityPoller provides polling facilities until the operation reaches a terminal state.
 type PrivateLinkServicesCheckPrivateLinkServiceVisibilityPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -4572,7 +4572,7 @@ func (p *PrivateLinkServicesCheckPrivateLinkServiceVisibilityPoller) ResumeToken
 
 // PrivateLinkServicesCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type PrivateLinkServicesCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -4615,7 +4615,7 @@ func (p *PrivateLinkServicesCreateOrUpdatePoller) ResumeToken() (string, error) 
 
 // PrivateLinkServicesDeletePoller provides polling facilities until the operation reaches a terminal state.
 type PrivateLinkServicesDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -4658,7 +4658,7 @@ func (p *PrivateLinkServicesDeletePoller) ResumeToken() (string, error) {
 
 // PrivateLinkServicesDeletePrivateEndpointConnectionPoller provides polling facilities until the operation reaches a terminal state.
 type PrivateLinkServicesDeletePrivateEndpointConnectionPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -4701,7 +4701,7 @@ func (p *PrivateLinkServicesDeletePrivateEndpointConnectionPoller) ResumeToken()
 
 // PublicIPAddressesCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type PublicIPAddressesCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -4744,7 +4744,7 @@ func (p *PublicIPAddressesCreateOrUpdatePoller) ResumeToken() (string, error) {
 
 // PublicIPAddressesDeletePoller provides polling facilities until the operation reaches a terminal state.
 type PublicIPAddressesDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -4787,7 +4787,7 @@ func (p *PublicIPAddressesDeletePoller) ResumeToken() (string, error) {
 
 // PublicIPPrefixesCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type PublicIPPrefixesCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -4830,7 +4830,7 @@ func (p *PublicIPPrefixesCreateOrUpdatePoller) ResumeToken() (string, error) {
 
 // PublicIPPrefixesDeletePoller provides polling facilities until the operation reaches a terminal state.
 type PublicIPPrefixesDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -4873,7 +4873,7 @@ func (p *PublicIPPrefixesDeletePoller) ResumeToken() (string, error) {
 
 // RouteFilterRulesCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type RouteFilterRulesCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -4916,7 +4916,7 @@ func (p *RouteFilterRulesCreateOrUpdatePoller) ResumeToken() (string, error) {
 
 // RouteFilterRulesDeletePoller provides polling facilities until the operation reaches a terminal state.
 type RouteFilterRulesDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -4959,7 +4959,7 @@ func (p *RouteFilterRulesDeletePoller) ResumeToken() (string, error) {
 
 // RouteFiltersCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type RouteFiltersCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -5002,7 +5002,7 @@ func (p *RouteFiltersCreateOrUpdatePoller) ResumeToken() (string, error) {
 
 // RouteFiltersDeletePoller provides polling facilities until the operation reaches a terminal state.
 type RouteFiltersDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -5045,7 +5045,7 @@ func (p *RouteFiltersDeletePoller) ResumeToken() (string, error) {
 
 // RouteTablesCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type RouteTablesCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -5088,7 +5088,7 @@ func (p *RouteTablesCreateOrUpdatePoller) ResumeToken() (string, error) {
 
 // RouteTablesDeletePoller provides polling facilities until the operation reaches a terminal state.
 type RouteTablesDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -5131,7 +5131,7 @@ func (p *RouteTablesDeletePoller) ResumeToken() (string, error) {
 
 // RoutesCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type RoutesCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -5174,7 +5174,7 @@ func (p *RoutesCreateOrUpdatePoller) ResumeToken() (string, error) {
 
 // RoutesDeletePoller provides polling facilities until the operation reaches a terminal state.
 type RoutesDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -5217,7 +5217,7 @@ func (p *RoutesDeletePoller) ResumeToken() (string, error) {
 
 // SecurityPartnerProvidersCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type SecurityPartnerProvidersCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -5260,7 +5260,7 @@ func (p *SecurityPartnerProvidersCreateOrUpdatePoller) ResumeToken() (string, er
 
 // SecurityPartnerProvidersDeletePoller provides polling facilities until the operation reaches a terminal state.
 type SecurityPartnerProvidersDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -5303,7 +5303,7 @@ func (p *SecurityPartnerProvidersDeletePoller) ResumeToken() (string, error) {
 
 // SecurityRulesCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type SecurityRulesCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -5346,7 +5346,7 @@ func (p *SecurityRulesCreateOrUpdatePoller) ResumeToken() (string, error) {
 
 // SecurityRulesDeletePoller provides polling facilities until the operation reaches a terminal state.
 type SecurityRulesDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -5389,7 +5389,7 @@ func (p *SecurityRulesDeletePoller) ResumeToken() (string, error) {
 
 // ServiceEndpointPoliciesCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type ServiceEndpointPoliciesCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -5432,7 +5432,7 @@ func (p *ServiceEndpointPoliciesCreateOrUpdatePoller) ResumeToken() (string, err
 
 // ServiceEndpointPoliciesDeletePoller provides polling facilities until the operation reaches a terminal state.
 type ServiceEndpointPoliciesDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -5475,7 +5475,7 @@ func (p *ServiceEndpointPoliciesDeletePoller) ResumeToken() (string, error) {
 
 // ServiceEndpointPolicyDefinitionsCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type ServiceEndpointPolicyDefinitionsCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -5518,7 +5518,7 @@ func (p *ServiceEndpointPolicyDefinitionsCreateOrUpdatePoller) ResumeToken() (st
 
 // ServiceEndpointPolicyDefinitionsDeletePoller provides polling facilities until the operation reaches a terminal state.
 type ServiceEndpointPolicyDefinitionsDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -5561,7 +5561,7 @@ func (p *ServiceEndpointPolicyDefinitionsDeletePoller) ResumeToken() (string, er
 
 // SubnetsCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type SubnetsCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -5604,7 +5604,7 @@ func (p *SubnetsCreateOrUpdatePoller) ResumeToken() (string, error) {
 
 // SubnetsDeletePoller provides polling facilities until the operation reaches a terminal state.
 type SubnetsDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -5647,7 +5647,7 @@ func (p *SubnetsDeletePoller) ResumeToken() (string, error) {
 
 // SubnetsPrepareNetworkPoliciesPoller provides polling facilities until the operation reaches a terminal state.
 type SubnetsPrepareNetworkPoliciesPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -5690,7 +5690,7 @@ func (p *SubnetsPrepareNetworkPoliciesPoller) ResumeToken() (string, error) {
 
 // SubnetsUnprepareNetworkPoliciesPoller provides polling facilities until the operation reaches a terminal state.
 type SubnetsUnprepareNetworkPoliciesPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -5733,7 +5733,7 @@ func (p *SubnetsUnprepareNetworkPoliciesPoller) ResumeToken() (string, error) {
 
 // VPNConnectionsCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type VPNConnectionsCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -5776,7 +5776,7 @@ func (p *VPNConnectionsCreateOrUpdatePoller) ResumeToken() (string, error) {
 
 // VPNConnectionsDeletePoller provides polling facilities until the operation reaches a terminal state.
 type VPNConnectionsDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -5819,7 +5819,7 @@ func (p *VPNConnectionsDeletePoller) ResumeToken() (string, error) {
 
 // VPNGatewaysCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type VPNGatewaysCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -5862,7 +5862,7 @@ func (p *VPNGatewaysCreateOrUpdatePoller) ResumeToken() (string, error) {
 
 // VPNGatewaysDeletePoller provides polling facilities until the operation reaches a terminal state.
 type VPNGatewaysDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -5905,7 +5905,7 @@ func (p *VPNGatewaysDeletePoller) ResumeToken() (string, error) {
 
 // VPNGatewaysResetPoller provides polling facilities until the operation reaches a terminal state.
 type VPNGatewaysResetPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -5948,7 +5948,7 @@ func (p *VPNGatewaysResetPoller) ResumeToken() (string, error) {
 
 // VPNServerConfigurationsAssociatedWithVirtualWanListPoller provides polling facilities until the operation reaches a terminal state.
 type VPNServerConfigurationsAssociatedWithVirtualWanListPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -5991,7 +5991,7 @@ func (p *VPNServerConfigurationsAssociatedWithVirtualWanListPoller) ResumeToken(
 
 // VPNServerConfigurationsCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type VPNServerConfigurationsCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -6034,7 +6034,7 @@ func (p *VPNServerConfigurationsCreateOrUpdatePoller) ResumeToken() (string, err
 
 // VPNServerConfigurationsDeletePoller provides polling facilities until the operation reaches a terminal state.
 type VPNServerConfigurationsDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -6077,7 +6077,7 @@ func (p *VPNServerConfigurationsDeletePoller) ResumeToken() (string, error) {
 
 // VPNSitesConfigurationDownloadPoller provides polling facilities until the operation reaches a terminal state.
 type VPNSitesConfigurationDownloadPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -6120,7 +6120,7 @@ func (p *VPNSitesConfigurationDownloadPoller) ResumeToken() (string, error) {
 
 // VPNSitesCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type VPNSitesCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -6163,7 +6163,7 @@ func (p *VPNSitesCreateOrUpdatePoller) ResumeToken() (string, error) {
 
 // VPNSitesDeletePoller provides polling facilities until the operation reaches a terminal state.
 type VPNSitesDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -6206,7 +6206,7 @@ func (p *VPNSitesDeletePoller) ResumeToken() (string, error) {
 
 // VirtualHubRouteTableV2SCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualHubRouteTableV2SCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -6249,7 +6249,7 @@ func (p *VirtualHubRouteTableV2SCreateOrUpdatePoller) ResumeToken() (string, err
 
 // VirtualHubRouteTableV2SDeletePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualHubRouteTableV2SDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -6292,7 +6292,7 @@ func (p *VirtualHubRouteTableV2SDeletePoller) ResumeToken() (string, error) {
 
 // VirtualHubsCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualHubsCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -6335,7 +6335,7 @@ func (p *VirtualHubsCreateOrUpdatePoller) ResumeToken() (string, error) {
 
 // VirtualHubsDeletePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualHubsDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -6378,7 +6378,7 @@ func (p *VirtualHubsDeletePoller) ResumeToken() (string, error) {
 
 // VirtualNetworkGatewayConnectionsCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualNetworkGatewayConnectionsCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -6421,7 +6421,7 @@ func (p *VirtualNetworkGatewayConnectionsCreateOrUpdatePoller) ResumeToken() (st
 
 // VirtualNetworkGatewayConnectionsDeletePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualNetworkGatewayConnectionsDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -6464,7 +6464,7 @@ func (p *VirtualNetworkGatewayConnectionsDeletePoller) ResumeToken() (string, er
 
 // VirtualNetworkGatewayConnectionsResetSharedKeyPoller provides polling facilities until the operation reaches a terminal state.
 type VirtualNetworkGatewayConnectionsResetSharedKeyPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -6507,7 +6507,7 @@ func (p *VirtualNetworkGatewayConnectionsResetSharedKeyPoller) ResumeToken() (st
 
 // VirtualNetworkGatewayConnectionsSetSharedKeyPoller provides polling facilities until the operation reaches a terminal state.
 type VirtualNetworkGatewayConnectionsSetSharedKeyPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -6550,7 +6550,7 @@ func (p *VirtualNetworkGatewayConnectionsSetSharedKeyPoller) ResumeToken() (stri
 
 // VirtualNetworkGatewayConnectionsStartPacketCapturePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualNetworkGatewayConnectionsStartPacketCapturePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -6593,7 +6593,7 @@ func (p *VirtualNetworkGatewayConnectionsStartPacketCapturePoller) ResumeToken()
 
 // VirtualNetworkGatewayConnectionsStopPacketCapturePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualNetworkGatewayConnectionsStopPacketCapturePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -6636,7 +6636,7 @@ func (p *VirtualNetworkGatewayConnectionsStopPacketCapturePoller) ResumeToken() 
 
 // VirtualNetworkGatewayConnectionsUpdateTagsPoller provides polling facilities until the operation reaches a terminal state.
 type VirtualNetworkGatewayConnectionsUpdateTagsPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -6679,7 +6679,7 @@ func (p *VirtualNetworkGatewayConnectionsUpdateTagsPoller) ResumeToken() (string
 
 // VirtualNetworkGatewaysCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualNetworkGatewaysCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -6722,7 +6722,7 @@ func (p *VirtualNetworkGatewaysCreateOrUpdatePoller) ResumeToken() (string, erro
 
 // VirtualNetworkGatewaysDeletePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualNetworkGatewaysDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -6765,7 +6765,7 @@ func (p *VirtualNetworkGatewaysDeletePoller) ResumeToken() (string, error) {
 
 // VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVPNConnectionsPoller provides polling facilities until the operation reaches a terminal state.
 type VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVPNConnectionsPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -6808,7 +6808,7 @@ func (p *VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVPNConnectionsPoll
 
 // VirtualNetworkGatewaysGenerateVPNProfilePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualNetworkGatewaysGenerateVPNProfilePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -6851,7 +6851,7 @@ func (p *VirtualNetworkGatewaysGenerateVPNProfilePoller) ResumeToken() (string, 
 
 // VirtualNetworkGatewaysGeneratevpnclientpackagePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualNetworkGatewaysGeneratevpnclientpackagePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -6894,7 +6894,7 @@ func (p *VirtualNetworkGatewaysGeneratevpnclientpackagePoller) ResumeToken() (st
 
 // VirtualNetworkGatewaysGetAdvertisedRoutesPoller provides polling facilities until the operation reaches a terminal state.
 type VirtualNetworkGatewaysGetAdvertisedRoutesPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -6937,7 +6937,7 @@ func (p *VirtualNetworkGatewaysGetAdvertisedRoutesPoller) ResumeToken() (string,
 
 // VirtualNetworkGatewaysGetBgpPeerStatusPoller provides polling facilities until the operation reaches a terminal state.
 type VirtualNetworkGatewaysGetBgpPeerStatusPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -6980,7 +6980,7 @@ func (p *VirtualNetworkGatewaysGetBgpPeerStatusPoller) ResumeToken() (string, er
 
 // VirtualNetworkGatewaysGetLearnedRoutesPoller provides polling facilities until the operation reaches a terminal state.
 type VirtualNetworkGatewaysGetLearnedRoutesPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -7023,7 +7023,7 @@ func (p *VirtualNetworkGatewaysGetLearnedRoutesPoller) ResumeToken() (string, er
 
 // VirtualNetworkGatewaysGetVPNProfilePackageURLPoller provides polling facilities until the operation reaches a terminal state.
 type VirtualNetworkGatewaysGetVPNProfilePackageURLPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -7066,7 +7066,7 @@ func (p *VirtualNetworkGatewaysGetVPNProfilePackageURLPoller) ResumeToken() (str
 
 // VirtualNetworkGatewaysGetVpnclientConnectionHealthPoller provides polling facilities until the operation reaches a terminal state.
 type VirtualNetworkGatewaysGetVpnclientConnectionHealthPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -7109,7 +7109,7 @@ func (p *VirtualNetworkGatewaysGetVpnclientConnectionHealthPoller) ResumeToken()
 
 // VirtualNetworkGatewaysGetVpnclientIPSecParametersPoller provides polling facilities until the operation reaches a terminal state.
 type VirtualNetworkGatewaysGetVpnclientIPSecParametersPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -7152,7 +7152,7 @@ func (p *VirtualNetworkGatewaysGetVpnclientIPSecParametersPoller) ResumeToken() 
 
 // VirtualNetworkGatewaysResetPoller provides polling facilities until the operation reaches a terminal state.
 type VirtualNetworkGatewaysResetPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -7195,7 +7195,7 @@ func (p *VirtualNetworkGatewaysResetPoller) ResumeToken() (string, error) {
 
 // VirtualNetworkGatewaysResetVPNClientSharedKeyPoller provides polling facilities until the operation reaches a terminal state.
 type VirtualNetworkGatewaysResetVPNClientSharedKeyPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -7238,7 +7238,7 @@ func (p *VirtualNetworkGatewaysResetVPNClientSharedKeyPoller) ResumeToken() (str
 
 // VirtualNetworkGatewaysSetVpnclientIPSecParametersPoller provides polling facilities until the operation reaches a terminal state.
 type VirtualNetworkGatewaysSetVpnclientIPSecParametersPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -7281,7 +7281,7 @@ func (p *VirtualNetworkGatewaysSetVpnclientIPSecParametersPoller) ResumeToken() 
 
 // VirtualNetworkGatewaysStartPacketCapturePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualNetworkGatewaysStartPacketCapturePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -7324,7 +7324,7 @@ func (p *VirtualNetworkGatewaysStartPacketCapturePoller) ResumeToken() (string, 
 
 // VirtualNetworkGatewaysStopPacketCapturePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualNetworkGatewaysStopPacketCapturePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -7367,7 +7367,7 @@ func (p *VirtualNetworkGatewaysStopPacketCapturePoller) ResumeToken() (string, e
 
 // VirtualNetworkGatewaysUpdateTagsPoller provides polling facilities until the operation reaches a terminal state.
 type VirtualNetworkGatewaysUpdateTagsPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -7410,7 +7410,7 @@ func (p *VirtualNetworkGatewaysUpdateTagsPoller) ResumeToken() (string, error) {
 
 // VirtualNetworkPeeringsCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualNetworkPeeringsCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -7453,7 +7453,7 @@ func (p *VirtualNetworkPeeringsCreateOrUpdatePoller) ResumeToken() (string, erro
 
 // VirtualNetworkPeeringsDeletePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualNetworkPeeringsDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -7496,7 +7496,7 @@ func (p *VirtualNetworkPeeringsDeletePoller) ResumeToken() (string, error) {
 
 // VirtualNetworkTapsCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualNetworkTapsCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -7539,7 +7539,7 @@ func (p *VirtualNetworkTapsCreateOrUpdatePoller) ResumeToken() (string, error) {
 
 // VirtualNetworkTapsDeletePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualNetworkTapsDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -7582,7 +7582,7 @@ func (p *VirtualNetworkTapsDeletePoller) ResumeToken() (string, error) {
 
 // VirtualNetworksCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualNetworksCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -7625,7 +7625,7 @@ func (p *VirtualNetworksCreateOrUpdatePoller) ResumeToken() (string, error) {
 
 // VirtualNetworksDeletePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualNetworksDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -7668,7 +7668,7 @@ func (p *VirtualNetworksDeletePoller) ResumeToken() (string, error) {
 
 // VirtualRouterPeeringsCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualRouterPeeringsCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -7711,7 +7711,7 @@ func (p *VirtualRouterPeeringsCreateOrUpdatePoller) ResumeToken() (string, error
 
 // VirtualRouterPeeringsDeletePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualRouterPeeringsDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -7754,7 +7754,7 @@ func (p *VirtualRouterPeeringsDeletePoller) ResumeToken() (string, error) {
 
 // VirtualRoutersCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualRoutersCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -7797,7 +7797,7 @@ func (p *VirtualRoutersCreateOrUpdatePoller) ResumeToken() (string, error) {
 
 // VirtualRoutersDeletePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualRoutersDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -7840,7 +7840,7 @@ func (p *VirtualRoutersDeletePoller) ResumeToken() (string, error) {
 
 // VirtualWansCreateOrUpdatePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualWansCreateOrUpdatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -7883,7 +7883,7 @@ func (p *VirtualWansCreateOrUpdatePoller) ResumeToken() (string, error) {
 
 // VirtualWansDeletePoller provides polling facilities until the operation reaches a terminal state.
 type VirtualWansDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -7926,7 +7926,7 @@ func (p *VirtualWansDeletePoller) ResumeToken() (string, error) {
 
 // WebApplicationFirewallPoliciesDeletePoller provides polling facilities until the operation reaches a terminal state.
 type WebApplicationFirewallPoliciesDeletePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.

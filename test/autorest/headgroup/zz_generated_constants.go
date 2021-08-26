@@ -9,6 +9,6 @@
 package headgroup
 
 const (
-	telemetryInfo = "azsdk-go-headgroup/" + version
-	version       = "v0.1"
+	module  = "headgroup"
+	version = "v0.1"
 )

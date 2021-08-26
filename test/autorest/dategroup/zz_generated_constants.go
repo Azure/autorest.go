@@ -9,6 +9,6 @@
 package dategroup
 
 const (
-	telemetryInfo = "azsdk-go-dategroup/" + version
-	version       = "v0.1"
+	module  = "dategroup"
+	version = "v0.1"
 )

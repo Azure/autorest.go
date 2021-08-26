@@ -12,14 +12,14 @@ import { ImportManager } from './imports';
 // generates content for connection.go
 export async function generateConnection(session: Session<CodeModel>): Promise<string> {
   if (<boolean>session.model.language.go!.azureARM) {
-    // use the Connection type in armcore instead of generating one
+    // use the Connection type in arm instead of generating one
     return '';
   }
   // the list of packages to import
   const imports = new ImportManager();
   // add standard imports
-  imports.add('fmt');
-  imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
+  imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/policy');
+  imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
 
   let text = await contentPreamble(session);
   // content generation can add to the imports list, so execute it before emitting any text
@@ -55,29 +55,19 @@ function generateContent(session: Session<CodeModel>, imports: ImportManager): s
   text += '// All zero-value fields will be initialized with their default values.\n';
   text += `type ${connectionOptions} struct {\n`;
   text += '\t// HTTPClient sets the transport for making HTTP requests.\n';
-  text += '\tHTTPClient azcore.Transport\n';
+  text += '\tHTTPClient policy.Transporter\n';
   text += '\t// Retry configures the built-in retry policy behavior.\n';
-  text += '\tRetry azcore.RetryOptions\n';
+  text += '\tRetry policy.RetryOptions\n';
   text += '\t// Telemetry configures the built-in telemetry policy behavior.\n';
-  text += '\tTelemetry azcore.TelemetryOptions\n';
+  text += '\tTelemetry policy.TelemetryOptions\n';
   text += '\t// Logging configures the built-in logging policy behavior.\n';
-  text += '\tLogging azcore.LogOptions\n';
+  text += '\tLogging policy.LogOptions\n';
   text += '\t// PerCallPolicies contains custom policies to inject into the pipeline.\n';
   text += '\t// Each policy is executed once per request.\n';
-  text += '\tPerCallPolicies []azcore.Policy\n';
+  text += '\tPerCallPolicies []policy.Policy\n';
   text += '\t// PerRetryPolicies contains custom policies to inject into the pipeline.\n';
   text += '\t// Each policy is executed once per request, and for each retry request.\n';
-  text += '\tPerRetryPolicies []azcore.Policy\n';
-  text += '}\n\n';
-
-  text += `func (c *${connectionOptions}) telemetryOptions() *azcore.TelemetryOptions {\n`;
-  text += '\tto := c.Telemetry\n';
-  text += '\tif to.Value == "" {\n';
-  text += '\t\tto.Value = telemetryInfo\n';
-  text += '\t} else {\n';
-  text += '\t\tto.Value = fmt.Sprintf("%s %s", telemetryInfo, to.Value)\n';
-  text += '\t}\n';
-  text += '\treturn &to\n';
+  text += '\tPerRetryPolicies []policy.Policy\n';
   text += '}\n\n';
 
   // Connection
@@ -107,12 +97,13 @@ function generateContent(session: Session<CodeModel>, imports: ImportManager): s
     // there's a client host param
     text += `\tu string\n`;
   }
-  text += `\tp azcore.Pipeline\n`;
+  text += `\tp runtime.Pipeline\n`;
   text += '}\n\n';
 
-  let credParam = 'cred azcore.Credential, ';
-  if (!session.model.security.authenticationRequired) {
-    credParam = '';
+  let credParam = '';
+  if (session.model.security.authenticationRequired) {
+    credParam = 'cred azcore.Credential, ';
+    imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
   }
   const endpoint = getDefaultEndpoint(session.model.globalParameters);
   if (endpoint) {
@@ -161,21 +152,22 @@ function generateContent(session: Session<CodeModel>, imports: ImportManager): s
   text += '\tif options == nil {\n';
   text += `\t\toptions = &${connectionOptions}{}\n`;
   text += '\t}\n';
-  text += '\tpolicies := []azcore.Policy{\n';
-  text += '\t\tazcore.NewTelemetryPolicy(options.telemetryOptions()),\n';
+  text += '\tpolicies := []policy.Policy{}\n';
+  text += '\tif !options.Telemetry.Disabled {\n';
+  text += '\t\tpolicies = append(policies, runtime.NewTelemetryPolicy(module, version, &options.Telemetry))\n';
   text += '\t}\n';
   text += '\tpolicies = append(policies, options.PerCallPolicies...)\n';
-  text += '\tpolicies = append(policies, azcore.NewRetryPolicy(&options.Retry))\n';
+  text += '\tpolicies = append(policies, runtime.NewRetryPolicy(&options.Retry))\n';
   text += '\tpolicies = append(policies, options.PerRetryPolicies...)\n';
   if (session.model.security.authenticationRequired) {
     let scopes = '';
     if (usesScopes) {
       scopes = 'Scopes: scopes'
     }
-    text += `\t\tpolicies = append(policies, cred.AuthenticationPolicy(azcore.AuthenticationPolicyOptions{Options: azcore.TokenRequestOptions{${scopes}}}))\n`;
+    text += `\t\tpolicies = append(policies, cred.NewAuthenticationPolicy(runtime.AuthenticationOptions{TokenRequest: policy.TokenRequestOptions{${scopes}}}))\n`;
   }
-  text += '\tpolicies = append(policies, azcore.NewLogPolicy(&options.Logging))\n';
-  const pipeline = 'azcore.NewPipeline(options.HTTPClient, policies...)';
+  text += '\tpolicies = append(policies, runtime.NewLogPolicy(&options.Logging))\n';
+  const pipeline = 'runtime.NewPipeline(options.HTTPClient, policies...)';
   if (!session.model.language.go!.complexHostParams) {
     // simple case, construct the full host here
     var hostURL: string;
@@ -206,6 +198,7 @@ function generateContent(session: Session<CodeModel>, imports: ImportManager): s
             text += `${pointer}${hostParam.language.go!.name})\n`;
             break;
           default:
+            imports.add('fmt');
             text += `fmt.Sprint(${pointer}${hostParam.language.go!.name}))\n`;
             break;
         }
@@ -256,7 +249,7 @@ function generateContent(session: Session<CodeModel>, imports: ImportManager): s
     }
   }
   text += '// Pipeline returns the connection\'s pipeline.\n';
-  text += `func (c *${connection}) Pipeline() (azcore.Pipeline) {\n`;
+  text += `func (c *${connection}) Pipeline() (runtime.Pipeline) {\n`;
   text += '\treturn c.p\n';
   text += '}\n\n';
   return text;

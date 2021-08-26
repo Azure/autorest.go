@@ -5,12 +5,13 @@ package formdatagroup
 
 import (
 	"context"
+	"io"
 	"io/ioutil"
 	"net/http"
 	"strings"
 	"testing"
 
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming"
 )
 
 func newFormdataClient() *FormdataClient {
@@ -20,7 +21,7 @@ func newFormdataClient() *FormdataClient {
 func TestUploadFile(t *testing.T) {
 	client := newFormdataClient()
 	s := strings.NewReader("the data")
-	resp, err := client.UploadFile(context.Background(), azcore.NopCloser(s), "sample", nil)
+	resp, err := client.UploadFile(context.Background(), streaming.NopCloser(s), "sample", nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -39,7 +40,7 @@ func TestUploadFile(t *testing.T) {
 func TestUploadFileViaBody(t *testing.T) {
 	client := newFormdataClient()
 	s := strings.NewReader("the data")
-	resp, err := client.UploadFileViaBody(context.Background(), azcore.NopCloser(s), nil)
+	resp, err := client.UploadFileViaBody(context.Background(), streaming.NopCloser(s), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -60,9 +61,9 @@ func TestUploadFiles(t *testing.T) {
 	client := newFormdataClient()
 	s1 := strings.NewReader("the data")
 	s2 := strings.NewReader(" to be uploaded")
-	resp, err := client.UploadFiles(context.Background(), []azcore.ReadSeekCloser{
-		azcore.NopCloser(s1),
-		azcore.NopCloser(s2),
+	resp, err := client.UploadFiles(context.Background(), []io.ReadSeekCloser{
+		streaming.NopCloser(s1),
+		streaming.NopCloser(s2),
 	}, nil)
 	if err != nil {
 		t.Fatal(err)

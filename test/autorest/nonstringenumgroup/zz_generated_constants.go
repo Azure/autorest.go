@@ -9,8 +9,8 @@
 package nonstringenumgroup
 
 const (
-	telemetryInfo = "azsdk-go-nonstringenumgroup/" + version
-	version       = "v0.1"
+	module  = "nonstringenumgroup"
+	version = "v0.1"
 )
 
 // FloatEnum - List of float enums

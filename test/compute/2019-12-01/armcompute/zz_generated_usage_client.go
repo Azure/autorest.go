@@ -11,8 +11,9 @@ package armcompute
 import (
 	"context"
 	"errors"
-	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 	"net/url"
 	"strings"
@@ -21,13 +22,14 @@ import (
 // UsageClient contains the methods for the Usage group.
 // Don't use this type directly, use NewUsageClient() instead.
 type UsageClient struct {
-	con            *armcore.Connection
+	ep             string
+	pl             runtime.Pipeline
 	subscriptionID string
 }
 
 // NewUsageClient creates a new instance of UsageClient with the specified values.
-func NewUsageClient(con *armcore.Connection, subscriptionID string) *UsageClient {
-	return &UsageClient{con: con, subscriptionID: subscriptionID}
+func NewUsageClient(con *arm.Connection, subscriptionID string) *UsageClient {
+	return &UsageClient{ep: con.Endpoint(), pl: con.NewPipeline(module, version), subscriptionID: subscriptionID}
 }
 
 // List - Gets, for the specified location, the current compute resource usage information as well as the limits for compute resources under the subscription.
@@ -35,17 +37,17 @@ func NewUsageClient(con *armcore.Connection, subscriptionID string) *UsageClient
 func (client *UsageClient) List(location string, options *UsageListOptions) *UsageListPager {
 	return &UsageListPager{
 		client: client,
-		requester: func(ctx context.Context) (*azcore.Request, error) {
+		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, location, options)
 		},
-		advancer: func(ctx context.Context, resp UsageListResponse) (*azcore.Request, error) {
-			return azcore.NewRequest(ctx, http.MethodGet, *resp.ListUsagesResult.NextLink)
+		advancer: func(ctx context.Context, resp UsageListResponse) (*policy.Request, error) {
+			return runtime.NewRequest(ctx, http.MethodGet, *resp.ListUsagesResult.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *UsageClient) listCreateRequest(ctx context.Context, location string, options *UsageListOptions) (*azcore.Request, error) {
+func (client *UsageClient) listCreateRequest(ctx context.Context, location string, options *UsageListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/usages"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")
@@ -55,35 +57,34 @@ func (client *UsageClient) listCreateRequest(ctx context.Context, location strin
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // listHandleResponse handles the List response.
-func (client *UsageClient) listHandleResponse(resp *azcore.Response) (UsageListResponse, error) {
-	result := UsageListResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.ListUsagesResult); err != nil {
+func (client *UsageClient) listHandleResponse(resp *http.Response) (UsageListResponse, error) {
+	result := UsageListResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.ListUsagesResult); err != nil {
 		return UsageListResponse{}, err
 	}
 	return result, nil
 }
 
 // listHandleError handles the List error response.
-func (client *UsageClient) listHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *UsageClient) listHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	if len(body) == 0 {
-		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
+		return runtime.NewResponseError(errors.New(resp.Status), resp)
 	}
-	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
+	return runtime.NewResponseError(errors.New(string(body)), resp)
 }

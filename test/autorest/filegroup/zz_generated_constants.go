@@ -9,6 +9,6 @@
 package filegroup
 
 const (
-	telemetryInfo = "azsdk-go-filegroup/" + version
-	version       = "v0.1"
+	module  = "filegroup"
+	version = "v0.1"
 )

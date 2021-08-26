@@ -9,43 +9,33 @@
 package reportgroup
 
 import (
-	"fmt"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
 // ConnectionOptions contains configuration settings for the connection's pipeline.
 // All zero-value fields will be initialized with their default values.
 type ConnectionOptions struct {
 	// HTTPClient sets the transport for making HTTP requests.
-	HTTPClient azcore.Transport
+	HTTPClient policy.Transporter
 	// Retry configures the built-in retry policy behavior.
-	Retry azcore.RetryOptions
+	Retry policy.RetryOptions
 	// Telemetry configures the built-in telemetry policy behavior.
-	Telemetry azcore.TelemetryOptions
+	Telemetry policy.TelemetryOptions
 	// Logging configures the built-in logging policy behavior.
-	Logging azcore.LogOptions
+	Logging policy.LogOptions
 	// PerCallPolicies contains custom policies to inject into the pipeline.
 	// Each policy is executed once per request.
-	PerCallPolicies []azcore.Policy
+	PerCallPolicies []policy.Policy
 	// PerRetryPolicies contains custom policies to inject into the pipeline.
 	// Each policy is executed once per request, and for each retry request.
-	PerRetryPolicies []azcore.Policy
-}
-
-func (c *ConnectionOptions) telemetryOptions() *azcore.TelemetryOptions {
-	to := c.Telemetry
-	if to.Value == "" {
-		to.Value = telemetryInfo
-	} else {
-		to.Value = fmt.Sprintf("%s %s", telemetryInfo, to.Value)
-	}
-	return &to
+	PerRetryPolicies []policy.Policy
 }
 
 // Connection - Test Infrastructure for AutoRest
 type Connection struct {
 	u string
-	p azcore.Pipeline
+	p runtime.Pipeline
 }
 
 // DefaultEndpoint is the default service endpoint.
@@ -63,14 +53,15 @@ func NewConnection(endpoint string, options *ConnectionOptions) *Connection {
 	if options == nil {
 		options = &ConnectionOptions{}
 	}
-	policies := []azcore.Policy{
-		azcore.NewTelemetryPolicy(options.telemetryOptions()),
+	policies := []policy.Policy{}
+	if !options.Telemetry.Disabled {
+		policies = append(policies, runtime.NewTelemetryPolicy(module, version, &options.Telemetry))
 	}
 	policies = append(policies, options.PerCallPolicies...)
-	policies = append(policies, azcore.NewRetryPolicy(&options.Retry))
+	policies = append(policies, runtime.NewRetryPolicy(&options.Retry))
 	policies = append(policies, options.PerRetryPolicies...)
-	policies = append(policies, azcore.NewLogPolicy(&options.Logging))
-	return &Connection{u: endpoint, p: azcore.NewPipeline(options.HTTPClient, policies...)}
+	policies = append(policies, runtime.NewLogPolicy(&options.Logging))
+	return &Connection{u: endpoint, p: runtime.NewPipeline(options.HTTPClient, policies...)}
 }
 
 // Endpoint returns the connection's endpoint.
@@ -79,6 +70,6 @@ func (c *Connection) Endpoint() string {
 }
 
 // Pipeline returns the connection's pipeline.
-func (c *Connection) Pipeline() azcore.Pipeline {
+func (c *Connection) Pipeline() runtime.Pipeline {
 	return c.p
 }

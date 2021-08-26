@@ -374,6 +374,14 @@ export function emitPoller(op: Operation): string {
   return text;
 }
 
+// returns the client's pipeline
+export function getClientPipeline(op: Operation): string {
+  if (<boolean>op.language.go!.azureARM) {
+    return '\tclient.pl';
+  }
+  return '\tclient.con.Pipeline()';
+}
+
 export function formatStatusCode(statusCode: string): string {
   switch (statusCode) {
     // 1xx

@@ -9,8 +9,8 @@
 package extenumsgroup
 
 const (
-	telemetryInfo = "azsdk-go-extenumsgroup/" + version
-	version       = "v0.1"
+	module  = "extenumsgroup"
+	version = "v0.1"
 )
 
 // DaysOfWeekExtensibleEnum - Type of Pet

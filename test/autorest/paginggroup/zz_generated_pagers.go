@@ -10,7 +10,8 @@ package paginggroup
 
 import (
 	"context"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 	"reflect"
 )
@@ -20,8 +21,8 @@ type PagingFirstResponseEmptyPager struct {
 	client    *PagingClient
 	current   PagingFirstResponseEmptyResponse
 	err       error
-	requester func(context.Context) (*azcore.Request, error)
-	advancer  func(context.Context, PagingFirstResponseEmptyResponse) (*azcore.Request, error)
+	requester func(context.Context) (*policy.Request, error)
+	advancer  func(context.Context, PagingFirstResponseEmptyResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
@@ -32,7 +33,7 @@ func (p *PagingFirstResponseEmptyPager) Err() error {
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
 func (p *PagingFirstResponseEmptyPager) NextPage(ctx context.Context) bool {
-	var req *azcore.Request
+	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.ProductResultValue.NextLink == nil || len(*p.current.ProductResultValue.NextLink) == 0 {
@@ -51,7 +52,7 @@ func (p *PagingFirstResponseEmptyPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		p.err = p.client.firstResponseEmptyHandleError(resp)
 		return false
 	}
@@ -74,8 +75,8 @@ type PagingGetMultiplePagesFailurePager struct {
 	client    *PagingClient
 	current   PagingGetMultiplePagesFailureResponse
 	err       error
-	requester func(context.Context) (*azcore.Request, error)
-	advancer  func(context.Context, PagingGetMultiplePagesFailureResponse) (*azcore.Request, error)
+	requester func(context.Context) (*policy.Request, error)
+	advancer  func(context.Context, PagingGetMultiplePagesFailureResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
@@ -86,7 +87,7 @@ func (p *PagingGetMultiplePagesFailurePager) Err() error {
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
 func (p *PagingGetMultiplePagesFailurePager) NextPage(ctx context.Context) bool {
-	var req *azcore.Request
+	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.ProductResult.NextLink == nil || len(*p.current.ProductResult.NextLink) == 0 {
@@ -105,7 +106,7 @@ func (p *PagingGetMultiplePagesFailurePager) NextPage(ctx context.Context) bool 
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		p.err = p.client.getMultiplePagesFailureHandleError(resp)
 		return false
 	}
@@ -128,8 +129,8 @@ type PagingGetMultiplePagesFailureURIPager struct {
 	client    *PagingClient
 	current   PagingGetMultiplePagesFailureURIResponse
 	err       error
-	requester func(context.Context) (*azcore.Request, error)
-	advancer  func(context.Context, PagingGetMultiplePagesFailureURIResponse) (*azcore.Request, error)
+	requester func(context.Context) (*policy.Request, error)
+	advancer  func(context.Context, PagingGetMultiplePagesFailureURIResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
@@ -140,7 +141,7 @@ func (p *PagingGetMultiplePagesFailureURIPager) Err() error {
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
 func (p *PagingGetMultiplePagesFailureURIPager) NextPage(ctx context.Context) bool {
-	var req *azcore.Request
+	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.ProductResult.NextLink == nil || len(*p.current.ProductResult.NextLink) == 0 {
@@ -159,7 +160,7 @@ func (p *PagingGetMultiplePagesFailureURIPager) NextPage(ctx context.Context) bo
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		p.err = p.client.getMultiplePagesFailureURIHandleError(resp)
 		return false
 	}
@@ -182,8 +183,8 @@ type PagingGetMultiplePagesFragmentNextLinkPager struct {
 	client    *PagingClient
 	current   PagingGetMultiplePagesFragmentNextLinkResponse
 	err       error
-	requester func(context.Context) (*azcore.Request, error)
-	advancer  func(context.Context, PagingGetMultiplePagesFragmentNextLinkResponse) (*azcore.Request, error)
+	requester func(context.Context) (*policy.Request, error)
+	advancer  func(context.Context, PagingGetMultiplePagesFragmentNextLinkResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
@@ -194,7 +195,7 @@ func (p *PagingGetMultiplePagesFragmentNextLinkPager) Err() error {
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
 func (p *PagingGetMultiplePagesFragmentNextLinkPager) NextPage(ctx context.Context) bool {
-	var req *azcore.Request
+	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.ODataProductResult.ODataNextLink == nil || len(*p.current.ODataProductResult.ODataNextLink) == 0 {
@@ -213,7 +214,7 @@ func (p *PagingGetMultiplePagesFragmentNextLinkPager) NextPage(ctx context.Conte
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		p.err = p.client.getMultiplePagesFragmentNextLinkHandleError(resp)
 		return false
 	}
@@ -236,8 +237,8 @@ type PagingGetMultiplePagesFragmentWithGroupingNextLinkPager struct {
 	client    *PagingClient
 	current   PagingGetMultiplePagesFragmentWithGroupingNextLinkResponse
 	err       error
-	requester func(context.Context) (*azcore.Request, error)
-	advancer  func(context.Context, PagingGetMultiplePagesFragmentWithGroupingNextLinkResponse) (*azcore.Request, error)
+	requester func(context.Context) (*policy.Request, error)
+	advancer  func(context.Context, PagingGetMultiplePagesFragmentWithGroupingNextLinkResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
@@ -248,7 +249,7 @@ func (p *PagingGetMultiplePagesFragmentWithGroupingNextLinkPager) Err() error {
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
 func (p *PagingGetMultiplePagesFragmentWithGroupingNextLinkPager) NextPage(ctx context.Context) bool {
-	var req *azcore.Request
+	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.ODataProductResult.ODataNextLink == nil || len(*p.current.ODataProductResult.ODataNextLink) == 0 {
@@ -267,7 +268,7 @@ func (p *PagingGetMultiplePagesFragmentWithGroupingNextLinkPager) NextPage(ctx c
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		p.err = p.client.getMultiplePagesFragmentWithGroupingNextLinkHandleError(resp)
 		return false
 	}
@@ -309,7 +310,7 @@ func (p *PagingGetMultiplePagesLROPager) NextPage(ctx context.Context) bool {
 			return false
 		}
 	}
-	req, err := azcore.NewRequest(ctx, http.MethodGet, *p.current.ProductResult.NextLink)
+	req, err := runtime.NewRequest(ctx, http.MethodGet, *p.current.ProductResult.NextLink)
 	if err != nil {
 		p.err = err
 		return false
@@ -319,7 +320,7 @@ func (p *PagingGetMultiplePagesLROPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted) {
 		p.err = p.client.getMultiplePagesLROHandleError(resp)
 		return false
 	}
@@ -342,8 +343,8 @@ type PagingGetMultiplePagesPager struct {
 	client    *PagingClient
 	current   PagingGetMultiplePagesResponse
 	err       error
-	requester func(context.Context) (*azcore.Request, error)
-	advancer  func(context.Context, PagingGetMultiplePagesResponse) (*azcore.Request, error)
+	requester func(context.Context) (*policy.Request, error)
+	advancer  func(context.Context, PagingGetMultiplePagesResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
@@ -354,7 +355,7 @@ func (p *PagingGetMultiplePagesPager) Err() error {
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
 func (p *PagingGetMultiplePagesPager) NextPage(ctx context.Context) bool {
-	var req *azcore.Request
+	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.ProductResult.NextLink == nil || len(*p.current.ProductResult.NextLink) == 0 {
@@ -373,7 +374,7 @@ func (p *PagingGetMultiplePagesPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		p.err = p.client.getMultiplePagesHandleError(resp)
 		return false
 	}
@@ -396,8 +397,8 @@ type PagingGetMultiplePagesRetryFirstPager struct {
 	client    *PagingClient
 	current   PagingGetMultiplePagesRetryFirstResponse
 	err       error
-	requester func(context.Context) (*azcore.Request, error)
-	advancer  func(context.Context, PagingGetMultiplePagesRetryFirstResponse) (*azcore.Request, error)
+	requester func(context.Context) (*policy.Request, error)
+	advancer  func(context.Context, PagingGetMultiplePagesRetryFirstResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
@@ -408,7 +409,7 @@ func (p *PagingGetMultiplePagesRetryFirstPager) Err() error {
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
 func (p *PagingGetMultiplePagesRetryFirstPager) NextPage(ctx context.Context) bool {
-	var req *azcore.Request
+	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.ProductResult.NextLink == nil || len(*p.current.ProductResult.NextLink) == 0 {
@@ -427,7 +428,7 @@ func (p *PagingGetMultiplePagesRetryFirstPager) NextPage(ctx context.Context) bo
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		p.err = p.client.getMultiplePagesRetryFirstHandleError(resp)
 		return false
 	}
@@ -450,8 +451,8 @@ type PagingGetMultiplePagesRetrySecondPager struct {
 	client    *PagingClient
 	current   PagingGetMultiplePagesRetrySecondResponse
 	err       error
-	requester func(context.Context) (*azcore.Request, error)
-	advancer  func(context.Context, PagingGetMultiplePagesRetrySecondResponse) (*azcore.Request, error)
+	requester func(context.Context) (*policy.Request, error)
+	advancer  func(context.Context, PagingGetMultiplePagesRetrySecondResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
@@ -462,7 +463,7 @@ func (p *PagingGetMultiplePagesRetrySecondPager) Err() error {
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
 func (p *PagingGetMultiplePagesRetrySecondPager) NextPage(ctx context.Context) bool {
-	var req *azcore.Request
+	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.ProductResult.NextLink == nil || len(*p.current.ProductResult.NextLink) == 0 {
@@ -481,7 +482,7 @@ func (p *PagingGetMultiplePagesRetrySecondPager) NextPage(ctx context.Context) b
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		p.err = p.client.getMultiplePagesRetrySecondHandleError(resp)
 		return false
 	}
@@ -504,8 +505,8 @@ type PagingGetMultiplePagesWithOffsetPager struct {
 	client    *PagingClient
 	current   PagingGetMultiplePagesWithOffsetResponse
 	err       error
-	requester func(context.Context) (*azcore.Request, error)
-	advancer  func(context.Context, PagingGetMultiplePagesWithOffsetResponse) (*azcore.Request, error)
+	requester func(context.Context) (*policy.Request, error)
+	advancer  func(context.Context, PagingGetMultiplePagesWithOffsetResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
@@ -516,7 +517,7 @@ func (p *PagingGetMultiplePagesWithOffsetPager) Err() error {
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
 func (p *PagingGetMultiplePagesWithOffsetPager) NextPage(ctx context.Context) bool {
-	var req *azcore.Request
+	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.ProductResult.NextLink == nil || len(*p.current.ProductResult.NextLink) == 0 {
@@ -535,7 +536,7 @@ func (p *PagingGetMultiplePagesWithOffsetPager) NextPage(ctx context.Context) bo
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		p.err = p.client.getMultiplePagesWithOffsetHandleError(resp)
 		return false
 	}
@@ -558,8 +559,8 @@ type PagingGetNoItemNamePagesPager struct {
 	client    *PagingClient
 	current   PagingGetNoItemNamePagesResponse
 	err       error
-	requester func(context.Context) (*azcore.Request, error)
-	advancer  func(context.Context, PagingGetNoItemNamePagesResponse) (*azcore.Request, error)
+	requester func(context.Context) (*policy.Request, error)
+	advancer  func(context.Context, PagingGetNoItemNamePagesResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
@@ -570,7 +571,7 @@ func (p *PagingGetNoItemNamePagesPager) Err() error {
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
 func (p *PagingGetNoItemNamePagesPager) NextPage(ctx context.Context) bool {
-	var req *azcore.Request
+	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.ProductResultValue.NextLink == nil || len(*p.current.ProductResultValue.NextLink) == 0 {
@@ -589,7 +590,7 @@ func (p *PagingGetNoItemNamePagesPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		p.err = p.client.getNoItemNamePagesHandleError(resp)
 		return false
 	}
@@ -612,8 +613,8 @@ type PagingGetODataMultiplePagesPager struct {
 	client    *PagingClient
 	current   PagingGetODataMultiplePagesResponse
 	err       error
-	requester func(context.Context) (*azcore.Request, error)
-	advancer  func(context.Context, PagingGetODataMultiplePagesResponse) (*azcore.Request, error)
+	requester func(context.Context) (*policy.Request, error)
+	advancer  func(context.Context, PagingGetODataMultiplePagesResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
@@ -624,7 +625,7 @@ func (p *PagingGetODataMultiplePagesPager) Err() error {
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
 func (p *PagingGetODataMultiplePagesPager) NextPage(ctx context.Context) bool {
-	var req *azcore.Request
+	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.ODataProductResult.ODataNextLink == nil || len(*p.current.ODataProductResult.ODataNextLink) == 0 {
@@ -643,7 +644,7 @@ func (p *PagingGetODataMultiplePagesPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		p.err = p.client.getODataMultiplePagesHandleError(resp)
 		return false
 	}
@@ -666,8 +667,8 @@ type PagingGetPagingModelWithItemNameWithXMSClientNamePager struct {
 	client    *PagingClient
 	current   PagingGetPagingModelWithItemNameWithXMSClientNameResponse
 	err       error
-	requester func(context.Context) (*azcore.Request, error)
-	advancer  func(context.Context, PagingGetPagingModelWithItemNameWithXMSClientNameResponse) (*azcore.Request, error)
+	requester func(context.Context) (*policy.Request, error)
+	advancer  func(context.Context, PagingGetPagingModelWithItemNameWithXMSClientNameResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
@@ -678,7 +679,7 @@ func (p *PagingGetPagingModelWithItemNameWithXMSClientNamePager) Err() error {
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
 func (p *PagingGetPagingModelWithItemNameWithXMSClientNamePager) NextPage(ctx context.Context) bool {
-	var req *azcore.Request
+	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.ProductResultValueWithXMSClientName.NextLink == nil || len(*p.current.ProductResultValueWithXMSClientName.NextLink) == 0 {
@@ -697,7 +698,7 @@ func (p *PagingGetPagingModelWithItemNameWithXMSClientNamePager) NextPage(ctx co
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		p.err = p.client.getPagingModelWithItemNameWithXMSClientNameHandleError(resp)
 		return false
 	}
@@ -720,8 +721,8 @@ type PagingGetSinglePagesFailurePager struct {
 	client    *PagingClient
 	current   PagingGetSinglePagesFailureResponse
 	err       error
-	requester func(context.Context) (*azcore.Request, error)
-	advancer  func(context.Context, PagingGetSinglePagesFailureResponse) (*azcore.Request, error)
+	requester func(context.Context) (*policy.Request, error)
+	advancer  func(context.Context, PagingGetSinglePagesFailureResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
@@ -732,7 +733,7 @@ func (p *PagingGetSinglePagesFailurePager) Err() error {
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
 func (p *PagingGetSinglePagesFailurePager) NextPage(ctx context.Context) bool {
-	var req *azcore.Request
+	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.ProductResult.NextLink == nil || len(*p.current.ProductResult.NextLink) == 0 {
@@ -751,7 +752,7 @@ func (p *PagingGetSinglePagesFailurePager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		p.err = p.client.getSinglePagesFailureHandleError(resp)
 		return false
 	}
@@ -774,8 +775,8 @@ type PagingGetSinglePagesPager struct {
 	client    *PagingClient
 	current   PagingGetSinglePagesResponse
 	err       error
-	requester func(context.Context) (*azcore.Request, error)
-	advancer  func(context.Context, PagingGetSinglePagesResponse) (*azcore.Request, error)
+	requester func(context.Context) (*policy.Request, error)
+	advancer  func(context.Context, PagingGetSinglePagesResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
@@ -786,7 +787,7 @@ func (p *PagingGetSinglePagesPager) Err() error {
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
 func (p *PagingGetSinglePagesPager) NextPage(ctx context.Context) bool {
-	var req *azcore.Request
+	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.ProductResult.NextLink == nil || len(*p.current.ProductResult.NextLink) == 0 {
@@ -805,7 +806,7 @@ func (p *PagingGetSinglePagesPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		p.err = p.client.getSinglePagesHandleError(resp)
 		return false
 	}
@@ -828,8 +829,8 @@ type PagingGetWithQueryParamsPager struct {
 	client    *PagingClient
 	current   PagingGetWithQueryParamsResponse
 	err       error
-	requester func(context.Context) (*azcore.Request, error)
-	advancer  func(context.Context, PagingGetWithQueryParamsResponse) (*azcore.Request, error)
+	requester func(context.Context) (*policy.Request, error)
+	advancer  func(context.Context, PagingGetWithQueryParamsResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
@@ -840,7 +841,7 @@ func (p *PagingGetWithQueryParamsPager) Err() error {
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
 func (p *PagingGetWithQueryParamsPager) NextPage(ctx context.Context) bool {
-	var req *azcore.Request
+	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.ProductResult.NextLink == nil || len(*p.current.ProductResult.NextLink) == 0 {
@@ -859,7 +860,7 @@ func (p *PagingGetWithQueryParamsPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		p.err = p.client.getWithQueryParamsHandleError(resp)
 		return false
 	}
@@ -882,8 +883,8 @@ type PagingNextFragmentPager struct {
 	client    *PagingClient
 	current   PagingNextFragmentResponse
 	err       error
-	requester func(context.Context) (*azcore.Request, error)
-	advancer  func(context.Context, PagingNextFragmentResponse) (*azcore.Request, error)
+	requester func(context.Context) (*policy.Request, error)
+	advancer  func(context.Context, PagingNextFragmentResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
@@ -894,7 +895,7 @@ func (p *PagingNextFragmentPager) Err() error {
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
 func (p *PagingNextFragmentPager) NextPage(ctx context.Context) bool {
-	var req *azcore.Request
+	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.ODataProductResult.ODataNextLink == nil || len(*p.current.ODataProductResult.ODataNextLink) == 0 {
@@ -913,7 +914,7 @@ func (p *PagingNextFragmentPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		p.err = p.client.nextFragmentHandleError(resp)
 		return false
 	}
@@ -936,8 +937,8 @@ type PagingNextFragmentWithGroupingPager struct {
 	client    *PagingClient
 	current   PagingNextFragmentWithGroupingResponse
 	err       error
-	requester func(context.Context) (*azcore.Request, error)
-	advancer  func(context.Context, PagingNextFragmentWithGroupingResponse) (*azcore.Request, error)
+	requester func(context.Context) (*policy.Request, error)
+	advancer  func(context.Context, PagingNextFragmentWithGroupingResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
@@ -948,7 +949,7 @@ func (p *PagingNextFragmentWithGroupingPager) Err() error {
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
 func (p *PagingNextFragmentWithGroupingPager) NextPage(ctx context.Context) bool {
-	var req *azcore.Request
+	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.ODataProductResult.ODataNextLink == nil || len(*p.current.ODataProductResult.ODataNextLink) == 0 {
@@ -967,7 +968,7 @@ func (p *PagingNextFragmentWithGroupingPager) NextPage(ctx context.Context) bool
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		p.err = p.client.nextFragmentWithGroupingHandleError(resp)
 		return false
 	}

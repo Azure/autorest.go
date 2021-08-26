@@ -11,7 +11,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/google/go-cmp/cmp"
 )
 
@@ -22,15 +22,13 @@ func newPagingClient() *PagingClient {
 	return NewPagingClient(NewDefaultConnection(&options))
 }
 
-func httpClientWithCookieJar() azcore.Transport {
+func httpClientWithCookieJar() policy.Transporter {
 	j, err := cookiejar.New(nil)
 	if err != nil {
 		panic(err)
 	}
 	http.DefaultClient.Jar = j
-	return azcore.TransportFunc(func(req *http.Request) (*http.Response, error) {
-		return http.DefaultClient.Do(req)
-	})
+	return http.DefaultClient
 }
 
 // GetMultiplePages - A paging operation that includes a nextLink that has 10 pages

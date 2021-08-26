@@ -11,7 +11,8 @@ package complexgroup
 import (
 	"context"
 	"fmt"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
@@ -37,44 +38,43 @@ func (client *PolymorphismClient) GetComplicated(ctx context.Context, options *P
 	if err != nil {
 		return PolymorphismGetComplicatedResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PolymorphismGetComplicatedResponse{}, client.getComplicatedHandleError(resp)
 	}
 	return client.getComplicatedHandleResponse(resp)
 }
 
 // getComplicatedCreateRequest creates the GetComplicated request.
-func (client *PolymorphismClient) getComplicatedCreateRequest(ctx context.Context, options *PolymorphismGetComplicatedOptions) (*azcore.Request, error) {
+func (client *PolymorphismClient) getComplicatedCreateRequest(ctx context.Context, options *PolymorphismGetComplicatedOptions) (*policy.Request, error) {
 	urlPath := "/complex/polymorphism/complicated"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getComplicatedHandleResponse handles the GetComplicated response.
-func (client *PolymorphismClient) getComplicatedHandleResponse(resp *azcore.Response) (PolymorphismGetComplicatedResponse, error) {
-	result := PolymorphismGetComplicatedResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result); err != nil {
+func (client *PolymorphismClient) getComplicatedHandleResponse(resp *http.Response) (PolymorphismGetComplicatedResponse, error) {
+	result := PolymorphismGetComplicatedResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result); err != nil {
 		return PolymorphismGetComplicatedResponse{}, err
 	}
 	return result, nil
 }
 
 // getComplicatedHandleError handles the GetComplicated error response.
-func (client *PolymorphismClient) getComplicatedHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *PolymorphismClient) getComplicatedHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetComposedWithDiscriminator - Get complex object composing a polymorphic scalar property and array property with polymorphic element type, with discriminator
@@ -90,44 +90,43 @@ func (client *PolymorphismClient) GetComposedWithDiscriminator(ctx context.Conte
 	if err != nil {
 		return PolymorphismGetComposedWithDiscriminatorResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PolymorphismGetComposedWithDiscriminatorResponse{}, client.getComposedWithDiscriminatorHandleError(resp)
 	}
 	return client.getComposedWithDiscriminatorHandleResponse(resp)
 }
 
 // getComposedWithDiscriminatorCreateRequest creates the GetComposedWithDiscriminator request.
-func (client *PolymorphismClient) getComposedWithDiscriminatorCreateRequest(ctx context.Context, options *PolymorphismGetComposedWithDiscriminatorOptions) (*azcore.Request, error) {
+func (client *PolymorphismClient) getComposedWithDiscriminatorCreateRequest(ctx context.Context, options *PolymorphismGetComposedWithDiscriminatorOptions) (*policy.Request, error) {
 	urlPath := "/complex/polymorphism/composedWithDiscriminator"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getComposedWithDiscriminatorHandleResponse handles the GetComposedWithDiscriminator response.
-func (client *PolymorphismClient) getComposedWithDiscriminatorHandleResponse(resp *azcore.Response) (PolymorphismGetComposedWithDiscriminatorResponse, error) {
-	result := PolymorphismGetComposedWithDiscriminatorResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.DotFishMarket); err != nil {
+func (client *PolymorphismClient) getComposedWithDiscriminatorHandleResponse(resp *http.Response) (PolymorphismGetComposedWithDiscriminatorResponse, error) {
+	result := PolymorphismGetComposedWithDiscriminatorResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.DotFishMarket); err != nil {
 		return PolymorphismGetComposedWithDiscriminatorResponse{}, err
 	}
 	return result, nil
 }
 
 // getComposedWithDiscriminatorHandleError handles the GetComposedWithDiscriminator error response.
-func (client *PolymorphismClient) getComposedWithDiscriminatorHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *PolymorphismClient) getComposedWithDiscriminatorHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetComposedWithoutDiscriminator - Get complex object composing a polymorphic scalar property and array property with polymorphic element type, without
@@ -143,44 +142,43 @@ func (client *PolymorphismClient) GetComposedWithoutDiscriminator(ctx context.Co
 	if err != nil {
 		return PolymorphismGetComposedWithoutDiscriminatorResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PolymorphismGetComposedWithoutDiscriminatorResponse{}, client.getComposedWithoutDiscriminatorHandleError(resp)
 	}
 	return client.getComposedWithoutDiscriminatorHandleResponse(resp)
 }
 
 // getComposedWithoutDiscriminatorCreateRequest creates the GetComposedWithoutDiscriminator request.
-func (client *PolymorphismClient) getComposedWithoutDiscriminatorCreateRequest(ctx context.Context, options *PolymorphismGetComposedWithoutDiscriminatorOptions) (*azcore.Request, error) {
+func (client *PolymorphismClient) getComposedWithoutDiscriminatorCreateRequest(ctx context.Context, options *PolymorphismGetComposedWithoutDiscriminatorOptions) (*policy.Request, error) {
 	urlPath := "/complex/polymorphism/composedWithoutDiscriminator"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getComposedWithoutDiscriminatorHandleResponse handles the GetComposedWithoutDiscriminator response.
-func (client *PolymorphismClient) getComposedWithoutDiscriminatorHandleResponse(resp *azcore.Response) (PolymorphismGetComposedWithoutDiscriminatorResponse, error) {
-	result := PolymorphismGetComposedWithoutDiscriminatorResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.DotFishMarket); err != nil {
+func (client *PolymorphismClient) getComposedWithoutDiscriminatorHandleResponse(resp *http.Response) (PolymorphismGetComposedWithoutDiscriminatorResponse, error) {
+	result := PolymorphismGetComposedWithoutDiscriminatorResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.DotFishMarket); err != nil {
 		return PolymorphismGetComposedWithoutDiscriminatorResponse{}, err
 	}
 	return result, nil
 }
 
 // getComposedWithoutDiscriminatorHandleError handles the GetComposedWithoutDiscriminator error response.
-func (client *PolymorphismClient) getComposedWithoutDiscriminatorHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *PolymorphismClient) getComposedWithoutDiscriminatorHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetDotSyntax - Get complex types that are polymorphic, JSON key contains a dot
@@ -194,44 +192,43 @@ func (client *PolymorphismClient) GetDotSyntax(ctx context.Context, options *Pol
 	if err != nil {
 		return PolymorphismGetDotSyntaxResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PolymorphismGetDotSyntaxResponse{}, client.getDotSyntaxHandleError(resp)
 	}
 	return client.getDotSyntaxHandleResponse(resp)
 }
 
 // getDotSyntaxCreateRequest creates the GetDotSyntax request.
-func (client *PolymorphismClient) getDotSyntaxCreateRequest(ctx context.Context, options *PolymorphismGetDotSyntaxOptions) (*azcore.Request, error) {
+func (client *PolymorphismClient) getDotSyntaxCreateRequest(ctx context.Context, options *PolymorphismGetDotSyntaxOptions) (*policy.Request, error) {
 	urlPath := "/complex/polymorphism/dotsyntax"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getDotSyntaxHandleResponse handles the GetDotSyntax response.
-func (client *PolymorphismClient) getDotSyntaxHandleResponse(resp *azcore.Response) (PolymorphismGetDotSyntaxResponse, error) {
-	result := PolymorphismGetDotSyntaxResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result); err != nil {
+func (client *PolymorphismClient) getDotSyntaxHandleResponse(resp *http.Response) (PolymorphismGetDotSyntaxResponse, error) {
+	result := PolymorphismGetDotSyntaxResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result); err != nil {
 		return PolymorphismGetDotSyntaxResponse{}, err
 	}
 	return result, nil
 }
 
 // getDotSyntaxHandleError handles the GetDotSyntax error response.
-func (client *PolymorphismClient) getDotSyntaxHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *PolymorphismClient) getDotSyntaxHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetValid - Get complex types that are polymorphic
@@ -245,44 +242,43 @@ func (client *PolymorphismClient) GetValid(ctx context.Context, options *Polymor
 	if err != nil {
 		return PolymorphismGetValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PolymorphismGetValidResponse{}, client.getValidHandleError(resp)
 	}
 	return client.getValidHandleResponse(resp)
 }
 
 // getValidCreateRequest creates the GetValid request.
-func (client *PolymorphismClient) getValidCreateRequest(ctx context.Context, options *PolymorphismGetValidOptions) (*azcore.Request, error) {
+func (client *PolymorphismClient) getValidCreateRequest(ctx context.Context, options *PolymorphismGetValidOptions) (*policy.Request, error) {
 	urlPath := "/complex/polymorphism/valid"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getValidHandleResponse handles the GetValid response.
-func (client *PolymorphismClient) getValidHandleResponse(resp *azcore.Response) (PolymorphismGetValidResponse, error) {
-	result := PolymorphismGetValidResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result); err != nil {
+func (client *PolymorphismClient) getValidHandleResponse(resp *http.Response) (PolymorphismGetValidResponse, error) {
+	result := PolymorphismGetValidResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result); err != nil {
 		return PolymorphismGetValidResponse{}, err
 	}
 	return result, nil
 }
 
 // getValidHandleError handles the GetValid error response.
-func (client *PolymorphismClient) getValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *PolymorphismClient) getValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutComplicated - Put complex types that are polymorphic, but not at the root of the hierarchy; also have additional properties
@@ -296,35 +292,34 @@ func (client *PolymorphismClient) PutComplicated(ctx context.Context, complexBod
 	if err != nil {
 		return PolymorphismPutComplicatedResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PolymorphismPutComplicatedResponse{}, client.putComplicatedHandleError(resp)
 	}
-	return PolymorphismPutComplicatedResponse{RawResponse: resp.Response}, nil
+	return PolymorphismPutComplicatedResponse{RawResponse: resp}, nil
 }
 
 // putComplicatedCreateRequest creates the PutComplicated request.
-func (client *PolymorphismClient) putComplicatedCreateRequest(ctx context.Context, complexBody SalmonClassification, options *PolymorphismPutComplicatedOptions) (*azcore.Request, error) {
+func (client *PolymorphismClient) putComplicatedCreateRequest(ctx context.Context, complexBody SalmonClassification, options *PolymorphismPutComplicatedOptions) (*policy.Request, error) {
 	urlPath := "/complex/polymorphism/complicated"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(complexBody)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, complexBody)
 }
 
 // putComplicatedHandleError handles the PutComplicated error response.
-func (client *PolymorphismClient) putComplicatedHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *PolymorphismClient) putComplicatedHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutMissingDiscriminator - Put complex types that are polymorphic, omitting the discriminator
@@ -338,44 +333,43 @@ func (client *PolymorphismClient) PutMissingDiscriminator(ctx context.Context, c
 	if err != nil {
 		return PolymorphismPutMissingDiscriminatorResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PolymorphismPutMissingDiscriminatorResponse{}, client.putMissingDiscriminatorHandleError(resp)
 	}
 	return client.putMissingDiscriminatorHandleResponse(resp)
 }
 
 // putMissingDiscriminatorCreateRequest creates the PutMissingDiscriminator request.
-func (client *PolymorphismClient) putMissingDiscriminatorCreateRequest(ctx context.Context, complexBody SalmonClassification, options *PolymorphismPutMissingDiscriminatorOptions) (*azcore.Request, error) {
+func (client *PolymorphismClient) putMissingDiscriminatorCreateRequest(ctx context.Context, complexBody SalmonClassification, options *PolymorphismPutMissingDiscriminatorOptions) (*policy.Request, error) {
 	urlPath := "/complex/polymorphism/missingdiscriminator"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(complexBody)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, complexBody)
 }
 
 // putMissingDiscriminatorHandleResponse handles the PutMissingDiscriminator response.
-func (client *PolymorphismClient) putMissingDiscriminatorHandleResponse(resp *azcore.Response) (PolymorphismPutMissingDiscriminatorResponse, error) {
-	result := PolymorphismPutMissingDiscriminatorResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result); err != nil {
+func (client *PolymorphismClient) putMissingDiscriminatorHandleResponse(resp *http.Response) (PolymorphismPutMissingDiscriminatorResponse, error) {
+	result := PolymorphismPutMissingDiscriminatorResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result); err != nil {
 		return PolymorphismPutMissingDiscriminatorResponse{}, err
 	}
 	return result, nil
 }
 
 // putMissingDiscriminatorHandleError handles the PutMissingDiscriminator error response.
-func (client *PolymorphismClient) putMissingDiscriminatorHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *PolymorphismClient) putMissingDiscriminatorHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutValid - Put complex types that are polymorphic
@@ -389,35 +383,34 @@ func (client *PolymorphismClient) PutValid(ctx context.Context, complexBody Fish
 	if err != nil {
 		return PolymorphismPutValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PolymorphismPutValidResponse{}, client.putValidHandleError(resp)
 	}
-	return PolymorphismPutValidResponse{RawResponse: resp.Response}, nil
+	return PolymorphismPutValidResponse{RawResponse: resp}, nil
 }
 
 // putValidCreateRequest creates the PutValid request.
-func (client *PolymorphismClient) putValidCreateRequest(ctx context.Context, complexBody FishClassification, options *PolymorphismPutValidOptions) (*azcore.Request, error) {
+func (client *PolymorphismClient) putValidCreateRequest(ctx context.Context, complexBody FishClassification, options *PolymorphismPutValidOptions) (*policy.Request, error) {
 	urlPath := "/complex/polymorphism/valid"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(complexBody)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, complexBody)
 }
 
 // putValidHandleError handles the PutValid error response.
-func (client *PolymorphismClient) putValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *PolymorphismClient) putValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutValidMissingRequired - Put complex types that are polymorphic, attempting to omit required 'birthday' field - the request should not be allowed from
@@ -432,33 +425,32 @@ func (client *PolymorphismClient) PutValidMissingRequired(ctx context.Context, c
 	if err != nil {
 		return PolymorphismPutValidMissingRequiredResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PolymorphismPutValidMissingRequiredResponse{}, client.putValidMissingRequiredHandleError(resp)
 	}
-	return PolymorphismPutValidMissingRequiredResponse{RawResponse: resp.Response}, nil
+	return PolymorphismPutValidMissingRequiredResponse{RawResponse: resp}, nil
 }
 
 // putValidMissingRequiredCreateRequest creates the PutValidMissingRequired request.
-func (client *PolymorphismClient) putValidMissingRequiredCreateRequest(ctx context.Context, complexBody FishClassification, options *PolymorphismPutValidMissingRequiredOptions) (*azcore.Request, error) {
+func (client *PolymorphismClient) putValidMissingRequiredCreateRequest(ctx context.Context, complexBody FishClassification, options *PolymorphismPutValidMissingRequiredOptions) (*policy.Request, error) {
 	urlPath := "/complex/polymorphism/missingrequired/invalid"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(complexBody)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, complexBody)
 }
 
 // putValidMissingRequiredHandleError handles the PutValidMissingRequired error response.
-func (client *PolymorphismClient) putValidMissingRequiredHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *PolymorphismClient) putValidMissingRequiredHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }

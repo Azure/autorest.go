@@ -7,7 +7,7 @@ import { Session } from '@autorest/extension-base';
 import { CodeModel } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
 import { isLROOperation, PagerInfo } from '../common/helpers';
-import { contentPreamble, getResponseEnvelopeName, getResultFieldName, getStatusCodes, formatStatusCodes, sortAscending, getFinalResponseEnvelopeName } from './helpers';
+import { contentPreamble, getClientPipeline, getResponseEnvelopeName, getResultFieldName, getStatusCodes, formatStatusCodes, sortAscending, getFinalResponseEnvelopeName } from './helpers';
 import { ImportManager } from './imports';
 
 // Creates the content in pagers.go
@@ -20,7 +20,8 @@ export async function generatePagers(session: Session<CodeModel>): Promise<strin
   // add standard imports
   const imports = new ImportManager();
   imports.add('context');
-  imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
+  imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/policy');
+  imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
   imports.add('net/http');
   imports.add('reflect');
   text += imports.text();
@@ -41,8 +42,8 @@ export async function generatePagers(session: Session<CodeModel>): Promise<strin
     if (isLROOperation(pager.op)) {
       text += '\tsecond bool\n';
     } else {
-      text += '\trequester func(context.Context) (*azcore.Request, error)\n';
-      text += `\tadvancer func(context.Context, ${respEnv}) (*azcore.Request, error)\n`;
+      text += '\trequester func(context.Context) (*policy.Request, error)\n';
+      text += `\tadvancer func(context.Context, ${respEnv}) (*policy.Request, error)\n`;
     }
     text += '}\n\n';
     // pager methods
@@ -58,21 +59,21 @@ export async function generatePagers(session: Session<CodeModel>): Promise<strin
       text += '\t} else ';
     } else {
       // note the trailing tab for the next line
-      text += '\tvar req *azcore.Request\n\tvar err error\n\t';
+      text += '\tvar req *policy.Request\n\tvar err error\n\t';
     }
     text += 'if !reflect.ValueOf(p.current).IsZero() {\n';
     const nextLinkField = `${getResultFieldName(pager.op)}.${pager.op.language.go!.paging.nextLinkName}`;
     text += `\t\tif p.current.${nextLinkField} == nil || len(*p.current.${nextLinkField}) == 0 {\n`;
     text += '\t\t\treturn false\n\t\t}\n';
     if (isLROOperation(pager.op)) {
-      text += `\t}\n\treq, err := azcore.NewRequest(ctx, http.MethodGet, *p.current.${nextLinkField})\n`;
+      text += `\t}\n\treq, err := runtime.NewRequest(ctx, http.MethodGet, *p.current.${nextLinkField})\n`;
     } else {
       text += '\t\treq, err = p.advancer(ctx, p.current)\n';
       text += '\t} else {\n';
       text += '\t\treq, err = p.requester(ctx)\n\t}\n';
     }
     text += '\tif err != nil {\n\t\tp.err = err\n\t\treturn false\n\t}\n';
-    text += '\tresp, err := p.client.con.Pipeline().Do(req)\n';
+    text += `\tresp, err := p.${getClientPipeline(pager.op)}.Do(req)\n`;
     text += '\tif err != nil {\n\t\tp.err = err\n\t\treturn false\n\t}\n';
     let statusCodes: string;
     if (isLROOperation(pager.op)) {
@@ -81,7 +82,7 @@ export async function generatePagers(session: Session<CodeModel>): Promise<strin
     } else {
       statusCodes = formatStatusCodes(getStatusCodes(pager.op));
     }
-    text += `\tif !resp.HasStatusCode(${statusCodes}) {\n`;
+    text += `\tif !runtime.HasStatusCode(resp, ${statusCodes}) {\n`;
     text += `\t\tp.err = p.client.${pager.op.language.go!.protocolNaming.errorMethod}(resp)\n\t\treturn false\n\t}\n`;
     text += `\tresult, err := p.client.${pager.op.language.go!.protocolNaming.responseMethod}(resp)\n`;
     text += '\tif err != nil {\n\t\tp.err = err\n\t\treturn false\n\t}\n';

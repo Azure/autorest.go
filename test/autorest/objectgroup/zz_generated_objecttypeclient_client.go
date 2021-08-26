@@ -11,7 +11,8 @@ package objectgroup
 import (
 	"context"
 	"errors"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
@@ -37,43 +38,42 @@ func (client *ObjectTypeClient) Get(ctx context.Context, options *ObjectTypeClie
 	if err != nil {
 		return ObjectTypeClientGetResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ObjectTypeClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *ObjectTypeClient) getCreateRequest(ctx context.Context, options *ObjectTypeClientGetOptions) (*azcore.Request, error) {
+func (client *ObjectTypeClient) getCreateRequest(ctx context.Context, options *ObjectTypeClientGetOptions) (*policy.Request, error) {
 	urlPath := "/objectType/get"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getHandleResponse handles the Get response.
-func (client *ObjectTypeClient) getHandleResponse(resp *azcore.Response) (ObjectTypeClientGetResponse, error) {
-	result := ObjectTypeClientGetResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.Object); err != nil {
+func (client *ObjectTypeClient) getHandleResponse(resp *http.Response) (ObjectTypeClientGetResponse, error) {
+	result := ObjectTypeClientGetResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Object); err != nil {
 		return ObjectTypeClientGetResponse{}, err
 	}
 	return result, nil
 }
 
 // getHandleError handles the Get error response.
-func (client *ObjectTypeClient) getHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ObjectTypeClient) getHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	if len(body) == 0 {
-		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
+		return runtime.NewResponseError(errors.New(resp.Status), resp)
 	}
-	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
+	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
 // Put - Basic put that puts an object. Pass in {'foo': 'bar'} to get a 200 and anything else to get an object error.
@@ -87,32 +87,31 @@ func (client *ObjectTypeClient) Put(ctx context.Context, putObject map[string]in
 	if err != nil {
 		return ObjectTypeClientPutResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ObjectTypeClientPutResponse{}, client.putHandleError(resp)
 	}
-	return ObjectTypeClientPutResponse{RawResponse: resp.Response}, nil
+	return ObjectTypeClientPutResponse{RawResponse: resp}, nil
 }
 
 // putCreateRequest creates the Put request.
-func (client *ObjectTypeClient) putCreateRequest(ctx context.Context, putObject map[string]interface{}, options *ObjectTypeClientPutOptions) (*azcore.Request, error) {
+func (client *ObjectTypeClient) putCreateRequest(ctx context.Context, putObject map[string]interface{}, options *ObjectTypeClientPutOptions) (*policy.Request, error) {
 	urlPath := "/objectType/put"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(putObject)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, putObject)
 }
 
 // putHandleError handles the Put error response.
-func (client *ObjectTypeClient) putHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ObjectTypeClient) putHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	if len(body) == 0 {
-		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
+		return runtime.NewResponseError(errors.New(resp.Status), resp)
 	}
-	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
+	return runtime.NewResponseError(errors.New(string(body)), resp)
 }

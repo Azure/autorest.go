@@ -9,6 +9,6 @@
 package numbergroup
 
 const (
-	telemetryInfo = "azsdk-go-numbergroup/" + version
-	version       = "v0.1"
+	module  = "numbergroup"
+	version = "v0.1"
 )

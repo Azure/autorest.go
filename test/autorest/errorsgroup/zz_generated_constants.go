@@ -9,6 +9,6 @@
 package errorsgroup
 
 const (
-	telemetryInfo = "azsdk-go-errorsgroup/" + version
-	version       = "v0.1"
+	module  = "errorsgroup"
+	version = "v0.1"
 )

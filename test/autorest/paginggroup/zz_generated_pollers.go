@@ -10,13 +10,13 @@ package paginggroup
 
 import (
 	"context"
-	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 )
 
 // PagingGetMultiplePagesLROPoller provides polling facilities until the operation reaches a terminal state.
 type PagingGetMultiplePagesLROPoller struct {
-	pt     *armcore.LROPoller
+	pt     *azcore.Poller
 	client *PagingClient
 }
 

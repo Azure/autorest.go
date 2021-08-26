@@ -11,7 +11,8 @@ package azartifacts
 import (
 	"context"
 	"fmt"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
@@ -30,45 +31,44 @@ func (client *workspaceClient) Get(ctx context.Context, options *WorkspaceGetOpt
 	if err != nil {
 		return WorkspaceGetResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return WorkspaceGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *workspaceClient) getCreateRequest(ctx context.Context, options *WorkspaceGetOptions) (*azcore.Request, error) {
+func (client *workspaceClient) getCreateRequest(ctx context.Context, options *WorkspaceGetOptions) (*policy.Request, error) {
 	urlPath := "/workspace"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-06-01-preview")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getHandleResponse handles the Get response.
-func (client *workspaceClient) getHandleResponse(resp *azcore.Response) (WorkspaceGetResponse, error) {
-	result := WorkspaceGetResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.Workspace); err != nil {
+func (client *workspaceClient) getHandleResponse(resp *http.Response) (WorkspaceGetResponse, error) {
+	result := WorkspaceGetResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Workspace); err != nil {
 		return WorkspaceGetResponse{}, err
 	}
 	return result, nil
 }
 
 // getHandleError handles the Get error response.
-func (client *workspaceClient) getHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *workspaceClient) getHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := ErrorContract{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }

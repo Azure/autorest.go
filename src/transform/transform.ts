@@ -170,7 +170,7 @@ function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, inBody: boolea
       }
       return `[]${arrayElem.language.go!.name}`;
     case SchemaType.Binary:
-      return 'azcore.ReadSeekCloser';
+      return 'io.ReadSeekCloser';
     case SchemaType.Boolean:
       return 'bool';
     case SchemaType.ByteArray:
