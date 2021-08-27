@@ -74,6 +74,21 @@ namespace AutoRest.Go.Model
         public IModelType ResultType { get; }
 
         /// <summary>
+        /// Returns true if the result type is a wrapper type.
+        /// </summary>
+        public bool IsResultWrapperType
+        {
+            get
+            {
+                if (ResultType is CompositeTypeGo ctg)
+                {
+                    return ctg.IsWrapperType;
+                }
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Gets the type name of the object that's returned when the operation is complete.
         /// </summary>
         public string ResultTypeName
@@ -122,19 +137,6 @@ namespace AutoRest.Go.Model
         public override int GetHashCode()
         {
             return Name.GetHashCode();
-        }
-
-        public override bool IsWrapperType
-        {
-            get
-            {
-                if (ResultType is CompositeTypeGo ctg)
-                {
-                    // propagate the result's wrapper status
-                    return ctg.IsWrapperType;
-                }
-                return base.IsWrapperType;
-            }
         }
     }
 }

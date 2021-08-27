@@ -536,7 +536,7 @@ namespace AutoRest.Go.Model
 
                 if (HasReturnValue() && !ReturnType.Body.IsStreamType() && !LroWrapsDefaultResp())
                 {
-                    if (((CompositeTypeGo)ReturnType.Body).IsWrapperType && !((CompositeTypeGo)ReturnType.Body).HasPolymorphicFields)
+                    if ((((CompositeTypeGo)ReturnType.Body).IsWrapperType || (ReturnType.Body is FutureTypeGo ftg && ftg.IsResultWrapperType)) && !((CompositeTypeGo)ReturnType.Body).HasPolymorphicFields)
                     {
                         decorators.Add("autorest.ByUnmarshallingJSON(&result.Value)");
                     }
