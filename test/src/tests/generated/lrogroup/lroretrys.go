@@ -51,7 +51,7 @@ func (client LRORetrysClient) Delete202Retry200(ctx context.Context) (result LRO
 
 	result, err = client.Delete202Retry200Sender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysClient", "Delete202Retry200", nil, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysClient", "Delete202Retry200", result.Response(), "Failure sending request")
 		return
 	}
 
@@ -115,7 +115,7 @@ func (client LRORetrysClient) DeleteAsyncRelativeRetrySucceeded(ctx context.Cont
 
 	result, err = client.DeleteAsyncRelativeRetrySucceededSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysClient", "DeleteAsyncRelativeRetrySucceeded", nil, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysClient", "DeleteAsyncRelativeRetrySucceeded", result.Response(), "Failure sending request")
 		return
 	}
 
@@ -180,7 +180,7 @@ func (client LRORetrysClient) DeleteProvisioning202Accepted200Succeeded(ctx cont
 
 	result, err = client.DeleteProvisioning202Accepted200SucceededSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysClient", "DeleteProvisioning202Accepted200Succeeded", nil, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysClient", "DeleteProvisioning202Accepted200Succeeded", result.Response(), "Failure sending request")
 		return
 	}
 
@@ -247,7 +247,7 @@ func (client LRORetrysClient) Post202Retry200(ctx context.Context, product *Prod
 
 	result, err = client.Post202Retry200Sender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysClient", "Post202Retry200", nil, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysClient", "Post202Retry200", result.Response(), "Failure sending request")
 		return
 	}
 
@@ -319,7 +319,7 @@ func (client LRORetrysClient) PostAsyncRelativeRetrySucceeded(ctx context.Contex
 
 	result, err = client.PostAsyncRelativeRetrySucceededSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysClient", "PostAsyncRelativeRetrySucceeded", nil, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysClient", "PostAsyncRelativeRetrySucceeded", result.Response(), "Failure sending request")
 		return
 	}
 
@@ -391,7 +391,7 @@ func (client LRORetrysClient) Put201CreatingSucceeded200(ctx context.Context, pr
 
 	result, err = client.Put201CreatingSucceeded200Sender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysClient", "Put201CreatingSucceeded200", nil, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysClient", "Put201CreatingSucceeded200", result.Response(), "Failure sending request")
 		return
 	}
 
@@ -464,7 +464,7 @@ func (client LRORetrysClient) PutAsyncRelativeRetrySucceeded(ctx context.Context
 
 	result, err = client.PutAsyncRelativeRetrySucceededSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysClient", "PutAsyncRelativeRetrySucceeded", nil, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LRORetrysClient", "PutAsyncRelativeRetrySucceeded", result.Response(), "Failure sending request")
 		return
 	}
 

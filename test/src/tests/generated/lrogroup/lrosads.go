@@ -50,7 +50,7 @@ func (client LROSADsClient) Delete202NonRetry400(ctx context.Context) (result LR
 
 	result, err = client.Delete202NonRetry400Sender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "Delete202NonRetry400", nil, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "Delete202NonRetry400", result.Response(), "Failure sending request")
 		return
 	}
 
@@ -114,7 +114,7 @@ func (client LROSADsClient) Delete202RetryInvalidHeader(ctx context.Context) (re
 
 	result, err = client.Delete202RetryInvalidHeaderSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "Delete202RetryInvalidHeader", nil, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "Delete202RetryInvalidHeader", result.Response(), "Failure sending request")
 		return
 	}
 
@@ -177,7 +177,7 @@ func (client LROSADsClient) Delete204Succeeded(ctx context.Context) (result LROS
 
 	result, err = client.Delete204SucceededSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "Delete204Succeeded", nil, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "Delete204Succeeded", result.Response(), "Failure sending request")
 		return
 	}
 
@@ -241,7 +241,7 @@ func (client LROSADsClient) DeleteAsyncRelativeRetry400(ctx context.Context) (re
 
 	result, err = client.DeleteAsyncRelativeRetry400Sender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "DeleteAsyncRelativeRetry400", nil, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "DeleteAsyncRelativeRetry400", result.Response(), "Failure sending request")
 		return
 	}
 
@@ -305,7 +305,7 @@ func (client LROSADsClient) DeleteAsyncRelativeRetryInvalidHeader(ctx context.Co
 
 	result, err = client.DeleteAsyncRelativeRetryInvalidHeaderSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "DeleteAsyncRelativeRetryInvalidHeader", nil, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "DeleteAsyncRelativeRetryInvalidHeader", result.Response(), "Failure sending request")
 		return
 	}
 
@@ -369,7 +369,7 @@ func (client LROSADsClient) DeleteAsyncRelativeRetryInvalidJSONPolling(ctx conte
 
 	result, err = client.DeleteAsyncRelativeRetryInvalidJSONPollingSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "DeleteAsyncRelativeRetryInvalidJSONPolling", nil, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "DeleteAsyncRelativeRetryInvalidJSONPolling", result.Response(), "Failure sending request")
 		return
 	}
 
@@ -433,7 +433,7 @@ func (client LROSADsClient) DeleteAsyncRelativeRetryNoStatus(ctx context.Context
 
 	result, err = client.DeleteAsyncRelativeRetryNoStatusSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "DeleteAsyncRelativeRetryNoStatus", nil, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "DeleteAsyncRelativeRetryNoStatus", result.Response(), "Failure sending request")
 		return
 	}
 
@@ -496,7 +496,7 @@ func (client LROSADsClient) DeleteNonRetry400(ctx context.Context) (result LROSA
 
 	result, err = client.DeleteNonRetry400Sender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "DeleteNonRetry400", nil, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "DeleteNonRetry400", result.Response(), "Failure sending request")
 		return
 	}
 
@@ -562,7 +562,7 @@ func (client LROSADsClient) Post202NoLocation(ctx context.Context, product *Prod
 
 	result, err = client.Post202NoLocationSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "Post202NoLocation", nil, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "Post202NoLocation", result.Response(), "Failure sending request")
 		return
 	}
 
@@ -632,7 +632,7 @@ func (client LROSADsClient) Post202NonRetry400(ctx context.Context, product *Pro
 
 	result, err = client.Post202NonRetry400Sender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "Post202NonRetry400", nil, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "Post202NonRetry400", result.Response(), "Failure sending request")
 		return
 	}
 
@@ -703,7 +703,7 @@ func (client LROSADsClient) Post202RetryInvalidHeader(ctx context.Context, produ
 
 	result, err = client.Post202RetryInvalidHeaderSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "Post202RetryInvalidHeader", nil, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "Post202RetryInvalidHeader", result.Response(), "Failure sending request")
 		return
 	}
 
@@ -774,7 +774,7 @@ func (client LROSADsClient) PostAsyncRelativeRetry400(ctx context.Context, produ
 
 	result, err = client.PostAsyncRelativeRetry400Sender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PostAsyncRelativeRetry400", nil, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PostAsyncRelativeRetry400", result.Response(), "Failure sending request")
 		return
 	}
 
@@ -846,7 +846,7 @@ func (client LROSADsClient) PostAsyncRelativeRetryInvalidHeader(ctx context.Cont
 
 	result, err = client.PostAsyncRelativeRetryInvalidHeaderSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PostAsyncRelativeRetryInvalidHeader", nil, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PostAsyncRelativeRetryInvalidHeader", result.Response(), "Failure sending request")
 		return
 	}
 
@@ -918,7 +918,7 @@ func (client LROSADsClient) PostAsyncRelativeRetryInvalidJSONPolling(ctx context
 
 	result, err = client.PostAsyncRelativeRetryInvalidJSONPollingSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PostAsyncRelativeRetryInvalidJSONPolling", nil, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PostAsyncRelativeRetryInvalidJSONPolling", result.Response(), "Failure sending request")
 		return
 	}
 
@@ -990,7 +990,7 @@ func (client LROSADsClient) PostAsyncRelativeRetryNoPayload(ctx context.Context,
 
 	result, err = client.PostAsyncRelativeRetryNoPayloadSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PostAsyncRelativeRetryNoPayload", nil, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PostAsyncRelativeRetryNoPayload", result.Response(), "Failure sending request")
 		return
 	}
 
@@ -1060,7 +1060,7 @@ func (client LROSADsClient) PostNonRetry400(ctx context.Context, product *Produc
 
 	result, err = client.PostNonRetry400Sender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PostNonRetry400", nil, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PostNonRetry400", result.Response(), "Failure sending request")
 		return
 	}
 
@@ -1131,7 +1131,7 @@ func (client LROSADsClient) Put200InvalidJSON(ctx context.Context, product *Prod
 
 	result, err = client.Put200InvalidJSONSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "Put200InvalidJSON", nil, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "Put200InvalidJSON", result.Response(), "Failure sending request")
 		return
 	}
 
@@ -1203,7 +1203,7 @@ func (client LROSADsClient) PutAsyncRelativeRetry400(ctx context.Context, produc
 
 	result, err = client.PutAsyncRelativeRetry400Sender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutAsyncRelativeRetry400", nil, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutAsyncRelativeRetry400", result.Response(), "Failure sending request")
 		return
 	}
 
@@ -1276,7 +1276,7 @@ func (client LROSADsClient) PutAsyncRelativeRetryInvalidHeader(ctx context.Conte
 
 	result, err = client.PutAsyncRelativeRetryInvalidHeaderSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutAsyncRelativeRetryInvalidHeader", nil, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutAsyncRelativeRetryInvalidHeader", result.Response(), "Failure sending request")
 		return
 	}
 
@@ -1349,7 +1349,7 @@ func (client LROSADsClient) PutAsyncRelativeRetryInvalidJSONPolling(ctx context.
 
 	result, err = client.PutAsyncRelativeRetryInvalidJSONPollingSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutAsyncRelativeRetryInvalidJSONPolling", nil, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutAsyncRelativeRetryInvalidJSONPolling", result.Response(), "Failure sending request")
 		return
 	}
 
@@ -1422,7 +1422,7 @@ func (client LROSADsClient) PutAsyncRelativeRetryNoStatus(ctx context.Context, p
 
 	result, err = client.PutAsyncRelativeRetryNoStatusSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutAsyncRelativeRetryNoStatus", nil, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutAsyncRelativeRetryNoStatus", result.Response(), "Failure sending request")
 		return
 	}
 
@@ -1495,7 +1495,7 @@ func (client LROSADsClient) PutAsyncRelativeRetryNoStatusPayload(ctx context.Con
 
 	result, err = client.PutAsyncRelativeRetryNoStatusPayloadSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutAsyncRelativeRetryNoStatusPayload", nil, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutAsyncRelativeRetryNoStatusPayload", result.Response(), "Failure sending request")
 		return
 	}
 
@@ -1567,7 +1567,7 @@ func (client LROSADsClient) PutError201NoProvisioningStatePayload(ctx context.Co
 
 	result, err = client.PutError201NoProvisioningStatePayloadSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutError201NoProvisioningStatePayload", nil, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutError201NoProvisioningStatePayload", result.Response(), "Failure sending request")
 		return
 	}
 
@@ -1639,7 +1639,7 @@ func (client LROSADsClient) PutNonRetry201Creating400(ctx context.Context, produ
 
 	result, err = client.PutNonRetry201Creating400Sender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutNonRetry201Creating400", nil, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutNonRetry201Creating400", result.Response(), "Failure sending request")
 		return
 	}
 
@@ -1711,7 +1711,7 @@ func (client LROSADsClient) PutNonRetry201Creating400InvalidJSON(ctx context.Con
 
 	result, err = client.PutNonRetry201Creating400InvalidJSONSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutNonRetry201Creating400InvalidJSON", nil, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutNonRetry201Creating400InvalidJSON", result.Response(), "Failure sending request")
 		return
 	}
 
@@ -1782,7 +1782,7 @@ func (client LROSADsClient) PutNonRetry400(ctx context.Context, product *Product
 
 	result, err = client.PutNonRetry400Sender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutNonRetry400", nil, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "lrogroup.LROSADsClient", "PutNonRetry400", result.Response(), "Failure sending request")
 		return
 	}
 
