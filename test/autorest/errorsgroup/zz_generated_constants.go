@@ -10,5 +10,5 @@ package errorsgroup
 
 const (
 	module  = "errorsgroup"
-	version = "v0.1"
+	version = "v0.1.0"
 )

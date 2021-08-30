@@ -10,7 +10,7 @@ package mediatypesgroup
 
 const (
 	module  = "mediatypesgroup"
-	version = "v0.1"
+	version = "v0.1.0"
 )
 
 // ContentType - Content type for upload

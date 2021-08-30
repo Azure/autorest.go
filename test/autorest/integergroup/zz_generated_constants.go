@@ -10,5 +10,5 @@ package integergroup
 
 const (
 	module  = "integergroup"
-	version = "v0.1"
+	version = "v0.1.0"
 )

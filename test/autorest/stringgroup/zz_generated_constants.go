@@ -10,7 +10,7 @@ package stringgroup
 
 const (
 	module  = "stringgroup"
-	version = "v0.1"
+	version = "v0.1.0"
 )
 
 // Colors - Referenced Color Enum Description.

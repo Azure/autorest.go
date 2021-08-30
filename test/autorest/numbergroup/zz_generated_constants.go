@@ -10,5 +10,5 @@ package numbergroup
 
 const (
 	module  = "numbergroup"
-	version = "v0.1"
+	version = "v0.1.0"
 )

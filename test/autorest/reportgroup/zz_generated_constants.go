@@ -10,5 +10,5 @@ package reportgroup
 
 const (
 	module  = "reportgroup"
-	version = "v0.1"
+	version = "v0.1.0"
 )

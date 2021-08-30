@@ -10,7 +10,7 @@ package urlgroup
 
 const (
 	module  = "urlgroup"
-	version = "v0.1"
+	version = "v0.1.0"
 )
 
 type URIColor string

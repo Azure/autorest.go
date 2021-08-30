@@ -10,7 +10,7 @@ package paginggroup
 
 const (
 	module  = "paginggroup"
-	version = "v0.1"
+	version = "v0.1.0"
 )
 
 // OperationResultStatus - The status of the request

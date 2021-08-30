@@ -10,5 +10,5 @@ package morecustombaseurigroup
 
 const (
 	module  = "morecustombaseurigroup"
-	version = "v0.1"
+	version = "v0.1.0"
 )

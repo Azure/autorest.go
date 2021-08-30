@@ -10,7 +10,7 @@ package arraygroup
 
 const (
 	module  = "arraygroup"
-	version = "v0.1"
+	version = "v0.1.0"
 )
 
 type Enum0 string

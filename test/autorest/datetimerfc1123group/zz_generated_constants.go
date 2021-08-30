@@ -10,5 +10,5 @@ package datetimerfc1123group
 
 const (
 	module  = "datetimerfc1123group"
-	version = "v0.1"
+	version = "v0.1.0"
 )

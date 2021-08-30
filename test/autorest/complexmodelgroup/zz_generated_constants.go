@@ -10,5 +10,5 @@ package complexmodelgroup
 
 const (
 	module  = "complexmodelgroup"
-	version = "v0.1"
+	version = "v0.1.0"
 )

@@ -10,7 +10,7 @@ package extenumsgroup
 
 const (
 	module  = "extenumsgroup"
-	version = "v0.1"
+	version = "v0.1.0"
 )
 
 // DaysOfWeekExtensibleEnum - Type of Pet

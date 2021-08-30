@@ -10,7 +10,7 @@ package complexgroup
 
 const (
 	module  = "complexgroup"
-	version = "v0.1"
+	version = "v0.1.0"
 )
 
 type CMYKColors string

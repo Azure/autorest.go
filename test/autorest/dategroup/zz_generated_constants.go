@@ -10,5 +10,5 @@ package dategroup
 
 const (
 	module  = "dategroup"
-	version = "v0.1"
+	version = "v0.1.0"
 )

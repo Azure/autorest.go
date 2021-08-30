@@ -10,7 +10,7 @@ package nonstringenumgroup
 
 const (
 	module  = "nonstringenumgroup"
-	version = "v0.1"
+	version = "v0.1.0"
 )
 
 // FloatEnum - List of float enums
