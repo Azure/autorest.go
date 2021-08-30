@@ -13,7 +13,8 @@ import (
 	"time"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"github.com/Azure/azure-sdk-for-go/sdk/to"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/google/go-cmp/cmp"
 )
 
@@ -24,15 +25,13 @@ func newLROSClient() *LROsClient {
 	return NewLROsClient(NewDefaultConnection(&options))
 }
 
-func httpClientWithCookieJar() azcore.Transport {
+func httpClientWithCookieJar() policy.Transporter {
 	j, err := cookiejar.New(nil)
 	if err != nil {
 		panic(err)
 	}
 	http.DefaultClient.Jar = j
-	return azcore.TransportFunc(func(req *http.Request) (*http.Response, error) {
-		return http.DefaultClient.Do(req)
-	})
+	return http.DefaultClient
 }
 
 func TestLROResumeWrongPoller(t *testing.T) {

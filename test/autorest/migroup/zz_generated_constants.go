@@ -9,6 +9,6 @@
 package migroup
 
 const (
-	telemetryInfo = "azsdk-go-migroup/" + version
-	version       = "v0.1"
+	module  = "migroup"
+	version = "v0.1.0"
 )

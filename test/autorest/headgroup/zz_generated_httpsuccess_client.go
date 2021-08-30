@@ -10,7 +10,8 @@ package headgroup
 
 import (
 	"context"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
@@ -36,7 +37,7 @@ func (client *HTTPSuccessClient) Head200(ctx context.Context, options *HTTPSucce
 	if err != nil {
 		return HTTPSuccessHead200Response{}, err
 	}
-	result := HTTPSuccessHead200Response{RawResponse: resp.Response}
+	result := HTTPSuccessHead200Response{RawResponse: resp}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
 		result.Success = true
 	}
@@ -44,13 +45,12 @@ func (client *HTTPSuccessClient) Head200(ctx context.Context, options *HTTPSucce
 }
 
 // head200CreateRequest creates the Head200 request.
-func (client *HTTPSuccessClient) head200CreateRequest(ctx context.Context, options *HTTPSuccessHead200Options) (*azcore.Request, error) {
+func (client *HTTPSuccessClient) head200CreateRequest(ctx context.Context, options *HTTPSuccessHead200Options) (*policy.Request, error) {
 	urlPath := "/http/success/200"
-	req, err := azcore.NewRequest(ctx, http.MethodHead, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
 	return req, nil
 }
 
@@ -65,7 +65,7 @@ func (client *HTTPSuccessClient) Head204(ctx context.Context, options *HTTPSucce
 	if err != nil {
 		return HTTPSuccessHead204Response{}, err
 	}
-	result := HTTPSuccessHead204Response{RawResponse: resp.Response}
+	result := HTTPSuccessHead204Response{RawResponse: resp}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
 		result.Success = true
 	}
@@ -73,13 +73,12 @@ func (client *HTTPSuccessClient) Head204(ctx context.Context, options *HTTPSucce
 }
 
 // head204CreateRequest creates the Head204 request.
-func (client *HTTPSuccessClient) head204CreateRequest(ctx context.Context, options *HTTPSuccessHead204Options) (*azcore.Request, error) {
+func (client *HTTPSuccessClient) head204CreateRequest(ctx context.Context, options *HTTPSuccessHead204Options) (*policy.Request, error) {
 	urlPath := "/http/success/204"
-	req, err := azcore.NewRequest(ctx, http.MethodHead, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
 	return req, nil
 }
 
@@ -94,7 +93,7 @@ func (client *HTTPSuccessClient) Head404(ctx context.Context, options *HTTPSucce
 	if err != nil {
 		return HTTPSuccessHead404Response{}, err
 	}
-	result := HTTPSuccessHead404Response{RawResponse: resp.Response}
+	result := HTTPSuccessHead404Response{RawResponse: resp}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
 		result.Success = true
 	}
@@ -102,12 +101,11 @@ func (client *HTTPSuccessClient) Head404(ctx context.Context, options *HTTPSucce
 }
 
 // head404CreateRequest creates the Head404 request.
-func (client *HTTPSuccessClient) head404CreateRequest(ctx context.Context, options *HTTPSuccessHead404Options) (*azcore.Request, error) {
+func (client *HTTPSuccessClient) head404CreateRequest(ctx context.Context, options *HTTPSuccessHead404Options) (*policy.Request, error) {
 	urlPath := "/http/success/404"
-	req, err := azcore.NewRequest(ctx, http.MethodHead, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
 	return req, nil
 }

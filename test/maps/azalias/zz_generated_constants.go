@@ -9,8 +9,8 @@
 package azalias
 
 const (
-	telemetryInfo = "azsdk-go-azalias/" + version
-	version       = "v0.1"
+	module  = "azalias"
+	version = "v0.1"
 )
 
 type GeographicResourceLocation string

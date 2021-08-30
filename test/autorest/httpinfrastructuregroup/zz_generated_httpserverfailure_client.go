@@ -11,7 +11,8 @@ package httpinfrastructuregroup
 import (
 	"context"
 	"fmt"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
@@ -37,35 +38,34 @@ func (client *HTTPServerFailureClient) Delete505(ctx context.Context, options *H
 	if err != nil {
 		return HTTPServerFailureDelete505Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
 		return HTTPServerFailureDelete505Response{}, client.delete505HandleError(resp)
 	}
-	return HTTPServerFailureDelete505Response{RawResponse: resp.Response}, nil
+	return HTTPServerFailureDelete505Response{RawResponse: resp}, nil
 }
 
 // delete505CreateRequest creates the Delete505 request.
-func (client *HTTPServerFailureClient) delete505CreateRequest(ctx context.Context, options *HTTPServerFailureDelete505Options) (*azcore.Request, error) {
+func (client *HTTPServerFailureClient) delete505CreateRequest(ctx context.Context, options *HTTPServerFailureDelete505Options) (*policy.Request, error) {
 	urlPath := "/http/failure/server/505"
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(true)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, true)
 }
 
 // delete505HandleError handles the Delete505 error response.
-func (client *HTTPServerFailureClient) delete505HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HTTPServerFailureClient) delete505HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // Get501 - Return 501 status code - should be represented in the client as an error
@@ -79,35 +79,34 @@ func (client *HTTPServerFailureClient) Get501(ctx context.Context, options *HTTP
 	if err != nil {
 		return HTTPServerFailureGet501Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
 		return HTTPServerFailureGet501Response{}, client.get501HandleError(resp)
 	}
-	return HTTPServerFailureGet501Response{RawResponse: resp.Response}, nil
+	return HTTPServerFailureGet501Response{RawResponse: resp}, nil
 }
 
 // get501CreateRequest creates the Get501 request.
-func (client *HTTPServerFailureClient) get501CreateRequest(ctx context.Context, options *HTTPServerFailureGet501Options) (*azcore.Request, error) {
+func (client *HTTPServerFailureClient) get501CreateRequest(ctx context.Context, options *HTTPServerFailureGet501Options) (*policy.Request, error) {
 	urlPath := "/http/failure/server/501"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // get501HandleError handles the Get501 error response.
-func (client *HTTPServerFailureClient) get501HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HTTPServerFailureClient) get501HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // Head501 - Return 501 status code - should be represented in the client as an error
@@ -121,7 +120,7 @@ func (client *HTTPServerFailureClient) Head501(ctx context.Context, options *HTT
 	if err != nil {
 		return HTTPServerFailureHead501Response{}, err
 	}
-	result := HTTPServerFailureHead501Response{RawResponse: resp.Response}
+	result := HTTPServerFailureHead501Response{RawResponse: resp}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
 		result.Success = true
 	}
@@ -129,14 +128,13 @@ func (client *HTTPServerFailureClient) Head501(ctx context.Context, options *HTT
 }
 
 // head501CreateRequest creates the Head501 request.
-func (client *HTTPServerFailureClient) head501CreateRequest(ctx context.Context, options *HTTPServerFailureHead501Options) (*azcore.Request, error) {
+func (client *HTTPServerFailureClient) head501CreateRequest(ctx context.Context, options *HTTPServerFailureHead501Options) (*policy.Request, error) {
 	urlPath := "/http/failure/server/501"
-	req, err := azcore.NewRequest(ctx, http.MethodHead, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -151,33 +149,32 @@ func (client *HTTPServerFailureClient) Post505(ctx context.Context, options *HTT
 	if err != nil {
 		return HTTPServerFailurePost505Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
 		return HTTPServerFailurePost505Response{}, client.post505HandleError(resp)
 	}
-	return HTTPServerFailurePost505Response{RawResponse: resp.Response}, nil
+	return HTTPServerFailurePost505Response{RawResponse: resp}, nil
 }
 
 // post505CreateRequest creates the Post505 request.
-func (client *HTTPServerFailureClient) post505CreateRequest(ctx context.Context, options *HTTPServerFailurePost505Options) (*azcore.Request, error) {
+func (client *HTTPServerFailureClient) post505CreateRequest(ctx context.Context, options *HTTPServerFailurePost505Options) (*policy.Request, error) {
 	urlPath := "/http/failure/server/505"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(true)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, true)
 }
 
 // post505HandleError handles the Post505 error response.
-func (client *HTTPServerFailureClient) post505HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HTTPServerFailureClient) post505HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }

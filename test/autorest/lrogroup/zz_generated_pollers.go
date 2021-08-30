@@ -10,13 +10,13 @@ package lrogroup
 
 import (
 	"context"
-	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
 )
 
 // LRORetrysDelete202Retry200Poller provides polling facilities until the operation reaches a terminal state.
 type LRORetrysDelete202Retry200Poller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -59,7 +59,7 @@ func (p *LRORetrysDelete202Retry200Poller) ResumeToken() (string, error) {
 
 // LRORetrysDeleteAsyncRelativeRetrySucceededPoller provides polling facilities until the operation reaches a terminal state.
 type LRORetrysDeleteAsyncRelativeRetrySucceededPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -102,7 +102,7 @@ func (p *LRORetrysDeleteAsyncRelativeRetrySucceededPoller) ResumeToken() (string
 
 // LRORetrysDeleteProvisioning202Accepted200SucceededPoller provides polling facilities until the operation reaches a terminal state.
 type LRORetrysDeleteProvisioning202Accepted200SucceededPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -145,7 +145,7 @@ func (p *LRORetrysDeleteProvisioning202Accepted200SucceededPoller) ResumeToken()
 
 // LRORetrysPost202Retry200Poller provides polling facilities until the operation reaches a terminal state.
 type LRORetrysPost202Retry200Poller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -188,7 +188,7 @@ func (p *LRORetrysPost202Retry200Poller) ResumeToken() (string, error) {
 
 // LRORetrysPostAsyncRelativeRetrySucceededPoller provides polling facilities until the operation reaches a terminal state.
 type LRORetrysPostAsyncRelativeRetrySucceededPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -231,7 +231,7 @@ func (p *LRORetrysPostAsyncRelativeRetrySucceededPoller) ResumeToken() (string, 
 
 // LRORetrysPut201CreatingSucceeded200Poller provides polling facilities until the operation reaches a terminal state.
 type LRORetrysPut201CreatingSucceeded200Poller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -274,7 +274,7 @@ func (p *LRORetrysPut201CreatingSucceeded200Poller) ResumeToken() (string, error
 
 // LRORetrysPutAsyncRelativeRetrySucceededPoller provides polling facilities until the operation reaches a terminal state.
 type LRORetrysPutAsyncRelativeRetrySucceededPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -317,7 +317,7 @@ func (p *LRORetrysPutAsyncRelativeRetrySucceededPoller) ResumeToken() (string, e
 
 // LROSADsDelete202NonRetry400Poller provides polling facilities until the operation reaches a terminal state.
 type LROSADsDelete202NonRetry400Poller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -360,7 +360,7 @@ func (p *LROSADsDelete202NonRetry400Poller) ResumeToken() (string, error) {
 
 // LROSADsDelete202RetryInvalidHeaderPoller provides polling facilities until the operation reaches a terminal state.
 type LROSADsDelete202RetryInvalidHeaderPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -403,7 +403,7 @@ func (p *LROSADsDelete202RetryInvalidHeaderPoller) ResumeToken() (string, error)
 
 // LROSADsDelete204SucceededPoller provides polling facilities until the operation reaches a terminal state.
 type LROSADsDelete204SucceededPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -446,7 +446,7 @@ func (p *LROSADsDelete204SucceededPoller) ResumeToken() (string, error) {
 
 // LROSADsDeleteAsyncRelativeRetry400Poller provides polling facilities until the operation reaches a terminal state.
 type LROSADsDeleteAsyncRelativeRetry400Poller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -489,7 +489,7 @@ func (p *LROSADsDeleteAsyncRelativeRetry400Poller) ResumeToken() (string, error)
 
 // LROSADsDeleteAsyncRelativeRetryInvalidHeaderPoller provides polling facilities until the operation reaches a terminal state.
 type LROSADsDeleteAsyncRelativeRetryInvalidHeaderPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -532,7 +532,7 @@ func (p *LROSADsDeleteAsyncRelativeRetryInvalidHeaderPoller) ResumeToken() (stri
 
 // LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingPoller provides polling facilities until the operation reaches a terminal state.
 type LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -575,7 +575,7 @@ func (p *LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingPoller) ResumeToken() 
 
 // LROSADsDeleteAsyncRelativeRetryNoStatusPoller provides polling facilities until the operation reaches a terminal state.
 type LROSADsDeleteAsyncRelativeRetryNoStatusPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -618,7 +618,7 @@ func (p *LROSADsDeleteAsyncRelativeRetryNoStatusPoller) ResumeToken() (string, e
 
 // LROSADsDeleteNonRetry400Poller provides polling facilities until the operation reaches a terminal state.
 type LROSADsDeleteNonRetry400Poller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -661,7 +661,7 @@ func (p *LROSADsDeleteNonRetry400Poller) ResumeToken() (string, error) {
 
 // LROSADsPost202NoLocationPoller provides polling facilities until the operation reaches a terminal state.
 type LROSADsPost202NoLocationPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -704,7 +704,7 @@ func (p *LROSADsPost202NoLocationPoller) ResumeToken() (string, error) {
 
 // LROSADsPost202NonRetry400Poller provides polling facilities until the operation reaches a terminal state.
 type LROSADsPost202NonRetry400Poller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -747,7 +747,7 @@ func (p *LROSADsPost202NonRetry400Poller) ResumeToken() (string, error) {
 
 // LROSADsPost202RetryInvalidHeaderPoller provides polling facilities until the operation reaches a terminal state.
 type LROSADsPost202RetryInvalidHeaderPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -790,7 +790,7 @@ func (p *LROSADsPost202RetryInvalidHeaderPoller) ResumeToken() (string, error) {
 
 // LROSADsPostAsyncRelativeRetry400Poller provides polling facilities until the operation reaches a terminal state.
 type LROSADsPostAsyncRelativeRetry400Poller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -833,7 +833,7 @@ func (p *LROSADsPostAsyncRelativeRetry400Poller) ResumeToken() (string, error) {
 
 // LROSADsPostAsyncRelativeRetryInvalidHeaderPoller provides polling facilities until the operation reaches a terminal state.
 type LROSADsPostAsyncRelativeRetryInvalidHeaderPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -876,7 +876,7 @@ func (p *LROSADsPostAsyncRelativeRetryInvalidHeaderPoller) ResumeToken() (string
 
 // LROSADsPostAsyncRelativeRetryInvalidJSONPollingPoller provides polling facilities until the operation reaches a terminal state.
 type LROSADsPostAsyncRelativeRetryInvalidJSONPollingPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -919,7 +919,7 @@ func (p *LROSADsPostAsyncRelativeRetryInvalidJSONPollingPoller) ResumeToken() (s
 
 // LROSADsPostAsyncRelativeRetryNoPayloadPoller provides polling facilities until the operation reaches a terminal state.
 type LROSADsPostAsyncRelativeRetryNoPayloadPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -962,7 +962,7 @@ func (p *LROSADsPostAsyncRelativeRetryNoPayloadPoller) ResumeToken() (string, er
 
 // LROSADsPostNonRetry400Poller provides polling facilities until the operation reaches a terminal state.
 type LROSADsPostNonRetry400Poller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1005,7 +1005,7 @@ func (p *LROSADsPostNonRetry400Poller) ResumeToken() (string, error) {
 
 // LROSADsPut200InvalidJSONPoller provides polling facilities until the operation reaches a terminal state.
 type LROSADsPut200InvalidJSONPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1048,7 +1048,7 @@ func (p *LROSADsPut200InvalidJSONPoller) ResumeToken() (string, error) {
 
 // LROSADsPutAsyncRelativeRetry400Poller provides polling facilities until the operation reaches a terminal state.
 type LROSADsPutAsyncRelativeRetry400Poller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1091,7 +1091,7 @@ func (p *LROSADsPutAsyncRelativeRetry400Poller) ResumeToken() (string, error) {
 
 // LROSADsPutAsyncRelativeRetryInvalidHeaderPoller provides polling facilities until the operation reaches a terminal state.
 type LROSADsPutAsyncRelativeRetryInvalidHeaderPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1134,7 +1134,7 @@ func (p *LROSADsPutAsyncRelativeRetryInvalidHeaderPoller) ResumeToken() (string,
 
 // LROSADsPutAsyncRelativeRetryInvalidJSONPollingPoller provides polling facilities until the operation reaches a terminal state.
 type LROSADsPutAsyncRelativeRetryInvalidJSONPollingPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1177,7 +1177,7 @@ func (p *LROSADsPutAsyncRelativeRetryInvalidJSONPollingPoller) ResumeToken() (st
 
 // LROSADsPutAsyncRelativeRetryNoStatusPayloadPoller provides polling facilities until the operation reaches a terminal state.
 type LROSADsPutAsyncRelativeRetryNoStatusPayloadPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1220,7 +1220,7 @@ func (p *LROSADsPutAsyncRelativeRetryNoStatusPayloadPoller) ResumeToken() (strin
 
 // LROSADsPutAsyncRelativeRetryNoStatusPoller provides polling facilities until the operation reaches a terminal state.
 type LROSADsPutAsyncRelativeRetryNoStatusPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1263,7 +1263,7 @@ func (p *LROSADsPutAsyncRelativeRetryNoStatusPoller) ResumeToken() (string, erro
 
 // LROSADsPutError201NoProvisioningStatePayloadPoller provides polling facilities until the operation reaches a terminal state.
 type LROSADsPutError201NoProvisioningStatePayloadPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1306,7 +1306,7 @@ func (p *LROSADsPutError201NoProvisioningStatePayloadPoller) ResumeToken() (stri
 
 // LROSADsPutNonRetry201Creating400InvalidJSONPoller provides polling facilities until the operation reaches a terminal state.
 type LROSADsPutNonRetry201Creating400InvalidJSONPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1349,7 +1349,7 @@ func (p *LROSADsPutNonRetry201Creating400InvalidJSONPoller) ResumeToken() (strin
 
 // LROSADsPutNonRetry201Creating400Poller provides polling facilities until the operation reaches a terminal state.
 type LROSADsPutNonRetry201Creating400Poller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1392,7 +1392,7 @@ func (p *LROSADsPutNonRetry201Creating400Poller) ResumeToken() (string, error) {
 
 // LROSADsPutNonRetry400Poller provides polling facilities until the operation reaches a terminal state.
 type LROSADsPutNonRetry400Poller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1435,7 +1435,7 @@ func (p *LROSADsPutNonRetry400Poller) ResumeToken() (string, error) {
 
 // LROsCustomHeaderPost202Retry200Poller provides polling facilities until the operation reaches a terminal state.
 type LROsCustomHeaderPost202Retry200Poller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1478,7 +1478,7 @@ func (p *LROsCustomHeaderPost202Retry200Poller) ResumeToken() (string, error) {
 
 // LROsCustomHeaderPostAsyncRetrySucceededPoller provides polling facilities until the operation reaches a terminal state.
 type LROsCustomHeaderPostAsyncRetrySucceededPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1521,7 +1521,7 @@ func (p *LROsCustomHeaderPostAsyncRetrySucceededPoller) ResumeToken() (string, e
 
 // LROsCustomHeaderPut201CreatingSucceeded200Poller provides polling facilities until the operation reaches a terminal state.
 type LROsCustomHeaderPut201CreatingSucceeded200Poller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1564,7 +1564,7 @@ func (p *LROsCustomHeaderPut201CreatingSucceeded200Poller) ResumeToken() (string
 
 // LROsCustomHeaderPutAsyncRetrySucceededPoller provides polling facilities until the operation reaches a terminal state.
 type LROsCustomHeaderPutAsyncRetrySucceededPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1607,7 +1607,7 @@ func (p *LROsCustomHeaderPutAsyncRetrySucceededPoller) ResumeToken() (string, er
 
 // LROsDelete202NoRetry204Poller provides polling facilities until the operation reaches a terminal state.
 type LROsDelete202NoRetry204Poller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1650,7 +1650,7 @@ func (p *LROsDelete202NoRetry204Poller) ResumeToken() (string, error) {
 
 // LROsDelete202Retry200Poller provides polling facilities until the operation reaches a terminal state.
 type LROsDelete202Retry200Poller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1693,7 +1693,7 @@ func (p *LROsDelete202Retry200Poller) ResumeToken() (string, error) {
 
 // LROsDelete204SucceededPoller provides polling facilities until the operation reaches a terminal state.
 type LROsDelete204SucceededPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1736,7 +1736,7 @@ func (p *LROsDelete204SucceededPoller) ResumeToken() (string, error) {
 
 // LROsDeleteAsyncNoHeaderInRetryPoller provides polling facilities until the operation reaches a terminal state.
 type LROsDeleteAsyncNoHeaderInRetryPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1779,7 +1779,7 @@ func (p *LROsDeleteAsyncNoHeaderInRetryPoller) ResumeToken() (string, error) {
 
 // LROsDeleteAsyncNoRetrySucceededPoller provides polling facilities until the operation reaches a terminal state.
 type LROsDeleteAsyncNoRetrySucceededPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1822,7 +1822,7 @@ func (p *LROsDeleteAsyncNoRetrySucceededPoller) ResumeToken() (string, error) {
 
 // LROsDeleteAsyncRetryFailedPoller provides polling facilities until the operation reaches a terminal state.
 type LROsDeleteAsyncRetryFailedPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1865,7 +1865,7 @@ func (p *LROsDeleteAsyncRetryFailedPoller) ResumeToken() (string, error) {
 
 // LROsDeleteAsyncRetrySucceededPoller provides polling facilities until the operation reaches a terminal state.
 type LROsDeleteAsyncRetrySucceededPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1908,7 +1908,7 @@ func (p *LROsDeleteAsyncRetrySucceededPoller) ResumeToken() (string, error) {
 
 // LROsDeleteAsyncRetrycanceledPoller provides polling facilities until the operation reaches a terminal state.
 type LROsDeleteAsyncRetrycanceledPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1951,7 +1951,7 @@ func (p *LROsDeleteAsyncRetrycanceledPoller) ResumeToken() (string, error) {
 
 // LROsDeleteNoHeaderInRetryPoller provides polling facilities until the operation reaches a terminal state.
 type LROsDeleteNoHeaderInRetryPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1994,7 +1994,7 @@ func (p *LROsDeleteNoHeaderInRetryPoller) ResumeToken() (string, error) {
 
 // LROsDeleteProvisioning202Accepted200SucceededPoller provides polling facilities until the operation reaches a terminal state.
 type LROsDeleteProvisioning202Accepted200SucceededPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2037,7 +2037,7 @@ func (p *LROsDeleteProvisioning202Accepted200SucceededPoller) ResumeToken() (str
 
 // LROsDeleteProvisioning202DeletingFailed200Poller provides polling facilities until the operation reaches a terminal state.
 type LROsDeleteProvisioning202DeletingFailed200Poller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2080,7 +2080,7 @@ func (p *LROsDeleteProvisioning202DeletingFailed200Poller) ResumeToken() (string
 
 // LROsDeleteProvisioning202Deletingcanceled200Poller provides polling facilities until the operation reaches a terminal state.
 type LROsDeleteProvisioning202Deletingcanceled200Poller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2123,7 +2123,7 @@ func (p *LROsDeleteProvisioning202Deletingcanceled200Poller) ResumeToken() (stri
 
 // LROsPost200WithPayloadPoller provides polling facilities until the operation reaches a terminal state.
 type LROsPost200WithPayloadPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2166,7 +2166,7 @@ func (p *LROsPost200WithPayloadPoller) ResumeToken() (string, error) {
 
 // LROsPost202ListPoller provides polling facilities until the operation reaches a terminal state.
 type LROsPost202ListPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2209,7 +2209,7 @@ func (p *LROsPost202ListPoller) ResumeToken() (string, error) {
 
 // LROsPost202NoRetry204Poller provides polling facilities until the operation reaches a terminal state.
 type LROsPost202NoRetry204Poller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2252,7 +2252,7 @@ func (p *LROsPost202NoRetry204Poller) ResumeToken() (string, error) {
 
 // LROsPost202Retry200Poller provides polling facilities until the operation reaches a terminal state.
 type LROsPost202Retry200Poller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2295,7 +2295,7 @@ func (p *LROsPost202Retry200Poller) ResumeToken() (string, error) {
 
 // LROsPostAsyncNoRetrySucceededPoller provides polling facilities until the operation reaches a terminal state.
 type LROsPostAsyncNoRetrySucceededPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2338,7 +2338,7 @@ func (p *LROsPostAsyncNoRetrySucceededPoller) ResumeToken() (string, error) {
 
 // LROsPostAsyncRetryFailedPoller provides polling facilities until the operation reaches a terminal state.
 type LROsPostAsyncRetryFailedPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2381,7 +2381,7 @@ func (p *LROsPostAsyncRetryFailedPoller) ResumeToken() (string, error) {
 
 // LROsPostAsyncRetrySucceededPoller provides polling facilities until the operation reaches a terminal state.
 type LROsPostAsyncRetrySucceededPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2424,7 +2424,7 @@ func (p *LROsPostAsyncRetrySucceededPoller) ResumeToken() (string, error) {
 
 // LROsPostAsyncRetrycanceledPoller provides polling facilities until the operation reaches a terminal state.
 type LROsPostAsyncRetrycanceledPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2467,7 +2467,7 @@ func (p *LROsPostAsyncRetrycanceledPoller) ResumeToken() (string, error) {
 
 // LROsPostDoubleHeadersFinalAzureHeaderGetDefaultPoller provides polling facilities until the operation reaches a terminal state.
 type LROsPostDoubleHeadersFinalAzureHeaderGetDefaultPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2510,7 +2510,7 @@ func (p *LROsPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) ResumeToken() (s
 
 // LROsPostDoubleHeadersFinalAzureHeaderGetPoller provides polling facilities until the operation reaches a terminal state.
 type LROsPostDoubleHeadersFinalAzureHeaderGetPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2553,7 +2553,7 @@ func (p *LROsPostDoubleHeadersFinalAzureHeaderGetPoller) ResumeToken() (string, 
 
 // LROsPostDoubleHeadersFinalLocationGetPoller provides polling facilities until the operation reaches a terminal state.
 type LROsPostDoubleHeadersFinalLocationGetPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2596,7 +2596,7 @@ func (p *LROsPostDoubleHeadersFinalLocationGetPoller) ResumeToken() (string, err
 
 // LROsPut200Acceptedcanceled200Poller provides polling facilities until the operation reaches a terminal state.
 type LROsPut200Acceptedcanceled200Poller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2639,7 +2639,7 @@ func (p *LROsPut200Acceptedcanceled200Poller) ResumeToken() (string, error) {
 
 // LROsPut200SucceededNoStatePoller provides polling facilities until the operation reaches a terminal state.
 type LROsPut200SucceededNoStatePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2682,7 +2682,7 @@ func (p *LROsPut200SucceededNoStatePoller) ResumeToken() (string, error) {
 
 // LROsPut200SucceededPoller provides polling facilities until the operation reaches a terminal state.
 type LROsPut200SucceededPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2725,7 +2725,7 @@ func (p *LROsPut200SucceededPoller) ResumeToken() (string, error) {
 
 // LROsPut200UpdatingSucceeded204Poller provides polling facilities until the operation reaches a terminal state.
 type LROsPut200UpdatingSucceeded204Poller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2768,7 +2768,7 @@ func (p *LROsPut200UpdatingSucceeded204Poller) ResumeToken() (string, error) {
 
 // LROsPut201CreatingFailed200Poller provides polling facilities until the operation reaches a terminal state.
 type LROsPut201CreatingFailed200Poller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2811,7 +2811,7 @@ func (p *LROsPut201CreatingFailed200Poller) ResumeToken() (string, error) {
 
 // LROsPut201CreatingSucceeded200Poller provides polling facilities until the operation reaches a terminal state.
 type LROsPut201CreatingSucceeded200Poller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2854,7 +2854,7 @@ func (p *LROsPut201CreatingSucceeded200Poller) ResumeToken() (string, error) {
 
 // LROsPut201SucceededPoller provides polling facilities until the operation reaches a terminal state.
 type LROsPut201SucceededPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2897,7 +2897,7 @@ func (p *LROsPut201SucceededPoller) ResumeToken() (string, error) {
 
 // LROsPut202Retry200Poller provides polling facilities until the operation reaches a terminal state.
 type LROsPut202Retry200Poller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2940,7 +2940,7 @@ func (p *LROsPut202Retry200Poller) ResumeToken() (string, error) {
 
 // LROsPutAsyncNoHeaderInRetryPoller provides polling facilities until the operation reaches a terminal state.
 type LROsPutAsyncNoHeaderInRetryPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -2983,7 +2983,7 @@ func (p *LROsPutAsyncNoHeaderInRetryPoller) ResumeToken() (string, error) {
 
 // LROsPutAsyncNoRetrySucceededPoller provides polling facilities until the operation reaches a terminal state.
 type LROsPutAsyncNoRetrySucceededPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -3026,7 +3026,7 @@ func (p *LROsPutAsyncNoRetrySucceededPoller) ResumeToken() (string, error) {
 
 // LROsPutAsyncNoRetrycanceledPoller provides polling facilities until the operation reaches a terminal state.
 type LROsPutAsyncNoRetrycanceledPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -3069,7 +3069,7 @@ func (p *LROsPutAsyncNoRetrycanceledPoller) ResumeToken() (string, error) {
 
 // LROsPutAsyncNonResourcePoller provides polling facilities until the operation reaches a terminal state.
 type LROsPutAsyncNonResourcePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -3112,7 +3112,7 @@ func (p *LROsPutAsyncNonResourcePoller) ResumeToken() (string, error) {
 
 // LROsPutAsyncRetryFailedPoller provides polling facilities until the operation reaches a terminal state.
 type LROsPutAsyncRetryFailedPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -3155,7 +3155,7 @@ func (p *LROsPutAsyncRetryFailedPoller) ResumeToken() (string, error) {
 
 // LROsPutAsyncRetrySucceededPoller provides polling facilities until the operation reaches a terminal state.
 type LROsPutAsyncRetrySucceededPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -3198,7 +3198,7 @@ func (p *LROsPutAsyncRetrySucceededPoller) ResumeToken() (string, error) {
 
 // LROsPutAsyncSubResourcePoller provides polling facilities until the operation reaches a terminal state.
 type LROsPutAsyncSubResourcePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -3241,7 +3241,7 @@ func (p *LROsPutAsyncSubResourcePoller) ResumeToken() (string, error) {
 
 // LROsPutNoHeaderInRetryPoller provides polling facilities until the operation reaches a terminal state.
 type LROsPutNoHeaderInRetryPoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -3284,7 +3284,7 @@ func (p *LROsPutNoHeaderInRetryPoller) ResumeToken() (string, error) {
 
 // LROsPutNonResourcePoller provides polling facilities until the operation reaches a terminal state.
 type LROsPutNonResourcePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -3327,7 +3327,7 @@ func (p *LROsPutNonResourcePoller) ResumeToken() (string, error) {
 
 // LROsPutSubResourcePoller provides polling facilities until the operation reaches a terminal state.
 type LROsPutSubResourcePoller struct {
-	pt *armcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.

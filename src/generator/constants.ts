@@ -14,7 +14,7 @@ import { commentLength } from '../common/helpers';
 export async function generateConstants(session: Session<CodeModel>, version: string): Promise<string> {
   let text = await contentPreamble(session);
   text += `const (\n`;
-  text += `\ttelemetryInfo = "azsdk-go-${session.model.language.go!.packageName}/" + version\n`;
+  text += `\tmodule = "${session.model.language.go!.packageName}"\n`;
   text += `\tversion = "v${version}"\n`;
   text += ')\n\n';
   for (const enm of values(getEnums(session.model.schemas))) {

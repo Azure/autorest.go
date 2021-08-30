@@ -12,8 +12,9 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 	"net/url"
 	"strings"
@@ -22,13 +23,14 @@ import (
 // ExpressRouteLinksClient contains the methods for the ExpressRouteLinks group.
 // Don't use this type directly, use NewExpressRouteLinksClient() instead.
 type ExpressRouteLinksClient struct {
-	con            *armcore.Connection
+	ep             string
+	pl             runtime.Pipeline
 	subscriptionID string
 }
 
 // NewExpressRouteLinksClient creates a new instance of ExpressRouteLinksClient with the specified values.
-func NewExpressRouteLinksClient(con *armcore.Connection, subscriptionID string) *ExpressRouteLinksClient {
-	return &ExpressRouteLinksClient{con: con, subscriptionID: subscriptionID}
+func NewExpressRouteLinksClient(con *arm.Connection, subscriptionID string) *ExpressRouteLinksClient {
+	return &ExpressRouteLinksClient{ep: con.Endpoint(), pl: con.NewPipeline(module, version), subscriptionID: subscriptionID}
 }
 
 // Get - Retrieves the specified ExpressRouteLink resource.
@@ -38,18 +40,18 @@ func (client *ExpressRouteLinksClient) Get(ctx context.Context, resourceGroupNam
 	if err != nil {
 		return ExpressRouteLinksGetResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return ExpressRouteLinksGetResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ExpressRouteLinksGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *ExpressRouteLinksClient) getCreateRequest(ctx context.Context, resourceGroupName string, expressRoutePortName string, linkName string, options *ExpressRouteLinksGetOptions) (*azcore.Request, error) {
+func (client *ExpressRouteLinksClient) getCreateRequest(ctx context.Context, resourceGroupName string, expressRoutePortName string, linkName string, options *ExpressRouteLinksGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}/links/{linkName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -67,38 +69,37 @@ func (client *ExpressRouteLinksClient) getCreateRequest(ctx context.Context, res
 		return nil, errors.New("parameter linkName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{linkName}", url.PathEscape(linkName))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2020-03-01")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getHandleResponse handles the Get response.
-func (client *ExpressRouteLinksClient) getHandleResponse(resp *azcore.Response) (ExpressRouteLinksGetResponse, error) {
-	result := ExpressRouteLinksGetResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.ExpressRouteLink); err != nil {
+func (client *ExpressRouteLinksClient) getHandleResponse(resp *http.Response) (ExpressRouteLinksGetResponse, error) {
+	result := ExpressRouteLinksGetResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRouteLink); err != nil {
 		return ExpressRouteLinksGetResponse{}, err
 	}
 	return result, nil
 }
 
 // getHandleError handles the Get error response.
-func (client *ExpressRouteLinksClient) getHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ExpressRouteLinksClient) getHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // List - Retrieve the ExpressRouteLink sub-resources of the specified ExpressRoutePort resource.
@@ -106,17 +107,17 @@ func (client *ExpressRouteLinksClient) getHandleError(resp *azcore.Response) err
 func (client *ExpressRouteLinksClient) List(resourceGroupName string, expressRoutePortName string, options *ExpressRouteLinksListOptions) *ExpressRouteLinksListPager {
 	return &ExpressRouteLinksListPager{
 		client: client,
-		requester: func(ctx context.Context) (*azcore.Request, error) {
+		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, expressRoutePortName, options)
 		},
-		advancer: func(ctx context.Context, resp ExpressRouteLinksListResponse) (*azcore.Request, error) {
-			return azcore.NewRequest(ctx, http.MethodGet, *resp.ExpressRouteLinkListResult.NextLink)
+		advancer: func(ctx context.Context, resp ExpressRouteLinksListResponse) (*policy.Request, error) {
+			return runtime.NewRequest(ctx, http.MethodGet, *resp.ExpressRouteLinkListResult.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *ExpressRouteLinksClient) listCreateRequest(ctx context.Context, resourceGroupName string, expressRoutePortName string, options *ExpressRouteLinksListOptions) (*azcore.Request, error) {
+func (client *ExpressRouteLinksClient) listCreateRequest(ctx context.Context, resourceGroupName string, expressRoutePortName string, options *ExpressRouteLinksListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}/links"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -130,36 +131,35 @@ func (client *ExpressRouteLinksClient) listCreateRequest(ctx context.Context, re
 		return nil, errors.New("parameter expressRoutePortName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{expressRoutePortName}", url.PathEscape(expressRoutePortName))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2020-03-01")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // listHandleResponse handles the List response.
-func (client *ExpressRouteLinksClient) listHandleResponse(resp *azcore.Response) (ExpressRouteLinksListResponse, error) {
-	result := ExpressRouteLinksListResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.ExpressRouteLinkListResult); err != nil {
+func (client *ExpressRouteLinksClient) listHandleResponse(resp *http.Response) (ExpressRouteLinksListResponse, error) {
+	result := ExpressRouteLinksListResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRouteLinkListResult); err != nil {
 		return ExpressRouteLinksListResponse{}, err
 	}
 	return result, nil
 }
 
 // listHandleError handles the List error response.
-func (client *ExpressRouteLinksClient) listHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ExpressRouteLinksClient) listHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }

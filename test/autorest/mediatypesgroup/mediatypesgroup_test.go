@@ -9,8 +9,8 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"github.com/Azure/azure-sdk-for-go/sdk/to"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 )
 
 func newMediaTypesClient() *MediaTypesClient {
@@ -19,7 +19,7 @@ func newMediaTypesClient() *MediaTypesClient {
 
 func TestAnalyzeBody(t *testing.T) {
 	client := newMediaTypesClient()
-	body := azcore.NopCloser(bytes.NewReader([]byte("PDF")))
+	body := streaming.NopCloser(bytes.NewReader([]byte("PDF")))
 	result, err := client.AnalyzeBody(context.Background(), ContentTypeApplicationPDF, &MediaTypesClientAnalyzeBodyOptions{
 		Input: body,
 	})

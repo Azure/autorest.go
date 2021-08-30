@@ -12,7 +12,8 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 	"net/url"
 	"strings"
@@ -41,14 +42,14 @@ func (client *PathsClient) GetEmpty(ctx context.Context, vault string, secret st
 	if err != nil {
 		return PathsGetEmptyResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PathsGetEmptyResponse{}, client.getEmptyHandleError(resp)
 	}
-	return PathsGetEmptyResponse{RawResponse: resp.Response}, nil
+	return PathsGetEmptyResponse{RawResponse: resp}, nil
 }
 
 // getEmptyCreateRequest creates the GetEmpty request.
-func (client *PathsClient) getEmptyCreateRequest(ctx context.Context, vault string, secret string, keyName string, options *PathsGetEmptyOptions) (*azcore.Request, error) {
+func (client *PathsClient) getEmptyCreateRequest(ctx context.Context, vault string, secret string, keyName string, options *PathsGetEmptyOptions) (*policy.Request, error) {
 	host := "{vault}{secret}{dnsSuffix}"
 	host = strings.ReplaceAll(host, "{dnsSuffix}", client.con.DnsSuffix())
 	host = strings.ReplaceAll(host, "{vault}", vault)
@@ -62,29 +63,28 @@ func (client *PathsClient) getEmptyCreateRequest(ctx context.Context, vault stri
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if options != nil && options.KeyVersion != nil {
 		reqQP.Set("keyVersion", *options.KeyVersion)
 	}
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getEmptyHandleError handles the GetEmpty error response.
-func (client *PathsClient) getEmptyHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *PathsClient) getEmptyHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }

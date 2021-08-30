@@ -11,7 +11,8 @@ package arraygroup
 import (
 	"context"
 	"fmt"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 	"time"
 )
@@ -38,44 +39,43 @@ func (client *ArrayClient) GetArrayEmpty(ctx context.Context, options *ArrayGetA
 	if err != nil {
 		return ArrayGetArrayEmptyResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetArrayEmptyResponse{}, client.getArrayEmptyHandleError(resp)
 	}
 	return client.getArrayEmptyHandleResponse(resp)
 }
 
 // getArrayEmptyCreateRequest creates the GetArrayEmpty request.
-func (client *ArrayClient) getArrayEmptyCreateRequest(ctx context.Context, options *ArrayGetArrayEmptyOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getArrayEmptyCreateRequest(ctx context.Context, options *ArrayGetArrayEmptyOptions) (*policy.Request, error) {
 	urlPath := "/array/array/empty"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getArrayEmptyHandleResponse handles the GetArrayEmpty response.
-func (client *ArrayClient) getArrayEmptyHandleResponse(resp *azcore.Response) (ArrayGetArrayEmptyResponse, error) {
-	result := ArrayGetArrayEmptyResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.StringArrayArray); err != nil {
+func (client *ArrayClient) getArrayEmptyHandleResponse(resp *http.Response) (ArrayGetArrayEmptyResponse, error) {
+	result := ArrayGetArrayEmptyResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.StringArrayArray); err != nil {
 		return ArrayGetArrayEmptyResponse{}, err
 	}
 	return result, nil
 }
 
 // getArrayEmptyHandleError handles the GetArrayEmpty error response.
-func (client *ArrayClient) getArrayEmptyHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getArrayEmptyHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetArrayItemEmpty - Get an array of array of strings [['1', '2', '3'], [], ['7', '8', '9']]
@@ -89,44 +89,43 @@ func (client *ArrayClient) GetArrayItemEmpty(ctx context.Context, options *Array
 	if err != nil {
 		return ArrayGetArrayItemEmptyResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetArrayItemEmptyResponse{}, client.getArrayItemEmptyHandleError(resp)
 	}
 	return client.getArrayItemEmptyHandleResponse(resp)
 }
 
 // getArrayItemEmptyCreateRequest creates the GetArrayItemEmpty request.
-func (client *ArrayClient) getArrayItemEmptyCreateRequest(ctx context.Context, options *ArrayGetArrayItemEmptyOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getArrayItemEmptyCreateRequest(ctx context.Context, options *ArrayGetArrayItemEmptyOptions) (*policy.Request, error) {
 	urlPath := "/array/array/itemempty"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getArrayItemEmptyHandleResponse handles the GetArrayItemEmpty response.
-func (client *ArrayClient) getArrayItemEmptyHandleResponse(resp *azcore.Response) (ArrayGetArrayItemEmptyResponse, error) {
-	result := ArrayGetArrayItemEmptyResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.StringArrayArray); err != nil {
+func (client *ArrayClient) getArrayItemEmptyHandleResponse(resp *http.Response) (ArrayGetArrayItemEmptyResponse, error) {
+	result := ArrayGetArrayItemEmptyResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.StringArrayArray); err != nil {
 		return ArrayGetArrayItemEmptyResponse{}, err
 	}
 	return result, nil
 }
 
 // getArrayItemEmptyHandleError handles the GetArrayItemEmpty error response.
-func (client *ArrayClient) getArrayItemEmptyHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getArrayItemEmptyHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetArrayItemNull - Get an array of array of strings [['1', '2', '3'], null, ['7', '8', '9']]
@@ -140,44 +139,43 @@ func (client *ArrayClient) GetArrayItemNull(ctx context.Context, options *ArrayG
 	if err != nil {
 		return ArrayGetArrayItemNullResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetArrayItemNullResponse{}, client.getArrayItemNullHandleError(resp)
 	}
 	return client.getArrayItemNullHandleResponse(resp)
 }
 
 // getArrayItemNullCreateRequest creates the GetArrayItemNull request.
-func (client *ArrayClient) getArrayItemNullCreateRequest(ctx context.Context, options *ArrayGetArrayItemNullOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getArrayItemNullCreateRequest(ctx context.Context, options *ArrayGetArrayItemNullOptions) (*policy.Request, error) {
 	urlPath := "/array/array/itemnull"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getArrayItemNullHandleResponse handles the GetArrayItemNull response.
-func (client *ArrayClient) getArrayItemNullHandleResponse(resp *azcore.Response) (ArrayGetArrayItemNullResponse, error) {
-	result := ArrayGetArrayItemNullResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.StringArrayArray); err != nil {
+func (client *ArrayClient) getArrayItemNullHandleResponse(resp *http.Response) (ArrayGetArrayItemNullResponse, error) {
+	result := ArrayGetArrayItemNullResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.StringArrayArray); err != nil {
 		return ArrayGetArrayItemNullResponse{}, err
 	}
 	return result, nil
 }
 
 // getArrayItemNullHandleError handles the GetArrayItemNull error response.
-func (client *ArrayClient) getArrayItemNullHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getArrayItemNullHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetArrayNull - Get a null array
@@ -191,44 +189,43 @@ func (client *ArrayClient) GetArrayNull(ctx context.Context, options *ArrayGetAr
 	if err != nil {
 		return ArrayGetArrayNullResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetArrayNullResponse{}, client.getArrayNullHandleError(resp)
 	}
 	return client.getArrayNullHandleResponse(resp)
 }
 
 // getArrayNullCreateRequest creates the GetArrayNull request.
-func (client *ArrayClient) getArrayNullCreateRequest(ctx context.Context, options *ArrayGetArrayNullOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getArrayNullCreateRequest(ctx context.Context, options *ArrayGetArrayNullOptions) (*policy.Request, error) {
 	urlPath := "/array/array/null"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getArrayNullHandleResponse handles the GetArrayNull response.
-func (client *ArrayClient) getArrayNullHandleResponse(resp *azcore.Response) (ArrayGetArrayNullResponse, error) {
-	result := ArrayGetArrayNullResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.StringArrayArray); err != nil {
+func (client *ArrayClient) getArrayNullHandleResponse(resp *http.Response) (ArrayGetArrayNullResponse, error) {
+	result := ArrayGetArrayNullResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.StringArrayArray); err != nil {
 		return ArrayGetArrayNullResponse{}, err
 	}
 	return result, nil
 }
 
 // getArrayNullHandleError handles the GetArrayNull error response.
-func (client *ArrayClient) getArrayNullHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getArrayNullHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetArrayValid - Get an array of array of strings [['1', '2', '3'], ['4', '5', '6'], ['7', '8', '9']]
@@ -242,44 +239,43 @@ func (client *ArrayClient) GetArrayValid(ctx context.Context, options *ArrayGetA
 	if err != nil {
 		return ArrayGetArrayValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetArrayValidResponse{}, client.getArrayValidHandleError(resp)
 	}
 	return client.getArrayValidHandleResponse(resp)
 }
 
 // getArrayValidCreateRequest creates the GetArrayValid request.
-func (client *ArrayClient) getArrayValidCreateRequest(ctx context.Context, options *ArrayGetArrayValidOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getArrayValidCreateRequest(ctx context.Context, options *ArrayGetArrayValidOptions) (*policy.Request, error) {
 	urlPath := "/array/array/valid"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getArrayValidHandleResponse handles the GetArrayValid response.
-func (client *ArrayClient) getArrayValidHandleResponse(resp *azcore.Response) (ArrayGetArrayValidResponse, error) {
-	result := ArrayGetArrayValidResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.StringArrayArray); err != nil {
+func (client *ArrayClient) getArrayValidHandleResponse(resp *http.Response) (ArrayGetArrayValidResponse, error) {
+	result := ArrayGetArrayValidResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.StringArrayArray); err != nil {
 		return ArrayGetArrayValidResponse{}, err
 	}
 	return result, nil
 }
 
 // getArrayValidHandleError handles the GetArrayValid error response.
-func (client *ArrayClient) getArrayValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getArrayValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetBase64URL - Get array value ['a string that gets encoded with base64url', 'test string' 'Lorem ipsum'] with the items base64url encoded
@@ -293,44 +289,43 @@ func (client *ArrayClient) GetBase64URL(ctx context.Context, options *ArrayGetBa
 	if err != nil {
 		return ArrayGetBase64URLResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetBase64URLResponse{}, client.getBase64URLHandleError(resp)
 	}
 	return client.getBase64URLHandleResponse(resp)
 }
 
 // getBase64URLCreateRequest creates the GetBase64URL request.
-func (client *ArrayClient) getBase64URLCreateRequest(ctx context.Context, options *ArrayGetBase64URLOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getBase64URLCreateRequest(ctx context.Context, options *ArrayGetBase64URLOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/base64url/valid"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getBase64URLHandleResponse handles the GetBase64URL response.
-func (client *ArrayClient) getBase64URLHandleResponse(resp *azcore.Response) (ArrayGetBase64URLResponse, error) {
-	result := ArrayGetBase64URLResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.ByteArrayArray); err != nil {
+func (client *ArrayClient) getBase64URLHandleResponse(resp *http.Response) (ArrayGetBase64URLResponse, error) {
+	result := ArrayGetBase64URLResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.ByteArrayArray); err != nil {
 		return ArrayGetBase64URLResponse{}, err
 	}
 	return result, nil
 }
 
 // getBase64URLHandleError handles the GetBase64URL error response.
-func (client *ArrayClient) getBase64URLHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getBase64URLHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetBooleanInvalidNull - Get boolean array value [true, null, false]
@@ -344,44 +339,43 @@ func (client *ArrayClient) GetBooleanInvalidNull(ctx context.Context, options *A
 	if err != nil {
 		return ArrayGetBooleanInvalidNullResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetBooleanInvalidNullResponse{}, client.getBooleanInvalidNullHandleError(resp)
 	}
 	return client.getBooleanInvalidNullHandleResponse(resp)
 }
 
 // getBooleanInvalidNullCreateRequest creates the GetBooleanInvalidNull request.
-func (client *ArrayClient) getBooleanInvalidNullCreateRequest(ctx context.Context, options *ArrayGetBooleanInvalidNullOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getBooleanInvalidNullCreateRequest(ctx context.Context, options *ArrayGetBooleanInvalidNullOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/boolean/true.null.false"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getBooleanInvalidNullHandleResponse handles the GetBooleanInvalidNull response.
-func (client *ArrayClient) getBooleanInvalidNullHandleResponse(resp *azcore.Response) (ArrayGetBooleanInvalidNullResponse, error) {
-	result := ArrayGetBooleanInvalidNullResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.BoolArray); err != nil {
+func (client *ArrayClient) getBooleanInvalidNullHandleResponse(resp *http.Response) (ArrayGetBooleanInvalidNullResponse, error) {
+	result := ArrayGetBooleanInvalidNullResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.BoolArray); err != nil {
 		return ArrayGetBooleanInvalidNullResponse{}, err
 	}
 	return result, nil
 }
 
 // getBooleanInvalidNullHandleError handles the GetBooleanInvalidNull error response.
-func (client *ArrayClient) getBooleanInvalidNullHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getBooleanInvalidNullHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetBooleanInvalidString - Get boolean array value [true, 'boolean', false]
@@ -395,44 +389,43 @@ func (client *ArrayClient) GetBooleanInvalidString(ctx context.Context, options 
 	if err != nil {
 		return ArrayGetBooleanInvalidStringResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetBooleanInvalidStringResponse{}, client.getBooleanInvalidStringHandleError(resp)
 	}
 	return client.getBooleanInvalidStringHandleResponse(resp)
 }
 
 // getBooleanInvalidStringCreateRequest creates the GetBooleanInvalidString request.
-func (client *ArrayClient) getBooleanInvalidStringCreateRequest(ctx context.Context, options *ArrayGetBooleanInvalidStringOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getBooleanInvalidStringCreateRequest(ctx context.Context, options *ArrayGetBooleanInvalidStringOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/boolean/true.boolean.false"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getBooleanInvalidStringHandleResponse handles the GetBooleanInvalidString response.
-func (client *ArrayClient) getBooleanInvalidStringHandleResponse(resp *azcore.Response) (ArrayGetBooleanInvalidStringResponse, error) {
-	result := ArrayGetBooleanInvalidStringResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.BoolArray); err != nil {
+func (client *ArrayClient) getBooleanInvalidStringHandleResponse(resp *http.Response) (ArrayGetBooleanInvalidStringResponse, error) {
+	result := ArrayGetBooleanInvalidStringResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.BoolArray); err != nil {
 		return ArrayGetBooleanInvalidStringResponse{}, err
 	}
 	return result, nil
 }
 
 // getBooleanInvalidStringHandleError handles the GetBooleanInvalidString error response.
-func (client *ArrayClient) getBooleanInvalidStringHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getBooleanInvalidStringHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetBooleanTfft - Get boolean array value [true, false, false, true]
@@ -446,44 +439,43 @@ func (client *ArrayClient) GetBooleanTfft(ctx context.Context, options *ArrayGet
 	if err != nil {
 		return ArrayGetBooleanTfftResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetBooleanTfftResponse{}, client.getBooleanTfftHandleError(resp)
 	}
 	return client.getBooleanTfftHandleResponse(resp)
 }
 
 // getBooleanTfftCreateRequest creates the GetBooleanTfft request.
-func (client *ArrayClient) getBooleanTfftCreateRequest(ctx context.Context, options *ArrayGetBooleanTfftOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getBooleanTfftCreateRequest(ctx context.Context, options *ArrayGetBooleanTfftOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/boolean/tfft"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getBooleanTfftHandleResponse handles the GetBooleanTfft response.
-func (client *ArrayClient) getBooleanTfftHandleResponse(resp *azcore.Response) (ArrayGetBooleanTfftResponse, error) {
-	result := ArrayGetBooleanTfftResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.BoolArray); err != nil {
+func (client *ArrayClient) getBooleanTfftHandleResponse(resp *http.Response) (ArrayGetBooleanTfftResponse, error) {
+	result := ArrayGetBooleanTfftResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.BoolArray); err != nil {
 		return ArrayGetBooleanTfftResponse{}, err
 	}
 	return result, nil
 }
 
 // getBooleanTfftHandleError handles the GetBooleanTfft error response.
-func (client *ArrayClient) getBooleanTfftHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getBooleanTfftHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetByteInvalidNull - Get byte array value [hex(AB, AC, AD), null] with the first item base64 encoded
@@ -497,44 +489,43 @@ func (client *ArrayClient) GetByteInvalidNull(ctx context.Context, options *Arra
 	if err != nil {
 		return ArrayGetByteInvalidNullResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetByteInvalidNullResponse{}, client.getByteInvalidNullHandleError(resp)
 	}
 	return client.getByteInvalidNullHandleResponse(resp)
 }
 
 // getByteInvalidNullCreateRequest creates the GetByteInvalidNull request.
-func (client *ArrayClient) getByteInvalidNullCreateRequest(ctx context.Context, options *ArrayGetByteInvalidNullOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getByteInvalidNullCreateRequest(ctx context.Context, options *ArrayGetByteInvalidNullOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/byte/invalidnull"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getByteInvalidNullHandleResponse handles the GetByteInvalidNull response.
-func (client *ArrayClient) getByteInvalidNullHandleResponse(resp *azcore.Response) (ArrayGetByteInvalidNullResponse, error) {
-	result := ArrayGetByteInvalidNullResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.ByteArrayArray); err != nil {
+func (client *ArrayClient) getByteInvalidNullHandleResponse(resp *http.Response) (ArrayGetByteInvalidNullResponse, error) {
+	result := ArrayGetByteInvalidNullResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.ByteArrayArray); err != nil {
 		return ArrayGetByteInvalidNullResponse{}, err
 	}
 	return result, nil
 }
 
 // getByteInvalidNullHandleError handles the GetByteInvalidNull error response.
-func (client *ArrayClient) getByteInvalidNullHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getByteInvalidNullHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetByteValid - Get byte array value [hex(FF FF FF FA), hex(01 02 03), hex (25, 29, 43)] with each item encoded in base64
@@ -548,44 +539,43 @@ func (client *ArrayClient) GetByteValid(ctx context.Context, options *ArrayGetBy
 	if err != nil {
 		return ArrayGetByteValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetByteValidResponse{}, client.getByteValidHandleError(resp)
 	}
 	return client.getByteValidHandleResponse(resp)
 }
 
 // getByteValidCreateRequest creates the GetByteValid request.
-func (client *ArrayClient) getByteValidCreateRequest(ctx context.Context, options *ArrayGetByteValidOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getByteValidCreateRequest(ctx context.Context, options *ArrayGetByteValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/byte/valid"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getByteValidHandleResponse handles the GetByteValid response.
-func (client *ArrayClient) getByteValidHandleResponse(resp *azcore.Response) (ArrayGetByteValidResponse, error) {
-	result := ArrayGetByteValidResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.ByteArrayArray); err != nil {
+func (client *ArrayClient) getByteValidHandleResponse(resp *http.Response) (ArrayGetByteValidResponse, error) {
+	result := ArrayGetByteValidResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.ByteArrayArray); err != nil {
 		return ArrayGetByteValidResponse{}, err
 	}
 	return result, nil
 }
 
 // getByteValidHandleError handles the GetByteValid error response.
-func (client *ArrayClient) getByteValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getByteValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetComplexEmpty - Get empty array of complex type []
@@ -599,44 +589,43 @@ func (client *ArrayClient) GetComplexEmpty(ctx context.Context, options *ArrayGe
 	if err != nil {
 		return ArrayGetComplexEmptyResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetComplexEmptyResponse{}, client.getComplexEmptyHandleError(resp)
 	}
 	return client.getComplexEmptyHandleResponse(resp)
 }
 
 // getComplexEmptyCreateRequest creates the GetComplexEmpty request.
-func (client *ArrayClient) getComplexEmptyCreateRequest(ctx context.Context, options *ArrayGetComplexEmptyOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getComplexEmptyCreateRequest(ctx context.Context, options *ArrayGetComplexEmptyOptions) (*policy.Request, error) {
 	urlPath := "/array/complex/empty"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getComplexEmptyHandleResponse handles the GetComplexEmpty response.
-func (client *ArrayClient) getComplexEmptyHandleResponse(resp *azcore.Response) (ArrayGetComplexEmptyResponse, error) {
-	result := ArrayGetComplexEmptyResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.ProductArray); err != nil {
+func (client *ArrayClient) getComplexEmptyHandleResponse(resp *http.Response) (ArrayGetComplexEmptyResponse, error) {
+	result := ArrayGetComplexEmptyResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.ProductArray); err != nil {
 		return ArrayGetComplexEmptyResponse{}, err
 	}
 	return result, nil
 }
 
 // getComplexEmptyHandleError handles the GetComplexEmpty error response.
-func (client *ArrayClient) getComplexEmptyHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getComplexEmptyHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetComplexItemEmpty - Get array of complex type with empty item [{'integer': 1 'string': '2'}, {}, {'integer': 5, 'string': '6'}]
@@ -650,44 +639,43 @@ func (client *ArrayClient) GetComplexItemEmpty(ctx context.Context, options *Arr
 	if err != nil {
 		return ArrayGetComplexItemEmptyResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetComplexItemEmptyResponse{}, client.getComplexItemEmptyHandleError(resp)
 	}
 	return client.getComplexItemEmptyHandleResponse(resp)
 }
 
 // getComplexItemEmptyCreateRequest creates the GetComplexItemEmpty request.
-func (client *ArrayClient) getComplexItemEmptyCreateRequest(ctx context.Context, options *ArrayGetComplexItemEmptyOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getComplexItemEmptyCreateRequest(ctx context.Context, options *ArrayGetComplexItemEmptyOptions) (*policy.Request, error) {
 	urlPath := "/array/complex/itemempty"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getComplexItemEmptyHandleResponse handles the GetComplexItemEmpty response.
-func (client *ArrayClient) getComplexItemEmptyHandleResponse(resp *azcore.Response) (ArrayGetComplexItemEmptyResponse, error) {
-	result := ArrayGetComplexItemEmptyResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.ProductArray); err != nil {
+func (client *ArrayClient) getComplexItemEmptyHandleResponse(resp *http.Response) (ArrayGetComplexItemEmptyResponse, error) {
+	result := ArrayGetComplexItemEmptyResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.ProductArray); err != nil {
 		return ArrayGetComplexItemEmptyResponse{}, err
 	}
 	return result, nil
 }
 
 // getComplexItemEmptyHandleError handles the GetComplexItemEmpty error response.
-func (client *ArrayClient) getComplexItemEmptyHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getComplexItemEmptyHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetComplexItemNull - Get array of complex type with null item [{'integer': 1 'string': '2'}, null, {'integer': 5, 'string': '6'}]
@@ -701,44 +689,43 @@ func (client *ArrayClient) GetComplexItemNull(ctx context.Context, options *Arra
 	if err != nil {
 		return ArrayGetComplexItemNullResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetComplexItemNullResponse{}, client.getComplexItemNullHandleError(resp)
 	}
 	return client.getComplexItemNullHandleResponse(resp)
 }
 
 // getComplexItemNullCreateRequest creates the GetComplexItemNull request.
-func (client *ArrayClient) getComplexItemNullCreateRequest(ctx context.Context, options *ArrayGetComplexItemNullOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getComplexItemNullCreateRequest(ctx context.Context, options *ArrayGetComplexItemNullOptions) (*policy.Request, error) {
 	urlPath := "/array/complex/itemnull"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getComplexItemNullHandleResponse handles the GetComplexItemNull response.
-func (client *ArrayClient) getComplexItemNullHandleResponse(resp *azcore.Response) (ArrayGetComplexItemNullResponse, error) {
-	result := ArrayGetComplexItemNullResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.ProductArray); err != nil {
+func (client *ArrayClient) getComplexItemNullHandleResponse(resp *http.Response) (ArrayGetComplexItemNullResponse, error) {
+	result := ArrayGetComplexItemNullResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.ProductArray); err != nil {
 		return ArrayGetComplexItemNullResponse{}, err
 	}
 	return result, nil
 }
 
 // getComplexItemNullHandleError handles the GetComplexItemNull error response.
-func (client *ArrayClient) getComplexItemNullHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getComplexItemNullHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetComplexNull - Get array of complex type null value
@@ -752,44 +739,43 @@ func (client *ArrayClient) GetComplexNull(ctx context.Context, options *ArrayGet
 	if err != nil {
 		return ArrayGetComplexNullResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetComplexNullResponse{}, client.getComplexNullHandleError(resp)
 	}
 	return client.getComplexNullHandleResponse(resp)
 }
 
 // getComplexNullCreateRequest creates the GetComplexNull request.
-func (client *ArrayClient) getComplexNullCreateRequest(ctx context.Context, options *ArrayGetComplexNullOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getComplexNullCreateRequest(ctx context.Context, options *ArrayGetComplexNullOptions) (*policy.Request, error) {
 	urlPath := "/array/complex/null"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getComplexNullHandleResponse handles the GetComplexNull response.
-func (client *ArrayClient) getComplexNullHandleResponse(resp *azcore.Response) (ArrayGetComplexNullResponse, error) {
-	result := ArrayGetComplexNullResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.ProductArray); err != nil {
+func (client *ArrayClient) getComplexNullHandleResponse(resp *http.Response) (ArrayGetComplexNullResponse, error) {
+	result := ArrayGetComplexNullResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.ProductArray); err != nil {
 		return ArrayGetComplexNullResponse{}, err
 	}
 	return result, nil
 }
 
 // getComplexNullHandleError handles the GetComplexNull error response.
-func (client *ArrayClient) getComplexNullHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getComplexNullHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetComplexValid - Get array of complex type with [{'integer': 1 'string': '2'}, {'integer': 3, 'string': '4'}, {'integer': 5, 'string': '6'}]
@@ -803,44 +789,43 @@ func (client *ArrayClient) GetComplexValid(ctx context.Context, options *ArrayGe
 	if err != nil {
 		return ArrayGetComplexValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetComplexValidResponse{}, client.getComplexValidHandleError(resp)
 	}
 	return client.getComplexValidHandleResponse(resp)
 }
 
 // getComplexValidCreateRequest creates the GetComplexValid request.
-func (client *ArrayClient) getComplexValidCreateRequest(ctx context.Context, options *ArrayGetComplexValidOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getComplexValidCreateRequest(ctx context.Context, options *ArrayGetComplexValidOptions) (*policy.Request, error) {
 	urlPath := "/array/complex/valid"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getComplexValidHandleResponse handles the GetComplexValid response.
-func (client *ArrayClient) getComplexValidHandleResponse(resp *azcore.Response) (ArrayGetComplexValidResponse, error) {
-	result := ArrayGetComplexValidResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.ProductArray); err != nil {
+func (client *ArrayClient) getComplexValidHandleResponse(resp *http.Response) (ArrayGetComplexValidResponse, error) {
+	result := ArrayGetComplexValidResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.ProductArray); err != nil {
 		return ArrayGetComplexValidResponse{}, err
 	}
 	return result, nil
 }
 
 // getComplexValidHandleError handles the GetComplexValid error response.
-func (client *ArrayClient) getComplexValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getComplexValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetDateInvalidChars - Get date array value ['2011-03-22', 'date']
@@ -854,29 +839,28 @@ func (client *ArrayClient) GetDateInvalidChars(ctx context.Context, options *Arr
 	if err != nil {
 		return ArrayGetDateInvalidCharsResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetDateInvalidCharsResponse{}, client.getDateInvalidCharsHandleError(resp)
 	}
 	return client.getDateInvalidCharsHandleResponse(resp)
 }
 
 // getDateInvalidCharsCreateRequest creates the GetDateInvalidChars request.
-func (client *ArrayClient) getDateInvalidCharsCreateRequest(ctx context.Context, options *ArrayGetDateInvalidCharsOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getDateInvalidCharsCreateRequest(ctx context.Context, options *ArrayGetDateInvalidCharsOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/date/invalidchars"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getDateInvalidCharsHandleResponse handles the GetDateInvalidChars response.
-func (client *ArrayClient) getDateInvalidCharsHandleResponse(resp *azcore.Response) (ArrayGetDateInvalidCharsResponse, error) {
-	result := ArrayGetDateInvalidCharsResponse{RawResponse: resp.Response}
+func (client *ArrayClient) getDateInvalidCharsHandleResponse(resp *http.Response) (ArrayGetDateInvalidCharsResponse, error) {
+	result := ArrayGetDateInvalidCharsResponse{RawResponse: resp}
 	var aux []*dateType
-	if err := resp.UnmarshalAsJSON(&aux); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return ArrayGetDateInvalidCharsResponse{}, err
 	}
 	cp := make([]*time.Time, len(aux), len(aux))
@@ -888,16 +872,16 @@ func (client *ArrayClient) getDateInvalidCharsHandleResponse(resp *azcore.Respon
 }
 
 // getDateInvalidCharsHandleError handles the GetDateInvalidChars error response.
-func (client *ArrayClient) getDateInvalidCharsHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getDateInvalidCharsHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetDateInvalidNull - Get date array value ['2012-01-01', null, '1776-07-04']
@@ -911,29 +895,28 @@ func (client *ArrayClient) GetDateInvalidNull(ctx context.Context, options *Arra
 	if err != nil {
 		return ArrayGetDateInvalidNullResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetDateInvalidNullResponse{}, client.getDateInvalidNullHandleError(resp)
 	}
 	return client.getDateInvalidNullHandleResponse(resp)
 }
 
 // getDateInvalidNullCreateRequest creates the GetDateInvalidNull request.
-func (client *ArrayClient) getDateInvalidNullCreateRequest(ctx context.Context, options *ArrayGetDateInvalidNullOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getDateInvalidNullCreateRequest(ctx context.Context, options *ArrayGetDateInvalidNullOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/date/invalidnull"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getDateInvalidNullHandleResponse handles the GetDateInvalidNull response.
-func (client *ArrayClient) getDateInvalidNullHandleResponse(resp *azcore.Response) (ArrayGetDateInvalidNullResponse, error) {
-	result := ArrayGetDateInvalidNullResponse{RawResponse: resp.Response}
+func (client *ArrayClient) getDateInvalidNullHandleResponse(resp *http.Response) (ArrayGetDateInvalidNullResponse, error) {
+	result := ArrayGetDateInvalidNullResponse{RawResponse: resp}
 	var aux []*dateType
-	if err := resp.UnmarshalAsJSON(&aux); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return ArrayGetDateInvalidNullResponse{}, err
 	}
 	cp := make([]*time.Time, len(aux), len(aux))
@@ -945,16 +928,16 @@ func (client *ArrayClient) getDateInvalidNullHandleResponse(resp *azcore.Respons
 }
 
 // getDateInvalidNullHandleError handles the GetDateInvalidNull error response.
-func (client *ArrayClient) getDateInvalidNullHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getDateInvalidNullHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetDateTimeInvalidChars - Get date array value ['2000-12-01t00:00:01z', 'date-time']
@@ -968,29 +951,28 @@ func (client *ArrayClient) GetDateTimeInvalidChars(ctx context.Context, options 
 	if err != nil {
 		return ArrayGetDateTimeInvalidCharsResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetDateTimeInvalidCharsResponse{}, client.getDateTimeInvalidCharsHandleError(resp)
 	}
 	return client.getDateTimeInvalidCharsHandleResponse(resp)
 }
 
 // getDateTimeInvalidCharsCreateRequest creates the GetDateTimeInvalidChars request.
-func (client *ArrayClient) getDateTimeInvalidCharsCreateRequest(ctx context.Context, options *ArrayGetDateTimeInvalidCharsOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getDateTimeInvalidCharsCreateRequest(ctx context.Context, options *ArrayGetDateTimeInvalidCharsOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/date-time/invalidchars"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getDateTimeInvalidCharsHandleResponse handles the GetDateTimeInvalidChars response.
-func (client *ArrayClient) getDateTimeInvalidCharsHandleResponse(resp *azcore.Response) (ArrayGetDateTimeInvalidCharsResponse, error) {
-	result := ArrayGetDateTimeInvalidCharsResponse{RawResponse: resp.Response}
+func (client *ArrayClient) getDateTimeInvalidCharsHandleResponse(resp *http.Response) (ArrayGetDateTimeInvalidCharsResponse, error) {
+	result := ArrayGetDateTimeInvalidCharsResponse{RawResponse: resp}
 	var aux []*timeRFC3339
-	if err := resp.UnmarshalAsJSON(&aux); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return ArrayGetDateTimeInvalidCharsResponse{}, err
 	}
 	cp := make([]*time.Time, len(aux), len(aux))
@@ -1002,16 +984,16 @@ func (client *ArrayClient) getDateTimeInvalidCharsHandleResponse(resp *azcore.Re
 }
 
 // getDateTimeInvalidCharsHandleError handles the GetDateTimeInvalidChars error response.
-func (client *ArrayClient) getDateTimeInvalidCharsHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getDateTimeInvalidCharsHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetDateTimeInvalidNull - Get date array value ['2000-12-01t00:00:01z', null]
@@ -1025,29 +1007,28 @@ func (client *ArrayClient) GetDateTimeInvalidNull(ctx context.Context, options *
 	if err != nil {
 		return ArrayGetDateTimeInvalidNullResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetDateTimeInvalidNullResponse{}, client.getDateTimeInvalidNullHandleError(resp)
 	}
 	return client.getDateTimeInvalidNullHandleResponse(resp)
 }
 
 // getDateTimeInvalidNullCreateRequest creates the GetDateTimeInvalidNull request.
-func (client *ArrayClient) getDateTimeInvalidNullCreateRequest(ctx context.Context, options *ArrayGetDateTimeInvalidNullOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getDateTimeInvalidNullCreateRequest(ctx context.Context, options *ArrayGetDateTimeInvalidNullOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/date-time/invalidnull"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getDateTimeInvalidNullHandleResponse handles the GetDateTimeInvalidNull response.
-func (client *ArrayClient) getDateTimeInvalidNullHandleResponse(resp *azcore.Response) (ArrayGetDateTimeInvalidNullResponse, error) {
-	result := ArrayGetDateTimeInvalidNullResponse{RawResponse: resp.Response}
+func (client *ArrayClient) getDateTimeInvalidNullHandleResponse(resp *http.Response) (ArrayGetDateTimeInvalidNullResponse, error) {
+	result := ArrayGetDateTimeInvalidNullResponse{RawResponse: resp}
 	var aux []*timeRFC3339
-	if err := resp.UnmarshalAsJSON(&aux); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return ArrayGetDateTimeInvalidNullResponse{}, err
 	}
 	cp := make([]*time.Time, len(aux), len(aux))
@@ -1059,16 +1040,16 @@ func (client *ArrayClient) getDateTimeInvalidNullHandleResponse(resp *azcore.Res
 }
 
 // getDateTimeInvalidNullHandleError handles the GetDateTimeInvalidNull error response.
-func (client *ArrayClient) getDateTimeInvalidNullHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getDateTimeInvalidNullHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetDateTimeRFC1123Valid - Get date-time array value ['Fri, 01 Dec 2000 00:00:01 GMT', 'Wed, 02 Jan 1980 00:11:35 GMT', 'Wed, 12 Oct 1492 10:15:01 GMT']
@@ -1082,29 +1063,28 @@ func (client *ArrayClient) GetDateTimeRFC1123Valid(ctx context.Context, options 
 	if err != nil {
 		return ArrayGetDateTimeRFC1123ValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetDateTimeRFC1123ValidResponse{}, client.getDateTimeRFC1123ValidHandleError(resp)
 	}
 	return client.getDateTimeRFC1123ValidHandleResponse(resp)
 }
 
 // getDateTimeRFC1123ValidCreateRequest creates the GetDateTimeRFC1123Valid request.
-func (client *ArrayClient) getDateTimeRFC1123ValidCreateRequest(ctx context.Context, options *ArrayGetDateTimeRFC1123ValidOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getDateTimeRFC1123ValidCreateRequest(ctx context.Context, options *ArrayGetDateTimeRFC1123ValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/date-time-rfc1123/valid"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getDateTimeRFC1123ValidHandleResponse handles the GetDateTimeRFC1123Valid response.
-func (client *ArrayClient) getDateTimeRFC1123ValidHandleResponse(resp *azcore.Response) (ArrayGetDateTimeRFC1123ValidResponse, error) {
-	result := ArrayGetDateTimeRFC1123ValidResponse{RawResponse: resp.Response}
+func (client *ArrayClient) getDateTimeRFC1123ValidHandleResponse(resp *http.Response) (ArrayGetDateTimeRFC1123ValidResponse, error) {
+	result := ArrayGetDateTimeRFC1123ValidResponse{RawResponse: resp}
 	var aux []*timeRFC1123
-	if err := resp.UnmarshalAsJSON(&aux); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return ArrayGetDateTimeRFC1123ValidResponse{}, err
 	}
 	cp := make([]*time.Time, len(aux), len(aux))
@@ -1116,16 +1096,16 @@ func (client *ArrayClient) getDateTimeRFC1123ValidHandleResponse(resp *azcore.Re
 }
 
 // getDateTimeRFC1123ValidHandleError handles the GetDateTimeRFC1123Valid error response.
-func (client *ArrayClient) getDateTimeRFC1123ValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getDateTimeRFC1123ValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetDateTimeValid - Get date-time array value ['2000-12-01t00:00:01z', '1980-01-02T00:11:35+01:00', '1492-10-12T10:15:01-08:00']
@@ -1139,29 +1119,28 @@ func (client *ArrayClient) GetDateTimeValid(ctx context.Context, options *ArrayG
 	if err != nil {
 		return ArrayGetDateTimeValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetDateTimeValidResponse{}, client.getDateTimeValidHandleError(resp)
 	}
 	return client.getDateTimeValidHandleResponse(resp)
 }
 
 // getDateTimeValidCreateRequest creates the GetDateTimeValid request.
-func (client *ArrayClient) getDateTimeValidCreateRequest(ctx context.Context, options *ArrayGetDateTimeValidOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getDateTimeValidCreateRequest(ctx context.Context, options *ArrayGetDateTimeValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/date-time/valid"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getDateTimeValidHandleResponse handles the GetDateTimeValid response.
-func (client *ArrayClient) getDateTimeValidHandleResponse(resp *azcore.Response) (ArrayGetDateTimeValidResponse, error) {
-	result := ArrayGetDateTimeValidResponse{RawResponse: resp.Response}
+func (client *ArrayClient) getDateTimeValidHandleResponse(resp *http.Response) (ArrayGetDateTimeValidResponse, error) {
+	result := ArrayGetDateTimeValidResponse{RawResponse: resp}
 	var aux []*timeRFC3339
-	if err := resp.UnmarshalAsJSON(&aux); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return ArrayGetDateTimeValidResponse{}, err
 	}
 	cp := make([]*time.Time, len(aux), len(aux))
@@ -1173,16 +1152,16 @@ func (client *ArrayClient) getDateTimeValidHandleResponse(resp *azcore.Response)
 }
 
 // getDateTimeValidHandleError handles the GetDateTimeValid error response.
-func (client *ArrayClient) getDateTimeValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getDateTimeValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetDateValid - Get integer array value ['2000-12-01', '1980-01-02', '1492-10-12']
@@ -1196,29 +1175,28 @@ func (client *ArrayClient) GetDateValid(ctx context.Context, options *ArrayGetDa
 	if err != nil {
 		return ArrayGetDateValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetDateValidResponse{}, client.getDateValidHandleError(resp)
 	}
 	return client.getDateValidHandleResponse(resp)
 }
 
 // getDateValidCreateRequest creates the GetDateValid request.
-func (client *ArrayClient) getDateValidCreateRequest(ctx context.Context, options *ArrayGetDateValidOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getDateValidCreateRequest(ctx context.Context, options *ArrayGetDateValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/date/valid"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getDateValidHandleResponse handles the GetDateValid response.
-func (client *ArrayClient) getDateValidHandleResponse(resp *azcore.Response) (ArrayGetDateValidResponse, error) {
-	result := ArrayGetDateValidResponse{RawResponse: resp.Response}
+func (client *ArrayClient) getDateValidHandleResponse(resp *http.Response) (ArrayGetDateValidResponse, error) {
+	result := ArrayGetDateValidResponse{RawResponse: resp}
 	var aux []*dateType
-	if err := resp.UnmarshalAsJSON(&aux); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return ArrayGetDateValidResponse{}, err
 	}
 	cp := make([]*time.Time, len(aux), len(aux))
@@ -1230,16 +1208,16 @@ func (client *ArrayClient) getDateValidHandleResponse(resp *azcore.Response) (Ar
 }
 
 // getDateValidHandleError handles the GetDateValid error response.
-func (client *ArrayClient) getDateValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getDateValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetDictionaryEmpty - Get an array of Dictionaries of type with value []
@@ -1253,44 +1231,43 @@ func (client *ArrayClient) GetDictionaryEmpty(ctx context.Context, options *Arra
 	if err != nil {
 		return ArrayGetDictionaryEmptyResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetDictionaryEmptyResponse{}, client.getDictionaryEmptyHandleError(resp)
 	}
 	return client.getDictionaryEmptyHandleResponse(resp)
 }
 
 // getDictionaryEmptyCreateRequest creates the GetDictionaryEmpty request.
-func (client *ArrayClient) getDictionaryEmptyCreateRequest(ctx context.Context, options *ArrayGetDictionaryEmptyOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getDictionaryEmptyCreateRequest(ctx context.Context, options *ArrayGetDictionaryEmptyOptions) (*policy.Request, error) {
 	urlPath := "/array/dictionary/empty"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getDictionaryEmptyHandleResponse handles the GetDictionaryEmpty response.
-func (client *ArrayClient) getDictionaryEmptyHandleResponse(resp *azcore.Response) (ArrayGetDictionaryEmptyResponse, error) {
-	result := ArrayGetDictionaryEmptyResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.MapOfStringArray); err != nil {
+func (client *ArrayClient) getDictionaryEmptyHandleResponse(resp *http.Response) (ArrayGetDictionaryEmptyResponse, error) {
+	result := ArrayGetDictionaryEmptyResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.MapOfStringArray); err != nil {
 		return ArrayGetDictionaryEmptyResponse{}, err
 	}
 	return result, nil
 }
 
 // getDictionaryEmptyHandleError handles the GetDictionaryEmpty error response.
-func (client *ArrayClient) getDictionaryEmptyHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getDictionaryEmptyHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetDictionaryItemEmpty - Get an array of Dictionaries of type with value [{'1': 'one', '2': 'two', '3': 'three'}, {}, {'7': 'seven', '8': 'eight', '9':
@@ -1305,44 +1282,43 @@ func (client *ArrayClient) GetDictionaryItemEmpty(ctx context.Context, options *
 	if err != nil {
 		return ArrayGetDictionaryItemEmptyResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetDictionaryItemEmptyResponse{}, client.getDictionaryItemEmptyHandleError(resp)
 	}
 	return client.getDictionaryItemEmptyHandleResponse(resp)
 }
 
 // getDictionaryItemEmptyCreateRequest creates the GetDictionaryItemEmpty request.
-func (client *ArrayClient) getDictionaryItemEmptyCreateRequest(ctx context.Context, options *ArrayGetDictionaryItemEmptyOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getDictionaryItemEmptyCreateRequest(ctx context.Context, options *ArrayGetDictionaryItemEmptyOptions) (*policy.Request, error) {
 	urlPath := "/array/dictionary/itemempty"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getDictionaryItemEmptyHandleResponse handles the GetDictionaryItemEmpty response.
-func (client *ArrayClient) getDictionaryItemEmptyHandleResponse(resp *azcore.Response) (ArrayGetDictionaryItemEmptyResponse, error) {
-	result := ArrayGetDictionaryItemEmptyResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.MapOfStringArray); err != nil {
+func (client *ArrayClient) getDictionaryItemEmptyHandleResponse(resp *http.Response) (ArrayGetDictionaryItemEmptyResponse, error) {
+	result := ArrayGetDictionaryItemEmptyResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.MapOfStringArray); err != nil {
 		return ArrayGetDictionaryItemEmptyResponse{}, err
 	}
 	return result, nil
 }
 
 // getDictionaryItemEmptyHandleError handles the GetDictionaryItemEmpty error response.
-func (client *ArrayClient) getDictionaryItemEmptyHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getDictionaryItemEmptyHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetDictionaryItemNull - Get an array of Dictionaries of type with value [{'1': 'one', '2': 'two', '3': 'three'}, null, {'7': 'seven', '8': 'eight', '9':
@@ -1357,44 +1333,43 @@ func (client *ArrayClient) GetDictionaryItemNull(ctx context.Context, options *A
 	if err != nil {
 		return ArrayGetDictionaryItemNullResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetDictionaryItemNullResponse{}, client.getDictionaryItemNullHandleError(resp)
 	}
 	return client.getDictionaryItemNullHandleResponse(resp)
 }
 
 // getDictionaryItemNullCreateRequest creates the GetDictionaryItemNull request.
-func (client *ArrayClient) getDictionaryItemNullCreateRequest(ctx context.Context, options *ArrayGetDictionaryItemNullOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getDictionaryItemNullCreateRequest(ctx context.Context, options *ArrayGetDictionaryItemNullOptions) (*policy.Request, error) {
 	urlPath := "/array/dictionary/itemnull"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getDictionaryItemNullHandleResponse handles the GetDictionaryItemNull response.
-func (client *ArrayClient) getDictionaryItemNullHandleResponse(resp *azcore.Response) (ArrayGetDictionaryItemNullResponse, error) {
-	result := ArrayGetDictionaryItemNullResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.MapOfStringArray); err != nil {
+func (client *ArrayClient) getDictionaryItemNullHandleResponse(resp *http.Response) (ArrayGetDictionaryItemNullResponse, error) {
+	result := ArrayGetDictionaryItemNullResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.MapOfStringArray); err != nil {
 		return ArrayGetDictionaryItemNullResponse{}, err
 	}
 	return result, nil
 }
 
 // getDictionaryItemNullHandleError handles the GetDictionaryItemNull error response.
-func (client *ArrayClient) getDictionaryItemNullHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getDictionaryItemNullHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetDictionaryNull - Get an array of Dictionaries with value null
@@ -1408,44 +1383,43 @@ func (client *ArrayClient) GetDictionaryNull(ctx context.Context, options *Array
 	if err != nil {
 		return ArrayGetDictionaryNullResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetDictionaryNullResponse{}, client.getDictionaryNullHandleError(resp)
 	}
 	return client.getDictionaryNullHandleResponse(resp)
 }
 
 // getDictionaryNullCreateRequest creates the GetDictionaryNull request.
-func (client *ArrayClient) getDictionaryNullCreateRequest(ctx context.Context, options *ArrayGetDictionaryNullOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getDictionaryNullCreateRequest(ctx context.Context, options *ArrayGetDictionaryNullOptions) (*policy.Request, error) {
 	urlPath := "/array/dictionary/null"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getDictionaryNullHandleResponse handles the GetDictionaryNull response.
-func (client *ArrayClient) getDictionaryNullHandleResponse(resp *azcore.Response) (ArrayGetDictionaryNullResponse, error) {
-	result := ArrayGetDictionaryNullResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.MapOfStringArray); err != nil {
+func (client *ArrayClient) getDictionaryNullHandleResponse(resp *http.Response) (ArrayGetDictionaryNullResponse, error) {
+	result := ArrayGetDictionaryNullResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.MapOfStringArray); err != nil {
 		return ArrayGetDictionaryNullResponse{}, err
 	}
 	return result, nil
 }
 
 // getDictionaryNullHandleError handles the GetDictionaryNull error response.
-func (client *ArrayClient) getDictionaryNullHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getDictionaryNullHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetDictionaryValid - Get an array of Dictionaries of type with value [{'1': 'one', '2': 'two', '3': 'three'}, {'4': 'four', '5': 'five', '6': 'six'},
@@ -1460,44 +1434,43 @@ func (client *ArrayClient) GetDictionaryValid(ctx context.Context, options *Arra
 	if err != nil {
 		return ArrayGetDictionaryValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetDictionaryValidResponse{}, client.getDictionaryValidHandleError(resp)
 	}
 	return client.getDictionaryValidHandleResponse(resp)
 }
 
 // getDictionaryValidCreateRequest creates the GetDictionaryValid request.
-func (client *ArrayClient) getDictionaryValidCreateRequest(ctx context.Context, options *ArrayGetDictionaryValidOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getDictionaryValidCreateRequest(ctx context.Context, options *ArrayGetDictionaryValidOptions) (*policy.Request, error) {
 	urlPath := "/array/dictionary/valid"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getDictionaryValidHandleResponse handles the GetDictionaryValid response.
-func (client *ArrayClient) getDictionaryValidHandleResponse(resp *azcore.Response) (ArrayGetDictionaryValidResponse, error) {
-	result := ArrayGetDictionaryValidResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.MapOfStringArray); err != nil {
+func (client *ArrayClient) getDictionaryValidHandleResponse(resp *http.Response) (ArrayGetDictionaryValidResponse, error) {
+	result := ArrayGetDictionaryValidResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.MapOfStringArray); err != nil {
 		return ArrayGetDictionaryValidResponse{}, err
 	}
 	return result, nil
 }
 
 // getDictionaryValidHandleError handles the GetDictionaryValid error response.
-func (client *ArrayClient) getDictionaryValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getDictionaryValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetDoubleInvalidNull - Get float array value [0.0, null, -1.2e20]
@@ -1511,44 +1484,43 @@ func (client *ArrayClient) GetDoubleInvalidNull(ctx context.Context, options *Ar
 	if err != nil {
 		return ArrayGetDoubleInvalidNullResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetDoubleInvalidNullResponse{}, client.getDoubleInvalidNullHandleError(resp)
 	}
 	return client.getDoubleInvalidNullHandleResponse(resp)
 }
 
 // getDoubleInvalidNullCreateRequest creates the GetDoubleInvalidNull request.
-func (client *ArrayClient) getDoubleInvalidNullCreateRequest(ctx context.Context, options *ArrayGetDoubleInvalidNullOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getDoubleInvalidNullCreateRequest(ctx context.Context, options *ArrayGetDoubleInvalidNullOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/double/0.0-null-1.2e20"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getDoubleInvalidNullHandleResponse handles the GetDoubleInvalidNull response.
-func (client *ArrayClient) getDoubleInvalidNullHandleResponse(resp *azcore.Response) (ArrayGetDoubleInvalidNullResponse, error) {
-	result := ArrayGetDoubleInvalidNullResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.Float64Array); err != nil {
+func (client *ArrayClient) getDoubleInvalidNullHandleResponse(resp *http.Response) (ArrayGetDoubleInvalidNullResponse, error) {
+	result := ArrayGetDoubleInvalidNullResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Float64Array); err != nil {
 		return ArrayGetDoubleInvalidNullResponse{}, err
 	}
 	return result, nil
 }
 
 // getDoubleInvalidNullHandleError handles the GetDoubleInvalidNull error response.
-func (client *ArrayClient) getDoubleInvalidNullHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getDoubleInvalidNullHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetDoubleInvalidString - Get boolean array value [1.0, 'number', 0.0]
@@ -1562,44 +1534,43 @@ func (client *ArrayClient) GetDoubleInvalidString(ctx context.Context, options *
 	if err != nil {
 		return ArrayGetDoubleInvalidStringResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetDoubleInvalidStringResponse{}, client.getDoubleInvalidStringHandleError(resp)
 	}
 	return client.getDoubleInvalidStringHandleResponse(resp)
 }
 
 // getDoubleInvalidStringCreateRequest creates the GetDoubleInvalidString request.
-func (client *ArrayClient) getDoubleInvalidStringCreateRequest(ctx context.Context, options *ArrayGetDoubleInvalidStringOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getDoubleInvalidStringCreateRequest(ctx context.Context, options *ArrayGetDoubleInvalidStringOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/double/1.number.0"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getDoubleInvalidStringHandleResponse handles the GetDoubleInvalidString response.
-func (client *ArrayClient) getDoubleInvalidStringHandleResponse(resp *azcore.Response) (ArrayGetDoubleInvalidStringResponse, error) {
-	result := ArrayGetDoubleInvalidStringResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.Float64Array); err != nil {
+func (client *ArrayClient) getDoubleInvalidStringHandleResponse(resp *http.Response) (ArrayGetDoubleInvalidStringResponse, error) {
+	result := ArrayGetDoubleInvalidStringResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Float64Array); err != nil {
 		return ArrayGetDoubleInvalidStringResponse{}, err
 	}
 	return result, nil
 }
 
 // getDoubleInvalidStringHandleError handles the GetDoubleInvalidString error response.
-func (client *ArrayClient) getDoubleInvalidStringHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getDoubleInvalidStringHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetDoubleValid - Get float array value [0, -0.01, 1.2e20]
@@ -1613,44 +1584,43 @@ func (client *ArrayClient) GetDoubleValid(ctx context.Context, options *ArrayGet
 	if err != nil {
 		return ArrayGetDoubleValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetDoubleValidResponse{}, client.getDoubleValidHandleError(resp)
 	}
 	return client.getDoubleValidHandleResponse(resp)
 }
 
 // getDoubleValidCreateRequest creates the GetDoubleValid request.
-func (client *ArrayClient) getDoubleValidCreateRequest(ctx context.Context, options *ArrayGetDoubleValidOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getDoubleValidCreateRequest(ctx context.Context, options *ArrayGetDoubleValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/double/0--0.01-1.2e20"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getDoubleValidHandleResponse handles the GetDoubleValid response.
-func (client *ArrayClient) getDoubleValidHandleResponse(resp *azcore.Response) (ArrayGetDoubleValidResponse, error) {
-	result := ArrayGetDoubleValidResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.Float64Array); err != nil {
+func (client *ArrayClient) getDoubleValidHandleResponse(resp *http.Response) (ArrayGetDoubleValidResponse, error) {
+	result := ArrayGetDoubleValidResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Float64Array); err != nil {
 		return ArrayGetDoubleValidResponse{}, err
 	}
 	return result, nil
 }
 
 // getDoubleValidHandleError handles the GetDoubleValid error response.
-func (client *ArrayClient) getDoubleValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getDoubleValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetDurationValid - Get duration array value ['P123DT22H14M12.011S', 'P5DT1H0M0S']
@@ -1664,44 +1634,43 @@ func (client *ArrayClient) GetDurationValid(ctx context.Context, options *ArrayG
 	if err != nil {
 		return ArrayGetDurationValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetDurationValidResponse{}, client.getDurationValidHandleError(resp)
 	}
 	return client.getDurationValidHandleResponse(resp)
 }
 
 // getDurationValidCreateRequest creates the GetDurationValid request.
-func (client *ArrayClient) getDurationValidCreateRequest(ctx context.Context, options *ArrayGetDurationValidOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getDurationValidCreateRequest(ctx context.Context, options *ArrayGetDurationValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/duration/valid"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getDurationValidHandleResponse handles the GetDurationValid response.
-func (client *ArrayClient) getDurationValidHandleResponse(resp *azcore.Response) (ArrayGetDurationValidResponse, error) {
-	result := ArrayGetDurationValidResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.StringArray); err != nil {
+func (client *ArrayClient) getDurationValidHandleResponse(resp *http.Response) (ArrayGetDurationValidResponse, error) {
+	result := ArrayGetDurationValidResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.StringArray); err != nil {
 		return ArrayGetDurationValidResponse{}, err
 	}
 	return result, nil
 }
 
 // getDurationValidHandleError handles the GetDurationValid error response.
-func (client *ArrayClient) getDurationValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getDurationValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetEmpty - Get empty array value []
@@ -1715,44 +1684,43 @@ func (client *ArrayClient) GetEmpty(ctx context.Context, options *ArrayGetEmptyO
 	if err != nil {
 		return ArrayGetEmptyResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetEmptyResponse{}, client.getEmptyHandleError(resp)
 	}
 	return client.getEmptyHandleResponse(resp)
 }
 
 // getEmptyCreateRequest creates the GetEmpty request.
-func (client *ArrayClient) getEmptyCreateRequest(ctx context.Context, options *ArrayGetEmptyOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getEmptyCreateRequest(ctx context.Context, options *ArrayGetEmptyOptions) (*policy.Request, error) {
 	urlPath := "/array/empty"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getEmptyHandleResponse handles the GetEmpty response.
-func (client *ArrayClient) getEmptyHandleResponse(resp *azcore.Response) (ArrayGetEmptyResponse, error) {
-	result := ArrayGetEmptyResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.Int32Array); err != nil {
+func (client *ArrayClient) getEmptyHandleResponse(resp *http.Response) (ArrayGetEmptyResponse, error) {
+	result := ArrayGetEmptyResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Int32Array); err != nil {
 		return ArrayGetEmptyResponse{}, err
 	}
 	return result, nil
 }
 
 // getEmptyHandleError handles the GetEmpty error response.
-func (client *ArrayClient) getEmptyHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getEmptyHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetEnumValid - Get enum array value ['foo1', 'foo2', 'foo3']
@@ -1766,44 +1734,43 @@ func (client *ArrayClient) GetEnumValid(ctx context.Context, options *ArrayGetEn
 	if err != nil {
 		return ArrayGetEnumValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetEnumValidResponse{}, client.getEnumValidHandleError(resp)
 	}
 	return client.getEnumValidHandleResponse(resp)
 }
 
 // getEnumValidCreateRequest creates the GetEnumValid request.
-func (client *ArrayClient) getEnumValidCreateRequest(ctx context.Context, options *ArrayGetEnumValidOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getEnumValidCreateRequest(ctx context.Context, options *ArrayGetEnumValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/enum/foo1.foo2.foo3"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getEnumValidHandleResponse handles the GetEnumValid response.
-func (client *ArrayClient) getEnumValidHandleResponse(resp *azcore.Response) (ArrayGetEnumValidResponse, error) {
-	result := ArrayGetEnumValidResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.FooEnumArray); err != nil {
+func (client *ArrayClient) getEnumValidHandleResponse(resp *http.Response) (ArrayGetEnumValidResponse, error) {
+	result := ArrayGetEnumValidResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.FooEnumArray); err != nil {
 		return ArrayGetEnumValidResponse{}, err
 	}
 	return result, nil
 }
 
 // getEnumValidHandleError handles the GetEnumValid error response.
-func (client *ArrayClient) getEnumValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getEnumValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetFloatInvalidNull - Get float array value [0.0, null, -1.2e20]
@@ -1817,44 +1784,43 @@ func (client *ArrayClient) GetFloatInvalidNull(ctx context.Context, options *Arr
 	if err != nil {
 		return ArrayGetFloatInvalidNullResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetFloatInvalidNullResponse{}, client.getFloatInvalidNullHandleError(resp)
 	}
 	return client.getFloatInvalidNullHandleResponse(resp)
 }
 
 // getFloatInvalidNullCreateRequest creates the GetFloatInvalidNull request.
-func (client *ArrayClient) getFloatInvalidNullCreateRequest(ctx context.Context, options *ArrayGetFloatInvalidNullOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getFloatInvalidNullCreateRequest(ctx context.Context, options *ArrayGetFloatInvalidNullOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/float/0.0-null-1.2e20"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getFloatInvalidNullHandleResponse handles the GetFloatInvalidNull response.
-func (client *ArrayClient) getFloatInvalidNullHandleResponse(resp *azcore.Response) (ArrayGetFloatInvalidNullResponse, error) {
-	result := ArrayGetFloatInvalidNullResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.Float32Array); err != nil {
+func (client *ArrayClient) getFloatInvalidNullHandleResponse(resp *http.Response) (ArrayGetFloatInvalidNullResponse, error) {
+	result := ArrayGetFloatInvalidNullResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Float32Array); err != nil {
 		return ArrayGetFloatInvalidNullResponse{}, err
 	}
 	return result, nil
 }
 
 // getFloatInvalidNullHandleError handles the GetFloatInvalidNull error response.
-func (client *ArrayClient) getFloatInvalidNullHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getFloatInvalidNullHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetFloatInvalidString - Get boolean array value [1.0, 'number', 0.0]
@@ -1868,44 +1834,43 @@ func (client *ArrayClient) GetFloatInvalidString(ctx context.Context, options *A
 	if err != nil {
 		return ArrayGetFloatInvalidStringResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetFloatInvalidStringResponse{}, client.getFloatInvalidStringHandleError(resp)
 	}
 	return client.getFloatInvalidStringHandleResponse(resp)
 }
 
 // getFloatInvalidStringCreateRequest creates the GetFloatInvalidString request.
-func (client *ArrayClient) getFloatInvalidStringCreateRequest(ctx context.Context, options *ArrayGetFloatInvalidStringOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getFloatInvalidStringCreateRequest(ctx context.Context, options *ArrayGetFloatInvalidStringOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/float/1.number.0"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getFloatInvalidStringHandleResponse handles the GetFloatInvalidString response.
-func (client *ArrayClient) getFloatInvalidStringHandleResponse(resp *azcore.Response) (ArrayGetFloatInvalidStringResponse, error) {
-	result := ArrayGetFloatInvalidStringResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.Float32Array); err != nil {
+func (client *ArrayClient) getFloatInvalidStringHandleResponse(resp *http.Response) (ArrayGetFloatInvalidStringResponse, error) {
+	result := ArrayGetFloatInvalidStringResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Float32Array); err != nil {
 		return ArrayGetFloatInvalidStringResponse{}, err
 	}
 	return result, nil
 }
 
 // getFloatInvalidStringHandleError handles the GetFloatInvalidString error response.
-func (client *ArrayClient) getFloatInvalidStringHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getFloatInvalidStringHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetFloatValid - Get float array value [0, -0.01, 1.2e20]
@@ -1919,44 +1884,43 @@ func (client *ArrayClient) GetFloatValid(ctx context.Context, options *ArrayGetF
 	if err != nil {
 		return ArrayGetFloatValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetFloatValidResponse{}, client.getFloatValidHandleError(resp)
 	}
 	return client.getFloatValidHandleResponse(resp)
 }
 
 // getFloatValidCreateRequest creates the GetFloatValid request.
-func (client *ArrayClient) getFloatValidCreateRequest(ctx context.Context, options *ArrayGetFloatValidOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getFloatValidCreateRequest(ctx context.Context, options *ArrayGetFloatValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/float/0--0.01-1.2e20"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getFloatValidHandleResponse handles the GetFloatValid response.
-func (client *ArrayClient) getFloatValidHandleResponse(resp *azcore.Response) (ArrayGetFloatValidResponse, error) {
-	result := ArrayGetFloatValidResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.Float32Array); err != nil {
+func (client *ArrayClient) getFloatValidHandleResponse(resp *http.Response) (ArrayGetFloatValidResponse, error) {
+	result := ArrayGetFloatValidResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Float32Array); err != nil {
 		return ArrayGetFloatValidResponse{}, err
 	}
 	return result, nil
 }
 
 // getFloatValidHandleError handles the GetFloatValid error response.
-func (client *ArrayClient) getFloatValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getFloatValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetIntInvalidNull - Get integer array value [1, null, 0]
@@ -1970,44 +1934,43 @@ func (client *ArrayClient) GetIntInvalidNull(ctx context.Context, options *Array
 	if err != nil {
 		return ArrayGetIntInvalidNullResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetIntInvalidNullResponse{}, client.getIntInvalidNullHandleError(resp)
 	}
 	return client.getIntInvalidNullHandleResponse(resp)
 }
 
 // getIntInvalidNullCreateRequest creates the GetIntInvalidNull request.
-func (client *ArrayClient) getIntInvalidNullCreateRequest(ctx context.Context, options *ArrayGetIntInvalidNullOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getIntInvalidNullCreateRequest(ctx context.Context, options *ArrayGetIntInvalidNullOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/integer/1.null.zero"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getIntInvalidNullHandleResponse handles the GetIntInvalidNull response.
-func (client *ArrayClient) getIntInvalidNullHandleResponse(resp *azcore.Response) (ArrayGetIntInvalidNullResponse, error) {
-	result := ArrayGetIntInvalidNullResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.Int32Array); err != nil {
+func (client *ArrayClient) getIntInvalidNullHandleResponse(resp *http.Response) (ArrayGetIntInvalidNullResponse, error) {
+	result := ArrayGetIntInvalidNullResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Int32Array); err != nil {
 		return ArrayGetIntInvalidNullResponse{}, err
 	}
 	return result, nil
 }
 
 // getIntInvalidNullHandleError handles the GetIntInvalidNull error response.
-func (client *ArrayClient) getIntInvalidNullHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getIntInvalidNullHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetIntInvalidString - Get integer array value [1, 'integer', 0]
@@ -2021,44 +1984,43 @@ func (client *ArrayClient) GetIntInvalidString(ctx context.Context, options *Arr
 	if err != nil {
 		return ArrayGetIntInvalidStringResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetIntInvalidStringResponse{}, client.getIntInvalidStringHandleError(resp)
 	}
 	return client.getIntInvalidStringHandleResponse(resp)
 }
 
 // getIntInvalidStringCreateRequest creates the GetIntInvalidString request.
-func (client *ArrayClient) getIntInvalidStringCreateRequest(ctx context.Context, options *ArrayGetIntInvalidStringOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getIntInvalidStringCreateRequest(ctx context.Context, options *ArrayGetIntInvalidStringOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/integer/1.integer.0"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getIntInvalidStringHandleResponse handles the GetIntInvalidString response.
-func (client *ArrayClient) getIntInvalidStringHandleResponse(resp *azcore.Response) (ArrayGetIntInvalidStringResponse, error) {
-	result := ArrayGetIntInvalidStringResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.Int32Array); err != nil {
+func (client *ArrayClient) getIntInvalidStringHandleResponse(resp *http.Response) (ArrayGetIntInvalidStringResponse, error) {
+	result := ArrayGetIntInvalidStringResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Int32Array); err != nil {
 		return ArrayGetIntInvalidStringResponse{}, err
 	}
 	return result, nil
 }
 
 // getIntInvalidStringHandleError handles the GetIntInvalidString error response.
-func (client *ArrayClient) getIntInvalidStringHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getIntInvalidStringHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetIntegerValid - Get integer array value [1, -1, 3, 300]
@@ -2072,44 +2034,43 @@ func (client *ArrayClient) GetIntegerValid(ctx context.Context, options *ArrayGe
 	if err != nil {
 		return ArrayGetIntegerValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetIntegerValidResponse{}, client.getIntegerValidHandleError(resp)
 	}
 	return client.getIntegerValidHandleResponse(resp)
 }
 
 // getIntegerValidCreateRequest creates the GetIntegerValid request.
-func (client *ArrayClient) getIntegerValidCreateRequest(ctx context.Context, options *ArrayGetIntegerValidOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getIntegerValidCreateRequest(ctx context.Context, options *ArrayGetIntegerValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/integer/1.-1.3.300"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getIntegerValidHandleResponse handles the GetIntegerValid response.
-func (client *ArrayClient) getIntegerValidHandleResponse(resp *azcore.Response) (ArrayGetIntegerValidResponse, error) {
-	result := ArrayGetIntegerValidResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.Int32Array); err != nil {
+func (client *ArrayClient) getIntegerValidHandleResponse(resp *http.Response) (ArrayGetIntegerValidResponse, error) {
+	result := ArrayGetIntegerValidResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Int32Array); err != nil {
 		return ArrayGetIntegerValidResponse{}, err
 	}
 	return result, nil
 }
 
 // getIntegerValidHandleError handles the GetIntegerValid error response.
-func (client *ArrayClient) getIntegerValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getIntegerValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetInvalid - Get invalid array [1, 2, 3
@@ -2123,44 +2084,43 @@ func (client *ArrayClient) GetInvalid(ctx context.Context, options *ArrayGetInva
 	if err != nil {
 		return ArrayGetInvalidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetInvalidResponse{}, client.getInvalidHandleError(resp)
 	}
 	return client.getInvalidHandleResponse(resp)
 }
 
 // getInvalidCreateRequest creates the GetInvalid request.
-func (client *ArrayClient) getInvalidCreateRequest(ctx context.Context, options *ArrayGetInvalidOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getInvalidCreateRequest(ctx context.Context, options *ArrayGetInvalidOptions) (*policy.Request, error) {
 	urlPath := "/array/invalid"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getInvalidHandleResponse handles the GetInvalid response.
-func (client *ArrayClient) getInvalidHandleResponse(resp *azcore.Response) (ArrayGetInvalidResponse, error) {
-	result := ArrayGetInvalidResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.Int32Array); err != nil {
+func (client *ArrayClient) getInvalidHandleResponse(resp *http.Response) (ArrayGetInvalidResponse, error) {
+	result := ArrayGetInvalidResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Int32Array); err != nil {
 		return ArrayGetInvalidResponse{}, err
 	}
 	return result, nil
 }
 
 // getInvalidHandleError handles the GetInvalid error response.
-func (client *ArrayClient) getInvalidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getInvalidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetLongInvalidNull - Get long array value [1, null, 0]
@@ -2174,44 +2134,43 @@ func (client *ArrayClient) GetLongInvalidNull(ctx context.Context, options *Arra
 	if err != nil {
 		return ArrayGetLongInvalidNullResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetLongInvalidNullResponse{}, client.getLongInvalidNullHandleError(resp)
 	}
 	return client.getLongInvalidNullHandleResponse(resp)
 }
 
 // getLongInvalidNullCreateRequest creates the GetLongInvalidNull request.
-func (client *ArrayClient) getLongInvalidNullCreateRequest(ctx context.Context, options *ArrayGetLongInvalidNullOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getLongInvalidNullCreateRequest(ctx context.Context, options *ArrayGetLongInvalidNullOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/long/1.null.zero"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getLongInvalidNullHandleResponse handles the GetLongInvalidNull response.
-func (client *ArrayClient) getLongInvalidNullHandleResponse(resp *azcore.Response) (ArrayGetLongInvalidNullResponse, error) {
-	result := ArrayGetLongInvalidNullResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.Int64Array); err != nil {
+func (client *ArrayClient) getLongInvalidNullHandleResponse(resp *http.Response) (ArrayGetLongInvalidNullResponse, error) {
+	result := ArrayGetLongInvalidNullResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Int64Array); err != nil {
 		return ArrayGetLongInvalidNullResponse{}, err
 	}
 	return result, nil
 }
 
 // getLongInvalidNullHandleError handles the GetLongInvalidNull error response.
-func (client *ArrayClient) getLongInvalidNullHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getLongInvalidNullHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetLongInvalidString - Get long array value [1, 'integer', 0]
@@ -2225,44 +2184,43 @@ func (client *ArrayClient) GetLongInvalidString(ctx context.Context, options *Ar
 	if err != nil {
 		return ArrayGetLongInvalidStringResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetLongInvalidStringResponse{}, client.getLongInvalidStringHandleError(resp)
 	}
 	return client.getLongInvalidStringHandleResponse(resp)
 }
 
 // getLongInvalidStringCreateRequest creates the GetLongInvalidString request.
-func (client *ArrayClient) getLongInvalidStringCreateRequest(ctx context.Context, options *ArrayGetLongInvalidStringOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getLongInvalidStringCreateRequest(ctx context.Context, options *ArrayGetLongInvalidStringOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/long/1.integer.0"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getLongInvalidStringHandleResponse handles the GetLongInvalidString response.
-func (client *ArrayClient) getLongInvalidStringHandleResponse(resp *azcore.Response) (ArrayGetLongInvalidStringResponse, error) {
-	result := ArrayGetLongInvalidStringResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.Int64Array); err != nil {
+func (client *ArrayClient) getLongInvalidStringHandleResponse(resp *http.Response) (ArrayGetLongInvalidStringResponse, error) {
+	result := ArrayGetLongInvalidStringResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Int64Array); err != nil {
 		return ArrayGetLongInvalidStringResponse{}, err
 	}
 	return result, nil
 }
 
 // getLongInvalidStringHandleError handles the GetLongInvalidString error response.
-func (client *ArrayClient) getLongInvalidStringHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getLongInvalidStringHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetLongValid - Get integer array value [1, -1, 3, 300]
@@ -2276,44 +2234,43 @@ func (client *ArrayClient) GetLongValid(ctx context.Context, options *ArrayGetLo
 	if err != nil {
 		return ArrayGetLongValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetLongValidResponse{}, client.getLongValidHandleError(resp)
 	}
 	return client.getLongValidHandleResponse(resp)
 }
 
 // getLongValidCreateRequest creates the GetLongValid request.
-func (client *ArrayClient) getLongValidCreateRequest(ctx context.Context, options *ArrayGetLongValidOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getLongValidCreateRequest(ctx context.Context, options *ArrayGetLongValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/long/1.-1.3.300"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getLongValidHandleResponse handles the GetLongValid response.
-func (client *ArrayClient) getLongValidHandleResponse(resp *azcore.Response) (ArrayGetLongValidResponse, error) {
-	result := ArrayGetLongValidResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.Int64Array); err != nil {
+func (client *ArrayClient) getLongValidHandleResponse(resp *http.Response) (ArrayGetLongValidResponse, error) {
+	result := ArrayGetLongValidResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Int64Array); err != nil {
 		return ArrayGetLongValidResponse{}, err
 	}
 	return result, nil
 }
 
 // getLongValidHandleError handles the GetLongValid error response.
-func (client *ArrayClient) getLongValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getLongValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetNull - Get null array value
@@ -2327,44 +2284,43 @@ func (client *ArrayClient) GetNull(ctx context.Context, options *ArrayGetNullOpt
 	if err != nil {
 		return ArrayGetNullResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetNullResponse{}, client.getNullHandleError(resp)
 	}
 	return client.getNullHandleResponse(resp)
 }
 
 // getNullCreateRequest creates the GetNull request.
-func (client *ArrayClient) getNullCreateRequest(ctx context.Context, options *ArrayGetNullOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getNullCreateRequest(ctx context.Context, options *ArrayGetNullOptions) (*policy.Request, error) {
 	urlPath := "/array/null"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getNullHandleResponse handles the GetNull response.
-func (client *ArrayClient) getNullHandleResponse(resp *azcore.Response) (ArrayGetNullResponse, error) {
-	result := ArrayGetNullResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.Int32Array); err != nil {
+func (client *ArrayClient) getNullHandleResponse(resp *http.Response) (ArrayGetNullResponse, error) {
+	result := ArrayGetNullResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Int32Array); err != nil {
 		return ArrayGetNullResponse{}, err
 	}
 	return result, nil
 }
 
 // getNullHandleError handles the GetNull error response.
-func (client *ArrayClient) getNullHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getNullHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetStringEnumValid - Get enum array value ['foo1', 'foo2', 'foo3']
@@ -2378,44 +2334,43 @@ func (client *ArrayClient) GetStringEnumValid(ctx context.Context, options *Arra
 	if err != nil {
 		return ArrayGetStringEnumValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetStringEnumValidResponse{}, client.getStringEnumValidHandleError(resp)
 	}
 	return client.getStringEnumValidHandleResponse(resp)
 }
 
 // getStringEnumValidCreateRequest creates the GetStringEnumValid request.
-func (client *ArrayClient) getStringEnumValidCreateRequest(ctx context.Context, options *ArrayGetStringEnumValidOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getStringEnumValidCreateRequest(ctx context.Context, options *ArrayGetStringEnumValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/string-enum/foo1.foo2.foo3"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getStringEnumValidHandleResponse handles the GetStringEnumValid response.
-func (client *ArrayClient) getStringEnumValidHandleResponse(resp *azcore.Response) (ArrayGetStringEnumValidResponse, error) {
-	result := ArrayGetStringEnumValidResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.Enum0Array); err != nil {
+func (client *ArrayClient) getStringEnumValidHandleResponse(resp *http.Response) (ArrayGetStringEnumValidResponse, error) {
+	result := ArrayGetStringEnumValidResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Enum0Array); err != nil {
 		return ArrayGetStringEnumValidResponse{}, err
 	}
 	return result, nil
 }
 
 // getStringEnumValidHandleError handles the GetStringEnumValid error response.
-func (client *ArrayClient) getStringEnumValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getStringEnumValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetStringValid - Get string array value ['foo1', 'foo2', 'foo3']
@@ -2429,44 +2384,43 @@ func (client *ArrayClient) GetStringValid(ctx context.Context, options *ArrayGet
 	if err != nil {
 		return ArrayGetStringValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetStringValidResponse{}, client.getStringValidHandleError(resp)
 	}
 	return client.getStringValidHandleResponse(resp)
 }
 
 // getStringValidCreateRequest creates the GetStringValid request.
-func (client *ArrayClient) getStringValidCreateRequest(ctx context.Context, options *ArrayGetStringValidOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getStringValidCreateRequest(ctx context.Context, options *ArrayGetStringValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/string/foo1.foo2.foo3"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getStringValidHandleResponse handles the GetStringValid response.
-func (client *ArrayClient) getStringValidHandleResponse(resp *azcore.Response) (ArrayGetStringValidResponse, error) {
-	result := ArrayGetStringValidResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.StringArray); err != nil {
+func (client *ArrayClient) getStringValidHandleResponse(resp *http.Response) (ArrayGetStringValidResponse, error) {
+	result := ArrayGetStringValidResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.StringArray); err != nil {
 		return ArrayGetStringValidResponse{}, err
 	}
 	return result, nil
 }
 
 // getStringValidHandleError handles the GetStringValid error response.
-func (client *ArrayClient) getStringValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getStringValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetStringWithInvalid - Get string array value ['foo', 123, 'foo2']
@@ -2480,44 +2434,43 @@ func (client *ArrayClient) GetStringWithInvalid(ctx context.Context, options *Ar
 	if err != nil {
 		return ArrayGetStringWithInvalidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetStringWithInvalidResponse{}, client.getStringWithInvalidHandleError(resp)
 	}
 	return client.getStringWithInvalidHandleResponse(resp)
 }
 
 // getStringWithInvalidCreateRequest creates the GetStringWithInvalid request.
-func (client *ArrayClient) getStringWithInvalidCreateRequest(ctx context.Context, options *ArrayGetStringWithInvalidOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getStringWithInvalidCreateRequest(ctx context.Context, options *ArrayGetStringWithInvalidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/string/foo.123.foo2"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getStringWithInvalidHandleResponse handles the GetStringWithInvalid response.
-func (client *ArrayClient) getStringWithInvalidHandleResponse(resp *azcore.Response) (ArrayGetStringWithInvalidResponse, error) {
-	result := ArrayGetStringWithInvalidResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.StringArray); err != nil {
+func (client *ArrayClient) getStringWithInvalidHandleResponse(resp *http.Response) (ArrayGetStringWithInvalidResponse, error) {
+	result := ArrayGetStringWithInvalidResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.StringArray); err != nil {
 		return ArrayGetStringWithInvalidResponse{}, err
 	}
 	return result, nil
 }
 
 // getStringWithInvalidHandleError handles the GetStringWithInvalid error response.
-func (client *ArrayClient) getStringWithInvalidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getStringWithInvalidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetStringWithNull - Get string array value ['foo', null, 'foo2']
@@ -2531,44 +2484,43 @@ func (client *ArrayClient) GetStringWithNull(ctx context.Context, options *Array
 	if err != nil {
 		return ArrayGetStringWithNullResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetStringWithNullResponse{}, client.getStringWithNullHandleError(resp)
 	}
 	return client.getStringWithNullHandleResponse(resp)
 }
 
 // getStringWithNullCreateRequest creates the GetStringWithNull request.
-func (client *ArrayClient) getStringWithNullCreateRequest(ctx context.Context, options *ArrayGetStringWithNullOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getStringWithNullCreateRequest(ctx context.Context, options *ArrayGetStringWithNullOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/string/foo.null.foo2"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getStringWithNullHandleResponse handles the GetStringWithNull response.
-func (client *ArrayClient) getStringWithNullHandleResponse(resp *azcore.Response) (ArrayGetStringWithNullResponse, error) {
-	result := ArrayGetStringWithNullResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.StringArray); err != nil {
+func (client *ArrayClient) getStringWithNullHandleResponse(resp *http.Response) (ArrayGetStringWithNullResponse, error) {
+	result := ArrayGetStringWithNullResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.StringArray); err != nil {
 		return ArrayGetStringWithNullResponse{}, err
 	}
 	return result, nil
 }
 
 // getStringWithNullHandleError handles the GetStringWithNull error response.
-func (client *ArrayClient) getStringWithNullHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getStringWithNullHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetUUIDInvalidChars - Get uuid array value ['6dcc7237-45fe-45c4-8a6b-3a8a3f625652', 'foo']
@@ -2582,44 +2534,43 @@ func (client *ArrayClient) GetUUIDInvalidChars(ctx context.Context, options *Arr
 	if err != nil {
 		return ArrayGetUUIDInvalidCharsResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetUUIDInvalidCharsResponse{}, client.getUUIDInvalidCharsHandleError(resp)
 	}
 	return client.getUUIDInvalidCharsHandleResponse(resp)
 }
 
 // getUUIDInvalidCharsCreateRequest creates the GetUUIDInvalidChars request.
-func (client *ArrayClient) getUUIDInvalidCharsCreateRequest(ctx context.Context, options *ArrayGetUUIDInvalidCharsOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getUUIDInvalidCharsCreateRequest(ctx context.Context, options *ArrayGetUUIDInvalidCharsOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/uuid/invalidchars"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getUUIDInvalidCharsHandleResponse handles the GetUUIDInvalidChars response.
-func (client *ArrayClient) getUUIDInvalidCharsHandleResponse(resp *azcore.Response) (ArrayGetUUIDInvalidCharsResponse, error) {
-	result := ArrayGetUUIDInvalidCharsResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.StringArray); err != nil {
+func (client *ArrayClient) getUUIDInvalidCharsHandleResponse(resp *http.Response) (ArrayGetUUIDInvalidCharsResponse, error) {
+	result := ArrayGetUUIDInvalidCharsResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.StringArray); err != nil {
 		return ArrayGetUUIDInvalidCharsResponse{}, err
 	}
 	return result, nil
 }
 
 // getUUIDInvalidCharsHandleError handles the GetUUIDInvalidChars error response.
-func (client *ArrayClient) getUUIDInvalidCharsHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getUUIDInvalidCharsHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetUUIDValid - Get uuid array value ['6dcc7237-45fe-45c4-8a6b-3a8a3f625652', 'd1399005-30f7-40d6-8da6-dd7c89ad34db', 'f42f6aa1-a5bc-4ddf-907e-5f915de43205']
@@ -2633,44 +2584,43 @@ func (client *ArrayClient) GetUUIDValid(ctx context.Context, options *ArrayGetUU
 	if err != nil {
 		return ArrayGetUUIDValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayGetUUIDValidResponse{}, client.getUUIDValidHandleError(resp)
 	}
 	return client.getUUIDValidHandleResponse(resp)
 }
 
 // getUUIDValidCreateRequest creates the GetUUIDValid request.
-func (client *ArrayClient) getUUIDValidCreateRequest(ctx context.Context, options *ArrayGetUUIDValidOptions) (*azcore.Request, error) {
+func (client *ArrayClient) getUUIDValidCreateRequest(ctx context.Context, options *ArrayGetUUIDValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/uuid/valid"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getUUIDValidHandleResponse handles the GetUUIDValid response.
-func (client *ArrayClient) getUUIDValidHandleResponse(resp *azcore.Response) (ArrayGetUUIDValidResponse, error) {
-	result := ArrayGetUUIDValidResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.StringArray); err != nil {
+func (client *ArrayClient) getUUIDValidHandleResponse(resp *http.Response) (ArrayGetUUIDValidResponse, error) {
+	result := ArrayGetUUIDValidResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.StringArray); err != nil {
 		return ArrayGetUUIDValidResponse{}, err
 	}
 	return result, nil
 }
 
 // getUUIDValidHandleError handles the GetUUIDValid error response.
-func (client *ArrayClient) getUUIDValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) getUUIDValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutArrayValid - Put An array of array of strings [['1', '2', '3'], ['4', '5', '6'], ['7', '8', '9']]
@@ -2684,35 +2634,34 @@ func (client *ArrayClient) PutArrayValid(ctx context.Context, arrayBody [][]*str
 	if err != nil {
 		return ArrayPutArrayValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayPutArrayValidResponse{}, client.putArrayValidHandleError(resp)
 	}
-	return ArrayPutArrayValidResponse{RawResponse: resp.Response}, nil
+	return ArrayPutArrayValidResponse{RawResponse: resp}, nil
 }
 
 // putArrayValidCreateRequest creates the PutArrayValid request.
-func (client *ArrayClient) putArrayValidCreateRequest(ctx context.Context, arrayBody [][]*string, options *ArrayPutArrayValidOptions) (*azcore.Request, error) {
+func (client *ArrayClient) putArrayValidCreateRequest(ctx context.Context, arrayBody [][]*string, options *ArrayPutArrayValidOptions) (*policy.Request, error) {
 	urlPath := "/array/array/valid"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(arrayBody)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
 // putArrayValidHandleError handles the PutArrayValid error response.
-func (client *ArrayClient) putArrayValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) putArrayValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutBooleanTfft - Set array value empty [true, false, false, true]
@@ -2726,35 +2675,34 @@ func (client *ArrayClient) PutBooleanTfft(ctx context.Context, arrayBody []*bool
 	if err != nil {
 		return ArrayPutBooleanTfftResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayPutBooleanTfftResponse{}, client.putBooleanTfftHandleError(resp)
 	}
-	return ArrayPutBooleanTfftResponse{RawResponse: resp.Response}, nil
+	return ArrayPutBooleanTfftResponse{RawResponse: resp}, nil
 }
 
 // putBooleanTfftCreateRequest creates the PutBooleanTfft request.
-func (client *ArrayClient) putBooleanTfftCreateRequest(ctx context.Context, arrayBody []*bool, options *ArrayPutBooleanTfftOptions) (*azcore.Request, error) {
+func (client *ArrayClient) putBooleanTfftCreateRequest(ctx context.Context, arrayBody []*bool, options *ArrayPutBooleanTfftOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/boolean/tfft"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(arrayBody)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
 // putBooleanTfftHandleError handles the PutBooleanTfft error response.
-func (client *ArrayClient) putBooleanTfftHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) putBooleanTfftHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutByteValid - Put the array value [hex(FF FF FF FA), hex(01 02 03), hex (25, 29, 43)] with each elementencoded in base 64
@@ -2768,35 +2716,34 @@ func (client *ArrayClient) PutByteValid(ctx context.Context, arrayBody [][]byte,
 	if err != nil {
 		return ArrayPutByteValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayPutByteValidResponse{}, client.putByteValidHandleError(resp)
 	}
-	return ArrayPutByteValidResponse{RawResponse: resp.Response}, nil
+	return ArrayPutByteValidResponse{RawResponse: resp}, nil
 }
 
 // putByteValidCreateRequest creates the PutByteValid request.
-func (client *ArrayClient) putByteValidCreateRequest(ctx context.Context, arrayBody [][]byte, options *ArrayPutByteValidOptions) (*azcore.Request, error) {
+func (client *ArrayClient) putByteValidCreateRequest(ctx context.Context, arrayBody [][]byte, options *ArrayPutByteValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/byte/valid"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(arrayBody)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
 // putByteValidHandleError handles the PutByteValid error response.
-func (client *ArrayClient) putByteValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) putByteValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutComplexValid - Put an array of complex type with values [{'integer': 1 'string': '2'}, {'integer': 3, 'string': '4'}, {'integer': 5, 'string': '6'}]
@@ -2810,35 +2757,34 @@ func (client *ArrayClient) PutComplexValid(ctx context.Context, arrayBody []*Pro
 	if err != nil {
 		return ArrayPutComplexValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayPutComplexValidResponse{}, client.putComplexValidHandleError(resp)
 	}
-	return ArrayPutComplexValidResponse{RawResponse: resp.Response}, nil
+	return ArrayPutComplexValidResponse{RawResponse: resp}, nil
 }
 
 // putComplexValidCreateRequest creates the PutComplexValid request.
-func (client *ArrayClient) putComplexValidCreateRequest(ctx context.Context, arrayBody []*Product, options *ArrayPutComplexValidOptions) (*azcore.Request, error) {
+func (client *ArrayClient) putComplexValidCreateRequest(ctx context.Context, arrayBody []*Product, options *ArrayPutComplexValidOptions) (*policy.Request, error) {
 	urlPath := "/array/complex/valid"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(arrayBody)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
 // putComplexValidHandleError handles the PutComplexValid error response.
-func (client *ArrayClient) putComplexValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) putComplexValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutDateTimeRFC1123Valid - Set array value ['Fri, 01 Dec 2000 00:00:01 GMT', 'Wed, 02 Jan 1980 00:11:35 GMT', 'Wed, 12 Oct 1492 10:15:01 GMT']
@@ -2852,39 +2798,38 @@ func (client *ArrayClient) PutDateTimeRFC1123Valid(ctx context.Context, arrayBod
 	if err != nil {
 		return ArrayPutDateTimeRFC1123ValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayPutDateTimeRFC1123ValidResponse{}, client.putDateTimeRFC1123ValidHandleError(resp)
 	}
-	return ArrayPutDateTimeRFC1123ValidResponse{RawResponse: resp.Response}, nil
+	return ArrayPutDateTimeRFC1123ValidResponse{RawResponse: resp}, nil
 }
 
 // putDateTimeRFC1123ValidCreateRequest creates the PutDateTimeRFC1123Valid request.
-func (client *ArrayClient) putDateTimeRFC1123ValidCreateRequest(ctx context.Context, arrayBody []*time.Time, options *ArrayPutDateTimeRFC1123ValidOptions) (*azcore.Request, error) {
+func (client *ArrayClient) putDateTimeRFC1123ValidCreateRequest(ctx context.Context, arrayBody []*time.Time, options *ArrayPutDateTimeRFC1123ValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/date-time-rfc1123/valid"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	aux := make([]*timeRFC1123, len(arrayBody), len(arrayBody))
 	for i := 0; i < len(arrayBody); i++ {
 		aux[i] = (*timeRFC1123)(arrayBody[i])
 	}
-	return req, req.MarshalAsJSON(aux)
+	return req, runtime.MarshalAsJSON(req, aux)
 }
 
 // putDateTimeRFC1123ValidHandleError handles the PutDateTimeRFC1123Valid error response.
-func (client *ArrayClient) putDateTimeRFC1123ValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) putDateTimeRFC1123ValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutDateTimeValid - Set array value ['2000-12-01t00:00:01z', '1980-01-02T00:11:35+01:00', '1492-10-12T10:15:01-08:00']
@@ -2898,35 +2843,34 @@ func (client *ArrayClient) PutDateTimeValid(ctx context.Context, arrayBody []*ti
 	if err != nil {
 		return ArrayPutDateTimeValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayPutDateTimeValidResponse{}, client.putDateTimeValidHandleError(resp)
 	}
-	return ArrayPutDateTimeValidResponse{RawResponse: resp.Response}, nil
+	return ArrayPutDateTimeValidResponse{RawResponse: resp}, nil
 }
 
 // putDateTimeValidCreateRequest creates the PutDateTimeValid request.
-func (client *ArrayClient) putDateTimeValidCreateRequest(ctx context.Context, arrayBody []*time.Time, options *ArrayPutDateTimeValidOptions) (*azcore.Request, error) {
+func (client *ArrayClient) putDateTimeValidCreateRequest(ctx context.Context, arrayBody []*time.Time, options *ArrayPutDateTimeValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/date-time/valid"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(arrayBody)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
 // putDateTimeValidHandleError handles the PutDateTimeValid error response.
-func (client *ArrayClient) putDateTimeValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) putDateTimeValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutDateValid - Set array value ['2000-12-01', '1980-01-02', '1492-10-12']
@@ -2940,39 +2884,38 @@ func (client *ArrayClient) PutDateValid(ctx context.Context, arrayBody []*time.T
 	if err != nil {
 		return ArrayPutDateValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayPutDateValidResponse{}, client.putDateValidHandleError(resp)
 	}
-	return ArrayPutDateValidResponse{RawResponse: resp.Response}, nil
+	return ArrayPutDateValidResponse{RawResponse: resp}, nil
 }
 
 // putDateValidCreateRequest creates the PutDateValid request.
-func (client *ArrayClient) putDateValidCreateRequest(ctx context.Context, arrayBody []*time.Time, options *ArrayPutDateValidOptions) (*azcore.Request, error) {
+func (client *ArrayClient) putDateValidCreateRequest(ctx context.Context, arrayBody []*time.Time, options *ArrayPutDateValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/date/valid"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	aux := make([]*dateType, len(arrayBody), len(arrayBody))
 	for i := 0; i < len(arrayBody); i++ {
 		aux[i] = (*dateType)(arrayBody[i])
 	}
-	return req, req.MarshalAsJSON(aux)
+	return req, runtime.MarshalAsJSON(req, aux)
 }
 
 // putDateValidHandleError handles the PutDateValid error response.
-func (client *ArrayClient) putDateValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) putDateValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutDictionaryValid - Get an array of Dictionaries of type with value [{'1': 'one', '2': 'two', '3': 'three'}, {'4': 'four', '5': 'five', '6': 'six'},
@@ -2987,35 +2930,34 @@ func (client *ArrayClient) PutDictionaryValid(ctx context.Context, arrayBody []m
 	if err != nil {
 		return ArrayPutDictionaryValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayPutDictionaryValidResponse{}, client.putDictionaryValidHandleError(resp)
 	}
-	return ArrayPutDictionaryValidResponse{RawResponse: resp.Response}, nil
+	return ArrayPutDictionaryValidResponse{RawResponse: resp}, nil
 }
 
 // putDictionaryValidCreateRequest creates the PutDictionaryValid request.
-func (client *ArrayClient) putDictionaryValidCreateRequest(ctx context.Context, arrayBody []map[string]*string, options *ArrayPutDictionaryValidOptions) (*azcore.Request, error) {
+func (client *ArrayClient) putDictionaryValidCreateRequest(ctx context.Context, arrayBody []map[string]*string, options *ArrayPutDictionaryValidOptions) (*policy.Request, error) {
 	urlPath := "/array/dictionary/valid"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(arrayBody)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
 // putDictionaryValidHandleError handles the PutDictionaryValid error response.
-func (client *ArrayClient) putDictionaryValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) putDictionaryValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutDoubleValid - Set array value [0, -0.01, 1.2e20]
@@ -3029,35 +2971,34 @@ func (client *ArrayClient) PutDoubleValid(ctx context.Context, arrayBody []*floa
 	if err != nil {
 		return ArrayPutDoubleValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayPutDoubleValidResponse{}, client.putDoubleValidHandleError(resp)
 	}
-	return ArrayPutDoubleValidResponse{RawResponse: resp.Response}, nil
+	return ArrayPutDoubleValidResponse{RawResponse: resp}, nil
 }
 
 // putDoubleValidCreateRequest creates the PutDoubleValid request.
-func (client *ArrayClient) putDoubleValidCreateRequest(ctx context.Context, arrayBody []*float64, options *ArrayPutDoubleValidOptions) (*azcore.Request, error) {
+func (client *ArrayClient) putDoubleValidCreateRequest(ctx context.Context, arrayBody []*float64, options *ArrayPutDoubleValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/double/0--0.01-1.2e20"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(arrayBody)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
 // putDoubleValidHandleError handles the PutDoubleValid error response.
-func (client *ArrayClient) putDoubleValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) putDoubleValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutDurationValid - Set array value ['P123DT22H14M12.011S', 'P5DT1H0M0S']
@@ -3071,35 +3012,34 @@ func (client *ArrayClient) PutDurationValid(ctx context.Context, arrayBody []*st
 	if err != nil {
 		return ArrayPutDurationValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayPutDurationValidResponse{}, client.putDurationValidHandleError(resp)
 	}
-	return ArrayPutDurationValidResponse{RawResponse: resp.Response}, nil
+	return ArrayPutDurationValidResponse{RawResponse: resp}, nil
 }
 
 // putDurationValidCreateRequest creates the PutDurationValid request.
-func (client *ArrayClient) putDurationValidCreateRequest(ctx context.Context, arrayBody []*string, options *ArrayPutDurationValidOptions) (*azcore.Request, error) {
+func (client *ArrayClient) putDurationValidCreateRequest(ctx context.Context, arrayBody []*string, options *ArrayPutDurationValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/duration/valid"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(arrayBody)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
 // putDurationValidHandleError handles the PutDurationValid error response.
-func (client *ArrayClient) putDurationValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) putDurationValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutEmpty - Set array value empty []
@@ -3113,35 +3053,34 @@ func (client *ArrayClient) PutEmpty(ctx context.Context, arrayBody []*string, op
 	if err != nil {
 		return ArrayPutEmptyResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayPutEmptyResponse{}, client.putEmptyHandleError(resp)
 	}
-	return ArrayPutEmptyResponse{RawResponse: resp.Response}, nil
+	return ArrayPutEmptyResponse{RawResponse: resp}, nil
 }
 
 // putEmptyCreateRequest creates the PutEmpty request.
-func (client *ArrayClient) putEmptyCreateRequest(ctx context.Context, arrayBody []*string, options *ArrayPutEmptyOptions) (*azcore.Request, error) {
+func (client *ArrayClient) putEmptyCreateRequest(ctx context.Context, arrayBody []*string, options *ArrayPutEmptyOptions) (*policy.Request, error) {
 	urlPath := "/array/empty"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(arrayBody)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
 // putEmptyHandleError handles the PutEmpty error response.
-func (client *ArrayClient) putEmptyHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) putEmptyHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutEnumValid - Set array value ['foo1', 'foo2', 'foo3']
@@ -3155,35 +3094,34 @@ func (client *ArrayClient) PutEnumValid(ctx context.Context, arrayBody []*FooEnu
 	if err != nil {
 		return ArrayPutEnumValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayPutEnumValidResponse{}, client.putEnumValidHandleError(resp)
 	}
-	return ArrayPutEnumValidResponse{RawResponse: resp.Response}, nil
+	return ArrayPutEnumValidResponse{RawResponse: resp}, nil
 }
 
 // putEnumValidCreateRequest creates the PutEnumValid request.
-func (client *ArrayClient) putEnumValidCreateRequest(ctx context.Context, arrayBody []*FooEnum, options *ArrayPutEnumValidOptions) (*azcore.Request, error) {
+func (client *ArrayClient) putEnumValidCreateRequest(ctx context.Context, arrayBody []*FooEnum, options *ArrayPutEnumValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/enum/foo1.foo2.foo3"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(arrayBody)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
 // putEnumValidHandleError handles the PutEnumValid error response.
-func (client *ArrayClient) putEnumValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) putEnumValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutFloatValid - Set array value [0, -0.01, 1.2e20]
@@ -3197,35 +3135,34 @@ func (client *ArrayClient) PutFloatValid(ctx context.Context, arrayBody []*float
 	if err != nil {
 		return ArrayPutFloatValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayPutFloatValidResponse{}, client.putFloatValidHandleError(resp)
 	}
-	return ArrayPutFloatValidResponse{RawResponse: resp.Response}, nil
+	return ArrayPutFloatValidResponse{RawResponse: resp}, nil
 }
 
 // putFloatValidCreateRequest creates the PutFloatValid request.
-func (client *ArrayClient) putFloatValidCreateRequest(ctx context.Context, arrayBody []*float32, options *ArrayPutFloatValidOptions) (*azcore.Request, error) {
+func (client *ArrayClient) putFloatValidCreateRequest(ctx context.Context, arrayBody []*float32, options *ArrayPutFloatValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/float/0--0.01-1.2e20"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(arrayBody)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
 // putFloatValidHandleError handles the PutFloatValid error response.
-func (client *ArrayClient) putFloatValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) putFloatValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutIntegerValid - Set array value empty [1, -1, 3, 300]
@@ -3239,35 +3176,34 @@ func (client *ArrayClient) PutIntegerValid(ctx context.Context, arrayBody []*int
 	if err != nil {
 		return ArrayPutIntegerValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayPutIntegerValidResponse{}, client.putIntegerValidHandleError(resp)
 	}
-	return ArrayPutIntegerValidResponse{RawResponse: resp.Response}, nil
+	return ArrayPutIntegerValidResponse{RawResponse: resp}, nil
 }
 
 // putIntegerValidCreateRequest creates the PutIntegerValid request.
-func (client *ArrayClient) putIntegerValidCreateRequest(ctx context.Context, arrayBody []*int32, options *ArrayPutIntegerValidOptions) (*azcore.Request, error) {
+func (client *ArrayClient) putIntegerValidCreateRequest(ctx context.Context, arrayBody []*int32, options *ArrayPutIntegerValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/integer/1.-1.3.300"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(arrayBody)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
 // putIntegerValidHandleError handles the PutIntegerValid error response.
-func (client *ArrayClient) putIntegerValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) putIntegerValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutLongValid - Set array value empty [1, -1, 3, 300]
@@ -3281,35 +3217,34 @@ func (client *ArrayClient) PutLongValid(ctx context.Context, arrayBody []*int64,
 	if err != nil {
 		return ArrayPutLongValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayPutLongValidResponse{}, client.putLongValidHandleError(resp)
 	}
-	return ArrayPutLongValidResponse{RawResponse: resp.Response}, nil
+	return ArrayPutLongValidResponse{RawResponse: resp}, nil
 }
 
 // putLongValidCreateRequest creates the PutLongValid request.
-func (client *ArrayClient) putLongValidCreateRequest(ctx context.Context, arrayBody []*int64, options *ArrayPutLongValidOptions) (*azcore.Request, error) {
+func (client *ArrayClient) putLongValidCreateRequest(ctx context.Context, arrayBody []*int64, options *ArrayPutLongValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/long/1.-1.3.300"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(arrayBody)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
 // putLongValidHandleError handles the PutLongValid error response.
-func (client *ArrayClient) putLongValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) putLongValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutStringEnumValid - Set array value ['foo1', 'foo2', 'foo3']
@@ -3323,35 +3258,34 @@ func (client *ArrayClient) PutStringEnumValid(ctx context.Context, arrayBody []*
 	if err != nil {
 		return ArrayPutStringEnumValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayPutStringEnumValidResponse{}, client.putStringEnumValidHandleError(resp)
 	}
-	return ArrayPutStringEnumValidResponse{RawResponse: resp.Response}, nil
+	return ArrayPutStringEnumValidResponse{RawResponse: resp}, nil
 }
 
 // putStringEnumValidCreateRequest creates the PutStringEnumValid request.
-func (client *ArrayClient) putStringEnumValidCreateRequest(ctx context.Context, arrayBody []*Enum1, options *ArrayPutStringEnumValidOptions) (*azcore.Request, error) {
+func (client *ArrayClient) putStringEnumValidCreateRequest(ctx context.Context, arrayBody []*Enum1, options *ArrayPutStringEnumValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/string-enum/foo1.foo2.foo3"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(arrayBody)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
 // putStringEnumValidHandleError handles the PutStringEnumValid error response.
-func (client *ArrayClient) putStringEnumValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) putStringEnumValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutStringValid - Set array value ['foo1', 'foo2', 'foo3']
@@ -3365,35 +3299,34 @@ func (client *ArrayClient) PutStringValid(ctx context.Context, arrayBody []*stri
 	if err != nil {
 		return ArrayPutStringValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayPutStringValidResponse{}, client.putStringValidHandleError(resp)
 	}
-	return ArrayPutStringValidResponse{RawResponse: resp.Response}, nil
+	return ArrayPutStringValidResponse{RawResponse: resp}, nil
 }
 
 // putStringValidCreateRequest creates the PutStringValid request.
-func (client *ArrayClient) putStringValidCreateRequest(ctx context.Context, arrayBody []*string, options *ArrayPutStringValidOptions) (*azcore.Request, error) {
+func (client *ArrayClient) putStringValidCreateRequest(ctx context.Context, arrayBody []*string, options *ArrayPutStringValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/string/foo1.foo2.foo3"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(arrayBody)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
 // putStringValidHandleError handles the PutStringValid error response.
-func (client *ArrayClient) putStringValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) putStringValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutUUIDValid - Set array value ['6dcc7237-45fe-45c4-8a6b-3a8a3f625652', 'd1399005-30f7-40d6-8da6-dd7c89ad34db', 'f42f6aa1-a5bc-4ddf-907e-5f915de43205']
@@ -3407,33 +3340,32 @@ func (client *ArrayClient) PutUUIDValid(ctx context.Context, arrayBody []*string
 	if err != nil {
 		return ArrayPutUUIDValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayPutUUIDValidResponse{}, client.putUUIDValidHandleError(resp)
 	}
-	return ArrayPutUUIDValidResponse{RawResponse: resp.Response}, nil
+	return ArrayPutUUIDValidResponse{RawResponse: resp}, nil
 }
 
 // putUUIDValidCreateRequest creates the PutUUIDValid request.
-func (client *ArrayClient) putUUIDValidCreateRequest(ctx context.Context, arrayBody []*string, options *ArrayPutUUIDValidOptions) (*azcore.Request, error) {
+func (client *ArrayClient) putUUIDValidCreateRequest(ctx context.Context, arrayBody []*string, options *ArrayPutUUIDValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/uuid/valid"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(arrayBody)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
 // putUUIDValidHandleError handles the PutUUIDValid error response.
-func (client *ArrayClient) putUUIDValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ArrayClient) putUUIDValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }

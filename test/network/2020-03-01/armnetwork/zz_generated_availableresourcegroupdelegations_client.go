@@ -12,8 +12,9 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 	"net/url"
 	"strings"
@@ -22,13 +23,14 @@ import (
 // AvailableResourceGroupDelegationsClient contains the methods for the AvailableResourceGroupDelegations group.
 // Don't use this type directly, use NewAvailableResourceGroupDelegationsClient() instead.
 type AvailableResourceGroupDelegationsClient struct {
-	con            *armcore.Connection
+	ep             string
+	pl             runtime.Pipeline
 	subscriptionID string
 }
 
 // NewAvailableResourceGroupDelegationsClient creates a new instance of AvailableResourceGroupDelegationsClient with the specified values.
-func NewAvailableResourceGroupDelegationsClient(con *armcore.Connection, subscriptionID string) *AvailableResourceGroupDelegationsClient {
-	return &AvailableResourceGroupDelegationsClient{con: con, subscriptionID: subscriptionID}
+func NewAvailableResourceGroupDelegationsClient(con *arm.Connection, subscriptionID string) *AvailableResourceGroupDelegationsClient {
+	return &AvailableResourceGroupDelegationsClient{ep: con.Endpoint(), pl: con.NewPipeline(module, version), subscriptionID: subscriptionID}
 }
 
 // List - Gets all of the available subnet delegations for this resource group in this region.
@@ -36,17 +38,17 @@ func NewAvailableResourceGroupDelegationsClient(con *armcore.Connection, subscri
 func (client *AvailableResourceGroupDelegationsClient) List(location string, resourceGroupName string, options *AvailableResourceGroupDelegationsListOptions) *AvailableResourceGroupDelegationsListPager {
 	return &AvailableResourceGroupDelegationsListPager{
 		client: client,
-		requester: func(ctx context.Context) (*azcore.Request, error) {
+		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, location, resourceGroupName, options)
 		},
-		advancer: func(ctx context.Context, resp AvailableResourceGroupDelegationsListResponse) (*azcore.Request, error) {
-			return azcore.NewRequest(ctx, http.MethodGet, *resp.AvailableDelegationsResult.NextLink)
+		advancer: func(ctx context.Context, resp AvailableResourceGroupDelegationsListResponse) (*policy.Request, error) {
+			return runtime.NewRequest(ctx, http.MethodGet, *resp.AvailableDelegationsResult.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *AvailableResourceGroupDelegationsClient) listCreateRequest(ctx context.Context, location string, resourceGroupName string, options *AvailableResourceGroupDelegationsListOptions) (*azcore.Request, error) {
+func (client *AvailableResourceGroupDelegationsClient) listCreateRequest(ctx context.Context, location string, resourceGroupName string, options *AvailableResourceGroupDelegationsListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availableDelegations"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")
@@ -60,36 +62,35 @@ func (client *AvailableResourceGroupDelegationsClient) listCreateRequest(ctx con
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2020-03-01")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // listHandleResponse handles the List response.
-func (client *AvailableResourceGroupDelegationsClient) listHandleResponse(resp *azcore.Response) (AvailableResourceGroupDelegationsListResponse, error) {
-	result := AvailableResourceGroupDelegationsListResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.AvailableDelegationsResult); err != nil {
+func (client *AvailableResourceGroupDelegationsClient) listHandleResponse(resp *http.Response) (AvailableResourceGroupDelegationsListResponse, error) {
+	result := AvailableResourceGroupDelegationsListResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.AvailableDelegationsResult); err != nil {
 		return AvailableResourceGroupDelegationsListResponse{}, err
 	}
 	return result, nil
 }
 
 // listHandleError handles the List error response.
-func (client *AvailableResourceGroupDelegationsClient) listHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *AvailableResourceGroupDelegationsClient) listHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }

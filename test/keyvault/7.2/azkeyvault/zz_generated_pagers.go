@@ -10,7 +10,8 @@ package azkeyvault
 
 import (
 	"context"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 	"reflect"
 )
@@ -20,8 +21,8 @@ type KeyVaultClientGetCertificateIssuersPager struct {
 	client    *KeyVaultClient
 	current   KeyVaultClientGetCertificateIssuersResponse
 	err       error
-	requester func(context.Context) (*azcore.Request, error)
-	advancer  func(context.Context, KeyVaultClientGetCertificateIssuersResponse) (*azcore.Request, error)
+	requester func(context.Context) (*policy.Request, error)
+	advancer  func(context.Context, KeyVaultClientGetCertificateIssuersResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
@@ -32,7 +33,7 @@ func (p *KeyVaultClientGetCertificateIssuersPager) Err() error {
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
 func (p *KeyVaultClientGetCertificateIssuersPager) NextPage(ctx context.Context) bool {
-	var req *azcore.Request
+	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.CertificateIssuerListResult.NextLink == nil || len(*p.current.CertificateIssuerListResult.NextLink) == 0 {
@@ -51,7 +52,7 @@ func (p *KeyVaultClientGetCertificateIssuersPager) NextPage(ctx context.Context)
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		p.err = p.client.getCertificateIssuersHandleError(resp)
 		return false
 	}
@@ -74,8 +75,8 @@ type KeyVaultClientGetCertificateVersionsPager struct {
 	client    *KeyVaultClient
 	current   KeyVaultClientGetCertificateVersionsResponse
 	err       error
-	requester func(context.Context) (*azcore.Request, error)
-	advancer  func(context.Context, KeyVaultClientGetCertificateVersionsResponse) (*azcore.Request, error)
+	requester func(context.Context) (*policy.Request, error)
+	advancer  func(context.Context, KeyVaultClientGetCertificateVersionsResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
@@ -86,7 +87,7 @@ func (p *KeyVaultClientGetCertificateVersionsPager) Err() error {
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
 func (p *KeyVaultClientGetCertificateVersionsPager) NextPage(ctx context.Context) bool {
-	var req *azcore.Request
+	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.CertificateListResult.NextLink == nil || len(*p.current.CertificateListResult.NextLink) == 0 {
@@ -105,7 +106,7 @@ func (p *KeyVaultClientGetCertificateVersionsPager) NextPage(ctx context.Context
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		p.err = p.client.getCertificateVersionsHandleError(resp)
 		return false
 	}
@@ -128,8 +129,8 @@ type KeyVaultClientGetCertificatesPager struct {
 	client    *KeyVaultClient
 	current   KeyVaultClientGetCertificatesResponse
 	err       error
-	requester func(context.Context) (*azcore.Request, error)
-	advancer  func(context.Context, KeyVaultClientGetCertificatesResponse) (*azcore.Request, error)
+	requester func(context.Context) (*policy.Request, error)
+	advancer  func(context.Context, KeyVaultClientGetCertificatesResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
@@ -140,7 +141,7 @@ func (p *KeyVaultClientGetCertificatesPager) Err() error {
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
 func (p *KeyVaultClientGetCertificatesPager) NextPage(ctx context.Context) bool {
-	var req *azcore.Request
+	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.CertificateListResult.NextLink == nil || len(*p.current.CertificateListResult.NextLink) == 0 {
@@ -159,7 +160,7 @@ func (p *KeyVaultClientGetCertificatesPager) NextPage(ctx context.Context) bool 
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		p.err = p.client.getCertificatesHandleError(resp)
 		return false
 	}
@@ -182,8 +183,8 @@ type KeyVaultClientGetDeletedCertificatesPager struct {
 	client    *KeyVaultClient
 	current   KeyVaultClientGetDeletedCertificatesResponse
 	err       error
-	requester func(context.Context) (*azcore.Request, error)
-	advancer  func(context.Context, KeyVaultClientGetDeletedCertificatesResponse) (*azcore.Request, error)
+	requester func(context.Context) (*policy.Request, error)
+	advancer  func(context.Context, KeyVaultClientGetDeletedCertificatesResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
@@ -194,7 +195,7 @@ func (p *KeyVaultClientGetDeletedCertificatesPager) Err() error {
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
 func (p *KeyVaultClientGetDeletedCertificatesPager) NextPage(ctx context.Context) bool {
-	var req *azcore.Request
+	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.DeletedCertificateListResult.NextLink == nil || len(*p.current.DeletedCertificateListResult.NextLink) == 0 {
@@ -213,7 +214,7 @@ func (p *KeyVaultClientGetDeletedCertificatesPager) NextPage(ctx context.Context
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		p.err = p.client.getDeletedCertificatesHandleError(resp)
 		return false
 	}
@@ -236,8 +237,8 @@ type KeyVaultClientGetDeletedKeysPager struct {
 	client    *KeyVaultClient
 	current   KeyVaultClientGetDeletedKeysResponse
 	err       error
-	requester func(context.Context) (*azcore.Request, error)
-	advancer  func(context.Context, KeyVaultClientGetDeletedKeysResponse) (*azcore.Request, error)
+	requester func(context.Context) (*policy.Request, error)
+	advancer  func(context.Context, KeyVaultClientGetDeletedKeysResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
@@ -248,7 +249,7 @@ func (p *KeyVaultClientGetDeletedKeysPager) Err() error {
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
 func (p *KeyVaultClientGetDeletedKeysPager) NextPage(ctx context.Context) bool {
-	var req *azcore.Request
+	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.DeletedKeyListResult.NextLink == nil || len(*p.current.DeletedKeyListResult.NextLink) == 0 {
@@ -267,7 +268,7 @@ func (p *KeyVaultClientGetDeletedKeysPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		p.err = p.client.getDeletedKeysHandleError(resp)
 		return false
 	}
@@ -290,8 +291,8 @@ type KeyVaultClientGetDeletedSasDefinitionsPager struct {
 	client    *KeyVaultClient
 	current   KeyVaultClientGetDeletedSasDefinitionsResponse
 	err       error
-	requester func(context.Context) (*azcore.Request, error)
-	advancer  func(context.Context, KeyVaultClientGetDeletedSasDefinitionsResponse) (*azcore.Request, error)
+	requester func(context.Context) (*policy.Request, error)
+	advancer  func(context.Context, KeyVaultClientGetDeletedSasDefinitionsResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
@@ -302,7 +303,7 @@ func (p *KeyVaultClientGetDeletedSasDefinitionsPager) Err() error {
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
 func (p *KeyVaultClientGetDeletedSasDefinitionsPager) NextPage(ctx context.Context) bool {
-	var req *azcore.Request
+	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.DeletedSasDefinitionListResult.NextLink == nil || len(*p.current.DeletedSasDefinitionListResult.NextLink) == 0 {
@@ -321,7 +322,7 @@ func (p *KeyVaultClientGetDeletedSasDefinitionsPager) NextPage(ctx context.Conte
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		p.err = p.client.getDeletedSasDefinitionsHandleError(resp)
 		return false
 	}
@@ -344,8 +345,8 @@ type KeyVaultClientGetDeletedSecretsPager struct {
 	client    *KeyVaultClient
 	current   KeyVaultClientGetDeletedSecretsResponse
 	err       error
-	requester func(context.Context) (*azcore.Request, error)
-	advancer  func(context.Context, KeyVaultClientGetDeletedSecretsResponse) (*azcore.Request, error)
+	requester func(context.Context) (*policy.Request, error)
+	advancer  func(context.Context, KeyVaultClientGetDeletedSecretsResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
@@ -356,7 +357,7 @@ func (p *KeyVaultClientGetDeletedSecretsPager) Err() error {
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
 func (p *KeyVaultClientGetDeletedSecretsPager) NextPage(ctx context.Context) bool {
-	var req *azcore.Request
+	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.DeletedSecretListResult.NextLink == nil || len(*p.current.DeletedSecretListResult.NextLink) == 0 {
@@ -375,7 +376,7 @@ func (p *KeyVaultClientGetDeletedSecretsPager) NextPage(ctx context.Context) boo
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		p.err = p.client.getDeletedSecretsHandleError(resp)
 		return false
 	}
@@ -398,8 +399,8 @@ type KeyVaultClientGetDeletedStorageAccountsPager struct {
 	client    *KeyVaultClient
 	current   KeyVaultClientGetDeletedStorageAccountsResponse
 	err       error
-	requester func(context.Context) (*azcore.Request, error)
-	advancer  func(context.Context, KeyVaultClientGetDeletedStorageAccountsResponse) (*azcore.Request, error)
+	requester func(context.Context) (*policy.Request, error)
+	advancer  func(context.Context, KeyVaultClientGetDeletedStorageAccountsResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
@@ -410,7 +411,7 @@ func (p *KeyVaultClientGetDeletedStorageAccountsPager) Err() error {
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
 func (p *KeyVaultClientGetDeletedStorageAccountsPager) NextPage(ctx context.Context) bool {
-	var req *azcore.Request
+	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.DeletedStorageListResult.NextLink == nil || len(*p.current.DeletedStorageListResult.NextLink) == 0 {
@@ -429,7 +430,7 @@ func (p *KeyVaultClientGetDeletedStorageAccountsPager) NextPage(ctx context.Cont
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		p.err = p.client.getDeletedStorageAccountsHandleError(resp)
 		return false
 	}
@@ -452,8 +453,8 @@ type KeyVaultClientGetKeyVersionsPager struct {
 	client    *KeyVaultClient
 	current   KeyVaultClientGetKeyVersionsResponse
 	err       error
-	requester func(context.Context) (*azcore.Request, error)
-	advancer  func(context.Context, KeyVaultClientGetKeyVersionsResponse) (*azcore.Request, error)
+	requester func(context.Context) (*policy.Request, error)
+	advancer  func(context.Context, KeyVaultClientGetKeyVersionsResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
@@ -464,7 +465,7 @@ func (p *KeyVaultClientGetKeyVersionsPager) Err() error {
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
 func (p *KeyVaultClientGetKeyVersionsPager) NextPage(ctx context.Context) bool {
-	var req *azcore.Request
+	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.KeyListResult.NextLink == nil || len(*p.current.KeyListResult.NextLink) == 0 {
@@ -483,7 +484,7 @@ func (p *KeyVaultClientGetKeyVersionsPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		p.err = p.client.getKeyVersionsHandleError(resp)
 		return false
 	}
@@ -506,8 +507,8 @@ type KeyVaultClientGetKeysPager struct {
 	client    *KeyVaultClient
 	current   KeyVaultClientGetKeysResponse
 	err       error
-	requester func(context.Context) (*azcore.Request, error)
-	advancer  func(context.Context, KeyVaultClientGetKeysResponse) (*azcore.Request, error)
+	requester func(context.Context) (*policy.Request, error)
+	advancer  func(context.Context, KeyVaultClientGetKeysResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
@@ -518,7 +519,7 @@ func (p *KeyVaultClientGetKeysPager) Err() error {
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
 func (p *KeyVaultClientGetKeysPager) NextPage(ctx context.Context) bool {
-	var req *azcore.Request
+	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.KeyListResult.NextLink == nil || len(*p.current.KeyListResult.NextLink) == 0 {
@@ -537,7 +538,7 @@ func (p *KeyVaultClientGetKeysPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		p.err = p.client.getKeysHandleError(resp)
 		return false
 	}
@@ -560,8 +561,8 @@ type KeyVaultClientGetSasDefinitionsPager struct {
 	client    *KeyVaultClient
 	current   KeyVaultClientGetSasDefinitionsResponse
 	err       error
-	requester func(context.Context) (*azcore.Request, error)
-	advancer  func(context.Context, KeyVaultClientGetSasDefinitionsResponse) (*azcore.Request, error)
+	requester func(context.Context) (*policy.Request, error)
+	advancer  func(context.Context, KeyVaultClientGetSasDefinitionsResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
@@ -572,7 +573,7 @@ func (p *KeyVaultClientGetSasDefinitionsPager) Err() error {
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
 func (p *KeyVaultClientGetSasDefinitionsPager) NextPage(ctx context.Context) bool {
-	var req *azcore.Request
+	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.SasDefinitionListResult.NextLink == nil || len(*p.current.SasDefinitionListResult.NextLink) == 0 {
@@ -591,7 +592,7 @@ func (p *KeyVaultClientGetSasDefinitionsPager) NextPage(ctx context.Context) boo
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		p.err = p.client.getSasDefinitionsHandleError(resp)
 		return false
 	}
@@ -614,8 +615,8 @@ type KeyVaultClientGetSecretVersionsPager struct {
 	client    *KeyVaultClient
 	current   KeyVaultClientGetSecretVersionsResponse
 	err       error
-	requester func(context.Context) (*azcore.Request, error)
-	advancer  func(context.Context, KeyVaultClientGetSecretVersionsResponse) (*azcore.Request, error)
+	requester func(context.Context) (*policy.Request, error)
+	advancer  func(context.Context, KeyVaultClientGetSecretVersionsResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
@@ -626,7 +627,7 @@ func (p *KeyVaultClientGetSecretVersionsPager) Err() error {
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
 func (p *KeyVaultClientGetSecretVersionsPager) NextPage(ctx context.Context) bool {
-	var req *azcore.Request
+	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.SecretListResult.NextLink == nil || len(*p.current.SecretListResult.NextLink) == 0 {
@@ -645,7 +646,7 @@ func (p *KeyVaultClientGetSecretVersionsPager) NextPage(ctx context.Context) boo
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		p.err = p.client.getSecretVersionsHandleError(resp)
 		return false
 	}
@@ -668,8 +669,8 @@ type KeyVaultClientGetSecretsPager struct {
 	client    *KeyVaultClient
 	current   KeyVaultClientGetSecretsResponse
 	err       error
-	requester func(context.Context) (*azcore.Request, error)
-	advancer  func(context.Context, KeyVaultClientGetSecretsResponse) (*azcore.Request, error)
+	requester func(context.Context) (*policy.Request, error)
+	advancer  func(context.Context, KeyVaultClientGetSecretsResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
@@ -680,7 +681,7 @@ func (p *KeyVaultClientGetSecretsPager) Err() error {
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
 func (p *KeyVaultClientGetSecretsPager) NextPage(ctx context.Context) bool {
-	var req *azcore.Request
+	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.SecretListResult.NextLink == nil || len(*p.current.SecretListResult.NextLink) == 0 {
@@ -699,7 +700,7 @@ func (p *KeyVaultClientGetSecretsPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		p.err = p.client.getSecretsHandleError(resp)
 		return false
 	}
@@ -722,8 +723,8 @@ type KeyVaultClientGetStorageAccountsPager struct {
 	client    *KeyVaultClient
 	current   KeyVaultClientGetStorageAccountsResponse
 	err       error
-	requester func(context.Context) (*azcore.Request, error)
-	advancer  func(context.Context, KeyVaultClientGetStorageAccountsResponse) (*azcore.Request, error)
+	requester func(context.Context) (*policy.Request, error)
+	advancer  func(context.Context, KeyVaultClientGetStorageAccountsResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
@@ -734,7 +735,7 @@ func (p *KeyVaultClientGetStorageAccountsPager) Err() error {
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
 func (p *KeyVaultClientGetStorageAccountsPager) NextPage(ctx context.Context) bool {
-	var req *azcore.Request
+	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.StorageListResult.NextLink == nil || len(*p.current.StorageListResult.NextLink) == 0 {
@@ -753,7 +754,7 @@ func (p *KeyVaultClientGetStorageAccountsPager) NextPage(ctx context.Context) bo
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		p.err = p.client.getStorageAccountsHandleError(resp)
 		return false
 	}
@@ -776,8 +777,8 @@ type RoleAssignmentsListForScopePager struct {
 	client    *RoleAssignmentsClient
 	current   RoleAssignmentsListForScopeResponse
 	err       error
-	requester func(context.Context) (*azcore.Request, error)
-	advancer  func(context.Context, RoleAssignmentsListForScopeResponse) (*azcore.Request, error)
+	requester func(context.Context) (*policy.Request, error)
+	advancer  func(context.Context, RoleAssignmentsListForScopeResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
@@ -788,7 +789,7 @@ func (p *RoleAssignmentsListForScopePager) Err() error {
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
 func (p *RoleAssignmentsListForScopePager) NextPage(ctx context.Context) bool {
-	var req *azcore.Request
+	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.RoleAssignmentListResult.NextLink == nil || len(*p.current.RoleAssignmentListResult.NextLink) == 0 {
@@ -807,7 +808,7 @@ func (p *RoleAssignmentsListForScopePager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		p.err = p.client.listForScopeHandleError(resp)
 		return false
 	}
@@ -830,8 +831,8 @@ type RoleDefinitionsListPager struct {
 	client    *RoleDefinitionsClient
 	current   RoleDefinitionsListResponse
 	err       error
-	requester func(context.Context) (*azcore.Request, error)
-	advancer  func(context.Context, RoleDefinitionsListResponse) (*azcore.Request, error)
+	requester func(context.Context) (*policy.Request, error)
+	advancer  func(context.Context, RoleDefinitionsListResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
@@ -842,7 +843,7 @@ func (p *RoleDefinitionsListPager) Err() error {
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
 func (p *RoleDefinitionsListPager) NextPage(ctx context.Context) bool {
-	var req *azcore.Request
+	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.RoleDefinitionListResult.NextLink == nil || len(*p.current.RoleDefinitionListResult.NextLink) == 0 {
@@ -861,7 +862,7 @@ func (p *RoleDefinitionsListPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		p.err = p.client.listHandleError(resp)
 		return false
 	}

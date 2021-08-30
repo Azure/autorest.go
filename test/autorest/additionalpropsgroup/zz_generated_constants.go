@@ -9,6 +9,6 @@
 package additionalpropsgroup
 
 const (
-	telemetryInfo = "azsdk-go-additionalpropsgroup/" + version
-	version       = "v0.1"
+	module  = "additionalpropsgroup"
+	version = "v0.1.0"
 )

@@ -12,7 +12,8 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 	"net/url"
 	"strings"
@@ -40,14 +41,14 @@ func (client *RoleDefinitionsClient) CreateOrUpdate(ctx context.Context, vaultBa
 	if err != nil {
 		return RoleDefinitionsCreateOrUpdateResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusCreated) {
+	if !runtime.HasStatusCode(resp, http.StatusCreated) {
 		return RoleDefinitionsCreateOrUpdateResponse{}, client.createOrUpdateHandleError(resp)
 	}
 	return client.createOrUpdateHandleResponse(resp)
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *RoleDefinitionsClient) createOrUpdateCreateRequest(ctx context.Context, vaultBaseURL string, scope string, roleDefinitionName string, parameters RoleDefinitionCreateParameters, options *RoleDefinitionsCreateOrUpdateOptions) (*azcore.Request, error) {
+func (client *RoleDefinitionsClient) createOrUpdateCreateRequest(ctx context.Context, vaultBaseURL string, scope string, roleDefinitionName string, parameters RoleDefinitionCreateParameters, options *RoleDefinitionsCreateOrUpdateOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/{scope}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionName}"
@@ -59,38 +60,37 @@ func (client *RoleDefinitionsClient) createOrUpdateCreateRequest(ctx context.Con
 		return nil, errors.New("parameter roleDefinitionName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{roleDefinitionName}", url.PathEscape(roleDefinitionName))
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(parameters)
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *RoleDefinitionsClient) createOrUpdateHandleResponse(resp *azcore.Response) (RoleDefinitionsCreateOrUpdateResponse, error) {
-	result := RoleDefinitionsCreateOrUpdateResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.RoleDefinition); err != nil {
+func (client *RoleDefinitionsClient) createOrUpdateHandleResponse(resp *http.Response) (RoleDefinitionsCreateOrUpdateResponse, error) {
+	result := RoleDefinitionsCreateOrUpdateResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.RoleDefinition); err != nil {
 		return RoleDefinitionsCreateOrUpdateResponse{}, err
 	}
 	return result, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *RoleDefinitionsClient) createOrUpdateHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *RoleDefinitionsClient) createOrUpdateHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // Delete - Deletes a custom role definition.
@@ -104,14 +104,14 @@ func (client *RoleDefinitionsClient) Delete(ctx context.Context, vaultBaseURL st
 	if err != nil {
 		return RoleDefinitionsDeleteResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return RoleDefinitionsDeleteResponse{}, client.deleteHandleError(resp)
 	}
 	return client.deleteHandleResponse(resp)
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *RoleDefinitionsClient) deleteCreateRequest(ctx context.Context, vaultBaseURL string, scope string, roleDefinitionName string, options *RoleDefinitionsDeleteOptions) (*azcore.Request, error) {
+func (client *RoleDefinitionsClient) deleteCreateRequest(ctx context.Context, vaultBaseURL string, scope string, roleDefinitionName string, options *RoleDefinitionsDeleteOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/{scope}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionName}"
@@ -123,38 +123,37 @@ func (client *RoleDefinitionsClient) deleteCreateRequest(ctx context.Context, va
 		return nil, errors.New("parameter roleDefinitionName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{roleDefinitionName}", url.PathEscape(roleDefinitionName))
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // deleteHandleResponse handles the Delete response.
-func (client *RoleDefinitionsClient) deleteHandleResponse(resp *azcore.Response) (RoleDefinitionsDeleteResponse, error) {
-	result := RoleDefinitionsDeleteResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.RoleDefinition); err != nil {
+func (client *RoleDefinitionsClient) deleteHandleResponse(resp *http.Response) (RoleDefinitionsDeleteResponse, error) {
+	result := RoleDefinitionsDeleteResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.RoleDefinition); err != nil {
 		return RoleDefinitionsDeleteResponse{}, err
 	}
 	return result, nil
 }
 
 // deleteHandleError handles the Delete error response.
-func (client *RoleDefinitionsClient) deleteHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *RoleDefinitionsClient) deleteHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // Get - Get the specified role definition.
@@ -168,14 +167,14 @@ func (client *RoleDefinitionsClient) Get(ctx context.Context, vaultBaseURL strin
 	if err != nil {
 		return RoleDefinitionsGetResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return RoleDefinitionsGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *RoleDefinitionsClient) getCreateRequest(ctx context.Context, vaultBaseURL string, scope string, roleDefinitionName string, options *RoleDefinitionsGetOptions) (*azcore.Request, error) {
+func (client *RoleDefinitionsClient) getCreateRequest(ctx context.Context, vaultBaseURL string, scope string, roleDefinitionName string, options *RoleDefinitionsGetOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/{scope}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionName}"
@@ -187,38 +186,37 @@ func (client *RoleDefinitionsClient) getCreateRequest(ctx context.Context, vault
 		return nil, errors.New("parameter roleDefinitionName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{roleDefinitionName}", url.PathEscape(roleDefinitionName))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getHandleResponse handles the Get response.
-func (client *RoleDefinitionsClient) getHandleResponse(resp *azcore.Response) (RoleDefinitionsGetResponse, error) {
-	result := RoleDefinitionsGetResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.RoleDefinition); err != nil {
+func (client *RoleDefinitionsClient) getHandleResponse(resp *http.Response) (RoleDefinitionsGetResponse, error) {
+	result := RoleDefinitionsGetResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.RoleDefinition); err != nil {
 		return RoleDefinitionsGetResponse{}, err
 	}
 	return result, nil
 }
 
 // getHandleError handles the Get error response.
-func (client *RoleDefinitionsClient) getHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *RoleDefinitionsClient) getHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // List - Get all role definitions that are applicable at scope and above.
@@ -226,17 +224,17 @@ func (client *RoleDefinitionsClient) getHandleError(resp *azcore.Response) error
 func (client *RoleDefinitionsClient) List(vaultBaseURL string, scope string, options *RoleDefinitionsListOptions) *RoleDefinitionsListPager {
 	return &RoleDefinitionsListPager{
 		client: client,
-		requester: func(ctx context.Context) (*azcore.Request, error) {
+		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, vaultBaseURL, scope, options)
 		},
-		advancer: func(ctx context.Context, resp RoleDefinitionsListResponse) (*azcore.Request, error) {
-			return azcore.NewRequest(ctx, http.MethodGet, *resp.RoleDefinitionListResult.NextLink)
+		advancer: func(ctx context.Context, resp RoleDefinitionsListResponse) (*policy.Request, error) {
+			return runtime.NewRequest(ctx, http.MethodGet, *resp.RoleDefinitionListResult.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *RoleDefinitionsClient) listCreateRequest(ctx context.Context, vaultBaseURL string, scope string, options *RoleDefinitionsListOptions) (*azcore.Request, error) {
+func (client *RoleDefinitionsClient) listCreateRequest(ctx context.Context, vaultBaseURL string, scope string, options *RoleDefinitionsListOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/{scope}/providers/Microsoft.Authorization/roleDefinitions"
@@ -244,39 +242,38 @@ func (client *RoleDefinitionsClient) listCreateRequest(ctx context.Context, vaul
 		return nil, errors.New("parameter scope cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{scope}", scope)
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if options != nil && options.Filter != nil {
 		reqQP.Set("$filter", *options.Filter)
 	}
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // listHandleResponse handles the List response.
-func (client *RoleDefinitionsClient) listHandleResponse(resp *azcore.Response) (RoleDefinitionsListResponse, error) {
-	result := RoleDefinitionsListResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.RoleDefinitionListResult); err != nil {
+func (client *RoleDefinitionsClient) listHandleResponse(resp *http.Response) (RoleDefinitionsListResponse, error) {
+	result := RoleDefinitionsListResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.RoleDefinitionListResult); err != nil {
 		return RoleDefinitionsListResponse{}, err
 	}
 	return result, nil
 }
 
 // listHandleError handles the List error response.
-func (client *RoleDefinitionsClient) listHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *RoleDefinitionsClient) listHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }

@@ -8,12 +8,12 @@
 
 package mediatypesgroup
 
-import "github.com/Azure/azure-sdk-for-go/sdk/azcore"
+import "io"
 
 // MediaTypesClientAnalyzeBodyOptions contains the optional parameters for the MediaTypesClient.AnalyzeBody method.
 type MediaTypesClientAnalyzeBodyOptions struct {
 	// Input parameter.
-	Input azcore.ReadSeekCloser
+	Input io.ReadSeekCloser
 }
 
 // MediaTypesClientAnalyzeBodyWithSourcePathOptions contains the optional parameters for the MediaTypesClient.AnalyzeBodyWithSourcePath method.

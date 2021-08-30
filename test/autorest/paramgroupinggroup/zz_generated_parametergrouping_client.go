@@ -12,7 +12,8 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -41,49 +42,48 @@ func (client *ParameterGroupingClient) PostMultiParamGroups(ctx context.Context,
 	if err != nil {
 		return ParameterGroupingPostMultiParamGroupsResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ParameterGroupingPostMultiParamGroupsResponse{}, client.postMultiParamGroupsHandleError(resp)
 	}
-	return ParameterGroupingPostMultiParamGroupsResponse{RawResponse: resp.Response}, nil
+	return ParameterGroupingPostMultiParamGroupsResponse{RawResponse: resp}, nil
 }
 
 // postMultiParamGroupsCreateRequest creates the PostMultiParamGroups request.
-func (client *ParameterGroupingClient) postMultiParamGroupsCreateRequest(ctx context.Context, firstParameterGroup *FirstParameterGroup, parameterGroupingPostMultiParamGroupsSecondParamGroup *ParameterGroupingPostMultiParamGroupsSecondParamGroup) (*azcore.Request, error) {
+func (client *ParameterGroupingClient) postMultiParamGroupsCreateRequest(ctx context.Context, firstParameterGroup *FirstParameterGroup, parameterGroupingPostMultiParamGroupsSecondParamGroup *ParameterGroupingPostMultiParamGroupsSecondParamGroup) (*policy.Request, error) {
 	urlPath := "/parameterGrouping/postMultipleParameterGroups"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if firstParameterGroup != nil && firstParameterGroup.QueryOne != nil {
 		reqQP.Set("query-one", strconv.FormatInt(int64(*firstParameterGroup.QueryOne), 10))
 	}
 	if parameterGroupingPostMultiParamGroupsSecondParamGroup != nil && parameterGroupingPostMultiParamGroupsSecondParamGroup.QueryTwo != nil {
 		reqQP.Set("query-two", strconv.FormatInt(int64(*parameterGroupingPostMultiParamGroupsSecondParamGroup.QueryTwo), 10))
 	}
-	req.URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = reqQP.Encode()
 	if firstParameterGroup != nil && firstParameterGroup.HeaderOne != nil {
-		req.Header.Set("header-one", *firstParameterGroup.HeaderOne)
+		req.Raw().Header.Set("header-one", *firstParameterGroup.HeaderOne)
 	}
 	if parameterGroupingPostMultiParamGroupsSecondParamGroup != nil && parameterGroupingPostMultiParamGroupsSecondParamGroup.HeaderTwo != nil {
-		req.Header.Set("header-two", *parameterGroupingPostMultiParamGroupsSecondParamGroup.HeaderTwo)
+		req.Raw().Header.Set("header-two", *parameterGroupingPostMultiParamGroupsSecondParamGroup.HeaderTwo)
 	}
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // postMultiParamGroupsHandleError handles the PostMultiParamGroups error response.
-func (client *ParameterGroupingClient) postMultiParamGroupsHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ParameterGroupingClient) postMultiParamGroupsHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PostOptional - Post a bunch of optional parameters grouped
@@ -97,43 +97,42 @@ func (client *ParameterGroupingClient) PostOptional(ctx context.Context, options
 	if err != nil {
 		return ParameterGroupingPostOptionalResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ParameterGroupingPostOptionalResponse{}, client.postOptionalHandleError(resp)
 	}
-	return ParameterGroupingPostOptionalResponse{RawResponse: resp.Response}, nil
+	return ParameterGroupingPostOptionalResponse{RawResponse: resp}, nil
 }
 
 // postOptionalCreateRequest creates the PostOptional request.
-func (client *ParameterGroupingClient) postOptionalCreateRequest(ctx context.Context, options *ParameterGroupingPostOptionalParameters) (*azcore.Request, error) {
+func (client *ParameterGroupingClient) postOptionalCreateRequest(ctx context.Context, options *ParameterGroupingPostOptionalParameters) (*policy.Request, error) {
 	urlPath := "/parameterGrouping/postOptional"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if options != nil && options.Query != nil {
 		reqQP.Set("query", strconv.FormatInt(int64(*options.Query), 10))
 	}
-	req.URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = reqQP.Encode()
 	if options != nil && options.CustomHeader != nil {
-		req.Header.Set("customHeader", *options.CustomHeader)
+		req.Raw().Header.Set("customHeader", *options.CustomHeader)
 	}
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // postOptionalHandleError handles the PostOptional error response.
-func (client *ParameterGroupingClient) postOptionalHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ParameterGroupingClient) postOptionalHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PostRequired - Post a bunch of required parameters grouped
@@ -147,47 +146,46 @@ func (client *ParameterGroupingClient) PostRequired(ctx context.Context, paramet
 	if err != nil {
 		return ParameterGroupingPostRequiredResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ParameterGroupingPostRequiredResponse{}, client.postRequiredHandleError(resp)
 	}
-	return ParameterGroupingPostRequiredResponse{RawResponse: resp.Response}, nil
+	return ParameterGroupingPostRequiredResponse{RawResponse: resp}, nil
 }
 
 // postRequiredCreateRequest creates the PostRequired request.
-func (client *ParameterGroupingClient) postRequiredCreateRequest(ctx context.Context, parameterGroupingPostRequiredParameters ParameterGroupingPostRequiredParameters) (*azcore.Request, error) {
+func (client *ParameterGroupingClient) postRequiredCreateRequest(ctx context.Context, parameterGroupingPostRequiredParameters ParameterGroupingPostRequiredParameters) (*policy.Request, error) {
 	urlPath := "/parameterGrouping/postRequired/{path}"
 	if parameterGroupingPostRequiredParameters.Path == "" {
 		return nil, errors.New("parameter parameterGroupingPostRequiredParameters.Path cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{path}", url.PathEscape(parameterGroupingPostRequiredParameters.Path))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if parameterGroupingPostRequiredParameters.Query != nil {
 		reqQP.Set("query", strconv.FormatInt(int64(*parameterGroupingPostRequiredParameters.Query), 10))
 	}
-	req.URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = reqQP.Encode()
 	if parameterGroupingPostRequiredParameters.CustomHeader != nil {
-		req.Header.Set("customHeader", *parameterGroupingPostRequiredParameters.CustomHeader)
+		req.Raw().Header.Set("customHeader", *parameterGroupingPostRequiredParameters.CustomHeader)
 	}
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(parameterGroupingPostRequiredParameters.Body)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, parameterGroupingPostRequiredParameters.Body)
 }
 
 // postRequiredHandleError handles the PostRequired error response.
-func (client *ParameterGroupingClient) postRequiredHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ParameterGroupingClient) postRequiredHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PostSharedParameterGroupObject - Post parameters with a shared parameter group object
@@ -201,41 +199,40 @@ func (client *ParameterGroupingClient) PostSharedParameterGroupObject(ctx contex
 	if err != nil {
 		return ParameterGroupingPostSharedParameterGroupObjectResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ParameterGroupingPostSharedParameterGroupObjectResponse{}, client.postSharedParameterGroupObjectHandleError(resp)
 	}
-	return ParameterGroupingPostSharedParameterGroupObjectResponse{RawResponse: resp.Response}, nil
+	return ParameterGroupingPostSharedParameterGroupObjectResponse{RawResponse: resp}, nil
 }
 
 // postSharedParameterGroupObjectCreateRequest creates the PostSharedParameterGroupObject request.
-func (client *ParameterGroupingClient) postSharedParameterGroupObjectCreateRequest(ctx context.Context, options *FirstParameterGroup) (*azcore.Request, error) {
+func (client *ParameterGroupingClient) postSharedParameterGroupObjectCreateRequest(ctx context.Context, options *FirstParameterGroup) (*policy.Request, error) {
 	urlPath := "/parameterGrouping/sharedParameterGroupObject"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if options != nil && options.QueryOne != nil {
 		reqQP.Set("query-one", strconv.FormatInt(int64(*options.QueryOne), 10))
 	}
-	req.URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = reqQP.Encode()
 	if options != nil && options.HeaderOne != nil {
-		req.Header.Set("header-one", *options.HeaderOne)
+		req.Raw().Header.Set("header-one", *options.HeaderOne)
 	}
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // postSharedParameterGroupObjectHandleError handles the PostSharedParameterGroupObject error response.
-func (client *ParameterGroupingClient) postSharedParameterGroupObjectHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ParameterGroupingClient) postSharedParameterGroupObjectHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }

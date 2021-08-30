@@ -12,7 +12,8 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 	"net/url"
 	"strings"
@@ -30,9 +31,9 @@ func (client *linkedServiceClient) BeginCreateOrUpdateLinkedService(ctx context.
 		return LinkedServiceCreateOrUpdateLinkedServicePollerResponse{}, err
 	}
 	result := LinkedServiceCreateOrUpdateLinkedServicePollerResponse{
-		RawResponse: resp.Response,
+		RawResponse: resp,
 	}
-	pt, err := azcore.NewLROPoller("linkedServiceClient.CreateOrUpdateLinkedService", resp, client.con.Pipeline(), client.createOrUpdateLinkedServiceHandleError)
+	pt, err := runtime.NewPoller("linkedServiceClient.CreateOrUpdateLinkedService", resp, client.con.Pipeline(), client.createOrUpdateLinkedServiceHandleError)
 	if err != nil {
 		return LinkedServiceCreateOrUpdateLinkedServicePollerResponse{}, err
 	}
@@ -44,7 +45,7 @@ func (client *linkedServiceClient) BeginCreateOrUpdateLinkedService(ctx context.
 
 // CreateOrUpdateLinkedService - Creates or updates a linked service.
 // If the operation fails it returns the *CloudError error type.
-func (client *linkedServiceClient) createOrUpdateLinkedService(ctx context.Context, linkedServiceName string, linkedService LinkedServiceResource, options *LinkedServiceBeginCreateOrUpdateLinkedServiceOptions) (*azcore.Response, error) {
+func (client *linkedServiceClient) createOrUpdateLinkedService(ctx context.Context, linkedServiceName string, linkedService LinkedServiceResource, options *LinkedServiceBeginCreateOrUpdateLinkedServiceOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateLinkedServiceCreateRequest(ctx, linkedServiceName, linkedService, options)
 	if err != nil {
 		return nil, err
@@ -53,45 +54,44 @@ func (client *linkedServiceClient) createOrUpdateLinkedService(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
 		return nil, client.createOrUpdateLinkedServiceHandleError(resp)
 	}
 	return resp, nil
 }
 
 // createOrUpdateLinkedServiceCreateRequest creates the CreateOrUpdateLinkedService request.
-func (client *linkedServiceClient) createOrUpdateLinkedServiceCreateRequest(ctx context.Context, linkedServiceName string, linkedService LinkedServiceResource, options *LinkedServiceBeginCreateOrUpdateLinkedServiceOptions) (*azcore.Request, error) {
+func (client *linkedServiceClient) createOrUpdateLinkedServiceCreateRequest(ctx context.Context, linkedServiceName string, linkedService LinkedServiceResource, options *LinkedServiceBeginCreateOrUpdateLinkedServiceOptions) (*policy.Request, error) {
 	urlPath := "/linkedservices/{linkedServiceName}"
 	if linkedServiceName == "" {
 		return nil, errors.New("parameter linkedServiceName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{linkedServiceName}", url.PathEscape(linkedServiceName))
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-06-01-preview")
-	req.URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = reqQP.Encode()
 	if options != nil && options.IfMatch != nil {
-		req.Header.Set("If-Match", *options.IfMatch)
+		req.Raw().Header.Set("If-Match", *options.IfMatch)
 	}
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(linkedService)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, linkedService)
 }
 
 // createOrUpdateLinkedServiceHandleError handles the CreateOrUpdateLinkedService error response.
-func (client *linkedServiceClient) createOrUpdateLinkedServiceHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *linkedServiceClient) createOrUpdateLinkedServiceHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BeginDeleteLinkedService - Deletes a linked service.
@@ -102,9 +102,9 @@ func (client *linkedServiceClient) BeginDeleteLinkedService(ctx context.Context,
 		return LinkedServiceDeleteLinkedServicePollerResponse{}, err
 	}
 	result := LinkedServiceDeleteLinkedServicePollerResponse{
-		RawResponse: resp.Response,
+		RawResponse: resp,
 	}
-	pt, err := azcore.NewLROPoller("linkedServiceClient.DeleteLinkedService", resp, client.con.Pipeline(), client.deleteLinkedServiceHandleError)
+	pt, err := runtime.NewPoller("linkedServiceClient.DeleteLinkedService", resp, client.con.Pipeline(), client.deleteLinkedServiceHandleError)
 	if err != nil {
 		return LinkedServiceDeleteLinkedServicePollerResponse{}, err
 	}
@@ -116,7 +116,7 @@ func (client *linkedServiceClient) BeginDeleteLinkedService(ctx context.Context,
 
 // DeleteLinkedService - Deletes a linked service.
 // If the operation fails it returns the *CloudError error type.
-func (client *linkedServiceClient) deleteLinkedService(ctx context.Context, linkedServiceName string, options *LinkedServiceBeginDeleteLinkedServiceOptions) (*azcore.Response, error) {
+func (client *linkedServiceClient) deleteLinkedService(ctx context.Context, linkedServiceName string, options *LinkedServiceBeginDeleteLinkedServiceOptions) (*http.Response, error) {
 	req, err := client.deleteLinkedServiceCreateRequest(ctx, linkedServiceName, options)
 	if err != nil {
 		return nil, err
@@ -125,42 +125,41 @@ func (client *linkedServiceClient) deleteLinkedService(ctx context.Context, link
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.deleteLinkedServiceHandleError(resp)
 	}
 	return resp, nil
 }
 
 // deleteLinkedServiceCreateRequest creates the DeleteLinkedService request.
-func (client *linkedServiceClient) deleteLinkedServiceCreateRequest(ctx context.Context, linkedServiceName string, options *LinkedServiceBeginDeleteLinkedServiceOptions) (*azcore.Request, error) {
+func (client *linkedServiceClient) deleteLinkedServiceCreateRequest(ctx context.Context, linkedServiceName string, options *LinkedServiceBeginDeleteLinkedServiceOptions) (*policy.Request, error) {
 	urlPath := "/linkedservices/{linkedServiceName}"
 	if linkedServiceName == "" {
 		return nil, errors.New("parameter linkedServiceName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{linkedServiceName}", url.PathEscape(linkedServiceName))
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-06-01-preview")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // deleteLinkedServiceHandleError handles the DeleteLinkedService error response.
-func (client *linkedServiceClient) deleteLinkedServiceHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *linkedServiceClient) deleteLinkedServiceHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetLinkedService - Gets a linked service.
@@ -174,54 +173,53 @@ func (client *linkedServiceClient) GetLinkedService(ctx context.Context, linkedS
 	if err != nil {
 		return LinkedServiceGetLinkedServiceResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusNotModified) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusNotModified) {
 		return LinkedServiceGetLinkedServiceResponse{}, client.getLinkedServiceHandleError(resp)
 	}
 	return client.getLinkedServiceHandleResponse(resp)
 }
 
 // getLinkedServiceCreateRequest creates the GetLinkedService request.
-func (client *linkedServiceClient) getLinkedServiceCreateRequest(ctx context.Context, linkedServiceName string, options *LinkedServiceGetLinkedServiceOptions) (*azcore.Request, error) {
+func (client *linkedServiceClient) getLinkedServiceCreateRequest(ctx context.Context, linkedServiceName string, options *LinkedServiceGetLinkedServiceOptions) (*policy.Request, error) {
 	urlPath := "/linkedservices/{linkedServiceName}"
 	if linkedServiceName == "" {
 		return nil, errors.New("parameter linkedServiceName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{linkedServiceName}", url.PathEscape(linkedServiceName))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-06-01-preview")
-	req.URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = reqQP.Encode()
 	if options != nil && options.IfNoneMatch != nil {
-		req.Header.Set("If-None-Match", *options.IfNoneMatch)
+		req.Raw().Header.Set("If-None-Match", *options.IfNoneMatch)
 	}
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getLinkedServiceHandleResponse handles the GetLinkedService response.
-func (client *linkedServiceClient) getLinkedServiceHandleResponse(resp *azcore.Response) (LinkedServiceGetLinkedServiceResponse, error) {
-	result := LinkedServiceGetLinkedServiceResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.LinkedServiceResource); err != nil {
+func (client *linkedServiceClient) getLinkedServiceHandleResponse(resp *http.Response) (LinkedServiceGetLinkedServiceResponse, error) {
+	result := LinkedServiceGetLinkedServiceResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.LinkedServiceResource); err != nil {
 		return LinkedServiceGetLinkedServiceResponse{}, err
 	}
 	return result, nil
 }
 
 // getLinkedServiceHandleError handles the GetLinkedService error response.
-func (client *linkedServiceClient) getLinkedServiceHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *linkedServiceClient) getLinkedServiceHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetLinkedServicesByWorkspace - Lists linked services.
@@ -229,50 +227,49 @@ func (client *linkedServiceClient) getLinkedServiceHandleError(resp *azcore.Resp
 func (client *linkedServiceClient) GetLinkedServicesByWorkspace(options *LinkedServiceGetLinkedServicesByWorkspaceOptions) *LinkedServiceGetLinkedServicesByWorkspacePager {
 	return &LinkedServiceGetLinkedServicesByWorkspacePager{
 		client: client,
-		requester: func(ctx context.Context) (*azcore.Request, error) {
+		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.getLinkedServicesByWorkspaceCreateRequest(ctx, options)
 		},
-		advancer: func(ctx context.Context, resp LinkedServiceGetLinkedServicesByWorkspaceResponse) (*azcore.Request, error) {
-			return azcore.NewRequest(ctx, http.MethodGet, *resp.LinkedServiceListResponse.NextLink)
+		advancer: func(ctx context.Context, resp LinkedServiceGetLinkedServicesByWorkspaceResponse) (*policy.Request, error) {
+			return runtime.NewRequest(ctx, http.MethodGet, *resp.LinkedServiceListResponse.NextLink)
 		},
 	}
 }
 
 // getLinkedServicesByWorkspaceCreateRequest creates the GetLinkedServicesByWorkspace request.
-func (client *linkedServiceClient) getLinkedServicesByWorkspaceCreateRequest(ctx context.Context, options *LinkedServiceGetLinkedServicesByWorkspaceOptions) (*azcore.Request, error) {
+func (client *linkedServiceClient) getLinkedServicesByWorkspaceCreateRequest(ctx context.Context, options *LinkedServiceGetLinkedServicesByWorkspaceOptions) (*policy.Request, error) {
 	urlPath := "/linkedservices"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-06-01-preview")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getLinkedServicesByWorkspaceHandleResponse handles the GetLinkedServicesByWorkspace response.
-func (client *linkedServiceClient) getLinkedServicesByWorkspaceHandleResponse(resp *azcore.Response) (LinkedServiceGetLinkedServicesByWorkspaceResponse, error) {
-	result := LinkedServiceGetLinkedServicesByWorkspaceResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.LinkedServiceListResponse); err != nil {
+func (client *linkedServiceClient) getLinkedServicesByWorkspaceHandleResponse(resp *http.Response) (LinkedServiceGetLinkedServicesByWorkspaceResponse, error) {
+	result := LinkedServiceGetLinkedServicesByWorkspaceResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.LinkedServiceListResponse); err != nil {
 		return LinkedServiceGetLinkedServicesByWorkspaceResponse{}, err
 	}
 	return result, nil
 }
 
 // getLinkedServicesByWorkspaceHandleError handles the GetLinkedServicesByWorkspace error response.
-func (client *linkedServiceClient) getLinkedServicesByWorkspaceHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *linkedServiceClient) getLinkedServicesByWorkspaceHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BeginRenameLinkedService - Renames a linked service.
@@ -283,9 +280,9 @@ func (client *linkedServiceClient) BeginRenameLinkedService(ctx context.Context,
 		return LinkedServiceRenameLinkedServicePollerResponse{}, err
 	}
 	result := LinkedServiceRenameLinkedServicePollerResponse{
-		RawResponse: resp.Response,
+		RawResponse: resp,
 	}
-	pt, err := azcore.NewLROPoller("linkedServiceClient.RenameLinkedService", resp, client.con.Pipeline(), client.renameLinkedServiceHandleError)
+	pt, err := runtime.NewPoller("linkedServiceClient.RenameLinkedService", resp, client.con.Pipeline(), client.renameLinkedServiceHandleError)
 	if err != nil {
 		return LinkedServiceRenameLinkedServicePollerResponse{}, err
 	}
@@ -297,7 +294,7 @@ func (client *linkedServiceClient) BeginRenameLinkedService(ctx context.Context,
 
 // RenameLinkedService - Renames a linked service.
 // If the operation fails it returns the *CloudError error type.
-func (client *linkedServiceClient) renameLinkedService(ctx context.Context, linkedServiceName string, request ArtifactRenameRequest, options *LinkedServiceBeginRenameLinkedServiceOptions) (*azcore.Response, error) {
+func (client *linkedServiceClient) renameLinkedService(ctx context.Context, linkedServiceName string, request ArtifactRenameRequest, options *LinkedServiceBeginRenameLinkedServiceOptions) (*http.Response, error) {
 	req, err := client.renameLinkedServiceCreateRequest(ctx, linkedServiceName, request, options)
 	if err != nil {
 		return nil, err
@@ -306,40 +303,39 @@ func (client *linkedServiceClient) renameLinkedService(ctx context.Context, link
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
 		return nil, client.renameLinkedServiceHandleError(resp)
 	}
 	return resp, nil
 }
 
 // renameLinkedServiceCreateRequest creates the RenameLinkedService request.
-func (client *linkedServiceClient) renameLinkedServiceCreateRequest(ctx context.Context, linkedServiceName string, request ArtifactRenameRequest, options *LinkedServiceBeginRenameLinkedServiceOptions) (*azcore.Request, error) {
+func (client *linkedServiceClient) renameLinkedServiceCreateRequest(ctx context.Context, linkedServiceName string, request ArtifactRenameRequest, options *LinkedServiceBeginRenameLinkedServiceOptions) (*policy.Request, error) {
 	urlPath := "/linkedservices/{linkedServiceName}/rename"
 	if linkedServiceName == "" {
 		return nil, errors.New("parameter linkedServiceName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{linkedServiceName}", url.PathEscape(linkedServiceName))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-06-01-preview")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(request)
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, request)
 }
 
 // renameLinkedServiceHandleError handles the RenameLinkedService error response.
-func (client *linkedServiceClient) renameLinkedServiceHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *linkedServiceClient) renameLinkedServiceHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }

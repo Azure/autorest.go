@@ -9,6 +9,6 @@
 package objectgroup
 
 const (
-	telemetryInfo = "azsdk-go-objectgroup/" + version
-	version       = "v0.1"
+	module  = "objectgroup"
+	version = "v0.1.0"
 )

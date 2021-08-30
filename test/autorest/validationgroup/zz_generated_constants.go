@@ -9,6 +9,6 @@
 package validationgroup
 
 const (
-	telemetryInfo = "azsdk-go-validationgroup/" + version
-	version       = "v0.1"
+	module  = "validationgroup"
+	version = "v0.1.0"
 )

@@ -9,8 +9,8 @@
 package headergroup
 
 const (
-	telemetryInfo = "azsdk-go-headergroup/" + version
-	version       = "v0.1"
+	module  = "headergroup"
+	version = "v0.1.0"
 )
 
 type GreyscaleColors string

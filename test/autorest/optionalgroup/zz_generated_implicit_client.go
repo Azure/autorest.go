@@ -12,7 +12,8 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -44,40 +45,39 @@ func (client *ImplicitClient) GetOptionalGlobalQuery(ctx context.Context, option
 	if err != nil {
 		return ImplicitGetOptionalGlobalQueryResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ImplicitGetOptionalGlobalQueryResponse{}, client.getOptionalGlobalQueryHandleError(resp)
 	}
-	return ImplicitGetOptionalGlobalQueryResponse{RawResponse: resp.Response}, nil
+	return ImplicitGetOptionalGlobalQueryResponse{RawResponse: resp}, nil
 }
 
 // getOptionalGlobalQueryCreateRequest creates the GetOptionalGlobalQuery request.
-func (client *ImplicitClient) getOptionalGlobalQueryCreateRequest(ctx context.Context, options *ImplicitGetOptionalGlobalQueryOptions) (*azcore.Request, error) {
+func (client *ImplicitClient) getOptionalGlobalQueryCreateRequest(ctx context.Context, options *ImplicitGetOptionalGlobalQueryOptions) (*policy.Request, error) {
 	urlPath := "/reqopt/global/optional/query"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if client.optionalGlobalQuery != nil {
 		reqQP.Set("optional-global-query", strconv.FormatInt(int64(*client.optionalGlobalQuery), 10))
 	}
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getOptionalGlobalQueryHandleError handles the GetOptionalGlobalQuery error response.
-func (client *ImplicitClient) getOptionalGlobalQueryHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ImplicitClient) getOptionalGlobalQueryHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetRequiredGlobalPath - Test implicitly required path parameter
@@ -91,39 +91,38 @@ func (client *ImplicitClient) GetRequiredGlobalPath(ctx context.Context, options
 	if err != nil {
 		return ImplicitGetRequiredGlobalPathResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ImplicitGetRequiredGlobalPathResponse{}, client.getRequiredGlobalPathHandleError(resp)
 	}
-	return ImplicitGetRequiredGlobalPathResponse{RawResponse: resp.Response}, nil
+	return ImplicitGetRequiredGlobalPathResponse{RawResponse: resp}, nil
 }
 
 // getRequiredGlobalPathCreateRequest creates the GetRequiredGlobalPath request.
-func (client *ImplicitClient) getRequiredGlobalPathCreateRequest(ctx context.Context, options *ImplicitGetRequiredGlobalPathOptions) (*azcore.Request, error) {
+func (client *ImplicitClient) getRequiredGlobalPathCreateRequest(ctx context.Context, options *ImplicitGetRequiredGlobalPathOptions) (*policy.Request, error) {
 	urlPath := "/reqopt/global/required/path/{required-global-path}"
 	if client.requiredGlobalPath == "" {
 		return nil, errors.New("parameter client.requiredGlobalPath cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{required-global-path}", url.PathEscape(client.requiredGlobalPath))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getRequiredGlobalPathHandleError handles the GetRequiredGlobalPath error response.
-func (client *ImplicitClient) getRequiredGlobalPathHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ImplicitClient) getRequiredGlobalPathHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetRequiredGlobalQuery - Test implicitly required query parameter
@@ -137,38 +136,37 @@ func (client *ImplicitClient) GetRequiredGlobalQuery(ctx context.Context, option
 	if err != nil {
 		return ImplicitGetRequiredGlobalQueryResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ImplicitGetRequiredGlobalQueryResponse{}, client.getRequiredGlobalQueryHandleError(resp)
 	}
-	return ImplicitGetRequiredGlobalQueryResponse{RawResponse: resp.Response}, nil
+	return ImplicitGetRequiredGlobalQueryResponse{RawResponse: resp}, nil
 }
 
 // getRequiredGlobalQueryCreateRequest creates the GetRequiredGlobalQuery request.
-func (client *ImplicitClient) getRequiredGlobalQueryCreateRequest(ctx context.Context, options *ImplicitGetRequiredGlobalQueryOptions) (*azcore.Request, error) {
+func (client *ImplicitClient) getRequiredGlobalQueryCreateRequest(ctx context.Context, options *ImplicitGetRequiredGlobalQueryOptions) (*policy.Request, error) {
 	urlPath := "/reqopt/global/required/query"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("required-global-query", client.requiredGlobalQuery)
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getRequiredGlobalQueryHandleError handles the GetRequiredGlobalQuery error response.
-func (client *ImplicitClient) getRequiredGlobalQueryHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ImplicitClient) getRequiredGlobalQueryHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetRequiredPath - Test implicitly required path parameter
@@ -182,39 +180,38 @@ func (client *ImplicitClient) GetRequiredPath(ctx context.Context, pathParameter
 	if err != nil {
 		return ImplicitGetRequiredPathResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ImplicitGetRequiredPathResponse{}, client.getRequiredPathHandleError(resp)
 	}
-	return ImplicitGetRequiredPathResponse{RawResponse: resp.Response}, nil
+	return ImplicitGetRequiredPathResponse{RawResponse: resp}, nil
 }
 
 // getRequiredPathCreateRequest creates the GetRequiredPath request.
-func (client *ImplicitClient) getRequiredPathCreateRequest(ctx context.Context, pathParameter string, options *ImplicitGetRequiredPathOptions) (*azcore.Request, error) {
+func (client *ImplicitClient) getRequiredPathCreateRequest(ctx context.Context, pathParameter string, options *ImplicitGetRequiredPathOptions) (*policy.Request, error) {
 	urlPath := "/reqopt/implicit/required/path/{pathParameter}"
 	if pathParameter == "" {
 		return nil, errors.New("parameter pathParameter cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{pathParameter}", url.PathEscape(pathParameter))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getRequiredPathHandleError handles the GetRequiredPath error response.
-func (client *ImplicitClient) getRequiredPathHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ImplicitClient) getRequiredPathHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutOptionalBinaryBody - Test implicitly optional body parameter
@@ -228,21 +225,20 @@ func (client *ImplicitClient) PutOptionalBinaryBody(ctx context.Context, options
 	if err != nil {
 		return ImplicitPutOptionalBinaryBodyResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ImplicitPutOptionalBinaryBodyResponse{}, client.putOptionalBinaryBodyHandleError(resp)
 	}
-	return ImplicitPutOptionalBinaryBodyResponse{RawResponse: resp.Response}, nil
+	return ImplicitPutOptionalBinaryBodyResponse{RawResponse: resp}, nil
 }
 
 // putOptionalBinaryBodyCreateRequest creates the PutOptionalBinaryBody request.
-func (client *ImplicitClient) putOptionalBinaryBodyCreateRequest(ctx context.Context, options *ImplicitPutOptionalBinaryBodyOptions) (*azcore.Request, error) {
+func (client *ImplicitClient) putOptionalBinaryBodyCreateRequest(ctx context.Context, options *ImplicitPutOptionalBinaryBodyOptions) (*policy.Request, error) {
 	urlPath := "/reqopt/implicit/optional/binary-body"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	if options != nil && options.BodyParameter != nil {
 		return req, req.SetBody(options.BodyParameter, "application/octet-stream")
 	}
@@ -250,16 +246,16 @@ func (client *ImplicitClient) putOptionalBinaryBodyCreateRequest(ctx context.Con
 }
 
 // putOptionalBinaryBodyHandleError handles the PutOptionalBinaryBody error response.
-func (client *ImplicitClient) putOptionalBinaryBodyHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ImplicitClient) putOptionalBinaryBodyHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutOptionalBody - Test implicitly optional body parameter
@@ -273,38 +269,37 @@ func (client *ImplicitClient) PutOptionalBody(ctx context.Context, options *Impl
 	if err != nil {
 		return ImplicitPutOptionalBodyResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ImplicitPutOptionalBodyResponse{}, client.putOptionalBodyHandleError(resp)
 	}
-	return ImplicitPutOptionalBodyResponse{RawResponse: resp.Response}, nil
+	return ImplicitPutOptionalBodyResponse{RawResponse: resp}, nil
 }
 
 // putOptionalBodyCreateRequest creates the PutOptionalBody request.
-func (client *ImplicitClient) putOptionalBodyCreateRequest(ctx context.Context, options *ImplicitPutOptionalBodyOptions) (*azcore.Request, error) {
+func (client *ImplicitClient) putOptionalBodyCreateRequest(ctx context.Context, options *ImplicitPutOptionalBodyOptions) (*policy.Request, error) {
 	urlPath := "/reqopt/implicit/optional/body"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	if options != nil && options.BodyParameter != nil {
-		return req, req.MarshalAsJSON(*options.BodyParameter)
+		return req, runtime.MarshalAsJSON(req, *options.BodyParameter)
 	}
 	return req, nil
 }
 
 // putOptionalBodyHandleError handles the PutOptionalBody error response.
-func (client *ImplicitClient) putOptionalBodyHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ImplicitClient) putOptionalBodyHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutOptionalHeader - Test implicitly optional header parameter
@@ -318,38 +313,37 @@ func (client *ImplicitClient) PutOptionalHeader(ctx context.Context, options *Im
 	if err != nil {
 		return ImplicitPutOptionalHeaderResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ImplicitPutOptionalHeaderResponse{}, client.putOptionalHeaderHandleError(resp)
 	}
-	return ImplicitPutOptionalHeaderResponse{RawResponse: resp.Response}, nil
+	return ImplicitPutOptionalHeaderResponse{RawResponse: resp}, nil
 }
 
 // putOptionalHeaderCreateRequest creates the PutOptionalHeader request.
-func (client *ImplicitClient) putOptionalHeaderCreateRequest(ctx context.Context, options *ImplicitPutOptionalHeaderOptions) (*azcore.Request, error) {
+func (client *ImplicitClient) putOptionalHeaderCreateRequest(ctx context.Context, options *ImplicitPutOptionalHeaderOptions) (*policy.Request, error) {
 	urlPath := "/reqopt/implicit/optional/header"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
 	if options != nil && options.QueryParameter != nil {
-		req.Header.Set("queryParameter", *options.QueryParameter)
+		req.Raw().Header.Set("queryParameter", *options.QueryParameter)
 	}
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // putOptionalHeaderHandleError handles the PutOptionalHeader error response.
-func (client *ImplicitClient) putOptionalHeaderHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ImplicitClient) putOptionalHeaderHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutOptionalQuery - Test implicitly optional query parameter
@@ -363,38 +357,37 @@ func (client *ImplicitClient) PutOptionalQuery(ctx context.Context, options *Imp
 	if err != nil {
 		return ImplicitPutOptionalQueryResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ImplicitPutOptionalQueryResponse{}, client.putOptionalQueryHandleError(resp)
 	}
-	return ImplicitPutOptionalQueryResponse{RawResponse: resp.Response}, nil
+	return ImplicitPutOptionalQueryResponse{RawResponse: resp}, nil
 }
 
 // putOptionalQueryCreateRequest creates the PutOptionalQuery request.
-func (client *ImplicitClient) putOptionalQueryCreateRequest(ctx context.Context, options *ImplicitPutOptionalQueryOptions) (*azcore.Request, error) {
+func (client *ImplicitClient) putOptionalQueryCreateRequest(ctx context.Context, options *ImplicitPutOptionalQueryOptions) (*policy.Request, error) {
 	urlPath := "/reqopt/implicit/optional/query"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if options != nil && options.QueryParameter != nil {
 		reqQP.Set("queryParameter", *options.QueryParameter)
 	}
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // putOptionalQueryHandleError handles the PutOptionalQuery error response.
-func (client *ImplicitClient) putOptionalQueryHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ImplicitClient) putOptionalQueryHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }

@@ -11,7 +11,8 @@ package extenumsgroup
 import (
 	"context"
 	"errors"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 	"net/url"
 	"strings"
@@ -39,46 +40,45 @@ func (client *PetClient) AddPet(ctx context.Context, options *PetAddPetOptions) 
 	if err != nil {
 		return PetAddPetResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PetAddPetResponse{}, client.addPetHandleError(resp)
 	}
 	return client.addPetHandleResponse(resp)
 }
 
 // addPetCreateRequest creates the AddPet request.
-func (client *PetClient) addPetCreateRequest(ctx context.Context, options *PetAddPetOptions) (*azcore.Request, error) {
+func (client *PetClient) addPetCreateRequest(ctx context.Context, options *PetAddPetOptions) (*policy.Request, error) {
 	urlPath := "/extensibleenums/pet/addPet"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	if options != nil && options.PetParam != nil {
-		return req, req.MarshalAsJSON(*options.PetParam)
+		return req, runtime.MarshalAsJSON(req, *options.PetParam)
 	}
 	return req, nil
 }
 
 // addPetHandleResponse handles the AddPet response.
-func (client *PetClient) addPetHandleResponse(resp *azcore.Response) (PetAddPetResponse, error) {
-	result := PetAddPetResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.Pet); err != nil {
+func (client *PetClient) addPetHandleResponse(resp *http.Response) (PetAddPetResponse, error) {
+	result := PetAddPetResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Pet); err != nil {
 		return PetAddPetResponse{}, err
 	}
 	return result, nil
 }
 
 // addPetHandleError handles the AddPet error response.
-func (client *PetClient) addPetHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *PetClient) addPetHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	if len(body) == 0 {
-		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
+		return runtime.NewResponseError(errors.New(resp.Status), resp)
 	}
-	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
+	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
 // GetByPetID - get pet by id
@@ -92,45 +92,44 @@ func (client *PetClient) GetByPetID(ctx context.Context, petID string, options *
 	if err != nil {
 		return PetGetByPetIDResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PetGetByPetIDResponse{}, client.getByPetIDHandleError(resp)
 	}
 	return client.getByPetIDHandleResponse(resp)
 }
 
 // getByPetIDCreateRequest creates the GetByPetID request.
-func (client *PetClient) getByPetIDCreateRequest(ctx context.Context, petID string, options *PetGetByPetIDOptions) (*azcore.Request, error) {
+func (client *PetClient) getByPetIDCreateRequest(ctx context.Context, petID string, options *PetGetByPetIDOptions) (*policy.Request, error) {
 	urlPath := "/extensibleenums/pet/{petId}"
 	if petID == "" {
 		return nil, errors.New("parameter petID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{petId}", url.PathEscape(petID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getByPetIDHandleResponse handles the GetByPetID response.
-func (client *PetClient) getByPetIDHandleResponse(resp *azcore.Response) (PetGetByPetIDResponse, error) {
-	result := PetGetByPetIDResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.Pet); err != nil {
+func (client *PetClient) getByPetIDHandleResponse(resp *http.Response) (PetGetByPetIDResponse, error) {
+	result := PetGetByPetIDResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Pet); err != nil {
 		return PetGetByPetIDResponse{}, err
 	}
 	return result, nil
 }
 
 // getByPetIDHandleError handles the GetByPetID error response.
-func (client *PetClient) getByPetIDHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *PetClient) getByPetIDHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	if len(body) == 0 {
-		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
+		return runtime.NewResponseError(errors.New(resp.Status), resp)
 	}
-	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
+	return runtime.NewResponseError(errors.New(string(body)), resp)
 }

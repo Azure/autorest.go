@@ -11,8 +11,9 @@ package armcompute
 import (
 	"context"
 	"errors"
-	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -22,13 +23,14 @@ import (
 // VirtualMachineImagesClient contains the methods for the VirtualMachineImages group.
 // Don't use this type directly, use NewVirtualMachineImagesClient() instead.
 type VirtualMachineImagesClient struct {
-	con            *armcore.Connection
+	ep             string
+	pl             runtime.Pipeline
 	subscriptionID string
 }
 
 // NewVirtualMachineImagesClient creates a new instance of VirtualMachineImagesClient with the specified values.
-func NewVirtualMachineImagesClient(con *armcore.Connection, subscriptionID string) *VirtualMachineImagesClient {
-	return &VirtualMachineImagesClient{con: con, subscriptionID: subscriptionID}
+func NewVirtualMachineImagesClient(con *arm.Connection, subscriptionID string) *VirtualMachineImagesClient {
+	return &VirtualMachineImagesClient{ep: con.Endpoint(), pl: con.NewPipeline(module, version), subscriptionID: subscriptionID}
 }
 
 // Get - Gets a virtual machine image.
@@ -38,18 +40,18 @@ func (client *VirtualMachineImagesClient) Get(ctx context.Context, location stri
 	if err != nil {
 		return VirtualMachineImagesGetResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return VirtualMachineImagesGetResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return VirtualMachineImagesGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *VirtualMachineImagesClient) getCreateRequest(ctx context.Context, location string, publisherName string, offer string, skus string, version string, options *VirtualMachineImagesGetOptions) (*azcore.Request, error) {
+func (client *VirtualMachineImagesClient) getCreateRequest(ctx context.Context, location string, publisherName string, offer string, skus string, version string, options *VirtualMachineImagesGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus/{skus}/versions/{version}"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")
@@ -75,37 +77,36 @@ func (client *VirtualMachineImagesClient) getCreateRequest(ctx context.Context, 
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getHandleResponse handles the Get response.
-func (client *VirtualMachineImagesClient) getHandleResponse(resp *azcore.Response) (VirtualMachineImagesGetResponse, error) {
-	result := VirtualMachineImagesGetResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.VirtualMachineImage); err != nil {
+func (client *VirtualMachineImagesClient) getHandleResponse(resp *http.Response) (VirtualMachineImagesGetResponse, error) {
+	result := VirtualMachineImagesGetResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineImage); err != nil {
 		return VirtualMachineImagesGetResponse{}, err
 	}
 	return result, nil
 }
 
 // getHandleError handles the Get error response.
-func (client *VirtualMachineImagesClient) getHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *VirtualMachineImagesClient) getHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	if len(body) == 0 {
-		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
+		return runtime.NewResponseError(errors.New(resp.Status), resp)
 	}
-	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
+	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
 // List - Gets a list of all virtual machine image versions for the specified location, publisher, offer, and SKU.
@@ -115,18 +116,18 @@ func (client *VirtualMachineImagesClient) List(ctx context.Context, location str
 	if err != nil {
 		return VirtualMachineImagesListResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return VirtualMachineImagesListResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return VirtualMachineImagesListResponse{}, client.listHandleError(resp)
 	}
 	return client.listHandleResponse(resp)
 }
 
 // listCreateRequest creates the List request.
-func (client *VirtualMachineImagesClient) listCreateRequest(ctx context.Context, location string, publisherName string, offer string, skus string, options *VirtualMachineImagesListOptions) (*azcore.Request, error) {
+func (client *VirtualMachineImagesClient) listCreateRequest(ctx context.Context, location string, publisherName string, offer string, skus string, options *VirtualMachineImagesListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus/{skus}/versions"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")
@@ -148,12 +149,11 @@ func (client *VirtualMachineImagesClient) listCreateRequest(ctx context.Context,
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if options != nil && options.Expand != nil {
 		reqQP.Set("$expand", *options.Expand)
 	}
@@ -164,30 +164,30 @@ func (client *VirtualMachineImagesClient) listCreateRequest(ctx context.Context,
 		reqQP.Set("$orderby", *options.Orderby)
 	}
 	reqQP.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // listHandleResponse handles the List response.
-func (client *VirtualMachineImagesClient) listHandleResponse(resp *azcore.Response) (VirtualMachineImagesListResponse, error) {
-	result := VirtualMachineImagesListResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.VirtualMachineImageResourceArray); err != nil {
+func (client *VirtualMachineImagesClient) listHandleResponse(resp *http.Response) (VirtualMachineImagesListResponse, error) {
+	result := VirtualMachineImagesListResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineImageResourceArray); err != nil {
 		return VirtualMachineImagesListResponse{}, err
 	}
 	return result, nil
 }
 
 // listHandleError handles the List error response.
-func (client *VirtualMachineImagesClient) listHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *VirtualMachineImagesClient) listHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	if len(body) == 0 {
-		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
+		return runtime.NewResponseError(errors.New(resp.Status), resp)
 	}
-	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
+	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
 // ListOffers - Gets a list of virtual machine image offers for the specified location and publisher.
@@ -197,18 +197,18 @@ func (client *VirtualMachineImagesClient) ListOffers(ctx context.Context, locati
 	if err != nil {
 		return VirtualMachineImagesListOffersResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return VirtualMachineImagesListOffersResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return VirtualMachineImagesListOffersResponse{}, client.listOffersHandleError(resp)
 	}
 	return client.listOffersHandleResponse(resp)
 }
 
 // listOffersCreateRequest creates the ListOffers request.
-func (client *VirtualMachineImagesClient) listOffersCreateRequest(ctx context.Context, location string, publisherName string, options *VirtualMachineImagesListOffersOptions) (*azcore.Request, error) {
+func (client *VirtualMachineImagesClient) listOffersCreateRequest(ctx context.Context, location string, publisherName string, options *VirtualMachineImagesListOffersOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmimage/offers"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")
@@ -222,37 +222,36 @@ func (client *VirtualMachineImagesClient) listOffersCreateRequest(ctx context.Co
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // listOffersHandleResponse handles the ListOffers response.
-func (client *VirtualMachineImagesClient) listOffersHandleResponse(resp *azcore.Response) (VirtualMachineImagesListOffersResponse, error) {
-	result := VirtualMachineImagesListOffersResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.VirtualMachineImageResourceArray); err != nil {
+func (client *VirtualMachineImagesClient) listOffersHandleResponse(resp *http.Response) (VirtualMachineImagesListOffersResponse, error) {
+	result := VirtualMachineImagesListOffersResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineImageResourceArray); err != nil {
 		return VirtualMachineImagesListOffersResponse{}, err
 	}
 	return result, nil
 }
 
 // listOffersHandleError handles the ListOffers error response.
-func (client *VirtualMachineImagesClient) listOffersHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *VirtualMachineImagesClient) listOffersHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	if len(body) == 0 {
-		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
+		return runtime.NewResponseError(errors.New(resp.Status), resp)
 	}
-	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
+	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
 // ListPublishers - Gets a list of virtual machine image publishers for the specified Azure location.
@@ -262,18 +261,18 @@ func (client *VirtualMachineImagesClient) ListPublishers(ctx context.Context, lo
 	if err != nil {
 		return VirtualMachineImagesListPublishersResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return VirtualMachineImagesListPublishersResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return VirtualMachineImagesListPublishersResponse{}, client.listPublishersHandleError(resp)
 	}
 	return client.listPublishersHandleResponse(resp)
 }
 
 // listPublishersCreateRequest creates the ListPublishers request.
-func (client *VirtualMachineImagesClient) listPublishersCreateRequest(ctx context.Context, location string, options *VirtualMachineImagesListPublishersOptions) (*azcore.Request, error) {
+func (client *VirtualMachineImagesClient) listPublishersCreateRequest(ctx context.Context, location string, options *VirtualMachineImagesListPublishersOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")
@@ -283,37 +282,36 @@ func (client *VirtualMachineImagesClient) listPublishersCreateRequest(ctx contex
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // listPublishersHandleResponse handles the ListPublishers response.
-func (client *VirtualMachineImagesClient) listPublishersHandleResponse(resp *azcore.Response) (VirtualMachineImagesListPublishersResponse, error) {
-	result := VirtualMachineImagesListPublishersResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.VirtualMachineImageResourceArray); err != nil {
+func (client *VirtualMachineImagesClient) listPublishersHandleResponse(resp *http.Response) (VirtualMachineImagesListPublishersResponse, error) {
+	result := VirtualMachineImagesListPublishersResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineImageResourceArray); err != nil {
 		return VirtualMachineImagesListPublishersResponse{}, err
 	}
 	return result, nil
 }
 
 // listPublishersHandleError handles the ListPublishers error response.
-func (client *VirtualMachineImagesClient) listPublishersHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *VirtualMachineImagesClient) listPublishersHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	if len(body) == 0 {
-		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
+		return runtime.NewResponseError(errors.New(resp.Status), resp)
 	}
-	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
+	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
 // ListSKUs - Gets a list of virtual machine image SKUs for the specified location, publisher, and offer.
@@ -323,18 +321,18 @@ func (client *VirtualMachineImagesClient) ListSKUs(ctx context.Context, location
 	if err != nil {
 		return VirtualMachineImagesListSKUsResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return VirtualMachineImagesListSKUsResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return VirtualMachineImagesListSKUsResponse{}, client.listSKUsHandleError(resp)
 	}
 	return client.listSKUsHandleResponse(resp)
 }
 
 // listSKUsCreateRequest creates the ListSKUs request.
-func (client *VirtualMachineImagesClient) listSKUsCreateRequest(ctx context.Context, location string, publisherName string, offer string, options *VirtualMachineImagesListSKUsOptions) (*azcore.Request, error) {
+func (client *VirtualMachineImagesClient) listSKUsCreateRequest(ctx context.Context, location string, publisherName string, offer string, options *VirtualMachineImagesListSKUsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")
@@ -352,35 +350,34 @@ func (client *VirtualMachineImagesClient) listSKUsCreateRequest(ctx context.Cont
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // listSKUsHandleResponse handles the ListSKUs response.
-func (client *VirtualMachineImagesClient) listSKUsHandleResponse(resp *azcore.Response) (VirtualMachineImagesListSKUsResponse, error) {
-	result := VirtualMachineImagesListSKUsResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.VirtualMachineImageResourceArray); err != nil {
+func (client *VirtualMachineImagesClient) listSKUsHandleResponse(resp *http.Response) (VirtualMachineImagesListSKUsResponse, error) {
+	result := VirtualMachineImagesListSKUsResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineImageResourceArray); err != nil {
 		return VirtualMachineImagesListSKUsResponse{}, err
 	}
 	return result, nil
 }
 
 // listSKUsHandleError handles the ListSKUs error response.
-func (client *VirtualMachineImagesClient) listSKUsHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *VirtualMachineImagesClient) listSKUsHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	if len(body) == 0 {
-		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
+		return runtime.NewResponseError(errors.New(resp.Status), resp)
 	}
-	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
+	return runtime.NewResponseError(errors.New(string(body)), resp)
 }

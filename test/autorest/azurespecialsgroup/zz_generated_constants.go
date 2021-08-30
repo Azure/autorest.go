@@ -9,6 +9,6 @@
 package azurespecialsgroup
 
 const (
-	telemetryInfo = "azsdk-go-azurespecialsgroup/" + version
-	version       = "v0.1"
+	module  = "azurespecialsgroup"
+	version = "v0.1.0"
 )

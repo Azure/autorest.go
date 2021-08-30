@@ -12,7 +12,8 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 	"net/url"
 	"strings"
@@ -30,9 +31,9 @@ func (client *sqlScriptClient) BeginCreateOrUpdateSQLScript(ctx context.Context,
 		return SQLScriptCreateOrUpdateSQLScriptPollerResponse{}, err
 	}
 	result := SQLScriptCreateOrUpdateSQLScriptPollerResponse{
-		RawResponse: resp.Response,
+		RawResponse: resp,
 	}
-	pt, err := azcore.NewLROPoller("sqlScriptClient.CreateOrUpdateSQLScript", resp, client.con.Pipeline(), client.createOrUpdateSQLScriptHandleError)
+	pt, err := runtime.NewPoller("sqlScriptClient.CreateOrUpdateSQLScript", resp, client.con.Pipeline(), client.createOrUpdateSQLScriptHandleError)
 	if err != nil {
 		return SQLScriptCreateOrUpdateSQLScriptPollerResponse{}, err
 	}
@@ -44,7 +45,7 @@ func (client *sqlScriptClient) BeginCreateOrUpdateSQLScript(ctx context.Context,
 
 // CreateOrUpdateSQLScript - Creates or updates a Sql Script.
 // If the operation fails it returns the *CloudError error type.
-func (client *sqlScriptClient) createOrUpdateSQLScript(ctx context.Context, sqlScriptName string, sqlScript SQLScriptResource, options *SQLScriptBeginCreateOrUpdateSQLScriptOptions) (*azcore.Response, error) {
+func (client *sqlScriptClient) createOrUpdateSQLScript(ctx context.Context, sqlScriptName string, sqlScript SQLScriptResource, options *SQLScriptBeginCreateOrUpdateSQLScriptOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateSQLScriptCreateRequest(ctx, sqlScriptName, sqlScript, options)
 	if err != nil {
 		return nil, err
@@ -53,45 +54,44 @@ func (client *sqlScriptClient) createOrUpdateSQLScript(ctx context.Context, sqlS
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
 		return nil, client.createOrUpdateSQLScriptHandleError(resp)
 	}
 	return resp, nil
 }
 
 // createOrUpdateSQLScriptCreateRequest creates the CreateOrUpdateSQLScript request.
-func (client *sqlScriptClient) createOrUpdateSQLScriptCreateRequest(ctx context.Context, sqlScriptName string, sqlScript SQLScriptResource, options *SQLScriptBeginCreateOrUpdateSQLScriptOptions) (*azcore.Request, error) {
+func (client *sqlScriptClient) createOrUpdateSQLScriptCreateRequest(ctx context.Context, sqlScriptName string, sqlScript SQLScriptResource, options *SQLScriptBeginCreateOrUpdateSQLScriptOptions) (*policy.Request, error) {
 	urlPath := "/sqlScripts/{sqlScriptName}"
 	if sqlScriptName == "" {
 		return nil, errors.New("parameter sqlScriptName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{sqlScriptName}", url.PathEscape(sqlScriptName))
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-06-01-preview")
-	req.URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = reqQP.Encode()
 	if options != nil && options.IfMatch != nil {
-		req.Header.Set("If-Match", *options.IfMatch)
+		req.Raw().Header.Set("If-Match", *options.IfMatch)
 	}
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(sqlScript)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, sqlScript)
 }
 
 // createOrUpdateSQLScriptHandleError handles the CreateOrUpdateSQLScript error response.
-func (client *sqlScriptClient) createOrUpdateSQLScriptHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *sqlScriptClient) createOrUpdateSQLScriptHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BeginDeleteSQLScript - Deletes a Sql Script.
@@ -102,9 +102,9 @@ func (client *sqlScriptClient) BeginDeleteSQLScript(ctx context.Context, sqlScri
 		return SQLScriptDeleteSQLScriptPollerResponse{}, err
 	}
 	result := SQLScriptDeleteSQLScriptPollerResponse{
-		RawResponse: resp.Response,
+		RawResponse: resp,
 	}
-	pt, err := azcore.NewLROPoller("sqlScriptClient.DeleteSQLScript", resp, client.con.Pipeline(), client.deleteSQLScriptHandleError)
+	pt, err := runtime.NewPoller("sqlScriptClient.DeleteSQLScript", resp, client.con.Pipeline(), client.deleteSQLScriptHandleError)
 	if err != nil {
 		return SQLScriptDeleteSQLScriptPollerResponse{}, err
 	}
@@ -116,7 +116,7 @@ func (client *sqlScriptClient) BeginDeleteSQLScript(ctx context.Context, sqlScri
 
 // DeleteSQLScript - Deletes a Sql Script.
 // If the operation fails it returns the *CloudError error type.
-func (client *sqlScriptClient) deleteSQLScript(ctx context.Context, sqlScriptName string, options *SQLScriptBeginDeleteSQLScriptOptions) (*azcore.Response, error) {
+func (client *sqlScriptClient) deleteSQLScript(ctx context.Context, sqlScriptName string, options *SQLScriptBeginDeleteSQLScriptOptions) (*http.Response, error) {
 	req, err := client.deleteSQLScriptCreateRequest(ctx, sqlScriptName, options)
 	if err != nil {
 		return nil, err
@@ -125,42 +125,41 @@ func (client *sqlScriptClient) deleteSQLScript(ctx context.Context, sqlScriptNam
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.deleteSQLScriptHandleError(resp)
 	}
 	return resp, nil
 }
 
 // deleteSQLScriptCreateRequest creates the DeleteSQLScript request.
-func (client *sqlScriptClient) deleteSQLScriptCreateRequest(ctx context.Context, sqlScriptName string, options *SQLScriptBeginDeleteSQLScriptOptions) (*azcore.Request, error) {
+func (client *sqlScriptClient) deleteSQLScriptCreateRequest(ctx context.Context, sqlScriptName string, options *SQLScriptBeginDeleteSQLScriptOptions) (*policy.Request, error) {
 	urlPath := "/sqlScripts/{sqlScriptName}"
 	if sqlScriptName == "" {
 		return nil, errors.New("parameter sqlScriptName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{sqlScriptName}", url.PathEscape(sqlScriptName))
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-06-01-preview")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // deleteSQLScriptHandleError handles the DeleteSQLScript error response.
-func (client *sqlScriptClient) deleteSQLScriptHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *sqlScriptClient) deleteSQLScriptHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetSQLScript - Gets a sql script.
@@ -174,54 +173,53 @@ func (client *sqlScriptClient) GetSQLScript(ctx context.Context, sqlScriptName s
 	if err != nil {
 		return SQLScriptGetSQLScriptResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusNotModified) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusNotModified) {
 		return SQLScriptGetSQLScriptResponse{}, client.getSQLScriptHandleError(resp)
 	}
 	return client.getSQLScriptHandleResponse(resp)
 }
 
 // getSQLScriptCreateRequest creates the GetSQLScript request.
-func (client *sqlScriptClient) getSQLScriptCreateRequest(ctx context.Context, sqlScriptName string, options *SQLScriptGetSQLScriptOptions) (*azcore.Request, error) {
+func (client *sqlScriptClient) getSQLScriptCreateRequest(ctx context.Context, sqlScriptName string, options *SQLScriptGetSQLScriptOptions) (*policy.Request, error) {
 	urlPath := "/sqlScripts/{sqlScriptName}"
 	if sqlScriptName == "" {
 		return nil, errors.New("parameter sqlScriptName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{sqlScriptName}", url.PathEscape(sqlScriptName))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-06-01-preview")
-	req.URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = reqQP.Encode()
 	if options != nil && options.IfNoneMatch != nil {
-		req.Header.Set("If-None-Match", *options.IfNoneMatch)
+		req.Raw().Header.Set("If-None-Match", *options.IfNoneMatch)
 	}
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getSQLScriptHandleResponse handles the GetSQLScript response.
-func (client *sqlScriptClient) getSQLScriptHandleResponse(resp *azcore.Response) (SQLScriptGetSQLScriptResponse, error) {
-	result := SQLScriptGetSQLScriptResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.SQLScriptResource); err != nil {
+func (client *sqlScriptClient) getSQLScriptHandleResponse(resp *http.Response) (SQLScriptGetSQLScriptResponse, error) {
+	result := SQLScriptGetSQLScriptResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.SQLScriptResource); err != nil {
 		return SQLScriptGetSQLScriptResponse{}, err
 	}
 	return result, nil
 }
 
 // getSQLScriptHandleError handles the GetSQLScript error response.
-func (client *sqlScriptClient) getSQLScriptHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *sqlScriptClient) getSQLScriptHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetSQLScriptsByWorkspace - Lists sql scripts.
@@ -229,50 +227,49 @@ func (client *sqlScriptClient) getSQLScriptHandleError(resp *azcore.Response) er
 func (client *sqlScriptClient) GetSQLScriptsByWorkspace(options *SQLScriptGetSQLScriptsByWorkspaceOptions) *SQLScriptGetSQLScriptsByWorkspacePager {
 	return &SQLScriptGetSQLScriptsByWorkspacePager{
 		client: client,
-		requester: func(ctx context.Context) (*azcore.Request, error) {
+		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.getSQLScriptsByWorkspaceCreateRequest(ctx, options)
 		},
-		advancer: func(ctx context.Context, resp SQLScriptGetSQLScriptsByWorkspaceResponse) (*azcore.Request, error) {
-			return azcore.NewRequest(ctx, http.MethodGet, *resp.SQLScriptsListResponse.NextLink)
+		advancer: func(ctx context.Context, resp SQLScriptGetSQLScriptsByWorkspaceResponse) (*policy.Request, error) {
+			return runtime.NewRequest(ctx, http.MethodGet, *resp.SQLScriptsListResponse.NextLink)
 		},
 	}
 }
 
 // getSQLScriptsByWorkspaceCreateRequest creates the GetSQLScriptsByWorkspace request.
-func (client *sqlScriptClient) getSQLScriptsByWorkspaceCreateRequest(ctx context.Context, options *SQLScriptGetSQLScriptsByWorkspaceOptions) (*azcore.Request, error) {
+func (client *sqlScriptClient) getSQLScriptsByWorkspaceCreateRequest(ctx context.Context, options *SQLScriptGetSQLScriptsByWorkspaceOptions) (*policy.Request, error) {
 	urlPath := "/sqlScripts"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-06-01-preview")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getSQLScriptsByWorkspaceHandleResponse handles the GetSQLScriptsByWorkspace response.
-func (client *sqlScriptClient) getSQLScriptsByWorkspaceHandleResponse(resp *azcore.Response) (SQLScriptGetSQLScriptsByWorkspaceResponse, error) {
-	result := SQLScriptGetSQLScriptsByWorkspaceResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.SQLScriptsListResponse); err != nil {
+func (client *sqlScriptClient) getSQLScriptsByWorkspaceHandleResponse(resp *http.Response) (SQLScriptGetSQLScriptsByWorkspaceResponse, error) {
+	result := SQLScriptGetSQLScriptsByWorkspaceResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.SQLScriptsListResponse); err != nil {
 		return SQLScriptGetSQLScriptsByWorkspaceResponse{}, err
 	}
 	return result, nil
 }
 
 // getSQLScriptsByWorkspaceHandleError handles the GetSQLScriptsByWorkspace error response.
-func (client *sqlScriptClient) getSQLScriptsByWorkspaceHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *sqlScriptClient) getSQLScriptsByWorkspaceHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BeginRenameSQLScript - Renames a sqlScript.
@@ -283,9 +280,9 @@ func (client *sqlScriptClient) BeginRenameSQLScript(ctx context.Context, sqlScri
 		return SQLScriptRenameSQLScriptPollerResponse{}, err
 	}
 	result := SQLScriptRenameSQLScriptPollerResponse{
-		RawResponse: resp.Response,
+		RawResponse: resp,
 	}
-	pt, err := azcore.NewLROPoller("sqlScriptClient.RenameSQLScript", resp, client.con.Pipeline(), client.renameSQLScriptHandleError)
+	pt, err := runtime.NewPoller("sqlScriptClient.RenameSQLScript", resp, client.con.Pipeline(), client.renameSQLScriptHandleError)
 	if err != nil {
 		return SQLScriptRenameSQLScriptPollerResponse{}, err
 	}
@@ -297,7 +294,7 @@ func (client *sqlScriptClient) BeginRenameSQLScript(ctx context.Context, sqlScri
 
 // RenameSQLScript - Renames a sqlScript.
 // If the operation fails it returns the *CloudError error type.
-func (client *sqlScriptClient) renameSQLScript(ctx context.Context, sqlScriptName string, request ArtifactRenameRequest, options *SQLScriptBeginRenameSQLScriptOptions) (*azcore.Response, error) {
+func (client *sqlScriptClient) renameSQLScript(ctx context.Context, sqlScriptName string, request ArtifactRenameRequest, options *SQLScriptBeginRenameSQLScriptOptions) (*http.Response, error) {
 	req, err := client.renameSQLScriptCreateRequest(ctx, sqlScriptName, request, options)
 	if err != nil {
 		return nil, err
@@ -306,40 +303,39 @@ func (client *sqlScriptClient) renameSQLScript(ctx context.Context, sqlScriptNam
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
 		return nil, client.renameSQLScriptHandleError(resp)
 	}
 	return resp, nil
 }
 
 // renameSQLScriptCreateRequest creates the RenameSQLScript request.
-func (client *sqlScriptClient) renameSQLScriptCreateRequest(ctx context.Context, sqlScriptName string, request ArtifactRenameRequest, options *SQLScriptBeginRenameSQLScriptOptions) (*azcore.Request, error) {
+func (client *sqlScriptClient) renameSQLScriptCreateRequest(ctx context.Context, sqlScriptName string, request ArtifactRenameRequest, options *SQLScriptBeginRenameSQLScriptOptions) (*policy.Request, error) {
 	urlPath := "/sqlScripts/{sqlScriptName}/rename"
 	if sqlScriptName == "" {
 		return nil, errors.New("parameter sqlScriptName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{sqlScriptName}", url.PathEscape(sqlScriptName))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-06-01-preview")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(request)
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, request)
 }
 
 // renameSQLScriptHandleError handles the RenameSQLScript error response.
-func (client *sqlScriptClient) renameSQLScriptHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *sqlScriptClient) renameSQLScriptHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }

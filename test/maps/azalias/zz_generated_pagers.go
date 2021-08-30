@@ -10,7 +10,8 @@ package azalias
 
 import (
 	"context"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 	"reflect"
 )
@@ -20,8 +21,8 @@ type AliasListPager struct {
 	client    *aliasClient
 	current   AliasListResponseEnvelope
 	err       error
-	requester func(context.Context) (*azcore.Request, error)
-	advancer  func(context.Context, AliasListResponseEnvelope) (*azcore.Request, error)
+	requester func(context.Context) (*policy.Request, error)
+	advancer  func(context.Context, AliasListResponseEnvelope) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
@@ -32,7 +33,7 @@ func (p *AliasListPager) Err() error {
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
 func (p *AliasListPager) NextPage(ctx context.Context) bool {
-	var req *azcore.Request
+	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.AliasListResponse.NextLink == nil || len(*p.current.AliasListResponse.NextLink) == 0 {
@@ -51,7 +52,7 @@ func (p *AliasListPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		p.err = p.client.listHandleError(resp)
 		return false
 	}

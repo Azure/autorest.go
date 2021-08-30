@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/Azure/azure-sdk-for-go/sdk/to"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 )
 
 func newAutoRestValidationTestClient() *AutoRestValidationTestClient {

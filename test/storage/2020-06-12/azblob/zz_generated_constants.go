@@ -9,8 +9,8 @@
 package azblob
 
 const (
-	telemetryInfo = "azsdk-go-azblob/" + version
-	version       = "v0.1"
+	module  = "azblob"
+	version = "v0.1"
 )
 
 type AccessTier string

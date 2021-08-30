@@ -9,6 +9,6 @@
 package integergroup
 
 const (
-	telemetryInfo = "azsdk-go-integergroup/" + version
-	version       = "v0.1"
+	module  = "integergroup"
+	version = "v0.1.0"
 )

@@ -11,7 +11,8 @@ package nonstringenumgroup
 import (
 	"context"
 	"errors"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
@@ -37,43 +38,42 @@ func (client *FloatClient) Get(ctx context.Context, options *FloatGetOptions) (F
 	if err != nil {
 		return FloatGetResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return FloatGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *FloatClient) getCreateRequest(ctx context.Context, options *FloatGetOptions) (*azcore.Request, error) {
+func (client *FloatClient) getCreateRequest(ctx context.Context, options *FloatGetOptions) (*policy.Request, error) {
 	urlPath := "/nonStringEnums/float/get"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getHandleResponse handles the Get response.
-func (client *FloatClient) getHandleResponse(resp *azcore.Response) (FloatGetResponse, error) {
-	result := FloatGetResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.Value); err != nil {
+func (client *FloatClient) getHandleResponse(resp *http.Response) (FloatGetResponse, error) {
+	result := FloatGetResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return FloatGetResponse{}, err
 	}
 	return result, nil
 }
 
 // getHandleError handles the Get error response.
-func (client *FloatClient) getHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *FloatClient) getHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	if len(body) == 0 {
-		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
+		return runtime.NewResponseError(errors.New(resp.Status), resp)
 	}
-	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
+	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
 // Put - Put a float enum
@@ -87,44 +87,43 @@ func (client *FloatClient) Put(ctx context.Context, options *FloatPutOptions) (F
 	if err != nil {
 		return FloatPutResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return FloatPutResponse{}, client.putHandleError(resp)
 	}
 	return client.putHandleResponse(resp)
 }
 
 // putCreateRequest creates the Put request.
-func (client *FloatClient) putCreateRequest(ctx context.Context, options *FloatPutOptions) (*azcore.Request, error) {
+func (client *FloatClient) putCreateRequest(ctx context.Context, options *FloatPutOptions) (*policy.Request, error) {
 	urlPath := "/nonStringEnums/float/put"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	if options != nil && options.Input != nil {
-		return req, req.MarshalAsJSON(*options.Input)
+		return req, runtime.MarshalAsJSON(req, *options.Input)
 	}
 	return req, nil
 }
 
 // putHandleResponse handles the Put response.
-func (client *FloatClient) putHandleResponse(resp *azcore.Response) (FloatPutResponse, error) {
-	result := FloatPutResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.Value); err != nil {
+func (client *FloatClient) putHandleResponse(resp *http.Response) (FloatPutResponse, error) {
+	result := FloatPutResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return FloatPutResponse{}, err
 	}
 	return result, nil
 }
 
 // putHandleError handles the Put error response.
-func (client *FloatClient) putHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *FloatClient) putHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	if len(body) == 0 {
-		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
+		return runtime.NewResponseError(errors.New(resp.Status), resp)
 	}
-	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
+	return runtime.NewResponseError(errors.New(string(body)), resp)
 }

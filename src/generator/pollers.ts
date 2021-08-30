@@ -16,15 +16,10 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
     return '';
   }
   let text = await contentPreamble(session);
-  const isARM = session.model.language.go!.openApiType === 'arm';
   // add standard imports
   const imports = new ImportManager();
   imports.add('context');
-  if (isARM) {
-    imports.add('github.com/Azure/azure-sdk-for-go/sdk/armcore');
-  } else {
-    imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
-  }
+  imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
   imports.add('net/http');
   const pollers = <Array<PollerInfo>>session.model.language.go!.pollerTypes;
   pollers.sort((a: PollerInfo, b: PollerInfo) => { return sortAscending(a.name, b.name) });
@@ -33,11 +28,7 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
     // generate the poller type
     bodyText += `// ${poller.name} provides polling facilities until the operation reaches a terminal state.\n`;
     bodyText += `type ${poller.name} struct {\n`;
-    if (isARM) {
-      bodyText += '\tpt *armcore.LROPoller\n';
-    } else {
-      bodyText += '\tpt *azcore.LROPoller\n';
-    }
+    bodyText += '\tpt *azcore.Poller\n';
     if (poller.op.language.go!.pageableType) {
       bodyText += `\tclient *${poller.op.language.go!.clientName}\n`;
     }

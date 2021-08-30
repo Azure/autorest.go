@@ -9,6 +9,6 @@
 package paramgroupinggroup
 
 const (
-	telemetryInfo = "azsdk-go-paramgroupinggroup/" + version
-	version       = "v0.1"
+	module  = "paramgroupinggroup"
+	version = "v0.1.0"
 )

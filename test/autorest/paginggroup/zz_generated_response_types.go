@@ -10,7 +10,7 @@ package paginggroup
 
 import (
 	"context"
-	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
+	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
 	"net/http"
 	"time"
 )
@@ -98,7 +98,7 @@ func (l PagingGetMultiplePagesLROPollerResponse) PollUntilDone(ctx context.Conte
 
 // Resume rehydrates a PagingGetMultiplePagesLROPollerResponse from the provided client and resume token.
 func (l *PagingGetMultiplePagesLROPollerResponse) Resume(ctx context.Context, client *PagingClient, token string) error {
-	pt, err := armcore.NewLROPollerFromResumeToken("PagingClient.GetMultiplePagesLRO", token, client.con.Pipeline(), client.getMultiplePagesLROHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("PagingClient.GetMultiplePagesLRO", token, client.con.Pipeline(), client.getMultiplePagesLROHandleError)
 	if err != nil {
 		return err
 	}

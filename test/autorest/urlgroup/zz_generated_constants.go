@@ -9,8 +9,8 @@
 package urlgroup
 
 const (
-	telemetryInfo = "azsdk-go-urlgroup/" + version
-	version       = "v0.1"
+	module  = "urlgroup"
+	version = "v0.1.0"
 )
 
 type URIColor string

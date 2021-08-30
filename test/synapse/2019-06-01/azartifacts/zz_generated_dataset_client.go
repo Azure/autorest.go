@@ -12,7 +12,8 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 	"net/url"
 	"strings"
@@ -30,9 +31,9 @@ func (client *datasetClient) BeginCreateOrUpdateDataset(ctx context.Context, dat
 		return DatasetCreateOrUpdateDatasetPollerResponse{}, err
 	}
 	result := DatasetCreateOrUpdateDatasetPollerResponse{
-		RawResponse: resp.Response,
+		RawResponse: resp,
 	}
-	pt, err := azcore.NewLROPoller("datasetClient.CreateOrUpdateDataset", resp, client.con.Pipeline(), client.createOrUpdateDatasetHandleError)
+	pt, err := runtime.NewPoller("datasetClient.CreateOrUpdateDataset", resp, client.con.Pipeline(), client.createOrUpdateDatasetHandleError)
 	if err != nil {
 		return DatasetCreateOrUpdateDatasetPollerResponse{}, err
 	}
@@ -44,7 +45,7 @@ func (client *datasetClient) BeginCreateOrUpdateDataset(ctx context.Context, dat
 
 // CreateOrUpdateDataset - Creates or updates a dataset.
 // If the operation fails it returns the *CloudError error type.
-func (client *datasetClient) createOrUpdateDataset(ctx context.Context, datasetName string, dataset DatasetResource, options *DatasetBeginCreateOrUpdateDatasetOptions) (*azcore.Response, error) {
+func (client *datasetClient) createOrUpdateDataset(ctx context.Context, datasetName string, dataset DatasetResource, options *DatasetBeginCreateOrUpdateDatasetOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateDatasetCreateRequest(ctx, datasetName, dataset, options)
 	if err != nil {
 		return nil, err
@@ -53,45 +54,44 @@ func (client *datasetClient) createOrUpdateDataset(ctx context.Context, datasetN
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
 		return nil, client.createOrUpdateDatasetHandleError(resp)
 	}
 	return resp, nil
 }
 
 // createOrUpdateDatasetCreateRequest creates the CreateOrUpdateDataset request.
-func (client *datasetClient) createOrUpdateDatasetCreateRequest(ctx context.Context, datasetName string, dataset DatasetResource, options *DatasetBeginCreateOrUpdateDatasetOptions) (*azcore.Request, error) {
+func (client *datasetClient) createOrUpdateDatasetCreateRequest(ctx context.Context, datasetName string, dataset DatasetResource, options *DatasetBeginCreateOrUpdateDatasetOptions) (*policy.Request, error) {
 	urlPath := "/datasets/{datasetName}"
 	if datasetName == "" {
 		return nil, errors.New("parameter datasetName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{datasetName}", url.PathEscape(datasetName))
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-06-01-preview")
-	req.URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = reqQP.Encode()
 	if options != nil && options.IfMatch != nil {
-		req.Header.Set("If-Match", *options.IfMatch)
+		req.Raw().Header.Set("If-Match", *options.IfMatch)
 	}
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(dataset)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, dataset)
 }
 
 // createOrUpdateDatasetHandleError handles the CreateOrUpdateDataset error response.
-func (client *datasetClient) createOrUpdateDatasetHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *datasetClient) createOrUpdateDatasetHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BeginDeleteDataset - Deletes a dataset.
@@ -102,9 +102,9 @@ func (client *datasetClient) BeginDeleteDataset(ctx context.Context, datasetName
 		return DatasetDeleteDatasetPollerResponse{}, err
 	}
 	result := DatasetDeleteDatasetPollerResponse{
-		RawResponse: resp.Response,
+		RawResponse: resp,
 	}
-	pt, err := azcore.NewLROPoller("datasetClient.DeleteDataset", resp, client.con.Pipeline(), client.deleteDatasetHandleError)
+	pt, err := runtime.NewPoller("datasetClient.DeleteDataset", resp, client.con.Pipeline(), client.deleteDatasetHandleError)
 	if err != nil {
 		return DatasetDeleteDatasetPollerResponse{}, err
 	}
@@ -116,7 +116,7 @@ func (client *datasetClient) BeginDeleteDataset(ctx context.Context, datasetName
 
 // DeleteDataset - Deletes a dataset.
 // If the operation fails it returns the *CloudError error type.
-func (client *datasetClient) deleteDataset(ctx context.Context, datasetName string, options *DatasetBeginDeleteDatasetOptions) (*azcore.Response, error) {
+func (client *datasetClient) deleteDataset(ctx context.Context, datasetName string, options *DatasetBeginDeleteDatasetOptions) (*http.Response, error) {
 	req, err := client.deleteDatasetCreateRequest(ctx, datasetName, options)
 	if err != nil {
 		return nil, err
@@ -125,42 +125,41 @@ func (client *datasetClient) deleteDataset(ctx context.Context, datasetName stri
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.deleteDatasetHandleError(resp)
 	}
 	return resp, nil
 }
 
 // deleteDatasetCreateRequest creates the DeleteDataset request.
-func (client *datasetClient) deleteDatasetCreateRequest(ctx context.Context, datasetName string, options *DatasetBeginDeleteDatasetOptions) (*azcore.Request, error) {
+func (client *datasetClient) deleteDatasetCreateRequest(ctx context.Context, datasetName string, options *DatasetBeginDeleteDatasetOptions) (*policy.Request, error) {
 	urlPath := "/datasets/{datasetName}"
 	if datasetName == "" {
 		return nil, errors.New("parameter datasetName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{datasetName}", url.PathEscape(datasetName))
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-06-01-preview")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // deleteDatasetHandleError handles the DeleteDataset error response.
-func (client *datasetClient) deleteDatasetHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *datasetClient) deleteDatasetHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetDataset - Gets a dataset.
@@ -174,54 +173,53 @@ func (client *datasetClient) GetDataset(ctx context.Context, datasetName string,
 	if err != nil {
 		return DatasetGetDatasetResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusNotModified) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusNotModified) {
 		return DatasetGetDatasetResponse{}, client.getDatasetHandleError(resp)
 	}
 	return client.getDatasetHandleResponse(resp)
 }
 
 // getDatasetCreateRequest creates the GetDataset request.
-func (client *datasetClient) getDatasetCreateRequest(ctx context.Context, datasetName string, options *DatasetGetDatasetOptions) (*azcore.Request, error) {
+func (client *datasetClient) getDatasetCreateRequest(ctx context.Context, datasetName string, options *DatasetGetDatasetOptions) (*policy.Request, error) {
 	urlPath := "/datasets/{datasetName}"
 	if datasetName == "" {
 		return nil, errors.New("parameter datasetName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{datasetName}", url.PathEscape(datasetName))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-06-01-preview")
-	req.URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = reqQP.Encode()
 	if options != nil && options.IfNoneMatch != nil {
-		req.Header.Set("If-None-Match", *options.IfNoneMatch)
+		req.Raw().Header.Set("If-None-Match", *options.IfNoneMatch)
 	}
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getDatasetHandleResponse handles the GetDataset response.
-func (client *datasetClient) getDatasetHandleResponse(resp *azcore.Response) (DatasetGetDatasetResponse, error) {
-	result := DatasetGetDatasetResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.DatasetResource); err != nil {
+func (client *datasetClient) getDatasetHandleResponse(resp *http.Response) (DatasetGetDatasetResponse, error) {
+	result := DatasetGetDatasetResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.DatasetResource); err != nil {
 		return DatasetGetDatasetResponse{}, err
 	}
 	return result, nil
 }
 
 // getDatasetHandleError handles the GetDataset error response.
-func (client *datasetClient) getDatasetHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *datasetClient) getDatasetHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetDatasetsByWorkspace - Lists datasets.
@@ -229,50 +227,49 @@ func (client *datasetClient) getDatasetHandleError(resp *azcore.Response) error 
 func (client *datasetClient) GetDatasetsByWorkspace(options *DatasetGetDatasetsByWorkspaceOptions) *DatasetGetDatasetsByWorkspacePager {
 	return &DatasetGetDatasetsByWorkspacePager{
 		client: client,
-		requester: func(ctx context.Context) (*azcore.Request, error) {
+		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.getDatasetsByWorkspaceCreateRequest(ctx, options)
 		},
-		advancer: func(ctx context.Context, resp DatasetGetDatasetsByWorkspaceResponse) (*azcore.Request, error) {
-			return azcore.NewRequest(ctx, http.MethodGet, *resp.DatasetListResponse.NextLink)
+		advancer: func(ctx context.Context, resp DatasetGetDatasetsByWorkspaceResponse) (*policy.Request, error) {
+			return runtime.NewRequest(ctx, http.MethodGet, *resp.DatasetListResponse.NextLink)
 		},
 	}
 }
 
 // getDatasetsByWorkspaceCreateRequest creates the GetDatasetsByWorkspace request.
-func (client *datasetClient) getDatasetsByWorkspaceCreateRequest(ctx context.Context, options *DatasetGetDatasetsByWorkspaceOptions) (*azcore.Request, error) {
+func (client *datasetClient) getDatasetsByWorkspaceCreateRequest(ctx context.Context, options *DatasetGetDatasetsByWorkspaceOptions) (*policy.Request, error) {
 	urlPath := "/datasets"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-06-01-preview")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getDatasetsByWorkspaceHandleResponse handles the GetDatasetsByWorkspace response.
-func (client *datasetClient) getDatasetsByWorkspaceHandleResponse(resp *azcore.Response) (DatasetGetDatasetsByWorkspaceResponse, error) {
-	result := DatasetGetDatasetsByWorkspaceResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.DatasetListResponse); err != nil {
+func (client *datasetClient) getDatasetsByWorkspaceHandleResponse(resp *http.Response) (DatasetGetDatasetsByWorkspaceResponse, error) {
+	result := DatasetGetDatasetsByWorkspaceResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.DatasetListResponse); err != nil {
 		return DatasetGetDatasetsByWorkspaceResponse{}, err
 	}
 	return result, nil
 }
 
 // getDatasetsByWorkspaceHandleError handles the GetDatasetsByWorkspace error response.
-func (client *datasetClient) getDatasetsByWorkspaceHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *datasetClient) getDatasetsByWorkspaceHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BeginRenameDataset - Renames a dataset.
@@ -283,9 +280,9 @@ func (client *datasetClient) BeginRenameDataset(ctx context.Context, datasetName
 		return DatasetRenameDatasetPollerResponse{}, err
 	}
 	result := DatasetRenameDatasetPollerResponse{
-		RawResponse: resp.Response,
+		RawResponse: resp,
 	}
-	pt, err := azcore.NewLROPoller("datasetClient.RenameDataset", resp, client.con.Pipeline(), client.renameDatasetHandleError)
+	pt, err := runtime.NewPoller("datasetClient.RenameDataset", resp, client.con.Pipeline(), client.renameDatasetHandleError)
 	if err != nil {
 		return DatasetRenameDatasetPollerResponse{}, err
 	}
@@ -297,7 +294,7 @@ func (client *datasetClient) BeginRenameDataset(ctx context.Context, datasetName
 
 // RenameDataset - Renames a dataset.
 // If the operation fails it returns the *CloudError error type.
-func (client *datasetClient) renameDataset(ctx context.Context, datasetName string, request ArtifactRenameRequest, options *DatasetBeginRenameDatasetOptions) (*azcore.Response, error) {
+func (client *datasetClient) renameDataset(ctx context.Context, datasetName string, request ArtifactRenameRequest, options *DatasetBeginRenameDatasetOptions) (*http.Response, error) {
 	req, err := client.renameDatasetCreateRequest(ctx, datasetName, request, options)
 	if err != nil {
 		return nil, err
@@ -306,40 +303,39 @@ func (client *datasetClient) renameDataset(ctx context.Context, datasetName stri
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
 		return nil, client.renameDatasetHandleError(resp)
 	}
 	return resp, nil
 }
 
 // renameDatasetCreateRequest creates the RenameDataset request.
-func (client *datasetClient) renameDatasetCreateRequest(ctx context.Context, datasetName string, request ArtifactRenameRequest, options *DatasetBeginRenameDatasetOptions) (*azcore.Request, error) {
+func (client *datasetClient) renameDatasetCreateRequest(ctx context.Context, datasetName string, request ArtifactRenameRequest, options *DatasetBeginRenameDatasetOptions) (*policy.Request, error) {
 	urlPath := "/datasets/{datasetName}/rename"
 	if datasetName == "" {
 		return nil, errors.New("parameter datasetName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{datasetName}", url.PathEscape(datasetName))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-06-01-preview")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(request)
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, request)
 }
 
 // renameDatasetHandleError handles the RenameDataset error response.
-func (client *datasetClient) renameDatasetHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *datasetClient) renameDatasetHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }

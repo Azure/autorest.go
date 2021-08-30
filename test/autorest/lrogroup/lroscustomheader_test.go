@@ -9,8 +9,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"github.com/Azure/azure-sdk-for-go/sdk/to"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/google/go-cmp/cmp"
 )
 
@@ -24,7 +24,7 @@ func newLrOSCustomHeaderClient() *LROsCustomHeaderClient {
 func ctxWithHTTPHeader() context.Context {
 	header := http.Header{}
 	header.Add("x-ms-client-request-id", "9C4D50EE-2D56-4CD3-8152-34347DC9F2B0")
-	return azcore.WithHTTPHeader(context.Background(), header)
+	return policy.WithHTTPHeader(context.Background(), header)
 }
 
 // BeginPost202Retry200 - x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 is required message header for all requests. Long running post request, service returns a 202 to the initial request, with 'Location' and 'Retry-After' headers, Polls return a 200 with a response body after success

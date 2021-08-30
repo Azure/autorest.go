@@ -16,7 +16,7 @@ import (
 
 // HSMSecurityDomainDownloadPoller provides polling facilities until the operation reaches a terminal state.
 type HSMSecurityDomainDownloadPoller struct {
-	pt *azcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -59,7 +59,7 @@ func (p *HSMSecurityDomainDownloadPoller) ResumeToken() (string, error) {
 
 // HSMSecurityDomainUploadPoller provides polling facilities until the operation reaches a terminal state.
 type HSMSecurityDomainUploadPoller struct {
-	pt *azcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -102,7 +102,7 @@ func (p *HSMSecurityDomainUploadPoller) ResumeToken() (string, error) {
 
 // KeyVaultClientFullBackupPoller provides polling facilities until the operation reaches a terminal state.
 type KeyVaultClientFullBackupPoller struct {
-	pt *azcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -145,7 +145,7 @@ func (p *KeyVaultClientFullBackupPoller) ResumeToken() (string, error) {
 
 // KeyVaultClientFullRestoreOperationPoller provides polling facilities until the operation reaches a terminal state.
 type KeyVaultClientFullRestoreOperationPoller struct {
-	pt *azcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -188,7 +188,7 @@ func (p *KeyVaultClientFullRestoreOperationPoller) ResumeToken() (string, error)
 
 // KeyVaultClientSelectiveKeyRestoreOperationPoller provides polling facilities until the operation reaches a terminal state.
 type KeyVaultClientSelectiveKeyRestoreOperationPoller struct {
-	pt *azcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.

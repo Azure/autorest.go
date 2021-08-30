@@ -12,7 +12,8 @@ import (
 	"context"
 	"encoding/base64"
 	"fmt"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 	"strconv"
 	"strings"
@@ -41,40 +42,39 @@ func (client *QueriesClient) ArrayStringCSVEmpty(ctx context.Context, options *Q
 	if err != nil {
 		return QueriesArrayStringCSVEmptyResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesArrayStringCSVEmptyResponse{}, client.arrayStringCSVEmptyHandleError(resp)
 	}
-	return QueriesArrayStringCSVEmptyResponse{RawResponse: resp.Response}, nil
+	return QueriesArrayStringCSVEmptyResponse{RawResponse: resp}, nil
 }
 
 // arrayStringCSVEmptyCreateRequest creates the ArrayStringCSVEmpty request.
-func (client *QueriesClient) arrayStringCSVEmptyCreateRequest(ctx context.Context, options *QueriesArrayStringCSVEmptyOptions) (*azcore.Request, error) {
+func (client *QueriesClient) arrayStringCSVEmptyCreateRequest(ctx context.Context, options *QueriesArrayStringCSVEmptyOptions) (*policy.Request, error) {
 	urlPath := "/queries/array/csv/string/empty"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if options != nil && options.ArrayQuery != nil {
 		reqQP.Set("arrayQuery", strings.Join(options.ArrayQuery, ","))
 	}
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // arrayStringCSVEmptyHandleError handles the ArrayStringCSVEmpty error response.
-func (client *QueriesClient) arrayStringCSVEmptyHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *QueriesClient) arrayStringCSVEmptyHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // ArrayStringCSVNull - Get a null array of string using the csv-array format
@@ -88,40 +88,39 @@ func (client *QueriesClient) ArrayStringCSVNull(ctx context.Context, options *Qu
 	if err != nil {
 		return QueriesArrayStringCSVNullResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesArrayStringCSVNullResponse{}, client.arrayStringCSVNullHandleError(resp)
 	}
-	return QueriesArrayStringCSVNullResponse{RawResponse: resp.Response}, nil
+	return QueriesArrayStringCSVNullResponse{RawResponse: resp}, nil
 }
 
 // arrayStringCSVNullCreateRequest creates the ArrayStringCSVNull request.
-func (client *QueriesClient) arrayStringCSVNullCreateRequest(ctx context.Context, options *QueriesArrayStringCSVNullOptions) (*azcore.Request, error) {
+func (client *QueriesClient) arrayStringCSVNullCreateRequest(ctx context.Context, options *QueriesArrayStringCSVNullOptions) (*policy.Request, error) {
 	urlPath := "/queries/array/csv/string/null"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if options != nil && options.ArrayQuery != nil {
 		reqQP.Set("arrayQuery", strings.Join(options.ArrayQuery, ","))
 	}
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // arrayStringCSVNullHandleError handles the ArrayStringCSVNull error response.
-func (client *QueriesClient) arrayStringCSVNullHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *QueriesClient) arrayStringCSVNullHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // ArrayStringCSVValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
@@ -135,40 +134,39 @@ func (client *QueriesClient) ArrayStringCSVValid(ctx context.Context, options *Q
 	if err != nil {
 		return QueriesArrayStringCSVValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesArrayStringCSVValidResponse{}, client.arrayStringCSVValidHandleError(resp)
 	}
-	return QueriesArrayStringCSVValidResponse{RawResponse: resp.Response}, nil
+	return QueriesArrayStringCSVValidResponse{RawResponse: resp}, nil
 }
 
 // arrayStringCSVValidCreateRequest creates the ArrayStringCSVValid request.
-func (client *QueriesClient) arrayStringCSVValidCreateRequest(ctx context.Context, options *QueriesArrayStringCSVValidOptions) (*azcore.Request, error) {
+func (client *QueriesClient) arrayStringCSVValidCreateRequest(ctx context.Context, options *QueriesArrayStringCSVValidOptions) (*policy.Request, error) {
 	urlPath := "/queries/array/csv/string/valid"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if options != nil && options.ArrayQuery != nil {
 		reqQP.Set("arrayQuery", strings.Join(options.ArrayQuery, ","))
 	}
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // arrayStringCSVValidHandleError handles the ArrayStringCSVValid error response.
-func (client *QueriesClient) arrayStringCSVValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *QueriesClient) arrayStringCSVValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // ArrayStringNoCollectionFormatEmpty - Array query has no defined collection format, should default to csv. Pass in ['hello', 'nihao', 'bonjour'] for the
@@ -183,40 +181,39 @@ func (client *QueriesClient) ArrayStringNoCollectionFormatEmpty(ctx context.Cont
 	if err != nil {
 		return QueriesArrayStringNoCollectionFormatEmptyResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesArrayStringNoCollectionFormatEmptyResponse{}, client.arrayStringNoCollectionFormatEmptyHandleError(resp)
 	}
-	return QueriesArrayStringNoCollectionFormatEmptyResponse{RawResponse: resp.Response}, nil
+	return QueriesArrayStringNoCollectionFormatEmptyResponse{RawResponse: resp}, nil
 }
 
 // arrayStringNoCollectionFormatEmptyCreateRequest creates the ArrayStringNoCollectionFormatEmpty request.
-func (client *QueriesClient) arrayStringNoCollectionFormatEmptyCreateRequest(ctx context.Context, options *QueriesArrayStringNoCollectionFormatEmptyOptions) (*azcore.Request, error) {
+func (client *QueriesClient) arrayStringNoCollectionFormatEmptyCreateRequest(ctx context.Context, options *QueriesArrayStringNoCollectionFormatEmptyOptions) (*policy.Request, error) {
 	urlPath := "/queries/array/none/string/empty"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if options != nil && options.ArrayQuery != nil {
 		reqQP.Set("arrayQuery", strings.Join(options.ArrayQuery, ","))
 	}
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // arrayStringNoCollectionFormatEmptyHandleError handles the ArrayStringNoCollectionFormatEmpty error response.
-func (client *QueriesClient) arrayStringNoCollectionFormatEmptyHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *QueriesClient) arrayStringNoCollectionFormatEmptyHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // ArrayStringPipesValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the pipes-array format
@@ -230,40 +227,39 @@ func (client *QueriesClient) ArrayStringPipesValid(ctx context.Context, options 
 	if err != nil {
 		return QueriesArrayStringPipesValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesArrayStringPipesValidResponse{}, client.arrayStringPipesValidHandleError(resp)
 	}
-	return QueriesArrayStringPipesValidResponse{RawResponse: resp.Response}, nil
+	return QueriesArrayStringPipesValidResponse{RawResponse: resp}, nil
 }
 
 // arrayStringPipesValidCreateRequest creates the ArrayStringPipesValid request.
-func (client *QueriesClient) arrayStringPipesValidCreateRequest(ctx context.Context, options *QueriesArrayStringPipesValidOptions) (*azcore.Request, error) {
+func (client *QueriesClient) arrayStringPipesValidCreateRequest(ctx context.Context, options *QueriesArrayStringPipesValidOptions) (*policy.Request, error) {
 	urlPath := "/queries/array/pipes/string/valid"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if options != nil && options.ArrayQuery != nil {
 		reqQP.Set("arrayQuery", strings.Join(options.ArrayQuery, "|"))
 	}
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // arrayStringPipesValidHandleError handles the ArrayStringPipesValid error response.
-func (client *QueriesClient) arrayStringPipesValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *QueriesClient) arrayStringPipesValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // ArrayStringSsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the ssv-array format
@@ -277,40 +273,39 @@ func (client *QueriesClient) ArrayStringSsvValid(ctx context.Context, options *Q
 	if err != nil {
 		return QueriesArrayStringSsvValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesArrayStringSsvValidResponse{}, client.arrayStringSsvValidHandleError(resp)
 	}
-	return QueriesArrayStringSsvValidResponse{RawResponse: resp.Response}, nil
+	return QueriesArrayStringSsvValidResponse{RawResponse: resp}, nil
 }
 
 // arrayStringSsvValidCreateRequest creates the ArrayStringSsvValid request.
-func (client *QueriesClient) arrayStringSsvValidCreateRequest(ctx context.Context, options *QueriesArrayStringSsvValidOptions) (*azcore.Request, error) {
+func (client *QueriesClient) arrayStringSsvValidCreateRequest(ctx context.Context, options *QueriesArrayStringSsvValidOptions) (*policy.Request, error) {
 	urlPath := "/queries/array/ssv/string/valid"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if options != nil && options.ArrayQuery != nil {
 		reqQP.Set("arrayQuery", strings.Join(options.ArrayQuery, " "))
 	}
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // arrayStringSsvValidHandleError handles the ArrayStringSsvValid error response.
-func (client *QueriesClient) arrayStringSsvValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *QueriesClient) arrayStringSsvValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // ArrayStringTsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the tsv-array format
@@ -324,40 +319,39 @@ func (client *QueriesClient) ArrayStringTsvValid(ctx context.Context, options *Q
 	if err != nil {
 		return QueriesArrayStringTsvValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesArrayStringTsvValidResponse{}, client.arrayStringTsvValidHandleError(resp)
 	}
-	return QueriesArrayStringTsvValidResponse{RawResponse: resp.Response}, nil
+	return QueriesArrayStringTsvValidResponse{RawResponse: resp}, nil
 }
 
 // arrayStringTsvValidCreateRequest creates the ArrayStringTsvValid request.
-func (client *QueriesClient) arrayStringTsvValidCreateRequest(ctx context.Context, options *QueriesArrayStringTsvValidOptions) (*azcore.Request, error) {
+func (client *QueriesClient) arrayStringTsvValidCreateRequest(ctx context.Context, options *QueriesArrayStringTsvValidOptions) (*policy.Request, error) {
 	urlPath := "/queries/array/tsv/string/valid"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if options != nil && options.ArrayQuery != nil {
 		reqQP.Set("arrayQuery", strings.Join(options.ArrayQuery, "\t"))
 	}
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // arrayStringTsvValidHandleError handles the ArrayStringTsvValid error response.
-func (client *QueriesClient) arrayStringTsvValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *QueriesClient) arrayStringTsvValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // ByteEmpty - Get '' as byte array
@@ -371,38 +365,37 @@ func (client *QueriesClient) ByteEmpty(ctx context.Context, options *QueriesByte
 	if err != nil {
 		return QueriesByteEmptyResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesByteEmptyResponse{}, client.byteEmptyHandleError(resp)
 	}
-	return QueriesByteEmptyResponse{RawResponse: resp.Response}, nil
+	return QueriesByteEmptyResponse{RawResponse: resp}, nil
 }
 
 // byteEmptyCreateRequest creates the ByteEmpty request.
-func (client *QueriesClient) byteEmptyCreateRequest(ctx context.Context, options *QueriesByteEmptyOptions) (*azcore.Request, error) {
+func (client *QueriesClient) byteEmptyCreateRequest(ctx context.Context, options *QueriesByteEmptyOptions) (*policy.Request, error) {
 	urlPath := "/queries/byte/empty"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("byteQuery", "")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // byteEmptyHandleError handles the ByteEmpty error response.
-func (client *QueriesClient) byteEmptyHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *QueriesClient) byteEmptyHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // ByteMultiByte - Get '啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array
@@ -416,40 +409,39 @@ func (client *QueriesClient) ByteMultiByte(ctx context.Context, options *Queries
 	if err != nil {
 		return QueriesByteMultiByteResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesByteMultiByteResponse{}, client.byteMultiByteHandleError(resp)
 	}
-	return QueriesByteMultiByteResponse{RawResponse: resp.Response}, nil
+	return QueriesByteMultiByteResponse{RawResponse: resp}, nil
 }
 
 // byteMultiByteCreateRequest creates the ByteMultiByte request.
-func (client *QueriesClient) byteMultiByteCreateRequest(ctx context.Context, options *QueriesByteMultiByteOptions) (*azcore.Request, error) {
+func (client *QueriesClient) byteMultiByteCreateRequest(ctx context.Context, options *QueriesByteMultiByteOptions) (*policy.Request, error) {
 	urlPath := "/queries/byte/multibyte"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if options != nil && options.ByteQuery != nil {
 		reqQP.Set("byteQuery", base64.StdEncoding.EncodeToString(options.ByteQuery))
 	}
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // byteMultiByteHandleError handles the ByteMultiByte error response.
-func (client *QueriesClient) byteMultiByteHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *QueriesClient) byteMultiByteHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // ByteNull - Get null as byte array (no query parameters in uri)
@@ -463,40 +455,39 @@ func (client *QueriesClient) ByteNull(ctx context.Context, options *QueriesByteN
 	if err != nil {
 		return QueriesByteNullResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesByteNullResponse{}, client.byteNullHandleError(resp)
 	}
-	return QueriesByteNullResponse{RawResponse: resp.Response}, nil
+	return QueriesByteNullResponse{RawResponse: resp}, nil
 }
 
 // byteNullCreateRequest creates the ByteNull request.
-func (client *QueriesClient) byteNullCreateRequest(ctx context.Context, options *QueriesByteNullOptions) (*azcore.Request, error) {
+func (client *QueriesClient) byteNullCreateRequest(ctx context.Context, options *QueriesByteNullOptions) (*policy.Request, error) {
 	urlPath := "/queries/byte/null"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if options != nil && options.ByteQuery != nil {
 		reqQP.Set("byteQuery", base64.StdEncoding.EncodeToString(options.ByteQuery))
 	}
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // byteNullHandleError handles the ByteNull error response.
-func (client *QueriesClient) byteNullHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *QueriesClient) byteNullHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // DateNull - Get null as date - this should result in no query parameters in uri
@@ -510,40 +501,39 @@ func (client *QueriesClient) DateNull(ctx context.Context, options *QueriesDateN
 	if err != nil {
 		return QueriesDateNullResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesDateNullResponse{}, client.dateNullHandleError(resp)
 	}
-	return QueriesDateNullResponse{RawResponse: resp.Response}, nil
+	return QueriesDateNullResponse{RawResponse: resp}, nil
 }
 
 // dateNullCreateRequest creates the DateNull request.
-func (client *QueriesClient) dateNullCreateRequest(ctx context.Context, options *QueriesDateNullOptions) (*azcore.Request, error) {
+func (client *QueriesClient) dateNullCreateRequest(ctx context.Context, options *QueriesDateNullOptions) (*policy.Request, error) {
 	urlPath := "/queries/date/null"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if options != nil && options.DateQuery != nil {
 		reqQP.Set("dateQuery", options.DateQuery.Format("2006-01-02"))
 	}
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // dateNullHandleError handles the DateNull error response.
-func (client *QueriesClient) dateNullHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *QueriesClient) dateNullHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // DateTimeNull - Get null as date-time, should result in no query parameters in uri
@@ -557,40 +547,39 @@ func (client *QueriesClient) DateTimeNull(ctx context.Context, options *QueriesD
 	if err != nil {
 		return QueriesDateTimeNullResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesDateTimeNullResponse{}, client.dateTimeNullHandleError(resp)
 	}
-	return QueriesDateTimeNullResponse{RawResponse: resp.Response}, nil
+	return QueriesDateTimeNullResponse{RawResponse: resp}, nil
 }
 
 // dateTimeNullCreateRequest creates the DateTimeNull request.
-func (client *QueriesClient) dateTimeNullCreateRequest(ctx context.Context, options *QueriesDateTimeNullOptions) (*azcore.Request, error) {
+func (client *QueriesClient) dateTimeNullCreateRequest(ctx context.Context, options *QueriesDateTimeNullOptions) (*policy.Request, error) {
 	urlPath := "/queries/datetime/null"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if options != nil && options.DateTimeQuery != nil {
 		reqQP.Set("dateTimeQuery", options.DateTimeQuery.Format(time.RFC3339Nano))
 	}
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // dateTimeNullHandleError handles the DateTimeNull error response.
-func (client *QueriesClient) dateTimeNullHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *QueriesClient) dateTimeNullHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // DateTimeValid - Get '2012-01-01T01:01:01Z' as date-time
@@ -604,38 +593,37 @@ func (client *QueriesClient) DateTimeValid(ctx context.Context, options *Queries
 	if err != nil {
 		return QueriesDateTimeValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesDateTimeValidResponse{}, client.dateTimeValidHandleError(resp)
 	}
-	return QueriesDateTimeValidResponse{RawResponse: resp.Response}, nil
+	return QueriesDateTimeValidResponse{RawResponse: resp}, nil
 }
 
 // dateTimeValidCreateRequest creates the DateTimeValid request.
-func (client *QueriesClient) dateTimeValidCreateRequest(ctx context.Context, options *QueriesDateTimeValidOptions) (*azcore.Request, error) {
+func (client *QueriesClient) dateTimeValidCreateRequest(ctx context.Context, options *QueriesDateTimeValidOptions) (*policy.Request, error) {
 	urlPath := "/queries/datetime/2012-01-01T01%3A01%3A01Z"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("dateTimeQuery", "2012-01-01T01:01:01Z")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // dateTimeValidHandleError handles the DateTimeValid error response.
-func (client *QueriesClient) dateTimeValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *QueriesClient) dateTimeValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // DateValid - Get '2012-01-01' as date
@@ -649,38 +637,37 @@ func (client *QueriesClient) DateValid(ctx context.Context, options *QueriesDate
 	if err != nil {
 		return QueriesDateValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesDateValidResponse{}, client.dateValidHandleError(resp)
 	}
-	return QueriesDateValidResponse{RawResponse: resp.Response}, nil
+	return QueriesDateValidResponse{RawResponse: resp}, nil
 }
 
 // dateValidCreateRequest creates the DateValid request.
-func (client *QueriesClient) dateValidCreateRequest(ctx context.Context, options *QueriesDateValidOptions) (*azcore.Request, error) {
+func (client *QueriesClient) dateValidCreateRequest(ctx context.Context, options *QueriesDateValidOptions) (*policy.Request, error) {
 	urlPath := "/queries/date/2012-01-01"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("dateQuery", "2012-01-01")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // dateValidHandleError handles the DateValid error response.
-func (client *QueriesClient) dateValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *QueriesClient) dateValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // DoubleDecimalNegative - Get '-9999999.999' numeric value
@@ -694,38 +681,37 @@ func (client *QueriesClient) DoubleDecimalNegative(ctx context.Context, options 
 	if err != nil {
 		return QueriesDoubleDecimalNegativeResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesDoubleDecimalNegativeResponse{}, client.doubleDecimalNegativeHandleError(resp)
 	}
-	return QueriesDoubleDecimalNegativeResponse{RawResponse: resp.Response}, nil
+	return QueriesDoubleDecimalNegativeResponse{RawResponse: resp}, nil
 }
 
 // doubleDecimalNegativeCreateRequest creates the DoubleDecimalNegative request.
-func (client *QueriesClient) doubleDecimalNegativeCreateRequest(ctx context.Context, options *QueriesDoubleDecimalNegativeOptions) (*azcore.Request, error) {
+func (client *QueriesClient) doubleDecimalNegativeCreateRequest(ctx context.Context, options *QueriesDoubleDecimalNegativeOptions) (*policy.Request, error) {
 	urlPath := "/queries/double/-9999999.999"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("doubleQuery", "-9999999.999")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // doubleDecimalNegativeHandleError handles the DoubleDecimalNegative error response.
-func (client *QueriesClient) doubleDecimalNegativeHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *QueriesClient) doubleDecimalNegativeHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // DoubleDecimalPositive - Get '9999999.999' numeric value
@@ -739,38 +725,37 @@ func (client *QueriesClient) DoubleDecimalPositive(ctx context.Context, options 
 	if err != nil {
 		return QueriesDoubleDecimalPositiveResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesDoubleDecimalPositiveResponse{}, client.doubleDecimalPositiveHandleError(resp)
 	}
-	return QueriesDoubleDecimalPositiveResponse{RawResponse: resp.Response}, nil
+	return QueriesDoubleDecimalPositiveResponse{RawResponse: resp}, nil
 }
 
 // doubleDecimalPositiveCreateRequest creates the DoubleDecimalPositive request.
-func (client *QueriesClient) doubleDecimalPositiveCreateRequest(ctx context.Context, options *QueriesDoubleDecimalPositiveOptions) (*azcore.Request, error) {
+func (client *QueriesClient) doubleDecimalPositiveCreateRequest(ctx context.Context, options *QueriesDoubleDecimalPositiveOptions) (*policy.Request, error) {
 	urlPath := "/queries/double/9999999.999"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("doubleQuery", "9999999.999")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // doubleDecimalPositiveHandleError handles the DoubleDecimalPositive error response.
-func (client *QueriesClient) doubleDecimalPositiveHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *QueriesClient) doubleDecimalPositiveHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // DoubleNull - Get null numeric value (no query parameter)
@@ -784,40 +769,39 @@ func (client *QueriesClient) DoubleNull(ctx context.Context, options *QueriesDou
 	if err != nil {
 		return QueriesDoubleNullResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesDoubleNullResponse{}, client.doubleNullHandleError(resp)
 	}
-	return QueriesDoubleNullResponse{RawResponse: resp.Response}, nil
+	return QueriesDoubleNullResponse{RawResponse: resp}, nil
 }
 
 // doubleNullCreateRequest creates the DoubleNull request.
-func (client *QueriesClient) doubleNullCreateRequest(ctx context.Context, options *QueriesDoubleNullOptions) (*azcore.Request, error) {
+func (client *QueriesClient) doubleNullCreateRequest(ctx context.Context, options *QueriesDoubleNullOptions) (*policy.Request, error) {
 	urlPath := "/queries/double/null"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if options != nil && options.DoubleQuery != nil {
 		reqQP.Set("doubleQuery", strconv.FormatFloat(*options.DoubleQuery, 'f', -1, 64))
 	}
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // doubleNullHandleError handles the DoubleNull error response.
-func (client *QueriesClient) doubleNullHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *QueriesClient) doubleNullHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // EnumNull - Get null (no query parameter in url)
@@ -831,40 +815,39 @@ func (client *QueriesClient) EnumNull(ctx context.Context, options *QueriesEnumN
 	if err != nil {
 		return QueriesEnumNullResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesEnumNullResponse{}, client.enumNullHandleError(resp)
 	}
-	return QueriesEnumNullResponse{RawResponse: resp.Response}, nil
+	return QueriesEnumNullResponse{RawResponse: resp}, nil
 }
 
 // enumNullCreateRequest creates the EnumNull request.
-func (client *QueriesClient) enumNullCreateRequest(ctx context.Context, options *QueriesEnumNullOptions) (*azcore.Request, error) {
+func (client *QueriesClient) enumNullCreateRequest(ctx context.Context, options *QueriesEnumNullOptions) (*policy.Request, error) {
 	urlPath := "/queries/enum/null"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if options != nil && options.EnumQuery != nil {
 		reqQP.Set("enumQuery", string(*options.EnumQuery))
 	}
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // enumNullHandleError handles the EnumNull error response.
-func (client *QueriesClient) enumNullHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *QueriesClient) enumNullHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // EnumValid - Get using uri with query parameter 'green color'
@@ -878,40 +861,39 @@ func (client *QueriesClient) EnumValid(ctx context.Context, options *QueriesEnum
 	if err != nil {
 		return QueriesEnumValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesEnumValidResponse{}, client.enumValidHandleError(resp)
 	}
-	return QueriesEnumValidResponse{RawResponse: resp.Response}, nil
+	return QueriesEnumValidResponse{RawResponse: resp}, nil
 }
 
 // enumValidCreateRequest creates the EnumValid request.
-func (client *QueriesClient) enumValidCreateRequest(ctx context.Context, options *QueriesEnumValidOptions) (*azcore.Request, error) {
+func (client *QueriesClient) enumValidCreateRequest(ctx context.Context, options *QueriesEnumValidOptions) (*policy.Request, error) {
 	urlPath := "/queries/enum/green%20color"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if options != nil && options.EnumQuery != nil {
 		reqQP.Set("enumQuery", string(*options.EnumQuery))
 	}
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // enumValidHandleError handles the EnumValid error response.
-func (client *QueriesClient) enumValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *QueriesClient) enumValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // FloatNull - Get null numeric value (no query parameter)
@@ -925,40 +907,39 @@ func (client *QueriesClient) FloatNull(ctx context.Context, options *QueriesFloa
 	if err != nil {
 		return QueriesFloatNullResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesFloatNullResponse{}, client.floatNullHandleError(resp)
 	}
-	return QueriesFloatNullResponse{RawResponse: resp.Response}, nil
+	return QueriesFloatNullResponse{RawResponse: resp}, nil
 }
 
 // floatNullCreateRequest creates the FloatNull request.
-func (client *QueriesClient) floatNullCreateRequest(ctx context.Context, options *QueriesFloatNullOptions) (*azcore.Request, error) {
+func (client *QueriesClient) floatNullCreateRequest(ctx context.Context, options *QueriesFloatNullOptions) (*policy.Request, error) {
 	urlPath := "/queries/float/null"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if options != nil && options.FloatQuery != nil {
 		reqQP.Set("floatQuery", strconv.FormatFloat(float64(*options.FloatQuery), 'f', -1, 32))
 	}
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // floatNullHandleError handles the FloatNull error response.
-func (client *QueriesClient) floatNullHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *QueriesClient) floatNullHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // FloatScientificNegative - Get '-1.034E-20' numeric value
@@ -972,38 +953,37 @@ func (client *QueriesClient) FloatScientificNegative(ctx context.Context, option
 	if err != nil {
 		return QueriesFloatScientificNegativeResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesFloatScientificNegativeResponse{}, client.floatScientificNegativeHandleError(resp)
 	}
-	return QueriesFloatScientificNegativeResponse{RawResponse: resp.Response}, nil
+	return QueriesFloatScientificNegativeResponse{RawResponse: resp}, nil
 }
 
 // floatScientificNegativeCreateRequest creates the FloatScientificNegative request.
-func (client *QueriesClient) floatScientificNegativeCreateRequest(ctx context.Context, options *QueriesFloatScientificNegativeOptions) (*azcore.Request, error) {
+func (client *QueriesClient) floatScientificNegativeCreateRequest(ctx context.Context, options *QueriesFloatScientificNegativeOptions) (*policy.Request, error) {
 	urlPath := "/queries/float/-1.034E-20"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("floatQuery", "-1.034e-20")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // floatScientificNegativeHandleError handles the FloatScientificNegative error response.
-func (client *QueriesClient) floatScientificNegativeHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *QueriesClient) floatScientificNegativeHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // FloatScientificPositive - Get '1.034E+20' numeric value
@@ -1017,38 +997,37 @@ func (client *QueriesClient) FloatScientificPositive(ctx context.Context, option
 	if err != nil {
 		return QueriesFloatScientificPositiveResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesFloatScientificPositiveResponse{}, client.floatScientificPositiveHandleError(resp)
 	}
-	return QueriesFloatScientificPositiveResponse{RawResponse: resp.Response}, nil
+	return QueriesFloatScientificPositiveResponse{RawResponse: resp}, nil
 }
 
 // floatScientificPositiveCreateRequest creates the FloatScientificPositive request.
-func (client *QueriesClient) floatScientificPositiveCreateRequest(ctx context.Context, options *QueriesFloatScientificPositiveOptions) (*azcore.Request, error) {
+func (client *QueriesClient) floatScientificPositiveCreateRequest(ctx context.Context, options *QueriesFloatScientificPositiveOptions) (*policy.Request, error) {
 	urlPath := "/queries/float/1.034E+20"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("floatQuery", "103400000000000000000")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // floatScientificPositiveHandleError handles the FloatScientificPositive error response.
-func (client *QueriesClient) floatScientificPositiveHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *QueriesClient) floatScientificPositiveHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetBooleanFalse - Get false Boolean value on path
@@ -1062,38 +1041,37 @@ func (client *QueriesClient) GetBooleanFalse(ctx context.Context, options *Queri
 	if err != nil {
 		return QueriesGetBooleanFalseResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesGetBooleanFalseResponse{}, client.getBooleanFalseHandleError(resp)
 	}
-	return QueriesGetBooleanFalseResponse{RawResponse: resp.Response}, nil
+	return QueriesGetBooleanFalseResponse{RawResponse: resp}, nil
 }
 
 // getBooleanFalseCreateRequest creates the GetBooleanFalse request.
-func (client *QueriesClient) getBooleanFalseCreateRequest(ctx context.Context, options *QueriesGetBooleanFalseOptions) (*azcore.Request, error) {
+func (client *QueriesClient) getBooleanFalseCreateRequest(ctx context.Context, options *QueriesGetBooleanFalseOptions) (*policy.Request, error) {
 	urlPath := "/queries/bool/false"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("boolQuery", "false")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getBooleanFalseHandleError handles the GetBooleanFalse error response.
-func (client *QueriesClient) getBooleanFalseHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *QueriesClient) getBooleanFalseHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetBooleanNull - Get null Boolean value on query (query string should be absent)
@@ -1107,40 +1085,39 @@ func (client *QueriesClient) GetBooleanNull(ctx context.Context, options *Querie
 	if err != nil {
 		return QueriesGetBooleanNullResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesGetBooleanNullResponse{}, client.getBooleanNullHandleError(resp)
 	}
-	return QueriesGetBooleanNullResponse{RawResponse: resp.Response}, nil
+	return QueriesGetBooleanNullResponse{RawResponse: resp}, nil
 }
 
 // getBooleanNullCreateRequest creates the GetBooleanNull request.
-func (client *QueriesClient) getBooleanNullCreateRequest(ctx context.Context, options *QueriesGetBooleanNullOptions) (*azcore.Request, error) {
+func (client *QueriesClient) getBooleanNullCreateRequest(ctx context.Context, options *QueriesGetBooleanNullOptions) (*policy.Request, error) {
 	urlPath := "/queries/bool/null"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if options != nil && options.BoolQuery != nil {
 		reqQP.Set("boolQuery", strconv.FormatBool(*options.BoolQuery))
 	}
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getBooleanNullHandleError handles the GetBooleanNull error response.
-func (client *QueriesClient) getBooleanNullHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *QueriesClient) getBooleanNullHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetBooleanTrue - Get true Boolean value on path
@@ -1154,38 +1131,37 @@ func (client *QueriesClient) GetBooleanTrue(ctx context.Context, options *Querie
 	if err != nil {
 		return QueriesGetBooleanTrueResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesGetBooleanTrueResponse{}, client.getBooleanTrueHandleError(resp)
 	}
-	return QueriesGetBooleanTrueResponse{RawResponse: resp.Response}, nil
+	return QueriesGetBooleanTrueResponse{RawResponse: resp}, nil
 }
 
 // getBooleanTrueCreateRequest creates the GetBooleanTrue request.
-func (client *QueriesClient) getBooleanTrueCreateRequest(ctx context.Context, options *QueriesGetBooleanTrueOptions) (*azcore.Request, error) {
+func (client *QueriesClient) getBooleanTrueCreateRequest(ctx context.Context, options *QueriesGetBooleanTrueOptions) (*policy.Request, error) {
 	urlPath := "/queries/bool/true"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("boolQuery", "true")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getBooleanTrueHandleError handles the GetBooleanTrue error response.
-func (client *QueriesClient) getBooleanTrueHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *QueriesClient) getBooleanTrueHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetIntNegativeOneMillion - Get '-1000000' integer value
@@ -1199,38 +1175,37 @@ func (client *QueriesClient) GetIntNegativeOneMillion(ctx context.Context, optio
 	if err != nil {
 		return QueriesGetIntNegativeOneMillionResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesGetIntNegativeOneMillionResponse{}, client.getIntNegativeOneMillionHandleError(resp)
 	}
-	return QueriesGetIntNegativeOneMillionResponse{RawResponse: resp.Response}, nil
+	return QueriesGetIntNegativeOneMillionResponse{RawResponse: resp}, nil
 }
 
 // getIntNegativeOneMillionCreateRequest creates the GetIntNegativeOneMillion request.
-func (client *QueriesClient) getIntNegativeOneMillionCreateRequest(ctx context.Context, options *QueriesGetIntNegativeOneMillionOptions) (*azcore.Request, error) {
+func (client *QueriesClient) getIntNegativeOneMillionCreateRequest(ctx context.Context, options *QueriesGetIntNegativeOneMillionOptions) (*policy.Request, error) {
 	urlPath := "/queries/int/-1000000"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("intQuery", "-1000000")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getIntNegativeOneMillionHandleError handles the GetIntNegativeOneMillion error response.
-func (client *QueriesClient) getIntNegativeOneMillionHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *QueriesClient) getIntNegativeOneMillionHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetIntNull - Get null integer value (no query parameter)
@@ -1244,40 +1219,39 @@ func (client *QueriesClient) GetIntNull(ctx context.Context, options *QueriesGet
 	if err != nil {
 		return QueriesGetIntNullResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesGetIntNullResponse{}, client.getIntNullHandleError(resp)
 	}
-	return QueriesGetIntNullResponse{RawResponse: resp.Response}, nil
+	return QueriesGetIntNullResponse{RawResponse: resp}, nil
 }
 
 // getIntNullCreateRequest creates the GetIntNull request.
-func (client *QueriesClient) getIntNullCreateRequest(ctx context.Context, options *QueriesGetIntNullOptions) (*azcore.Request, error) {
+func (client *QueriesClient) getIntNullCreateRequest(ctx context.Context, options *QueriesGetIntNullOptions) (*policy.Request, error) {
 	urlPath := "/queries/int/null"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if options != nil && options.IntQuery != nil {
 		reqQP.Set("intQuery", strconv.FormatInt(int64(*options.IntQuery), 10))
 	}
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getIntNullHandleError handles the GetIntNull error response.
-func (client *QueriesClient) getIntNullHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *QueriesClient) getIntNullHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetIntOneMillion - Get '1000000' integer value
@@ -1291,38 +1265,37 @@ func (client *QueriesClient) GetIntOneMillion(ctx context.Context, options *Quer
 	if err != nil {
 		return QueriesGetIntOneMillionResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesGetIntOneMillionResponse{}, client.getIntOneMillionHandleError(resp)
 	}
-	return QueriesGetIntOneMillionResponse{RawResponse: resp.Response}, nil
+	return QueriesGetIntOneMillionResponse{RawResponse: resp}, nil
 }
 
 // getIntOneMillionCreateRequest creates the GetIntOneMillion request.
-func (client *QueriesClient) getIntOneMillionCreateRequest(ctx context.Context, options *QueriesGetIntOneMillionOptions) (*azcore.Request, error) {
+func (client *QueriesClient) getIntOneMillionCreateRequest(ctx context.Context, options *QueriesGetIntOneMillionOptions) (*policy.Request, error) {
 	urlPath := "/queries/int/1000000"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("intQuery", "1000000")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getIntOneMillionHandleError handles the GetIntOneMillion error response.
-func (client *QueriesClient) getIntOneMillionHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *QueriesClient) getIntOneMillionHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetLongNull - Get 'null 64 bit integer value (no query param in uri)
@@ -1336,40 +1309,39 @@ func (client *QueriesClient) GetLongNull(ctx context.Context, options *QueriesGe
 	if err != nil {
 		return QueriesGetLongNullResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesGetLongNullResponse{}, client.getLongNullHandleError(resp)
 	}
-	return QueriesGetLongNullResponse{RawResponse: resp.Response}, nil
+	return QueriesGetLongNullResponse{RawResponse: resp}, nil
 }
 
 // getLongNullCreateRequest creates the GetLongNull request.
-func (client *QueriesClient) getLongNullCreateRequest(ctx context.Context, options *QueriesGetLongNullOptions) (*azcore.Request, error) {
+func (client *QueriesClient) getLongNullCreateRequest(ctx context.Context, options *QueriesGetLongNullOptions) (*policy.Request, error) {
 	urlPath := "/queries/long/null"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if options != nil && options.LongQuery != nil {
 		reqQP.Set("longQuery", strconv.FormatInt(*options.LongQuery, 10))
 	}
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getLongNullHandleError handles the GetLongNull error response.
-func (client *QueriesClient) getLongNullHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *QueriesClient) getLongNullHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetNegativeTenBillion - Get '-10000000000' 64 bit integer value
@@ -1383,38 +1355,37 @@ func (client *QueriesClient) GetNegativeTenBillion(ctx context.Context, options 
 	if err != nil {
 		return QueriesGetNegativeTenBillionResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesGetNegativeTenBillionResponse{}, client.getNegativeTenBillionHandleError(resp)
 	}
-	return QueriesGetNegativeTenBillionResponse{RawResponse: resp.Response}, nil
+	return QueriesGetNegativeTenBillionResponse{RawResponse: resp}, nil
 }
 
 // getNegativeTenBillionCreateRequest creates the GetNegativeTenBillion request.
-func (client *QueriesClient) getNegativeTenBillionCreateRequest(ctx context.Context, options *QueriesGetNegativeTenBillionOptions) (*azcore.Request, error) {
+func (client *QueriesClient) getNegativeTenBillionCreateRequest(ctx context.Context, options *QueriesGetNegativeTenBillionOptions) (*policy.Request, error) {
 	urlPath := "/queries/long/-10000000000"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("longQuery", "-10000000000")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getNegativeTenBillionHandleError handles the GetNegativeTenBillion error response.
-func (client *QueriesClient) getNegativeTenBillionHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *QueriesClient) getNegativeTenBillionHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetTenBillion - Get '10000000000' 64 bit integer value
@@ -1428,38 +1399,37 @@ func (client *QueriesClient) GetTenBillion(ctx context.Context, options *Queries
 	if err != nil {
 		return QueriesGetTenBillionResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesGetTenBillionResponse{}, client.getTenBillionHandleError(resp)
 	}
-	return QueriesGetTenBillionResponse{RawResponse: resp.Response}, nil
+	return QueriesGetTenBillionResponse{RawResponse: resp}, nil
 }
 
 // getTenBillionCreateRequest creates the GetTenBillion request.
-func (client *QueriesClient) getTenBillionCreateRequest(ctx context.Context, options *QueriesGetTenBillionOptions) (*azcore.Request, error) {
+func (client *QueriesClient) getTenBillionCreateRequest(ctx context.Context, options *QueriesGetTenBillionOptions) (*policy.Request, error) {
 	urlPath := "/queries/long/10000000000"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("longQuery", "10000000000")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getTenBillionHandleError handles the GetTenBillion error response.
-func (client *QueriesClient) getTenBillionHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *QueriesClient) getTenBillionHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // StringEmpty - Get ''
@@ -1473,38 +1443,37 @@ func (client *QueriesClient) StringEmpty(ctx context.Context, options *QueriesSt
 	if err != nil {
 		return QueriesStringEmptyResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesStringEmptyResponse{}, client.stringEmptyHandleError(resp)
 	}
-	return QueriesStringEmptyResponse{RawResponse: resp.Response}, nil
+	return QueriesStringEmptyResponse{RawResponse: resp}, nil
 }
 
 // stringEmptyCreateRequest creates the StringEmpty request.
-func (client *QueriesClient) stringEmptyCreateRequest(ctx context.Context, options *QueriesStringEmptyOptions) (*azcore.Request, error) {
+func (client *QueriesClient) stringEmptyCreateRequest(ctx context.Context, options *QueriesStringEmptyOptions) (*policy.Request, error) {
 	urlPath := "/queries/string/empty"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("stringQuery", "")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // stringEmptyHandleError handles the StringEmpty error response.
-func (client *QueriesClient) stringEmptyHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *QueriesClient) stringEmptyHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // StringNull - Get null (no query parameter in url)
@@ -1518,40 +1487,39 @@ func (client *QueriesClient) StringNull(ctx context.Context, options *QueriesStr
 	if err != nil {
 		return QueriesStringNullResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesStringNullResponse{}, client.stringNullHandleError(resp)
 	}
-	return QueriesStringNullResponse{RawResponse: resp.Response}, nil
+	return QueriesStringNullResponse{RawResponse: resp}, nil
 }
 
 // stringNullCreateRequest creates the StringNull request.
-func (client *QueriesClient) stringNullCreateRequest(ctx context.Context, options *QueriesStringNullOptions) (*azcore.Request, error) {
+func (client *QueriesClient) stringNullCreateRequest(ctx context.Context, options *QueriesStringNullOptions) (*policy.Request, error) {
 	urlPath := "/queries/string/null"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if options != nil && options.StringQuery != nil {
 		reqQP.Set("stringQuery", *options.StringQuery)
 	}
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // stringNullHandleError handles the StringNull error response.
-func (client *QueriesClient) stringNullHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *QueriesClient) stringNullHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // StringURLEncoded - Get 'begin!*'();:@ &=+$,/?#[]end
@@ -1565,38 +1533,37 @@ func (client *QueriesClient) StringURLEncoded(ctx context.Context, options *Quer
 	if err != nil {
 		return QueriesStringURLEncodedResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesStringURLEncodedResponse{}, client.stringURLEncodedHandleError(resp)
 	}
-	return QueriesStringURLEncodedResponse{RawResponse: resp.Response}, nil
+	return QueriesStringURLEncodedResponse{RawResponse: resp}, nil
 }
 
 // stringURLEncodedCreateRequest creates the StringURLEncoded request.
-func (client *QueriesClient) stringURLEncodedCreateRequest(ctx context.Context, options *QueriesStringURLEncodedOptions) (*azcore.Request, error) {
+func (client *QueriesClient) stringURLEncodedCreateRequest(ctx context.Context, options *QueriesStringURLEncodedOptions) (*policy.Request, error) {
 	urlPath := "/queries/string/begin%21%2A%27%28%29%3B%3A%40%20%26%3D%2B%24%2C%2F%3F%23%5B%5Dend"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("stringQuery", "begin!*'();:@ &=+$,/?#[]end")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // stringURLEncodedHandleError handles the StringURLEncoded error response.
-func (client *QueriesClient) stringURLEncodedHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *QueriesClient) stringURLEncodedHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // StringUnicode - Get '啊齄丂狛狜隣郎隣兀﨩' multi-byte string value
@@ -1610,36 +1577,35 @@ func (client *QueriesClient) StringUnicode(ctx context.Context, options *Queries
 	if err != nil {
 		return QueriesStringUnicodeResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesStringUnicodeResponse{}, client.stringUnicodeHandleError(resp)
 	}
-	return QueriesStringUnicodeResponse{RawResponse: resp.Response}, nil
+	return QueriesStringUnicodeResponse{RawResponse: resp}, nil
 }
 
 // stringUnicodeCreateRequest creates the StringUnicode request.
-func (client *QueriesClient) stringUnicodeCreateRequest(ctx context.Context, options *QueriesStringUnicodeOptions) (*azcore.Request, error) {
+func (client *QueriesClient) stringUnicodeCreateRequest(ctx context.Context, options *QueriesStringUnicodeOptions) (*policy.Request, error) {
 	urlPath := "/queries/string/unicode/"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("stringQuery", "啊齄丂狛狜隣郎隣兀﨩")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // stringUnicodeHandleError handles the StringUnicode error response.
-func (client *QueriesClient) stringUnicodeHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *QueriesClient) stringUnicodeHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }

@@ -12,7 +12,8 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -34,45 +35,44 @@ func (client *pipelineRunClient) CancelPipelineRun(ctx context.Context, runID st
 	if err != nil {
 		return PipelineRunCancelPipelineRunResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PipelineRunCancelPipelineRunResponse{}, client.cancelPipelineRunHandleError(resp)
 	}
-	return PipelineRunCancelPipelineRunResponse{RawResponse: resp.Response}, nil
+	return PipelineRunCancelPipelineRunResponse{RawResponse: resp}, nil
 }
 
 // cancelPipelineRunCreateRequest creates the CancelPipelineRun request.
-func (client *pipelineRunClient) cancelPipelineRunCreateRequest(ctx context.Context, runID string, options *PipelineRunCancelPipelineRunOptions) (*azcore.Request, error) {
+func (client *pipelineRunClient) cancelPipelineRunCreateRequest(ctx context.Context, runID string, options *PipelineRunCancelPipelineRunOptions) (*policy.Request, error) {
 	urlPath := "/pipelineruns/{runId}/cancel"
 	if runID == "" {
 		return nil, errors.New("parameter runID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{runId}", url.PathEscape(runID))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if options != nil && options.IsRecursive != nil {
 		reqQP.Set("isRecursive", strconv.FormatBool(*options.IsRecursive))
 	}
 	reqQP.Set("api-version", "2019-06-01-preview")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // cancelPipelineRunHandleError handles the CancelPipelineRun error response.
-func (client *pipelineRunClient) cancelPipelineRunHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *pipelineRunClient) cancelPipelineRunHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetPipelineRun - Get a pipeline run by its run ID.
@@ -86,51 +86,50 @@ func (client *pipelineRunClient) GetPipelineRun(ctx context.Context, runID strin
 	if err != nil {
 		return PipelineRunGetPipelineRunResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PipelineRunGetPipelineRunResponse{}, client.getPipelineRunHandleError(resp)
 	}
 	return client.getPipelineRunHandleResponse(resp)
 }
 
 // getPipelineRunCreateRequest creates the GetPipelineRun request.
-func (client *pipelineRunClient) getPipelineRunCreateRequest(ctx context.Context, runID string, options *PipelineRunGetPipelineRunOptions) (*azcore.Request, error) {
+func (client *pipelineRunClient) getPipelineRunCreateRequest(ctx context.Context, runID string, options *PipelineRunGetPipelineRunOptions) (*policy.Request, error) {
 	urlPath := "/pipelineruns/{runId}"
 	if runID == "" {
 		return nil, errors.New("parameter runID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{runId}", url.PathEscape(runID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-06-01-preview")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getPipelineRunHandleResponse handles the GetPipelineRun response.
-func (client *pipelineRunClient) getPipelineRunHandleResponse(resp *azcore.Response) (PipelineRunGetPipelineRunResponse, error) {
-	result := PipelineRunGetPipelineRunResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.PipelineRun); err != nil {
+func (client *pipelineRunClient) getPipelineRunHandleResponse(resp *http.Response) (PipelineRunGetPipelineRunResponse, error) {
+	result := PipelineRunGetPipelineRunResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.PipelineRun); err != nil {
 		return PipelineRunGetPipelineRunResponse{}, err
 	}
 	return result, nil
 }
 
 // getPipelineRunHandleError handles the GetPipelineRun error response.
-func (client *pipelineRunClient) getPipelineRunHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *pipelineRunClient) getPipelineRunHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // QueryActivityRuns - Query activity runs based on input filter conditions.
@@ -144,14 +143,14 @@ func (client *pipelineRunClient) QueryActivityRuns(ctx context.Context, pipeline
 	if err != nil {
 		return PipelineRunQueryActivityRunsResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PipelineRunQueryActivityRunsResponse{}, client.queryActivityRunsHandleError(resp)
 	}
 	return client.queryActivityRunsHandleResponse(resp)
 }
 
 // queryActivityRunsCreateRequest creates the QueryActivityRuns request.
-func (client *pipelineRunClient) queryActivityRunsCreateRequest(ctx context.Context, pipelineName string, runID string, filterParameters RunFilterParameters, options *PipelineRunQueryActivityRunsOptions) (*azcore.Request, error) {
+func (client *pipelineRunClient) queryActivityRunsCreateRequest(ctx context.Context, pipelineName string, runID string, filterParameters RunFilterParameters, options *PipelineRunQueryActivityRunsOptions) (*policy.Request, error) {
 	urlPath := "/pipelines/{pipelineName}/pipelineruns/{runId}/queryActivityruns"
 	if pipelineName == "" {
 		return nil, errors.New("parameter pipelineName cannot be empty")
@@ -161,38 +160,37 @@ func (client *pipelineRunClient) queryActivityRunsCreateRequest(ctx context.Cont
 		return nil, errors.New("parameter runID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{runId}", url.PathEscape(runID))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-06-01-preview")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(filterParameters)
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, filterParameters)
 }
 
 // queryActivityRunsHandleResponse handles the QueryActivityRuns response.
-func (client *pipelineRunClient) queryActivityRunsHandleResponse(resp *azcore.Response) (PipelineRunQueryActivityRunsResponse, error) {
-	result := PipelineRunQueryActivityRunsResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.ActivityRunsQueryResponse); err != nil {
+func (client *pipelineRunClient) queryActivityRunsHandleResponse(resp *http.Response) (PipelineRunQueryActivityRunsResponse, error) {
+	result := PipelineRunQueryActivityRunsResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.ActivityRunsQueryResponse); err != nil {
 		return PipelineRunQueryActivityRunsResponse{}, err
 	}
 	return result, nil
 }
 
 // queryActivityRunsHandleError handles the QueryActivityRuns error response.
-func (client *pipelineRunClient) queryActivityRunsHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *pipelineRunClient) queryActivityRunsHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // QueryPipelineRunsByWorkspace - Query pipeline runs in the workspace based on input filter conditions.
@@ -206,45 +204,44 @@ func (client *pipelineRunClient) QueryPipelineRunsByWorkspace(ctx context.Contex
 	if err != nil {
 		return PipelineRunQueryPipelineRunsByWorkspaceResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PipelineRunQueryPipelineRunsByWorkspaceResponse{}, client.queryPipelineRunsByWorkspaceHandleError(resp)
 	}
 	return client.queryPipelineRunsByWorkspaceHandleResponse(resp)
 }
 
 // queryPipelineRunsByWorkspaceCreateRequest creates the QueryPipelineRunsByWorkspace request.
-func (client *pipelineRunClient) queryPipelineRunsByWorkspaceCreateRequest(ctx context.Context, filterParameters RunFilterParameters, options *PipelineRunQueryPipelineRunsByWorkspaceOptions) (*azcore.Request, error) {
+func (client *pipelineRunClient) queryPipelineRunsByWorkspaceCreateRequest(ctx context.Context, filterParameters RunFilterParameters, options *PipelineRunQueryPipelineRunsByWorkspaceOptions) (*policy.Request, error) {
 	urlPath := "/queryPipelineRuns"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-06-01-preview")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(filterParameters)
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, filterParameters)
 }
 
 // queryPipelineRunsByWorkspaceHandleResponse handles the QueryPipelineRunsByWorkspace response.
-func (client *pipelineRunClient) queryPipelineRunsByWorkspaceHandleResponse(resp *azcore.Response) (PipelineRunQueryPipelineRunsByWorkspaceResponse, error) {
-	result := PipelineRunQueryPipelineRunsByWorkspaceResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.PipelineRunsQueryResponse); err != nil {
+func (client *pipelineRunClient) queryPipelineRunsByWorkspaceHandleResponse(resp *http.Response) (PipelineRunQueryPipelineRunsByWorkspaceResponse, error) {
+	result := PipelineRunQueryPipelineRunsByWorkspaceResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.PipelineRunsQueryResponse); err != nil {
 		return PipelineRunQueryPipelineRunsByWorkspaceResponse{}, err
 	}
 	return result, nil
 }
 
 // queryPipelineRunsByWorkspaceHandleError handles the QueryPipelineRunsByWorkspace error response.
-func (client *pipelineRunClient) queryPipelineRunsByWorkspaceHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *pipelineRunClient) queryPipelineRunsByWorkspaceHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType.InnerError); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }

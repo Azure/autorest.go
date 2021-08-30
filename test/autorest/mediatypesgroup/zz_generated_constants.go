@@ -9,8 +9,8 @@
 package mediatypesgroup
 
 const (
-	telemetryInfo = "azsdk-go-mediatypesgroup/" + version
-	version       = "v0.1"
+	module  = "mediatypesgroup"
+	version = "v0.1.0"
 )
 
 // ContentType - Content type for upload

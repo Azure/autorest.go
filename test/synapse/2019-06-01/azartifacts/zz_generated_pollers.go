@@ -16,7 +16,7 @@ import (
 
 // DataFlowCreateOrUpdateDataFlowPoller provides polling facilities until the operation reaches a terminal state.
 type DataFlowCreateOrUpdateDataFlowPoller struct {
-	pt *azcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -59,7 +59,7 @@ func (p *DataFlowCreateOrUpdateDataFlowPoller) ResumeToken() (string, error) {
 
 // DataFlowDebugSessionCreateDataFlowDebugSessionPoller provides polling facilities until the operation reaches a terminal state.
 type DataFlowDebugSessionCreateDataFlowDebugSessionPoller struct {
-	pt *azcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -102,7 +102,7 @@ func (p *DataFlowDebugSessionCreateDataFlowDebugSessionPoller) ResumeToken() (st
 
 // DataFlowDebugSessionExecuteCommandPoller provides polling facilities until the operation reaches a terminal state.
 type DataFlowDebugSessionExecuteCommandPoller struct {
-	pt *azcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -145,7 +145,7 @@ func (p *DataFlowDebugSessionExecuteCommandPoller) ResumeToken() (string, error)
 
 // DataFlowDeleteDataFlowPoller provides polling facilities until the operation reaches a terminal state.
 type DataFlowDeleteDataFlowPoller struct {
-	pt *azcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -188,7 +188,7 @@ func (p *DataFlowDeleteDataFlowPoller) ResumeToken() (string, error) {
 
 // DataFlowRenameDataFlowPoller provides polling facilities until the operation reaches a terminal state.
 type DataFlowRenameDataFlowPoller struct {
-	pt *azcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -231,7 +231,7 @@ func (p *DataFlowRenameDataFlowPoller) ResumeToken() (string, error) {
 
 // DatasetCreateOrUpdateDatasetPoller provides polling facilities until the operation reaches a terminal state.
 type DatasetCreateOrUpdateDatasetPoller struct {
-	pt *azcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -274,7 +274,7 @@ func (p *DatasetCreateOrUpdateDatasetPoller) ResumeToken() (string, error) {
 
 // DatasetDeleteDatasetPoller provides polling facilities until the operation reaches a terminal state.
 type DatasetDeleteDatasetPoller struct {
-	pt *azcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -317,7 +317,7 @@ func (p *DatasetDeleteDatasetPoller) ResumeToken() (string, error) {
 
 // DatasetRenameDatasetPoller provides polling facilities until the operation reaches a terminal state.
 type DatasetRenameDatasetPoller struct {
-	pt *azcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -360,7 +360,7 @@ func (p *DatasetRenameDatasetPoller) ResumeToken() (string, error) {
 
 // LibraryCreatePoller provides polling facilities until the operation reaches a terminal state.
 type LibraryCreatePoller struct {
-	pt *azcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -403,7 +403,7 @@ func (p *LibraryCreatePoller) ResumeToken() (string, error) {
 
 // LibraryDeletePoller provides polling facilities until the operation reaches a terminal state.
 type LibraryDeletePoller struct {
-	pt *azcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -446,7 +446,7 @@ func (p *LibraryDeletePoller) ResumeToken() (string, error) {
 
 // LibraryFlushPoller provides polling facilities until the operation reaches a terminal state.
 type LibraryFlushPoller struct {
-	pt *azcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -489,7 +489,7 @@ func (p *LibraryFlushPoller) ResumeToken() (string, error) {
 
 // LinkedServiceCreateOrUpdateLinkedServicePoller provides polling facilities until the operation reaches a terminal state.
 type LinkedServiceCreateOrUpdateLinkedServicePoller struct {
-	pt *azcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -532,7 +532,7 @@ func (p *LinkedServiceCreateOrUpdateLinkedServicePoller) ResumeToken() (string, 
 
 // LinkedServiceDeleteLinkedServicePoller provides polling facilities until the operation reaches a terminal state.
 type LinkedServiceDeleteLinkedServicePoller struct {
-	pt *azcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -575,7 +575,7 @@ func (p *LinkedServiceDeleteLinkedServicePoller) ResumeToken() (string, error) {
 
 // LinkedServiceRenameLinkedServicePoller provides polling facilities until the operation reaches a terminal state.
 type LinkedServiceRenameLinkedServicePoller struct {
-	pt *azcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -618,7 +618,7 @@ func (p *LinkedServiceRenameLinkedServicePoller) ResumeToken() (string, error) {
 
 // NotebookCreateOrUpdateNotebookPoller provides polling facilities until the operation reaches a terminal state.
 type NotebookCreateOrUpdateNotebookPoller struct {
-	pt *azcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -661,7 +661,7 @@ func (p *NotebookCreateOrUpdateNotebookPoller) ResumeToken() (string, error) {
 
 // NotebookDeleteNotebookPoller provides polling facilities until the operation reaches a terminal state.
 type NotebookDeleteNotebookPoller struct {
-	pt *azcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -704,7 +704,7 @@ func (p *NotebookDeleteNotebookPoller) ResumeToken() (string, error) {
 
 // NotebookRenameNotebookPoller provides polling facilities until the operation reaches a terminal state.
 type NotebookRenameNotebookPoller struct {
-	pt *azcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -747,7 +747,7 @@ func (p *NotebookRenameNotebookPoller) ResumeToken() (string, error) {
 
 // PipelineCreateOrUpdatePipelinePoller provides polling facilities until the operation reaches a terminal state.
 type PipelineCreateOrUpdatePipelinePoller struct {
-	pt *azcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -790,7 +790,7 @@ func (p *PipelineCreateOrUpdatePipelinePoller) ResumeToken() (string, error) {
 
 // PipelineDeletePipelinePoller provides polling facilities until the operation reaches a terminal state.
 type PipelineDeletePipelinePoller struct {
-	pt *azcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -833,7 +833,7 @@ func (p *PipelineDeletePipelinePoller) ResumeToken() (string, error) {
 
 // PipelineRenamePipelinePoller provides polling facilities until the operation reaches a terminal state.
 type PipelineRenamePipelinePoller struct {
-	pt *azcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -876,7 +876,7 @@ func (p *PipelineRenamePipelinePoller) ResumeToken() (string, error) {
 
 // SQLScriptCreateOrUpdateSQLScriptPoller provides polling facilities until the operation reaches a terminal state.
 type SQLScriptCreateOrUpdateSQLScriptPoller struct {
-	pt *azcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -919,7 +919,7 @@ func (p *SQLScriptCreateOrUpdateSQLScriptPoller) ResumeToken() (string, error) {
 
 // SQLScriptDeleteSQLScriptPoller provides polling facilities until the operation reaches a terminal state.
 type SQLScriptDeleteSQLScriptPoller struct {
-	pt *azcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -962,7 +962,7 @@ func (p *SQLScriptDeleteSQLScriptPoller) ResumeToken() (string, error) {
 
 // SQLScriptRenameSQLScriptPoller provides polling facilities until the operation reaches a terminal state.
 type SQLScriptRenameSQLScriptPoller struct {
-	pt *azcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1005,7 +1005,7 @@ func (p *SQLScriptRenameSQLScriptPoller) ResumeToken() (string, error) {
 
 // SparkJobDefinitionCreateOrUpdateSparkJobDefinitionPoller provides polling facilities until the operation reaches a terminal state.
 type SparkJobDefinitionCreateOrUpdateSparkJobDefinitionPoller struct {
-	pt *azcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1048,7 +1048,7 @@ func (p *SparkJobDefinitionCreateOrUpdateSparkJobDefinitionPoller) ResumeToken()
 
 // SparkJobDefinitionDebugSparkJobDefinitionPoller provides polling facilities until the operation reaches a terminal state.
 type SparkJobDefinitionDebugSparkJobDefinitionPoller struct {
-	pt *azcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1091,7 +1091,7 @@ func (p *SparkJobDefinitionDebugSparkJobDefinitionPoller) ResumeToken() (string,
 
 // SparkJobDefinitionDeleteSparkJobDefinitionPoller provides polling facilities until the operation reaches a terminal state.
 type SparkJobDefinitionDeleteSparkJobDefinitionPoller struct {
-	pt *azcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1134,7 +1134,7 @@ func (p *SparkJobDefinitionDeleteSparkJobDefinitionPoller) ResumeToken() (string
 
 // SparkJobDefinitionExecuteSparkJobDefinitionPoller provides polling facilities until the operation reaches a terminal state.
 type SparkJobDefinitionExecuteSparkJobDefinitionPoller struct {
-	pt *azcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1177,7 +1177,7 @@ func (p *SparkJobDefinitionExecuteSparkJobDefinitionPoller) ResumeToken() (strin
 
 // SparkJobDefinitionRenameSparkJobDefinitionPoller provides polling facilities until the operation reaches a terminal state.
 type SparkJobDefinitionRenameSparkJobDefinitionPoller struct {
-	pt *azcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1220,7 +1220,7 @@ func (p *SparkJobDefinitionRenameSparkJobDefinitionPoller) ResumeToken() (string
 
 // TriggerCreateOrUpdateTriggerPoller provides polling facilities until the operation reaches a terminal state.
 type TriggerCreateOrUpdateTriggerPoller struct {
-	pt *azcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1263,7 +1263,7 @@ func (p *TriggerCreateOrUpdateTriggerPoller) ResumeToken() (string, error) {
 
 // TriggerDeleteTriggerPoller provides polling facilities until the operation reaches a terminal state.
 type TriggerDeleteTriggerPoller struct {
-	pt *azcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1306,7 +1306,7 @@ func (p *TriggerDeleteTriggerPoller) ResumeToken() (string, error) {
 
 // TriggerStartTriggerPoller provides polling facilities until the operation reaches a terminal state.
 type TriggerStartTriggerPoller struct {
-	pt *azcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1349,7 +1349,7 @@ func (p *TriggerStartTriggerPoller) ResumeToken() (string, error) {
 
 // TriggerStopTriggerPoller provides polling facilities until the operation reaches a terminal state.
 type TriggerStopTriggerPoller struct {
-	pt *azcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1392,7 +1392,7 @@ func (p *TriggerStopTriggerPoller) ResumeToken() (string, error) {
 
 // TriggerSubscribeTriggerToEventsPoller provides polling facilities until the operation reaches a terminal state.
 type TriggerSubscribeTriggerToEventsPoller struct {
-	pt *azcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -1435,7 +1435,7 @@ func (p *TriggerSubscribeTriggerToEventsPoller) ResumeToken() (string, error) {
 
 // TriggerUnsubscribeTriggerFromEventsPoller provides polling facilities until the operation reaches a terminal state.
 type TriggerUnsubscribeTriggerFromEventsPoller struct {
-	pt *azcore.LROPoller
+	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.

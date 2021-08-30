@@ -9,8 +9,8 @@
 package armnetwork
 
 const (
-	telemetryInfo = "azsdk-go-armnetwork/" + version
-	version       = "v0.1"
+	module  = "armnetwork"
+	version = "v0.1"
 )
 
 // Access - Access to be allowed or denied.

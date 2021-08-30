@@ -11,7 +11,8 @@ package azurereportgroup
 import (
 	"context"
 	"fmt"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
@@ -37,47 +38,46 @@ func (client *AutoRestReportServiceForAzureClient) GetReport(ctx context.Context
 	if err != nil {
 		return AutoRestReportServiceForAzureGetReportResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return AutoRestReportServiceForAzureGetReportResponse{}, client.getReportHandleError(resp)
 	}
 	return client.getReportHandleResponse(resp)
 }
 
 // getReportCreateRequest creates the GetReport request.
-func (client *AutoRestReportServiceForAzureClient) getReportCreateRequest(ctx context.Context, options *AutoRestReportServiceForAzureGetReportOptions) (*azcore.Request, error) {
+func (client *AutoRestReportServiceForAzureClient) getReportCreateRequest(ctx context.Context, options *AutoRestReportServiceForAzureGetReportOptions) (*policy.Request, error) {
 	urlPath := "/report/azure"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if options != nil && options.Qualifier != nil {
 		reqQP.Set("qualifier", *options.Qualifier)
 	}
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getReportHandleResponse handles the GetReport response.
-func (client *AutoRestReportServiceForAzureClient) getReportHandleResponse(resp *azcore.Response) (AutoRestReportServiceForAzureGetReportResponse, error) {
-	result := AutoRestReportServiceForAzureGetReportResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.Value); err != nil {
+func (client *AutoRestReportServiceForAzureClient) getReportHandleResponse(resp *http.Response) (AutoRestReportServiceForAzureGetReportResponse, error) {
+	result := AutoRestReportServiceForAzureGetReportResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return AutoRestReportServiceForAzureGetReportResponse{}, err
 	}
 	return result, nil
 }
 
 // getReportHandleError handles the GetReport error response.
-func (client *AutoRestReportServiceForAzureClient) getReportHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *AutoRestReportServiceForAzureClient) getReportHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }

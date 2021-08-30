@@ -9,8 +9,8 @@
 package azspark
 
 const (
-	telemetryInfo = "azsdk-go-azspark/" + version
-	version       = "v0.1"
+	module  = "azspark"
+	version = "v0.1"
 )
 
 type PluginCurrentState string
