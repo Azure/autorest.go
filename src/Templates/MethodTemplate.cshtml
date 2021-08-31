@@ -104,7 +104,7 @@ else
     <text>
         result, err = client.@(Model.SenderMethodName)(req)
         if err != nil {
-        err = @(Model.AutorestError("Failure sending request"))
+        err = @(Model.AutorestError("Failure sending request", "result.Response()"))
         return
         }
     </text>

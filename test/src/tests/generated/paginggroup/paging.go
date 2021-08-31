@@ -582,7 +582,7 @@ func (client PagingClient) GetMultiplePagesLRO(ctx context.Context, clientReques
 
 	result, err = client.GetMultiplePagesLROSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetMultiplePagesLRO", nil, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "paginggroup.PagingClient", "GetMultiplePagesLRO", result.Response(), "Failure sending request")
 		return
 	}
 
