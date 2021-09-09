@@ -18,6 +18,7 @@ import (
 type AliasCreateOptions struct {
 	// The unique id that references a creator data item to be aliased.
 	CreatorDataItemID *string
+	GroupBy           []SomethingCount
 }
 
 // AliasListItem - Detailed information for the alias.
@@ -37,7 +38,7 @@ type AliasListItem struct {
 
 // AliasListOptions contains the optional parameters for the Alias.List method.
 type AliasListOptions struct {
-	// placeholder for future optional parameters
+	GroupBy []LogMetricsGroupBy
 }
 
 // AliasListResponse - The response model for the List API. Returns a list of all the previously created aliases.

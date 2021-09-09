@@ -55,3 +55,53 @@ func PossibleGeographyValues() []Geography {
 func (c Geography) ToPtr() *Geography {
 	return &c
 }
+
+type LogMetricsGroupBy string
+
+const (
+	LogMetricsGroupByCacheStatus    LogMetricsGroupBy = "cacheStatus"
+	LogMetricsGroupByCountry        LogMetricsGroupBy = "country"
+	LogMetricsGroupByCustomDomain   LogMetricsGroupBy = "customDomain"
+	LogMetricsGroupByHTTPStatusCode LogMetricsGroupBy = "httpStatusCode"
+	LogMetricsGroupByProtocol       LogMetricsGroupBy = "protocol"
+)
+
+// PossibleLogMetricsGroupByValues returns the possible values for the LogMetricsGroupBy const type.
+func PossibleLogMetricsGroupByValues() []LogMetricsGroupBy {
+	return []LogMetricsGroupBy{
+		LogMetricsGroupByCacheStatus,
+		LogMetricsGroupByCountry,
+		LogMetricsGroupByCustomDomain,
+		LogMetricsGroupByHTTPStatusCode,
+		LogMetricsGroupByProtocol,
+	}
+}
+
+// ToPtr returns a *LogMetricsGroupBy pointing to the current value.
+func (c LogMetricsGroupBy) ToPtr() *LogMetricsGroupBy {
+	return &c
+}
+
+type SomethingCount int32
+
+const (
+	SomethingCountTen    SomethingCount = 10
+	SomethingCountTwenty SomethingCount = 20
+	SomethingCountThirty SomethingCount = 30
+	SomethingCountForty  SomethingCount = 40
+)
+
+// PossibleSomethingCountValues returns the possible values for the SomethingCount const type.
+func PossibleSomethingCountValues() []SomethingCount {
+	return []SomethingCount{
+		SomethingCountTen,
+		SomethingCountTwenty,
+		SomethingCountThirty,
+		SomethingCountForty,
+	}
+}
+
+// ToPtr returns a *SomethingCount pointing to the current value.
+func (c SomethingCount) ToPtr() *SomethingCount {
+	return &c
+}
