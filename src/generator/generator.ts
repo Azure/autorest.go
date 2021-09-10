@@ -21,10 +21,12 @@ import { generateXMLAdditionalPropsHelpers } from './xmlAdditionalProps';
 
 async function getModuleVersion(session: Session<CodeModel>): Promise<string> {
   const version = await session.getValue('module-version', '');
-  if (version !== "") {
-    return version;
+  if (version === '') {
+    throw new Error('--module-version is a required parameter');
+  } else if (!version.match(/^\d+\.\d+\.\d+$/) && !version.match(/^\d+\.\d+\.\d+-beta\.\d+$/)) {
+    throw new Error(`module version ${version} must in the format major.minor.patch[-beta.N]`);
   }
-  throw new Error('--module-version is a required parameter');
+  return version;
 }
 
 // The generator emits Go source code files to disk.

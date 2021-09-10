@@ -10,7 +10,7 @@ package aztables
 
 const (
 	module  = "aztables"
-	version = "v0.1"
+	version = "v0.1.0"
 )
 
 // GeoReplicationStatusType - The status of the secondary location.

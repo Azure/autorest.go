@@ -10,7 +10,7 @@ package azkeyvault
 
 const (
 	module  = "azkeyvault"
-	version = "v0.1"
+	version = "v0.1.0"
 )
 
 // ActionType - The type of the action.
