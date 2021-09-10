@@ -11,6 +11,7 @@ package azalias
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -61,6 +62,11 @@ func (client *aliasClient) createCreateRequest(ctx context.Context, options *Ali
 	reqQP.Set("api-version", "2.0")
 	if options != nil && options.CreatorDataItemID != nil {
 		reqQP.Set("creatorDataItemId", *options.CreatorDataItemID)
+	}
+	if options != nil && options.GroupBy != nil {
+		for _, qv := range options.GroupBy {
+			reqQP.Add("groupBy", fmt.Sprintf("%d", qv))
+		}
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header.Set("Accept", "application/json")
@@ -129,6 +135,11 @@ func (client *aliasClient) listCreateRequest(ctx context.Context, options *Alias
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2.0")
+	if options != nil && options.GroupBy != nil {
+		for _, qv := range options.GroupBy {
+			reqQP.Add("groupBy", string(qv))
+		}
+	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil

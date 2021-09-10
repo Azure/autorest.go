@@ -456,7 +456,32 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
         let setter: string;
         if (qp.protocol.http?.explode === true) {
           setter = `\tfor _, qv := range ${getParamName(qp)} {\n`;
-          setter += `\t\treqQP.Add("${qp.language.go!.serializedName}", qv)\n`;
+          if (qp.schema.type !== SchemaType.Array) {
+            throw new Error(`expected SchemaType.Array for query param ${qp.language.go!.name}`);
+          }
+          // emit a type conversion for the qv based on the array's element type
+          let queryVal: string;
+          const arrayQP = <ArraySchema>qp.schema;
+          switch (arrayQP.elementType.type) {
+            case SchemaType.Choice:
+            case SchemaType.SealedChoice:
+              const ch = <ChoiceSchema>arrayQP.elementType;
+              // only string and number types are supported for enums
+              if (ch.choiceType.type === SchemaType.String) {
+                queryVal = 'string(qv)';
+              } else {
+                imports.add('fmt');
+                queryVal = 'fmt.Sprintf("%d", qv)';
+              }
+              break;
+            case SchemaType.String:
+              queryVal = 'qv';
+              break;
+            default:
+              imports.add('fmt');
+              queryVal = 'fmt.Sprintf("%v", qv)';
+          }
+          setter += `\t\treqQP.Add("${qp.language.go!.serializedName}", ${queryVal})\n`;
           setter += '\t}';
         } else {
           // cannot initialize setter to this value as formatParamValue() can change imports
