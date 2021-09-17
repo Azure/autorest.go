@@ -67,6 +67,19 @@ type ParameterGroupingPostRequiredParameters struct {
 	Query *int32
 }
 
+// ParameterGroupingPostReservedWordsOptions contains the optional parameters for the ParameterGrouping.PostReservedWords method.
+type ParameterGroupingPostReservedWordsOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ParameterGroupingPostReservedWordsParameters contains a group of parameters for the ParameterGrouping.PostReservedWords method.
+type ParameterGroupingPostReservedWordsParameters struct {
+	// 'accept' is a reserved word. Pass in 'yes' to pass.
+	Accept *string
+	// 'from' is a reserved word. Pass in 'bob' to pass.
+	From *string
+}
+
 // ParameterGroupingPostSharedParameterGroupObjectOptions contains the optional parameters for the ParameterGrouping.PostSharedParameterGroupObject method.
 type ParameterGroupingPostSharedParameterGroupObjectOptions struct {
 	// placeholder for future optional parameters

@@ -788,6 +788,72 @@ func (client *LROsClient) deleteProvisioning202Deletingcanceled200HandleError(re
 	return runtime.NewResponseError(&errType, resp)
 }
 
+// BeginPatch200SucceededIgnoreHeaders - Long running put request, service returns a 200 to the initial request with location header. We should not have
+// any subsequent calls after receiving this first response.
+// If the operation fails it returns the *CloudError error type.
+func (client *LROsClient) BeginPatch200SucceededIgnoreHeaders(ctx context.Context, options *LROsBeginPatch200SucceededIgnoreHeadersOptions) (LROsPatch200SucceededIgnoreHeadersPollerResponse, error) {
+	resp, err := client.patch200SucceededIgnoreHeaders(ctx, options)
+	if err != nil {
+		return LROsPatch200SucceededIgnoreHeadersPollerResponse{}, err
+	}
+	result := LROsPatch200SucceededIgnoreHeadersPollerResponse{
+		RawResponse: resp,
+	}
+	pt, err := armruntime.NewPoller("LROsClient.Patch200SucceededIgnoreHeaders", "", resp, client.con.Pipeline(), client.patch200SucceededIgnoreHeadersHandleError)
+	if err != nil {
+		return LROsPatch200SucceededIgnoreHeadersPollerResponse{}, err
+	}
+	result.Poller = &LROsPatch200SucceededIgnoreHeadersPoller{
+		pt: pt,
+	}
+	return result, nil
+}
+
+// Patch200SucceededIgnoreHeaders - Long running put request, service returns a 200 to the initial request with location header. We should not have any
+// subsequent calls after receiving this first response.
+// If the operation fails it returns the *CloudError error type.
+func (client *LROsClient) patch200SucceededIgnoreHeaders(ctx context.Context, options *LROsBeginPatch200SucceededIgnoreHeadersOptions) (*http.Response, error) {
+	req, err := client.patch200SucceededIgnoreHeadersCreateRequest(ctx, options)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.con.Pipeline().Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
+		return nil, client.patch200SucceededIgnoreHeadersHandleError(resp)
+	}
+	return resp, nil
+}
+
+// patch200SucceededIgnoreHeadersCreateRequest creates the Patch200SucceededIgnoreHeaders request.
+func (client *LROsClient) patch200SucceededIgnoreHeadersCreateRequest(ctx context.Context, options *LROsBeginPatch200SucceededIgnoreHeadersOptions) (*policy.Request, error) {
+	urlPath := "/lro/patch/200/succeeded/ignoreheaders"
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header.Set("Accept", "application/json")
+	if options != nil && options.Product != nil {
+		return req, runtime.MarshalAsJSON(req, *options.Product)
+	}
+	return req, nil
+}
+
+// patch200SucceededIgnoreHeadersHandleError handles the Patch200SucceededIgnoreHeaders error response.
+func (client *LROsClient) patch200SucceededIgnoreHeadersHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
+	if err != nil {
+		return runtime.NewResponseError(err, resp)
+	}
+	errType := CloudError{raw: string(body)}
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
+	}
+	return runtime.NewResponseError(&errType, resp)
+}
+
 // BeginPost200WithPayload - Long running post request, service returns a 202 to the initial request, with 'Location' header. Poll returns a 200 with a
 // response body after success.
 // If the operation fails it returns the *CloudError error type.

@@ -28,7 +28,7 @@ export async function transform(host: Host) {
 
   } catch (E) {
     if (debug) {
-      console.error(`${__filename} - FAILURE  ${JSON.stringify(E)} ${E.stack}`);
+      console.error(`${__filename} - FAILURE  ${JSON.stringify(E)} ${(<Error>E).stack}`);
     }
     throw E;
   }

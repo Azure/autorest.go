@@ -10,6 +10,19 @@ package mediatypesgroup
 
 import "io"
 
+// MediaTypesClientAnalyzeBodyNoAcceptHeaderOptions contains the optional parameters for the MediaTypesClient.AnalyzeBodyNoAcceptHeader method.
+type MediaTypesClientAnalyzeBodyNoAcceptHeaderOptions struct {
+	// Input parameter.
+	Input io.ReadSeekCloser
+}
+
+// MediaTypesClientAnalyzeBodyNoAcceptHeaderWithSourcePathOptions contains the optional parameters for the MediaTypesClient.AnalyzeBodyNoAcceptHeaderWithSourcePath
+// method.
+type MediaTypesClientAnalyzeBodyNoAcceptHeaderWithSourcePathOptions struct {
+	// Input parameter.
+	Input *SourcePath
+}
+
 // MediaTypesClientAnalyzeBodyOptions contains the optional parameters for the MediaTypesClient.AnalyzeBody method.
 type MediaTypesClientAnalyzeBodyOptions struct {
 	// Input parameter.

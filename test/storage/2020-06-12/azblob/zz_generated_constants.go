@@ -237,6 +237,636 @@ func (c DeleteSnapshotsOptionType) ToPtr() *DeleteSnapshotsOptionType {
 	return &c
 }
 
+type Enum0 string
+
+const (
+	Enum0Service Enum0 = "service"
+)
+
+// PossibleEnum0Values returns the possible values for the Enum0 const type.
+func PossibleEnum0Values() []Enum0 {
+	return []Enum0{
+		Enum0Service,
+	}
+}
+
+// ToPtr returns a *Enum0 pointing to the current value.
+func (c Enum0) ToPtr() *Enum0 {
+	return &c
+}
+
+type Enum1 string
+
+const (
+	Enum1Properties Enum1 = "properties"
+)
+
+// PossibleEnum1Values returns the possible values for the Enum1 const type.
+func PossibleEnum1Values() []Enum1 {
+	return []Enum1{
+		Enum1Properties,
+	}
+}
+
+// ToPtr returns a *Enum1 pointing to the current value.
+func (c Enum1) ToPtr() *Enum1 {
+	return &c
+}
+
+type Enum10 string
+
+const (
+	Enum10Blobs Enum10 = "blobs"
+)
+
+// PossibleEnum10Values returns the possible values for the Enum10 const type.
+func PossibleEnum10Values() []Enum10 {
+	return []Enum10{
+		Enum10Blobs,
+	}
+}
+
+// ToPtr returns a *Enum10 pointing to the current value.
+func (c Enum10) ToPtr() *Enum10 {
+	return &c
+}
+
+type Enum11 string
+
+const (
+	Enum11Container Enum11 = "container"
+)
+
+// PossibleEnum11Values returns the possible values for the Enum11 const type.
+func PossibleEnum11Values() []Enum11 {
+	return []Enum11{
+		Enum11Container,
+	}
+}
+
+// ToPtr returns a *Enum11 pointing to the current value.
+func (c Enum11) ToPtr() *Enum11 {
+	return &c
+}
+
+type Enum12 string
+
+const (
+	Enum12Metadata Enum12 = "metadata"
+)
+
+// PossibleEnum12Values returns the possible values for the Enum12 const type.
+func PossibleEnum12Values() []Enum12 {
+	return []Enum12{
+		Enum12Metadata,
+	}
+}
+
+// ToPtr returns a *Enum12 pointing to the current value.
+func (c Enum12) ToPtr() *Enum12 {
+	return &c
+}
+
+type Enum13 string
+
+const (
+	Enum13ACL Enum13 = "acl"
+)
+
+// PossibleEnum13Values returns the possible values for the Enum13 const type.
+func PossibleEnum13Values() []Enum13 {
+	return []Enum13{
+		Enum13ACL,
+	}
+}
+
+// ToPtr returns a *Enum13 pointing to the current value.
+func (c Enum13) ToPtr() *Enum13 {
+	return &c
+}
+
+type Enum14 string
+
+const (
+	Enum14Undelete Enum14 = "undelete"
+)
+
+// PossibleEnum14Values returns the possible values for the Enum14 const type.
+func PossibleEnum14Values() []Enum14 {
+	return []Enum14{
+		Enum14Undelete,
+	}
+}
+
+// ToPtr returns a *Enum14 pointing to the current value.
+func (c Enum14) ToPtr() *Enum14 {
+	return &c
+}
+
+type Enum15 string
+
+const (
+	Enum15Rename Enum15 = "rename"
+)
+
+// PossibleEnum15Values returns the possible values for the Enum15 const type.
+func PossibleEnum15Values() []Enum15 {
+	return []Enum15{
+		Enum15Rename,
+	}
+}
+
+// ToPtr returns a *Enum15 pointing to the current value.
+func (c Enum15) ToPtr() *Enum15 {
+	return &c
+}
+
+type Enum16 string
+
+const (
+	Enum16Lease Enum16 = "lease"
+)
+
+// PossibleEnum16Values returns the possible values for the Enum16 const type.
+func PossibleEnum16Values() []Enum16 {
+	return []Enum16{
+		Enum16Lease,
+	}
+}
+
+// ToPtr returns a *Enum16 pointing to the current value.
+func (c Enum16) ToPtr() *Enum16 {
+	return &c
+}
+
+type Enum2 string
+
+const (
+	Enum2TwoThousandTwenty0612 Enum2 = "2020-06-12"
+)
+
+// PossibleEnum2Values returns the possible values for the Enum2 const type.
+func PossibleEnum2Values() []Enum2 {
+	return []Enum2{
+		Enum2TwoThousandTwenty0612,
+	}
+}
+
+// ToPtr returns a *Enum2 pointing to the current value.
+func (c Enum2) ToPtr() *Enum2 {
+	return &c
+}
+
+type Enum20 string
+
+const (
+	Enum20Directory Enum20 = "directory"
+)
+
+// PossibleEnum20Values returns the possible values for the Enum20 const type.
+func PossibleEnum20Values() []Enum20 {
+	return []Enum20{
+		Enum20Directory,
+	}
+}
+
+// ToPtr returns a *Enum20 pointing to the current value.
+func (c Enum20) ToPtr() *Enum20 {
+	return &c
+}
+
+type Enum21 string
+
+const (
+	Enum21SetAccessControl Enum21 = "setAccessControl"
+)
+
+// PossibleEnum21Values returns the possible values for the Enum21 const type.
+func PossibleEnum21Values() []Enum21 {
+	return []Enum21{
+		Enum21SetAccessControl,
+	}
+}
+
+// ToPtr returns a *Enum21 pointing to the current value.
+func (c Enum21) ToPtr() *Enum21 {
+	return &c
+}
+
+type Enum22 string
+
+const (
+	Enum22GetAccessControl Enum22 = "getAccessControl"
+)
+
+// PossibleEnum22Values returns the possible values for the Enum22 const type.
+func PossibleEnum22Values() []Enum22 {
+	return []Enum22{
+		Enum22GetAccessControl,
+	}
+}
+
+// ToPtr returns a *Enum22 pointing to the current value.
+func (c Enum22) ToPtr() *Enum22 {
+	return &c
+}
+
+type Enum24 string
+
+const (
+	Enum24Expiry Enum24 = "expiry"
+)
+
+// PossibleEnum24Values returns the possible values for the Enum24 const type.
+func PossibleEnum24Values() []Enum24 {
+	return []Enum24{
+		Enum24Expiry,
+	}
+}
+
+// ToPtr returns a *Enum24 pointing to the current value.
+func (c Enum24) ToPtr() *Enum24 {
+	return &c
+}
+
+type Enum26 string
+
+const (
+	Enum26ImmutabilityPolicies Enum26 = "immutabilityPolicies"
+)
+
+// PossibleEnum26Values returns the possible values for the Enum26 const type.
+func PossibleEnum26Values() []Enum26 {
+	return []Enum26{
+		Enum26ImmutabilityPolicies,
+	}
+}
+
+// ToPtr returns a *Enum26 pointing to the current value.
+func (c Enum26) ToPtr() *Enum26 {
+	return &c
+}
+
+type Enum27 string
+
+const (
+	Enum27Legalhold Enum27 = "legalhold"
+)
+
+// PossibleEnum27Values returns the possible values for the Enum27 const type.
+func PossibleEnum27Values() []Enum27 {
+	return []Enum27{
+		Enum27Legalhold,
+	}
+}
+
+// ToPtr returns a *Enum27 pointing to the current value.
+func (c Enum27) ToPtr() *Enum27 {
+	return &c
+}
+
+type Enum28 string
+
+const (
+	Enum28Snapshot Enum28 = "snapshot"
+)
+
+// PossibleEnum28Values returns the possible values for the Enum28 const type.
+func PossibleEnum28Values() []Enum28 {
+	return []Enum28{
+		Enum28Snapshot,
+	}
+}
+
+// ToPtr returns a *Enum28 pointing to the current value.
+func (c Enum28) ToPtr() *Enum28 {
+	return &c
+}
+
+type Enum29 string
+
+const (
+	Enum29True Enum29 = "true"
+)
+
+// PossibleEnum29Values returns the possible values for the Enum29 const type.
+func PossibleEnum29Values() []Enum29 {
+	return []Enum29{
+		Enum29True,
+	}
+}
+
+// ToPtr returns a *Enum29 pointing to the current value.
+func (c Enum29) ToPtr() *Enum29 {
+	return &c
+}
+
+type Enum3 string
+
+const (
+	Enum3Stats Enum3 = "stats"
+)
+
+// PossibleEnum3Values returns the possible values for the Enum3 const type.
+func PossibleEnum3Values() []Enum3 {
+	return []Enum3{
+		Enum3Stats,
+	}
+}
+
+// ToPtr returns a *Enum3 pointing to the current value.
+func (c Enum3) ToPtr() *Enum3 {
+	return &c
+}
+
+type Enum30 string
+
+const (
+	Enum30Copy Enum30 = "copy"
+)
+
+// PossibleEnum30Values returns the possible values for the Enum30 const type.
+func PossibleEnum30Values() []Enum30 {
+	return []Enum30{
+		Enum30Copy,
+	}
+}
+
+// ToPtr returns a *Enum30 pointing to the current value.
+func (c Enum30) ToPtr() *Enum30 {
+	return &c
+}
+
+type Enum31 string
+
+const (
+	Enum31Abort Enum31 = "abort"
+)
+
+// PossibleEnum31Values returns the possible values for the Enum31 const type.
+func PossibleEnum31Values() []Enum31 {
+	return []Enum31{
+		Enum31Abort,
+	}
+}
+
+// ToPtr returns a *Enum31 pointing to the current value.
+func (c Enum31) ToPtr() *Enum31 {
+	return &c
+}
+
+type Enum32 string
+
+const (
+	Enum32Tier Enum32 = "tier"
+)
+
+// PossibleEnum32Values returns the possible values for the Enum32 const type.
+func PossibleEnum32Values() []Enum32 {
+	return []Enum32{
+		Enum32Tier,
+	}
+}
+
+// ToPtr returns a *Enum32 pointing to the current value.
+func (c Enum32) ToPtr() *Enum32 {
+	return &c
+}
+
+type Enum33 string
+
+const (
+	Enum33Block Enum33 = "block"
+)
+
+// PossibleEnum33Values returns the possible values for the Enum33 const type.
+func PossibleEnum33Values() []Enum33 {
+	return []Enum33{
+		Enum33Block,
+	}
+}
+
+// ToPtr returns a *Enum33 pointing to the current value.
+func (c Enum33) ToPtr() *Enum33 {
+	return &c
+}
+
+type Enum34 string
+
+const (
+	Enum34Blocklist Enum34 = "blocklist"
+)
+
+// PossibleEnum34Values returns the possible values for the Enum34 const type.
+func PossibleEnum34Values() []Enum34 {
+	return []Enum34{
+		Enum34Blocklist,
+	}
+}
+
+// ToPtr returns a *Enum34 pointing to the current value.
+func (c Enum34) ToPtr() *Enum34 {
+	return &c
+}
+
+type Enum35 string
+
+const (
+	Enum35Page Enum35 = "page"
+)
+
+// PossibleEnum35Values returns the possible values for the Enum35 const type.
+func PossibleEnum35Values() []Enum35 {
+	return []Enum35{
+		Enum35Page,
+	}
+}
+
+// ToPtr returns a *Enum35 pointing to the current value.
+func (c Enum35) ToPtr() *Enum35 {
+	return &c
+}
+
+type Enum36 string
+
+const (
+	Enum36Pagelist Enum36 = "pagelist"
+)
+
+// PossibleEnum36Values returns the possible values for the Enum36 const type.
+func PossibleEnum36Values() []Enum36 {
+	return []Enum36{
+		Enum36Pagelist,
+	}
+}
+
+// ToPtr returns a *Enum36 pointing to the current value.
+func (c Enum36) ToPtr() *Enum36 {
+	return &c
+}
+
+type Enum37 string
+
+const (
+	Enum37Incrementalcopy Enum37 = "incrementalcopy"
+)
+
+// PossibleEnum37Values returns the possible values for the Enum37 const type.
+func PossibleEnum37Values() []Enum37 {
+	return []Enum37{
+		Enum37Incrementalcopy,
+	}
+}
+
+// ToPtr returns a *Enum37 pointing to the current value.
+func (c Enum37) ToPtr() *Enum37 {
+	return &c
+}
+
+type Enum38 string
+
+const (
+	Enum38Appendblock Enum38 = "appendblock"
+)
+
+// PossibleEnum38Values returns the possible values for the Enum38 const type.
+func PossibleEnum38Values() []Enum38 {
+	return []Enum38{
+		Enum38Appendblock,
+	}
+}
+
+// ToPtr returns a *Enum38 pointing to the current value.
+func (c Enum38) ToPtr() *Enum38 {
+	return &c
+}
+
+type Enum39 string
+
+const (
+	Enum39Seal Enum39 = "seal"
+)
+
+// PossibleEnum39Values returns the possible values for the Enum39 const type.
+func PossibleEnum39Values() []Enum39 {
+	return []Enum39{
+		Enum39Seal,
+	}
+}
+
+// ToPtr returns a *Enum39 pointing to the current value.
+func (c Enum39) ToPtr() *Enum39 {
+	return &c
+}
+
+type Enum40 string
+
+const (
+	Enum40Query Enum40 = "query"
+)
+
+// PossibleEnum40Values returns the possible values for the Enum40 const type.
+func PossibleEnum40Values() []Enum40 {
+	return []Enum40{
+		Enum40Query,
+	}
+}
+
+// ToPtr returns a *Enum40 pointing to the current value.
+func (c Enum40) ToPtr() *Enum40 {
+	return &c
+}
+
+type Enum42 string
+
+const (
+	Enum42Tags Enum42 = "tags"
+)
+
+// PossibleEnum42Values returns the possible values for the Enum42 const type.
+func PossibleEnum42Values() []Enum42 {
+	return []Enum42{
+		Enum42Tags,
+	}
+}
+
+// ToPtr returns a *Enum42 pointing to the current value.
+func (c Enum42) ToPtr() *Enum42 {
+	return &c
+}
+
+type Enum5 string
+
+const (
+	Enum5List Enum5 = "list"
+)
+
+// PossibleEnum5Values returns the possible values for the Enum5 const type.
+func PossibleEnum5Values() []Enum5 {
+	return []Enum5{
+		Enum5List,
+	}
+}
+
+// ToPtr returns a *Enum5 pointing to the current value.
+func (c Enum5) ToPtr() *Enum5 {
+	return &c
+}
+
+type Enum7 string
+
+const (
+	Enum7Userdelegationkey Enum7 = "userdelegationkey"
+)
+
+// PossibleEnum7Values returns the possible values for the Enum7 const type.
+func PossibleEnum7Values() []Enum7 {
+	return []Enum7{
+		Enum7Userdelegationkey,
+	}
+}
+
+// ToPtr returns a *Enum7 pointing to the current value.
+func (c Enum7) ToPtr() *Enum7 {
+	return &c
+}
+
+type Enum8 string
+
+const (
+	Enum8Account Enum8 = "account"
+)
+
+// PossibleEnum8Values returns the possible values for the Enum8 const type.
+func PossibleEnum8Values() []Enum8 {
+	return []Enum8{
+		Enum8Account,
+	}
+}
+
+// ToPtr returns a *Enum8 pointing to the current value.
+func (c Enum8) ToPtr() *Enum8 {
+	return &c
+}
+
+type Enum9 string
+
+const (
+	Enum9Batch Enum9 = "batch"
+)
+
+// PossibleEnum9Values returns the possible values for the Enum9 const type.
+func PossibleEnum9Values() []Enum9 {
+	return []Enum9{
+		Enum9Batch,
+	}
+}
+
+// ToPtr returns a *Enum9 pointing to the current value.
+func (c Enum9) ToPtr() *Enum9 {
+	return &c
+}
+
 // GeoReplicationStatusType - The status of the secondary location
 type GeoReplicationStatusType string
 
@@ -478,6 +1108,25 @@ func PossibleQueryFormatTypeValues() []QueryFormatType {
 
 // ToPtr returns a *QueryFormatType pointing to the current value.
 func (c QueryFormatType) ToPtr() *QueryFormatType {
+	return &c
+}
+
+// QueryRequestQueryType - the query type
+type QueryRequestQueryType string
+
+const (
+	QueryRequestQueryTypeSQL QueryRequestQueryType = "SQL"
+)
+
+// PossibleQueryRequestQueryTypeValues returns the possible values for the QueryRequestQueryType const type.
+func PossibleQueryRequestQueryTypeValues() []QueryRequestQueryType {
+	return []QueryRequestQueryType{
+		QueryRequestQueryTypeSQL,
+	}
+}
+
+// ToPtr returns a *QueryRequestQueryType pointing to the current value.
+func (c QueryRequestQueryType) ToPtr() *QueryRequestQueryType {
 	return &c
 }
 

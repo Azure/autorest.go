@@ -2291,6 +2291,56 @@ type LROsDeleteProvisioning202Deletingcanceled200Result struct {
 	Product
 }
 
+// LROsPatch200SucceededIgnoreHeadersPollerResponse contains the response from method LROs.Patch200SucceededIgnoreHeaders.
+type LROsPatch200SucceededIgnoreHeadersPollerResponse struct {
+	// Poller contains an initialized poller.
+	Poller *LROsPatch200SucceededIgnoreHeadersPoller
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l LROsPatch200SucceededIgnoreHeadersPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROsPatch200SucceededIgnoreHeadersResponse, error) {
+	respType := LROsPatch200SucceededIgnoreHeadersResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Product)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// Resume rehydrates a LROsPatch200SucceededIgnoreHeadersPollerResponse from the provided client and resume token.
+func (l *LROsPatch200SucceededIgnoreHeadersPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
+	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Patch200SucceededIgnoreHeaders", token, client.con.Pipeline(), client.patch200SucceededIgnoreHeadersHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &LROsPatch200SucceededIgnoreHeadersPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
+}
+
+// LROsPatch200SucceededIgnoreHeadersResponse contains the response from method LROs.Patch200SucceededIgnoreHeaders.
+type LROsPatch200SucceededIgnoreHeadersResponse struct {
+	LROsPatch200SucceededIgnoreHeadersResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// LROsPatch200SucceededIgnoreHeadersResult contains the result from method LROs.Patch200SucceededIgnoreHeaders.
+type LROsPatch200SucceededIgnoreHeadersResult struct {
+	Product
+}
+
 // LROsPost200WithPayloadPollerResponse contains the response from method LROs.Post200WithPayload.
 type LROsPost200WithPayloadPollerResponse struct {
 	// Poller contains an initialized poller.

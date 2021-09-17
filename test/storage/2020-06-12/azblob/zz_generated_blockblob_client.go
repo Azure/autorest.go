@@ -21,7 +21,8 @@ import (
 )
 
 type blockBlobClient struct {
-	con *connection
+	con     *connection
+	version Enum2
 }
 
 // CommitBlockList - The Commit Block List operation writes a blob by specifying the list of block IDs that make up the blob. In order to be written as
@@ -32,8 +33,8 @@ type blockBlobClient struct {
 // version of the block, whichever list it may
 // belong to.
 // If the operation fails it returns the *StorageError error type.
-func (client *blockBlobClient) CommitBlockList(ctx context.Context, blocks BlockLookupList, blockBlobCommitBlockListOptions *BlockBlobCommitBlockListOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (BlockBlobCommitBlockListResponse, error) {
-	req, err := client.commitBlockListCreateRequest(ctx, blocks, blockBlobCommitBlockListOptions, blobHTTPHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
+func (client *blockBlobClient) CommitBlockList(ctx context.Context, comp Enum34, blocks BlockLookupList, blockBlobCommitBlockListOptions *BlockBlobCommitBlockListOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (BlockBlobCommitBlockListResponse, error) {
+	req, err := client.commitBlockListCreateRequest(ctx, comp, blocks, blockBlobCommitBlockListOptions, blobHTTPHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
 	if err != nil {
 		return BlockBlobCommitBlockListResponse{}, err
 	}
@@ -48,13 +49,13 @@ func (client *blockBlobClient) CommitBlockList(ctx context.Context, blocks Block
 }
 
 // commitBlockListCreateRequest creates the CommitBlockList request.
-func (client *blockBlobClient) commitBlockListCreateRequest(ctx context.Context, blocks BlockLookupList, blockBlobCommitBlockListOptions *BlockBlobCommitBlockListOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
+func (client *blockBlobClient) commitBlockListCreateRequest(ctx context.Context, comp Enum34, blocks BlockLookupList, blockBlobCommitBlockListOptions *BlockBlobCommitBlockListOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
 	if err != nil {
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("comp", "blocklist")
+	reqQP.Set("comp", string(comp))
 	if blockBlobCommitBlockListOptions != nil && blockBlobCommitBlockListOptions.Timeout != nil {
 		reqQP.Set("timeout", strconv.FormatInt(int64(*blockBlobCommitBlockListOptions.Timeout), 10))
 	}
@@ -121,7 +122,7 @@ func (client *blockBlobClient) commitBlockListCreateRequest(ctx context.Context,
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfTags != nil {
 		req.Raw().Header.Set("x-ms-if-tags", *modifiedAccessConditions.IfTags)
 	}
-	req.Raw().Header.Set("x-ms-version", "2020-06-12")
+	req.Raw().Header.Set("x-ms-version", string(client.version))
 	if blockBlobCommitBlockListOptions != nil && blockBlobCommitBlockListOptions.RequestID != nil {
 		req.Raw().Header.Set("x-ms-client-request-id", *blockBlobCommitBlockListOptions.RequestID)
 	}
@@ -218,8 +219,8 @@ func (client *blockBlobClient) commitBlockListHandleError(resp *http.Response) e
 
 // GetBlockList - The Get Block List operation retrieves the list of blocks that have been uploaded as part of a block blob
 // If the operation fails it returns the *StorageError error type.
-func (client *blockBlobClient) GetBlockList(ctx context.Context, listType BlockListType, blockBlobGetBlockListOptions *BlockBlobGetBlockListOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (BlockBlobGetBlockListResponse, error) {
-	req, err := client.getBlockListCreateRequest(ctx, listType, blockBlobGetBlockListOptions, leaseAccessConditions, modifiedAccessConditions)
+func (client *blockBlobClient) GetBlockList(ctx context.Context, comp Enum34, listType BlockListType, blockBlobGetBlockListOptions *BlockBlobGetBlockListOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (BlockBlobGetBlockListResponse, error) {
+	req, err := client.getBlockListCreateRequest(ctx, comp, listType, blockBlobGetBlockListOptions, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
 		return BlockBlobGetBlockListResponse{}, err
 	}
@@ -234,13 +235,13 @@ func (client *blockBlobClient) GetBlockList(ctx context.Context, listType BlockL
 }
 
 // getBlockListCreateRequest creates the GetBlockList request.
-func (client *blockBlobClient) getBlockListCreateRequest(ctx context.Context, listType BlockListType, blockBlobGetBlockListOptions *BlockBlobGetBlockListOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
+func (client *blockBlobClient) getBlockListCreateRequest(ctx context.Context, comp Enum34, listType BlockListType, blockBlobGetBlockListOptions *BlockBlobGetBlockListOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodGet, client.con.Endpoint())
 	if err != nil {
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("comp", "blocklist")
+	reqQP.Set("comp", string(comp))
 	if blockBlobGetBlockListOptions != nil && blockBlobGetBlockListOptions.Snapshot != nil {
 		reqQP.Set("snapshot", *blockBlobGetBlockListOptions.Snapshot)
 	}
@@ -255,7 +256,7 @@ func (client *blockBlobClient) getBlockListCreateRequest(ctx context.Context, li
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfTags != nil {
 		req.Raw().Header.Set("x-ms-if-tags", *modifiedAccessConditions.IfTags)
 	}
-	req.Raw().Header.Set("x-ms-version", "2020-06-12")
+	req.Raw().Header.Set("x-ms-version", string(client.version))
 	if blockBlobGetBlockListOptions != nil && blockBlobGetBlockListOptions.RequestID != nil {
 		req.Raw().Header.Set("x-ms-client-request-id", *blockBlobGetBlockListOptions.RequestID)
 	}
@@ -429,7 +430,7 @@ func (client *blockBlobClient) putBlobFromURLCreateRequest(ctx context.Context, 
 	if sourceModifiedAccessConditions != nil && sourceModifiedAccessConditions.SourceIfTags != nil {
 		req.Raw().Header.Set("x-ms-source-if-tags", *sourceModifiedAccessConditions.SourceIfTags)
 	}
-	req.Raw().Header.Set("x-ms-version", "2020-06-12")
+	req.Raw().Header.Set("x-ms-version", string(client.version))
 	if blockBlobPutBlobFromURLOptions != nil && blockBlobPutBlobFromURLOptions.RequestID != nil {
 		req.Raw().Header.Set("x-ms-client-request-id", *blockBlobPutBlobFromURLOptions.RequestID)
 	}
@@ -517,8 +518,8 @@ func (client *blockBlobClient) putBlobFromURLHandleError(resp *http.Response) er
 
 // StageBlock - The Stage Block operation creates a new block to be committed as part of a blob
 // If the operation fails it returns the *StorageError error type.
-func (client *blockBlobClient) StageBlock(ctx context.Context, blockID string, contentLength int64, body io.ReadSeekCloser, blockBlobStageBlockOptions *BlockBlobStageBlockOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo) (BlockBlobStageBlockResponse, error) {
-	req, err := client.stageBlockCreateRequest(ctx, blockID, contentLength, body, blockBlobStageBlockOptions, leaseAccessConditions, cpkInfo, cpkScopeInfo)
+func (client *blockBlobClient) StageBlock(ctx context.Context, comp Enum33, blockID string, contentLength int64, body io.ReadSeekCloser, blockBlobStageBlockOptions *BlockBlobStageBlockOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo) (BlockBlobStageBlockResponse, error) {
+	req, err := client.stageBlockCreateRequest(ctx, comp, blockID, contentLength, body, blockBlobStageBlockOptions, leaseAccessConditions, cpkInfo, cpkScopeInfo)
 	if err != nil {
 		return BlockBlobStageBlockResponse{}, err
 	}
@@ -533,13 +534,13 @@ func (client *blockBlobClient) StageBlock(ctx context.Context, blockID string, c
 }
 
 // stageBlockCreateRequest creates the StageBlock request.
-func (client *blockBlobClient) stageBlockCreateRequest(ctx context.Context, blockID string, contentLength int64, body io.ReadSeekCloser, blockBlobStageBlockOptions *BlockBlobStageBlockOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo) (*policy.Request, error) {
+func (client *blockBlobClient) stageBlockCreateRequest(ctx context.Context, comp Enum33, blockID string, contentLength int64, body io.ReadSeekCloser, blockBlobStageBlockOptions *BlockBlobStageBlockOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
 	if err != nil {
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("comp", "block")
+	reqQP.Set("comp", string(comp))
 	reqQP.Set("blockid", blockID)
 	if blockBlobStageBlockOptions != nil && blockBlobStageBlockOptions.Timeout != nil {
 		reqQP.Set("timeout", strconv.FormatInt(int64(*blockBlobStageBlockOptions.Timeout), 10))
@@ -567,7 +568,7 @@ func (client *blockBlobClient) stageBlockCreateRequest(ctx context.Context, bloc
 	if cpkScopeInfo != nil && cpkScopeInfo.EncryptionScope != nil {
 		req.Raw().Header.Set("x-ms-encryption-scope", *cpkScopeInfo.EncryptionScope)
 	}
-	req.Raw().Header.Set("x-ms-version", "2020-06-12")
+	req.Raw().Header.Set("x-ms-version", string(client.version))
 	if blockBlobStageBlockOptions != nil && blockBlobStageBlockOptions.RequestID != nil {
 		req.Raw().Header.Set("x-ms-client-request-id", *blockBlobStageBlockOptions.RequestID)
 	}
@@ -639,8 +640,8 @@ func (client *blockBlobClient) stageBlockHandleError(resp *http.Response) error 
 
 // StageBlockFromURL - The Stage Block operation creates a new block to be committed as part of a blob where the contents are read from a URL.
 // If the operation fails it returns the *StorageError error type.
-func (client *blockBlobClient) StageBlockFromURL(ctx context.Context, blockID string, contentLength int64, sourceURL string, blockBlobStageBlockFromURLOptions *BlockBlobStageBlockFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (BlockBlobStageBlockFromURLResponse, error) {
-	req, err := client.stageBlockFromURLCreateRequest(ctx, blockID, contentLength, sourceURL, blockBlobStageBlockFromURLOptions, cpkInfo, cpkScopeInfo, leaseAccessConditions, sourceModifiedAccessConditions)
+func (client *blockBlobClient) StageBlockFromURL(ctx context.Context, comp Enum33, blockID string, contentLength int64, sourceURL string, blockBlobStageBlockFromURLOptions *BlockBlobStageBlockFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (BlockBlobStageBlockFromURLResponse, error) {
+	req, err := client.stageBlockFromURLCreateRequest(ctx, comp, blockID, contentLength, sourceURL, blockBlobStageBlockFromURLOptions, cpkInfo, cpkScopeInfo, leaseAccessConditions, sourceModifiedAccessConditions)
 	if err != nil {
 		return BlockBlobStageBlockFromURLResponse{}, err
 	}
@@ -655,13 +656,13 @@ func (client *blockBlobClient) StageBlockFromURL(ctx context.Context, blockID st
 }
 
 // stageBlockFromURLCreateRequest creates the StageBlockFromURL request.
-func (client *blockBlobClient) stageBlockFromURLCreateRequest(ctx context.Context, blockID string, contentLength int64, sourceURL string, blockBlobStageBlockFromURLOptions *BlockBlobStageBlockFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*policy.Request, error) {
+func (client *blockBlobClient) stageBlockFromURLCreateRequest(ctx context.Context, comp Enum33, blockID string, contentLength int64, sourceURL string, blockBlobStageBlockFromURLOptions *BlockBlobStageBlockFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
 	if err != nil {
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("comp", "block")
+	reqQP.Set("comp", string(comp))
 	reqQP.Set("blockid", blockID)
 	if blockBlobStageBlockFromURLOptions != nil && blockBlobStageBlockFromURLOptions.Timeout != nil {
 		reqQP.Set("timeout", strconv.FormatInt(int64(*blockBlobStageBlockFromURLOptions.Timeout), 10))
@@ -705,7 +706,7 @@ func (client *blockBlobClient) stageBlockFromURLCreateRequest(ctx context.Contex
 	if sourceModifiedAccessConditions != nil && sourceModifiedAccessConditions.SourceIfNoneMatch != nil {
 		req.Raw().Header.Set("x-ms-source-if-none-match", *sourceModifiedAccessConditions.SourceIfNoneMatch)
 	}
-	req.Raw().Header.Set("x-ms-version", "2020-06-12")
+	req.Raw().Header.Set("x-ms-version", string(client.version))
 	if blockBlobStageBlockFromURLOptions != nil && blockBlobStageBlockFromURLOptions.RequestID != nil {
 		req.Raw().Header.Set("x-ms-client-request-id", *blockBlobStageBlockFromURLOptions.RequestID)
 	}
@@ -867,7 +868,7 @@ func (client *blockBlobClient) uploadCreateRequest(ctx context.Context, contentL
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfTags != nil {
 		req.Raw().Header.Set("x-ms-if-tags", *modifiedAccessConditions.IfTags)
 	}
-	req.Raw().Header.Set("x-ms-version", "2020-06-12")
+	req.Raw().Header.Set("x-ms-version", string(client.version))
 	if blockBlobUploadOptions != nil && blockBlobUploadOptions.RequestID != nil {
 		req.Raw().Header.Set("x-ms-client-request-id", *blockBlobUploadOptions.RequestID)
 	}

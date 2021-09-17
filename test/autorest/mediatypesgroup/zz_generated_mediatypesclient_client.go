@@ -82,6 +82,91 @@ func (client *MediaTypesClient) analyzeBodyHandleError(resp *http.Response) erro
 	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
+// AnalyzeBodyNoAcceptHeader - Analyze body, that could be different media types. Adds to AnalyzeBody by not having an accept type.
+// If the operation fails it returns a generic error.
+func (client *MediaTypesClient) AnalyzeBodyNoAcceptHeader(ctx context.Context, contentType ContentType, options *MediaTypesClientAnalyzeBodyNoAcceptHeaderOptions) (MediaTypesClientAnalyzeBodyNoAcceptHeaderResponse, error) {
+	req, err := client.analyzeBodyNoAcceptHeaderCreateRequest(ctx, contentType, options)
+	if err != nil {
+		return MediaTypesClientAnalyzeBodyNoAcceptHeaderResponse{}, err
+	}
+	resp, err := client.con.Pipeline().Do(req)
+	if err != nil {
+		return MediaTypesClientAnalyzeBodyNoAcceptHeaderResponse{}, err
+	}
+	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
+		return MediaTypesClientAnalyzeBodyNoAcceptHeaderResponse{}, client.analyzeBodyNoAcceptHeaderHandleError(resp)
+	}
+	return MediaTypesClientAnalyzeBodyNoAcceptHeaderResponse{RawResponse: resp}, nil
+}
+
+// analyzeBodyNoAcceptHeaderCreateRequest creates the AnalyzeBodyNoAcceptHeader request.
+func (client *MediaTypesClient) analyzeBodyNoAcceptHeaderCreateRequest(ctx context.Context, contentType ContentType, options *MediaTypesClientAnalyzeBodyNoAcceptHeaderOptions) (*policy.Request, error) {
+	urlPath := "/mediatypes/analyzeNoAccept"
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header.Set("Content-Type", string(contentType))
+	if options != nil && options.Input != nil {
+		return req, req.SetBody(options.Input, string(contentType))
+	}
+	return req, nil
+}
+
+// analyzeBodyNoAcceptHeaderHandleError handles the AnalyzeBodyNoAcceptHeader error response.
+func (client *MediaTypesClient) analyzeBodyNoAcceptHeaderHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
+	if err != nil {
+		return runtime.NewResponseError(err, resp)
+	}
+	if len(body) == 0 {
+		return runtime.NewResponseError(errors.New(resp.Status), resp)
+	}
+	return runtime.NewResponseError(errors.New(string(body)), resp)
+}
+
+// AnalyzeBodyNoAcceptHeaderWithSourcePath - Analyze body, that could be different media types. Adds to AnalyzeBody by not having an accept type.
+// If the operation fails it returns a generic error.
+func (client *MediaTypesClient) AnalyzeBodyNoAcceptHeaderWithSourcePath(ctx context.Context, options *MediaTypesClientAnalyzeBodyNoAcceptHeaderWithSourcePathOptions) (MediaTypesClientAnalyzeBodyNoAcceptHeaderWithSourcePathResponse, error) {
+	req, err := client.analyzeBodyNoAcceptHeaderWithSourcePathCreateRequest(ctx, options)
+	if err != nil {
+		return MediaTypesClientAnalyzeBodyNoAcceptHeaderWithSourcePathResponse{}, err
+	}
+	resp, err := client.con.Pipeline().Do(req)
+	if err != nil {
+		return MediaTypesClientAnalyzeBodyNoAcceptHeaderWithSourcePathResponse{}, err
+	}
+	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
+		return MediaTypesClientAnalyzeBodyNoAcceptHeaderWithSourcePathResponse{}, client.analyzeBodyNoAcceptHeaderWithSourcePathHandleError(resp)
+	}
+	return MediaTypesClientAnalyzeBodyNoAcceptHeaderWithSourcePathResponse{RawResponse: resp}, nil
+}
+
+// analyzeBodyNoAcceptHeaderWithSourcePathCreateRequest creates the AnalyzeBodyNoAcceptHeaderWithSourcePath request.
+func (client *MediaTypesClient) analyzeBodyNoAcceptHeaderWithSourcePathCreateRequest(ctx context.Context, options *MediaTypesClientAnalyzeBodyNoAcceptHeaderWithSourcePathOptions) (*policy.Request, error) {
+	urlPath := "/mediatypes/analyzeNoAccept"
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	if err != nil {
+		return nil, err
+	}
+	if options != nil && options.Input != nil {
+		return req, runtime.MarshalAsJSON(req, *options.Input)
+	}
+	return req, nil
+}
+
+// analyzeBodyNoAcceptHeaderWithSourcePathHandleError handles the AnalyzeBodyNoAcceptHeaderWithSourcePath error response.
+func (client *MediaTypesClient) analyzeBodyNoAcceptHeaderWithSourcePathHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
+	if err != nil {
+		return runtime.NewResponseError(err, resp)
+	}
+	if len(body) == 0 {
+		return runtime.NewResponseError(errors.New(resp.Status), resp)
+	}
+	return runtime.NewResponseError(errors.New(string(body)), resp)
+}
+
 // AnalyzeBodyWithSourcePath - Analyze body, that could be different media types.
 // If the operation fails it returns a generic error.
 func (client *MediaTypesClient) AnalyzeBodyWithSourcePath(ctx context.Context, options *MediaTypesClientAnalyzeBodyWithSourcePathOptions) (MediaTypesClientAnalyzeBodyWithSourcePathResponse, error) {

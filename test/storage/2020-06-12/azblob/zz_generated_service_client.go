@@ -21,15 +21,16 @@ import (
 )
 
 type serviceClient struct {
-	con *connection
+	con     *connection
+	version Enum2
 }
 
 // FilterBlobs - The Filter Blobs operation enables callers to list blobs across all containers whose tags match a given search expression. Filter blobs
 // searches across all containers within a storage account but can
 // be scoped within the expression to a single container.
 // If the operation fails it returns the *StorageError error type.
-func (client *serviceClient) FilterBlobs(ctx context.Context, options *ServiceFilterBlobsOptions) (ServiceFilterBlobsResponse, error) {
-	req, err := client.filterBlobsCreateRequest(ctx, options)
+func (client *serviceClient) FilterBlobs(ctx context.Context, comp Enum10, options *ServiceFilterBlobsOptions) (ServiceFilterBlobsResponse, error) {
+	req, err := client.filterBlobsCreateRequest(ctx, comp, options)
 	if err != nil {
 		return ServiceFilterBlobsResponse{}, err
 	}
@@ -44,13 +45,13 @@ func (client *serviceClient) FilterBlobs(ctx context.Context, options *ServiceFi
 }
 
 // filterBlobsCreateRequest creates the FilterBlobs request.
-func (client *serviceClient) filterBlobsCreateRequest(ctx context.Context, options *ServiceFilterBlobsOptions) (*policy.Request, error) {
+func (client *serviceClient) filterBlobsCreateRequest(ctx context.Context, comp Enum10, options *ServiceFilterBlobsOptions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodGet, client.con.Endpoint())
 	if err != nil {
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("comp", "blobs")
+	reqQP.Set("comp", string(comp))
 	if options != nil && options.Timeout != nil {
 		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
@@ -64,7 +65,7 @@ func (client *serviceClient) filterBlobsCreateRequest(ctx context.Context, optio
 		reqQP.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("x-ms-version", "2020-06-12")
+	req.Raw().Header.Set("x-ms-version", string(client.version))
 	if options != nil && options.RequestID != nil {
 		req.Raw().Header.Set("x-ms-client-request-id", *options.RequestID)
 	}
@@ -112,8 +113,8 @@ func (client *serviceClient) filterBlobsHandleError(resp *http.Response) error {
 
 // GetAccountInfo - Returns the sku name and account kind
 // If the operation fails it returns the *StorageError error type.
-func (client *serviceClient) GetAccountInfo(ctx context.Context, options *ServiceGetAccountInfoOptions) (ServiceGetAccountInfoResponse, error) {
-	req, err := client.getAccountInfoCreateRequest(ctx, options)
+func (client *serviceClient) GetAccountInfo(ctx context.Context, restype Enum8, comp Enum1, options *ServiceGetAccountInfoOptions) (ServiceGetAccountInfoResponse, error) {
+	req, err := client.getAccountInfoCreateRequest(ctx, restype, comp, options)
 	if err != nil {
 		return ServiceGetAccountInfoResponse{}, err
 	}
@@ -128,16 +129,16 @@ func (client *serviceClient) GetAccountInfo(ctx context.Context, options *Servic
 }
 
 // getAccountInfoCreateRequest creates the GetAccountInfo request.
-func (client *serviceClient) getAccountInfoCreateRequest(ctx context.Context, options *ServiceGetAccountInfoOptions) (*policy.Request, error) {
+func (client *serviceClient) getAccountInfoCreateRequest(ctx context.Context, restype Enum8, comp Enum1, options *ServiceGetAccountInfoOptions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodGet, client.con.Endpoint())
 	if err != nil {
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("restype", "account")
-	reqQP.Set("comp", "properties")
+	reqQP.Set("restype", string(restype))
+	reqQP.Set("comp", string(comp))
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("x-ms-version", "2020-06-12")
+	req.Raw().Header.Set("x-ms-version", string(client.version))
 	req.Raw().Header.Set("Accept", "application/xml")
 	return req, nil
 }
@@ -193,8 +194,8 @@ func (client *serviceClient) getAccountInfoHandleError(resp *http.Response) erro
 // GetProperties - gets the properties of a storage account's Blob service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing)
 // rules.
 // If the operation fails it returns the *StorageError error type.
-func (client *serviceClient) GetProperties(ctx context.Context, options *ServiceGetPropertiesOptions) (ServiceGetPropertiesResponse, error) {
-	req, err := client.getPropertiesCreateRequest(ctx, options)
+func (client *serviceClient) GetProperties(ctx context.Context, restype Enum0, comp Enum1, options *ServiceGetPropertiesOptions) (ServiceGetPropertiesResponse, error) {
+	req, err := client.getPropertiesCreateRequest(ctx, restype, comp, options)
 	if err != nil {
 		return ServiceGetPropertiesResponse{}, err
 	}
@@ -209,19 +210,19 @@ func (client *serviceClient) GetProperties(ctx context.Context, options *Service
 }
 
 // getPropertiesCreateRequest creates the GetProperties request.
-func (client *serviceClient) getPropertiesCreateRequest(ctx context.Context, options *ServiceGetPropertiesOptions) (*policy.Request, error) {
+func (client *serviceClient) getPropertiesCreateRequest(ctx context.Context, restype Enum0, comp Enum1, options *ServiceGetPropertiesOptions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodGet, client.con.Endpoint())
 	if err != nil {
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("restype", "service")
-	reqQP.Set("comp", "properties")
+	reqQP.Set("restype", string(restype))
+	reqQP.Set("comp", string(comp))
 	if options != nil && options.Timeout != nil {
 		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("x-ms-version", "2020-06-12")
+	req.Raw().Header.Set("x-ms-version", string(client.version))
 	if options != nil && options.RequestID != nil {
 		req.Raw().Header.Set("x-ms-client-request-id", *options.RequestID)
 	}
@@ -263,8 +264,8 @@ func (client *serviceClient) getPropertiesHandleError(resp *http.Response) error
 // GetStatistics - Retrieves statistics related to replication for the Blob service. It is only available on the secondary location endpoint when read-access
 // geo-redundant replication is enabled for the storage account.
 // If the operation fails it returns the *StorageError error type.
-func (client *serviceClient) GetStatistics(ctx context.Context, options *ServiceGetStatisticsOptions) (ServiceGetStatisticsResponse, error) {
-	req, err := client.getStatisticsCreateRequest(ctx, options)
+func (client *serviceClient) GetStatistics(ctx context.Context, restype Enum0, comp Enum3, options *ServiceGetStatisticsOptions) (ServiceGetStatisticsResponse, error) {
+	req, err := client.getStatisticsCreateRequest(ctx, restype, comp, options)
 	if err != nil {
 		return ServiceGetStatisticsResponse{}, err
 	}
@@ -279,19 +280,19 @@ func (client *serviceClient) GetStatistics(ctx context.Context, options *Service
 }
 
 // getStatisticsCreateRequest creates the GetStatistics request.
-func (client *serviceClient) getStatisticsCreateRequest(ctx context.Context, options *ServiceGetStatisticsOptions) (*policy.Request, error) {
+func (client *serviceClient) getStatisticsCreateRequest(ctx context.Context, restype Enum0, comp Enum3, options *ServiceGetStatisticsOptions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodGet, client.con.Endpoint())
 	if err != nil {
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("restype", "service")
-	reqQP.Set("comp", "stats")
+	reqQP.Set("restype", string(restype))
+	reqQP.Set("comp", string(comp))
 	if options != nil && options.Timeout != nil {
 		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("x-ms-version", "2020-06-12")
+	req.Raw().Header.Set("x-ms-version", string(client.version))
 	if options != nil && options.RequestID != nil {
 		req.Raw().Header.Set("x-ms-client-request-id", *options.RequestID)
 	}
@@ -339,8 +340,8 @@ func (client *serviceClient) getStatisticsHandleError(resp *http.Response) error
 
 // GetUserDelegationKey - Retrieves a user delegation key for the Blob service. This is only a valid operation when using bearer token authentication.
 // If the operation fails it returns the *StorageError error type.
-func (client *serviceClient) GetUserDelegationKey(ctx context.Context, keyInfo KeyInfo, options *ServiceGetUserDelegationKeyOptions) (ServiceGetUserDelegationKeyResponse, error) {
-	req, err := client.getUserDelegationKeyCreateRequest(ctx, keyInfo, options)
+func (client *serviceClient) GetUserDelegationKey(ctx context.Context, restype Enum0, comp Enum7, keyInfo KeyInfo, options *ServiceGetUserDelegationKeyOptions) (ServiceGetUserDelegationKeyResponse, error) {
+	req, err := client.getUserDelegationKeyCreateRequest(ctx, restype, comp, keyInfo, options)
 	if err != nil {
 		return ServiceGetUserDelegationKeyResponse{}, err
 	}
@@ -355,19 +356,19 @@ func (client *serviceClient) GetUserDelegationKey(ctx context.Context, keyInfo K
 }
 
 // getUserDelegationKeyCreateRequest creates the GetUserDelegationKey request.
-func (client *serviceClient) getUserDelegationKeyCreateRequest(ctx context.Context, keyInfo KeyInfo, options *ServiceGetUserDelegationKeyOptions) (*policy.Request, error) {
+func (client *serviceClient) getUserDelegationKeyCreateRequest(ctx context.Context, restype Enum0, comp Enum7, keyInfo KeyInfo, options *ServiceGetUserDelegationKeyOptions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPost, client.con.Endpoint())
 	if err != nil {
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("restype", "service")
-	reqQP.Set("comp", "userdelegationkey")
+	reqQP.Set("restype", string(restype))
+	reqQP.Set("comp", string(comp))
 	if options != nil && options.Timeout != nil {
 		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("x-ms-version", "2020-06-12")
+	req.Raw().Header.Set("x-ms-version", string(client.version))
 	if options != nil && options.RequestID != nil {
 		req.Raw().Header.Set("x-ms-client-request-id", *options.RequestID)
 	}
@@ -415,11 +416,11 @@ func (client *serviceClient) getUserDelegationKeyHandleError(resp *http.Response
 
 // ListContainersSegment - The List Containers Segment operation returns a list of the containers under the specified account
 // If the operation fails it returns the *StorageError error type.
-func (client *serviceClient) ListContainersSegment(options *ServiceListContainersSegmentOptions) *ServiceListContainersSegmentPager {
+func (client *serviceClient) ListContainersSegment(comp Enum5, options *ServiceListContainersSegmentOptions) *ServiceListContainersSegmentPager {
 	return &ServiceListContainersSegmentPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listContainersSegmentCreateRequest(ctx, options)
+			return client.listContainersSegmentCreateRequest(ctx, comp, options)
 		},
 		advancer: func(ctx context.Context, resp ServiceListContainersSegmentResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.ListContainersSegmentResponse.NextMarker)
@@ -428,13 +429,13 @@ func (client *serviceClient) ListContainersSegment(options *ServiceListContainer
 }
 
 // listContainersSegmentCreateRequest creates the ListContainersSegment request.
-func (client *serviceClient) listContainersSegmentCreateRequest(ctx context.Context, options *ServiceListContainersSegmentOptions) (*policy.Request, error) {
+func (client *serviceClient) listContainersSegmentCreateRequest(ctx context.Context, comp Enum5, options *ServiceListContainersSegmentOptions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodGet, client.con.Endpoint())
 	if err != nil {
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("comp", "list")
+	reqQP.Set("comp", string(comp))
 	if options != nil && options.Prefix != nil {
 		reqQP.Set("prefix", *options.Prefix)
 	}
@@ -451,7 +452,7 @@ func (client *serviceClient) listContainersSegmentCreateRequest(ctx context.Cont
 		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("x-ms-version", "2020-06-12")
+	req.Raw().Header.Set("x-ms-version", string(client.version))
 	if options != nil && options.RequestID != nil {
 		req.Raw().Header.Set("x-ms-client-request-id", *options.RequestID)
 	}
@@ -493,8 +494,8 @@ func (client *serviceClient) listContainersSegmentHandleError(resp *http.Respons
 // SetProperties - Sets properties for a storage account's Blob service endpoint, including properties for Storage Analytics and CORS (Cross-Origin Resource
 // Sharing) rules
 // If the operation fails it returns the *StorageError error type.
-func (client *serviceClient) SetProperties(ctx context.Context, storageServiceProperties StorageServiceProperties, options *ServiceSetPropertiesOptions) (ServiceSetPropertiesResponse, error) {
-	req, err := client.setPropertiesCreateRequest(ctx, storageServiceProperties, options)
+func (client *serviceClient) SetProperties(ctx context.Context, restype Enum0, comp Enum1, storageServiceProperties StorageServiceProperties, options *ServiceSetPropertiesOptions) (ServiceSetPropertiesResponse, error) {
+	req, err := client.setPropertiesCreateRequest(ctx, restype, comp, storageServiceProperties, options)
 	if err != nil {
 		return ServiceSetPropertiesResponse{}, err
 	}
@@ -509,19 +510,19 @@ func (client *serviceClient) SetProperties(ctx context.Context, storageServicePr
 }
 
 // setPropertiesCreateRequest creates the SetProperties request.
-func (client *serviceClient) setPropertiesCreateRequest(ctx context.Context, storageServiceProperties StorageServiceProperties, options *ServiceSetPropertiesOptions) (*policy.Request, error) {
+func (client *serviceClient) setPropertiesCreateRequest(ctx context.Context, restype Enum0, comp Enum1, storageServiceProperties StorageServiceProperties, options *ServiceSetPropertiesOptions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
 	if err != nil {
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("restype", "service")
-	reqQP.Set("comp", "properties")
+	reqQP.Set("restype", string(restype))
+	reqQP.Set("comp", string(comp))
 	if options != nil && options.Timeout != nil {
 		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("x-ms-version", "2020-06-12")
+	req.Raw().Header.Set("x-ms-version", string(client.version))
 	if options != nil && options.RequestID != nil {
 		req.Raw().Header.Set("x-ms-client-request-id", *options.RequestID)
 	}
@@ -559,8 +560,8 @@ func (client *serviceClient) setPropertiesHandleError(resp *http.Response) error
 
 // SubmitBatch - The Batch operation allows multiple API calls to be embedded into a single HTTP request.
 // If the operation fails it returns the *StorageError error type.
-func (client *serviceClient) SubmitBatch(ctx context.Context, contentLength int64, multipartContentType string, body io.ReadSeekCloser, options *ServiceSubmitBatchOptions) (ServiceSubmitBatchResponse, error) {
-	req, err := client.submitBatchCreateRequest(ctx, contentLength, multipartContentType, body, options)
+func (client *serviceClient) SubmitBatch(ctx context.Context, comp Enum9, contentLength int64, multipartContentType string, body io.ReadSeekCloser, options *ServiceSubmitBatchOptions) (ServiceSubmitBatchResponse, error) {
+	req, err := client.submitBatchCreateRequest(ctx, comp, contentLength, multipartContentType, body, options)
 	if err != nil {
 		return ServiceSubmitBatchResponse{}, err
 	}
@@ -575,13 +576,13 @@ func (client *serviceClient) SubmitBatch(ctx context.Context, contentLength int6
 }
 
 // submitBatchCreateRequest creates the SubmitBatch request.
-func (client *serviceClient) submitBatchCreateRequest(ctx context.Context, contentLength int64, multipartContentType string, body io.ReadSeekCloser, options *ServiceSubmitBatchOptions) (*policy.Request, error) {
+func (client *serviceClient) submitBatchCreateRequest(ctx context.Context, comp Enum9, contentLength int64, multipartContentType string, body io.ReadSeekCloser, options *ServiceSubmitBatchOptions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPost, client.con.Endpoint())
 	if err != nil {
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("comp", "batch")
+	reqQP.Set("comp", string(comp))
 	if options != nil && options.Timeout != nil {
 		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
@@ -589,7 +590,7 @@ func (client *serviceClient) submitBatchCreateRequest(ctx context.Context, conte
 	req.SkipBodyDownload()
 	req.Raw().Header.Set("Content-Length", strconv.FormatInt(contentLength, 10))
 	req.Raw().Header.Set("Content-Type", multipartContentType)
-	req.Raw().Header.Set("x-ms-version", "2020-06-12")
+	req.Raw().Header.Set("x-ms-version", string(client.version))
 	if options != nil && options.RequestID != nil {
 		req.Raw().Header.Set("x-ms-client-request-id", *options.RequestID)
 	}
