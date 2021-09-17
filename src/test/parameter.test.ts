@@ -21,4 +21,3 @@ describe('parameter ordering', () => {
         expect(params[3].required).toBe(false);
     });    
 });
-
