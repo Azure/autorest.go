@@ -1,4 +1,5 @@
-// +build go1.13
+//go:build go1.16
+// +build go1.16
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -11,7 +12,8 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
@@ -37,33 +39,32 @@ func (client *XMSClientRequestIDClient) Get(ctx context.Context, options *XMSCli
 	if err != nil {
 		return XMSClientRequestIDGetResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return XMSClientRequestIDGetResponse{}, client.getHandleError(resp)
 	}
-	return XMSClientRequestIDGetResponse{RawResponse: resp.Response}, nil
+	return XMSClientRequestIDGetResponse{RawResponse: resp}, nil
 }
 
 // getCreateRequest creates the Get request.
-func (client *XMSClientRequestIDClient) getCreateRequest(ctx context.Context, options *XMSClientRequestIDGetOptions) (*azcore.Request, error) {
+func (client *XMSClientRequestIDClient) getCreateRequest(ctx context.Context, options *XMSClientRequestIDGetOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/overwrite/x-ms-client-request-id/method/"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
 	return req, nil
 }
 
 // getHandleError handles the Get error response.
-func (client *XMSClientRequestIDClient) getHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *XMSClientRequestIDClient) getHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	if len(body) == 0 {
-		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
+		return runtime.NewResponseError(errors.New(resp.Status), resp)
 	}
-	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
+	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
 // ParamGet - Get method that overwrites x-ms-client-request header with value 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.
@@ -77,34 +78,33 @@ func (client *XMSClientRequestIDClient) ParamGet(ctx context.Context, xmsClientR
 	if err != nil {
 		return XMSClientRequestIDParamGetResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return XMSClientRequestIDParamGetResponse{}, client.paramGetHandleError(resp)
 	}
-	return XMSClientRequestIDParamGetResponse{RawResponse: resp.Response}, nil
+	return XMSClientRequestIDParamGetResponse{RawResponse: resp}, nil
 }
 
 // paramGetCreateRequest creates the ParamGet request.
-func (client *XMSClientRequestIDClient) paramGetCreateRequest(ctx context.Context, xmsClientRequestID string, options *XMSClientRequestIDParamGetOptions) (*azcore.Request, error) {
+func (client *XMSClientRequestIDClient) paramGetCreateRequest(ctx context.Context, xmsClientRequestID string, options *XMSClientRequestIDParamGetOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/overwrite/x-ms-client-request-id/via-param/method/"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("x-ms-client-request-id", xmsClientRequestID)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("x-ms-client-request-id", xmsClientRequestID)
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // paramGetHandleError handles the ParamGet error response.
-func (client *XMSClientRequestIDClient) paramGetHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *XMSClientRequestIDClient) paramGetHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }

@@ -10,7 +10,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 )
 
 func newHTTPRetryClient() *HTTPRetryClient {
@@ -20,15 +20,13 @@ func newHTTPRetryClient() *HTTPRetryClient {
 	return NewHTTPRetryClient(NewDefaultConnection(&options))
 }
 
-func httpClientWithCookieJar() azcore.Transport {
+func httpClientWithCookieJar() policy.Transporter {
 	j, err := cookiejar.New(nil)
 	if err != nil {
 		panic(err)
 	}
 	http.DefaultClient.Jar = j
-	return azcore.TransportFunc(func(req *http.Request) (*http.Response, error) {
-		return http.DefaultClient.Do(req)
-	})
+	return http.DefaultClient
 }
 
 func TestHTTPRetryDelete503(t *testing.T) {

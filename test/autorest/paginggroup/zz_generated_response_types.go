@@ -1,4 +1,5 @@
-// +build go1.13
+//go:build go1.16
+// +build go1.16
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -9,6 +10,7 @@ package paginggroup
 
 import (
 	"context"
+	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
 	"net/http"
 	"time"
 )
@@ -58,7 +60,7 @@ type PagingGetMultiplePagesFragmentNextLinkResponse struct {
 
 // PagingGetMultiplePagesFragmentNextLinkResult contains the result from method Paging.GetMultiplePagesFragmentNextLink.
 type PagingGetMultiplePagesFragmentNextLinkResult struct {
-	OdataProductResult
+	ODataProductResult
 }
 
 // PagingGetMultiplePagesFragmentWithGroupingNextLinkResponse contains the response from method Paging.GetMultiplePagesFragmentWithGroupingNextLink.
@@ -70,19 +72,47 @@ type PagingGetMultiplePagesFragmentWithGroupingNextLinkResponse struct {
 
 // PagingGetMultiplePagesFragmentWithGroupingNextLinkResult contains the result from method Paging.GetMultiplePagesFragmentWithGroupingNextLink.
 type PagingGetMultiplePagesFragmentWithGroupingNextLinkResult struct {
-	OdataProductResult
+	ODataProductResult
 }
 
 // PagingGetMultiplePagesLROPollerResponse contains the response from method Paging.GetMultiplePagesLRO.
 type PagingGetMultiplePagesLROPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (PagingGetMultiplePagesLROPager, error)
-
 	// Poller contains an initialized poller.
-	Poller PagingGetMultiplePagesLROPoller
+	Poller *PagingGetMultiplePagesLROPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l PagingGetMultiplePagesLROPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (*PagingGetMultiplePagesLROPager, error) {
+	respType := &PagingGetMultiplePagesLROPager{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.current.ProductResult)
+	if err != nil {
+		return respType, err
+	}
+	respType.current.RawResponse = resp
+	respType.client = l.Poller.client
+	return respType, nil
+}
+
+// Resume rehydrates a PagingGetMultiplePagesLROPollerResponse from the provided client and resume token.
+func (l *PagingGetMultiplePagesLROPollerResponse) Resume(ctx context.Context, client *PagingClient, token string) error {
+	pt, err := armruntime.NewPollerFromResumeToken("PagingClient.GetMultiplePagesLRO", token, client.con.Pipeline(), client.getMultiplePagesLROHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &PagingGetMultiplePagesLROPoller{
+		pt:     pt,
+		client: client,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // PagingGetMultiplePagesLROResponse contains the response from method Paging.GetMultiplePagesLRO.
@@ -169,16 +199,16 @@ type PagingGetNullNextLinkNamePagesResult struct {
 	ProductResult
 }
 
-// PagingGetOdataMultiplePagesResponse contains the response from method Paging.GetOdataMultiplePages.
-type PagingGetOdataMultiplePagesResponse struct {
-	PagingGetOdataMultiplePagesResult
+// PagingGetODataMultiplePagesResponse contains the response from method Paging.GetODataMultiplePages.
+type PagingGetODataMultiplePagesResponse struct {
+	PagingGetODataMultiplePagesResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PagingGetOdataMultiplePagesResult contains the result from method Paging.GetOdataMultiplePages.
-type PagingGetOdataMultiplePagesResult struct {
-	OdataProductResult
+// PagingGetODataMultiplePagesResult contains the result from method Paging.GetODataMultiplePages.
+type PagingGetODataMultiplePagesResult struct {
+	ODataProductResult
 }
 
 // PagingGetPagingModelWithItemNameWithXMSClientNameResponse contains the response from method Paging.GetPagingModelWithItemNameWithXMSClientName.
@@ -238,7 +268,7 @@ type PagingNextFragmentResponse struct {
 
 // PagingNextFragmentResult contains the result from method Paging.NextFragment.
 type PagingNextFragmentResult struct {
-	OdataProductResult
+	ODataProductResult
 }
 
 // PagingNextFragmentWithGroupingResponse contains the response from method Paging.NextFragmentWithGrouping.
@@ -250,7 +280,7 @@ type PagingNextFragmentWithGroupingResponse struct {
 
 // PagingNextFragmentWithGroupingResult contains the result from method Paging.NextFragmentWithGrouping.
 type PagingNextFragmentWithGroupingResult struct {
-	OdataProductResult
+	ODataProductResult
 }
 
 // PagingNextOperationWithQueryParamsResponse contains the response from method Paging.NextOperationWithQueryParams.

@@ -67,13 +67,14 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
     text += '}\n\n';
   }
   if (needsJSONPopulateByteArray) {
-    text += 'func populateByteArray(m map[string]interface{}, k string, b []byte, f azcore.Base64Encoding) {\n';
+    imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
+    text += 'func populateByteArray(m map[string]interface{}, k string, b []byte, f runtime.Base64Encoding) {\n';
     text += '\tif azcore.IsNullValue(b) {\n';
     text += '\t\tm[k] = nil\n';
     text += '\t} else if len(b) == 0 {\n';
     text += '\t\treturn\n';
     text += '\t} else {\n';
-    text += '\t\tm[k] = azcore.EncodeByteArray(b, f)\n';
+    text += '\t\tm[k] = runtime.EncodeByteArray(b, f)\n';
     text += '\t}\n';
     text += '}\n\n';
   }
@@ -127,10 +128,10 @@ function generateStructs(imports: ImportManager, objects?: ObjectSchema[]): Stru
     }
     const needs = determineMarshallers(obj);
     if (needs.intM) {
-      generateInternalMarshaller(obj, structDef, parentType);
+      generateInternalMarshaller(obj, structDef, imports, parentType);
     }
     if (needs.intU) {
-      generateInternalUnmarshaller(obj, structDef, parentType);
+      generateInternalUnmarshaller(obj, structDef, imports, parentType);
     }
     if (needs.M) {
       imports.add('reflect');
@@ -321,7 +322,7 @@ function generateDiscriminatorMarkerMethod(obj: ObjectSchema, structDef: StructD
   structDef.Methods.push({ name: interfaceMethod, desc: `${interfaceMethod} implements the ${obj.language.go!.discriminatorInterface} interface for type ${typeName}.`, text: method });
 }
 
-function generateInternalMarshaller(obj: ObjectSchema, structDef: StructDef, parentType?: ObjectSchema) {
+function generateInternalMarshaller(obj: ObjectSchema, structDef: StructDef, imports: ImportManager, parentType?: ObjectSchema) {
   if (obj.language.go!.errorType || obj.language.go!.inheritedErrorType) {
     // errors don't need custom marshallers
     return;
@@ -346,17 +347,17 @@ function generateInternalMarshaller(obj: ObjectSchema, structDef: StructDef, par
   } else {
     marshalInteral += '\tobjectMap := make(map[string]interface{})\n';
   }
-  marshalInteral += generateJSONMarshallerBody(obj, structDef);
+  marshalInteral += generateJSONMarshallerBody(obj, structDef, imports);
   marshalInteral += '\treturn objectMap\n';
   marshalInteral += '}\n\n';
   structDef.Methods.push({ name: 'marshalInternal', desc: '', text: marshalInteral });
 }
 
-function generateInternalUnmarshaller(obj: ObjectSchema, structDef: StructDef, parentType?: ObjectSchema) {
+function generateInternalUnmarshaller(obj: ObjectSchema, structDef: StructDef, imports: ImportManager, parentType?: ObjectSchema) {
   const typeName = obj.language.go!.name;
   const receiver = structDef.receiverName();
   let unmarshalInternall = `func (${receiver} *${typeName}) unmarshalInternal(rawMsg map[string]json.RawMessage) error {\n`;
-  unmarshalInternall += generateJSONUnmarshallerBody(obj, structDef, parentType);
+  unmarshalInternall += generateJSONUnmarshallerBody(obj, structDef, imports, parentType);
   unmarshalInternall += '}\n\n';
   structDef.Methods.push({ name: 'unmarshalInternal', desc: '', text: unmarshalInternall });
 }
@@ -389,14 +390,14 @@ function generateJSONMarshaller(imports: ImportManager, obj: ObjectSchema, struc
     } else {
       marshaller += '\tobjectMap := make(map[string]interface{})\n';
     }
-    marshaller += generateJSONMarshallerBody(obj, structDef);
+    marshaller += generateJSONMarshallerBody(obj, structDef, imports);
   }
   marshaller += '\treturn json.Marshal(objectMap)\n';
   marshaller += '}\n\n';
   structDef.Methods.push({ name: 'MarshalJSON', desc: `MarshalJSON implements the json.Marshaller interface for type ${typeName}.`, text: marshaller });
 }
 
-function generateJSONMarshallerBody(obj: ObjectSchema, structDef: StructDef): string {
+function generateJSONMarshallerBody(obj: ObjectSchema, structDef: StructDef, imports: ImportManager): string {
   const receiver = structDef.receiverName();
   let marshaller = '';
   for (const prop of values(structDef.Properties)) {
@@ -411,7 +412,8 @@ function generateJSONMarshallerBody(obj: ObjectSchema, structDef: StructDef): st
       if ((<ByteArraySchema>prop.schema).format === 'base64url') {
         base64Format = 'URL';
       }
-      marshaller += `\tpopulateByteArray(objectMap, "${prop.serializedName}", ${receiver}.${prop.language.go!.name}, azcore.Base64${base64Format}Format)\n`;
+      imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
+      marshaller += `\tpopulateByteArray(objectMap, "${prop.serializedName}", ${receiver}.${prop.language.go!.name}, runtime.Base64${base64Format}Format)\n`;
     } else if (isArraySchema(prop.schema) && prop.schema.elementType.language.go!.internalTimeType) {
       const source = `${receiver}.${prop.language.go!.name}`;
       marshaller += `\taux := make([]*${prop.schema.elementType.language.go!.internalTimeType}, len(${source}), len(${source}))\n`;
@@ -463,13 +465,13 @@ function generateJSONUnmarshaller(imports: ImportManager, obj: ObjectSchema, str
   if (obj.discriminator || obj.children?.immediate && isObjectSchema(obj.children.immediate[0])) {
     unmarshaller += `\treturn ${receiver}.unmarshalInternal(rawMsg)\n`;
   } else {
-    unmarshaller += generateJSONUnmarshallerBody(obj, structDef, parentType);
+    unmarshaller += generateJSONUnmarshallerBody(obj, structDef, imports, parentType);
   }
   unmarshaller += '}\n\n';
   structDef.Methods.push({ name: 'UnmarshalJSON', desc: `UnmarshalJSON implements the json.Unmarshaller interface for type ${typeName}.`, text: unmarshaller });
 }
 
-function generateJSONUnmarshallerBody(obj: ObjectSchema, structDef: StructDef, parentType?: ObjectSchema): string {
+function generateJSONUnmarshallerBody(obj: ObjectSchema, structDef: StructDef, imports: ImportManager, parentType?: ObjectSchema): string {
   const receiver = structDef.receiverName();
   const addlProps = hasAdditionalProperties(obj);
   const emitAddlProps = function (tab: string, addlProps: DictionarySchema): string {
@@ -527,7 +529,8 @@ function generateJSONUnmarshallerBody(obj: ObjectSchema, structDef: StructDef, p
         if ((<ByteArraySchema>prop.schema).format === 'base64url') {
           base64Format = 'URL';
         }
-        unmarshalBody += `\t\t\terr = azcore.DecodeByteArray(string(val), &${receiver}.${prop.language.go!.name}, azcore.Base64${base64Format}Format)\n`;
+        imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
+        unmarshalBody += `\t\t\terr = runtime.DecodeByteArray(string(val), &${receiver}.${prop.language.go!.name}, runtime.Base64${base64Format}Format)\n`;
       } else {
         unmarshalBody += `\t\t\t\terr = unpopulate(val, &${receiver}.${prop.language.go!.name})\n`;
       }

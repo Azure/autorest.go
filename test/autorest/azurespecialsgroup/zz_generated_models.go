@@ -1,4 +1,5 @@
-// +build go1.13
+//go:build go1.16
+// +build go1.16
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -84,13 +85,13 @@ type HeaderCustomNamedRequestIDParamGroupingParameters struct {
 	FooClientRequestID string
 }
 
-type OdataFilter struct {
+type ODataFilter struct {
 	ID   *int32  `json:"id,omitempty"`
 	Name *string `json:"name,omitempty"`
 }
 
-// OdataGetWithFilterOptions contains the optional parameters for the Odata.GetWithFilter method.
-type OdataGetWithFilterOptions struct {
+// ODataGetWithFilterOptions contains the optional parameters for the OData.GetWithFilter method.
+type ODataGetWithFilterOptions struct {
 	// The filter parameter with value '$filter=id gt 5 and name eq 'foo''.
 	Filter *string
 	// The orderby parameter with value id.

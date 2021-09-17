@@ -1,4 +1,5 @@
-// +build go1.13
+//go:build go1.16
+// +build go1.16
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -10,7 +11,8 @@ package httpinfrastructuregroup
 import (
 	"context"
 	"fmt"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
@@ -36,35 +38,34 @@ func (client *HTTPClientFailureClient) Delete400(ctx context.Context, options *H
 	if err != nil {
 		return HTTPClientFailureDelete400Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
 		return HTTPClientFailureDelete400Response{}, client.delete400HandleError(resp)
 	}
-	return HTTPClientFailureDelete400Response{RawResponse: resp.Response}, nil
+	return HTTPClientFailureDelete400Response{RawResponse: resp}, nil
 }
 
 // delete400CreateRequest creates the Delete400 request.
-func (client *HTTPClientFailureClient) delete400CreateRequest(ctx context.Context, options *HTTPClientFailureDelete400Options) (*azcore.Request, error) {
+func (client *HTTPClientFailureClient) delete400CreateRequest(ctx context.Context, options *HTTPClientFailureDelete400Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/400"
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(true)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, true)
 }
 
 // delete400HandleError handles the Delete400 error response.
-func (client *HTTPClientFailureClient) delete400HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HTTPClientFailureClient) delete400HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // Delete407 - Return 407 status code - should be represented in the client as an error
@@ -78,35 +79,34 @@ func (client *HTTPClientFailureClient) Delete407(ctx context.Context, options *H
 	if err != nil {
 		return HTTPClientFailureDelete407Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
 		return HTTPClientFailureDelete407Response{}, client.delete407HandleError(resp)
 	}
-	return HTTPClientFailureDelete407Response{RawResponse: resp.Response}, nil
+	return HTTPClientFailureDelete407Response{RawResponse: resp}, nil
 }
 
 // delete407CreateRequest creates the Delete407 request.
-func (client *HTTPClientFailureClient) delete407CreateRequest(ctx context.Context, options *HTTPClientFailureDelete407Options) (*azcore.Request, error) {
+func (client *HTTPClientFailureClient) delete407CreateRequest(ctx context.Context, options *HTTPClientFailureDelete407Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/407"
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(true)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, true)
 }
 
 // delete407HandleError handles the Delete407 error response.
-func (client *HTTPClientFailureClient) delete407HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HTTPClientFailureClient) delete407HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // Delete417 - Return 417 status code - should be represented in the client as an error
@@ -120,35 +120,34 @@ func (client *HTTPClientFailureClient) Delete417(ctx context.Context, options *H
 	if err != nil {
 		return HTTPClientFailureDelete417Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
 		return HTTPClientFailureDelete417Response{}, client.delete417HandleError(resp)
 	}
-	return HTTPClientFailureDelete417Response{RawResponse: resp.Response}, nil
+	return HTTPClientFailureDelete417Response{RawResponse: resp}, nil
 }
 
 // delete417CreateRequest creates the Delete417 request.
-func (client *HTTPClientFailureClient) delete417CreateRequest(ctx context.Context, options *HTTPClientFailureDelete417Options) (*azcore.Request, error) {
+func (client *HTTPClientFailureClient) delete417CreateRequest(ctx context.Context, options *HTTPClientFailureDelete417Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/417"
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(true)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, true)
 }
 
 // delete417HandleError handles the Delete417 error response.
-func (client *HTTPClientFailureClient) delete417HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HTTPClientFailureClient) delete417HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // Get400 - Return 400 status code - should be represented in the client as an error
@@ -162,35 +161,34 @@ func (client *HTTPClientFailureClient) Get400(ctx context.Context, options *HTTP
 	if err != nil {
 		return HTTPClientFailureGet400Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
 		return HTTPClientFailureGet400Response{}, client.get400HandleError(resp)
 	}
-	return HTTPClientFailureGet400Response{RawResponse: resp.Response}, nil
+	return HTTPClientFailureGet400Response{RawResponse: resp}, nil
 }
 
 // get400CreateRequest creates the Get400 request.
-func (client *HTTPClientFailureClient) get400CreateRequest(ctx context.Context, options *HTTPClientFailureGet400Options) (*azcore.Request, error) {
+func (client *HTTPClientFailureClient) get400CreateRequest(ctx context.Context, options *HTTPClientFailureGet400Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/400"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // get400HandleError handles the Get400 error response.
-func (client *HTTPClientFailureClient) get400HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HTTPClientFailureClient) get400HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // Get402 - Return 402 status code - should be represented in the client as an error
@@ -204,35 +202,34 @@ func (client *HTTPClientFailureClient) Get402(ctx context.Context, options *HTTP
 	if err != nil {
 		return HTTPClientFailureGet402Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
 		return HTTPClientFailureGet402Response{}, client.get402HandleError(resp)
 	}
-	return HTTPClientFailureGet402Response{RawResponse: resp.Response}, nil
+	return HTTPClientFailureGet402Response{RawResponse: resp}, nil
 }
 
 // get402CreateRequest creates the Get402 request.
-func (client *HTTPClientFailureClient) get402CreateRequest(ctx context.Context, options *HTTPClientFailureGet402Options) (*azcore.Request, error) {
+func (client *HTTPClientFailureClient) get402CreateRequest(ctx context.Context, options *HTTPClientFailureGet402Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/402"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // get402HandleError handles the Get402 error response.
-func (client *HTTPClientFailureClient) get402HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HTTPClientFailureClient) get402HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // Get403 - Return 403 status code - should be represented in the client as an error
@@ -246,35 +243,34 @@ func (client *HTTPClientFailureClient) Get403(ctx context.Context, options *HTTP
 	if err != nil {
 		return HTTPClientFailureGet403Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
 		return HTTPClientFailureGet403Response{}, client.get403HandleError(resp)
 	}
-	return HTTPClientFailureGet403Response{RawResponse: resp.Response}, nil
+	return HTTPClientFailureGet403Response{RawResponse: resp}, nil
 }
 
 // get403CreateRequest creates the Get403 request.
-func (client *HTTPClientFailureClient) get403CreateRequest(ctx context.Context, options *HTTPClientFailureGet403Options) (*azcore.Request, error) {
+func (client *HTTPClientFailureClient) get403CreateRequest(ctx context.Context, options *HTTPClientFailureGet403Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/403"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // get403HandleError handles the Get403 error response.
-func (client *HTTPClientFailureClient) get403HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HTTPClientFailureClient) get403HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // Get411 - Return 411 status code - should be represented in the client as an error
@@ -288,35 +284,34 @@ func (client *HTTPClientFailureClient) Get411(ctx context.Context, options *HTTP
 	if err != nil {
 		return HTTPClientFailureGet411Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
 		return HTTPClientFailureGet411Response{}, client.get411HandleError(resp)
 	}
-	return HTTPClientFailureGet411Response{RawResponse: resp.Response}, nil
+	return HTTPClientFailureGet411Response{RawResponse: resp}, nil
 }
 
 // get411CreateRequest creates the Get411 request.
-func (client *HTTPClientFailureClient) get411CreateRequest(ctx context.Context, options *HTTPClientFailureGet411Options) (*azcore.Request, error) {
+func (client *HTTPClientFailureClient) get411CreateRequest(ctx context.Context, options *HTTPClientFailureGet411Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/411"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // get411HandleError handles the Get411 error response.
-func (client *HTTPClientFailureClient) get411HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HTTPClientFailureClient) get411HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // Get412 - Return 412 status code - should be represented in the client as an error
@@ -330,35 +325,34 @@ func (client *HTTPClientFailureClient) Get412(ctx context.Context, options *HTTP
 	if err != nil {
 		return HTTPClientFailureGet412Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
 		return HTTPClientFailureGet412Response{}, client.get412HandleError(resp)
 	}
-	return HTTPClientFailureGet412Response{RawResponse: resp.Response}, nil
+	return HTTPClientFailureGet412Response{RawResponse: resp}, nil
 }
 
 // get412CreateRequest creates the Get412 request.
-func (client *HTTPClientFailureClient) get412CreateRequest(ctx context.Context, options *HTTPClientFailureGet412Options) (*azcore.Request, error) {
+func (client *HTTPClientFailureClient) get412CreateRequest(ctx context.Context, options *HTTPClientFailureGet412Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/412"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // get412HandleError handles the Get412 error response.
-func (client *HTTPClientFailureClient) get412HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HTTPClientFailureClient) get412HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // Get416 - Return 416 status code - should be represented in the client as an error
@@ -372,35 +366,34 @@ func (client *HTTPClientFailureClient) Get416(ctx context.Context, options *HTTP
 	if err != nil {
 		return HTTPClientFailureGet416Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
 		return HTTPClientFailureGet416Response{}, client.get416HandleError(resp)
 	}
-	return HTTPClientFailureGet416Response{RawResponse: resp.Response}, nil
+	return HTTPClientFailureGet416Response{RawResponse: resp}, nil
 }
 
 // get416CreateRequest creates the Get416 request.
-func (client *HTTPClientFailureClient) get416CreateRequest(ctx context.Context, options *HTTPClientFailureGet416Options) (*azcore.Request, error) {
+func (client *HTTPClientFailureClient) get416CreateRequest(ctx context.Context, options *HTTPClientFailureGet416Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/416"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // get416HandleError handles the Get416 error response.
-func (client *HTTPClientFailureClient) get416HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HTTPClientFailureClient) get416HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // Head400 - Return 400 status code - should be represented in the client as an error
@@ -414,7 +407,7 @@ func (client *HTTPClientFailureClient) Head400(ctx context.Context, options *HTT
 	if err != nil {
 		return HTTPClientFailureHead400Response{}, err
 	}
-	result := HTTPClientFailureHead400Response{RawResponse: resp.Response}
+	result := HTTPClientFailureHead400Response{RawResponse: resp}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
 		result.Success = true
 	}
@@ -422,14 +415,13 @@ func (client *HTTPClientFailureClient) Head400(ctx context.Context, options *HTT
 }
 
 // head400CreateRequest creates the Head400 request.
-func (client *HTTPClientFailureClient) head400CreateRequest(ctx context.Context, options *HTTPClientFailureHead400Options) (*azcore.Request, error) {
+func (client *HTTPClientFailureClient) head400CreateRequest(ctx context.Context, options *HTTPClientFailureHead400Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/400"
-	req, err := azcore.NewRequest(ctx, http.MethodHead, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -444,7 +436,7 @@ func (client *HTTPClientFailureClient) Head401(ctx context.Context, options *HTT
 	if err != nil {
 		return HTTPClientFailureHead401Response{}, err
 	}
-	result := HTTPClientFailureHead401Response{RawResponse: resp.Response}
+	result := HTTPClientFailureHead401Response{RawResponse: resp}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
 		result.Success = true
 	}
@@ -452,14 +444,13 @@ func (client *HTTPClientFailureClient) Head401(ctx context.Context, options *HTT
 }
 
 // head401CreateRequest creates the Head401 request.
-func (client *HTTPClientFailureClient) head401CreateRequest(ctx context.Context, options *HTTPClientFailureHead401Options) (*azcore.Request, error) {
+func (client *HTTPClientFailureClient) head401CreateRequest(ctx context.Context, options *HTTPClientFailureHead401Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/401"
-	req, err := azcore.NewRequest(ctx, http.MethodHead, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -474,7 +465,7 @@ func (client *HTTPClientFailureClient) Head410(ctx context.Context, options *HTT
 	if err != nil {
 		return HTTPClientFailureHead410Response{}, err
 	}
-	result := HTTPClientFailureHead410Response{RawResponse: resp.Response}
+	result := HTTPClientFailureHead410Response{RawResponse: resp}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
 		result.Success = true
 	}
@@ -482,14 +473,13 @@ func (client *HTTPClientFailureClient) Head410(ctx context.Context, options *HTT
 }
 
 // head410CreateRequest creates the Head410 request.
-func (client *HTTPClientFailureClient) head410CreateRequest(ctx context.Context, options *HTTPClientFailureHead410Options) (*azcore.Request, error) {
+func (client *HTTPClientFailureClient) head410CreateRequest(ctx context.Context, options *HTTPClientFailureHead410Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/410"
-	req, err := azcore.NewRequest(ctx, http.MethodHead, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -504,7 +494,7 @@ func (client *HTTPClientFailureClient) Head429(ctx context.Context, options *HTT
 	if err != nil {
 		return HTTPClientFailureHead429Response{}, err
 	}
-	result := HTTPClientFailureHead429Response{RawResponse: resp.Response}
+	result := HTTPClientFailureHead429Response{RawResponse: resp}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
 		result.Success = true
 	}
@@ -512,14 +502,13 @@ func (client *HTTPClientFailureClient) Head429(ctx context.Context, options *HTT
 }
 
 // head429CreateRequest creates the Head429 request.
-func (client *HTTPClientFailureClient) head429CreateRequest(ctx context.Context, options *HTTPClientFailureHead429Options) (*azcore.Request, error) {
+func (client *HTTPClientFailureClient) head429CreateRequest(ctx context.Context, options *HTTPClientFailureHead429Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/429"
-	req, err := azcore.NewRequest(ctx, http.MethodHead, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
@@ -534,35 +523,34 @@ func (client *HTTPClientFailureClient) Options400(ctx context.Context, options *
 	if err != nil {
 		return HTTPClientFailureOptions400Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
 		return HTTPClientFailureOptions400Response{}, client.options400HandleError(resp)
 	}
-	return HTTPClientFailureOptions400Response{RawResponse: resp.Response}, nil
+	return HTTPClientFailureOptions400Response{RawResponse: resp}, nil
 }
 
 // options400CreateRequest creates the Options400 request.
-func (client *HTTPClientFailureClient) options400CreateRequest(ctx context.Context, options *HTTPClientFailureOptions400Options) (*azcore.Request, error) {
+func (client *HTTPClientFailureClient) options400CreateRequest(ctx context.Context, options *HTTPClientFailureOptions400Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/400"
-	req, err := azcore.NewRequest(ctx, http.MethodOptions, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodOptions, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // options400HandleError handles the Options400 error response.
-func (client *HTTPClientFailureClient) options400HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HTTPClientFailureClient) options400HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // Options403 - Return 403 status code - should be represented in the client as an error
@@ -576,35 +564,34 @@ func (client *HTTPClientFailureClient) Options403(ctx context.Context, options *
 	if err != nil {
 		return HTTPClientFailureOptions403Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
 		return HTTPClientFailureOptions403Response{}, client.options403HandleError(resp)
 	}
-	return HTTPClientFailureOptions403Response{RawResponse: resp.Response}, nil
+	return HTTPClientFailureOptions403Response{RawResponse: resp}, nil
 }
 
 // options403CreateRequest creates the Options403 request.
-func (client *HTTPClientFailureClient) options403CreateRequest(ctx context.Context, options *HTTPClientFailureOptions403Options) (*azcore.Request, error) {
+func (client *HTTPClientFailureClient) options403CreateRequest(ctx context.Context, options *HTTPClientFailureOptions403Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/403"
-	req, err := azcore.NewRequest(ctx, http.MethodOptions, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodOptions, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // options403HandleError handles the Options403 error response.
-func (client *HTTPClientFailureClient) options403HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HTTPClientFailureClient) options403HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // Options412 - Return 412 status code - should be represented in the client as an error
@@ -618,35 +605,34 @@ func (client *HTTPClientFailureClient) Options412(ctx context.Context, options *
 	if err != nil {
 		return HTTPClientFailureOptions412Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
 		return HTTPClientFailureOptions412Response{}, client.options412HandleError(resp)
 	}
-	return HTTPClientFailureOptions412Response{RawResponse: resp.Response}, nil
+	return HTTPClientFailureOptions412Response{RawResponse: resp}, nil
 }
 
 // options412CreateRequest creates the Options412 request.
-func (client *HTTPClientFailureClient) options412CreateRequest(ctx context.Context, options *HTTPClientFailureOptions412Options) (*azcore.Request, error) {
+func (client *HTTPClientFailureClient) options412CreateRequest(ctx context.Context, options *HTTPClientFailureOptions412Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/412"
-	req, err := azcore.NewRequest(ctx, http.MethodOptions, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodOptions, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // options412HandleError handles the Options412 error response.
-func (client *HTTPClientFailureClient) options412HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HTTPClientFailureClient) options412HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // Patch400 - Return 400 status code - should be represented in the client as an error
@@ -660,35 +646,34 @@ func (client *HTTPClientFailureClient) Patch400(ctx context.Context, options *HT
 	if err != nil {
 		return HTTPClientFailurePatch400Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
 		return HTTPClientFailurePatch400Response{}, client.patch400HandleError(resp)
 	}
-	return HTTPClientFailurePatch400Response{RawResponse: resp.Response}, nil
+	return HTTPClientFailurePatch400Response{RawResponse: resp}, nil
 }
 
 // patch400CreateRequest creates the Patch400 request.
-func (client *HTTPClientFailureClient) patch400CreateRequest(ctx context.Context, options *HTTPClientFailurePatch400Options) (*azcore.Request, error) {
+func (client *HTTPClientFailureClient) patch400CreateRequest(ctx context.Context, options *HTTPClientFailurePatch400Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/400"
-	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(true)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, true)
 }
 
 // patch400HandleError handles the Patch400 error response.
-func (client *HTTPClientFailureClient) patch400HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HTTPClientFailureClient) patch400HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // Patch405 - Return 405 status code - should be represented in the client as an error
@@ -702,35 +687,34 @@ func (client *HTTPClientFailureClient) Patch405(ctx context.Context, options *HT
 	if err != nil {
 		return HTTPClientFailurePatch405Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
 		return HTTPClientFailurePatch405Response{}, client.patch405HandleError(resp)
 	}
-	return HTTPClientFailurePatch405Response{RawResponse: resp.Response}, nil
+	return HTTPClientFailurePatch405Response{RawResponse: resp}, nil
 }
 
 // patch405CreateRequest creates the Patch405 request.
-func (client *HTTPClientFailureClient) patch405CreateRequest(ctx context.Context, options *HTTPClientFailurePatch405Options) (*azcore.Request, error) {
+func (client *HTTPClientFailureClient) patch405CreateRequest(ctx context.Context, options *HTTPClientFailurePatch405Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/405"
-	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(true)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, true)
 }
 
 // patch405HandleError handles the Patch405 error response.
-func (client *HTTPClientFailureClient) patch405HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HTTPClientFailureClient) patch405HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // Patch414 - Return 414 status code - should be represented in the client as an error
@@ -744,35 +728,34 @@ func (client *HTTPClientFailureClient) Patch414(ctx context.Context, options *HT
 	if err != nil {
 		return HTTPClientFailurePatch414Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
 		return HTTPClientFailurePatch414Response{}, client.patch414HandleError(resp)
 	}
-	return HTTPClientFailurePatch414Response{RawResponse: resp.Response}, nil
+	return HTTPClientFailurePatch414Response{RawResponse: resp}, nil
 }
 
 // patch414CreateRequest creates the Patch414 request.
-func (client *HTTPClientFailureClient) patch414CreateRequest(ctx context.Context, options *HTTPClientFailurePatch414Options) (*azcore.Request, error) {
+func (client *HTTPClientFailureClient) patch414CreateRequest(ctx context.Context, options *HTTPClientFailurePatch414Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/414"
-	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(true)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, true)
 }
 
 // patch414HandleError handles the Patch414 error response.
-func (client *HTTPClientFailureClient) patch414HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HTTPClientFailureClient) patch414HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // Post400 - Return 400 status code - should be represented in the client as an error
@@ -786,35 +769,34 @@ func (client *HTTPClientFailureClient) Post400(ctx context.Context, options *HTT
 	if err != nil {
 		return HTTPClientFailurePost400Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
 		return HTTPClientFailurePost400Response{}, client.post400HandleError(resp)
 	}
-	return HTTPClientFailurePost400Response{RawResponse: resp.Response}, nil
+	return HTTPClientFailurePost400Response{RawResponse: resp}, nil
 }
 
 // post400CreateRequest creates the Post400 request.
-func (client *HTTPClientFailureClient) post400CreateRequest(ctx context.Context, options *HTTPClientFailurePost400Options) (*azcore.Request, error) {
+func (client *HTTPClientFailureClient) post400CreateRequest(ctx context.Context, options *HTTPClientFailurePost400Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/400"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(true)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, true)
 }
 
 // post400HandleError handles the Post400 error response.
-func (client *HTTPClientFailureClient) post400HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HTTPClientFailureClient) post400HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // Post406 - Return 406 status code - should be represented in the client as an error
@@ -828,35 +810,34 @@ func (client *HTTPClientFailureClient) Post406(ctx context.Context, options *HTT
 	if err != nil {
 		return HTTPClientFailurePost406Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
 		return HTTPClientFailurePost406Response{}, client.post406HandleError(resp)
 	}
-	return HTTPClientFailurePost406Response{RawResponse: resp.Response}, nil
+	return HTTPClientFailurePost406Response{RawResponse: resp}, nil
 }
 
 // post406CreateRequest creates the Post406 request.
-func (client *HTTPClientFailureClient) post406CreateRequest(ctx context.Context, options *HTTPClientFailurePost406Options) (*azcore.Request, error) {
+func (client *HTTPClientFailureClient) post406CreateRequest(ctx context.Context, options *HTTPClientFailurePost406Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/406"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(true)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, true)
 }
 
 // post406HandleError handles the Post406 error response.
-func (client *HTTPClientFailureClient) post406HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HTTPClientFailureClient) post406HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // Post415 - Return 415 status code - should be represented in the client as an error
@@ -870,35 +851,34 @@ func (client *HTTPClientFailureClient) Post415(ctx context.Context, options *HTT
 	if err != nil {
 		return HTTPClientFailurePost415Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
 		return HTTPClientFailurePost415Response{}, client.post415HandleError(resp)
 	}
-	return HTTPClientFailurePost415Response{RawResponse: resp.Response}, nil
+	return HTTPClientFailurePost415Response{RawResponse: resp}, nil
 }
 
 // post415CreateRequest creates the Post415 request.
-func (client *HTTPClientFailureClient) post415CreateRequest(ctx context.Context, options *HTTPClientFailurePost415Options) (*azcore.Request, error) {
+func (client *HTTPClientFailureClient) post415CreateRequest(ctx context.Context, options *HTTPClientFailurePost415Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/415"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(true)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, true)
 }
 
 // post415HandleError handles the Post415 error response.
-func (client *HTTPClientFailureClient) post415HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HTTPClientFailureClient) post415HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // Put400 - Return 400 status code - should be represented in the client as an error
@@ -912,35 +892,34 @@ func (client *HTTPClientFailureClient) Put400(ctx context.Context, options *HTTP
 	if err != nil {
 		return HTTPClientFailurePut400Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
 		return HTTPClientFailurePut400Response{}, client.put400HandleError(resp)
 	}
-	return HTTPClientFailurePut400Response{RawResponse: resp.Response}, nil
+	return HTTPClientFailurePut400Response{RawResponse: resp}, nil
 }
 
 // put400CreateRequest creates the Put400 request.
-func (client *HTTPClientFailureClient) put400CreateRequest(ctx context.Context, options *HTTPClientFailurePut400Options) (*azcore.Request, error) {
+func (client *HTTPClientFailureClient) put400CreateRequest(ctx context.Context, options *HTTPClientFailurePut400Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/400"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(true)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, true)
 }
 
 // put400HandleError handles the Put400 error response.
-func (client *HTTPClientFailureClient) put400HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HTTPClientFailureClient) put400HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // Put404 - Return 404 status code - should be represented in the client as an error
@@ -954,35 +933,34 @@ func (client *HTTPClientFailureClient) Put404(ctx context.Context, options *HTTP
 	if err != nil {
 		return HTTPClientFailurePut404Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
 		return HTTPClientFailurePut404Response{}, client.put404HandleError(resp)
 	}
-	return HTTPClientFailurePut404Response{RawResponse: resp.Response}, nil
+	return HTTPClientFailurePut404Response{RawResponse: resp}, nil
 }
 
 // put404CreateRequest creates the Put404 request.
-func (client *HTTPClientFailureClient) put404CreateRequest(ctx context.Context, options *HTTPClientFailurePut404Options) (*azcore.Request, error) {
+func (client *HTTPClientFailureClient) put404CreateRequest(ctx context.Context, options *HTTPClientFailurePut404Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/404"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(true)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, true)
 }
 
 // put404HandleError handles the Put404 error response.
-func (client *HTTPClientFailureClient) put404HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HTTPClientFailureClient) put404HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // Put409 - Return 409 status code - should be represented in the client as an error
@@ -996,35 +974,34 @@ func (client *HTTPClientFailureClient) Put409(ctx context.Context, options *HTTP
 	if err != nil {
 		return HTTPClientFailurePut409Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
 		return HTTPClientFailurePut409Response{}, client.put409HandleError(resp)
 	}
-	return HTTPClientFailurePut409Response{RawResponse: resp.Response}, nil
+	return HTTPClientFailurePut409Response{RawResponse: resp}, nil
 }
 
 // put409CreateRequest creates the Put409 request.
-func (client *HTTPClientFailureClient) put409CreateRequest(ctx context.Context, options *HTTPClientFailurePut409Options) (*azcore.Request, error) {
+func (client *HTTPClientFailureClient) put409CreateRequest(ctx context.Context, options *HTTPClientFailurePut409Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/409"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(true)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, true)
 }
 
 // put409HandleError handles the Put409 error response.
-func (client *HTTPClientFailureClient) put409HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HTTPClientFailureClient) put409HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // Put413 - Return 413 status code - should be represented in the client as an error
@@ -1038,33 +1015,32 @@ func (client *HTTPClientFailureClient) Put413(ctx context.Context, options *HTTP
 	if err != nil {
 		return HTTPClientFailurePut413Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
 		return HTTPClientFailurePut413Response{}, client.put413HandleError(resp)
 	}
-	return HTTPClientFailurePut413Response{RawResponse: resp.Response}, nil
+	return HTTPClientFailurePut413Response{RawResponse: resp}, nil
 }
 
 // put413CreateRequest creates the Put413 request.
-func (client *HTTPClientFailureClient) put413CreateRequest(ctx context.Context, options *HTTPClientFailurePut413Options) (*azcore.Request, error) {
+func (client *HTTPClientFailureClient) put413CreateRequest(ctx context.Context, options *HTTPClientFailurePut413Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/413"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(true)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, true)
 }
 
 // put413HandleError handles the Put413 error response.
-func (client *HTTPClientFailureClient) put413HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HTTPClientFailureClient) put413HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }

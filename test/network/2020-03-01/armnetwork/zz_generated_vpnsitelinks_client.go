@@ -1,4 +1,5 @@
-// +build go1.13
+//go:build go1.16
+// +build go1.16
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -11,8 +12,9 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 	"net/url"
 	"strings"
@@ -21,13 +23,14 @@ import (
 // VPNSiteLinksClient contains the methods for the VPNSiteLinks group.
 // Don't use this type directly, use NewVPNSiteLinksClient() instead.
 type VPNSiteLinksClient struct {
-	con            *armcore.Connection
+	ep             string
+	pl             runtime.Pipeline
 	subscriptionID string
 }
 
 // NewVPNSiteLinksClient creates a new instance of VPNSiteLinksClient with the specified values.
-func NewVPNSiteLinksClient(con *armcore.Connection, subscriptionID string) *VPNSiteLinksClient {
-	return &VPNSiteLinksClient{con: con, subscriptionID: subscriptionID}
+func NewVPNSiteLinksClient(con *arm.Connection, subscriptionID string) *VPNSiteLinksClient {
+	return &VPNSiteLinksClient{ep: con.Endpoint(), pl: con.NewPipeline(module, version), subscriptionID: subscriptionID}
 }
 
 // Get - Retrieves the details of a VPN site link.
@@ -37,18 +40,18 @@ func (client *VPNSiteLinksClient) Get(ctx context.Context, resourceGroupName str
 	if err != nil {
 		return VPNSiteLinksGetResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return VPNSiteLinksGetResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return VPNSiteLinksGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *VPNSiteLinksClient) getCreateRequest(ctx context.Context, resourceGroupName string, vpnSiteName string, vpnSiteLinkName string, options *VPNSiteLinksGetOptions) (*azcore.Request, error) {
+func (client *VPNSiteLinksClient) getCreateRequest(ctx context.Context, resourceGroupName string, vpnSiteName string, vpnSiteLinkName string, options *VPNSiteLinksGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnSites/{vpnSiteName}/vpnSiteLinks/{vpnSiteLinkName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -66,56 +69,55 @@ func (client *VPNSiteLinksClient) getCreateRequest(ctx context.Context, resource
 		return nil, errors.New("parameter vpnSiteLinkName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{vpnSiteLinkName}", url.PathEscape(vpnSiteLinkName))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2020-03-01")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getHandleResponse handles the Get response.
-func (client *VPNSiteLinksClient) getHandleResponse(resp *azcore.Response) (VPNSiteLinksGetResponse, error) {
-	result := VPNSiteLinksGetResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.VPNSiteLink); err != nil {
+func (client *VPNSiteLinksClient) getHandleResponse(resp *http.Response) (VPNSiteLinksGetResponse, error) {
+	result := VPNSiteLinksGetResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.VPNSiteLink); err != nil {
 		return VPNSiteLinksGetResponse{}, err
 	}
 	return result, nil
 }
 
 // getHandleError handles the Get error response.
-func (client *VPNSiteLinksClient) getHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *VPNSiteLinksClient) getHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // ListByVPNSite - Lists all the vpnSiteLinks in a resource group for a vpn site.
 // If the operation fails it returns the *CloudError error type.
-func (client *VPNSiteLinksClient) ListByVPNSite(resourceGroupName string, vpnSiteName string, options *VPNSiteLinksListByVPNSiteOptions) VPNSiteLinksListByVPNSitePager {
-	return &vpnSiteLinksListByVPNSitePager{
+func (client *VPNSiteLinksClient) ListByVPNSite(resourceGroupName string, vpnSiteName string, options *VPNSiteLinksListByVPNSiteOptions) *VPNSiteLinksListByVPNSitePager {
+	return &VPNSiteLinksListByVPNSitePager{
 		client: client,
-		requester: func(ctx context.Context) (*azcore.Request, error) {
+		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listByVPNSiteCreateRequest(ctx, resourceGroupName, vpnSiteName, options)
 		},
-		advancer: func(ctx context.Context, resp VPNSiteLinksListByVPNSiteResponse) (*azcore.Request, error) {
-			return azcore.NewRequest(ctx, http.MethodGet, *resp.ListVPNSiteLinksResult.NextLink)
+		advancer: func(ctx context.Context, resp VPNSiteLinksListByVPNSiteResponse) (*policy.Request, error) {
+			return runtime.NewRequest(ctx, http.MethodGet, *resp.ListVPNSiteLinksResult.NextLink)
 		},
 	}
 }
 
 // listByVPNSiteCreateRequest creates the ListByVPNSite request.
-func (client *VPNSiteLinksClient) listByVPNSiteCreateRequest(ctx context.Context, resourceGroupName string, vpnSiteName string, options *VPNSiteLinksListByVPNSiteOptions) (*azcore.Request, error) {
+func (client *VPNSiteLinksClient) listByVPNSiteCreateRequest(ctx context.Context, resourceGroupName string, vpnSiteName string, options *VPNSiteLinksListByVPNSiteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnSites/{vpnSiteName}/vpnSiteLinks"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -129,36 +131,35 @@ func (client *VPNSiteLinksClient) listByVPNSiteCreateRequest(ctx context.Context
 		return nil, errors.New("parameter vpnSiteName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{vpnSiteName}", url.PathEscape(vpnSiteName))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2020-03-01")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // listByVPNSiteHandleResponse handles the ListByVPNSite response.
-func (client *VPNSiteLinksClient) listByVPNSiteHandleResponse(resp *azcore.Response) (VPNSiteLinksListByVPNSiteResponse, error) {
-	result := VPNSiteLinksListByVPNSiteResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.ListVPNSiteLinksResult); err != nil {
+func (client *VPNSiteLinksClient) listByVPNSiteHandleResponse(resp *http.Response) (VPNSiteLinksListByVPNSiteResponse, error) {
+	result := VPNSiteLinksListByVPNSiteResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.ListVPNSiteLinksResult); err != nil {
 		return VPNSiteLinksListByVPNSiteResponse{}, err
 	}
 	return result, nil
 }
 
 // listByVPNSiteHandleError handles the ListByVPNSite error response.
-func (client *VPNSiteLinksClient) listByVPNSiteHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *VPNSiteLinksClient) listByVPNSiteHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }

@@ -28,8 +28,7 @@ func TestLROSADSBeginDelete202NonRetry400(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp, err = op.ResumeDelete202NonRetry400(context.Background(), rt)
-	if err == nil {
+	if err = resp.Resume(context.Background(), op, rt); err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
 }
@@ -76,8 +75,7 @@ func TestLROSADSBeginDeleteAsyncRelativeRetry400(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp, err = op.ResumeDeleteAsyncRelativeRetry400(context.Background(), rt)
-	if err == nil {
+	if err = resp.Resume(context.Background(), op, rt); err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
 }
@@ -101,8 +99,7 @@ func TestLROSADSBeginDeleteAsyncRelativeRetryInvalidJSONPolling(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp, err = op.ResumeDeleteAsyncRelativeRetryInvalidJSONPolling(context.Background(), rt)
-	if err == nil {
+	if err = resp.Resume(context.Background(), op, rt); err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
 }
@@ -118,8 +115,7 @@ func TestLROSADSBeginDeleteAsyncRelativeRetryNoStatus(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp, err = op.ResumeDeleteAsyncRelativeRetryNoStatus(context.Background(), rt)
-	if err == nil {
+	if err = resp.Resume(context.Background(), op, rt); err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
 }
@@ -151,8 +147,7 @@ func TestLROSADSBeginPost202NonRetry400(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp, err = op.ResumePost202NonRetry400(context.Background(), rt)
-	if err == nil {
+	if err = resp.Resume(context.Background(), op, rt); err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
 }
@@ -176,8 +171,7 @@ func TestLROSADSBeginPostAsyncRelativeRetry400(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp, err = op.ResumePostAsyncRelativeRetry400(context.Background(), rt)
-	if err == nil {
+	if err = resp.Resume(context.Background(), op, rt); err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
 }
@@ -201,8 +195,7 @@ func TestLROSADSBeginPostAsyncRelativeRetryInvalidJSONPolling(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp, err = op.ResumePostAsyncRelativeRetryInvalidJSONPolling(context.Background(), rt)
-	if err == nil {
+	if err = resp.Resume(context.Background(), op, rt); err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
 }
@@ -218,8 +211,7 @@ func TestLROSADSBeginPostAsyncRelativeRetryNoPayload(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp, err = op.ResumePostAsyncRelativeRetryNoPayload(context.Background(), rt)
-	if err == nil {
+	if err = resp.Resume(context.Background(), op, rt); err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
 }
@@ -251,8 +243,7 @@ func TestLROSADSBeginPutAsyncRelativeRetry400(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp, err = op.ResumePutAsyncRelativeRetry400(context.Background(), rt)
-	if err == nil {
+	if err = resp.Resume(context.Background(), op, rt); err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
 }
@@ -276,8 +267,7 @@ func TestLROSADSBeginPutAsyncRelativeRetryInvalidJSONPolling(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp, err = op.ResumePutAsyncRelativeRetryInvalidJSONPolling(context.Background(), rt)
-	if err == nil {
+	if err = resp.Resume(context.Background(), op, rt); err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
 }
@@ -293,8 +283,7 @@ func TestLROSADSBeginPutAsyncRelativeRetryNoStatus(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp, err = op.ResumePutAsyncRelativeRetryNoStatus(context.Background(), rt)
-	if err == nil {
+	if err = resp.Resume(context.Background(), op, rt); err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
 }
@@ -310,8 +299,7 @@ func TestLROSADSBeginPutAsyncRelativeRetryNoStatusPayload(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp, err = op.ResumePutAsyncRelativeRetryNoStatusPayload(context.Background(), rt)
-	if err == nil {
+	if err = resp.Resume(context.Background(), op, rt); err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
 }
@@ -327,8 +315,7 @@ func TestLROSADSBeginPutError201NoProvisioningStatePayload(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp, err = op.ResumePutError201NoProvisioningStatePayload(context.Background(), rt)
-	if err == nil {
+	if err = resp.Resume(context.Background(), op, rt); err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
 }
@@ -344,8 +331,7 @@ func TestLROSADSBeginPutNonRetry201Creating400(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp, err = op.ResumePutNonRetry201Creating400(context.Background(), rt)
-	if err == nil {
+	if err = resp.Resume(context.Background(), op, rt); err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
 }
@@ -361,8 +347,7 @@ func TestLROSADSBeginPutNonRetry201Creating400InvalidJSON(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp, err = op.ResumePutNonRetry201Creating400InvalidJSON(context.Background(), rt)
-	if err == nil {
+	if err = resp.Resume(context.Background(), op, rt); err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
 }

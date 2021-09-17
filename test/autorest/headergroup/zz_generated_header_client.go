@@ -1,4 +1,5 @@
-// +build go1.13
+//go:build go1.16
+// +build go1.16
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -11,7 +12,8 @@ import (
 	"context"
 	"encoding/base64"
 	"fmt"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 	"strconv"
 	"time"
@@ -39,35 +41,34 @@ func (client *HeaderClient) CustomRequestID(ctx context.Context, options *Header
 	if err != nil {
 		return HeaderCustomRequestIDResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HeaderCustomRequestIDResponse{}, client.customRequestIDHandleError(resp)
 	}
-	return HeaderCustomRequestIDResponse{RawResponse: resp.Response}, nil
+	return HeaderCustomRequestIDResponse{RawResponse: resp}, nil
 }
 
 // customRequestIDCreateRequest creates the CustomRequestID request.
-func (client *HeaderClient) customRequestIDCreateRequest(ctx context.Context, options *HeaderCustomRequestIDOptions) (*azcore.Request, error) {
+func (client *HeaderClient) customRequestIDCreateRequest(ctx context.Context, options *HeaderCustomRequestIDOptions) (*policy.Request, error) {
 	urlPath := "/header/custom/x-ms-client-request-id/9C4D50EE-2D56-4CD3-8152-34347DC9F2B0"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // customRequestIDHandleError handles the CustomRequestID error response.
-func (client *HeaderClient) customRequestIDHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HeaderClient) customRequestIDHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // ParamBool - Send a post request with header values "scenario": "true", "value": true or "scenario": "false", "value": false
@@ -81,37 +82,36 @@ func (client *HeaderClient) ParamBool(ctx context.Context, scenario string, valu
 	if err != nil {
 		return HeaderParamBoolResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HeaderParamBoolResponse{}, client.paramBoolHandleError(resp)
 	}
-	return HeaderParamBoolResponse{RawResponse: resp.Response}, nil
+	return HeaderParamBoolResponse{RawResponse: resp}, nil
 }
 
 // paramBoolCreateRequest creates the ParamBool request.
-func (client *HeaderClient) paramBoolCreateRequest(ctx context.Context, scenario string, value bool, options *HeaderParamBoolOptions) (*azcore.Request, error) {
+func (client *HeaderClient) paramBoolCreateRequest(ctx context.Context, scenario string, value bool, options *HeaderParamBoolOptions) (*policy.Request, error) {
 	urlPath := "/header/param/prim/bool"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("scenario", scenario)
-	req.Header.Set("value", strconv.FormatBool(value))
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("scenario", scenario)
+	req.Raw().Header.Set("value", strconv.FormatBool(value))
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // paramBoolHandleError handles the ParamBool error response.
-func (client *HeaderClient) paramBoolHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HeaderClient) paramBoolHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // ParamByte - Send a post request with header values "scenario": "valid", "value": "啊齄丂狛狜隣郎隣兀﨩"
@@ -125,37 +125,36 @@ func (client *HeaderClient) ParamByte(ctx context.Context, scenario string, valu
 	if err != nil {
 		return HeaderParamByteResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HeaderParamByteResponse{}, client.paramByteHandleError(resp)
 	}
-	return HeaderParamByteResponse{RawResponse: resp.Response}, nil
+	return HeaderParamByteResponse{RawResponse: resp}, nil
 }
 
 // paramByteCreateRequest creates the ParamByte request.
-func (client *HeaderClient) paramByteCreateRequest(ctx context.Context, scenario string, value []byte, options *HeaderParamByteOptions) (*azcore.Request, error) {
+func (client *HeaderClient) paramByteCreateRequest(ctx context.Context, scenario string, value []byte, options *HeaderParamByteOptions) (*policy.Request, error) {
 	urlPath := "/header/param/prim/byte"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("scenario", scenario)
-	req.Header.Set("value", base64.StdEncoding.EncodeToString(value))
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("scenario", scenario)
+	req.Raw().Header.Set("value", base64.StdEncoding.EncodeToString(value))
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // paramByteHandleError handles the ParamByte error response.
-func (client *HeaderClient) paramByteHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HeaderClient) paramByteHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // ParamDate - Send a post request with header values "scenario": "valid", "value": "2010-01-01" or "scenario": "min", "value": "0001-01-01"
@@ -169,37 +168,36 @@ func (client *HeaderClient) ParamDate(ctx context.Context, scenario string, valu
 	if err != nil {
 		return HeaderParamDateResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HeaderParamDateResponse{}, client.paramDateHandleError(resp)
 	}
-	return HeaderParamDateResponse{RawResponse: resp.Response}, nil
+	return HeaderParamDateResponse{RawResponse: resp}, nil
 }
 
 // paramDateCreateRequest creates the ParamDate request.
-func (client *HeaderClient) paramDateCreateRequest(ctx context.Context, scenario string, value time.Time, options *HeaderParamDateOptions) (*azcore.Request, error) {
+func (client *HeaderClient) paramDateCreateRequest(ctx context.Context, scenario string, value time.Time, options *HeaderParamDateOptions) (*policy.Request, error) {
 	urlPath := "/header/param/prim/date"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("scenario", scenario)
-	req.Header.Set("value", value.Format("2006-01-02"))
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("scenario", scenario)
+	req.Raw().Header.Set("value", value.Format("2006-01-02"))
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // paramDateHandleError handles the ParamDate error response.
-func (client *HeaderClient) paramDateHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HeaderClient) paramDateHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // ParamDatetime - Send a post request with header values "scenario": "valid", "value": "2010-01-01T12:34:56Z" or "scenario": "min", "value": "0001-01-01T00:00:00Z"
@@ -213,37 +211,36 @@ func (client *HeaderClient) ParamDatetime(ctx context.Context, scenario string, 
 	if err != nil {
 		return HeaderParamDatetimeResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HeaderParamDatetimeResponse{}, client.paramDatetimeHandleError(resp)
 	}
-	return HeaderParamDatetimeResponse{RawResponse: resp.Response}, nil
+	return HeaderParamDatetimeResponse{RawResponse: resp}, nil
 }
 
 // paramDatetimeCreateRequest creates the ParamDatetime request.
-func (client *HeaderClient) paramDatetimeCreateRequest(ctx context.Context, scenario string, value time.Time, options *HeaderParamDatetimeOptions) (*azcore.Request, error) {
+func (client *HeaderClient) paramDatetimeCreateRequest(ctx context.Context, scenario string, value time.Time, options *HeaderParamDatetimeOptions) (*policy.Request, error) {
 	urlPath := "/header/param/prim/datetime"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("scenario", scenario)
-	req.Header.Set("value", value.Format(time.RFC3339Nano))
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("scenario", scenario)
+	req.Raw().Header.Set("value", value.Format(time.RFC3339Nano))
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // paramDatetimeHandleError handles the ParamDatetime error response.
-func (client *HeaderClient) paramDatetimeHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HeaderClient) paramDatetimeHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // ParamDatetimeRFC1123 - Send a post request with header values "scenario": "valid", "value": "Wed, 01 Jan 2010 12:34:56 GMT" or "scenario": "min", "value":
@@ -258,39 +255,38 @@ func (client *HeaderClient) ParamDatetimeRFC1123(ctx context.Context, scenario s
 	if err != nil {
 		return HeaderParamDatetimeRFC1123Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HeaderParamDatetimeRFC1123Response{}, client.paramDatetimeRFC1123HandleError(resp)
 	}
-	return HeaderParamDatetimeRFC1123Response{RawResponse: resp.Response}, nil
+	return HeaderParamDatetimeRFC1123Response{RawResponse: resp}, nil
 }
 
 // paramDatetimeRFC1123CreateRequest creates the ParamDatetimeRFC1123 request.
-func (client *HeaderClient) paramDatetimeRFC1123CreateRequest(ctx context.Context, scenario string, options *HeaderParamDatetimeRFC1123Options) (*azcore.Request, error) {
+func (client *HeaderClient) paramDatetimeRFC1123CreateRequest(ctx context.Context, scenario string, options *HeaderParamDatetimeRFC1123Options) (*policy.Request, error) {
 	urlPath := "/header/param/prim/datetimerfc1123"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("scenario", scenario)
+	req.Raw().Header.Set("scenario", scenario)
 	if options != nil && options.Value != nil {
-		req.Header.Set("value", options.Value.Format(time.RFC1123))
+		req.Raw().Header.Set("value", options.Value.Format(time.RFC1123))
 	}
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // paramDatetimeRFC1123HandleError handles the ParamDatetimeRFC1123 error response.
-func (client *HeaderClient) paramDatetimeRFC1123HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HeaderClient) paramDatetimeRFC1123HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // ParamDouble - Send a post request with header values "scenario": "positive", "value": 7e120 or "scenario": "negative", "value": -3.0
@@ -304,37 +300,36 @@ func (client *HeaderClient) ParamDouble(ctx context.Context, scenario string, va
 	if err != nil {
 		return HeaderParamDoubleResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HeaderParamDoubleResponse{}, client.paramDoubleHandleError(resp)
 	}
-	return HeaderParamDoubleResponse{RawResponse: resp.Response}, nil
+	return HeaderParamDoubleResponse{RawResponse: resp}, nil
 }
 
 // paramDoubleCreateRequest creates the ParamDouble request.
-func (client *HeaderClient) paramDoubleCreateRequest(ctx context.Context, scenario string, value float64, options *HeaderParamDoubleOptions) (*azcore.Request, error) {
+func (client *HeaderClient) paramDoubleCreateRequest(ctx context.Context, scenario string, value float64, options *HeaderParamDoubleOptions) (*policy.Request, error) {
 	urlPath := "/header/param/prim/double"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("scenario", scenario)
-	req.Header.Set("value", strconv.FormatFloat(value, 'f', -1, 64))
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("scenario", scenario)
+	req.Raw().Header.Set("value", strconv.FormatFloat(value, 'f', -1, 64))
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // paramDoubleHandleError handles the ParamDouble error response.
-func (client *HeaderClient) paramDoubleHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HeaderClient) paramDoubleHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // ParamDuration - Send a post request with header values "scenario": "valid", "value": "P123DT22H14M12.011S"
@@ -348,37 +343,36 @@ func (client *HeaderClient) ParamDuration(ctx context.Context, scenario string, 
 	if err != nil {
 		return HeaderParamDurationResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HeaderParamDurationResponse{}, client.paramDurationHandleError(resp)
 	}
-	return HeaderParamDurationResponse{RawResponse: resp.Response}, nil
+	return HeaderParamDurationResponse{RawResponse: resp}, nil
 }
 
 // paramDurationCreateRequest creates the ParamDuration request.
-func (client *HeaderClient) paramDurationCreateRequest(ctx context.Context, scenario string, value string, options *HeaderParamDurationOptions) (*azcore.Request, error) {
+func (client *HeaderClient) paramDurationCreateRequest(ctx context.Context, scenario string, value string, options *HeaderParamDurationOptions) (*policy.Request, error) {
 	urlPath := "/header/param/prim/duration"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("scenario", scenario)
-	req.Header.Set("value", value)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("scenario", scenario)
+	req.Raw().Header.Set("value", value)
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // paramDurationHandleError handles the ParamDuration error response.
-func (client *HeaderClient) paramDurationHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HeaderClient) paramDurationHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // ParamEnum - Send a post request with header values "scenario": "valid", "value": "GREY" or "scenario": "null", "value": null
@@ -392,39 +386,38 @@ func (client *HeaderClient) ParamEnum(ctx context.Context, scenario string, opti
 	if err != nil {
 		return HeaderParamEnumResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HeaderParamEnumResponse{}, client.paramEnumHandleError(resp)
 	}
-	return HeaderParamEnumResponse{RawResponse: resp.Response}, nil
+	return HeaderParamEnumResponse{RawResponse: resp}, nil
 }
 
 // paramEnumCreateRequest creates the ParamEnum request.
-func (client *HeaderClient) paramEnumCreateRequest(ctx context.Context, scenario string, options *HeaderParamEnumOptions) (*azcore.Request, error) {
+func (client *HeaderClient) paramEnumCreateRequest(ctx context.Context, scenario string, options *HeaderParamEnumOptions) (*policy.Request, error) {
 	urlPath := "/header/param/prim/enum"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("scenario", scenario)
+	req.Raw().Header.Set("scenario", scenario)
 	if options != nil && options.Value != nil {
-		req.Header.Set("value", string(*options.Value))
+		req.Raw().Header.Set("value", string(*options.Value))
 	}
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // paramEnumHandleError handles the ParamEnum error response.
-func (client *HeaderClient) paramEnumHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HeaderClient) paramEnumHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // ParamExistingKey - Send a post request with header value "User-Agent": "overwrite"
@@ -438,36 +431,35 @@ func (client *HeaderClient) ParamExistingKey(ctx context.Context, userAgent stri
 	if err != nil {
 		return HeaderParamExistingKeyResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HeaderParamExistingKeyResponse{}, client.paramExistingKeyHandleError(resp)
 	}
-	return HeaderParamExistingKeyResponse{RawResponse: resp.Response}, nil
+	return HeaderParamExistingKeyResponse{RawResponse: resp}, nil
 }
 
 // paramExistingKeyCreateRequest creates the ParamExistingKey request.
-func (client *HeaderClient) paramExistingKeyCreateRequest(ctx context.Context, userAgent string, options *HeaderParamExistingKeyOptions) (*azcore.Request, error) {
+func (client *HeaderClient) paramExistingKeyCreateRequest(ctx context.Context, userAgent string, options *HeaderParamExistingKeyOptions) (*policy.Request, error) {
 	urlPath := "/header/param/existingkey"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("User-Agent", userAgent)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("User-Agent", userAgent)
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // paramExistingKeyHandleError handles the ParamExistingKey error response.
-func (client *HeaderClient) paramExistingKeyHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HeaderClient) paramExistingKeyHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // ParamFloat - Send a post request with header values "scenario": "positive", "value": 0.07 or "scenario": "negative", "value": -3.0
@@ -481,37 +473,36 @@ func (client *HeaderClient) ParamFloat(ctx context.Context, scenario string, val
 	if err != nil {
 		return HeaderParamFloatResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HeaderParamFloatResponse{}, client.paramFloatHandleError(resp)
 	}
-	return HeaderParamFloatResponse{RawResponse: resp.Response}, nil
+	return HeaderParamFloatResponse{RawResponse: resp}, nil
 }
 
 // paramFloatCreateRequest creates the ParamFloat request.
-func (client *HeaderClient) paramFloatCreateRequest(ctx context.Context, scenario string, value float32, options *HeaderParamFloatOptions) (*azcore.Request, error) {
+func (client *HeaderClient) paramFloatCreateRequest(ctx context.Context, scenario string, value float32, options *HeaderParamFloatOptions) (*policy.Request, error) {
 	urlPath := "/header/param/prim/float"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("scenario", scenario)
-	req.Header.Set("value", strconv.FormatFloat(float64(value), 'f', -1, 32))
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("scenario", scenario)
+	req.Raw().Header.Set("value", strconv.FormatFloat(float64(value), 'f', -1, 32))
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // paramFloatHandleError handles the ParamFloat error response.
-func (client *HeaderClient) paramFloatHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HeaderClient) paramFloatHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // ParamInteger - Send a post request with header values "scenario": "positive", "value": 1 or "scenario": "negative", "value": -2
@@ -525,37 +516,36 @@ func (client *HeaderClient) ParamInteger(ctx context.Context, scenario string, v
 	if err != nil {
 		return HeaderParamIntegerResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HeaderParamIntegerResponse{}, client.paramIntegerHandleError(resp)
 	}
-	return HeaderParamIntegerResponse{RawResponse: resp.Response}, nil
+	return HeaderParamIntegerResponse{RawResponse: resp}, nil
 }
 
 // paramIntegerCreateRequest creates the ParamInteger request.
-func (client *HeaderClient) paramIntegerCreateRequest(ctx context.Context, scenario string, value int32, options *HeaderParamIntegerOptions) (*azcore.Request, error) {
+func (client *HeaderClient) paramIntegerCreateRequest(ctx context.Context, scenario string, value int32, options *HeaderParamIntegerOptions) (*policy.Request, error) {
 	urlPath := "/header/param/prim/integer"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("scenario", scenario)
-	req.Header.Set("value", strconv.FormatInt(int64(value), 10))
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("scenario", scenario)
+	req.Raw().Header.Set("value", strconv.FormatInt(int64(value), 10))
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // paramIntegerHandleError handles the ParamInteger error response.
-func (client *HeaderClient) paramIntegerHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HeaderClient) paramIntegerHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // ParamLong - Send a post request with header values "scenario": "positive", "value": 105 or "scenario": "negative", "value": -2
@@ -569,37 +559,36 @@ func (client *HeaderClient) ParamLong(ctx context.Context, scenario string, valu
 	if err != nil {
 		return HeaderParamLongResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HeaderParamLongResponse{}, client.paramLongHandleError(resp)
 	}
-	return HeaderParamLongResponse{RawResponse: resp.Response}, nil
+	return HeaderParamLongResponse{RawResponse: resp}, nil
 }
 
 // paramLongCreateRequest creates the ParamLong request.
-func (client *HeaderClient) paramLongCreateRequest(ctx context.Context, scenario string, value int64, options *HeaderParamLongOptions) (*azcore.Request, error) {
+func (client *HeaderClient) paramLongCreateRequest(ctx context.Context, scenario string, value int64, options *HeaderParamLongOptions) (*policy.Request, error) {
 	urlPath := "/header/param/prim/long"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("scenario", scenario)
-	req.Header.Set("value", strconv.FormatInt(value, 10))
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("scenario", scenario)
+	req.Raw().Header.Set("value", strconv.FormatInt(value, 10))
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // paramLongHandleError handles the ParamLong error response.
-func (client *HeaderClient) paramLongHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HeaderClient) paramLongHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // ParamProtectedKey - Send a post request with header value "Content-Type": "text/html"
@@ -613,36 +602,35 @@ func (client *HeaderClient) ParamProtectedKey(ctx context.Context, contentType s
 	if err != nil {
 		return HeaderParamProtectedKeyResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HeaderParamProtectedKeyResponse{}, client.paramProtectedKeyHandleError(resp)
 	}
-	return HeaderParamProtectedKeyResponse{RawResponse: resp.Response}, nil
+	return HeaderParamProtectedKeyResponse{RawResponse: resp}, nil
 }
 
 // paramProtectedKeyCreateRequest creates the ParamProtectedKey request.
-func (client *HeaderClient) paramProtectedKeyCreateRequest(ctx context.Context, contentType string, options *HeaderParamProtectedKeyOptions) (*azcore.Request, error) {
+func (client *HeaderClient) paramProtectedKeyCreateRequest(ctx context.Context, contentType string, options *HeaderParamProtectedKeyOptions) (*policy.Request, error) {
 	urlPath := "/header/param/protectedkey"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Content-Type", contentType)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Content-Type", contentType)
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // paramProtectedKeyHandleError handles the ParamProtectedKey error response.
-func (client *HeaderClient) paramProtectedKeyHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HeaderClient) paramProtectedKeyHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // ParamString - Send a post request with header values "scenario": "valid", "value": "The quick brown fox jumps over the lazy dog" or "scenario": "null",
@@ -657,39 +645,38 @@ func (client *HeaderClient) ParamString(ctx context.Context, scenario string, op
 	if err != nil {
 		return HeaderParamStringResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HeaderParamStringResponse{}, client.paramStringHandleError(resp)
 	}
-	return HeaderParamStringResponse{RawResponse: resp.Response}, nil
+	return HeaderParamStringResponse{RawResponse: resp}, nil
 }
 
 // paramStringCreateRequest creates the ParamString request.
-func (client *HeaderClient) paramStringCreateRequest(ctx context.Context, scenario string, options *HeaderParamStringOptions) (*azcore.Request, error) {
+func (client *HeaderClient) paramStringCreateRequest(ctx context.Context, scenario string, options *HeaderParamStringOptions) (*policy.Request, error) {
 	urlPath := "/header/param/prim/string"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("scenario", scenario)
+	req.Raw().Header.Set("scenario", scenario)
 	if options != nil && options.Value != nil {
-		req.Header.Set("value", *options.Value)
+		req.Raw().Header.Set("value", *options.Value)
 	}
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // paramStringHandleError handles the ParamString error response.
-func (client *HeaderClient) paramStringHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HeaderClient) paramStringHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // ResponseBool - Get a response with header value "value": true or false
@@ -703,28 +690,27 @@ func (client *HeaderClient) ResponseBool(ctx context.Context, scenario string, o
 	if err != nil {
 		return HeaderResponseBoolResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HeaderResponseBoolResponse{}, client.responseBoolHandleError(resp)
 	}
 	return client.responseBoolHandleResponse(resp)
 }
 
 // responseBoolCreateRequest creates the ResponseBool request.
-func (client *HeaderClient) responseBoolCreateRequest(ctx context.Context, scenario string, options *HeaderResponseBoolOptions) (*azcore.Request, error) {
+func (client *HeaderClient) responseBoolCreateRequest(ctx context.Context, scenario string, options *HeaderResponseBoolOptions) (*policy.Request, error) {
 	urlPath := "/header/response/prim/bool"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("scenario", scenario)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("scenario", scenario)
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // responseBoolHandleResponse handles the ResponseBool response.
-func (client *HeaderClient) responseBoolHandleResponse(resp *azcore.Response) (HeaderResponseBoolResponse, error) {
-	result := HeaderResponseBoolResponse{RawResponse: resp.Response}
+func (client *HeaderClient) responseBoolHandleResponse(resp *http.Response) (HeaderResponseBoolResponse, error) {
+	result := HeaderResponseBoolResponse{RawResponse: resp}
 	if val := resp.Header.Get("value"); val != "" {
 		value, err := strconv.ParseBool(val)
 		if err != nil {
@@ -736,16 +722,16 @@ func (client *HeaderClient) responseBoolHandleResponse(resp *azcore.Response) (H
 }
 
 // responseBoolHandleError handles the ResponseBool error response.
-func (client *HeaderClient) responseBoolHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HeaderClient) responseBoolHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // ResponseByte - Get a response with header values "啊齄丂狛狜隣郎隣兀﨩"
@@ -759,28 +745,27 @@ func (client *HeaderClient) ResponseByte(ctx context.Context, scenario string, o
 	if err != nil {
 		return HeaderResponseByteResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HeaderResponseByteResponse{}, client.responseByteHandleError(resp)
 	}
 	return client.responseByteHandleResponse(resp)
 }
 
 // responseByteCreateRequest creates the ResponseByte request.
-func (client *HeaderClient) responseByteCreateRequest(ctx context.Context, scenario string, options *HeaderResponseByteOptions) (*azcore.Request, error) {
+func (client *HeaderClient) responseByteCreateRequest(ctx context.Context, scenario string, options *HeaderResponseByteOptions) (*policy.Request, error) {
 	urlPath := "/header/response/prim/byte"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("scenario", scenario)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("scenario", scenario)
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // responseByteHandleResponse handles the ResponseByte response.
-func (client *HeaderClient) responseByteHandleResponse(resp *azcore.Response) (HeaderResponseByteResponse, error) {
-	result := HeaderResponseByteResponse{RawResponse: resp.Response}
+func (client *HeaderClient) responseByteHandleResponse(resp *http.Response) (HeaderResponseByteResponse, error) {
+	result := HeaderResponseByteResponse{RawResponse: resp}
 	if val := resp.Header.Get("value"); val != "" {
 		value, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
@@ -792,16 +777,16 @@ func (client *HeaderClient) responseByteHandleResponse(resp *azcore.Response) (H
 }
 
 // responseByteHandleError handles the ResponseByte error response.
-func (client *HeaderClient) responseByteHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HeaderClient) responseByteHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // ResponseDate - Get a response with header values "2010-01-01" or "0001-01-01"
@@ -815,28 +800,27 @@ func (client *HeaderClient) ResponseDate(ctx context.Context, scenario string, o
 	if err != nil {
 		return HeaderResponseDateResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HeaderResponseDateResponse{}, client.responseDateHandleError(resp)
 	}
 	return client.responseDateHandleResponse(resp)
 }
 
 // responseDateCreateRequest creates the ResponseDate request.
-func (client *HeaderClient) responseDateCreateRequest(ctx context.Context, scenario string, options *HeaderResponseDateOptions) (*azcore.Request, error) {
+func (client *HeaderClient) responseDateCreateRequest(ctx context.Context, scenario string, options *HeaderResponseDateOptions) (*policy.Request, error) {
 	urlPath := "/header/response/prim/date"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("scenario", scenario)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("scenario", scenario)
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // responseDateHandleResponse handles the ResponseDate response.
-func (client *HeaderClient) responseDateHandleResponse(resp *azcore.Response) (HeaderResponseDateResponse, error) {
-	result := HeaderResponseDateResponse{RawResponse: resp.Response}
+func (client *HeaderClient) responseDateHandleResponse(resp *http.Response) (HeaderResponseDateResponse, error) {
+	result := HeaderResponseDateResponse{RawResponse: resp}
 	if val := resp.Header.Get("value"); val != "" {
 		value, err := time.Parse("2006-01-02", val)
 		if err != nil {
@@ -848,16 +832,16 @@ func (client *HeaderClient) responseDateHandleResponse(resp *azcore.Response) (H
 }
 
 // responseDateHandleError handles the ResponseDate error response.
-func (client *HeaderClient) responseDateHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HeaderClient) responseDateHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // ResponseDatetime - Get a response with header values "2010-01-01T12:34:56Z" or "0001-01-01T00:00:00Z"
@@ -871,28 +855,27 @@ func (client *HeaderClient) ResponseDatetime(ctx context.Context, scenario strin
 	if err != nil {
 		return HeaderResponseDatetimeResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HeaderResponseDatetimeResponse{}, client.responseDatetimeHandleError(resp)
 	}
 	return client.responseDatetimeHandleResponse(resp)
 }
 
 // responseDatetimeCreateRequest creates the ResponseDatetime request.
-func (client *HeaderClient) responseDatetimeCreateRequest(ctx context.Context, scenario string, options *HeaderResponseDatetimeOptions) (*azcore.Request, error) {
+func (client *HeaderClient) responseDatetimeCreateRequest(ctx context.Context, scenario string, options *HeaderResponseDatetimeOptions) (*policy.Request, error) {
 	urlPath := "/header/response/prim/datetime"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("scenario", scenario)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("scenario", scenario)
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // responseDatetimeHandleResponse handles the ResponseDatetime response.
-func (client *HeaderClient) responseDatetimeHandleResponse(resp *azcore.Response) (HeaderResponseDatetimeResponse, error) {
-	result := HeaderResponseDatetimeResponse{RawResponse: resp.Response}
+func (client *HeaderClient) responseDatetimeHandleResponse(resp *http.Response) (HeaderResponseDatetimeResponse, error) {
+	result := HeaderResponseDatetimeResponse{RawResponse: resp}
 	if val := resp.Header.Get("value"); val != "" {
 		value, err := time.Parse(time.RFC3339Nano, val)
 		if err != nil {
@@ -904,16 +887,16 @@ func (client *HeaderClient) responseDatetimeHandleResponse(resp *azcore.Response
 }
 
 // responseDatetimeHandleError handles the ResponseDatetime error response.
-func (client *HeaderClient) responseDatetimeHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HeaderClient) responseDatetimeHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // ResponseDatetimeRFC1123 - Get a response with header values "Wed, 01 Jan 2010 12:34:56 GMT" or "Mon, 01 Jan 0001 00:00:00 GMT"
@@ -927,28 +910,27 @@ func (client *HeaderClient) ResponseDatetimeRFC1123(ctx context.Context, scenari
 	if err != nil {
 		return HeaderResponseDatetimeRFC1123Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HeaderResponseDatetimeRFC1123Response{}, client.responseDatetimeRFC1123HandleError(resp)
 	}
 	return client.responseDatetimeRFC1123HandleResponse(resp)
 }
 
 // responseDatetimeRFC1123CreateRequest creates the ResponseDatetimeRFC1123 request.
-func (client *HeaderClient) responseDatetimeRFC1123CreateRequest(ctx context.Context, scenario string, options *HeaderResponseDatetimeRFC1123Options) (*azcore.Request, error) {
+func (client *HeaderClient) responseDatetimeRFC1123CreateRequest(ctx context.Context, scenario string, options *HeaderResponseDatetimeRFC1123Options) (*policy.Request, error) {
 	urlPath := "/header/response/prim/datetimerfc1123"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("scenario", scenario)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("scenario", scenario)
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // responseDatetimeRFC1123HandleResponse handles the ResponseDatetimeRFC1123 response.
-func (client *HeaderClient) responseDatetimeRFC1123HandleResponse(resp *azcore.Response) (HeaderResponseDatetimeRFC1123Response, error) {
-	result := HeaderResponseDatetimeRFC1123Response{RawResponse: resp.Response}
+func (client *HeaderClient) responseDatetimeRFC1123HandleResponse(resp *http.Response) (HeaderResponseDatetimeRFC1123Response, error) {
+	result := HeaderResponseDatetimeRFC1123Response{RawResponse: resp}
 	if val := resp.Header.Get("value"); val != "" {
 		value, err := time.Parse(time.RFC1123, val)
 		if err != nil {
@@ -960,16 +942,16 @@ func (client *HeaderClient) responseDatetimeRFC1123HandleResponse(resp *azcore.R
 }
 
 // responseDatetimeRFC1123HandleError handles the ResponseDatetimeRFC1123 error response.
-func (client *HeaderClient) responseDatetimeRFC1123HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HeaderClient) responseDatetimeRFC1123HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // ResponseDouble - Get a response with header value "value": 7e120 or -3.0
@@ -983,28 +965,27 @@ func (client *HeaderClient) ResponseDouble(ctx context.Context, scenario string,
 	if err != nil {
 		return HeaderResponseDoubleResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HeaderResponseDoubleResponse{}, client.responseDoubleHandleError(resp)
 	}
 	return client.responseDoubleHandleResponse(resp)
 }
 
 // responseDoubleCreateRequest creates the ResponseDouble request.
-func (client *HeaderClient) responseDoubleCreateRequest(ctx context.Context, scenario string, options *HeaderResponseDoubleOptions) (*azcore.Request, error) {
+func (client *HeaderClient) responseDoubleCreateRequest(ctx context.Context, scenario string, options *HeaderResponseDoubleOptions) (*policy.Request, error) {
 	urlPath := "/header/response/prim/double"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("scenario", scenario)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("scenario", scenario)
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // responseDoubleHandleResponse handles the ResponseDouble response.
-func (client *HeaderClient) responseDoubleHandleResponse(resp *azcore.Response) (HeaderResponseDoubleResponse, error) {
-	result := HeaderResponseDoubleResponse{RawResponse: resp.Response}
+func (client *HeaderClient) responseDoubleHandleResponse(resp *http.Response) (HeaderResponseDoubleResponse, error) {
+	result := HeaderResponseDoubleResponse{RawResponse: resp}
 	if val := resp.Header.Get("value"); val != "" {
 		value, err := strconv.ParseFloat(val, 64)
 		if err != nil {
@@ -1016,16 +997,16 @@ func (client *HeaderClient) responseDoubleHandleResponse(resp *azcore.Response) 
 }
 
 // responseDoubleHandleError handles the ResponseDouble error response.
-func (client *HeaderClient) responseDoubleHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HeaderClient) responseDoubleHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // ResponseDuration - Get a response with header values "P123DT22H14M12.011S"
@@ -1039,28 +1020,27 @@ func (client *HeaderClient) ResponseDuration(ctx context.Context, scenario strin
 	if err != nil {
 		return HeaderResponseDurationResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HeaderResponseDurationResponse{}, client.responseDurationHandleError(resp)
 	}
 	return client.responseDurationHandleResponse(resp)
 }
 
 // responseDurationCreateRequest creates the ResponseDuration request.
-func (client *HeaderClient) responseDurationCreateRequest(ctx context.Context, scenario string, options *HeaderResponseDurationOptions) (*azcore.Request, error) {
+func (client *HeaderClient) responseDurationCreateRequest(ctx context.Context, scenario string, options *HeaderResponseDurationOptions) (*policy.Request, error) {
 	urlPath := "/header/response/prim/duration"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("scenario", scenario)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("scenario", scenario)
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // responseDurationHandleResponse handles the ResponseDuration response.
-func (client *HeaderClient) responseDurationHandleResponse(resp *azcore.Response) (HeaderResponseDurationResponse, error) {
-	result := HeaderResponseDurationResponse{RawResponse: resp.Response}
+func (client *HeaderClient) responseDurationHandleResponse(resp *http.Response) (HeaderResponseDurationResponse, error) {
+	result := HeaderResponseDurationResponse{RawResponse: resp}
 	if val := resp.Header.Get("value"); val != "" {
 		result.Value = &val
 	}
@@ -1068,16 +1048,16 @@ func (client *HeaderClient) responseDurationHandleResponse(resp *azcore.Response
 }
 
 // responseDurationHandleError handles the ResponseDuration error response.
-func (client *HeaderClient) responseDurationHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HeaderClient) responseDurationHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // ResponseEnum - Get a response with header values "GREY" or null
@@ -1091,28 +1071,27 @@ func (client *HeaderClient) ResponseEnum(ctx context.Context, scenario string, o
 	if err != nil {
 		return HeaderResponseEnumResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HeaderResponseEnumResponse{}, client.responseEnumHandleError(resp)
 	}
 	return client.responseEnumHandleResponse(resp)
 }
 
 // responseEnumCreateRequest creates the ResponseEnum request.
-func (client *HeaderClient) responseEnumCreateRequest(ctx context.Context, scenario string, options *HeaderResponseEnumOptions) (*azcore.Request, error) {
+func (client *HeaderClient) responseEnumCreateRequest(ctx context.Context, scenario string, options *HeaderResponseEnumOptions) (*policy.Request, error) {
 	urlPath := "/header/response/prim/enum"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("scenario", scenario)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("scenario", scenario)
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // responseEnumHandleResponse handles the ResponseEnum response.
-func (client *HeaderClient) responseEnumHandleResponse(resp *azcore.Response) (HeaderResponseEnumResponse, error) {
-	result := HeaderResponseEnumResponse{RawResponse: resp.Response}
+func (client *HeaderClient) responseEnumHandleResponse(resp *http.Response) (HeaderResponseEnumResponse, error) {
+	result := HeaderResponseEnumResponse{RawResponse: resp}
 	if val := resp.Header.Get("value"); val != "" {
 		result.Value = (*GreyscaleColors)(&val)
 	}
@@ -1120,16 +1099,16 @@ func (client *HeaderClient) responseEnumHandleResponse(resp *azcore.Response) (H
 }
 
 // responseEnumHandleError handles the ResponseEnum error response.
-func (client *HeaderClient) responseEnumHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HeaderClient) responseEnumHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // ResponseExistingKey - Get a response with header value "User-Agent": "overwrite"
@@ -1143,27 +1122,26 @@ func (client *HeaderClient) ResponseExistingKey(ctx context.Context, options *He
 	if err != nil {
 		return HeaderResponseExistingKeyResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HeaderResponseExistingKeyResponse{}, client.responseExistingKeyHandleError(resp)
 	}
 	return client.responseExistingKeyHandleResponse(resp)
 }
 
 // responseExistingKeyCreateRequest creates the ResponseExistingKey request.
-func (client *HeaderClient) responseExistingKeyCreateRequest(ctx context.Context, options *HeaderResponseExistingKeyOptions) (*azcore.Request, error) {
+func (client *HeaderClient) responseExistingKeyCreateRequest(ctx context.Context, options *HeaderResponseExistingKeyOptions) (*policy.Request, error) {
 	urlPath := "/header/response/existingkey"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // responseExistingKeyHandleResponse handles the ResponseExistingKey response.
-func (client *HeaderClient) responseExistingKeyHandleResponse(resp *azcore.Response) (HeaderResponseExistingKeyResponse, error) {
-	result := HeaderResponseExistingKeyResponse{RawResponse: resp.Response}
+func (client *HeaderClient) responseExistingKeyHandleResponse(resp *http.Response) (HeaderResponseExistingKeyResponse, error) {
+	result := HeaderResponseExistingKeyResponse{RawResponse: resp}
 	if val := resp.Header.Get("User-Agent"); val != "" {
 		result.UserAgent = &val
 	}
@@ -1171,16 +1149,16 @@ func (client *HeaderClient) responseExistingKeyHandleResponse(resp *azcore.Respo
 }
 
 // responseExistingKeyHandleError handles the ResponseExistingKey error response.
-func (client *HeaderClient) responseExistingKeyHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HeaderClient) responseExistingKeyHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // ResponseFloat - Get a response with header value "value": 0.07 or -3.0
@@ -1194,28 +1172,27 @@ func (client *HeaderClient) ResponseFloat(ctx context.Context, scenario string, 
 	if err != nil {
 		return HeaderResponseFloatResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HeaderResponseFloatResponse{}, client.responseFloatHandleError(resp)
 	}
 	return client.responseFloatHandleResponse(resp)
 }
 
 // responseFloatCreateRequest creates the ResponseFloat request.
-func (client *HeaderClient) responseFloatCreateRequest(ctx context.Context, scenario string, options *HeaderResponseFloatOptions) (*azcore.Request, error) {
+func (client *HeaderClient) responseFloatCreateRequest(ctx context.Context, scenario string, options *HeaderResponseFloatOptions) (*policy.Request, error) {
 	urlPath := "/header/response/prim/float"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("scenario", scenario)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("scenario", scenario)
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // responseFloatHandleResponse handles the ResponseFloat response.
-func (client *HeaderClient) responseFloatHandleResponse(resp *azcore.Response) (HeaderResponseFloatResponse, error) {
-	result := HeaderResponseFloatResponse{RawResponse: resp.Response}
+func (client *HeaderClient) responseFloatHandleResponse(resp *http.Response) (HeaderResponseFloatResponse, error) {
+	result := HeaderResponseFloatResponse{RawResponse: resp}
 	if val := resp.Header.Get("value"); val != "" {
 		value32, err := strconv.ParseFloat(val, 32)
 		value := float32(value32)
@@ -1228,16 +1205,16 @@ func (client *HeaderClient) responseFloatHandleResponse(resp *azcore.Response) (
 }
 
 // responseFloatHandleError handles the ResponseFloat error response.
-func (client *HeaderClient) responseFloatHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HeaderClient) responseFloatHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // ResponseInteger - Get a response with header value "value": 1 or -2
@@ -1251,28 +1228,27 @@ func (client *HeaderClient) ResponseInteger(ctx context.Context, scenario string
 	if err != nil {
 		return HeaderResponseIntegerResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HeaderResponseIntegerResponse{}, client.responseIntegerHandleError(resp)
 	}
 	return client.responseIntegerHandleResponse(resp)
 }
 
 // responseIntegerCreateRequest creates the ResponseInteger request.
-func (client *HeaderClient) responseIntegerCreateRequest(ctx context.Context, scenario string, options *HeaderResponseIntegerOptions) (*azcore.Request, error) {
+func (client *HeaderClient) responseIntegerCreateRequest(ctx context.Context, scenario string, options *HeaderResponseIntegerOptions) (*policy.Request, error) {
 	urlPath := "/header/response/prim/integer"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("scenario", scenario)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("scenario", scenario)
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // responseIntegerHandleResponse handles the ResponseInteger response.
-func (client *HeaderClient) responseIntegerHandleResponse(resp *azcore.Response) (HeaderResponseIntegerResponse, error) {
-	result := HeaderResponseIntegerResponse{RawResponse: resp.Response}
+func (client *HeaderClient) responseIntegerHandleResponse(resp *http.Response) (HeaderResponseIntegerResponse, error) {
+	result := HeaderResponseIntegerResponse{RawResponse: resp}
 	if val := resp.Header.Get("value"); val != "" {
 		value32, err := strconv.ParseInt(val, 10, 32)
 		value := int32(value32)
@@ -1285,16 +1261,16 @@ func (client *HeaderClient) responseIntegerHandleResponse(resp *azcore.Response)
 }
 
 // responseIntegerHandleError handles the ResponseInteger error response.
-func (client *HeaderClient) responseIntegerHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HeaderClient) responseIntegerHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // ResponseLong - Get a response with header value "value": 105 or -2
@@ -1308,28 +1284,27 @@ func (client *HeaderClient) ResponseLong(ctx context.Context, scenario string, o
 	if err != nil {
 		return HeaderResponseLongResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HeaderResponseLongResponse{}, client.responseLongHandleError(resp)
 	}
 	return client.responseLongHandleResponse(resp)
 }
 
 // responseLongCreateRequest creates the ResponseLong request.
-func (client *HeaderClient) responseLongCreateRequest(ctx context.Context, scenario string, options *HeaderResponseLongOptions) (*azcore.Request, error) {
+func (client *HeaderClient) responseLongCreateRequest(ctx context.Context, scenario string, options *HeaderResponseLongOptions) (*policy.Request, error) {
 	urlPath := "/header/response/prim/long"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("scenario", scenario)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("scenario", scenario)
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // responseLongHandleResponse handles the ResponseLong response.
-func (client *HeaderClient) responseLongHandleResponse(resp *azcore.Response) (HeaderResponseLongResponse, error) {
-	result := HeaderResponseLongResponse{RawResponse: resp.Response}
+func (client *HeaderClient) responseLongHandleResponse(resp *http.Response) (HeaderResponseLongResponse, error) {
+	result := HeaderResponseLongResponse{RawResponse: resp}
 	if val := resp.Header.Get("value"); val != "" {
 		value, err := strconv.ParseInt(val, 10, 64)
 		if err != nil {
@@ -1341,16 +1316,16 @@ func (client *HeaderClient) responseLongHandleResponse(resp *azcore.Response) (H
 }
 
 // responseLongHandleError handles the ResponseLong error response.
-func (client *HeaderClient) responseLongHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HeaderClient) responseLongHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // ResponseProtectedKey - Get a response with header value "Content-Type": "text/html"
@@ -1364,27 +1339,26 @@ func (client *HeaderClient) ResponseProtectedKey(ctx context.Context, options *H
 	if err != nil {
 		return HeaderResponseProtectedKeyResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HeaderResponseProtectedKeyResponse{}, client.responseProtectedKeyHandleError(resp)
 	}
 	return client.responseProtectedKeyHandleResponse(resp)
 }
 
 // responseProtectedKeyCreateRequest creates the ResponseProtectedKey request.
-func (client *HeaderClient) responseProtectedKeyCreateRequest(ctx context.Context, options *HeaderResponseProtectedKeyOptions) (*azcore.Request, error) {
+func (client *HeaderClient) responseProtectedKeyCreateRequest(ctx context.Context, options *HeaderResponseProtectedKeyOptions) (*policy.Request, error) {
 	urlPath := "/header/response/protectedkey"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // responseProtectedKeyHandleResponse handles the ResponseProtectedKey response.
-func (client *HeaderClient) responseProtectedKeyHandleResponse(resp *azcore.Response) (HeaderResponseProtectedKeyResponse, error) {
-	result := HeaderResponseProtectedKeyResponse{RawResponse: resp.Response}
+func (client *HeaderClient) responseProtectedKeyHandleResponse(resp *http.Response) (HeaderResponseProtectedKeyResponse, error) {
+	result := HeaderResponseProtectedKeyResponse{RawResponse: resp}
 	if val := resp.Header.Get("Content-Type"); val != "" {
 		result.ContentType = &val
 	}
@@ -1392,16 +1366,16 @@ func (client *HeaderClient) responseProtectedKeyHandleResponse(resp *azcore.Resp
 }
 
 // responseProtectedKeyHandleError handles the ResponseProtectedKey error response.
-func (client *HeaderClient) responseProtectedKeyHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HeaderClient) responseProtectedKeyHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // ResponseString - Get a response with header values "The quick brown fox jumps over the lazy dog" or null or ""
@@ -1415,28 +1389,27 @@ func (client *HeaderClient) ResponseString(ctx context.Context, scenario string,
 	if err != nil {
 		return HeaderResponseStringResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HeaderResponseStringResponse{}, client.responseStringHandleError(resp)
 	}
 	return client.responseStringHandleResponse(resp)
 }
 
 // responseStringCreateRequest creates the ResponseString request.
-func (client *HeaderClient) responseStringCreateRequest(ctx context.Context, scenario string, options *HeaderResponseStringOptions) (*azcore.Request, error) {
+func (client *HeaderClient) responseStringCreateRequest(ctx context.Context, scenario string, options *HeaderResponseStringOptions) (*policy.Request, error) {
 	urlPath := "/header/response/prim/string"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("scenario", scenario)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("scenario", scenario)
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // responseStringHandleResponse handles the ResponseString response.
-func (client *HeaderClient) responseStringHandleResponse(resp *azcore.Response) (HeaderResponseStringResponse, error) {
-	result := HeaderResponseStringResponse{RawResponse: resp.Response}
+func (client *HeaderClient) responseStringHandleResponse(resp *http.Response) (HeaderResponseStringResponse, error) {
+	result := HeaderResponseStringResponse{RawResponse: resp}
 	if val := resp.Header.Get("value"); val != "" {
 		result.Value = &val
 	}
@@ -1444,14 +1417,14 @@ func (client *HeaderClient) responseStringHandleResponse(resp *azcore.Response) 
 }
 
 // responseStringHandleError handles the ResponseString error response.
-func (client *HeaderClient) responseStringHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *HeaderClient) responseStringHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }

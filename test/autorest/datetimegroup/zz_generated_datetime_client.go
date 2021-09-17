@@ -1,4 +1,5 @@
-// +build go1.13
+//go:build go1.16
+// +build go1.16
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -10,7 +11,8 @@ package datetimegroup
 import (
 	"context"
 	"fmt"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 	"time"
 )
@@ -37,29 +39,28 @@ func (client *DatetimeClient) GetInvalid(ctx context.Context, options *DatetimeG
 	if err != nil {
 		return DatetimeGetInvalidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return DatetimeGetInvalidResponse{}, client.getInvalidHandleError(resp)
 	}
 	return client.getInvalidHandleResponse(resp)
 }
 
 // getInvalidCreateRequest creates the GetInvalid request.
-func (client *DatetimeClient) getInvalidCreateRequest(ctx context.Context, options *DatetimeGetInvalidOptions) (*azcore.Request, error) {
+func (client *DatetimeClient) getInvalidCreateRequest(ctx context.Context, options *DatetimeGetInvalidOptions) (*policy.Request, error) {
 	urlPath := "/datetime/invalid"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getInvalidHandleResponse handles the GetInvalid response.
-func (client *DatetimeClient) getInvalidHandleResponse(resp *azcore.Response) (DatetimeGetInvalidResponse, error) {
-	result := DatetimeGetInvalidResponse{RawResponse: resp.Response}
+func (client *DatetimeClient) getInvalidHandleResponse(resp *http.Response) (DatetimeGetInvalidResponse, error) {
+	result := DatetimeGetInvalidResponse{RawResponse: resp}
 	var aux *timeRFC3339
-	if err := resp.UnmarshalAsJSON(&aux); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return DatetimeGetInvalidResponse{}, err
 	}
 	result.Value = (*time.Time)(aux)
@@ -67,16 +68,16 @@ func (client *DatetimeClient) getInvalidHandleResponse(resp *azcore.Response) (D
 }
 
 // getInvalidHandleError handles the GetInvalid error response.
-func (client *DatetimeClient) getInvalidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *DatetimeClient) getInvalidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetLocalNegativeOffsetLowercaseMaxDateTime - Get max datetime value with positive num offset 9999-12-31t23:59:59.999-14:00
@@ -90,29 +91,28 @@ func (client *DatetimeClient) GetLocalNegativeOffsetLowercaseMaxDateTime(ctx con
 	if err != nil {
 		return DatetimeGetLocalNegativeOffsetLowercaseMaxDateTimeResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return DatetimeGetLocalNegativeOffsetLowercaseMaxDateTimeResponse{}, client.getLocalNegativeOffsetLowercaseMaxDateTimeHandleError(resp)
 	}
 	return client.getLocalNegativeOffsetLowercaseMaxDateTimeHandleResponse(resp)
 }
 
 // getLocalNegativeOffsetLowercaseMaxDateTimeCreateRequest creates the GetLocalNegativeOffsetLowercaseMaxDateTime request.
-func (client *DatetimeClient) getLocalNegativeOffsetLowercaseMaxDateTimeCreateRequest(ctx context.Context, options *DatetimeGetLocalNegativeOffsetLowercaseMaxDateTimeOptions) (*azcore.Request, error) {
+func (client *DatetimeClient) getLocalNegativeOffsetLowercaseMaxDateTimeCreateRequest(ctx context.Context, options *DatetimeGetLocalNegativeOffsetLowercaseMaxDateTimeOptions) (*policy.Request, error) {
 	urlPath := "/datetime/max/localnegativeoffset/lowercase"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getLocalNegativeOffsetLowercaseMaxDateTimeHandleResponse handles the GetLocalNegativeOffsetLowercaseMaxDateTime response.
-func (client *DatetimeClient) getLocalNegativeOffsetLowercaseMaxDateTimeHandleResponse(resp *azcore.Response) (DatetimeGetLocalNegativeOffsetLowercaseMaxDateTimeResponse, error) {
-	result := DatetimeGetLocalNegativeOffsetLowercaseMaxDateTimeResponse{RawResponse: resp.Response}
+func (client *DatetimeClient) getLocalNegativeOffsetLowercaseMaxDateTimeHandleResponse(resp *http.Response) (DatetimeGetLocalNegativeOffsetLowercaseMaxDateTimeResponse, error) {
+	result := DatetimeGetLocalNegativeOffsetLowercaseMaxDateTimeResponse{RawResponse: resp}
 	var aux *timeRFC3339
-	if err := resp.UnmarshalAsJSON(&aux); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return DatetimeGetLocalNegativeOffsetLowercaseMaxDateTimeResponse{}, err
 	}
 	result.Value = (*time.Time)(aux)
@@ -120,16 +120,16 @@ func (client *DatetimeClient) getLocalNegativeOffsetLowercaseMaxDateTimeHandleRe
 }
 
 // getLocalNegativeOffsetLowercaseMaxDateTimeHandleError handles the GetLocalNegativeOffsetLowercaseMaxDateTime error response.
-func (client *DatetimeClient) getLocalNegativeOffsetLowercaseMaxDateTimeHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *DatetimeClient) getLocalNegativeOffsetLowercaseMaxDateTimeHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetLocalNegativeOffsetMinDateTime - Get min datetime value 0001-01-01T00:00:00-14:00
@@ -143,29 +143,28 @@ func (client *DatetimeClient) GetLocalNegativeOffsetMinDateTime(ctx context.Cont
 	if err != nil {
 		return DatetimeGetLocalNegativeOffsetMinDateTimeResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return DatetimeGetLocalNegativeOffsetMinDateTimeResponse{}, client.getLocalNegativeOffsetMinDateTimeHandleError(resp)
 	}
 	return client.getLocalNegativeOffsetMinDateTimeHandleResponse(resp)
 }
 
 // getLocalNegativeOffsetMinDateTimeCreateRequest creates the GetLocalNegativeOffsetMinDateTime request.
-func (client *DatetimeClient) getLocalNegativeOffsetMinDateTimeCreateRequest(ctx context.Context, options *DatetimeGetLocalNegativeOffsetMinDateTimeOptions) (*azcore.Request, error) {
+func (client *DatetimeClient) getLocalNegativeOffsetMinDateTimeCreateRequest(ctx context.Context, options *DatetimeGetLocalNegativeOffsetMinDateTimeOptions) (*policy.Request, error) {
 	urlPath := "/datetime/min/localnegativeoffset"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getLocalNegativeOffsetMinDateTimeHandleResponse handles the GetLocalNegativeOffsetMinDateTime response.
-func (client *DatetimeClient) getLocalNegativeOffsetMinDateTimeHandleResponse(resp *azcore.Response) (DatetimeGetLocalNegativeOffsetMinDateTimeResponse, error) {
-	result := DatetimeGetLocalNegativeOffsetMinDateTimeResponse{RawResponse: resp.Response}
+func (client *DatetimeClient) getLocalNegativeOffsetMinDateTimeHandleResponse(resp *http.Response) (DatetimeGetLocalNegativeOffsetMinDateTimeResponse, error) {
+	result := DatetimeGetLocalNegativeOffsetMinDateTimeResponse{RawResponse: resp}
 	var aux *timeRFC3339
-	if err := resp.UnmarshalAsJSON(&aux); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return DatetimeGetLocalNegativeOffsetMinDateTimeResponse{}, err
 	}
 	result.Value = (*time.Time)(aux)
@@ -173,16 +172,16 @@ func (client *DatetimeClient) getLocalNegativeOffsetMinDateTimeHandleResponse(re
 }
 
 // getLocalNegativeOffsetMinDateTimeHandleError handles the GetLocalNegativeOffsetMinDateTime error response.
-func (client *DatetimeClient) getLocalNegativeOffsetMinDateTimeHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *DatetimeClient) getLocalNegativeOffsetMinDateTimeHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetLocalNegativeOffsetUppercaseMaxDateTime - Get max datetime value with positive num offset 9999-12-31T23:59:59.999-14:00
@@ -196,29 +195,28 @@ func (client *DatetimeClient) GetLocalNegativeOffsetUppercaseMaxDateTime(ctx con
 	if err != nil {
 		return DatetimeGetLocalNegativeOffsetUppercaseMaxDateTimeResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return DatetimeGetLocalNegativeOffsetUppercaseMaxDateTimeResponse{}, client.getLocalNegativeOffsetUppercaseMaxDateTimeHandleError(resp)
 	}
 	return client.getLocalNegativeOffsetUppercaseMaxDateTimeHandleResponse(resp)
 }
 
 // getLocalNegativeOffsetUppercaseMaxDateTimeCreateRequest creates the GetLocalNegativeOffsetUppercaseMaxDateTime request.
-func (client *DatetimeClient) getLocalNegativeOffsetUppercaseMaxDateTimeCreateRequest(ctx context.Context, options *DatetimeGetLocalNegativeOffsetUppercaseMaxDateTimeOptions) (*azcore.Request, error) {
+func (client *DatetimeClient) getLocalNegativeOffsetUppercaseMaxDateTimeCreateRequest(ctx context.Context, options *DatetimeGetLocalNegativeOffsetUppercaseMaxDateTimeOptions) (*policy.Request, error) {
 	urlPath := "/datetime/max/localnegativeoffset/uppercase"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getLocalNegativeOffsetUppercaseMaxDateTimeHandleResponse handles the GetLocalNegativeOffsetUppercaseMaxDateTime response.
-func (client *DatetimeClient) getLocalNegativeOffsetUppercaseMaxDateTimeHandleResponse(resp *azcore.Response) (DatetimeGetLocalNegativeOffsetUppercaseMaxDateTimeResponse, error) {
-	result := DatetimeGetLocalNegativeOffsetUppercaseMaxDateTimeResponse{RawResponse: resp.Response}
+func (client *DatetimeClient) getLocalNegativeOffsetUppercaseMaxDateTimeHandleResponse(resp *http.Response) (DatetimeGetLocalNegativeOffsetUppercaseMaxDateTimeResponse, error) {
+	result := DatetimeGetLocalNegativeOffsetUppercaseMaxDateTimeResponse{RawResponse: resp}
 	var aux *timeRFC3339
-	if err := resp.UnmarshalAsJSON(&aux); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return DatetimeGetLocalNegativeOffsetUppercaseMaxDateTimeResponse{}, err
 	}
 	result.Value = (*time.Time)(aux)
@@ -226,16 +224,16 @@ func (client *DatetimeClient) getLocalNegativeOffsetUppercaseMaxDateTimeHandleRe
 }
 
 // getLocalNegativeOffsetUppercaseMaxDateTimeHandleError handles the GetLocalNegativeOffsetUppercaseMaxDateTime error response.
-func (client *DatetimeClient) getLocalNegativeOffsetUppercaseMaxDateTimeHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *DatetimeClient) getLocalNegativeOffsetUppercaseMaxDateTimeHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetLocalNoOffsetMinDateTime - Get min datetime value 0001-01-01T00:00:00
@@ -249,29 +247,28 @@ func (client *DatetimeClient) GetLocalNoOffsetMinDateTime(ctx context.Context, o
 	if err != nil {
 		return DatetimeGetLocalNoOffsetMinDateTimeResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return DatetimeGetLocalNoOffsetMinDateTimeResponse{}, client.getLocalNoOffsetMinDateTimeHandleError(resp)
 	}
 	return client.getLocalNoOffsetMinDateTimeHandleResponse(resp)
 }
 
 // getLocalNoOffsetMinDateTimeCreateRequest creates the GetLocalNoOffsetMinDateTime request.
-func (client *DatetimeClient) getLocalNoOffsetMinDateTimeCreateRequest(ctx context.Context, options *DatetimeGetLocalNoOffsetMinDateTimeOptions) (*azcore.Request, error) {
+func (client *DatetimeClient) getLocalNoOffsetMinDateTimeCreateRequest(ctx context.Context, options *DatetimeGetLocalNoOffsetMinDateTimeOptions) (*policy.Request, error) {
 	urlPath := "/datetime/min/localnooffset"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getLocalNoOffsetMinDateTimeHandleResponse handles the GetLocalNoOffsetMinDateTime response.
-func (client *DatetimeClient) getLocalNoOffsetMinDateTimeHandleResponse(resp *azcore.Response) (DatetimeGetLocalNoOffsetMinDateTimeResponse, error) {
-	result := DatetimeGetLocalNoOffsetMinDateTimeResponse{RawResponse: resp.Response}
+func (client *DatetimeClient) getLocalNoOffsetMinDateTimeHandleResponse(resp *http.Response) (DatetimeGetLocalNoOffsetMinDateTimeResponse, error) {
+	result := DatetimeGetLocalNoOffsetMinDateTimeResponse{RawResponse: resp}
 	var aux *timeRFC3339
-	if err := resp.UnmarshalAsJSON(&aux); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return DatetimeGetLocalNoOffsetMinDateTimeResponse{}, err
 	}
 	result.Value = (*time.Time)(aux)
@@ -279,16 +276,16 @@ func (client *DatetimeClient) getLocalNoOffsetMinDateTimeHandleResponse(resp *az
 }
 
 // getLocalNoOffsetMinDateTimeHandleError handles the GetLocalNoOffsetMinDateTime error response.
-func (client *DatetimeClient) getLocalNoOffsetMinDateTimeHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *DatetimeClient) getLocalNoOffsetMinDateTimeHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetLocalPositiveOffsetLowercaseMaxDateTime - Get max datetime value with positive num offset 9999-12-31t23:59:59.999+14:00
@@ -302,29 +299,28 @@ func (client *DatetimeClient) GetLocalPositiveOffsetLowercaseMaxDateTime(ctx con
 	if err != nil {
 		return DatetimeGetLocalPositiveOffsetLowercaseMaxDateTimeResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return DatetimeGetLocalPositiveOffsetLowercaseMaxDateTimeResponse{}, client.getLocalPositiveOffsetLowercaseMaxDateTimeHandleError(resp)
 	}
 	return client.getLocalPositiveOffsetLowercaseMaxDateTimeHandleResponse(resp)
 }
 
 // getLocalPositiveOffsetLowercaseMaxDateTimeCreateRequest creates the GetLocalPositiveOffsetLowercaseMaxDateTime request.
-func (client *DatetimeClient) getLocalPositiveOffsetLowercaseMaxDateTimeCreateRequest(ctx context.Context, options *DatetimeGetLocalPositiveOffsetLowercaseMaxDateTimeOptions) (*azcore.Request, error) {
+func (client *DatetimeClient) getLocalPositiveOffsetLowercaseMaxDateTimeCreateRequest(ctx context.Context, options *DatetimeGetLocalPositiveOffsetLowercaseMaxDateTimeOptions) (*policy.Request, error) {
 	urlPath := "/datetime/max/localpositiveoffset/lowercase"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getLocalPositiveOffsetLowercaseMaxDateTimeHandleResponse handles the GetLocalPositiveOffsetLowercaseMaxDateTime response.
-func (client *DatetimeClient) getLocalPositiveOffsetLowercaseMaxDateTimeHandleResponse(resp *azcore.Response) (DatetimeGetLocalPositiveOffsetLowercaseMaxDateTimeResponse, error) {
-	result := DatetimeGetLocalPositiveOffsetLowercaseMaxDateTimeResponse{RawResponse: resp.Response}
+func (client *DatetimeClient) getLocalPositiveOffsetLowercaseMaxDateTimeHandleResponse(resp *http.Response) (DatetimeGetLocalPositiveOffsetLowercaseMaxDateTimeResponse, error) {
+	result := DatetimeGetLocalPositiveOffsetLowercaseMaxDateTimeResponse{RawResponse: resp}
 	var aux *timeRFC3339
-	if err := resp.UnmarshalAsJSON(&aux); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return DatetimeGetLocalPositiveOffsetLowercaseMaxDateTimeResponse{}, err
 	}
 	result.Value = (*time.Time)(aux)
@@ -332,16 +328,16 @@ func (client *DatetimeClient) getLocalPositiveOffsetLowercaseMaxDateTimeHandleRe
 }
 
 // getLocalPositiveOffsetLowercaseMaxDateTimeHandleError handles the GetLocalPositiveOffsetLowercaseMaxDateTime error response.
-func (client *DatetimeClient) getLocalPositiveOffsetLowercaseMaxDateTimeHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *DatetimeClient) getLocalPositiveOffsetLowercaseMaxDateTimeHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetLocalPositiveOffsetMinDateTime - Get min datetime value 0001-01-01T00:00:00+14:00
@@ -355,29 +351,28 @@ func (client *DatetimeClient) GetLocalPositiveOffsetMinDateTime(ctx context.Cont
 	if err != nil {
 		return DatetimeGetLocalPositiveOffsetMinDateTimeResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return DatetimeGetLocalPositiveOffsetMinDateTimeResponse{}, client.getLocalPositiveOffsetMinDateTimeHandleError(resp)
 	}
 	return client.getLocalPositiveOffsetMinDateTimeHandleResponse(resp)
 }
 
 // getLocalPositiveOffsetMinDateTimeCreateRequest creates the GetLocalPositiveOffsetMinDateTime request.
-func (client *DatetimeClient) getLocalPositiveOffsetMinDateTimeCreateRequest(ctx context.Context, options *DatetimeGetLocalPositiveOffsetMinDateTimeOptions) (*azcore.Request, error) {
+func (client *DatetimeClient) getLocalPositiveOffsetMinDateTimeCreateRequest(ctx context.Context, options *DatetimeGetLocalPositiveOffsetMinDateTimeOptions) (*policy.Request, error) {
 	urlPath := "/datetime/min/localpositiveoffset"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getLocalPositiveOffsetMinDateTimeHandleResponse handles the GetLocalPositiveOffsetMinDateTime response.
-func (client *DatetimeClient) getLocalPositiveOffsetMinDateTimeHandleResponse(resp *azcore.Response) (DatetimeGetLocalPositiveOffsetMinDateTimeResponse, error) {
-	result := DatetimeGetLocalPositiveOffsetMinDateTimeResponse{RawResponse: resp.Response}
+func (client *DatetimeClient) getLocalPositiveOffsetMinDateTimeHandleResponse(resp *http.Response) (DatetimeGetLocalPositiveOffsetMinDateTimeResponse, error) {
+	result := DatetimeGetLocalPositiveOffsetMinDateTimeResponse{RawResponse: resp}
 	var aux *timeRFC3339
-	if err := resp.UnmarshalAsJSON(&aux); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return DatetimeGetLocalPositiveOffsetMinDateTimeResponse{}, err
 	}
 	result.Value = (*time.Time)(aux)
@@ -385,16 +380,16 @@ func (client *DatetimeClient) getLocalPositiveOffsetMinDateTimeHandleResponse(re
 }
 
 // getLocalPositiveOffsetMinDateTimeHandleError handles the GetLocalPositiveOffsetMinDateTime error response.
-func (client *DatetimeClient) getLocalPositiveOffsetMinDateTimeHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *DatetimeClient) getLocalPositiveOffsetMinDateTimeHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetLocalPositiveOffsetUppercaseMaxDateTime - Get max datetime value with positive num offset 9999-12-31T23:59:59.999+14:00
@@ -408,29 +403,28 @@ func (client *DatetimeClient) GetLocalPositiveOffsetUppercaseMaxDateTime(ctx con
 	if err != nil {
 		return DatetimeGetLocalPositiveOffsetUppercaseMaxDateTimeResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return DatetimeGetLocalPositiveOffsetUppercaseMaxDateTimeResponse{}, client.getLocalPositiveOffsetUppercaseMaxDateTimeHandleError(resp)
 	}
 	return client.getLocalPositiveOffsetUppercaseMaxDateTimeHandleResponse(resp)
 }
 
 // getLocalPositiveOffsetUppercaseMaxDateTimeCreateRequest creates the GetLocalPositiveOffsetUppercaseMaxDateTime request.
-func (client *DatetimeClient) getLocalPositiveOffsetUppercaseMaxDateTimeCreateRequest(ctx context.Context, options *DatetimeGetLocalPositiveOffsetUppercaseMaxDateTimeOptions) (*azcore.Request, error) {
+func (client *DatetimeClient) getLocalPositiveOffsetUppercaseMaxDateTimeCreateRequest(ctx context.Context, options *DatetimeGetLocalPositiveOffsetUppercaseMaxDateTimeOptions) (*policy.Request, error) {
 	urlPath := "/datetime/max/localpositiveoffset/uppercase"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getLocalPositiveOffsetUppercaseMaxDateTimeHandleResponse handles the GetLocalPositiveOffsetUppercaseMaxDateTime response.
-func (client *DatetimeClient) getLocalPositiveOffsetUppercaseMaxDateTimeHandleResponse(resp *azcore.Response) (DatetimeGetLocalPositiveOffsetUppercaseMaxDateTimeResponse, error) {
-	result := DatetimeGetLocalPositiveOffsetUppercaseMaxDateTimeResponse{RawResponse: resp.Response}
+func (client *DatetimeClient) getLocalPositiveOffsetUppercaseMaxDateTimeHandleResponse(resp *http.Response) (DatetimeGetLocalPositiveOffsetUppercaseMaxDateTimeResponse, error) {
+	result := DatetimeGetLocalPositiveOffsetUppercaseMaxDateTimeResponse{RawResponse: resp}
 	var aux *timeRFC3339
-	if err := resp.UnmarshalAsJSON(&aux); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return DatetimeGetLocalPositiveOffsetUppercaseMaxDateTimeResponse{}, err
 	}
 	result.Value = (*time.Time)(aux)
@@ -438,16 +432,16 @@ func (client *DatetimeClient) getLocalPositiveOffsetUppercaseMaxDateTimeHandleRe
 }
 
 // getLocalPositiveOffsetUppercaseMaxDateTimeHandleError handles the GetLocalPositiveOffsetUppercaseMaxDateTime error response.
-func (client *DatetimeClient) getLocalPositiveOffsetUppercaseMaxDateTimeHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *DatetimeClient) getLocalPositiveOffsetUppercaseMaxDateTimeHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetNull - Get null datetime value
@@ -461,29 +455,28 @@ func (client *DatetimeClient) GetNull(ctx context.Context, options *DatetimeGetN
 	if err != nil {
 		return DatetimeGetNullResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return DatetimeGetNullResponse{}, client.getNullHandleError(resp)
 	}
 	return client.getNullHandleResponse(resp)
 }
 
 // getNullCreateRequest creates the GetNull request.
-func (client *DatetimeClient) getNullCreateRequest(ctx context.Context, options *DatetimeGetNullOptions) (*azcore.Request, error) {
+func (client *DatetimeClient) getNullCreateRequest(ctx context.Context, options *DatetimeGetNullOptions) (*policy.Request, error) {
 	urlPath := "/datetime/null"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getNullHandleResponse handles the GetNull response.
-func (client *DatetimeClient) getNullHandleResponse(resp *azcore.Response) (DatetimeGetNullResponse, error) {
-	result := DatetimeGetNullResponse{RawResponse: resp.Response}
+func (client *DatetimeClient) getNullHandleResponse(resp *http.Response) (DatetimeGetNullResponse, error) {
+	result := DatetimeGetNullResponse{RawResponse: resp}
 	var aux *timeRFC3339
-	if err := resp.UnmarshalAsJSON(&aux); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return DatetimeGetNullResponse{}, err
 	}
 	result.Value = (*time.Time)(aux)
@@ -491,16 +484,16 @@ func (client *DatetimeClient) getNullHandleResponse(resp *azcore.Response) (Date
 }
 
 // getNullHandleError handles the GetNull error response.
-func (client *DatetimeClient) getNullHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *DatetimeClient) getNullHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetOverflow - Get overflow datetime value
@@ -514,29 +507,28 @@ func (client *DatetimeClient) GetOverflow(ctx context.Context, options *Datetime
 	if err != nil {
 		return DatetimeGetOverflowResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return DatetimeGetOverflowResponse{}, client.getOverflowHandleError(resp)
 	}
 	return client.getOverflowHandleResponse(resp)
 }
 
 // getOverflowCreateRequest creates the GetOverflow request.
-func (client *DatetimeClient) getOverflowCreateRequest(ctx context.Context, options *DatetimeGetOverflowOptions) (*azcore.Request, error) {
+func (client *DatetimeClient) getOverflowCreateRequest(ctx context.Context, options *DatetimeGetOverflowOptions) (*policy.Request, error) {
 	urlPath := "/datetime/overflow"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getOverflowHandleResponse handles the GetOverflow response.
-func (client *DatetimeClient) getOverflowHandleResponse(resp *azcore.Response) (DatetimeGetOverflowResponse, error) {
-	result := DatetimeGetOverflowResponse{RawResponse: resp.Response}
+func (client *DatetimeClient) getOverflowHandleResponse(resp *http.Response) (DatetimeGetOverflowResponse, error) {
+	result := DatetimeGetOverflowResponse{RawResponse: resp}
 	var aux *timeRFC3339
-	if err := resp.UnmarshalAsJSON(&aux); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return DatetimeGetOverflowResponse{}, err
 	}
 	result.Value = (*time.Time)(aux)
@@ -544,16 +536,16 @@ func (client *DatetimeClient) getOverflowHandleResponse(resp *azcore.Response) (
 }
 
 // getOverflowHandleError handles the GetOverflow error response.
-func (client *DatetimeClient) getOverflowHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *DatetimeClient) getOverflowHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetUTCLowercaseMaxDateTime - Get max datetime value 9999-12-31t23:59:59.999z
@@ -567,29 +559,28 @@ func (client *DatetimeClient) GetUTCLowercaseMaxDateTime(ctx context.Context, op
 	if err != nil {
 		return DatetimeGetUTCLowercaseMaxDateTimeResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return DatetimeGetUTCLowercaseMaxDateTimeResponse{}, client.getUTCLowercaseMaxDateTimeHandleError(resp)
 	}
 	return client.getUTCLowercaseMaxDateTimeHandleResponse(resp)
 }
 
 // getUTCLowercaseMaxDateTimeCreateRequest creates the GetUTCLowercaseMaxDateTime request.
-func (client *DatetimeClient) getUTCLowercaseMaxDateTimeCreateRequest(ctx context.Context, options *DatetimeGetUTCLowercaseMaxDateTimeOptions) (*azcore.Request, error) {
+func (client *DatetimeClient) getUTCLowercaseMaxDateTimeCreateRequest(ctx context.Context, options *DatetimeGetUTCLowercaseMaxDateTimeOptions) (*policy.Request, error) {
 	urlPath := "/datetime/max/utc/lowercase"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getUTCLowercaseMaxDateTimeHandleResponse handles the GetUTCLowercaseMaxDateTime response.
-func (client *DatetimeClient) getUTCLowercaseMaxDateTimeHandleResponse(resp *azcore.Response) (DatetimeGetUTCLowercaseMaxDateTimeResponse, error) {
-	result := DatetimeGetUTCLowercaseMaxDateTimeResponse{RawResponse: resp.Response}
+func (client *DatetimeClient) getUTCLowercaseMaxDateTimeHandleResponse(resp *http.Response) (DatetimeGetUTCLowercaseMaxDateTimeResponse, error) {
+	result := DatetimeGetUTCLowercaseMaxDateTimeResponse{RawResponse: resp}
 	var aux *timeRFC3339
-	if err := resp.UnmarshalAsJSON(&aux); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return DatetimeGetUTCLowercaseMaxDateTimeResponse{}, err
 	}
 	result.Value = (*time.Time)(aux)
@@ -597,16 +588,16 @@ func (client *DatetimeClient) getUTCLowercaseMaxDateTimeHandleResponse(resp *azc
 }
 
 // getUTCLowercaseMaxDateTimeHandleError handles the GetUTCLowercaseMaxDateTime error response.
-func (client *DatetimeClient) getUTCLowercaseMaxDateTimeHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *DatetimeClient) getUTCLowercaseMaxDateTimeHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetUTCMinDateTime - Get min datetime value 0001-01-01T00:00:00Z
@@ -620,29 +611,28 @@ func (client *DatetimeClient) GetUTCMinDateTime(ctx context.Context, options *Da
 	if err != nil {
 		return DatetimeGetUTCMinDateTimeResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return DatetimeGetUTCMinDateTimeResponse{}, client.getUTCMinDateTimeHandleError(resp)
 	}
 	return client.getUTCMinDateTimeHandleResponse(resp)
 }
 
 // getUTCMinDateTimeCreateRequest creates the GetUTCMinDateTime request.
-func (client *DatetimeClient) getUTCMinDateTimeCreateRequest(ctx context.Context, options *DatetimeGetUTCMinDateTimeOptions) (*azcore.Request, error) {
+func (client *DatetimeClient) getUTCMinDateTimeCreateRequest(ctx context.Context, options *DatetimeGetUTCMinDateTimeOptions) (*policy.Request, error) {
 	urlPath := "/datetime/min/utc"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getUTCMinDateTimeHandleResponse handles the GetUTCMinDateTime response.
-func (client *DatetimeClient) getUTCMinDateTimeHandleResponse(resp *azcore.Response) (DatetimeGetUTCMinDateTimeResponse, error) {
-	result := DatetimeGetUTCMinDateTimeResponse{RawResponse: resp.Response}
+func (client *DatetimeClient) getUTCMinDateTimeHandleResponse(resp *http.Response) (DatetimeGetUTCMinDateTimeResponse, error) {
+	result := DatetimeGetUTCMinDateTimeResponse{RawResponse: resp}
 	var aux *timeRFC3339
-	if err := resp.UnmarshalAsJSON(&aux); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return DatetimeGetUTCMinDateTimeResponse{}, err
 	}
 	result.Value = (*time.Time)(aux)
@@ -650,16 +640,16 @@ func (client *DatetimeClient) getUTCMinDateTimeHandleResponse(resp *azcore.Respo
 }
 
 // getUTCMinDateTimeHandleError handles the GetUTCMinDateTime error response.
-func (client *DatetimeClient) getUTCMinDateTimeHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *DatetimeClient) getUTCMinDateTimeHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetUTCUppercaseMaxDateTime - Get max datetime value 9999-12-31T23:59:59.999Z
@@ -673,29 +663,28 @@ func (client *DatetimeClient) GetUTCUppercaseMaxDateTime(ctx context.Context, op
 	if err != nil {
 		return DatetimeGetUTCUppercaseMaxDateTimeResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return DatetimeGetUTCUppercaseMaxDateTimeResponse{}, client.getUTCUppercaseMaxDateTimeHandleError(resp)
 	}
 	return client.getUTCUppercaseMaxDateTimeHandleResponse(resp)
 }
 
 // getUTCUppercaseMaxDateTimeCreateRequest creates the GetUTCUppercaseMaxDateTime request.
-func (client *DatetimeClient) getUTCUppercaseMaxDateTimeCreateRequest(ctx context.Context, options *DatetimeGetUTCUppercaseMaxDateTimeOptions) (*azcore.Request, error) {
+func (client *DatetimeClient) getUTCUppercaseMaxDateTimeCreateRequest(ctx context.Context, options *DatetimeGetUTCUppercaseMaxDateTimeOptions) (*policy.Request, error) {
 	urlPath := "/datetime/max/utc/uppercase"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getUTCUppercaseMaxDateTimeHandleResponse handles the GetUTCUppercaseMaxDateTime response.
-func (client *DatetimeClient) getUTCUppercaseMaxDateTimeHandleResponse(resp *azcore.Response) (DatetimeGetUTCUppercaseMaxDateTimeResponse, error) {
-	result := DatetimeGetUTCUppercaseMaxDateTimeResponse{RawResponse: resp.Response}
+func (client *DatetimeClient) getUTCUppercaseMaxDateTimeHandleResponse(resp *http.Response) (DatetimeGetUTCUppercaseMaxDateTimeResponse, error) {
+	result := DatetimeGetUTCUppercaseMaxDateTimeResponse{RawResponse: resp}
 	var aux *timeRFC3339
-	if err := resp.UnmarshalAsJSON(&aux); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return DatetimeGetUTCUppercaseMaxDateTimeResponse{}, err
 	}
 	result.Value = (*time.Time)(aux)
@@ -703,16 +692,16 @@ func (client *DatetimeClient) getUTCUppercaseMaxDateTimeHandleResponse(resp *azc
 }
 
 // getUTCUppercaseMaxDateTimeHandleError handles the GetUTCUppercaseMaxDateTime error response.
-func (client *DatetimeClient) getUTCUppercaseMaxDateTimeHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *DatetimeClient) getUTCUppercaseMaxDateTimeHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetUTCUppercaseMaxDateTime7Digits - This is against the recommendation that asks for 3 digits, but allow to test what happens in that scenario
@@ -726,29 +715,28 @@ func (client *DatetimeClient) GetUTCUppercaseMaxDateTime7Digits(ctx context.Cont
 	if err != nil {
 		return DatetimeGetUTCUppercaseMaxDateTime7DigitsResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return DatetimeGetUTCUppercaseMaxDateTime7DigitsResponse{}, client.getUTCUppercaseMaxDateTime7DigitsHandleError(resp)
 	}
 	return client.getUTCUppercaseMaxDateTime7DigitsHandleResponse(resp)
 }
 
 // getUTCUppercaseMaxDateTime7DigitsCreateRequest creates the GetUTCUppercaseMaxDateTime7Digits request.
-func (client *DatetimeClient) getUTCUppercaseMaxDateTime7DigitsCreateRequest(ctx context.Context, options *DatetimeGetUTCUppercaseMaxDateTime7DigitsOptions) (*azcore.Request, error) {
+func (client *DatetimeClient) getUTCUppercaseMaxDateTime7DigitsCreateRequest(ctx context.Context, options *DatetimeGetUTCUppercaseMaxDateTime7DigitsOptions) (*policy.Request, error) {
 	urlPath := "/datetime/max/utc7ms/uppercase"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getUTCUppercaseMaxDateTime7DigitsHandleResponse handles the GetUTCUppercaseMaxDateTime7Digits response.
-func (client *DatetimeClient) getUTCUppercaseMaxDateTime7DigitsHandleResponse(resp *azcore.Response) (DatetimeGetUTCUppercaseMaxDateTime7DigitsResponse, error) {
-	result := DatetimeGetUTCUppercaseMaxDateTime7DigitsResponse{RawResponse: resp.Response}
+func (client *DatetimeClient) getUTCUppercaseMaxDateTime7DigitsHandleResponse(resp *http.Response) (DatetimeGetUTCUppercaseMaxDateTime7DigitsResponse, error) {
+	result := DatetimeGetUTCUppercaseMaxDateTime7DigitsResponse{RawResponse: resp}
 	var aux *timeRFC3339
-	if err := resp.UnmarshalAsJSON(&aux); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return DatetimeGetUTCUppercaseMaxDateTime7DigitsResponse{}, err
 	}
 	result.Value = (*time.Time)(aux)
@@ -756,16 +744,16 @@ func (client *DatetimeClient) getUTCUppercaseMaxDateTime7DigitsHandleResponse(re
 }
 
 // getUTCUppercaseMaxDateTime7DigitsHandleError handles the GetUTCUppercaseMaxDateTime7Digits error response.
-func (client *DatetimeClient) getUTCUppercaseMaxDateTime7DigitsHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *DatetimeClient) getUTCUppercaseMaxDateTime7DigitsHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetUnderflow - Get underflow datetime value
@@ -779,29 +767,28 @@ func (client *DatetimeClient) GetUnderflow(ctx context.Context, options *Datetim
 	if err != nil {
 		return DatetimeGetUnderflowResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return DatetimeGetUnderflowResponse{}, client.getUnderflowHandleError(resp)
 	}
 	return client.getUnderflowHandleResponse(resp)
 }
 
 // getUnderflowCreateRequest creates the GetUnderflow request.
-func (client *DatetimeClient) getUnderflowCreateRequest(ctx context.Context, options *DatetimeGetUnderflowOptions) (*azcore.Request, error) {
+func (client *DatetimeClient) getUnderflowCreateRequest(ctx context.Context, options *DatetimeGetUnderflowOptions) (*policy.Request, error) {
 	urlPath := "/datetime/underflow"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getUnderflowHandleResponse handles the GetUnderflow response.
-func (client *DatetimeClient) getUnderflowHandleResponse(resp *azcore.Response) (DatetimeGetUnderflowResponse, error) {
-	result := DatetimeGetUnderflowResponse{RawResponse: resp.Response}
+func (client *DatetimeClient) getUnderflowHandleResponse(resp *http.Response) (DatetimeGetUnderflowResponse, error) {
+	result := DatetimeGetUnderflowResponse{RawResponse: resp}
 	var aux *timeRFC3339
-	if err := resp.UnmarshalAsJSON(&aux); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return DatetimeGetUnderflowResponse{}, err
 	}
 	result.Value = (*time.Time)(aux)
@@ -809,16 +796,16 @@ func (client *DatetimeClient) getUnderflowHandleResponse(resp *azcore.Response) 
 }
 
 // getUnderflowHandleError handles the GetUnderflow error response.
-func (client *DatetimeClient) getUnderflowHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *DatetimeClient) getUnderflowHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutLocalNegativeOffsetMaxDateTime - Put max datetime value with positive numoffset 9999-12-31t23:59:59.999-14:00
@@ -832,35 +819,34 @@ func (client *DatetimeClient) PutLocalNegativeOffsetMaxDateTime(ctx context.Cont
 	if err != nil {
 		return DatetimePutLocalNegativeOffsetMaxDateTimeResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return DatetimePutLocalNegativeOffsetMaxDateTimeResponse{}, client.putLocalNegativeOffsetMaxDateTimeHandleError(resp)
 	}
-	return DatetimePutLocalNegativeOffsetMaxDateTimeResponse{RawResponse: resp.Response}, nil
+	return DatetimePutLocalNegativeOffsetMaxDateTimeResponse{RawResponse: resp}, nil
 }
 
 // putLocalNegativeOffsetMaxDateTimeCreateRequest creates the PutLocalNegativeOffsetMaxDateTime request.
-func (client *DatetimeClient) putLocalNegativeOffsetMaxDateTimeCreateRequest(ctx context.Context, datetimeBody time.Time, options *DatetimePutLocalNegativeOffsetMaxDateTimeOptions) (*azcore.Request, error) {
+func (client *DatetimeClient) putLocalNegativeOffsetMaxDateTimeCreateRequest(ctx context.Context, datetimeBody time.Time, options *DatetimePutLocalNegativeOffsetMaxDateTimeOptions) (*policy.Request, error) {
 	urlPath := "/datetime/max/localnegativeoffset"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(datetimeBody)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, datetimeBody)
 }
 
 // putLocalNegativeOffsetMaxDateTimeHandleError handles the PutLocalNegativeOffsetMaxDateTime error response.
-func (client *DatetimeClient) putLocalNegativeOffsetMaxDateTimeHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *DatetimeClient) putLocalNegativeOffsetMaxDateTimeHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutLocalNegativeOffsetMinDateTime - Put min datetime value 0001-01-01T00:00:00-14:00
@@ -874,35 +860,34 @@ func (client *DatetimeClient) PutLocalNegativeOffsetMinDateTime(ctx context.Cont
 	if err != nil {
 		return DatetimePutLocalNegativeOffsetMinDateTimeResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return DatetimePutLocalNegativeOffsetMinDateTimeResponse{}, client.putLocalNegativeOffsetMinDateTimeHandleError(resp)
 	}
-	return DatetimePutLocalNegativeOffsetMinDateTimeResponse{RawResponse: resp.Response}, nil
+	return DatetimePutLocalNegativeOffsetMinDateTimeResponse{RawResponse: resp}, nil
 }
 
 // putLocalNegativeOffsetMinDateTimeCreateRequest creates the PutLocalNegativeOffsetMinDateTime request.
-func (client *DatetimeClient) putLocalNegativeOffsetMinDateTimeCreateRequest(ctx context.Context, datetimeBody time.Time, options *DatetimePutLocalNegativeOffsetMinDateTimeOptions) (*azcore.Request, error) {
+func (client *DatetimeClient) putLocalNegativeOffsetMinDateTimeCreateRequest(ctx context.Context, datetimeBody time.Time, options *DatetimePutLocalNegativeOffsetMinDateTimeOptions) (*policy.Request, error) {
 	urlPath := "/datetime/min/localnegativeoffset"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(datetimeBody)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, datetimeBody)
 }
 
 // putLocalNegativeOffsetMinDateTimeHandleError handles the PutLocalNegativeOffsetMinDateTime error response.
-func (client *DatetimeClient) putLocalNegativeOffsetMinDateTimeHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *DatetimeClient) putLocalNegativeOffsetMinDateTimeHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutLocalPositiveOffsetMaxDateTime - Put max datetime value with positive numoffset 9999-12-31t23:59:59.999+14:00
@@ -916,35 +901,34 @@ func (client *DatetimeClient) PutLocalPositiveOffsetMaxDateTime(ctx context.Cont
 	if err != nil {
 		return DatetimePutLocalPositiveOffsetMaxDateTimeResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return DatetimePutLocalPositiveOffsetMaxDateTimeResponse{}, client.putLocalPositiveOffsetMaxDateTimeHandleError(resp)
 	}
-	return DatetimePutLocalPositiveOffsetMaxDateTimeResponse{RawResponse: resp.Response}, nil
+	return DatetimePutLocalPositiveOffsetMaxDateTimeResponse{RawResponse: resp}, nil
 }
 
 // putLocalPositiveOffsetMaxDateTimeCreateRequest creates the PutLocalPositiveOffsetMaxDateTime request.
-func (client *DatetimeClient) putLocalPositiveOffsetMaxDateTimeCreateRequest(ctx context.Context, datetimeBody time.Time, options *DatetimePutLocalPositiveOffsetMaxDateTimeOptions) (*azcore.Request, error) {
+func (client *DatetimeClient) putLocalPositiveOffsetMaxDateTimeCreateRequest(ctx context.Context, datetimeBody time.Time, options *DatetimePutLocalPositiveOffsetMaxDateTimeOptions) (*policy.Request, error) {
 	urlPath := "/datetime/max/localpositiveoffset"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(datetimeBody)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, datetimeBody)
 }
 
 // putLocalPositiveOffsetMaxDateTimeHandleError handles the PutLocalPositiveOffsetMaxDateTime error response.
-func (client *DatetimeClient) putLocalPositiveOffsetMaxDateTimeHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *DatetimeClient) putLocalPositiveOffsetMaxDateTimeHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutLocalPositiveOffsetMinDateTime - Put min datetime value 0001-01-01T00:00:00+14:00
@@ -958,35 +942,34 @@ func (client *DatetimeClient) PutLocalPositiveOffsetMinDateTime(ctx context.Cont
 	if err != nil {
 		return DatetimePutLocalPositiveOffsetMinDateTimeResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return DatetimePutLocalPositiveOffsetMinDateTimeResponse{}, client.putLocalPositiveOffsetMinDateTimeHandleError(resp)
 	}
-	return DatetimePutLocalPositiveOffsetMinDateTimeResponse{RawResponse: resp.Response}, nil
+	return DatetimePutLocalPositiveOffsetMinDateTimeResponse{RawResponse: resp}, nil
 }
 
 // putLocalPositiveOffsetMinDateTimeCreateRequest creates the PutLocalPositiveOffsetMinDateTime request.
-func (client *DatetimeClient) putLocalPositiveOffsetMinDateTimeCreateRequest(ctx context.Context, datetimeBody time.Time, options *DatetimePutLocalPositiveOffsetMinDateTimeOptions) (*azcore.Request, error) {
+func (client *DatetimeClient) putLocalPositiveOffsetMinDateTimeCreateRequest(ctx context.Context, datetimeBody time.Time, options *DatetimePutLocalPositiveOffsetMinDateTimeOptions) (*policy.Request, error) {
 	urlPath := "/datetime/min/localpositiveoffset"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(datetimeBody)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, datetimeBody)
 }
 
 // putLocalPositiveOffsetMinDateTimeHandleError handles the PutLocalPositiveOffsetMinDateTime error response.
-func (client *DatetimeClient) putLocalPositiveOffsetMinDateTimeHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *DatetimeClient) putLocalPositiveOffsetMinDateTimeHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutUTCMaxDateTime - Put max datetime value 9999-12-31T23:59:59.999Z
@@ -1000,35 +983,34 @@ func (client *DatetimeClient) PutUTCMaxDateTime(ctx context.Context, datetimeBod
 	if err != nil {
 		return DatetimePutUTCMaxDateTimeResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return DatetimePutUTCMaxDateTimeResponse{}, client.putUTCMaxDateTimeHandleError(resp)
 	}
-	return DatetimePutUTCMaxDateTimeResponse{RawResponse: resp.Response}, nil
+	return DatetimePutUTCMaxDateTimeResponse{RawResponse: resp}, nil
 }
 
 // putUTCMaxDateTimeCreateRequest creates the PutUTCMaxDateTime request.
-func (client *DatetimeClient) putUTCMaxDateTimeCreateRequest(ctx context.Context, datetimeBody time.Time, options *DatetimePutUTCMaxDateTimeOptions) (*azcore.Request, error) {
+func (client *DatetimeClient) putUTCMaxDateTimeCreateRequest(ctx context.Context, datetimeBody time.Time, options *DatetimePutUTCMaxDateTimeOptions) (*policy.Request, error) {
 	urlPath := "/datetime/max/utc"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(datetimeBody)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, datetimeBody)
 }
 
 // putUTCMaxDateTimeHandleError handles the PutUTCMaxDateTime error response.
-func (client *DatetimeClient) putUTCMaxDateTimeHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *DatetimeClient) putUTCMaxDateTimeHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutUTCMaxDateTime7Digits - This is against the recommendation that asks for 3 digits, but allow to test what happens in that scenario
@@ -1042,35 +1024,34 @@ func (client *DatetimeClient) PutUTCMaxDateTime7Digits(ctx context.Context, date
 	if err != nil {
 		return DatetimePutUTCMaxDateTime7DigitsResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return DatetimePutUTCMaxDateTime7DigitsResponse{}, client.putUTCMaxDateTime7DigitsHandleError(resp)
 	}
-	return DatetimePutUTCMaxDateTime7DigitsResponse{RawResponse: resp.Response}, nil
+	return DatetimePutUTCMaxDateTime7DigitsResponse{RawResponse: resp}, nil
 }
 
 // putUTCMaxDateTime7DigitsCreateRequest creates the PutUTCMaxDateTime7Digits request.
-func (client *DatetimeClient) putUTCMaxDateTime7DigitsCreateRequest(ctx context.Context, datetimeBody time.Time, options *DatetimePutUTCMaxDateTime7DigitsOptions) (*azcore.Request, error) {
+func (client *DatetimeClient) putUTCMaxDateTime7DigitsCreateRequest(ctx context.Context, datetimeBody time.Time, options *DatetimePutUTCMaxDateTime7DigitsOptions) (*policy.Request, error) {
 	urlPath := "/datetime/max/utc7ms"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(datetimeBody)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, datetimeBody)
 }
 
 // putUTCMaxDateTime7DigitsHandleError handles the PutUTCMaxDateTime7Digits error response.
-func (client *DatetimeClient) putUTCMaxDateTime7DigitsHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *DatetimeClient) putUTCMaxDateTime7DigitsHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutUTCMinDateTime - Put min datetime value 0001-01-01T00:00:00Z
@@ -1084,33 +1065,32 @@ func (client *DatetimeClient) PutUTCMinDateTime(ctx context.Context, datetimeBod
 	if err != nil {
 		return DatetimePutUTCMinDateTimeResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return DatetimePutUTCMinDateTimeResponse{}, client.putUTCMinDateTimeHandleError(resp)
 	}
-	return DatetimePutUTCMinDateTimeResponse{RawResponse: resp.Response}, nil
+	return DatetimePutUTCMinDateTimeResponse{RawResponse: resp}, nil
 }
 
 // putUTCMinDateTimeCreateRequest creates the PutUTCMinDateTime request.
-func (client *DatetimeClient) putUTCMinDateTimeCreateRequest(ctx context.Context, datetimeBody time.Time, options *DatetimePutUTCMinDateTimeOptions) (*azcore.Request, error) {
+func (client *DatetimeClient) putUTCMinDateTimeCreateRequest(ctx context.Context, datetimeBody time.Time, options *DatetimePutUTCMinDateTimeOptions) (*policy.Request, error) {
 	urlPath := "/datetime/min/utc"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(datetimeBody)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, datetimeBody)
 }
 
 // putUTCMinDateTimeHandleError handles the PutUTCMinDateTime error response.
-func (client *DatetimeClient) putUTCMinDateTimeHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *DatetimeClient) putUTCMinDateTimeHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }

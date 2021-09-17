@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { serialize } from '@azure-tools/codegen';
-import { Host, Session, startSession } from '@autorest/extension-base';
+import { Host, startSession, Session } from '@autorest/extension-base';
 import { codeModelSchema, CodeModel } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
 import { generateOperations } from './operations';
@@ -20,6 +20,16 @@ import { generateGoModFile } from './gomod';
 import { generateXMLAdditionalPropsHelpers } from './xmlAdditionalProps';
 import { writeCodeModelOnCrash } from '../common/crash';
 
+async function getModuleVersion(session: Session<CodeModel>): Promise<string> {
+  const version = await session.getValue('module-version', '');
+  if (version === '') {
+    throw new Error('--module-version is a required parameter');
+  } else if (!version.match(/^\d+\.\d+\.\d+$/) && !version.match(/^\d+\.\d+\.\d+-beta\.\d+$/)) {
+    throw new Error(`module version ${version} must in the format major.minor.patch[-beta.N]`);
+  }
+  return version;
+}
+
 // The generator emits Go source code files to disk.
 export async function protocolGen(host: Host) {
   const debug = await host.GetValue('debug') || false;
@@ -27,6 +37,8 @@ export async function protocolGen(host: Host) {
   try {
     // get the code model from the core
     session = await startSession<CodeModel>(host, codeModelSchema);
+    const version = await getModuleVersion(session);
+
     const operations = await generateOperations(session);
     let filePrefix = await session.getValue('file-prefix', '');
     // if a file prefix was specified, ensure it's properly snaked
@@ -42,7 +54,7 @@ export async function protocolGen(host: Host) {
       host.WriteFile(`${filePrefix}${op.name.toLowerCase()}_client.go`, op.content, undefined, 'source-file-go');
     }
 
-    const constants = await generateConstants(session);
+    const constants = await generateConstants(session, version);
     host.WriteFile(`${filePrefix}constants.go`, constants, undefined, 'source-file-go');
 
     const models = await generateModels(session);

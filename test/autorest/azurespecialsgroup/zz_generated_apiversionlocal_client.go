@@ -1,4 +1,5 @@
-// +build go1.13
+//go:build go1.16
+// +build go1.16
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -10,7 +11,8 @@ package azurespecialsgroup
 import (
 	"context"
 	"fmt"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
@@ -36,40 +38,39 @@ func (client *APIVersionLocalClient) GetMethodLocalNull(ctx context.Context, opt
 	if err != nil {
 		return APIVersionLocalGetMethodLocalNullResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return APIVersionLocalGetMethodLocalNullResponse{}, client.getMethodLocalNullHandleError(resp)
 	}
-	return APIVersionLocalGetMethodLocalNullResponse{RawResponse: resp.Response}, nil
+	return APIVersionLocalGetMethodLocalNullResponse{RawResponse: resp}, nil
 }
 
 // getMethodLocalNullCreateRequest creates the GetMethodLocalNull request.
-func (client *APIVersionLocalClient) getMethodLocalNullCreateRequest(ctx context.Context, options *APIVersionLocalGetMethodLocalNullOptions) (*azcore.Request, error) {
+func (client *APIVersionLocalClient) getMethodLocalNullCreateRequest(ctx context.Context, options *APIVersionLocalGetMethodLocalNullOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/apiVersion/method/string/none/query/local/null"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if options != nil && options.APIVersion != nil {
 		reqQP.Set("api-version", *options.APIVersion)
 	}
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getMethodLocalNullHandleError handles the GetMethodLocalNull error response.
-func (client *APIVersionLocalClient) getMethodLocalNullHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *APIVersionLocalClient) getMethodLocalNullHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetMethodLocalValid - Get method with api-version modeled in the method. pass in api-version = '2.0' to succeed
@@ -83,38 +84,37 @@ func (client *APIVersionLocalClient) GetMethodLocalValid(ctx context.Context, op
 	if err != nil {
 		return APIVersionLocalGetMethodLocalValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return APIVersionLocalGetMethodLocalValidResponse{}, client.getMethodLocalValidHandleError(resp)
 	}
-	return APIVersionLocalGetMethodLocalValidResponse{RawResponse: resp.Response}, nil
+	return APIVersionLocalGetMethodLocalValidResponse{RawResponse: resp}, nil
 }
 
 // getMethodLocalValidCreateRequest creates the GetMethodLocalValid request.
-func (client *APIVersionLocalClient) getMethodLocalValidCreateRequest(ctx context.Context, options *APIVersionLocalGetMethodLocalValidOptions) (*azcore.Request, error) {
+func (client *APIVersionLocalClient) getMethodLocalValidCreateRequest(ctx context.Context, options *APIVersionLocalGetMethodLocalValidOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/apiVersion/method/string/none/query/local/2.0"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2.0")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getMethodLocalValidHandleError handles the GetMethodLocalValid error response.
-func (client *APIVersionLocalClient) getMethodLocalValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *APIVersionLocalClient) getMethodLocalValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetPathLocalValid - Get method with api-version modeled in the method. pass in api-version = '2.0' to succeed
@@ -128,38 +128,37 @@ func (client *APIVersionLocalClient) GetPathLocalValid(ctx context.Context, opti
 	if err != nil {
 		return APIVersionLocalGetPathLocalValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return APIVersionLocalGetPathLocalValidResponse{}, client.getPathLocalValidHandleError(resp)
 	}
-	return APIVersionLocalGetPathLocalValidResponse{RawResponse: resp.Response}, nil
+	return APIVersionLocalGetPathLocalValidResponse{RawResponse: resp}, nil
 }
 
 // getPathLocalValidCreateRequest creates the GetPathLocalValid request.
-func (client *APIVersionLocalClient) getPathLocalValidCreateRequest(ctx context.Context, options *APIVersionLocalGetPathLocalValidOptions) (*azcore.Request, error) {
+func (client *APIVersionLocalClient) getPathLocalValidCreateRequest(ctx context.Context, options *APIVersionLocalGetPathLocalValidOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/apiVersion/path/string/none/query/local/2.0"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2.0")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getPathLocalValidHandleError handles the GetPathLocalValid error response.
-func (client *APIVersionLocalClient) getPathLocalValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *APIVersionLocalClient) getPathLocalValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetSwaggerLocalValid - Get method with api-version modeled in the method. pass in api-version = '2.0' to succeed
@@ -173,36 +172,35 @@ func (client *APIVersionLocalClient) GetSwaggerLocalValid(ctx context.Context, o
 	if err != nil {
 		return APIVersionLocalGetSwaggerLocalValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return APIVersionLocalGetSwaggerLocalValidResponse{}, client.getSwaggerLocalValidHandleError(resp)
 	}
-	return APIVersionLocalGetSwaggerLocalValidResponse{RawResponse: resp.Response}, nil
+	return APIVersionLocalGetSwaggerLocalValidResponse{RawResponse: resp}, nil
 }
 
 // getSwaggerLocalValidCreateRequest creates the GetSwaggerLocalValid request.
-func (client *APIVersionLocalClient) getSwaggerLocalValidCreateRequest(ctx context.Context, options *APIVersionLocalGetSwaggerLocalValidOptions) (*azcore.Request, error) {
+func (client *APIVersionLocalClient) getSwaggerLocalValidCreateRequest(ctx context.Context, options *APIVersionLocalGetSwaggerLocalValidOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/apiVersion/swagger/string/none/query/local/2.0"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2.0")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getSwaggerLocalValidHandleError handles the GetSwaggerLocalValid error response.
-func (client *APIVersionLocalClient) getSwaggerLocalValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *APIVersionLocalClient) getSwaggerLocalValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }

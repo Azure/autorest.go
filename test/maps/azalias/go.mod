@@ -1,5 +1,5 @@
 module azalias
 
-go 1.13
+go 1.16
 
-require github.com/Azure/azure-sdk-for-go/sdk/azcore v0.16.2
+require github.com/Azure/azure-sdk-for-go/sdk/azcore v0.19.0

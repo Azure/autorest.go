@@ -1,4 +1,5 @@
-// +build go1.13
+//go:build go1.16
+// +build go1.16
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -11,31 +12,36 @@ import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"net/http"
-	"time"
 )
 
 // HSMSecurityDomainDownloadPoller provides polling facilities until the operation reaches a terminal state.
-type HSMSecurityDomainDownloadPoller interface {
-	azcore.Poller
-	// FinalResponse performs a final GET to the service and returns the final response
-	// for the polling operation. If there is an error performing the final GET then an error is returned.
-	// If the final GET succeeded then the final HSMSecurityDomainDownloadResponse will be returned.
-	FinalResponse(ctx context.Context) (HSMSecurityDomainDownloadResponse, error)
+type HSMSecurityDomainDownloadPoller struct {
+	pt *azcore.Poller
 }
 
-type hsmSecurityDomainDownloadPoller struct {
-	pt *azcore.LROPoller
-}
-
-func (p *hsmSecurityDomainDownloadPoller) Done() bool {
+// Done returns true if the LRO has reached a terminal state.
+func (p *HSMSecurityDomainDownloadPoller) Done() bool {
 	return p.pt.Done()
 }
 
-func (p *hsmSecurityDomainDownloadPoller) Poll(ctx context.Context) (*http.Response, error) {
+// Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
+// response is returned.
+// If the LRO has completed with failure or was cancelled, the poller's state is
+// updated and the error is returned.
+// If the LRO has not reached a terminal state, the poller's state is updated and
+// the latest HTTP response is returned.
+// If Poll fails, the poller's state is unmodified and the error is returned.
+// Calling Poll on an LRO that has reached a terminal state will return the final
+// HTTP response or error.
+func (p *HSMSecurityDomainDownloadPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx)
 }
 
-func (p *hsmSecurityDomainDownloadPoller) FinalResponse(ctx context.Context) (HSMSecurityDomainDownloadResponse, error) {
+// FinalResponse performs a final GET to the service and returns the final response
+// for the polling operation. If there is an error performing the final GET then an error is returned.
+// If the final GET succeeded then the final HSMSecurityDomainDownloadResponse will be returned.
+func (p *HSMSecurityDomainDownloadPoller) FinalResponse(ctx context.Context) (HSMSecurityDomainDownloadResponse, error) {
 	respType := HSMSecurityDomainDownloadResponse{}
 	resp, err := p.pt.FinalResponse(ctx, &respType.SecurityDomainObject)
 	if err != nil {
@@ -45,42 +51,40 @@ func (p *hsmSecurityDomainDownloadPoller) FinalResponse(ctx context.Context) (HS
 	return respType, nil
 }
 
-func (p *hsmSecurityDomainDownloadPoller) ResumeToken() (string, error) {
+// ResumeToken returns a value representing the poller that can be used to resume
+// the LRO at a later time. ResumeTokens are unique per service operation.
+func (p *HSMSecurityDomainDownloadPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-func (p *hsmSecurityDomainDownloadPoller) pollUntilDone(ctx context.Context, freq time.Duration) (HSMSecurityDomainDownloadResponse, error) {
-	respType := HSMSecurityDomainDownloadResponse{}
-	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.SecurityDomainObject)
-	if err != nil {
-		return HSMSecurityDomainDownloadResponse{}, err
-	}
-	respType.RawResponse = resp
-	return respType, nil
-}
-
 // HSMSecurityDomainUploadPoller provides polling facilities until the operation reaches a terminal state.
-type HSMSecurityDomainUploadPoller interface {
-	azcore.Poller
-	// FinalResponse performs a final GET to the service and returns the final response
-	// for the polling operation. If there is an error performing the final GET then an error is returned.
-	// If the final GET succeeded then the final HSMSecurityDomainUploadResponse will be returned.
-	FinalResponse(ctx context.Context) (HSMSecurityDomainUploadResponse, error)
+type HSMSecurityDomainUploadPoller struct {
+	pt *azcore.Poller
 }
 
-type hsmSecurityDomainUploadPoller struct {
-	pt *azcore.LROPoller
-}
-
-func (p *hsmSecurityDomainUploadPoller) Done() bool {
+// Done returns true if the LRO has reached a terminal state.
+func (p *HSMSecurityDomainUploadPoller) Done() bool {
 	return p.pt.Done()
 }
 
-func (p *hsmSecurityDomainUploadPoller) Poll(ctx context.Context) (*http.Response, error) {
+// Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
+// response is returned.
+// If the LRO has completed with failure or was cancelled, the poller's state is
+// updated and the error is returned.
+// If the LRO has not reached a terminal state, the poller's state is updated and
+// the latest HTTP response is returned.
+// If Poll fails, the poller's state is unmodified and the error is returned.
+// Calling Poll on an LRO that has reached a terminal state will return the final
+// HTTP response or error.
+func (p *HSMSecurityDomainUploadPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx)
 }
 
-func (p *hsmSecurityDomainUploadPoller) FinalResponse(ctx context.Context) (HSMSecurityDomainUploadResponse, error) {
+// FinalResponse performs a final GET to the service and returns the final response
+// for the polling operation. If there is an error performing the final GET then an error is returned.
+// If the final GET succeeded then the final HSMSecurityDomainUploadResponse will be returned.
+func (p *HSMSecurityDomainUploadPoller) FinalResponse(ctx context.Context) (HSMSecurityDomainUploadResponse, error) {
 	respType := HSMSecurityDomainUploadResponse{}
 	resp, err := p.pt.FinalResponse(ctx, &respType.SecurityDomainOperationStatus)
 	if err != nil {
@@ -90,42 +94,40 @@ func (p *hsmSecurityDomainUploadPoller) FinalResponse(ctx context.Context) (HSMS
 	return respType, nil
 }
 
-func (p *hsmSecurityDomainUploadPoller) ResumeToken() (string, error) {
+// ResumeToken returns a value representing the poller that can be used to resume
+// the LRO at a later time. ResumeTokens are unique per service operation.
+func (p *HSMSecurityDomainUploadPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-func (p *hsmSecurityDomainUploadPoller) pollUntilDone(ctx context.Context, freq time.Duration) (HSMSecurityDomainUploadResponse, error) {
-	respType := HSMSecurityDomainUploadResponse{}
-	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.SecurityDomainOperationStatus)
-	if err != nil {
-		return HSMSecurityDomainUploadResponse{}, err
-	}
-	respType.RawResponse = resp
-	return respType, nil
-}
-
 // KeyVaultClientFullBackupPoller provides polling facilities until the operation reaches a terminal state.
-type KeyVaultClientFullBackupPoller interface {
-	azcore.Poller
-	// FinalResponse performs a final GET to the service and returns the final response
-	// for the polling operation. If there is an error performing the final GET then an error is returned.
-	// If the final GET succeeded then the final KeyVaultClientFullBackupResponse will be returned.
-	FinalResponse(ctx context.Context) (KeyVaultClientFullBackupResponse, error)
+type KeyVaultClientFullBackupPoller struct {
+	pt *azcore.Poller
 }
 
-type keyVaultClientFullBackupPoller struct {
-	pt *azcore.LROPoller
-}
-
-func (p *keyVaultClientFullBackupPoller) Done() bool {
+// Done returns true if the LRO has reached a terminal state.
+func (p *KeyVaultClientFullBackupPoller) Done() bool {
 	return p.pt.Done()
 }
 
-func (p *keyVaultClientFullBackupPoller) Poll(ctx context.Context) (*http.Response, error) {
+// Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
+// response is returned.
+// If the LRO has completed with failure or was cancelled, the poller's state is
+// updated and the error is returned.
+// If the LRO has not reached a terminal state, the poller's state is updated and
+// the latest HTTP response is returned.
+// If Poll fails, the poller's state is unmodified and the error is returned.
+// Calling Poll on an LRO that has reached a terminal state will return the final
+// HTTP response or error.
+func (p *KeyVaultClientFullBackupPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx)
 }
 
-func (p *keyVaultClientFullBackupPoller) FinalResponse(ctx context.Context) (KeyVaultClientFullBackupResponse, error) {
+// FinalResponse performs a final GET to the service and returns the final response
+// for the polling operation. If there is an error performing the final GET then an error is returned.
+// If the final GET succeeded then the final KeyVaultClientFullBackupResponse will be returned.
+func (p *KeyVaultClientFullBackupPoller) FinalResponse(ctx context.Context) (KeyVaultClientFullBackupResponse, error) {
 	respType := KeyVaultClientFullBackupResponse{}
 	resp, err := p.pt.FinalResponse(ctx, &respType.FullBackupOperation)
 	if err != nil {
@@ -135,42 +137,40 @@ func (p *keyVaultClientFullBackupPoller) FinalResponse(ctx context.Context) (Key
 	return respType, nil
 }
 
-func (p *keyVaultClientFullBackupPoller) ResumeToken() (string, error) {
+// ResumeToken returns a value representing the poller that can be used to resume
+// the LRO at a later time. ResumeTokens are unique per service operation.
+func (p *KeyVaultClientFullBackupPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-func (p *keyVaultClientFullBackupPoller) pollUntilDone(ctx context.Context, freq time.Duration) (KeyVaultClientFullBackupResponse, error) {
-	respType := KeyVaultClientFullBackupResponse{}
-	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.FullBackupOperation)
-	if err != nil {
-		return KeyVaultClientFullBackupResponse{}, err
-	}
-	respType.RawResponse = resp
-	return respType, nil
-}
-
 // KeyVaultClientFullRestoreOperationPoller provides polling facilities until the operation reaches a terminal state.
-type KeyVaultClientFullRestoreOperationPoller interface {
-	azcore.Poller
-	// FinalResponse performs a final GET to the service and returns the final response
-	// for the polling operation. If there is an error performing the final GET then an error is returned.
-	// If the final GET succeeded then the final KeyVaultClientFullRestoreOperationResponse will be returned.
-	FinalResponse(ctx context.Context) (KeyVaultClientFullRestoreOperationResponse, error)
+type KeyVaultClientFullRestoreOperationPoller struct {
+	pt *azcore.Poller
 }
 
-type keyVaultClientFullRestoreOperationPoller struct {
-	pt *azcore.LROPoller
-}
-
-func (p *keyVaultClientFullRestoreOperationPoller) Done() bool {
+// Done returns true if the LRO has reached a terminal state.
+func (p *KeyVaultClientFullRestoreOperationPoller) Done() bool {
 	return p.pt.Done()
 }
 
-func (p *keyVaultClientFullRestoreOperationPoller) Poll(ctx context.Context) (*http.Response, error) {
+// Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
+// response is returned.
+// If the LRO has completed with failure or was cancelled, the poller's state is
+// updated and the error is returned.
+// If the LRO has not reached a terminal state, the poller's state is updated and
+// the latest HTTP response is returned.
+// If Poll fails, the poller's state is unmodified and the error is returned.
+// Calling Poll on an LRO that has reached a terminal state will return the final
+// HTTP response or error.
+func (p *KeyVaultClientFullRestoreOperationPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx)
 }
 
-func (p *keyVaultClientFullRestoreOperationPoller) FinalResponse(ctx context.Context) (KeyVaultClientFullRestoreOperationResponse, error) {
+// FinalResponse performs a final GET to the service and returns the final response
+// for the polling operation. If there is an error performing the final GET then an error is returned.
+// If the final GET succeeded then the final KeyVaultClientFullRestoreOperationResponse will be returned.
+func (p *KeyVaultClientFullRestoreOperationPoller) FinalResponse(ctx context.Context) (KeyVaultClientFullRestoreOperationResponse, error) {
 	respType := KeyVaultClientFullRestoreOperationResponse{}
 	resp, err := p.pt.FinalResponse(ctx, &respType.RestoreOperation)
 	if err != nil {
@@ -180,42 +180,40 @@ func (p *keyVaultClientFullRestoreOperationPoller) FinalResponse(ctx context.Con
 	return respType, nil
 }
 
-func (p *keyVaultClientFullRestoreOperationPoller) ResumeToken() (string, error) {
+// ResumeToken returns a value representing the poller that can be used to resume
+// the LRO at a later time. ResumeTokens are unique per service operation.
+func (p *KeyVaultClientFullRestoreOperationPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-func (p *keyVaultClientFullRestoreOperationPoller) pollUntilDone(ctx context.Context, freq time.Duration) (KeyVaultClientFullRestoreOperationResponse, error) {
-	respType := KeyVaultClientFullRestoreOperationResponse{}
-	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.RestoreOperation)
-	if err != nil {
-		return KeyVaultClientFullRestoreOperationResponse{}, err
-	}
-	respType.RawResponse = resp
-	return respType, nil
-}
-
 // KeyVaultClientSelectiveKeyRestoreOperationPoller provides polling facilities until the operation reaches a terminal state.
-type KeyVaultClientSelectiveKeyRestoreOperationPoller interface {
-	azcore.Poller
-	// FinalResponse performs a final GET to the service and returns the final response
-	// for the polling operation. If there is an error performing the final GET then an error is returned.
-	// If the final GET succeeded then the final KeyVaultClientSelectiveKeyRestoreOperationResponse will be returned.
-	FinalResponse(ctx context.Context) (KeyVaultClientSelectiveKeyRestoreOperationResponse, error)
+type KeyVaultClientSelectiveKeyRestoreOperationPoller struct {
+	pt *azcore.Poller
 }
 
-type keyVaultClientSelectiveKeyRestoreOperationPoller struct {
-	pt *azcore.LROPoller
-}
-
-func (p *keyVaultClientSelectiveKeyRestoreOperationPoller) Done() bool {
+// Done returns true if the LRO has reached a terminal state.
+func (p *KeyVaultClientSelectiveKeyRestoreOperationPoller) Done() bool {
 	return p.pt.Done()
 }
 
-func (p *keyVaultClientSelectiveKeyRestoreOperationPoller) Poll(ctx context.Context) (*http.Response, error) {
+// Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
+// response is returned.
+// If the LRO has completed with failure or was cancelled, the poller's state is
+// updated and the error is returned.
+// If the LRO has not reached a terminal state, the poller's state is updated and
+// the latest HTTP response is returned.
+// If Poll fails, the poller's state is unmodified and the error is returned.
+// Calling Poll on an LRO that has reached a terminal state will return the final
+// HTTP response or error.
+func (p *KeyVaultClientSelectiveKeyRestoreOperationPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx)
 }
 
-func (p *keyVaultClientSelectiveKeyRestoreOperationPoller) FinalResponse(ctx context.Context) (KeyVaultClientSelectiveKeyRestoreOperationResponse, error) {
+// FinalResponse performs a final GET to the service and returns the final response
+// for the polling operation. If there is an error performing the final GET then an error is returned.
+// If the final GET succeeded then the final KeyVaultClientSelectiveKeyRestoreOperationResponse will be returned.
+func (p *KeyVaultClientSelectiveKeyRestoreOperationPoller) FinalResponse(ctx context.Context) (KeyVaultClientSelectiveKeyRestoreOperationResponse, error) {
 	respType := KeyVaultClientSelectiveKeyRestoreOperationResponse{}
 	resp, err := p.pt.FinalResponse(ctx, &respType.SelectiveKeyRestoreOperation)
 	if err != nil {
@@ -225,16 +223,8 @@ func (p *keyVaultClientSelectiveKeyRestoreOperationPoller) FinalResponse(ctx con
 	return respType, nil
 }
 
-func (p *keyVaultClientSelectiveKeyRestoreOperationPoller) ResumeToken() (string, error) {
+// ResumeToken returns a value representing the poller that can be used to resume
+// the LRO at a later time. ResumeTokens are unique per service operation.
+func (p *KeyVaultClientSelectiveKeyRestoreOperationPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
-}
-
-func (p *keyVaultClientSelectiveKeyRestoreOperationPoller) pollUntilDone(ctx context.Context, freq time.Duration) (KeyVaultClientSelectiveKeyRestoreOperationResponse, error) {
-	respType := KeyVaultClientSelectiveKeyRestoreOperationResponse{}
-	resp, err := p.pt.PollUntilDone(ctx, freq, &respType.SelectiveKeyRestoreOperation)
-	if err != nil {
-		return KeyVaultClientSelectiveKeyRestoreOperationResponse{}, err
-	}
-	respType.RawResponse = resp
-	return respType, nil
 }

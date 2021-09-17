@@ -1,4 +1,5 @@
-// +build go1.13
+//go:build go1.16
+// +build go1.16
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -7,7 +8,10 @@
 
 package aztables
 
-const telemetryInfo = "azsdk-go-aztables/<version>"
+const (
+	module  = "aztables"
+	version = "v0.1.0"
+)
 
 // GeoReplicationStatusType - The status of the secondary location.
 type GeoReplicationStatusType string
@@ -32,25 +36,25 @@ func (c GeoReplicationStatusType) ToPtr() *GeoReplicationStatusType {
 	return &c
 }
 
-type OdataMetadataFormat string
+type ODataMetadataFormat string
 
 const (
-	OdataMetadataFormatApplicationJSONOdataFullmetadata    OdataMetadataFormat = "application/json;odata=fullmetadata"
-	OdataMetadataFormatApplicationJSONOdataMinimalmetadata OdataMetadataFormat = "application/json;odata=minimalmetadata"
-	OdataMetadataFormatApplicationJSONOdataNometadata      OdataMetadataFormat = "application/json;odata=nometadata"
+	ODataMetadataFormatApplicationJSONODataFullmetadata    ODataMetadataFormat = "application/json;odata=fullmetadata"
+	ODataMetadataFormatApplicationJSONODataMinimalmetadata ODataMetadataFormat = "application/json;odata=minimalmetadata"
+	ODataMetadataFormatApplicationJSONODataNometadata      ODataMetadataFormat = "application/json;odata=nometadata"
 )
 
-// PossibleOdataMetadataFormatValues returns the possible values for the OdataMetadataFormat const type.
-func PossibleOdataMetadataFormatValues() []OdataMetadataFormat {
-	return []OdataMetadataFormat{
-		OdataMetadataFormatApplicationJSONOdataFullmetadata,
-		OdataMetadataFormatApplicationJSONOdataMinimalmetadata,
-		OdataMetadataFormatApplicationJSONOdataNometadata,
+// PossibleODataMetadataFormatValues returns the possible values for the ODataMetadataFormat const type.
+func PossibleODataMetadataFormatValues() []ODataMetadataFormat {
+	return []ODataMetadataFormat{
+		ODataMetadataFormatApplicationJSONODataFullmetadata,
+		ODataMetadataFormatApplicationJSONODataMinimalmetadata,
+		ODataMetadataFormatApplicationJSONODataNometadata,
 	}
 }
 
-// ToPtr returns a *OdataMetadataFormat pointing to the current value.
-func (c OdataMetadataFormat) ToPtr() *OdataMetadataFormat {
+// ToPtr returns a *ODataMetadataFormat pointing to the current value.
+func (c ODataMetadataFormat) ToPtr() *ODataMetadataFormat {
 	return &c
 }
 

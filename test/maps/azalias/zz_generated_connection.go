@@ -1,4 +1,5 @@
-// +build go1.13
+//go:build go1.16
+// +build go1.16
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -8,8 +9,9 @@
 package azalias
 
 import (
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"strings"
 )
 
@@ -17,35 +19,25 @@ import (
 // All zero-value fields will be initialized with their default values.
 type connectionOptions struct {
 	// HTTPClient sets the transport for making HTTP requests.
-	HTTPClient azcore.Transport
+	HTTPClient policy.Transporter
 	// Retry configures the built-in retry policy behavior.
-	Retry azcore.RetryOptions
+	Retry policy.RetryOptions
 	// Telemetry configures the built-in telemetry policy behavior.
-	Telemetry azcore.TelemetryOptions
+	Telemetry policy.TelemetryOptions
 	// Logging configures the built-in logging policy behavior.
-	Logging azcore.LogOptions
+	Logging policy.LogOptions
 	// PerCallPolicies contains custom policies to inject into the pipeline.
 	// Each policy is executed once per request.
-	PerCallPolicies []azcore.Policy
+	PerCallPolicies []policy.Policy
 	// PerRetryPolicies contains custom policies to inject into the pipeline.
 	// Each policy is executed once per request, and for each retry request.
-	PerRetryPolicies []azcore.Policy
-}
-
-func (c *connectionOptions) telemetryOptions() *azcore.TelemetryOptions {
-	to := c.Telemetry
-	if to.Value == "" {
-		to.Value = telemetryInfo
-	} else {
-		to.Value = fmt.Sprintf("%s %s", telemetryInfo, to.Value)
-	}
-	return &to
+	PerRetryPolicies []policy.Policy
 }
 
 // connection - APIs for managing aliases in Azure Maps.
 type connection struct {
 	u string
-	p azcore.Pipeline
+	p runtime.Pipeline
 }
 
 // newConnection creates an instance of the connection type with the specified endpoint.
@@ -54,21 +46,22 @@ func newConnection(geography *Geography, cred azcore.Credential, options *connec
 	if options == nil {
 		options = &connectionOptions{}
 	}
-	policies := []azcore.Policy{
-		azcore.NewTelemetryPolicy(options.telemetryOptions()),
+	policies := []policy.Policy{}
+	if !options.Telemetry.Disabled {
+		policies = append(policies, runtime.NewTelemetryPolicy(module, version, &options.Telemetry))
 	}
 	policies = append(policies, options.PerCallPolicies...)
-	policies = append(policies, azcore.NewRetryPolicy(&options.Retry))
+	policies = append(policies, runtime.NewRetryPolicy(&options.Retry))
 	policies = append(policies, options.PerRetryPolicies...)
-	policies = append(policies, cred.AuthenticationPolicy(azcore.AuthenticationPolicyOptions{Options: azcore.TokenRequestOptions{}}))
-	policies = append(policies, azcore.NewLogPolicy(&options.Logging))
+	policies = append(policies, cred.NewAuthenticationPolicy(runtime.AuthenticationOptions{TokenRequest: policy.TokenRequestOptions{}}))
+	policies = append(policies, runtime.NewLogPolicy(&options.Logging))
 	hostURL := "https://{geography}.atlas.microsoft.com"
 	if geography == nil {
 		defaultValue := GeographyUs
 		geography = &defaultValue
 	}
 	hostURL = strings.ReplaceAll(hostURL, "{geography}", string(*geography))
-	return &connection{u: hostURL, p: azcore.NewPipeline(options.HTTPClient, policies...)}
+	return &connection{u: hostURL, p: runtime.NewPipeline(options.HTTPClient, policies...)}
 }
 
 // Endpoint returns the connection's endpoint.
@@ -77,6 +70,6 @@ func (c *connection) Endpoint() string {
 }
 
 // Pipeline returns the connection's pipeline.
-func (c *connection) Pipeline() azcore.Pipeline {
+func (c *connection) Pipeline() runtime.Pipeline {
 	return c.p
 }

@@ -1,4 +1,5 @@
-// +build go1.13
+//go:build go1.16
+// +build go1.16
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -10,7 +11,8 @@ package complexgroup
 import (
 	"context"
 	"fmt"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
@@ -36,44 +38,43 @@ func (client *ReadonlypropertyClient) GetValid(ctx context.Context, options *Rea
 	if err != nil {
 		return ReadonlypropertyGetValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ReadonlypropertyGetValidResponse{}, client.getValidHandleError(resp)
 	}
 	return client.getValidHandleResponse(resp)
 }
 
 // getValidCreateRequest creates the GetValid request.
-func (client *ReadonlypropertyClient) getValidCreateRequest(ctx context.Context, options *ReadonlypropertyGetValidOptions) (*azcore.Request, error) {
+func (client *ReadonlypropertyClient) getValidCreateRequest(ctx context.Context, options *ReadonlypropertyGetValidOptions) (*policy.Request, error) {
 	urlPath := "/complex/readonlyproperty/valid"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getValidHandleResponse handles the GetValid response.
-func (client *ReadonlypropertyClient) getValidHandleResponse(resp *azcore.Response) (ReadonlypropertyGetValidResponse, error) {
-	result := ReadonlypropertyGetValidResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.ReadonlyObj); err != nil {
+func (client *ReadonlypropertyClient) getValidHandleResponse(resp *http.Response) (ReadonlypropertyGetValidResponse, error) {
+	result := ReadonlypropertyGetValidResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.ReadonlyObj); err != nil {
 		return ReadonlypropertyGetValidResponse{}, err
 	}
 	return result, nil
 }
 
 // getValidHandleError handles the GetValid error response.
-func (client *ReadonlypropertyClient) getValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ReadonlypropertyClient) getValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutValid - Put complex types that have readonly properties
@@ -87,33 +88,32 @@ func (client *ReadonlypropertyClient) PutValid(ctx context.Context, complexBody 
 	if err != nil {
 		return ReadonlypropertyPutValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ReadonlypropertyPutValidResponse{}, client.putValidHandleError(resp)
 	}
-	return ReadonlypropertyPutValidResponse{RawResponse: resp.Response}, nil
+	return ReadonlypropertyPutValidResponse{RawResponse: resp}, nil
 }
 
 // putValidCreateRequest creates the PutValid request.
-func (client *ReadonlypropertyClient) putValidCreateRequest(ctx context.Context, complexBody ReadonlyObj, options *ReadonlypropertyPutValidOptions) (*azcore.Request, error) {
+func (client *ReadonlypropertyClient) putValidCreateRequest(ctx context.Context, complexBody ReadonlyObj, options *ReadonlypropertyPutValidOptions) (*policy.Request, error) {
 	urlPath := "/complex/readonlyproperty/valid"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(complexBody)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, complexBody)
 }
 
 // putValidHandleError handles the PutValid error response.
-func (client *ReadonlypropertyClient) putValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ReadonlypropertyClient) putValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }

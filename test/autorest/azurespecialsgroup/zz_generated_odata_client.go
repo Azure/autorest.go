@@ -1,4 +1,5 @@
-// +build go1.13
+//go:build go1.16
+// +build go1.16
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -10,48 +11,48 @@ package azurespecialsgroup
 import (
 	"context"
 	"fmt"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 	"strconv"
 )
 
-// OdataClient contains the methods for the Odata group.
-// Don't use this type directly, use NewOdataClient() instead.
-type OdataClient struct {
+// ODataClient contains the methods for the OData group.
+// Don't use this type directly, use NewODataClient() instead.
+type ODataClient struct {
 	con *Connection
 }
 
-// NewOdataClient creates a new instance of OdataClient with the specified values.
-func NewOdataClient(con *Connection) *OdataClient {
-	return &OdataClient{con: con}
+// NewODataClient creates a new instance of ODataClient with the specified values.
+func NewODataClient(con *Connection) *ODataClient {
+	return &ODataClient{con: con}
 }
 
 // GetWithFilter - Specify filter parameter with value '$filter=id gt 5 and name eq 'foo'&$orderby=id&$top=10'
 // If the operation fails it returns the *Error error type.
-func (client *OdataClient) GetWithFilter(ctx context.Context, options *OdataGetWithFilterOptions) (OdataGetWithFilterResponse, error) {
+func (client *ODataClient) GetWithFilter(ctx context.Context, options *ODataGetWithFilterOptions) (ODataGetWithFilterResponse, error) {
 	req, err := client.getWithFilterCreateRequest(ctx, options)
 	if err != nil {
-		return OdataGetWithFilterResponse{}, err
+		return ODataGetWithFilterResponse{}, err
 	}
 	resp, err := client.con.Pipeline().Do(req)
 	if err != nil {
-		return OdataGetWithFilterResponse{}, err
+		return ODataGetWithFilterResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
-		return OdataGetWithFilterResponse{}, client.getWithFilterHandleError(resp)
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
+		return ODataGetWithFilterResponse{}, client.getWithFilterHandleError(resp)
 	}
-	return OdataGetWithFilterResponse{RawResponse: resp.Response}, nil
+	return ODataGetWithFilterResponse{RawResponse: resp}, nil
 }
 
 // getWithFilterCreateRequest creates the GetWithFilter request.
-func (client *OdataClient) getWithFilterCreateRequest(ctx context.Context, options *OdataGetWithFilterOptions) (*azcore.Request, error) {
+func (client *ODataClient) getWithFilterCreateRequest(ctx context.Context, options *ODataGetWithFilterOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/odata/filter"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if options != nil && options.Filter != nil {
 		reqQP.Set("$filter", *options.Filter)
 	}
@@ -61,20 +62,20 @@ func (client *OdataClient) getWithFilterCreateRequest(ctx context.Context, optio
 	if options != nil && options.Orderby != nil {
 		reqQP.Set("$orderby", *options.Orderby)
 	}
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getWithFilterHandleError handles the GetWithFilter error response.
-func (client *OdataClient) getWithFilterHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *ODataClient) getWithFilterHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }

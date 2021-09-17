@@ -1,4 +1,5 @@
-// +build go1.13
+//go:build go1.16
+// +build go1.16
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -10,7 +11,8 @@ package complexgroup
 import (
 	"context"
 	"errors"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
@@ -36,41 +38,40 @@ func (client *FlattencomplexClient) GetValid(ctx context.Context, options *Flatt
 	if err != nil {
 		return FlattencomplexGetValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return FlattencomplexGetValidResponse{}, client.getValidHandleError(resp)
 	}
 	return client.getValidHandleResponse(resp)
 }
 
 // getValidCreateRequest creates the GetValid request.
-func (client *FlattencomplexClient) getValidCreateRequest(ctx context.Context, options *FlattencomplexGetValidOptions) (*azcore.Request, error) {
+func (client *FlattencomplexClient) getValidCreateRequest(ctx context.Context, options *FlattencomplexGetValidOptions) (*policy.Request, error) {
 	urlPath := "/complex/flatten/valid"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getValidHandleResponse handles the GetValid response.
-func (client *FlattencomplexClient) getValidHandleResponse(resp *azcore.Response) (FlattencomplexGetValidResponse, error) {
-	result := FlattencomplexGetValidResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result); err != nil {
+func (client *FlattencomplexClient) getValidHandleResponse(resp *http.Response) (FlattencomplexGetValidResponse, error) {
+	result := FlattencomplexGetValidResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result); err != nil {
 		return FlattencomplexGetValidResponse{}, err
 	}
 	return result, nil
 }
 
 // getValidHandleError handles the GetValid error response.
-func (client *FlattencomplexClient) getValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *FlattencomplexClient) getValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	if len(body) == 0 {
-		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
+		return runtime.NewResponseError(errors.New(resp.Status), resp)
 	}
-	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
+	return runtime.NewResponseError(errors.New(string(body)), resp)
 }

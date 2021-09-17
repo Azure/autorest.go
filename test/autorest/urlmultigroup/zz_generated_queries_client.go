@@ -1,4 +1,5 @@
-// +build go1.13
+//go:build go1.16
+// +build go1.16
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -10,7 +11,8 @@ package urlmultigroup
 import (
 	"context"
 	"fmt"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
@@ -36,42 +38,41 @@ func (client *QueriesClient) ArrayStringMultiEmpty(ctx context.Context, options 
 	if err != nil {
 		return QueriesArrayStringMultiEmptyResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesArrayStringMultiEmptyResponse{}, client.arrayStringMultiEmptyHandleError(resp)
 	}
-	return QueriesArrayStringMultiEmptyResponse{RawResponse: resp.Response}, nil
+	return QueriesArrayStringMultiEmptyResponse{RawResponse: resp}, nil
 }
 
 // arrayStringMultiEmptyCreateRequest creates the ArrayStringMultiEmpty request.
-func (client *QueriesClient) arrayStringMultiEmptyCreateRequest(ctx context.Context, options *QueriesArrayStringMultiEmptyOptions) (*azcore.Request, error) {
+func (client *QueriesClient) arrayStringMultiEmptyCreateRequest(ctx context.Context, options *QueriesArrayStringMultiEmptyOptions) (*policy.Request, error) {
 	urlPath := "/queries/array/multi/string/empty"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if options != nil && options.ArrayQuery != nil {
 		for _, qv := range options.ArrayQuery {
 			reqQP.Add("arrayQuery", qv)
 		}
 	}
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // arrayStringMultiEmptyHandleError handles the ArrayStringMultiEmpty error response.
-func (client *QueriesClient) arrayStringMultiEmptyHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *QueriesClient) arrayStringMultiEmptyHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // ArrayStringMultiNull - Get a null array of string using the multi-array format
@@ -85,42 +86,41 @@ func (client *QueriesClient) ArrayStringMultiNull(ctx context.Context, options *
 	if err != nil {
 		return QueriesArrayStringMultiNullResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesArrayStringMultiNullResponse{}, client.arrayStringMultiNullHandleError(resp)
 	}
-	return QueriesArrayStringMultiNullResponse{RawResponse: resp.Response}, nil
+	return QueriesArrayStringMultiNullResponse{RawResponse: resp}, nil
 }
 
 // arrayStringMultiNullCreateRequest creates the ArrayStringMultiNull request.
-func (client *QueriesClient) arrayStringMultiNullCreateRequest(ctx context.Context, options *QueriesArrayStringMultiNullOptions) (*azcore.Request, error) {
+func (client *QueriesClient) arrayStringMultiNullCreateRequest(ctx context.Context, options *QueriesArrayStringMultiNullOptions) (*policy.Request, error) {
 	urlPath := "/queries/array/multi/string/null"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if options != nil && options.ArrayQuery != nil {
 		for _, qv := range options.ArrayQuery {
 			reqQP.Add("arrayQuery", qv)
 		}
 	}
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // arrayStringMultiNullHandleError handles the ArrayStringMultiNull error response.
-func (client *QueriesClient) arrayStringMultiNullHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *QueriesClient) arrayStringMultiNullHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // ArrayStringMultiValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the mult-array format
@@ -134,40 +134,39 @@ func (client *QueriesClient) ArrayStringMultiValid(ctx context.Context, options 
 	if err != nil {
 		return QueriesArrayStringMultiValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesArrayStringMultiValidResponse{}, client.arrayStringMultiValidHandleError(resp)
 	}
-	return QueriesArrayStringMultiValidResponse{RawResponse: resp.Response}, nil
+	return QueriesArrayStringMultiValidResponse{RawResponse: resp}, nil
 }
 
 // arrayStringMultiValidCreateRequest creates the ArrayStringMultiValid request.
-func (client *QueriesClient) arrayStringMultiValidCreateRequest(ctx context.Context, options *QueriesArrayStringMultiValidOptions) (*azcore.Request, error) {
+func (client *QueriesClient) arrayStringMultiValidCreateRequest(ctx context.Context, options *QueriesArrayStringMultiValidOptions) (*policy.Request, error) {
 	urlPath := "/queries/array/multi/string/valid"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if options != nil && options.ArrayQuery != nil {
 		for _, qv := range options.ArrayQuery {
 			reqQP.Add("arrayQuery", qv)
 		}
 	}
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // arrayStringMultiValidHandleError handles the ArrayStringMultiValid error response.
-func (client *QueriesClient) arrayStringMultiValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *QueriesClient) arrayStringMultiValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }

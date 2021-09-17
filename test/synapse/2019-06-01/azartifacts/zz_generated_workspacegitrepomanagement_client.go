@@ -1,4 +1,5 @@
-// +build go1.13
+//go:build go1.16
+// +build go1.16
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -10,7 +11,8 @@ package azartifacts
 import (
 	"context"
 	"errors"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
@@ -29,47 +31,46 @@ func (client *workspaceGitRepoManagementClient) GetGitHubAccessToken(ctx context
 	if err != nil {
 		return WorkspaceGitRepoManagementGetGitHubAccessTokenResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return WorkspaceGitRepoManagementGetGitHubAccessTokenResponse{}, client.getGitHubAccessTokenHandleError(resp)
 	}
 	return client.getGitHubAccessTokenHandleResponse(resp)
 }
 
 // getGitHubAccessTokenCreateRequest creates the GetGitHubAccessToken request.
-func (client *workspaceGitRepoManagementClient) getGitHubAccessTokenCreateRequest(ctx context.Context, gitHubAccessTokenRequest GitHubAccessTokenRequest, options *WorkspaceGitRepoManagementGetGitHubAccessTokenOptions) (*azcore.Request, error) {
+func (client *workspaceGitRepoManagementClient) getGitHubAccessTokenCreateRequest(ctx context.Context, gitHubAccessTokenRequest GitHubAccessTokenRequest, options *WorkspaceGitRepoManagementGetGitHubAccessTokenOptions) (*policy.Request, error) {
 	urlPath := "/getGitHubAccessToken"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-06-01-preview")
-	req.URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = reqQP.Encode()
 	if options != nil && options.ClientRequestID != nil {
-		req.Header.Set("x-ms-client-request-id", *options.ClientRequestID)
+		req.Raw().Header.Set("x-ms-client-request-id", *options.ClientRequestID)
 	}
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(gitHubAccessTokenRequest)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, gitHubAccessTokenRequest)
 }
 
 // getGitHubAccessTokenHandleResponse handles the GetGitHubAccessToken response.
-func (client *workspaceGitRepoManagementClient) getGitHubAccessTokenHandleResponse(resp *azcore.Response) (WorkspaceGitRepoManagementGetGitHubAccessTokenResponse, error) {
-	result := WorkspaceGitRepoManagementGetGitHubAccessTokenResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.GitHubAccessTokenResponse); err != nil {
+func (client *workspaceGitRepoManagementClient) getGitHubAccessTokenHandleResponse(resp *http.Response) (WorkspaceGitRepoManagementGetGitHubAccessTokenResponse, error) {
+	result := WorkspaceGitRepoManagementGetGitHubAccessTokenResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.GitHubAccessTokenResponse); err != nil {
 		return WorkspaceGitRepoManagementGetGitHubAccessTokenResponse{}, err
 	}
 	return result, nil
 }
 
 // getGitHubAccessTokenHandleError handles the GetGitHubAccessToken error response.
-func (client *workspaceGitRepoManagementClient) getGitHubAccessTokenHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *workspaceGitRepoManagementClient) getGitHubAccessTokenHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	if len(body) == 0 {
-		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
+		return runtime.NewResponseError(errors.New(resp.Status), resp)
 	}
-	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
+	return runtime.NewResponseError(errors.New(string(body)), resp)
 }

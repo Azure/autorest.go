@@ -1,4 +1,5 @@
-// +build go1.13
+//go:build go1.16
+// +build go1.16
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -7,4 +8,7 @@
 
 package datetimerfc1123group
 
-const telemetryInfo = "azsdk-go-datetimerfc1123group/<version>"
+const (
+	module  = "datetimerfc1123group"
+	version = "v0.1.0"
+)

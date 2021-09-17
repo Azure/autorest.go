@@ -1,4 +1,5 @@
-// +build go1.13
+//go:build go1.16
+// +build go1.16
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -85,7 +86,7 @@ type PetAPInPropertiesWithAPString struct {
 	ID *int32 `json:"id,omitempty"`
 
 	// REQUIRED
-	OdataLocation *string `json:"@odata.location,omitempty"`
+	ODataLocation *string `json:"@odata.location,omitempty"`
 
 	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]*string
@@ -104,7 +105,7 @@ func (p PetAPInPropertiesWithAPString) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "additionalProperties", p.AdditionalProperties1)
 	populate(objectMap, "id", p.ID)
 	populate(objectMap, "name", p.Name)
-	populate(objectMap, "@odata.location", p.OdataLocation)
+	populate(objectMap, "@odata.location", p.ODataLocation)
 	populate(objectMap, "status", p.Status)
 	if p.AdditionalProperties != nil {
 		for key, val := range p.AdditionalProperties {
@@ -133,7 +134,7 @@ func (p *PetAPInPropertiesWithAPString) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, &p.Name)
 			delete(rawMsg, key)
 		case "@odata.location":
-			err = unpopulate(val, &p.OdataLocation)
+			err = unpopulate(val, &p.ODataLocation)
 			delete(rawMsg, key)
 		case "status":
 			err = unpopulate(val, &p.Status)

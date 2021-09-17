@@ -125,6 +125,25 @@
           },
           {
             "$ref": "#/parameters/CreateCreatorDataItemId"
+          },
+          {
+            "name": "groupBy",
+            "in": "query",
+            "type": "array",
+            "required": false,
+            "collectionFormat": "multi",
+            "items": {
+              "type": "integer",
+              "enum": [
+                "10",
+                "20",
+                "30",
+                "40"
+              ],
+              "x-ms-enum": {
+                "name": "SomethingCount"
+              }
+            }
           }
         ],
         "responses": {
@@ -156,6 +175,27 @@
         "parameters": [
           {
             "$ref": "#/parameters/AliasApiVersionV2"
+          },
+          {
+            "name": "groupBy",
+            "in": "query",
+            "type": "array",
+            "required": false,
+            "collectionFormat": "multi",
+            "items": {
+              "type": "string",
+              "enum": [
+                "httpStatusCode",
+                "protocol",
+                "cacheStatus",
+                "country",
+                "customDomain"
+              ],
+              "x-ms-enum": {
+                "name": "LogMetricsGroupBy",
+                "modelAsString": true
+              }
+            }
           }
         ],
         "x-ms-pageable": {

@@ -1,4 +1,5 @@
-// +build go1.13
+//go:build go1.16
+// +build go1.16
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -10,6 +11,7 @@ package complexgroup
 import (
 	"encoding/json"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"reflect"
 	"time"
 )
@@ -102,7 +104,7 @@ type ByteWrapper struct {
 // MarshalJSON implements the json.Marshaller interface for type ByteWrapper.
 func (b ByteWrapper) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	populateByteArray(objectMap, "field", b.Field, azcore.Base64StdFormat)
+	populateByteArray(objectMap, "field", b.Field, runtime.Base64StdFormat)
 	return json.Marshal(objectMap)
 }
 
@@ -116,7 +118,7 @@ func (b *ByteWrapper) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "field":
-			err = azcore.DecodeByteArray(string(val), &b.Field, azcore.Base64StdFormat)
+			err = runtime.DecodeByteArray(string(val), &b.Field, runtime.Base64StdFormat)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -981,7 +983,7 @@ type Sawshark struct {
 // MarshalJSON implements the json.Marshaller interface for type Sawshark.
 func (s Sawshark) MarshalJSON() ([]byte, error) {
 	objectMap := s.Shark.marshalInternal("sawshark")
-	populateByteArray(objectMap, "picture", s.Picture, azcore.Base64StdFormat)
+	populateByteArray(objectMap, "picture", s.Picture, runtime.Base64StdFormat)
 	return json.Marshal(objectMap)
 }
 
@@ -995,7 +997,7 @@ func (s *Sawshark) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "picture":
-			err = azcore.DecodeByteArray(string(val), &s.Picture, azcore.Base64StdFormat)
+			err = runtime.DecodeByteArray(string(val), &s.Picture, runtime.Base64StdFormat)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -1152,13 +1154,13 @@ func populate(m map[string]interface{}, k string, v interface{}) {
 	}
 }
 
-func populateByteArray(m map[string]interface{}, k string, b []byte, f azcore.Base64Encoding) {
+func populateByteArray(m map[string]interface{}, k string, b []byte, f runtime.Base64Encoding) {
 	if azcore.IsNullValue(b) {
 		m[k] = nil
 	} else if len(b) == 0 {
 		return
 	} else {
-		m[k] = azcore.EncodeByteArray(b, f)
+		m[k] = runtime.EncodeByteArray(b, f)
 	}
 }
 

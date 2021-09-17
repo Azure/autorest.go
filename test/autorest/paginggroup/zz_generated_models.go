@@ -1,4 +1,5 @@
-// +build go1.13
+//go:build go1.16
+// +build go1.16
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -21,15 +22,15 @@ type CustomParameterGroup struct {
 	Tenant string
 }
 
-type OdataProductResult struct {
-	OdataNextLink *string    `json:"odata.nextLink,omitempty"`
+type ODataProductResult struct {
+	ODataNextLink *string    `json:"odata.nextLink,omitempty"`
 	Values        []*Product `json:"values,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type OdataProductResult.
-func (o OdataProductResult) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type ODataProductResult.
+func (o ODataProductResult) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	populate(objectMap, "odata.nextLink", o.OdataNextLink)
+	populate(objectMap, "odata.nextLink", o.ODataNextLink)
 	populate(objectMap, "values", o.Values)
 	return json.Marshal(objectMap)
 }
@@ -114,8 +115,8 @@ type PagingGetNullNextLinkNamePagesOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PagingGetOdataMultiplePagesOptions contains the optional parameters for the Paging.GetOdataMultiplePages method.
-type PagingGetOdataMultiplePagesOptions struct {
+// PagingGetODataMultiplePagesOptions contains the optional parameters for the Paging.GetODataMultiplePages method.
+type PagingGetODataMultiplePagesOptions struct {
 	ClientRequestID *string
 	// Sets the maximum number of items to return in the response.
 	Maxresults *int32

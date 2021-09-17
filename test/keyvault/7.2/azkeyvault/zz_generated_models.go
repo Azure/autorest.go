@@ -1,4 +1,5 @@
-// +build go1.13
+//go:build go1.16
+// +build go1.16
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -10,6 +11,7 @@ package azkeyvault
 import (
 	"encoding/json"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"reflect"
 	"time"
 )
@@ -122,7 +124,7 @@ type BackupCertificateResult struct {
 // MarshalJSON implements the json.Marshaller interface for type BackupCertificateResult.
 func (b BackupCertificateResult) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	populateByteArray(objectMap, "value", b.Value, azcore.Base64URLFormat)
+	populateByteArray(objectMap, "value", b.Value, runtime.Base64URLFormat)
 	return json.Marshal(objectMap)
 }
 
@@ -136,7 +138,7 @@ func (b *BackupCertificateResult) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "value":
-			err = azcore.DecodeByteArray(string(val), &b.Value, azcore.Base64URLFormat)
+			err = runtime.DecodeByteArray(string(val), &b.Value, runtime.Base64URLFormat)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -155,7 +157,7 @@ type BackupKeyResult struct {
 // MarshalJSON implements the json.Marshaller interface for type BackupKeyResult.
 func (b BackupKeyResult) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	populateByteArray(objectMap, "value", b.Value, azcore.Base64URLFormat)
+	populateByteArray(objectMap, "value", b.Value, runtime.Base64URLFormat)
 	return json.Marshal(objectMap)
 }
 
@@ -169,7 +171,7 @@ func (b *BackupKeyResult) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "value":
-			err = azcore.DecodeByteArray(string(val), &b.Value, azcore.Base64URLFormat)
+			err = runtime.DecodeByteArray(string(val), &b.Value, runtime.Base64URLFormat)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -188,7 +190,7 @@ type BackupSecretResult struct {
 // MarshalJSON implements the json.Marshaller interface for type BackupSecretResult.
 func (b BackupSecretResult) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	populateByteArray(objectMap, "value", b.Value, azcore.Base64URLFormat)
+	populateByteArray(objectMap, "value", b.Value, runtime.Base64URLFormat)
 	return json.Marshal(objectMap)
 }
 
@@ -202,7 +204,7 @@ func (b *BackupSecretResult) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "value":
-			err = azcore.DecodeByteArray(string(val), &b.Value, azcore.Base64URLFormat)
+			err = runtime.DecodeByteArray(string(val), &b.Value, runtime.Base64URLFormat)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -221,7 +223,7 @@ type BackupStorageResult struct {
 // MarshalJSON implements the json.Marshaller interface for type BackupStorageResult.
 func (b BackupStorageResult) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	populateByteArray(objectMap, "value", b.Value, azcore.Base64URLFormat)
+	populateByteArray(objectMap, "value", b.Value, runtime.Base64URLFormat)
 	return json.Marshal(objectMap)
 }
 
@@ -235,7 +237,7 @@ func (b *BackupStorageResult) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "value":
-			err = azcore.DecodeByteArray(string(val), &b.Value, azcore.Base64URLFormat)
+			err = runtime.DecodeByteArray(string(val), &b.Value, runtime.Base64URLFormat)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -336,14 +338,14 @@ func (c *CertificateBundle) UnmarshalJSON(data []byte) error {
 func (c CertificateBundle) marshalInternal() map[string]interface{} {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "attributes", c.Attributes)
-	populateByteArray(objectMap, "cer", c.Cer, azcore.Base64StdFormat)
+	populateByteArray(objectMap, "cer", c.Cer, runtime.Base64StdFormat)
 	populate(objectMap, "contentType", c.ContentType)
 	populate(objectMap, "id", c.ID)
 	populate(objectMap, "kid", c.Kid)
 	populate(objectMap, "policy", c.Policy)
 	populate(objectMap, "sid", c.Sid)
 	populate(objectMap, "tags", c.Tags)
-	populateByteArray(objectMap, "x5t", c.X509Thumbprint, azcore.Base64URLFormat)
+	populateByteArray(objectMap, "x5t", c.X509Thumbprint, runtime.Base64URLFormat)
 	return objectMap
 }
 
@@ -355,7 +357,7 @@ func (c *CertificateBundle) unmarshalInternal(rawMsg map[string]json.RawMessage)
 			err = unpopulate(val, &c.Attributes)
 			delete(rawMsg, key)
 		case "cer":
-			err = azcore.DecodeByteArray(string(val), &c.Cer, azcore.Base64StdFormat)
+			err = runtime.DecodeByteArray(string(val), &c.Cer, runtime.Base64StdFormat)
 			delete(rawMsg, key)
 		case "contentType":
 			err = unpopulate(val, &c.ContentType)
@@ -376,7 +378,7 @@ func (c *CertificateBundle) unmarshalInternal(rawMsg map[string]json.RawMessage)
 			err = unpopulate(val, &c.Tags)
 			delete(rawMsg, key)
 		case "x5t":
-			err = azcore.DecodeByteArray(string(val), &c.X509Thumbprint, azcore.Base64URLFormat)
+			err = runtime.DecodeByteArray(string(val), &c.X509Thumbprint, runtime.Base64URLFormat)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -553,7 +555,7 @@ func (c CertificateItem) marshalInternal() map[string]interface{} {
 	populate(objectMap, "attributes", c.Attributes)
 	populate(objectMap, "id", c.ID)
 	populate(objectMap, "tags", c.Tags)
-	populateByteArray(objectMap, "x5t", c.X509Thumbprint, azcore.Base64URLFormat)
+	populateByteArray(objectMap, "x5t", c.X509Thumbprint, runtime.Base64URLFormat)
 	return objectMap
 }
 
@@ -571,7 +573,7 @@ func (c *CertificateItem) unmarshalInternal(rawMsg map[string]json.RawMessage) e
 			err = unpopulate(val, &c.Tags)
 			delete(rawMsg, key)
 		case "x5t":
-			err = azcore.DecodeByteArray(string(val), &c.X509Thumbprint, azcore.Base64URLFormat)
+			err = runtime.DecodeByteArray(string(val), &c.X509Thumbprint, runtime.Base64URLFormat)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -653,7 +655,7 @@ type CertificateOperation struct {
 func (c CertificateOperation) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "cancellation_requested", c.CancellationRequested)
-	populateByteArray(objectMap, "csr", c.Csr, azcore.Base64StdFormat)
+	populateByteArray(objectMap, "csr", c.Csr, runtime.Base64StdFormat)
 	populate(objectMap, "error", c.Error)
 	populate(objectMap, "id", c.ID)
 	populate(objectMap, "issuer", c.IssuerParameters)
@@ -677,7 +679,7 @@ func (c *CertificateOperation) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, &c.CancellationRequested)
 			delete(rawMsg, key)
 		case "csr":
-			err = azcore.DecodeByteArray(string(val), &c.Csr, azcore.Base64StdFormat)
+			err = runtime.DecodeByteArray(string(val), &c.Csr, runtime.Base64StdFormat)
 			delete(rawMsg, key)
 		case "error":
 			err = unpopulate(val, &c.Error)
@@ -767,7 +769,7 @@ type CertificateRestoreParameters struct {
 // MarshalJSON implements the json.Marshaller interface for type CertificateRestoreParameters.
 func (c CertificateRestoreParameters) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	populateByteArray(objectMap, "value", c.CertificateBundleBackup, azcore.Base64URLFormat)
+	populateByteArray(objectMap, "value", c.CertificateBundleBackup, runtime.Base64URLFormat)
 	return json.Marshal(objectMap)
 }
 
@@ -781,7 +783,7 @@ func (c *CertificateRestoreParameters) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "value":
-			err = azcore.DecodeByteArray(string(val), &c.CertificateBundleBackup, azcore.Base64URLFormat)
+			err = runtime.DecodeByteArray(string(val), &c.CertificateBundleBackup, runtime.Base64URLFormat)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -1707,21 +1709,21 @@ type JSONWebKey struct {
 func (j JSONWebKey) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "crv", j.Crv)
-	populateByteArray(objectMap, "d", j.D, azcore.Base64URLFormat)
-	populateByteArray(objectMap, "dp", j.DP, azcore.Base64URLFormat)
-	populateByteArray(objectMap, "dq", j.DQ, azcore.Base64URLFormat)
-	populateByteArray(objectMap, "e", j.E, azcore.Base64URLFormat)
-	populateByteArray(objectMap, "k", j.K, azcore.Base64URLFormat)
+	populateByteArray(objectMap, "d", j.D, runtime.Base64URLFormat)
+	populateByteArray(objectMap, "dp", j.DP, runtime.Base64URLFormat)
+	populateByteArray(objectMap, "dq", j.DQ, runtime.Base64URLFormat)
+	populateByteArray(objectMap, "e", j.E, runtime.Base64URLFormat)
+	populateByteArray(objectMap, "k", j.K, runtime.Base64URLFormat)
 	populate(objectMap, "key_ops", j.KeyOps)
 	populate(objectMap, "kid", j.Kid)
 	populate(objectMap, "kty", j.Kty)
-	populateByteArray(objectMap, "n", j.N, azcore.Base64URLFormat)
-	populateByteArray(objectMap, "p", j.P, azcore.Base64URLFormat)
-	populateByteArray(objectMap, "q", j.Q, azcore.Base64URLFormat)
-	populateByteArray(objectMap, "qi", j.QI, azcore.Base64URLFormat)
-	populateByteArray(objectMap, "key_hsm", j.T, azcore.Base64URLFormat)
-	populateByteArray(objectMap, "x", j.X, azcore.Base64URLFormat)
-	populateByteArray(objectMap, "y", j.Y, azcore.Base64URLFormat)
+	populateByteArray(objectMap, "n", j.N, runtime.Base64URLFormat)
+	populateByteArray(objectMap, "p", j.P, runtime.Base64URLFormat)
+	populateByteArray(objectMap, "q", j.Q, runtime.Base64URLFormat)
+	populateByteArray(objectMap, "qi", j.QI, runtime.Base64URLFormat)
+	populateByteArray(objectMap, "key_hsm", j.T, runtime.Base64URLFormat)
+	populateByteArray(objectMap, "x", j.X, runtime.Base64URLFormat)
+	populateByteArray(objectMap, "y", j.Y, runtime.Base64URLFormat)
 	return json.Marshal(objectMap)
 }
 
@@ -1738,19 +1740,19 @@ func (j *JSONWebKey) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, &j.Crv)
 			delete(rawMsg, key)
 		case "d":
-			err = azcore.DecodeByteArray(string(val), &j.D, azcore.Base64URLFormat)
+			err = runtime.DecodeByteArray(string(val), &j.D, runtime.Base64URLFormat)
 			delete(rawMsg, key)
 		case "dp":
-			err = azcore.DecodeByteArray(string(val), &j.DP, azcore.Base64URLFormat)
+			err = runtime.DecodeByteArray(string(val), &j.DP, runtime.Base64URLFormat)
 			delete(rawMsg, key)
 		case "dq":
-			err = azcore.DecodeByteArray(string(val), &j.DQ, azcore.Base64URLFormat)
+			err = runtime.DecodeByteArray(string(val), &j.DQ, runtime.Base64URLFormat)
 			delete(rawMsg, key)
 		case "e":
-			err = azcore.DecodeByteArray(string(val), &j.E, azcore.Base64URLFormat)
+			err = runtime.DecodeByteArray(string(val), &j.E, runtime.Base64URLFormat)
 			delete(rawMsg, key)
 		case "k":
-			err = azcore.DecodeByteArray(string(val), &j.K, azcore.Base64URLFormat)
+			err = runtime.DecodeByteArray(string(val), &j.K, runtime.Base64URLFormat)
 			delete(rawMsg, key)
 		case "key_ops":
 			err = unpopulate(val, &j.KeyOps)
@@ -1762,25 +1764,25 @@ func (j *JSONWebKey) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, &j.Kty)
 			delete(rawMsg, key)
 		case "n":
-			err = azcore.DecodeByteArray(string(val), &j.N, azcore.Base64URLFormat)
+			err = runtime.DecodeByteArray(string(val), &j.N, runtime.Base64URLFormat)
 			delete(rawMsg, key)
 		case "p":
-			err = azcore.DecodeByteArray(string(val), &j.P, azcore.Base64URLFormat)
+			err = runtime.DecodeByteArray(string(val), &j.P, runtime.Base64URLFormat)
 			delete(rawMsg, key)
 		case "q":
-			err = azcore.DecodeByteArray(string(val), &j.Q, azcore.Base64URLFormat)
+			err = runtime.DecodeByteArray(string(val), &j.Q, runtime.Base64URLFormat)
 			delete(rawMsg, key)
 		case "qi":
-			err = azcore.DecodeByteArray(string(val), &j.QI, azcore.Base64URLFormat)
+			err = runtime.DecodeByteArray(string(val), &j.QI, runtime.Base64URLFormat)
 			delete(rawMsg, key)
 		case "key_hsm":
-			err = azcore.DecodeByteArray(string(val), &j.T, azcore.Base64URLFormat)
+			err = runtime.DecodeByteArray(string(val), &j.T, runtime.Base64URLFormat)
 			delete(rawMsg, key)
 		case "x":
-			err = azcore.DecodeByteArray(string(val), &j.X, azcore.Base64URLFormat)
+			err = runtime.DecodeByteArray(string(val), &j.X, runtime.Base64URLFormat)
 			delete(rawMsg, key)
 		case "y":
-			err = azcore.DecodeByteArray(string(val), &j.Y, azcore.Base64URLFormat)
+			err = runtime.DecodeByteArray(string(val), &j.Y, runtime.Base64URLFormat)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -2057,11 +2059,11 @@ type KeyOperationResult struct {
 // MarshalJSON implements the json.Marshaller interface for type KeyOperationResult.
 func (k KeyOperationResult) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	populateByteArray(objectMap, "aad", k.AdditionalAuthenticatedData, azcore.Base64URLFormat)
-	populateByteArray(objectMap, "tag", k.AuthenticationTag, azcore.Base64URLFormat)
-	populateByteArray(objectMap, "iv", k.Iv, azcore.Base64URLFormat)
+	populateByteArray(objectMap, "aad", k.AdditionalAuthenticatedData, runtime.Base64URLFormat)
+	populateByteArray(objectMap, "tag", k.AuthenticationTag, runtime.Base64URLFormat)
+	populateByteArray(objectMap, "iv", k.Iv, runtime.Base64URLFormat)
 	populate(objectMap, "kid", k.Kid)
-	populateByteArray(objectMap, "value", k.Result, azcore.Base64URLFormat)
+	populateByteArray(objectMap, "value", k.Result, runtime.Base64URLFormat)
 	return json.Marshal(objectMap)
 }
 
@@ -2075,19 +2077,19 @@ func (k *KeyOperationResult) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "aad":
-			err = azcore.DecodeByteArray(string(val), &k.AdditionalAuthenticatedData, azcore.Base64URLFormat)
+			err = runtime.DecodeByteArray(string(val), &k.AdditionalAuthenticatedData, runtime.Base64URLFormat)
 			delete(rawMsg, key)
 		case "tag":
-			err = azcore.DecodeByteArray(string(val), &k.AuthenticationTag, azcore.Base64URLFormat)
+			err = runtime.DecodeByteArray(string(val), &k.AuthenticationTag, runtime.Base64URLFormat)
 			delete(rawMsg, key)
 		case "iv":
-			err = azcore.DecodeByteArray(string(val), &k.Iv, azcore.Base64URLFormat)
+			err = runtime.DecodeByteArray(string(val), &k.Iv, runtime.Base64URLFormat)
 			delete(rawMsg, key)
 		case "kid":
 			err = unpopulate(val, &k.Kid)
 			delete(rawMsg, key)
 		case "value":
-			err = azcore.DecodeByteArray(string(val), &k.Result, azcore.Base64URLFormat)
+			err = runtime.DecodeByteArray(string(val), &k.Result, runtime.Base64URLFormat)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -2118,11 +2120,11 @@ type KeyOperationsParameters struct {
 // MarshalJSON implements the json.Marshaller interface for type KeyOperationsParameters.
 func (k KeyOperationsParameters) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	populateByteArray(objectMap, "aad", k.AAD, azcore.Base64URLFormat)
+	populateByteArray(objectMap, "aad", k.AAD, runtime.Base64URLFormat)
 	populate(objectMap, "alg", k.Algorithm)
-	populateByteArray(objectMap, "iv", k.Iv, azcore.Base64URLFormat)
-	populateByteArray(objectMap, "tag", k.Tag, azcore.Base64URLFormat)
-	populateByteArray(objectMap, "value", k.Value, azcore.Base64URLFormat)
+	populateByteArray(objectMap, "iv", k.Iv, runtime.Base64URLFormat)
+	populateByteArray(objectMap, "tag", k.Tag, runtime.Base64URLFormat)
+	populateByteArray(objectMap, "value", k.Value, runtime.Base64URLFormat)
 	return json.Marshal(objectMap)
 }
 
@@ -2136,19 +2138,19 @@ func (k *KeyOperationsParameters) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "aad":
-			err = azcore.DecodeByteArray(string(val), &k.AAD, azcore.Base64URLFormat)
+			err = runtime.DecodeByteArray(string(val), &k.AAD, runtime.Base64URLFormat)
 			delete(rawMsg, key)
 		case "alg":
 			err = unpopulate(val, &k.Algorithm)
 			delete(rawMsg, key)
 		case "iv":
-			err = azcore.DecodeByteArray(string(val), &k.Iv, azcore.Base64URLFormat)
+			err = runtime.DecodeByteArray(string(val), &k.Iv, runtime.Base64URLFormat)
 			delete(rawMsg, key)
 		case "tag":
-			err = azcore.DecodeByteArray(string(val), &k.Tag, azcore.Base64URLFormat)
+			err = runtime.DecodeByteArray(string(val), &k.Tag, runtime.Base64URLFormat)
 			delete(rawMsg, key)
 		case "value":
-			err = azcore.DecodeByteArray(string(val), &k.Value, azcore.Base64URLFormat)
+			err = runtime.DecodeByteArray(string(val), &k.Value, runtime.Base64URLFormat)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -2185,7 +2187,7 @@ type KeyRestoreParameters struct {
 // MarshalJSON implements the json.Marshaller interface for type KeyRestoreParameters.
 func (k KeyRestoreParameters) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	populateByteArray(objectMap, "value", k.KeyBundleBackup, azcore.Base64URLFormat)
+	populateByteArray(objectMap, "value", k.KeyBundleBackup, runtime.Base64URLFormat)
 	return json.Marshal(objectMap)
 }
 
@@ -2199,7 +2201,7 @@ func (k *KeyRestoreParameters) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "value":
-			err = azcore.DecodeByteArray(string(val), &k.KeyBundleBackup, azcore.Base64URLFormat)
+			err = runtime.DecodeByteArray(string(val), &k.KeyBundleBackup, runtime.Base64URLFormat)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -2222,7 +2224,7 @@ type KeySignParameters struct {
 func (k KeySignParameters) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "alg", k.Algorithm)
-	populateByteArray(objectMap, "value", k.Value, azcore.Base64URLFormat)
+	populateByteArray(objectMap, "value", k.Value, runtime.Base64URLFormat)
 	return json.Marshal(objectMap)
 }
 
@@ -2239,7 +2241,7 @@ func (k *KeySignParameters) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, &k.Algorithm)
 			delete(rawMsg, key)
 		case "value":
-			err = azcore.DecodeByteArray(string(val), &k.Value, azcore.Base64URLFormat)
+			err = runtime.DecodeByteArray(string(val), &k.Value, runtime.Base64URLFormat)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -2737,8 +2739,8 @@ type KeyVerifyParameters struct {
 func (k KeyVerifyParameters) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "alg", k.Algorithm)
-	populateByteArray(objectMap, "digest", k.Digest, azcore.Base64URLFormat)
-	populateByteArray(objectMap, "value", k.Signature, azcore.Base64URLFormat)
+	populateByteArray(objectMap, "digest", k.Digest, runtime.Base64URLFormat)
+	populateByteArray(objectMap, "value", k.Signature, runtime.Base64URLFormat)
 	return json.Marshal(objectMap)
 }
 
@@ -2755,10 +2757,10 @@ func (k *KeyVerifyParameters) UnmarshalJSON(data []byte) error {
 			err = unpopulate(val, &k.Algorithm)
 			delete(rawMsg, key)
 		case "digest":
-			err = azcore.DecodeByteArray(string(val), &k.Digest, azcore.Base64URLFormat)
+			err = runtime.DecodeByteArray(string(val), &k.Digest, runtime.Base64URLFormat)
 			delete(rawMsg, key)
 		case "value":
-			err = azcore.DecodeByteArray(string(val), &k.Signature, azcore.Base64URLFormat)
+			err = runtime.DecodeByteArray(string(val), &k.Signature, runtime.Base64URLFormat)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -3621,7 +3623,7 @@ type SecretRestoreParameters struct {
 // MarshalJSON implements the json.Marshaller interface for type SecretRestoreParameters.
 func (s SecretRestoreParameters) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	populateByteArray(objectMap, "value", s.SecretBundleBackup, azcore.Base64URLFormat)
+	populateByteArray(objectMap, "value", s.SecretBundleBackup, runtime.Base64URLFormat)
 	return json.Marshal(objectMap)
 }
 
@@ -3635,7 +3637,7 @@ func (s *SecretRestoreParameters) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "value":
-			err = azcore.DecodeByteArray(string(val), &s.SecretBundleBackup, azcore.Base64URLFormat)
+			err = runtime.DecodeByteArray(string(val), &s.SecretBundleBackup, runtime.Base64URLFormat)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -4145,7 +4147,7 @@ type StorageRestoreParameters struct {
 // MarshalJSON implements the json.Marshaller interface for type StorageRestoreParameters.
 func (s StorageRestoreParameters) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	populateByteArray(objectMap, "value", s.StorageBundleBackup, azcore.Base64URLFormat)
+	populateByteArray(objectMap, "value", s.StorageBundleBackup, runtime.Base64URLFormat)
 	return json.Marshal(objectMap)
 }
 
@@ -4159,7 +4161,7 @@ func (s *StorageRestoreParameters) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "value":
-			err = azcore.DecodeByteArray(string(val), &s.StorageBundleBackup, azcore.Base64URLFormat)
+			err = runtime.DecodeByteArray(string(val), &s.StorageBundleBackup, runtime.Base64URLFormat)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -4247,13 +4249,13 @@ func populate(m map[string]interface{}, k string, v interface{}) {
 	}
 }
 
-func populateByteArray(m map[string]interface{}, k string, b []byte, f azcore.Base64Encoding) {
+func populateByteArray(m map[string]interface{}, k string, b []byte, f runtime.Base64Encoding) {
 	if azcore.IsNullValue(b) {
 		m[k] = nil
 	} else if len(b) == 0 {
 		return
 	} else {
-		m[k] = azcore.EncodeByteArray(b, f)
+		m[k] = runtime.EncodeByteArray(b, f)
 	}
 }
 

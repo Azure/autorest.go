@@ -1,4 +1,5 @@
-// +build go1.13
+//go:build go1.16
+// +build go1.16
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -10,7 +11,8 @@ package complexgroup
 import (
 	"context"
 	"fmt"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
@@ -36,44 +38,43 @@ func (client *BasicClient) GetEmpty(ctx context.Context, options *BasicGetEmptyO
 	if err != nil {
 		return BasicGetEmptyResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return BasicGetEmptyResponse{}, client.getEmptyHandleError(resp)
 	}
 	return client.getEmptyHandleResponse(resp)
 }
 
 // getEmptyCreateRequest creates the GetEmpty request.
-func (client *BasicClient) getEmptyCreateRequest(ctx context.Context, options *BasicGetEmptyOptions) (*azcore.Request, error) {
+func (client *BasicClient) getEmptyCreateRequest(ctx context.Context, options *BasicGetEmptyOptions) (*policy.Request, error) {
 	urlPath := "/complex/basic/empty"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getEmptyHandleResponse handles the GetEmpty response.
-func (client *BasicClient) getEmptyHandleResponse(resp *azcore.Response) (BasicGetEmptyResponse, error) {
-	result := BasicGetEmptyResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.Basic); err != nil {
+func (client *BasicClient) getEmptyHandleResponse(resp *http.Response) (BasicGetEmptyResponse, error) {
+	result := BasicGetEmptyResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Basic); err != nil {
 		return BasicGetEmptyResponse{}, err
 	}
 	return result, nil
 }
 
 // getEmptyHandleError handles the GetEmpty error response.
-func (client *BasicClient) getEmptyHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *BasicClient) getEmptyHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetInvalid - Get a basic complex type that is invalid for the local strong type
@@ -87,44 +88,43 @@ func (client *BasicClient) GetInvalid(ctx context.Context, options *BasicGetInva
 	if err != nil {
 		return BasicGetInvalidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return BasicGetInvalidResponse{}, client.getInvalidHandleError(resp)
 	}
 	return client.getInvalidHandleResponse(resp)
 }
 
 // getInvalidCreateRequest creates the GetInvalid request.
-func (client *BasicClient) getInvalidCreateRequest(ctx context.Context, options *BasicGetInvalidOptions) (*azcore.Request, error) {
+func (client *BasicClient) getInvalidCreateRequest(ctx context.Context, options *BasicGetInvalidOptions) (*policy.Request, error) {
 	urlPath := "/complex/basic/invalid"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getInvalidHandleResponse handles the GetInvalid response.
-func (client *BasicClient) getInvalidHandleResponse(resp *azcore.Response) (BasicGetInvalidResponse, error) {
-	result := BasicGetInvalidResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.Basic); err != nil {
+func (client *BasicClient) getInvalidHandleResponse(resp *http.Response) (BasicGetInvalidResponse, error) {
+	result := BasicGetInvalidResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Basic); err != nil {
 		return BasicGetInvalidResponse{}, err
 	}
 	return result, nil
 }
 
 // getInvalidHandleError handles the GetInvalid error response.
-func (client *BasicClient) getInvalidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *BasicClient) getInvalidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetNotProvided - Get a basic complex type while the server doesn't provide a response payload
@@ -138,44 +138,43 @@ func (client *BasicClient) GetNotProvided(ctx context.Context, options *BasicGet
 	if err != nil {
 		return BasicGetNotProvidedResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return BasicGetNotProvidedResponse{}, client.getNotProvidedHandleError(resp)
 	}
 	return client.getNotProvidedHandleResponse(resp)
 }
 
 // getNotProvidedCreateRequest creates the GetNotProvided request.
-func (client *BasicClient) getNotProvidedCreateRequest(ctx context.Context, options *BasicGetNotProvidedOptions) (*azcore.Request, error) {
+func (client *BasicClient) getNotProvidedCreateRequest(ctx context.Context, options *BasicGetNotProvidedOptions) (*policy.Request, error) {
 	urlPath := "/complex/basic/notprovided"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getNotProvidedHandleResponse handles the GetNotProvided response.
-func (client *BasicClient) getNotProvidedHandleResponse(resp *azcore.Response) (BasicGetNotProvidedResponse, error) {
-	result := BasicGetNotProvidedResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.Basic); err != nil {
+func (client *BasicClient) getNotProvidedHandleResponse(resp *http.Response) (BasicGetNotProvidedResponse, error) {
+	result := BasicGetNotProvidedResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Basic); err != nil {
 		return BasicGetNotProvidedResponse{}, err
 	}
 	return result, nil
 }
 
 // getNotProvidedHandleError handles the GetNotProvided error response.
-func (client *BasicClient) getNotProvidedHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *BasicClient) getNotProvidedHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetNull - Get a basic complex type whose properties are null
@@ -189,44 +188,43 @@ func (client *BasicClient) GetNull(ctx context.Context, options *BasicGetNullOpt
 	if err != nil {
 		return BasicGetNullResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return BasicGetNullResponse{}, client.getNullHandleError(resp)
 	}
 	return client.getNullHandleResponse(resp)
 }
 
 // getNullCreateRequest creates the GetNull request.
-func (client *BasicClient) getNullCreateRequest(ctx context.Context, options *BasicGetNullOptions) (*azcore.Request, error) {
+func (client *BasicClient) getNullCreateRequest(ctx context.Context, options *BasicGetNullOptions) (*policy.Request, error) {
 	urlPath := "/complex/basic/null"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getNullHandleResponse handles the GetNull response.
-func (client *BasicClient) getNullHandleResponse(resp *azcore.Response) (BasicGetNullResponse, error) {
-	result := BasicGetNullResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.Basic); err != nil {
+func (client *BasicClient) getNullHandleResponse(resp *http.Response) (BasicGetNullResponse, error) {
+	result := BasicGetNullResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Basic); err != nil {
 		return BasicGetNullResponse{}, err
 	}
 	return result, nil
 }
 
 // getNullHandleError handles the GetNull error response.
-func (client *BasicClient) getNullHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *BasicClient) getNullHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetValid - Get complex type {id: 2, name: 'abc', color: 'YELLOW'}
@@ -240,44 +238,43 @@ func (client *BasicClient) GetValid(ctx context.Context, options *BasicGetValidO
 	if err != nil {
 		return BasicGetValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return BasicGetValidResponse{}, client.getValidHandleError(resp)
 	}
 	return client.getValidHandleResponse(resp)
 }
 
 // getValidCreateRequest creates the GetValid request.
-func (client *BasicClient) getValidCreateRequest(ctx context.Context, options *BasicGetValidOptions) (*azcore.Request, error) {
+func (client *BasicClient) getValidCreateRequest(ctx context.Context, options *BasicGetValidOptions) (*policy.Request, error) {
 	urlPath := "/complex/basic/valid"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getValidHandleResponse handles the GetValid response.
-func (client *BasicClient) getValidHandleResponse(resp *azcore.Response) (BasicGetValidResponse, error) {
-	result := BasicGetValidResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.Basic); err != nil {
+func (client *BasicClient) getValidHandleResponse(resp *http.Response) (BasicGetValidResponse, error) {
+	result := BasicGetValidResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Basic); err != nil {
 		return BasicGetValidResponse{}, err
 	}
 	return result, nil
 }
 
 // getValidHandleError handles the GetValid error response.
-func (client *BasicClient) getValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *BasicClient) getValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutValid - Please put {id: 2, name: 'abc', color: 'Magenta'}
@@ -291,36 +288,35 @@ func (client *BasicClient) PutValid(ctx context.Context, complexBody Basic, opti
 	if err != nil {
 		return BasicPutValidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return BasicPutValidResponse{}, client.putValidHandleError(resp)
 	}
-	return BasicPutValidResponse{RawResponse: resp.Response}, nil
+	return BasicPutValidResponse{RawResponse: resp}, nil
 }
 
 // putValidCreateRequest creates the PutValid request.
-func (client *BasicClient) putValidCreateRequest(ctx context.Context, complexBody Basic, options *BasicPutValidOptions) (*azcore.Request, error) {
+func (client *BasicClient) putValidCreateRequest(ctx context.Context, complexBody Basic, options *BasicPutValidOptions) (*policy.Request, error) {
 	urlPath := "/complex/basic/valid"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2016-02-29")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(complexBody)
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, complexBody)
 }
 
 // putValidHandleError handles the PutValid error response.
-func (client *BasicClient) putValidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *BasicClient) putValidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }

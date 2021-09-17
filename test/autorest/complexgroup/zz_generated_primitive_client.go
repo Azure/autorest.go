@@ -1,4 +1,5 @@
-// +build go1.13
+//go:build go1.16
+// +build go1.16
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -10,7 +11,8 @@ package complexgroup
 import (
 	"context"
 	"fmt"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
@@ -36,44 +38,43 @@ func (client *PrimitiveClient) GetBool(ctx context.Context, options *PrimitiveGe
 	if err != nil {
 		return PrimitiveGetBoolResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PrimitiveGetBoolResponse{}, client.getBoolHandleError(resp)
 	}
 	return client.getBoolHandleResponse(resp)
 }
 
 // getBoolCreateRequest creates the GetBool request.
-func (client *PrimitiveClient) getBoolCreateRequest(ctx context.Context, options *PrimitiveGetBoolOptions) (*azcore.Request, error) {
+func (client *PrimitiveClient) getBoolCreateRequest(ctx context.Context, options *PrimitiveGetBoolOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/bool"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getBoolHandleResponse handles the GetBool response.
-func (client *PrimitiveClient) getBoolHandleResponse(resp *azcore.Response) (PrimitiveGetBoolResponse, error) {
-	result := PrimitiveGetBoolResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.BooleanWrapper); err != nil {
+func (client *PrimitiveClient) getBoolHandleResponse(resp *http.Response) (PrimitiveGetBoolResponse, error) {
+	result := PrimitiveGetBoolResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.BooleanWrapper); err != nil {
 		return PrimitiveGetBoolResponse{}, err
 	}
 	return result, nil
 }
 
 // getBoolHandleError handles the GetBool error response.
-func (client *PrimitiveClient) getBoolHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *PrimitiveClient) getBoolHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetByte - Get complex types with byte properties
@@ -87,44 +88,43 @@ func (client *PrimitiveClient) GetByte(ctx context.Context, options *PrimitiveGe
 	if err != nil {
 		return PrimitiveGetByteResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PrimitiveGetByteResponse{}, client.getByteHandleError(resp)
 	}
 	return client.getByteHandleResponse(resp)
 }
 
 // getByteCreateRequest creates the GetByte request.
-func (client *PrimitiveClient) getByteCreateRequest(ctx context.Context, options *PrimitiveGetByteOptions) (*azcore.Request, error) {
+func (client *PrimitiveClient) getByteCreateRequest(ctx context.Context, options *PrimitiveGetByteOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/byte"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getByteHandleResponse handles the GetByte response.
-func (client *PrimitiveClient) getByteHandleResponse(resp *azcore.Response) (PrimitiveGetByteResponse, error) {
-	result := PrimitiveGetByteResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.ByteWrapper); err != nil {
+func (client *PrimitiveClient) getByteHandleResponse(resp *http.Response) (PrimitiveGetByteResponse, error) {
+	result := PrimitiveGetByteResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.ByteWrapper); err != nil {
 		return PrimitiveGetByteResponse{}, err
 	}
 	return result, nil
 }
 
 // getByteHandleError handles the GetByte error response.
-func (client *PrimitiveClient) getByteHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *PrimitiveClient) getByteHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetDate - Get complex types with date properties
@@ -138,44 +138,43 @@ func (client *PrimitiveClient) GetDate(ctx context.Context, options *PrimitiveGe
 	if err != nil {
 		return PrimitiveGetDateResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PrimitiveGetDateResponse{}, client.getDateHandleError(resp)
 	}
 	return client.getDateHandleResponse(resp)
 }
 
 // getDateCreateRequest creates the GetDate request.
-func (client *PrimitiveClient) getDateCreateRequest(ctx context.Context, options *PrimitiveGetDateOptions) (*azcore.Request, error) {
+func (client *PrimitiveClient) getDateCreateRequest(ctx context.Context, options *PrimitiveGetDateOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/date"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getDateHandleResponse handles the GetDate response.
-func (client *PrimitiveClient) getDateHandleResponse(resp *azcore.Response) (PrimitiveGetDateResponse, error) {
-	result := PrimitiveGetDateResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.DateWrapper); err != nil {
+func (client *PrimitiveClient) getDateHandleResponse(resp *http.Response) (PrimitiveGetDateResponse, error) {
+	result := PrimitiveGetDateResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.DateWrapper); err != nil {
 		return PrimitiveGetDateResponse{}, err
 	}
 	return result, nil
 }
 
 // getDateHandleError handles the GetDate error response.
-func (client *PrimitiveClient) getDateHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *PrimitiveClient) getDateHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetDateTime - Get complex types with datetime properties
@@ -189,44 +188,43 @@ func (client *PrimitiveClient) GetDateTime(ctx context.Context, options *Primiti
 	if err != nil {
 		return PrimitiveGetDateTimeResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PrimitiveGetDateTimeResponse{}, client.getDateTimeHandleError(resp)
 	}
 	return client.getDateTimeHandleResponse(resp)
 }
 
 // getDateTimeCreateRequest creates the GetDateTime request.
-func (client *PrimitiveClient) getDateTimeCreateRequest(ctx context.Context, options *PrimitiveGetDateTimeOptions) (*azcore.Request, error) {
+func (client *PrimitiveClient) getDateTimeCreateRequest(ctx context.Context, options *PrimitiveGetDateTimeOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/datetime"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getDateTimeHandleResponse handles the GetDateTime response.
-func (client *PrimitiveClient) getDateTimeHandleResponse(resp *azcore.Response) (PrimitiveGetDateTimeResponse, error) {
-	result := PrimitiveGetDateTimeResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.DatetimeWrapper); err != nil {
+func (client *PrimitiveClient) getDateTimeHandleResponse(resp *http.Response) (PrimitiveGetDateTimeResponse, error) {
+	result := PrimitiveGetDateTimeResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.DatetimeWrapper); err != nil {
 		return PrimitiveGetDateTimeResponse{}, err
 	}
 	return result, nil
 }
 
 // getDateTimeHandleError handles the GetDateTime error response.
-func (client *PrimitiveClient) getDateTimeHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *PrimitiveClient) getDateTimeHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetDateTimeRFC1123 - Get complex types with datetimeRfc1123 properties
@@ -240,44 +238,43 @@ func (client *PrimitiveClient) GetDateTimeRFC1123(ctx context.Context, options *
 	if err != nil {
 		return PrimitiveGetDateTimeRFC1123Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PrimitiveGetDateTimeRFC1123Response{}, client.getDateTimeRFC1123HandleError(resp)
 	}
 	return client.getDateTimeRFC1123HandleResponse(resp)
 }
 
 // getDateTimeRFC1123CreateRequest creates the GetDateTimeRFC1123 request.
-func (client *PrimitiveClient) getDateTimeRFC1123CreateRequest(ctx context.Context, options *PrimitiveGetDateTimeRFC1123Options) (*azcore.Request, error) {
+func (client *PrimitiveClient) getDateTimeRFC1123CreateRequest(ctx context.Context, options *PrimitiveGetDateTimeRFC1123Options) (*policy.Request, error) {
 	urlPath := "/complex/primitive/datetimerfc1123"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getDateTimeRFC1123HandleResponse handles the GetDateTimeRFC1123 response.
-func (client *PrimitiveClient) getDateTimeRFC1123HandleResponse(resp *azcore.Response) (PrimitiveGetDateTimeRFC1123Response, error) {
-	result := PrimitiveGetDateTimeRFC1123Response{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.Datetimerfc1123Wrapper); err != nil {
+func (client *PrimitiveClient) getDateTimeRFC1123HandleResponse(resp *http.Response) (PrimitiveGetDateTimeRFC1123Response, error) {
+	result := PrimitiveGetDateTimeRFC1123Response{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Datetimerfc1123Wrapper); err != nil {
 		return PrimitiveGetDateTimeRFC1123Response{}, err
 	}
 	return result, nil
 }
 
 // getDateTimeRFC1123HandleError handles the GetDateTimeRFC1123 error response.
-func (client *PrimitiveClient) getDateTimeRFC1123HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *PrimitiveClient) getDateTimeRFC1123HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetDouble - Get complex types with double properties
@@ -291,44 +288,43 @@ func (client *PrimitiveClient) GetDouble(ctx context.Context, options *Primitive
 	if err != nil {
 		return PrimitiveGetDoubleResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PrimitiveGetDoubleResponse{}, client.getDoubleHandleError(resp)
 	}
 	return client.getDoubleHandleResponse(resp)
 }
 
 // getDoubleCreateRequest creates the GetDouble request.
-func (client *PrimitiveClient) getDoubleCreateRequest(ctx context.Context, options *PrimitiveGetDoubleOptions) (*azcore.Request, error) {
+func (client *PrimitiveClient) getDoubleCreateRequest(ctx context.Context, options *PrimitiveGetDoubleOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/double"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getDoubleHandleResponse handles the GetDouble response.
-func (client *PrimitiveClient) getDoubleHandleResponse(resp *azcore.Response) (PrimitiveGetDoubleResponse, error) {
-	result := PrimitiveGetDoubleResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.DoubleWrapper); err != nil {
+func (client *PrimitiveClient) getDoubleHandleResponse(resp *http.Response) (PrimitiveGetDoubleResponse, error) {
+	result := PrimitiveGetDoubleResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.DoubleWrapper); err != nil {
 		return PrimitiveGetDoubleResponse{}, err
 	}
 	return result, nil
 }
 
 // getDoubleHandleError handles the GetDouble error response.
-func (client *PrimitiveClient) getDoubleHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *PrimitiveClient) getDoubleHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetDuration - Get complex types with duration properties
@@ -342,44 +338,43 @@ func (client *PrimitiveClient) GetDuration(ctx context.Context, options *Primiti
 	if err != nil {
 		return PrimitiveGetDurationResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PrimitiveGetDurationResponse{}, client.getDurationHandleError(resp)
 	}
 	return client.getDurationHandleResponse(resp)
 }
 
 // getDurationCreateRequest creates the GetDuration request.
-func (client *PrimitiveClient) getDurationCreateRequest(ctx context.Context, options *PrimitiveGetDurationOptions) (*azcore.Request, error) {
+func (client *PrimitiveClient) getDurationCreateRequest(ctx context.Context, options *PrimitiveGetDurationOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/duration"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getDurationHandleResponse handles the GetDuration response.
-func (client *PrimitiveClient) getDurationHandleResponse(resp *azcore.Response) (PrimitiveGetDurationResponse, error) {
-	result := PrimitiveGetDurationResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.DurationWrapper); err != nil {
+func (client *PrimitiveClient) getDurationHandleResponse(resp *http.Response) (PrimitiveGetDurationResponse, error) {
+	result := PrimitiveGetDurationResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.DurationWrapper); err != nil {
 		return PrimitiveGetDurationResponse{}, err
 	}
 	return result, nil
 }
 
 // getDurationHandleError handles the GetDuration error response.
-func (client *PrimitiveClient) getDurationHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *PrimitiveClient) getDurationHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetFloat - Get complex types with float properties
@@ -393,44 +388,43 @@ func (client *PrimitiveClient) GetFloat(ctx context.Context, options *PrimitiveG
 	if err != nil {
 		return PrimitiveGetFloatResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PrimitiveGetFloatResponse{}, client.getFloatHandleError(resp)
 	}
 	return client.getFloatHandleResponse(resp)
 }
 
 // getFloatCreateRequest creates the GetFloat request.
-func (client *PrimitiveClient) getFloatCreateRequest(ctx context.Context, options *PrimitiveGetFloatOptions) (*azcore.Request, error) {
+func (client *PrimitiveClient) getFloatCreateRequest(ctx context.Context, options *PrimitiveGetFloatOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/float"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getFloatHandleResponse handles the GetFloat response.
-func (client *PrimitiveClient) getFloatHandleResponse(resp *azcore.Response) (PrimitiveGetFloatResponse, error) {
-	result := PrimitiveGetFloatResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.FloatWrapper); err != nil {
+func (client *PrimitiveClient) getFloatHandleResponse(resp *http.Response) (PrimitiveGetFloatResponse, error) {
+	result := PrimitiveGetFloatResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.FloatWrapper); err != nil {
 		return PrimitiveGetFloatResponse{}, err
 	}
 	return result, nil
 }
 
 // getFloatHandleError handles the GetFloat error response.
-func (client *PrimitiveClient) getFloatHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *PrimitiveClient) getFloatHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetInt - Get complex types with integer properties
@@ -444,44 +438,43 @@ func (client *PrimitiveClient) GetInt(ctx context.Context, options *PrimitiveGet
 	if err != nil {
 		return PrimitiveGetIntResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PrimitiveGetIntResponse{}, client.getIntHandleError(resp)
 	}
 	return client.getIntHandleResponse(resp)
 }
 
 // getIntCreateRequest creates the GetInt request.
-func (client *PrimitiveClient) getIntCreateRequest(ctx context.Context, options *PrimitiveGetIntOptions) (*azcore.Request, error) {
+func (client *PrimitiveClient) getIntCreateRequest(ctx context.Context, options *PrimitiveGetIntOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/integer"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getIntHandleResponse handles the GetInt response.
-func (client *PrimitiveClient) getIntHandleResponse(resp *azcore.Response) (PrimitiveGetIntResponse, error) {
-	result := PrimitiveGetIntResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.IntWrapper); err != nil {
+func (client *PrimitiveClient) getIntHandleResponse(resp *http.Response) (PrimitiveGetIntResponse, error) {
+	result := PrimitiveGetIntResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.IntWrapper); err != nil {
 		return PrimitiveGetIntResponse{}, err
 	}
 	return result, nil
 }
 
 // getIntHandleError handles the GetInt error response.
-func (client *PrimitiveClient) getIntHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *PrimitiveClient) getIntHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetLong - Get complex types with long properties
@@ -495,44 +488,43 @@ func (client *PrimitiveClient) GetLong(ctx context.Context, options *PrimitiveGe
 	if err != nil {
 		return PrimitiveGetLongResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PrimitiveGetLongResponse{}, client.getLongHandleError(resp)
 	}
 	return client.getLongHandleResponse(resp)
 }
 
 // getLongCreateRequest creates the GetLong request.
-func (client *PrimitiveClient) getLongCreateRequest(ctx context.Context, options *PrimitiveGetLongOptions) (*azcore.Request, error) {
+func (client *PrimitiveClient) getLongCreateRequest(ctx context.Context, options *PrimitiveGetLongOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/long"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getLongHandleResponse handles the GetLong response.
-func (client *PrimitiveClient) getLongHandleResponse(resp *azcore.Response) (PrimitiveGetLongResponse, error) {
-	result := PrimitiveGetLongResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.LongWrapper); err != nil {
+func (client *PrimitiveClient) getLongHandleResponse(resp *http.Response) (PrimitiveGetLongResponse, error) {
+	result := PrimitiveGetLongResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.LongWrapper); err != nil {
 		return PrimitiveGetLongResponse{}, err
 	}
 	return result, nil
 }
 
 // getLongHandleError handles the GetLong error response.
-func (client *PrimitiveClient) getLongHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *PrimitiveClient) getLongHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetString - Get complex types with string properties
@@ -546,44 +538,43 @@ func (client *PrimitiveClient) GetString(ctx context.Context, options *Primitive
 	if err != nil {
 		return PrimitiveGetStringResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PrimitiveGetStringResponse{}, client.getStringHandleError(resp)
 	}
 	return client.getStringHandleResponse(resp)
 }
 
 // getStringCreateRequest creates the GetString request.
-func (client *PrimitiveClient) getStringCreateRequest(ctx context.Context, options *PrimitiveGetStringOptions) (*azcore.Request, error) {
+func (client *PrimitiveClient) getStringCreateRequest(ctx context.Context, options *PrimitiveGetStringOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/string"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getStringHandleResponse handles the GetString response.
-func (client *PrimitiveClient) getStringHandleResponse(resp *azcore.Response) (PrimitiveGetStringResponse, error) {
-	result := PrimitiveGetStringResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.StringWrapper); err != nil {
+func (client *PrimitiveClient) getStringHandleResponse(resp *http.Response) (PrimitiveGetStringResponse, error) {
+	result := PrimitiveGetStringResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.StringWrapper); err != nil {
 		return PrimitiveGetStringResponse{}, err
 	}
 	return result, nil
 }
 
 // getStringHandleError handles the GetString error response.
-func (client *PrimitiveClient) getStringHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *PrimitiveClient) getStringHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutBool - Put complex types with bool properties
@@ -597,35 +588,34 @@ func (client *PrimitiveClient) PutBool(ctx context.Context, complexBody BooleanW
 	if err != nil {
 		return PrimitivePutBoolResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PrimitivePutBoolResponse{}, client.putBoolHandleError(resp)
 	}
-	return PrimitivePutBoolResponse{RawResponse: resp.Response}, nil
+	return PrimitivePutBoolResponse{RawResponse: resp}, nil
 }
 
 // putBoolCreateRequest creates the PutBool request.
-func (client *PrimitiveClient) putBoolCreateRequest(ctx context.Context, complexBody BooleanWrapper, options *PrimitivePutBoolOptions) (*azcore.Request, error) {
+func (client *PrimitiveClient) putBoolCreateRequest(ctx context.Context, complexBody BooleanWrapper, options *PrimitivePutBoolOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/bool"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(complexBody)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, complexBody)
 }
 
 // putBoolHandleError handles the PutBool error response.
-func (client *PrimitiveClient) putBoolHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *PrimitiveClient) putBoolHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutByte - Put complex types with byte properties
@@ -639,35 +629,34 @@ func (client *PrimitiveClient) PutByte(ctx context.Context, complexBody ByteWrap
 	if err != nil {
 		return PrimitivePutByteResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PrimitivePutByteResponse{}, client.putByteHandleError(resp)
 	}
-	return PrimitivePutByteResponse{RawResponse: resp.Response}, nil
+	return PrimitivePutByteResponse{RawResponse: resp}, nil
 }
 
 // putByteCreateRequest creates the PutByte request.
-func (client *PrimitiveClient) putByteCreateRequest(ctx context.Context, complexBody ByteWrapper, options *PrimitivePutByteOptions) (*azcore.Request, error) {
+func (client *PrimitiveClient) putByteCreateRequest(ctx context.Context, complexBody ByteWrapper, options *PrimitivePutByteOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/byte"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(complexBody)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, complexBody)
 }
 
 // putByteHandleError handles the PutByte error response.
-func (client *PrimitiveClient) putByteHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *PrimitiveClient) putByteHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutDate - Put complex types with date properties
@@ -681,35 +670,34 @@ func (client *PrimitiveClient) PutDate(ctx context.Context, complexBody DateWrap
 	if err != nil {
 		return PrimitivePutDateResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PrimitivePutDateResponse{}, client.putDateHandleError(resp)
 	}
-	return PrimitivePutDateResponse{RawResponse: resp.Response}, nil
+	return PrimitivePutDateResponse{RawResponse: resp}, nil
 }
 
 // putDateCreateRequest creates the PutDate request.
-func (client *PrimitiveClient) putDateCreateRequest(ctx context.Context, complexBody DateWrapper, options *PrimitivePutDateOptions) (*azcore.Request, error) {
+func (client *PrimitiveClient) putDateCreateRequest(ctx context.Context, complexBody DateWrapper, options *PrimitivePutDateOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/date"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(complexBody)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, complexBody)
 }
 
 // putDateHandleError handles the PutDate error response.
-func (client *PrimitiveClient) putDateHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *PrimitiveClient) putDateHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutDateTime - Put complex types with datetime properties
@@ -723,35 +711,34 @@ func (client *PrimitiveClient) PutDateTime(ctx context.Context, complexBody Date
 	if err != nil {
 		return PrimitivePutDateTimeResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PrimitivePutDateTimeResponse{}, client.putDateTimeHandleError(resp)
 	}
-	return PrimitivePutDateTimeResponse{RawResponse: resp.Response}, nil
+	return PrimitivePutDateTimeResponse{RawResponse: resp}, nil
 }
 
 // putDateTimeCreateRequest creates the PutDateTime request.
-func (client *PrimitiveClient) putDateTimeCreateRequest(ctx context.Context, complexBody DatetimeWrapper, options *PrimitivePutDateTimeOptions) (*azcore.Request, error) {
+func (client *PrimitiveClient) putDateTimeCreateRequest(ctx context.Context, complexBody DatetimeWrapper, options *PrimitivePutDateTimeOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/datetime"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(complexBody)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, complexBody)
 }
 
 // putDateTimeHandleError handles the PutDateTime error response.
-func (client *PrimitiveClient) putDateTimeHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *PrimitiveClient) putDateTimeHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutDateTimeRFC1123 - Put complex types with datetimeRfc1123 properties
@@ -765,35 +752,34 @@ func (client *PrimitiveClient) PutDateTimeRFC1123(ctx context.Context, complexBo
 	if err != nil {
 		return PrimitivePutDateTimeRFC1123Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PrimitivePutDateTimeRFC1123Response{}, client.putDateTimeRFC1123HandleError(resp)
 	}
-	return PrimitivePutDateTimeRFC1123Response{RawResponse: resp.Response}, nil
+	return PrimitivePutDateTimeRFC1123Response{RawResponse: resp}, nil
 }
 
 // putDateTimeRFC1123CreateRequest creates the PutDateTimeRFC1123 request.
-func (client *PrimitiveClient) putDateTimeRFC1123CreateRequest(ctx context.Context, complexBody Datetimerfc1123Wrapper, options *PrimitivePutDateTimeRFC1123Options) (*azcore.Request, error) {
+func (client *PrimitiveClient) putDateTimeRFC1123CreateRequest(ctx context.Context, complexBody Datetimerfc1123Wrapper, options *PrimitivePutDateTimeRFC1123Options) (*policy.Request, error) {
 	urlPath := "/complex/primitive/datetimerfc1123"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(complexBody)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, complexBody)
 }
 
 // putDateTimeRFC1123HandleError handles the PutDateTimeRFC1123 error response.
-func (client *PrimitiveClient) putDateTimeRFC1123HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *PrimitiveClient) putDateTimeRFC1123HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutDouble - Put complex types with double properties
@@ -807,35 +793,34 @@ func (client *PrimitiveClient) PutDouble(ctx context.Context, complexBody Double
 	if err != nil {
 		return PrimitivePutDoubleResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PrimitivePutDoubleResponse{}, client.putDoubleHandleError(resp)
 	}
-	return PrimitivePutDoubleResponse{RawResponse: resp.Response}, nil
+	return PrimitivePutDoubleResponse{RawResponse: resp}, nil
 }
 
 // putDoubleCreateRequest creates the PutDouble request.
-func (client *PrimitiveClient) putDoubleCreateRequest(ctx context.Context, complexBody DoubleWrapper, options *PrimitivePutDoubleOptions) (*azcore.Request, error) {
+func (client *PrimitiveClient) putDoubleCreateRequest(ctx context.Context, complexBody DoubleWrapper, options *PrimitivePutDoubleOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/double"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(complexBody)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, complexBody)
 }
 
 // putDoubleHandleError handles the PutDouble error response.
-func (client *PrimitiveClient) putDoubleHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *PrimitiveClient) putDoubleHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutDuration - Put complex types with duration properties
@@ -849,35 +834,34 @@ func (client *PrimitiveClient) PutDuration(ctx context.Context, complexBody Dura
 	if err != nil {
 		return PrimitivePutDurationResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PrimitivePutDurationResponse{}, client.putDurationHandleError(resp)
 	}
-	return PrimitivePutDurationResponse{RawResponse: resp.Response}, nil
+	return PrimitivePutDurationResponse{RawResponse: resp}, nil
 }
 
 // putDurationCreateRequest creates the PutDuration request.
-func (client *PrimitiveClient) putDurationCreateRequest(ctx context.Context, complexBody DurationWrapper, options *PrimitivePutDurationOptions) (*azcore.Request, error) {
+func (client *PrimitiveClient) putDurationCreateRequest(ctx context.Context, complexBody DurationWrapper, options *PrimitivePutDurationOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/duration"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(complexBody)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, complexBody)
 }
 
 // putDurationHandleError handles the PutDuration error response.
-func (client *PrimitiveClient) putDurationHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *PrimitiveClient) putDurationHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutFloat - Put complex types with float properties
@@ -891,35 +875,34 @@ func (client *PrimitiveClient) PutFloat(ctx context.Context, complexBody FloatWr
 	if err != nil {
 		return PrimitivePutFloatResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PrimitivePutFloatResponse{}, client.putFloatHandleError(resp)
 	}
-	return PrimitivePutFloatResponse{RawResponse: resp.Response}, nil
+	return PrimitivePutFloatResponse{RawResponse: resp}, nil
 }
 
 // putFloatCreateRequest creates the PutFloat request.
-func (client *PrimitiveClient) putFloatCreateRequest(ctx context.Context, complexBody FloatWrapper, options *PrimitivePutFloatOptions) (*azcore.Request, error) {
+func (client *PrimitiveClient) putFloatCreateRequest(ctx context.Context, complexBody FloatWrapper, options *PrimitivePutFloatOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/float"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(complexBody)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, complexBody)
 }
 
 // putFloatHandleError handles the PutFloat error response.
-func (client *PrimitiveClient) putFloatHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *PrimitiveClient) putFloatHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutInt - Put complex types with integer properties
@@ -933,35 +916,34 @@ func (client *PrimitiveClient) PutInt(ctx context.Context, complexBody IntWrappe
 	if err != nil {
 		return PrimitivePutIntResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PrimitivePutIntResponse{}, client.putIntHandleError(resp)
 	}
-	return PrimitivePutIntResponse{RawResponse: resp.Response}, nil
+	return PrimitivePutIntResponse{RawResponse: resp}, nil
 }
 
 // putIntCreateRequest creates the PutInt request.
-func (client *PrimitiveClient) putIntCreateRequest(ctx context.Context, complexBody IntWrapper, options *PrimitivePutIntOptions) (*azcore.Request, error) {
+func (client *PrimitiveClient) putIntCreateRequest(ctx context.Context, complexBody IntWrapper, options *PrimitivePutIntOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/integer"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(complexBody)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, complexBody)
 }
 
 // putIntHandleError handles the PutInt error response.
-func (client *PrimitiveClient) putIntHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *PrimitiveClient) putIntHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutLong - Put complex types with long properties
@@ -975,35 +957,34 @@ func (client *PrimitiveClient) PutLong(ctx context.Context, complexBody LongWrap
 	if err != nil {
 		return PrimitivePutLongResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PrimitivePutLongResponse{}, client.putLongHandleError(resp)
 	}
-	return PrimitivePutLongResponse{RawResponse: resp.Response}, nil
+	return PrimitivePutLongResponse{RawResponse: resp}, nil
 }
 
 // putLongCreateRequest creates the PutLong request.
-func (client *PrimitiveClient) putLongCreateRequest(ctx context.Context, complexBody LongWrapper, options *PrimitivePutLongOptions) (*azcore.Request, error) {
+func (client *PrimitiveClient) putLongCreateRequest(ctx context.Context, complexBody LongWrapper, options *PrimitivePutLongOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/long"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(complexBody)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, complexBody)
 }
 
 // putLongHandleError handles the PutLong error response.
-func (client *PrimitiveClient) putLongHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *PrimitiveClient) putLongHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutString - Put complex types with string properties
@@ -1017,33 +998,32 @@ func (client *PrimitiveClient) PutString(ctx context.Context, complexBody String
 	if err != nil {
 		return PrimitivePutStringResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PrimitivePutStringResponse{}, client.putStringHandleError(resp)
 	}
-	return PrimitivePutStringResponse{RawResponse: resp.Response}, nil
+	return PrimitivePutStringResponse{RawResponse: resp}, nil
 }
 
 // putStringCreateRequest creates the PutString request.
-func (client *PrimitiveClient) putStringCreateRequest(ctx context.Context, complexBody StringWrapper, options *PrimitivePutStringOptions) (*azcore.Request, error) {
+func (client *PrimitiveClient) putStringCreateRequest(ctx context.Context, complexBody StringWrapper, options *PrimitivePutStringOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/string"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(complexBody)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, complexBody)
 }
 
 // putStringHandleError handles the PutString error response.
-func (client *PrimitiveClient) putStringHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *PrimitiveClient) putStringHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }

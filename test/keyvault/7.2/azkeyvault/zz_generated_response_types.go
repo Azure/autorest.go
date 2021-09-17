@@ -1,4 +1,5 @@
-// +build go1.13
+//go:build go1.16
+// +build go1.16
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -9,6 +10,7 @@ package azkeyvault
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 	"time"
 )
@@ -27,14 +29,40 @@ type HSMSecurityDomainDownloadPendingResult struct {
 
 // HSMSecurityDomainDownloadPollerResponse contains the response from method HSMSecurityDomain.Download.
 type HSMSecurityDomainDownloadPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (HSMSecurityDomainDownloadResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller HSMSecurityDomainDownloadPoller
+	Poller *HSMSecurityDomainDownloadPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l HSMSecurityDomainDownloadPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (HSMSecurityDomainDownloadResponse, error) {
+	respType := HSMSecurityDomainDownloadResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.SecurityDomainObject)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// Resume rehydrates a HSMSecurityDomainDownloadPollerResponse from the provided client and resume token.
+func (l *HSMSecurityDomainDownloadPollerResponse) Resume(ctx context.Context, client *HSMSecurityDomainClient, token string) error {
+	pt, err := runtime.NewPollerFromResumeToken("HSMSecurityDomainClient.Download", token, client.con.Pipeline(), client.downloadHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &HSMSecurityDomainDownloadPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // HSMSecurityDomainDownloadResponse contains the response from method HSMSecurityDomain.Download.
@@ -75,14 +103,40 @@ type HSMSecurityDomainUploadPendingResult struct {
 
 // HSMSecurityDomainUploadPollerResponse contains the response from method HSMSecurityDomain.Upload.
 type HSMSecurityDomainUploadPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (HSMSecurityDomainUploadResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller HSMSecurityDomainUploadPoller
+	Poller *HSMSecurityDomainUploadPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l HSMSecurityDomainUploadPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (HSMSecurityDomainUploadResponse, error) {
+	respType := HSMSecurityDomainUploadResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.SecurityDomainOperationStatus)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// Resume rehydrates a HSMSecurityDomainUploadPollerResponse from the provided client and resume token.
+func (l *HSMSecurityDomainUploadPollerResponse) Resume(ctx context.Context, client *HSMSecurityDomainClient, token string) error {
+	pt, err := runtime.NewPollerFromResumeToken("HSMSecurityDomainClient.Upload", token, client.con.Pipeline(), client.uploadHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &HSMSecurityDomainUploadPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // HSMSecurityDomainUploadResponse contains the response from method HSMSecurityDomain.Upload.
@@ -291,14 +345,40 @@ type KeyVaultClientEncryptResult struct {
 
 // KeyVaultClientFullBackupPollerResponse contains the response from method KeyVaultClient.FullBackup.
 type KeyVaultClientFullBackupPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (KeyVaultClientFullBackupResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller KeyVaultClientFullBackupPoller
+	Poller *KeyVaultClientFullBackupPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l KeyVaultClientFullBackupPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (KeyVaultClientFullBackupResponse, error) {
+	respType := KeyVaultClientFullBackupResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.FullBackupOperation)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// Resume rehydrates a KeyVaultClientFullBackupPollerResponse from the provided client and resume token.
+func (l *KeyVaultClientFullBackupPollerResponse) Resume(ctx context.Context, client *KeyVaultClient, token string) error {
+	pt, err := runtime.NewPollerFromResumeToken("KeyVaultClient.FullBackup", token, client.con.Pipeline(), client.fullBackupHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &KeyVaultClientFullBackupPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // KeyVaultClientFullBackupResponse contains the response from method KeyVaultClient.FullBackup.
@@ -327,14 +407,40 @@ type KeyVaultClientFullBackupStatusResult struct {
 
 // KeyVaultClientFullRestoreOperationPollerResponse contains the response from method KeyVaultClient.FullRestoreOperation.
 type KeyVaultClientFullRestoreOperationPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (KeyVaultClientFullRestoreOperationResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller KeyVaultClientFullRestoreOperationPoller
+	Poller *KeyVaultClientFullRestoreOperationPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l KeyVaultClientFullRestoreOperationPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (KeyVaultClientFullRestoreOperationResponse, error) {
+	respType := KeyVaultClientFullRestoreOperationResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.RestoreOperation)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// Resume rehydrates a KeyVaultClientFullRestoreOperationPollerResponse from the provided client and resume token.
+func (l *KeyVaultClientFullRestoreOperationPollerResponse) Resume(ctx context.Context, client *KeyVaultClient, token string) error {
+	pt, err := runtime.NewPollerFromResumeToken("KeyVaultClient.FullRestoreOperation", token, client.con.Pipeline(), client.fullRestoreOperationHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &KeyVaultClientFullRestoreOperationPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // KeyVaultClientFullRestoreOperationResponse contains the response from method KeyVaultClient.FullRestoreOperation.
@@ -879,14 +985,40 @@ type KeyVaultClientRestoreStorageAccountResult struct {
 
 // KeyVaultClientSelectiveKeyRestoreOperationPollerResponse contains the response from method KeyVaultClient.SelectiveKeyRestoreOperation.
 type KeyVaultClientSelectiveKeyRestoreOperationPollerResponse struct {
-	// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received
-	PollUntilDone func(ctx context.Context, frequency time.Duration) (KeyVaultClientSelectiveKeyRestoreOperationResponse, error)
-
 	// Poller contains an initialized poller.
-	Poller KeyVaultClientSelectiveKeyRestoreOperationPoller
+	Poller *KeyVaultClientSelectiveKeyRestoreOperationPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+func (l KeyVaultClientSelectiveKeyRestoreOperationPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (KeyVaultClientSelectiveKeyRestoreOperationResponse, error) {
+	respType := KeyVaultClientSelectiveKeyRestoreOperationResponse{}
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.SelectiveKeyRestoreOperation)
+	if err != nil {
+		return respType, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// Resume rehydrates a KeyVaultClientSelectiveKeyRestoreOperationPollerResponse from the provided client and resume token.
+func (l *KeyVaultClientSelectiveKeyRestoreOperationPollerResponse) Resume(ctx context.Context, client *KeyVaultClient, token string) error {
+	pt, err := runtime.NewPollerFromResumeToken("KeyVaultClient.SelectiveKeyRestoreOperation", token, client.con.Pipeline(), client.selectiveKeyRestoreOperationHandleError)
+	if err != nil {
+		return err
+	}
+	poller := &KeyVaultClientSelectiveKeyRestoreOperationPoller{
+		pt: pt,
+	}
+	resp, err := poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	l.RawResponse = resp
+	return nil
 }
 
 // KeyVaultClientSelectiveKeyRestoreOperationResponse contains the response from method KeyVaultClient.SelectiveKeyRestoreOperation.

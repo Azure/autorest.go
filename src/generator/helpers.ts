@@ -6,7 +6,7 @@
 import { Session } from '@autorest/extension-base';
 import { values } from '@azure-tools/linq';
 import { comment } from '@azure-tools/codegen';
-import { aggregateParameters, isLROOperation, isSchemaResponse, isMultiRespOperation } from '../common/helpers';
+import { aggregateParameters, isLROOperation, isPageableOperation, isSchemaResponse, isMultiRespOperation, PollerInfo } from '../common/helpers';
 import { ArraySchema, CodeModel, DictionarySchema, Language, Parameter, Schema, SchemaType, ObjectSchema, Operation, Property, GroupProperty, ImplementationLocation, SerializationStyle, ByteArraySchema, ConstantSchema, NumberSchema, DateTimeSchema } from '@autorest/codemodel';
 import { ImportManager } from './imports';
 
@@ -17,7 +17,8 @@ export const datetimeRFC1123Format = 'time.RFC1123';
 // returns the common source-file preamble (license comment, package name etc)
 export async function contentPreamble(session: Session<CodeModel>): Promise<string> {
   const headerText = comment(await session.getValue('header-text', 'MISSING LICENSE HEADER'), '// ');
-  let text = `// +build go1.13\n\n${headerText}\n\n`;
+  let text = `//go:build go1.16\n`;
+  text += `// +build go1.16\n\n${headerText}\n\n`;
   text += `package ${session.model.language.go!.packageName}\n\n`;
   return text;
 }
@@ -360,6 +361,25 @@ export function formatStatusCodes(statusCodes: Array<string>): string {
     asHTTPStatus.push(formatStatusCode(rawCode));
   }
   return asHTTPStatus.join(', ');
+}
+
+// emits a poller declaration
+export function emitPoller(op: Operation): string {
+  let text = `&${(<PollerInfo>op.language.go!.pollerType).name} {\n`;
+  text += '\t\tpt: pt,\n';
+  if (isPageableOperation(op)) {
+    text += '\t\tclient: client,\n';
+  }
+  text += '\t}\n';
+  return text;
+}
+
+// returns the client's pipeline
+export function getClientPipeline(op: Operation): string {
+  if (<boolean>op.language.go!.azureARM) {
+    return '\tclient.pl';
+  }
+  return '\tclient.con.Pipeline()';
 }
 
 export function formatStatusCode(statusCode: string): string {

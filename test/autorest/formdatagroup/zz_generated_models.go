@@ -1,4 +1,5 @@
-// +build go1.13
+//go:build go1.16
+// +build go1.16
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -10,6 +11,7 @@ package formdatagroup
 import (
 	"encoding/json"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"io"
 	"reflect"
 )
 
@@ -43,7 +45,7 @@ type FormdataUploadFilesOptions struct {
 
 type Paths1MqqetpFormdataStreamUploadfilePostRequestbodyContentMultipartFormDataSchema struct {
 	// REQUIRED; File to upload.
-	FileContent *azcore.ReadSeekCloser `json:"fileContent,omitempty"`
+	FileContent *io.ReadSeekCloser `json:"fileContent,omitempty"`
 
 	// REQUIRED; File name to upload. Name has to be spelled exactly as written here.
 	FileName *string `json:"fileName,omitempty"`
@@ -51,7 +53,7 @@ type Paths1MqqetpFormdataStreamUploadfilePostRequestbodyContentMultipartFormData
 
 type Paths1P3Stk3FormdataStreamUploadfilesPostRequestbodyContentMultipartFormDataSchema struct {
 	// REQUIRED; Files to upload.
-	FileContent []azcore.ReadSeekCloser `json:"fileContent,omitempty"`
+	FileContent []io.ReadSeekCloser `json:"fileContent,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type Paths1P3Stk3FormdataStreamUploadfilesPostRequestbodyContentMultipartFormDataSchema.

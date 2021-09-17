@@ -1,4 +1,5 @@
-// +build go1.13
+//go:build go1.16
+// +build go1.16
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -99,8 +100,8 @@ type HeaderCustomNamedRequestIDResult struct {
 	FooRequestID *string
 }
 
-// OdataGetWithFilterResponse contains the response from method Odata.GetWithFilter.
-type OdataGetWithFilterResponse struct {
+// ODataGetWithFilterResponse contains the response from method OData.GetWithFilter.
+type ODataGetWithFilterResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }

@@ -7,9 +7,9 @@ import { Session } from '@autorest/extension-base';
 import { comment, KnownMediaType } from '@azure-tools/codegen';
 import { ArraySchema, ByteArraySchema, ChoiceSchema, CodeModel, ConstantSchema, DateTimeSchema, DictionarySchema, GroupProperty, ImplementationLocation, NumberSchema, ObjectSchema, Operation, Parameter, Property, Protocols, Response, Schema, SchemaResponse, SchemaType } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
-import { aggregateParameters, getSchemaResponse, internalPagerTypeName, internalPollerTypeName, isArraySchema, isMultiRespOperation, isPageableOperation, isSchemaResponse, isTypePassedByValue, PagerInfo, PollerInfo, isLROOperation, commentLength } from '../common/helpers';
+import { aggregateParameters, getSchemaResponse, isArraySchema, isMultiRespOperation, isPageableOperation, isSchemaResponse, isTypePassedByValue, PagerInfo, isLROOperation, commentLength } from '../common/helpers';
 import { OperationNaming } from '../transform/namer';
-import { contentPreamble, formatParameterTypeName, formatStatusCodes, getFinalResponseEnvelopeName, getResponseEnvelope, getResponseEnvelopeName, getResultFieldName, getStatusCodes, hasDescription, hasResultEnvelope, hasSchemaResponse, skipURLEncoding, sortAscending, getCreateRequestParameters, getCreateRequestParametersSig, getMethodParameters, getParamName, formatParamValue, dateFormat, datetimeRFC1123Format, datetimeRFC3339Format, sortParametersByRequired } from './helpers';
+import { contentPreamble, emitPoller, formatParameterTypeName, formatStatusCodes, getClientPipeline, getFinalResponseEnvelopeName, getResponseEnvelope, getResponseEnvelopeName, getResultFieldName, getStatusCodes, hasDescription, hasResultEnvelope, hasSchemaResponse, skipURLEncoding, sortAscending, getCreateRequestParameters, getCreateRequestParametersSig, getMethodParameters, getParamName, formatParamValue, dateFormat, datetimeRFC1123Format, datetimeRFC3339Format, sortParametersByRequired } from './helpers';
 import { ImportManager } from './imports';
 
 // represents the generated content for an operation group
@@ -34,9 +34,10 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     const imports = new ImportManager();
     // add standard imports
     imports.add('net/http');
-    imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
+    imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/policy');
+    imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
     if (<boolean>session.model.language.go!.azureARM) {
-      imports.add('github.com/Azure/azure-sdk-for-go/sdk/armcore');
+      imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/arm');
     }
 
     let opText = '';
@@ -45,9 +46,8 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       // protocol creation can add imports to the list so
       // it must be done before the imports are written out
       if (isLROOperation(op)) {
-        // generate Begin and Resume methods
+        // generate Begin method
         opText += generateLROBeginMethod(op, imports, isARM);
-        opText += generateLROResumeMethod(op, isARM);
       }
       opText += generateOperation(op, imports);
       opText += createProtocolRequest(session.model, op, imports);
@@ -64,10 +64,10 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     let text = await contentPreamble(session);
     let connection = 'Connection';
     let clientName = group.language.go!.clientName;
-    if (!isARM && !forceExports) {
+    if (<boolean>session.model.language.go!.azureARM) {
+      connection = 'arm.Connection';
+    } else if (!forceExports) {
       connection = connection.uncapitalize();
-    } else if (<boolean>session.model.language.go!.azureARM) {
-      connection = 'armcore.Connection';
     }
     const clientCtor = group.language.go!.clientCtorName;
     text += imports.text();
@@ -77,7 +77,12 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       text += `// Don't use this type directly, use ${clientCtor}() instead.\n`;
     }
     text += `type ${clientName} struct {\n`;
-    text += `\tcon *${connection}\n`;
+    if (<boolean>session.model.language.go!.azureARM) {
+      text += '\tep string\n';
+      text += '\tpl runtime.Pipeline\n';
+    } else {
+      text += `\tcon *${connection}\n`;
+    }
     if (group.language.go!.clientParams) {
       const clientParams = <Array<Parameter>>group.language.go!.clientParams;
       for (const clientParam of values(clientParams)) {
@@ -86,9 +91,18 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     }
     text += '}\n\n';
     if (isARM || forceExports) {
-      // operation client constructor
-      const connectionLiterals = ['con: con'];
-      const methodParams = [`con *${connection}`];
+      const connectionLiterals = new Array<string>();
+      const methodParams = new Array<string>();
+      if (<boolean>session.model.language.go!.azureARM) {
+        // real ARM doesn't need to deal with parameterized host (yay)
+        connectionLiterals.push('ep: con.Endpoint()');
+        connectionLiterals.push('pl: con.NewPipeline(module, version)');
+        methodParams.push('con *arm.Connection');
+      } else {
+        // operation client constructor
+        connectionLiterals.push('con: con');
+        methodParams.push(`con *${connection}`);
+      }
       // add client params to the operation client constructor
       if (group.language.go!.clientParams) {
         const clientParams = <Array<Parameter>>group.language.go!.clientParams;
@@ -203,7 +217,7 @@ function getZeroReturnValue(op: Operation, apiType: 'api' | 'op' | 'handler'): s
   let returnType = `${getResponseEnvelopeName(op)}{}`;
   if (isLROOperation(op)) {
     if (apiType === 'op') {
-      // the operation returns an *azcore.Response
+      // the operation returns an *http.Response
       returnType = 'nil';
     } else if (apiType === 'handler' && isPageableOperation(op)) {
       returnType = `${getFinalResponseEnvelopeName(op)}{}`;
@@ -248,12 +262,12 @@ function generateOperation(op: Operation, imports: ImportManager): string {
   const statusCodes = getStatusCodes(op);
   if (isPageableOperation(op) && !isLROOperation(op)) {
     imports.add('context');
-    text += `\treturn &${internalPagerTypeName(<PagerInfo>op.language.go!.pageableType)}{\n`;
+    text += `\treturn &${(<PagerInfo>op.language.go!.pageableType).name}{\n`;
     text += `\t\tclient: client,\n`;
-    text += `\t\trequester: func(ctx context.Context) (*azcore.Request, error) {\n`;
+    text += `\t\trequester: func(ctx context.Context) (*policy.Request, error) {\n`;
     text += `\t\t\treturn client.${info.protocolNaming.requestMethod}(${reqParams})\n`;
     text += '\t\t},\n';
-    text += `\t\tadvancer: func(ctx context.Context, resp ${getResponseEnvelopeName(op)}) (*azcore.Request, error) {\n`;
+    text += `\t\tadvancer: func(ctx context.Context, resp ${getResponseEnvelopeName(op)}) (*policy.Request, error) {\n`;
     const nextLink = op.language.go!.paging.nextLinkName;
     const response = getResultFieldName(op);
     if (op.language.go!.paging.member) {
@@ -270,7 +284,7 @@ function generateOperation(op: Operation, imports: ImportManager): string {
       }
       text += `\t\t\treturn client.${op.language.go!.paging.member}CreateRequest(${nextOpParams.join(', ')})\n`;
     } else {
-      text += `\t\t\treturn azcore.NewRequest(ctx, http.MethodGet, *resp.${response}.${nextLink})\n`;
+      text += `\t\t\treturn runtime.NewRequest(ctx, http.MethodGet, *resp.${response}.${nextLink})\n`;
     }
     text += '\t\t},\n';
     text += `\t}\n`;
@@ -282,13 +296,13 @@ function generateOperation(op: Operation, imports: ImportManager): string {
   text += `\tif err != nil {\n`;
   text += `\t\treturn ${zeroResp}, err\n`;
   text += `\t}\n`;
-  text += `\tresp, err := client.con.Pipeline().Do(req)\n`;
+  text += `\tresp, err := ${getClientPipeline(op)}.Do(req)\n`;
   text += `\tif err != nil {\n`;
   text += `\t\treturn ${zeroResp}, err\n`;
   text += `\t}\n`;
   // HAB with headers response is handled in protocol responder
   if (op.language.go!.headAsBoolean && !responseHasHeaders(op)) {
-    text += `\tresult := ${getResponseEnvelopeName(op)}{RawResponse: resp.Response}\n`;
+    text += `\tresult := ${getResponseEnvelopeName(op)}{RawResponse: resp}\n`;
     text += '\tif resp.StatusCode >= 200 && resp.StatusCode < 300 {\n';
     text += '\t\tresult.Success = true\n';
     text += '\t}\n';
@@ -296,17 +310,17 @@ function generateOperation(op: Operation, imports: ImportManager): string {
   } else {
     // for complex HAB the status code check isn't applicable
     if (!op.language.go!.headAsBoolean) {
-      text += `\tif !resp.HasStatusCode(${formatStatusCodes(statusCodes)}) {\n`;
+      text += `\tif !runtime.HasStatusCode(resp, ${formatStatusCodes(statusCodes)}) {\n`;
       text += `\t\treturn ${zeroResp}, client.${info.protocolNaming.errorMethod}(resp)\n`;
       text += '\t}\n';
     }
     if (isLROOperation(op)) {
       text += '\t return resp, nil\n';
     } else if (needsResponseHandler(op)) {
-      // also cheating here as at present the only param to the responder is an azcore.Response
+      // also cheating here as at present the only param to the responder is an http.Response
       text += `\treturn client.${info.protocolNaming.responseMethod}(resp)\n`;
     } else {
-      text += `\treturn ${getResponseEnvelopeName(op)}{RawResponse: resp.Response}, nil\n`;
+      text += `\treturn ${getResponseEnvelopeName(op)}{RawResponse: resp}, nil\n`;
     }
   }
   text += '}\n\n';
@@ -322,11 +336,14 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
     }
     imports.addImportForSchemaType(param.schema);
   }
-  const returns = ['*azcore.Request', 'error'];
+  const returns = ['*policy.Request', 'error'];
   let text = `${comment(name, '// ')} creates the ${info.name} request.\n`;
   text += `func (client *${op.language.go!.clientName}) ${name}(${getCreateRequestParametersSig(op)}) (${returns.join(', ')}) {\n`;
   // default to host on the connection
   let hostParam = 'client.con.Endpoint()';
+  if (<boolean>op.language.go!.azureARM) {
+    hostParam = '\tclient.ep';
+  }
   if (codeModel.language.go!.complexHostParams) {
     imports.add('strings');
     // we have a complex parameterized host
@@ -355,7 +372,7 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
   if (hasPathParams || (!pathContainsParms && pathStr.length > 1)) {
     // there are path params, or the path doesn't contain tokens and is not "/" so emit it
     text += `\turlPath := "${op.requests![0].protocol.http!.path}"\n`;
-    hostParam = `azcore.JoinPaths(${hostParam}, urlPath)`;
+    hostParam = `runtime.JoinPaths(${hostParam}, urlPath)`;
   }
   if (hasPathParams) {
     // swagger defines path params, emit path and replace tokens
@@ -388,11 +405,10 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
       text += `\turlPath = strings.ReplaceAll(urlPath, "{${pp.language.go!.serializedName}}", ${paramValue})\n`;
     }
   }
-  text += `\treq, err := azcore.NewRequest(ctx, http.Method${(<string>op.requests![0].protocol.http!.method).capitalize()}, ${hostParam})\n`;
+  text += `\treq, err := runtime.NewRequest(ctx, http.Method${(<string>op.requests![0].protocol.http!.method).capitalize()}, ${hostParam})\n`;
   text += '\tif err != nil {\n';
   text += '\t\treturn nil, err\n';
   text += '\t}\n';
-  text += '\treq.Telemetry(telemetryInfo)\n';
   const hasQueryParams = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'query'; }).any();
   // helper to build nil checks for param groups
   const emitParamGroupCheck = function (gp: GroupProperty, param: Parameter): string {
@@ -435,12 +451,37 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
     }
     // emit encoded params first
     if (encodedParams.length > 0) {
-      text += '\treqQP := req.URL.Query()\n';
+      text += '\treqQP := req.Raw().URL.Query()\n';
       for (const qp of values(encodedParams)) {
         let setter: string;
         if (qp.protocol.http?.explode === true) {
           setter = `\tfor _, qv := range ${getParamName(qp)} {\n`;
-          setter += `\t\treqQP.Add("${qp.language.go!.serializedName}", qv)\n`;
+          if (qp.schema.type !== SchemaType.Array) {
+            throw new Error(`expected SchemaType.Array for query param ${qp.language.go!.name}`);
+          }
+          // emit a type conversion for the qv based on the array's element type
+          let queryVal: string;
+          const arrayQP = <ArraySchema>qp.schema;
+          switch (arrayQP.elementType.type) {
+            case SchemaType.Choice:
+            case SchemaType.SealedChoice:
+              const ch = <ChoiceSchema>arrayQP.elementType;
+              // only string and number types are supported for enums
+              if (ch.choiceType.type === SchemaType.String) {
+                queryVal = 'string(qv)';
+              } else {
+                imports.add('fmt');
+                queryVal = 'fmt.Sprintf("%d", qv)';
+              }
+              break;
+            case SchemaType.String:
+              queryVal = 'qv';
+              break;
+            default:
+              imports.add('fmt');
+              queryVal = 'fmt.Sprintf("%v", qv)';
+          }
+          setter += `\t\treqQP.Add("${qp.language.go!.serializedName}", ${queryVal})\n`;
           setter += '\t}';
         } else {
           // cannot initialize setter to this value as formatParamValue() can change imports
@@ -448,12 +489,12 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
         }
         text += emitQueryParam(qp, setter);
       }
-      text += '\treq.URL.RawQuery = reqQP.Encode()\n';
+      text += '\treq.Raw().URL.RawQuery = reqQP.Encode()\n';
     }
     // tack on any unencoded params to the end
     if (unencodedParams.length > 0) {
       if (encodedParams.length > 0) {
-        text += '\tunencodedParams := []string{req.URL.RawQuery}\n';
+        text += '\tunencodedParams := []string{req.Raw().URL.RawQuery}\n';
       } else {
         text += '\tunencodedParams := []string{}\n';
       }
@@ -468,7 +509,7 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
         }
         text += emitQueryParam(qp, setter);
       }
-      text += '\treq.URL.RawQuery = strings.Join(unencodedParams, "&")\n';
+      text += '\treq.Raw().URL.RawQuery = strings.Join(unencodedParams, "&")\n';
     }
   }
   if (hasBinaryResponse(op.responses!)) {
@@ -481,11 +522,11 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
     const emitHeaderSet = function (headerParam: Parameter, prefix: string): string {
       if (header.schema.language.go!.headerCollectionPrefix) {
         let headerText = `${prefix}for k, v := range ${getParamName(headerParam)} {\n`;
-        headerText += `${prefix}\treq.Header.Set("${header.schema.language.go!.headerCollectionPrefix}"+k, v)\n`;
+        headerText += `${prefix}\treq.Raw().Header.Set("${header.schema.language.go!.headerCollectionPrefix}"+k, v)\n`;
         headerText += `${prefix}}\n`;
         return headerText;
       } else {
-        return `${prefix}req.Header.Set("${headerParam.language.go!.serializedName}", ${formatParamValue(headerParam, imports)})\n`;
+        return `${prefix}req.Raw().Header.Set("${headerParam.language.go!.serializedName}", ${formatParamValue(headerParam, imports)})\n`;
       }
     }
     if (header.required) {
@@ -551,10 +592,10 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
       body = 'aux';
     }
     if (bodyParam!.required || bodyParam!.schema.type === SchemaType.Constant) {
-      text += `\treturn req, req.MarshalAs${getMediaFormat(bodyParam!.schema, mediaType, body)}\n`;
+      text += `\treturn req, runtime.MarshalAs${getMediaFormat(bodyParam!.schema, mediaType, `req, ${body}`)}\n`;
     } else {
       text += emitParamGroupCheck(<GroupProperty>bodyParam!.language.go!.paramGroup, bodyParam!);
-      text += `\t\treturn req, req.MarshalAs${getMediaFormat(bodyParam!.schema, mediaType, body)}\n`;
+      text += `\t\treturn req, runtime.MarshalAs${getMediaFormat(bodyParam!.schema, mediaType, `req, ${body}`)}\n`;
       text += '\t}\n';
       text += '\treturn req, nil\n';
     }
@@ -580,19 +621,20 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
     }
   } else if (mediaType === 'text') {
     imports.add('strings');
+    imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming');
     const bodyParam = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http!.in === 'body'; }).first();
     if (bodyParam!.required) {
-      text += `\tbody := azcore.NopCloser(strings.NewReader(${bodyParam!.language.go!.name}))\n`;
+      text += `\tbody := streaming.NopCloser(strings.NewReader(${bodyParam!.language.go!.name}))\n`;
       text += `\treturn req, req.SetBody(body, "text/plain; encoding=UTF-8")\n`;
     } else {
       text += emitParamGroupCheck(<GroupProperty>bodyParam!.language.go!.paramGroup, bodyParam!);
-      text += `\tbody := azcore.NopCloser(strings.NewReader(${getParamName(bodyParam!)}))\n`;
+      text += `\tbody := streaming.NopCloser(strings.NewReader(${getParamName(bodyParam!)}))\n`;
       text += `\treturn req, req.SetBody(body, "text/plain; encoding=UTF-8")\n`;
       text += '\t}\n';
       text += '\treturn req, nil\n';
     }
   } else if (mediaType === 'multipart') {
-    text += '\tif err := req.SetMultipartFormData(map[string]interface{}{\n';
+    text += '\tif err := runtime.SetMultipartFormData(req, map[string]interface{}{\n';
     for (const param of values(aggregateParameters(op))) {
       if (param.isPartialBody) {
         text += `\t\t\t"${param.language.go!.name}": ${param.language.go!.name},\n`;
@@ -614,9 +656,9 @@ function getMediaFormat(schema: Schema, mediaType: 'JSON' | 'XML', param: string
   let format = '';
   if (schema.type === SchemaType.ByteArray) {
     marshaller = 'ByteArray';
-    format = ', azcore.Base64StdFormat';
+    format = ', runtime.Base64StdFormat';
     if ((<ByteArraySchema>schema).format === 'base64url') {
-      format = ', azcore.Base64URLFormat';
+      format = ', runtime.Base64URLFormat';
     }
   }
   return `${marshaller}(${param}${format})`;
@@ -656,7 +698,7 @@ function generateResponseUnmarshaller(op: Operation, response: SchemaResponse, u
   if (response.schema.type === SchemaType.DateTime || response.schema.type === SchemaType.UnixTime || response.schema.type === SchemaType.Date) {
     // use the designated time type for unmarshalling
     unmarshallerText += `\tvar aux *${response.schema.language.go!.internalTimeType}\n`;
-    unmarshallerText += `\tif err := resp.UnmarshalAs${getMediaType(response.protocol)}(&aux); err != nil {\n`;
+    unmarshallerText += `\tif err := runtime.UnmarshalAs${getMediaType(response.protocol)}(resp, &aux); err != nil {\n`;
     unmarshallerText += `\t\treturn ${zeroValue}, err\n`;
     unmarshallerText += '\t}\n';
     unmarshallerText += `\tresult.${getResultFieldName(op)} = (*time.Time)(aux)\n`;
@@ -664,7 +706,7 @@ function generateResponseUnmarshaller(op: Operation, response: SchemaResponse, u
   } else if (isArrayOfDateTime(response.schema) || isArrayOfDate(response.schema)) {
     // unmarshalling arrays of date/time is a little more involved
     unmarshallerText += `\tvar aux []*${(<ArraySchema>response.schema).elementType.language.go!.internalTimeType}\n`;
-    unmarshallerText += `\tif err := resp.UnmarshalAs${getMediaType(response.protocol)}(&aux); err != nil {\n`;
+    unmarshallerText += `\tif err := runtime.UnmarshalAs${getMediaType(response.protocol)}(resp, &aux); err != nil {\n`;
     unmarshallerText += `\t\treturn ${zeroValue}, err\n`;
     unmarshallerText += '\t}\n';
     unmarshallerText += '\tcp := make([]*time.Time, len(aux), len(aux))\n';
@@ -675,7 +717,7 @@ function generateResponseUnmarshaller(op: Operation, response: SchemaResponse, u
     return unmarshallerText;
   } else if (isMapOfDateTime(response.schema) || isMapOfDate(response.schema)) {
     unmarshallerText += `\taux := map[string]*${(<DictionarySchema>response.schema).elementType.language.go!.internalTimeType}{}\n`;
-    unmarshallerText += `\tif err := resp.UnmarshalAs${getMediaType(response.protocol)}(&aux); err != nil {\n`;
+    unmarshallerText += `\tif err := runtime.UnmarshalAs${getMediaType(response.protocol)}(resp, &aux); err != nil {\n`;
     unmarshallerText += `\t\treturn ${zeroValue}, err\n`;
     unmarshallerText += '\t}\n';
     unmarshallerText += `\tcp := map[string]*time.Time{}\n`;
@@ -687,7 +729,7 @@ function generateResponseUnmarshaller(op: Operation, response: SchemaResponse, u
   }
   const mediaType = getMediaType(response.protocol);
   if (mediaType === 'JSON' || mediaType === 'XML') {
-    unmarshallerText += `\tif err := resp.UnmarshalAs${getMediaFormat(response.schema, mediaType, `&${unmarshalTarget}`)}; err != nil {\n`;
+    unmarshallerText += `\tif err := runtime.UnmarshalAs${getMediaFormat(response.schema, mediaType, `resp, &${unmarshalTarget}`)}; err != nil {\n`;
     unmarshallerText += `\t\treturn ${zeroValue}, err\n`;
     unmarshallerText += '\t}\n';
   }
@@ -702,7 +744,7 @@ function createProtocolResponse(op: Operation, imports: ImportManager): string {
   const name = info.protocolNaming.responseMethod;
   const clientName = op.language.go!.clientName;
   let text = `${comment(name, '// ')} handles the ${info.name} response.\n`;
-  text += `func (client *${clientName}) ${name}(resp *azcore.Response) (${generateReturnsInfo(op, 'handler').join(', ')}) {\n`;
+  text += `func (client *${clientName}) ${name}(resp *http.Response) (${generateReturnsInfo(op, 'handler').join(', ')}) {\n`;
   const addHeaders = function (props?: Property[]) {
     const headerVals = new Array<Property>();
     for (const prop of values(props)) {
@@ -719,7 +761,7 @@ function createProtocolResponse(op: Operation, imports: ImportManager): string {
     if (isLROOperation(op)) {
       respEnv = getFinalResponseEnvelopeName(op);
     }
-    text += `\tresult := ${respEnv}{RawResponse: resp.Response}\n`;
+    text += `\tresult := ${respEnv}{RawResponse: resp}\n`;
     // we know there's a result envelope at this point
     const resultEnv = hasResultEnvelope(op);
     addHeaders((<ObjectSchema>resultEnv!.schema).properties);
@@ -739,7 +781,7 @@ function createProtocolResponse(op: Operation, imports: ImportManager): string {
     text += '\treturn result, nil\n';
   } else {
     imports.add('fmt');
-    text += `\tresult := ${getResponseEnvelopeName(op)}{RawResponse: resp.Response}\n`;
+    text += `\tresult := ${getResponseEnvelopeName(op)}{RawResponse: resp}\n`;
     // unmarshal any header values
     const respEnv = getResponseEnvelope(op);
     addHeaders(respEnv.properties);
@@ -764,21 +806,22 @@ function createProtocolResponse(op: Operation, imports: ImportManager): string {
 }
 
 function createProtocolErrHandler(op: Operation, imports: ImportManager): string {
+  imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
   const info = <OperationNaming>op.language.go!;
   const name = info.protocolNaming.errorMethod;
   let text = `${comment(name, '// ')} handles the ${info.name} error response.\n`;
-  text += `func (client *${op.language.go!.clientName}) ${name}(resp *azcore.Response) error {\n`;
-  text += '\tbody, err := resp.Payload()\n';
+  text += `func (client *${op.language.go!.clientName}) ${name}(resp *http.Response) error {\n`;
+  text += '\tbody, err := runtime.Payload(resp)\n';
   text += '\tif err != nil {\n';
-  text += '\t\treturn azcore.NewResponseError(err, resp.Response)\n';
+  text += '\t\treturn runtime.NewResponseError(err, resp)\n';
   text += '\t}\n';
   // define a generic error for when there are no exceptions or no error schema
   const generateGenericError = function () {
     imports.add('errors');
     return `\tif len(body) == 0 {
-      return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
+      return runtime.NewResponseError(errors.New(resp.Status), resp)
     }
-    return azcore.NewResponseError(errors.New(string(body)), resp.Response)
+    return runtime.NewResponseError(errors.New(string(body)), resp)
     `;
   }
 
@@ -809,17 +852,17 @@ function createProtocolErrHandler(op: Operation, imports: ImportManager): string
       unmarshaller += `\tvar errType ${typeName}\n`;
     }
     const innerErr = schemaError.language.go!.flattenedErr ? `.${schemaError.language.go!.flattenedErr}` : '';
-    unmarshaller += `${prefix}if err := resp.UnmarshalAs${errFormat.toUpperCase()}(&errType${innerErr}); err != nil {\n`;
-    unmarshaller += `${prefix}\treturn azcore.NewResponseError(fmt.Errorf("%s\\n%s", string(body), err), resp.Response)\n`;
+    unmarshaller += `${prefix}if err := runtime.UnmarshalAs${errFormat.toUpperCase()}(resp, &errType${innerErr}); err != nil {\n`;
+    unmarshaller += `${prefix}\treturn runtime.NewResponseError(fmt.Errorf("%s\\n%s", string(body), err), resp)\n`;
     unmarshaller += `${prefix}}\n`;
     if (schemaError.language.go!.internalErrorType) {
       // err.wrapped is for discriminated error types, it will already be pointer-to-type
-      unmarshaller += `${prefix}return azcore.NewResponseError(errType.wrapped, resp.Response)\n`;
+      unmarshaller += `${prefix}return runtime.NewResponseError(errType.wrapped, resp)\n`;
     } else if (schemaError.type === SchemaType.Object) {
       // for consistency with success responses, return pointer-to-error type
-      unmarshaller += `${prefix}return azcore.NewResponseError(&errType, resp.Response)\n`;
+      unmarshaller += `${prefix}return runtime.NewResponseError(&errType, resp)\n`;
     } else {
-      unmarshaller += `${prefix}return azcore.NewResponseError(fmt.Errorf("%v", errType), resp.Response)\n`;
+      unmarshaller += `${prefix}return runtime.NewResponseError(fmt.Errorf("%v", errType), resp)\n`;
     }
     return unmarshaller;
   };
@@ -979,7 +1022,7 @@ function generateReturnsInfo(op: Operation, apiType: 'api' | 'op' | 'handler'): 
         }
         break;
       case 'op':
-        returnType = '*azcore.Response';
+        returnType = '*http.Response';
         break;
     }
   } else if (isPageableOperation(op)) {
@@ -987,7 +1030,7 @@ function generateReturnsInfo(op: Operation, apiType: 'api' | 'op' | 'handler'): 
       case 'api':
       case 'op':
         // pager operations don't return an error
-        return [(<PagerInfo>op.language.go!.pageableType).name];
+        return [`*${(<PagerInfo>op.language.go!.pageableType).name}`];
     }
   }
   return [returnType, 'error'];
@@ -999,9 +1042,8 @@ function generateLROBeginMethod(op: Operation, imports: ImportManager, isARM: bo
   const returns = generateReturnsInfo(op, 'api');
   const clientName = op.language.go!.clientName;
   if (isARM) {
-    imports.add('github.com/Azure/azure-sdk-for-go/sdk/armcore');
+    imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime', 'armruntime');
   }
-  imports.add('time');
   let text = '';
   if (hasDescription(op.language.go!)) {
     text += `${comment(`Begin${op.language.go!.name} - ${op.language.go!.description}`, "//", undefined, commentLength)}\n`;
@@ -1015,7 +1057,7 @@ function generateLROBeginMethod(op: Operation, imports: ImportManager, isARM: bo
   text += `\t\treturn ${zeroResp}, err\n`;
   text += `\t}\n`;
   text += `\tresult := ${getResponseEnvelopeName(op)}{\n`;
-  text += '\t\tRawResponse: resp.Response,\n';
+  text += '\t\tRawResponse: resp,\n';
   text += '\t}\n';
   if (isARM) {
     // LRO operation might have a special configuration set in x-ms-long-running-operation-options
@@ -1024,74 +1066,18 @@ function generateLROBeginMethod(op: Operation, imports: ImportManager, isARM: bo
     if (op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via']) {
       finalState = op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via'];
     }
-    text += `\tpt, err := armcore.NewLROPoller("${clientName}.${op.language.go!.name}", "${finalState}", resp, client.con.Pipeline(), client.${info.protocolNaming.errorMethod})\n`;
+    text += `\tpt, err := armruntime.NewPoller("${clientName}.${op.language.go!.name}", "${finalState}", resp, ${getClientPipeline(op)}, client.${info.protocolNaming.errorMethod})\n`;
   } else {
-    text += `\tpt, err := azcore.NewLROPoller("${clientName}.${op.language.go!.name}",resp, client.con.Pipeline(), client.${info.protocolNaming.errorMethod})\n`;
+    imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
+    text += `\tpt, err := runtime.NewPoller("${clientName}.${op.language.go!.name}",resp, ${getClientPipeline(op)}, client.${info.protocolNaming.errorMethod})\n`;
   }
   text += '\tif err != nil {\n';
   text += `\t\treturn ${zeroResp}, err\n`;
   text += '\t}\n';
-  text += emitPoller(op);
-  text += '\tresult.Poller = poller\n';
-  // determine the poller response based on the name and whether is is a pageable operation
-  let pollerResp = getFinalResponseEnvelopeName(op);
-  if (isPageableOperation(op)) {
-    pollerResp = (<PagerInfo>op.language.go!.pageableType).name;
-  }
-  text += `\tresult.PollUntilDone = func(ctx context.Context, frequency time.Duration) (${pollerResp}, error) {\n`;
-  text += `\t\treturn poller.pollUntilDone(ctx, frequency)\n`;
-  text += `\t}\n`;
+  text += `\tresult.Poller = ${emitPoller(op)}`;
   text += `\treturn result, nil\n`;
   // closing braces
   text += '}\n\n';
   return text;
 }
 
-function generateLROResumeMethod(op: Operation, isARM: boolean): string {
-  const info = <OperationNaming>op.language.go!;
-  const clientName = op.language.go!.clientName;
-  const returns = generateReturnsInfo(op, 'api');
-  const zeroResp = getZeroReturnValue(op, 'api');
-  let text = `// Resume${op.language.go!.name} creates a new ${op.language.go!.pollerType.name} from the specified resume token.\n`;
-  text += `// token - The value must come from a previous call to ${op.language.go!.pollerType.name}.ResumeToken().\n`;
-  text += `func (client *${clientName}) Resume${op.language.go!.name}(ctx context.Context, token string) (${returns.join(', ')}) {\n`;
-  if (isARM) {
-    text += `\tpt, err := armcore.NewLROPollerFromResumeToken("${clientName}.${op.language.go!.name}", token, client.con.Pipeline(), client.${info.protocolNaming.errorMethod})\n`;
-  } else {
-    text += `\tpt, err := azcore.NewLROPollerFromResumeToken("${clientName}.${op.language.go!.name}",token, client.con.Pipeline(), client.${info.protocolNaming.errorMethod})\n`;
-  }
-  text += '\tif err != nil {\n';
-  text += `\t\treturn ${zeroResp}, err\n`;
-  text += '\t}\n';
-  text += emitPoller(op);
-  text += '\tresp, err := poller.Poll(ctx)\n';
-  text += '\tif err != nil {\n';
-  text += `\t\treturn ${zeroResp}, err\n`;
-  text += '\t}\n';
-  text += `\tresult := ${getResponseEnvelopeName(op)}{\n`;
-  text += '\t\tRawResponse: resp,\n';
-  text += '\t}\n';
-  text += '\tresult.Poller = poller\n';
-  // determine the poller response based on the name and whether is is a pageable operation
-  let pollerResp = getFinalResponseEnvelopeName(op);
-  if (isPageableOperation(op)) {
-    pollerResp = (<PagerInfo>op.language.go!.pageableType).name;
-  }
-  text += `\tresult.PollUntilDone = func(ctx context.Context, frequency time.Duration) (${pollerResp}, error) {\n`;
-  text += `\t\treturn poller.pollUntilDone(ctx, frequency)\n`;
-  text += `\t}\n`;
-  text += `\treturn result, nil\n`;
-  // closing braces
-  text += '}\n\n';
-  return text;
-}
-
-function emitPoller(op: Operation): string {
-  let text = `\tpoller := &${internalPollerTypeName(<PollerInfo>op.language.go!.pollerType)}{\n`;
-  text += '\t\tpt: pt,\n';
-  if (isPageableOperation(op)) {
-    text += '\t\tclient: client,\n';
-  }
-  text += '\t}\n';
-  return text;
-}

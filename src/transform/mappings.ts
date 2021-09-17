@@ -29,6 +29,7 @@ export const CommonAcronyms = [
   '^lhs$',
   '^mbcs$',
   '^md5$',
+  '^(od)ata$',
   '^pdf$',
   '^png$',
   '^qps$',

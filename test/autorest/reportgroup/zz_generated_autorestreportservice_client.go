@@ -1,4 +1,5 @@
-// +build go1.13
+//go:build go1.16
+// +build go1.16
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -10,7 +11,8 @@ package reportgroup
 import (
 	"context"
 	"fmt"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
@@ -36,49 +38,48 @@ func (client *AutoRestReportServiceClient) GetOptionalReport(ctx context.Context
 	if err != nil {
 		return AutoRestReportServiceGetOptionalReportResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return AutoRestReportServiceGetOptionalReportResponse{}, client.getOptionalReportHandleError(resp)
 	}
 	return client.getOptionalReportHandleResponse(resp)
 }
 
 // getOptionalReportCreateRequest creates the GetOptionalReport request.
-func (client *AutoRestReportServiceClient) getOptionalReportCreateRequest(ctx context.Context, options *AutoRestReportServiceGetOptionalReportOptions) (*azcore.Request, error) {
+func (client *AutoRestReportServiceClient) getOptionalReportCreateRequest(ctx context.Context, options *AutoRestReportServiceGetOptionalReportOptions) (*policy.Request, error) {
 	urlPath := "/report/optional"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if options != nil && options.Qualifier != nil {
 		reqQP.Set("qualifier", *options.Qualifier)
 	}
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getOptionalReportHandleResponse handles the GetOptionalReport response.
-func (client *AutoRestReportServiceClient) getOptionalReportHandleResponse(resp *azcore.Response) (AutoRestReportServiceGetOptionalReportResponse, error) {
-	result := AutoRestReportServiceGetOptionalReportResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.Value); err != nil {
+func (client *AutoRestReportServiceClient) getOptionalReportHandleResponse(resp *http.Response) (AutoRestReportServiceGetOptionalReportResponse, error) {
+	result := AutoRestReportServiceGetOptionalReportResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return AutoRestReportServiceGetOptionalReportResponse{}, err
 	}
 	return result, nil
 }
 
 // getOptionalReportHandleError handles the GetOptionalReport error response.
-func (client *AutoRestReportServiceClient) getOptionalReportHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *AutoRestReportServiceClient) getOptionalReportHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetReport - Get test coverage report
@@ -92,47 +93,46 @@ func (client *AutoRestReportServiceClient) GetReport(ctx context.Context, option
 	if err != nil {
 		return AutoRestReportServiceGetReportResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return AutoRestReportServiceGetReportResponse{}, client.getReportHandleError(resp)
 	}
 	return client.getReportHandleResponse(resp)
 }
 
 // getReportCreateRequest creates the GetReport request.
-func (client *AutoRestReportServiceClient) getReportCreateRequest(ctx context.Context, options *AutoRestReportServiceGetReportOptions) (*azcore.Request, error) {
+func (client *AutoRestReportServiceClient) getReportCreateRequest(ctx context.Context, options *AutoRestReportServiceGetReportOptions) (*policy.Request, error) {
 	urlPath := "/report"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if options != nil && options.Qualifier != nil {
 		reqQP.Set("qualifier", *options.Qualifier)
 	}
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getReportHandleResponse handles the GetReport response.
-func (client *AutoRestReportServiceClient) getReportHandleResponse(resp *azcore.Response) (AutoRestReportServiceGetReportResponse, error) {
-	result := AutoRestReportServiceGetReportResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.Value); err != nil {
+func (client *AutoRestReportServiceClient) getReportHandleResponse(resp *http.Response) (AutoRestReportServiceGetReportResponse, error) {
+	result := AutoRestReportServiceGetReportResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return AutoRestReportServiceGetReportResponse{}, err
 	}
 	return result, nil
 }
 
 // getReportHandleError handles the GetReport error response.
-func (client *AutoRestReportServiceClient) getReportHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *AutoRestReportServiceClient) getReportHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }

@@ -1,4 +1,5 @@
-// +build go1.13
+//go:build go1.16
+// +build go1.16
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -10,10 +11,10 @@ package lrogroup
 import (
 	"context"
 	"fmt"
-	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
-	"time"
 )
 
 // LROsClient contains the methods for the LROs group.
@@ -36,42 +37,14 @@ func (client *LROsClient) BeginDelete202NoRetry204(ctx context.Context, options 
 		return LROsDelete202NoRetry204PollerResponse{}, err
 	}
 	result := LROsDelete202NoRetry204PollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("LROsClient.Delete202NoRetry204", "", resp, client.con.Pipeline(), client.delete202NoRetry204HandleError)
-	if err != nil {
-		return LROsDelete202NoRetry204PollerResponse{}, err
-	}
-	poller := &lrOsDelete202NoRetry204Poller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsDelete202NoRetry204Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumeDelete202NoRetry204 creates a new LROsDelete202NoRetry204Poller from the specified resume token.
-// token - The value must come from a previous call to LROsDelete202NoRetry204Poller.ResumeToken().
-func (client *LROsClient) ResumeDelete202NoRetry204(ctx context.Context, token string) (LROsDelete202NoRetry204PollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("LROsClient.Delete202NoRetry204", token, client.con.Pipeline(), client.delete202NoRetry204HandleError)
-	if err != nil {
-		return LROsDelete202NoRetry204PollerResponse{}, err
-	}
-	poller := &lrOsDelete202NoRetry204Poller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return LROsDelete202NoRetry204PollerResponse{}, err
-	}
-	result := LROsDelete202NoRetry204PollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsDelete202NoRetry204Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("LROsClient.Delete202NoRetry204", "", resp, client.con.Pipeline(), client.delete202NoRetry204HandleError)
+	if err != nil {
+		return LROsDelete202NoRetry204PollerResponse{}, err
+	}
+	result.Poller = &LROsDelete202NoRetry204Poller{
+		pt: pt,
 	}
 	return result, nil
 }
@@ -79,7 +52,7 @@ func (client *LROsClient) ResumeDelete202NoRetry204(ctx context.Context, token s
 // Delete202NoRetry204 - Long running delete request, service returns a 202 to the initial request. Polls return this value until the last poll returns
 // a ‘200’ with ProvisioningState=’Succeeded’
 // If the operation fails it returns the *CloudError error type.
-func (client *LROsClient) delete202NoRetry204(ctx context.Context, options *LROsBeginDelete202NoRetry204Options) (*azcore.Response, error) {
+func (client *LROsClient) delete202NoRetry204(ctx context.Context, options *LROsBeginDelete202NoRetry204Options) (*http.Response, error) {
 	req, err := client.delete202NoRetry204CreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -88,35 +61,34 @@ func (client *LROsClient) delete202NoRetry204(ctx context.Context, options *LROs
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
 		return nil, client.delete202NoRetry204HandleError(resp)
 	}
 	return resp, nil
 }
 
 // delete202NoRetry204CreateRequest creates the Delete202NoRetry204 request.
-func (client *LROsClient) delete202NoRetry204CreateRequest(ctx context.Context, options *LROsBeginDelete202NoRetry204Options) (*azcore.Request, error) {
+func (client *LROsClient) delete202NoRetry204CreateRequest(ctx context.Context, options *LROsBeginDelete202NoRetry204Options) (*policy.Request, error) {
 	urlPath := "/lro/delete/202/noretry/204"
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // delete202NoRetry204HandleError handles the Delete202NoRetry204 error response.
-func (client *LROsClient) delete202NoRetry204HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *LROsClient) delete202NoRetry204HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BeginDelete202Retry200 - Long running delete request, service returns a 202 to the initial request. Polls return this value until the last poll returns
@@ -128,42 +100,14 @@ func (client *LROsClient) BeginDelete202Retry200(ctx context.Context, options *L
 		return LROsDelete202Retry200PollerResponse{}, err
 	}
 	result := LROsDelete202Retry200PollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("LROsClient.Delete202Retry200", "", resp, client.con.Pipeline(), client.delete202Retry200HandleError)
-	if err != nil {
-		return LROsDelete202Retry200PollerResponse{}, err
-	}
-	poller := &lrOsDelete202Retry200Poller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsDelete202Retry200Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumeDelete202Retry200 creates a new LROsDelete202Retry200Poller from the specified resume token.
-// token - The value must come from a previous call to LROsDelete202Retry200Poller.ResumeToken().
-func (client *LROsClient) ResumeDelete202Retry200(ctx context.Context, token string) (LROsDelete202Retry200PollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("LROsClient.Delete202Retry200", token, client.con.Pipeline(), client.delete202Retry200HandleError)
-	if err != nil {
-		return LROsDelete202Retry200PollerResponse{}, err
-	}
-	poller := &lrOsDelete202Retry200Poller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return LROsDelete202Retry200PollerResponse{}, err
-	}
-	result := LROsDelete202Retry200PollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsDelete202Retry200Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("LROsClient.Delete202Retry200", "", resp, client.con.Pipeline(), client.delete202Retry200HandleError)
+	if err != nil {
+		return LROsDelete202Retry200PollerResponse{}, err
+	}
+	result.Poller = &LROsDelete202Retry200Poller{
+		pt: pt,
 	}
 	return result, nil
 }
@@ -171,7 +115,7 @@ func (client *LROsClient) ResumeDelete202Retry200(ctx context.Context, token str
 // Delete202Retry200 - Long running delete request, service returns a 202 to the initial request. Polls return this value until the last poll returns a
 // ‘200’ with ProvisioningState=’Succeeded’
 // If the operation fails it returns the *CloudError error type.
-func (client *LROsClient) delete202Retry200(ctx context.Context, options *LROsBeginDelete202Retry200Options) (*azcore.Response, error) {
+func (client *LROsClient) delete202Retry200(ctx context.Context, options *LROsBeginDelete202Retry200Options) (*http.Response, error) {
 	req, err := client.delete202Retry200CreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -180,35 +124,34 @@ func (client *LROsClient) delete202Retry200(ctx context.Context, options *LROsBe
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
 		return nil, client.delete202Retry200HandleError(resp)
 	}
 	return resp, nil
 }
 
 // delete202Retry200CreateRequest creates the Delete202Retry200 request.
-func (client *LROsClient) delete202Retry200CreateRequest(ctx context.Context, options *LROsBeginDelete202Retry200Options) (*azcore.Request, error) {
+func (client *LROsClient) delete202Retry200CreateRequest(ctx context.Context, options *LROsBeginDelete202Retry200Options) (*policy.Request, error) {
 	urlPath := "/lro/delete/202/retry/200"
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // delete202Retry200HandleError handles the Delete202Retry200 error response.
-func (client *LROsClient) delete202Retry200HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *LROsClient) delete202Retry200HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BeginDelete204Succeeded - Long running delete succeeds and returns right away
@@ -219,49 +162,21 @@ func (client *LROsClient) BeginDelete204Succeeded(ctx context.Context, options *
 		return LROsDelete204SucceededPollerResponse{}, err
 	}
 	result := LROsDelete204SucceededPollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("LROsClient.Delete204Succeeded", "", resp, client.con.Pipeline(), client.delete204SucceededHandleError)
-	if err != nil {
-		return LROsDelete204SucceededPollerResponse{}, err
-	}
-	poller := &lrOsDelete204SucceededPoller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsDelete204SucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumeDelete204Succeeded creates a new LROsDelete204SucceededPoller from the specified resume token.
-// token - The value must come from a previous call to LROsDelete204SucceededPoller.ResumeToken().
-func (client *LROsClient) ResumeDelete204Succeeded(ctx context.Context, token string) (LROsDelete204SucceededPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("LROsClient.Delete204Succeeded", token, client.con.Pipeline(), client.delete204SucceededHandleError)
-	if err != nil {
-		return LROsDelete204SucceededPollerResponse{}, err
-	}
-	poller := &lrOsDelete204SucceededPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return LROsDelete204SucceededPollerResponse{}, err
-	}
-	result := LROsDelete204SucceededPollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsDelete204SucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("LROsClient.Delete204Succeeded", "", resp, client.con.Pipeline(), client.delete204SucceededHandleError)
+	if err != nil {
+		return LROsDelete204SucceededPollerResponse{}, err
+	}
+	result.Poller = &LROsDelete204SucceededPoller{
+		pt: pt,
 	}
 	return result, nil
 }
 
 // Delete204Succeeded - Long running delete succeeds and returns right away
 // If the operation fails it returns the *CloudError error type.
-func (client *LROsClient) delete204Succeeded(ctx context.Context, options *LROsBeginDelete204SucceededOptions) (*azcore.Response, error) {
+func (client *LROsClient) delete204Succeeded(ctx context.Context, options *LROsBeginDelete204SucceededOptions) (*http.Response, error) {
 	req, err := client.delete204SucceededCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -270,35 +185,34 @@ func (client *LROsClient) delete204Succeeded(ctx context.Context, options *LROsB
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusNoContent) {
+	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
 		return nil, client.delete204SucceededHandleError(resp)
 	}
 	return resp, nil
 }
 
 // delete204SucceededCreateRequest creates the Delete204Succeeded request.
-func (client *LROsClient) delete204SucceededCreateRequest(ctx context.Context, options *LROsBeginDelete204SucceededOptions) (*azcore.Request, error) {
+func (client *LROsClient) delete204SucceededCreateRequest(ctx context.Context, options *LROsBeginDelete204SucceededOptions) (*policy.Request, error) {
 	urlPath := "/lro/delete/204/succeeded"
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // delete204SucceededHandleError handles the Delete204Succeeded error response.
-func (client *LROsClient) delete204SucceededHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *LROsClient) delete204SucceededHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BeginDeleteAsyncNoHeaderInRetry - Long running delete request, service returns an Azure-AsyncOperation header in the initial request. Subsequent calls
@@ -310,42 +224,14 @@ func (client *LROsClient) BeginDeleteAsyncNoHeaderInRetry(ctx context.Context, o
 		return LROsDeleteAsyncNoHeaderInRetryPollerResponse{}, err
 	}
 	result := LROsDeleteAsyncNoHeaderInRetryPollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("LROsClient.DeleteAsyncNoHeaderInRetry", "", resp, client.con.Pipeline(), client.deleteAsyncNoHeaderInRetryHandleError)
-	if err != nil {
-		return LROsDeleteAsyncNoHeaderInRetryPollerResponse{}, err
-	}
-	poller := &lrOsDeleteAsyncNoHeaderInRetryPoller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsDeleteAsyncNoHeaderInRetryResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumeDeleteAsyncNoHeaderInRetry creates a new LROsDeleteAsyncNoHeaderInRetryPoller from the specified resume token.
-// token - The value must come from a previous call to LROsDeleteAsyncNoHeaderInRetryPoller.ResumeToken().
-func (client *LROsClient) ResumeDeleteAsyncNoHeaderInRetry(ctx context.Context, token string) (LROsDeleteAsyncNoHeaderInRetryPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("LROsClient.DeleteAsyncNoHeaderInRetry", token, client.con.Pipeline(), client.deleteAsyncNoHeaderInRetryHandleError)
-	if err != nil {
-		return LROsDeleteAsyncNoHeaderInRetryPollerResponse{}, err
-	}
-	poller := &lrOsDeleteAsyncNoHeaderInRetryPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return LROsDeleteAsyncNoHeaderInRetryPollerResponse{}, err
-	}
-	result := LROsDeleteAsyncNoHeaderInRetryPollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsDeleteAsyncNoHeaderInRetryResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("LROsClient.DeleteAsyncNoHeaderInRetry", "", resp, client.con.Pipeline(), client.deleteAsyncNoHeaderInRetryHandleError)
+	if err != nil {
+		return LROsDeleteAsyncNoHeaderInRetryPollerResponse{}, err
+	}
+	result.Poller = &LROsDeleteAsyncNoHeaderInRetryPoller{
+		pt: pt,
 	}
 	return result, nil
 }
@@ -353,7 +239,7 @@ func (client *LROsClient) ResumeDeleteAsyncNoHeaderInRetry(ctx context.Context, 
 // DeleteAsyncNoHeaderInRetry - Long running delete request, service returns an Azure-AsyncOperation header in the initial request. Subsequent calls to
 // operation status do not contain Azure-AsyncOperation header.
 // If the operation fails it returns the *CloudError error type.
-func (client *LROsClient) deleteAsyncNoHeaderInRetry(ctx context.Context, options *LROsBeginDeleteAsyncNoHeaderInRetryOptions) (*azcore.Response, error) {
+func (client *LROsClient) deleteAsyncNoHeaderInRetry(ctx context.Context, options *LROsBeginDeleteAsyncNoHeaderInRetryOptions) (*http.Response, error) {
 	req, err := client.deleteAsyncNoHeaderInRetryCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -362,35 +248,34 @@ func (client *LROsClient) deleteAsyncNoHeaderInRetry(ctx context.Context, option
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
+	if !runtime.HasStatusCode(resp, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.deleteAsyncNoHeaderInRetryHandleError(resp)
 	}
 	return resp, nil
 }
 
 // deleteAsyncNoHeaderInRetryCreateRequest creates the DeleteAsyncNoHeaderInRetry request.
-func (client *LROsClient) deleteAsyncNoHeaderInRetryCreateRequest(ctx context.Context, options *LROsBeginDeleteAsyncNoHeaderInRetryOptions) (*azcore.Request, error) {
+func (client *LROsClient) deleteAsyncNoHeaderInRetryCreateRequest(ctx context.Context, options *LROsBeginDeleteAsyncNoHeaderInRetryOptions) (*policy.Request, error) {
 	urlPath := "/lro/deleteasync/noheader/202/204"
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // deleteAsyncNoHeaderInRetryHandleError handles the DeleteAsyncNoHeaderInRetry error response.
-func (client *LROsClient) deleteAsyncNoHeaderInRetryHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *LROsClient) deleteAsyncNoHeaderInRetryHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BeginDeleteAsyncNoRetrySucceeded - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation
@@ -402,42 +287,14 @@ func (client *LROsClient) BeginDeleteAsyncNoRetrySucceeded(ctx context.Context, 
 		return LROsDeleteAsyncNoRetrySucceededPollerResponse{}, err
 	}
 	result := LROsDeleteAsyncNoRetrySucceededPollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("LROsClient.DeleteAsyncNoRetrySucceeded", "", resp, client.con.Pipeline(), client.deleteAsyncNoRetrySucceededHandleError)
-	if err != nil {
-		return LROsDeleteAsyncNoRetrySucceededPollerResponse{}, err
-	}
-	poller := &lrOsDeleteAsyncNoRetrySucceededPoller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsDeleteAsyncNoRetrySucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumeDeleteAsyncNoRetrySucceeded creates a new LROsDeleteAsyncNoRetrySucceededPoller from the specified resume token.
-// token - The value must come from a previous call to LROsDeleteAsyncNoRetrySucceededPoller.ResumeToken().
-func (client *LROsClient) ResumeDeleteAsyncNoRetrySucceeded(ctx context.Context, token string) (LROsDeleteAsyncNoRetrySucceededPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("LROsClient.DeleteAsyncNoRetrySucceeded", token, client.con.Pipeline(), client.deleteAsyncNoRetrySucceededHandleError)
-	if err != nil {
-		return LROsDeleteAsyncNoRetrySucceededPollerResponse{}, err
-	}
-	poller := &lrOsDeleteAsyncNoRetrySucceededPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return LROsDeleteAsyncNoRetrySucceededPollerResponse{}, err
-	}
-	result := LROsDeleteAsyncNoRetrySucceededPollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsDeleteAsyncNoRetrySucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("LROsClient.DeleteAsyncNoRetrySucceeded", "", resp, client.con.Pipeline(), client.deleteAsyncNoRetrySucceededHandleError)
+	if err != nil {
+		return LROsDeleteAsyncNoRetrySucceededPollerResponse{}, err
+	}
+	result.Poller = &LROsDeleteAsyncNoRetrySucceededPoller{
+		pt: pt,
 	}
 	return result, nil
 }
@@ -445,7 +302,7 @@ func (client *LROsClient) ResumeDeleteAsyncNoRetrySucceeded(ctx context.Context,
 // DeleteAsyncNoRetrySucceeded - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation
 // header for operation status
 // If the operation fails it returns the *CloudError error type.
-func (client *LROsClient) deleteAsyncNoRetrySucceeded(ctx context.Context, options *LROsBeginDeleteAsyncNoRetrySucceededOptions) (*azcore.Response, error) {
+func (client *LROsClient) deleteAsyncNoRetrySucceeded(ctx context.Context, options *LROsBeginDeleteAsyncNoRetrySucceededOptions) (*http.Response, error) {
 	req, err := client.deleteAsyncNoRetrySucceededCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -454,35 +311,34 @@ func (client *LROsClient) deleteAsyncNoRetrySucceeded(ctx context.Context, optio
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
 		return nil, client.deleteAsyncNoRetrySucceededHandleError(resp)
 	}
 	return resp, nil
 }
 
 // deleteAsyncNoRetrySucceededCreateRequest creates the DeleteAsyncNoRetrySucceeded request.
-func (client *LROsClient) deleteAsyncNoRetrySucceededCreateRequest(ctx context.Context, options *LROsBeginDeleteAsyncNoRetrySucceededOptions) (*azcore.Request, error) {
+func (client *LROsClient) deleteAsyncNoRetrySucceededCreateRequest(ctx context.Context, options *LROsBeginDeleteAsyncNoRetrySucceededOptions) (*policy.Request, error) {
 	urlPath := "/lro/deleteasync/noretry/succeeded"
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // deleteAsyncNoRetrySucceededHandleError handles the DeleteAsyncNoRetrySucceeded error response.
-func (client *LROsClient) deleteAsyncNoRetrySucceededHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *LROsClient) deleteAsyncNoRetrySucceededHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BeginDeleteAsyncRetryFailed - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation
@@ -494,42 +350,14 @@ func (client *LROsClient) BeginDeleteAsyncRetryFailed(ctx context.Context, optio
 		return LROsDeleteAsyncRetryFailedPollerResponse{}, err
 	}
 	result := LROsDeleteAsyncRetryFailedPollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("LROsClient.DeleteAsyncRetryFailed", "", resp, client.con.Pipeline(), client.deleteAsyncRetryFailedHandleError)
-	if err != nil {
-		return LROsDeleteAsyncRetryFailedPollerResponse{}, err
-	}
-	poller := &lrOsDeleteAsyncRetryFailedPoller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsDeleteAsyncRetryFailedResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumeDeleteAsyncRetryFailed creates a new LROsDeleteAsyncRetryFailedPoller from the specified resume token.
-// token - The value must come from a previous call to LROsDeleteAsyncRetryFailedPoller.ResumeToken().
-func (client *LROsClient) ResumeDeleteAsyncRetryFailed(ctx context.Context, token string) (LROsDeleteAsyncRetryFailedPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("LROsClient.DeleteAsyncRetryFailed", token, client.con.Pipeline(), client.deleteAsyncRetryFailedHandleError)
-	if err != nil {
-		return LROsDeleteAsyncRetryFailedPollerResponse{}, err
-	}
-	poller := &lrOsDeleteAsyncRetryFailedPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return LROsDeleteAsyncRetryFailedPollerResponse{}, err
-	}
-	result := LROsDeleteAsyncRetryFailedPollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsDeleteAsyncRetryFailedResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("LROsClient.DeleteAsyncRetryFailed", "", resp, client.con.Pipeline(), client.deleteAsyncRetryFailedHandleError)
+	if err != nil {
+		return LROsDeleteAsyncRetryFailedPollerResponse{}, err
+	}
+	result.Poller = &LROsDeleteAsyncRetryFailedPoller{
+		pt: pt,
 	}
 	return result, nil
 }
@@ -537,7 +365,7 @@ func (client *LROsClient) ResumeDeleteAsyncRetryFailed(ctx context.Context, toke
 // DeleteAsyncRetryFailed - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation
 // header for operation status
 // If the operation fails it returns the *CloudError error type.
-func (client *LROsClient) deleteAsyncRetryFailed(ctx context.Context, options *LROsBeginDeleteAsyncRetryFailedOptions) (*azcore.Response, error) {
+func (client *LROsClient) deleteAsyncRetryFailed(ctx context.Context, options *LROsBeginDeleteAsyncRetryFailedOptions) (*http.Response, error) {
 	req, err := client.deleteAsyncRetryFailedCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -546,35 +374,34 @@ func (client *LROsClient) deleteAsyncRetryFailed(ctx context.Context, options *L
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
 		return nil, client.deleteAsyncRetryFailedHandleError(resp)
 	}
 	return resp, nil
 }
 
 // deleteAsyncRetryFailedCreateRequest creates the DeleteAsyncRetryFailed request.
-func (client *LROsClient) deleteAsyncRetryFailedCreateRequest(ctx context.Context, options *LROsBeginDeleteAsyncRetryFailedOptions) (*azcore.Request, error) {
+func (client *LROsClient) deleteAsyncRetryFailedCreateRequest(ctx context.Context, options *LROsBeginDeleteAsyncRetryFailedOptions) (*policy.Request, error) {
 	urlPath := "/lro/deleteasync/retry/failed"
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // deleteAsyncRetryFailedHandleError handles the DeleteAsyncRetryFailed error response.
-func (client *LROsClient) deleteAsyncRetryFailedHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *LROsClient) deleteAsyncRetryFailedHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BeginDeleteAsyncRetrySucceeded - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation
@@ -586,42 +413,14 @@ func (client *LROsClient) BeginDeleteAsyncRetrySucceeded(ctx context.Context, op
 		return LROsDeleteAsyncRetrySucceededPollerResponse{}, err
 	}
 	result := LROsDeleteAsyncRetrySucceededPollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("LROsClient.DeleteAsyncRetrySucceeded", "", resp, client.con.Pipeline(), client.deleteAsyncRetrySucceededHandleError)
-	if err != nil {
-		return LROsDeleteAsyncRetrySucceededPollerResponse{}, err
-	}
-	poller := &lrOsDeleteAsyncRetrySucceededPoller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsDeleteAsyncRetrySucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumeDeleteAsyncRetrySucceeded creates a new LROsDeleteAsyncRetrySucceededPoller from the specified resume token.
-// token - The value must come from a previous call to LROsDeleteAsyncRetrySucceededPoller.ResumeToken().
-func (client *LROsClient) ResumeDeleteAsyncRetrySucceeded(ctx context.Context, token string) (LROsDeleteAsyncRetrySucceededPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("LROsClient.DeleteAsyncRetrySucceeded", token, client.con.Pipeline(), client.deleteAsyncRetrySucceededHandleError)
-	if err != nil {
-		return LROsDeleteAsyncRetrySucceededPollerResponse{}, err
-	}
-	poller := &lrOsDeleteAsyncRetrySucceededPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return LROsDeleteAsyncRetrySucceededPollerResponse{}, err
-	}
-	result := LROsDeleteAsyncRetrySucceededPollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsDeleteAsyncRetrySucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("LROsClient.DeleteAsyncRetrySucceeded", "", resp, client.con.Pipeline(), client.deleteAsyncRetrySucceededHandleError)
+	if err != nil {
+		return LROsDeleteAsyncRetrySucceededPollerResponse{}, err
+	}
+	result.Poller = &LROsDeleteAsyncRetrySucceededPoller{
+		pt: pt,
 	}
 	return result, nil
 }
@@ -629,7 +428,7 @@ func (client *LROsClient) ResumeDeleteAsyncRetrySucceeded(ctx context.Context, t
 // DeleteAsyncRetrySucceeded - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation
 // header for operation status
 // If the operation fails it returns the *CloudError error type.
-func (client *LROsClient) deleteAsyncRetrySucceeded(ctx context.Context, options *LROsBeginDeleteAsyncRetrySucceededOptions) (*azcore.Response, error) {
+func (client *LROsClient) deleteAsyncRetrySucceeded(ctx context.Context, options *LROsBeginDeleteAsyncRetrySucceededOptions) (*http.Response, error) {
 	req, err := client.deleteAsyncRetrySucceededCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -638,35 +437,34 @@ func (client *LROsClient) deleteAsyncRetrySucceeded(ctx context.Context, options
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
 		return nil, client.deleteAsyncRetrySucceededHandleError(resp)
 	}
 	return resp, nil
 }
 
 // deleteAsyncRetrySucceededCreateRequest creates the DeleteAsyncRetrySucceeded request.
-func (client *LROsClient) deleteAsyncRetrySucceededCreateRequest(ctx context.Context, options *LROsBeginDeleteAsyncRetrySucceededOptions) (*azcore.Request, error) {
+func (client *LROsClient) deleteAsyncRetrySucceededCreateRequest(ctx context.Context, options *LROsBeginDeleteAsyncRetrySucceededOptions) (*policy.Request, error) {
 	urlPath := "/lro/deleteasync/retry/succeeded"
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // deleteAsyncRetrySucceededHandleError handles the DeleteAsyncRetrySucceeded error response.
-func (client *LROsClient) deleteAsyncRetrySucceededHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *LROsClient) deleteAsyncRetrySucceededHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BeginDeleteAsyncRetrycanceled - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation
@@ -678,42 +476,14 @@ func (client *LROsClient) BeginDeleteAsyncRetrycanceled(ctx context.Context, opt
 		return LROsDeleteAsyncRetrycanceledPollerResponse{}, err
 	}
 	result := LROsDeleteAsyncRetrycanceledPollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("LROsClient.DeleteAsyncRetrycanceled", "", resp, client.con.Pipeline(), client.deleteAsyncRetrycanceledHandleError)
-	if err != nil {
-		return LROsDeleteAsyncRetrycanceledPollerResponse{}, err
-	}
-	poller := &lrOsDeleteAsyncRetrycanceledPoller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsDeleteAsyncRetrycanceledResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumeDeleteAsyncRetrycanceled creates a new LROsDeleteAsyncRetrycanceledPoller from the specified resume token.
-// token - The value must come from a previous call to LROsDeleteAsyncRetrycanceledPoller.ResumeToken().
-func (client *LROsClient) ResumeDeleteAsyncRetrycanceled(ctx context.Context, token string) (LROsDeleteAsyncRetrycanceledPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("LROsClient.DeleteAsyncRetrycanceled", token, client.con.Pipeline(), client.deleteAsyncRetrycanceledHandleError)
-	if err != nil {
-		return LROsDeleteAsyncRetrycanceledPollerResponse{}, err
-	}
-	poller := &lrOsDeleteAsyncRetrycanceledPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return LROsDeleteAsyncRetrycanceledPollerResponse{}, err
-	}
-	result := LROsDeleteAsyncRetrycanceledPollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsDeleteAsyncRetrycanceledResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("LROsClient.DeleteAsyncRetrycanceled", "", resp, client.con.Pipeline(), client.deleteAsyncRetrycanceledHandleError)
+	if err != nil {
+		return LROsDeleteAsyncRetrycanceledPollerResponse{}, err
+	}
+	result.Poller = &LROsDeleteAsyncRetrycanceledPoller{
+		pt: pt,
 	}
 	return result, nil
 }
@@ -721,7 +491,7 @@ func (client *LROsClient) ResumeDeleteAsyncRetrycanceled(ctx context.Context, to
 // DeleteAsyncRetrycanceled - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated in the Azure-AsyncOperation
 // header for operation status
 // If the operation fails it returns the *CloudError error type.
-func (client *LROsClient) deleteAsyncRetrycanceled(ctx context.Context, options *LROsBeginDeleteAsyncRetrycanceledOptions) (*azcore.Response, error) {
+func (client *LROsClient) deleteAsyncRetrycanceled(ctx context.Context, options *LROsBeginDeleteAsyncRetrycanceledOptions) (*http.Response, error) {
 	req, err := client.deleteAsyncRetrycanceledCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -730,35 +500,34 @@ func (client *LROsClient) deleteAsyncRetrycanceled(ctx context.Context, options 
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
 		return nil, client.deleteAsyncRetrycanceledHandleError(resp)
 	}
 	return resp, nil
 }
 
 // deleteAsyncRetrycanceledCreateRequest creates the DeleteAsyncRetrycanceled request.
-func (client *LROsClient) deleteAsyncRetrycanceledCreateRequest(ctx context.Context, options *LROsBeginDeleteAsyncRetrycanceledOptions) (*azcore.Request, error) {
+func (client *LROsClient) deleteAsyncRetrycanceledCreateRequest(ctx context.Context, options *LROsBeginDeleteAsyncRetrycanceledOptions) (*policy.Request, error) {
 	urlPath := "/lro/deleteasync/retry/canceled"
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // deleteAsyncRetrycanceledHandleError handles the DeleteAsyncRetrycanceled error response.
-func (client *LROsClient) deleteAsyncRetrycanceledHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *LROsClient) deleteAsyncRetrycanceledHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BeginDeleteNoHeaderInRetry - Long running delete request, service returns a location header in the initial request. Subsequent calls to operation status
@@ -770,42 +539,14 @@ func (client *LROsClient) BeginDeleteNoHeaderInRetry(ctx context.Context, option
 		return LROsDeleteNoHeaderInRetryPollerResponse{}, err
 	}
 	result := LROsDeleteNoHeaderInRetryPollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("LROsClient.DeleteNoHeaderInRetry", "", resp, client.con.Pipeline(), client.deleteNoHeaderInRetryHandleError)
-	if err != nil {
-		return LROsDeleteNoHeaderInRetryPollerResponse{}, err
-	}
-	poller := &lrOsDeleteNoHeaderInRetryPoller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsDeleteNoHeaderInRetryResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumeDeleteNoHeaderInRetry creates a new LROsDeleteNoHeaderInRetryPoller from the specified resume token.
-// token - The value must come from a previous call to LROsDeleteNoHeaderInRetryPoller.ResumeToken().
-func (client *LROsClient) ResumeDeleteNoHeaderInRetry(ctx context.Context, token string) (LROsDeleteNoHeaderInRetryPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("LROsClient.DeleteNoHeaderInRetry", token, client.con.Pipeline(), client.deleteNoHeaderInRetryHandleError)
-	if err != nil {
-		return LROsDeleteNoHeaderInRetryPollerResponse{}, err
-	}
-	poller := &lrOsDeleteNoHeaderInRetryPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return LROsDeleteNoHeaderInRetryPollerResponse{}, err
-	}
-	result := LROsDeleteNoHeaderInRetryPollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsDeleteNoHeaderInRetryResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("LROsClient.DeleteNoHeaderInRetry", "", resp, client.con.Pipeline(), client.deleteNoHeaderInRetryHandleError)
+	if err != nil {
+		return LROsDeleteNoHeaderInRetryPollerResponse{}, err
+	}
+	result.Poller = &LROsDeleteNoHeaderInRetryPoller{
+		pt: pt,
 	}
 	return result, nil
 }
@@ -813,7 +554,7 @@ func (client *LROsClient) ResumeDeleteNoHeaderInRetry(ctx context.Context, token
 // DeleteNoHeaderInRetry - Long running delete request, service returns a location header in the initial request. Subsequent calls to operation status do
 // not contain location header.
 // If the operation fails it returns the *CloudError error type.
-func (client *LROsClient) deleteNoHeaderInRetry(ctx context.Context, options *LROsBeginDeleteNoHeaderInRetryOptions) (*azcore.Response, error) {
+func (client *LROsClient) deleteNoHeaderInRetry(ctx context.Context, options *LROsBeginDeleteNoHeaderInRetryOptions) (*http.Response, error) {
 	req, err := client.deleteNoHeaderInRetryCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -822,35 +563,34 @@ func (client *LROsClient) deleteNoHeaderInRetry(ctx context.Context, options *LR
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusAccepted, http.StatusNoContent) {
+	if !runtime.HasStatusCode(resp, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.deleteNoHeaderInRetryHandleError(resp)
 	}
 	return resp, nil
 }
 
 // deleteNoHeaderInRetryCreateRequest creates the DeleteNoHeaderInRetry request.
-func (client *LROsClient) deleteNoHeaderInRetryCreateRequest(ctx context.Context, options *LROsBeginDeleteNoHeaderInRetryOptions) (*azcore.Request, error) {
+func (client *LROsClient) deleteNoHeaderInRetryCreateRequest(ctx context.Context, options *LROsBeginDeleteNoHeaderInRetryOptions) (*policy.Request, error) {
 	urlPath := "/lro/delete/noheader"
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // deleteNoHeaderInRetryHandleError handles the DeleteNoHeaderInRetry error response.
-func (client *LROsClient) deleteNoHeaderInRetryHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *LROsClient) deleteNoHeaderInRetryHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BeginDeleteProvisioning202Accepted200Succeeded - Long running delete request, service returns a 202 to the initial request, with an entity that contains
@@ -863,42 +603,14 @@ func (client *LROsClient) BeginDeleteProvisioning202Accepted200Succeeded(ctx con
 		return LROsDeleteProvisioning202Accepted200SucceededPollerResponse{}, err
 	}
 	result := LROsDeleteProvisioning202Accepted200SucceededPollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("LROsClient.DeleteProvisioning202Accepted200Succeeded", "", resp, client.con.Pipeline(), client.deleteProvisioning202Accepted200SucceededHandleError)
-	if err != nil {
-		return LROsDeleteProvisioning202Accepted200SucceededPollerResponse{}, err
-	}
-	poller := &lrOsDeleteProvisioning202Accepted200SucceededPoller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsDeleteProvisioning202Accepted200SucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumeDeleteProvisioning202Accepted200Succeeded creates a new LROsDeleteProvisioning202Accepted200SucceededPoller from the specified resume token.
-// token - The value must come from a previous call to LROsDeleteProvisioning202Accepted200SucceededPoller.ResumeToken().
-func (client *LROsClient) ResumeDeleteProvisioning202Accepted200Succeeded(ctx context.Context, token string) (LROsDeleteProvisioning202Accepted200SucceededPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("LROsClient.DeleteProvisioning202Accepted200Succeeded", token, client.con.Pipeline(), client.deleteProvisioning202Accepted200SucceededHandleError)
-	if err != nil {
-		return LROsDeleteProvisioning202Accepted200SucceededPollerResponse{}, err
-	}
-	poller := &lrOsDeleteProvisioning202Accepted200SucceededPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return LROsDeleteProvisioning202Accepted200SucceededPollerResponse{}, err
-	}
-	result := LROsDeleteProvisioning202Accepted200SucceededPollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsDeleteProvisioning202Accepted200SucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("LROsClient.DeleteProvisioning202Accepted200Succeeded", "", resp, client.con.Pipeline(), client.deleteProvisioning202Accepted200SucceededHandleError)
+	if err != nil {
+		return LROsDeleteProvisioning202Accepted200SucceededPollerResponse{}, err
+	}
+	result.Poller = &LROsDeleteProvisioning202Accepted200SucceededPoller{
+		pt: pt,
 	}
 	return result, nil
 }
@@ -907,7 +619,7 @@ func (client *LROsClient) ResumeDeleteProvisioning202Accepted200Succeeded(ctx co
 // Polls return this value until the last poll returns a ‘200’ with
 // ProvisioningState=’Succeeded’
 // If the operation fails it returns the *CloudError error type.
-func (client *LROsClient) deleteProvisioning202Accepted200Succeeded(ctx context.Context, options *LROsBeginDeleteProvisioning202Accepted200SucceededOptions) (*azcore.Response, error) {
+func (client *LROsClient) deleteProvisioning202Accepted200Succeeded(ctx context.Context, options *LROsBeginDeleteProvisioning202Accepted200SucceededOptions) (*http.Response, error) {
 	req, err := client.deleteProvisioning202Accepted200SucceededCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -916,35 +628,34 @@ func (client *LROsClient) deleteProvisioning202Accepted200Succeeded(ctx context.
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
 		return nil, client.deleteProvisioning202Accepted200SucceededHandleError(resp)
 	}
 	return resp, nil
 }
 
 // deleteProvisioning202Accepted200SucceededCreateRequest creates the DeleteProvisioning202Accepted200Succeeded request.
-func (client *LROsClient) deleteProvisioning202Accepted200SucceededCreateRequest(ctx context.Context, options *LROsBeginDeleteProvisioning202Accepted200SucceededOptions) (*azcore.Request, error) {
+func (client *LROsClient) deleteProvisioning202Accepted200SucceededCreateRequest(ctx context.Context, options *LROsBeginDeleteProvisioning202Accepted200SucceededOptions) (*policy.Request, error) {
 	urlPath := "/lro/delete/provisioning/202/accepted/200/succeeded"
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // deleteProvisioning202Accepted200SucceededHandleError handles the DeleteProvisioning202Accepted200Succeeded error response.
-func (client *LROsClient) deleteProvisioning202Accepted200SucceededHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *LROsClient) deleteProvisioning202Accepted200SucceededHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BeginDeleteProvisioning202DeletingFailed200 - Long running delete request, service returns a 202 to the initial request, with an entity that contains
@@ -957,42 +668,14 @@ func (client *LROsClient) BeginDeleteProvisioning202DeletingFailed200(ctx contex
 		return LROsDeleteProvisioning202DeletingFailed200PollerResponse{}, err
 	}
 	result := LROsDeleteProvisioning202DeletingFailed200PollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("LROsClient.DeleteProvisioning202DeletingFailed200", "", resp, client.con.Pipeline(), client.deleteProvisioning202DeletingFailed200HandleError)
-	if err != nil {
-		return LROsDeleteProvisioning202DeletingFailed200PollerResponse{}, err
-	}
-	poller := &lrOsDeleteProvisioning202DeletingFailed200Poller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsDeleteProvisioning202DeletingFailed200Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumeDeleteProvisioning202DeletingFailed200 creates a new LROsDeleteProvisioning202DeletingFailed200Poller from the specified resume token.
-// token - The value must come from a previous call to LROsDeleteProvisioning202DeletingFailed200Poller.ResumeToken().
-func (client *LROsClient) ResumeDeleteProvisioning202DeletingFailed200(ctx context.Context, token string) (LROsDeleteProvisioning202DeletingFailed200PollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("LROsClient.DeleteProvisioning202DeletingFailed200", token, client.con.Pipeline(), client.deleteProvisioning202DeletingFailed200HandleError)
-	if err != nil {
-		return LROsDeleteProvisioning202DeletingFailed200PollerResponse{}, err
-	}
-	poller := &lrOsDeleteProvisioning202DeletingFailed200Poller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return LROsDeleteProvisioning202DeletingFailed200PollerResponse{}, err
-	}
-	result := LROsDeleteProvisioning202DeletingFailed200PollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsDeleteProvisioning202DeletingFailed200Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("LROsClient.DeleteProvisioning202DeletingFailed200", "", resp, client.con.Pipeline(), client.deleteProvisioning202DeletingFailed200HandleError)
+	if err != nil {
+		return LROsDeleteProvisioning202DeletingFailed200PollerResponse{}, err
+	}
+	result.Poller = &LROsDeleteProvisioning202DeletingFailed200Poller{
+		pt: pt,
 	}
 	return result, nil
 }
@@ -1001,7 +684,7 @@ func (client *LROsClient) ResumeDeleteProvisioning202DeletingFailed200(ctx conte
 // Polls return this value until the last poll returns a ‘200’ with
 // ProvisioningState=’Failed’
 // If the operation fails it returns the *CloudError error type.
-func (client *LROsClient) deleteProvisioning202DeletingFailed200(ctx context.Context, options *LROsBeginDeleteProvisioning202DeletingFailed200Options) (*azcore.Response, error) {
+func (client *LROsClient) deleteProvisioning202DeletingFailed200(ctx context.Context, options *LROsBeginDeleteProvisioning202DeletingFailed200Options) (*http.Response, error) {
 	req, err := client.deleteProvisioning202DeletingFailed200CreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -1010,35 +693,34 @@ func (client *LROsClient) deleteProvisioning202DeletingFailed200(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
 		return nil, client.deleteProvisioning202DeletingFailed200HandleError(resp)
 	}
 	return resp, nil
 }
 
 // deleteProvisioning202DeletingFailed200CreateRequest creates the DeleteProvisioning202DeletingFailed200 request.
-func (client *LROsClient) deleteProvisioning202DeletingFailed200CreateRequest(ctx context.Context, options *LROsBeginDeleteProvisioning202DeletingFailed200Options) (*azcore.Request, error) {
+func (client *LROsClient) deleteProvisioning202DeletingFailed200CreateRequest(ctx context.Context, options *LROsBeginDeleteProvisioning202DeletingFailed200Options) (*policy.Request, error) {
 	urlPath := "/lro/delete/provisioning/202/deleting/200/failed"
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // deleteProvisioning202DeletingFailed200HandleError handles the DeleteProvisioning202DeletingFailed200 error response.
-func (client *LROsClient) deleteProvisioning202DeletingFailed200HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *LROsClient) deleteProvisioning202DeletingFailed200HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BeginDeleteProvisioning202Deletingcanceled200 - Long running delete request, service returns a 202 to the initial request, with an entity that contains
@@ -1051,42 +733,14 @@ func (client *LROsClient) BeginDeleteProvisioning202Deletingcanceled200(ctx cont
 		return LROsDeleteProvisioning202Deletingcanceled200PollerResponse{}, err
 	}
 	result := LROsDeleteProvisioning202Deletingcanceled200PollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("LROsClient.DeleteProvisioning202Deletingcanceled200", "", resp, client.con.Pipeline(), client.deleteProvisioning202Deletingcanceled200HandleError)
-	if err != nil {
-		return LROsDeleteProvisioning202Deletingcanceled200PollerResponse{}, err
-	}
-	poller := &lrOsDeleteProvisioning202Deletingcanceled200Poller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsDeleteProvisioning202Deletingcanceled200Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumeDeleteProvisioning202Deletingcanceled200 creates a new LROsDeleteProvisioning202Deletingcanceled200Poller from the specified resume token.
-// token - The value must come from a previous call to LROsDeleteProvisioning202Deletingcanceled200Poller.ResumeToken().
-func (client *LROsClient) ResumeDeleteProvisioning202Deletingcanceled200(ctx context.Context, token string) (LROsDeleteProvisioning202Deletingcanceled200PollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("LROsClient.DeleteProvisioning202Deletingcanceled200", token, client.con.Pipeline(), client.deleteProvisioning202Deletingcanceled200HandleError)
-	if err != nil {
-		return LROsDeleteProvisioning202Deletingcanceled200PollerResponse{}, err
-	}
-	poller := &lrOsDeleteProvisioning202Deletingcanceled200Poller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return LROsDeleteProvisioning202Deletingcanceled200PollerResponse{}, err
-	}
-	result := LROsDeleteProvisioning202Deletingcanceled200PollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsDeleteProvisioning202Deletingcanceled200Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("LROsClient.DeleteProvisioning202Deletingcanceled200", "", resp, client.con.Pipeline(), client.deleteProvisioning202Deletingcanceled200HandleError)
+	if err != nil {
+		return LROsDeleteProvisioning202Deletingcanceled200PollerResponse{}, err
+	}
+	result.Poller = &LROsDeleteProvisioning202Deletingcanceled200Poller{
+		pt: pt,
 	}
 	return result, nil
 }
@@ -1095,7 +749,7 @@ func (client *LROsClient) ResumeDeleteProvisioning202Deletingcanceled200(ctx con
 // Polls return this value until the last poll returns a ‘200’ with
 // ProvisioningState=’Canceled’
 // If the operation fails it returns the *CloudError error type.
-func (client *LROsClient) deleteProvisioning202Deletingcanceled200(ctx context.Context, options *LROsBeginDeleteProvisioning202Deletingcanceled200Options) (*azcore.Response, error) {
+func (client *LROsClient) deleteProvisioning202Deletingcanceled200(ctx context.Context, options *LROsBeginDeleteProvisioning202Deletingcanceled200Options) (*http.Response, error) {
 	req, err := client.deleteProvisioning202Deletingcanceled200CreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -1104,35 +758,34 @@ func (client *LROsClient) deleteProvisioning202Deletingcanceled200(ctx context.C
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
 		return nil, client.deleteProvisioning202Deletingcanceled200HandleError(resp)
 	}
 	return resp, nil
 }
 
 // deleteProvisioning202Deletingcanceled200CreateRequest creates the DeleteProvisioning202Deletingcanceled200 request.
-func (client *LROsClient) deleteProvisioning202Deletingcanceled200CreateRequest(ctx context.Context, options *LROsBeginDeleteProvisioning202Deletingcanceled200Options) (*azcore.Request, error) {
+func (client *LROsClient) deleteProvisioning202Deletingcanceled200CreateRequest(ctx context.Context, options *LROsBeginDeleteProvisioning202Deletingcanceled200Options) (*policy.Request, error) {
 	urlPath := "/lro/delete/provisioning/202/deleting/200/canceled"
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // deleteProvisioning202Deletingcanceled200HandleError handles the DeleteProvisioning202Deletingcanceled200 error response.
-func (client *LROsClient) deleteProvisioning202Deletingcanceled200HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *LROsClient) deleteProvisioning202Deletingcanceled200HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BeginPost200WithPayload - Long running post request, service returns a 202 to the initial request, with 'Location' header. Poll returns a 200 with a
@@ -1144,42 +797,14 @@ func (client *LROsClient) BeginPost200WithPayload(ctx context.Context, options *
 		return LROsPost200WithPayloadPollerResponse{}, err
 	}
 	result := LROsPost200WithPayloadPollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("LROsClient.Post200WithPayload", "", resp, client.con.Pipeline(), client.post200WithPayloadHandleError)
-	if err != nil {
-		return LROsPost200WithPayloadPollerResponse{}, err
-	}
-	poller := &lrOsPost200WithPayloadPoller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPost200WithPayloadResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumePost200WithPayload creates a new LROsPost200WithPayloadPoller from the specified resume token.
-// token - The value must come from a previous call to LROsPost200WithPayloadPoller.ResumeToken().
-func (client *LROsClient) ResumePost200WithPayload(ctx context.Context, token string) (LROsPost200WithPayloadPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("LROsClient.Post200WithPayload", token, client.con.Pipeline(), client.post200WithPayloadHandleError)
-	if err != nil {
-		return LROsPost200WithPayloadPollerResponse{}, err
-	}
-	poller := &lrOsPost200WithPayloadPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return LROsPost200WithPayloadPollerResponse{}, err
-	}
-	result := LROsPost200WithPayloadPollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPost200WithPayloadResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("LROsClient.Post200WithPayload", "", resp, client.con.Pipeline(), client.post200WithPayloadHandleError)
+	if err != nil {
+		return LROsPost200WithPayloadPollerResponse{}, err
+	}
+	result.Poller = &LROsPost200WithPayloadPoller{
+		pt: pt,
 	}
 	return result, nil
 }
@@ -1187,7 +812,7 @@ func (client *LROsClient) ResumePost200WithPayload(ctx context.Context, token st
 // Post200WithPayload - Long running post request, service returns a 202 to the initial request, with 'Location' header. Poll returns a 200 with a response
 // body after success.
 // If the operation fails it returns the *CloudError error type.
-func (client *LROsClient) post200WithPayload(ctx context.Context, options *LROsBeginPost200WithPayloadOptions) (*azcore.Response, error) {
+func (client *LROsClient) post200WithPayload(ctx context.Context, options *LROsBeginPost200WithPayloadOptions) (*http.Response, error) {
 	req, err := client.post200WithPayloadCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -1196,35 +821,34 @@ func (client *LROsClient) post200WithPayload(ctx context.Context, options *LROsB
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
 		return nil, client.post200WithPayloadHandleError(resp)
 	}
 	return resp, nil
 }
 
 // post200WithPayloadCreateRequest creates the Post200WithPayload request.
-func (client *LROsClient) post200WithPayloadCreateRequest(ctx context.Context, options *LROsBeginPost200WithPayloadOptions) (*azcore.Request, error) {
+func (client *LROsClient) post200WithPayloadCreateRequest(ctx context.Context, options *LROsBeginPost200WithPayloadOptions) (*policy.Request, error) {
 	urlPath := "/lro/post/payload/200"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // post200WithPayloadHandleError handles the Post200WithPayload error response.
-func (client *LROsClient) post200WithPayloadHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *LROsClient) post200WithPayloadHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BeginPost202List - Long running put request, service returns a 202 with empty body to first request, returns a 200 with body [{ 'id': '100', 'name':
@@ -1236,42 +860,14 @@ func (client *LROsClient) BeginPost202List(ctx context.Context, options *LROsBeg
 		return LROsPost202ListPollerResponse{}, err
 	}
 	result := LROsPost202ListPollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("LROsClient.Post202List", "", resp, client.con.Pipeline(), client.post202ListHandleError)
-	if err != nil {
-		return LROsPost202ListPollerResponse{}, err
-	}
-	poller := &lrOsPost202ListPoller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPost202ListResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumePost202List creates a new LROsPost202ListPoller from the specified resume token.
-// token - The value must come from a previous call to LROsPost202ListPoller.ResumeToken().
-func (client *LROsClient) ResumePost202List(ctx context.Context, token string) (LROsPost202ListPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("LROsClient.Post202List", token, client.con.Pipeline(), client.post202ListHandleError)
-	if err != nil {
-		return LROsPost202ListPollerResponse{}, err
-	}
-	poller := &lrOsPost202ListPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return LROsPost202ListPollerResponse{}, err
-	}
-	result := LROsPost202ListPollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPost202ListResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("LROsClient.Post202List", "", resp, client.con.Pipeline(), client.post202ListHandleError)
+	if err != nil {
+		return LROsPost202ListPollerResponse{}, err
+	}
+	result.Poller = &LROsPost202ListPoller{
+		pt: pt,
 	}
 	return result, nil
 }
@@ -1279,7 +875,7 @@ func (client *LROsClient) ResumePost202List(ctx context.Context, token string) (
 // Post202List - Long running put request, service returns a 202 with empty body to first request, returns a 200 with body [{ 'id': '100', 'name': 'foo'
 // }].
 // If the operation fails it returns the *CloudError error type.
-func (client *LROsClient) post202List(ctx context.Context, options *LROsBeginPost202ListOptions) (*azcore.Response, error) {
+func (client *LROsClient) post202List(ctx context.Context, options *LROsBeginPost202ListOptions) (*http.Response, error) {
 	req, err := client.post202ListCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -1288,35 +884,34 @@ func (client *LROsClient) post202List(ctx context.Context, options *LROsBeginPos
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
 		return nil, client.post202ListHandleError(resp)
 	}
 	return resp, nil
 }
 
 // post202ListCreateRequest creates the Post202List request.
-func (client *LROsClient) post202ListCreateRequest(ctx context.Context, options *LROsBeginPost202ListOptions) (*azcore.Request, error) {
+func (client *LROsClient) post202ListCreateRequest(ctx context.Context, options *LROsBeginPost202ListOptions) (*policy.Request, error) {
 	urlPath := "/lro/list"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // post202ListHandleError handles the Post202List error response.
-func (client *LROsClient) post202ListHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *LROsClient) post202ListHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BeginPost202NoRetry204 - Long running post request, service returns a 202 to the initial request, with 'Location' header, 204 with noresponse body after
@@ -1328,49 +923,21 @@ func (client *LROsClient) BeginPost202NoRetry204(ctx context.Context, options *L
 		return LROsPost202NoRetry204PollerResponse{}, err
 	}
 	result := LROsPost202NoRetry204PollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("LROsClient.Post202NoRetry204", "", resp, client.con.Pipeline(), client.post202NoRetry204HandleError)
-	if err != nil {
-		return LROsPost202NoRetry204PollerResponse{}, err
-	}
-	poller := &lrOsPost202NoRetry204Poller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPost202NoRetry204Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumePost202NoRetry204 creates a new LROsPost202NoRetry204Poller from the specified resume token.
-// token - The value must come from a previous call to LROsPost202NoRetry204Poller.ResumeToken().
-func (client *LROsClient) ResumePost202NoRetry204(ctx context.Context, token string) (LROsPost202NoRetry204PollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("LROsClient.Post202NoRetry204", token, client.con.Pipeline(), client.post202NoRetry204HandleError)
-	if err != nil {
-		return LROsPost202NoRetry204PollerResponse{}, err
-	}
-	poller := &lrOsPost202NoRetry204Poller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return LROsPost202NoRetry204PollerResponse{}, err
-	}
-	result := LROsPost202NoRetry204PollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPost202NoRetry204Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("LROsClient.Post202NoRetry204", "", resp, client.con.Pipeline(), client.post202NoRetry204HandleError)
+	if err != nil {
+		return LROsPost202NoRetry204PollerResponse{}, err
+	}
+	result.Poller = &LROsPost202NoRetry204Poller{
+		pt: pt,
 	}
 	return result, nil
 }
 
 // Post202NoRetry204 - Long running post request, service returns a 202 to the initial request, with 'Location' header, 204 with noresponse body after success
 // If the operation fails it returns the *CloudError error type.
-func (client *LROsClient) post202NoRetry204(ctx context.Context, options *LROsBeginPost202NoRetry204Options) (*azcore.Response, error) {
+func (client *LROsClient) post202NoRetry204(ctx context.Context, options *LROsBeginPost202NoRetry204Options) (*http.Response, error) {
 	req, err := client.post202NoRetry204CreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -1379,38 +946,37 @@ func (client *LROsClient) post202NoRetry204(ctx context.Context, options *LROsBe
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
 		return nil, client.post202NoRetry204HandleError(resp)
 	}
 	return resp, nil
 }
 
 // post202NoRetry204CreateRequest creates the Post202NoRetry204 request.
-func (client *LROsClient) post202NoRetry204CreateRequest(ctx context.Context, options *LROsBeginPost202NoRetry204Options) (*azcore.Request, error) {
+func (client *LROsClient) post202NoRetry204CreateRequest(ctx context.Context, options *LROsBeginPost202NoRetry204Options) (*policy.Request, error) {
 	urlPath := "/lro/post/202/noretry/204"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	if options != nil && options.Product != nil {
-		return req, req.MarshalAsJSON(*options.Product)
+		return req, runtime.MarshalAsJSON(req, *options.Product)
 	}
 	return req, nil
 }
 
 // post202NoRetry204HandleError handles the Post202NoRetry204 error response.
-func (client *LROsClient) post202NoRetry204HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *LROsClient) post202NoRetry204HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BeginPost202Retry200 - Long running post request, service returns a 202 to the initial request, with 'Location' and 'Retry-After' headers, Polls return
@@ -1422,42 +988,14 @@ func (client *LROsClient) BeginPost202Retry200(ctx context.Context, options *LRO
 		return LROsPost202Retry200PollerResponse{}, err
 	}
 	result := LROsPost202Retry200PollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("LROsClient.Post202Retry200", "", resp, client.con.Pipeline(), client.post202Retry200HandleError)
-	if err != nil {
-		return LROsPost202Retry200PollerResponse{}, err
-	}
-	poller := &lrOsPost202Retry200Poller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPost202Retry200Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumePost202Retry200 creates a new LROsPost202Retry200Poller from the specified resume token.
-// token - The value must come from a previous call to LROsPost202Retry200Poller.ResumeToken().
-func (client *LROsClient) ResumePost202Retry200(ctx context.Context, token string) (LROsPost202Retry200PollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("LROsClient.Post202Retry200", token, client.con.Pipeline(), client.post202Retry200HandleError)
-	if err != nil {
-		return LROsPost202Retry200PollerResponse{}, err
-	}
-	poller := &lrOsPost202Retry200Poller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return LROsPost202Retry200PollerResponse{}, err
-	}
-	result := LROsPost202Retry200PollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPost202Retry200Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("LROsClient.Post202Retry200", "", resp, client.con.Pipeline(), client.post202Retry200HandleError)
+	if err != nil {
+		return LROsPost202Retry200PollerResponse{}, err
+	}
+	result.Poller = &LROsPost202Retry200Poller{
+		pt: pt,
 	}
 	return result, nil
 }
@@ -1465,7 +1003,7 @@ func (client *LROsClient) ResumePost202Retry200(ctx context.Context, token strin
 // Post202Retry200 - Long running post request, service returns a 202 to the initial request, with 'Location' and 'Retry-After' headers, Polls return a
 // 200 with a response body after success
 // If the operation fails it returns the *CloudError error type.
-func (client *LROsClient) post202Retry200(ctx context.Context, options *LROsBeginPost202Retry200Options) (*azcore.Response, error) {
+func (client *LROsClient) post202Retry200(ctx context.Context, options *LROsBeginPost202Retry200Options) (*http.Response, error) {
 	req, err := client.post202Retry200CreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -1474,38 +1012,37 @@ func (client *LROsClient) post202Retry200(ctx context.Context, options *LROsBegi
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
 		return nil, client.post202Retry200HandleError(resp)
 	}
 	return resp, nil
 }
 
 // post202Retry200CreateRequest creates the Post202Retry200 request.
-func (client *LROsClient) post202Retry200CreateRequest(ctx context.Context, options *LROsBeginPost202Retry200Options) (*azcore.Request, error) {
+func (client *LROsClient) post202Retry200CreateRequest(ctx context.Context, options *LROsBeginPost202Retry200Options) (*policy.Request, error) {
 	urlPath := "/lro/post/202/retry/200"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	if options != nil && options.Product != nil {
-		return req, req.MarshalAsJSON(*options.Product)
+		return req, runtime.MarshalAsJSON(req, *options.Product)
 	}
 	return req, nil
 }
 
 // post202Retry200HandleError handles the Post202Retry200 error response.
-func (client *LROsClient) post202Retry200HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *LROsClient) post202Retry200HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BeginPostAsyncNoRetrySucceeded - Long running post request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’.
@@ -1518,42 +1055,14 @@ func (client *LROsClient) BeginPostAsyncNoRetrySucceeded(ctx context.Context, op
 		return LROsPostAsyncNoRetrySucceededPollerResponse{}, err
 	}
 	result := LROsPostAsyncNoRetrySucceededPollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("LROsClient.PostAsyncNoRetrySucceeded", "", resp, client.con.Pipeline(), client.postAsyncNoRetrySucceededHandleError)
-	if err != nil {
-		return LROsPostAsyncNoRetrySucceededPollerResponse{}, err
-	}
-	poller := &lrOsPostAsyncNoRetrySucceededPoller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPostAsyncNoRetrySucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumePostAsyncNoRetrySucceeded creates a new LROsPostAsyncNoRetrySucceededPoller from the specified resume token.
-// token - The value must come from a previous call to LROsPostAsyncNoRetrySucceededPoller.ResumeToken().
-func (client *LROsClient) ResumePostAsyncNoRetrySucceeded(ctx context.Context, token string) (LROsPostAsyncNoRetrySucceededPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("LROsClient.PostAsyncNoRetrySucceeded", token, client.con.Pipeline(), client.postAsyncNoRetrySucceededHandleError)
-	if err != nil {
-		return LROsPostAsyncNoRetrySucceededPollerResponse{}, err
-	}
-	poller := &lrOsPostAsyncNoRetrySucceededPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return LROsPostAsyncNoRetrySucceededPollerResponse{}, err
-	}
-	result := LROsPostAsyncNoRetrySucceededPollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPostAsyncNoRetrySucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("LROsClient.PostAsyncNoRetrySucceeded", "", resp, client.con.Pipeline(), client.postAsyncNoRetrySucceededHandleError)
+	if err != nil {
+		return LROsPostAsyncNoRetrySucceededPollerResponse{}, err
+	}
+	result.Poller = &LROsPostAsyncNoRetrySucceededPoller{
+		pt: pt,
 	}
 	return result, nil
 }
@@ -1562,7 +1071,7 @@ func (client *LROsClient) ResumePostAsyncNoRetrySucceeded(ctx context.Context, t
 // Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
 // If the operation fails it returns the *CloudError error type.
-func (client *LROsClient) postAsyncNoRetrySucceeded(ctx context.Context, options *LROsBeginPostAsyncNoRetrySucceededOptions) (*azcore.Response, error) {
+func (client *LROsClient) postAsyncNoRetrySucceeded(ctx context.Context, options *LROsBeginPostAsyncNoRetrySucceededOptions) (*http.Response, error) {
 	req, err := client.postAsyncNoRetrySucceededCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -1571,38 +1080,37 @@ func (client *LROsClient) postAsyncNoRetrySucceeded(ctx context.Context, options
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
 		return nil, client.postAsyncNoRetrySucceededHandleError(resp)
 	}
 	return resp, nil
 }
 
 // postAsyncNoRetrySucceededCreateRequest creates the PostAsyncNoRetrySucceeded request.
-func (client *LROsClient) postAsyncNoRetrySucceededCreateRequest(ctx context.Context, options *LROsBeginPostAsyncNoRetrySucceededOptions) (*azcore.Request, error) {
+func (client *LROsClient) postAsyncNoRetrySucceededCreateRequest(ctx context.Context, options *LROsBeginPostAsyncNoRetrySucceededOptions) (*policy.Request, error) {
 	urlPath := "/lro/postasync/noretry/succeeded"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	if options != nil && options.Product != nil {
-		return req, req.MarshalAsJSON(*options.Product)
+		return req, runtime.MarshalAsJSON(req, *options.Product)
 	}
 	return req, nil
 }
 
 // postAsyncNoRetrySucceededHandleError handles the PostAsyncNoRetrySucceeded error response.
-func (client *LROsClient) postAsyncNoRetrySucceededHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *LROsClient) postAsyncNoRetrySucceededHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BeginPostAsyncRetryFailed - Long running post request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’.
@@ -1615,42 +1123,14 @@ func (client *LROsClient) BeginPostAsyncRetryFailed(ctx context.Context, options
 		return LROsPostAsyncRetryFailedPollerResponse{}, err
 	}
 	result := LROsPostAsyncRetryFailedPollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("LROsClient.PostAsyncRetryFailed", "", resp, client.con.Pipeline(), client.postAsyncRetryFailedHandleError)
-	if err != nil {
-		return LROsPostAsyncRetryFailedPollerResponse{}, err
-	}
-	poller := &lrOsPostAsyncRetryFailedPoller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPostAsyncRetryFailedResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumePostAsyncRetryFailed creates a new LROsPostAsyncRetryFailedPoller from the specified resume token.
-// token - The value must come from a previous call to LROsPostAsyncRetryFailedPoller.ResumeToken().
-func (client *LROsClient) ResumePostAsyncRetryFailed(ctx context.Context, token string) (LROsPostAsyncRetryFailedPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("LROsClient.PostAsyncRetryFailed", token, client.con.Pipeline(), client.postAsyncRetryFailedHandleError)
-	if err != nil {
-		return LROsPostAsyncRetryFailedPollerResponse{}, err
-	}
-	poller := &lrOsPostAsyncRetryFailedPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return LROsPostAsyncRetryFailedPollerResponse{}, err
-	}
-	result := LROsPostAsyncRetryFailedPollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPostAsyncRetryFailedResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("LROsClient.PostAsyncRetryFailed", "", resp, client.con.Pipeline(), client.postAsyncRetryFailedHandleError)
+	if err != nil {
+		return LROsPostAsyncRetryFailedPollerResponse{}, err
+	}
+	result.Poller = &LROsPostAsyncRetryFailedPoller{
+		pt: pt,
 	}
 	return result, nil
 }
@@ -1659,7 +1139,7 @@ func (client *LROsClient) ResumePostAsyncRetryFailed(ctx context.Context, token 
 // Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
 // If the operation fails it returns the *CloudError error type.
-func (client *LROsClient) postAsyncRetryFailed(ctx context.Context, options *LROsBeginPostAsyncRetryFailedOptions) (*azcore.Response, error) {
+func (client *LROsClient) postAsyncRetryFailed(ctx context.Context, options *LROsBeginPostAsyncRetryFailedOptions) (*http.Response, error) {
 	req, err := client.postAsyncRetryFailedCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -1668,38 +1148,37 @@ func (client *LROsClient) postAsyncRetryFailed(ctx context.Context, options *LRO
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
 		return nil, client.postAsyncRetryFailedHandleError(resp)
 	}
 	return resp, nil
 }
 
 // postAsyncRetryFailedCreateRequest creates the PostAsyncRetryFailed request.
-func (client *LROsClient) postAsyncRetryFailedCreateRequest(ctx context.Context, options *LROsBeginPostAsyncRetryFailedOptions) (*azcore.Request, error) {
+func (client *LROsClient) postAsyncRetryFailedCreateRequest(ctx context.Context, options *LROsBeginPostAsyncRetryFailedOptions) (*policy.Request, error) {
 	urlPath := "/lro/postasync/retry/failed"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	if options != nil && options.Product != nil {
-		return req, req.MarshalAsJSON(*options.Product)
+		return req, runtime.MarshalAsJSON(req, *options.Product)
 	}
 	return req, nil
 }
 
 // postAsyncRetryFailedHandleError handles the PostAsyncRetryFailed error response.
-func (client *LROsClient) postAsyncRetryFailedHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *LROsClient) postAsyncRetryFailedHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BeginPostAsyncRetrySucceeded - Long running post request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’.
@@ -1712,42 +1191,14 @@ func (client *LROsClient) BeginPostAsyncRetrySucceeded(ctx context.Context, opti
 		return LROsPostAsyncRetrySucceededPollerResponse{}, err
 	}
 	result := LROsPostAsyncRetrySucceededPollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("LROsClient.PostAsyncRetrySucceeded", "", resp, client.con.Pipeline(), client.postAsyncRetrySucceededHandleError)
-	if err != nil {
-		return LROsPostAsyncRetrySucceededPollerResponse{}, err
-	}
-	poller := &lrOsPostAsyncRetrySucceededPoller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPostAsyncRetrySucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumePostAsyncRetrySucceeded creates a new LROsPostAsyncRetrySucceededPoller from the specified resume token.
-// token - The value must come from a previous call to LROsPostAsyncRetrySucceededPoller.ResumeToken().
-func (client *LROsClient) ResumePostAsyncRetrySucceeded(ctx context.Context, token string) (LROsPostAsyncRetrySucceededPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("LROsClient.PostAsyncRetrySucceeded", token, client.con.Pipeline(), client.postAsyncRetrySucceededHandleError)
-	if err != nil {
-		return LROsPostAsyncRetrySucceededPollerResponse{}, err
-	}
-	poller := &lrOsPostAsyncRetrySucceededPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return LROsPostAsyncRetrySucceededPollerResponse{}, err
-	}
-	result := LROsPostAsyncRetrySucceededPollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPostAsyncRetrySucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("LROsClient.PostAsyncRetrySucceeded", "", resp, client.con.Pipeline(), client.postAsyncRetrySucceededHandleError)
+	if err != nil {
+		return LROsPostAsyncRetrySucceededPollerResponse{}, err
+	}
+	result.Poller = &LROsPostAsyncRetrySucceededPoller{
+		pt: pt,
 	}
 	return result, nil
 }
@@ -1756,7 +1207,7 @@ func (client *LROsClient) ResumePostAsyncRetrySucceeded(ctx context.Context, tok
 // Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
 // If the operation fails it returns the *CloudError error type.
-func (client *LROsClient) postAsyncRetrySucceeded(ctx context.Context, options *LROsBeginPostAsyncRetrySucceededOptions) (*azcore.Response, error) {
+func (client *LROsClient) postAsyncRetrySucceeded(ctx context.Context, options *LROsBeginPostAsyncRetrySucceededOptions) (*http.Response, error) {
 	req, err := client.postAsyncRetrySucceededCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -1765,38 +1216,37 @@ func (client *LROsClient) postAsyncRetrySucceeded(ctx context.Context, options *
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
 		return nil, client.postAsyncRetrySucceededHandleError(resp)
 	}
 	return resp, nil
 }
 
 // postAsyncRetrySucceededCreateRequest creates the PostAsyncRetrySucceeded request.
-func (client *LROsClient) postAsyncRetrySucceededCreateRequest(ctx context.Context, options *LROsBeginPostAsyncRetrySucceededOptions) (*azcore.Request, error) {
+func (client *LROsClient) postAsyncRetrySucceededCreateRequest(ctx context.Context, options *LROsBeginPostAsyncRetrySucceededOptions) (*policy.Request, error) {
 	urlPath := "/lro/postasync/retry/succeeded"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	if options != nil && options.Product != nil {
-		return req, req.MarshalAsJSON(*options.Product)
+		return req, runtime.MarshalAsJSON(req, *options.Product)
 	}
 	return req, nil
 }
 
 // postAsyncRetrySucceededHandleError handles the PostAsyncRetrySucceeded error response.
-func (client *LROsClient) postAsyncRetrySucceededHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *LROsClient) postAsyncRetrySucceededHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BeginPostAsyncRetrycanceled - Long running post request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’.
@@ -1809,42 +1259,14 @@ func (client *LROsClient) BeginPostAsyncRetrycanceled(ctx context.Context, optio
 		return LROsPostAsyncRetrycanceledPollerResponse{}, err
 	}
 	result := LROsPostAsyncRetrycanceledPollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("LROsClient.PostAsyncRetrycanceled", "", resp, client.con.Pipeline(), client.postAsyncRetrycanceledHandleError)
-	if err != nil {
-		return LROsPostAsyncRetrycanceledPollerResponse{}, err
-	}
-	poller := &lrOsPostAsyncRetrycanceledPoller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPostAsyncRetrycanceledResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumePostAsyncRetrycanceled creates a new LROsPostAsyncRetrycanceledPoller from the specified resume token.
-// token - The value must come from a previous call to LROsPostAsyncRetrycanceledPoller.ResumeToken().
-func (client *LROsClient) ResumePostAsyncRetrycanceled(ctx context.Context, token string) (LROsPostAsyncRetrycanceledPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("LROsClient.PostAsyncRetrycanceled", token, client.con.Pipeline(), client.postAsyncRetrycanceledHandleError)
-	if err != nil {
-		return LROsPostAsyncRetrycanceledPollerResponse{}, err
-	}
-	poller := &lrOsPostAsyncRetrycanceledPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return LROsPostAsyncRetrycanceledPollerResponse{}, err
-	}
-	result := LROsPostAsyncRetrycanceledPollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPostAsyncRetrycanceledResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("LROsClient.PostAsyncRetrycanceled", "", resp, client.con.Pipeline(), client.postAsyncRetrycanceledHandleError)
+	if err != nil {
+		return LROsPostAsyncRetrycanceledPollerResponse{}, err
+	}
+	result.Poller = &LROsPostAsyncRetrycanceledPoller{
+		pt: pt,
 	}
 	return result, nil
 }
@@ -1853,7 +1275,7 @@ func (client *LROsClient) ResumePostAsyncRetrycanceled(ctx context.Context, toke
 // Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
 // If the operation fails it returns the *CloudError error type.
-func (client *LROsClient) postAsyncRetrycanceled(ctx context.Context, options *LROsBeginPostAsyncRetrycanceledOptions) (*azcore.Response, error) {
+func (client *LROsClient) postAsyncRetrycanceled(ctx context.Context, options *LROsBeginPostAsyncRetrycanceledOptions) (*http.Response, error) {
 	req, err := client.postAsyncRetrycanceledCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -1862,38 +1284,37 @@ func (client *LROsClient) postAsyncRetrycanceled(ctx context.Context, options *L
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
 		return nil, client.postAsyncRetrycanceledHandleError(resp)
 	}
 	return resp, nil
 }
 
 // postAsyncRetrycanceledCreateRequest creates the PostAsyncRetrycanceled request.
-func (client *LROsClient) postAsyncRetrycanceledCreateRequest(ctx context.Context, options *LROsBeginPostAsyncRetrycanceledOptions) (*azcore.Request, error) {
+func (client *LROsClient) postAsyncRetrycanceledCreateRequest(ctx context.Context, options *LROsBeginPostAsyncRetrycanceledOptions) (*policy.Request, error) {
 	urlPath := "/lro/postasync/retry/canceled"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	if options != nil && options.Product != nil {
-		return req, req.MarshalAsJSON(*options.Product)
+		return req, runtime.MarshalAsJSON(req, *options.Product)
 	}
 	return req, nil
 }
 
 // postAsyncRetrycanceledHandleError handles the PostAsyncRetrycanceled error response.
-func (client *LROsClient) postAsyncRetrycanceledHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *LROsClient) postAsyncRetrycanceledHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BeginPostDoubleHeadersFinalAzureHeaderGet - Long running post request, service returns a 202 to the initial request with both Location and Azure-Async
@@ -1905,42 +1326,14 @@ func (client *LROsClient) BeginPostDoubleHeadersFinalAzureHeaderGet(ctx context.
 		return LROsPostDoubleHeadersFinalAzureHeaderGetPollerResponse{}, err
 	}
 	result := LROsPostDoubleHeadersFinalAzureHeaderGetPollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("LROsClient.PostDoubleHeadersFinalAzureHeaderGet", "azure-async-operation", resp, client.con.Pipeline(), client.postDoubleHeadersFinalAzureHeaderGetHandleError)
-	if err != nil {
-		return LROsPostDoubleHeadersFinalAzureHeaderGetPollerResponse{}, err
-	}
-	poller := &lrOsPostDoubleHeadersFinalAzureHeaderGetPoller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPostDoubleHeadersFinalAzureHeaderGetResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumePostDoubleHeadersFinalAzureHeaderGet creates a new LROsPostDoubleHeadersFinalAzureHeaderGetPoller from the specified resume token.
-// token - The value must come from a previous call to LROsPostDoubleHeadersFinalAzureHeaderGetPoller.ResumeToken().
-func (client *LROsClient) ResumePostDoubleHeadersFinalAzureHeaderGet(ctx context.Context, token string) (LROsPostDoubleHeadersFinalAzureHeaderGetPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("LROsClient.PostDoubleHeadersFinalAzureHeaderGet", token, client.con.Pipeline(), client.postDoubleHeadersFinalAzureHeaderGetHandleError)
-	if err != nil {
-		return LROsPostDoubleHeadersFinalAzureHeaderGetPollerResponse{}, err
-	}
-	poller := &lrOsPostDoubleHeadersFinalAzureHeaderGetPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return LROsPostDoubleHeadersFinalAzureHeaderGetPollerResponse{}, err
-	}
-	result := LROsPostDoubleHeadersFinalAzureHeaderGetPollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPostDoubleHeadersFinalAzureHeaderGetResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("LROsClient.PostDoubleHeadersFinalAzureHeaderGet", "azure-async-operation", resp, client.con.Pipeline(), client.postDoubleHeadersFinalAzureHeaderGetHandleError)
+	if err != nil {
+		return LROsPostDoubleHeadersFinalAzureHeaderGetPollerResponse{}, err
+	}
+	result.Poller = &LROsPostDoubleHeadersFinalAzureHeaderGetPoller{
+		pt: pt,
 	}
 	return result, nil
 }
@@ -1948,7 +1341,7 @@ func (client *LROsClient) ResumePostDoubleHeadersFinalAzureHeaderGet(ctx context
 // PostDoubleHeadersFinalAzureHeaderGet - Long running post request, service returns a 202 to the initial request with both Location and Azure-Async header.
 // Poll Azure-Async and it's success. Should NOT poll Location to get the final object
 // If the operation fails it returns the *CloudError error type.
-func (client *LROsClient) postDoubleHeadersFinalAzureHeaderGet(ctx context.Context, options *LROsBeginPostDoubleHeadersFinalAzureHeaderGetOptions) (*azcore.Response, error) {
+func (client *LROsClient) postDoubleHeadersFinalAzureHeaderGet(ctx context.Context, options *LROsBeginPostDoubleHeadersFinalAzureHeaderGetOptions) (*http.Response, error) {
 	req, err := client.postDoubleHeadersFinalAzureHeaderGetCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -1957,35 +1350,34 @@ func (client *LROsClient) postDoubleHeadersFinalAzureHeaderGet(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
 		return nil, client.postDoubleHeadersFinalAzureHeaderGetHandleError(resp)
 	}
 	return resp, nil
 }
 
 // postDoubleHeadersFinalAzureHeaderGetCreateRequest creates the PostDoubleHeadersFinalAzureHeaderGet request.
-func (client *LROsClient) postDoubleHeadersFinalAzureHeaderGetCreateRequest(ctx context.Context, options *LROsBeginPostDoubleHeadersFinalAzureHeaderGetOptions) (*azcore.Request, error) {
+func (client *LROsClient) postDoubleHeadersFinalAzureHeaderGetCreateRequest(ctx context.Context, options *LROsBeginPostDoubleHeadersFinalAzureHeaderGetOptions) (*policy.Request, error) {
 	urlPath := "/lro/LROPostDoubleHeadersFinalAzureHeaderGet"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // postDoubleHeadersFinalAzureHeaderGetHandleError handles the PostDoubleHeadersFinalAzureHeaderGet error response.
-func (client *LROsClient) postDoubleHeadersFinalAzureHeaderGetHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *LROsClient) postDoubleHeadersFinalAzureHeaderGetHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BeginPostDoubleHeadersFinalAzureHeaderGetDefault - Long running post request, service returns a 202 to the initial request with both Location and Azure-Async
@@ -1998,42 +1390,14 @@ func (client *LROsClient) BeginPostDoubleHeadersFinalAzureHeaderGetDefault(ctx c
 		return LROsPostDoubleHeadersFinalAzureHeaderGetDefaultPollerResponse{}, err
 	}
 	result := LROsPostDoubleHeadersFinalAzureHeaderGetDefaultPollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("LROsClient.PostDoubleHeadersFinalAzureHeaderGetDefault", "", resp, client.con.Pipeline(), client.postDoubleHeadersFinalAzureHeaderGetDefaultHandleError)
-	if err != nil {
-		return LROsPostDoubleHeadersFinalAzureHeaderGetDefaultPollerResponse{}, err
-	}
-	poller := &lrOsPostDoubleHeadersFinalAzureHeaderGetDefaultPoller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPostDoubleHeadersFinalAzureHeaderGetDefaultResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumePostDoubleHeadersFinalAzureHeaderGetDefault creates a new LROsPostDoubleHeadersFinalAzureHeaderGetDefaultPoller from the specified resume token.
-// token - The value must come from a previous call to LROsPostDoubleHeadersFinalAzureHeaderGetDefaultPoller.ResumeToken().
-func (client *LROsClient) ResumePostDoubleHeadersFinalAzureHeaderGetDefault(ctx context.Context, token string) (LROsPostDoubleHeadersFinalAzureHeaderGetDefaultPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("LROsClient.PostDoubleHeadersFinalAzureHeaderGetDefault", token, client.con.Pipeline(), client.postDoubleHeadersFinalAzureHeaderGetDefaultHandleError)
-	if err != nil {
-		return LROsPostDoubleHeadersFinalAzureHeaderGetDefaultPollerResponse{}, err
-	}
-	poller := &lrOsPostDoubleHeadersFinalAzureHeaderGetDefaultPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return LROsPostDoubleHeadersFinalAzureHeaderGetDefaultPollerResponse{}, err
-	}
-	result := LROsPostDoubleHeadersFinalAzureHeaderGetDefaultPollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPostDoubleHeadersFinalAzureHeaderGetDefaultResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("LROsClient.PostDoubleHeadersFinalAzureHeaderGetDefault", "", resp, client.con.Pipeline(), client.postDoubleHeadersFinalAzureHeaderGetDefaultHandleError)
+	if err != nil {
+		return LROsPostDoubleHeadersFinalAzureHeaderGetDefaultPollerResponse{}, err
+	}
+	result.Poller = &LROsPostDoubleHeadersFinalAzureHeaderGetDefaultPoller{
+		pt: pt,
 	}
 	return result, nil
 }
@@ -2042,7 +1406,7 @@ func (client *LROsClient) ResumePostDoubleHeadersFinalAzureHeaderGetDefault(ctx 
 // header. Poll Azure-Async and it's success. Should NOT poll Location to get the final object
 // if you support initial Autorest behavior.
 // If the operation fails it returns the *CloudError error type.
-func (client *LROsClient) postDoubleHeadersFinalAzureHeaderGetDefault(ctx context.Context, options *LROsBeginPostDoubleHeadersFinalAzureHeaderGetDefaultOptions) (*azcore.Response, error) {
+func (client *LROsClient) postDoubleHeadersFinalAzureHeaderGetDefault(ctx context.Context, options *LROsBeginPostDoubleHeadersFinalAzureHeaderGetDefaultOptions) (*http.Response, error) {
 	req, err := client.postDoubleHeadersFinalAzureHeaderGetDefaultCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -2051,35 +1415,34 @@ func (client *LROsClient) postDoubleHeadersFinalAzureHeaderGetDefault(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
 		return nil, client.postDoubleHeadersFinalAzureHeaderGetDefaultHandleError(resp)
 	}
 	return resp, nil
 }
 
 // postDoubleHeadersFinalAzureHeaderGetDefaultCreateRequest creates the PostDoubleHeadersFinalAzureHeaderGetDefault request.
-func (client *LROsClient) postDoubleHeadersFinalAzureHeaderGetDefaultCreateRequest(ctx context.Context, options *LROsBeginPostDoubleHeadersFinalAzureHeaderGetDefaultOptions) (*azcore.Request, error) {
+func (client *LROsClient) postDoubleHeadersFinalAzureHeaderGetDefaultCreateRequest(ctx context.Context, options *LROsBeginPostDoubleHeadersFinalAzureHeaderGetDefaultOptions) (*policy.Request, error) {
 	urlPath := "/lro/LROPostDoubleHeadersFinalAzureHeaderGetDefault"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // postDoubleHeadersFinalAzureHeaderGetDefaultHandleError handles the PostDoubleHeadersFinalAzureHeaderGetDefault error response.
-func (client *LROsClient) postDoubleHeadersFinalAzureHeaderGetDefaultHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *LROsClient) postDoubleHeadersFinalAzureHeaderGetDefaultHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BeginPostDoubleHeadersFinalLocationGet - Long running post request, service returns a 202 to the initial request with both Location and Azure-Async header.
@@ -2091,42 +1454,14 @@ func (client *LROsClient) BeginPostDoubleHeadersFinalLocationGet(ctx context.Con
 		return LROsPostDoubleHeadersFinalLocationGetPollerResponse{}, err
 	}
 	result := LROsPostDoubleHeadersFinalLocationGetPollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("LROsClient.PostDoubleHeadersFinalLocationGet", "location", resp, client.con.Pipeline(), client.postDoubleHeadersFinalLocationGetHandleError)
-	if err != nil {
-		return LROsPostDoubleHeadersFinalLocationGetPollerResponse{}, err
-	}
-	poller := &lrOsPostDoubleHeadersFinalLocationGetPoller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPostDoubleHeadersFinalLocationGetResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumePostDoubleHeadersFinalLocationGet creates a new LROsPostDoubleHeadersFinalLocationGetPoller from the specified resume token.
-// token - The value must come from a previous call to LROsPostDoubleHeadersFinalLocationGetPoller.ResumeToken().
-func (client *LROsClient) ResumePostDoubleHeadersFinalLocationGet(ctx context.Context, token string) (LROsPostDoubleHeadersFinalLocationGetPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("LROsClient.PostDoubleHeadersFinalLocationGet", token, client.con.Pipeline(), client.postDoubleHeadersFinalLocationGetHandleError)
-	if err != nil {
-		return LROsPostDoubleHeadersFinalLocationGetPollerResponse{}, err
-	}
-	poller := &lrOsPostDoubleHeadersFinalLocationGetPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return LROsPostDoubleHeadersFinalLocationGetPollerResponse{}, err
-	}
-	result := LROsPostDoubleHeadersFinalLocationGetPollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPostDoubleHeadersFinalLocationGetResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("LROsClient.PostDoubleHeadersFinalLocationGet", "location", resp, client.con.Pipeline(), client.postDoubleHeadersFinalLocationGetHandleError)
+	if err != nil {
+		return LROsPostDoubleHeadersFinalLocationGetPollerResponse{}, err
+	}
+	result.Poller = &LROsPostDoubleHeadersFinalLocationGetPoller{
+		pt: pt,
 	}
 	return result, nil
 }
@@ -2134,7 +1469,7 @@ func (client *LROsClient) ResumePostDoubleHeadersFinalLocationGet(ctx context.Co
 // PostDoubleHeadersFinalLocationGet - Long running post request, service returns a 202 to the initial request with both Location and Azure-Async header.
 // Poll Azure-Async and it's success. Should poll Location to get the final object
 // If the operation fails it returns the *CloudError error type.
-func (client *LROsClient) postDoubleHeadersFinalLocationGet(ctx context.Context, options *LROsBeginPostDoubleHeadersFinalLocationGetOptions) (*azcore.Response, error) {
+func (client *LROsClient) postDoubleHeadersFinalLocationGet(ctx context.Context, options *LROsBeginPostDoubleHeadersFinalLocationGetOptions) (*http.Response, error) {
 	req, err := client.postDoubleHeadersFinalLocationGetCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -2143,35 +1478,34 @@ func (client *LROsClient) postDoubleHeadersFinalLocationGet(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
 		return nil, client.postDoubleHeadersFinalLocationGetHandleError(resp)
 	}
 	return resp, nil
 }
 
 // postDoubleHeadersFinalLocationGetCreateRequest creates the PostDoubleHeadersFinalLocationGet request.
-func (client *LROsClient) postDoubleHeadersFinalLocationGetCreateRequest(ctx context.Context, options *LROsBeginPostDoubleHeadersFinalLocationGetOptions) (*azcore.Request, error) {
+func (client *LROsClient) postDoubleHeadersFinalLocationGetCreateRequest(ctx context.Context, options *LROsBeginPostDoubleHeadersFinalLocationGetOptions) (*policy.Request, error) {
 	urlPath := "/lro/LROPostDoubleHeadersFinalLocationGet"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // postDoubleHeadersFinalLocationGetHandleError handles the PostDoubleHeadersFinalLocationGet error response.
-func (client *LROsClient) postDoubleHeadersFinalLocationGetHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *LROsClient) postDoubleHeadersFinalLocationGetHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BeginPut200Acceptedcanceled200 - Long running put request, service returns a 201 to the initial request, with an entity that contains ProvisioningState=’Creating’.
@@ -2184,42 +1518,14 @@ func (client *LROsClient) BeginPut200Acceptedcanceled200(ctx context.Context, op
 		return LROsPut200Acceptedcanceled200PollerResponse{}, err
 	}
 	result := LROsPut200Acceptedcanceled200PollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("LROsClient.Put200Acceptedcanceled200", "", resp, client.con.Pipeline(), client.put200Acceptedcanceled200HandleError)
-	if err != nil {
-		return LROsPut200Acceptedcanceled200PollerResponse{}, err
-	}
-	poller := &lrOsPut200Acceptedcanceled200Poller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPut200Acceptedcanceled200Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumePut200Acceptedcanceled200 creates a new LROsPut200Acceptedcanceled200Poller from the specified resume token.
-// token - The value must come from a previous call to LROsPut200Acceptedcanceled200Poller.ResumeToken().
-func (client *LROsClient) ResumePut200Acceptedcanceled200(ctx context.Context, token string) (LROsPut200Acceptedcanceled200PollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("LROsClient.Put200Acceptedcanceled200", token, client.con.Pipeline(), client.put200Acceptedcanceled200HandleError)
-	if err != nil {
-		return LROsPut200Acceptedcanceled200PollerResponse{}, err
-	}
-	poller := &lrOsPut200Acceptedcanceled200Poller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return LROsPut200Acceptedcanceled200PollerResponse{}, err
-	}
-	result := LROsPut200Acceptedcanceled200PollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPut200Acceptedcanceled200Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("LROsClient.Put200Acceptedcanceled200", "", resp, client.con.Pipeline(), client.put200Acceptedcanceled200HandleError)
+	if err != nil {
+		return LROsPut200Acceptedcanceled200PollerResponse{}, err
+	}
+	result.Poller = &LROsPut200Acceptedcanceled200Poller{
+		pt: pt,
 	}
 	return result, nil
 }
@@ -2228,7 +1534,7 @@ func (client *LROsClient) ResumePut200Acceptedcanceled200(ctx context.Context, t
 // Polls return this value until the last poll returns a ‘200’ with
 // ProvisioningState=’Canceled’
 // If the operation fails it returns the *CloudError error type.
-func (client *LROsClient) put200Acceptedcanceled200(ctx context.Context, options *LROsBeginPut200Acceptedcanceled200Options) (*azcore.Response, error) {
+func (client *LROsClient) put200Acceptedcanceled200(ctx context.Context, options *LROsBeginPut200Acceptedcanceled200Options) (*http.Response, error) {
 	req, err := client.put200Acceptedcanceled200CreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -2237,38 +1543,37 @@ func (client *LROsClient) put200Acceptedcanceled200(ctx context.Context, options
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return nil, client.put200Acceptedcanceled200HandleError(resp)
 	}
 	return resp, nil
 }
 
 // put200Acceptedcanceled200CreateRequest creates the Put200Acceptedcanceled200 request.
-func (client *LROsClient) put200Acceptedcanceled200CreateRequest(ctx context.Context, options *LROsBeginPut200Acceptedcanceled200Options) (*azcore.Request, error) {
+func (client *LROsClient) put200Acceptedcanceled200CreateRequest(ctx context.Context, options *LROsBeginPut200Acceptedcanceled200Options) (*policy.Request, error) {
 	urlPath := "/lro/put/200/accepted/canceled/200"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	if options != nil && options.Product != nil {
-		return req, req.MarshalAsJSON(*options.Product)
+		return req, runtime.MarshalAsJSON(req, *options.Product)
 	}
 	return req, nil
 }
 
 // put200Acceptedcanceled200HandleError handles the Put200Acceptedcanceled200 error response.
-func (client *LROsClient) put200Acceptedcanceled200HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *LROsClient) put200Acceptedcanceled200HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BeginPut200Succeeded - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Succeeded’.
@@ -2279,49 +1584,21 @@ func (client *LROsClient) BeginPut200Succeeded(ctx context.Context, options *LRO
 		return LROsPut200SucceededPollerResponse{}, err
 	}
 	result := LROsPut200SucceededPollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("LROsClient.Put200Succeeded", "", resp, client.con.Pipeline(), client.put200SucceededHandleError)
-	if err != nil {
-		return LROsPut200SucceededPollerResponse{}, err
-	}
-	poller := &lrOsPut200SucceededPoller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPut200SucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumePut200Succeeded creates a new LROsPut200SucceededPoller from the specified resume token.
-// token - The value must come from a previous call to LROsPut200SucceededPoller.ResumeToken().
-func (client *LROsClient) ResumePut200Succeeded(ctx context.Context, token string) (LROsPut200SucceededPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("LROsClient.Put200Succeeded", token, client.con.Pipeline(), client.put200SucceededHandleError)
-	if err != nil {
-		return LROsPut200SucceededPollerResponse{}, err
-	}
-	poller := &lrOsPut200SucceededPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return LROsPut200SucceededPollerResponse{}, err
-	}
-	result := LROsPut200SucceededPollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPut200SucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("LROsClient.Put200Succeeded", "", resp, client.con.Pipeline(), client.put200SucceededHandleError)
+	if err != nil {
+		return LROsPut200SucceededPollerResponse{}, err
+	}
+	result.Poller = &LROsPut200SucceededPoller{
+		pt: pt,
 	}
 	return result, nil
 }
 
 // Put200Succeeded - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Succeeded’.
 // If the operation fails it returns the *CloudError error type.
-func (client *LROsClient) put200Succeeded(ctx context.Context, options *LROsBeginPut200SucceededOptions) (*azcore.Response, error) {
+func (client *LROsClient) put200Succeeded(ctx context.Context, options *LROsBeginPut200SucceededOptions) (*http.Response, error) {
 	req, err := client.put200SucceededCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -2330,38 +1607,37 @@ func (client *LROsClient) put200Succeeded(ctx context.Context, options *LROsBegi
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusNoContent) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusNoContent) {
 		return nil, client.put200SucceededHandleError(resp)
 	}
 	return resp, nil
 }
 
 // put200SucceededCreateRequest creates the Put200Succeeded request.
-func (client *LROsClient) put200SucceededCreateRequest(ctx context.Context, options *LROsBeginPut200SucceededOptions) (*azcore.Request, error) {
+func (client *LROsClient) put200SucceededCreateRequest(ctx context.Context, options *LROsBeginPut200SucceededOptions) (*policy.Request, error) {
 	urlPath := "/lro/put/200/succeeded"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	if options != nil && options.Product != nil {
-		return req, req.MarshalAsJSON(*options.Product)
+		return req, runtime.MarshalAsJSON(req, *options.Product)
 	}
 	return req, nil
 }
 
 // put200SucceededHandleError handles the Put200Succeeded error response.
-func (client *LROsClient) put200SucceededHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *LROsClient) put200SucceededHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BeginPut200SucceededNoState - Long running put request, service returns a 200 to the initial request, with an entity that does not contain ProvisioningState=’Succeeded’.
@@ -2372,49 +1648,21 @@ func (client *LROsClient) BeginPut200SucceededNoState(ctx context.Context, optio
 		return LROsPut200SucceededNoStatePollerResponse{}, err
 	}
 	result := LROsPut200SucceededNoStatePollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("LROsClient.Put200SucceededNoState", "", resp, client.con.Pipeline(), client.put200SucceededNoStateHandleError)
-	if err != nil {
-		return LROsPut200SucceededNoStatePollerResponse{}, err
-	}
-	poller := &lrOsPut200SucceededNoStatePoller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPut200SucceededNoStateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumePut200SucceededNoState creates a new LROsPut200SucceededNoStatePoller from the specified resume token.
-// token - The value must come from a previous call to LROsPut200SucceededNoStatePoller.ResumeToken().
-func (client *LROsClient) ResumePut200SucceededNoState(ctx context.Context, token string) (LROsPut200SucceededNoStatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("LROsClient.Put200SucceededNoState", token, client.con.Pipeline(), client.put200SucceededNoStateHandleError)
-	if err != nil {
-		return LROsPut200SucceededNoStatePollerResponse{}, err
-	}
-	poller := &lrOsPut200SucceededNoStatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return LROsPut200SucceededNoStatePollerResponse{}, err
-	}
-	result := LROsPut200SucceededNoStatePollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPut200SucceededNoStateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("LROsClient.Put200SucceededNoState", "", resp, client.con.Pipeline(), client.put200SucceededNoStateHandleError)
+	if err != nil {
+		return LROsPut200SucceededNoStatePollerResponse{}, err
+	}
+	result.Poller = &LROsPut200SucceededNoStatePoller{
+		pt: pt,
 	}
 	return result, nil
 }
 
 // Put200SucceededNoState - Long running put request, service returns a 200 to the initial request, with an entity that does not contain ProvisioningState=’Succeeded’.
 // If the operation fails it returns the *CloudError error type.
-func (client *LROsClient) put200SucceededNoState(ctx context.Context, options *LROsBeginPut200SucceededNoStateOptions) (*azcore.Response, error) {
+func (client *LROsClient) put200SucceededNoState(ctx context.Context, options *LROsBeginPut200SucceededNoStateOptions) (*http.Response, error) {
 	req, err := client.put200SucceededNoStateCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -2423,38 +1671,37 @@ func (client *LROsClient) put200SucceededNoState(ctx context.Context, options *L
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return nil, client.put200SucceededNoStateHandleError(resp)
 	}
 	return resp, nil
 }
 
 // put200SucceededNoStateCreateRequest creates the Put200SucceededNoState request.
-func (client *LROsClient) put200SucceededNoStateCreateRequest(ctx context.Context, options *LROsBeginPut200SucceededNoStateOptions) (*azcore.Request, error) {
+func (client *LROsClient) put200SucceededNoStateCreateRequest(ctx context.Context, options *LROsBeginPut200SucceededNoStateOptions) (*policy.Request, error) {
 	urlPath := "/lro/put/200/succeeded/nostate"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	if options != nil && options.Product != nil {
-		return req, req.MarshalAsJSON(*options.Product)
+		return req, runtime.MarshalAsJSON(req, *options.Product)
 	}
 	return req, nil
 }
 
 // put200SucceededNoStateHandleError handles the Put200SucceededNoState error response.
-func (client *LROsClient) put200SucceededNoStateHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *LROsClient) put200SucceededNoStateHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BeginPut200UpdatingSucceeded204 - Long running put request, service returns a 201 to the initial request, with an entity that contains ProvisioningState=’Updating’.
@@ -2467,42 +1714,14 @@ func (client *LROsClient) BeginPut200UpdatingSucceeded204(ctx context.Context, o
 		return LROsPut200UpdatingSucceeded204PollerResponse{}, err
 	}
 	result := LROsPut200UpdatingSucceeded204PollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("LROsClient.Put200UpdatingSucceeded204", "", resp, client.con.Pipeline(), client.put200UpdatingSucceeded204HandleError)
-	if err != nil {
-		return LROsPut200UpdatingSucceeded204PollerResponse{}, err
-	}
-	poller := &lrOsPut200UpdatingSucceeded204Poller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPut200UpdatingSucceeded204Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumePut200UpdatingSucceeded204 creates a new LROsPut200UpdatingSucceeded204Poller from the specified resume token.
-// token - The value must come from a previous call to LROsPut200UpdatingSucceeded204Poller.ResumeToken().
-func (client *LROsClient) ResumePut200UpdatingSucceeded204(ctx context.Context, token string) (LROsPut200UpdatingSucceeded204PollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("LROsClient.Put200UpdatingSucceeded204", token, client.con.Pipeline(), client.put200UpdatingSucceeded204HandleError)
-	if err != nil {
-		return LROsPut200UpdatingSucceeded204PollerResponse{}, err
-	}
-	poller := &lrOsPut200UpdatingSucceeded204Poller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return LROsPut200UpdatingSucceeded204PollerResponse{}, err
-	}
-	result := LROsPut200UpdatingSucceeded204PollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPut200UpdatingSucceeded204Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("LROsClient.Put200UpdatingSucceeded204", "", resp, client.con.Pipeline(), client.put200UpdatingSucceeded204HandleError)
+	if err != nil {
+		return LROsPut200UpdatingSucceeded204PollerResponse{}, err
+	}
+	result.Poller = &LROsPut200UpdatingSucceeded204Poller{
+		pt: pt,
 	}
 	return result, nil
 }
@@ -2511,7 +1730,7 @@ func (client *LROsClient) ResumePut200UpdatingSucceeded204(ctx context.Context, 
 // Polls return this value until the last poll returns a ‘200’ with
 // ProvisioningState=’Succeeded’
 // If the operation fails it returns the *CloudError error type.
-func (client *LROsClient) put200UpdatingSucceeded204(ctx context.Context, options *LROsBeginPut200UpdatingSucceeded204Options) (*azcore.Response, error) {
+func (client *LROsClient) put200UpdatingSucceeded204(ctx context.Context, options *LROsBeginPut200UpdatingSucceeded204Options) (*http.Response, error) {
 	req, err := client.put200UpdatingSucceeded204CreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -2520,38 +1739,37 @@ func (client *LROsClient) put200UpdatingSucceeded204(ctx context.Context, option
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return nil, client.put200UpdatingSucceeded204HandleError(resp)
 	}
 	return resp, nil
 }
 
 // put200UpdatingSucceeded204CreateRequest creates the Put200UpdatingSucceeded204 request.
-func (client *LROsClient) put200UpdatingSucceeded204CreateRequest(ctx context.Context, options *LROsBeginPut200UpdatingSucceeded204Options) (*azcore.Request, error) {
+func (client *LROsClient) put200UpdatingSucceeded204CreateRequest(ctx context.Context, options *LROsBeginPut200UpdatingSucceeded204Options) (*policy.Request, error) {
 	urlPath := "/lro/put/200/updating/succeeded/200"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	if options != nil && options.Product != nil {
-		return req, req.MarshalAsJSON(*options.Product)
+		return req, runtime.MarshalAsJSON(req, *options.Product)
 	}
 	return req, nil
 }
 
 // put200UpdatingSucceeded204HandleError handles the Put200UpdatingSucceeded204 error response.
-func (client *LROsClient) put200UpdatingSucceeded204HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *LROsClient) put200UpdatingSucceeded204HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BeginPut201CreatingFailed200 - Long running put request, service returns a 201 to the initial request, with an entity that contains ProvisioningState=’Created’.
@@ -2564,42 +1782,14 @@ func (client *LROsClient) BeginPut201CreatingFailed200(ctx context.Context, opti
 		return LROsPut201CreatingFailed200PollerResponse{}, err
 	}
 	result := LROsPut201CreatingFailed200PollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("LROsClient.Put201CreatingFailed200", "", resp, client.con.Pipeline(), client.put201CreatingFailed200HandleError)
-	if err != nil {
-		return LROsPut201CreatingFailed200PollerResponse{}, err
-	}
-	poller := &lrOsPut201CreatingFailed200Poller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPut201CreatingFailed200Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumePut201CreatingFailed200 creates a new LROsPut201CreatingFailed200Poller from the specified resume token.
-// token - The value must come from a previous call to LROsPut201CreatingFailed200Poller.ResumeToken().
-func (client *LROsClient) ResumePut201CreatingFailed200(ctx context.Context, token string) (LROsPut201CreatingFailed200PollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("LROsClient.Put201CreatingFailed200", token, client.con.Pipeline(), client.put201CreatingFailed200HandleError)
-	if err != nil {
-		return LROsPut201CreatingFailed200PollerResponse{}, err
-	}
-	poller := &lrOsPut201CreatingFailed200Poller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return LROsPut201CreatingFailed200PollerResponse{}, err
-	}
-	result := LROsPut201CreatingFailed200PollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPut201CreatingFailed200Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("LROsClient.Put201CreatingFailed200", "", resp, client.con.Pipeline(), client.put201CreatingFailed200HandleError)
+	if err != nil {
+		return LROsPut201CreatingFailed200PollerResponse{}, err
+	}
+	result.Poller = &LROsPut201CreatingFailed200Poller{
+		pt: pt,
 	}
 	return result, nil
 }
@@ -2608,7 +1798,7 @@ func (client *LROsClient) ResumePut201CreatingFailed200(ctx context.Context, tok
 // Polls return this value until the last poll returns a ‘200’ with
 // ProvisioningState=’Failed’
 // If the operation fails it returns the *CloudError error type.
-func (client *LROsClient) put201CreatingFailed200(ctx context.Context, options *LROsBeginPut201CreatingFailed200Options) (*azcore.Response, error) {
+func (client *LROsClient) put201CreatingFailed200(ctx context.Context, options *LROsBeginPut201CreatingFailed200Options) (*http.Response, error) {
 	req, err := client.put201CreatingFailed200CreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -2617,38 +1807,37 @@ func (client *LROsClient) put201CreatingFailed200(ctx context.Context, options *
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
 		return nil, client.put201CreatingFailed200HandleError(resp)
 	}
 	return resp, nil
 }
 
 // put201CreatingFailed200CreateRequest creates the Put201CreatingFailed200 request.
-func (client *LROsClient) put201CreatingFailed200CreateRequest(ctx context.Context, options *LROsBeginPut201CreatingFailed200Options) (*azcore.Request, error) {
+func (client *LROsClient) put201CreatingFailed200CreateRequest(ctx context.Context, options *LROsBeginPut201CreatingFailed200Options) (*policy.Request, error) {
 	urlPath := "/lro/put/201/created/failed/200"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	if options != nil && options.Product != nil {
-		return req, req.MarshalAsJSON(*options.Product)
+		return req, runtime.MarshalAsJSON(req, *options.Product)
 	}
 	return req, nil
 }
 
 // put201CreatingFailed200HandleError handles the Put201CreatingFailed200 error response.
-func (client *LROsClient) put201CreatingFailed200HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *LROsClient) put201CreatingFailed200HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BeginPut201CreatingSucceeded200 - Long running put request, service returns a 201 to the initial request, with an entity that contains ProvisioningState=’Creating’.
@@ -2661,42 +1850,14 @@ func (client *LROsClient) BeginPut201CreatingSucceeded200(ctx context.Context, o
 		return LROsPut201CreatingSucceeded200PollerResponse{}, err
 	}
 	result := LROsPut201CreatingSucceeded200PollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("LROsClient.Put201CreatingSucceeded200", "", resp, client.con.Pipeline(), client.put201CreatingSucceeded200HandleError)
-	if err != nil {
-		return LROsPut201CreatingSucceeded200PollerResponse{}, err
-	}
-	poller := &lrOsPut201CreatingSucceeded200Poller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPut201CreatingSucceeded200Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumePut201CreatingSucceeded200 creates a new LROsPut201CreatingSucceeded200Poller from the specified resume token.
-// token - The value must come from a previous call to LROsPut201CreatingSucceeded200Poller.ResumeToken().
-func (client *LROsClient) ResumePut201CreatingSucceeded200(ctx context.Context, token string) (LROsPut201CreatingSucceeded200PollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("LROsClient.Put201CreatingSucceeded200", token, client.con.Pipeline(), client.put201CreatingSucceeded200HandleError)
-	if err != nil {
-		return LROsPut201CreatingSucceeded200PollerResponse{}, err
-	}
-	poller := &lrOsPut201CreatingSucceeded200Poller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return LROsPut201CreatingSucceeded200PollerResponse{}, err
-	}
-	result := LROsPut201CreatingSucceeded200PollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPut201CreatingSucceeded200Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("LROsClient.Put201CreatingSucceeded200", "", resp, client.con.Pipeline(), client.put201CreatingSucceeded200HandleError)
+	if err != nil {
+		return LROsPut201CreatingSucceeded200PollerResponse{}, err
+	}
+	result.Poller = &LROsPut201CreatingSucceeded200Poller{
+		pt: pt,
 	}
 	return result, nil
 }
@@ -2705,7 +1866,7 @@ func (client *LROsClient) ResumePut201CreatingSucceeded200(ctx context.Context, 
 // Polls return this value until the last poll returns a ‘200’ with
 // ProvisioningState=’Succeeded’
 // If the operation fails it returns the *CloudError error type.
-func (client *LROsClient) put201CreatingSucceeded200(ctx context.Context, options *LROsBeginPut201CreatingSucceeded200Options) (*azcore.Response, error) {
+func (client *LROsClient) put201CreatingSucceeded200(ctx context.Context, options *LROsBeginPut201CreatingSucceeded200Options) (*http.Response, error) {
 	req, err := client.put201CreatingSucceeded200CreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -2714,38 +1875,37 @@ func (client *LROsClient) put201CreatingSucceeded200(ctx context.Context, option
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
 		return nil, client.put201CreatingSucceeded200HandleError(resp)
 	}
 	return resp, nil
 }
 
 // put201CreatingSucceeded200CreateRequest creates the Put201CreatingSucceeded200 request.
-func (client *LROsClient) put201CreatingSucceeded200CreateRequest(ctx context.Context, options *LROsBeginPut201CreatingSucceeded200Options) (*azcore.Request, error) {
+func (client *LROsClient) put201CreatingSucceeded200CreateRequest(ctx context.Context, options *LROsBeginPut201CreatingSucceeded200Options) (*policy.Request, error) {
 	urlPath := "/lro/put/201/creating/succeeded/200"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	if options != nil && options.Product != nil {
-		return req, req.MarshalAsJSON(*options.Product)
+		return req, runtime.MarshalAsJSON(req, *options.Product)
 	}
 	return req, nil
 }
 
 // put201CreatingSucceeded200HandleError handles the Put201CreatingSucceeded200 error response.
-func (client *LROsClient) put201CreatingSucceeded200HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *LROsClient) put201CreatingSucceeded200HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BeginPut201Succeeded - Long running put request, service returns a 201 to the initial request, with an entity that contains ProvisioningState=’Succeeded’.
@@ -2756,49 +1916,21 @@ func (client *LROsClient) BeginPut201Succeeded(ctx context.Context, options *LRO
 		return LROsPut201SucceededPollerResponse{}, err
 	}
 	result := LROsPut201SucceededPollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("LROsClient.Put201Succeeded", "", resp, client.con.Pipeline(), client.put201SucceededHandleError)
-	if err != nil {
-		return LROsPut201SucceededPollerResponse{}, err
-	}
-	poller := &lrOsPut201SucceededPoller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPut201SucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumePut201Succeeded creates a new LROsPut201SucceededPoller from the specified resume token.
-// token - The value must come from a previous call to LROsPut201SucceededPoller.ResumeToken().
-func (client *LROsClient) ResumePut201Succeeded(ctx context.Context, token string) (LROsPut201SucceededPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("LROsClient.Put201Succeeded", token, client.con.Pipeline(), client.put201SucceededHandleError)
-	if err != nil {
-		return LROsPut201SucceededPollerResponse{}, err
-	}
-	poller := &lrOsPut201SucceededPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return LROsPut201SucceededPollerResponse{}, err
-	}
-	result := LROsPut201SucceededPollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPut201SucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("LROsClient.Put201Succeeded", "", resp, client.con.Pipeline(), client.put201SucceededHandleError)
+	if err != nil {
+		return LROsPut201SucceededPollerResponse{}, err
+	}
+	result.Poller = &LROsPut201SucceededPoller{
+		pt: pt,
 	}
 	return result, nil
 }
 
 // Put201Succeeded - Long running put request, service returns a 201 to the initial request, with an entity that contains ProvisioningState=’Succeeded’.
 // If the operation fails it returns the *CloudError error type.
-func (client *LROsClient) put201Succeeded(ctx context.Context, options *LROsBeginPut201SucceededOptions) (*azcore.Response, error) {
+func (client *LROsClient) put201Succeeded(ctx context.Context, options *LROsBeginPut201SucceededOptions) (*http.Response, error) {
 	req, err := client.put201SucceededCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -2807,38 +1939,37 @@ func (client *LROsClient) put201Succeeded(ctx context.Context, options *LROsBegi
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusCreated) {
+	if !runtime.HasStatusCode(resp, http.StatusCreated) {
 		return nil, client.put201SucceededHandleError(resp)
 	}
 	return resp, nil
 }
 
 // put201SucceededCreateRequest creates the Put201Succeeded request.
-func (client *LROsClient) put201SucceededCreateRequest(ctx context.Context, options *LROsBeginPut201SucceededOptions) (*azcore.Request, error) {
+func (client *LROsClient) put201SucceededCreateRequest(ctx context.Context, options *LROsBeginPut201SucceededOptions) (*policy.Request, error) {
 	urlPath := "/lro/put/201/succeeded"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	if options != nil && options.Product != nil {
-		return req, req.MarshalAsJSON(*options.Product)
+		return req, runtime.MarshalAsJSON(req, *options.Product)
 	}
 	return req, nil
 }
 
 // put201SucceededHandleError handles the Put201Succeeded error response.
-func (client *LROsClient) put201SucceededHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *LROsClient) put201SucceededHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BeginPut202Retry200 - Long running put request, service returns a 202 to the initial request, with a location header that points to a polling URL that
@@ -2850,42 +1981,14 @@ func (client *LROsClient) BeginPut202Retry200(ctx context.Context, options *LROs
 		return LROsPut202Retry200PollerResponse{}, err
 	}
 	result := LROsPut202Retry200PollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("LROsClient.Put202Retry200", "", resp, client.con.Pipeline(), client.put202Retry200HandleError)
-	if err != nil {
-		return LROsPut202Retry200PollerResponse{}, err
-	}
-	poller := &lrOsPut202Retry200Poller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPut202Retry200Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumePut202Retry200 creates a new LROsPut202Retry200Poller from the specified resume token.
-// token - The value must come from a previous call to LROsPut202Retry200Poller.ResumeToken().
-func (client *LROsClient) ResumePut202Retry200(ctx context.Context, token string) (LROsPut202Retry200PollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("LROsClient.Put202Retry200", token, client.con.Pipeline(), client.put202Retry200HandleError)
-	if err != nil {
-		return LROsPut202Retry200PollerResponse{}, err
-	}
-	poller := &lrOsPut202Retry200Poller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return LROsPut202Retry200PollerResponse{}, err
-	}
-	result := LROsPut202Retry200PollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPut202Retry200Response, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("LROsClient.Put202Retry200", "", resp, client.con.Pipeline(), client.put202Retry200HandleError)
+	if err != nil {
+		return LROsPut202Retry200PollerResponse{}, err
+	}
+	result.Poller = &LROsPut202Retry200Poller{
+		pt: pt,
 	}
 	return result, nil
 }
@@ -2893,7 +1996,7 @@ func (client *LROsClient) ResumePut202Retry200(ctx context.Context, token string
 // Put202Retry200 - Long running put request, service returns a 202 to the initial request, with a location header that points to a polling URL that returns
 // a 200 and an entity that doesn't contains ProvisioningState
 // If the operation fails it returns the *CloudError error type.
-func (client *LROsClient) put202Retry200(ctx context.Context, options *LROsBeginPut202Retry200Options) (*azcore.Response, error) {
+func (client *LROsClient) put202Retry200(ctx context.Context, options *LROsBeginPut202Retry200Options) (*http.Response, error) {
 	req, err := client.put202Retry200CreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -2902,38 +2005,37 @@ func (client *LROsClient) put202Retry200(ctx context.Context, options *LROsBegin
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
 		return nil, client.put202Retry200HandleError(resp)
 	}
 	return resp, nil
 }
 
 // put202Retry200CreateRequest creates the Put202Retry200 request.
-func (client *LROsClient) put202Retry200CreateRequest(ctx context.Context, options *LROsBeginPut202Retry200Options) (*azcore.Request, error) {
+func (client *LROsClient) put202Retry200CreateRequest(ctx context.Context, options *LROsBeginPut202Retry200Options) (*policy.Request, error) {
 	urlPath := "/lro/put/202/retry/200"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	if options != nil && options.Product != nil {
-		return req, req.MarshalAsJSON(*options.Product)
+		return req, runtime.MarshalAsJSON(req, *options.Product)
 	}
 	return req, nil
 }
 
 // put202Retry200HandleError handles the Put202Retry200 error response.
-func (client *LROsClient) put202Retry200HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *LROsClient) put202Retry200HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BeginPutAsyncNoHeaderInRetry - Long running put request, service returns a 202 to the initial request with Azure-AsyncOperation header. Subsequent calls
@@ -2945,42 +2047,14 @@ func (client *LROsClient) BeginPutAsyncNoHeaderInRetry(ctx context.Context, opti
 		return LROsPutAsyncNoHeaderInRetryPollerResponse{}, err
 	}
 	result := LROsPutAsyncNoHeaderInRetryPollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("LROsClient.PutAsyncNoHeaderInRetry", "", resp, client.con.Pipeline(), client.putAsyncNoHeaderInRetryHandleError)
-	if err != nil {
-		return LROsPutAsyncNoHeaderInRetryPollerResponse{}, err
-	}
-	poller := &lrOsPutAsyncNoHeaderInRetryPoller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPutAsyncNoHeaderInRetryResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumePutAsyncNoHeaderInRetry creates a new LROsPutAsyncNoHeaderInRetryPoller from the specified resume token.
-// token - The value must come from a previous call to LROsPutAsyncNoHeaderInRetryPoller.ResumeToken().
-func (client *LROsClient) ResumePutAsyncNoHeaderInRetry(ctx context.Context, token string) (LROsPutAsyncNoHeaderInRetryPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("LROsClient.PutAsyncNoHeaderInRetry", token, client.con.Pipeline(), client.putAsyncNoHeaderInRetryHandleError)
-	if err != nil {
-		return LROsPutAsyncNoHeaderInRetryPollerResponse{}, err
-	}
-	poller := &lrOsPutAsyncNoHeaderInRetryPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return LROsPutAsyncNoHeaderInRetryPollerResponse{}, err
-	}
-	result := LROsPutAsyncNoHeaderInRetryPollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPutAsyncNoHeaderInRetryResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("LROsClient.PutAsyncNoHeaderInRetry", "", resp, client.con.Pipeline(), client.putAsyncNoHeaderInRetryHandleError)
+	if err != nil {
+		return LROsPutAsyncNoHeaderInRetryPollerResponse{}, err
+	}
+	result.Poller = &LROsPutAsyncNoHeaderInRetryPoller{
+		pt: pt,
 	}
 	return result, nil
 }
@@ -2988,7 +2062,7 @@ func (client *LROsClient) ResumePutAsyncNoHeaderInRetry(ctx context.Context, tok
 // PutAsyncNoHeaderInRetry - Long running put request, service returns a 202 to the initial request with Azure-AsyncOperation header. Subsequent calls to
 // operation status do not contain Azure-AsyncOperation header.
 // If the operation fails it returns the *CloudError error type.
-func (client *LROsClient) putAsyncNoHeaderInRetry(ctx context.Context, options *LROsBeginPutAsyncNoHeaderInRetryOptions) (*azcore.Response, error) {
+func (client *LROsClient) putAsyncNoHeaderInRetry(ctx context.Context, options *LROsBeginPutAsyncNoHeaderInRetryOptions) (*http.Response, error) {
 	req, err := client.putAsyncNoHeaderInRetryCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -2997,38 +2071,37 @@ func (client *LROsClient) putAsyncNoHeaderInRetry(ctx context.Context, options *
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusCreated) {
+	if !runtime.HasStatusCode(resp, http.StatusCreated) {
 		return nil, client.putAsyncNoHeaderInRetryHandleError(resp)
 	}
 	return resp, nil
 }
 
 // putAsyncNoHeaderInRetryCreateRequest creates the PutAsyncNoHeaderInRetry request.
-func (client *LROsClient) putAsyncNoHeaderInRetryCreateRequest(ctx context.Context, options *LROsBeginPutAsyncNoHeaderInRetryOptions) (*azcore.Request, error) {
+func (client *LROsClient) putAsyncNoHeaderInRetryCreateRequest(ctx context.Context, options *LROsBeginPutAsyncNoHeaderInRetryOptions) (*policy.Request, error) {
 	urlPath := "/lro/putasync/noheader/201/200"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	if options != nil && options.Product != nil {
-		return req, req.MarshalAsJSON(*options.Product)
+		return req, runtime.MarshalAsJSON(req, *options.Product)
 	}
 	return req, nil
 }
 
 // putAsyncNoHeaderInRetryHandleError handles the PutAsyncNoHeaderInRetry error response.
-func (client *LROsClient) putAsyncNoHeaderInRetryHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *LROsClient) putAsyncNoHeaderInRetryHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BeginPutAsyncNoRetrySucceeded - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’.
@@ -3041,42 +2114,14 @@ func (client *LROsClient) BeginPutAsyncNoRetrySucceeded(ctx context.Context, opt
 		return LROsPutAsyncNoRetrySucceededPollerResponse{}, err
 	}
 	result := LROsPutAsyncNoRetrySucceededPollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("LROsClient.PutAsyncNoRetrySucceeded", "", resp, client.con.Pipeline(), client.putAsyncNoRetrySucceededHandleError)
-	if err != nil {
-		return LROsPutAsyncNoRetrySucceededPollerResponse{}, err
-	}
-	poller := &lrOsPutAsyncNoRetrySucceededPoller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPutAsyncNoRetrySucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumePutAsyncNoRetrySucceeded creates a new LROsPutAsyncNoRetrySucceededPoller from the specified resume token.
-// token - The value must come from a previous call to LROsPutAsyncNoRetrySucceededPoller.ResumeToken().
-func (client *LROsClient) ResumePutAsyncNoRetrySucceeded(ctx context.Context, token string) (LROsPutAsyncNoRetrySucceededPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("LROsClient.PutAsyncNoRetrySucceeded", token, client.con.Pipeline(), client.putAsyncNoRetrySucceededHandleError)
-	if err != nil {
-		return LROsPutAsyncNoRetrySucceededPollerResponse{}, err
-	}
-	poller := &lrOsPutAsyncNoRetrySucceededPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return LROsPutAsyncNoRetrySucceededPollerResponse{}, err
-	}
-	result := LROsPutAsyncNoRetrySucceededPollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPutAsyncNoRetrySucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("LROsClient.PutAsyncNoRetrySucceeded", "", resp, client.con.Pipeline(), client.putAsyncNoRetrySucceededHandleError)
+	if err != nil {
+		return LROsPutAsyncNoRetrySucceededPollerResponse{}, err
+	}
+	result.Poller = &LROsPutAsyncNoRetrySucceededPoller{
+		pt: pt,
 	}
 	return result, nil
 }
@@ -3085,7 +2130,7 @@ func (client *LROsClient) ResumePutAsyncNoRetrySucceeded(ctx context.Context, to
 // Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
 // If the operation fails it returns the *CloudError error type.
-func (client *LROsClient) putAsyncNoRetrySucceeded(ctx context.Context, options *LROsBeginPutAsyncNoRetrySucceededOptions) (*azcore.Response, error) {
+func (client *LROsClient) putAsyncNoRetrySucceeded(ctx context.Context, options *LROsBeginPutAsyncNoRetrySucceededOptions) (*http.Response, error) {
 	req, err := client.putAsyncNoRetrySucceededCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -3094,38 +2139,37 @@ func (client *LROsClient) putAsyncNoRetrySucceeded(ctx context.Context, options 
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return nil, client.putAsyncNoRetrySucceededHandleError(resp)
 	}
 	return resp, nil
 }
 
 // putAsyncNoRetrySucceededCreateRequest creates the PutAsyncNoRetrySucceeded request.
-func (client *LROsClient) putAsyncNoRetrySucceededCreateRequest(ctx context.Context, options *LROsBeginPutAsyncNoRetrySucceededOptions) (*azcore.Request, error) {
+func (client *LROsClient) putAsyncNoRetrySucceededCreateRequest(ctx context.Context, options *LROsBeginPutAsyncNoRetrySucceededOptions) (*policy.Request, error) {
 	urlPath := "/lro/putasync/noretry/succeeded"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	if options != nil && options.Product != nil {
-		return req, req.MarshalAsJSON(*options.Product)
+		return req, runtime.MarshalAsJSON(req, *options.Product)
 	}
 	return req, nil
 }
 
 // putAsyncNoRetrySucceededHandleError handles the PutAsyncNoRetrySucceeded error response.
-func (client *LROsClient) putAsyncNoRetrySucceededHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *LROsClient) putAsyncNoRetrySucceededHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BeginPutAsyncNoRetrycanceled - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’.
@@ -3138,42 +2182,14 @@ func (client *LROsClient) BeginPutAsyncNoRetrycanceled(ctx context.Context, opti
 		return LROsPutAsyncNoRetrycanceledPollerResponse{}, err
 	}
 	result := LROsPutAsyncNoRetrycanceledPollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("LROsClient.PutAsyncNoRetrycanceled", "", resp, client.con.Pipeline(), client.putAsyncNoRetrycanceledHandleError)
-	if err != nil {
-		return LROsPutAsyncNoRetrycanceledPollerResponse{}, err
-	}
-	poller := &lrOsPutAsyncNoRetrycanceledPoller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPutAsyncNoRetrycanceledResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumePutAsyncNoRetrycanceled creates a new LROsPutAsyncNoRetrycanceledPoller from the specified resume token.
-// token - The value must come from a previous call to LROsPutAsyncNoRetrycanceledPoller.ResumeToken().
-func (client *LROsClient) ResumePutAsyncNoRetrycanceled(ctx context.Context, token string) (LROsPutAsyncNoRetrycanceledPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("LROsClient.PutAsyncNoRetrycanceled", token, client.con.Pipeline(), client.putAsyncNoRetrycanceledHandleError)
-	if err != nil {
-		return LROsPutAsyncNoRetrycanceledPollerResponse{}, err
-	}
-	poller := &lrOsPutAsyncNoRetrycanceledPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return LROsPutAsyncNoRetrycanceledPollerResponse{}, err
-	}
-	result := LROsPutAsyncNoRetrycanceledPollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPutAsyncNoRetrycanceledResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("LROsClient.PutAsyncNoRetrycanceled", "", resp, client.con.Pipeline(), client.putAsyncNoRetrycanceledHandleError)
+	if err != nil {
+		return LROsPutAsyncNoRetrycanceledPollerResponse{}, err
+	}
+	result.Poller = &LROsPutAsyncNoRetrycanceledPoller{
+		pt: pt,
 	}
 	return result, nil
 }
@@ -3182,7 +2198,7 @@ func (client *LROsClient) ResumePutAsyncNoRetrycanceled(ctx context.Context, tok
 // Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
 // If the operation fails it returns the *CloudError error type.
-func (client *LROsClient) putAsyncNoRetrycanceled(ctx context.Context, options *LROsBeginPutAsyncNoRetrycanceledOptions) (*azcore.Response, error) {
+func (client *LROsClient) putAsyncNoRetrycanceled(ctx context.Context, options *LROsBeginPutAsyncNoRetrycanceledOptions) (*http.Response, error) {
 	req, err := client.putAsyncNoRetrycanceledCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -3191,38 +2207,37 @@ func (client *LROsClient) putAsyncNoRetrycanceled(ctx context.Context, options *
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return nil, client.putAsyncNoRetrycanceledHandleError(resp)
 	}
 	return resp, nil
 }
 
 // putAsyncNoRetrycanceledCreateRequest creates the PutAsyncNoRetrycanceled request.
-func (client *LROsClient) putAsyncNoRetrycanceledCreateRequest(ctx context.Context, options *LROsBeginPutAsyncNoRetrycanceledOptions) (*azcore.Request, error) {
+func (client *LROsClient) putAsyncNoRetrycanceledCreateRequest(ctx context.Context, options *LROsBeginPutAsyncNoRetrycanceledOptions) (*policy.Request, error) {
 	urlPath := "/lro/putasync/noretry/canceled"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	if options != nil && options.Product != nil {
-		return req, req.MarshalAsJSON(*options.Product)
+		return req, runtime.MarshalAsJSON(req, *options.Product)
 	}
 	return req, nil
 }
 
 // putAsyncNoRetrycanceledHandleError handles the PutAsyncNoRetrycanceled error response.
-func (client *LROsClient) putAsyncNoRetrycanceledHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *LROsClient) putAsyncNoRetrycanceledHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BeginPutAsyncNonResource - Long running put request with non resource.
@@ -3233,49 +2248,21 @@ func (client *LROsClient) BeginPutAsyncNonResource(ctx context.Context, options 
 		return LROsPutAsyncNonResourcePollerResponse{}, err
 	}
 	result := LROsPutAsyncNonResourcePollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("LROsClient.PutAsyncNonResource", "", resp, client.con.Pipeline(), client.putAsyncNonResourceHandleError)
-	if err != nil {
-		return LROsPutAsyncNonResourcePollerResponse{}, err
-	}
-	poller := &lrOsPutAsyncNonResourcePoller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPutAsyncNonResourceResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumePutAsyncNonResource creates a new LROsPutAsyncNonResourcePoller from the specified resume token.
-// token - The value must come from a previous call to LROsPutAsyncNonResourcePoller.ResumeToken().
-func (client *LROsClient) ResumePutAsyncNonResource(ctx context.Context, token string) (LROsPutAsyncNonResourcePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("LROsClient.PutAsyncNonResource", token, client.con.Pipeline(), client.putAsyncNonResourceHandleError)
-	if err != nil {
-		return LROsPutAsyncNonResourcePollerResponse{}, err
-	}
-	poller := &lrOsPutAsyncNonResourcePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return LROsPutAsyncNonResourcePollerResponse{}, err
-	}
-	result := LROsPutAsyncNonResourcePollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPutAsyncNonResourceResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("LROsClient.PutAsyncNonResource", "", resp, client.con.Pipeline(), client.putAsyncNonResourceHandleError)
+	if err != nil {
+		return LROsPutAsyncNonResourcePollerResponse{}, err
+	}
+	result.Poller = &LROsPutAsyncNonResourcePoller{
+		pt: pt,
 	}
 	return result, nil
 }
 
 // PutAsyncNonResource - Long running put request with non resource.
 // If the operation fails it returns the *CloudError error type.
-func (client *LROsClient) putAsyncNonResource(ctx context.Context, options *LROsBeginPutAsyncNonResourceOptions) (*azcore.Response, error) {
+func (client *LROsClient) putAsyncNonResource(ctx context.Context, options *LROsBeginPutAsyncNonResourceOptions) (*http.Response, error) {
 	req, err := client.putAsyncNonResourceCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -3284,38 +2271,37 @@ func (client *LROsClient) putAsyncNonResource(ctx context.Context, options *LROs
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
 		return nil, client.putAsyncNonResourceHandleError(resp)
 	}
 	return resp, nil
 }
 
 // putAsyncNonResourceCreateRequest creates the PutAsyncNonResource request.
-func (client *LROsClient) putAsyncNonResourceCreateRequest(ctx context.Context, options *LROsBeginPutAsyncNonResourceOptions) (*azcore.Request, error) {
+func (client *LROsClient) putAsyncNonResourceCreateRequest(ctx context.Context, options *LROsBeginPutAsyncNonResourceOptions) (*policy.Request, error) {
 	urlPath := "/lro/putnonresourceasync/202/200"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	if options != nil && options.SKU != nil {
-		return req, req.MarshalAsJSON(*options.SKU)
+		return req, runtime.MarshalAsJSON(req, *options.SKU)
 	}
 	return req, nil
 }
 
 // putAsyncNonResourceHandleError handles the PutAsyncNonResource error response.
-func (client *LROsClient) putAsyncNonResourceHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *LROsClient) putAsyncNonResourceHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BeginPutAsyncRetryFailed - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’.
@@ -3328,42 +2314,14 @@ func (client *LROsClient) BeginPutAsyncRetryFailed(ctx context.Context, options 
 		return LROsPutAsyncRetryFailedPollerResponse{}, err
 	}
 	result := LROsPutAsyncRetryFailedPollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("LROsClient.PutAsyncRetryFailed", "", resp, client.con.Pipeline(), client.putAsyncRetryFailedHandleError)
-	if err != nil {
-		return LROsPutAsyncRetryFailedPollerResponse{}, err
-	}
-	poller := &lrOsPutAsyncRetryFailedPoller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPutAsyncRetryFailedResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumePutAsyncRetryFailed creates a new LROsPutAsyncRetryFailedPoller from the specified resume token.
-// token - The value must come from a previous call to LROsPutAsyncRetryFailedPoller.ResumeToken().
-func (client *LROsClient) ResumePutAsyncRetryFailed(ctx context.Context, token string) (LROsPutAsyncRetryFailedPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("LROsClient.PutAsyncRetryFailed", token, client.con.Pipeline(), client.putAsyncRetryFailedHandleError)
-	if err != nil {
-		return LROsPutAsyncRetryFailedPollerResponse{}, err
-	}
-	poller := &lrOsPutAsyncRetryFailedPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return LROsPutAsyncRetryFailedPollerResponse{}, err
-	}
-	result := LROsPutAsyncRetryFailedPollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPutAsyncRetryFailedResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("LROsClient.PutAsyncRetryFailed", "", resp, client.con.Pipeline(), client.putAsyncRetryFailedHandleError)
+	if err != nil {
+		return LROsPutAsyncRetryFailedPollerResponse{}, err
+	}
+	result.Poller = &LROsPutAsyncRetryFailedPoller{
+		pt: pt,
 	}
 	return result, nil
 }
@@ -3372,7 +2330,7 @@ func (client *LROsClient) ResumePutAsyncRetryFailed(ctx context.Context, token s
 // Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
 // If the operation fails it returns the *CloudError error type.
-func (client *LROsClient) putAsyncRetryFailed(ctx context.Context, options *LROsBeginPutAsyncRetryFailedOptions) (*azcore.Response, error) {
+func (client *LROsClient) putAsyncRetryFailed(ctx context.Context, options *LROsBeginPutAsyncRetryFailedOptions) (*http.Response, error) {
 	req, err := client.putAsyncRetryFailedCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -3381,38 +2339,37 @@ func (client *LROsClient) putAsyncRetryFailed(ctx context.Context, options *LROs
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return nil, client.putAsyncRetryFailedHandleError(resp)
 	}
 	return resp, nil
 }
 
 // putAsyncRetryFailedCreateRequest creates the PutAsyncRetryFailed request.
-func (client *LROsClient) putAsyncRetryFailedCreateRequest(ctx context.Context, options *LROsBeginPutAsyncRetryFailedOptions) (*azcore.Request, error) {
+func (client *LROsClient) putAsyncRetryFailedCreateRequest(ctx context.Context, options *LROsBeginPutAsyncRetryFailedOptions) (*policy.Request, error) {
 	urlPath := "/lro/putasync/retry/failed"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	if options != nil && options.Product != nil {
-		return req, req.MarshalAsJSON(*options.Product)
+		return req, runtime.MarshalAsJSON(req, *options.Product)
 	}
 	return req, nil
 }
 
 // putAsyncRetryFailedHandleError handles the PutAsyncRetryFailed error response.
-func (client *LROsClient) putAsyncRetryFailedHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *LROsClient) putAsyncRetryFailedHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BeginPutAsyncRetrySucceeded - Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’.
@@ -3425,42 +2382,14 @@ func (client *LROsClient) BeginPutAsyncRetrySucceeded(ctx context.Context, optio
 		return LROsPutAsyncRetrySucceededPollerResponse{}, err
 	}
 	result := LROsPutAsyncRetrySucceededPollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("LROsClient.PutAsyncRetrySucceeded", "", resp, client.con.Pipeline(), client.putAsyncRetrySucceededHandleError)
-	if err != nil {
-		return LROsPutAsyncRetrySucceededPollerResponse{}, err
-	}
-	poller := &lrOsPutAsyncRetrySucceededPoller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPutAsyncRetrySucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumePutAsyncRetrySucceeded creates a new LROsPutAsyncRetrySucceededPoller from the specified resume token.
-// token - The value must come from a previous call to LROsPutAsyncRetrySucceededPoller.ResumeToken().
-func (client *LROsClient) ResumePutAsyncRetrySucceeded(ctx context.Context, token string) (LROsPutAsyncRetrySucceededPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("LROsClient.PutAsyncRetrySucceeded", token, client.con.Pipeline(), client.putAsyncRetrySucceededHandleError)
-	if err != nil {
-		return LROsPutAsyncRetrySucceededPollerResponse{}, err
-	}
-	poller := &lrOsPutAsyncRetrySucceededPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return LROsPutAsyncRetrySucceededPollerResponse{}, err
-	}
-	result := LROsPutAsyncRetrySucceededPollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPutAsyncRetrySucceededResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("LROsClient.PutAsyncRetrySucceeded", "", resp, client.con.Pipeline(), client.putAsyncRetrySucceededHandleError)
+	if err != nil {
+		return LROsPutAsyncRetrySucceededPollerResponse{}, err
+	}
+	result.Poller = &LROsPutAsyncRetrySucceededPoller{
+		pt: pt,
 	}
 	return result, nil
 }
@@ -3469,7 +2398,7 @@ func (client *LROsClient) ResumePutAsyncRetrySucceeded(ctx context.Context, toke
 // Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
 // If the operation fails it returns the *CloudError error type.
-func (client *LROsClient) putAsyncRetrySucceeded(ctx context.Context, options *LROsBeginPutAsyncRetrySucceededOptions) (*azcore.Response, error) {
+func (client *LROsClient) putAsyncRetrySucceeded(ctx context.Context, options *LROsBeginPutAsyncRetrySucceededOptions) (*http.Response, error) {
 	req, err := client.putAsyncRetrySucceededCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -3478,38 +2407,37 @@ func (client *LROsClient) putAsyncRetrySucceeded(ctx context.Context, options *L
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return nil, client.putAsyncRetrySucceededHandleError(resp)
 	}
 	return resp, nil
 }
 
 // putAsyncRetrySucceededCreateRequest creates the PutAsyncRetrySucceeded request.
-func (client *LROsClient) putAsyncRetrySucceededCreateRequest(ctx context.Context, options *LROsBeginPutAsyncRetrySucceededOptions) (*azcore.Request, error) {
+func (client *LROsClient) putAsyncRetrySucceededCreateRequest(ctx context.Context, options *LROsBeginPutAsyncRetrySucceededOptions) (*policy.Request, error) {
 	urlPath := "/lro/putasync/retry/succeeded"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	if options != nil && options.Product != nil {
-		return req, req.MarshalAsJSON(*options.Product)
+		return req, runtime.MarshalAsJSON(req, *options.Product)
 	}
 	return req, nil
 }
 
 // putAsyncRetrySucceededHandleError handles the PutAsyncRetrySucceeded error response.
-func (client *LROsClient) putAsyncRetrySucceededHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *LROsClient) putAsyncRetrySucceededHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BeginPutAsyncSubResource - Long running put request with sub resource.
@@ -3520,49 +2448,21 @@ func (client *LROsClient) BeginPutAsyncSubResource(ctx context.Context, options 
 		return LROsPutAsyncSubResourcePollerResponse{}, err
 	}
 	result := LROsPutAsyncSubResourcePollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("LROsClient.PutAsyncSubResource", "", resp, client.con.Pipeline(), client.putAsyncSubResourceHandleError)
-	if err != nil {
-		return LROsPutAsyncSubResourcePollerResponse{}, err
-	}
-	poller := &lrOsPutAsyncSubResourcePoller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPutAsyncSubResourceResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumePutAsyncSubResource creates a new LROsPutAsyncSubResourcePoller from the specified resume token.
-// token - The value must come from a previous call to LROsPutAsyncSubResourcePoller.ResumeToken().
-func (client *LROsClient) ResumePutAsyncSubResource(ctx context.Context, token string) (LROsPutAsyncSubResourcePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("LROsClient.PutAsyncSubResource", token, client.con.Pipeline(), client.putAsyncSubResourceHandleError)
-	if err != nil {
-		return LROsPutAsyncSubResourcePollerResponse{}, err
-	}
-	poller := &lrOsPutAsyncSubResourcePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return LROsPutAsyncSubResourcePollerResponse{}, err
-	}
-	result := LROsPutAsyncSubResourcePollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPutAsyncSubResourceResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("LROsClient.PutAsyncSubResource", "", resp, client.con.Pipeline(), client.putAsyncSubResourceHandleError)
+	if err != nil {
+		return LROsPutAsyncSubResourcePollerResponse{}, err
+	}
+	result.Poller = &LROsPutAsyncSubResourcePoller{
+		pt: pt,
 	}
 	return result, nil
 }
 
 // PutAsyncSubResource - Long running put request with sub resource.
 // If the operation fails it returns the *CloudError error type.
-func (client *LROsClient) putAsyncSubResource(ctx context.Context, options *LROsBeginPutAsyncSubResourceOptions) (*azcore.Response, error) {
+func (client *LROsClient) putAsyncSubResource(ctx context.Context, options *LROsBeginPutAsyncSubResourceOptions) (*http.Response, error) {
 	req, err := client.putAsyncSubResourceCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -3571,38 +2471,37 @@ func (client *LROsClient) putAsyncSubResource(ctx context.Context, options *LROs
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
 		return nil, client.putAsyncSubResourceHandleError(resp)
 	}
 	return resp, nil
 }
 
 // putAsyncSubResourceCreateRequest creates the PutAsyncSubResource request.
-func (client *LROsClient) putAsyncSubResourceCreateRequest(ctx context.Context, options *LROsBeginPutAsyncSubResourceOptions) (*azcore.Request, error) {
+func (client *LROsClient) putAsyncSubResourceCreateRequest(ctx context.Context, options *LROsBeginPutAsyncSubResourceOptions) (*policy.Request, error) {
 	urlPath := "/lro/putsubresourceasync/202/200"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	if options != nil && options.Product != nil {
-		return req, req.MarshalAsJSON(*options.Product)
+		return req, runtime.MarshalAsJSON(req, *options.Product)
 	}
 	return req, nil
 }
 
 // putAsyncSubResourceHandleError handles the PutAsyncSubResource error response.
-func (client *LROsClient) putAsyncSubResourceHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *LROsClient) putAsyncSubResourceHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BeginPutNoHeaderInRetry - Long running put request, service returns a 202 to the initial request with location header. Subsequent calls to operation
@@ -3614,42 +2513,14 @@ func (client *LROsClient) BeginPutNoHeaderInRetry(ctx context.Context, options *
 		return LROsPutNoHeaderInRetryPollerResponse{}, err
 	}
 	result := LROsPutNoHeaderInRetryPollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("LROsClient.PutNoHeaderInRetry", "", resp, client.con.Pipeline(), client.putNoHeaderInRetryHandleError)
-	if err != nil {
-		return LROsPutNoHeaderInRetryPollerResponse{}, err
-	}
-	poller := &lrOsPutNoHeaderInRetryPoller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPutNoHeaderInRetryResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumePutNoHeaderInRetry creates a new LROsPutNoHeaderInRetryPoller from the specified resume token.
-// token - The value must come from a previous call to LROsPutNoHeaderInRetryPoller.ResumeToken().
-func (client *LROsClient) ResumePutNoHeaderInRetry(ctx context.Context, token string) (LROsPutNoHeaderInRetryPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("LROsClient.PutNoHeaderInRetry", token, client.con.Pipeline(), client.putNoHeaderInRetryHandleError)
-	if err != nil {
-		return LROsPutNoHeaderInRetryPollerResponse{}, err
-	}
-	poller := &lrOsPutNoHeaderInRetryPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return LROsPutNoHeaderInRetryPollerResponse{}, err
-	}
-	result := LROsPutNoHeaderInRetryPollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPutNoHeaderInRetryResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("LROsClient.PutNoHeaderInRetry", "", resp, client.con.Pipeline(), client.putNoHeaderInRetryHandleError)
+	if err != nil {
+		return LROsPutNoHeaderInRetryPollerResponse{}, err
+	}
+	result.Poller = &LROsPutNoHeaderInRetryPoller{
+		pt: pt,
 	}
 	return result, nil
 }
@@ -3657,7 +2528,7 @@ func (client *LROsClient) ResumePutNoHeaderInRetry(ctx context.Context, token st
 // PutNoHeaderInRetry - Long running put request, service returns a 202 to the initial request with location header. Subsequent calls to operation status
 // do not contain location header.
 // If the operation fails it returns the *CloudError error type.
-func (client *LROsClient) putNoHeaderInRetry(ctx context.Context, options *LROsBeginPutNoHeaderInRetryOptions) (*azcore.Response, error) {
+func (client *LROsClient) putNoHeaderInRetry(ctx context.Context, options *LROsBeginPutNoHeaderInRetryOptions) (*http.Response, error) {
 	req, err := client.putNoHeaderInRetryCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -3666,38 +2537,37 @@ func (client *LROsClient) putNoHeaderInRetry(ctx context.Context, options *LROsB
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
 		return nil, client.putNoHeaderInRetryHandleError(resp)
 	}
 	return resp, nil
 }
 
 // putNoHeaderInRetryCreateRequest creates the PutNoHeaderInRetry request.
-func (client *LROsClient) putNoHeaderInRetryCreateRequest(ctx context.Context, options *LROsBeginPutNoHeaderInRetryOptions) (*azcore.Request, error) {
+func (client *LROsClient) putNoHeaderInRetryCreateRequest(ctx context.Context, options *LROsBeginPutNoHeaderInRetryOptions) (*policy.Request, error) {
 	urlPath := "/lro/put/noheader/202/200"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	if options != nil && options.Product != nil {
-		return req, req.MarshalAsJSON(*options.Product)
+		return req, runtime.MarshalAsJSON(req, *options.Product)
 	}
 	return req, nil
 }
 
 // putNoHeaderInRetryHandleError handles the PutNoHeaderInRetry error response.
-func (client *LROsClient) putNoHeaderInRetryHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *LROsClient) putNoHeaderInRetryHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BeginPutNonResource - Long running put request with non resource.
@@ -3708,49 +2578,21 @@ func (client *LROsClient) BeginPutNonResource(ctx context.Context, options *LROs
 		return LROsPutNonResourcePollerResponse{}, err
 	}
 	result := LROsPutNonResourcePollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("LROsClient.PutNonResource", "", resp, client.con.Pipeline(), client.putNonResourceHandleError)
-	if err != nil {
-		return LROsPutNonResourcePollerResponse{}, err
-	}
-	poller := &lrOsPutNonResourcePoller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPutNonResourceResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumePutNonResource creates a new LROsPutNonResourcePoller from the specified resume token.
-// token - The value must come from a previous call to LROsPutNonResourcePoller.ResumeToken().
-func (client *LROsClient) ResumePutNonResource(ctx context.Context, token string) (LROsPutNonResourcePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("LROsClient.PutNonResource", token, client.con.Pipeline(), client.putNonResourceHandleError)
-	if err != nil {
-		return LROsPutNonResourcePollerResponse{}, err
-	}
-	poller := &lrOsPutNonResourcePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return LROsPutNonResourcePollerResponse{}, err
-	}
-	result := LROsPutNonResourcePollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPutNonResourceResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("LROsClient.PutNonResource", "", resp, client.con.Pipeline(), client.putNonResourceHandleError)
+	if err != nil {
+		return LROsPutNonResourcePollerResponse{}, err
+	}
+	result.Poller = &LROsPutNonResourcePoller{
+		pt: pt,
 	}
 	return result, nil
 }
 
 // PutNonResource - Long running put request with non resource.
 // If the operation fails it returns the *CloudError error type.
-func (client *LROsClient) putNonResource(ctx context.Context, options *LROsBeginPutNonResourceOptions) (*azcore.Response, error) {
+func (client *LROsClient) putNonResource(ctx context.Context, options *LROsBeginPutNonResourceOptions) (*http.Response, error) {
 	req, err := client.putNonResourceCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -3759,38 +2601,37 @@ func (client *LROsClient) putNonResource(ctx context.Context, options *LROsBegin
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
 		return nil, client.putNonResourceHandleError(resp)
 	}
 	return resp, nil
 }
 
 // putNonResourceCreateRequest creates the PutNonResource request.
-func (client *LROsClient) putNonResourceCreateRequest(ctx context.Context, options *LROsBeginPutNonResourceOptions) (*azcore.Request, error) {
+func (client *LROsClient) putNonResourceCreateRequest(ctx context.Context, options *LROsBeginPutNonResourceOptions) (*policy.Request, error) {
 	urlPath := "/lro/putnonresource/202/200"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	if options != nil && options.SKU != nil {
-		return req, req.MarshalAsJSON(*options.SKU)
+		return req, runtime.MarshalAsJSON(req, *options.SKU)
 	}
 	return req, nil
 }
 
 // putNonResourceHandleError handles the PutNonResource error response.
-func (client *LROsClient) putNonResourceHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *LROsClient) putNonResourceHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BeginPutSubResource - Long running put request with sub resource.
@@ -3801,49 +2642,21 @@ func (client *LROsClient) BeginPutSubResource(ctx context.Context, options *LROs
 		return LROsPutSubResourcePollerResponse{}, err
 	}
 	result := LROsPutSubResourcePollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("LROsClient.PutSubResource", "", resp, client.con.Pipeline(), client.putSubResourceHandleError)
-	if err != nil {
-		return LROsPutSubResourcePollerResponse{}, err
-	}
-	poller := &lrOsPutSubResourcePoller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPutSubResourceResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumePutSubResource creates a new LROsPutSubResourcePoller from the specified resume token.
-// token - The value must come from a previous call to LROsPutSubResourcePoller.ResumeToken().
-func (client *LROsClient) ResumePutSubResource(ctx context.Context, token string) (LROsPutSubResourcePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("LROsClient.PutSubResource", token, client.con.Pipeline(), client.putSubResourceHandleError)
-	if err != nil {
-		return LROsPutSubResourcePollerResponse{}, err
-	}
-	poller := &lrOsPutSubResourcePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return LROsPutSubResourcePollerResponse{}, err
-	}
-	result := LROsPutSubResourcePollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (LROsPutSubResourceResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("LROsClient.PutSubResource", "", resp, client.con.Pipeline(), client.putSubResourceHandleError)
+	if err != nil {
+		return LROsPutSubResourcePollerResponse{}, err
+	}
+	result.Poller = &LROsPutSubResourcePoller{
+		pt: pt,
 	}
 	return result, nil
 }
 
 // PutSubResource - Long running put request with sub resource.
 // If the operation fails it returns the *CloudError error type.
-func (client *LROsClient) putSubResource(ctx context.Context, options *LROsBeginPutSubResourceOptions) (*azcore.Response, error) {
+func (client *LROsClient) putSubResource(ctx context.Context, options *LROsBeginPutSubResourceOptions) (*http.Response, error) {
 	req, err := client.putSubResourceCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -3852,36 +2665,35 @@ func (client *LROsClient) putSubResource(ctx context.Context, options *LROsBegin
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
 		return nil, client.putSubResourceHandleError(resp)
 	}
 	return resp, nil
 }
 
 // putSubResourceCreateRequest creates the PutSubResource request.
-func (client *LROsClient) putSubResourceCreateRequest(ctx context.Context, options *LROsBeginPutSubResourceOptions) (*azcore.Request, error) {
+func (client *LROsClient) putSubResourceCreateRequest(ctx context.Context, options *LROsBeginPutSubResourceOptions) (*policy.Request, error) {
 	urlPath := "/lro/putsubresource/202/200"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	if options != nil && options.Product != nil {
-		return req, req.MarshalAsJSON(*options.Product)
+		return req, runtime.MarshalAsJSON(req, *options.Product)
 	}
 	return req, nil
 }
 
 // putSubResourceHandleError handles the PutSubResource error response.
-func (client *LROsClient) putSubResourceHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *LROsClient) putSubResourceHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := CloudError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }

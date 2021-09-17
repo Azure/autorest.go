@@ -9,7 +9,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Azure/azure-sdk-for-go/sdk/to"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/google/go-cmp/cmp"
 )
 
@@ -31,8 +31,8 @@ func TestLRORetrysBeginDelete202Retry200(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp, err = op.ResumeDelete202Retry200(context.Background(), rt)
-	if err != nil {
+	resp = LRORetrysDelete202Retry200PollerResponse{}
+	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
 	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
@@ -55,8 +55,8 @@ func TestLRORetrysBeginDeleteAsyncRelativeRetrySucceeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp, err = op.ResumeDeleteAsyncRelativeRetrySucceeded(context.Background(), rt)
-	if err != nil {
+	resp = LRORetrysDeleteAsyncRelativeRetrySucceededPollerResponse{}
+	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
 	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
@@ -79,8 +79,8 @@ func TestLRORetrysBeginDeleteProvisioning202Accepted200Succeeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp, err = op.ResumeDeleteProvisioning202Accepted200Succeeded(context.Background(), rt)
-	if err != nil {
+	resp = LRORetrysDeleteProvisioning202Accepted200SucceededPollerResponse{}
+	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
 	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
@@ -114,8 +114,8 @@ func TestLRORetrysBeginPost202Retry200(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp, err = op.ResumePost202Retry200(context.Background(), rt)
-	if err != nil {
+	resp = LRORetrysPost202Retry200PollerResponse{}
+	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
 	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
@@ -138,8 +138,8 @@ func TestLRORetrysBeginPostAsyncRelativeRetrySucceeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp, err = op.ResumePostAsyncRelativeRetrySucceeded(context.Background(), rt)
-	if err != nil {
+	resp = LRORetrysPostAsyncRelativeRetrySucceededPollerResponse{}
+	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
 	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
@@ -162,8 +162,8 @@ func TestLRORetrysBeginPut201CreatingSucceeded200(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp, err = op.ResumePut201CreatingSucceeded200(context.Background(), rt)
-	if err != nil {
+	resp = LRORetrysPut201CreatingSucceeded200PollerResponse{}
+	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
 	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
@@ -197,8 +197,8 @@ func TestLRORetrysBeginPutAsyncRelativeRetrySucceeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp, err = op.ResumePutAsyncRelativeRetrySucceeded(context.Background(), rt)
-	if err != nil {
+	resp = LRORetrysPutAsyncRelativeRetrySucceededPollerResponse{}
+	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
 	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)

@@ -1,4 +1,5 @@
-// +build go1.13
+//go:build go1.16
+// +build go1.16
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -10,7 +11,8 @@ package integergroup
 import (
 	"context"
 	"fmt"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 	"time"
 )
@@ -37,44 +39,43 @@ func (client *IntClient) GetInvalid(ctx context.Context, options *IntGetInvalidO
 	if err != nil {
 		return IntGetInvalidResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return IntGetInvalidResponse{}, client.getInvalidHandleError(resp)
 	}
 	return client.getInvalidHandleResponse(resp)
 }
 
 // getInvalidCreateRequest creates the GetInvalid request.
-func (client *IntClient) getInvalidCreateRequest(ctx context.Context, options *IntGetInvalidOptions) (*azcore.Request, error) {
+func (client *IntClient) getInvalidCreateRequest(ctx context.Context, options *IntGetInvalidOptions) (*policy.Request, error) {
 	urlPath := "/int/invalid"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getInvalidHandleResponse handles the GetInvalid response.
-func (client *IntClient) getInvalidHandleResponse(resp *azcore.Response) (IntGetInvalidResponse, error) {
-	result := IntGetInvalidResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.Value); err != nil {
+func (client *IntClient) getInvalidHandleResponse(resp *http.Response) (IntGetInvalidResponse, error) {
+	result := IntGetInvalidResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return IntGetInvalidResponse{}, err
 	}
 	return result, nil
 }
 
 // getInvalidHandleError handles the GetInvalid error response.
-func (client *IntClient) getInvalidHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *IntClient) getInvalidHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetInvalidUnixTime - Get invalid Unix time value
@@ -88,29 +89,28 @@ func (client *IntClient) GetInvalidUnixTime(ctx context.Context, options *IntGet
 	if err != nil {
 		return IntGetInvalidUnixTimeResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return IntGetInvalidUnixTimeResponse{}, client.getInvalidUnixTimeHandleError(resp)
 	}
 	return client.getInvalidUnixTimeHandleResponse(resp)
 }
 
 // getInvalidUnixTimeCreateRequest creates the GetInvalidUnixTime request.
-func (client *IntClient) getInvalidUnixTimeCreateRequest(ctx context.Context, options *IntGetInvalidUnixTimeOptions) (*azcore.Request, error) {
+func (client *IntClient) getInvalidUnixTimeCreateRequest(ctx context.Context, options *IntGetInvalidUnixTimeOptions) (*policy.Request, error) {
 	urlPath := "/int/invalidunixtime"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getInvalidUnixTimeHandleResponse handles the GetInvalidUnixTime response.
-func (client *IntClient) getInvalidUnixTimeHandleResponse(resp *azcore.Response) (IntGetInvalidUnixTimeResponse, error) {
-	result := IntGetInvalidUnixTimeResponse{RawResponse: resp.Response}
+func (client *IntClient) getInvalidUnixTimeHandleResponse(resp *http.Response) (IntGetInvalidUnixTimeResponse, error) {
+	result := IntGetInvalidUnixTimeResponse{RawResponse: resp}
 	var aux *timeUnix
-	if err := resp.UnmarshalAsJSON(&aux); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return IntGetInvalidUnixTimeResponse{}, err
 	}
 	result.Value = (*time.Time)(aux)
@@ -118,16 +118,16 @@ func (client *IntClient) getInvalidUnixTimeHandleResponse(resp *azcore.Response)
 }
 
 // getInvalidUnixTimeHandleError handles the GetInvalidUnixTime error response.
-func (client *IntClient) getInvalidUnixTimeHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *IntClient) getInvalidUnixTimeHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetNull - Get null Int value
@@ -141,44 +141,43 @@ func (client *IntClient) GetNull(ctx context.Context, options *IntGetNullOptions
 	if err != nil {
 		return IntGetNullResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return IntGetNullResponse{}, client.getNullHandleError(resp)
 	}
 	return client.getNullHandleResponse(resp)
 }
 
 // getNullCreateRequest creates the GetNull request.
-func (client *IntClient) getNullCreateRequest(ctx context.Context, options *IntGetNullOptions) (*azcore.Request, error) {
+func (client *IntClient) getNullCreateRequest(ctx context.Context, options *IntGetNullOptions) (*policy.Request, error) {
 	urlPath := "/int/null"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getNullHandleResponse handles the GetNull response.
-func (client *IntClient) getNullHandleResponse(resp *azcore.Response) (IntGetNullResponse, error) {
-	result := IntGetNullResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.Value); err != nil {
+func (client *IntClient) getNullHandleResponse(resp *http.Response) (IntGetNullResponse, error) {
+	result := IntGetNullResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return IntGetNullResponse{}, err
 	}
 	return result, nil
 }
 
 // getNullHandleError handles the GetNull error response.
-func (client *IntClient) getNullHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *IntClient) getNullHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetNullUnixTime - Get null Unix time value
@@ -192,29 +191,28 @@ func (client *IntClient) GetNullUnixTime(ctx context.Context, options *IntGetNul
 	if err != nil {
 		return IntGetNullUnixTimeResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return IntGetNullUnixTimeResponse{}, client.getNullUnixTimeHandleError(resp)
 	}
 	return client.getNullUnixTimeHandleResponse(resp)
 }
 
 // getNullUnixTimeCreateRequest creates the GetNullUnixTime request.
-func (client *IntClient) getNullUnixTimeCreateRequest(ctx context.Context, options *IntGetNullUnixTimeOptions) (*azcore.Request, error) {
+func (client *IntClient) getNullUnixTimeCreateRequest(ctx context.Context, options *IntGetNullUnixTimeOptions) (*policy.Request, error) {
 	urlPath := "/int/nullunixtime"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getNullUnixTimeHandleResponse handles the GetNullUnixTime response.
-func (client *IntClient) getNullUnixTimeHandleResponse(resp *azcore.Response) (IntGetNullUnixTimeResponse, error) {
-	result := IntGetNullUnixTimeResponse{RawResponse: resp.Response}
+func (client *IntClient) getNullUnixTimeHandleResponse(resp *http.Response) (IntGetNullUnixTimeResponse, error) {
+	result := IntGetNullUnixTimeResponse{RawResponse: resp}
 	var aux *timeUnix
-	if err := resp.UnmarshalAsJSON(&aux); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return IntGetNullUnixTimeResponse{}, err
 	}
 	result.Value = (*time.Time)(aux)
@@ -222,16 +220,16 @@ func (client *IntClient) getNullUnixTimeHandleResponse(resp *azcore.Response) (I
 }
 
 // getNullUnixTimeHandleError handles the GetNullUnixTime error response.
-func (client *IntClient) getNullUnixTimeHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *IntClient) getNullUnixTimeHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetOverflowInt32 - Get overflow Int32 value
@@ -245,44 +243,43 @@ func (client *IntClient) GetOverflowInt32(ctx context.Context, options *IntGetOv
 	if err != nil {
 		return IntGetOverflowInt32Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return IntGetOverflowInt32Response{}, client.getOverflowInt32HandleError(resp)
 	}
 	return client.getOverflowInt32HandleResponse(resp)
 }
 
 // getOverflowInt32CreateRequest creates the GetOverflowInt32 request.
-func (client *IntClient) getOverflowInt32CreateRequest(ctx context.Context, options *IntGetOverflowInt32Options) (*azcore.Request, error) {
+func (client *IntClient) getOverflowInt32CreateRequest(ctx context.Context, options *IntGetOverflowInt32Options) (*policy.Request, error) {
 	urlPath := "/int/overflowint32"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getOverflowInt32HandleResponse handles the GetOverflowInt32 response.
-func (client *IntClient) getOverflowInt32HandleResponse(resp *azcore.Response) (IntGetOverflowInt32Response, error) {
-	result := IntGetOverflowInt32Response{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.Value); err != nil {
+func (client *IntClient) getOverflowInt32HandleResponse(resp *http.Response) (IntGetOverflowInt32Response, error) {
+	result := IntGetOverflowInt32Response{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return IntGetOverflowInt32Response{}, err
 	}
 	return result, nil
 }
 
 // getOverflowInt32HandleError handles the GetOverflowInt32 error response.
-func (client *IntClient) getOverflowInt32HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *IntClient) getOverflowInt32HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetOverflowInt64 - Get overflow Int64 value
@@ -296,44 +293,43 @@ func (client *IntClient) GetOverflowInt64(ctx context.Context, options *IntGetOv
 	if err != nil {
 		return IntGetOverflowInt64Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return IntGetOverflowInt64Response{}, client.getOverflowInt64HandleError(resp)
 	}
 	return client.getOverflowInt64HandleResponse(resp)
 }
 
 // getOverflowInt64CreateRequest creates the GetOverflowInt64 request.
-func (client *IntClient) getOverflowInt64CreateRequest(ctx context.Context, options *IntGetOverflowInt64Options) (*azcore.Request, error) {
+func (client *IntClient) getOverflowInt64CreateRequest(ctx context.Context, options *IntGetOverflowInt64Options) (*policy.Request, error) {
 	urlPath := "/int/overflowint64"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getOverflowInt64HandleResponse handles the GetOverflowInt64 response.
-func (client *IntClient) getOverflowInt64HandleResponse(resp *azcore.Response) (IntGetOverflowInt64Response, error) {
-	result := IntGetOverflowInt64Response{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.Value); err != nil {
+func (client *IntClient) getOverflowInt64HandleResponse(resp *http.Response) (IntGetOverflowInt64Response, error) {
+	result := IntGetOverflowInt64Response{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return IntGetOverflowInt64Response{}, err
 	}
 	return result, nil
 }
 
 // getOverflowInt64HandleError handles the GetOverflowInt64 error response.
-func (client *IntClient) getOverflowInt64HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *IntClient) getOverflowInt64HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetUnderflowInt32 - Get underflow Int32 value
@@ -347,44 +343,43 @@ func (client *IntClient) GetUnderflowInt32(ctx context.Context, options *IntGetU
 	if err != nil {
 		return IntGetUnderflowInt32Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return IntGetUnderflowInt32Response{}, client.getUnderflowInt32HandleError(resp)
 	}
 	return client.getUnderflowInt32HandleResponse(resp)
 }
 
 // getUnderflowInt32CreateRequest creates the GetUnderflowInt32 request.
-func (client *IntClient) getUnderflowInt32CreateRequest(ctx context.Context, options *IntGetUnderflowInt32Options) (*azcore.Request, error) {
+func (client *IntClient) getUnderflowInt32CreateRequest(ctx context.Context, options *IntGetUnderflowInt32Options) (*policy.Request, error) {
 	urlPath := "/int/underflowint32"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getUnderflowInt32HandleResponse handles the GetUnderflowInt32 response.
-func (client *IntClient) getUnderflowInt32HandleResponse(resp *azcore.Response) (IntGetUnderflowInt32Response, error) {
-	result := IntGetUnderflowInt32Response{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.Value); err != nil {
+func (client *IntClient) getUnderflowInt32HandleResponse(resp *http.Response) (IntGetUnderflowInt32Response, error) {
+	result := IntGetUnderflowInt32Response{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return IntGetUnderflowInt32Response{}, err
 	}
 	return result, nil
 }
 
 // getUnderflowInt32HandleError handles the GetUnderflowInt32 error response.
-func (client *IntClient) getUnderflowInt32HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *IntClient) getUnderflowInt32HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetUnderflowInt64 - Get underflow Int64 value
@@ -398,44 +393,43 @@ func (client *IntClient) GetUnderflowInt64(ctx context.Context, options *IntGetU
 	if err != nil {
 		return IntGetUnderflowInt64Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return IntGetUnderflowInt64Response{}, client.getUnderflowInt64HandleError(resp)
 	}
 	return client.getUnderflowInt64HandleResponse(resp)
 }
 
 // getUnderflowInt64CreateRequest creates the GetUnderflowInt64 request.
-func (client *IntClient) getUnderflowInt64CreateRequest(ctx context.Context, options *IntGetUnderflowInt64Options) (*azcore.Request, error) {
+func (client *IntClient) getUnderflowInt64CreateRequest(ctx context.Context, options *IntGetUnderflowInt64Options) (*policy.Request, error) {
 	urlPath := "/int/underflowint64"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getUnderflowInt64HandleResponse handles the GetUnderflowInt64 response.
-func (client *IntClient) getUnderflowInt64HandleResponse(resp *azcore.Response) (IntGetUnderflowInt64Response, error) {
-	result := IntGetUnderflowInt64Response{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.Value); err != nil {
+func (client *IntClient) getUnderflowInt64HandleResponse(resp *http.Response) (IntGetUnderflowInt64Response, error) {
+	result := IntGetUnderflowInt64Response{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return IntGetUnderflowInt64Response{}, err
 	}
 	return result, nil
 }
 
 // getUnderflowInt64HandleError handles the GetUnderflowInt64 error response.
-func (client *IntClient) getUnderflowInt64HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *IntClient) getUnderflowInt64HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetUnixTime - Get datetime encoded as Unix time value
@@ -449,29 +443,28 @@ func (client *IntClient) GetUnixTime(ctx context.Context, options *IntGetUnixTim
 	if err != nil {
 		return IntGetUnixTimeResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return IntGetUnixTimeResponse{}, client.getUnixTimeHandleError(resp)
 	}
 	return client.getUnixTimeHandleResponse(resp)
 }
 
 // getUnixTimeCreateRequest creates the GetUnixTime request.
-func (client *IntClient) getUnixTimeCreateRequest(ctx context.Context, options *IntGetUnixTimeOptions) (*azcore.Request, error) {
+func (client *IntClient) getUnixTimeCreateRequest(ctx context.Context, options *IntGetUnixTimeOptions) (*policy.Request, error) {
 	urlPath := "/int/unixtime"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getUnixTimeHandleResponse handles the GetUnixTime response.
-func (client *IntClient) getUnixTimeHandleResponse(resp *azcore.Response) (IntGetUnixTimeResponse, error) {
-	result := IntGetUnixTimeResponse{RawResponse: resp.Response}
+func (client *IntClient) getUnixTimeHandleResponse(resp *http.Response) (IntGetUnixTimeResponse, error) {
+	result := IntGetUnixTimeResponse{RawResponse: resp}
 	var aux *timeUnix
-	if err := resp.UnmarshalAsJSON(&aux); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return IntGetUnixTimeResponse{}, err
 	}
 	result.Value = (*time.Time)(aux)
@@ -479,16 +472,16 @@ func (client *IntClient) getUnixTimeHandleResponse(resp *azcore.Response) (IntGe
 }
 
 // getUnixTimeHandleError handles the GetUnixTime error response.
-func (client *IntClient) getUnixTimeHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *IntClient) getUnixTimeHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutMax32 - Put max int32 value
@@ -502,35 +495,34 @@ func (client *IntClient) PutMax32(ctx context.Context, intBody int32, options *I
 	if err != nil {
 		return IntPutMax32Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return IntPutMax32Response{}, client.putMax32HandleError(resp)
 	}
-	return IntPutMax32Response{RawResponse: resp.Response}, nil
+	return IntPutMax32Response{RawResponse: resp}, nil
 }
 
 // putMax32CreateRequest creates the PutMax32 request.
-func (client *IntClient) putMax32CreateRequest(ctx context.Context, intBody int32, options *IntPutMax32Options) (*azcore.Request, error) {
+func (client *IntClient) putMax32CreateRequest(ctx context.Context, intBody int32, options *IntPutMax32Options) (*policy.Request, error) {
 	urlPath := "/int/max/32"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(intBody)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, intBody)
 }
 
 // putMax32HandleError handles the PutMax32 error response.
-func (client *IntClient) putMax32HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *IntClient) putMax32HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutMax64 - Put max int64 value
@@ -544,35 +536,34 @@ func (client *IntClient) PutMax64(ctx context.Context, intBody int64, options *I
 	if err != nil {
 		return IntPutMax64Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return IntPutMax64Response{}, client.putMax64HandleError(resp)
 	}
-	return IntPutMax64Response{RawResponse: resp.Response}, nil
+	return IntPutMax64Response{RawResponse: resp}, nil
 }
 
 // putMax64CreateRequest creates the PutMax64 request.
-func (client *IntClient) putMax64CreateRequest(ctx context.Context, intBody int64, options *IntPutMax64Options) (*azcore.Request, error) {
+func (client *IntClient) putMax64CreateRequest(ctx context.Context, intBody int64, options *IntPutMax64Options) (*policy.Request, error) {
 	urlPath := "/int/max/64"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(intBody)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, intBody)
 }
 
 // putMax64HandleError handles the PutMax64 error response.
-func (client *IntClient) putMax64HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *IntClient) putMax64HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutMin32 - Put min int32 value
@@ -586,35 +577,34 @@ func (client *IntClient) PutMin32(ctx context.Context, intBody int32, options *I
 	if err != nil {
 		return IntPutMin32Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return IntPutMin32Response{}, client.putMin32HandleError(resp)
 	}
-	return IntPutMin32Response{RawResponse: resp.Response}, nil
+	return IntPutMin32Response{RawResponse: resp}, nil
 }
 
 // putMin32CreateRequest creates the PutMin32 request.
-func (client *IntClient) putMin32CreateRequest(ctx context.Context, intBody int32, options *IntPutMin32Options) (*azcore.Request, error) {
+func (client *IntClient) putMin32CreateRequest(ctx context.Context, intBody int32, options *IntPutMin32Options) (*policy.Request, error) {
 	urlPath := "/int/min/32"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(intBody)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, intBody)
 }
 
 // putMin32HandleError handles the PutMin32 error response.
-func (client *IntClient) putMin32HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *IntClient) putMin32HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutMin64 - Put min int64 value
@@ -628,35 +618,34 @@ func (client *IntClient) PutMin64(ctx context.Context, intBody int64, options *I
 	if err != nil {
 		return IntPutMin64Response{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return IntPutMin64Response{}, client.putMin64HandleError(resp)
 	}
-	return IntPutMin64Response{RawResponse: resp.Response}, nil
+	return IntPutMin64Response{RawResponse: resp}, nil
 }
 
 // putMin64CreateRequest creates the PutMin64 request.
-func (client *IntClient) putMin64CreateRequest(ctx context.Context, intBody int64, options *IntPutMin64Options) (*azcore.Request, error) {
+func (client *IntClient) putMin64CreateRequest(ctx context.Context, intBody int64, options *IntPutMin64Options) (*policy.Request, error) {
 	urlPath := "/int/min/64"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(intBody)
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, intBody)
 }
 
 // putMin64HandleError handles the PutMin64 error response.
-func (client *IntClient) putMin64HandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *IntClient) putMin64HandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutUnixTimeDate - Put datetime encoded as Unix time
@@ -670,34 +659,33 @@ func (client *IntClient) PutUnixTimeDate(ctx context.Context, intBody time.Time,
 	if err != nil {
 		return IntPutUnixTimeDateResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return IntPutUnixTimeDateResponse{}, client.putUnixTimeDateHandleError(resp)
 	}
-	return IntPutUnixTimeDateResponse{RawResponse: resp.Response}, nil
+	return IntPutUnixTimeDateResponse{RawResponse: resp}, nil
 }
 
 // putUnixTimeDateCreateRequest creates the PutUnixTimeDate request.
-func (client *IntClient) putUnixTimeDateCreateRequest(ctx context.Context, intBody time.Time, options *IntPutUnixTimeDateOptions) (*azcore.Request, error) {
+func (client *IntClient) putUnixTimeDateCreateRequest(ctx context.Context, intBody time.Time, options *IntPutUnixTimeDateOptions) (*policy.Request, error) {
 	urlPath := "/int/unixtime"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	req.Header.Set("Accept", "application/json")
+	req.Raw().Header.Set("Accept", "application/json")
 	aux := timeUnix(intBody)
-	return req, req.MarshalAsJSON(aux)
+	return req, runtime.MarshalAsJSON(req, aux)
 }
 
 // putUnixTimeDateHandleError handles the PutUnixTimeDate error response.
-func (client *IntClient) putUnixTimeDateHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *IntClient) putUnixTimeDateHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }

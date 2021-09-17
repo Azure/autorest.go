@@ -1,4 +1,5 @@
-// +build go1.13
+//go:build go1.16
+// +build go1.16
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -11,12 +12,12 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
-	"time"
 )
 
 // KeyVaultClient contains the methods for the KeyVaultClient group.
@@ -42,14 +43,14 @@ func (client *KeyVaultClient) BackupCertificate(ctx context.Context, vaultBaseUR
 	if err != nil {
 		return KeyVaultClientBackupCertificateResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientBackupCertificateResponse{}, client.backupCertificateHandleError(resp)
 	}
 	return client.backupCertificateHandleResponse(resp)
 }
 
 // backupCertificateCreateRequest creates the BackupCertificate request.
-func (client *KeyVaultClient) backupCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientBackupCertificateOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) backupCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientBackupCertificateOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/{certificate-name}/backup"
@@ -57,38 +58,37 @@ func (client *KeyVaultClient) backupCertificateCreateRequest(ctx context.Context
 		return nil, errors.New("parameter certificateName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{certificate-name}", url.PathEscape(certificateName))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // backupCertificateHandleResponse handles the BackupCertificate response.
-func (client *KeyVaultClient) backupCertificateHandleResponse(resp *azcore.Response) (KeyVaultClientBackupCertificateResponse, error) {
-	result := KeyVaultClientBackupCertificateResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.BackupCertificateResult); err != nil {
+func (client *KeyVaultClient) backupCertificateHandleResponse(resp *http.Response) (KeyVaultClientBackupCertificateResponse, error) {
+	result := KeyVaultClientBackupCertificateResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.BackupCertificateResult); err != nil {
 		return KeyVaultClientBackupCertificateResponse{}, err
 	}
 	return result, nil
 }
 
 // backupCertificateHandleError handles the BackupCertificate error response.
-func (client *KeyVaultClient) backupCertificateHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) backupCertificateHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BackupKey - The Key Backup operation exports a key from Azure Key Vault in a protected form. Note that this operation does NOT return key material in
@@ -111,14 +111,14 @@ func (client *KeyVaultClient) BackupKey(ctx context.Context, vaultBaseURL string
 	if err != nil {
 		return KeyVaultClientBackupKeyResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientBackupKeyResponse{}, client.backupKeyHandleError(resp)
 	}
 	return client.backupKeyHandleResponse(resp)
 }
 
 // backupKeyCreateRequest creates the BackupKey request.
-func (client *KeyVaultClient) backupKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientBackupKeyOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) backupKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientBackupKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/keys/{key-name}/backup"
@@ -126,38 +126,37 @@ func (client *KeyVaultClient) backupKeyCreateRequest(ctx context.Context, vaultB
 		return nil, errors.New("parameter keyName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{key-name}", url.PathEscape(keyName))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // backupKeyHandleResponse handles the BackupKey response.
-func (client *KeyVaultClient) backupKeyHandleResponse(resp *azcore.Response) (KeyVaultClientBackupKeyResponse, error) {
-	result := KeyVaultClientBackupKeyResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.BackupKeyResult); err != nil {
+func (client *KeyVaultClient) backupKeyHandleResponse(resp *http.Response) (KeyVaultClientBackupKeyResponse, error) {
+	result := KeyVaultClientBackupKeyResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.BackupKeyResult); err != nil {
 		return KeyVaultClientBackupKeyResponse{}, err
 	}
 	return result, nil
 }
 
 // backupKeyHandleError handles the BackupKey error response.
-func (client *KeyVaultClient) backupKeyHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) backupKeyHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BackupSecret - Requests that a backup of the specified secret be downloaded to the client. All versions of the secret will be downloaded. This operation
@@ -172,14 +171,14 @@ func (client *KeyVaultClient) BackupSecret(ctx context.Context, vaultBaseURL str
 	if err != nil {
 		return KeyVaultClientBackupSecretResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientBackupSecretResponse{}, client.backupSecretHandleError(resp)
 	}
 	return client.backupSecretHandleResponse(resp)
 }
 
 // backupSecretCreateRequest creates the BackupSecret request.
-func (client *KeyVaultClient) backupSecretCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, options *KeyVaultClientBackupSecretOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) backupSecretCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, options *KeyVaultClientBackupSecretOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/secrets/{secret-name}/backup"
@@ -187,38 +186,37 @@ func (client *KeyVaultClient) backupSecretCreateRequest(ctx context.Context, vau
 		return nil, errors.New("parameter secretName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{secret-name}", url.PathEscape(secretName))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // backupSecretHandleResponse handles the BackupSecret response.
-func (client *KeyVaultClient) backupSecretHandleResponse(resp *azcore.Response) (KeyVaultClientBackupSecretResponse, error) {
-	result := KeyVaultClientBackupSecretResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.BackupSecretResult); err != nil {
+func (client *KeyVaultClient) backupSecretHandleResponse(resp *http.Response) (KeyVaultClientBackupSecretResponse, error) {
+	result := KeyVaultClientBackupSecretResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.BackupSecretResult); err != nil {
 		return KeyVaultClientBackupSecretResponse{}, err
 	}
 	return result, nil
 }
 
 // backupSecretHandleError handles the BackupSecret error response.
-func (client *KeyVaultClient) backupSecretHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) backupSecretHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BackupStorageAccount - Requests that a backup of the specified storage account be downloaded to the client. This operation requires the storage/backup
@@ -233,14 +231,14 @@ func (client *KeyVaultClient) BackupStorageAccount(ctx context.Context, vaultBas
 	if err != nil {
 		return KeyVaultClientBackupStorageAccountResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientBackupStorageAccountResponse{}, client.backupStorageAccountHandleError(resp)
 	}
 	return client.backupStorageAccountHandleResponse(resp)
 }
 
 // backupStorageAccountCreateRequest creates the BackupStorageAccount request.
-func (client *KeyVaultClient) backupStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientBackupStorageAccountOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) backupStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientBackupStorageAccountOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/storage/{storage-account-name}/backup"
@@ -248,38 +246,37 @@ func (client *KeyVaultClient) backupStorageAccountCreateRequest(ctx context.Cont
 		return nil, errors.New("parameter storageAccountName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{storage-account-name}", url.PathEscape(storageAccountName))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // backupStorageAccountHandleResponse handles the BackupStorageAccount response.
-func (client *KeyVaultClient) backupStorageAccountHandleResponse(resp *azcore.Response) (KeyVaultClientBackupStorageAccountResponse, error) {
-	result := KeyVaultClientBackupStorageAccountResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.BackupStorageResult); err != nil {
+func (client *KeyVaultClient) backupStorageAccountHandleResponse(resp *http.Response) (KeyVaultClientBackupStorageAccountResponse, error) {
+	result := KeyVaultClientBackupStorageAccountResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.BackupStorageResult); err != nil {
 		return KeyVaultClientBackupStorageAccountResponse{}, err
 	}
 	return result, nil
 }
 
 // backupStorageAccountHandleError handles the BackupStorageAccount error response.
-func (client *KeyVaultClient) backupStorageAccountHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) backupStorageAccountHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // CreateCertificate - If this is the first version, the certificate resource is created. This operation requires the certificates/create permission.
@@ -293,14 +290,14 @@ func (client *KeyVaultClient) CreateCertificate(ctx context.Context, vaultBaseUR
 	if err != nil {
 		return KeyVaultClientCreateCertificateResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
 		return KeyVaultClientCreateCertificateResponse{}, client.createCertificateHandleError(resp)
 	}
 	return client.createCertificateHandleResponse(resp)
 }
 
 // createCertificateCreateRequest creates the CreateCertificate request.
-func (client *KeyVaultClient) createCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, parameters CertificateCreateParameters, options *KeyVaultClientCreateCertificateOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) createCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, parameters CertificateCreateParameters, options *KeyVaultClientCreateCertificateOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/{certificate-name}/create"
@@ -308,38 +305,37 @@ func (client *KeyVaultClient) createCertificateCreateRequest(ctx context.Context
 		return nil, errors.New("parameter certificateName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{certificate-name}", url.PathEscape(certificateName))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(parameters)
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
 // createCertificateHandleResponse handles the CreateCertificate response.
-func (client *KeyVaultClient) createCertificateHandleResponse(resp *azcore.Response) (KeyVaultClientCreateCertificateResponse, error) {
-	result := KeyVaultClientCreateCertificateResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.CertificateOperation); err != nil {
+func (client *KeyVaultClient) createCertificateHandleResponse(resp *http.Response) (KeyVaultClientCreateCertificateResponse, error) {
+	result := KeyVaultClientCreateCertificateResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateOperation); err != nil {
 		return KeyVaultClientCreateCertificateResponse{}, err
 	}
 	return result, nil
 }
 
 // createCertificateHandleError handles the CreateCertificate error response.
-func (client *KeyVaultClient) createCertificateHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) createCertificateHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // CreateKey - The create key operation can be used to create any key type in Azure Key Vault. If the named key already exists, Azure Key Vault creates
@@ -355,14 +351,14 @@ func (client *KeyVaultClient) CreateKey(ctx context.Context, vaultBaseURL string
 	if err != nil {
 		return KeyVaultClientCreateKeyResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientCreateKeyResponse{}, client.createKeyHandleError(resp)
 	}
 	return client.createKeyHandleResponse(resp)
 }
 
 // createKeyCreateRequest creates the CreateKey request.
-func (client *KeyVaultClient) createKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, parameters KeyCreateParameters, options *KeyVaultClientCreateKeyOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) createKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, parameters KeyCreateParameters, options *KeyVaultClientCreateKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/keys/{key-name}/create"
@@ -370,38 +366,37 @@ func (client *KeyVaultClient) createKeyCreateRequest(ctx context.Context, vaultB
 		return nil, errors.New("parameter keyName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{key-name}", url.PathEscape(keyName))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(parameters)
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
 // createKeyHandleResponse handles the CreateKey response.
-func (client *KeyVaultClient) createKeyHandleResponse(resp *azcore.Response) (KeyVaultClientCreateKeyResponse, error) {
-	result := KeyVaultClientCreateKeyResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.KeyBundle); err != nil {
+func (client *KeyVaultClient) createKeyHandleResponse(resp *http.Response) (KeyVaultClientCreateKeyResponse, error) {
+	result := KeyVaultClientCreateKeyResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.KeyBundle); err != nil {
 		return KeyVaultClientCreateKeyResponse{}, err
 	}
 	return result, nil
 }
 
 // createKeyHandleError handles the CreateKey error response.
-func (client *KeyVaultClient) createKeyHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) createKeyHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // Decrypt - The DECRYPT operation decrypts a well-formed block of ciphertext using the target encryption key and specified algorithm. This operation is
@@ -419,14 +414,14 @@ func (client *KeyVaultClient) Decrypt(ctx context.Context, vaultBaseURL string, 
 	if err != nil {
 		return KeyVaultClientDecryptResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientDecryptResponse{}, client.decryptHandleError(resp)
 	}
 	return client.decryptHandleResponse(resp)
 }
 
 // decryptCreateRequest creates the Decrypt request.
-func (client *KeyVaultClient) decryptCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyOperationsParameters, options *KeyVaultClientDecryptOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) decryptCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyOperationsParameters, options *KeyVaultClientDecryptOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/keys/{key-name}/{key-version}/decrypt"
@@ -438,38 +433,37 @@ func (client *KeyVaultClient) decryptCreateRequest(ctx context.Context, vaultBas
 		return nil, errors.New("parameter keyVersion cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{key-version}", url.PathEscape(keyVersion))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(parameters)
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
 // decryptHandleResponse handles the Decrypt response.
-func (client *KeyVaultClient) decryptHandleResponse(resp *azcore.Response) (KeyVaultClientDecryptResponse, error) {
-	result := KeyVaultClientDecryptResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.KeyOperationResult); err != nil {
+func (client *KeyVaultClient) decryptHandleResponse(resp *http.Response) (KeyVaultClientDecryptResponse, error) {
+	result := KeyVaultClientDecryptResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.KeyOperationResult); err != nil {
 		return KeyVaultClientDecryptResponse{}, err
 	}
 	return result, nil
 }
 
 // decryptHandleError handles the Decrypt error response.
-func (client *KeyVaultClient) decryptHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) decryptHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // DeleteCertificate - Deletes all versions of a certificate object along with its associated policy. Delete certificate cannot be used to remove individual
@@ -485,14 +479,14 @@ func (client *KeyVaultClient) DeleteCertificate(ctx context.Context, vaultBaseUR
 	if err != nil {
 		return KeyVaultClientDeleteCertificateResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientDeleteCertificateResponse{}, client.deleteCertificateHandleError(resp)
 	}
 	return client.deleteCertificateHandleResponse(resp)
 }
 
 // deleteCertificateCreateRequest creates the DeleteCertificate request.
-func (client *KeyVaultClient) deleteCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientDeleteCertificateOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) deleteCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientDeleteCertificateOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/{certificate-name}"
@@ -500,38 +494,37 @@ func (client *KeyVaultClient) deleteCertificateCreateRequest(ctx context.Context
 		return nil, errors.New("parameter certificateName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{certificate-name}", url.PathEscape(certificateName))
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // deleteCertificateHandleResponse handles the DeleteCertificate response.
-func (client *KeyVaultClient) deleteCertificateHandleResponse(resp *azcore.Response) (KeyVaultClientDeleteCertificateResponse, error) {
-	result := KeyVaultClientDeleteCertificateResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.DeletedCertificateBundle); err != nil {
+func (client *KeyVaultClient) deleteCertificateHandleResponse(resp *http.Response) (KeyVaultClientDeleteCertificateResponse, error) {
+	result := KeyVaultClientDeleteCertificateResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedCertificateBundle); err != nil {
 		return KeyVaultClientDeleteCertificateResponse{}, err
 	}
 	return result, nil
 }
 
 // deleteCertificateHandleError handles the DeleteCertificate error response.
-func (client *KeyVaultClient) deleteCertificateHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) deleteCertificateHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // DeleteCertificateContacts - Deletes the certificate contacts for a specified key vault certificate. This operation requires the certificates/managecontacts
@@ -546,49 +539,48 @@ func (client *KeyVaultClient) DeleteCertificateContacts(ctx context.Context, vau
 	if err != nil {
 		return KeyVaultClientDeleteCertificateContactsResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientDeleteCertificateContactsResponse{}, client.deleteCertificateContactsHandleError(resp)
 	}
 	return client.deleteCertificateContactsHandleResponse(resp)
 }
 
 // deleteCertificateContactsCreateRequest creates the DeleteCertificateContacts request.
-func (client *KeyVaultClient) deleteCertificateContactsCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientDeleteCertificateContactsOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) deleteCertificateContactsCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientDeleteCertificateContactsOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/contacts"
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // deleteCertificateContactsHandleResponse handles the DeleteCertificateContacts response.
-func (client *KeyVaultClient) deleteCertificateContactsHandleResponse(resp *azcore.Response) (KeyVaultClientDeleteCertificateContactsResponse, error) {
-	result := KeyVaultClientDeleteCertificateContactsResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.Contacts); err != nil {
+func (client *KeyVaultClient) deleteCertificateContactsHandleResponse(resp *http.Response) (KeyVaultClientDeleteCertificateContactsResponse, error) {
+	result := KeyVaultClientDeleteCertificateContactsResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Contacts); err != nil {
 		return KeyVaultClientDeleteCertificateContactsResponse{}, err
 	}
 	return result, nil
 }
 
 // deleteCertificateContactsHandleError handles the DeleteCertificateContacts error response.
-func (client *KeyVaultClient) deleteCertificateContactsHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) deleteCertificateContactsHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // DeleteCertificateIssuer - The DeleteCertificateIssuer operation permanently removes the specified certificate issuer from the vault. This operation requires
@@ -603,14 +595,14 @@ func (client *KeyVaultClient) DeleteCertificateIssuer(ctx context.Context, vault
 	if err != nil {
 		return KeyVaultClientDeleteCertificateIssuerResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientDeleteCertificateIssuerResponse{}, client.deleteCertificateIssuerHandleError(resp)
 	}
 	return client.deleteCertificateIssuerHandleResponse(resp)
 }
 
 // deleteCertificateIssuerCreateRequest creates the DeleteCertificateIssuer request.
-func (client *KeyVaultClient) deleteCertificateIssuerCreateRequest(ctx context.Context, vaultBaseURL string, issuerName string, options *KeyVaultClientDeleteCertificateIssuerOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) deleteCertificateIssuerCreateRequest(ctx context.Context, vaultBaseURL string, issuerName string, options *KeyVaultClientDeleteCertificateIssuerOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/issuers/{issuer-name}"
@@ -618,38 +610,37 @@ func (client *KeyVaultClient) deleteCertificateIssuerCreateRequest(ctx context.C
 		return nil, errors.New("parameter issuerName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{issuer-name}", url.PathEscape(issuerName))
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // deleteCertificateIssuerHandleResponse handles the DeleteCertificateIssuer response.
-func (client *KeyVaultClient) deleteCertificateIssuerHandleResponse(resp *azcore.Response) (KeyVaultClientDeleteCertificateIssuerResponse, error) {
-	result := KeyVaultClientDeleteCertificateIssuerResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.IssuerBundle); err != nil {
+func (client *KeyVaultClient) deleteCertificateIssuerHandleResponse(resp *http.Response) (KeyVaultClientDeleteCertificateIssuerResponse, error) {
+	result := KeyVaultClientDeleteCertificateIssuerResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.IssuerBundle); err != nil {
 		return KeyVaultClientDeleteCertificateIssuerResponse{}, err
 	}
 	return result, nil
 }
 
 // deleteCertificateIssuerHandleError handles the DeleteCertificateIssuer error response.
-func (client *KeyVaultClient) deleteCertificateIssuerHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) deleteCertificateIssuerHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // DeleteCertificateOperation - Deletes the creation operation for a specified certificate that is in the process of being created. The certificate is no
@@ -664,14 +655,14 @@ func (client *KeyVaultClient) DeleteCertificateOperation(ctx context.Context, va
 	if err != nil {
 		return KeyVaultClientDeleteCertificateOperationResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientDeleteCertificateOperationResponse{}, client.deleteCertificateOperationHandleError(resp)
 	}
 	return client.deleteCertificateOperationHandleResponse(resp)
 }
 
 // deleteCertificateOperationCreateRequest creates the DeleteCertificateOperation request.
-func (client *KeyVaultClient) deleteCertificateOperationCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientDeleteCertificateOperationOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) deleteCertificateOperationCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientDeleteCertificateOperationOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/{certificate-name}/pending"
@@ -679,38 +670,37 @@ func (client *KeyVaultClient) deleteCertificateOperationCreateRequest(ctx contex
 		return nil, errors.New("parameter certificateName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{certificate-name}", url.PathEscape(certificateName))
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // deleteCertificateOperationHandleResponse handles the DeleteCertificateOperation response.
-func (client *KeyVaultClient) deleteCertificateOperationHandleResponse(resp *azcore.Response) (KeyVaultClientDeleteCertificateOperationResponse, error) {
-	result := KeyVaultClientDeleteCertificateOperationResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.CertificateOperation); err != nil {
+func (client *KeyVaultClient) deleteCertificateOperationHandleResponse(resp *http.Response) (KeyVaultClientDeleteCertificateOperationResponse, error) {
+	result := KeyVaultClientDeleteCertificateOperationResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateOperation); err != nil {
 		return KeyVaultClientDeleteCertificateOperationResponse{}, err
 	}
 	return result, nil
 }
 
 // deleteCertificateOperationHandleError handles the DeleteCertificateOperation error response.
-func (client *KeyVaultClient) deleteCertificateOperationHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) deleteCertificateOperationHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // DeleteKey - The delete key operation cannot be used to remove individual versions of a key. This operation removes the cryptographic material associated
@@ -726,14 +716,14 @@ func (client *KeyVaultClient) DeleteKey(ctx context.Context, vaultBaseURL string
 	if err != nil {
 		return KeyVaultClientDeleteKeyResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientDeleteKeyResponse{}, client.deleteKeyHandleError(resp)
 	}
 	return client.deleteKeyHandleResponse(resp)
 }
 
 // deleteKeyCreateRequest creates the DeleteKey request.
-func (client *KeyVaultClient) deleteKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientDeleteKeyOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) deleteKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientDeleteKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/keys/{key-name}"
@@ -741,38 +731,37 @@ func (client *KeyVaultClient) deleteKeyCreateRequest(ctx context.Context, vaultB
 		return nil, errors.New("parameter keyName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{key-name}", url.PathEscape(keyName))
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // deleteKeyHandleResponse handles the DeleteKey response.
-func (client *KeyVaultClient) deleteKeyHandleResponse(resp *azcore.Response) (KeyVaultClientDeleteKeyResponse, error) {
-	result := KeyVaultClientDeleteKeyResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.DeletedKeyBundle); err != nil {
+func (client *KeyVaultClient) deleteKeyHandleResponse(resp *http.Response) (KeyVaultClientDeleteKeyResponse, error) {
+	result := KeyVaultClientDeleteKeyResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedKeyBundle); err != nil {
 		return KeyVaultClientDeleteKeyResponse{}, err
 	}
 	return result, nil
 }
 
 // deleteKeyHandleError handles the DeleteKey error response.
-func (client *KeyVaultClient) deleteKeyHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) deleteKeyHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // DeleteSasDefinition - Deletes a SAS definition from a specified storage account. This operation requires the storage/deletesas permission.
@@ -786,14 +775,14 @@ func (client *KeyVaultClient) DeleteSasDefinition(ctx context.Context, vaultBase
 	if err != nil {
 		return KeyVaultClientDeleteSasDefinitionResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientDeleteSasDefinitionResponse{}, client.deleteSasDefinitionHandleError(resp)
 	}
 	return client.deleteSasDefinitionHandleResponse(resp)
 }
 
 // deleteSasDefinitionCreateRequest creates the DeleteSasDefinition request.
-func (client *KeyVaultClient) deleteSasDefinitionCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, options *KeyVaultClientDeleteSasDefinitionOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) deleteSasDefinitionCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, options *KeyVaultClientDeleteSasDefinitionOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/storage/{storage-account-name}/sas/{sas-definition-name}"
@@ -805,38 +794,37 @@ func (client *KeyVaultClient) deleteSasDefinitionCreateRequest(ctx context.Conte
 		return nil, errors.New("parameter sasDefinitionName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{sas-definition-name}", url.PathEscape(sasDefinitionName))
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // deleteSasDefinitionHandleResponse handles the DeleteSasDefinition response.
-func (client *KeyVaultClient) deleteSasDefinitionHandleResponse(resp *azcore.Response) (KeyVaultClientDeleteSasDefinitionResponse, error) {
-	result := KeyVaultClientDeleteSasDefinitionResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.DeletedSasDefinitionBundle); err != nil {
+func (client *KeyVaultClient) deleteSasDefinitionHandleResponse(resp *http.Response) (KeyVaultClientDeleteSasDefinitionResponse, error) {
+	result := KeyVaultClientDeleteSasDefinitionResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedSasDefinitionBundle); err != nil {
 		return KeyVaultClientDeleteSasDefinitionResponse{}, err
 	}
 	return result, nil
 }
 
 // deleteSasDefinitionHandleError handles the DeleteSasDefinition error response.
-func (client *KeyVaultClient) deleteSasDefinitionHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) deleteSasDefinitionHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // DeleteSecret - The DELETE operation applies to any secret stored in Azure Key Vault. DELETE cannot be applied to an individual version of a secret. This
@@ -851,14 +839,14 @@ func (client *KeyVaultClient) DeleteSecret(ctx context.Context, vaultBaseURL str
 	if err != nil {
 		return KeyVaultClientDeleteSecretResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientDeleteSecretResponse{}, client.deleteSecretHandleError(resp)
 	}
 	return client.deleteSecretHandleResponse(resp)
 }
 
 // deleteSecretCreateRequest creates the DeleteSecret request.
-func (client *KeyVaultClient) deleteSecretCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, options *KeyVaultClientDeleteSecretOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) deleteSecretCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, options *KeyVaultClientDeleteSecretOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/secrets/{secret-name}"
@@ -866,38 +854,37 @@ func (client *KeyVaultClient) deleteSecretCreateRequest(ctx context.Context, vau
 		return nil, errors.New("parameter secretName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{secret-name}", url.PathEscape(secretName))
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // deleteSecretHandleResponse handles the DeleteSecret response.
-func (client *KeyVaultClient) deleteSecretHandleResponse(resp *azcore.Response) (KeyVaultClientDeleteSecretResponse, error) {
-	result := KeyVaultClientDeleteSecretResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.DeletedSecretBundle); err != nil {
+func (client *KeyVaultClient) deleteSecretHandleResponse(resp *http.Response) (KeyVaultClientDeleteSecretResponse, error) {
+	result := KeyVaultClientDeleteSecretResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedSecretBundle); err != nil {
 		return KeyVaultClientDeleteSecretResponse{}, err
 	}
 	return result, nil
 }
 
 // deleteSecretHandleError handles the DeleteSecret error response.
-func (client *KeyVaultClient) deleteSecretHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) deleteSecretHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // DeleteStorageAccount - Deletes a storage account. This operation requires the storage/delete permission.
@@ -911,14 +898,14 @@ func (client *KeyVaultClient) DeleteStorageAccount(ctx context.Context, vaultBas
 	if err != nil {
 		return KeyVaultClientDeleteStorageAccountResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientDeleteStorageAccountResponse{}, client.deleteStorageAccountHandleError(resp)
 	}
 	return client.deleteStorageAccountHandleResponse(resp)
 }
 
 // deleteStorageAccountCreateRequest creates the DeleteStorageAccount request.
-func (client *KeyVaultClient) deleteStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientDeleteStorageAccountOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) deleteStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientDeleteStorageAccountOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/storage/{storage-account-name}"
@@ -926,38 +913,37 @@ func (client *KeyVaultClient) deleteStorageAccountCreateRequest(ctx context.Cont
 		return nil, errors.New("parameter storageAccountName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{storage-account-name}", url.PathEscape(storageAccountName))
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // deleteStorageAccountHandleResponse handles the DeleteStorageAccount response.
-func (client *KeyVaultClient) deleteStorageAccountHandleResponse(resp *azcore.Response) (KeyVaultClientDeleteStorageAccountResponse, error) {
-	result := KeyVaultClientDeleteStorageAccountResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.DeletedStorageBundle); err != nil {
+func (client *KeyVaultClient) deleteStorageAccountHandleResponse(resp *http.Response) (KeyVaultClientDeleteStorageAccountResponse, error) {
+	result := KeyVaultClientDeleteStorageAccountResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedStorageBundle); err != nil {
 		return KeyVaultClientDeleteStorageAccountResponse{}, err
 	}
 	return result, nil
 }
 
 // deleteStorageAccountHandleError handles the DeleteStorageAccount error response.
-func (client *KeyVaultClient) deleteStorageAccountHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) deleteStorageAccountHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // Encrypt - The ENCRYPT operation encrypts an arbitrary sequence of bytes using an encryption key that is stored in Azure Key Vault. Note that the ENCRYPT
@@ -977,14 +963,14 @@ func (client *KeyVaultClient) Encrypt(ctx context.Context, vaultBaseURL string, 
 	if err != nil {
 		return KeyVaultClientEncryptResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientEncryptResponse{}, client.encryptHandleError(resp)
 	}
 	return client.encryptHandleResponse(resp)
 }
 
 // encryptCreateRequest creates the Encrypt request.
-func (client *KeyVaultClient) encryptCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyOperationsParameters, options *KeyVaultClientEncryptOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) encryptCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyOperationsParameters, options *KeyVaultClientEncryptOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/keys/{key-name}/{key-version}/encrypt"
@@ -996,38 +982,37 @@ func (client *KeyVaultClient) encryptCreateRequest(ctx context.Context, vaultBas
 		return nil, errors.New("parameter keyVersion cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{key-version}", url.PathEscape(keyVersion))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(parameters)
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
 // encryptHandleResponse handles the Encrypt response.
-func (client *KeyVaultClient) encryptHandleResponse(resp *azcore.Response) (KeyVaultClientEncryptResponse, error) {
-	result := KeyVaultClientEncryptResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.KeyOperationResult); err != nil {
+func (client *KeyVaultClient) encryptHandleResponse(resp *http.Response) (KeyVaultClientEncryptResponse, error) {
+	result := KeyVaultClientEncryptResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.KeyOperationResult); err != nil {
 		return KeyVaultClientEncryptResponse{}, err
 	}
 	return result, nil
 }
 
 // encryptHandleError handles the Encrypt error response.
-func (client *KeyVaultClient) encryptHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) encryptHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BeginFullBackup - Creates a full backup using a user-provided SAS token to an Azure blob storage container.
@@ -1038,49 +1023,21 @@ func (client *KeyVaultClient) BeginFullBackup(ctx context.Context, vaultBaseURL 
 		return KeyVaultClientFullBackupPollerResponse{}, err
 	}
 	result := KeyVaultClientFullBackupPollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := azcore.NewLROPoller("KeyVaultClient.FullBackup", resp, client.con.Pipeline(), client.fullBackupHandleError)
-	if err != nil {
-		return KeyVaultClientFullBackupPollerResponse{}, err
-	}
-	poller := &keyVaultClientFullBackupPoller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (KeyVaultClientFullBackupResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumeFullBackup creates a new KeyVaultClientFullBackupPoller from the specified resume token.
-// token - The value must come from a previous call to KeyVaultClientFullBackupPoller.ResumeToken().
-func (client *KeyVaultClient) ResumeFullBackup(ctx context.Context, token string) (KeyVaultClientFullBackupPollerResponse, error) {
-	pt, err := azcore.NewLROPollerFromResumeToken("KeyVaultClient.FullBackup", token, client.con.Pipeline(), client.fullBackupHandleError)
-	if err != nil {
-		return KeyVaultClientFullBackupPollerResponse{}, err
-	}
-	poller := &keyVaultClientFullBackupPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return KeyVaultClientFullBackupPollerResponse{}, err
-	}
-	result := KeyVaultClientFullBackupPollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (KeyVaultClientFullBackupResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := runtime.NewPoller("KeyVaultClient.FullBackup", resp, client.con.Pipeline(), client.fullBackupHandleError)
+	if err != nil {
+		return KeyVaultClientFullBackupPollerResponse{}, err
+	}
+	result.Poller = &KeyVaultClientFullBackupPoller{
+		pt: pt,
 	}
 	return result, nil
 }
 
 // FullBackup - Creates a full backup using a user-provided SAS token to an Azure blob storage container.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) fullBackup(ctx context.Context, vaultBaseURL string, options *KeyVaultClientBeginFullBackupOptions) (*azcore.Response, error) {
+func (client *KeyVaultClient) fullBackup(ctx context.Context, vaultBaseURL string, options *KeyVaultClientBeginFullBackupOptions) (*http.Response, error) {
 	req, err := client.fullBackupCreateRequest(ctx, vaultBaseURL, options)
 	if err != nil {
 		return nil, err
@@ -1089,43 +1046,42 @@ func (client *KeyVaultClient) fullBackup(ctx context.Context, vaultBaseURL strin
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
 		return nil, client.fullBackupHandleError(resp)
 	}
 	return resp, nil
 }
 
 // fullBackupCreateRequest creates the FullBackup request.
-func (client *KeyVaultClient) fullBackupCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientBeginFullBackupOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) fullBackupCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientBeginFullBackupOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/backup"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	if options != nil && options.AzureStorageBlobContainerURI != nil {
-		return req, req.MarshalAsJSON(*options.AzureStorageBlobContainerURI)
+		return req, runtime.MarshalAsJSON(req, *options.AzureStorageBlobContainerURI)
 	}
 	return req, nil
 }
 
 // fullBackupHandleError handles the FullBackup error response.
-func (client *KeyVaultClient) fullBackupHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) fullBackupHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // FullBackupStatus - Returns the status of full backup operation
@@ -1139,14 +1095,14 @@ func (client *KeyVaultClient) FullBackupStatus(ctx context.Context, vaultBaseURL
 	if err != nil {
 		return KeyVaultClientFullBackupStatusResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientFullBackupStatusResponse{}, client.fullBackupStatusHandleError(resp)
 	}
 	return client.fullBackupStatusHandleResponse(resp)
 }
 
 // fullBackupStatusCreateRequest creates the FullBackupStatus request.
-func (client *KeyVaultClient) fullBackupStatusCreateRequest(ctx context.Context, vaultBaseURL string, jobID string, options *KeyVaultClientFullBackupStatusOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) fullBackupStatusCreateRequest(ctx context.Context, vaultBaseURL string, jobID string, options *KeyVaultClientFullBackupStatusOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/backup/{jobId}/pending"
@@ -1154,38 +1110,37 @@ func (client *KeyVaultClient) fullBackupStatusCreateRequest(ctx context.Context,
 		return nil, errors.New("parameter jobID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{jobId}", url.PathEscape(jobID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // fullBackupStatusHandleResponse handles the FullBackupStatus response.
-func (client *KeyVaultClient) fullBackupStatusHandleResponse(resp *azcore.Response) (KeyVaultClientFullBackupStatusResponse, error) {
-	result := KeyVaultClientFullBackupStatusResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.FullBackupOperation); err != nil {
+func (client *KeyVaultClient) fullBackupStatusHandleResponse(resp *http.Response) (KeyVaultClientFullBackupStatusResponse, error) {
+	result := KeyVaultClientFullBackupStatusResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.FullBackupOperation); err != nil {
 		return KeyVaultClientFullBackupStatusResponse{}, err
 	}
 	return result, nil
 }
 
 // fullBackupStatusHandleError handles the FullBackupStatus error response.
-func (client *KeyVaultClient) fullBackupStatusHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) fullBackupStatusHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BeginFullRestoreOperation - Restores all key materials using the SAS token pointing to a previously stored Azure Blob storage backup folder
@@ -1196,49 +1151,21 @@ func (client *KeyVaultClient) BeginFullRestoreOperation(ctx context.Context, vau
 		return KeyVaultClientFullRestoreOperationPollerResponse{}, err
 	}
 	result := KeyVaultClientFullRestoreOperationPollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := azcore.NewLROPoller("KeyVaultClient.FullRestoreOperation", resp, client.con.Pipeline(), client.fullRestoreOperationHandleError)
-	if err != nil {
-		return KeyVaultClientFullRestoreOperationPollerResponse{}, err
-	}
-	poller := &keyVaultClientFullRestoreOperationPoller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (KeyVaultClientFullRestoreOperationResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumeFullRestoreOperation creates a new KeyVaultClientFullRestoreOperationPoller from the specified resume token.
-// token - The value must come from a previous call to KeyVaultClientFullRestoreOperationPoller.ResumeToken().
-func (client *KeyVaultClient) ResumeFullRestoreOperation(ctx context.Context, token string) (KeyVaultClientFullRestoreOperationPollerResponse, error) {
-	pt, err := azcore.NewLROPollerFromResumeToken("KeyVaultClient.FullRestoreOperation", token, client.con.Pipeline(), client.fullRestoreOperationHandleError)
-	if err != nil {
-		return KeyVaultClientFullRestoreOperationPollerResponse{}, err
-	}
-	poller := &keyVaultClientFullRestoreOperationPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return KeyVaultClientFullRestoreOperationPollerResponse{}, err
-	}
-	result := KeyVaultClientFullRestoreOperationPollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (KeyVaultClientFullRestoreOperationResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := runtime.NewPoller("KeyVaultClient.FullRestoreOperation", resp, client.con.Pipeline(), client.fullRestoreOperationHandleError)
+	if err != nil {
+		return KeyVaultClientFullRestoreOperationPollerResponse{}, err
+	}
+	result.Poller = &KeyVaultClientFullRestoreOperationPoller{
+		pt: pt,
 	}
 	return result, nil
 }
 
 // FullRestoreOperation - Restores all key materials using the SAS token pointing to a previously stored Azure Blob storage backup folder
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) fullRestoreOperation(ctx context.Context, vaultBaseURL string, options *KeyVaultClientBeginFullRestoreOperationOptions) (*azcore.Response, error) {
+func (client *KeyVaultClient) fullRestoreOperation(ctx context.Context, vaultBaseURL string, options *KeyVaultClientBeginFullRestoreOperationOptions) (*http.Response, error) {
 	req, err := client.fullRestoreOperationCreateRequest(ctx, vaultBaseURL, options)
 	if err != nil {
 		return nil, err
@@ -1247,43 +1174,42 @@ func (client *KeyVaultClient) fullRestoreOperation(ctx context.Context, vaultBas
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
 		return nil, client.fullRestoreOperationHandleError(resp)
 	}
 	return resp, nil
 }
 
 // fullRestoreOperationCreateRequest creates the FullRestoreOperation request.
-func (client *KeyVaultClient) fullRestoreOperationCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientBeginFullRestoreOperationOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) fullRestoreOperationCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientBeginFullRestoreOperationOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/restore"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	if options != nil && options.RestoreBlobDetails != nil {
-		return req, req.MarshalAsJSON(*options.RestoreBlobDetails)
+		return req, runtime.MarshalAsJSON(req, *options.RestoreBlobDetails)
 	}
 	return req, nil
 }
 
 // fullRestoreOperationHandleError handles the FullRestoreOperation error response.
-func (client *KeyVaultClient) fullRestoreOperationHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) fullRestoreOperationHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetCertificate - Gets information about a specific certificate. This operation requires the certificates/get permission.
@@ -1297,14 +1223,14 @@ func (client *KeyVaultClient) GetCertificate(ctx context.Context, vaultBaseURL s
 	if err != nil {
 		return KeyVaultClientGetCertificateResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientGetCertificateResponse{}, client.getCertificateHandleError(resp)
 	}
 	return client.getCertificateHandleResponse(resp)
 }
 
 // getCertificateCreateRequest creates the GetCertificate request.
-func (client *KeyVaultClient) getCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, certificateVersion string, options *KeyVaultClientGetCertificateOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) getCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, certificateVersion string, options *KeyVaultClientGetCertificateOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/{certificate-name}/{certificate-version}"
@@ -1316,38 +1242,37 @@ func (client *KeyVaultClient) getCertificateCreateRequest(ctx context.Context, v
 		return nil, errors.New("parameter certificateVersion cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{certificate-version}", url.PathEscape(certificateVersion))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getCertificateHandleResponse handles the GetCertificate response.
-func (client *KeyVaultClient) getCertificateHandleResponse(resp *azcore.Response) (KeyVaultClientGetCertificateResponse, error) {
-	result := KeyVaultClientGetCertificateResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.CertificateBundle); err != nil {
+func (client *KeyVaultClient) getCertificateHandleResponse(resp *http.Response) (KeyVaultClientGetCertificateResponse, error) {
+	result := KeyVaultClientGetCertificateResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateBundle); err != nil {
 		return KeyVaultClientGetCertificateResponse{}, err
 	}
 	return result, nil
 }
 
 // getCertificateHandleError handles the GetCertificate error response.
-func (client *KeyVaultClient) getCertificateHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) getCertificateHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetCertificateContacts - The GetCertificateContacts operation returns the set of certificate contact resources in the specified key vault. This operation
@@ -1362,49 +1287,48 @@ func (client *KeyVaultClient) GetCertificateContacts(ctx context.Context, vaultB
 	if err != nil {
 		return KeyVaultClientGetCertificateContactsResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientGetCertificateContactsResponse{}, client.getCertificateContactsHandleError(resp)
 	}
 	return client.getCertificateContactsHandleResponse(resp)
 }
 
 // getCertificateContactsCreateRequest creates the GetCertificateContacts request.
-func (client *KeyVaultClient) getCertificateContactsCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientGetCertificateContactsOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) getCertificateContactsCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientGetCertificateContactsOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/contacts"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getCertificateContactsHandleResponse handles the GetCertificateContacts response.
-func (client *KeyVaultClient) getCertificateContactsHandleResponse(resp *azcore.Response) (KeyVaultClientGetCertificateContactsResponse, error) {
-	result := KeyVaultClientGetCertificateContactsResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.Contacts); err != nil {
+func (client *KeyVaultClient) getCertificateContactsHandleResponse(resp *http.Response) (KeyVaultClientGetCertificateContactsResponse, error) {
+	result := KeyVaultClientGetCertificateContactsResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Contacts); err != nil {
 		return KeyVaultClientGetCertificateContactsResponse{}, err
 	}
 	return result, nil
 }
 
 // getCertificateContactsHandleError handles the GetCertificateContacts error response.
-func (client *KeyVaultClient) getCertificateContactsHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) getCertificateContactsHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetCertificateIssuer - The GetCertificateIssuer operation returns the specified certificate issuer resources in the specified key vault. This operation
@@ -1419,14 +1343,14 @@ func (client *KeyVaultClient) GetCertificateIssuer(ctx context.Context, vaultBas
 	if err != nil {
 		return KeyVaultClientGetCertificateIssuerResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientGetCertificateIssuerResponse{}, client.getCertificateIssuerHandleError(resp)
 	}
 	return client.getCertificateIssuerHandleResponse(resp)
 }
 
 // getCertificateIssuerCreateRequest creates the GetCertificateIssuer request.
-func (client *KeyVaultClient) getCertificateIssuerCreateRequest(ctx context.Context, vaultBaseURL string, issuerName string, options *KeyVaultClientGetCertificateIssuerOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) getCertificateIssuerCreateRequest(ctx context.Context, vaultBaseURL string, issuerName string, options *KeyVaultClientGetCertificateIssuerOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/issuers/{issuer-name}"
@@ -1434,95 +1358,93 @@ func (client *KeyVaultClient) getCertificateIssuerCreateRequest(ctx context.Cont
 		return nil, errors.New("parameter issuerName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{issuer-name}", url.PathEscape(issuerName))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getCertificateIssuerHandleResponse handles the GetCertificateIssuer response.
-func (client *KeyVaultClient) getCertificateIssuerHandleResponse(resp *azcore.Response) (KeyVaultClientGetCertificateIssuerResponse, error) {
-	result := KeyVaultClientGetCertificateIssuerResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.IssuerBundle); err != nil {
+func (client *KeyVaultClient) getCertificateIssuerHandleResponse(resp *http.Response) (KeyVaultClientGetCertificateIssuerResponse, error) {
+	result := KeyVaultClientGetCertificateIssuerResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.IssuerBundle); err != nil {
 		return KeyVaultClientGetCertificateIssuerResponse{}, err
 	}
 	return result, nil
 }
 
 // getCertificateIssuerHandleError handles the GetCertificateIssuer error response.
-func (client *KeyVaultClient) getCertificateIssuerHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) getCertificateIssuerHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetCertificateIssuers - The GetCertificateIssuers operation returns the set of certificate issuer resources in the specified key vault. This operation
 // requires the certificates/manageissuers/getissuers permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetCertificateIssuers(vaultBaseURL string, options *KeyVaultClientGetCertificateIssuersOptions) KeyVaultClientGetCertificateIssuersPager {
-	return &keyVaultClientGetCertificateIssuersPager{
+func (client *KeyVaultClient) GetCertificateIssuers(vaultBaseURL string, options *KeyVaultClientGetCertificateIssuersOptions) *KeyVaultClientGetCertificateIssuersPager {
+	return &KeyVaultClientGetCertificateIssuersPager{
 		client: client,
-		requester: func(ctx context.Context) (*azcore.Request, error) {
+		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.getCertificateIssuersCreateRequest(ctx, vaultBaseURL, options)
 		},
-		advancer: func(ctx context.Context, resp KeyVaultClientGetCertificateIssuersResponse) (*azcore.Request, error) {
-			return azcore.NewRequest(ctx, http.MethodGet, *resp.CertificateIssuerListResult.NextLink)
+		advancer: func(ctx context.Context, resp KeyVaultClientGetCertificateIssuersResponse) (*policy.Request, error) {
+			return runtime.NewRequest(ctx, http.MethodGet, *resp.CertificateIssuerListResult.NextLink)
 		},
 	}
 }
 
 // getCertificateIssuersCreateRequest creates the GetCertificateIssuers request.
-func (client *KeyVaultClient) getCertificateIssuersCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientGetCertificateIssuersOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) getCertificateIssuersCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientGetCertificateIssuersOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/issuers"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if options != nil && options.Maxresults != nil {
 		reqQP.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
 	}
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getCertificateIssuersHandleResponse handles the GetCertificateIssuers response.
-func (client *KeyVaultClient) getCertificateIssuersHandleResponse(resp *azcore.Response) (KeyVaultClientGetCertificateIssuersResponse, error) {
-	result := KeyVaultClientGetCertificateIssuersResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.CertificateIssuerListResult); err != nil {
+func (client *KeyVaultClient) getCertificateIssuersHandleResponse(resp *http.Response) (KeyVaultClientGetCertificateIssuersResponse, error) {
+	result := KeyVaultClientGetCertificateIssuersResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateIssuerListResult); err != nil {
 		return KeyVaultClientGetCertificateIssuersResponse{}, err
 	}
 	return result, nil
 }
 
 // getCertificateIssuersHandleError handles the GetCertificateIssuers error response.
-func (client *KeyVaultClient) getCertificateIssuersHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) getCertificateIssuersHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetCertificateOperation - Gets the creation operation associated with a specified certificate. This operation requires the certificates/get permission.
@@ -1536,14 +1458,14 @@ func (client *KeyVaultClient) GetCertificateOperation(ctx context.Context, vault
 	if err != nil {
 		return KeyVaultClientGetCertificateOperationResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientGetCertificateOperationResponse{}, client.getCertificateOperationHandleError(resp)
 	}
 	return client.getCertificateOperationHandleResponse(resp)
 }
 
 // getCertificateOperationCreateRequest creates the GetCertificateOperation request.
-func (client *KeyVaultClient) getCertificateOperationCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientGetCertificateOperationOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) getCertificateOperationCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientGetCertificateOperationOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/{certificate-name}/pending"
@@ -1551,38 +1473,37 @@ func (client *KeyVaultClient) getCertificateOperationCreateRequest(ctx context.C
 		return nil, errors.New("parameter certificateName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{certificate-name}", url.PathEscape(certificateName))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getCertificateOperationHandleResponse handles the GetCertificateOperation response.
-func (client *KeyVaultClient) getCertificateOperationHandleResponse(resp *azcore.Response) (KeyVaultClientGetCertificateOperationResponse, error) {
-	result := KeyVaultClientGetCertificateOperationResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.CertificateOperation); err != nil {
+func (client *KeyVaultClient) getCertificateOperationHandleResponse(resp *http.Response) (KeyVaultClientGetCertificateOperationResponse, error) {
+	result := KeyVaultClientGetCertificateOperationResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateOperation); err != nil {
 		return KeyVaultClientGetCertificateOperationResponse{}, err
 	}
 	return result, nil
 }
 
 // getCertificateOperationHandleError handles the GetCertificateOperation error response.
-func (client *KeyVaultClient) getCertificateOperationHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) getCertificateOperationHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetCertificatePolicy - The GetCertificatePolicy operation returns the specified certificate policy resources in the specified key vault. This operation
@@ -1597,14 +1518,14 @@ func (client *KeyVaultClient) GetCertificatePolicy(ctx context.Context, vaultBas
 	if err != nil {
 		return KeyVaultClientGetCertificatePolicyResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientGetCertificatePolicyResponse{}, client.getCertificatePolicyHandleError(resp)
 	}
 	return client.getCertificatePolicyHandleResponse(resp)
 }
 
 // getCertificatePolicyCreateRequest creates the GetCertificatePolicy request.
-func (client *KeyVaultClient) getCertificatePolicyCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientGetCertificatePolicyOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) getCertificatePolicyCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientGetCertificatePolicyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/{certificate-name}/policy"
@@ -1612,57 +1533,56 @@ func (client *KeyVaultClient) getCertificatePolicyCreateRequest(ctx context.Cont
 		return nil, errors.New("parameter certificateName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{certificate-name}", url.PathEscape(certificateName))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getCertificatePolicyHandleResponse handles the GetCertificatePolicy response.
-func (client *KeyVaultClient) getCertificatePolicyHandleResponse(resp *azcore.Response) (KeyVaultClientGetCertificatePolicyResponse, error) {
-	result := KeyVaultClientGetCertificatePolicyResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.CertificatePolicy); err != nil {
+func (client *KeyVaultClient) getCertificatePolicyHandleResponse(resp *http.Response) (KeyVaultClientGetCertificatePolicyResponse, error) {
+	result := KeyVaultClientGetCertificatePolicyResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.CertificatePolicy); err != nil {
 		return KeyVaultClientGetCertificatePolicyResponse{}, err
 	}
 	return result, nil
 }
 
 // getCertificatePolicyHandleError handles the GetCertificatePolicy error response.
-func (client *KeyVaultClient) getCertificatePolicyHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) getCertificatePolicyHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetCertificateVersions - The GetCertificateVersions operation returns the versions of a certificate in the specified key vault. This operation requires
 // the certificates/list permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetCertificateVersions(vaultBaseURL string, certificateName string, options *KeyVaultClientGetCertificateVersionsOptions) KeyVaultClientGetCertificateVersionsPager {
-	return &keyVaultClientGetCertificateVersionsPager{
+func (client *KeyVaultClient) GetCertificateVersions(vaultBaseURL string, certificateName string, options *KeyVaultClientGetCertificateVersionsOptions) *KeyVaultClientGetCertificateVersionsPager {
+	return &KeyVaultClientGetCertificateVersionsPager{
 		client: client,
-		requester: func(ctx context.Context) (*azcore.Request, error) {
+		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.getCertificateVersionsCreateRequest(ctx, vaultBaseURL, certificateName, options)
 		},
-		advancer: func(ctx context.Context, resp KeyVaultClientGetCertificateVersionsResponse) (*azcore.Request, error) {
-			return azcore.NewRequest(ctx, http.MethodGet, *resp.CertificateListResult.NextLink)
+		advancer: func(ctx context.Context, resp KeyVaultClientGetCertificateVersionsResponse) (*policy.Request, error) {
+			return runtime.NewRequest(ctx, http.MethodGet, *resp.CertificateListResult.NextLink)
 		},
 	}
 }
 
 // getCertificateVersionsCreateRequest creates the GetCertificateVersions request.
-func (client *KeyVaultClient) getCertificateVersionsCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientGetCertificateVersionsOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) getCertificateVersionsCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientGetCertificateVersionsOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/{certificate-name}/versions"
@@ -1670,69 +1590,67 @@ func (client *KeyVaultClient) getCertificateVersionsCreateRequest(ctx context.Co
 		return nil, errors.New("parameter certificateName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{certificate-name}", url.PathEscape(certificateName))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if options != nil && options.Maxresults != nil {
 		reqQP.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
 	}
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getCertificateVersionsHandleResponse handles the GetCertificateVersions response.
-func (client *KeyVaultClient) getCertificateVersionsHandleResponse(resp *azcore.Response) (KeyVaultClientGetCertificateVersionsResponse, error) {
-	result := KeyVaultClientGetCertificateVersionsResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.CertificateListResult); err != nil {
+func (client *KeyVaultClient) getCertificateVersionsHandleResponse(resp *http.Response) (KeyVaultClientGetCertificateVersionsResponse, error) {
+	result := KeyVaultClientGetCertificateVersionsResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateListResult); err != nil {
 		return KeyVaultClientGetCertificateVersionsResponse{}, err
 	}
 	return result, nil
 }
 
 // getCertificateVersionsHandleError handles the GetCertificateVersions error response.
-func (client *KeyVaultClient) getCertificateVersionsHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) getCertificateVersionsHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetCertificates - The GetCertificates operation returns the set of certificates resources in the specified key vault. This operation requires the certificates/list
 // permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetCertificates(vaultBaseURL string, options *KeyVaultClientGetCertificatesOptions) KeyVaultClientGetCertificatesPager {
-	return &keyVaultClientGetCertificatesPager{
+func (client *KeyVaultClient) GetCertificates(vaultBaseURL string, options *KeyVaultClientGetCertificatesOptions) *KeyVaultClientGetCertificatesPager {
+	return &KeyVaultClientGetCertificatesPager{
 		client: client,
-		requester: func(ctx context.Context) (*azcore.Request, error) {
+		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.getCertificatesCreateRequest(ctx, vaultBaseURL, options)
 		},
-		advancer: func(ctx context.Context, resp KeyVaultClientGetCertificatesResponse) (*azcore.Request, error) {
-			return azcore.NewRequest(ctx, http.MethodGet, *resp.CertificateListResult.NextLink)
+		advancer: func(ctx context.Context, resp KeyVaultClientGetCertificatesResponse) (*policy.Request, error) {
+			return runtime.NewRequest(ctx, http.MethodGet, *resp.CertificateListResult.NextLink)
 		},
 	}
 }
 
 // getCertificatesCreateRequest creates the GetCertificates request.
-func (client *KeyVaultClient) getCertificatesCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientGetCertificatesOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) getCertificatesCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientGetCertificatesOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if options != nil && options.Maxresults != nil {
 		reqQP.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
 	}
@@ -1740,31 +1658,31 @@ func (client *KeyVaultClient) getCertificatesCreateRequest(ctx context.Context, 
 		reqQP.Set("includePending", strconv.FormatBool(*options.IncludePending))
 	}
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getCertificatesHandleResponse handles the GetCertificates response.
-func (client *KeyVaultClient) getCertificatesHandleResponse(resp *azcore.Response) (KeyVaultClientGetCertificatesResponse, error) {
-	result := KeyVaultClientGetCertificatesResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.CertificateListResult); err != nil {
+func (client *KeyVaultClient) getCertificatesHandleResponse(resp *http.Response) (KeyVaultClientGetCertificatesResponse, error) {
+	result := KeyVaultClientGetCertificatesResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateListResult); err != nil {
 		return KeyVaultClientGetCertificatesResponse{}, err
 	}
 	return result, nil
 }
 
 // getCertificatesHandleError handles the GetCertificates error response.
-func (client *KeyVaultClient) getCertificatesHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) getCertificatesHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetDeletedCertificate - The GetDeletedCertificate operation retrieves the deleted certificate information plus its attributes, such as retention interval,
@@ -1780,14 +1698,14 @@ func (client *KeyVaultClient) GetDeletedCertificate(ctx context.Context, vaultBa
 	if err != nil {
 		return KeyVaultClientGetDeletedCertificateResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientGetDeletedCertificateResponse{}, client.getDeletedCertificateHandleError(resp)
 	}
 	return client.getDeletedCertificateHandleResponse(resp)
 }
 
 // getDeletedCertificateCreateRequest creates the GetDeletedCertificate request.
-func (client *KeyVaultClient) getDeletedCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientGetDeletedCertificateOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) getDeletedCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientGetDeletedCertificateOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedcertificates/{certificate-name}"
@@ -1795,67 +1713,65 @@ func (client *KeyVaultClient) getDeletedCertificateCreateRequest(ctx context.Con
 		return nil, errors.New("parameter certificateName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{certificate-name}", url.PathEscape(certificateName))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getDeletedCertificateHandleResponse handles the GetDeletedCertificate response.
-func (client *KeyVaultClient) getDeletedCertificateHandleResponse(resp *azcore.Response) (KeyVaultClientGetDeletedCertificateResponse, error) {
-	result := KeyVaultClientGetDeletedCertificateResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.DeletedCertificateBundle); err != nil {
+func (client *KeyVaultClient) getDeletedCertificateHandleResponse(resp *http.Response) (KeyVaultClientGetDeletedCertificateResponse, error) {
+	result := KeyVaultClientGetDeletedCertificateResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedCertificateBundle); err != nil {
 		return KeyVaultClientGetDeletedCertificateResponse{}, err
 	}
 	return result, nil
 }
 
 // getDeletedCertificateHandleError handles the GetDeletedCertificate error response.
-func (client *KeyVaultClient) getDeletedCertificateHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) getDeletedCertificateHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetDeletedCertificates - The GetDeletedCertificates operation retrieves the certificates in the current vault which are in a deleted state and ready
 // for recovery or purging. This operation includes deletion-specific
 // information. This operation requires the certificates/get/list permission. This operation can only be enabled on soft-delete enabled vaults.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetDeletedCertificates(vaultBaseURL string, options *KeyVaultClientGetDeletedCertificatesOptions) KeyVaultClientGetDeletedCertificatesPager {
-	return &keyVaultClientGetDeletedCertificatesPager{
+func (client *KeyVaultClient) GetDeletedCertificates(vaultBaseURL string, options *KeyVaultClientGetDeletedCertificatesOptions) *KeyVaultClientGetDeletedCertificatesPager {
+	return &KeyVaultClientGetDeletedCertificatesPager{
 		client: client,
-		requester: func(ctx context.Context) (*azcore.Request, error) {
+		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.getDeletedCertificatesCreateRequest(ctx, vaultBaseURL, options)
 		},
-		advancer: func(ctx context.Context, resp KeyVaultClientGetDeletedCertificatesResponse) (*azcore.Request, error) {
-			return azcore.NewRequest(ctx, http.MethodGet, *resp.DeletedCertificateListResult.NextLink)
+		advancer: func(ctx context.Context, resp KeyVaultClientGetDeletedCertificatesResponse) (*policy.Request, error) {
+			return runtime.NewRequest(ctx, http.MethodGet, *resp.DeletedCertificateListResult.NextLink)
 		},
 	}
 }
 
 // getDeletedCertificatesCreateRequest creates the GetDeletedCertificates request.
-func (client *KeyVaultClient) getDeletedCertificatesCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientGetDeletedCertificatesOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) getDeletedCertificatesCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientGetDeletedCertificatesOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedcertificates"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if options != nil && options.Maxresults != nil {
 		reqQP.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
 	}
@@ -1863,31 +1779,31 @@ func (client *KeyVaultClient) getDeletedCertificatesCreateRequest(ctx context.Co
 		reqQP.Set("includePending", strconv.FormatBool(*options.IncludePending))
 	}
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getDeletedCertificatesHandleResponse handles the GetDeletedCertificates response.
-func (client *KeyVaultClient) getDeletedCertificatesHandleResponse(resp *azcore.Response) (KeyVaultClientGetDeletedCertificatesResponse, error) {
-	result := KeyVaultClientGetDeletedCertificatesResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.DeletedCertificateListResult); err != nil {
+func (client *KeyVaultClient) getDeletedCertificatesHandleResponse(resp *http.Response) (KeyVaultClientGetDeletedCertificatesResponse, error) {
+	result := KeyVaultClientGetDeletedCertificatesResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedCertificateListResult); err != nil {
 		return KeyVaultClientGetDeletedCertificatesResponse{}, err
 	}
 	return result, nil
 }
 
 // getDeletedCertificatesHandleError handles the GetDeletedCertificates error response.
-func (client *KeyVaultClient) getDeletedCertificatesHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) getDeletedCertificatesHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetDeletedKey - The Get Deleted Key operation is applicable for soft-delete enabled vaults. While the operation can be invoked on any vault, it will
@@ -1903,14 +1819,14 @@ func (client *KeyVaultClient) GetDeletedKey(ctx context.Context, vaultBaseURL st
 	if err != nil {
 		return KeyVaultClientGetDeletedKeyResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientGetDeletedKeyResponse{}, client.getDeletedKeyHandleError(resp)
 	}
 	return client.getDeletedKeyHandleResponse(resp)
 }
 
 // getDeletedKeyCreateRequest creates the GetDeletedKey request.
-func (client *KeyVaultClient) getDeletedKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientGetDeletedKeyOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) getDeletedKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientGetDeletedKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedkeys/{key-name}"
@@ -1918,38 +1834,37 @@ func (client *KeyVaultClient) getDeletedKeyCreateRequest(ctx context.Context, va
 		return nil, errors.New("parameter keyName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{key-name}", url.PathEscape(keyName))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getDeletedKeyHandleResponse handles the GetDeletedKey response.
-func (client *KeyVaultClient) getDeletedKeyHandleResponse(resp *azcore.Response) (KeyVaultClientGetDeletedKeyResponse, error) {
-	result := KeyVaultClientGetDeletedKeyResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.DeletedKeyBundle); err != nil {
+func (client *KeyVaultClient) getDeletedKeyHandleResponse(resp *http.Response) (KeyVaultClientGetDeletedKeyResponse, error) {
+	result := KeyVaultClientGetDeletedKeyResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedKeyBundle); err != nil {
 		return KeyVaultClientGetDeletedKeyResponse{}, err
 	}
 	return result, nil
 }
 
 // getDeletedKeyHandleError handles the GetDeletedKey error response.
-func (client *KeyVaultClient) getDeletedKeyHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) getDeletedKeyHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetDeletedKeys - Retrieves a list of the keys in the Key Vault as JSON Web Key structures that contain the public part of a deleted key. This operation
@@ -1958,58 +1873,57 @@ func (client *KeyVaultClient) getDeletedKeyHandleError(resp *azcore.Response) er
 // non soft-delete enabled vault. This operation
 // requires the keys/list permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetDeletedKeys(vaultBaseURL string, options *KeyVaultClientGetDeletedKeysOptions) KeyVaultClientGetDeletedKeysPager {
-	return &keyVaultClientGetDeletedKeysPager{
+func (client *KeyVaultClient) GetDeletedKeys(vaultBaseURL string, options *KeyVaultClientGetDeletedKeysOptions) *KeyVaultClientGetDeletedKeysPager {
+	return &KeyVaultClientGetDeletedKeysPager{
 		client: client,
-		requester: func(ctx context.Context) (*azcore.Request, error) {
+		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.getDeletedKeysCreateRequest(ctx, vaultBaseURL, options)
 		},
-		advancer: func(ctx context.Context, resp KeyVaultClientGetDeletedKeysResponse) (*azcore.Request, error) {
-			return azcore.NewRequest(ctx, http.MethodGet, *resp.DeletedKeyListResult.NextLink)
+		advancer: func(ctx context.Context, resp KeyVaultClientGetDeletedKeysResponse) (*policy.Request, error) {
+			return runtime.NewRequest(ctx, http.MethodGet, *resp.DeletedKeyListResult.NextLink)
 		},
 	}
 }
 
 // getDeletedKeysCreateRequest creates the GetDeletedKeys request.
-func (client *KeyVaultClient) getDeletedKeysCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientGetDeletedKeysOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) getDeletedKeysCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientGetDeletedKeysOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedkeys"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if options != nil && options.Maxresults != nil {
 		reqQP.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
 	}
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getDeletedKeysHandleResponse handles the GetDeletedKeys response.
-func (client *KeyVaultClient) getDeletedKeysHandleResponse(resp *azcore.Response) (KeyVaultClientGetDeletedKeysResponse, error) {
-	result := KeyVaultClientGetDeletedKeysResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.DeletedKeyListResult); err != nil {
+func (client *KeyVaultClient) getDeletedKeysHandleResponse(resp *http.Response) (KeyVaultClientGetDeletedKeysResponse, error) {
+	result := KeyVaultClientGetDeletedKeysResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedKeyListResult); err != nil {
 		return KeyVaultClientGetDeletedKeysResponse{}, err
 	}
 	return result, nil
 }
 
 // getDeletedKeysHandleError handles the GetDeletedKeys error response.
-func (client *KeyVaultClient) getDeletedKeysHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) getDeletedKeysHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetDeletedSasDefinition - The Get Deleted SAS Definition operation returns the specified deleted SAS definition along with its attributes. This operation
@@ -2024,14 +1938,14 @@ func (client *KeyVaultClient) GetDeletedSasDefinition(ctx context.Context, vault
 	if err != nil {
 		return KeyVaultClientGetDeletedSasDefinitionResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientGetDeletedSasDefinitionResponse{}, client.getDeletedSasDefinitionHandleError(resp)
 	}
 	return client.getDeletedSasDefinitionHandleResponse(resp)
 }
 
 // getDeletedSasDefinitionCreateRequest creates the GetDeletedSasDefinition request.
-func (client *KeyVaultClient) getDeletedSasDefinitionCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, options *KeyVaultClientGetDeletedSasDefinitionOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) getDeletedSasDefinitionCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, options *KeyVaultClientGetDeletedSasDefinitionOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedstorage/{storage-account-name}/sas/{sas-definition-name}"
@@ -2043,57 +1957,56 @@ func (client *KeyVaultClient) getDeletedSasDefinitionCreateRequest(ctx context.C
 		return nil, errors.New("parameter sasDefinitionName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{sas-definition-name}", url.PathEscape(sasDefinitionName))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getDeletedSasDefinitionHandleResponse handles the GetDeletedSasDefinition response.
-func (client *KeyVaultClient) getDeletedSasDefinitionHandleResponse(resp *azcore.Response) (KeyVaultClientGetDeletedSasDefinitionResponse, error) {
-	result := KeyVaultClientGetDeletedSasDefinitionResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.DeletedSasDefinitionBundle); err != nil {
+func (client *KeyVaultClient) getDeletedSasDefinitionHandleResponse(resp *http.Response) (KeyVaultClientGetDeletedSasDefinitionResponse, error) {
+	result := KeyVaultClientGetDeletedSasDefinitionResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedSasDefinitionBundle); err != nil {
 		return KeyVaultClientGetDeletedSasDefinitionResponse{}, err
 	}
 	return result, nil
 }
 
 // getDeletedSasDefinitionHandleError handles the GetDeletedSasDefinition error response.
-func (client *KeyVaultClient) getDeletedSasDefinitionHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) getDeletedSasDefinitionHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetDeletedSasDefinitions - The Get Deleted Sas Definitions operation returns the SAS definitions that have been deleted for a vault enabled for soft-delete.
 // This operation requires the storage/listsas permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetDeletedSasDefinitions(vaultBaseURL string, storageAccountName string, options *KeyVaultClientGetDeletedSasDefinitionsOptions) KeyVaultClientGetDeletedSasDefinitionsPager {
-	return &keyVaultClientGetDeletedSasDefinitionsPager{
+func (client *KeyVaultClient) GetDeletedSasDefinitions(vaultBaseURL string, storageAccountName string, options *KeyVaultClientGetDeletedSasDefinitionsOptions) *KeyVaultClientGetDeletedSasDefinitionsPager {
+	return &KeyVaultClientGetDeletedSasDefinitionsPager{
 		client: client,
-		requester: func(ctx context.Context) (*azcore.Request, error) {
+		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.getDeletedSasDefinitionsCreateRequest(ctx, vaultBaseURL, storageAccountName, options)
 		},
-		advancer: func(ctx context.Context, resp KeyVaultClientGetDeletedSasDefinitionsResponse) (*azcore.Request, error) {
-			return azcore.NewRequest(ctx, http.MethodGet, *resp.DeletedSasDefinitionListResult.NextLink)
+		advancer: func(ctx context.Context, resp KeyVaultClientGetDeletedSasDefinitionsResponse) (*policy.Request, error) {
+			return runtime.NewRequest(ctx, http.MethodGet, *resp.DeletedSasDefinitionListResult.NextLink)
 		},
 	}
 }
 
 // getDeletedSasDefinitionsCreateRequest creates the GetDeletedSasDefinitions request.
-func (client *KeyVaultClient) getDeletedSasDefinitionsCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientGetDeletedSasDefinitionsOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) getDeletedSasDefinitionsCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientGetDeletedSasDefinitionsOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedstorage/{storage-account-name}/sas"
@@ -2101,41 +2014,40 @@ func (client *KeyVaultClient) getDeletedSasDefinitionsCreateRequest(ctx context.
 		return nil, errors.New("parameter storageAccountName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{storage-account-name}", url.PathEscape(storageAccountName))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if options != nil && options.Maxresults != nil {
 		reqQP.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
 	}
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getDeletedSasDefinitionsHandleResponse handles the GetDeletedSasDefinitions response.
-func (client *KeyVaultClient) getDeletedSasDefinitionsHandleResponse(resp *azcore.Response) (KeyVaultClientGetDeletedSasDefinitionsResponse, error) {
-	result := KeyVaultClientGetDeletedSasDefinitionsResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.DeletedSasDefinitionListResult); err != nil {
+func (client *KeyVaultClient) getDeletedSasDefinitionsHandleResponse(resp *http.Response) (KeyVaultClientGetDeletedSasDefinitionsResponse, error) {
+	result := KeyVaultClientGetDeletedSasDefinitionsResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedSasDefinitionListResult); err != nil {
 		return KeyVaultClientGetDeletedSasDefinitionsResponse{}, err
 	}
 	return result, nil
 }
 
 // getDeletedSasDefinitionsHandleError handles the GetDeletedSasDefinitions error response.
-func (client *KeyVaultClient) getDeletedSasDefinitionsHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) getDeletedSasDefinitionsHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetDeletedSecret - The Get Deleted Secret operation returns the specified deleted secret along with its attributes. This operation requires the secrets/get
@@ -2150,14 +2062,14 @@ func (client *KeyVaultClient) GetDeletedSecret(ctx context.Context, vaultBaseURL
 	if err != nil {
 		return KeyVaultClientGetDeletedSecretResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientGetDeletedSecretResponse{}, client.getDeletedSecretHandleError(resp)
 	}
 	return client.getDeletedSecretHandleResponse(resp)
 }
 
 // getDeletedSecretCreateRequest creates the GetDeletedSecret request.
-func (client *KeyVaultClient) getDeletedSecretCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, options *KeyVaultClientGetDeletedSecretOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) getDeletedSecretCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, options *KeyVaultClientGetDeletedSecretOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedsecrets/{secret-name}"
@@ -2165,95 +2077,93 @@ func (client *KeyVaultClient) getDeletedSecretCreateRequest(ctx context.Context,
 		return nil, errors.New("parameter secretName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{secret-name}", url.PathEscape(secretName))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getDeletedSecretHandleResponse handles the GetDeletedSecret response.
-func (client *KeyVaultClient) getDeletedSecretHandleResponse(resp *azcore.Response) (KeyVaultClientGetDeletedSecretResponse, error) {
-	result := KeyVaultClientGetDeletedSecretResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.DeletedSecretBundle); err != nil {
+func (client *KeyVaultClient) getDeletedSecretHandleResponse(resp *http.Response) (KeyVaultClientGetDeletedSecretResponse, error) {
+	result := KeyVaultClientGetDeletedSecretResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedSecretBundle); err != nil {
 		return KeyVaultClientGetDeletedSecretResponse{}, err
 	}
 	return result, nil
 }
 
 // getDeletedSecretHandleError handles the GetDeletedSecret error response.
-func (client *KeyVaultClient) getDeletedSecretHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) getDeletedSecretHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetDeletedSecrets - The Get Deleted Secrets operation returns the secrets that have been deleted for a vault enabled for soft-delete. This operation
 // requires the secrets/list permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetDeletedSecrets(vaultBaseURL string, options *KeyVaultClientGetDeletedSecretsOptions) KeyVaultClientGetDeletedSecretsPager {
-	return &keyVaultClientGetDeletedSecretsPager{
+func (client *KeyVaultClient) GetDeletedSecrets(vaultBaseURL string, options *KeyVaultClientGetDeletedSecretsOptions) *KeyVaultClientGetDeletedSecretsPager {
+	return &KeyVaultClientGetDeletedSecretsPager{
 		client: client,
-		requester: func(ctx context.Context) (*azcore.Request, error) {
+		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.getDeletedSecretsCreateRequest(ctx, vaultBaseURL, options)
 		},
-		advancer: func(ctx context.Context, resp KeyVaultClientGetDeletedSecretsResponse) (*azcore.Request, error) {
-			return azcore.NewRequest(ctx, http.MethodGet, *resp.DeletedSecretListResult.NextLink)
+		advancer: func(ctx context.Context, resp KeyVaultClientGetDeletedSecretsResponse) (*policy.Request, error) {
+			return runtime.NewRequest(ctx, http.MethodGet, *resp.DeletedSecretListResult.NextLink)
 		},
 	}
 }
 
 // getDeletedSecretsCreateRequest creates the GetDeletedSecrets request.
-func (client *KeyVaultClient) getDeletedSecretsCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientGetDeletedSecretsOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) getDeletedSecretsCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientGetDeletedSecretsOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedsecrets"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if options != nil && options.Maxresults != nil {
 		reqQP.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
 	}
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getDeletedSecretsHandleResponse handles the GetDeletedSecrets response.
-func (client *KeyVaultClient) getDeletedSecretsHandleResponse(resp *azcore.Response) (KeyVaultClientGetDeletedSecretsResponse, error) {
-	result := KeyVaultClientGetDeletedSecretsResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.DeletedSecretListResult); err != nil {
+func (client *KeyVaultClient) getDeletedSecretsHandleResponse(resp *http.Response) (KeyVaultClientGetDeletedSecretsResponse, error) {
+	result := KeyVaultClientGetDeletedSecretsResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedSecretListResult); err != nil {
 		return KeyVaultClientGetDeletedSecretsResponse{}, err
 	}
 	return result, nil
 }
 
 // getDeletedSecretsHandleError handles the GetDeletedSecrets error response.
-func (client *KeyVaultClient) getDeletedSecretsHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) getDeletedSecretsHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetDeletedStorageAccount - The Get Deleted Storage Account operation returns the specified deleted storage account along with its attributes. This operation
@@ -2268,14 +2178,14 @@ func (client *KeyVaultClient) GetDeletedStorageAccount(ctx context.Context, vaul
 	if err != nil {
 		return KeyVaultClientGetDeletedStorageAccountResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientGetDeletedStorageAccountResponse{}, client.getDeletedStorageAccountHandleError(resp)
 	}
 	return client.getDeletedStorageAccountHandleResponse(resp)
 }
 
 // getDeletedStorageAccountCreateRequest creates the GetDeletedStorageAccount request.
-func (client *KeyVaultClient) getDeletedStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientGetDeletedStorageAccountOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) getDeletedStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientGetDeletedStorageAccountOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedstorage/{storage-account-name}"
@@ -2283,95 +2193,93 @@ func (client *KeyVaultClient) getDeletedStorageAccountCreateRequest(ctx context.
 		return nil, errors.New("parameter storageAccountName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{storage-account-name}", url.PathEscape(storageAccountName))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getDeletedStorageAccountHandleResponse handles the GetDeletedStorageAccount response.
-func (client *KeyVaultClient) getDeletedStorageAccountHandleResponse(resp *azcore.Response) (KeyVaultClientGetDeletedStorageAccountResponse, error) {
-	result := KeyVaultClientGetDeletedStorageAccountResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.DeletedStorageBundle); err != nil {
+func (client *KeyVaultClient) getDeletedStorageAccountHandleResponse(resp *http.Response) (KeyVaultClientGetDeletedStorageAccountResponse, error) {
+	result := KeyVaultClientGetDeletedStorageAccountResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedStorageBundle); err != nil {
 		return KeyVaultClientGetDeletedStorageAccountResponse{}, err
 	}
 	return result, nil
 }
 
 // getDeletedStorageAccountHandleError handles the GetDeletedStorageAccount error response.
-func (client *KeyVaultClient) getDeletedStorageAccountHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) getDeletedStorageAccountHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetDeletedStorageAccounts - The Get Deleted Storage Accounts operation returns the storage accounts that have been deleted for a vault enabled for soft-delete.
 // This operation requires the storage/list permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetDeletedStorageAccounts(vaultBaseURL string, options *KeyVaultClientGetDeletedStorageAccountsOptions) KeyVaultClientGetDeletedStorageAccountsPager {
-	return &keyVaultClientGetDeletedStorageAccountsPager{
+func (client *KeyVaultClient) GetDeletedStorageAccounts(vaultBaseURL string, options *KeyVaultClientGetDeletedStorageAccountsOptions) *KeyVaultClientGetDeletedStorageAccountsPager {
+	return &KeyVaultClientGetDeletedStorageAccountsPager{
 		client: client,
-		requester: func(ctx context.Context) (*azcore.Request, error) {
+		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.getDeletedStorageAccountsCreateRequest(ctx, vaultBaseURL, options)
 		},
-		advancer: func(ctx context.Context, resp KeyVaultClientGetDeletedStorageAccountsResponse) (*azcore.Request, error) {
-			return azcore.NewRequest(ctx, http.MethodGet, *resp.DeletedStorageListResult.NextLink)
+		advancer: func(ctx context.Context, resp KeyVaultClientGetDeletedStorageAccountsResponse) (*policy.Request, error) {
+			return runtime.NewRequest(ctx, http.MethodGet, *resp.DeletedStorageListResult.NextLink)
 		},
 	}
 }
 
 // getDeletedStorageAccountsCreateRequest creates the GetDeletedStorageAccounts request.
-func (client *KeyVaultClient) getDeletedStorageAccountsCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientGetDeletedStorageAccountsOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) getDeletedStorageAccountsCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientGetDeletedStorageAccountsOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedstorage"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if options != nil && options.Maxresults != nil {
 		reqQP.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
 	}
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getDeletedStorageAccountsHandleResponse handles the GetDeletedStorageAccounts response.
-func (client *KeyVaultClient) getDeletedStorageAccountsHandleResponse(resp *azcore.Response) (KeyVaultClientGetDeletedStorageAccountsResponse, error) {
-	result := KeyVaultClientGetDeletedStorageAccountsResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.DeletedStorageListResult); err != nil {
+func (client *KeyVaultClient) getDeletedStorageAccountsHandleResponse(resp *http.Response) (KeyVaultClientGetDeletedStorageAccountsResponse, error) {
+	result := KeyVaultClientGetDeletedStorageAccountsResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedStorageListResult); err != nil {
 		return KeyVaultClientGetDeletedStorageAccountsResponse{}, err
 	}
 	return result, nil
 }
 
 // getDeletedStorageAccountsHandleError handles the GetDeletedStorageAccounts error response.
-func (client *KeyVaultClient) getDeletedStorageAccountsHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) getDeletedStorageAccountsHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetKey - The get key operation is applicable to all key types. If the requested key is symmetric, then no key material is released in the response. This
@@ -2386,14 +2294,14 @@ func (client *KeyVaultClient) GetKey(ctx context.Context, vaultBaseURL string, k
 	if err != nil {
 		return KeyVaultClientGetKeyResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientGetKeyResponse{}, client.getKeyHandleError(resp)
 	}
 	return client.getKeyHandleResponse(resp)
 }
 
 // getKeyCreateRequest creates the GetKey request.
-func (client *KeyVaultClient) getKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, options *KeyVaultClientGetKeyOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) getKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, options *KeyVaultClientGetKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/keys/{key-name}/{key-version}"
@@ -2405,56 +2313,55 @@ func (client *KeyVaultClient) getKeyCreateRequest(ctx context.Context, vaultBase
 		return nil, errors.New("parameter keyVersion cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{key-version}", url.PathEscape(keyVersion))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getKeyHandleResponse handles the GetKey response.
-func (client *KeyVaultClient) getKeyHandleResponse(resp *azcore.Response) (KeyVaultClientGetKeyResponse, error) {
-	result := KeyVaultClientGetKeyResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.KeyBundle); err != nil {
+func (client *KeyVaultClient) getKeyHandleResponse(resp *http.Response) (KeyVaultClientGetKeyResponse, error) {
+	result := KeyVaultClientGetKeyResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.KeyBundle); err != nil {
 		return KeyVaultClientGetKeyResponse{}, err
 	}
 	return result, nil
 }
 
 // getKeyHandleError handles the GetKey error response.
-func (client *KeyVaultClient) getKeyHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) getKeyHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetKeyVersions - The full key identifier, attributes, and tags are provided in the response. This operation requires the keys/list permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetKeyVersions(vaultBaseURL string, keyName string, options *KeyVaultClientGetKeyVersionsOptions) KeyVaultClientGetKeyVersionsPager {
-	return &keyVaultClientGetKeyVersionsPager{
+func (client *KeyVaultClient) GetKeyVersions(vaultBaseURL string, keyName string, options *KeyVaultClientGetKeyVersionsOptions) *KeyVaultClientGetKeyVersionsPager {
+	return &KeyVaultClientGetKeyVersionsPager{
 		client: client,
-		requester: func(ctx context.Context) (*azcore.Request, error) {
+		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.getKeyVersionsCreateRequest(ctx, vaultBaseURL, keyName, options)
 		},
-		advancer: func(ctx context.Context, resp KeyVaultClientGetKeyVersionsResponse) (*azcore.Request, error) {
-			return azcore.NewRequest(ctx, http.MethodGet, *resp.KeyListResult.NextLink)
+		advancer: func(ctx context.Context, resp KeyVaultClientGetKeyVersionsResponse) (*policy.Request, error) {
+			return runtime.NewRequest(ctx, http.MethodGet, *resp.KeyListResult.NextLink)
 		},
 	}
 }
 
 // getKeyVersionsCreateRequest creates the GetKeyVersions request.
-func (client *KeyVaultClient) getKeyVersionsCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientGetKeyVersionsOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) getKeyVersionsCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientGetKeyVersionsOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/keys/{key-name}/versions"
@@ -2462,41 +2369,40 @@ func (client *KeyVaultClient) getKeyVersionsCreateRequest(ctx context.Context, v
 		return nil, errors.New("parameter keyName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{key-name}", url.PathEscape(keyName))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if options != nil && options.Maxresults != nil {
 		reqQP.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
 	}
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getKeyVersionsHandleResponse handles the GetKeyVersions response.
-func (client *KeyVaultClient) getKeyVersionsHandleResponse(resp *azcore.Response) (KeyVaultClientGetKeyVersionsResponse, error) {
-	result := KeyVaultClientGetKeyVersionsResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.KeyListResult); err != nil {
+func (client *KeyVaultClient) getKeyVersionsHandleResponse(resp *http.Response) (KeyVaultClientGetKeyVersionsResponse, error) {
+	result := KeyVaultClientGetKeyVersionsResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.KeyListResult); err != nil {
 		return KeyVaultClientGetKeyVersionsResponse{}, err
 	}
 	return result, nil
 }
 
 // getKeyVersionsHandleError handles the GetKeyVersions error response.
-func (client *KeyVaultClient) getKeyVersionsHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) getKeyVersionsHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetKeys - Retrieves a list of the keys in the Key Vault as JSON Web Key structures that contain the public part of a stored key. The LIST operation is
@@ -2504,58 +2410,57 @@ func (client *KeyVaultClient) getKeyVersionsHandleError(resp *azcore.Response) e
 // identifier, attributes, and tags are provided in the response. Individual versions of a key are not listed in the response. This operation requires the
 // keys/list permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetKeys(vaultBaseURL string, options *KeyVaultClientGetKeysOptions) KeyVaultClientGetKeysPager {
-	return &keyVaultClientGetKeysPager{
+func (client *KeyVaultClient) GetKeys(vaultBaseURL string, options *KeyVaultClientGetKeysOptions) *KeyVaultClientGetKeysPager {
+	return &KeyVaultClientGetKeysPager{
 		client: client,
-		requester: func(ctx context.Context) (*azcore.Request, error) {
+		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.getKeysCreateRequest(ctx, vaultBaseURL, options)
 		},
-		advancer: func(ctx context.Context, resp KeyVaultClientGetKeysResponse) (*azcore.Request, error) {
-			return azcore.NewRequest(ctx, http.MethodGet, *resp.KeyListResult.NextLink)
+		advancer: func(ctx context.Context, resp KeyVaultClientGetKeysResponse) (*policy.Request, error) {
+			return runtime.NewRequest(ctx, http.MethodGet, *resp.KeyListResult.NextLink)
 		},
 	}
 }
 
 // getKeysCreateRequest creates the GetKeys request.
-func (client *KeyVaultClient) getKeysCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientGetKeysOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) getKeysCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientGetKeysOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/keys"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if options != nil && options.Maxresults != nil {
 		reqQP.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
 	}
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getKeysHandleResponse handles the GetKeys response.
-func (client *KeyVaultClient) getKeysHandleResponse(resp *azcore.Response) (KeyVaultClientGetKeysResponse, error) {
-	result := KeyVaultClientGetKeysResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.KeyListResult); err != nil {
+func (client *KeyVaultClient) getKeysHandleResponse(resp *http.Response) (KeyVaultClientGetKeysResponse, error) {
+	result := KeyVaultClientGetKeysResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.KeyListResult); err != nil {
 		return KeyVaultClientGetKeysResponse{}, err
 	}
 	return result, nil
 }
 
 // getKeysHandleError handles the GetKeys error response.
-func (client *KeyVaultClient) getKeysHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) getKeysHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetSasDefinition - Gets information about a SAS definition for the specified storage account. This operation requires the storage/getsas permission.
@@ -2569,14 +2474,14 @@ func (client *KeyVaultClient) GetSasDefinition(ctx context.Context, vaultBaseURL
 	if err != nil {
 		return KeyVaultClientGetSasDefinitionResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientGetSasDefinitionResponse{}, client.getSasDefinitionHandleError(resp)
 	}
 	return client.getSasDefinitionHandleResponse(resp)
 }
 
 // getSasDefinitionCreateRequest creates the GetSasDefinition request.
-func (client *KeyVaultClient) getSasDefinitionCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, options *KeyVaultClientGetSasDefinitionOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) getSasDefinitionCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, options *KeyVaultClientGetSasDefinitionOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/storage/{storage-account-name}/sas/{sas-definition-name}"
@@ -2588,56 +2493,55 @@ func (client *KeyVaultClient) getSasDefinitionCreateRequest(ctx context.Context,
 		return nil, errors.New("parameter sasDefinitionName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{sas-definition-name}", url.PathEscape(sasDefinitionName))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getSasDefinitionHandleResponse handles the GetSasDefinition response.
-func (client *KeyVaultClient) getSasDefinitionHandleResponse(resp *azcore.Response) (KeyVaultClientGetSasDefinitionResponse, error) {
-	result := KeyVaultClientGetSasDefinitionResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.SasDefinitionBundle); err != nil {
+func (client *KeyVaultClient) getSasDefinitionHandleResponse(resp *http.Response) (KeyVaultClientGetSasDefinitionResponse, error) {
+	result := KeyVaultClientGetSasDefinitionResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.SasDefinitionBundle); err != nil {
 		return KeyVaultClientGetSasDefinitionResponse{}, err
 	}
 	return result, nil
 }
 
 // getSasDefinitionHandleError handles the GetSasDefinition error response.
-func (client *KeyVaultClient) getSasDefinitionHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) getSasDefinitionHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetSasDefinitions - List storage SAS definitions for the given storage account. This operation requires the storage/listsas permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetSasDefinitions(vaultBaseURL string, storageAccountName string, options *KeyVaultClientGetSasDefinitionsOptions) KeyVaultClientGetSasDefinitionsPager {
-	return &keyVaultClientGetSasDefinitionsPager{
+func (client *KeyVaultClient) GetSasDefinitions(vaultBaseURL string, storageAccountName string, options *KeyVaultClientGetSasDefinitionsOptions) *KeyVaultClientGetSasDefinitionsPager {
+	return &KeyVaultClientGetSasDefinitionsPager{
 		client: client,
-		requester: func(ctx context.Context) (*azcore.Request, error) {
+		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.getSasDefinitionsCreateRequest(ctx, vaultBaseURL, storageAccountName, options)
 		},
-		advancer: func(ctx context.Context, resp KeyVaultClientGetSasDefinitionsResponse) (*azcore.Request, error) {
-			return azcore.NewRequest(ctx, http.MethodGet, *resp.SasDefinitionListResult.NextLink)
+		advancer: func(ctx context.Context, resp KeyVaultClientGetSasDefinitionsResponse) (*policy.Request, error) {
+			return runtime.NewRequest(ctx, http.MethodGet, *resp.SasDefinitionListResult.NextLink)
 		},
 	}
 }
 
 // getSasDefinitionsCreateRequest creates the GetSasDefinitions request.
-func (client *KeyVaultClient) getSasDefinitionsCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientGetSasDefinitionsOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) getSasDefinitionsCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientGetSasDefinitionsOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/storage/{storage-account-name}/sas"
@@ -2645,41 +2549,40 @@ func (client *KeyVaultClient) getSasDefinitionsCreateRequest(ctx context.Context
 		return nil, errors.New("parameter storageAccountName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{storage-account-name}", url.PathEscape(storageAccountName))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if options != nil && options.Maxresults != nil {
 		reqQP.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
 	}
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getSasDefinitionsHandleResponse handles the GetSasDefinitions response.
-func (client *KeyVaultClient) getSasDefinitionsHandleResponse(resp *azcore.Response) (KeyVaultClientGetSasDefinitionsResponse, error) {
-	result := KeyVaultClientGetSasDefinitionsResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.SasDefinitionListResult); err != nil {
+func (client *KeyVaultClient) getSasDefinitionsHandleResponse(resp *http.Response) (KeyVaultClientGetSasDefinitionsResponse, error) {
+	result := KeyVaultClientGetSasDefinitionsResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.SasDefinitionListResult); err != nil {
 		return KeyVaultClientGetSasDefinitionsResponse{}, err
 	}
 	return result, nil
 }
 
 // getSasDefinitionsHandleError handles the GetSasDefinitions error response.
-func (client *KeyVaultClient) getSasDefinitionsHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) getSasDefinitionsHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetSecret - The GET operation is applicable to any secret stored in Azure Key Vault. This operation requires the secrets/get permission.
@@ -2693,14 +2596,14 @@ func (client *KeyVaultClient) GetSecret(ctx context.Context, vaultBaseURL string
 	if err != nil {
 		return KeyVaultClientGetSecretResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientGetSecretResponse{}, client.getSecretHandleError(resp)
 	}
 	return client.getSecretHandleResponse(resp)
 }
 
 // getSecretCreateRequest creates the GetSecret request.
-func (client *KeyVaultClient) getSecretCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, secretVersion string, options *KeyVaultClientGetSecretOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) getSecretCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, secretVersion string, options *KeyVaultClientGetSecretOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/secrets/{secret-name}/{secret-version}"
@@ -2712,57 +2615,56 @@ func (client *KeyVaultClient) getSecretCreateRequest(ctx context.Context, vaultB
 		return nil, errors.New("parameter secretVersion cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{secret-version}", url.PathEscape(secretVersion))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getSecretHandleResponse handles the GetSecret response.
-func (client *KeyVaultClient) getSecretHandleResponse(resp *azcore.Response) (KeyVaultClientGetSecretResponse, error) {
-	result := KeyVaultClientGetSecretResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.SecretBundle); err != nil {
+func (client *KeyVaultClient) getSecretHandleResponse(resp *http.Response) (KeyVaultClientGetSecretResponse, error) {
+	result := KeyVaultClientGetSecretResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.SecretBundle); err != nil {
 		return KeyVaultClientGetSecretResponse{}, err
 	}
 	return result, nil
 }
 
 // getSecretHandleError handles the GetSecret error response.
-func (client *KeyVaultClient) getSecretHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) getSecretHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetSecretVersions - The full secret identifier and attributes are provided in the response. No values are returned for the secrets. This operations requires
 // the secrets/list permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetSecretVersions(vaultBaseURL string, secretName string, options *KeyVaultClientGetSecretVersionsOptions) KeyVaultClientGetSecretVersionsPager {
-	return &keyVaultClientGetSecretVersionsPager{
+func (client *KeyVaultClient) GetSecretVersions(vaultBaseURL string, secretName string, options *KeyVaultClientGetSecretVersionsOptions) *KeyVaultClientGetSecretVersionsPager {
+	return &KeyVaultClientGetSecretVersionsPager{
 		client: client,
-		requester: func(ctx context.Context) (*azcore.Request, error) {
+		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.getSecretVersionsCreateRequest(ctx, vaultBaseURL, secretName, options)
 		},
-		advancer: func(ctx context.Context, resp KeyVaultClientGetSecretVersionsResponse) (*azcore.Request, error) {
-			return azcore.NewRequest(ctx, http.MethodGet, *resp.SecretListResult.NextLink)
+		advancer: func(ctx context.Context, resp KeyVaultClientGetSecretVersionsResponse) (*policy.Request, error) {
+			return runtime.NewRequest(ctx, http.MethodGet, *resp.SecretListResult.NextLink)
 		},
 	}
 }
 
 // getSecretVersionsCreateRequest creates the GetSecretVersions request.
-func (client *KeyVaultClient) getSecretVersionsCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, options *KeyVaultClientGetSecretVersionsOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) getSecretVersionsCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, options *KeyVaultClientGetSecretVersionsOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/secrets/{secret-name}/versions"
@@ -2770,99 +2672,97 @@ func (client *KeyVaultClient) getSecretVersionsCreateRequest(ctx context.Context
 		return nil, errors.New("parameter secretName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{secret-name}", url.PathEscape(secretName))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if options != nil && options.Maxresults != nil {
 		reqQP.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
 	}
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getSecretVersionsHandleResponse handles the GetSecretVersions response.
-func (client *KeyVaultClient) getSecretVersionsHandleResponse(resp *azcore.Response) (KeyVaultClientGetSecretVersionsResponse, error) {
-	result := KeyVaultClientGetSecretVersionsResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.SecretListResult); err != nil {
+func (client *KeyVaultClient) getSecretVersionsHandleResponse(resp *http.Response) (KeyVaultClientGetSecretVersionsResponse, error) {
+	result := KeyVaultClientGetSecretVersionsResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.SecretListResult); err != nil {
 		return KeyVaultClientGetSecretVersionsResponse{}, err
 	}
 	return result, nil
 }
 
 // getSecretVersionsHandleError handles the GetSecretVersions error response.
-func (client *KeyVaultClient) getSecretVersionsHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) getSecretVersionsHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetSecrets - The Get Secrets operation is applicable to the entire vault. However, only the base secret identifier and its attributes are provided in
 // the response. Individual secret versions are not listed in the
 // response. This operation requires the secrets/list permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetSecrets(vaultBaseURL string, options *KeyVaultClientGetSecretsOptions) KeyVaultClientGetSecretsPager {
-	return &keyVaultClientGetSecretsPager{
+func (client *KeyVaultClient) GetSecrets(vaultBaseURL string, options *KeyVaultClientGetSecretsOptions) *KeyVaultClientGetSecretsPager {
+	return &KeyVaultClientGetSecretsPager{
 		client: client,
-		requester: func(ctx context.Context) (*azcore.Request, error) {
+		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.getSecretsCreateRequest(ctx, vaultBaseURL, options)
 		},
-		advancer: func(ctx context.Context, resp KeyVaultClientGetSecretsResponse) (*azcore.Request, error) {
-			return azcore.NewRequest(ctx, http.MethodGet, *resp.SecretListResult.NextLink)
+		advancer: func(ctx context.Context, resp KeyVaultClientGetSecretsResponse) (*policy.Request, error) {
+			return runtime.NewRequest(ctx, http.MethodGet, *resp.SecretListResult.NextLink)
 		},
 	}
 }
 
 // getSecretsCreateRequest creates the GetSecrets request.
-func (client *KeyVaultClient) getSecretsCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientGetSecretsOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) getSecretsCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientGetSecretsOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/secrets"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if options != nil && options.Maxresults != nil {
 		reqQP.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
 	}
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getSecretsHandleResponse handles the GetSecrets response.
-func (client *KeyVaultClient) getSecretsHandleResponse(resp *azcore.Response) (KeyVaultClientGetSecretsResponse, error) {
-	result := KeyVaultClientGetSecretsResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.SecretListResult); err != nil {
+func (client *KeyVaultClient) getSecretsHandleResponse(resp *http.Response) (KeyVaultClientGetSecretsResponse, error) {
+	result := KeyVaultClientGetSecretsResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.SecretListResult); err != nil {
 		return KeyVaultClientGetSecretsResponse{}, err
 	}
 	return result, nil
 }
 
 // getSecretsHandleError handles the GetSecrets error response.
-func (client *KeyVaultClient) getSecretsHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) getSecretsHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetStorageAccount - Gets information about a specified storage account. This operation requires the storage/get permission.
@@ -2876,14 +2776,14 @@ func (client *KeyVaultClient) GetStorageAccount(ctx context.Context, vaultBaseUR
 	if err != nil {
 		return KeyVaultClientGetStorageAccountResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientGetStorageAccountResponse{}, client.getStorageAccountHandleError(resp)
 	}
 	return client.getStorageAccountHandleResponse(resp)
 }
 
 // getStorageAccountCreateRequest creates the GetStorageAccount request.
-func (client *KeyVaultClient) getStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientGetStorageAccountOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) getStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientGetStorageAccountOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/storage/{storage-account-name}"
@@ -2891,94 +2791,92 @@ func (client *KeyVaultClient) getStorageAccountCreateRequest(ctx context.Context
 		return nil, errors.New("parameter storageAccountName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{storage-account-name}", url.PathEscape(storageAccountName))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getStorageAccountHandleResponse handles the GetStorageAccount response.
-func (client *KeyVaultClient) getStorageAccountHandleResponse(resp *azcore.Response) (KeyVaultClientGetStorageAccountResponse, error) {
-	result := KeyVaultClientGetStorageAccountResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.StorageBundle); err != nil {
+func (client *KeyVaultClient) getStorageAccountHandleResponse(resp *http.Response) (KeyVaultClientGetStorageAccountResponse, error) {
+	result := KeyVaultClientGetStorageAccountResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.StorageBundle); err != nil {
 		return KeyVaultClientGetStorageAccountResponse{}, err
 	}
 	return result, nil
 }
 
 // getStorageAccountHandleError handles the GetStorageAccount error response.
-func (client *KeyVaultClient) getStorageAccountHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) getStorageAccountHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetStorageAccounts - List storage accounts managed by the specified key vault. This operation requires the storage/list permission.
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) GetStorageAccounts(vaultBaseURL string, options *KeyVaultClientGetStorageAccountsOptions) KeyVaultClientGetStorageAccountsPager {
-	return &keyVaultClientGetStorageAccountsPager{
+func (client *KeyVaultClient) GetStorageAccounts(vaultBaseURL string, options *KeyVaultClientGetStorageAccountsOptions) *KeyVaultClientGetStorageAccountsPager {
+	return &KeyVaultClientGetStorageAccountsPager{
 		client: client,
-		requester: func(ctx context.Context) (*azcore.Request, error) {
+		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.getStorageAccountsCreateRequest(ctx, vaultBaseURL, options)
 		},
-		advancer: func(ctx context.Context, resp KeyVaultClientGetStorageAccountsResponse) (*azcore.Request, error) {
-			return azcore.NewRequest(ctx, http.MethodGet, *resp.StorageListResult.NextLink)
+		advancer: func(ctx context.Context, resp KeyVaultClientGetStorageAccountsResponse) (*policy.Request, error) {
+			return runtime.NewRequest(ctx, http.MethodGet, *resp.StorageListResult.NextLink)
 		},
 	}
 }
 
 // getStorageAccountsCreateRequest creates the GetStorageAccounts request.
-func (client *KeyVaultClient) getStorageAccountsCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientGetStorageAccountsOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) getStorageAccountsCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientGetStorageAccountsOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/storage"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if options != nil && options.Maxresults != nil {
 		reqQP.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
 	}
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getStorageAccountsHandleResponse handles the GetStorageAccounts response.
-func (client *KeyVaultClient) getStorageAccountsHandleResponse(resp *azcore.Response) (KeyVaultClientGetStorageAccountsResponse, error) {
-	result := KeyVaultClientGetStorageAccountsResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.StorageListResult); err != nil {
+func (client *KeyVaultClient) getStorageAccountsHandleResponse(resp *http.Response) (KeyVaultClientGetStorageAccountsResponse, error) {
+	result := KeyVaultClientGetStorageAccountsResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.StorageListResult); err != nil {
 		return KeyVaultClientGetStorageAccountsResponse{}, err
 	}
 	return result, nil
 }
 
 // getStorageAccountsHandleError handles the GetStorageAccounts error response.
-func (client *KeyVaultClient) getStorageAccountsHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) getStorageAccountsHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // ImportCertificate - Imports an existing valid certificate, containing a private key, into Azure Key Vault. The certificate to be imported can be in either
@@ -2994,14 +2892,14 @@ func (client *KeyVaultClient) ImportCertificate(ctx context.Context, vaultBaseUR
 	if err != nil {
 		return KeyVaultClientImportCertificateResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientImportCertificateResponse{}, client.importCertificateHandleError(resp)
 	}
 	return client.importCertificateHandleResponse(resp)
 }
 
 // importCertificateCreateRequest creates the ImportCertificate request.
-func (client *KeyVaultClient) importCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, parameters CertificateImportParameters, options *KeyVaultClientImportCertificateOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) importCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, parameters CertificateImportParameters, options *KeyVaultClientImportCertificateOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/{certificate-name}/import"
@@ -3009,38 +2907,37 @@ func (client *KeyVaultClient) importCertificateCreateRequest(ctx context.Context
 		return nil, errors.New("parameter certificateName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{certificate-name}", url.PathEscape(certificateName))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(parameters)
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
 // importCertificateHandleResponse handles the ImportCertificate response.
-func (client *KeyVaultClient) importCertificateHandleResponse(resp *azcore.Response) (KeyVaultClientImportCertificateResponse, error) {
-	result := KeyVaultClientImportCertificateResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.CertificateBundle); err != nil {
+func (client *KeyVaultClient) importCertificateHandleResponse(resp *http.Response) (KeyVaultClientImportCertificateResponse, error) {
+	result := KeyVaultClientImportCertificateResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateBundle); err != nil {
 		return KeyVaultClientImportCertificateResponse{}, err
 	}
 	return result, nil
 }
 
 // importCertificateHandleError handles the ImportCertificate error response.
-func (client *KeyVaultClient) importCertificateHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) importCertificateHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // ImportKey - The import key operation may be used to import any key type into an Azure Key Vault. If the named key already exists, Azure Key Vault creates
@@ -3056,14 +2953,14 @@ func (client *KeyVaultClient) ImportKey(ctx context.Context, vaultBaseURL string
 	if err != nil {
 		return KeyVaultClientImportKeyResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientImportKeyResponse{}, client.importKeyHandleError(resp)
 	}
 	return client.importKeyHandleResponse(resp)
 }
 
 // importKeyCreateRequest creates the ImportKey request.
-func (client *KeyVaultClient) importKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, parameters KeyImportParameters, options *KeyVaultClientImportKeyOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) importKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, parameters KeyImportParameters, options *KeyVaultClientImportKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/keys/{key-name}"
@@ -3071,38 +2968,37 @@ func (client *KeyVaultClient) importKeyCreateRequest(ctx context.Context, vaultB
 		return nil, errors.New("parameter keyName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{key-name}", url.PathEscape(keyName))
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(parameters)
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
 // importKeyHandleResponse handles the ImportKey response.
-func (client *KeyVaultClient) importKeyHandleResponse(resp *azcore.Response) (KeyVaultClientImportKeyResponse, error) {
-	result := KeyVaultClientImportKeyResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.KeyBundle); err != nil {
+func (client *KeyVaultClient) importKeyHandleResponse(resp *http.Response) (KeyVaultClientImportKeyResponse, error) {
+	result := KeyVaultClientImportKeyResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.KeyBundle); err != nil {
 		return KeyVaultClientImportKeyResponse{}, err
 	}
 	return result, nil
 }
 
 // importKeyHandleError handles the ImportKey error response.
-func (client *KeyVaultClient) importKeyHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) importKeyHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // MergeCertificate - The MergeCertificate operation performs the merging of a certificate or certificate chain with a key pair currently available in the
@@ -3118,14 +3014,14 @@ func (client *KeyVaultClient) MergeCertificate(ctx context.Context, vaultBaseURL
 	if err != nil {
 		return KeyVaultClientMergeCertificateResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusCreated) {
+	if !runtime.HasStatusCode(resp, http.StatusCreated) {
 		return KeyVaultClientMergeCertificateResponse{}, client.mergeCertificateHandleError(resp)
 	}
 	return client.mergeCertificateHandleResponse(resp)
 }
 
 // mergeCertificateCreateRequest creates the MergeCertificate request.
-func (client *KeyVaultClient) mergeCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, parameters CertificateMergeParameters, options *KeyVaultClientMergeCertificateOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) mergeCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, parameters CertificateMergeParameters, options *KeyVaultClientMergeCertificateOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/{certificate-name}/pending/merge"
@@ -3133,38 +3029,37 @@ func (client *KeyVaultClient) mergeCertificateCreateRequest(ctx context.Context,
 		return nil, errors.New("parameter certificateName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{certificate-name}", url.PathEscape(certificateName))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(parameters)
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
 // mergeCertificateHandleResponse handles the MergeCertificate response.
-func (client *KeyVaultClient) mergeCertificateHandleResponse(resp *azcore.Response) (KeyVaultClientMergeCertificateResponse, error) {
-	result := KeyVaultClientMergeCertificateResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.CertificateBundle); err != nil {
+func (client *KeyVaultClient) mergeCertificateHandleResponse(resp *http.Response) (KeyVaultClientMergeCertificateResponse, error) {
+	result := KeyVaultClientMergeCertificateResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateBundle); err != nil {
 		return KeyVaultClientMergeCertificateResponse{}, err
 	}
 	return result, nil
 }
 
 // mergeCertificateHandleError handles the MergeCertificate error response.
-func (client *KeyVaultClient) mergeCertificateHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) mergeCertificateHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PurgeDeletedCertificate - The PurgeDeletedCertificate operation performs an irreversible deletion of the specified certificate, without possibility for
@@ -3180,14 +3075,14 @@ func (client *KeyVaultClient) PurgeDeletedCertificate(ctx context.Context, vault
 	if err != nil {
 		return KeyVaultClientPurgeDeletedCertificateResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusNoContent) {
+	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
 		return KeyVaultClientPurgeDeletedCertificateResponse{}, client.purgeDeletedCertificateHandleError(resp)
 	}
-	return KeyVaultClientPurgeDeletedCertificateResponse{RawResponse: resp.Response}, nil
+	return KeyVaultClientPurgeDeletedCertificateResponse{RawResponse: resp}, nil
 }
 
 // purgeDeletedCertificateCreateRequest creates the PurgeDeletedCertificate request.
-func (client *KeyVaultClient) purgeDeletedCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientPurgeDeletedCertificateOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) purgeDeletedCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientPurgeDeletedCertificateOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedcertificates/{certificate-name}"
@@ -3195,29 +3090,28 @@ func (client *KeyVaultClient) purgeDeletedCertificateCreateRequest(ctx context.C
 		return nil, errors.New("parameter certificateName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{certificate-name}", url.PathEscape(certificateName))
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // purgeDeletedCertificateHandleError handles the PurgeDeletedCertificate error response.
-func (client *KeyVaultClient) purgeDeletedCertificateHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) purgeDeletedCertificateHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PurgeDeletedKey - The Purge Deleted Key operation is applicable for soft-delete enabled vaults. While the operation can be invoked on any vault, it will
@@ -3233,14 +3127,14 @@ func (client *KeyVaultClient) PurgeDeletedKey(ctx context.Context, vaultBaseURL 
 	if err != nil {
 		return KeyVaultClientPurgeDeletedKeyResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusNoContent) {
+	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
 		return KeyVaultClientPurgeDeletedKeyResponse{}, client.purgeDeletedKeyHandleError(resp)
 	}
-	return KeyVaultClientPurgeDeletedKeyResponse{RawResponse: resp.Response}, nil
+	return KeyVaultClientPurgeDeletedKeyResponse{RawResponse: resp}, nil
 }
 
 // purgeDeletedKeyCreateRequest creates the PurgeDeletedKey request.
-func (client *KeyVaultClient) purgeDeletedKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientPurgeDeletedKeyOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) purgeDeletedKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientPurgeDeletedKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedkeys/{key-name}"
@@ -3248,29 +3142,28 @@ func (client *KeyVaultClient) purgeDeletedKeyCreateRequest(ctx context.Context, 
 		return nil, errors.New("parameter keyName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{key-name}", url.PathEscape(keyName))
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // purgeDeletedKeyHandleError handles the PurgeDeletedKey error response.
-func (client *KeyVaultClient) purgeDeletedKeyHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) purgeDeletedKeyHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PurgeDeletedSecret - The purge deleted secret operation removes the secret permanently, without the possibility of recovery. This operation can only
@@ -3286,14 +3179,14 @@ func (client *KeyVaultClient) PurgeDeletedSecret(ctx context.Context, vaultBaseU
 	if err != nil {
 		return KeyVaultClientPurgeDeletedSecretResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusNoContent) {
+	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
 		return KeyVaultClientPurgeDeletedSecretResponse{}, client.purgeDeletedSecretHandleError(resp)
 	}
-	return KeyVaultClientPurgeDeletedSecretResponse{RawResponse: resp.Response}, nil
+	return KeyVaultClientPurgeDeletedSecretResponse{RawResponse: resp}, nil
 }
 
 // purgeDeletedSecretCreateRequest creates the PurgeDeletedSecret request.
-func (client *KeyVaultClient) purgeDeletedSecretCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, options *KeyVaultClientPurgeDeletedSecretOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) purgeDeletedSecretCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, options *KeyVaultClientPurgeDeletedSecretOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedsecrets/{secret-name}"
@@ -3301,29 +3194,28 @@ func (client *KeyVaultClient) purgeDeletedSecretCreateRequest(ctx context.Contex
 		return nil, errors.New("parameter secretName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{secret-name}", url.PathEscape(secretName))
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // purgeDeletedSecretHandleError handles the PurgeDeletedSecret error response.
-func (client *KeyVaultClient) purgeDeletedSecretHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) purgeDeletedSecretHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // PurgeDeletedStorageAccount - The purge deleted storage account operation removes the secret permanently, without the possibility of recovery. This operation
@@ -3339,14 +3231,14 @@ func (client *KeyVaultClient) PurgeDeletedStorageAccount(ctx context.Context, va
 	if err != nil {
 		return KeyVaultClientPurgeDeletedStorageAccountResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusNoContent) {
+	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
 		return KeyVaultClientPurgeDeletedStorageAccountResponse{}, client.purgeDeletedStorageAccountHandleError(resp)
 	}
-	return KeyVaultClientPurgeDeletedStorageAccountResponse{RawResponse: resp.Response}, nil
+	return KeyVaultClientPurgeDeletedStorageAccountResponse{RawResponse: resp}, nil
 }
 
 // purgeDeletedStorageAccountCreateRequest creates the PurgeDeletedStorageAccount request.
-func (client *KeyVaultClient) purgeDeletedStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientPurgeDeletedStorageAccountOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) purgeDeletedStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientPurgeDeletedStorageAccountOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedstorage/{storage-account-name}"
@@ -3354,29 +3246,28 @@ func (client *KeyVaultClient) purgeDeletedStorageAccountCreateRequest(ctx contex
 		return nil, errors.New("parameter storageAccountName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{storage-account-name}", url.PathEscape(storageAccountName))
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // purgeDeletedStorageAccountHandleError handles the PurgeDeletedStorageAccount error response.
-func (client *KeyVaultClient) purgeDeletedStorageAccountHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) purgeDeletedStorageAccountHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // RecoverDeletedCertificate - The RecoverDeletedCertificate operation performs the reversal of the Delete operation. The operation is applicable in vaults
@@ -3392,14 +3283,14 @@ func (client *KeyVaultClient) RecoverDeletedCertificate(ctx context.Context, vau
 	if err != nil {
 		return KeyVaultClientRecoverDeletedCertificateResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientRecoverDeletedCertificateResponse{}, client.recoverDeletedCertificateHandleError(resp)
 	}
 	return client.recoverDeletedCertificateHandleResponse(resp)
 }
 
 // recoverDeletedCertificateCreateRequest creates the RecoverDeletedCertificate request.
-func (client *KeyVaultClient) recoverDeletedCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientRecoverDeletedCertificateOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) recoverDeletedCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientRecoverDeletedCertificateOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedcertificates/{certificate-name}/recover"
@@ -3407,38 +3298,37 @@ func (client *KeyVaultClient) recoverDeletedCertificateCreateRequest(ctx context
 		return nil, errors.New("parameter certificateName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{certificate-name}", url.PathEscape(certificateName))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // recoverDeletedCertificateHandleResponse handles the RecoverDeletedCertificate response.
-func (client *KeyVaultClient) recoverDeletedCertificateHandleResponse(resp *azcore.Response) (KeyVaultClientRecoverDeletedCertificateResponse, error) {
-	result := KeyVaultClientRecoverDeletedCertificateResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.CertificateBundle); err != nil {
+func (client *KeyVaultClient) recoverDeletedCertificateHandleResponse(resp *http.Response) (KeyVaultClientRecoverDeletedCertificateResponse, error) {
+	result := KeyVaultClientRecoverDeletedCertificateResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateBundle); err != nil {
 		return KeyVaultClientRecoverDeletedCertificateResponse{}, err
 	}
 	return result, nil
 }
 
 // recoverDeletedCertificateHandleError handles the RecoverDeletedCertificate error response.
-func (client *KeyVaultClient) recoverDeletedCertificateHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) recoverDeletedCertificateHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // RecoverDeletedKey - The Recover Deleted Key operation is applicable for deleted keys in soft-delete enabled vaults. It recovers the deleted key back
@@ -3454,14 +3344,14 @@ func (client *KeyVaultClient) RecoverDeletedKey(ctx context.Context, vaultBaseUR
 	if err != nil {
 		return KeyVaultClientRecoverDeletedKeyResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientRecoverDeletedKeyResponse{}, client.recoverDeletedKeyHandleError(resp)
 	}
 	return client.recoverDeletedKeyHandleResponse(resp)
 }
 
 // recoverDeletedKeyCreateRequest creates the RecoverDeletedKey request.
-func (client *KeyVaultClient) recoverDeletedKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientRecoverDeletedKeyOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) recoverDeletedKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientRecoverDeletedKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedkeys/{key-name}/recover"
@@ -3469,38 +3359,37 @@ func (client *KeyVaultClient) recoverDeletedKeyCreateRequest(ctx context.Context
 		return nil, errors.New("parameter keyName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{key-name}", url.PathEscape(keyName))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // recoverDeletedKeyHandleResponse handles the RecoverDeletedKey response.
-func (client *KeyVaultClient) recoverDeletedKeyHandleResponse(resp *azcore.Response) (KeyVaultClientRecoverDeletedKeyResponse, error) {
-	result := KeyVaultClientRecoverDeletedKeyResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.KeyBundle); err != nil {
+func (client *KeyVaultClient) recoverDeletedKeyHandleResponse(resp *http.Response) (KeyVaultClientRecoverDeletedKeyResponse, error) {
+	result := KeyVaultClientRecoverDeletedKeyResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.KeyBundle); err != nil {
 		return KeyVaultClientRecoverDeletedKeyResponse{}, err
 	}
 	return result, nil
 }
 
 // recoverDeletedKeyHandleError handles the RecoverDeletedKey error response.
-func (client *KeyVaultClient) recoverDeletedKeyHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) recoverDeletedKeyHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // RecoverDeletedSasDefinition - Recovers the deleted SAS definition for the specified storage account. This operation can only be performed on a soft-delete
@@ -3515,14 +3404,14 @@ func (client *KeyVaultClient) RecoverDeletedSasDefinition(ctx context.Context, v
 	if err != nil {
 		return KeyVaultClientRecoverDeletedSasDefinitionResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientRecoverDeletedSasDefinitionResponse{}, client.recoverDeletedSasDefinitionHandleError(resp)
 	}
 	return client.recoverDeletedSasDefinitionHandleResponse(resp)
 }
 
 // recoverDeletedSasDefinitionCreateRequest creates the RecoverDeletedSasDefinition request.
-func (client *KeyVaultClient) recoverDeletedSasDefinitionCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, options *KeyVaultClientRecoverDeletedSasDefinitionOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) recoverDeletedSasDefinitionCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, options *KeyVaultClientRecoverDeletedSasDefinitionOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedstorage/{storage-account-name}/sas/{sas-definition-name}/recover"
@@ -3534,38 +3423,37 @@ func (client *KeyVaultClient) recoverDeletedSasDefinitionCreateRequest(ctx conte
 		return nil, errors.New("parameter sasDefinitionName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{sas-definition-name}", url.PathEscape(sasDefinitionName))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // recoverDeletedSasDefinitionHandleResponse handles the RecoverDeletedSasDefinition response.
-func (client *KeyVaultClient) recoverDeletedSasDefinitionHandleResponse(resp *azcore.Response) (KeyVaultClientRecoverDeletedSasDefinitionResponse, error) {
-	result := KeyVaultClientRecoverDeletedSasDefinitionResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.SasDefinitionBundle); err != nil {
+func (client *KeyVaultClient) recoverDeletedSasDefinitionHandleResponse(resp *http.Response) (KeyVaultClientRecoverDeletedSasDefinitionResponse, error) {
+	result := KeyVaultClientRecoverDeletedSasDefinitionResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.SasDefinitionBundle); err != nil {
 		return KeyVaultClientRecoverDeletedSasDefinitionResponse{}, err
 	}
 	return result, nil
 }
 
 // recoverDeletedSasDefinitionHandleError handles the RecoverDeletedSasDefinition error response.
-func (client *KeyVaultClient) recoverDeletedSasDefinitionHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) recoverDeletedSasDefinitionHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // RecoverDeletedSecret - Recovers the deleted secret in the specified vault. This operation can only be performed on a soft-delete enabled vault. This
@@ -3580,14 +3468,14 @@ func (client *KeyVaultClient) RecoverDeletedSecret(ctx context.Context, vaultBas
 	if err != nil {
 		return KeyVaultClientRecoverDeletedSecretResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientRecoverDeletedSecretResponse{}, client.recoverDeletedSecretHandleError(resp)
 	}
 	return client.recoverDeletedSecretHandleResponse(resp)
 }
 
 // recoverDeletedSecretCreateRequest creates the RecoverDeletedSecret request.
-func (client *KeyVaultClient) recoverDeletedSecretCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, options *KeyVaultClientRecoverDeletedSecretOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) recoverDeletedSecretCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, options *KeyVaultClientRecoverDeletedSecretOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedsecrets/{secret-name}/recover"
@@ -3595,38 +3483,37 @@ func (client *KeyVaultClient) recoverDeletedSecretCreateRequest(ctx context.Cont
 		return nil, errors.New("parameter secretName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{secret-name}", url.PathEscape(secretName))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // recoverDeletedSecretHandleResponse handles the RecoverDeletedSecret response.
-func (client *KeyVaultClient) recoverDeletedSecretHandleResponse(resp *azcore.Response) (KeyVaultClientRecoverDeletedSecretResponse, error) {
-	result := KeyVaultClientRecoverDeletedSecretResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.SecretBundle); err != nil {
+func (client *KeyVaultClient) recoverDeletedSecretHandleResponse(resp *http.Response) (KeyVaultClientRecoverDeletedSecretResponse, error) {
+	result := KeyVaultClientRecoverDeletedSecretResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.SecretBundle); err != nil {
 		return KeyVaultClientRecoverDeletedSecretResponse{}, err
 	}
 	return result, nil
 }
 
 // recoverDeletedSecretHandleError handles the RecoverDeletedSecret error response.
-func (client *KeyVaultClient) recoverDeletedSecretHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) recoverDeletedSecretHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // RecoverDeletedStorageAccount - Recovers the deleted storage account in the specified vault. This operation can only be performed on a soft-delete enabled
@@ -3641,14 +3528,14 @@ func (client *KeyVaultClient) RecoverDeletedStorageAccount(ctx context.Context, 
 	if err != nil {
 		return KeyVaultClientRecoverDeletedStorageAccountResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientRecoverDeletedStorageAccountResponse{}, client.recoverDeletedStorageAccountHandleError(resp)
 	}
 	return client.recoverDeletedStorageAccountHandleResponse(resp)
 }
 
 // recoverDeletedStorageAccountCreateRequest creates the RecoverDeletedStorageAccount request.
-func (client *KeyVaultClient) recoverDeletedStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientRecoverDeletedStorageAccountOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) recoverDeletedStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientRecoverDeletedStorageAccountOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedstorage/{storage-account-name}/recover"
@@ -3656,38 +3543,37 @@ func (client *KeyVaultClient) recoverDeletedStorageAccountCreateRequest(ctx cont
 		return nil, errors.New("parameter storageAccountName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{storage-account-name}", url.PathEscape(storageAccountName))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // recoverDeletedStorageAccountHandleResponse handles the RecoverDeletedStorageAccount response.
-func (client *KeyVaultClient) recoverDeletedStorageAccountHandleResponse(resp *azcore.Response) (KeyVaultClientRecoverDeletedStorageAccountResponse, error) {
-	result := KeyVaultClientRecoverDeletedStorageAccountResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.StorageBundle); err != nil {
+func (client *KeyVaultClient) recoverDeletedStorageAccountHandleResponse(resp *http.Response) (KeyVaultClientRecoverDeletedStorageAccountResponse, error) {
+	result := KeyVaultClientRecoverDeletedStorageAccountResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.StorageBundle); err != nil {
 		return KeyVaultClientRecoverDeletedStorageAccountResponse{}, err
 	}
 	return result, nil
 }
 
 // recoverDeletedStorageAccountHandleError handles the RecoverDeletedStorageAccount error response.
-func (client *KeyVaultClient) recoverDeletedStorageAccountHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) recoverDeletedStorageAccountHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // RegenerateStorageAccountKey - Regenerates the specified key value for the given storage account. This operation requires the storage/regeneratekey permission.
@@ -3701,14 +3587,14 @@ func (client *KeyVaultClient) RegenerateStorageAccountKey(ctx context.Context, v
 	if err != nil {
 		return KeyVaultClientRegenerateStorageAccountKeyResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientRegenerateStorageAccountKeyResponse{}, client.regenerateStorageAccountKeyHandleError(resp)
 	}
 	return client.regenerateStorageAccountKeyHandleResponse(resp)
 }
 
 // regenerateStorageAccountKeyCreateRequest creates the RegenerateStorageAccountKey request.
-func (client *KeyVaultClient) regenerateStorageAccountKeyCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, parameters StorageAccountRegenerteKeyParameters, options *KeyVaultClientRegenerateStorageAccountKeyOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) regenerateStorageAccountKeyCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, parameters StorageAccountRegenerteKeyParameters, options *KeyVaultClientRegenerateStorageAccountKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/storage/{storage-account-name}/regeneratekey"
@@ -3716,38 +3602,37 @@ func (client *KeyVaultClient) regenerateStorageAccountKeyCreateRequest(ctx conte
 		return nil, errors.New("parameter storageAccountName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{storage-account-name}", url.PathEscape(storageAccountName))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(parameters)
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
 // regenerateStorageAccountKeyHandleResponse handles the RegenerateStorageAccountKey response.
-func (client *KeyVaultClient) regenerateStorageAccountKeyHandleResponse(resp *azcore.Response) (KeyVaultClientRegenerateStorageAccountKeyResponse, error) {
-	result := KeyVaultClientRegenerateStorageAccountKeyResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.StorageBundle); err != nil {
+func (client *KeyVaultClient) regenerateStorageAccountKeyHandleResponse(resp *http.Response) (KeyVaultClientRegenerateStorageAccountKeyResponse, error) {
+	result := KeyVaultClientRegenerateStorageAccountKeyResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.StorageBundle); err != nil {
 		return KeyVaultClientRegenerateStorageAccountKeyResponse{}, err
 	}
 	return result, nil
 }
 
 // regenerateStorageAccountKeyHandleError handles the RegenerateStorageAccountKey error response.
-func (client *KeyVaultClient) regenerateStorageAccountKeyHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) regenerateStorageAccountKeyHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // RestoreCertificate - Restores a backed up certificate, and all its versions, to a vault. This operation requires the certificates/restore permission.
@@ -3761,49 +3646,48 @@ func (client *KeyVaultClient) RestoreCertificate(ctx context.Context, vaultBaseU
 	if err != nil {
 		return KeyVaultClientRestoreCertificateResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientRestoreCertificateResponse{}, client.restoreCertificateHandleError(resp)
 	}
 	return client.restoreCertificateHandleResponse(resp)
 }
 
 // restoreCertificateCreateRequest creates the RestoreCertificate request.
-func (client *KeyVaultClient) restoreCertificateCreateRequest(ctx context.Context, vaultBaseURL string, parameters CertificateRestoreParameters, options *KeyVaultClientRestoreCertificateOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) restoreCertificateCreateRequest(ctx context.Context, vaultBaseURL string, parameters CertificateRestoreParameters, options *KeyVaultClientRestoreCertificateOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/restore"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(parameters)
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
 // restoreCertificateHandleResponse handles the RestoreCertificate response.
-func (client *KeyVaultClient) restoreCertificateHandleResponse(resp *azcore.Response) (KeyVaultClientRestoreCertificateResponse, error) {
-	result := KeyVaultClientRestoreCertificateResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.CertificateBundle); err != nil {
+func (client *KeyVaultClient) restoreCertificateHandleResponse(resp *http.Response) (KeyVaultClientRestoreCertificateResponse, error) {
+	result := KeyVaultClientRestoreCertificateResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateBundle); err != nil {
 		return KeyVaultClientRestoreCertificateResponse{}, err
 	}
 	return result, nil
 }
 
 // restoreCertificateHandleError handles the RestoreCertificate error response.
-func (client *KeyVaultClient) restoreCertificateHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) restoreCertificateHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // RestoreKey - Imports a previously backed up key into Azure Key Vault, restoring the key, its key identifier, attributes and access control policies.
@@ -3825,49 +3709,48 @@ func (client *KeyVaultClient) RestoreKey(ctx context.Context, vaultBaseURL strin
 	if err != nil {
 		return KeyVaultClientRestoreKeyResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientRestoreKeyResponse{}, client.restoreKeyHandleError(resp)
 	}
 	return client.restoreKeyHandleResponse(resp)
 }
 
 // restoreKeyCreateRequest creates the RestoreKey request.
-func (client *KeyVaultClient) restoreKeyCreateRequest(ctx context.Context, vaultBaseURL string, parameters KeyRestoreParameters, options *KeyVaultClientRestoreKeyOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) restoreKeyCreateRequest(ctx context.Context, vaultBaseURL string, parameters KeyRestoreParameters, options *KeyVaultClientRestoreKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/keys/restore"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(parameters)
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
 // restoreKeyHandleResponse handles the RestoreKey response.
-func (client *KeyVaultClient) restoreKeyHandleResponse(resp *azcore.Response) (KeyVaultClientRestoreKeyResponse, error) {
-	result := KeyVaultClientRestoreKeyResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.KeyBundle); err != nil {
+func (client *KeyVaultClient) restoreKeyHandleResponse(resp *http.Response) (KeyVaultClientRestoreKeyResponse, error) {
+	result := KeyVaultClientRestoreKeyResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.KeyBundle); err != nil {
 		return KeyVaultClientRestoreKeyResponse{}, err
 	}
 	return result, nil
 }
 
 // restoreKeyHandleError handles the RestoreKey error response.
-func (client *KeyVaultClient) restoreKeyHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) restoreKeyHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // RestoreSecret - Restores a backed up secret, and all its versions, to a vault. This operation requires the secrets/restore permission.
@@ -3881,49 +3764,48 @@ func (client *KeyVaultClient) RestoreSecret(ctx context.Context, vaultBaseURL st
 	if err != nil {
 		return KeyVaultClientRestoreSecretResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientRestoreSecretResponse{}, client.restoreSecretHandleError(resp)
 	}
 	return client.restoreSecretHandleResponse(resp)
 }
 
 // restoreSecretCreateRequest creates the RestoreSecret request.
-func (client *KeyVaultClient) restoreSecretCreateRequest(ctx context.Context, vaultBaseURL string, parameters SecretRestoreParameters, options *KeyVaultClientRestoreSecretOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) restoreSecretCreateRequest(ctx context.Context, vaultBaseURL string, parameters SecretRestoreParameters, options *KeyVaultClientRestoreSecretOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/secrets/restore"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(parameters)
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
 // restoreSecretHandleResponse handles the RestoreSecret response.
-func (client *KeyVaultClient) restoreSecretHandleResponse(resp *azcore.Response) (KeyVaultClientRestoreSecretResponse, error) {
-	result := KeyVaultClientRestoreSecretResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.SecretBundle); err != nil {
+func (client *KeyVaultClient) restoreSecretHandleResponse(resp *http.Response) (KeyVaultClientRestoreSecretResponse, error) {
+	result := KeyVaultClientRestoreSecretResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.SecretBundle); err != nil {
 		return KeyVaultClientRestoreSecretResponse{}, err
 	}
 	return result, nil
 }
 
 // restoreSecretHandleError handles the RestoreSecret error response.
-func (client *KeyVaultClient) restoreSecretHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) restoreSecretHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // RestoreStatus - Returns the status of restore operation
@@ -3937,14 +3819,14 @@ func (client *KeyVaultClient) RestoreStatus(ctx context.Context, vaultBaseURL st
 	if err != nil {
 		return KeyVaultClientRestoreStatusResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientRestoreStatusResponse{}, client.restoreStatusHandleError(resp)
 	}
 	return client.restoreStatusHandleResponse(resp)
 }
 
 // restoreStatusCreateRequest creates the RestoreStatus request.
-func (client *KeyVaultClient) restoreStatusCreateRequest(ctx context.Context, vaultBaseURL string, jobID string, options *KeyVaultClientRestoreStatusOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) restoreStatusCreateRequest(ctx context.Context, vaultBaseURL string, jobID string, options *KeyVaultClientRestoreStatusOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/restore/{jobId}/pending"
@@ -3952,38 +3834,37 @@ func (client *KeyVaultClient) restoreStatusCreateRequest(ctx context.Context, va
 		return nil, errors.New("parameter jobID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{jobId}", url.PathEscape(jobID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // restoreStatusHandleResponse handles the RestoreStatus response.
-func (client *KeyVaultClient) restoreStatusHandleResponse(resp *azcore.Response) (KeyVaultClientRestoreStatusResponse, error) {
-	result := KeyVaultClientRestoreStatusResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.RestoreOperation); err != nil {
+func (client *KeyVaultClient) restoreStatusHandleResponse(resp *http.Response) (KeyVaultClientRestoreStatusResponse, error) {
+	result := KeyVaultClientRestoreStatusResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.RestoreOperation); err != nil {
 		return KeyVaultClientRestoreStatusResponse{}, err
 	}
 	return result, nil
 }
 
 // restoreStatusHandleError handles the RestoreStatus error response.
-func (client *KeyVaultClient) restoreStatusHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) restoreStatusHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // RestoreStorageAccount - Restores a backed up storage account to a vault. This operation requires the storage/restore permission.
@@ -3997,49 +3878,48 @@ func (client *KeyVaultClient) RestoreStorageAccount(ctx context.Context, vaultBa
 	if err != nil {
 		return KeyVaultClientRestoreStorageAccountResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientRestoreStorageAccountResponse{}, client.restoreStorageAccountHandleError(resp)
 	}
 	return client.restoreStorageAccountHandleResponse(resp)
 }
 
 // restoreStorageAccountCreateRequest creates the RestoreStorageAccount request.
-func (client *KeyVaultClient) restoreStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, parameters StorageRestoreParameters, options *KeyVaultClientRestoreStorageAccountOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) restoreStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, parameters StorageRestoreParameters, options *KeyVaultClientRestoreStorageAccountOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/storage/restore"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(parameters)
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
 // restoreStorageAccountHandleResponse handles the RestoreStorageAccount response.
-func (client *KeyVaultClient) restoreStorageAccountHandleResponse(resp *azcore.Response) (KeyVaultClientRestoreStorageAccountResponse, error) {
-	result := KeyVaultClientRestoreStorageAccountResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.StorageBundle); err != nil {
+func (client *KeyVaultClient) restoreStorageAccountHandleResponse(resp *http.Response) (KeyVaultClientRestoreStorageAccountResponse, error) {
+	result := KeyVaultClientRestoreStorageAccountResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.StorageBundle); err != nil {
 		return KeyVaultClientRestoreStorageAccountResponse{}, err
 	}
 	return result, nil
 }
 
 // restoreStorageAccountHandleError handles the RestoreStorageAccount error response.
-func (client *KeyVaultClient) restoreStorageAccountHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) restoreStorageAccountHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // BeginSelectiveKeyRestoreOperation - Restores all key versions of a given key using user supplied SAS token pointing to a previously stored Azure Blob
@@ -4051,42 +3931,14 @@ func (client *KeyVaultClient) BeginSelectiveKeyRestoreOperation(ctx context.Cont
 		return KeyVaultClientSelectiveKeyRestoreOperationPollerResponse{}, err
 	}
 	result := KeyVaultClientSelectiveKeyRestoreOperationPollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := azcore.NewLROPoller("KeyVaultClient.SelectiveKeyRestoreOperation", resp, client.con.Pipeline(), client.selectiveKeyRestoreOperationHandleError)
-	if err != nil {
-		return KeyVaultClientSelectiveKeyRestoreOperationPollerResponse{}, err
-	}
-	poller := &keyVaultClientSelectiveKeyRestoreOperationPoller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (KeyVaultClientSelectiveKeyRestoreOperationResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumeSelectiveKeyRestoreOperation creates a new KeyVaultClientSelectiveKeyRestoreOperationPoller from the specified resume token.
-// token - The value must come from a previous call to KeyVaultClientSelectiveKeyRestoreOperationPoller.ResumeToken().
-func (client *KeyVaultClient) ResumeSelectiveKeyRestoreOperation(ctx context.Context, token string) (KeyVaultClientSelectiveKeyRestoreOperationPollerResponse, error) {
-	pt, err := azcore.NewLROPollerFromResumeToken("KeyVaultClient.SelectiveKeyRestoreOperation", token, client.con.Pipeline(), client.selectiveKeyRestoreOperationHandleError)
-	if err != nil {
-		return KeyVaultClientSelectiveKeyRestoreOperationPollerResponse{}, err
-	}
-	poller := &keyVaultClientSelectiveKeyRestoreOperationPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return KeyVaultClientSelectiveKeyRestoreOperationPollerResponse{}, err
-	}
-	result := KeyVaultClientSelectiveKeyRestoreOperationPollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (KeyVaultClientSelectiveKeyRestoreOperationResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := runtime.NewPoller("KeyVaultClient.SelectiveKeyRestoreOperation", resp, client.con.Pipeline(), client.selectiveKeyRestoreOperationHandleError)
+	if err != nil {
+		return KeyVaultClientSelectiveKeyRestoreOperationPollerResponse{}, err
+	}
+	result.Poller = &KeyVaultClientSelectiveKeyRestoreOperationPoller{
+		pt: pt,
 	}
 	return result, nil
 }
@@ -4094,7 +3946,7 @@ func (client *KeyVaultClient) ResumeSelectiveKeyRestoreOperation(ctx context.Con
 // SelectiveKeyRestoreOperation - Restores all key versions of a given key using user supplied SAS token pointing to a previously stored Azure Blob storage
 // backup folder
 // If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) selectiveKeyRestoreOperation(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientBeginSelectiveKeyRestoreOperationOptions) (*azcore.Response, error) {
+func (client *KeyVaultClient) selectiveKeyRestoreOperation(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientBeginSelectiveKeyRestoreOperationOptions) (*http.Response, error) {
 	req, err := client.selectiveKeyRestoreOperationCreateRequest(ctx, vaultBaseURL, keyName, options)
 	if err != nil {
 		return nil, err
@@ -4103,14 +3955,14 @@ func (client *KeyVaultClient) selectiveKeyRestoreOperation(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
 		return nil, client.selectiveKeyRestoreOperationHandleError(resp)
 	}
 	return resp, nil
 }
 
 // selectiveKeyRestoreOperationCreateRequest creates the SelectiveKeyRestoreOperation request.
-func (client *KeyVaultClient) selectiveKeyRestoreOperationCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientBeginSelectiveKeyRestoreOperationOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) selectiveKeyRestoreOperationCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientBeginSelectiveKeyRestoreOperationOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/keys/{keyName}/restore"
@@ -4118,32 +3970,31 @@ func (client *KeyVaultClient) selectiveKeyRestoreOperationCreateRequest(ctx cont
 		return nil, errors.New("parameter keyName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{keyName}", url.PathEscape(keyName))
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	if options != nil && options.RestoreBlobDetails != nil {
-		return req, req.MarshalAsJSON(*options.RestoreBlobDetails)
+		return req, runtime.MarshalAsJSON(req, *options.RestoreBlobDetails)
 	}
 	return req, nil
 }
 
 // selectiveKeyRestoreOperationHandleError handles the SelectiveKeyRestoreOperation error response.
-func (client *KeyVaultClient) selectiveKeyRestoreOperationHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) selectiveKeyRestoreOperationHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // SetCertificateContacts - Sets the certificate contacts for the specified key vault. This operation requires the certificates/managecontacts permission.
@@ -4157,49 +4008,48 @@ func (client *KeyVaultClient) SetCertificateContacts(ctx context.Context, vaultB
 	if err != nil {
 		return KeyVaultClientSetCertificateContactsResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientSetCertificateContactsResponse{}, client.setCertificateContactsHandleError(resp)
 	}
 	return client.setCertificateContactsHandleResponse(resp)
 }
 
 // setCertificateContactsCreateRequest creates the SetCertificateContacts request.
-func (client *KeyVaultClient) setCertificateContactsCreateRequest(ctx context.Context, vaultBaseURL string, contacts Contacts, options *KeyVaultClientSetCertificateContactsOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) setCertificateContactsCreateRequest(ctx context.Context, vaultBaseURL string, contacts Contacts, options *KeyVaultClientSetCertificateContactsOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/contacts"
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(contacts)
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, contacts)
 }
 
 // setCertificateContactsHandleResponse handles the SetCertificateContacts response.
-func (client *KeyVaultClient) setCertificateContactsHandleResponse(resp *azcore.Response) (KeyVaultClientSetCertificateContactsResponse, error) {
-	result := KeyVaultClientSetCertificateContactsResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.Contacts); err != nil {
+func (client *KeyVaultClient) setCertificateContactsHandleResponse(resp *http.Response) (KeyVaultClientSetCertificateContactsResponse, error) {
+	result := KeyVaultClientSetCertificateContactsResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.Contacts); err != nil {
 		return KeyVaultClientSetCertificateContactsResponse{}, err
 	}
 	return result, nil
 }
 
 // setCertificateContactsHandleError handles the SetCertificateContacts error response.
-func (client *KeyVaultClient) setCertificateContactsHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) setCertificateContactsHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // SetCertificateIssuer - The SetCertificateIssuer operation adds or updates the specified certificate issuer. This operation requires the certificates/setissuers
@@ -4214,14 +4064,14 @@ func (client *KeyVaultClient) SetCertificateIssuer(ctx context.Context, vaultBas
 	if err != nil {
 		return KeyVaultClientSetCertificateIssuerResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientSetCertificateIssuerResponse{}, client.setCertificateIssuerHandleError(resp)
 	}
 	return client.setCertificateIssuerHandleResponse(resp)
 }
 
 // setCertificateIssuerCreateRequest creates the SetCertificateIssuer request.
-func (client *KeyVaultClient) setCertificateIssuerCreateRequest(ctx context.Context, vaultBaseURL string, issuerName string, parameter CertificateIssuerSetParameters, options *KeyVaultClientSetCertificateIssuerOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) setCertificateIssuerCreateRequest(ctx context.Context, vaultBaseURL string, issuerName string, parameter CertificateIssuerSetParameters, options *KeyVaultClientSetCertificateIssuerOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/issuers/{issuer-name}"
@@ -4229,38 +4079,37 @@ func (client *KeyVaultClient) setCertificateIssuerCreateRequest(ctx context.Cont
 		return nil, errors.New("parameter issuerName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{issuer-name}", url.PathEscape(issuerName))
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(parameter)
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, parameter)
 }
 
 // setCertificateIssuerHandleResponse handles the SetCertificateIssuer response.
-func (client *KeyVaultClient) setCertificateIssuerHandleResponse(resp *azcore.Response) (KeyVaultClientSetCertificateIssuerResponse, error) {
-	result := KeyVaultClientSetCertificateIssuerResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.IssuerBundle); err != nil {
+func (client *KeyVaultClient) setCertificateIssuerHandleResponse(resp *http.Response) (KeyVaultClientSetCertificateIssuerResponse, error) {
+	result := KeyVaultClientSetCertificateIssuerResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.IssuerBundle); err != nil {
 		return KeyVaultClientSetCertificateIssuerResponse{}, err
 	}
 	return result, nil
 }
 
 // setCertificateIssuerHandleError handles the SetCertificateIssuer error response.
-func (client *KeyVaultClient) setCertificateIssuerHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) setCertificateIssuerHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // SetSasDefinition - Creates or updates a new SAS definition for the specified storage account. This operation requires the storage/setsas permission.
@@ -4274,14 +4123,14 @@ func (client *KeyVaultClient) SetSasDefinition(ctx context.Context, vaultBaseURL
 	if err != nil {
 		return KeyVaultClientSetSasDefinitionResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientSetSasDefinitionResponse{}, client.setSasDefinitionHandleError(resp)
 	}
 	return client.setSasDefinitionHandleResponse(resp)
 }
 
 // setSasDefinitionCreateRequest creates the SetSasDefinition request.
-func (client *KeyVaultClient) setSasDefinitionCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, parameters SasDefinitionCreateParameters, options *KeyVaultClientSetSasDefinitionOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) setSasDefinitionCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, parameters SasDefinitionCreateParameters, options *KeyVaultClientSetSasDefinitionOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/storage/{storage-account-name}/sas/{sas-definition-name}"
@@ -4293,38 +4142,37 @@ func (client *KeyVaultClient) setSasDefinitionCreateRequest(ctx context.Context,
 		return nil, errors.New("parameter sasDefinitionName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{sas-definition-name}", url.PathEscape(sasDefinitionName))
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(parameters)
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
 // setSasDefinitionHandleResponse handles the SetSasDefinition response.
-func (client *KeyVaultClient) setSasDefinitionHandleResponse(resp *azcore.Response) (KeyVaultClientSetSasDefinitionResponse, error) {
-	result := KeyVaultClientSetSasDefinitionResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.SasDefinitionBundle); err != nil {
+func (client *KeyVaultClient) setSasDefinitionHandleResponse(resp *http.Response) (KeyVaultClientSetSasDefinitionResponse, error) {
+	result := KeyVaultClientSetSasDefinitionResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.SasDefinitionBundle); err != nil {
 		return KeyVaultClientSetSasDefinitionResponse{}, err
 	}
 	return result, nil
 }
 
 // setSasDefinitionHandleError handles the SetSasDefinition error response.
-func (client *KeyVaultClient) setSasDefinitionHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) setSasDefinitionHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // SetSecret - The SET operation adds a secret to the Azure Key Vault. If the named secret already exists, Azure Key Vault creates a new version of that
@@ -4339,14 +4187,14 @@ func (client *KeyVaultClient) SetSecret(ctx context.Context, vaultBaseURL string
 	if err != nil {
 		return KeyVaultClientSetSecretResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientSetSecretResponse{}, client.setSecretHandleError(resp)
 	}
 	return client.setSecretHandleResponse(resp)
 }
 
 // setSecretCreateRequest creates the SetSecret request.
-func (client *KeyVaultClient) setSecretCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, parameters SecretSetParameters, options *KeyVaultClientSetSecretOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) setSecretCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, parameters SecretSetParameters, options *KeyVaultClientSetSecretOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/secrets/{secret-name}"
@@ -4354,38 +4202,37 @@ func (client *KeyVaultClient) setSecretCreateRequest(ctx context.Context, vaultB
 		return nil, errors.New("parameter secretName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{secret-name}", url.PathEscape(secretName))
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(parameters)
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
 // setSecretHandleResponse handles the SetSecret response.
-func (client *KeyVaultClient) setSecretHandleResponse(resp *azcore.Response) (KeyVaultClientSetSecretResponse, error) {
-	result := KeyVaultClientSetSecretResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.SecretBundle); err != nil {
+func (client *KeyVaultClient) setSecretHandleResponse(resp *http.Response) (KeyVaultClientSetSecretResponse, error) {
+	result := KeyVaultClientSetSecretResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.SecretBundle); err != nil {
 		return KeyVaultClientSetSecretResponse{}, err
 	}
 	return result, nil
 }
 
 // setSecretHandleError handles the SetSecret error response.
-func (client *KeyVaultClient) setSecretHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) setSecretHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // SetStorageAccount - Creates or updates a new storage account. This operation requires the storage/set permission.
@@ -4399,14 +4246,14 @@ func (client *KeyVaultClient) SetStorageAccount(ctx context.Context, vaultBaseUR
 	if err != nil {
 		return KeyVaultClientSetStorageAccountResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientSetStorageAccountResponse{}, client.setStorageAccountHandleError(resp)
 	}
 	return client.setStorageAccountHandleResponse(resp)
 }
 
 // setStorageAccountCreateRequest creates the SetStorageAccount request.
-func (client *KeyVaultClient) setStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, parameters StorageAccountCreateParameters, options *KeyVaultClientSetStorageAccountOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) setStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, parameters StorageAccountCreateParameters, options *KeyVaultClientSetStorageAccountOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/storage/{storage-account-name}"
@@ -4414,38 +4261,37 @@ func (client *KeyVaultClient) setStorageAccountCreateRequest(ctx context.Context
 		return nil, errors.New("parameter storageAccountName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{storage-account-name}", url.PathEscape(storageAccountName))
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(parameters)
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
 // setStorageAccountHandleResponse handles the SetStorageAccount response.
-func (client *KeyVaultClient) setStorageAccountHandleResponse(resp *azcore.Response) (KeyVaultClientSetStorageAccountResponse, error) {
-	result := KeyVaultClientSetStorageAccountResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.StorageBundle); err != nil {
+func (client *KeyVaultClient) setStorageAccountHandleResponse(resp *http.Response) (KeyVaultClientSetStorageAccountResponse, error) {
+	result := KeyVaultClientSetStorageAccountResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.StorageBundle); err != nil {
 		return KeyVaultClientSetStorageAccountResponse{}, err
 	}
 	return result, nil
 }
 
 // setStorageAccountHandleError handles the SetStorageAccount error response.
-func (client *KeyVaultClient) setStorageAccountHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) setStorageAccountHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // Sign - The SIGN operation is applicable to asymmetric and symmetric keys stored in Azure Key Vault since this operation uses the private portion of the
@@ -4460,14 +4306,14 @@ func (client *KeyVaultClient) Sign(ctx context.Context, vaultBaseURL string, key
 	if err != nil {
 		return KeyVaultClientSignResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientSignResponse{}, client.signHandleError(resp)
 	}
 	return client.signHandleResponse(resp)
 }
 
 // signCreateRequest creates the Sign request.
-func (client *KeyVaultClient) signCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeySignParameters, options *KeyVaultClientSignOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) signCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeySignParameters, options *KeyVaultClientSignOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/keys/{key-name}/{key-version}/sign"
@@ -4479,38 +4325,37 @@ func (client *KeyVaultClient) signCreateRequest(ctx context.Context, vaultBaseUR
 		return nil, errors.New("parameter keyVersion cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{key-version}", url.PathEscape(keyVersion))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(parameters)
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
 // signHandleResponse handles the Sign response.
-func (client *KeyVaultClient) signHandleResponse(resp *azcore.Response) (KeyVaultClientSignResponse, error) {
-	result := KeyVaultClientSignResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.KeyOperationResult); err != nil {
+func (client *KeyVaultClient) signHandleResponse(resp *http.Response) (KeyVaultClientSignResponse, error) {
+	result := KeyVaultClientSignResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.KeyOperationResult); err != nil {
 		return KeyVaultClientSignResponse{}, err
 	}
 	return result, nil
 }
 
 // signHandleError handles the Sign error response.
-func (client *KeyVaultClient) signHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) signHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // UnwrapKey - The UNWRAP operation supports decryption of a symmetric key using the target key encryption key. This operation is the reverse of the WRAP
@@ -4526,14 +4371,14 @@ func (client *KeyVaultClient) UnwrapKey(ctx context.Context, vaultBaseURL string
 	if err != nil {
 		return KeyVaultClientUnwrapKeyResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientUnwrapKeyResponse{}, client.unwrapKeyHandleError(resp)
 	}
 	return client.unwrapKeyHandleResponse(resp)
 }
 
 // unwrapKeyCreateRequest creates the UnwrapKey request.
-func (client *KeyVaultClient) unwrapKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyOperationsParameters, options *KeyVaultClientUnwrapKeyOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) unwrapKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyOperationsParameters, options *KeyVaultClientUnwrapKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/keys/{key-name}/{key-version}/unwrapkey"
@@ -4545,38 +4390,37 @@ func (client *KeyVaultClient) unwrapKeyCreateRequest(ctx context.Context, vaultB
 		return nil, errors.New("parameter keyVersion cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{key-version}", url.PathEscape(keyVersion))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(parameters)
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
 // unwrapKeyHandleResponse handles the UnwrapKey response.
-func (client *KeyVaultClient) unwrapKeyHandleResponse(resp *azcore.Response) (KeyVaultClientUnwrapKeyResponse, error) {
-	result := KeyVaultClientUnwrapKeyResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.KeyOperationResult); err != nil {
+func (client *KeyVaultClient) unwrapKeyHandleResponse(resp *http.Response) (KeyVaultClientUnwrapKeyResponse, error) {
+	result := KeyVaultClientUnwrapKeyResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.KeyOperationResult); err != nil {
 		return KeyVaultClientUnwrapKeyResponse{}, err
 	}
 	return result, nil
 }
 
 // unwrapKeyHandleError handles the UnwrapKey error response.
-func (client *KeyVaultClient) unwrapKeyHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) unwrapKeyHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // UpdateCertificate - The UpdateCertificate operation applies the specified update on the given certificate; the only elements updated are the certificate's
@@ -4592,14 +4436,14 @@ func (client *KeyVaultClient) UpdateCertificate(ctx context.Context, vaultBaseUR
 	if err != nil {
 		return KeyVaultClientUpdateCertificateResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientUpdateCertificateResponse{}, client.updateCertificateHandleError(resp)
 	}
 	return client.updateCertificateHandleResponse(resp)
 }
 
 // updateCertificateCreateRequest creates the UpdateCertificate request.
-func (client *KeyVaultClient) updateCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, certificateVersion string, parameters CertificateUpdateParameters, options *KeyVaultClientUpdateCertificateOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) updateCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, certificateVersion string, parameters CertificateUpdateParameters, options *KeyVaultClientUpdateCertificateOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/{certificate-name}/{certificate-version}"
@@ -4611,38 +4455,37 @@ func (client *KeyVaultClient) updateCertificateCreateRequest(ctx context.Context
 		return nil, errors.New("parameter certificateVersion cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{certificate-version}", url.PathEscape(certificateVersion))
-	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(parameters)
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
 // updateCertificateHandleResponse handles the UpdateCertificate response.
-func (client *KeyVaultClient) updateCertificateHandleResponse(resp *azcore.Response) (KeyVaultClientUpdateCertificateResponse, error) {
-	result := KeyVaultClientUpdateCertificateResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.CertificateBundle); err != nil {
+func (client *KeyVaultClient) updateCertificateHandleResponse(resp *http.Response) (KeyVaultClientUpdateCertificateResponse, error) {
+	result := KeyVaultClientUpdateCertificateResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateBundle); err != nil {
 		return KeyVaultClientUpdateCertificateResponse{}, err
 	}
 	return result, nil
 }
 
 // updateCertificateHandleError handles the UpdateCertificate error response.
-func (client *KeyVaultClient) updateCertificateHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) updateCertificateHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // UpdateCertificateIssuer - The UpdateCertificateIssuer operation performs an update on the specified certificate issuer entity. This operation requires
@@ -4657,14 +4500,14 @@ func (client *KeyVaultClient) UpdateCertificateIssuer(ctx context.Context, vault
 	if err != nil {
 		return KeyVaultClientUpdateCertificateIssuerResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientUpdateCertificateIssuerResponse{}, client.updateCertificateIssuerHandleError(resp)
 	}
 	return client.updateCertificateIssuerHandleResponse(resp)
 }
 
 // updateCertificateIssuerCreateRequest creates the UpdateCertificateIssuer request.
-func (client *KeyVaultClient) updateCertificateIssuerCreateRequest(ctx context.Context, vaultBaseURL string, issuerName string, parameter CertificateIssuerUpdateParameters, options *KeyVaultClientUpdateCertificateIssuerOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) updateCertificateIssuerCreateRequest(ctx context.Context, vaultBaseURL string, issuerName string, parameter CertificateIssuerUpdateParameters, options *KeyVaultClientUpdateCertificateIssuerOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/issuers/{issuer-name}"
@@ -4672,38 +4515,37 @@ func (client *KeyVaultClient) updateCertificateIssuerCreateRequest(ctx context.C
 		return nil, errors.New("parameter issuerName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{issuer-name}", url.PathEscape(issuerName))
-	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(parameter)
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, parameter)
 }
 
 // updateCertificateIssuerHandleResponse handles the UpdateCertificateIssuer response.
-func (client *KeyVaultClient) updateCertificateIssuerHandleResponse(resp *azcore.Response) (KeyVaultClientUpdateCertificateIssuerResponse, error) {
-	result := KeyVaultClientUpdateCertificateIssuerResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.IssuerBundle); err != nil {
+func (client *KeyVaultClient) updateCertificateIssuerHandleResponse(resp *http.Response) (KeyVaultClientUpdateCertificateIssuerResponse, error) {
+	result := KeyVaultClientUpdateCertificateIssuerResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.IssuerBundle); err != nil {
 		return KeyVaultClientUpdateCertificateIssuerResponse{}, err
 	}
 	return result, nil
 }
 
 // updateCertificateIssuerHandleError handles the UpdateCertificateIssuer error response.
-func (client *KeyVaultClient) updateCertificateIssuerHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) updateCertificateIssuerHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // UpdateCertificateOperation - Updates a certificate creation operation that is already in progress. This operation requires the certificates/update permission.
@@ -4717,14 +4559,14 @@ func (client *KeyVaultClient) UpdateCertificateOperation(ctx context.Context, va
 	if err != nil {
 		return KeyVaultClientUpdateCertificateOperationResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientUpdateCertificateOperationResponse{}, client.updateCertificateOperationHandleError(resp)
 	}
 	return client.updateCertificateOperationHandleResponse(resp)
 }
 
 // updateCertificateOperationCreateRequest creates the UpdateCertificateOperation request.
-func (client *KeyVaultClient) updateCertificateOperationCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, certificateOperation CertificateOperationUpdateParameter, options *KeyVaultClientUpdateCertificateOperationOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) updateCertificateOperationCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, certificateOperation CertificateOperationUpdateParameter, options *KeyVaultClientUpdateCertificateOperationOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/{certificate-name}/pending"
@@ -4732,38 +4574,37 @@ func (client *KeyVaultClient) updateCertificateOperationCreateRequest(ctx contex
 		return nil, errors.New("parameter certificateName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{certificate-name}", url.PathEscape(certificateName))
-	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(certificateOperation)
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, certificateOperation)
 }
 
 // updateCertificateOperationHandleResponse handles the UpdateCertificateOperation response.
-func (client *KeyVaultClient) updateCertificateOperationHandleResponse(resp *azcore.Response) (KeyVaultClientUpdateCertificateOperationResponse, error) {
-	result := KeyVaultClientUpdateCertificateOperationResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.CertificateOperation); err != nil {
+func (client *KeyVaultClient) updateCertificateOperationHandleResponse(resp *http.Response) (KeyVaultClientUpdateCertificateOperationResponse, error) {
+	result := KeyVaultClientUpdateCertificateOperationResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateOperation); err != nil {
 		return KeyVaultClientUpdateCertificateOperationResponse{}, err
 	}
 	return result, nil
 }
 
 // updateCertificateOperationHandleError handles the UpdateCertificateOperation error response.
-func (client *KeyVaultClient) updateCertificateOperationHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) updateCertificateOperationHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // UpdateCertificatePolicy - Set specified members in the certificate policy. Leave others as null. This operation requires the certificates/update permission.
@@ -4777,14 +4618,14 @@ func (client *KeyVaultClient) UpdateCertificatePolicy(ctx context.Context, vault
 	if err != nil {
 		return KeyVaultClientUpdateCertificatePolicyResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientUpdateCertificatePolicyResponse{}, client.updateCertificatePolicyHandleError(resp)
 	}
 	return client.updateCertificatePolicyHandleResponse(resp)
 }
 
 // updateCertificatePolicyCreateRequest creates the UpdateCertificatePolicy request.
-func (client *KeyVaultClient) updateCertificatePolicyCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, certificatePolicy CertificatePolicy, options *KeyVaultClientUpdateCertificatePolicyOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) updateCertificatePolicyCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, certificatePolicy CertificatePolicy, options *KeyVaultClientUpdateCertificatePolicyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/{certificate-name}/policy"
@@ -4792,38 +4633,37 @@ func (client *KeyVaultClient) updateCertificatePolicyCreateRequest(ctx context.C
 		return nil, errors.New("parameter certificateName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{certificate-name}", url.PathEscape(certificateName))
-	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(certificatePolicy)
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, certificatePolicy)
 }
 
 // updateCertificatePolicyHandleResponse handles the UpdateCertificatePolicy response.
-func (client *KeyVaultClient) updateCertificatePolicyHandleResponse(resp *azcore.Response) (KeyVaultClientUpdateCertificatePolicyResponse, error) {
-	result := KeyVaultClientUpdateCertificatePolicyResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.CertificatePolicy); err != nil {
+func (client *KeyVaultClient) updateCertificatePolicyHandleResponse(resp *http.Response) (KeyVaultClientUpdateCertificatePolicyResponse, error) {
+	result := KeyVaultClientUpdateCertificatePolicyResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.CertificatePolicy); err != nil {
 		return KeyVaultClientUpdateCertificatePolicyResponse{}, err
 	}
 	return result, nil
 }
 
 // updateCertificatePolicyHandleError handles the UpdateCertificatePolicy error response.
-func (client *KeyVaultClient) updateCertificatePolicyHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) updateCertificatePolicyHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // UpdateKey - In order to perform this operation, the key must already exist in the Key Vault. Note: The cryptographic material of a key itself cannot
@@ -4838,14 +4678,14 @@ func (client *KeyVaultClient) UpdateKey(ctx context.Context, vaultBaseURL string
 	if err != nil {
 		return KeyVaultClientUpdateKeyResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientUpdateKeyResponse{}, client.updateKeyHandleError(resp)
 	}
 	return client.updateKeyHandleResponse(resp)
 }
 
 // updateKeyCreateRequest creates the UpdateKey request.
-func (client *KeyVaultClient) updateKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyUpdateParameters, options *KeyVaultClientUpdateKeyOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) updateKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyUpdateParameters, options *KeyVaultClientUpdateKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/keys/{key-name}/{key-version}"
@@ -4857,38 +4697,37 @@ func (client *KeyVaultClient) updateKeyCreateRequest(ctx context.Context, vaultB
 		return nil, errors.New("parameter keyVersion cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{key-version}", url.PathEscape(keyVersion))
-	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(parameters)
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
 // updateKeyHandleResponse handles the UpdateKey response.
-func (client *KeyVaultClient) updateKeyHandleResponse(resp *azcore.Response) (KeyVaultClientUpdateKeyResponse, error) {
-	result := KeyVaultClientUpdateKeyResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.KeyBundle); err != nil {
+func (client *KeyVaultClient) updateKeyHandleResponse(resp *http.Response) (KeyVaultClientUpdateKeyResponse, error) {
+	result := KeyVaultClientUpdateKeyResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.KeyBundle); err != nil {
 		return KeyVaultClientUpdateKeyResponse{}, err
 	}
 	return result, nil
 }
 
 // updateKeyHandleError handles the UpdateKey error response.
-func (client *KeyVaultClient) updateKeyHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) updateKeyHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // UpdateSasDefinition - Updates the specified attributes associated with the given SAS definition. This operation requires the storage/setsas permission.
@@ -4902,14 +4741,14 @@ func (client *KeyVaultClient) UpdateSasDefinition(ctx context.Context, vaultBase
 	if err != nil {
 		return KeyVaultClientUpdateSasDefinitionResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientUpdateSasDefinitionResponse{}, client.updateSasDefinitionHandleError(resp)
 	}
 	return client.updateSasDefinitionHandleResponse(resp)
 }
 
 // updateSasDefinitionCreateRequest creates the UpdateSasDefinition request.
-func (client *KeyVaultClient) updateSasDefinitionCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, parameters SasDefinitionUpdateParameters, options *KeyVaultClientUpdateSasDefinitionOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) updateSasDefinitionCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, parameters SasDefinitionUpdateParameters, options *KeyVaultClientUpdateSasDefinitionOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/storage/{storage-account-name}/sas/{sas-definition-name}"
@@ -4921,38 +4760,37 @@ func (client *KeyVaultClient) updateSasDefinitionCreateRequest(ctx context.Conte
 		return nil, errors.New("parameter sasDefinitionName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{sas-definition-name}", url.PathEscape(sasDefinitionName))
-	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(parameters)
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
 // updateSasDefinitionHandleResponse handles the UpdateSasDefinition response.
-func (client *KeyVaultClient) updateSasDefinitionHandleResponse(resp *azcore.Response) (KeyVaultClientUpdateSasDefinitionResponse, error) {
-	result := KeyVaultClientUpdateSasDefinitionResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.SasDefinitionBundle); err != nil {
+func (client *KeyVaultClient) updateSasDefinitionHandleResponse(resp *http.Response) (KeyVaultClientUpdateSasDefinitionResponse, error) {
+	result := KeyVaultClientUpdateSasDefinitionResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.SasDefinitionBundle); err != nil {
 		return KeyVaultClientUpdateSasDefinitionResponse{}, err
 	}
 	return result, nil
 }
 
 // updateSasDefinitionHandleError handles the UpdateSasDefinition error response.
-func (client *KeyVaultClient) updateSasDefinitionHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) updateSasDefinitionHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // UpdateSecret - The UPDATE operation changes specified attributes of an existing stored secret. Attributes that are not specified in the request are left
@@ -4968,14 +4806,14 @@ func (client *KeyVaultClient) UpdateSecret(ctx context.Context, vaultBaseURL str
 	if err != nil {
 		return KeyVaultClientUpdateSecretResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientUpdateSecretResponse{}, client.updateSecretHandleError(resp)
 	}
 	return client.updateSecretHandleResponse(resp)
 }
 
 // updateSecretCreateRequest creates the UpdateSecret request.
-func (client *KeyVaultClient) updateSecretCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, secretVersion string, parameters SecretUpdateParameters, options *KeyVaultClientUpdateSecretOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) updateSecretCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, secretVersion string, parameters SecretUpdateParameters, options *KeyVaultClientUpdateSecretOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/secrets/{secret-name}/{secret-version}"
@@ -4987,38 +4825,37 @@ func (client *KeyVaultClient) updateSecretCreateRequest(ctx context.Context, vau
 		return nil, errors.New("parameter secretVersion cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{secret-version}", url.PathEscape(secretVersion))
-	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(parameters)
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
 // updateSecretHandleResponse handles the UpdateSecret response.
-func (client *KeyVaultClient) updateSecretHandleResponse(resp *azcore.Response) (KeyVaultClientUpdateSecretResponse, error) {
-	result := KeyVaultClientUpdateSecretResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.SecretBundle); err != nil {
+func (client *KeyVaultClient) updateSecretHandleResponse(resp *http.Response) (KeyVaultClientUpdateSecretResponse, error) {
+	result := KeyVaultClientUpdateSecretResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.SecretBundle); err != nil {
 		return KeyVaultClientUpdateSecretResponse{}, err
 	}
 	return result, nil
 }
 
 // updateSecretHandleError handles the UpdateSecret error response.
-func (client *KeyVaultClient) updateSecretHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) updateSecretHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // UpdateStorageAccount - Updates the specified attributes associated with the given storage account. This operation requires the storage/set/update permission.
@@ -5032,14 +4869,14 @@ func (client *KeyVaultClient) UpdateStorageAccount(ctx context.Context, vaultBas
 	if err != nil {
 		return KeyVaultClientUpdateStorageAccountResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientUpdateStorageAccountResponse{}, client.updateStorageAccountHandleError(resp)
 	}
 	return client.updateStorageAccountHandleResponse(resp)
 }
 
 // updateStorageAccountCreateRequest creates the UpdateStorageAccount request.
-func (client *KeyVaultClient) updateStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, parameters StorageAccountUpdateParameters, options *KeyVaultClientUpdateStorageAccountOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) updateStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, parameters StorageAccountUpdateParameters, options *KeyVaultClientUpdateStorageAccountOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/storage/{storage-account-name}"
@@ -5047,38 +4884,37 @@ func (client *KeyVaultClient) updateStorageAccountCreateRequest(ctx context.Cont
 		return nil, errors.New("parameter storageAccountName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{storage-account-name}", url.PathEscape(storageAccountName))
-	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(parameters)
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
 // updateStorageAccountHandleResponse handles the UpdateStorageAccount response.
-func (client *KeyVaultClient) updateStorageAccountHandleResponse(resp *azcore.Response) (KeyVaultClientUpdateStorageAccountResponse, error) {
-	result := KeyVaultClientUpdateStorageAccountResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.StorageBundle); err != nil {
+func (client *KeyVaultClient) updateStorageAccountHandleResponse(resp *http.Response) (KeyVaultClientUpdateStorageAccountResponse, error) {
+	result := KeyVaultClientUpdateStorageAccountResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.StorageBundle); err != nil {
 		return KeyVaultClientUpdateStorageAccountResponse{}, err
 	}
 	return result, nil
 }
 
 // updateStorageAccountHandleError handles the UpdateStorageAccount error response.
-func (client *KeyVaultClient) updateStorageAccountHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) updateStorageAccountHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // Verify - The VERIFY operation is applicable to symmetric keys stored in Azure Key Vault. VERIFY is not strictly necessary for asymmetric keys stored
@@ -5096,14 +4932,14 @@ func (client *KeyVaultClient) Verify(ctx context.Context, vaultBaseURL string, k
 	if err != nil {
 		return KeyVaultClientVerifyResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientVerifyResponse{}, client.verifyHandleError(resp)
 	}
 	return client.verifyHandleResponse(resp)
 }
 
 // verifyCreateRequest creates the Verify request.
-func (client *KeyVaultClient) verifyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyVerifyParameters, options *KeyVaultClientVerifyOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) verifyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyVerifyParameters, options *KeyVaultClientVerifyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/keys/{key-name}/{key-version}/verify"
@@ -5115,38 +4951,37 @@ func (client *KeyVaultClient) verifyCreateRequest(ctx context.Context, vaultBase
 		return nil, errors.New("parameter keyVersion cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{key-version}", url.PathEscape(keyVersion))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(parameters)
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
 // verifyHandleResponse handles the Verify response.
-func (client *KeyVaultClient) verifyHandleResponse(resp *azcore.Response) (KeyVaultClientVerifyResponse, error) {
-	result := KeyVaultClientVerifyResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.KeyVerifyResult); err != nil {
+func (client *KeyVaultClient) verifyHandleResponse(resp *http.Response) (KeyVaultClientVerifyResponse, error) {
+	result := KeyVaultClientVerifyResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.KeyVerifyResult); err != nil {
 		return KeyVaultClientVerifyResponse{}, err
 	}
 	return result, nil
 }
 
 // verifyHandleError handles the Verify error response.
-func (client *KeyVaultClient) verifyHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) verifyHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // WrapKey - The WRAP operation supports encryption of a symmetric key using a key encryption key that has previously been stored in an Azure Key Vault.
@@ -5164,14 +4999,14 @@ func (client *KeyVaultClient) WrapKey(ctx context.Context, vaultBaseURL string, 
 	if err != nil {
 		return KeyVaultClientWrapKeyResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return KeyVaultClientWrapKeyResponse{}, client.wrapKeyHandleError(resp)
 	}
 	return client.wrapKeyHandleResponse(resp)
 }
 
 // wrapKeyCreateRequest creates the WrapKey request.
-func (client *KeyVaultClient) wrapKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyOperationsParameters, options *KeyVaultClientWrapKeyOptions) (*azcore.Request, error) {
+func (client *KeyVaultClient) wrapKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyOperationsParameters, options *KeyVaultClientWrapKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/keys/{key-name}/{key-version}/wrapkey"
@@ -5183,36 +5018,35 @@ func (client *KeyVaultClient) wrapKeyCreateRequest(ctx context.Context, vaultBas
 		return nil, errors.New("parameter keyVersion cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{key-version}", url.PathEscape(keyVersion))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(parameters)
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
 // wrapKeyHandleResponse handles the WrapKey response.
-func (client *KeyVaultClient) wrapKeyHandleResponse(resp *azcore.Response) (KeyVaultClientWrapKeyResponse, error) {
-	result := KeyVaultClientWrapKeyResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.KeyOperationResult); err != nil {
+func (client *KeyVaultClient) wrapKeyHandleResponse(resp *http.Response) (KeyVaultClientWrapKeyResponse, error) {
+	result := KeyVaultClientWrapKeyResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.KeyOperationResult); err != nil {
 		return KeyVaultClientWrapKeyResponse{}, err
 	}
 	return result, nil
 }
 
 // wrapKeyHandleError handles the WrapKey error response.
-func (client *KeyVaultClient) wrapKeyHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *KeyVaultClient) wrapKeyHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := KeyVaultError{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }

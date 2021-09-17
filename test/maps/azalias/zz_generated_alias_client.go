@@ -1,4 +1,5 @@
-// +build go1.13
+//go:build go1.16
+// +build go1.16
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -10,7 +11,9 @@ package azalias
 import (
 	"context"
 	"errors"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
@@ -42,52 +45,56 @@ func (client *aliasClient) Create(ctx context.Context, options *AliasCreateOptio
 	if err != nil {
 		return AliasCreateResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusCreated) {
+	if !runtime.HasStatusCode(resp, http.StatusCreated) {
 		return AliasCreateResponse{}, client.createHandleError(resp)
 	}
 	return client.createHandleResponse(resp)
 }
 
 // createCreateRequest creates the Create request.
-func (client *aliasClient) createCreateRequest(ctx context.Context, options *AliasCreateOptions) (*azcore.Request, error) {
+func (client *aliasClient) createCreateRequest(ctx context.Context, options *AliasCreateOptions) (*policy.Request, error) {
 	urlPath := "/aliases"
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2.0")
 	if options != nil && options.CreatorDataItemID != nil {
 		reqQP.Set("creatorDataItemId", *options.CreatorDataItemID)
 	}
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	if options != nil && options.GroupBy != nil {
+		for _, qv := range options.GroupBy {
+			reqQP.Add("groupBy", fmt.Sprintf("%d", qv))
+		}
+	}
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // createHandleResponse handles the Create response.
-func (client *aliasClient) createHandleResponse(resp *azcore.Response) (AliasCreateResponse, error) {
-	result := AliasCreateResponse{RawResponse: resp.Response}
+func (client *aliasClient) createHandleResponse(resp *http.Response) (AliasCreateResponse, error) {
+	result := AliasCreateResponse{RawResponse: resp}
 	if val := resp.Header.Get("Access-Control-Expose-Headers"); val != "" {
 		result.AccessControlExposeHeaders = &val
 	}
-	if err := resp.UnmarshalAsJSON(&result.AliasesCreateResponse); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.AliasesCreateResponse); err != nil {
 		return AliasCreateResponse{}, err
 	}
 	return result, nil
 }
 
 // createHandleError handles the Create error response.
-func (client *aliasClient) createHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *aliasClient) createHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	if len(body) == 0 {
-		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
+		return runtime.NewResponseError(errors.New(resp.Status), resp)
 	}
-	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
+	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
 // List - Applies to: see pricing tiers [https://aka.ms/AzureMapsPricingTier].
@@ -107,50 +114,54 @@ func (client *aliasClient) createHandleError(resp *azcore.Response) error {
 // null, "lastUpdatedTimestamp":
 // "2020-02-18T19:53:33.123Z" } ] }
 // If the operation fails it returns a generic error.
-func (client *aliasClient) List(options *AliasListOptions) AliasListPager {
-	return &aliasListPager{
+func (client *aliasClient) List(options *AliasListOptions) *AliasListPager {
+	return &AliasListPager{
 		client: client,
-		requester: func(ctx context.Context) (*azcore.Request, error) {
+		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, options)
 		},
-		advancer: func(ctx context.Context, resp AliasListResponseEnvelope) (*azcore.Request, error) {
-			return azcore.NewRequest(ctx, http.MethodGet, *resp.AliasListResponse.NextLink)
+		advancer: func(ctx context.Context, resp AliasListResponseEnvelope) (*policy.Request, error) {
+			return runtime.NewRequest(ctx, http.MethodGet, *resp.AliasListResponse.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *aliasClient) listCreateRequest(ctx context.Context, options *AliasListOptions) (*azcore.Request, error) {
+func (client *aliasClient) listCreateRequest(ctx context.Context, options *AliasListOptions) (*policy.Request, error) {
 	urlPath := "/aliases"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2.0")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	if options != nil && options.GroupBy != nil {
+		for _, qv := range options.GroupBy {
+			reqQP.Add("groupBy", string(qv))
+		}
+	}
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // listHandleResponse handles the List response.
-func (client *aliasClient) listHandleResponse(resp *azcore.Response) (AliasListResponseEnvelope, error) {
-	result := AliasListResponseEnvelope{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.AliasListResponse); err != nil {
+func (client *aliasClient) listHandleResponse(resp *http.Response) (AliasListResponseEnvelope, error) {
+	result := AliasListResponseEnvelope{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.AliasListResponse); err != nil {
 		return AliasListResponseEnvelope{}, err
 	}
 	return result, nil
 }
 
 // listHandleError handles the List error response.
-func (client *aliasClient) listHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *aliasClient) listHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	if len(body) == 0 {
-		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
+		return runtime.NewResponseError(errors.New(resp.Status), resp)
 	}
-	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
+	return runtime.NewResponseError(errors.New(string(body)), resp)
 }

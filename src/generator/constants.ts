@@ -11,9 +11,12 @@ import { contentPreamble, hasDescription, sortAscending } from './helpers';
 import { commentLength } from '../common/helpers';
 
 // Creates the content in constants.go
-export async function generateConstants(session: Session<CodeModel>): Promise<string> {
+export async function generateConstants(session: Session<CodeModel>, version: string): Promise<string> {
   let text = await contentPreamble(session);
-  text += `const telemetryInfo = "azsdk-go-${session.model.language.go!.packageName}/<version>"\n`;
+  text += `const (\n`;
+  text += `\tmodule = "${session.model.language.go!.packageName}"\n`;
+  text += `\tversion = "v${version}"\n`;
+  text += ')\n\n';
   for (const enm of values(getEnums(session.model.schemas))) {
     if (enm.desc) {
       text += `${comment(`${enm.name} - ${enm.desc}`, '// ', undefined, commentLength)}\n`;

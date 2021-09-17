@@ -1,4 +1,5 @@
-// +build go1.13
+//go:build go1.16
+// +build go1.16
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -7,4 +8,7 @@
 
 package dictionarygroup
 
-const telemetryInfo = "azsdk-go-dictionarygroup/<version>"
+const (
+	module  = "dictionarygroup"
+	version = "v0.1.0"
+)

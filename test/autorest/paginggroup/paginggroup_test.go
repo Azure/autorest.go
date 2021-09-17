@@ -11,7 +11,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/google/go-cmp/cmp"
 )
 
@@ -22,15 +22,13 @@ func newPagingClient() *PagingClient {
 	return NewPagingClient(NewDefaultConnection(&options))
 }
 
-func httpClientWithCookieJar() azcore.Transport {
+func httpClientWithCookieJar() policy.Transporter {
 	j, err := cookiejar.New(nil)
 	if err != nil {
 		panic(err)
 	}
 	http.DefaultClient.Jar = j
-	return azcore.TransportFunc(func(req *http.Request) (*http.Response, error) {
-		return http.DefaultClient.Do(req)
-	})
+	return http.DefaultClient
 }
 
 // GetMultiplePages - A paging operation that includes a nextLink that has 10 pages
@@ -109,7 +107,7 @@ func TestGetMultiplePagesFragmentNextLink(t *testing.T) {
 	count := 0
 	for page.NextPage(context.Background()) {
 		resp := page.PageResponse()
-		if len(resp.OdataProductResult.Values) == 0 {
+		if len(resp.ODataProductResult.Values) == 0 {
 			t.Fatal("missing payload")
 		}
 		count++
@@ -135,7 +133,7 @@ func TestGetMultiplePagesFragmentWithGroupingNextLink(t *testing.T) {
 	count := 0
 	for page.NextPage(context.Background()) {
 		resp := page.PageResponse()
-		if len(resp.OdataProductResult.Values) == 0 {
+		if len(resp.ODataProductResult.Values) == 0 {
 			t.Fatal("missing payload")
 		}
 		count++
@@ -163,8 +161,8 @@ func TestGetMultiplePagesLro(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp, err = client.ResumeGetMultiplePagesLRO(context.Background(), rt)
-	if err != nil {
+	resp = PagingGetMultiplePagesLROPollerResponse{}
+	if err = resp.Resume(context.Background(), client, rt); err != nil {
 		t.Fatal(err)
 	}
 	pager, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
@@ -295,11 +293,11 @@ func TestGetNullNextLinkNamePages(t *testing.T) {
 // GetOdataMultiplePages - A paging operation that includes a nextLink in odata format that has 10 pages
 func TestGetOdataMultiplePages(t *testing.T) {
 	client := newPagingClient()
-	page := client.GetOdataMultiplePages(nil)
+	page := client.GetODataMultiplePages(nil)
 	count := 0
 	for page.NextPage(context.Background()) {
 		resp := page.PageResponse()
-		if len(resp.OdataProductResult.Values) == 0 {
+		if len(resp.ODataProductResult.Values) == 0 {
 			t.Fatal("missing payload")
 		}
 		count++

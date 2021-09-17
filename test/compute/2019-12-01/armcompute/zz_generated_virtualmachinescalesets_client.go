@@ -1,4 +1,5 @@
-// +build go1.13
+//go:build go1.16
+// +build go1.16
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -10,25 +11,27 @@ package armcompute
 import (
 	"context"
 	"errors"
-	"github.com/Azure/azure-sdk-for-go/sdk/armcore"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
+	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
-	"time"
 )
 
 // VirtualMachineScaleSetsClient contains the methods for the VirtualMachineScaleSets group.
 // Don't use this type directly, use NewVirtualMachineScaleSetsClient() instead.
 type VirtualMachineScaleSetsClient struct {
-	con            *armcore.Connection
+	ep             string
+	pl             runtime.Pipeline
 	subscriptionID string
 }
 
 // NewVirtualMachineScaleSetsClient creates a new instance of VirtualMachineScaleSetsClient with the specified values.
-func NewVirtualMachineScaleSetsClient(con *armcore.Connection, subscriptionID string) *VirtualMachineScaleSetsClient {
-	return &VirtualMachineScaleSetsClient{con: con, subscriptionID: subscriptionID}
+func NewVirtualMachineScaleSetsClient(con *arm.Connection, subscriptionID string) *VirtualMachineScaleSetsClient {
+	return &VirtualMachineScaleSetsClient{ep: con.Endpoint(), pl: con.NewPipeline(module, version), subscriptionID: subscriptionID}
 }
 
 // ConvertToSinglePlacementGroup - Converts SinglePlacementGroup property to true for a existing virtual machine scale set.
@@ -38,18 +41,18 @@ func (client *VirtualMachineScaleSetsClient) ConvertToSinglePlacementGroup(ctx c
 	if err != nil {
 		return VirtualMachineScaleSetsConvertToSinglePlacementGroupResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return VirtualMachineScaleSetsConvertToSinglePlacementGroupResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return VirtualMachineScaleSetsConvertToSinglePlacementGroupResponse{}, client.convertToSinglePlacementGroupHandleError(resp)
 	}
-	return VirtualMachineScaleSetsConvertToSinglePlacementGroupResponse{RawResponse: resp.Response}, nil
+	return VirtualMachineScaleSetsConvertToSinglePlacementGroupResponse{RawResponse: resp}, nil
 }
 
 // convertToSinglePlacementGroupCreateRequest creates the ConvertToSinglePlacementGroup request.
-func (client *VirtualMachineScaleSetsClient) convertToSinglePlacementGroupCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters VMScaleSetConvertToSinglePlacementGroupInput, options *VirtualMachineScaleSetsConvertToSinglePlacementGroupOptions) (*azcore.Request, error) {
+func (client *VirtualMachineScaleSetsClient) convertToSinglePlacementGroupCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters VMScaleSetConvertToSinglePlacementGroupInput, options *VirtualMachineScaleSetsConvertToSinglePlacementGroupOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/convertToSinglePlacementGroup"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -63,27 +66,26 @@ func (client *VirtualMachineScaleSetsClient) convertToSinglePlacementGroupCreate
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.ep, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = reqQP.Encode()
-	return req, req.MarshalAsJSON(parameters)
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
 // convertToSinglePlacementGroupHandleError handles the ConvertToSinglePlacementGroup error response.
-func (client *VirtualMachineScaleSetsClient) convertToSinglePlacementGroupHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *VirtualMachineScaleSetsClient) convertToSinglePlacementGroupHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	if len(body) == 0 {
-		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
+		return runtime.NewResponseError(errors.New(resp.Status), resp)
 	}
-	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
+	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
 // BeginCreateOrUpdate - Create or update a VM scale set.
@@ -94,65 +96,37 @@ func (client *VirtualMachineScaleSetsClient) BeginCreateOrUpdate(ctx context.Con
 		return VirtualMachineScaleSetsCreateOrUpdatePollerResponse{}, err
 	}
 	result := VirtualMachineScaleSetsCreateOrUpdatePollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("VirtualMachineScaleSetsClient.CreateOrUpdate", "", resp, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return VirtualMachineScaleSetsCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &virtualMachineScaleSetsCreateOrUpdatePoller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumeCreateOrUpdate creates a new VirtualMachineScaleSetsCreateOrUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to VirtualMachineScaleSetsCreateOrUpdatePoller.ResumeToken().
-func (client *VirtualMachineScaleSetsClient) ResumeCreateOrUpdate(ctx context.Context, token string) (VirtualMachineScaleSetsCreateOrUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetsClient.CreateOrUpdate", token, client.con.Pipeline(), client.createOrUpdateHandleError)
-	if err != nil {
-		return VirtualMachineScaleSetsCreateOrUpdatePollerResponse{}, err
-	}
-	poller := &virtualMachineScaleSetsCreateOrUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualMachineScaleSetsCreateOrUpdatePollerResponse{}, err
-	}
-	result := VirtualMachineScaleSetsCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetsCreateOrUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("VirtualMachineScaleSetsClient.CreateOrUpdate", "", resp, client.pl, client.createOrUpdateHandleError)
+	if err != nil {
+		return VirtualMachineScaleSetsCreateOrUpdatePollerResponse{}, err
+	}
+	result.Poller = &VirtualMachineScaleSetsCreateOrUpdatePoller{
+		pt: pt,
 	}
 	return result, nil
 }
 
 // CreateOrUpdate - Create or update a VM scale set.
 // If the operation fails it returns a generic error.
-func (client *VirtualMachineScaleSetsClient) createOrUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters VirtualMachineScaleSet, options *VirtualMachineScaleSetsBeginCreateOrUpdateOptions) (*azcore.Response, error) {
+func (client *VirtualMachineScaleSetsClient) createOrUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters VirtualMachineScaleSet, options *VirtualMachineScaleSetsBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, vmScaleSetName, parameters, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusCreated) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
 		return nil, client.createOrUpdateHandleError(resp)
 	}
 	return resp, nil
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *VirtualMachineScaleSetsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters VirtualMachineScaleSet, options *VirtualMachineScaleSetsBeginCreateOrUpdateOptions) (*azcore.Request, error) {
+func (client *VirtualMachineScaleSetsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters VirtualMachineScaleSet, options *VirtualMachineScaleSetsBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -166,28 +140,27 @@ func (client *VirtualMachineScaleSetsClient) createOrUpdateCreateRequest(ctx con
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPut, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.ep, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(parameters)
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *VirtualMachineScaleSetsClient) createOrUpdateHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *VirtualMachineScaleSetsClient) createOrUpdateHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	if len(body) == 0 {
-		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
+		return runtime.NewResponseError(errors.New(resp.Status), resp)
 	}
-	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
+	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
 // BeginDeallocate - Deallocates specific virtual machines in a VM scale set. Shuts down the virtual machines and releases the compute resources. You are
@@ -200,42 +173,14 @@ func (client *VirtualMachineScaleSetsClient) BeginDeallocate(ctx context.Context
 		return VirtualMachineScaleSetsDeallocatePollerResponse{}, err
 	}
 	result := VirtualMachineScaleSetsDeallocatePollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("VirtualMachineScaleSetsClient.Deallocate", "", resp, client.con.Pipeline(), client.deallocateHandleError)
-	if err != nil {
-		return VirtualMachineScaleSetsDeallocatePollerResponse{}, err
-	}
-	poller := &virtualMachineScaleSetsDeallocatePoller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetsDeallocateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumeDeallocate creates a new VirtualMachineScaleSetsDeallocatePoller from the specified resume token.
-// token - The value must come from a previous call to VirtualMachineScaleSetsDeallocatePoller.ResumeToken().
-func (client *VirtualMachineScaleSetsClient) ResumeDeallocate(ctx context.Context, token string) (VirtualMachineScaleSetsDeallocatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetsClient.Deallocate", token, client.con.Pipeline(), client.deallocateHandleError)
-	if err != nil {
-		return VirtualMachineScaleSetsDeallocatePollerResponse{}, err
-	}
-	poller := &virtualMachineScaleSetsDeallocatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualMachineScaleSetsDeallocatePollerResponse{}, err
-	}
-	result := VirtualMachineScaleSetsDeallocatePollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetsDeallocateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("VirtualMachineScaleSetsClient.Deallocate", "", resp, client.pl, client.deallocateHandleError)
+	if err != nil {
+		return VirtualMachineScaleSetsDeallocatePollerResponse{}, err
+	}
+	result.Poller = &VirtualMachineScaleSetsDeallocatePoller{
+		pt: pt,
 	}
 	return result, nil
 }
@@ -244,23 +189,23 @@ func (client *VirtualMachineScaleSetsClient) ResumeDeallocate(ctx context.Contex
 // billed for the compute resources that this virtual machine
 // scale set deallocates.
 // If the operation fails it returns a generic error.
-func (client *VirtualMachineScaleSetsClient) deallocate(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsBeginDeallocateOptions) (*azcore.Response, error) {
+func (client *VirtualMachineScaleSetsClient) deallocate(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsBeginDeallocateOptions) (*http.Response, error) {
 	req, err := client.deallocateCreateRequest(ctx, resourceGroupName, vmScaleSetName, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
 		return nil, client.deallocateHandleError(resp)
 	}
 	return resp, nil
 }
 
 // deallocateCreateRequest creates the Deallocate request.
-func (client *VirtualMachineScaleSetsClient) deallocateCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsBeginDeallocateOptions) (*azcore.Request, error) {
+func (client *VirtualMachineScaleSetsClient) deallocateCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsBeginDeallocateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/deallocate"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -274,30 +219,29 @@ func (client *VirtualMachineScaleSetsClient) deallocateCreateRequest(ctx context
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.ep, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = reqQP.Encode()
 	if options != nil && options.VMInstanceIDs != nil {
-		return req, req.MarshalAsJSON(*options.VMInstanceIDs)
+		return req, runtime.MarshalAsJSON(req, *options.VMInstanceIDs)
 	}
 	return req, nil
 }
 
 // deallocateHandleError handles the Deallocate error response.
-func (client *VirtualMachineScaleSetsClient) deallocateHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *VirtualMachineScaleSetsClient) deallocateHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	if len(body) == 0 {
-		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
+		return runtime.NewResponseError(errors.New(resp.Status), resp)
 	}
-	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
+	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
 // BeginDelete - Deletes a VM scale set.
@@ -308,65 +252,37 @@ func (client *VirtualMachineScaleSetsClient) BeginDelete(ctx context.Context, re
 		return VirtualMachineScaleSetsDeletePollerResponse{}, err
 	}
 	result := VirtualMachineScaleSetsDeletePollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("VirtualMachineScaleSetsClient.Delete", "", resp, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return VirtualMachineScaleSetsDeletePollerResponse{}, err
-	}
-	poller := &virtualMachineScaleSetsDeletePoller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumeDelete creates a new VirtualMachineScaleSetsDeletePoller from the specified resume token.
-// token - The value must come from a previous call to VirtualMachineScaleSetsDeletePoller.ResumeToken().
-func (client *VirtualMachineScaleSetsClient) ResumeDelete(ctx context.Context, token string) (VirtualMachineScaleSetsDeletePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetsClient.Delete", token, client.con.Pipeline(), client.deleteHandleError)
-	if err != nil {
-		return VirtualMachineScaleSetsDeletePollerResponse{}, err
-	}
-	poller := &virtualMachineScaleSetsDeletePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualMachineScaleSetsDeletePollerResponse{}, err
-	}
-	result := VirtualMachineScaleSetsDeletePollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetsDeleteResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("VirtualMachineScaleSetsClient.Delete", "", resp, client.pl, client.deleteHandleError)
+	if err != nil {
+		return VirtualMachineScaleSetsDeletePollerResponse{}, err
+	}
+	result.Poller = &VirtualMachineScaleSetsDeletePoller{
+		pt: pt,
 	}
 	return result, nil
 }
 
 // Delete - Deletes a VM scale set.
 // If the operation fails it returns a generic error.
-func (client *VirtualMachineScaleSetsClient) deleteOperation(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsBeginDeleteOptions) (*azcore.Response, error) {
+func (client *VirtualMachineScaleSetsClient) deleteOperation(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, vmScaleSetName, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
 		return nil, client.deleteHandleError(resp)
 	}
 	return resp, nil
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *VirtualMachineScaleSetsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsBeginDeleteOptions) (*azcore.Request, error) {
+func (client *VirtualMachineScaleSetsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -380,27 +296,26 @@ func (client *VirtualMachineScaleSetsClient) deleteCreateRequest(ctx context.Con
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodDelete, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.ep, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = reqQP.Encode()
 	return req, nil
 }
 
 // deleteHandleError handles the Delete error response.
-func (client *VirtualMachineScaleSetsClient) deleteHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *VirtualMachineScaleSetsClient) deleteHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	if len(body) == 0 {
-		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
+		return runtime.NewResponseError(errors.New(resp.Status), resp)
 	}
-	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
+	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
 // BeginDeleteInstances - Deletes virtual machines in a VM scale set.
@@ -411,65 +326,37 @@ func (client *VirtualMachineScaleSetsClient) BeginDeleteInstances(ctx context.Co
 		return VirtualMachineScaleSetsDeleteInstancesPollerResponse{}, err
 	}
 	result := VirtualMachineScaleSetsDeleteInstancesPollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("VirtualMachineScaleSetsClient.DeleteInstances", "", resp, client.con.Pipeline(), client.deleteInstancesHandleError)
-	if err != nil {
-		return VirtualMachineScaleSetsDeleteInstancesPollerResponse{}, err
-	}
-	poller := &virtualMachineScaleSetsDeleteInstancesPoller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetsDeleteInstancesResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumeDeleteInstances creates a new VirtualMachineScaleSetsDeleteInstancesPoller from the specified resume token.
-// token - The value must come from a previous call to VirtualMachineScaleSetsDeleteInstancesPoller.ResumeToken().
-func (client *VirtualMachineScaleSetsClient) ResumeDeleteInstances(ctx context.Context, token string) (VirtualMachineScaleSetsDeleteInstancesPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetsClient.DeleteInstances", token, client.con.Pipeline(), client.deleteInstancesHandleError)
-	if err != nil {
-		return VirtualMachineScaleSetsDeleteInstancesPollerResponse{}, err
-	}
-	poller := &virtualMachineScaleSetsDeleteInstancesPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualMachineScaleSetsDeleteInstancesPollerResponse{}, err
-	}
-	result := VirtualMachineScaleSetsDeleteInstancesPollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetsDeleteInstancesResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("VirtualMachineScaleSetsClient.DeleteInstances", "", resp, client.pl, client.deleteInstancesHandleError)
+	if err != nil {
+		return VirtualMachineScaleSetsDeleteInstancesPollerResponse{}, err
+	}
+	result.Poller = &VirtualMachineScaleSetsDeleteInstancesPoller{
+		pt: pt,
 	}
 	return result, nil
 }
 
 // DeleteInstances - Deletes virtual machines in a VM scale set.
 // If the operation fails it returns a generic error.
-func (client *VirtualMachineScaleSetsClient) deleteInstances(ctx context.Context, resourceGroupName string, vmScaleSetName string, vmInstanceIDs VirtualMachineScaleSetVMInstanceRequiredIDs, options *VirtualMachineScaleSetsBeginDeleteInstancesOptions) (*azcore.Response, error) {
+func (client *VirtualMachineScaleSetsClient) deleteInstances(ctx context.Context, resourceGroupName string, vmScaleSetName string, vmInstanceIDs VirtualMachineScaleSetVMInstanceRequiredIDs, options *VirtualMachineScaleSetsBeginDeleteInstancesOptions) (*http.Response, error) {
 	req, err := client.deleteInstancesCreateRequest(ctx, resourceGroupName, vmScaleSetName, vmInstanceIDs, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
 		return nil, client.deleteInstancesHandleError(resp)
 	}
 	return resp, nil
 }
 
 // deleteInstancesCreateRequest creates the DeleteInstances request.
-func (client *VirtualMachineScaleSetsClient) deleteInstancesCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, vmInstanceIDs VirtualMachineScaleSetVMInstanceRequiredIDs, options *VirtualMachineScaleSetsBeginDeleteInstancesOptions) (*azcore.Request, error) {
+func (client *VirtualMachineScaleSetsClient) deleteInstancesCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, vmInstanceIDs VirtualMachineScaleSetVMInstanceRequiredIDs, options *VirtualMachineScaleSetsBeginDeleteInstancesOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/delete"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -483,27 +370,26 @@ func (client *VirtualMachineScaleSetsClient) deleteInstancesCreateRequest(ctx co
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.ep, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = reqQP.Encode()
-	return req, req.MarshalAsJSON(vmInstanceIDs)
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	return req, runtime.MarshalAsJSON(req, vmInstanceIDs)
 }
 
 // deleteInstancesHandleError handles the DeleteInstances error response.
-func (client *VirtualMachineScaleSetsClient) deleteInstancesHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *VirtualMachineScaleSetsClient) deleteInstancesHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	if len(body) == 0 {
-		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
+		return runtime.NewResponseError(errors.New(resp.Status), resp)
 	}
-	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
+	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
 // ForceRecoveryServiceFabricPlatformUpdateDomainWalk - Manual platform update domain walk to update virtual machines in a service fabric virtual machine
@@ -514,18 +400,18 @@ func (client *VirtualMachineScaleSetsClient) ForceRecoveryServiceFabricPlatformU
 	if err != nil {
 		return VirtualMachineScaleSetsForceRecoveryServiceFabricPlatformUpdateDomainWalkResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return VirtualMachineScaleSetsForceRecoveryServiceFabricPlatformUpdateDomainWalkResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return VirtualMachineScaleSetsForceRecoveryServiceFabricPlatformUpdateDomainWalkResponse{}, client.forceRecoveryServiceFabricPlatformUpdateDomainWalkHandleError(resp)
 	}
 	return client.forceRecoveryServiceFabricPlatformUpdateDomainWalkHandleResponse(resp)
 }
 
 // forceRecoveryServiceFabricPlatformUpdateDomainWalkCreateRequest creates the ForceRecoveryServiceFabricPlatformUpdateDomainWalk request.
-func (client *VirtualMachineScaleSetsClient) forceRecoveryServiceFabricPlatformUpdateDomainWalkCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, platformUpdateDomain int32, options *VirtualMachineScaleSetsForceRecoveryServiceFabricPlatformUpdateDomainWalkOptions) (*azcore.Request, error) {
+func (client *VirtualMachineScaleSetsClient) forceRecoveryServiceFabricPlatformUpdateDomainWalkCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, platformUpdateDomain int32, options *VirtualMachineScaleSetsForceRecoveryServiceFabricPlatformUpdateDomainWalkOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/forceRecoveryServiceFabricPlatformUpdateDomainWalk"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -539,38 +425,37 @@ func (client *VirtualMachineScaleSetsClient) forceRecoveryServiceFabricPlatformU
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.ep, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-12-01")
 	reqQP.Set("platformUpdateDomain", strconv.FormatInt(int64(platformUpdateDomain), 10))
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // forceRecoveryServiceFabricPlatformUpdateDomainWalkHandleResponse handles the ForceRecoveryServiceFabricPlatformUpdateDomainWalk response.
-func (client *VirtualMachineScaleSetsClient) forceRecoveryServiceFabricPlatformUpdateDomainWalkHandleResponse(resp *azcore.Response) (VirtualMachineScaleSetsForceRecoveryServiceFabricPlatformUpdateDomainWalkResponse, error) {
-	result := VirtualMachineScaleSetsForceRecoveryServiceFabricPlatformUpdateDomainWalkResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.RecoveryWalkResponse); err != nil {
+func (client *VirtualMachineScaleSetsClient) forceRecoveryServiceFabricPlatformUpdateDomainWalkHandleResponse(resp *http.Response) (VirtualMachineScaleSetsForceRecoveryServiceFabricPlatformUpdateDomainWalkResponse, error) {
+	result := VirtualMachineScaleSetsForceRecoveryServiceFabricPlatformUpdateDomainWalkResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.RecoveryWalkResponse); err != nil {
 		return VirtualMachineScaleSetsForceRecoveryServiceFabricPlatformUpdateDomainWalkResponse{}, err
 	}
 	return result, nil
 }
 
 // forceRecoveryServiceFabricPlatformUpdateDomainWalkHandleError handles the ForceRecoveryServiceFabricPlatformUpdateDomainWalk error response.
-func (client *VirtualMachineScaleSetsClient) forceRecoveryServiceFabricPlatformUpdateDomainWalkHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *VirtualMachineScaleSetsClient) forceRecoveryServiceFabricPlatformUpdateDomainWalkHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	if len(body) == 0 {
-		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
+		return runtime.NewResponseError(errors.New(resp.Status), resp)
 	}
-	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
+	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
 // Get - Display information about a virtual machine scale set.
@@ -580,18 +465,18 @@ func (client *VirtualMachineScaleSetsClient) Get(ctx context.Context, resourceGr
 	if err != nil {
 		return VirtualMachineScaleSetsGetResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return VirtualMachineScaleSetsGetResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return VirtualMachineScaleSetsGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *VirtualMachineScaleSetsClient) getCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsGetOptions) (*azcore.Request, error) {
+func (client *VirtualMachineScaleSetsClient) getCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -605,37 +490,36 @@ func (client *VirtualMachineScaleSetsClient) getCreateRequest(ctx context.Contex
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getHandleResponse handles the Get response.
-func (client *VirtualMachineScaleSetsClient) getHandleResponse(resp *azcore.Response) (VirtualMachineScaleSetsGetResponse, error) {
-	result := VirtualMachineScaleSetsGetResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.VirtualMachineScaleSet); err != nil {
+func (client *VirtualMachineScaleSetsClient) getHandleResponse(resp *http.Response) (VirtualMachineScaleSetsGetResponse, error) {
+	result := VirtualMachineScaleSetsGetResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineScaleSet); err != nil {
 		return VirtualMachineScaleSetsGetResponse{}, err
 	}
 	return result, nil
 }
 
 // getHandleError handles the Get error response.
-func (client *VirtualMachineScaleSetsClient) getHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *VirtualMachineScaleSetsClient) getHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	if len(body) == 0 {
-		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
+		return runtime.NewResponseError(errors.New(resp.Status), resp)
 	}
-	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
+	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
 // GetInstanceView - Gets the status of a VM scale set instance.
@@ -645,18 +529,18 @@ func (client *VirtualMachineScaleSetsClient) GetInstanceView(ctx context.Context
 	if err != nil {
 		return VirtualMachineScaleSetsGetInstanceViewResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return VirtualMachineScaleSetsGetInstanceViewResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return VirtualMachineScaleSetsGetInstanceViewResponse{}, client.getInstanceViewHandleError(resp)
 	}
 	return client.getInstanceViewHandleResponse(resp)
 }
 
 // getInstanceViewCreateRequest creates the GetInstanceView request.
-func (client *VirtualMachineScaleSetsClient) getInstanceViewCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsGetInstanceViewOptions) (*azcore.Request, error) {
+func (client *VirtualMachineScaleSetsClient) getInstanceViewCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsGetInstanceViewOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/instanceView"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -670,55 +554,54 @@ func (client *VirtualMachineScaleSetsClient) getInstanceViewCreateRequest(ctx co
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getInstanceViewHandleResponse handles the GetInstanceView response.
-func (client *VirtualMachineScaleSetsClient) getInstanceViewHandleResponse(resp *azcore.Response) (VirtualMachineScaleSetsGetInstanceViewResponse, error) {
-	result := VirtualMachineScaleSetsGetInstanceViewResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.VirtualMachineScaleSetInstanceView); err != nil {
+func (client *VirtualMachineScaleSetsClient) getInstanceViewHandleResponse(resp *http.Response) (VirtualMachineScaleSetsGetInstanceViewResponse, error) {
+	result := VirtualMachineScaleSetsGetInstanceViewResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineScaleSetInstanceView); err != nil {
 		return VirtualMachineScaleSetsGetInstanceViewResponse{}, err
 	}
 	return result, nil
 }
 
 // getInstanceViewHandleError handles the GetInstanceView error response.
-func (client *VirtualMachineScaleSetsClient) getInstanceViewHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *VirtualMachineScaleSetsClient) getInstanceViewHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	if len(body) == 0 {
-		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
+		return runtime.NewResponseError(errors.New(resp.Status), resp)
 	}
-	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
+	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
 // GetOSUpgradeHistory - Gets list of OS upgrades on a VM scale set instance.
 // If the operation fails it returns a generic error.
-func (client *VirtualMachineScaleSetsClient) GetOSUpgradeHistory(resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsGetOSUpgradeHistoryOptions) VirtualMachineScaleSetsGetOSUpgradeHistoryPager {
-	return &virtualMachineScaleSetsGetOSUpgradeHistoryPager{
+func (client *VirtualMachineScaleSetsClient) GetOSUpgradeHistory(resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsGetOSUpgradeHistoryOptions) *VirtualMachineScaleSetsGetOSUpgradeHistoryPager {
+	return &VirtualMachineScaleSetsGetOSUpgradeHistoryPager{
 		client: client,
-		requester: func(ctx context.Context) (*azcore.Request, error) {
+		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.getOSUpgradeHistoryCreateRequest(ctx, resourceGroupName, vmScaleSetName, options)
 		},
-		advancer: func(ctx context.Context, resp VirtualMachineScaleSetsGetOSUpgradeHistoryResponse) (*azcore.Request, error) {
-			return azcore.NewRequest(ctx, http.MethodGet, *resp.VirtualMachineScaleSetListOSUpgradeHistory.NextLink)
+		advancer: func(ctx context.Context, resp VirtualMachineScaleSetsGetOSUpgradeHistoryResponse) (*policy.Request, error) {
+			return runtime.NewRequest(ctx, http.MethodGet, *resp.VirtualMachineScaleSetListOSUpgradeHistory.NextLink)
 		},
 	}
 }
 
 // getOSUpgradeHistoryCreateRequest creates the GetOSUpgradeHistory request.
-func (client *VirtualMachineScaleSetsClient) getOSUpgradeHistoryCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsGetOSUpgradeHistoryOptions) (*azcore.Request, error) {
+func (client *VirtualMachineScaleSetsClient) getOSUpgradeHistoryCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsGetOSUpgradeHistoryOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/osUpgradeHistory"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -732,55 +615,54 @@ func (client *VirtualMachineScaleSetsClient) getOSUpgradeHistoryCreateRequest(ct
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getOSUpgradeHistoryHandleResponse handles the GetOSUpgradeHistory response.
-func (client *VirtualMachineScaleSetsClient) getOSUpgradeHistoryHandleResponse(resp *azcore.Response) (VirtualMachineScaleSetsGetOSUpgradeHistoryResponse, error) {
-	result := VirtualMachineScaleSetsGetOSUpgradeHistoryResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.VirtualMachineScaleSetListOSUpgradeHistory); err != nil {
+func (client *VirtualMachineScaleSetsClient) getOSUpgradeHistoryHandleResponse(resp *http.Response) (VirtualMachineScaleSetsGetOSUpgradeHistoryResponse, error) {
+	result := VirtualMachineScaleSetsGetOSUpgradeHistoryResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineScaleSetListOSUpgradeHistory); err != nil {
 		return VirtualMachineScaleSetsGetOSUpgradeHistoryResponse{}, err
 	}
 	return result, nil
 }
 
 // getOSUpgradeHistoryHandleError handles the GetOSUpgradeHistory error response.
-func (client *VirtualMachineScaleSetsClient) getOSUpgradeHistoryHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *VirtualMachineScaleSetsClient) getOSUpgradeHistoryHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	if len(body) == 0 {
-		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
+		return runtime.NewResponseError(errors.New(resp.Status), resp)
 	}
-	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
+	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
 // List - Gets a list of all VM scale sets under a resource group.
 // If the operation fails it returns a generic error.
-func (client *VirtualMachineScaleSetsClient) List(resourceGroupName string, options *VirtualMachineScaleSetsListOptions) VirtualMachineScaleSetsListPager {
-	return &virtualMachineScaleSetsListPager{
+func (client *VirtualMachineScaleSetsClient) List(resourceGroupName string, options *VirtualMachineScaleSetsListOptions) *VirtualMachineScaleSetsListPager {
+	return &VirtualMachineScaleSetsListPager{
 		client: client,
-		requester: func(ctx context.Context) (*azcore.Request, error) {
+		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, options)
 		},
-		advancer: func(ctx context.Context, resp VirtualMachineScaleSetsListResponse) (*azcore.Request, error) {
-			return azcore.NewRequest(ctx, http.MethodGet, *resp.VirtualMachineScaleSetListResult.NextLink)
+		advancer: func(ctx context.Context, resp VirtualMachineScaleSetsListResponse) (*policy.Request, error) {
+			return runtime.NewRequest(ctx, http.MethodGet, *resp.VirtualMachineScaleSetListResult.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *VirtualMachineScaleSetsClient) listCreateRequest(ctx context.Context, resourceGroupName string, options *VirtualMachineScaleSetsListOptions) (*azcore.Request, error) {
+func (client *VirtualMachineScaleSetsClient) listCreateRequest(ctx context.Context, resourceGroupName string, options *VirtualMachineScaleSetsListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -790,111 +672,109 @@ func (client *VirtualMachineScaleSetsClient) listCreateRequest(ctx context.Conte
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // listHandleResponse handles the List response.
-func (client *VirtualMachineScaleSetsClient) listHandleResponse(resp *azcore.Response) (VirtualMachineScaleSetsListResponse, error) {
-	result := VirtualMachineScaleSetsListResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.VirtualMachineScaleSetListResult); err != nil {
+func (client *VirtualMachineScaleSetsClient) listHandleResponse(resp *http.Response) (VirtualMachineScaleSetsListResponse, error) {
+	result := VirtualMachineScaleSetsListResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineScaleSetListResult); err != nil {
 		return VirtualMachineScaleSetsListResponse{}, err
 	}
 	return result, nil
 }
 
 // listHandleError handles the List error response.
-func (client *VirtualMachineScaleSetsClient) listHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *VirtualMachineScaleSetsClient) listHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	if len(body) == 0 {
-		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
+		return runtime.NewResponseError(errors.New(resp.Status), resp)
 	}
-	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
+	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
 // ListAll - Gets a list of all VM Scale Sets in the subscription, regardless of the associated resource group. Use nextLink property in the response to
 // get the next page of VM Scale Sets. Do this till nextLink is
 // null to fetch all the VM Scale Sets.
 // If the operation fails it returns a generic error.
-func (client *VirtualMachineScaleSetsClient) ListAll(options *VirtualMachineScaleSetsListAllOptions) VirtualMachineScaleSetsListAllPager {
-	return &virtualMachineScaleSetsListAllPager{
+func (client *VirtualMachineScaleSetsClient) ListAll(options *VirtualMachineScaleSetsListAllOptions) *VirtualMachineScaleSetsListAllPager {
+	return &VirtualMachineScaleSetsListAllPager{
 		client: client,
-		requester: func(ctx context.Context) (*azcore.Request, error) {
+		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listAllCreateRequest(ctx, options)
 		},
-		advancer: func(ctx context.Context, resp VirtualMachineScaleSetsListAllResponse) (*azcore.Request, error) {
-			return azcore.NewRequest(ctx, http.MethodGet, *resp.VirtualMachineScaleSetListWithLinkResult.NextLink)
+		advancer: func(ctx context.Context, resp VirtualMachineScaleSetsListAllResponse) (*policy.Request, error) {
+			return runtime.NewRequest(ctx, http.MethodGet, *resp.VirtualMachineScaleSetListWithLinkResult.NextLink)
 		},
 	}
 }
 
 // listAllCreateRequest creates the ListAll request.
-func (client *VirtualMachineScaleSetsClient) listAllCreateRequest(ctx context.Context, options *VirtualMachineScaleSetsListAllOptions) (*azcore.Request, error) {
+func (client *VirtualMachineScaleSetsClient) listAllCreateRequest(ctx context.Context, options *VirtualMachineScaleSetsListAllOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/virtualMachineScaleSets"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // listAllHandleResponse handles the ListAll response.
-func (client *VirtualMachineScaleSetsClient) listAllHandleResponse(resp *azcore.Response) (VirtualMachineScaleSetsListAllResponse, error) {
-	result := VirtualMachineScaleSetsListAllResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.VirtualMachineScaleSetListWithLinkResult); err != nil {
+func (client *VirtualMachineScaleSetsClient) listAllHandleResponse(resp *http.Response) (VirtualMachineScaleSetsListAllResponse, error) {
+	result := VirtualMachineScaleSetsListAllResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineScaleSetListWithLinkResult); err != nil {
 		return VirtualMachineScaleSetsListAllResponse{}, err
 	}
 	return result, nil
 }
 
 // listAllHandleError handles the ListAll error response.
-func (client *VirtualMachineScaleSetsClient) listAllHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *VirtualMachineScaleSetsClient) listAllHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	if len(body) == 0 {
-		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
+		return runtime.NewResponseError(errors.New(resp.Status), resp)
 	}
-	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
+	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
 // ListSKUs - Gets a list of SKUs available for your VM scale set, including the minimum and maximum VM instances allowed for each SKU.
 // If the operation fails it returns a generic error.
-func (client *VirtualMachineScaleSetsClient) ListSKUs(resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsListSKUsOptions) VirtualMachineScaleSetsListSKUsPager {
-	return &virtualMachineScaleSetsListSKUsPager{
+func (client *VirtualMachineScaleSetsClient) ListSKUs(resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsListSKUsOptions) *VirtualMachineScaleSetsListSKUsPager {
+	return &VirtualMachineScaleSetsListSKUsPager{
 		client: client,
-		requester: func(ctx context.Context) (*azcore.Request, error) {
+		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listSKUsCreateRequest(ctx, resourceGroupName, vmScaleSetName, options)
 		},
-		advancer: func(ctx context.Context, resp VirtualMachineScaleSetsListSKUsResponse) (*azcore.Request, error) {
-			return azcore.NewRequest(ctx, http.MethodGet, *resp.VirtualMachineScaleSetListSKUsResult.NextLink)
+		advancer: func(ctx context.Context, resp VirtualMachineScaleSetsListSKUsResponse) (*policy.Request, error) {
+			return runtime.NewRequest(ctx, http.MethodGet, *resp.VirtualMachineScaleSetListSKUsResult.NextLink)
 		},
 	}
 }
 
 // listSKUsCreateRequest creates the ListSKUs request.
-func (client *VirtualMachineScaleSetsClient) listSKUsCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsListSKUsOptions) (*azcore.Request, error) {
+func (client *VirtualMachineScaleSetsClient) listSKUsCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsListSKUsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/skus"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -908,37 +788,36 @@ func (client *VirtualMachineScaleSetsClient) listSKUsCreateRequest(ctx context.C
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // listSKUsHandleResponse handles the ListSKUs response.
-func (client *VirtualMachineScaleSetsClient) listSKUsHandleResponse(resp *azcore.Response) (VirtualMachineScaleSetsListSKUsResponse, error) {
-	result := VirtualMachineScaleSetsListSKUsResponse{RawResponse: resp.Response}
-	if err := resp.UnmarshalAsJSON(&result.VirtualMachineScaleSetListSKUsResult); err != nil {
+func (client *VirtualMachineScaleSetsClient) listSKUsHandleResponse(resp *http.Response) (VirtualMachineScaleSetsListSKUsResponse, error) {
+	result := VirtualMachineScaleSetsListSKUsResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineScaleSetListSKUsResult); err != nil {
 		return VirtualMachineScaleSetsListSKUsResponse{}, err
 	}
 	return result, nil
 }
 
 // listSKUsHandleError handles the ListSKUs error response.
-func (client *VirtualMachineScaleSetsClient) listSKUsHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *VirtualMachineScaleSetsClient) listSKUsHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	if len(body) == 0 {
-		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
+		return runtime.NewResponseError(errors.New(resp.Status), resp)
 	}
-	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
+	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
 // BeginPerformMaintenance - Perform maintenance on one or more virtual machines in a VM scale set. Operation on instances which are not eligible for perform
@@ -951,42 +830,14 @@ func (client *VirtualMachineScaleSetsClient) BeginPerformMaintenance(ctx context
 		return VirtualMachineScaleSetsPerformMaintenancePollerResponse{}, err
 	}
 	result := VirtualMachineScaleSetsPerformMaintenancePollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("VirtualMachineScaleSetsClient.PerformMaintenance", "", resp, client.con.Pipeline(), client.performMaintenanceHandleError)
-	if err != nil {
-		return VirtualMachineScaleSetsPerformMaintenancePollerResponse{}, err
-	}
-	poller := &virtualMachineScaleSetsPerformMaintenancePoller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetsPerformMaintenanceResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumePerformMaintenance creates a new VirtualMachineScaleSetsPerformMaintenancePoller from the specified resume token.
-// token - The value must come from a previous call to VirtualMachineScaleSetsPerformMaintenancePoller.ResumeToken().
-func (client *VirtualMachineScaleSetsClient) ResumePerformMaintenance(ctx context.Context, token string) (VirtualMachineScaleSetsPerformMaintenancePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetsClient.PerformMaintenance", token, client.con.Pipeline(), client.performMaintenanceHandleError)
-	if err != nil {
-		return VirtualMachineScaleSetsPerformMaintenancePollerResponse{}, err
-	}
-	poller := &virtualMachineScaleSetsPerformMaintenancePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualMachineScaleSetsPerformMaintenancePollerResponse{}, err
-	}
-	result := VirtualMachineScaleSetsPerformMaintenancePollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetsPerformMaintenanceResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("VirtualMachineScaleSetsClient.PerformMaintenance", "", resp, client.pl, client.performMaintenanceHandleError)
+	if err != nil {
+		return VirtualMachineScaleSetsPerformMaintenancePollerResponse{}, err
+	}
+	result.Poller = &VirtualMachineScaleSetsPerformMaintenancePoller{
+		pt: pt,
 	}
 	return result, nil
 }
@@ -995,23 +846,23 @@ func (client *VirtualMachineScaleSetsClient) ResumePerformMaintenance(ctx contex
 // maintenance will be failed. Please refer to best practices for more
 // details: https://docs.microsoft.com/en-us/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-maintenance-notifications
 // If the operation fails it returns a generic error.
-func (client *VirtualMachineScaleSetsClient) performMaintenance(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsBeginPerformMaintenanceOptions) (*azcore.Response, error) {
+func (client *VirtualMachineScaleSetsClient) performMaintenance(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsBeginPerformMaintenanceOptions) (*http.Response, error) {
 	req, err := client.performMaintenanceCreateRequest(ctx, resourceGroupName, vmScaleSetName, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
 		return nil, client.performMaintenanceHandleError(resp)
 	}
 	return resp, nil
 }
 
 // performMaintenanceCreateRequest creates the PerformMaintenance request.
-func (client *VirtualMachineScaleSetsClient) performMaintenanceCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsBeginPerformMaintenanceOptions) (*azcore.Request, error) {
+func (client *VirtualMachineScaleSetsClient) performMaintenanceCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsBeginPerformMaintenanceOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/performMaintenance"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1025,30 +876,29 @@ func (client *VirtualMachineScaleSetsClient) performMaintenanceCreateRequest(ctx
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.ep, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = reqQP.Encode()
 	if options != nil && options.VMInstanceIDs != nil {
-		return req, req.MarshalAsJSON(*options.VMInstanceIDs)
+		return req, runtime.MarshalAsJSON(req, *options.VMInstanceIDs)
 	}
 	return req, nil
 }
 
 // performMaintenanceHandleError handles the PerformMaintenance error response.
-func (client *VirtualMachineScaleSetsClient) performMaintenanceHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *VirtualMachineScaleSetsClient) performMaintenanceHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	if len(body) == 0 {
-		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
+		return runtime.NewResponseError(errors.New(resp.Status), resp)
 	}
-	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
+	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
 // BeginPowerOff - Power off (stop) one or more virtual machines in a VM scale set. Note that resources are still attached and you are getting charged for
@@ -1061,42 +911,14 @@ func (client *VirtualMachineScaleSetsClient) BeginPowerOff(ctx context.Context, 
 		return VirtualMachineScaleSetsPowerOffPollerResponse{}, err
 	}
 	result := VirtualMachineScaleSetsPowerOffPollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("VirtualMachineScaleSetsClient.PowerOff", "", resp, client.con.Pipeline(), client.powerOffHandleError)
-	if err != nil {
-		return VirtualMachineScaleSetsPowerOffPollerResponse{}, err
-	}
-	poller := &virtualMachineScaleSetsPowerOffPoller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetsPowerOffResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumePowerOff creates a new VirtualMachineScaleSetsPowerOffPoller from the specified resume token.
-// token - The value must come from a previous call to VirtualMachineScaleSetsPowerOffPoller.ResumeToken().
-func (client *VirtualMachineScaleSetsClient) ResumePowerOff(ctx context.Context, token string) (VirtualMachineScaleSetsPowerOffPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetsClient.PowerOff", token, client.con.Pipeline(), client.powerOffHandleError)
-	if err != nil {
-		return VirtualMachineScaleSetsPowerOffPollerResponse{}, err
-	}
-	poller := &virtualMachineScaleSetsPowerOffPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualMachineScaleSetsPowerOffPollerResponse{}, err
-	}
-	result := VirtualMachineScaleSetsPowerOffPollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetsPowerOffResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("VirtualMachineScaleSetsClient.PowerOff", "", resp, client.pl, client.powerOffHandleError)
+	if err != nil {
+		return VirtualMachineScaleSetsPowerOffPollerResponse{}, err
+	}
+	result.Poller = &VirtualMachineScaleSetsPowerOffPoller{
+		pt: pt,
 	}
 	return result, nil
 }
@@ -1105,23 +927,23 @@ func (client *VirtualMachineScaleSetsClient) ResumePowerOff(ctx context.Context,
 // resources. Instead, use deallocate to release resources and
 // avoid charges.
 // If the operation fails it returns a generic error.
-func (client *VirtualMachineScaleSetsClient) powerOff(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsBeginPowerOffOptions) (*azcore.Response, error) {
+func (client *VirtualMachineScaleSetsClient) powerOff(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsBeginPowerOffOptions) (*http.Response, error) {
 	req, err := client.powerOffCreateRequest(ctx, resourceGroupName, vmScaleSetName, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
 		return nil, client.powerOffHandleError(resp)
 	}
 	return resp, nil
 }
 
 // powerOffCreateRequest creates the PowerOff request.
-func (client *VirtualMachineScaleSetsClient) powerOffCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsBeginPowerOffOptions) (*azcore.Request, error) {
+func (client *VirtualMachineScaleSetsClient) powerOffCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsBeginPowerOffOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/poweroff"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1135,33 +957,32 @@ func (client *VirtualMachineScaleSetsClient) powerOffCreateRequest(ctx context.C
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.ep, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	if options != nil && options.SkipShutdown != nil {
 		reqQP.Set("skipShutdown", strconv.FormatBool(*options.SkipShutdown))
 	}
 	reqQP.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = reqQP.Encode()
 	if options != nil && options.VMInstanceIDs != nil {
-		return req, req.MarshalAsJSON(*options.VMInstanceIDs)
+		return req, runtime.MarshalAsJSON(req, *options.VMInstanceIDs)
 	}
 	return req, nil
 }
 
 // powerOffHandleError handles the PowerOff error response.
-func (client *VirtualMachineScaleSetsClient) powerOffHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *VirtualMachineScaleSetsClient) powerOffHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	if len(body) == 0 {
-		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
+		return runtime.NewResponseError(errors.New(resp.Status), resp)
 	}
-	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
+	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
 // BeginRedeploy - Shuts down all the virtual machines in the virtual machine scale set, moves them to a new node, and powers them back on.
@@ -1172,65 +993,37 @@ func (client *VirtualMachineScaleSetsClient) BeginRedeploy(ctx context.Context, 
 		return VirtualMachineScaleSetsRedeployPollerResponse{}, err
 	}
 	result := VirtualMachineScaleSetsRedeployPollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("VirtualMachineScaleSetsClient.Redeploy", "", resp, client.con.Pipeline(), client.redeployHandleError)
-	if err != nil {
-		return VirtualMachineScaleSetsRedeployPollerResponse{}, err
-	}
-	poller := &virtualMachineScaleSetsRedeployPoller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetsRedeployResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumeRedeploy creates a new VirtualMachineScaleSetsRedeployPoller from the specified resume token.
-// token - The value must come from a previous call to VirtualMachineScaleSetsRedeployPoller.ResumeToken().
-func (client *VirtualMachineScaleSetsClient) ResumeRedeploy(ctx context.Context, token string) (VirtualMachineScaleSetsRedeployPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetsClient.Redeploy", token, client.con.Pipeline(), client.redeployHandleError)
-	if err != nil {
-		return VirtualMachineScaleSetsRedeployPollerResponse{}, err
-	}
-	poller := &virtualMachineScaleSetsRedeployPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualMachineScaleSetsRedeployPollerResponse{}, err
-	}
-	result := VirtualMachineScaleSetsRedeployPollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetsRedeployResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("VirtualMachineScaleSetsClient.Redeploy", "", resp, client.pl, client.redeployHandleError)
+	if err != nil {
+		return VirtualMachineScaleSetsRedeployPollerResponse{}, err
+	}
+	result.Poller = &VirtualMachineScaleSetsRedeployPoller{
+		pt: pt,
 	}
 	return result, nil
 }
 
 // Redeploy - Shuts down all the virtual machines in the virtual machine scale set, moves them to a new node, and powers them back on.
 // If the operation fails it returns a generic error.
-func (client *VirtualMachineScaleSetsClient) redeploy(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsBeginRedeployOptions) (*azcore.Response, error) {
+func (client *VirtualMachineScaleSetsClient) redeploy(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsBeginRedeployOptions) (*http.Response, error) {
 	req, err := client.redeployCreateRequest(ctx, resourceGroupName, vmScaleSetName, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
 		return nil, client.redeployHandleError(resp)
 	}
 	return resp, nil
 }
 
 // redeployCreateRequest creates the Redeploy request.
-func (client *VirtualMachineScaleSetsClient) redeployCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsBeginRedeployOptions) (*azcore.Request, error) {
+func (client *VirtualMachineScaleSetsClient) redeployCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsBeginRedeployOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/redeploy"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1244,30 +1037,29 @@ func (client *VirtualMachineScaleSetsClient) redeployCreateRequest(ctx context.C
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.ep, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = reqQP.Encode()
 	if options != nil && options.VMInstanceIDs != nil {
-		return req, req.MarshalAsJSON(*options.VMInstanceIDs)
+		return req, runtime.MarshalAsJSON(req, *options.VMInstanceIDs)
 	}
 	return req, nil
 }
 
 // redeployHandleError handles the Redeploy error response.
-func (client *VirtualMachineScaleSetsClient) redeployHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *VirtualMachineScaleSetsClient) redeployHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	if len(body) == 0 {
-		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
+		return runtime.NewResponseError(errors.New(resp.Status), resp)
 	}
-	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
+	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
 // BeginReimage - Reimages (upgrade the operating system) one or more virtual machines in a VM scale set which don't have a ephemeral OS disk, for virtual
@@ -1280,42 +1072,14 @@ func (client *VirtualMachineScaleSetsClient) BeginReimage(ctx context.Context, r
 		return VirtualMachineScaleSetsReimagePollerResponse{}, err
 	}
 	result := VirtualMachineScaleSetsReimagePollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("VirtualMachineScaleSetsClient.Reimage", "", resp, client.con.Pipeline(), client.reimageHandleError)
-	if err != nil {
-		return VirtualMachineScaleSetsReimagePollerResponse{}, err
-	}
-	poller := &virtualMachineScaleSetsReimagePoller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetsReimageResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumeReimage creates a new VirtualMachineScaleSetsReimagePoller from the specified resume token.
-// token - The value must come from a previous call to VirtualMachineScaleSetsReimagePoller.ResumeToken().
-func (client *VirtualMachineScaleSetsClient) ResumeReimage(ctx context.Context, token string) (VirtualMachineScaleSetsReimagePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetsClient.Reimage", token, client.con.Pipeline(), client.reimageHandleError)
-	if err != nil {
-		return VirtualMachineScaleSetsReimagePollerResponse{}, err
-	}
-	poller := &virtualMachineScaleSetsReimagePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualMachineScaleSetsReimagePollerResponse{}, err
-	}
-	result := VirtualMachineScaleSetsReimagePollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetsReimageResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("VirtualMachineScaleSetsClient.Reimage", "", resp, client.pl, client.reimageHandleError)
+	if err != nil {
+		return VirtualMachineScaleSetsReimagePollerResponse{}, err
+	}
+	result.Poller = &VirtualMachineScaleSetsReimagePoller{
+		pt: pt,
 	}
 	return result, nil
 }
@@ -1324,23 +1088,23 @@ func (client *VirtualMachineScaleSetsClient) ResumeReimage(ctx context.Context, 
 // who have a ephemeral OS disk the virtual machine is
 // reset to initial state.
 // If the operation fails it returns a generic error.
-func (client *VirtualMachineScaleSetsClient) reimage(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsBeginReimageOptions) (*azcore.Response, error) {
+func (client *VirtualMachineScaleSetsClient) reimage(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsBeginReimageOptions) (*http.Response, error) {
 	req, err := client.reimageCreateRequest(ctx, resourceGroupName, vmScaleSetName, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
 		return nil, client.reimageHandleError(resp)
 	}
 	return resp, nil
 }
 
 // reimageCreateRequest creates the Reimage request.
-func (client *VirtualMachineScaleSetsClient) reimageCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsBeginReimageOptions) (*azcore.Request, error) {
+func (client *VirtualMachineScaleSetsClient) reimageCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsBeginReimageOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/reimage"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1354,30 +1118,29 @@ func (client *VirtualMachineScaleSetsClient) reimageCreateRequest(ctx context.Co
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.ep, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = reqQP.Encode()
 	if options != nil && options.VMScaleSetReimageInput != nil {
-		return req, req.MarshalAsJSON(*options.VMScaleSetReimageInput)
+		return req, runtime.MarshalAsJSON(req, *options.VMScaleSetReimageInput)
 	}
 	return req, nil
 }
 
 // reimageHandleError handles the Reimage error response.
-func (client *VirtualMachineScaleSetsClient) reimageHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *VirtualMachineScaleSetsClient) reimageHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	if len(body) == 0 {
-		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
+		return runtime.NewResponseError(errors.New(resp.Status), resp)
 	}
-	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
+	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
 // BeginReimageAll - Reimages all the disks ( including data disks ) in the virtual machines in a VM scale set. This operation is only supported for managed
@@ -1389,42 +1152,14 @@ func (client *VirtualMachineScaleSetsClient) BeginReimageAll(ctx context.Context
 		return VirtualMachineScaleSetsReimageAllPollerResponse{}, err
 	}
 	result := VirtualMachineScaleSetsReimageAllPollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("VirtualMachineScaleSetsClient.ReimageAll", "", resp, client.con.Pipeline(), client.reimageAllHandleError)
-	if err != nil {
-		return VirtualMachineScaleSetsReimageAllPollerResponse{}, err
-	}
-	poller := &virtualMachineScaleSetsReimageAllPoller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetsReimageAllResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumeReimageAll creates a new VirtualMachineScaleSetsReimageAllPoller from the specified resume token.
-// token - The value must come from a previous call to VirtualMachineScaleSetsReimageAllPoller.ResumeToken().
-func (client *VirtualMachineScaleSetsClient) ResumeReimageAll(ctx context.Context, token string) (VirtualMachineScaleSetsReimageAllPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetsClient.ReimageAll", token, client.con.Pipeline(), client.reimageAllHandleError)
-	if err != nil {
-		return VirtualMachineScaleSetsReimageAllPollerResponse{}, err
-	}
-	poller := &virtualMachineScaleSetsReimageAllPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualMachineScaleSetsReimageAllPollerResponse{}, err
-	}
-	result := VirtualMachineScaleSetsReimageAllPollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetsReimageAllResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("VirtualMachineScaleSetsClient.ReimageAll", "", resp, client.pl, client.reimageAllHandleError)
+	if err != nil {
+		return VirtualMachineScaleSetsReimageAllPollerResponse{}, err
+	}
+	result.Poller = &VirtualMachineScaleSetsReimageAllPoller{
+		pt: pt,
 	}
 	return result, nil
 }
@@ -1432,23 +1167,23 @@ func (client *VirtualMachineScaleSetsClient) ResumeReimageAll(ctx context.Contex
 // ReimageAll - Reimages all the disks ( including data disks ) in the virtual machines in a VM scale set. This operation is only supported for managed
 // disks.
 // If the operation fails it returns a generic error.
-func (client *VirtualMachineScaleSetsClient) reimageAll(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsBeginReimageAllOptions) (*azcore.Response, error) {
+func (client *VirtualMachineScaleSetsClient) reimageAll(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsBeginReimageAllOptions) (*http.Response, error) {
 	req, err := client.reimageAllCreateRequest(ctx, resourceGroupName, vmScaleSetName, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
 		return nil, client.reimageAllHandleError(resp)
 	}
 	return resp, nil
 }
 
 // reimageAllCreateRequest creates the ReimageAll request.
-func (client *VirtualMachineScaleSetsClient) reimageAllCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsBeginReimageAllOptions) (*azcore.Request, error) {
+func (client *VirtualMachineScaleSetsClient) reimageAllCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsBeginReimageAllOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/reimageall"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1462,30 +1197,29 @@ func (client *VirtualMachineScaleSetsClient) reimageAllCreateRequest(ctx context
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.ep, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = reqQP.Encode()
 	if options != nil && options.VMInstanceIDs != nil {
-		return req, req.MarshalAsJSON(*options.VMInstanceIDs)
+		return req, runtime.MarshalAsJSON(req, *options.VMInstanceIDs)
 	}
 	return req, nil
 }
 
 // reimageAllHandleError handles the ReimageAll error response.
-func (client *VirtualMachineScaleSetsClient) reimageAllHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *VirtualMachineScaleSetsClient) reimageAllHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	if len(body) == 0 {
-		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
+		return runtime.NewResponseError(errors.New(resp.Status), resp)
 	}
-	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
+	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
 // BeginRestart - Restarts one or more virtual machines in a VM scale set.
@@ -1496,65 +1230,37 @@ func (client *VirtualMachineScaleSetsClient) BeginRestart(ctx context.Context, r
 		return VirtualMachineScaleSetsRestartPollerResponse{}, err
 	}
 	result := VirtualMachineScaleSetsRestartPollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("VirtualMachineScaleSetsClient.Restart", "", resp, client.con.Pipeline(), client.restartHandleError)
-	if err != nil {
-		return VirtualMachineScaleSetsRestartPollerResponse{}, err
-	}
-	poller := &virtualMachineScaleSetsRestartPoller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetsRestartResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumeRestart creates a new VirtualMachineScaleSetsRestartPoller from the specified resume token.
-// token - The value must come from a previous call to VirtualMachineScaleSetsRestartPoller.ResumeToken().
-func (client *VirtualMachineScaleSetsClient) ResumeRestart(ctx context.Context, token string) (VirtualMachineScaleSetsRestartPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetsClient.Restart", token, client.con.Pipeline(), client.restartHandleError)
-	if err != nil {
-		return VirtualMachineScaleSetsRestartPollerResponse{}, err
-	}
-	poller := &virtualMachineScaleSetsRestartPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualMachineScaleSetsRestartPollerResponse{}, err
-	}
-	result := VirtualMachineScaleSetsRestartPollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetsRestartResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("VirtualMachineScaleSetsClient.Restart", "", resp, client.pl, client.restartHandleError)
+	if err != nil {
+		return VirtualMachineScaleSetsRestartPollerResponse{}, err
+	}
+	result.Poller = &VirtualMachineScaleSetsRestartPoller{
+		pt: pt,
 	}
 	return result, nil
 }
 
 // Restart - Restarts one or more virtual machines in a VM scale set.
 // If the operation fails it returns a generic error.
-func (client *VirtualMachineScaleSetsClient) restart(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsBeginRestartOptions) (*azcore.Response, error) {
+func (client *VirtualMachineScaleSetsClient) restart(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsBeginRestartOptions) (*http.Response, error) {
 	req, err := client.restartCreateRequest(ctx, resourceGroupName, vmScaleSetName, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
 		return nil, client.restartHandleError(resp)
 	}
 	return resp, nil
 }
 
 // restartCreateRequest creates the Restart request.
-func (client *VirtualMachineScaleSetsClient) restartCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsBeginRestartOptions) (*azcore.Request, error) {
+func (client *VirtualMachineScaleSetsClient) restartCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsBeginRestartOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/restart"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1568,30 +1274,29 @@ func (client *VirtualMachineScaleSetsClient) restartCreateRequest(ctx context.Co
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.ep, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = reqQP.Encode()
 	if options != nil && options.VMInstanceIDs != nil {
-		return req, req.MarshalAsJSON(*options.VMInstanceIDs)
+		return req, runtime.MarshalAsJSON(req, *options.VMInstanceIDs)
 	}
 	return req, nil
 }
 
 // restartHandleError handles the Restart error response.
-func (client *VirtualMachineScaleSetsClient) restartHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *VirtualMachineScaleSetsClient) restartHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	if len(body) == 0 {
-		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
+		return runtime.NewResponseError(errors.New(resp.Status), resp)
 	}
-	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
+	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
 // BeginSetOrchestrationServiceState - Changes ServiceState property for a given service
@@ -1602,65 +1307,37 @@ func (client *VirtualMachineScaleSetsClient) BeginSetOrchestrationServiceState(c
 		return VirtualMachineScaleSetsSetOrchestrationServiceStatePollerResponse{}, err
 	}
 	result := VirtualMachineScaleSetsSetOrchestrationServiceStatePollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("VirtualMachineScaleSetsClient.SetOrchestrationServiceState", "", resp, client.con.Pipeline(), client.setOrchestrationServiceStateHandleError)
-	if err != nil {
-		return VirtualMachineScaleSetsSetOrchestrationServiceStatePollerResponse{}, err
-	}
-	poller := &virtualMachineScaleSetsSetOrchestrationServiceStatePoller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetsSetOrchestrationServiceStateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumeSetOrchestrationServiceState creates a new VirtualMachineScaleSetsSetOrchestrationServiceStatePoller from the specified resume token.
-// token - The value must come from a previous call to VirtualMachineScaleSetsSetOrchestrationServiceStatePoller.ResumeToken().
-func (client *VirtualMachineScaleSetsClient) ResumeSetOrchestrationServiceState(ctx context.Context, token string) (VirtualMachineScaleSetsSetOrchestrationServiceStatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetsClient.SetOrchestrationServiceState", token, client.con.Pipeline(), client.setOrchestrationServiceStateHandleError)
-	if err != nil {
-		return VirtualMachineScaleSetsSetOrchestrationServiceStatePollerResponse{}, err
-	}
-	poller := &virtualMachineScaleSetsSetOrchestrationServiceStatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualMachineScaleSetsSetOrchestrationServiceStatePollerResponse{}, err
-	}
-	result := VirtualMachineScaleSetsSetOrchestrationServiceStatePollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetsSetOrchestrationServiceStateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("VirtualMachineScaleSetsClient.SetOrchestrationServiceState", "", resp, client.pl, client.setOrchestrationServiceStateHandleError)
+	if err != nil {
+		return VirtualMachineScaleSetsSetOrchestrationServiceStatePollerResponse{}, err
+	}
+	result.Poller = &VirtualMachineScaleSetsSetOrchestrationServiceStatePoller{
+		pt: pt,
 	}
 	return result, nil
 }
 
 // SetOrchestrationServiceState - Changes ServiceState property for a given service
 // If the operation fails it returns a generic error.
-func (client *VirtualMachineScaleSetsClient) setOrchestrationServiceState(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters OrchestrationServiceStateInput, options *VirtualMachineScaleSetsBeginSetOrchestrationServiceStateOptions) (*azcore.Response, error) {
+func (client *VirtualMachineScaleSetsClient) setOrchestrationServiceState(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters OrchestrationServiceStateInput, options *VirtualMachineScaleSetsBeginSetOrchestrationServiceStateOptions) (*http.Response, error) {
 	req, err := client.setOrchestrationServiceStateCreateRequest(ctx, resourceGroupName, vmScaleSetName, parameters, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
 		return nil, client.setOrchestrationServiceStateHandleError(resp)
 	}
 	return resp, nil
 }
 
 // setOrchestrationServiceStateCreateRequest creates the SetOrchestrationServiceState request.
-func (client *VirtualMachineScaleSetsClient) setOrchestrationServiceStateCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters OrchestrationServiceStateInput, options *VirtualMachineScaleSetsBeginSetOrchestrationServiceStateOptions) (*azcore.Request, error) {
+func (client *VirtualMachineScaleSetsClient) setOrchestrationServiceStateCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters OrchestrationServiceStateInput, options *VirtualMachineScaleSetsBeginSetOrchestrationServiceStateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/setOrchestrationServiceState"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1674,27 +1351,26 @@ func (client *VirtualMachineScaleSetsClient) setOrchestrationServiceStateCreateR
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.ep, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = reqQP.Encode()
-	return req, req.MarshalAsJSON(parameters)
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
 // setOrchestrationServiceStateHandleError handles the SetOrchestrationServiceState error response.
-func (client *VirtualMachineScaleSetsClient) setOrchestrationServiceStateHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *VirtualMachineScaleSetsClient) setOrchestrationServiceStateHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	if len(body) == 0 {
-		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
+		return runtime.NewResponseError(errors.New(resp.Status), resp)
 	}
-	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
+	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
 // BeginStart - Starts one or more virtual machines in a VM scale set.
@@ -1705,65 +1381,37 @@ func (client *VirtualMachineScaleSetsClient) BeginStart(ctx context.Context, res
 		return VirtualMachineScaleSetsStartPollerResponse{}, err
 	}
 	result := VirtualMachineScaleSetsStartPollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("VirtualMachineScaleSetsClient.Start", "", resp, client.con.Pipeline(), client.startHandleError)
-	if err != nil {
-		return VirtualMachineScaleSetsStartPollerResponse{}, err
-	}
-	poller := &virtualMachineScaleSetsStartPoller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetsStartResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumeStart creates a new VirtualMachineScaleSetsStartPoller from the specified resume token.
-// token - The value must come from a previous call to VirtualMachineScaleSetsStartPoller.ResumeToken().
-func (client *VirtualMachineScaleSetsClient) ResumeStart(ctx context.Context, token string) (VirtualMachineScaleSetsStartPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetsClient.Start", token, client.con.Pipeline(), client.startHandleError)
-	if err != nil {
-		return VirtualMachineScaleSetsStartPollerResponse{}, err
-	}
-	poller := &virtualMachineScaleSetsStartPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualMachineScaleSetsStartPollerResponse{}, err
-	}
-	result := VirtualMachineScaleSetsStartPollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetsStartResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("VirtualMachineScaleSetsClient.Start", "", resp, client.pl, client.startHandleError)
+	if err != nil {
+		return VirtualMachineScaleSetsStartPollerResponse{}, err
+	}
+	result.Poller = &VirtualMachineScaleSetsStartPoller{
+		pt: pt,
 	}
 	return result, nil
 }
 
 // Start - Starts one or more virtual machines in a VM scale set.
 // If the operation fails it returns a generic error.
-func (client *VirtualMachineScaleSetsClient) start(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsBeginStartOptions) (*azcore.Response, error) {
+func (client *VirtualMachineScaleSetsClient) start(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsBeginStartOptions) (*http.Response, error) {
 	req, err := client.startCreateRequest(ctx, resourceGroupName, vmScaleSetName, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
 		return nil, client.startHandleError(resp)
 	}
 	return resp, nil
 }
 
 // startCreateRequest creates the Start request.
-func (client *VirtualMachineScaleSetsClient) startCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsBeginStartOptions) (*azcore.Request, error) {
+func (client *VirtualMachineScaleSetsClient) startCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsBeginStartOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/start"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1777,30 +1425,29 @@ func (client *VirtualMachineScaleSetsClient) startCreateRequest(ctx context.Cont
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.ep, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = reqQP.Encode()
+	req.Raw().URL.RawQuery = reqQP.Encode()
 	if options != nil && options.VMInstanceIDs != nil {
-		return req, req.MarshalAsJSON(*options.VMInstanceIDs)
+		return req, runtime.MarshalAsJSON(req, *options.VMInstanceIDs)
 	}
 	return req, nil
 }
 
 // startHandleError handles the Start error response.
-func (client *VirtualMachineScaleSetsClient) startHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *VirtualMachineScaleSetsClient) startHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	if len(body) == 0 {
-		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
+		return runtime.NewResponseError(errors.New(resp.Status), resp)
 	}
-	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
+	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
 // BeginUpdate - Update a VM scale set.
@@ -1811,65 +1458,37 @@ func (client *VirtualMachineScaleSetsClient) BeginUpdate(ctx context.Context, re
 		return VirtualMachineScaleSetsUpdatePollerResponse{}, err
 	}
 	result := VirtualMachineScaleSetsUpdatePollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("VirtualMachineScaleSetsClient.Update", "", resp, client.con.Pipeline(), client.updateHandleError)
-	if err != nil {
-		return VirtualMachineScaleSetsUpdatePollerResponse{}, err
-	}
-	poller := &virtualMachineScaleSetsUpdatePoller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetsUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumeUpdate creates a new VirtualMachineScaleSetsUpdatePoller from the specified resume token.
-// token - The value must come from a previous call to VirtualMachineScaleSetsUpdatePoller.ResumeToken().
-func (client *VirtualMachineScaleSetsClient) ResumeUpdate(ctx context.Context, token string) (VirtualMachineScaleSetsUpdatePollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetsClient.Update", token, client.con.Pipeline(), client.updateHandleError)
-	if err != nil {
-		return VirtualMachineScaleSetsUpdatePollerResponse{}, err
-	}
-	poller := &virtualMachineScaleSetsUpdatePoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualMachineScaleSetsUpdatePollerResponse{}, err
-	}
-	result := VirtualMachineScaleSetsUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetsUpdateResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("VirtualMachineScaleSetsClient.Update", "", resp, client.pl, client.updateHandleError)
+	if err != nil {
+		return VirtualMachineScaleSetsUpdatePollerResponse{}, err
+	}
+	result.Poller = &VirtualMachineScaleSetsUpdatePoller{
+		pt: pt,
 	}
 	return result, nil
 }
 
 // Update - Update a VM scale set.
 // If the operation fails it returns a generic error.
-func (client *VirtualMachineScaleSetsClient) update(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters VirtualMachineScaleSetUpdate, options *VirtualMachineScaleSetsBeginUpdateOptions) (*azcore.Response, error) {
+func (client *VirtualMachineScaleSetsClient) update(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters VirtualMachineScaleSetUpdate, options *VirtualMachineScaleSetsBeginUpdateOptions) (*http.Response, error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, vmScaleSetName, parameters, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return nil, client.updateHandleError(resp)
 	}
 	return resp, nil
 }
 
 // updateCreateRequest creates the Update request.
-func (client *VirtualMachineScaleSetsClient) updateCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters VirtualMachineScaleSetUpdate, options *VirtualMachineScaleSetsBeginUpdateOptions) (*azcore.Request, error) {
+func (client *VirtualMachineScaleSetsClient) updateCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters VirtualMachineScaleSetUpdate, options *VirtualMachineScaleSetsBeginUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1883,28 +1502,27 @@ func (client *VirtualMachineScaleSetsClient) updateCreateRequest(ctx context.Con
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPatch, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.ep, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = reqQP.Encode()
-	req.Header.Set("Accept", "application/json")
-	return req, req.MarshalAsJSON(parameters)
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
 // updateHandleError handles the Update error response.
-func (client *VirtualMachineScaleSetsClient) updateHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *VirtualMachineScaleSetsClient) updateHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	if len(body) == 0 {
-		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
+		return runtime.NewResponseError(errors.New(resp.Status), resp)
 	}
-	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
+	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
 // BeginUpdateInstances - Upgrades one or more virtual machines to the latest SKU set in the VM scale set model.
@@ -1915,65 +1533,37 @@ func (client *VirtualMachineScaleSetsClient) BeginUpdateInstances(ctx context.Co
 		return VirtualMachineScaleSetsUpdateInstancesPollerResponse{}, err
 	}
 	result := VirtualMachineScaleSetsUpdateInstancesPollerResponse{
-		RawResponse: resp.Response,
-	}
-	pt, err := armcore.NewLROPoller("VirtualMachineScaleSetsClient.UpdateInstances", "", resp, client.con.Pipeline(), client.updateInstancesHandleError)
-	if err != nil {
-		return VirtualMachineScaleSetsUpdateInstancesPollerResponse{}, err
-	}
-	poller := &virtualMachineScaleSetsUpdateInstancesPoller{
-		pt: pt,
-	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetsUpdateInstancesResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
-	}
-	return result, nil
-}
-
-// ResumeUpdateInstances creates a new VirtualMachineScaleSetsUpdateInstancesPoller from the specified resume token.
-// token - The value must come from a previous call to VirtualMachineScaleSetsUpdateInstancesPoller.ResumeToken().
-func (client *VirtualMachineScaleSetsClient) ResumeUpdateInstances(ctx context.Context, token string) (VirtualMachineScaleSetsUpdateInstancesPollerResponse, error) {
-	pt, err := armcore.NewLROPollerFromResumeToken("VirtualMachineScaleSetsClient.UpdateInstances", token, client.con.Pipeline(), client.updateInstancesHandleError)
-	if err != nil {
-		return VirtualMachineScaleSetsUpdateInstancesPollerResponse{}, err
-	}
-	poller := &virtualMachineScaleSetsUpdateInstancesPoller{
-		pt: pt,
-	}
-	resp, err := poller.Poll(ctx)
-	if err != nil {
-		return VirtualMachineScaleSetsUpdateInstancesPollerResponse{}, err
-	}
-	result := VirtualMachineScaleSetsUpdateInstancesPollerResponse{
 		RawResponse: resp,
 	}
-	result.Poller = poller
-	result.PollUntilDone = func(ctx context.Context, frequency time.Duration) (VirtualMachineScaleSetsUpdateInstancesResponse, error) {
-		return poller.pollUntilDone(ctx, frequency)
+	pt, err := armruntime.NewPoller("VirtualMachineScaleSetsClient.UpdateInstances", "", resp, client.pl, client.updateInstancesHandleError)
+	if err != nil {
+		return VirtualMachineScaleSetsUpdateInstancesPollerResponse{}, err
+	}
+	result.Poller = &VirtualMachineScaleSetsUpdateInstancesPoller{
+		pt: pt,
 	}
 	return result, nil
 }
 
 // UpdateInstances - Upgrades one or more virtual machines to the latest SKU set in the VM scale set model.
 // If the operation fails it returns a generic error.
-func (client *VirtualMachineScaleSetsClient) updateInstances(ctx context.Context, resourceGroupName string, vmScaleSetName string, vmInstanceIDs VirtualMachineScaleSetVMInstanceRequiredIDs, options *VirtualMachineScaleSetsBeginUpdateInstancesOptions) (*azcore.Response, error) {
+func (client *VirtualMachineScaleSetsClient) updateInstances(ctx context.Context, resourceGroupName string, vmScaleSetName string, vmInstanceIDs VirtualMachineScaleSetVMInstanceRequiredIDs, options *VirtualMachineScaleSetsBeginUpdateInstancesOptions) (*http.Response, error) {
 	req, err := client.updateInstancesCreateRequest(ctx, resourceGroupName, vmScaleSetName, vmInstanceIDs, options)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	if !resp.HasStatusCode(http.StatusOK, http.StatusAccepted) {
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
 		return nil, client.updateInstancesHandleError(resp)
 	}
 	return resp, nil
 }
 
 // updateInstancesCreateRequest creates the UpdateInstances request.
-func (client *VirtualMachineScaleSetsClient) updateInstancesCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, vmInstanceIDs VirtualMachineScaleSetVMInstanceRequiredIDs, options *VirtualMachineScaleSetsBeginUpdateInstancesOptions) (*azcore.Request, error) {
+func (client *VirtualMachineScaleSetsClient) updateInstancesCreateRequest(ctx context.Context, resourceGroupName string, vmScaleSetName string, vmInstanceIDs VirtualMachineScaleSetVMInstanceRequiredIDs, options *VirtualMachineScaleSetsBeginUpdateInstancesOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/manualupgrade"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1987,25 +1577,24 @@ func (client *VirtualMachineScaleSetsClient) updateInstancesCreateRequest(ctx co
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := azcore.NewRequest(ctx, http.MethodPost, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.ep, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
-	reqQP := req.URL.Query()
+	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-12-01")
-	req.URL.RawQuery = reqQP.Encode()
-	return req, req.MarshalAsJSON(vmInstanceIDs)
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	return req, runtime.MarshalAsJSON(req, vmInstanceIDs)
 }
 
 // updateInstancesHandleError handles the UpdateInstances error response.
-func (client *VirtualMachineScaleSetsClient) updateInstancesHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *VirtualMachineScaleSetsClient) updateInstancesHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	if len(body) == 0 {
-		return azcore.NewResponseError(errors.New(resp.Status), resp.Response)
+		return runtime.NewResponseError(errors.New(resp.Status), resp)
 	}
-	return azcore.NewResponseError(errors.New(string(body)), resp.Response)
+	return runtime.NewResponseError(errors.New(string(body)), resp)
 }

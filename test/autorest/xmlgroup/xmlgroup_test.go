@@ -9,8 +9,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"github.com/Azure/azure-sdk-for-go/sdk/to"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/google/go-cmp/cmp"
 )
 
@@ -24,7 +24,7 @@ func toTimePtr(layout string, value string) *time.Time {
 
 func newXMLClient() *XMLClient {
 	return NewXMLClient(NewDefaultConnection(&ConnectionOptions{
-		Logging: azcore.LogOptions{
+		Logging: policy.LogOptions{
 			IncludeBody: true,
 		},
 	}))

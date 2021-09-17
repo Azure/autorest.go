@@ -1,4 +1,5 @@
-// +build go1.13
+//go:build go1.16
+// +build go1.16
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -10,7 +11,8 @@ package filegroup
 import (
 	"context"
 	"fmt"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
@@ -36,36 +38,35 @@ func (client *FilesClient) GetEmptyFile(ctx context.Context, options *FilesGetEm
 	if err != nil {
 		return FilesGetEmptyFileResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return FilesGetEmptyFileResponse{}, client.getEmptyFileHandleError(resp)
 	}
-	return FilesGetEmptyFileResponse{RawResponse: resp.Response}, nil
+	return FilesGetEmptyFileResponse{RawResponse: resp}, nil
 }
 
 // getEmptyFileCreateRequest creates the GetEmptyFile request.
-func (client *FilesClient) getEmptyFileCreateRequest(ctx context.Context, options *FilesGetEmptyFileOptions) (*azcore.Request, error) {
+func (client *FilesClient) getEmptyFileCreateRequest(ctx context.Context, options *FilesGetEmptyFileOptions) (*policy.Request, error) {
 	urlPath := "/files/stream/empty"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
 	req.SkipBodyDownload()
-	req.Header.Set("Accept", "image/png, application/json")
+	req.Raw().Header.Set("Accept", "image/png, application/json")
 	return req, nil
 }
 
 // getEmptyFileHandleError handles the GetEmptyFile error response.
-func (client *FilesClient) getEmptyFileHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *FilesClient) getEmptyFileHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetFile - Get file
@@ -79,36 +80,35 @@ func (client *FilesClient) GetFile(ctx context.Context, options *FilesGetFileOpt
 	if err != nil {
 		return FilesGetFileResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return FilesGetFileResponse{}, client.getFileHandleError(resp)
 	}
-	return FilesGetFileResponse{RawResponse: resp.Response}, nil
+	return FilesGetFileResponse{RawResponse: resp}, nil
 }
 
 // getFileCreateRequest creates the GetFile request.
-func (client *FilesClient) getFileCreateRequest(ctx context.Context, options *FilesGetFileOptions) (*azcore.Request, error) {
+func (client *FilesClient) getFileCreateRequest(ctx context.Context, options *FilesGetFileOptions) (*policy.Request, error) {
 	urlPath := "/files/stream/nonempty"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
 	req.SkipBodyDownload()
-	req.Header.Set("Accept", "image/png, application/json")
+	req.Raw().Header.Set("Accept", "image/png, application/json")
 	return req, nil
 }
 
 // getFileHandleError handles the GetFile error response.
-func (client *FilesClient) getFileHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *FilesClient) getFileHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetFileLarge - Get a large file
@@ -122,34 +122,33 @@ func (client *FilesClient) GetFileLarge(ctx context.Context, options *FilesGetFi
 	if err != nil {
 		return FilesGetFileLargeResponse{}, err
 	}
-	if !resp.HasStatusCode(http.StatusOK) {
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return FilesGetFileLargeResponse{}, client.getFileLargeHandleError(resp)
 	}
-	return FilesGetFileLargeResponse{RawResponse: resp.Response}, nil
+	return FilesGetFileLargeResponse{RawResponse: resp}, nil
 }
 
 // getFileLargeCreateRequest creates the GetFileLarge request.
-func (client *FilesClient) getFileLargeCreateRequest(ctx context.Context, options *FilesGetFileLargeOptions) (*azcore.Request, error) {
+func (client *FilesClient) getFileLargeCreateRequest(ctx context.Context, options *FilesGetFileLargeOptions) (*policy.Request, error) {
 	urlPath := "/files/stream/verylarge"
-	req, err := azcore.NewRequest(ctx, http.MethodGet, azcore.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Telemetry(telemetryInfo)
 	req.SkipBodyDownload()
-	req.Header.Set("Accept", "image/png, application/json")
+	req.Raw().Header.Set("Accept", "image/png, application/json")
 	return req, nil
 }
 
 // getFileLargeHandleError handles the GetFileLarge error response.
-func (client *FilesClient) getFileLargeHandleError(resp *azcore.Response) error {
-	body, err := resp.Payload()
+func (client *FilesClient) getFileLargeHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
 	if err != nil {
-		return azcore.NewResponseError(err, resp.Response)
+		return runtime.NewResponseError(err, resp)
 	}
 	errType := Error{raw: string(body)}
-	if err := resp.UnmarshalAsJSON(&errType); err != nil {
-		return azcore.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp.Response)
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
-	return azcore.NewResponseError(&errType, resp.Response)
+	return runtime.NewResponseError(&errType, resp)
 }
