@@ -17,7 +17,8 @@
     "noUnusedParameters": true,
     "target": "es2018",
     "types": [
-      "node"
+      "node",
+      "jest"
     ],
     "lib": [
       "es2018", 
@@ -25,5 +26,6 @@
     ],
     "experimentalDecorators": true,
     "newLine": "LF",
-  }
+  },
+  "include": ["src/**/*.ts", "definitions/**/*.d.ts", "test/**/*.ts"]
 }
