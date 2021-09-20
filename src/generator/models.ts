@@ -6,7 +6,7 @@
 import { Session } from '@autorest/extension-base';
 import { comment } from '@azure-tools/codegen';
 import { ByteArraySchema, CodeModel, ComplexSchema, DictionarySchema, GroupProperty, ObjectSchema, Language, SchemaType, Parameter, Property } from '@autorest/codemodel';
-import { values } from '@azure-tools/linq';
+import { length, values } from '@azure-tools/linq';
 import { isArraySchema, isObjectSchema, hasAdditionalProperties, hasPolymorphicField, commentLength } from '../common/helpers';
 import { contentPreamble, sortAscending } from './helpers';
 import { ImportManager } from './imports';
@@ -462,7 +462,8 @@ function generateJSONUnmarshaller(imports: ImportManager, obj: ObjectSchema, str
   if (obj.language.go!.errorType || obj.language.go!.inheritedErrorType === 'child') {
     unmarshaller += `\t${receiver}.raw = string(data)\n`;
   }
-  if (obj.discriminator || obj.children?.immediate && isObjectSchema(obj.children.immediate[0])) {
+  // checking obj.discriminator isn't enough, also check that there are actual child types
+  if ((obj.discriminator && length(obj.discriminator.all) > 0) || obj.children?.immediate && isObjectSchema(obj.children.immediate[0])) {
     unmarshaller += `\treturn ${receiver}.unmarshalInternal(rawMsg)\n`;
   } else {
     unmarshaller += generateJSONUnmarshallerBody(obj, structDef, imports, parentType);

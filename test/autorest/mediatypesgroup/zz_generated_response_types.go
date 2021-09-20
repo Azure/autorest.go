@@ -10,6 +10,18 @@ package mediatypesgroup
 
 import "net/http"
 
+// MediaTypesClientAnalyzeBodyNoAcceptHeaderResponse contains the response from method MediaTypesClient.AnalyzeBodyNoAcceptHeader.
+type MediaTypesClientAnalyzeBodyNoAcceptHeaderResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// MediaTypesClientAnalyzeBodyNoAcceptHeaderWithSourcePathResponse contains the response from method MediaTypesClient.AnalyzeBodyNoAcceptHeaderWithSourcePath.
+type MediaTypesClientAnalyzeBodyNoAcceptHeaderWithSourcePathResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
 // MediaTypesClientAnalyzeBodyResponse contains the response from method MediaTypesClient.AnalyzeBody.
 type MediaTypesClientAnalyzeBodyResponse struct {
 	MediaTypesClientAnalyzeBodyResult

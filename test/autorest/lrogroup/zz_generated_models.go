@@ -282,6 +282,12 @@ type LROsBeginDeleteProvisioning202Deletingcanceled200Options struct {
 	// placeholder for future optional parameters
 }
 
+// LROsBeginPatch200SucceededIgnoreHeadersOptions contains the optional parameters for the LROs.BeginPatch200SucceededIgnoreHeaders method.
+type LROsBeginPatch200SucceededIgnoreHeadersOptions struct {
+	// Product to patch
+	Product *Product
+}
+
 // LROsBeginPost200WithPayloadOptions contains the optional parameters for the LROs.BeginPost200WithPayload method.
 type LROsBeginPost200WithPayloadOptions struct {
 	// placeholder for future optional parameters

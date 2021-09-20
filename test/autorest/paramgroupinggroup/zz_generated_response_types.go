@@ -28,6 +28,12 @@ type ParameterGroupingPostRequiredResponse struct {
 	RawResponse *http.Response
 }
 
+// ParameterGroupingPostReservedWordsResponse contains the response from method ParameterGrouping.PostReservedWords.
+type ParameterGroupingPostReservedWordsResponse struct {
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
 // ParameterGroupingPostSharedParameterGroupObjectResponse contains the response from method ParameterGrouping.PostSharedParameterGroupObject.
 type ParameterGroupingPostSharedParameterGroupObjectResponse struct {
 	// RawResponse contains the underlying HTTP response.

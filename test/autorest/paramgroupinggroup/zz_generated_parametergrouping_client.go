@@ -188,6 +188,55 @@ func (client *ParameterGroupingClient) postRequiredHandleError(resp *http.Respon
 	return runtime.NewResponseError(&errType, resp)
 }
 
+// PostReservedWords - Post a grouped parameters with reserved words
+// If the operation fails it returns the *Error error type.
+func (client *ParameterGroupingClient) PostReservedWords(ctx context.Context, options *ParameterGroupingPostReservedWordsParameters) (ParameterGroupingPostReservedWordsResponse, error) {
+	req, err := client.postReservedWordsCreateRequest(ctx, options)
+	if err != nil {
+		return ParameterGroupingPostReservedWordsResponse{}, err
+	}
+	resp, err := client.con.Pipeline().Do(req)
+	if err != nil {
+		return ParameterGroupingPostReservedWordsResponse{}, err
+	}
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
+		return ParameterGroupingPostReservedWordsResponse{}, client.postReservedWordsHandleError(resp)
+	}
+	return ParameterGroupingPostReservedWordsResponse{RawResponse: resp}, nil
+}
+
+// postReservedWordsCreateRequest creates the PostReservedWords request.
+func (client *ParameterGroupingClient) postReservedWordsCreateRequest(ctx context.Context, options *ParameterGroupingPostReservedWordsParameters) (*policy.Request, error) {
+	urlPath := "/parameterGrouping/postReservedWords"
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	if err != nil {
+		return nil, err
+	}
+	reqQP := req.Raw().URL.Query()
+	if options != nil && options.From != nil {
+		reqQP.Set("from", *options.From)
+	}
+	if options != nil && options.Accept != nil {
+		reqQP.Set("accept", *options.Accept)
+	}
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, nil
+}
+
+// postReservedWordsHandleError handles the PostReservedWords error response.
+func (client *ParameterGroupingClient) postReservedWordsHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
+	if err != nil {
+		return runtime.NewResponseError(err, resp)
+	}
+	errType := Error{raw: string(body)}
+	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
+		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
+	}
+	return runtime.NewResponseError(&errType, resp)
+}
+
 // PostSharedParameterGroupObject - Post parameters with a shared parameter group object
 // If the operation fails it returns the *Error error type.
 func (client *ParameterGroupingClient) PostSharedParameterGroupObject(ctx context.Context, options *FirstParameterGroup) (ParameterGroupingPostSharedParameterGroupObjectResponse, error) {

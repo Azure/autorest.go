@@ -788,69 +788,6 @@ func (c ImpalaAuthenticationType) ToPtr() *ImpalaAuthenticationType {
 	return &c
 }
 
-// IntegrationRuntimeEdition - The edition for the SSIS Integration Runtime
-type IntegrationRuntimeEdition string
-
-const (
-	IntegrationRuntimeEditionEnterprise IntegrationRuntimeEdition = "Enterprise"
-	IntegrationRuntimeEditionStandard   IntegrationRuntimeEdition = "Standard"
-)
-
-// PossibleIntegrationRuntimeEditionValues returns the possible values for the IntegrationRuntimeEdition const type.
-func PossibleIntegrationRuntimeEditionValues() []IntegrationRuntimeEdition {
-	return []IntegrationRuntimeEdition{
-		IntegrationRuntimeEditionEnterprise,
-		IntegrationRuntimeEditionStandard,
-	}
-}
-
-// ToPtr returns a *IntegrationRuntimeEdition pointing to the current value.
-func (c IntegrationRuntimeEdition) ToPtr() *IntegrationRuntimeEdition {
-	return &c
-}
-
-// IntegrationRuntimeEntityReferenceType - The type of this referenced entity.
-type IntegrationRuntimeEntityReferenceType string
-
-const (
-	IntegrationRuntimeEntityReferenceTypeIntegrationRuntimeReference IntegrationRuntimeEntityReferenceType = "IntegrationRuntimeReference"
-	IntegrationRuntimeEntityReferenceTypeLinkedServiceReference      IntegrationRuntimeEntityReferenceType = "LinkedServiceReference"
-)
-
-// PossibleIntegrationRuntimeEntityReferenceTypeValues returns the possible values for the IntegrationRuntimeEntityReferenceType const type.
-func PossibleIntegrationRuntimeEntityReferenceTypeValues() []IntegrationRuntimeEntityReferenceType {
-	return []IntegrationRuntimeEntityReferenceType{
-		IntegrationRuntimeEntityReferenceTypeIntegrationRuntimeReference,
-		IntegrationRuntimeEntityReferenceTypeLinkedServiceReference,
-	}
-}
-
-// ToPtr returns a *IntegrationRuntimeEntityReferenceType pointing to the current value.
-func (c IntegrationRuntimeEntityReferenceType) ToPtr() *IntegrationRuntimeEntityReferenceType {
-	return &c
-}
-
-// IntegrationRuntimeLicenseType - License type for bringing your own license scenario.
-type IntegrationRuntimeLicenseType string
-
-const (
-	IntegrationRuntimeLicenseTypeBasePrice       IntegrationRuntimeLicenseType = "BasePrice"
-	IntegrationRuntimeLicenseTypeLicenseIncluded IntegrationRuntimeLicenseType = "LicenseIncluded"
-)
-
-// PossibleIntegrationRuntimeLicenseTypeValues returns the possible values for the IntegrationRuntimeLicenseType const type.
-func PossibleIntegrationRuntimeLicenseTypeValues() []IntegrationRuntimeLicenseType {
-	return []IntegrationRuntimeLicenseType{
-		IntegrationRuntimeLicenseTypeBasePrice,
-		IntegrationRuntimeLicenseTypeLicenseIncluded,
-	}
-}
-
-// ToPtr returns a *IntegrationRuntimeLicenseType pointing to the current value.
-func (c IntegrationRuntimeLicenseType) ToPtr() *IntegrationRuntimeLicenseType {
-	return &c
-}
-
 // IntegrationRuntimeReferenceType - Type of integration runtime.
 type IntegrationRuntimeReferenceType string
 
@@ -867,68 +804,6 @@ func PossibleIntegrationRuntimeReferenceTypeValues() []IntegrationRuntimeReferen
 
 // ToPtr returns a *IntegrationRuntimeReferenceType pointing to the current value.
 func (c IntegrationRuntimeReferenceType) ToPtr() *IntegrationRuntimeReferenceType {
-	return &c
-}
-
-// IntegrationRuntimeSsisCatalogPricingTier - The pricing tier for the catalog database. The valid values could be found in https://azure.microsoft.com/en-us/pricing/details/sql-database/
-type IntegrationRuntimeSsisCatalogPricingTier string
-
-const (
-	IntegrationRuntimeSsisCatalogPricingTierBasic     IntegrationRuntimeSsisCatalogPricingTier = "Basic"
-	IntegrationRuntimeSsisCatalogPricingTierPremium   IntegrationRuntimeSsisCatalogPricingTier = "Premium"
-	IntegrationRuntimeSsisCatalogPricingTierPremiumRS IntegrationRuntimeSsisCatalogPricingTier = "PremiumRS"
-	IntegrationRuntimeSsisCatalogPricingTierStandard  IntegrationRuntimeSsisCatalogPricingTier = "Standard"
-)
-
-// PossibleIntegrationRuntimeSsisCatalogPricingTierValues returns the possible values for the IntegrationRuntimeSsisCatalogPricingTier const type.
-func PossibleIntegrationRuntimeSsisCatalogPricingTierValues() []IntegrationRuntimeSsisCatalogPricingTier {
-	return []IntegrationRuntimeSsisCatalogPricingTier{
-		IntegrationRuntimeSsisCatalogPricingTierBasic,
-		IntegrationRuntimeSsisCatalogPricingTierPremium,
-		IntegrationRuntimeSsisCatalogPricingTierPremiumRS,
-		IntegrationRuntimeSsisCatalogPricingTierStandard,
-	}
-}
-
-// ToPtr returns a *IntegrationRuntimeSsisCatalogPricingTier pointing to the current value.
-func (c IntegrationRuntimeSsisCatalogPricingTier) ToPtr() *IntegrationRuntimeSsisCatalogPricingTier {
-	return &c
-}
-
-// IntegrationRuntimeState - The state of integration runtime.
-type IntegrationRuntimeState string
-
-const (
-	IntegrationRuntimeStateAccessDenied     IntegrationRuntimeState = "AccessDenied"
-	IntegrationRuntimeStateInitial          IntegrationRuntimeState = "Initial"
-	IntegrationRuntimeStateLimited          IntegrationRuntimeState = "Limited"
-	IntegrationRuntimeStateNeedRegistration IntegrationRuntimeState = "NeedRegistration"
-	IntegrationRuntimeStateOffline          IntegrationRuntimeState = "Offline"
-	IntegrationRuntimeStateOnline           IntegrationRuntimeState = "Online"
-	IntegrationRuntimeStateStarted          IntegrationRuntimeState = "Started"
-	IntegrationRuntimeStateStarting         IntegrationRuntimeState = "Starting"
-	IntegrationRuntimeStateStopped          IntegrationRuntimeState = "Stopped"
-	IntegrationRuntimeStateStopping         IntegrationRuntimeState = "Stopping"
-)
-
-// PossibleIntegrationRuntimeStateValues returns the possible values for the IntegrationRuntimeState const type.
-func PossibleIntegrationRuntimeStateValues() []IntegrationRuntimeState {
-	return []IntegrationRuntimeState{
-		IntegrationRuntimeStateAccessDenied,
-		IntegrationRuntimeStateInitial,
-		IntegrationRuntimeStateLimited,
-		IntegrationRuntimeStateNeedRegistration,
-		IntegrationRuntimeStateOffline,
-		IntegrationRuntimeStateOnline,
-		IntegrationRuntimeStateStarted,
-		IntegrationRuntimeStateStarting,
-		IntegrationRuntimeStateStopped,
-		IntegrationRuntimeStateStopping,
-	}
-}
-
-// ToPtr returns a *IntegrationRuntimeState pointing to the current value.
-func (c IntegrationRuntimeState) ToPtr() *IntegrationRuntimeState {
 	return &c
 }
 

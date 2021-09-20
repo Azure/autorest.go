@@ -529,41 +529,6 @@ func unmarshalCopyTranslatorClassificationArray(rawMsg json.RawMessage) ([]CopyT
 	return fArray, nil
 }
 
-func unmarshalCustomSetupBaseClassification(rawMsg json.RawMessage) (CustomSetupBaseClassification, error) {
-	if rawMsg == nil {
-		return nil, nil
-	}
-	var m map[string]interface{}
-	if err := json.Unmarshal(rawMsg, &m); err != nil {
-		return nil, err
-	}
-	var b CustomSetupBaseClassification
-	switch m["type"] {
-	default:
-		b = &CustomSetupBase{}
-	}
-	return b, json.Unmarshal(rawMsg, b)
-}
-
-func unmarshalCustomSetupBaseClassificationArray(rawMsg json.RawMessage) ([]CustomSetupBaseClassification, error) {
-	if rawMsg == nil {
-		return nil, nil
-	}
-	var rawMessages []json.RawMessage
-	if err := json.Unmarshal(rawMsg, &rawMessages); err != nil {
-		return nil, err
-	}
-	fArray := make([]CustomSetupBaseClassification, len(rawMessages))
-	for index, rawMessage := range rawMessages {
-		f, err := unmarshalCustomSetupBaseClassification(rawMessage)
-		if err != nil {
-			return nil, err
-		}
-		fArray[index] = f
-	}
-	return fArray, nil
-}
-
 func unmarshalDataFlowClassification(rawMsg json.RawMessage) (DataFlowClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
@@ -1157,10 +1122,6 @@ func unmarshalIntegrationRuntimeClassification(rawMsg json.RawMessage) (Integrat
 	}
 	var b IntegrationRuntimeClassification
 	switch m["type"] {
-	case string(IntegrationRuntimeTypeManaged):
-		b = &ManagedIntegrationRuntime{}
-	case string(IntegrationRuntimeTypeSelfHosted):
-		b = &SelfHostedIntegrationRuntime{}
 	default:
 		b = &IntegrationRuntime{}
 	}
@@ -1178,45 +1139,6 @@ func unmarshalIntegrationRuntimeClassificationArray(rawMsg json.RawMessage) ([]I
 	fArray := make([]IntegrationRuntimeClassification, len(rawMessages))
 	for index, rawMessage := range rawMessages {
 		f, err := unmarshalIntegrationRuntimeClassification(rawMessage)
-		if err != nil {
-			return nil, err
-		}
-		fArray[index] = f
-	}
-	return fArray, nil
-}
-
-func unmarshalLinkedIntegrationRuntimeTypeClassification(rawMsg json.RawMessage) (LinkedIntegrationRuntimeTypeClassification, error) {
-	if rawMsg == nil {
-		return nil, nil
-	}
-	var m map[string]interface{}
-	if err := json.Unmarshal(rawMsg, &m); err != nil {
-		return nil, err
-	}
-	var b LinkedIntegrationRuntimeTypeClassification
-	switch m["authorizationType"] {
-	case "Key":
-		b = &LinkedIntegrationRuntimeKeyAuthorization{}
-	case "RBAC":
-		b = &LinkedIntegrationRuntimeRbacAuthorization{}
-	default:
-		b = &LinkedIntegrationRuntimeType{}
-	}
-	return b, json.Unmarshal(rawMsg, b)
-}
-
-func unmarshalLinkedIntegrationRuntimeTypeClassificationArray(rawMsg json.RawMessage) ([]LinkedIntegrationRuntimeTypeClassification, error) {
-	if rawMsg == nil {
-		return nil, nil
-	}
-	var rawMessages []json.RawMessage
-	if err := json.Unmarshal(rawMsg, &rawMessages); err != nil {
-		return nil, err
-	}
-	fArray := make([]LinkedIntegrationRuntimeTypeClassification, len(rawMessages))
-	for index, rawMessage := range rawMessages {
-		f, err := unmarshalLinkedIntegrationRuntimeTypeClassification(rawMessage)
 		if err != nil {
 			return nil, err
 		}
