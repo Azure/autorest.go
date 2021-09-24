@@ -94,10 +94,8 @@ function generateStructs(imports: ImportManager, objects?: ObjectSchema[]): Stru
   for (const obj of values(objects)) {
     const structDef = generateStruct(imports, obj.language.go!, obj.properties);
     // now add the parent type
-    let parentType: ObjectSchema | undefined;
     for (const parent of values(obj.parents?.immediate)) {
       if (isObjectSchema(parent)) {
-        parentType = parent;
         structDef.ComposedOf.push(parent.language.go!.name);
       }
     }
@@ -128,10 +126,10 @@ function generateStructs(imports: ImportManager, objects?: ObjectSchema[]): Stru
     }
     const needs = determineMarshallers(obj);
     if (needs.intM) {
-      generateInternalMarshaller(obj, structDef, imports, parentType);
+      generateInternalMarshaller(obj, structDef, imports);
     }
     if (needs.intU) {
-      generateInternalUnmarshaller(obj, structDef, imports, parentType);
+      generateInternalUnmarshaller(obj, structDef, imports);
     }
     if (needs.M) {
       imports.add('reflect');
@@ -140,11 +138,11 @@ function generateStructs(imports: ImportManager, objects?: ObjectSchema[]): Stru
       if (obj.language.go!.byteArrayFormat) {
         structDef.HasJSONByteArray = true;
       }
-      generateJSONMarshaller(imports, obj, structDef, parentType);
+      generateJSONMarshaller(imports, obj, structDef);
     }
     if (needs.U) {
       structDef.HasJSONUnmarshaller = true;
-      generateJSONUnmarshaller(imports, obj, structDef, parentType);
+      generateJSONUnmarshaller(imports, obj, structDef);
     }
     structTypes.push(structDef);
   }
@@ -174,9 +172,7 @@ function determineMarshallers(obj: ObjectSchema): Marshallers {
   //   inheritance
   //   discriminated types
 
-  const parents = recursiveDetermineMarshallers(obj, true);
-  const children = recursiveDetermineMarshallers(obj, false);
-  return mergeMarshallers(parents, children);
+  return recursiveDetermineMarshallers(obj, new Array<string>());
 }
 
 // determines the marshallers needed for this specific object.
@@ -215,56 +211,32 @@ function determineMarshallersForObj(obj: ObjectSchema): Marshallers {
 }
 
 // walks the inheritance graph of obj to determine marshallers.
-// when parents is true, the parents are walked, else the children.
-function recursiveDetermineMarshallers(obj: ObjectSchema, parents: boolean): Marshallers {
-  let cs: ComplexSchema[] | undefined;
-  if (parents) {
-    cs = obj.parents?.immediate;
-  } else {
-    cs = obj.children?.immediate;
-  }
-
+// visited tracks the name of the nodes that have been visited.
+function recursiveDetermineMarshallers(obj: ObjectSchema, visited: Array<string>): Marshallers {
   // first check ourselves
   let result = determineMarshallersForObj(obj);
+  visited.push(obj.language.go!.name);
 
-  // we must include any siblings in the calculation.  if one sibling
-  // requires custom marshallers then they all need them.  consider the
-  // following example (taken from body-complex.json)
-  //   Pet -> Cat
-  //   Pet -> Dog
-  // Cat requires a custom marshaller, so one will be added to Pet too.
-  // Dog does not require a custom marshaller, however if we don't give
-  // it one, it will inherit the one from Pet, causing Dog's fields to
-  // be omitted from the payload.
-  if (obj.parents) {
-    let parent: ObjectSchema | undefined;
-    for (const cs of values(<ComplexSchema[]>obj.parents.immediate)) {
-      if (!isObjectSchema(cs)) {
+  const visit = function (immediate: ComplexSchema[] | undefined) {
+    for (const c of values(immediate)) {
+      if (!isObjectSchema(c)) {
         continue;
       }
-      parent = cs;
-      break;
-    }
-    for (const sibling of values(parent?.children?.immediate)) {
-      if (!isObjectSchema(sibling)) {
+      if (visited.includes(c.language.go!.name)) {
+        // prevent infinite recursion
         continue;
       }
-      const sibres = determineMarshallersForObj(sibling);
-      result = mergeMarshallers(result, sibres);
+      // if we already know we need all kinds don't bother to keep walking the hierarchy
+      if (!result.M || !result.U || !result.intM || !result.intU) {
+        const other = recursiveDetermineMarshallers(c, visited);
+        result = mergeMarshallers(result, other);
+      }
     }
   }
 
   // now check children/parents
-  for (const c of values(cs)) {
-    if (!isObjectSchema(c)) {
-      continue;
-    }
-    // if we already know we need all kinds don't bother to keep walking the hierarchy
-    if (!result.M || !result.U || !result.intM || !result.intU) {
-      const other = recursiveDetermineMarshallers(c, parents);
-      result = mergeMarshallers(result, other);
-    }
-  }
+  visit(obj.parents?.immediate);
+  visit(obj.children?.immediate);
 
   // finally, understand our place in the hierarchy
   if (obj.children && obj.parents) {
@@ -273,7 +245,12 @@ function recursiveDetermineMarshallers(obj: ObjectSchema, parents: boolean): Mar
     result.intU = result.U;
   } else if (obj.children) {
     // root also needs both
-    result.intM = result.M;
+    if (!result.intM) {
+      // there's a corner-case here where result.M will be false for
+      // the root discriminator, however we already know we need an
+      // internal marshaller.  don't stomp over result.intM when true.
+      result.intM = result.M;
+    }
     result.intU = result.U;
   } else if (obj.parents) {
     // leaf requires no internal marshallers
@@ -322,7 +299,7 @@ function generateDiscriminatorMarkerMethod(obj: ObjectSchema, structDef: StructD
   structDef.Methods.push({ name: interfaceMethod, desc: `${interfaceMethod} implements the ${obj.language.go!.discriminatorInterface} interface for type ${typeName}.`, text: method });
 }
 
-function generateInternalMarshaller(obj: ObjectSchema, structDef: StructDef, imports: ImportManager, parentType?: ObjectSchema) {
+function generateInternalMarshaller(obj: ObjectSchema, structDef: StructDef, imports: ImportManager) {
   if (obj.language.go!.errorType || obj.language.go!.inheritedErrorType) {
     // errors don't need custom marshallers
     return;
@@ -334,35 +311,35 @@ function generateInternalMarshaller(obj: ObjectSchema, structDef: StructDef, imp
   let paramName = '';
   if (obj.discriminator) {
     paramType = ' ' + obj.discriminator.property.schema.language.go!.name;
-    paramName = 'discValue';
+    paramName = ', discValue';
   }
-  let marshalInteral = `func (${receiver} ${typeName}) marshalInternal(${paramName}${paramType}) map[string]interface{} {\n`;
-  if (parentType) {
-    // if the parent isn't a discriminator it won't have a param
+  let marshalInteral = `func (${receiver} ${typeName}) marshalInternal(objectMap map[string]interface{}${paramName}${paramType}) {\n`;
+  for (const parent of values(obj.parents?.immediate)) {
     let parentParam = '';
-    if (parentType.discriminator) {
-      parentParam = paramName;
+    if (isObjectSchema(parent)) {
+      // if we have a discriminator value and the parent is a discriminator then we
+      // know we need to call the marshalInternal() method with the discriminator value
+      if (obj.discriminatorValue && parent.discriminator) {
+        parentParam = paramName;
+      }
+      marshalInteral += `\t${receiver}.${parent.language.go!.name}.marshalInternal(objectMap${parentParam})\n`;
     }
-    marshalInteral += `\tobjectMap := ${receiver}.${parentType.language.go!.name}.marshalInternal(${parentParam})\n`;
-  } else {
-    marshalInteral += '\tobjectMap := make(map[string]interface{})\n';
   }
   marshalInteral += generateJSONMarshallerBody(obj, structDef, imports);
-  marshalInteral += '\treturn objectMap\n';
   marshalInteral += '}\n\n';
   structDef.Methods.push({ name: 'marshalInternal', desc: '', text: marshalInteral });
 }
 
-function generateInternalUnmarshaller(obj: ObjectSchema, structDef: StructDef, imports: ImportManager, parentType?: ObjectSchema) {
+function generateInternalUnmarshaller(obj: ObjectSchema, structDef: StructDef, imports: ImportManager) {
   const typeName = obj.language.go!.name;
   const receiver = structDef.receiverName();
   let unmarshalInternall = `func (${receiver} *${typeName}) unmarshalInternal(rawMsg map[string]json.RawMessage) error {\n`;
-  unmarshalInternall += generateJSONUnmarshallerBody(obj, structDef, imports, parentType);
+  unmarshalInternall += generateJSONUnmarshallerBody(obj, structDef, imports);
   unmarshalInternall += '}\n\n';
   structDef.Methods.push({ name: 'unmarshalInternal', desc: '', text: unmarshalInternall });
 }
 
-function generateJSONMarshaller(imports: ImportManager, obj: ObjectSchema, structDef: StructDef, parentType?: ObjectSchema) {
+function generateJSONMarshaller(imports: ImportManager, obj: ObjectSchema, structDef: StructDef) {
   if (obj.language.go!.errorType || obj.language.go!.inheritedErrorType) {
     // errors don't need custom marshallers
     return;
@@ -375,20 +352,23 @@ function generateJSONMarshaller(imports: ImportManager, obj: ObjectSchema, struc
   const typeName = structDef.Language.name;
   const receiver = structDef.receiverName();
   let marshaller = `func (${receiver} ${typeName}) MarshalJSON() ([]byte, error) {\n`;
+  marshaller += '\tobjectMap := make(map[string]interface{})\n';
   if (obj.discriminator) {
-    marshaller += `\tobjectMap := ${receiver}.marshalInternal(${obj.discriminatorValue})\n`;
+    marshaller += `\t${receiver}.marshalInternal(objectMap, ${obj.discriminatorValue})\n`;
   } else if (obj.children?.immediate && isObjectSchema(obj.children.immediate[0])) {
     // non-discriminated type inheritence case (no param)
-    marshaller += `\tobjectMap := ${receiver}.marshalInternal()\n`;
+    marshaller += `\t${receiver}.marshalInternal(objectMap)\n`;
   } else {
-    if (parentType) {
-      let internalParamName = '';
-      if (obj.discriminatorValue) {
-        internalParamName = obj.discriminatorValue;
+    for (const parent of values(obj.parents?.immediate)) {
+      if (isObjectSchema(parent)) {
+        let internalParamName = '';
+        // if we have a discriminator value and the parent is a discriminator then we
+        // know we need to call the marshalInternal() method with the discriminator value
+        if (obj.discriminatorValue && parent.discriminator) {
+          internalParamName = ', ' + obj.discriminatorValue;
+        }
+        marshaller += `\t${receiver}.${parent.language.go!.name}.marshalInternal(objectMap${internalParamName})\n`;
       }
-      marshaller += `\tobjectMap := ${receiver}.${parentType!.language.go!.name}.marshalInternal(${internalParamName})\n`;
-    } else {
-      marshaller += '\tobjectMap := make(map[string]interface{})\n';
     }
     marshaller += generateJSONMarshallerBody(obj, structDef, imports);
   }
@@ -444,7 +424,7 @@ function generateJSONMarshallerBody(obj: ObjectSchema, structDef: StructDef, imp
   return marshaller;
 }
 
-function generateJSONUnmarshaller(imports: ImportManager, obj: ObjectSchema, structDef: StructDef, parentType?: ObjectSchema) {
+function generateJSONUnmarshaller(imports: ImportManager, obj: ObjectSchema, structDef: StructDef) {
   // there's a corner-case where a derived type might not add any new fields (Cookiecuttershark).
   // in this case skip adding the unmarshaller as it's not necessary and doesn't compile.
   if (!structDef.Properties || structDef.Properties.length === 0) {
@@ -466,13 +446,13 @@ function generateJSONUnmarshaller(imports: ImportManager, obj: ObjectSchema, str
   if ((obj.discriminator && length(obj.discriminator.all) > 0) || obj.children?.immediate && isObjectSchema(obj.children.immediate[0])) {
     unmarshaller += `\treturn ${receiver}.unmarshalInternal(rawMsg)\n`;
   } else {
-    unmarshaller += generateJSONUnmarshallerBody(obj, structDef, imports, parentType);
+    unmarshaller += generateJSONUnmarshallerBody(obj, structDef, imports);
   }
   unmarshaller += '}\n\n';
   structDef.Methods.push({ name: 'UnmarshalJSON', desc: `UnmarshalJSON implements the json.Unmarshaller interface for type ${typeName}.`, text: unmarshaller });
 }
 
-function generateJSONUnmarshallerBody(obj: ObjectSchema, structDef: StructDef, imports: ImportManager, parentType?: ObjectSchema): string {
+function generateJSONUnmarshallerBody(obj: ObjectSchema, structDef: StructDef, imports: ImportManager): string {
   const receiver = structDef.receiverName();
   const addlProps = hasAdditionalProperties(obj);
   const emitAddlProps = function (tab: string, addlProps: DictionarySchema): string {
@@ -497,6 +477,13 @@ function generateJSONUnmarshallerBody(obj: ObjectSchema, structDef: StructDef, i
     addlPropsText += `${tab}\t\t}\n`;
     addlPropsText += `${tab}\t\tdelete(rawMsg, key)\n`;
     return addlPropsText;
+  }
+  let hasParentType = false;
+  for (const parent of values(obj.parents?.immediate)) {
+    if (isObjectSchema(parent)) {
+      hasParentType = true;
+      break;
+    }
   }
   let unmarshalBody = '';
   // handle the case where the type in the hierarchy doesn't contain any fields.
@@ -538,7 +525,7 @@ function generateJSONUnmarshallerBody(obj: ObjectSchema, structDef: StructDef, i
       unmarshalBody += '\t\t\t\tdelete(rawMsg, key)\n';
     }
     // if there's no parent type it's safe to unmarshal additional properties right here
-    if (addlProps && !parentType) {
+    if (addlProps && !hasParentType) {
       unmarshalBody += '\t\tdefault:\n';
       unmarshalBody += emitAddlProps('\t', addlProps);
     }
@@ -548,14 +535,15 @@ function generateJSONUnmarshallerBody(obj: ObjectSchema, structDef: StructDef, i
     unmarshalBody += '\t\t}\n';
     unmarshalBody += '\t}\n'; // end for key, val := range rawMsg
   }
-  if (parentType) {
-    if (!addlProps) {
-      unmarshalBody += `\treturn ${receiver}.${parentType.language.go!.name}.unmarshalInternal(rawMsg)\n`;
-    } else {
-      // unmarshal parent content first
-      unmarshalBody += `\tif err := ${receiver}.${parentType.language.go!.name}.unmarshalInternal(rawMsg); err != nil {\n`;
-      unmarshalBody += '\t\treturn err\n';
-      unmarshalBody += '\t}\n';
+  if (hasParentType) {
+    for (const parent of values(obj.parents?.immediate)) {
+      if (isObjectSchema(parent)) {
+        unmarshalBody += `\tif err := ${receiver}.${parent.language.go!.name}.unmarshalInternal(rawMsg); err != nil {\n`;
+        unmarshalBody += '\t\treturn err\n';
+        unmarshalBody += '\t}\n';
+      }
+    }
+    if (addlProps) {
       // now unmarshal additional properties
       unmarshalBody += '\tfor key, val := range rawMsg {\n';
       unmarshalBody += '\tvar err error\n';
@@ -564,12 +552,9 @@ function generateJSONUnmarshallerBody(obj: ObjectSchema, structDef: StructDef, i
       unmarshalBody += '\t\t\treturn err\n';
       unmarshalBody += '\t\t}\n';
       unmarshalBody += '\t}\n'; // end for key, val := range rawMsg
-      unmarshalBody += '\treturn nil\n';
     }
-  } else {
-    // nothing left to unmarshal
-    unmarshalBody += '\treturn nil\n';
   }
+  unmarshalBody += '\treturn nil\n';
   return unmarshalBody;
 }
 

@@ -82,6 +82,123 @@ type ErrorResponse struct {
 	Message *string `json:"message,omitempty" azure:"ro"`
 }
 
+// GeoJSONFeature - A valid GeoJSON Feature object type. Please refer to RFC 7946 [https://tools.ietf.org/html/rfc7946#section-3.2] for details.
+type GeoJSONFeature struct {
+	GeoJSONFeatureData
+	GeoJSONObject
+}
+
+// MarshalJSON implements the json.Marshaller interface for type GeoJSONFeature.
+func (g GeoJSONFeature) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	g.GeoJSONObject.marshalInternal(objectMap, GeoJSONObjectTypeGeoJSONFeature)
+	g.GeoJSONFeatureData.marshalInternal(objectMap)
+	return json.Marshal(objectMap)
+}
+
+type GeoJSONFeatureData struct {
+	// The type of the feature. The value depends on the data model the current feature is part of. Some data models may have an empty value.
+	FeatureType *string `json:"featureType,omitempty"`
+
+	// Identifier for the feature.
+	ID *string `json:"id,omitempty"`
+
+	// Properties can contain any additional metadata about the Feature. Value can be any JSON object or a JSON null value
+	Properties map[string]interface{} `json:"properties,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type GeoJSONFeatureData.
+func (g GeoJSONFeatureData) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	g.marshalInternal(objectMap)
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type GeoJSONFeatureData.
+func (g *GeoJSONFeatureData) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	return g.unmarshalInternal(rawMsg)
+}
+
+func (g GeoJSONFeatureData) marshalInternal(objectMap map[string]interface{}) {
+	populate(objectMap, "featureType", g.FeatureType)
+	populate(objectMap, "id", g.ID)
+	populate(objectMap, "properties", g.Properties)
+}
+
+func (g *GeoJSONFeatureData) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "featureType":
+			err = unpopulate(val, &g.FeatureType)
+			delete(rawMsg, key)
+		case "id":
+			err = unpopulate(val, &g.ID)
+			delete(rawMsg, key)
+		case "properties":
+			err = unpopulate(val, &g.Properties)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// GeoJSONObjectClassification provides polymorphic access to related types.
+// Call the interface's GetGeoJSONObject() method to access the common type.
+// Use a type switch to determine the concrete type.  The possible types are:
+// - *GeoJSONObject, *GeoJsonFeature
+type GeoJSONObjectClassification interface {
+	// GetGeoJSONObject returns the GeoJSONObject content of the underlying type.
+	GetGeoJSONObject() *GeoJSONObject
+}
+
+// GeoJSONObject - A valid GeoJSON object. Please refer to RFC 7946 [https://tools.ietf.org/html/rfc7946#section-3] for details.
+type GeoJSONObject struct {
+	// REQUIRED; Specifies the GeoJSON type. Must be one of the nine valid GeoJSON object types - Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon,
+	// GeometryCollection, Feature and
+	// FeatureCollection.
+	Type *GeoJSONObjectType `json:"type,omitempty"`
+}
+
+// GetGeoJSONObject implements the GeoJSONObjectClassification interface for type GeoJSONObject.
+func (g *GeoJSONObject) GetGeoJSONObject() *GeoJSONObject { return g }
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type GeoJSONObject.
+func (g *GeoJSONObject) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	return g.unmarshalInternal(rawMsg)
+}
+
+func (g GeoJSONObject) marshalInternal(objectMap map[string]interface{}, discValue GeoJSONObjectType) {
+	g.Type = &discValue
+	objectMap["type"] = g.Type
+}
+
+func (g *GeoJSONObject) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "type":
+			err = unpopulate(val, &g.Type)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 func populate(m map[string]interface{}, k string, v interface{}) {
 	if v == nil {
 		return
@@ -90,4 +207,11 @@ func populate(m map[string]interface{}, k string, v interface{}) {
 	} else if !reflect.ValueOf(v).IsNil() {
 		m[k] = v
 	}
+}
+
+func unpopulate(data json.RawMessage, v interface{}) error {
+	if data == nil {
+		return nil
+	}
+	return json.Unmarshal(data, v)
 }

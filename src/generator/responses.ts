@@ -8,7 +8,7 @@ import { comment } from '@azure-tools/codegen';
 import { CodeModel, ObjectSchema, Property } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
 import { commentLength, isObjectSchema, PagerInfo, PollerInfo } from '../common/helpers';
-import { contentPreamble, emitPoller, getClientPipeline, getFinalResponseEnvelopeName, sortAscending } from './helpers';
+import { contentPreamble, emitPoller, getClientPipeline, getFinalResponseEnvelopeName, sortAscending, substituteDiscriminatorTypeName } from './helpers';
 import { ImportManager } from './imports';
 import { generateStruct, StructDef, StructMethod } from './structs';
 
@@ -113,7 +113,7 @@ function generatePollUntilDoneForResponse(structDef: StructDef) {
     if (pagedResponse) {
       current = '.current';
     }
-    pollUntilDone += `\tresp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType${current}.${resultProp.language.go!.name})\n`;
+    pollUntilDone += `\tresp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType${current}.${substituteDiscriminatorTypeName(resultProp)})\n`;
   } else {
     // the operation doesn't return a model
     pollUntilDone += `\tresp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)\n`;

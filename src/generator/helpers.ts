@@ -103,6 +103,14 @@ export function substituteDiscriminator(schema: Schema, elemByVal: boolean): str
   }
 }
 
+// if a property is a discriminator, return the discriminator interface type name, else the property name
+export function substituteDiscriminatorTypeName(prop: Property): string {
+  if (prop.schema.language.go!.discriminatorInterface) {
+    return prop.schema.language.go!.discriminatorInterface;
+  }
+  return prop.language.go!.name;
+}
+
 // returns the parameters for the internal request creator method.
 // e.g. "i int, s string"
 export function getCreateRequestParametersSig(op: Operation): string {

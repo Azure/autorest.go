@@ -136,15 +136,15 @@ type Cat struct {
 
 // MarshalJSON implements the json.Marshaller interface for type Cat.
 func (c Cat) MarshalJSON() ([]byte, error) {
-	objectMap := c.marshalInternal()
+	objectMap := make(map[string]interface{})
+	c.marshalInternal(objectMap)
 	return json.Marshal(objectMap)
 }
 
-func (c Cat) marshalInternal() map[string]interface{} {
-	objectMap := c.Pet.marshalInternal()
+func (c Cat) marshalInternal(objectMap map[string]interface{}) {
+	c.Pet.marshalInternal(objectMap)
 	populate(objectMap, "color", c.Color)
 	populate(objectMap, "hates", c.Hates)
-	return objectMap
 }
 
 type Cookiecuttershark struct {
@@ -153,7 +153,8 @@ type Cookiecuttershark struct {
 
 // MarshalJSON implements the json.Marshaller interface for type Cookiecuttershark.
 func (c Cookiecuttershark) MarshalJSON() ([]byte, error) {
-	objectMap := c.Shark.marshalInternal("cookiecuttershark")
+	objectMap := make(map[string]interface{})
+	c.Shark.marshalInternal(objectMap, "cookiecuttershark")
 	return json.Marshal(objectMap)
 }
 
@@ -326,7 +327,8 @@ type Dog struct {
 
 // MarshalJSON implements the json.Marshaller interface for type Dog.
 func (d Dog) MarshalJSON() ([]byte, error) {
-	objectMap := d.Pet.marshalInternal()
+	objectMap := make(map[string]interface{})
+	d.Pet.marshalInternal(objectMap)
 	populate(objectMap, "food", d.Food)
 	return json.Marshal(objectMap)
 }
@@ -358,12 +360,10 @@ func (d *DotFish) UnmarshalJSON(data []byte) error {
 	return d.unmarshalInternal(rawMsg)
 }
 
-func (d DotFish) marshalInternal(discValue string) map[string]interface{} {
-	objectMap := make(map[string]interface{})
+func (d DotFish) marshalInternal(objectMap map[string]interface{}, discValue string) {
 	d.FishType = &discValue
 	objectMap["fish.type"] = d.FishType
 	populate(objectMap, "species", d.Species)
-	return objectMap
 }
 
 func (d *DotFish) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
@@ -438,7 +438,8 @@ type DotSalmon struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DotSalmon.
 func (d DotSalmon) MarshalJSON() ([]byte, error) {
-	objectMap := d.DotFish.marshalInternal("DotSalmon")
+	objectMap := make(map[string]interface{})
+	d.DotFish.marshalInternal(objectMap, "DotSalmon")
 	populate(objectMap, "iswild", d.Iswild)
 	populate(objectMap, "location", d.Location)
 	return json.Marshal(objectMap)
@@ -464,7 +465,10 @@ func (d *DotSalmon) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return d.DotFish.unmarshalInternal(rawMsg)
+	if err := d.DotFish.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 type DoubleWrapper struct {
@@ -520,14 +524,12 @@ func (f *Fish) UnmarshalJSON(data []byte) error {
 	return f.unmarshalInternal(rawMsg)
 }
 
-func (f Fish) marshalInternal(discValue string) map[string]interface{} {
-	objectMap := make(map[string]interface{})
+func (f Fish) marshalInternal(objectMap map[string]interface{}, discValue string) {
 	f.Fishtype = &discValue
 	objectMap["fishtype"] = f.Fishtype
 	populate(objectMap, "length", f.Length)
 	populate(objectMap, "siblings", f.Siblings)
 	populate(objectMap, "species", f.Species)
-	return objectMap
 }
 
 func (f *Fish) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
@@ -573,7 +575,8 @@ type Goblinshark struct {
 
 // MarshalJSON implements the json.Marshaller interface for type Goblinshark.
 func (g Goblinshark) MarshalJSON() ([]byte, error) {
-	objectMap := g.Shark.marshalInternal("goblin")
+	objectMap := make(map[string]interface{})
+	g.Shark.marshalInternal(objectMap, "goblin")
 	populate(objectMap, "color", g.Color)
 	populate(objectMap, "jawsize", g.Jawsize)
 	return json.Marshal(objectMap)
@@ -599,7 +602,10 @@ func (g *Goblinshark) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return g.Shark.unmarshalInternal(rawMsg)
+	if err := g.Shark.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // InheritanceGetValidOptions contains the optional parameters for the Inheritance.GetValid method.
@@ -654,13 +660,11 @@ func (m *MyBaseType) UnmarshalJSON(data []byte) error {
 	return m.unmarshalInternal(rawMsg)
 }
 
-func (m MyBaseType) marshalInternal(discValue MyKind) map[string]interface{} {
-	objectMap := make(map[string]interface{})
+func (m MyBaseType) marshalInternal(objectMap map[string]interface{}, discValue MyKind) {
 	populate(objectMap, "helper", m.Helper)
 	m.Kind = &discValue
 	objectMap["kind"] = m.Kind
 	populate(objectMap, "propB1", m.PropB1)
-	return objectMap
 }
 
 func (m *MyBaseType) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
@@ -691,7 +695,8 @@ type MyDerivedType struct {
 
 // MarshalJSON implements the json.Marshaller interface for type MyDerivedType.
 func (m MyDerivedType) MarshalJSON() ([]byte, error) {
-	objectMap := m.MyBaseType.marshalInternal(MyKindKind1)
+	objectMap := make(map[string]interface{})
+	m.MyBaseType.marshalInternal(objectMap, MyKindKind1)
 	populate(objectMap, "propD1", m.PropD1)
 	return json.Marshal(objectMap)
 }
@@ -713,7 +718,10 @@ func (m *MyDerivedType) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return m.MyBaseType.unmarshalInternal(rawMsg)
+	if err := m.MyBaseType.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 type Pet struct {
@@ -723,15 +731,14 @@ type Pet struct {
 
 // MarshalJSON implements the json.Marshaller interface for type Pet.
 func (p Pet) MarshalJSON() ([]byte, error) {
-	objectMap := p.marshalInternal()
+	objectMap := make(map[string]interface{})
+	p.marshalInternal(objectMap)
 	return json.Marshal(objectMap)
 }
 
-func (p Pet) marshalInternal() map[string]interface{} {
-	objectMap := make(map[string]interface{})
+func (p Pet) marshalInternal(objectMap map[string]interface{}) {
 	populate(objectMap, "id", p.ID)
 	populate(objectMap, "name", p.Name)
-	return objectMap
 }
 
 // PolymorphicrecursiveGetValidOptions contains the optional parameters for the Polymorphicrecursive.GetValid method.
@@ -937,7 +944,8 @@ func (s *Salmon) GetSalmon() *Salmon { return s }
 
 // MarshalJSON implements the json.Marshaller interface for type Salmon.
 func (s Salmon) MarshalJSON() ([]byte, error) {
-	objectMap := s.marshalInternal("salmon")
+	objectMap := make(map[string]interface{})
+	s.marshalInternal(objectMap, "salmon")
 	return json.Marshal(objectMap)
 }
 
@@ -950,11 +958,10 @@ func (s *Salmon) UnmarshalJSON(data []byte) error {
 	return s.unmarshalInternal(rawMsg)
 }
 
-func (s Salmon) marshalInternal(discValue string) map[string]interface{} {
-	objectMap := s.Fish.marshalInternal(discValue)
+func (s Salmon) marshalInternal(objectMap map[string]interface{}, discValue string) {
+	s.Fish.marshalInternal(objectMap, discValue)
 	populate(objectMap, "iswild", s.Iswild)
 	populate(objectMap, "location", s.Location)
-	return objectMap
 }
 
 func (s *Salmon) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
@@ -972,7 +979,10 @@ func (s *Salmon) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 			return err
 		}
 	}
-	return s.Fish.unmarshalInternal(rawMsg)
+	if err := s.Fish.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 type Sawshark struct {
@@ -982,7 +992,8 @@ type Sawshark struct {
 
 // MarshalJSON implements the json.Marshaller interface for type Sawshark.
 func (s Sawshark) MarshalJSON() ([]byte, error) {
-	objectMap := s.Shark.marshalInternal("sawshark")
+	objectMap := make(map[string]interface{})
+	s.Shark.marshalInternal(objectMap, "sawshark")
 	populateByteArray(objectMap, "picture", s.Picture, runtime.Base64StdFormat)
 	return json.Marshal(objectMap)
 }
@@ -1004,7 +1015,10 @@ func (s *Sawshark) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.Shark.unmarshalInternal(rawMsg)
+	if err := s.Shark.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SharkClassification provides polymorphic access to related types.
@@ -1029,7 +1043,8 @@ func (s *Shark) GetShark() *Shark { return s }
 
 // MarshalJSON implements the json.Marshaller interface for type Shark.
 func (s Shark) MarshalJSON() ([]byte, error) {
-	objectMap := s.marshalInternal("shark")
+	objectMap := make(map[string]interface{})
+	s.marshalInternal(objectMap, "shark")
 	return json.Marshal(objectMap)
 }
 
@@ -1042,11 +1057,10 @@ func (s *Shark) UnmarshalJSON(data []byte) error {
 	return s.unmarshalInternal(rawMsg)
 }
 
-func (s Shark) marshalInternal(discValue string) map[string]interface{} {
-	objectMap := s.Fish.marshalInternal(discValue)
+func (s Shark) marshalInternal(objectMap map[string]interface{}, discValue string) {
+	s.Fish.marshalInternal(objectMap, discValue)
 	populate(objectMap, "age", s.Age)
 	populate(objectMap, "birthday", (*timeRFC3339)(s.Birthday))
-	return objectMap
 }
 
 func (s *Shark) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
@@ -1066,7 +1080,10 @@ func (s *Shark) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 			return err
 		}
 	}
-	return s.Fish.unmarshalInternal(rawMsg)
+	if err := s.Fish.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 type Siamese struct {
@@ -1076,7 +1093,8 @@ type Siamese struct {
 
 // MarshalJSON implements the json.Marshaller interface for type Siamese.
 func (s Siamese) MarshalJSON() ([]byte, error) {
-	objectMap := s.Cat.marshalInternal()
+	objectMap := make(map[string]interface{})
+	s.Cat.marshalInternal(objectMap)
 	populate(objectMap, "breed", s.Breed)
 	return json.Marshal(objectMap)
 }
@@ -1090,7 +1108,8 @@ type SmartSalmon struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SmartSalmon.
 func (s SmartSalmon) MarshalJSON() ([]byte, error) {
-	objectMap := s.Salmon.marshalInternal("smart_salmon")
+	objectMap := make(map[string]interface{})
+	s.Salmon.marshalInternal(objectMap, "smart_salmon")
 	populate(objectMap, "college_degree", s.CollegeDegree)
 	if s.AdditionalProperties != nil {
 		for key, val := range s.AdditionalProperties {

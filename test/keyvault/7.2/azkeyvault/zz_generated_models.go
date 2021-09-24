@@ -57,7 +57,8 @@ type Attributes struct {
 
 // MarshalJSON implements the json.Marshaller interface for type Attributes.
 func (a Attributes) MarshalJSON() ([]byte, error) {
-	objectMap := a.marshalInternal()
+	objectMap := make(map[string]interface{})
+	a.marshalInternal(objectMap)
 	return json.Marshal(objectMap)
 }
 
@@ -70,14 +71,12 @@ func (a *Attributes) UnmarshalJSON(data []byte) error {
 	return a.unmarshalInternal(rawMsg)
 }
 
-func (a Attributes) marshalInternal() map[string]interface{} {
-	objectMap := make(map[string]interface{})
+func (a Attributes) marshalInternal(objectMap map[string]interface{}) {
 	populate(objectMap, "created", (*timeUnix)(a.Created))
 	populate(objectMap, "enabled", a.Enabled)
 	populate(objectMap, "exp", (*timeUnix)(a.Expires))
 	populate(objectMap, "nbf", (*timeUnix)(a.NotBefore))
 	populate(objectMap, "updated", (*timeUnix)(a.Updated))
-	return objectMap
 }
 
 func (a *Attributes) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
@@ -261,7 +260,8 @@ type CertificateAttributes struct {
 
 // MarshalJSON implements the json.Marshaller interface for type CertificateAttributes.
 func (c CertificateAttributes) MarshalJSON() ([]byte, error) {
-	objectMap := c.Attributes.marshalInternal()
+	objectMap := make(map[string]interface{})
+	c.Attributes.marshalInternal(objectMap)
 	populate(objectMap, "recoverableDays", c.RecoverableDays)
 	populate(objectMap, "recoveryLevel", c.RecoveryLevel)
 	return json.Marshal(objectMap)
@@ -287,7 +287,10 @@ func (c *CertificateAttributes) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return c.Attributes.unmarshalInternal(rawMsg)
+	if err := c.Attributes.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // CertificateBundle - A certificate bundle consists of a certificate (X509) plus its attributes.
@@ -322,7 +325,8 @@ type CertificateBundle struct {
 
 // MarshalJSON implements the json.Marshaller interface for type CertificateBundle.
 func (c CertificateBundle) MarshalJSON() ([]byte, error) {
-	objectMap := c.marshalInternal()
+	objectMap := make(map[string]interface{})
+	c.marshalInternal(objectMap)
 	return json.Marshal(objectMap)
 }
 
@@ -335,8 +339,7 @@ func (c *CertificateBundle) UnmarshalJSON(data []byte) error {
 	return c.unmarshalInternal(rawMsg)
 }
 
-func (c CertificateBundle) marshalInternal() map[string]interface{} {
-	objectMap := make(map[string]interface{})
+func (c CertificateBundle) marshalInternal(objectMap map[string]interface{}) {
 	populate(objectMap, "attributes", c.Attributes)
 	populateByteArray(objectMap, "cer", c.Cer, runtime.Base64StdFormat)
 	populate(objectMap, "contentType", c.ContentType)
@@ -346,7 +349,6 @@ func (c CertificateBundle) marshalInternal() map[string]interface{} {
 	populate(objectMap, "sid", c.Sid)
 	populate(objectMap, "tags", c.Tags)
 	populateByteArray(objectMap, "x5t", c.X509Thumbprint, runtime.Base64URLFormat)
-	return objectMap
 }
 
 func (c *CertificateBundle) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
@@ -537,7 +539,8 @@ type CertificateItem struct {
 
 // MarshalJSON implements the json.Marshaller interface for type CertificateItem.
 func (c CertificateItem) MarshalJSON() ([]byte, error) {
-	objectMap := c.marshalInternal()
+	objectMap := make(map[string]interface{})
+	c.marshalInternal(objectMap)
 	return json.Marshal(objectMap)
 }
 
@@ -550,13 +553,11 @@ func (c *CertificateItem) UnmarshalJSON(data []byte) error {
 	return c.unmarshalInternal(rawMsg)
 }
 
-func (c CertificateItem) marshalInternal() map[string]interface{} {
-	objectMap := make(map[string]interface{})
+func (c CertificateItem) marshalInternal(objectMap map[string]interface{}) {
 	populate(objectMap, "attributes", c.Attributes)
 	populate(objectMap, "id", c.ID)
 	populate(objectMap, "tags", c.Tags)
 	populateByteArray(objectMap, "x5t", c.X509Thumbprint, runtime.Base64URLFormat)
-	return objectMap
 }
 
 func (c *CertificateItem) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
@@ -858,7 +859,8 @@ type DeletedCertificateBundle struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DeletedCertificateBundle.
 func (d DeletedCertificateBundle) MarshalJSON() ([]byte, error) {
-	objectMap := d.CertificateBundle.marshalInternal()
+	objectMap := make(map[string]interface{})
+	d.CertificateBundle.marshalInternal(objectMap)
 	populate(objectMap, "deletedDate", (*timeUnix)(d.DeletedDate))
 	populate(objectMap, "recoveryId", d.RecoveryID)
 	populate(objectMap, "scheduledPurgeDate", (*timeUnix)(d.ScheduledPurgeDate))
@@ -892,7 +894,10 @@ func (d *DeletedCertificateBundle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return d.CertificateBundle.unmarshalInternal(rawMsg)
+	if err := d.CertificateBundle.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // DeletedCertificateItem - The deleted certificate item containing metadata about the deleted certificate.
@@ -910,7 +915,8 @@ type DeletedCertificateItem struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DeletedCertificateItem.
 func (d DeletedCertificateItem) MarshalJSON() ([]byte, error) {
-	objectMap := d.CertificateItem.marshalInternal()
+	objectMap := make(map[string]interface{})
+	d.CertificateItem.marshalInternal(objectMap)
 	populate(objectMap, "deletedDate", (*timeUnix)(d.DeletedDate))
 	populate(objectMap, "recoveryId", d.RecoveryID)
 	populate(objectMap, "scheduledPurgeDate", (*timeUnix)(d.ScheduledPurgeDate))
@@ -944,7 +950,10 @@ func (d *DeletedCertificateItem) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return d.CertificateItem.unmarshalInternal(rawMsg)
+	if err := d.CertificateItem.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // DeletedCertificateListResult - A list of certificates that have been deleted in this vault.
@@ -979,7 +988,8 @@ type DeletedKeyBundle struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DeletedKeyBundle.
 func (d DeletedKeyBundle) MarshalJSON() ([]byte, error) {
-	objectMap := d.KeyBundle.marshalInternal()
+	objectMap := make(map[string]interface{})
+	d.KeyBundle.marshalInternal(objectMap)
 	populate(objectMap, "deletedDate", (*timeUnix)(d.DeletedDate))
 	populate(objectMap, "recoveryId", d.RecoveryID)
 	populate(objectMap, "scheduledPurgeDate", (*timeUnix)(d.ScheduledPurgeDate))
@@ -1013,7 +1023,10 @@ func (d *DeletedKeyBundle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return d.KeyBundle.unmarshalInternal(rawMsg)
+	if err := d.KeyBundle.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // DeletedKeyItem - The deleted key item containing the deleted key metadata and information about deletion.
@@ -1031,7 +1044,8 @@ type DeletedKeyItem struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DeletedKeyItem.
 func (d DeletedKeyItem) MarshalJSON() ([]byte, error) {
-	objectMap := d.KeyItem.marshalInternal()
+	objectMap := make(map[string]interface{})
+	d.KeyItem.marshalInternal(objectMap)
 	populate(objectMap, "deletedDate", (*timeUnix)(d.DeletedDate))
 	populate(objectMap, "recoveryId", d.RecoveryID)
 	populate(objectMap, "scheduledPurgeDate", (*timeUnix)(d.ScheduledPurgeDate))
@@ -1065,7 +1079,10 @@ func (d *DeletedKeyItem) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return d.KeyItem.unmarshalInternal(rawMsg)
+	if err := d.KeyItem.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // DeletedKeyListResult - A list of keys that have been deleted in this vault.
@@ -1101,7 +1118,8 @@ type DeletedSasDefinitionBundle struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DeletedSasDefinitionBundle.
 func (d DeletedSasDefinitionBundle) MarshalJSON() ([]byte, error) {
-	objectMap := d.SasDefinitionBundle.marshalInternal()
+	objectMap := make(map[string]interface{})
+	d.SasDefinitionBundle.marshalInternal(objectMap)
 	populate(objectMap, "deletedDate", (*timeUnix)(d.DeletedDate))
 	populate(objectMap, "recoveryId", d.RecoveryID)
 	populate(objectMap, "scheduledPurgeDate", (*timeUnix)(d.ScheduledPurgeDate))
@@ -1135,7 +1153,10 @@ func (d *DeletedSasDefinitionBundle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return d.SasDefinitionBundle.unmarshalInternal(rawMsg)
+	if err := d.SasDefinitionBundle.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // DeletedSasDefinitionItem - The deleted SAS definition item containing metadata about the deleted SAS definition.
@@ -1153,7 +1174,8 @@ type DeletedSasDefinitionItem struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DeletedSasDefinitionItem.
 func (d DeletedSasDefinitionItem) MarshalJSON() ([]byte, error) {
-	objectMap := d.SasDefinitionItem.marshalInternal()
+	objectMap := make(map[string]interface{})
+	d.SasDefinitionItem.marshalInternal(objectMap)
 	populate(objectMap, "deletedDate", (*timeUnix)(d.DeletedDate))
 	populate(objectMap, "recoveryId", d.RecoveryID)
 	populate(objectMap, "scheduledPurgeDate", (*timeUnix)(d.ScheduledPurgeDate))
@@ -1187,7 +1209,10 @@ func (d *DeletedSasDefinitionItem) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return d.SasDefinitionItem.unmarshalInternal(rawMsg)
+	if err := d.SasDefinitionItem.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // DeletedSasDefinitionListResult - The deleted SAS definition list result
@@ -1222,7 +1247,8 @@ type DeletedSecretBundle struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DeletedSecretBundle.
 func (d DeletedSecretBundle) MarshalJSON() ([]byte, error) {
-	objectMap := d.SecretBundle.marshalInternal()
+	objectMap := make(map[string]interface{})
+	d.SecretBundle.marshalInternal(objectMap)
 	populate(objectMap, "deletedDate", (*timeUnix)(d.DeletedDate))
 	populate(objectMap, "recoveryId", d.RecoveryID)
 	populate(objectMap, "scheduledPurgeDate", (*timeUnix)(d.ScheduledPurgeDate))
@@ -1256,7 +1282,10 @@ func (d *DeletedSecretBundle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return d.SecretBundle.unmarshalInternal(rawMsg)
+	if err := d.SecretBundle.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // DeletedSecretItem - The deleted secret item containing metadata about the deleted secret.
@@ -1274,7 +1303,8 @@ type DeletedSecretItem struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DeletedSecretItem.
 func (d DeletedSecretItem) MarshalJSON() ([]byte, error) {
-	objectMap := d.SecretItem.marshalInternal()
+	objectMap := make(map[string]interface{})
+	d.SecretItem.marshalInternal(objectMap)
 	populate(objectMap, "deletedDate", (*timeUnix)(d.DeletedDate))
 	populate(objectMap, "recoveryId", d.RecoveryID)
 	populate(objectMap, "scheduledPurgeDate", (*timeUnix)(d.ScheduledPurgeDate))
@@ -1308,7 +1338,10 @@ func (d *DeletedSecretItem) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return d.SecretItem.unmarshalInternal(rawMsg)
+	if err := d.SecretItem.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // DeletedSecretListResult - The deleted secret list result
@@ -1343,7 +1376,8 @@ type DeletedStorageAccountItem struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DeletedStorageAccountItem.
 func (d DeletedStorageAccountItem) MarshalJSON() ([]byte, error) {
-	objectMap := d.StorageAccountItem.marshalInternal()
+	objectMap := make(map[string]interface{})
+	d.StorageAccountItem.marshalInternal(objectMap)
 	populate(objectMap, "deletedDate", (*timeUnix)(d.DeletedDate))
 	populate(objectMap, "recoveryId", d.RecoveryID)
 	populate(objectMap, "scheduledPurgeDate", (*timeUnix)(d.ScheduledPurgeDate))
@@ -1377,7 +1411,10 @@ func (d *DeletedStorageAccountItem) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return d.StorageAccountItem.unmarshalInternal(rawMsg)
+	if err := d.StorageAccountItem.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // DeletedStorageBundle - A deleted storage account bundle consisting of its previous id, attributes and its tags, as well as information on when it will
@@ -1396,7 +1433,8 @@ type DeletedStorageBundle struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DeletedStorageBundle.
 func (d DeletedStorageBundle) MarshalJSON() ([]byte, error) {
-	objectMap := d.StorageBundle.marshalInternal()
+	objectMap := make(map[string]interface{})
+	d.StorageBundle.marshalInternal(objectMap)
 	populate(objectMap, "deletedDate", (*timeUnix)(d.DeletedDate))
 	populate(objectMap, "recoveryId", d.RecoveryID)
 	populate(objectMap, "scheduledPurgeDate", (*timeUnix)(d.ScheduledPurgeDate))
@@ -1430,7 +1468,10 @@ func (d *DeletedStorageBundle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return d.StorageBundle.unmarshalInternal(rawMsg)
+	if err := d.StorageBundle.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // DeletedStorageListResult - The deleted storage account list result
@@ -1806,7 +1847,8 @@ type KeyAttributes struct {
 
 // MarshalJSON implements the json.Marshaller interface for type KeyAttributes.
 func (k KeyAttributes) MarshalJSON() ([]byte, error) {
-	objectMap := k.Attributes.marshalInternal()
+	objectMap := make(map[string]interface{})
+	k.Attributes.marshalInternal(objectMap)
 	populate(objectMap, "recoverableDays", k.RecoverableDays)
 	populate(objectMap, "recoveryLevel", k.RecoveryLevel)
 	return json.Marshal(objectMap)
@@ -1832,7 +1874,10 @@ func (k *KeyAttributes) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return k.Attributes.unmarshalInternal(rawMsg)
+	if err := k.Attributes.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // KeyBundle - A KeyBundle consisting of a WebKey plus its attributes.
@@ -1852,7 +1897,8 @@ type KeyBundle struct {
 
 // MarshalJSON implements the json.Marshaller interface for type KeyBundle.
 func (k KeyBundle) MarshalJSON() ([]byte, error) {
-	objectMap := k.marshalInternal()
+	objectMap := make(map[string]interface{})
+	k.marshalInternal(objectMap)
 	return json.Marshal(objectMap)
 }
 
@@ -1865,13 +1911,11 @@ func (k *KeyBundle) UnmarshalJSON(data []byte) error {
 	return k.unmarshalInternal(rawMsg)
 }
 
-func (k KeyBundle) marshalInternal() map[string]interface{} {
-	objectMap := make(map[string]interface{})
+func (k KeyBundle) marshalInternal(objectMap map[string]interface{}) {
 	populate(objectMap, "attributes", k.Attributes)
 	populate(objectMap, "key", k.Key)
 	populate(objectMap, "managed", k.Managed)
 	populate(objectMap, "tags", k.Tags)
-	return objectMap
 }
 
 func (k *KeyBundle) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
@@ -1975,7 +2019,8 @@ type KeyItem struct {
 
 // MarshalJSON implements the json.Marshaller interface for type KeyItem.
 func (k KeyItem) MarshalJSON() ([]byte, error) {
-	objectMap := k.marshalInternal()
+	objectMap := make(map[string]interface{})
+	k.marshalInternal(objectMap)
 	return json.Marshal(objectMap)
 }
 
@@ -1988,13 +2033,11 @@ func (k *KeyItem) UnmarshalJSON(data []byte) error {
 	return k.unmarshalInternal(rawMsg)
 }
 
-func (k KeyItem) marshalInternal() map[string]interface{} {
-	objectMap := make(map[string]interface{})
+func (k KeyItem) marshalInternal(objectMap map[string]interface{}) {
 	populate(objectMap, "attributes", k.Attributes)
 	populate(objectMap, "kid", k.Kid)
 	populate(objectMap, "managed", k.Managed)
 	populate(objectMap, "tags", k.Tags)
-	return objectMap
 }
 
 func (k *KeyItem) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
@@ -3197,7 +3240,8 @@ type SasDefinitionBundle struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SasDefinitionBundle.
 func (s SasDefinitionBundle) MarshalJSON() ([]byte, error) {
-	objectMap := s.marshalInternal()
+	objectMap := make(map[string]interface{})
+	s.marshalInternal(objectMap)
 	return json.Marshal(objectMap)
 }
 
@@ -3210,8 +3254,7 @@ func (s *SasDefinitionBundle) UnmarshalJSON(data []byte) error {
 	return s.unmarshalInternal(rawMsg)
 }
 
-func (s SasDefinitionBundle) marshalInternal() map[string]interface{} {
-	objectMap := make(map[string]interface{})
+func (s SasDefinitionBundle) marshalInternal(objectMap map[string]interface{}) {
 	populate(objectMap, "attributes", s.Attributes)
 	populate(objectMap, "id", s.ID)
 	populate(objectMap, "sasType", s.SasType)
@@ -3219,7 +3262,6 @@ func (s SasDefinitionBundle) marshalInternal() map[string]interface{} {
 	populate(objectMap, "tags", s.Tags)
 	populate(objectMap, "templateUri", s.TemplateURI)
 	populate(objectMap, "validityPeriod", s.ValidityPeriod)
-	return objectMap
 }
 
 func (s *SasDefinitionBundle) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
@@ -3302,7 +3344,8 @@ type SasDefinitionItem struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SasDefinitionItem.
 func (s SasDefinitionItem) MarshalJSON() ([]byte, error) {
-	objectMap := s.marshalInternal()
+	objectMap := make(map[string]interface{})
+	s.marshalInternal(objectMap)
 	return json.Marshal(objectMap)
 }
 
@@ -3315,13 +3358,11 @@ func (s *SasDefinitionItem) UnmarshalJSON(data []byte) error {
 	return s.unmarshalInternal(rawMsg)
 }
 
-func (s SasDefinitionItem) marshalInternal() map[string]interface{} {
-	objectMap := make(map[string]interface{})
+func (s SasDefinitionItem) marshalInternal(objectMap map[string]interface{}) {
 	populate(objectMap, "attributes", s.Attributes)
 	populate(objectMap, "id", s.ID)
 	populate(objectMap, "sid", s.SecretID)
 	populate(objectMap, "tags", s.Tags)
-	return objectMap
 }
 
 func (s *SasDefinitionItem) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
@@ -3408,7 +3449,8 @@ type SecretAttributes struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SecretAttributes.
 func (s SecretAttributes) MarshalJSON() ([]byte, error) {
-	objectMap := s.Attributes.marshalInternal()
+	objectMap := make(map[string]interface{})
+	s.Attributes.marshalInternal(objectMap)
 	populate(objectMap, "recoverableDays", s.RecoverableDays)
 	populate(objectMap, "recoveryLevel", s.RecoveryLevel)
 	return json.Marshal(objectMap)
@@ -3434,7 +3476,10 @@ func (s *SecretAttributes) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.Attributes.unmarshalInternal(rawMsg)
+	if err := s.Attributes.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SecretBundle - A secret consisting of a value, id and its attributes.
@@ -3463,7 +3508,8 @@ type SecretBundle struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SecretBundle.
 func (s SecretBundle) MarshalJSON() ([]byte, error) {
-	objectMap := s.marshalInternal()
+	objectMap := make(map[string]interface{})
+	s.marshalInternal(objectMap)
 	return json.Marshal(objectMap)
 }
 
@@ -3476,8 +3522,7 @@ func (s *SecretBundle) UnmarshalJSON(data []byte) error {
 	return s.unmarshalInternal(rawMsg)
 }
 
-func (s SecretBundle) marshalInternal() map[string]interface{} {
-	objectMap := make(map[string]interface{})
+func (s SecretBundle) marshalInternal(objectMap map[string]interface{}) {
 	populate(objectMap, "attributes", s.Attributes)
 	populate(objectMap, "contentType", s.ContentType)
 	populate(objectMap, "id", s.ID)
@@ -3485,7 +3530,6 @@ func (s SecretBundle) marshalInternal() map[string]interface{} {
 	populate(objectMap, "managed", s.Managed)
 	populate(objectMap, "tags", s.Tags)
 	populate(objectMap, "value", s.Value)
-	return objectMap
 }
 
 func (s *SecretBundle) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
@@ -3541,7 +3585,8 @@ type SecretItem struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SecretItem.
 func (s SecretItem) MarshalJSON() ([]byte, error) {
-	objectMap := s.marshalInternal()
+	objectMap := make(map[string]interface{})
+	s.marshalInternal(objectMap)
 	return json.Marshal(objectMap)
 }
 
@@ -3554,14 +3599,12 @@ func (s *SecretItem) UnmarshalJSON(data []byte) error {
 	return s.unmarshalInternal(rawMsg)
 }
 
-func (s SecretItem) marshalInternal() map[string]interface{} {
-	objectMap := make(map[string]interface{})
+func (s SecretItem) marshalInternal(objectMap map[string]interface{}) {
 	populate(objectMap, "attributes", s.Attributes)
 	populate(objectMap, "contentType", s.ContentType)
 	populate(objectMap, "id", s.ID)
 	populate(objectMap, "managed", s.Managed)
 	populate(objectMap, "tags", s.Tags)
-	return objectMap
 }
 
 func (s *SecretItem) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
@@ -3956,7 +3999,8 @@ type StorageAccountItem struct {
 
 // MarshalJSON implements the json.Marshaller interface for type StorageAccountItem.
 func (s StorageAccountItem) MarshalJSON() ([]byte, error) {
-	objectMap := s.marshalInternal()
+	objectMap := make(map[string]interface{})
+	s.marshalInternal(objectMap)
 	return json.Marshal(objectMap)
 }
 
@@ -3969,13 +4013,11 @@ func (s *StorageAccountItem) UnmarshalJSON(data []byte) error {
 	return s.unmarshalInternal(rawMsg)
 }
 
-func (s StorageAccountItem) marshalInternal() map[string]interface{} {
-	objectMap := make(map[string]interface{})
+func (s StorageAccountItem) marshalInternal(objectMap map[string]interface{}) {
 	populate(objectMap, "attributes", s.Attributes)
 	populate(objectMap, "id", s.ID)
 	populate(objectMap, "resourceId", s.ResourceID)
 	populate(objectMap, "tags", s.Tags)
-	return objectMap
 }
 
 func (s *StorageAccountItem) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
@@ -4063,7 +4105,8 @@ type StorageBundle struct {
 
 // MarshalJSON implements the json.Marshaller interface for type StorageBundle.
 func (s StorageBundle) MarshalJSON() ([]byte, error) {
-	objectMap := s.marshalInternal()
+	objectMap := make(map[string]interface{})
+	s.marshalInternal(objectMap)
 	return json.Marshal(objectMap)
 }
 
@@ -4076,8 +4119,7 @@ func (s *StorageBundle) UnmarshalJSON(data []byte) error {
 	return s.unmarshalInternal(rawMsg)
 }
 
-func (s StorageBundle) marshalInternal() map[string]interface{} {
-	objectMap := make(map[string]interface{})
+func (s StorageBundle) marshalInternal(objectMap map[string]interface{}) {
 	populate(objectMap, "activeKeyName", s.ActiveKeyName)
 	populate(objectMap, "attributes", s.Attributes)
 	populate(objectMap, "autoRegenerateKey", s.AutoRegenerateKey)
@@ -4085,7 +4127,6 @@ func (s StorageBundle) marshalInternal() map[string]interface{} {
 	populate(objectMap, "regenerationPeriod", s.RegenerationPeriod)
 	populate(objectMap, "resourceId", s.ResourceID)
 	populate(objectMap, "tags", s.Tags)
-	return objectMap
 }
 
 func (s *StorageBundle) unmarshalInternal(rawMsg map[string]json.RawMessage) error {

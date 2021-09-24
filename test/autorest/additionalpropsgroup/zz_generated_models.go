@@ -21,7 +21,8 @@ type CatAPTrue struct {
 
 // MarshalJSON implements the json.Marshaller interface for type CatAPTrue.
 func (c CatAPTrue) MarshalJSON() ([]byte, error) {
-	objectMap := c.PetAPTrue.marshalInternal()
+	objectMap := make(map[string]interface{})
+	c.PetAPTrue.marshalInternal(objectMap)
 	populate(objectMap, "friendly", c.Friendly)
 	return json.Marshal(objectMap)
 }
@@ -43,7 +44,10 @@ func (c *CatAPTrue) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return c.PetAPTrue.unmarshalInternal(rawMsg)
+	if err := c.PetAPTrue.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // Implements the error and azcore.HTTPResponse interfaces.
@@ -295,7 +299,8 @@ type PetAPTrue struct {
 
 // MarshalJSON implements the json.Marshaller interface for type PetAPTrue.
 func (p PetAPTrue) MarshalJSON() ([]byte, error) {
-	objectMap := p.marshalInternal()
+	objectMap := make(map[string]interface{})
+	p.marshalInternal(objectMap)
 	return json.Marshal(objectMap)
 }
 
@@ -308,8 +313,7 @@ func (p *PetAPTrue) UnmarshalJSON(data []byte) error {
 	return p.unmarshalInternal(rawMsg)
 }
 
-func (p PetAPTrue) marshalInternal() map[string]interface{} {
-	objectMap := make(map[string]interface{})
+func (p PetAPTrue) marshalInternal(objectMap map[string]interface{}) {
 	populate(objectMap, "id", p.ID)
 	populate(objectMap, "name", p.Name)
 	populate(objectMap, "status", p.Status)
@@ -318,7 +322,6 @@ func (p PetAPTrue) marshalInternal() map[string]interface{} {
 			objectMap[key] = val
 		}
 	}
-	return objectMap
 }
 
 func (p *PetAPTrue) unmarshalInternal(rawMsg map[string]json.RawMessage) error {

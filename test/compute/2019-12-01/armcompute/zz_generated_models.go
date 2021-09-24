@@ -147,7 +147,8 @@ type AvailabilitySet struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AvailabilitySet.
 func (a AvailabilitySet) MarshalJSON() ([]byte, error) {
-	objectMap := a.Resource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	a.Resource.marshalInternal(objectMap)
 	populate(objectMap, "properties", a.Properties)
 	populate(objectMap, "sku", a.SKU)
 	return json.Marshal(objectMap)
@@ -212,7 +213,8 @@ type AvailabilitySetUpdate struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AvailabilitySetUpdate.
 func (a AvailabilitySetUpdate) MarshalJSON() ([]byte, error) {
-	objectMap := a.UpdateResource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	a.UpdateResource.marshalInternal(objectMap)
 	populate(objectMap, "properties", a.Properties)
 	populate(objectMap, "sku", a.SKU)
 	return json.Marshal(objectMap)
@@ -358,7 +360,8 @@ type ContainerService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type ContainerService.
 func (c ContainerService) MarshalJSON() ([]byte, error) {
-	objectMap := c.Resource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	c.Resource.marshalInternal(objectMap)
 	populate(objectMap, "properties", c.Properties)
 	return json.Marshal(objectMap)
 }
@@ -668,7 +671,8 @@ type DedicatedHost struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DedicatedHost.
 func (d DedicatedHost) MarshalJSON() ([]byte, error) {
-	objectMap := d.Resource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	d.Resource.marshalInternal(objectMap)
 	populate(objectMap, "properties", d.Properties)
 	populate(objectMap, "sku", d.SKU)
 	return json.Marshal(objectMap)
@@ -712,7 +716,8 @@ type DedicatedHostGroup struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DedicatedHostGroup.
 func (d DedicatedHostGroup) MarshalJSON() ([]byte, error) {
-	objectMap := d.Resource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	d.Resource.marshalInternal(objectMap)
 	populate(objectMap, "properties", d.Properties)
 	populate(objectMap, "zones", d.Zones)
 	return json.Marshal(objectMap)
@@ -766,7 +771,8 @@ type DedicatedHostGroupUpdate struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DedicatedHostGroupUpdate.
 func (d DedicatedHostGroupUpdate) MarshalJSON() ([]byte, error) {
-	objectMap := d.UpdateResource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	d.UpdateResource.marshalInternal(objectMap)
 	populate(objectMap, "properties", d.Properties)
 	populate(objectMap, "zones", d.Zones)
 	return json.Marshal(objectMap)
@@ -939,7 +945,8 @@ type DedicatedHostUpdate struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DedicatedHostUpdate.
 func (d DedicatedHostUpdate) MarshalJSON() ([]byte, error) {
-	objectMap := d.UpdateResource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	d.UpdateResource.marshalInternal(objectMap)
 	populate(objectMap, "properties", d.Properties)
 	return json.Marshal(objectMap)
 }
@@ -1030,7 +1037,8 @@ type Disk struct {
 
 // MarshalJSON implements the json.Marshaller interface for type Disk.
 func (d Disk) MarshalJSON() ([]byte, error) {
-	objectMap := d.Resource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	d.Resource.marshalInternal(objectMap)
 	populate(objectMap, "managedBy", d.ManagedBy)
 	populate(objectMap, "managedByExtended", d.ManagedByExtended)
 	populate(objectMap, "properties", d.Properties)
@@ -1049,7 +1057,8 @@ type DiskEncryptionSet struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DiskEncryptionSet.
 func (d DiskEncryptionSet) MarshalJSON() ([]byte, error) {
-	objectMap := d.Resource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	d.Resource.marshalInternal(objectMap)
 	populate(objectMap, "identity", d.Identity)
 	populate(objectMap, "properties", d.Properties)
 	return json.Marshal(objectMap)
@@ -1582,7 +1591,8 @@ type Gallery struct {
 
 // MarshalJSON implements the json.Marshaller interface for type Gallery.
 func (g Gallery) MarshalJSON() ([]byte, error) {
-	objectMap := g.Resource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	g.Resource.marshalInternal(objectMap)
 	populate(objectMap, "properties", g.Properties)
 	return json.Marshal(objectMap)
 }
@@ -1596,7 +1606,8 @@ type GalleryApplication struct {
 
 // MarshalJSON implements the json.Marshaller interface for type GalleryApplication.
 func (g GalleryApplication) MarshalJSON() ([]byte, error) {
-	objectMap := g.Resource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	g.Resource.marshalInternal(objectMap)
 	populate(objectMap, "properties", g.Properties)
 	return json.Marshal(objectMap)
 }
@@ -1701,7 +1712,8 @@ type GalleryApplicationUpdate struct {
 
 // MarshalJSON implements the json.Marshaller interface for type GalleryApplicationUpdate.
 func (g GalleryApplicationUpdate) MarshalJSON() ([]byte, error) {
-	objectMap := g.UpdateResourceDefinition.marshalInternal()
+	objectMap := make(map[string]interface{})
+	g.UpdateResourceDefinition.marshalInternal(objectMap)
 	populate(objectMap, "properties", g.Properties)
 	return json.Marshal(objectMap)
 }
@@ -1715,7 +1727,8 @@ type GalleryApplicationVersion struct {
 
 // MarshalJSON implements the json.Marshaller interface for type GalleryApplicationVersion.
 func (g GalleryApplicationVersion) MarshalJSON() ([]byte, error) {
-	objectMap := g.Resource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	g.Resource.marshalInternal(objectMap)
 	populate(objectMap, "properties", g.Properties)
 	return json.Marshal(objectMap)
 }
@@ -1762,7 +1775,8 @@ type GalleryApplicationVersionPublishingProfile struct {
 
 // MarshalJSON implements the json.Marshaller interface for type GalleryApplicationVersionPublishingProfile.
 func (g GalleryApplicationVersionPublishingProfile) MarshalJSON() ([]byte, error) {
-	objectMap := g.GalleryArtifactPublishingProfileBase.marshalInternal()
+	objectMap := make(map[string]interface{})
+	g.GalleryArtifactPublishingProfileBase.marshalInternal(objectMap)
 	populate(objectMap, "enableHealthCheck", g.EnableHealthCheck)
 	populate(objectMap, "manageActions", g.ManageActions)
 	populate(objectMap, "source", g.Source)
@@ -1792,7 +1806,10 @@ func (g *GalleryApplicationVersionPublishingProfile) UnmarshalJSON(data []byte) 
 			return err
 		}
 	}
-	return g.GalleryArtifactPublishingProfileBase.unmarshalInternal(rawMsg)
+	if err := g.GalleryArtifactPublishingProfileBase.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // GalleryApplicationVersionUpdate - Specifies information about the gallery Application Version that you want to update.
@@ -1804,7 +1821,8 @@ type GalleryApplicationVersionUpdate struct {
 
 // MarshalJSON implements the json.Marshaller interface for type GalleryApplicationVersionUpdate.
 func (g GalleryApplicationVersionUpdate) MarshalJSON() ([]byte, error) {
-	objectMap := g.UpdateResourceDefinition.marshalInternal()
+	objectMap := make(map[string]interface{})
+	g.UpdateResourceDefinition.marshalInternal(objectMap)
 	populate(objectMap, "properties", g.Properties)
 	return json.Marshal(objectMap)
 }
@@ -1885,7 +1903,8 @@ type GalleryArtifactPublishingProfileBase struct {
 
 // MarshalJSON implements the json.Marshaller interface for type GalleryArtifactPublishingProfileBase.
 func (g GalleryArtifactPublishingProfileBase) MarshalJSON() ([]byte, error) {
-	objectMap := g.marshalInternal()
+	objectMap := make(map[string]interface{})
+	g.marshalInternal(objectMap)
 	return json.Marshal(objectMap)
 }
 
@@ -1898,15 +1917,13 @@ func (g *GalleryArtifactPublishingProfileBase) UnmarshalJSON(data []byte) error 
 	return g.unmarshalInternal(rawMsg)
 }
 
-func (g GalleryArtifactPublishingProfileBase) marshalInternal() map[string]interface{} {
-	objectMap := make(map[string]interface{})
+func (g GalleryArtifactPublishingProfileBase) marshalInternal(objectMap map[string]interface{}) {
 	populate(objectMap, "endOfLifeDate", (*timeRFC3339)(g.EndOfLifeDate))
 	populate(objectMap, "excludeFromLatest", g.ExcludeFromLatest)
 	populate(objectMap, "publishedDate", (*timeRFC3339)(g.PublishedDate))
 	populate(objectMap, "replicaCount", g.ReplicaCount)
 	populate(objectMap, "storageAccountType", g.StorageAccountType)
 	populate(objectMap, "targetRegions", g.TargetRegions)
-	return objectMap
 }
 
 func (g *GalleryArtifactPublishingProfileBase) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
@@ -1991,7 +2008,8 @@ type GalleryImage struct {
 
 // MarshalJSON implements the json.Marshaller interface for type GalleryImage.
 func (g GalleryImage) MarshalJSON() ([]byte, error) {
-	objectMap := g.Resource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	g.Resource.marshalInternal(objectMap)
 	populate(objectMap, "properties", g.Properties)
 	return json.Marshal(objectMap)
 }
@@ -2156,7 +2174,8 @@ type GalleryImageUpdate struct {
 
 // MarshalJSON implements the json.Marshaller interface for type GalleryImageUpdate.
 func (g GalleryImageUpdate) MarshalJSON() ([]byte, error) {
-	objectMap := g.UpdateResourceDefinition.marshalInternal()
+	objectMap := make(map[string]interface{})
+	g.UpdateResourceDefinition.marshalInternal(objectMap)
 	populate(objectMap, "properties", g.Properties)
 	return json.Marshal(objectMap)
 }
@@ -2170,7 +2189,8 @@ type GalleryImageVersion struct {
 
 // MarshalJSON implements the json.Marshaller interface for type GalleryImageVersion.
 func (g GalleryImageVersion) MarshalJSON() ([]byte, error) {
-	objectMap := g.Resource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	g.Resource.marshalInternal(objectMap)
 	populate(objectMap, "properties", g.Properties)
 	return json.Marshal(objectMap)
 }
@@ -2242,7 +2262,8 @@ type GalleryImageVersionUpdate struct {
 
 // MarshalJSON implements the json.Marshaller interface for type GalleryImageVersionUpdate.
 func (g GalleryImageVersionUpdate) MarshalJSON() ([]byte, error) {
-	objectMap := g.UpdateResourceDefinition.marshalInternal()
+	objectMap := make(map[string]interface{})
+	g.UpdateResourceDefinition.marshalInternal(objectMap)
 	populate(objectMap, "properties", g.Properties)
 	return json.Marshal(objectMap)
 }
@@ -2341,7 +2362,8 @@ type GalleryUpdate struct {
 
 // MarshalJSON implements the json.Marshaller interface for type GalleryUpdate.
 func (g GalleryUpdate) MarshalJSON() ([]byte, error) {
-	objectMap := g.UpdateResourceDefinition.marshalInternal()
+	objectMap := make(map[string]interface{})
+	g.UpdateResourceDefinition.marshalInternal(objectMap)
 	populate(objectMap, "properties", g.Properties)
 	return json.Marshal(objectMap)
 }
@@ -2377,7 +2399,8 @@ type Image struct {
 
 // MarshalJSON implements the json.Marshaller interface for type Image.
 func (i Image) MarshalJSON() ([]byte, error) {
-	objectMap := i.Resource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	i.Resource.marshalInternal(objectMap)
 	populate(objectMap, "properties", i.Properties)
 	return json.Marshal(objectMap)
 }
@@ -2517,7 +2540,8 @@ type ImageReference struct {
 
 // MarshalJSON implements the json.Marshaller interface for type ImageReference.
 func (i ImageReference) MarshalJSON() ([]byte, error) {
-	objectMap := i.SubResource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	i.SubResource.marshalInternal(objectMap)
 	populate(objectMap, "exactVersion", i.ExactVersion)
 	populate(objectMap, "offer", i.Offer)
 	populate(objectMap, "publisher", i.Publisher)
@@ -2561,7 +2585,8 @@ type ImageUpdate struct {
 
 // MarshalJSON implements the json.Marshaller interface for type ImageUpdate.
 func (i ImageUpdate) MarshalJSON() ([]byte, error) {
-	objectMap := i.UpdateResource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	i.UpdateResource.marshalInternal(objectMap)
 	populate(objectMap, "properties", i.Properties)
 	return json.Marshal(objectMap)
 }
@@ -2773,7 +2798,8 @@ type LogAnalyticsInputBase struct {
 
 // MarshalJSON implements the json.Marshaller interface for type LogAnalyticsInputBase.
 func (l LogAnalyticsInputBase) MarshalJSON() ([]byte, error) {
-	objectMap := l.marshalInternal()
+	objectMap := make(map[string]interface{})
+	l.marshalInternal(objectMap)
 	return json.Marshal(objectMap)
 }
 
@@ -2786,15 +2812,13 @@ func (l *LogAnalyticsInputBase) UnmarshalJSON(data []byte) error {
 	return l.unmarshalInternal(rawMsg)
 }
 
-func (l LogAnalyticsInputBase) marshalInternal() map[string]interface{} {
-	objectMap := make(map[string]interface{})
+func (l LogAnalyticsInputBase) marshalInternal(objectMap map[string]interface{}) {
 	populate(objectMap, "blobContainerSasUri", l.BlobContainerSasURI)
 	populate(objectMap, "fromTime", (*timeRFC3339)(l.FromTime))
 	populate(objectMap, "groupByOperationName", l.GroupByOperationName)
 	populate(objectMap, "groupByResourceName", l.GroupByResourceName)
 	populate(objectMap, "groupByThrottlePolicy", l.GroupByThrottlePolicy)
 	populate(objectMap, "toTime", (*timeRFC3339)(l.ToTime))
-	return objectMap
 }
 
 func (l *LogAnalyticsInputBase) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
@@ -2944,7 +2968,8 @@ type ManagedDiskParameters struct {
 
 // MarshalJSON implements the json.Marshaller interface for type ManagedDiskParameters.
 func (m ManagedDiskParameters) MarshalJSON() ([]byte, error) {
-	objectMap := m.SubResource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	m.SubResource.marshalInternal(objectMap)
 	populate(objectMap, "diskEncryptionSet", m.DiskEncryptionSet)
 	populate(objectMap, "storageAccountType", m.StorageAccountType)
 	return json.Marshal(objectMap)
@@ -2959,7 +2984,8 @@ type NetworkInterfaceReference struct {
 
 // MarshalJSON implements the json.Marshaller interface for type NetworkInterfaceReference.
 func (n NetworkInterfaceReference) MarshalJSON() ([]byte, error) {
-	objectMap := n.SubResource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	n.SubResource.marshalInternal(objectMap)
 	populate(objectMap, "properties", n.Properties)
 	return json.Marshal(objectMap)
 }
@@ -3188,7 +3214,8 @@ type ProximityPlacementGroup struct {
 
 // MarshalJSON implements the json.Marshaller interface for type ProximityPlacementGroup.
 func (p ProximityPlacementGroup) MarshalJSON() ([]byte, error) {
-	objectMap := p.Resource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	p.Resource.marshalInternal(objectMap)
 	populate(objectMap, "properties", p.Properties)
 	return json.Marshal(objectMap)
 }
@@ -3349,7 +3376,8 @@ type RequestRateByIntervalInput struct {
 
 // MarshalJSON implements the json.Marshaller interface for type RequestRateByIntervalInput.
 func (r RequestRateByIntervalInput) MarshalJSON() ([]byte, error) {
-	objectMap := r.LogAnalyticsInputBase.marshalInternal()
+	objectMap := make(map[string]interface{})
+	r.LogAnalyticsInputBase.marshalInternal(objectMap)
 	populate(objectMap, "intervalLength", r.IntervalLength)
 	return json.Marshal(objectMap)
 }
@@ -3371,7 +3399,10 @@ func (r *RequestRateByIntervalInput) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return r.LogAnalyticsInputBase.unmarshalInternal(rawMsg)
+	if err := r.LogAnalyticsInputBase.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // Resource - The Resource model definition.
@@ -3394,18 +3425,17 @@ type Resource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type Resource.
 func (r Resource) MarshalJSON() ([]byte, error) {
-	objectMap := r.marshalInternal()
+	objectMap := make(map[string]interface{})
+	r.marshalInternal(objectMap)
 	return json.Marshal(objectMap)
 }
 
-func (r Resource) marshalInternal() map[string]interface{} {
-	objectMap := make(map[string]interface{})
+func (r Resource) marshalInternal(objectMap map[string]interface{}) {
 	populate(objectMap, "id", r.ID)
 	populate(objectMap, "location", r.Location)
 	populate(objectMap, "name", r.Name)
 	populate(objectMap, "tags", r.Tags)
 	populate(objectMap, "type", r.Type)
-	return objectMap
 }
 
 // ResourceRange - Describes the resource range.
@@ -3736,7 +3766,8 @@ type RollingUpgradeStatusInfo struct {
 
 // MarshalJSON implements the json.Marshaller interface for type RollingUpgradeStatusInfo.
 func (r RollingUpgradeStatusInfo) MarshalJSON() ([]byte, error) {
-	objectMap := r.Resource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	r.Resource.marshalInternal(objectMap)
 	populate(objectMap, "properties", r.Properties)
 	return json.Marshal(objectMap)
 }
@@ -3768,7 +3799,8 @@ type RunCommandDocument struct {
 
 // MarshalJSON implements the json.Marshaller interface for type RunCommandDocument.
 func (r RunCommandDocument) MarshalJSON() ([]byte, error) {
-	objectMap := r.RunCommandDocumentBase.marshalInternal()
+	objectMap := make(map[string]interface{})
+	r.RunCommandDocumentBase.marshalInternal(objectMap)
 	populate(objectMap, "parameters", r.Parameters)
 	populate(objectMap, "script", r.Script)
 	return json.Marshal(objectMap)
@@ -3794,18 +3826,17 @@ type RunCommandDocumentBase struct {
 
 // MarshalJSON implements the json.Marshaller interface for type RunCommandDocumentBase.
 func (r RunCommandDocumentBase) MarshalJSON() ([]byte, error) {
-	objectMap := r.marshalInternal()
+	objectMap := make(map[string]interface{})
+	r.marshalInternal(objectMap)
 	return json.Marshal(objectMap)
 }
 
-func (r RunCommandDocumentBase) marshalInternal() map[string]interface{} {
-	objectMap := make(map[string]interface{})
+func (r RunCommandDocumentBase) marshalInternal(objectMap map[string]interface{}) {
 	populate(objectMap, "description", r.Description)
 	populate(objectMap, "id", r.ID)
 	populate(objectMap, "label", r.Label)
 	populate(objectMap, "osType", r.OSType)
 	populate(objectMap, "$schema", r.Schema)
-	return objectMap
 }
 
 // RunCommandInput - Capture Virtual Machine parameters.
@@ -3946,7 +3977,8 @@ type SSHPublicKeyResource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SSHPublicKeyResource.
 func (s SSHPublicKeyResource) MarshalJSON() ([]byte, error) {
-	objectMap := s.Resource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	s.Resource.marshalInternal(objectMap)
 	populate(objectMap, "properties", s.Properties)
 	return json.Marshal(objectMap)
 }
@@ -3969,7 +4001,8 @@ type SSHPublicKeyUpdateResource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SSHPublicKeyUpdateResource.
 func (s SSHPublicKeyUpdateResource) MarshalJSON() ([]byte, error) {
-	objectMap := s.UpdateResource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	s.UpdateResource.marshalInternal(objectMap)
 	populate(objectMap, "properties", s.Properties)
 	return json.Marshal(objectMap)
 }
@@ -4074,7 +4107,8 @@ type Snapshot struct {
 
 // MarshalJSON implements the json.Marshaller interface for type Snapshot.
 func (s Snapshot) MarshalJSON() ([]byte, error) {
-	objectMap := s.Resource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	s.Resource.marshalInternal(objectMap)
 	populate(objectMap, "managedBy", s.ManagedBy)
 	populate(objectMap, "properties", s.Properties)
 	populate(objectMap, "sku", s.SKU)
@@ -4332,14 +4366,13 @@ type SubResource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SubResource.
 func (s SubResource) MarshalJSON() ([]byte, error) {
-	objectMap := s.marshalInternal()
+	objectMap := make(map[string]interface{})
+	s.marshalInternal(objectMap)
 	return json.Marshal(objectMap)
 }
 
-func (s SubResource) marshalInternal() map[string]interface{} {
-	objectMap := make(map[string]interface{})
+func (s SubResource) marshalInternal(objectMap map[string]interface{}) {
 	populate(objectMap, "id", s.ID)
-	return objectMap
 }
 
 type SubResourceReadOnly struct {
@@ -4349,14 +4382,13 @@ type SubResourceReadOnly struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SubResourceReadOnly.
 func (s SubResourceReadOnly) MarshalJSON() ([]byte, error) {
-	objectMap := s.marshalInternal()
+	objectMap := make(map[string]interface{})
+	s.marshalInternal(objectMap)
 	return json.Marshal(objectMap)
 }
 
-func (s SubResourceReadOnly) marshalInternal() map[string]interface{} {
-	objectMap := make(map[string]interface{})
+func (s SubResourceReadOnly) marshalInternal(objectMap map[string]interface{}) {
 	populate(objectMap, "id", s.ID)
-	return objectMap
 }
 
 type SubResourceWithColocationStatus struct {
@@ -4367,7 +4399,8 @@ type SubResourceWithColocationStatus struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SubResourceWithColocationStatus.
 func (s SubResourceWithColocationStatus) MarshalJSON() ([]byte, error) {
-	objectMap := s.SubResource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	s.SubResource.marshalInternal(objectMap)
 	populate(objectMap, "colocationStatus", s.ColocationStatus)
 	return json.Marshal(objectMap)
 }
@@ -4410,14 +4443,13 @@ type UpdateResource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type UpdateResource.
 func (u UpdateResource) MarshalJSON() ([]byte, error) {
-	objectMap := u.marshalInternal()
+	objectMap := make(map[string]interface{})
+	u.marshalInternal(objectMap)
 	return json.Marshal(objectMap)
 }
 
-func (u UpdateResource) marshalInternal() map[string]interface{} {
-	objectMap := make(map[string]interface{})
+func (u UpdateResource) marshalInternal(objectMap map[string]interface{}) {
 	populate(objectMap, "tags", u.Tags)
-	return objectMap
 }
 
 // UpdateResourceDefinition - The Update Resource model definition.
@@ -4437,17 +4469,16 @@ type UpdateResourceDefinition struct {
 
 // MarshalJSON implements the json.Marshaller interface for type UpdateResourceDefinition.
 func (u UpdateResourceDefinition) MarshalJSON() ([]byte, error) {
-	objectMap := u.marshalInternal()
+	objectMap := make(map[string]interface{})
+	u.marshalInternal(objectMap)
 	return json.Marshal(objectMap)
 }
 
-func (u UpdateResourceDefinition) marshalInternal() map[string]interface{} {
-	objectMap := make(map[string]interface{})
+func (u UpdateResourceDefinition) marshalInternal(objectMap map[string]interface{}) {
 	populate(objectMap, "id", u.ID)
 	populate(objectMap, "name", u.Name)
 	populate(objectMap, "tags", u.Tags)
 	populate(objectMap, "type", u.Type)
-	return objectMap
 }
 
 // UpgradeOperationHistoricalStatusInfo - Virtual Machine Scale Set OS Upgrade History operation response.
@@ -4684,7 +4715,8 @@ type VirtualMachine struct {
 
 // MarshalJSON implements the json.Marshaller interface for type VirtualMachine.
 func (v VirtualMachine) MarshalJSON() ([]byte, error) {
-	objectMap := v.Resource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	v.Resource.marshalInternal(objectMap)
 	populate(objectMap, "identity", v.Identity)
 	populate(objectMap, "plan", v.Plan)
 	populate(objectMap, "properties", v.Properties)
@@ -4744,7 +4776,8 @@ type VirtualMachineCaptureResult struct {
 
 // MarshalJSON implements the json.Marshaller interface for type VirtualMachineCaptureResult.
 func (v VirtualMachineCaptureResult) MarshalJSON() ([]byte, error) {
-	objectMap := v.SubResource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	v.SubResource.marshalInternal(objectMap)
 	populate(objectMap, "contentVersion", v.ContentVersion)
 	populate(objectMap, "parameters", v.Parameters)
 	populate(objectMap, "resources", v.Resources)
@@ -4761,7 +4794,8 @@ type VirtualMachineExtension struct {
 
 // MarshalJSON implements the json.Marshaller interface for type VirtualMachineExtension.
 func (v VirtualMachineExtension) MarshalJSON() ([]byte, error) {
-	objectMap := v.Resource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	v.Resource.marshalInternal(objectMap)
 	populate(objectMap, "properties", v.Properties)
 	return json.Marshal(objectMap)
 }
@@ -4787,7 +4821,8 @@ type VirtualMachineExtensionImage struct {
 
 // MarshalJSON implements the json.Marshaller interface for type VirtualMachineExtensionImage.
 func (v VirtualMachineExtensionImage) MarshalJSON() ([]byte, error) {
-	objectMap := v.Resource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	v.Resource.marshalInternal(objectMap)
 	populate(objectMap, "properties", v.Properties)
 	return json.Marshal(objectMap)
 }
@@ -4900,7 +4935,8 @@ type VirtualMachineExtensionUpdate struct {
 
 // MarshalJSON implements the json.Marshaller interface for type VirtualMachineExtensionUpdate.
 func (v VirtualMachineExtensionUpdate) MarshalJSON() ([]byte, error) {
-	objectMap := v.UpdateResource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	v.UpdateResource.marshalInternal(objectMap)
 	populate(objectMap, "properties", v.Properties)
 	return json.Marshal(objectMap)
 }
@@ -5014,7 +5050,8 @@ type VirtualMachineImage struct {
 
 // MarshalJSON implements the json.Marshaller interface for type VirtualMachineImage.
 func (v VirtualMachineImage) MarshalJSON() ([]byte, error) {
-	objectMap := v.VirtualMachineImageResource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	v.VirtualMachineImageResource.marshalInternal(objectMap)
 	populate(objectMap, "properties", v.Properties)
 	return json.Marshal(objectMap)
 }
@@ -5062,16 +5099,16 @@ type VirtualMachineImageResource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type VirtualMachineImageResource.
 func (v VirtualMachineImageResource) MarshalJSON() ([]byte, error) {
-	objectMap := v.marshalInternal()
+	objectMap := make(map[string]interface{})
+	v.marshalInternal(objectMap)
 	return json.Marshal(objectMap)
 }
 
-func (v VirtualMachineImageResource) marshalInternal() map[string]interface{} {
-	objectMap := v.SubResource.marshalInternal()
+func (v VirtualMachineImageResource) marshalInternal(objectMap map[string]interface{}) {
+	v.SubResource.marshalInternal(objectMap)
 	populate(objectMap, "location", v.Location)
 	populate(objectMap, "name", v.Name)
 	populate(objectMap, "tags", v.Tags)
-	return objectMap
 }
 
 // VirtualMachineImagesGetOptions contains the optional parameters for the VirtualMachineImages.Get method.
@@ -5275,14 +5312,13 @@ type VirtualMachineReimageParameters struct {
 
 // MarshalJSON implements the json.Marshaller interface for type VirtualMachineReimageParameters.
 func (v VirtualMachineReimageParameters) MarshalJSON() ([]byte, error) {
-	objectMap := v.marshalInternal()
+	objectMap := make(map[string]interface{})
+	v.marshalInternal(objectMap)
 	return json.Marshal(objectMap)
 }
 
-func (v VirtualMachineReimageParameters) marshalInternal() map[string]interface{} {
-	objectMap := make(map[string]interface{})
+func (v VirtualMachineReimageParameters) marshalInternal(objectMap map[string]interface{}) {
 	populate(objectMap, "tempDisk", v.TempDisk)
-	return objectMap
 }
 
 // VirtualMachineRunCommandsGetOptions contains the optional parameters for the VirtualMachineRunCommands.Get method.
@@ -5320,7 +5356,8 @@ type VirtualMachineScaleSet struct {
 
 // MarshalJSON implements the json.Marshaller interface for type VirtualMachineScaleSet.
 func (v VirtualMachineScaleSet) MarshalJSON() ([]byte, error) {
-	objectMap := v.Resource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	v.Resource.marshalInternal(objectMap)
 	populate(objectMap, "identity", v.Identity)
 	populate(objectMap, "plan", v.Plan)
 	populate(objectMap, "properties", v.Properties)
@@ -5383,7 +5420,8 @@ type VirtualMachineScaleSetExtension struct {
 
 // MarshalJSON implements the json.Marshaller interface for type VirtualMachineScaleSetExtension.
 func (v VirtualMachineScaleSetExtension) MarshalJSON() ([]byte, error) {
-	objectMap := v.SubResourceReadOnly.marshalInternal()
+	objectMap := make(map[string]interface{})
+	v.SubResourceReadOnly.marshalInternal(objectMap)
 	populate(objectMap, "name", v.Name)
 	populate(objectMap, "properties", v.Properties)
 	populate(objectMap, "type", v.Type)
@@ -5483,7 +5521,8 @@ type VirtualMachineScaleSetExtensionUpdate struct {
 
 // MarshalJSON implements the json.Marshaller interface for type VirtualMachineScaleSetExtensionUpdate.
 func (v VirtualMachineScaleSetExtensionUpdate) MarshalJSON() ([]byte, error) {
-	objectMap := v.SubResourceReadOnly.marshalInternal()
+	objectMap := make(map[string]interface{})
+	v.SubResourceReadOnly.marshalInternal(objectMap)
 	populate(objectMap, "name", v.Name)
 	populate(objectMap, "properties", v.Properties)
 	populate(objectMap, "type", v.Type)
@@ -5529,7 +5568,8 @@ type VirtualMachineScaleSetIPConfiguration struct {
 
 // MarshalJSON implements the json.Marshaller interface for type VirtualMachineScaleSetIPConfiguration.
 func (v VirtualMachineScaleSetIPConfiguration) MarshalJSON() ([]byte, error) {
-	objectMap := v.SubResource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	v.SubResource.marshalInternal(objectMap)
 	populate(objectMap, "name", v.Name)
 	populate(objectMap, "properties", v.Properties)
 	return json.Marshal(objectMap)
@@ -5756,7 +5796,8 @@ type VirtualMachineScaleSetNetworkConfiguration struct {
 
 // MarshalJSON implements the json.Marshaller interface for type VirtualMachineScaleSetNetworkConfiguration.
 func (v VirtualMachineScaleSetNetworkConfiguration) MarshalJSON() ([]byte, error) {
-	objectMap := v.SubResource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	v.SubResource.marshalInternal(objectMap)
 	populate(objectMap, "name", v.Name)
 	populate(objectMap, "properties", v.Properties)
 	return json.Marshal(objectMap)
@@ -6062,7 +6103,8 @@ type VirtualMachineScaleSetReimageParameters struct {
 
 // MarshalJSON implements the json.Marshaller interface for type VirtualMachineScaleSetReimageParameters.
 func (v VirtualMachineScaleSetReimageParameters) MarshalJSON() ([]byte, error) {
-	objectMap := v.VirtualMachineScaleSetVMReimageParameters.marshalInternal()
+	objectMap := make(map[string]interface{})
+	v.VirtualMachineScaleSetVMReimageParameters.marshalInternal(objectMap)
 	populate(objectMap, "instanceIds", v.InstanceIDs)
 	return json.Marshal(objectMap)
 }
@@ -6161,7 +6203,8 @@ type VirtualMachineScaleSetUpdate struct {
 
 // MarshalJSON implements the json.Marshaller interface for type VirtualMachineScaleSetUpdate.
 func (v VirtualMachineScaleSetUpdate) MarshalJSON() ([]byte, error) {
-	objectMap := v.UpdateResource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	v.UpdateResource.marshalInternal(objectMap)
 	populate(objectMap, "identity", v.Identity)
 	populate(objectMap, "plan", v.Plan)
 	populate(objectMap, "properties", v.Properties)
@@ -6183,7 +6226,8 @@ type VirtualMachineScaleSetUpdateIPConfiguration struct {
 
 // MarshalJSON implements the json.Marshaller interface for type VirtualMachineScaleSetUpdateIPConfiguration.
 func (v VirtualMachineScaleSetUpdateIPConfiguration) MarshalJSON() ([]byte, error) {
-	objectMap := v.SubResource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	v.SubResource.marshalInternal(objectMap)
 	populate(objectMap, "name", v.Name)
 	populate(objectMap, "properties", v.Properties)
 	return json.Marshal(objectMap)
@@ -6243,7 +6287,8 @@ type VirtualMachineScaleSetUpdateNetworkConfiguration struct {
 
 // MarshalJSON implements the json.Marshaller interface for type VirtualMachineScaleSetUpdateNetworkConfiguration.
 func (v VirtualMachineScaleSetUpdateNetworkConfiguration) MarshalJSON() ([]byte, error) {
-	objectMap := v.SubResource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	v.SubResource.marshalInternal(objectMap)
 	populate(objectMap, "name", v.Name)
 	populate(objectMap, "properties", v.Properties)
 	return json.Marshal(objectMap)
@@ -6495,7 +6540,8 @@ type VirtualMachineScaleSetVM struct {
 
 // MarshalJSON implements the json.Marshaller interface for type VirtualMachineScaleSetVM.
 func (v VirtualMachineScaleSetVM) MarshalJSON() ([]byte, error) {
-	objectMap := v.Resource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	v.Resource.marshalInternal(objectMap)
 	populate(objectMap, "instanceId", v.InstanceID)
 	populate(objectMap, "plan", v.Plan)
 	populate(objectMap, "properties", v.Properties)
@@ -6789,9 +6835,8 @@ type VirtualMachineScaleSetVMReimageParameters struct {
 	VirtualMachineReimageParameters
 }
 
-func (v VirtualMachineScaleSetVMReimageParameters) marshalInternal() map[string]interface{} {
-	objectMap := v.VirtualMachineReimageParameters.marshalInternal()
-	return objectMap
+func (v VirtualMachineScaleSetVMReimageParameters) marshalInternal(objectMap map[string]interface{}) {
+	v.VirtualMachineReimageParameters.marshalInternal(objectMap)
 }
 
 // VirtualMachineScaleSetVMsBeginDeallocateOptions contains the optional parameters for the VirtualMachineScaleSetVMs.BeginDeallocate method.
@@ -7073,7 +7118,8 @@ type VirtualMachineUpdate struct {
 
 // MarshalJSON implements the json.Marshaller interface for type VirtualMachineUpdate.
 func (v VirtualMachineUpdate) MarshalJSON() ([]byte, error) {
-	objectMap := v.UpdateResource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	v.UpdateResource.marshalInternal(objectMap)
 	populate(objectMap, "identity", v.Identity)
 	populate(objectMap, "plan", v.Plan)
 	populate(objectMap, "properties", v.Properties)

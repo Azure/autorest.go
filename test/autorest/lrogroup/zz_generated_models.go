@@ -504,7 +504,8 @@ type Product struct {
 
 // MarshalJSON implements the json.Marshaller interface for type Product.
 func (p Product) MarshalJSON() ([]byte, error) {
-	objectMap := p.Resource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	p.Resource.marshalInternal(objectMap)
 	populate(objectMap, "properties", p.Properties)
 	return json.Marshal(objectMap)
 }
@@ -535,18 +536,17 @@ type Resource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type Resource.
 func (r Resource) MarshalJSON() ([]byte, error) {
-	objectMap := r.marshalInternal()
+	objectMap := make(map[string]interface{})
+	r.marshalInternal(objectMap)
 	return json.Marshal(objectMap)
 }
 
-func (r Resource) marshalInternal() map[string]interface{} {
-	objectMap := make(map[string]interface{})
+func (r Resource) marshalInternal(objectMap map[string]interface{}) {
 	populate(objectMap, "id", r.ID)
 	populate(objectMap, "location", r.Location)
 	populate(objectMap, "name", r.Name)
 	populate(objectMap, "tags", r.Tags)
 	populate(objectMap, "type", r.Type)
-	return objectMap
 }
 
 type SKU struct {
