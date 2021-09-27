@@ -313,7 +313,7 @@ function generateInternalMarshaller(obj: ObjectSchema, structDef: StructDef, imp
     paramType = ' ' + obj.discriminator.property.schema.language.go!.name;
     paramName = ', discValue';
   }
-  let marshalInteral = `func (${receiver} ${typeName}) marshalInternal(objectMap map[string]interface{}${paramName}${paramType}) {\n`;
+  let marshalInternal = `func (${receiver} ${typeName}) marshalInternal(objectMap map[string]interface{}${paramName}${paramType}) {\n`;
   for (const parent of values(obj.parents?.immediate)) {
     let parentParam = '';
     if (isObjectSchema(parent)) {
@@ -322,12 +322,12 @@ function generateInternalMarshaller(obj: ObjectSchema, structDef: StructDef, imp
       if (obj.discriminatorValue && parent.discriminator) {
         parentParam = paramName;
       }
-      marshalInteral += `\t${receiver}.${parent.language.go!.name}.marshalInternal(objectMap${parentParam})\n`;
+      marshalInternal += `\t${receiver}.${parent.language.go!.name}.marshalInternal(objectMap${parentParam})\n`;
     }
   }
-  marshalInteral += generateJSONMarshallerBody(obj, structDef, imports);
-  marshalInteral += '}\n\n';
-  structDef.Methods.push({ name: 'marshalInternal', desc: '', text: marshalInteral });
+  marshalInternal += generateJSONMarshallerBody(obj, structDef, imports);
+  marshalInternal += '}\n\n';
+  structDef.Methods.push({ name: 'marshalInternal', desc: '', text: marshalInternal });
 }
 
 function generateInternalUnmarshaller(obj: ObjectSchema, structDef: StructDef, imports: ImportManager) {
