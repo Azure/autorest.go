@@ -13,6 +13,52 @@ const (
 	version = "v0.1.0"
 )
 
+// GeoJSONObjectType - Specifies the GeoJSON type. Must be one of the nine valid GeoJSON object types - Point, MultiPoint, LineString, MultiLineString,
+// Polygon, MultiPolygon, GeometryCollection, Feature and
+// FeatureCollection.
+type GeoJSONObjectType string
+
+const (
+	// GeoJSONObjectTypeGeoJSONPoint - `GeoJSON Point` geometry.
+	GeoJSONObjectTypeGeoJSONPoint GeoJSONObjectType = "Point"
+	// GeoJSONObjectTypeGeoJSONMultiPoint - `GeoJSON MultiPoint` geometry.
+	GeoJSONObjectTypeGeoJSONMultiPoint GeoJSONObjectType = "MultiPoint"
+	// GeoJSONObjectTypeGeoJSONLineString - `GeoJSON LineString` geometry.
+	GeoJSONObjectTypeGeoJSONLineString GeoJSONObjectType = "LineString"
+	// GeoJSONObjectTypeGeoJSONMultiLineString - `GeoJSON MultiLineString` geometry.
+	GeoJSONObjectTypeGeoJSONMultiLineString GeoJSONObjectType = "MultiLineString"
+	// GeoJSONObjectTypeGeoJSONPolygon - `GeoJSON Polygon` geometry.
+	GeoJSONObjectTypeGeoJSONPolygon GeoJSONObjectType = "Polygon"
+	// GeoJSONObjectTypeGeoJSONMultiPolygon - `GeoJSON MultiPolygon` geometry.
+	GeoJSONObjectTypeGeoJSONMultiPolygon GeoJSONObjectType = "MultiPolygon"
+	// GeoJSONObjectTypeGeoJSONGeometryCollection - `GeoJSON GeometryCollection` geometry.
+	GeoJSONObjectTypeGeoJSONGeometryCollection GeoJSONObjectType = "GeometryCollection"
+	// GeoJSONObjectTypeGeoJSONFeature - `GeoJSON Feature` object.
+	GeoJSONObjectTypeGeoJSONFeature GeoJSONObjectType = "Feature"
+	// GeoJSONObjectTypeGeoJSONFeatureCollection - `GeoJSON FeatureCollection` object.
+	GeoJSONObjectTypeGeoJSONFeatureCollection GeoJSONObjectType = "FeatureCollection"
+)
+
+// PossibleGeoJSONObjectTypeValues returns the possible values for the GeoJSONObjectType const type.
+func PossibleGeoJSONObjectTypeValues() []GeoJSONObjectType {
+	return []GeoJSONObjectType{
+		GeoJSONObjectTypeGeoJSONPoint,
+		GeoJSONObjectTypeGeoJSONMultiPoint,
+		GeoJSONObjectTypeGeoJSONLineString,
+		GeoJSONObjectTypeGeoJSONMultiLineString,
+		GeoJSONObjectTypeGeoJSONPolygon,
+		GeoJSONObjectTypeGeoJSONMultiPolygon,
+		GeoJSONObjectTypeGeoJSONGeometryCollection,
+		GeoJSONObjectTypeGeoJSONFeature,
+		GeoJSONObjectTypeGeoJSONFeatureCollection,
+	}
+}
+
+// ToPtr returns a *GeoJSONObjectType pointing to the current value.
+func (c GeoJSONObjectType) ToPtr() *GeoJSONObjectType {
+	return &c
+}
+
 type GeographicResourceLocation string
 
 const (

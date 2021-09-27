@@ -64,8 +64,7 @@ func (a *Activity) UnmarshalJSON(data []byte) error {
 	return a.unmarshalInternal(rawMsg)
 }
 
-func (a Activity) marshalInternal(discValue string) map[string]interface{} {
-	objectMap := make(map[string]interface{})
+func (a Activity) marshalInternal(objectMap map[string]interface{}, discValue string) {
 	populate(objectMap, "dependsOn", a.DependsOn)
 	populate(objectMap, "description", a.Description)
 	populate(objectMap, "name", a.Name)
@@ -77,7 +76,6 @@ func (a Activity) marshalInternal(discValue string) map[string]interface{} {
 			objectMap[key] = val
 		}
 	}
-	return objectMap
 }
 
 func (a *Activity) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
@@ -425,7 +423,8 @@ type AmazonMWSLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AmazonMWSLinkedService.
 func (a AmazonMWSLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := a.LinkedService.marshalInternal("AmazonMWS")
+	objectMap := make(map[string]interface{})
+	a.LinkedService.marshalInternal(objectMap, "AmazonMWS")
 	populate(objectMap, "typeProperties", a.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -447,7 +446,10 @@ func (a *AmazonMWSLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.LinkedService.unmarshalInternal(rawMsg)
+	if err := a.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AmazonMWSLinkedServiceTypeProperties - Amazon Marketplace Web Service linked service properties.
@@ -558,7 +560,8 @@ type AmazonMWSObjectDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AmazonMWSObjectDataset.
 func (a AmazonMWSObjectDataset) MarshalJSON() ([]byte, error) {
-	objectMap := a.Dataset.marshalInternal("AmazonMWSObject")
+	objectMap := make(map[string]interface{})
+	a.Dataset.marshalInternal(objectMap, "AmazonMWSObject")
 	populate(objectMap, "typeProperties", a.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -580,7 +583,10 @@ func (a *AmazonMWSObjectDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.Dataset.unmarshalInternal(rawMsg)
+	if err := a.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AmazonMWSSource - A copy activity Amazon Marketplace Web Service source.
@@ -592,7 +598,8 @@ type AmazonMWSSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AmazonMWSSource.
 func (a AmazonMWSSource) MarshalJSON() ([]byte, error) {
-	objectMap := a.TabularSource.marshalInternal("AmazonMWSSource")
+	objectMap := make(map[string]interface{})
+	a.TabularSource.marshalInternal(objectMap, "AmazonMWSSource")
 	populate(objectMap, "query", a.Query)
 	return json.Marshal(objectMap)
 }
@@ -614,7 +621,10 @@ func (a *AmazonMWSSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.TabularSource.unmarshalInternal(rawMsg)
+	if err := a.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AmazonRedshiftLinkedService - Linked service for Amazon Redshift.
@@ -626,7 +636,8 @@ type AmazonRedshiftLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AmazonRedshiftLinkedService.
 func (a AmazonRedshiftLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := a.LinkedService.marshalInternal("AmazonRedshift")
+	objectMap := make(map[string]interface{})
+	a.LinkedService.marshalInternal(objectMap, "AmazonRedshift")
 	populate(objectMap, "typeProperties", a.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -648,7 +659,10 @@ func (a *AmazonRedshiftLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.LinkedService.unmarshalInternal(rawMsg)
+	if err := a.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AmazonRedshiftLinkedServiceTypeProperties - Amazon Redshift linked service properties.
@@ -735,7 +749,8 @@ type AmazonRedshiftSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AmazonRedshiftSource.
 func (a AmazonRedshiftSource) MarshalJSON() ([]byte, error) {
-	objectMap := a.TabularSource.marshalInternal("AmazonRedshiftSource")
+	objectMap := make(map[string]interface{})
+	a.TabularSource.marshalInternal(objectMap, "AmazonRedshiftSource")
 	populate(objectMap, "query", a.Query)
 	populate(objectMap, "redshiftUnloadSettings", a.RedshiftUnloadSettings)
 	return json.Marshal(objectMap)
@@ -761,7 +776,10 @@ func (a *AmazonRedshiftSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.TabularSource.unmarshalInternal(rawMsg)
+	if err := a.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AmazonRedshiftTableDataset - The Amazon Redshift table dataset.
@@ -773,7 +791,8 @@ type AmazonRedshiftTableDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AmazonRedshiftTableDataset.
 func (a AmazonRedshiftTableDataset) MarshalJSON() ([]byte, error) {
-	objectMap := a.Dataset.marshalInternal("AmazonRedshiftTable")
+	objectMap := make(map[string]interface{})
+	a.Dataset.marshalInternal(objectMap, "AmazonRedshiftTable")
 	populate(objectMap, "typeProperties", a.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -795,7 +814,10 @@ func (a *AmazonRedshiftTableDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.Dataset.unmarshalInternal(rawMsg)
+	if err := a.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AmazonRedshiftTableDatasetTypeProperties - Amazon Redshift table dataset properties.
@@ -819,7 +841,8 @@ type AmazonS3LinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AmazonS3LinkedService.
 func (a AmazonS3LinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := a.LinkedService.marshalInternal("AmazonS3")
+	objectMap := make(map[string]interface{})
+	a.LinkedService.marshalInternal(objectMap, "AmazonS3")
 	populate(objectMap, "typeProperties", a.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -841,7 +864,10 @@ func (a *AmazonS3LinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.LinkedService.unmarshalInternal(rawMsg)
+	if err := a.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AmazonS3LinkedServiceTypeProperties - Amazon S3 linked service properties.
@@ -913,7 +939,8 @@ type AmazonS3Location struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AmazonS3Location.
 func (a AmazonS3Location) MarshalJSON() ([]byte, error) {
-	objectMap := a.DatasetLocation.marshalInternal("AmazonS3Location")
+	objectMap := make(map[string]interface{})
+	a.DatasetLocation.marshalInternal(objectMap, "AmazonS3Location")
 	populate(objectMap, "bucketName", a.BucketName)
 	populate(objectMap, "version", a.Version)
 	return json.Marshal(objectMap)
@@ -939,7 +966,10 @@ func (a *AmazonS3Location) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.DatasetLocation.unmarshalInternal(rawMsg)
+	if err := a.DatasetLocation.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AmazonS3ReadSettings - Azure data lake store read settings.
@@ -969,7 +999,8 @@ type AmazonS3ReadSettings struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AmazonS3ReadSettings.
 func (a AmazonS3ReadSettings) MarshalJSON() ([]byte, error) {
-	objectMap := a.StoreReadSettings.marshalInternal("AmazonS3ReadSettings")
+	objectMap := make(map[string]interface{})
+	a.StoreReadSettings.marshalInternal(objectMap, "AmazonS3ReadSettings")
 	populate(objectMap, "enablePartitionDiscovery", a.EnablePartitionDiscovery)
 	populate(objectMap, "modifiedDatetimeEnd", a.ModifiedDatetimeEnd)
 	populate(objectMap, "modifiedDatetimeStart", a.ModifiedDatetimeStart)
@@ -1015,7 +1046,10 @@ func (a *AmazonS3ReadSettings) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.StoreReadSettings.unmarshalInternal(rawMsg)
+	if err := a.StoreReadSettings.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AppendVariableActivity - Append value for a Variable of type Array.
@@ -1027,7 +1061,8 @@ type AppendVariableActivity struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AppendVariableActivity.
 func (a AppendVariableActivity) MarshalJSON() ([]byte, error) {
-	objectMap := a.ControlActivity.marshalInternal("AppendVariable")
+	objectMap := make(map[string]interface{})
+	a.ControlActivity.marshalInternal(objectMap, "AppendVariable")
 	populate(objectMap, "typeProperties", a.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -1049,7 +1084,10 @@ func (a *AppendVariableActivity) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.ControlActivity.unmarshalInternal(rawMsg)
+	if err := a.ControlActivity.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AppendVariableActivityTypeProperties - AppendVariable activity properties.
@@ -1097,7 +1135,8 @@ type AvroDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AvroDataset.
 func (a AvroDataset) MarshalJSON() ([]byte, error) {
-	objectMap := a.Dataset.marshalInternal("Avro")
+	objectMap := make(map[string]interface{})
+	a.Dataset.marshalInternal(objectMap, "Avro")
 	populate(objectMap, "typeProperties", a.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -1119,7 +1158,10 @@ func (a *AvroDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.Dataset.unmarshalInternal(rawMsg)
+	if err := a.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AvroDatasetTypeProperties - Avro dataset properties.
@@ -1172,7 +1214,8 @@ type AvroFormat struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AvroFormat.
 func (a AvroFormat) MarshalJSON() ([]byte, error) {
-	objectMap := a.DatasetStorageFormat.marshalInternal("AvroFormat")
+	objectMap := make(map[string]interface{})
+	a.DatasetStorageFormat.marshalInternal(objectMap, "AvroFormat")
 	return json.Marshal(objectMap)
 }
 
@@ -1188,7 +1231,8 @@ type AvroSink struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AvroSink.
 func (a AvroSink) MarshalJSON() ([]byte, error) {
-	objectMap := a.CopySink.marshalInternal("AvroSink")
+	objectMap := make(map[string]interface{})
+	a.CopySink.marshalInternal(objectMap, "AvroSink")
 	populate(objectMap, "formatSettings", a.FormatSettings)
 	populate(objectMap, "storeSettings", a.StoreSettings)
 	return json.Marshal(objectMap)
@@ -1214,7 +1258,10 @@ func (a *AvroSink) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.CopySink.unmarshalInternal(rawMsg)
+	if err := a.CopySink.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AvroSource - A copy activity Avro source.
@@ -1226,7 +1273,8 @@ type AvroSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AvroSource.
 func (a AvroSource) MarshalJSON() ([]byte, error) {
-	objectMap := a.CopySource.marshalInternal("AvroSource")
+	objectMap := make(map[string]interface{})
+	a.CopySource.marshalInternal(objectMap, "AvroSource")
 	populate(objectMap, "storeSettings", a.StoreSettings)
 	return json.Marshal(objectMap)
 }
@@ -1248,7 +1296,10 @@ func (a *AvroSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.CopySource.unmarshalInternal(rawMsg)
+	if err := a.CopySource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AvroWriteSettings - Avro write settings.
@@ -1263,7 +1314,8 @@ type AvroWriteSettings struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AvroWriteSettings.
 func (a AvroWriteSettings) MarshalJSON() ([]byte, error) {
-	objectMap := a.FormatWriteSettings.marshalInternal("AvroWriteSettings")
+	objectMap := make(map[string]interface{})
+	a.FormatWriteSettings.marshalInternal(objectMap, "AvroWriteSettings")
 	populate(objectMap, "recordName", a.RecordName)
 	populate(objectMap, "recordNamespace", a.RecordNamespace)
 	return json.Marshal(objectMap)
@@ -1289,7 +1341,10 @@ func (a *AvroWriteSettings) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.FormatWriteSettings.unmarshalInternal(rawMsg)
+	if err := a.FormatWriteSettings.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureBatchLinkedService - Azure Batch linked service.
@@ -1301,7 +1356,8 @@ type AzureBatchLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureBatchLinkedService.
 func (a AzureBatchLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := a.LinkedService.marshalInternal("AzureBatch")
+	objectMap := make(map[string]interface{})
+	a.LinkedService.marshalInternal(objectMap, "AzureBatch")
 	populate(objectMap, "typeProperties", a.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -1323,7 +1379,10 @@ func (a *AzureBatchLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.LinkedService.unmarshalInternal(rawMsg)
+	if err := a.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureBatchLinkedServiceTypeProperties - Azure Batch linked service properties.
@@ -1404,7 +1463,8 @@ type AzureBlobFSLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureBlobFSLinkedService.
 func (a AzureBlobFSLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := a.LinkedService.marshalInternal("AzureBlobFS")
+	objectMap := make(map[string]interface{})
+	a.LinkedService.marshalInternal(objectMap, "AzureBlobFS")
 	populate(objectMap, "typeProperties", a.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -1426,7 +1486,10 @@ func (a *AzureBlobFSLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.LinkedService.unmarshalInternal(rawMsg)
+	if err := a.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureBlobFSLinkedServiceTypeProperties - Azure Data Lake Storage Gen2 linked service properties.
@@ -1507,7 +1570,8 @@ type AzureBlobFSLocation struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureBlobFSLocation.
 func (a AzureBlobFSLocation) MarshalJSON() ([]byte, error) {
-	objectMap := a.DatasetLocation.marshalInternal("AzureBlobFSLocation")
+	objectMap := make(map[string]interface{})
+	a.DatasetLocation.marshalInternal(objectMap, "AzureBlobFSLocation")
 	populate(objectMap, "fileSystem", a.FileSystem)
 	return json.Marshal(objectMap)
 }
@@ -1529,7 +1593,10 @@ func (a *AzureBlobFSLocation) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.DatasetLocation.unmarshalInternal(rawMsg)
+	if err := a.DatasetLocation.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureBlobFSReadSettings - Azure blobFS read settings.
@@ -1556,7 +1623,8 @@ type AzureBlobFSReadSettings struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureBlobFSReadSettings.
 func (a AzureBlobFSReadSettings) MarshalJSON() ([]byte, error) {
-	objectMap := a.StoreReadSettings.marshalInternal("AzureBlobFSReadSettings")
+	objectMap := make(map[string]interface{})
+	a.StoreReadSettings.marshalInternal(objectMap, "AzureBlobFSReadSettings")
 	populate(objectMap, "enablePartitionDiscovery", a.EnablePartitionDiscovery)
 	populate(objectMap, "modifiedDatetimeEnd", a.ModifiedDatetimeEnd)
 	populate(objectMap, "modifiedDatetimeStart", a.ModifiedDatetimeStart)
@@ -1598,7 +1666,10 @@ func (a *AzureBlobFSReadSettings) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.StoreReadSettings.unmarshalInternal(rawMsg)
+	if err := a.StoreReadSettings.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureBlobFSSink - A copy activity Azure Data Lake Storage Gen2 sink.
@@ -1610,7 +1681,8 @@ type AzureBlobFSSink struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureBlobFSSink.
 func (a AzureBlobFSSink) MarshalJSON() ([]byte, error) {
-	objectMap := a.CopySink.marshalInternal("AzureBlobFSSink")
+	objectMap := make(map[string]interface{})
+	a.CopySink.marshalInternal(objectMap, "AzureBlobFSSink")
 	populate(objectMap, "copyBehavior", a.CopyBehavior)
 	return json.Marshal(objectMap)
 }
@@ -1632,7 +1704,10 @@ func (a *AzureBlobFSSink) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.CopySink.unmarshalInternal(rawMsg)
+	if err := a.CopySink.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureBlobFSSource - A copy activity Azure BlobFS source.
@@ -1650,7 +1725,8 @@ type AzureBlobFSSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureBlobFSSource.
 func (a AzureBlobFSSource) MarshalJSON() ([]byte, error) {
-	objectMap := a.CopySource.marshalInternal("AzureBlobFSSource")
+	objectMap := make(map[string]interface{})
+	a.CopySource.marshalInternal(objectMap, "AzureBlobFSSource")
 	populate(objectMap, "recursive", a.Recursive)
 	populate(objectMap, "skipHeaderLineCount", a.SkipHeaderLineCount)
 	populate(objectMap, "treatEmptyAsNull", a.TreatEmptyAsNull)
@@ -1680,7 +1756,10 @@ func (a *AzureBlobFSSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.CopySource.unmarshalInternal(rawMsg)
+	if err := a.CopySource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureBlobFSWriteSettings - Azure blobFS write settings.
@@ -1692,7 +1771,8 @@ type AzureBlobFSWriteSettings struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureBlobFSWriteSettings.
 func (a AzureBlobFSWriteSettings) MarshalJSON() ([]byte, error) {
-	objectMap := a.StoreWriteSettings.marshalInternal("AzureBlobFSWriteSettings")
+	objectMap := make(map[string]interface{})
+	a.StoreWriteSettings.marshalInternal(objectMap, "AzureBlobFSWriteSettings")
 	populate(objectMap, "blockSizeInMB", a.BlockSizeInMB)
 	return json.Marshal(objectMap)
 }
@@ -1714,7 +1794,10 @@ func (a *AzureBlobFSWriteSettings) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.StoreWriteSettings.unmarshalInternal(rawMsg)
+	if err := a.StoreWriteSettings.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureBlobStorageLinkedService - The azure blob storage linked service.
@@ -1726,7 +1809,8 @@ type AzureBlobStorageLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureBlobStorageLinkedService.
 func (a AzureBlobStorageLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := a.LinkedService.marshalInternal("AzureBlobStorage")
+	objectMap := make(map[string]interface{})
+	a.LinkedService.marshalInternal(objectMap, "AzureBlobStorage")
 	populate(objectMap, "typeProperties", a.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -1748,7 +1832,10 @@ func (a *AzureBlobStorageLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.LinkedService.unmarshalInternal(rawMsg)
+	if err := a.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureBlobStorageLinkedServiceTypeProperties - Azure Blob Storage linked service properties.
@@ -1850,7 +1937,8 @@ type AzureBlobStorageLocation struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureBlobStorageLocation.
 func (a AzureBlobStorageLocation) MarshalJSON() ([]byte, error) {
-	objectMap := a.DatasetLocation.marshalInternal("AzureBlobStorageLocation")
+	objectMap := make(map[string]interface{})
+	a.DatasetLocation.marshalInternal(objectMap, "AzureBlobStorageLocation")
 	populate(objectMap, "container", a.Container)
 	return json.Marshal(objectMap)
 }
@@ -1872,7 +1960,10 @@ func (a *AzureBlobStorageLocation) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.DatasetLocation.unmarshalInternal(rawMsg)
+	if err := a.DatasetLocation.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureBlobStorageReadSettings - Azure blob read settings.
@@ -1902,7 +1993,8 @@ type AzureBlobStorageReadSettings struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureBlobStorageReadSettings.
 func (a AzureBlobStorageReadSettings) MarshalJSON() ([]byte, error) {
-	objectMap := a.StoreReadSettings.marshalInternal("AzureBlobStorageReadSettings")
+	objectMap := make(map[string]interface{})
+	a.StoreReadSettings.marshalInternal(objectMap, "AzureBlobStorageReadSettings")
 	populate(objectMap, "enablePartitionDiscovery", a.EnablePartitionDiscovery)
 	populate(objectMap, "modifiedDatetimeEnd", a.ModifiedDatetimeEnd)
 	populate(objectMap, "modifiedDatetimeStart", a.ModifiedDatetimeStart)
@@ -1948,7 +2040,10 @@ func (a *AzureBlobStorageReadSettings) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.StoreReadSettings.unmarshalInternal(rawMsg)
+	if err := a.StoreReadSettings.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureBlobStorageWriteSettings - Azure blob write settings.
@@ -1960,7 +2055,8 @@ type AzureBlobStorageWriteSettings struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureBlobStorageWriteSettings.
 func (a AzureBlobStorageWriteSettings) MarshalJSON() ([]byte, error) {
-	objectMap := a.StoreWriteSettings.marshalInternal("AzureBlobStorageWriteSettings")
+	objectMap := make(map[string]interface{})
+	a.StoreWriteSettings.marshalInternal(objectMap, "AzureBlobStorageWriteSettings")
 	populate(objectMap, "blockSizeInMB", a.BlockSizeInMB)
 	return json.Marshal(objectMap)
 }
@@ -1982,7 +2078,10 @@ func (a *AzureBlobStorageWriteSettings) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.StoreWriteSettings.unmarshalInternal(rawMsg)
+	if err := a.StoreWriteSettings.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureDataExplorerCommandActivity - Azure Data Explorer command activity.
@@ -1994,7 +2093,8 @@ type AzureDataExplorerCommandActivity struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureDataExplorerCommandActivity.
 func (a AzureDataExplorerCommandActivity) MarshalJSON() ([]byte, error) {
-	objectMap := a.ExecutionActivity.marshalInternal("AzureDataExplorerCommand")
+	objectMap := make(map[string]interface{})
+	a.ExecutionActivity.marshalInternal(objectMap, "AzureDataExplorerCommand")
 	populate(objectMap, "typeProperties", a.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -2016,7 +2116,10 @@ func (a *AzureDataExplorerCommandActivity) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.ExecutionActivity.unmarshalInternal(rawMsg)
+	if err := a.ExecutionActivity.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureDataExplorerCommandActivityTypeProperties - Azure Data Explorer command activity properties.
@@ -2043,7 +2146,8 @@ type AzureDataExplorerLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureDataExplorerLinkedService.
 func (a AzureDataExplorerLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := a.LinkedService.marshalInternal("AzureDataExplorer")
+	objectMap := make(map[string]interface{})
+	a.LinkedService.marshalInternal(objectMap, "AzureDataExplorer")
 	populate(objectMap, "typeProperties", a.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -2065,7 +2169,10 @@ func (a *AzureDataExplorerLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.LinkedService.unmarshalInternal(rawMsg)
+	if err := a.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureDataExplorerLinkedServiceTypeProperties - Azure Data Explorer (Kusto) linked service properties.
@@ -2145,7 +2252,8 @@ type AzureDataExplorerSink struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureDataExplorerSink.
 func (a AzureDataExplorerSink) MarshalJSON() ([]byte, error) {
-	objectMap := a.CopySink.marshalInternal("AzureDataExplorerSink")
+	objectMap := make(map[string]interface{})
+	a.CopySink.marshalInternal(objectMap, "AzureDataExplorerSink")
 	populate(objectMap, "flushImmediately", a.FlushImmediately)
 	populate(objectMap, "ingestionMappingAsJson", a.IngestionMappingAsJSON)
 	populate(objectMap, "ingestionMappingName", a.IngestionMappingName)
@@ -2175,7 +2283,10 @@ func (a *AzureDataExplorerSink) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.CopySink.unmarshalInternal(rawMsg)
+	if err := a.CopySink.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureDataExplorerSource - A copy activity Azure Data Explorer (Kusto) source.
@@ -2193,7 +2304,8 @@ type AzureDataExplorerSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureDataExplorerSource.
 func (a AzureDataExplorerSource) MarshalJSON() ([]byte, error) {
-	objectMap := a.CopySource.marshalInternal("AzureDataExplorerSource")
+	objectMap := make(map[string]interface{})
+	a.CopySource.marshalInternal(objectMap, "AzureDataExplorerSource")
 	populate(objectMap, "noTruncation", a.NoTruncation)
 	populate(objectMap, "query", a.Query)
 	populate(objectMap, "queryTimeout", a.QueryTimeout)
@@ -2223,7 +2335,10 @@ func (a *AzureDataExplorerSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.CopySource.unmarshalInternal(rawMsg)
+	if err := a.CopySource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureDataExplorerTableDataset - The Azure Data Explorer (Kusto) dataset.
@@ -2235,7 +2350,8 @@ type AzureDataExplorerTableDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureDataExplorerTableDataset.
 func (a AzureDataExplorerTableDataset) MarshalJSON() ([]byte, error) {
-	objectMap := a.Dataset.marshalInternal("AzureDataExplorerTable")
+	objectMap := make(map[string]interface{})
+	a.Dataset.marshalInternal(objectMap, "AzureDataExplorerTable")
 	populate(objectMap, "typeProperties", a.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -2257,7 +2373,10 @@ func (a *AzureDataExplorerTableDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.Dataset.unmarshalInternal(rawMsg)
+	if err := a.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureDataLakeAnalyticsLinkedService - Azure Data Lake Analytics linked service.
@@ -2269,7 +2388,8 @@ type AzureDataLakeAnalyticsLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureDataLakeAnalyticsLinkedService.
 func (a AzureDataLakeAnalyticsLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := a.LinkedService.marshalInternal("AzureDataLakeAnalytics")
+	objectMap := make(map[string]interface{})
+	a.LinkedService.marshalInternal(objectMap, "AzureDataLakeAnalytics")
 	populate(objectMap, "typeProperties", a.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -2291,7 +2411,10 @@ func (a *AzureDataLakeAnalyticsLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.LinkedService.unmarshalInternal(rawMsg)
+	if err := a.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureDataLakeAnalyticsLinkedServiceTypeProperties - Azure Data Lake Analytics linked service properties.
@@ -2386,7 +2509,8 @@ type AzureDataLakeStoreLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureDataLakeStoreLinkedService.
 func (a AzureDataLakeStoreLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := a.LinkedService.marshalInternal("AzureDataLakeStore")
+	objectMap := make(map[string]interface{})
+	a.LinkedService.marshalInternal(objectMap, "AzureDataLakeStore")
 	populate(objectMap, "typeProperties", a.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -2408,7 +2532,10 @@ func (a *AzureDataLakeStoreLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.LinkedService.unmarshalInternal(rawMsg)
+	if err := a.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureDataLakeStoreLinkedServiceTypeProperties - Azure Data Lake Store linked service properties.
@@ -2501,7 +2628,8 @@ type AzureDataLakeStoreLocation struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureDataLakeStoreLocation.
 func (a AzureDataLakeStoreLocation) MarshalJSON() ([]byte, error) {
-	objectMap := a.DatasetLocation.marshalInternal("AzureDataLakeStoreLocation")
+	objectMap := make(map[string]interface{})
+	a.DatasetLocation.marshalInternal(objectMap, "AzureDataLakeStoreLocation")
 	return json.Marshal(objectMap)
 }
 
@@ -2529,7 +2657,8 @@ type AzureDataLakeStoreReadSettings struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureDataLakeStoreReadSettings.
 func (a AzureDataLakeStoreReadSettings) MarshalJSON() ([]byte, error) {
-	objectMap := a.StoreReadSettings.marshalInternal("AzureDataLakeStoreReadSettings")
+	objectMap := make(map[string]interface{})
+	a.StoreReadSettings.marshalInternal(objectMap, "AzureDataLakeStoreReadSettings")
 	populate(objectMap, "enablePartitionDiscovery", a.EnablePartitionDiscovery)
 	populate(objectMap, "modifiedDatetimeEnd", a.ModifiedDatetimeEnd)
 	populate(objectMap, "modifiedDatetimeStart", a.ModifiedDatetimeStart)
@@ -2571,7 +2700,10 @@ func (a *AzureDataLakeStoreReadSettings) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.StoreReadSettings.unmarshalInternal(rawMsg)
+	if err := a.StoreReadSettings.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureDataLakeStoreSink - A copy activity Azure Data Lake Store sink.
@@ -2586,7 +2718,8 @@ type AzureDataLakeStoreSink struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureDataLakeStoreSink.
 func (a AzureDataLakeStoreSink) MarshalJSON() ([]byte, error) {
-	objectMap := a.CopySink.marshalInternal("AzureDataLakeStoreSink")
+	objectMap := make(map[string]interface{})
+	a.CopySink.marshalInternal(objectMap, "AzureDataLakeStoreSink")
 	populate(objectMap, "copyBehavior", a.CopyBehavior)
 	populate(objectMap, "enableAdlsSingleFileParallel", a.EnableAdlsSingleFileParallel)
 	return json.Marshal(objectMap)
@@ -2612,7 +2745,10 @@ func (a *AzureDataLakeStoreSink) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.CopySink.unmarshalInternal(rawMsg)
+	if err := a.CopySink.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureDataLakeStoreSource - A copy activity Azure Data Lake source.
@@ -2624,7 +2760,8 @@ type AzureDataLakeStoreSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureDataLakeStoreSource.
 func (a AzureDataLakeStoreSource) MarshalJSON() ([]byte, error) {
-	objectMap := a.CopySource.marshalInternal("AzureDataLakeStoreSource")
+	objectMap := make(map[string]interface{})
+	a.CopySource.marshalInternal(objectMap, "AzureDataLakeStoreSource")
 	populate(objectMap, "recursive", a.Recursive)
 	return json.Marshal(objectMap)
 }
@@ -2646,7 +2783,10 @@ func (a *AzureDataLakeStoreSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.CopySource.unmarshalInternal(rawMsg)
+	if err := a.CopySource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureDataLakeStoreWriteSettings - Azure data lake store write settings.
@@ -2656,7 +2796,8 @@ type AzureDataLakeStoreWriteSettings struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureDataLakeStoreWriteSettings.
 func (a AzureDataLakeStoreWriteSettings) MarshalJSON() ([]byte, error) {
-	objectMap := a.StoreWriteSettings.marshalInternal("AzureDataLakeStoreWriteSettings")
+	objectMap := make(map[string]interface{})
+	a.StoreWriteSettings.marshalInternal(objectMap, "AzureDataLakeStoreWriteSettings")
 	return json.Marshal(objectMap)
 }
 
@@ -2669,7 +2810,8 @@ type AzureDatabricksLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureDatabricksLinkedService.
 func (a AzureDatabricksLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := a.LinkedService.marshalInternal("AzureDatabricks")
+	objectMap := make(map[string]interface{})
+	a.LinkedService.marshalInternal(objectMap, "AzureDatabricks")
 	populate(objectMap, "typeProperties", a.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -2691,7 +2833,10 @@ func (a *AzureDatabricksLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.LinkedService.unmarshalInternal(rawMsg)
+	if err := a.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureDatabricksLinkedServiceTypeProperties - Azure Databricks linked service properties.
@@ -2839,7 +2984,8 @@ type AzureEntityResource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureEntityResource.
 func (a AzureEntityResource) MarshalJSON() ([]byte, error) {
-	objectMap := a.marshalInternal()
+	objectMap := make(map[string]interface{})
+	a.marshalInternal(objectMap)
 	return json.Marshal(objectMap)
 }
 
@@ -2852,10 +2998,9 @@ func (a *AzureEntityResource) UnmarshalJSON(data []byte) error {
 	return a.unmarshalInternal(rawMsg)
 }
 
-func (a AzureEntityResource) marshalInternal() map[string]interface{} {
-	objectMap := a.Resource.marshalInternal()
+func (a AzureEntityResource) marshalInternal(objectMap map[string]interface{}) {
+	a.Resource.marshalInternal(objectMap)
 	populate(objectMap, "etag", a.Etag)
-	return objectMap
 }
 
 func (a *AzureEntityResource) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
@@ -2870,7 +3015,10 @@ func (a *AzureEntityResource) unmarshalInternal(rawMsg map[string]json.RawMessag
 			return err
 		}
 	}
-	return a.Resource.unmarshalInternal(rawMsg)
+	if err := a.Resource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureFileStorageLinkedService - Azure File Storage linked service.
@@ -2882,7 +3030,8 @@ type AzureFileStorageLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureFileStorageLinkedService.
 func (a AzureFileStorageLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := a.LinkedService.marshalInternal("AzureFileStorage")
+	objectMap := make(map[string]interface{})
+	a.LinkedService.marshalInternal(objectMap, "AzureFileStorage")
 	populate(objectMap, "typeProperties", a.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -2904,7 +3053,10 @@ func (a *AzureFileStorageLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.LinkedService.unmarshalInternal(rawMsg)
+	if err := a.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureFileStorageLinkedServiceTypeProperties - Azure File Storage linked service properties.
@@ -2969,7 +3121,8 @@ type AzureFileStorageLocation struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureFileStorageLocation.
 func (a AzureFileStorageLocation) MarshalJSON() ([]byte, error) {
-	objectMap := a.DatasetLocation.marshalInternal("AzureFileStorageLocation")
+	objectMap := make(map[string]interface{})
+	a.DatasetLocation.marshalInternal(objectMap, "AzureFileStorageLocation")
 	return json.Marshal(objectMap)
 }
 
@@ -2997,7 +3150,8 @@ type AzureFileStorageReadSettings struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureFileStorageReadSettings.
 func (a AzureFileStorageReadSettings) MarshalJSON() ([]byte, error) {
-	objectMap := a.StoreReadSettings.marshalInternal("AzureFileStorageReadSettings")
+	objectMap := make(map[string]interface{})
+	a.StoreReadSettings.marshalInternal(objectMap, "AzureFileStorageReadSettings")
 	populate(objectMap, "enablePartitionDiscovery", a.EnablePartitionDiscovery)
 	populate(objectMap, "modifiedDatetimeEnd", a.ModifiedDatetimeEnd)
 	populate(objectMap, "modifiedDatetimeStart", a.ModifiedDatetimeStart)
@@ -3039,7 +3193,10 @@ func (a *AzureFileStorageReadSettings) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.StoreReadSettings.unmarshalInternal(rawMsg)
+	if err := a.StoreReadSettings.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureFunctionActivity - Azure Function activity.
@@ -3051,7 +3208,8 @@ type AzureFunctionActivity struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureFunctionActivity.
 func (a AzureFunctionActivity) MarshalJSON() ([]byte, error) {
-	objectMap := a.ExecutionActivity.marshalInternal("AzureFunctionActivity")
+	objectMap := make(map[string]interface{})
+	a.ExecutionActivity.marshalInternal(objectMap, "AzureFunctionActivity")
 	populate(objectMap, "typeProperties", a.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -3073,7 +3231,10 @@ func (a *AzureFunctionActivity) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.ExecutionActivity.unmarshalInternal(rawMsg)
+	if err := a.ExecutionActivity.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureFunctionActivityTypeProperties - Azure Function activity type properties.
@@ -3103,7 +3264,8 @@ type AzureFunctionLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureFunctionLinkedService.
 func (a AzureFunctionLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := a.LinkedService.marshalInternal("AzureFunction")
+	objectMap := make(map[string]interface{})
+	a.LinkedService.marshalInternal(objectMap, "AzureFunction")
 	populate(objectMap, "typeProperties", a.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -3125,7 +3287,10 @@ func (a *AzureFunctionLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.LinkedService.unmarshalInternal(rawMsg)
+	if err := a.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureFunctionLinkedServiceTypeProperties - Azure Function linked service properties.
@@ -3185,7 +3350,8 @@ type AzureKeyVaultLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureKeyVaultLinkedService.
 func (a AzureKeyVaultLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := a.LinkedService.marshalInternal("AzureKeyVault")
+	objectMap := make(map[string]interface{})
+	a.LinkedService.marshalInternal(objectMap, "AzureKeyVault")
 	populate(objectMap, "typeProperties", a.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -3207,7 +3373,10 @@ func (a *AzureKeyVaultLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.LinkedService.unmarshalInternal(rawMsg)
+	if err := a.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureKeyVaultLinkedServiceTypeProperties - Azure Key Vault linked service properties.
@@ -3231,7 +3400,8 @@ type AzureKeyVaultSecretReference struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureKeyVaultSecretReference.
 func (a AzureKeyVaultSecretReference) MarshalJSON() ([]byte, error) {
-	objectMap := a.SecretBase.marshalInternal("AzureKeyVaultSecret")
+	objectMap := make(map[string]interface{})
+	a.SecretBase.marshalInternal(objectMap, "AzureKeyVaultSecret")
 	populate(objectMap, "secretName", a.SecretName)
 	populate(objectMap, "secretVersion", a.SecretVersion)
 	populate(objectMap, "store", a.Store)
@@ -3261,7 +3431,10 @@ func (a *AzureKeyVaultSecretReference) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.SecretBase.unmarshalInternal(rawMsg)
+	if err := a.SecretBase.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureMLBatchExecutionActivity - Azure ML Batch Execution activity.
@@ -3273,7 +3446,8 @@ type AzureMLBatchExecutionActivity struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureMLBatchExecutionActivity.
 func (a AzureMLBatchExecutionActivity) MarshalJSON() ([]byte, error) {
-	objectMap := a.ExecutionActivity.marshalInternal("AzureMLBatchExecution")
+	objectMap := make(map[string]interface{})
+	a.ExecutionActivity.marshalInternal(objectMap, "AzureMLBatchExecution")
 	populate(objectMap, "typeProperties", a.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -3295,7 +3469,10 @@ func (a *AzureMLBatchExecutionActivity) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.ExecutionActivity.unmarshalInternal(rawMsg)
+	if err := a.ExecutionActivity.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureMLBatchExecutionActivityTypeProperties - Azure ML Batch Execution activity properties.
@@ -3334,7 +3511,8 @@ type AzureMLExecutePipelineActivity struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureMLExecutePipelineActivity.
 func (a AzureMLExecutePipelineActivity) MarshalJSON() ([]byte, error) {
-	objectMap := a.ExecutionActivity.marshalInternal("AzureMLExecutePipeline")
+	objectMap := make(map[string]interface{})
+	a.ExecutionActivity.marshalInternal(objectMap, "AzureMLExecutePipeline")
 	populate(objectMap, "typeProperties", a.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -3356,7 +3534,10 @@ func (a *AzureMLExecutePipelineActivity) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.ExecutionActivity.unmarshalInternal(rawMsg)
+	if err := a.ExecutionActivity.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureMLExecutePipelineActivityTypeProperties - Azure ML Execute Pipeline activity properties.
@@ -3394,7 +3575,8 @@ type AzureMLLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureMLLinkedService.
 func (a AzureMLLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := a.LinkedService.marshalInternal("AzureML")
+	objectMap := make(map[string]interface{})
+	a.LinkedService.marshalInternal(objectMap, "AzureML")
 	populate(objectMap, "typeProperties", a.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -3416,7 +3598,10 @@ func (a *AzureMLLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.LinkedService.unmarshalInternal(rawMsg)
+	if err := a.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureMLLinkedServiceTypeProperties - Azure ML Studio Web Service linked service properties.
@@ -3505,7 +3690,8 @@ type AzureMLServiceLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureMLServiceLinkedService.
 func (a AzureMLServiceLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := a.LinkedService.marshalInternal("AzureMLService")
+	objectMap := make(map[string]interface{})
+	a.LinkedService.marshalInternal(objectMap, "AzureMLService")
 	populate(objectMap, "typeProperties", a.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -3527,7 +3713,10 @@ func (a *AzureMLServiceLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.LinkedService.unmarshalInternal(rawMsg)
+	if err := a.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureMLServiceLinkedServiceTypeProperties - Azure ML Service linked service properties.
@@ -3616,7 +3805,8 @@ type AzureMLUpdateResourceActivity struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureMLUpdateResourceActivity.
 func (a AzureMLUpdateResourceActivity) MarshalJSON() ([]byte, error) {
-	objectMap := a.ExecutionActivity.marshalInternal("AzureMLUpdateResource")
+	objectMap := make(map[string]interface{})
+	a.ExecutionActivity.marshalInternal(objectMap, "AzureMLUpdateResource")
 	populate(objectMap, "typeProperties", a.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -3638,7 +3828,10 @@ func (a *AzureMLUpdateResourceActivity) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.ExecutionActivity.unmarshalInternal(rawMsg)
+	if err := a.ExecutionActivity.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureMLUpdateResourceActivityTypeProperties - Azure ML Update Resource activity properties.
@@ -3673,7 +3866,8 @@ type AzureMariaDBLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureMariaDBLinkedService.
 func (a AzureMariaDBLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := a.LinkedService.marshalInternal("AzureMariaDB")
+	objectMap := make(map[string]interface{})
+	a.LinkedService.marshalInternal(objectMap, "AzureMariaDB")
 	populate(objectMap, "typeProperties", a.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -3695,7 +3889,10 @@ func (a *AzureMariaDBLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.LinkedService.unmarshalInternal(rawMsg)
+	if err := a.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureMariaDBLinkedServiceTypeProperties - Azure Database for MariaDB linked service properties.
@@ -3720,7 +3917,8 @@ type AzureMariaDBSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureMariaDBSource.
 func (a AzureMariaDBSource) MarshalJSON() ([]byte, error) {
-	objectMap := a.TabularSource.marshalInternal("AzureMariaDBSource")
+	objectMap := make(map[string]interface{})
+	a.TabularSource.marshalInternal(objectMap, "AzureMariaDBSource")
 	populate(objectMap, "query", a.Query)
 	return json.Marshal(objectMap)
 }
@@ -3742,7 +3940,10 @@ func (a *AzureMariaDBSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.TabularSource.unmarshalInternal(rawMsg)
+	if err := a.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureMariaDBTableDataset - Azure Database for MariaDB dataset.
@@ -3754,7 +3955,8 @@ type AzureMariaDBTableDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureMariaDBTableDataset.
 func (a AzureMariaDBTableDataset) MarshalJSON() ([]byte, error) {
-	objectMap := a.Dataset.marshalInternal("AzureMariaDBTable")
+	objectMap := make(map[string]interface{})
+	a.Dataset.marshalInternal(objectMap, "AzureMariaDBTable")
 	populate(objectMap, "typeProperties", a.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -3776,7 +3978,10 @@ func (a *AzureMariaDBTableDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.Dataset.unmarshalInternal(rawMsg)
+	if err := a.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureMySQLLinkedService - Azure MySQL database linked service.
@@ -3788,7 +3993,8 @@ type AzureMySQLLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureMySQLLinkedService.
 func (a AzureMySQLLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := a.LinkedService.marshalInternal("AzureMySql")
+	objectMap := make(map[string]interface{})
+	a.LinkedService.marshalInternal(objectMap, "AzureMySql")
 	populate(objectMap, "typeProperties", a.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -3810,7 +4016,10 @@ func (a *AzureMySQLLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.LinkedService.unmarshalInternal(rawMsg)
+	if err := a.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureMySQLLinkedServiceTypeProperties - Azure MySQL database linked service properties.
@@ -3835,7 +4044,8 @@ type AzureMySQLSink struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureMySQLSink.
 func (a AzureMySQLSink) MarshalJSON() ([]byte, error) {
-	objectMap := a.CopySink.marshalInternal("AzureMySqlSink")
+	objectMap := make(map[string]interface{})
+	a.CopySink.marshalInternal(objectMap, "AzureMySqlSink")
 	populate(objectMap, "preCopyScript", a.PreCopyScript)
 	return json.Marshal(objectMap)
 }
@@ -3857,7 +4067,10 @@ func (a *AzureMySQLSink) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.CopySink.unmarshalInternal(rawMsg)
+	if err := a.CopySink.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureMySQLSource - A copy activity Azure MySQL source.
@@ -3869,7 +4082,8 @@ type AzureMySQLSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureMySQLSource.
 func (a AzureMySQLSource) MarshalJSON() ([]byte, error) {
-	objectMap := a.TabularSource.marshalInternal("AzureMySqlSource")
+	objectMap := make(map[string]interface{})
+	a.TabularSource.marshalInternal(objectMap, "AzureMySqlSource")
 	populate(objectMap, "query", a.Query)
 	return json.Marshal(objectMap)
 }
@@ -3891,7 +4105,10 @@ func (a *AzureMySQLSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.TabularSource.unmarshalInternal(rawMsg)
+	if err := a.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureMySQLTableDataset - The Azure MySQL database dataset.
@@ -3903,7 +4120,8 @@ type AzureMySQLTableDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureMySQLTableDataset.
 func (a AzureMySQLTableDataset) MarshalJSON() ([]byte, error) {
-	objectMap := a.Dataset.marshalInternal("AzureMySqlTable")
+	objectMap := make(map[string]interface{})
+	a.Dataset.marshalInternal(objectMap, "AzureMySqlTable")
 	populate(objectMap, "typeProperties", a.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -3925,7 +4143,10 @@ func (a *AzureMySQLTableDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.Dataset.unmarshalInternal(rawMsg)
+	if err := a.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureMySQLTableDatasetTypeProperties - Azure MySQL database dataset properties.
@@ -3946,7 +4167,8 @@ type AzurePostgreSQLLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzurePostgreSQLLinkedService.
 func (a AzurePostgreSQLLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := a.LinkedService.marshalInternal("AzurePostgreSql")
+	objectMap := make(map[string]interface{})
+	a.LinkedService.marshalInternal(objectMap, "AzurePostgreSql")
 	populate(objectMap, "typeProperties", a.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -3968,7 +4190,10 @@ func (a *AzurePostgreSQLLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.LinkedService.unmarshalInternal(rawMsg)
+	if err := a.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzurePostgreSQLLinkedServiceTypeProperties - Azure PostgreSQL linked service properties.
@@ -3993,7 +4218,8 @@ type AzurePostgreSQLSink struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzurePostgreSQLSink.
 func (a AzurePostgreSQLSink) MarshalJSON() ([]byte, error) {
-	objectMap := a.CopySink.marshalInternal("AzurePostgreSqlSink")
+	objectMap := make(map[string]interface{})
+	a.CopySink.marshalInternal(objectMap, "AzurePostgreSqlSink")
 	populate(objectMap, "preCopyScript", a.PreCopyScript)
 	return json.Marshal(objectMap)
 }
@@ -4015,7 +4241,10 @@ func (a *AzurePostgreSQLSink) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.CopySink.unmarshalInternal(rawMsg)
+	if err := a.CopySink.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzurePostgreSQLSource - A copy activity Azure PostgreSQL source.
@@ -4027,7 +4256,8 @@ type AzurePostgreSQLSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzurePostgreSQLSource.
 func (a AzurePostgreSQLSource) MarshalJSON() ([]byte, error) {
-	objectMap := a.TabularSource.marshalInternal("AzurePostgreSqlSource")
+	objectMap := make(map[string]interface{})
+	a.TabularSource.marshalInternal(objectMap, "AzurePostgreSqlSource")
 	populate(objectMap, "query", a.Query)
 	return json.Marshal(objectMap)
 }
@@ -4049,7 +4279,10 @@ func (a *AzurePostgreSQLSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.TabularSource.unmarshalInternal(rawMsg)
+	if err := a.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzurePostgreSQLTableDataset - Azure PostgreSQL dataset.
@@ -4061,7 +4294,8 @@ type AzurePostgreSQLTableDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzurePostgreSQLTableDataset.
 func (a AzurePostgreSQLTableDataset) MarshalJSON() ([]byte, error) {
-	objectMap := a.Dataset.marshalInternal("AzurePostgreSqlTable")
+	objectMap := make(map[string]interface{})
+	a.Dataset.marshalInternal(objectMap, "AzurePostgreSqlTable")
 	populate(objectMap, "typeProperties", a.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -4083,7 +4317,10 @@ func (a *AzurePostgreSQLTableDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.Dataset.unmarshalInternal(rawMsg)
+	if err := a.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzurePostgreSQLTableDatasetTypeProperties - Azure PostgreSQL dataset properties.
@@ -4105,7 +4342,8 @@ type AzureQueueSink struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureQueueSink.
 func (a AzureQueueSink) MarshalJSON() ([]byte, error) {
-	objectMap := a.CopySink.marshalInternal("AzureQueueSink")
+	objectMap := make(map[string]interface{})
+	a.CopySink.marshalInternal(objectMap, "AzureQueueSink")
 	return json.Marshal(objectMap)
 }
 
@@ -4118,7 +4356,8 @@ type AzureSQLDWLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureSQLDWLinkedService.
 func (a AzureSQLDWLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := a.LinkedService.marshalInternal("AzureSqlDW")
+	objectMap := make(map[string]interface{})
+	a.LinkedService.marshalInternal(objectMap, "AzureSqlDW")
 	populate(objectMap, "typeProperties", a.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -4140,7 +4379,10 @@ func (a *AzureSQLDWLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.LinkedService.unmarshalInternal(rawMsg)
+	if err := a.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureSQLDWLinkedServiceTypeProperties - Azure SQL Data Warehouse linked service properties.
@@ -4221,7 +4463,8 @@ type AzureSQLDWTableDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureSQLDWTableDataset.
 func (a AzureSQLDWTableDataset) MarshalJSON() ([]byte, error) {
-	objectMap := a.Dataset.marshalInternal("AzureSqlDWTable")
+	objectMap := make(map[string]interface{})
+	a.Dataset.marshalInternal(objectMap, "AzureSqlDWTable")
 	populate(objectMap, "typeProperties", a.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -4243,7 +4486,10 @@ func (a *AzureSQLDWTableDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.Dataset.unmarshalInternal(rawMsg)
+	if err := a.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureSQLDWTableDatasetTypeProperties - Azure SQL Data Warehouse dataset properties.
@@ -4267,7 +4513,8 @@ type AzureSQLDatabaseLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureSQLDatabaseLinkedService.
 func (a AzureSQLDatabaseLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := a.LinkedService.marshalInternal("AzureSqlDatabase")
+	objectMap := make(map[string]interface{})
+	a.LinkedService.marshalInternal(objectMap, "AzureSqlDatabase")
 	populate(objectMap, "typeProperties", a.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -4289,7 +4536,10 @@ func (a *AzureSQLDatabaseLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.LinkedService.unmarshalInternal(rawMsg)
+	if err := a.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureSQLDatabaseLinkedServiceTypeProperties - Azure SQL Database linked service properties.
@@ -4370,7 +4620,8 @@ type AzureSQLMILinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureSQLMILinkedService.
 func (a AzureSQLMILinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := a.LinkedService.marshalInternal("AzureSqlMI")
+	objectMap := make(map[string]interface{})
+	a.LinkedService.marshalInternal(objectMap, "AzureSqlMI")
 	populate(objectMap, "typeProperties", a.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -4392,7 +4643,10 @@ func (a *AzureSQLMILinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.LinkedService.unmarshalInternal(rawMsg)
+	if err := a.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureSQLMILinkedServiceTypeProperties - Azure SQL Managed Instance linked service properties.
@@ -4473,7 +4727,8 @@ type AzureSQLMITableDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureSQLMITableDataset.
 func (a AzureSQLMITableDataset) MarshalJSON() ([]byte, error) {
-	objectMap := a.Dataset.marshalInternal("AzureSqlMITable")
+	objectMap := make(map[string]interface{})
+	a.Dataset.marshalInternal(objectMap, "AzureSqlMITable")
 	populate(objectMap, "typeProperties", a.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -4495,7 +4750,10 @@ func (a *AzureSQLMITableDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.Dataset.unmarshalInternal(rawMsg)
+	if err := a.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureSQLMITableDatasetTypeProperties - Azure SQL Managed Instance dataset properties.
@@ -4534,7 +4792,8 @@ type AzureSQLSink struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureSQLSink.
 func (a AzureSQLSink) MarshalJSON() ([]byte, error) {
-	objectMap := a.CopySink.marshalInternal("AzureSqlSink")
+	objectMap := make(map[string]interface{})
+	a.CopySink.marshalInternal(objectMap, "AzureSqlSink")
 	populate(objectMap, "preCopyScript", a.PreCopyScript)
 	populate(objectMap, "sqlWriterStoredProcedureName", a.SQLWriterStoredProcedureName)
 	populate(objectMap, "sqlWriterTableType", a.SQLWriterTableType)
@@ -4576,7 +4835,10 @@ func (a *AzureSQLSink) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.CopySink.unmarshalInternal(rawMsg)
+	if err := a.CopySink.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureSQLSource - A copy activity Azure SQL source.
@@ -4598,7 +4860,8 @@ type AzureSQLSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureSQLSource.
 func (a AzureSQLSource) MarshalJSON() ([]byte, error) {
-	objectMap := a.TabularSource.marshalInternal("AzureSqlSource")
+	objectMap := make(map[string]interface{})
+	a.TabularSource.marshalInternal(objectMap, "AzureSqlSource")
 	populate(objectMap, "produceAdditionalTypes", a.ProduceAdditionalTypes)
 	populate(objectMap, "sqlReaderQuery", a.SQLReaderQuery)
 	populate(objectMap, "sqlReaderStoredProcedureName", a.SQLReaderStoredProcedureName)
@@ -4632,7 +4895,10 @@ func (a *AzureSQLSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.TabularSource.unmarshalInternal(rawMsg)
+	if err := a.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureSQLTableDataset - The Azure SQL Server database dataset.
@@ -4644,7 +4910,8 @@ type AzureSQLTableDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureSQLTableDataset.
 func (a AzureSQLTableDataset) MarshalJSON() ([]byte, error) {
-	objectMap := a.Dataset.marshalInternal("AzureSqlTable")
+	objectMap := make(map[string]interface{})
+	a.Dataset.marshalInternal(objectMap, "AzureSqlTable")
 	populate(objectMap, "typeProperties", a.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -4666,7 +4933,10 @@ func (a *AzureSQLTableDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.Dataset.unmarshalInternal(rawMsg)
+	if err := a.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureSQLTableDatasetTypeProperties - Azure SQL dataset properties.
@@ -4690,7 +4960,8 @@ type AzureSearchIndexDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureSearchIndexDataset.
 func (a AzureSearchIndexDataset) MarshalJSON() ([]byte, error) {
-	objectMap := a.Dataset.marshalInternal("AzureSearchIndex")
+	objectMap := make(map[string]interface{})
+	a.Dataset.marshalInternal(objectMap, "AzureSearchIndex")
 	populate(objectMap, "typeProperties", a.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -4712,7 +4983,10 @@ func (a *AzureSearchIndexDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.Dataset.unmarshalInternal(rawMsg)
+	if err := a.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureSearchIndexDatasetTypeProperties - Properties specific to this dataset type.
@@ -4730,7 +5004,8 @@ type AzureSearchIndexSink struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureSearchIndexSink.
 func (a AzureSearchIndexSink) MarshalJSON() ([]byte, error) {
-	objectMap := a.CopySink.marshalInternal("AzureSearchIndexSink")
+	objectMap := make(map[string]interface{})
+	a.CopySink.marshalInternal(objectMap, "AzureSearchIndexSink")
 	populate(objectMap, "writeBehavior", a.WriteBehavior)
 	return json.Marshal(objectMap)
 }
@@ -4752,7 +5027,10 @@ func (a *AzureSearchIndexSink) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.CopySink.unmarshalInternal(rawMsg)
+	if err := a.CopySink.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureSearchLinkedService - Linked service for Windows Azure Search Service.
@@ -4764,7 +5042,8 @@ type AzureSearchLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureSearchLinkedService.
 func (a AzureSearchLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := a.LinkedService.marshalInternal("AzureSearch")
+	objectMap := make(map[string]interface{})
+	a.LinkedService.marshalInternal(objectMap, "AzureSearch")
 	populate(objectMap, "typeProperties", a.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -4786,7 +5065,10 @@ func (a *AzureSearchLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.LinkedService.unmarshalInternal(rawMsg)
+	if err := a.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureSearchLinkedServiceTypeProperties - Windows Azure Search Service linked service properties.
@@ -4846,7 +5128,8 @@ type AzureStorageLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureStorageLinkedService.
 func (a AzureStorageLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := a.LinkedService.marshalInternal("AzureStorage")
+	objectMap := make(map[string]interface{})
+	a.LinkedService.marshalInternal(objectMap, "AzureStorage")
 	populate(objectMap, "typeProperties", a.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -4868,7 +5151,10 @@ func (a *AzureStorageLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.LinkedService.unmarshalInternal(rawMsg)
+	if err := a.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureStorageLinkedServiceTypeProperties - Azure Storage linked service properties.
@@ -4899,7 +5185,8 @@ type AzureTableDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureTableDataset.
 func (a AzureTableDataset) MarshalJSON() ([]byte, error) {
-	objectMap := a.Dataset.marshalInternal("AzureTable")
+	objectMap := make(map[string]interface{})
+	a.Dataset.marshalInternal(objectMap, "AzureTable")
 	populate(objectMap, "typeProperties", a.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -4921,7 +5208,10 @@ func (a *AzureTableDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.Dataset.unmarshalInternal(rawMsg)
+	if err := a.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureTableDatasetTypeProperties - Azure Table dataset properties.
@@ -4948,7 +5238,8 @@ type AzureTableSink struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureTableSink.
 func (a AzureTableSink) MarshalJSON() ([]byte, error) {
-	objectMap := a.CopySink.marshalInternal("AzureTableSink")
+	objectMap := make(map[string]interface{})
+	a.CopySink.marshalInternal(objectMap, "AzureTableSink")
 	populate(objectMap, "azureTableDefaultPartitionKeyValue", a.AzureTableDefaultPartitionKeyValue)
 	populate(objectMap, "azureTableInsertType", a.AzureTableInsertType)
 	populate(objectMap, "azureTablePartitionKeyName", a.AzureTablePartitionKeyName)
@@ -4982,7 +5273,10 @@ func (a *AzureTableSink) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.CopySink.unmarshalInternal(rawMsg)
+	if err := a.CopySink.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureTableSource - A copy activity Azure Table source.
@@ -4997,7 +5291,8 @@ type AzureTableSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureTableSource.
 func (a AzureTableSource) MarshalJSON() ([]byte, error) {
-	objectMap := a.TabularSource.marshalInternal("AzureTableSource")
+	objectMap := make(map[string]interface{})
+	a.TabularSource.marshalInternal(objectMap, "AzureTableSource")
 	populate(objectMap, "azureTableSourceIgnoreTableNotFound", a.AzureTableSourceIgnoreTableNotFound)
 	populate(objectMap, "azureTableSourceQuery", a.AzureTableSourceQuery)
 	return json.Marshal(objectMap)
@@ -5023,7 +5318,10 @@ func (a *AzureTableSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.TabularSource.unmarshalInternal(rawMsg)
+	if err := a.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // AzureTableStorageLinkedService - The azure table storage linked service.
@@ -5035,7 +5333,8 @@ type AzureTableStorageLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type AzureTableStorageLinkedService.
 func (a AzureTableStorageLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := a.LinkedService.marshalInternal("AzureTableStorage")
+	objectMap := make(map[string]interface{})
+	a.LinkedService.marshalInternal(objectMap, "AzureTableStorage")
 	populate(objectMap, "typeProperties", a.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -5057,7 +5356,10 @@ func (a *AzureTableStorageLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.LinkedService.unmarshalInternal(rawMsg)
+	if err := a.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // BigDataPoolReference - Big data pool reference.
@@ -5078,9 +5380,33 @@ type BigDataPoolResourceInfo struct {
 
 // MarshalJSON implements the json.Marshaller interface for type BigDataPoolResourceInfo.
 func (b BigDataPoolResourceInfo) MarshalJSON() ([]byte, error) {
-	objectMap := b.TrackedResource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	b.TrackedResource.marshalInternal(objectMap)
 	populate(objectMap, "properties", b.Properties)
 	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type BigDataPoolResourceInfo.
+func (b *BigDataPoolResourceInfo) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "properties":
+			err = unpopulate(val, &b.Properties)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	if err := b.TrackedResource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // BigDataPoolResourceInfoListResult - Collection of Big Data pool information
@@ -5275,7 +5601,8 @@ type BinaryDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type BinaryDataset.
 func (b BinaryDataset) MarshalJSON() ([]byte, error) {
-	objectMap := b.Dataset.marshalInternal("Binary")
+	objectMap := make(map[string]interface{})
+	b.Dataset.marshalInternal(objectMap, "Binary")
 	populate(objectMap, "typeProperties", b.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -5297,7 +5624,10 @@ func (b *BinaryDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return b.Dataset.unmarshalInternal(rawMsg)
+	if err := b.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // BinaryDatasetTypeProperties - Binary dataset properties.
@@ -5349,7 +5679,8 @@ type BinarySink struct {
 
 // MarshalJSON implements the json.Marshaller interface for type BinarySink.
 func (b BinarySink) MarshalJSON() ([]byte, error) {
-	objectMap := b.CopySink.marshalInternal("BinarySink")
+	objectMap := make(map[string]interface{})
+	b.CopySink.marshalInternal(objectMap, "BinarySink")
 	populate(objectMap, "storeSettings", b.StoreSettings)
 	return json.Marshal(objectMap)
 }
@@ -5371,7 +5702,10 @@ func (b *BinarySink) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return b.CopySink.unmarshalInternal(rawMsg)
+	if err := b.CopySink.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // BinarySource - A copy activity Binary source.
@@ -5383,7 +5717,8 @@ type BinarySource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type BinarySource.
 func (b BinarySource) MarshalJSON() ([]byte, error) {
-	objectMap := b.CopySource.marshalInternal("BinarySource")
+	objectMap := make(map[string]interface{})
+	b.CopySource.marshalInternal(objectMap, "BinarySource")
 	populate(objectMap, "storeSettings", b.StoreSettings)
 	return json.Marshal(objectMap)
 }
@@ -5405,7 +5740,10 @@ func (b *BinarySource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return b.CopySource.unmarshalInternal(rawMsg)
+	if err := b.CopySource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // BlobEventsTrigger - Trigger that runs every time a Blob event occurs.
@@ -5417,7 +5755,8 @@ type BlobEventsTrigger struct {
 
 // MarshalJSON implements the json.Marshaller interface for type BlobEventsTrigger.
 func (b BlobEventsTrigger) MarshalJSON() ([]byte, error) {
-	objectMap := b.MultiplePipelineTrigger.marshalInternal("BlobEventsTrigger")
+	objectMap := make(map[string]interface{})
+	b.MultiplePipelineTrigger.marshalInternal(objectMap, "BlobEventsTrigger")
 	populate(objectMap, "typeProperties", b.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -5439,7 +5778,10 @@ func (b *BlobEventsTrigger) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return b.MultiplePipelineTrigger.unmarshalInternal(rawMsg)
+	if err := b.MultiplePipelineTrigger.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // BlobEventsTriggerTypeProperties - Blob Events Trigger properties.
@@ -5493,7 +5835,8 @@ type BlobSink struct {
 
 // MarshalJSON implements the json.Marshaller interface for type BlobSink.
 func (b BlobSink) MarshalJSON() ([]byte, error) {
-	objectMap := b.CopySink.marshalInternal("BlobSink")
+	objectMap := make(map[string]interface{})
+	b.CopySink.marshalInternal(objectMap, "BlobSink")
 	populate(objectMap, "blobWriterAddHeader", b.BlobWriterAddHeader)
 	populate(objectMap, "blobWriterDateTimeFormat", b.BlobWriterDateTimeFormat)
 	populate(objectMap, "blobWriterOverwriteFiles", b.BlobWriterOverwriteFiles)
@@ -5527,7 +5870,10 @@ func (b *BlobSink) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return b.CopySink.unmarshalInternal(rawMsg)
+	if err := b.CopySink.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // BlobSource - A copy activity Azure Blob source.
@@ -5545,7 +5891,8 @@ type BlobSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type BlobSource.
 func (b BlobSource) MarshalJSON() ([]byte, error) {
-	objectMap := b.CopySource.marshalInternal("BlobSource")
+	objectMap := make(map[string]interface{})
+	b.CopySource.marshalInternal(objectMap, "BlobSource")
 	populate(objectMap, "recursive", b.Recursive)
 	populate(objectMap, "skipHeaderLineCount", b.SkipHeaderLineCount)
 	populate(objectMap, "treatEmptyAsNull", b.TreatEmptyAsNull)
@@ -5575,7 +5922,10 @@ func (b *BlobSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return b.CopySource.unmarshalInternal(rawMsg)
+	if err := b.CopySource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // BlobTrigger - Trigger that runs every time the selected Blob container changes.
@@ -5587,7 +5937,8 @@ type BlobTrigger struct {
 
 // MarshalJSON implements the json.Marshaller interface for type BlobTrigger.
 func (b BlobTrigger) MarshalJSON() ([]byte, error) {
-	objectMap := b.MultiplePipelineTrigger.marshalInternal("BlobTrigger")
+	objectMap := make(map[string]interface{})
+	b.MultiplePipelineTrigger.marshalInternal(objectMap, "BlobTrigger")
 	populate(objectMap, "typeProperties", b.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -5609,7 +5960,10 @@ func (b *BlobTrigger) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return b.MultiplePipelineTrigger.unmarshalInternal(rawMsg)
+	if err := b.MultiplePipelineTrigger.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // BlobTriggerTypeProperties - Blob Trigger properties.
@@ -5633,7 +5987,8 @@ type CassandraLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type CassandraLinkedService.
 func (c CassandraLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := c.LinkedService.marshalInternal("Cassandra")
+	objectMap := make(map[string]interface{})
+	c.LinkedService.marshalInternal(objectMap, "Cassandra")
 	populate(objectMap, "typeProperties", c.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -5655,7 +6010,10 @@ func (c *CassandraLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return c.LinkedService.unmarshalInternal(rawMsg)
+	if err := c.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // CassandraLinkedServiceTypeProperties - Cassandra linked service properties.
@@ -5741,7 +6099,8 @@ type CassandraSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type CassandraSource.
 func (c CassandraSource) MarshalJSON() ([]byte, error) {
-	objectMap := c.TabularSource.marshalInternal("CassandraSource")
+	objectMap := make(map[string]interface{})
+	c.TabularSource.marshalInternal(objectMap, "CassandraSource")
 	populate(objectMap, "consistencyLevel", c.ConsistencyLevel)
 	populate(objectMap, "query", c.Query)
 	return json.Marshal(objectMap)
@@ -5767,7 +6126,10 @@ func (c *CassandraSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return c.TabularSource.unmarshalInternal(rawMsg)
+	if err := c.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // CassandraTableDataset - The Cassandra database dataset.
@@ -5779,7 +6141,8 @@ type CassandraTableDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type CassandraTableDataset.
 func (c CassandraTableDataset) MarshalJSON() ([]byte, error) {
-	objectMap := c.Dataset.marshalInternal("CassandraTable")
+	objectMap := make(map[string]interface{})
+	c.Dataset.marshalInternal(objectMap, "CassandraTable")
 	populate(objectMap, "typeProperties", c.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -5801,7 +6164,10 @@ func (c *CassandraTableDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return c.Dataset.unmarshalInternal(rawMsg)
+	if err := c.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // CassandraTableDatasetTypeProperties - Cassandra dataset properties.
@@ -5828,7 +6194,8 @@ type ChainingTrigger struct {
 
 // MarshalJSON implements the json.Marshaller interface for type ChainingTrigger.
 func (c ChainingTrigger) MarshalJSON() ([]byte, error) {
-	objectMap := c.Trigger.marshalInternal("ChainingTrigger")
+	objectMap := make(map[string]interface{})
+	c.Trigger.marshalInternal(objectMap, "ChainingTrigger")
 	populate(objectMap, "pipeline", c.Pipeline)
 	populate(objectMap, "typeProperties", c.TypeProperties)
 	return json.Marshal(objectMap)
@@ -5854,7 +6221,10 @@ func (c *ChainingTrigger) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return c.Trigger.unmarshalInternal(rawMsg)
+	if err := c.Trigger.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // ChainingTriggerTypeProperties - Chaining Trigger properties.
@@ -5961,7 +6331,8 @@ type CommonDataServiceForAppsEntityDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type CommonDataServiceForAppsEntityDataset.
 func (c CommonDataServiceForAppsEntityDataset) MarshalJSON() ([]byte, error) {
-	objectMap := c.Dataset.marshalInternal("CommonDataServiceForAppsEntity")
+	objectMap := make(map[string]interface{})
+	c.Dataset.marshalInternal(objectMap, "CommonDataServiceForAppsEntity")
 	populate(objectMap, "typeProperties", c.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -5983,7 +6354,10 @@ func (c *CommonDataServiceForAppsEntityDataset) UnmarshalJSON(data []byte) error
 			return err
 		}
 	}
-	return c.Dataset.unmarshalInternal(rawMsg)
+	if err := c.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // CommonDataServiceForAppsEntityDatasetTypeProperties - Common Data Service for Apps entity dataset properties.
@@ -6001,7 +6375,8 @@ type CommonDataServiceForAppsLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type CommonDataServiceForAppsLinkedService.
 func (c CommonDataServiceForAppsLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := c.LinkedService.marshalInternal("CommonDataServiceForApps")
+	objectMap := make(map[string]interface{})
+	c.LinkedService.marshalInternal(objectMap, "CommonDataServiceForApps")
 	populate(objectMap, "typeProperties", c.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -6023,7 +6398,10 @@ func (c *CommonDataServiceForAppsLinkedService) UnmarshalJSON(data []byte) error
 			return err
 		}
 	}
-	return c.LinkedService.unmarshalInternal(rawMsg)
+	if err := c.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // CommonDataServiceForAppsLinkedServiceTypeProperties - Common Data Service for Apps linked service properties.
@@ -6167,7 +6545,8 @@ type CommonDataServiceForAppsSink struct {
 
 // MarshalJSON implements the json.Marshaller interface for type CommonDataServiceForAppsSink.
 func (c CommonDataServiceForAppsSink) MarshalJSON() ([]byte, error) {
-	objectMap := c.CopySink.marshalInternal("CommonDataServiceForAppsSink")
+	objectMap := make(map[string]interface{})
+	c.CopySink.marshalInternal(objectMap, "CommonDataServiceForAppsSink")
 	populate(objectMap, "alternateKeyName", c.AlternateKeyName)
 	populate(objectMap, "ignoreNullValues", c.IgnoreNullValues)
 	populate(objectMap, "writeBehavior", c.WriteBehavior)
@@ -6197,7 +6576,10 @@ func (c *CommonDataServiceForAppsSink) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return c.CopySink.unmarshalInternal(rawMsg)
+	if err := c.CopySink.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // CommonDataServiceForAppsSource - A copy activity Common Data Service for Apps source.
@@ -6210,7 +6592,8 @@ type CommonDataServiceForAppsSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type CommonDataServiceForAppsSource.
 func (c CommonDataServiceForAppsSource) MarshalJSON() ([]byte, error) {
-	objectMap := c.CopySource.marshalInternal("CommonDataServiceForAppsSource")
+	objectMap := make(map[string]interface{})
+	c.CopySource.marshalInternal(objectMap, "CommonDataServiceForAppsSource")
 	populate(objectMap, "query", c.Query)
 	return json.Marshal(objectMap)
 }
@@ -6232,7 +6615,10 @@ func (c *CommonDataServiceForAppsSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return c.CopySource.unmarshalInternal(rawMsg)
+	if err := c.CopySource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // ConcurLinkedService - Concur Service linked service.
@@ -6244,7 +6630,8 @@ type ConcurLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type ConcurLinkedService.
 func (c ConcurLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := c.LinkedService.marshalInternal("Concur")
+	objectMap := make(map[string]interface{})
+	c.LinkedService.marshalInternal(objectMap, "Concur")
 	populate(objectMap, "typeProperties", c.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -6266,7 +6653,10 @@ func (c *ConcurLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return c.LinkedService.unmarshalInternal(rawMsg)
+	if err := c.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // ConcurLinkedServiceTypeProperties - Concur Service linked service properties.
@@ -6355,7 +6745,8 @@ type ConcurObjectDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type ConcurObjectDataset.
 func (c ConcurObjectDataset) MarshalJSON() ([]byte, error) {
-	objectMap := c.Dataset.marshalInternal("ConcurObject")
+	objectMap := make(map[string]interface{})
+	c.Dataset.marshalInternal(objectMap, "ConcurObject")
 	populate(objectMap, "typeProperties", c.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -6377,7 +6768,10 @@ func (c *ConcurObjectDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return c.Dataset.unmarshalInternal(rawMsg)
+	if err := c.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // ConcurSource - A copy activity Concur Service source.
@@ -6389,7 +6783,8 @@ type ConcurSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type ConcurSource.
 func (c ConcurSource) MarshalJSON() ([]byte, error) {
-	objectMap := c.TabularSource.marshalInternal("ConcurSource")
+	objectMap := make(map[string]interface{})
+	c.TabularSource.marshalInternal(objectMap, "ConcurSource")
 	populate(objectMap, "query", c.Query)
 	return json.Marshal(objectMap)
 }
@@ -6411,7 +6806,10 @@ func (c *ConcurSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return c.TabularSource.unmarshalInternal(rawMsg)
+	if err := c.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // ControlActivityClassification provides polymorphic access to related types.
@@ -6435,17 +6833,20 @@ func (c *ControlActivity) GetControlActivity() *ControlActivity { return c }
 
 // MarshalJSON implements the json.Marshaller interface for type ControlActivity.
 func (c ControlActivity) MarshalJSON() ([]byte, error) {
-	objectMap := c.marshalInternal("Container")
+	objectMap := make(map[string]interface{})
+	c.marshalInternal(objectMap, "Container")
 	return json.Marshal(objectMap)
 }
 
-func (c ControlActivity) marshalInternal(discValue string) map[string]interface{} {
-	objectMap := c.Activity.marshalInternal(discValue)
-	return objectMap
+func (c ControlActivity) marshalInternal(objectMap map[string]interface{}, discValue string) {
+	c.Activity.marshalInternal(objectMap, discValue)
 }
 
 func (c *ControlActivity) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
-	return c.Activity.unmarshalInternal(rawMsg)
+	if err := c.Activity.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // CopyActivity - Copy activity.
@@ -6463,7 +6864,8 @@ type CopyActivity struct {
 
 // MarshalJSON implements the json.Marshaller interface for type CopyActivity.
 func (c CopyActivity) MarshalJSON() ([]byte, error) {
-	objectMap := c.ExecutionActivity.marshalInternal("Copy")
+	objectMap := make(map[string]interface{})
+	c.ExecutionActivity.marshalInternal(objectMap, "Copy")
 	populate(objectMap, "inputs", c.Inputs)
 	populate(objectMap, "outputs", c.Outputs)
 	populate(objectMap, "typeProperties", c.TypeProperties)
@@ -6493,7 +6895,10 @@ func (c *CopyActivity) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return c.ExecutionActivity.unmarshalInternal(rawMsg)
+	if err := c.ExecutionActivity.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // CopyActivityTypeProperties - Copy activity properties.
@@ -6650,8 +7055,7 @@ func (c *CopySink) UnmarshalJSON(data []byte) error {
 	return c.unmarshalInternal(rawMsg)
 }
 
-func (c CopySink) marshalInternal(discValue string) map[string]interface{} {
-	objectMap := make(map[string]interface{})
+func (c CopySink) marshalInternal(objectMap map[string]interface{}, discValue string) {
 	populate(objectMap, "maxConcurrentConnections", c.MaxConcurrentConnections)
 	populate(objectMap, "sinkRetryCount", c.SinkRetryCount)
 	populate(objectMap, "sinkRetryWait", c.SinkRetryWait)
@@ -6664,7 +7068,6 @@ func (c CopySink) marshalInternal(discValue string) map[string]interface{} {
 			objectMap[key] = val
 		}
 	}
-	return objectMap
 }
 
 func (c *CopySink) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
@@ -6758,8 +7161,7 @@ func (c *CopySource) UnmarshalJSON(data []byte) error {
 	return c.unmarshalInternal(rawMsg)
 }
 
-func (c CopySource) marshalInternal(discValue string) map[string]interface{} {
-	objectMap := make(map[string]interface{})
+func (c CopySource) marshalInternal(objectMap map[string]interface{}, discValue string) {
 	populate(objectMap, "maxConcurrentConnections", c.MaxConcurrentConnections)
 	populate(objectMap, "sourceRetryCount", c.SourceRetryCount)
 	populate(objectMap, "sourceRetryWait", c.SourceRetryWait)
@@ -6770,7 +7172,6 @@ func (c CopySource) marshalInternal(discValue string) map[string]interface{} {
 			objectMap[key] = val
 		}
 	}
-	return objectMap
 }
 
 func (c *CopySource) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
@@ -6837,8 +7238,7 @@ func (c *CopyTranslator) UnmarshalJSON(data []byte) error {
 	return c.unmarshalInternal(rawMsg)
 }
 
-func (c CopyTranslator) marshalInternal(discValue string) map[string]interface{} {
-	objectMap := make(map[string]interface{})
+func (c CopyTranslator) marshalInternal(objectMap map[string]interface{}, discValue string) {
 	c.Type = &discValue
 	objectMap["type"] = c.Type
 	if c.AdditionalProperties != nil {
@@ -6846,7 +7246,6 @@ func (c CopyTranslator) marshalInternal(discValue string) map[string]interface{}
 			objectMap[key] = val
 		}
 	}
-	return objectMap
 }
 
 func (c *CopyTranslator) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
@@ -6883,7 +7282,8 @@ type CosmosDbLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type CosmosDbLinkedService.
 func (c CosmosDbLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := c.LinkedService.marshalInternal("CosmosDb")
+	objectMap := make(map[string]interface{})
+	c.LinkedService.marshalInternal(objectMap, "CosmosDb")
 	populate(objectMap, "typeProperties", c.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -6905,7 +7305,10 @@ func (c *CosmosDbLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return c.LinkedService.unmarshalInternal(rawMsg)
+	if err := c.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // CosmosDbLinkedServiceTypeProperties - CosmosDB linked service properties.
@@ -6979,7 +7382,8 @@ type CosmosDbMongoDbAPICollectionDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type CosmosDbMongoDbAPICollectionDataset.
 func (c CosmosDbMongoDbAPICollectionDataset) MarshalJSON() ([]byte, error) {
-	objectMap := c.Dataset.marshalInternal("CosmosDbMongoDbApiCollection")
+	objectMap := make(map[string]interface{})
+	c.Dataset.marshalInternal(objectMap, "CosmosDbMongoDbApiCollection")
 	populate(objectMap, "typeProperties", c.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -7001,7 +7405,10 @@ func (c *CosmosDbMongoDbAPICollectionDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return c.Dataset.unmarshalInternal(rawMsg)
+	if err := c.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // CosmosDbMongoDbAPICollectionDatasetTypeProperties - CosmosDB (MongoDB API) database dataset properties.
@@ -7019,7 +7426,8 @@ type CosmosDbMongoDbAPILinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type CosmosDbMongoDbAPILinkedService.
 func (c CosmosDbMongoDbAPILinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := c.LinkedService.marshalInternal("CosmosDbMongoDbApi")
+	objectMap := make(map[string]interface{})
+	c.LinkedService.marshalInternal(objectMap, "CosmosDbMongoDbApi")
 	populate(objectMap, "typeProperties", c.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -7041,7 +7449,10 @@ func (c *CosmosDbMongoDbAPILinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return c.LinkedService.unmarshalInternal(rawMsg)
+	if err := c.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // CosmosDbMongoDbAPILinkedServiceTypeProperties - CosmosDB (MongoDB API) linked service properties.
@@ -7064,7 +7475,8 @@ type CosmosDbMongoDbAPISink struct {
 
 // MarshalJSON implements the json.Marshaller interface for type CosmosDbMongoDbAPISink.
 func (c CosmosDbMongoDbAPISink) MarshalJSON() ([]byte, error) {
-	objectMap := c.CopySink.marshalInternal("CosmosDbMongoDbApiSink")
+	objectMap := make(map[string]interface{})
+	c.CopySink.marshalInternal(objectMap, "CosmosDbMongoDbApiSink")
 	populate(objectMap, "writeBehavior", c.WriteBehavior)
 	return json.Marshal(objectMap)
 }
@@ -7086,7 +7498,10 @@ func (c *CosmosDbMongoDbAPISink) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return c.CopySink.unmarshalInternal(rawMsg)
+	if err := c.CopySink.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // CosmosDbMongoDbAPISource - A copy activity source for a CosmosDB (MongoDB API) database.
@@ -7110,7 +7525,8 @@ type CosmosDbMongoDbAPISource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type CosmosDbMongoDbAPISource.
 func (c CosmosDbMongoDbAPISource) MarshalJSON() ([]byte, error) {
-	objectMap := c.CopySource.marshalInternal("CosmosDbMongoDbApiSource")
+	objectMap := make(map[string]interface{})
+	c.CopySource.marshalInternal(objectMap, "CosmosDbMongoDbApiSource")
 	populate(objectMap, "batchSize", c.BatchSize)
 	populate(objectMap, "cursorMethods", c.CursorMethods)
 	populate(objectMap, "filter", c.Filter)
@@ -7144,7 +7560,10 @@ func (c *CosmosDbMongoDbAPISource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return c.CopySource.unmarshalInternal(rawMsg)
+	if err := c.CopySource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // CosmosDbSQLAPICollectionDataset - Microsoft Azure CosmosDB (SQL API) Collection dataset.
@@ -7156,7 +7575,8 @@ type CosmosDbSQLAPICollectionDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type CosmosDbSQLAPICollectionDataset.
 func (c CosmosDbSQLAPICollectionDataset) MarshalJSON() ([]byte, error) {
-	objectMap := c.Dataset.marshalInternal("CosmosDbSqlApiCollection")
+	objectMap := make(map[string]interface{})
+	c.Dataset.marshalInternal(objectMap, "CosmosDbSqlApiCollection")
 	populate(objectMap, "typeProperties", c.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -7178,7 +7598,10 @@ func (c *CosmosDbSQLAPICollectionDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return c.Dataset.unmarshalInternal(rawMsg)
+	if err := c.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // CosmosDbSQLAPICollectionDatasetTypeProperties - CosmosDB (SQL API) Collection dataset properties.
@@ -7196,7 +7619,8 @@ type CosmosDbSQLAPISink struct {
 
 // MarshalJSON implements the json.Marshaller interface for type CosmosDbSQLAPISink.
 func (c CosmosDbSQLAPISink) MarshalJSON() ([]byte, error) {
-	objectMap := c.CopySink.marshalInternal("CosmosDbSqlApiSink")
+	objectMap := make(map[string]interface{})
+	c.CopySink.marshalInternal(objectMap, "CosmosDbSqlApiSink")
 	populate(objectMap, "writeBehavior", c.WriteBehavior)
 	return json.Marshal(objectMap)
 }
@@ -7218,7 +7642,10 @@ func (c *CosmosDbSQLAPISink) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return c.CopySink.unmarshalInternal(rawMsg)
+	if err := c.CopySink.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // CosmosDbSQLAPISource - A copy activity Azure CosmosDB (SQL API) Collection source.
@@ -7236,7 +7663,8 @@ type CosmosDbSQLAPISource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type CosmosDbSQLAPISource.
 func (c CosmosDbSQLAPISource) MarshalJSON() ([]byte, error) {
-	objectMap := c.CopySource.marshalInternal("CosmosDbSqlApiSource")
+	objectMap := make(map[string]interface{})
+	c.CopySource.marshalInternal(objectMap, "CosmosDbSqlApiSource")
 	populate(objectMap, "pageSize", c.PageSize)
 	populate(objectMap, "preferredRegions", c.PreferredRegions)
 	populate(objectMap, "query", c.Query)
@@ -7266,7 +7694,10 @@ func (c *CosmosDbSQLAPISource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return c.CopySource.unmarshalInternal(rawMsg)
+	if err := c.CopySource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // CouchbaseLinkedService - Couchbase server linked service.
@@ -7278,7 +7709,8 @@ type CouchbaseLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type CouchbaseLinkedService.
 func (c CouchbaseLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := c.LinkedService.marshalInternal("Couchbase")
+	objectMap := make(map[string]interface{})
+	c.LinkedService.marshalInternal(objectMap, "Couchbase")
 	populate(objectMap, "typeProperties", c.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -7300,7 +7732,10 @@ func (c *CouchbaseLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return c.LinkedService.unmarshalInternal(rawMsg)
+	if err := c.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // CouchbaseLinkedServiceTypeProperties - Couchbase server linked service properties.
@@ -7325,7 +7760,8 @@ type CouchbaseSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type CouchbaseSource.
 func (c CouchbaseSource) MarshalJSON() ([]byte, error) {
-	objectMap := c.TabularSource.marshalInternal("CouchbaseSource")
+	objectMap := make(map[string]interface{})
+	c.TabularSource.marshalInternal(objectMap, "CouchbaseSource")
 	populate(objectMap, "query", c.Query)
 	return json.Marshal(objectMap)
 }
@@ -7347,7 +7783,10 @@ func (c *CouchbaseSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return c.TabularSource.unmarshalInternal(rawMsg)
+	if err := c.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // CouchbaseTableDataset - Couchbase server dataset.
@@ -7359,7 +7798,8 @@ type CouchbaseTableDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type CouchbaseTableDataset.
 func (c CouchbaseTableDataset) MarshalJSON() ([]byte, error) {
-	objectMap := c.Dataset.marshalInternal("CouchbaseTable")
+	objectMap := make(map[string]interface{})
+	c.Dataset.marshalInternal(objectMap, "CouchbaseTable")
 	populate(objectMap, "typeProperties", c.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -7381,7 +7821,10 @@ func (c *CouchbaseTableDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return c.Dataset.unmarshalInternal(rawMsg)
+	if err := c.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // CreateDataFlowDebugSessionRequest - Request body structure for creating data flow debug session.
@@ -7426,7 +7869,8 @@ type CustomActivity struct {
 
 // MarshalJSON implements the json.Marshaller interface for type CustomActivity.
 func (c CustomActivity) MarshalJSON() ([]byte, error) {
-	objectMap := c.ExecutionActivity.marshalInternal("Custom")
+	objectMap := make(map[string]interface{})
+	c.ExecutionActivity.marshalInternal(objectMap, "Custom")
 	populate(objectMap, "typeProperties", c.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -7448,7 +7892,10 @@ func (c *CustomActivity) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return c.ExecutionActivity.unmarshalInternal(rawMsg)
+	if err := c.ExecutionActivity.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // CustomActivityReferenceObject - Reference objects for custom activity
@@ -7511,7 +7958,8 @@ type CustomDataSourceLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type CustomDataSourceLinkedService.
 func (c CustomDataSourceLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := c.LinkedService.marshalInternal("CustomDataSource")
+	objectMap := make(map[string]interface{})
+	c.LinkedService.marshalInternal(objectMap, "CustomDataSource")
 	populate(objectMap, "typeProperties", c.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -7533,7 +7981,10 @@ func (c *CustomDataSourceLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return c.LinkedService.unmarshalInternal(rawMsg)
+	if err := c.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // CustomDataset - The custom dataset.
@@ -7545,7 +7996,8 @@ type CustomDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type CustomDataset.
 func (c CustomDataset) MarshalJSON() ([]byte, error) {
-	objectMap := c.Dataset.marshalInternal("CustomDataset")
+	objectMap := make(map[string]interface{})
+	c.Dataset.marshalInternal(objectMap, "CustomDataset")
 	populate(objectMap, "typeProperties", c.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -7567,7 +8019,10 @@ func (c *CustomDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return c.Dataset.unmarshalInternal(rawMsg)
+	if err := c.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // CustomerManagedKeyDetails - Details of the customer managed key associated with the workspace
@@ -7645,14 +8100,12 @@ func (d *DataFlow) UnmarshalJSON(data []byte) error {
 	return d.unmarshalInternal(rawMsg)
 }
 
-func (d DataFlow) marshalInternal(discValue string) map[string]interface{} {
-	objectMap := make(map[string]interface{})
+func (d DataFlow) marshalInternal(objectMap map[string]interface{}, discValue string) {
 	populate(objectMap, "annotations", d.Annotations)
 	populate(objectMap, "description", d.Description)
 	populate(objectMap, "folder", d.Folder)
 	d.Type = &discValue
 	objectMap["type"] = d.Type
-	return objectMap
 }
 
 func (d *DataFlow) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
@@ -7856,7 +8309,8 @@ type DataFlowDebugResource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DataFlowDebugResource.
 func (d DataFlowDebugResource) MarshalJSON() ([]byte, error) {
-	objectMap := d.SubResourceDebugResource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	d.SubResourceDebugResource.marshalInternal(objectMap)
 	populate(objectMap, "properties", d.Properties)
 	return json.Marshal(objectMap)
 }
@@ -7878,7 +8332,10 @@ func (d *DataFlowDebugResource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return d.SubResourceDebugResource.unmarshalInternal(rawMsg)
+	if err := d.SubResourceDebugResource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // DataFlowDebugResultResponse - Response body structure of data flow result for data preview, statistics or expression preview.
@@ -8158,7 +8615,8 @@ type DataFlowResource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DataFlowResource.
 func (d DataFlowResource) MarshalJSON() ([]byte, error) {
-	objectMap := d.SubResource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	d.SubResource.marshalInternal(objectMap)
 	populate(objectMap, "properties", d.Properties)
 	return json.Marshal(objectMap)
 }
@@ -8180,7 +8638,10 @@ func (d *DataFlowResource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return d.SubResource.unmarshalInternal(rawMsg)
+	if err := d.SubResource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // DataFlowSink - Transformation for data flow sink.
@@ -8273,7 +8734,8 @@ type DataLakeAnalyticsUSQLActivity struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DataLakeAnalyticsUSQLActivity.
 func (d DataLakeAnalyticsUSQLActivity) MarshalJSON() ([]byte, error) {
-	objectMap := d.ExecutionActivity.marshalInternal("DataLakeAnalyticsU-SQL")
+	objectMap := make(map[string]interface{})
+	d.ExecutionActivity.marshalInternal(objectMap, "DataLakeAnalyticsU-SQL")
 	populate(objectMap, "typeProperties", d.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -8295,7 +8757,10 @@ func (d *DataLakeAnalyticsUSQLActivity) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return d.ExecutionActivity.unmarshalInternal(rawMsg)
+	if err := d.ExecutionActivity.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // DataLakeAnalyticsUSQLActivityTypeProperties - DataLakeAnalyticsU-SQL activity properties.
@@ -8355,7 +8820,8 @@ type DatabricksNotebookActivity struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DatabricksNotebookActivity.
 func (d DatabricksNotebookActivity) MarshalJSON() ([]byte, error) {
-	objectMap := d.ExecutionActivity.marshalInternal("DatabricksNotebook")
+	objectMap := make(map[string]interface{})
+	d.ExecutionActivity.marshalInternal(objectMap, "DatabricksNotebook")
 	populate(objectMap, "typeProperties", d.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -8377,7 +8843,10 @@ func (d *DatabricksNotebookActivity) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return d.ExecutionActivity.unmarshalInternal(rawMsg)
+	if err := d.ExecutionActivity.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // DatabricksNotebookActivityTypeProperties - Databricks notebook activity properties.
@@ -8412,7 +8881,8 @@ type DatabricksSparkJarActivity struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DatabricksSparkJarActivity.
 func (d DatabricksSparkJarActivity) MarshalJSON() ([]byte, error) {
-	objectMap := d.ExecutionActivity.marshalInternal("DatabricksSparkJar")
+	objectMap := make(map[string]interface{})
+	d.ExecutionActivity.marshalInternal(objectMap, "DatabricksSparkJar")
 	populate(objectMap, "typeProperties", d.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -8434,7 +8904,10 @@ func (d *DatabricksSparkJarActivity) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return d.ExecutionActivity.unmarshalInternal(rawMsg)
+	if err := d.ExecutionActivity.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // DatabricksSparkJarActivityTypeProperties - Databricks SparkJar activity properties.
@@ -8468,7 +8941,8 @@ type DatabricksSparkPythonActivity struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DatabricksSparkPythonActivity.
 func (d DatabricksSparkPythonActivity) MarshalJSON() ([]byte, error) {
-	objectMap := d.ExecutionActivity.marshalInternal("DatabricksSparkPython")
+	objectMap := make(map[string]interface{})
+	d.ExecutionActivity.marshalInternal(objectMap, "DatabricksSparkPython")
 	populate(objectMap, "typeProperties", d.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -8490,7 +8964,10 @@ func (d *DatabricksSparkPythonActivity) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return d.ExecutionActivity.unmarshalInternal(rawMsg)
+	if err := d.ExecutionActivity.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // DatabricksSparkPythonActivityTypeProperties - Databricks SparkPython activity properties.
@@ -8580,8 +9057,7 @@ func (d *Dataset) UnmarshalJSON(data []byte) error {
 	return d.unmarshalInternal(rawMsg)
 }
 
-func (d Dataset) marshalInternal(discValue string) map[string]interface{} {
-	objectMap := make(map[string]interface{})
+func (d Dataset) marshalInternal(objectMap map[string]interface{}, discValue string) {
 	populate(objectMap, "annotations", d.Annotations)
 	populate(objectMap, "description", d.Description)
 	populate(objectMap, "folder", d.Folder)
@@ -8596,7 +9072,6 @@ func (d Dataset) marshalInternal(discValue string) map[string]interface{} {
 			objectMap[key] = val
 		}
 	}
-	return objectMap
 }
 
 func (d *Dataset) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
@@ -8652,7 +9127,8 @@ type DatasetBZip2Compression struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DatasetBZip2Compression.
 func (d DatasetBZip2Compression) MarshalJSON() ([]byte, error) {
-	objectMap := d.DatasetCompression.marshalInternal("BZip2")
+	objectMap := make(map[string]interface{})
+	d.DatasetCompression.marshalInternal(objectMap, "BZip2")
 	return json.Marshal(objectMap)
 }
 
@@ -8702,8 +9178,7 @@ func (d *DatasetCompression) UnmarshalJSON(data []byte) error {
 	return d.unmarshalInternal(rawMsg)
 }
 
-func (d DatasetCompression) marshalInternal(discValue string) map[string]interface{} {
-	objectMap := make(map[string]interface{})
+func (d DatasetCompression) marshalInternal(objectMap map[string]interface{}, discValue string) {
 	d.Type = &discValue
 	objectMap["type"] = d.Type
 	if d.AdditionalProperties != nil {
@@ -8711,7 +9186,6 @@ func (d DatasetCompression) marshalInternal(discValue string) map[string]interfa
 			objectMap[key] = val
 		}
 	}
-	return objectMap
 }
 
 func (d *DatasetCompression) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
@@ -8757,7 +9231,8 @@ type DatasetDebugResource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DatasetDebugResource.
 func (d DatasetDebugResource) MarshalJSON() ([]byte, error) {
-	objectMap := d.SubResourceDebugResource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	d.SubResourceDebugResource.marshalInternal(objectMap)
 	populate(objectMap, "properties", d.Properties)
 	return json.Marshal(objectMap)
 }
@@ -8779,7 +9254,10 @@ func (d *DatasetDebugResource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return d.SubResourceDebugResource.unmarshalInternal(rawMsg)
+	if err := d.SubResourceDebugResource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // DatasetDeflateCompression - The Deflate compression method used on a dataset.
@@ -8791,7 +9269,8 @@ type DatasetDeflateCompression struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DatasetDeflateCompression.
 func (d DatasetDeflateCompression) MarshalJSON() ([]byte, error) {
-	objectMap := d.DatasetCompression.marshalInternal("Deflate")
+	objectMap := make(map[string]interface{})
+	d.DatasetCompression.marshalInternal(objectMap, "Deflate")
 	populate(objectMap, "level", d.Level)
 	return json.Marshal(objectMap)
 }
@@ -8813,7 +9292,10 @@ func (d *DatasetDeflateCompression) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return d.DatasetCompression.unmarshalInternal(rawMsg)
+	if err := d.DatasetCompression.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // DatasetFolder - The folder that this Dataset is in. If not specified, Dataset will appear at the root level.
@@ -8831,7 +9313,8 @@ type DatasetGZipCompression struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DatasetGZipCompression.
 func (d DatasetGZipCompression) MarshalJSON() ([]byte, error) {
-	objectMap := d.DatasetCompression.marshalInternal("GZip")
+	objectMap := make(map[string]interface{})
+	d.DatasetCompression.marshalInternal(objectMap, "GZip")
 	populate(objectMap, "level", d.Level)
 	return json.Marshal(objectMap)
 }
@@ -8853,7 +9336,10 @@ func (d *DatasetGZipCompression) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return d.DatasetCompression.unmarshalInternal(rawMsg)
+	if err := d.DatasetCompression.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // DatasetGetDatasetOptions contains the optional parameters for the Dataset.GetDataset method.
@@ -8923,8 +9409,7 @@ func (d *DatasetLocation) UnmarshalJSON(data []byte) error {
 	return d.unmarshalInternal(rawMsg)
 }
 
-func (d DatasetLocation) marshalInternal(discValue string) map[string]interface{} {
-	objectMap := make(map[string]interface{})
+func (d DatasetLocation) marshalInternal(objectMap map[string]interface{}, discValue string) {
 	populate(objectMap, "fileName", d.FileName)
 	populate(objectMap, "folderPath", d.FolderPath)
 	d.Type = &discValue
@@ -8934,7 +9419,6 @@ func (d DatasetLocation) marshalInternal(discValue string) map[string]interface{
 			objectMap[key] = val
 		}
 	}
-	return objectMap
 }
 
 func (d *DatasetLocation) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
@@ -8998,7 +9482,8 @@ type DatasetResource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DatasetResource.
 func (d DatasetResource) MarshalJSON() ([]byte, error) {
-	objectMap := d.SubResource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	d.SubResource.marshalInternal(objectMap)
 	populate(objectMap, "properties", d.Properties)
 	return json.Marshal(objectMap)
 }
@@ -9020,7 +9505,10 @@ func (d *DatasetResource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return d.SubResource.unmarshalInternal(rawMsg)
+	if err := d.SubResource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // DatasetSchemaDataElement - Columns that define the physical type schema of the dataset.
@@ -9117,8 +9605,7 @@ func (d *DatasetStorageFormat) UnmarshalJSON(data []byte) error {
 	return d.unmarshalInternal(rawMsg)
 }
 
-func (d DatasetStorageFormat) marshalInternal(discValue string) map[string]interface{} {
-	objectMap := make(map[string]interface{})
+func (d DatasetStorageFormat) marshalInternal(objectMap map[string]interface{}, discValue string) {
 	populate(objectMap, "deserializer", d.Deserializer)
 	populate(objectMap, "serializer", d.Serializer)
 	d.Type = &discValue
@@ -9128,7 +9615,6 @@ func (d DatasetStorageFormat) marshalInternal(discValue string) map[string]inter
 			objectMap[key] = val
 		}
 	}
-	return objectMap
 }
 
 func (d *DatasetStorageFormat) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
@@ -9171,7 +9657,8 @@ type DatasetZipDeflateCompression struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DatasetZipDeflateCompression.
 func (d DatasetZipDeflateCompression) MarshalJSON() ([]byte, error) {
-	objectMap := d.DatasetCompression.marshalInternal("ZipDeflate")
+	objectMap := make(map[string]interface{})
+	d.DatasetCompression.marshalInternal(objectMap, "ZipDeflate")
 	populate(objectMap, "level", d.Level)
 	return json.Marshal(objectMap)
 }
@@ -9193,7 +9680,10 @@ func (d *DatasetZipDeflateCompression) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return d.DatasetCompression.unmarshalInternal(rawMsg)
+	if err := d.DatasetCompression.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // Db2LinkedService - Linked service for DB2 data source.
@@ -9205,7 +9695,8 @@ type Db2LinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type Db2LinkedService.
 func (d Db2LinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := d.LinkedService.marshalInternal("Db2")
+	objectMap := make(map[string]interface{})
+	d.LinkedService.marshalInternal(objectMap, "Db2")
 	populate(objectMap, "typeProperties", d.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -9227,7 +9718,10 @@ func (d *Db2LinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return d.LinkedService.unmarshalInternal(rawMsg)
+	if err := d.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // Db2LinkedServiceTypeProperties - DB2 linked service properties.
@@ -9322,7 +9816,8 @@ type Db2Source struct {
 
 // MarshalJSON implements the json.Marshaller interface for type Db2Source.
 func (d Db2Source) MarshalJSON() ([]byte, error) {
-	objectMap := d.TabularSource.marshalInternal("Db2Source")
+	objectMap := make(map[string]interface{})
+	d.TabularSource.marshalInternal(objectMap, "Db2Source")
 	populate(objectMap, "query", d.Query)
 	return json.Marshal(objectMap)
 }
@@ -9344,7 +9839,10 @@ func (d *Db2Source) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return d.TabularSource.unmarshalInternal(rawMsg)
+	if err := d.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // Db2TableDataset - The Db2 table dataset.
@@ -9356,7 +9854,8 @@ type Db2TableDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type Db2TableDataset.
 func (d Db2TableDataset) MarshalJSON() ([]byte, error) {
-	objectMap := d.Dataset.marshalInternal("Db2Table")
+	objectMap := make(map[string]interface{})
+	d.Dataset.marshalInternal(objectMap, "Db2Table")
 	populate(objectMap, "typeProperties", d.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -9378,7 +9877,10 @@ func (d *Db2TableDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return d.Dataset.unmarshalInternal(rawMsg)
+	if err := d.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // Db2TableDatasetTypeProperties - Db2 table dataset properties.
@@ -9402,7 +9904,8 @@ type DeleteActivity struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DeleteActivity.
 func (d DeleteActivity) MarshalJSON() ([]byte, error) {
-	objectMap := d.ExecutionActivity.marshalInternal("Delete")
+	objectMap := make(map[string]interface{})
+	d.ExecutionActivity.marshalInternal(objectMap, "Delete")
 	populate(objectMap, "typeProperties", d.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -9424,7 +9927,10 @@ func (d *DeleteActivity) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return d.ExecutionActivity.unmarshalInternal(rawMsg)
+	if err := d.ExecutionActivity.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // DeleteActivityTypeProperties - Delete activity properties.
@@ -9463,7 +9969,8 @@ type DelimitedTextDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DelimitedTextDataset.
 func (d DelimitedTextDataset) MarshalJSON() ([]byte, error) {
-	objectMap := d.Dataset.marshalInternal("DelimitedText")
+	objectMap := make(map[string]interface{})
+	d.Dataset.marshalInternal(objectMap, "DelimitedText")
 	populate(objectMap, "typeProperties", d.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -9485,7 +9992,10 @@ func (d *DelimitedTextDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return d.Dataset.unmarshalInternal(rawMsg)
+	if err := d.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // DelimitedTextDatasetTypeProperties - DelimitedText dataset properties.
@@ -9595,7 +10105,8 @@ type DelimitedTextReadSettings struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DelimitedTextReadSettings.
 func (d DelimitedTextReadSettings) MarshalJSON() ([]byte, error) {
-	objectMap := d.FormatReadSettings.marshalInternal("DelimitedTextReadSettings")
+	objectMap := make(map[string]interface{})
+	d.FormatReadSettings.marshalInternal(objectMap, "DelimitedTextReadSettings")
 	populate(objectMap, "skipLineCount", d.SkipLineCount)
 	return json.Marshal(objectMap)
 }
@@ -9617,7 +10128,10 @@ func (d *DelimitedTextReadSettings) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return d.FormatReadSettings.unmarshalInternal(rawMsg)
+	if err := d.FormatReadSettings.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // DelimitedTextSink - A copy activity DelimitedText sink.
@@ -9632,7 +10146,8 @@ type DelimitedTextSink struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DelimitedTextSink.
 func (d DelimitedTextSink) MarshalJSON() ([]byte, error) {
-	objectMap := d.CopySink.marshalInternal("DelimitedTextSink")
+	objectMap := make(map[string]interface{})
+	d.CopySink.marshalInternal(objectMap, "DelimitedTextSink")
 	populate(objectMap, "formatSettings", d.FormatSettings)
 	populate(objectMap, "storeSettings", d.StoreSettings)
 	return json.Marshal(objectMap)
@@ -9658,7 +10173,10 @@ func (d *DelimitedTextSink) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return d.CopySink.unmarshalInternal(rawMsg)
+	if err := d.CopySink.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // DelimitedTextSource - A copy activity DelimitedText source.
@@ -9673,7 +10191,8 @@ type DelimitedTextSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DelimitedTextSource.
 func (d DelimitedTextSource) MarshalJSON() ([]byte, error) {
-	objectMap := d.CopySource.marshalInternal("DelimitedTextSource")
+	objectMap := make(map[string]interface{})
+	d.CopySource.marshalInternal(objectMap, "DelimitedTextSource")
 	populate(objectMap, "formatSettings", d.FormatSettings)
 	populate(objectMap, "storeSettings", d.StoreSettings)
 	return json.Marshal(objectMap)
@@ -9699,7 +10218,10 @@ func (d *DelimitedTextSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return d.CopySource.unmarshalInternal(rawMsg)
+	if err := d.CopySource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // DelimitedTextWriteSettings - Delimited text write settings.
@@ -9714,7 +10236,8 @@ type DelimitedTextWriteSettings struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DelimitedTextWriteSettings.
 func (d DelimitedTextWriteSettings) MarshalJSON() ([]byte, error) {
-	objectMap := d.FormatWriteSettings.marshalInternal("DelimitedTextWriteSettings")
+	objectMap := make(map[string]interface{})
+	d.FormatWriteSettings.marshalInternal(objectMap, "DelimitedTextWriteSettings")
 	populate(objectMap, "fileExtension", d.FileExtension)
 	populate(objectMap, "quoteAllText", d.QuoteAllText)
 	return json.Marshal(objectMap)
@@ -9740,7 +10263,10 @@ func (d *DelimitedTextWriteSettings) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return d.FormatWriteSettings.unmarshalInternal(rawMsg)
+	if err := d.FormatWriteSettings.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // DependencyReferenceClassification provides polymorphic access to related types.
@@ -9770,11 +10296,9 @@ func (d *DependencyReference) UnmarshalJSON(data []byte) error {
 	return d.unmarshalInternal(rawMsg)
 }
 
-func (d DependencyReference) marshalInternal(discValue string) map[string]interface{} {
-	objectMap := make(map[string]interface{})
+func (d DependencyReference) marshalInternal(objectMap map[string]interface{}, discValue string) {
 	d.Type = &discValue
 	objectMap["type"] = d.Type
-	return objectMap
 }
 
 func (d *DependencyReference) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
@@ -9815,7 +10339,8 @@ type DocumentDbCollectionDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DocumentDbCollectionDataset.
 func (d DocumentDbCollectionDataset) MarshalJSON() ([]byte, error) {
-	objectMap := d.Dataset.marshalInternal("DocumentDbCollection")
+	objectMap := make(map[string]interface{})
+	d.Dataset.marshalInternal(objectMap, "DocumentDbCollection")
 	populate(objectMap, "typeProperties", d.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -9837,7 +10362,10 @@ func (d *DocumentDbCollectionDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return d.Dataset.unmarshalInternal(rawMsg)
+	if err := d.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // DocumentDbCollectionDatasetTypeProperties - DocumentDB Collection dataset properties.
@@ -9858,7 +10386,8 @@ type DocumentDbCollectionSink struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DocumentDbCollectionSink.
 func (d DocumentDbCollectionSink) MarshalJSON() ([]byte, error) {
-	objectMap := d.CopySink.marshalInternal("DocumentDbCollectionSink")
+	objectMap := make(map[string]interface{})
+	d.CopySink.marshalInternal(objectMap, "DocumentDbCollectionSink")
 	populate(objectMap, "nestingSeparator", d.NestingSeparator)
 	populate(objectMap, "writeBehavior", d.WriteBehavior)
 	return json.Marshal(objectMap)
@@ -9884,7 +10413,10 @@ func (d *DocumentDbCollectionSink) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return d.CopySink.unmarshalInternal(rawMsg)
+	if err := d.CopySink.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // DocumentDbCollectionSource - A copy activity Document Database Collection source.
@@ -9902,7 +10434,8 @@ type DocumentDbCollectionSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DocumentDbCollectionSource.
 func (d DocumentDbCollectionSource) MarshalJSON() ([]byte, error) {
-	objectMap := d.CopySource.marshalInternal("DocumentDbCollectionSource")
+	objectMap := make(map[string]interface{})
+	d.CopySource.marshalInternal(objectMap, "DocumentDbCollectionSource")
 	populate(objectMap, "nestingSeparator", d.NestingSeparator)
 	populate(objectMap, "query", d.Query)
 	populate(objectMap, "queryTimeout", d.QueryTimeout)
@@ -9932,7 +10465,10 @@ func (d *DocumentDbCollectionSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return d.CopySource.unmarshalInternal(rawMsg)
+	if err := d.CopySource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // DrillDatasetTypeProperties - Drill Dataset Properties
@@ -9956,7 +10492,8 @@ type DrillLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DrillLinkedService.
 func (d DrillLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := d.LinkedService.marshalInternal("Drill")
+	objectMap := make(map[string]interface{})
+	d.LinkedService.marshalInternal(objectMap, "Drill")
 	populate(objectMap, "typeProperties", d.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -9978,7 +10515,10 @@ func (d *DrillLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return d.LinkedService.unmarshalInternal(rawMsg)
+	if err := d.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // DrillLinkedServiceTypeProperties - Drill server linked service properties.
@@ -10003,7 +10543,8 @@ type DrillSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DrillSource.
 func (d DrillSource) MarshalJSON() ([]byte, error) {
-	objectMap := d.TabularSource.marshalInternal("DrillSource")
+	objectMap := make(map[string]interface{})
+	d.TabularSource.marshalInternal(objectMap, "DrillSource")
 	populate(objectMap, "query", d.Query)
 	return json.Marshal(objectMap)
 }
@@ -10025,7 +10566,10 @@ func (d *DrillSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return d.TabularSource.unmarshalInternal(rawMsg)
+	if err := d.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // DrillTableDataset - Drill server dataset.
@@ -10037,7 +10581,8 @@ type DrillTableDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DrillTableDataset.
 func (d DrillTableDataset) MarshalJSON() ([]byte, error) {
-	objectMap := d.Dataset.marshalInternal("DrillTable")
+	objectMap := make(map[string]interface{})
+	d.Dataset.marshalInternal(objectMap, "DrillTable")
 	populate(objectMap, "typeProperties", d.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -10059,7 +10604,10 @@ func (d *DrillTableDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return d.Dataset.unmarshalInternal(rawMsg)
+	if err := d.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // DynamicExecutorAllocation - Dynamic Executor Allocation Properties
@@ -10077,7 +10625,8 @@ type DynamicsAXLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DynamicsAXLinkedService.
 func (d DynamicsAXLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := d.LinkedService.marshalInternal("DynamicsAX")
+	objectMap := make(map[string]interface{})
+	d.LinkedService.marshalInternal(objectMap, "DynamicsAX")
 	populate(objectMap, "typeProperties", d.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -10099,7 +10648,10 @@ func (d *DynamicsAXLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return d.LinkedService.unmarshalInternal(rawMsg)
+	if err := d.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // DynamicsAXLinkedServiceTypeProperties - Dynamics AX linked service properties.
@@ -10184,7 +10736,8 @@ type DynamicsAXResourceDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DynamicsAXResourceDataset.
 func (d DynamicsAXResourceDataset) MarshalJSON() ([]byte, error) {
-	objectMap := d.Dataset.marshalInternal("DynamicsAXResource")
+	objectMap := make(map[string]interface{})
+	d.Dataset.marshalInternal(objectMap, "DynamicsAXResource")
 	populate(objectMap, "typeProperties", d.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -10206,7 +10759,10 @@ func (d *DynamicsAXResourceDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return d.Dataset.unmarshalInternal(rawMsg)
+	if err := d.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // DynamicsAXResourceDatasetTypeProperties - Dynamics AX OData resource dataset properties.
@@ -10224,7 +10780,8 @@ type DynamicsAXSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DynamicsAXSource.
 func (d DynamicsAXSource) MarshalJSON() ([]byte, error) {
-	objectMap := d.TabularSource.marshalInternal("DynamicsAXSource")
+	objectMap := make(map[string]interface{})
+	d.TabularSource.marshalInternal(objectMap, "DynamicsAXSource")
 	populate(objectMap, "query", d.Query)
 	return json.Marshal(objectMap)
 }
@@ -10246,7 +10803,10 @@ func (d *DynamicsAXSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return d.TabularSource.unmarshalInternal(rawMsg)
+	if err := d.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // DynamicsCrmEntityDataset - The Dynamics CRM entity dataset.
@@ -10258,7 +10818,8 @@ type DynamicsCrmEntityDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DynamicsCrmEntityDataset.
 func (d DynamicsCrmEntityDataset) MarshalJSON() ([]byte, error) {
-	objectMap := d.Dataset.marshalInternal("DynamicsCrmEntity")
+	objectMap := make(map[string]interface{})
+	d.Dataset.marshalInternal(objectMap, "DynamicsCrmEntity")
 	populate(objectMap, "typeProperties", d.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -10280,7 +10841,10 @@ func (d *DynamicsCrmEntityDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return d.Dataset.unmarshalInternal(rawMsg)
+	if err := d.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // DynamicsCrmEntityDatasetTypeProperties - Dynamics CRM entity dataset properties.
@@ -10298,7 +10862,8 @@ type DynamicsCrmLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DynamicsCrmLinkedService.
 func (d DynamicsCrmLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := d.LinkedService.marshalInternal("DynamicsCrm")
+	objectMap := make(map[string]interface{})
+	d.LinkedService.marshalInternal(objectMap, "DynamicsCrm")
 	populate(objectMap, "typeProperties", d.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -10320,7 +10885,10 @@ func (d *DynamicsCrmLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return d.LinkedService.unmarshalInternal(rawMsg)
+	if err := d.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // DynamicsCrmLinkedServiceTypeProperties - Dynamics CRM linked service properties.
@@ -10462,7 +11030,8 @@ type DynamicsCrmSink struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DynamicsCrmSink.
 func (d DynamicsCrmSink) MarshalJSON() ([]byte, error) {
-	objectMap := d.CopySink.marshalInternal("DynamicsCrmSink")
+	objectMap := make(map[string]interface{})
+	d.CopySink.marshalInternal(objectMap, "DynamicsCrmSink")
 	populate(objectMap, "alternateKeyName", d.AlternateKeyName)
 	populate(objectMap, "ignoreNullValues", d.IgnoreNullValues)
 	populate(objectMap, "writeBehavior", d.WriteBehavior)
@@ -10492,7 +11061,10 @@ func (d *DynamicsCrmSink) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return d.CopySink.unmarshalInternal(rawMsg)
+	if err := d.CopySink.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // DynamicsCrmSource - A copy activity Dynamics CRM source.
@@ -10504,7 +11076,8 @@ type DynamicsCrmSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DynamicsCrmSource.
 func (d DynamicsCrmSource) MarshalJSON() ([]byte, error) {
-	objectMap := d.CopySource.marshalInternal("DynamicsCrmSource")
+	objectMap := make(map[string]interface{})
+	d.CopySource.marshalInternal(objectMap, "DynamicsCrmSource")
 	populate(objectMap, "query", d.Query)
 	return json.Marshal(objectMap)
 }
@@ -10526,7 +11099,10 @@ func (d *DynamicsCrmSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return d.CopySource.unmarshalInternal(rawMsg)
+	if err := d.CopySource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // DynamicsEntityDataset - The Dynamics entity dataset.
@@ -10538,7 +11114,8 @@ type DynamicsEntityDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DynamicsEntityDataset.
 func (d DynamicsEntityDataset) MarshalJSON() ([]byte, error) {
-	objectMap := d.Dataset.marshalInternal("DynamicsEntity")
+	objectMap := make(map[string]interface{})
+	d.Dataset.marshalInternal(objectMap, "DynamicsEntity")
 	populate(objectMap, "typeProperties", d.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -10560,7 +11137,10 @@ func (d *DynamicsEntityDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return d.Dataset.unmarshalInternal(rawMsg)
+	if err := d.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // DynamicsEntityDatasetTypeProperties - Dynamics entity dataset properties.
@@ -10578,7 +11158,8 @@ type DynamicsLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DynamicsLinkedService.
 func (d DynamicsLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := d.LinkedService.marshalInternal("Dynamics")
+	objectMap := make(map[string]interface{})
+	d.LinkedService.marshalInternal(objectMap, "Dynamics")
 	populate(objectMap, "typeProperties", d.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -10600,7 +11181,10 @@ func (d *DynamicsLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return d.LinkedService.unmarshalInternal(rawMsg)
+	if err := d.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // DynamicsLinkedServiceTypeProperties - Dynamics linked service properties.
@@ -10742,7 +11326,8 @@ type DynamicsSink struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DynamicsSink.
 func (d DynamicsSink) MarshalJSON() ([]byte, error) {
-	objectMap := d.CopySink.marshalInternal("DynamicsSink")
+	objectMap := make(map[string]interface{})
+	d.CopySink.marshalInternal(objectMap, "DynamicsSink")
 	populate(objectMap, "alternateKeyName", d.AlternateKeyName)
 	populate(objectMap, "ignoreNullValues", d.IgnoreNullValues)
 	populate(objectMap, "writeBehavior", d.WriteBehavior)
@@ -10772,7 +11357,10 @@ func (d *DynamicsSink) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return d.CopySink.unmarshalInternal(rawMsg)
+	if err := d.CopySink.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // DynamicsSource - A copy activity Dynamics source.
@@ -10784,7 +11372,8 @@ type DynamicsSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type DynamicsSource.
 func (d DynamicsSource) MarshalJSON() ([]byte, error) {
-	objectMap := d.CopySource.marshalInternal("DynamicsSource")
+	objectMap := make(map[string]interface{})
+	d.CopySource.marshalInternal(objectMap, "DynamicsSource")
 	populate(objectMap, "query", d.Query)
 	return json.Marshal(objectMap)
 }
@@ -10806,7 +11395,10 @@ func (d *DynamicsSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return d.CopySource.unmarshalInternal(rawMsg)
+	if err := d.CopySource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // EloquaLinkedService - Eloqua server linked service.
@@ -10818,7 +11410,8 @@ type EloquaLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type EloquaLinkedService.
 func (e EloquaLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := e.LinkedService.marshalInternal("Eloqua")
+	objectMap := make(map[string]interface{})
+	e.LinkedService.marshalInternal(objectMap, "Eloqua")
 	populate(objectMap, "typeProperties", e.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -10840,7 +11433,10 @@ func (e *EloquaLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return e.LinkedService.unmarshalInternal(rawMsg)
+	if err := e.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // EloquaLinkedServiceTypeProperties - Eloqua server linked service properties.
@@ -10929,7 +11525,8 @@ type EloquaObjectDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type EloquaObjectDataset.
 func (e EloquaObjectDataset) MarshalJSON() ([]byte, error) {
-	objectMap := e.Dataset.marshalInternal("EloquaObject")
+	objectMap := make(map[string]interface{})
+	e.Dataset.marshalInternal(objectMap, "EloquaObject")
 	populate(objectMap, "typeProperties", e.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -10951,7 +11548,10 @@ func (e *EloquaObjectDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return e.Dataset.unmarshalInternal(rawMsg)
+	if err := e.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // EloquaSource - A copy activity Eloqua server source.
@@ -10963,7 +11563,8 @@ type EloquaSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type EloquaSource.
 func (e EloquaSource) MarshalJSON() ([]byte, error) {
-	objectMap := e.TabularSource.marshalInternal("EloquaSource")
+	objectMap := make(map[string]interface{})
+	e.TabularSource.marshalInternal(objectMap, "EloquaSource")
 	populate(objectMap, "query", e.Query)
 	return json.Marshal(objectMap)
 }
@@ -10985,7 +11586,10 @@ func (e *EloquaSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return e.TabularSource.unmarshalInternal(rawMsg)
+	if err := e.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // EncryptionDetails - Details of the encryption associated with the workspace
@@ -11077,7 +11681,8 @@ type ExecuteDataFlowActivity struct {
 
 // MarshalJSON implements the json.Marshaller interface for type ExecuteDataFlowActivity.
 func (e ExecuteDataFlowActivity) MarshalJSON() ([]byte, error) {
-	objectMap := e.ExecutionActivity.marshalInternal("ExecuteDataFlow")
+	objectMap := make(map[string]interface{})
+	e.ExecutionActivity.marshalInternal(objectMap, "ExecuteDataFlow")
 	populate(objectMap, "typeProperties", e.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -11099,7 +11704,10 @@ func (e *ExecuteDataFlowActivity) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return e.ExecutionActivity.unmarshalInternal(rawMsg)
+	if err := e.ExecutionActivity.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // ExecuteDataFlowActivityTypeProperties - Execute data flow activity properties.
@@ -11135,7 +11743,8 @@ type ExecutePipelineActivity struct {
 
 // MarshalJSON implements the json.Marshaller interface for type ExecutePipelineActivity.
 func (e ExecutePipelineActivity) MarshalJSON() ([]byte, error) {
-	objectMap := e.ControlActivity.marshalInternal("ExecutePipeline")
+	objectMap := make(map[string]interface{})
+	e.ControlActivity.marshalInternal(objectMap, "ExecutePipeline")
 	populate(objectMap, "typeProperties", e.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -11157,7 +11766,10 @@ func (e *ExecutePipelineActivity) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return e.ControlActivity.unmarshalInternal(rawMsg)
+	if err := e.ControlActivity.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // ExecutePipelineActivityTypeProperties - Execute pipeline activity properties.
@@ -11190,7 +11802,8 @@ type ExecuteSSISPackageActivity struct {
 
 // MarshalJSON implements the json.Marshaller interface for type ExecuteSSISPackageActivity.
 func (e ExecuteSSISPackageActivity) MarshalJSON() ([]byte, error) {
-	objectMap := e.ExecutionActivity.marshalInternal("ExecuteSSISPackage")
+	objectMap := make(map[string]interface{})
+	e.ExecutionActivity.marshalInternal(objectMap, "ExecuteSSISPackage")
 	populate(objectMap, "typeProperties", e.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -11212,7 +11825,10 @@ func (e *ExecuteSSISPackageActivity) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return e.ExecutionActivity.unmarshalInternal(rawMsg)
+	if err := e.ExecutionActivity.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // ExecuteSSISPackageActivityTypeProperties - Execute SSIS package activity properties.
@@ -11302,7 +11918,8 @@ func (e *ExecutionActivity) GetExecutionActivity() *ExecutionActivity { return e
 
 // MarshalJSON implements the json.Marshaller interface for type ExecutionActivity.
 func (e ExecutionActivity) MarshalJSON() ([]byte, error) {
-	objectMap := e.marshalInternal("Execution")
+	objectMap := make(map[string]interface{})
+	e.marshalInternal(objectMap, "Execution")
 	return json.Marshal(objectMap)
 }
 
@@ -11315,11 +11932,10 @@ func (e *ExecutionActivity) UnmarshalJSON(data []byte) error {
 	return e.unmarshalInternal(rawMsg)
 }
 
-func (e ExecutionActivity) marshalInternal(discValue string) map[string]interface{} {
-	objectMap := e.Activity.marshalInternal(discValue)
+func (e ExecutionActivity) marshalInternal(objectMap map[string]interface{}, discValue string) {
+	e.Activity.marshalInternal(objectMap, discValue)
 	populate(objectMap, "linkedServiceName", e.LinkedServiceName)
 	populate(objectMap, "policy", e.Policy)
-	return objectMap
 }
 
 func (e *ExecutionActivity) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
@@ -11337,7 +11953,10 @@ func (e *ExecutionActivity) unmarshalInternal(rawMsg map[string]json.RawMessage)
 			return err
 		}
 	}
-	return e.Activity.unmarshalInternal(rawMsg)
+	if err := e.Activity.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // ExposureControlRequest - The exposure control request.
@@ -11376,7 +11995,8 @@ type FileServerLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type FileServerLinkedService.
 func (f FileServerLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := f.LinkedService.marshalInternal("FileServer")
+	objectMap := make(map[string]interface{})
+	f.LinkedService.marshalInternal(objectMap, "FileServer")
 	populate(objectMap, "typeProperties", f.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -11398,7 +12018,10 @@ func (f *FileServerLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return f.LinkedService.unmarshalInternal(rawMsg)
+	if err := f.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // FileServerLinkedServiceTypeProperties - File system linked service properties.
@@ -11463,7 +12086,8 @@ type FileServerLocation struct {
 
 // MarshalJSON implements the json.Marshaller interface for type FileServerLocation.
 func (f FileServerLocation) MarshalJSON() ([]byte, error) {
-	objectMap := f.DatasetLocation.marshalInternal("FileServerLocation")
+	objectMap := make(map[string]interface{})
+	f.DatasetLocation.marshalInternal(objectMap, "FileServerLocation")
 	return json.Marshal(objectMap)
 }
 
@@ -11491,7 +12115,8 @@ type FileServerReadSettings struct {
 
 // MarshalJSON implements the json.Marshaller interface for type FileServerReadSettings.
 func (f FileServerReadSettings) MarshalJSON() ([]byte, error) {
-	objectMap := f.StoreReadSettings.marshalInternal("FileServerReadSettings")
+	objectMap := make(map[string]interface{})
+	f.StoreReadSettings.marshalInternal(objectMap, "FileServerReadSettings")
 	populate(objectMap, "enablePartitionDiscovery", f.EnablePartitionDiscovery)
 	populate(objectMap, "modifiedDatetimeEnd", f.ModifiedDatetimeEnd)
 	populate(objectMap, "modifiedDatetimeStart", f.ModifiedDatetimeStart)
@@ -11533,7 +12158,10 @@ func (f *FileServerReadSettings) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return f.StoreReadSettings.unmarshalInternal(rawMsg)
+	if err := f.StoreReadSettings.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // FileServerWriteSettings - File server write settings.
@@ -11543,7 +12171,8 @@ type FileServerWriteSettings struct {
 
 // MarshalJSON implements the json.Marshaller interface for type FileServerWriteSettings.
 func (f FileServerWriteSettings) MarshalJSON() ([]byte, error) {
-	objectMap := f.StoreWriteSettings.marshalInternal("FileServerWriteSettings")
+	objectMap := make(map[string]interface{})
+	f.StoreWriteSettings.marshalInternal(objectMap, "FileServerWriteSettings")
 	return json.Marshal(objectMap)
 }
 
@@ -11556,7 +12185,8 @@ type FileSystemSink struct {
 
 // MarshalJSON implements the json.Marshaller interface for type FileSystemSink.
 func (f FileSystemSink) MarshalJSON() ([]byte, error) {
-	objectMap := f.CopySink.marshalInternal("FileSystemSink")
+	objectMap := make(map[string]interface{})
+	f.CopySink.marshalInternal(objectMap, "FileSystemSink")
 	populate(objectMap, "copyBehavior", f.CopyBehavior)
 	return json.Marshal(objectMap)
 }
@@ -11578,7 +12208,10 @@ func (f *FileSystemSink) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return f.CopySink.unmarshalInternal(rawMsg)
+	if err := f.CopySink.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // FileSystemSource - A copy activity file system source.
@@ -11590,7 +12223,8 @@ type FileSystemSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type FileSystemSource.
 func (f FileSystemSource) MarshalJSON() ([]byte, error) {
-	objectMap := f.CopySource.marshalInternal("FileSystemSource")
+	objectMap := make(map[string]interface{})
+	f.CopySource.marshalInternal(objectMap, "FileSystemSource")
 	populate(objectMap, "recursive", f.Recursive)
 	return json.Marshal(objectMap)
 }
@@ -11612,7 +12246,10 @@ func (f *FileSystemSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return f.CopySource.unmarshalInternal(rawMsg)
+	if err := f.CopySource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // FilterActivity - Filter and return results from input array based on the conditions.
@@ -11624,7 +12261,8 @@ type FilterActivity struct {
 
 // MarshalJSON implements the json.Marshaller interface for type FilterActivity.
 func (f FilterActivity) MarshalJSON() ([]byte, error) {
-	objectMap := f.ControlActivity.marshalInternal("Filter")
+	objectMap := make(map[string]interface{})
+	f.ControlActivity.marshalInternal(objectMap, "Filter")
 	populate(objectMap, "typeProperties", f.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -11646,7 +12284,10 @@ func (f *FilterActivity) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return f.ControlActivity.unmarshalInternal(rawMsg)
+	if err := f.ControlActivity.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // FilterActivityTypeProperties - Filter activity properties.
@@ -11667,7 +12308,8 @@ type ForEachActivity struct {
 
 // MarshalJSON implements the json.Marshaller interface for type ForEachActivity.
 func (f ForEachActivity) MarshalJSON() ([]byte, error) {
-	objectMap := f.ControlActivity.marshalInternal("ForEach")
+	objectMap := make(map[string]interface{})
+	f.ControlActivity.marshalInternal(objectMap, "ForEach")
 	populate(objectMap, "typeProperties", f.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -11689,7 +12331,10 @@ func (f *ForEachActivity) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return f.ControlActivity.unmarshalInternal(rawMsg)
+	if err := f.ControlActivity.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // ForEachActivityTypeProperties - ForEach activity properties.
@@ -11776,8 +12421,7 @@ func (f *FormatReadSettings) UnmarshalJSON(data []byte) error {
 	return f.unmarshalInternal(rawMsg)
 }
 
-func (f FormatReadSettings) marshalInternal(discValue string) map[string]interface{} {
-	objectMap := make(map[string]interface{})
+func (f FormatReadSettings) marshalInternal(objectMap map[string]interface{}, discValue string) {
 	f.Type = &discValue
 	objectMap["type"] = f.Type
 	if f.AdditionalProperties != nil {
@@ -11785,7 +12429,6 @@ func (f FormatReadSettings) marshalInternal(discValue string) map[string]interfa
 			objectMap[key] = val
 		}
 	}
-	return objectMap
 }
 
 func (f *FormatReadSettings) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
@@ -11843,8 +12486,7 @@ func (f *FormatWriteSettings) UnmarshalJSON(data []byte) error {
 	return f.unmarshalInternal(rawMsg)
 }
 
-func (f FormatWriteSettings) marshalInternal(discValue string) map[string]interface{} {
-	objectMap := make(map[string]interface{})
+func (f FormatWriteSettings) marshalInternal(objectMap map[string]interface{}, discValue string) {
 	f.Type = &discValue
 	objectMap["type"] = f.Type
 	if f.AdditionalProperties != nil {
@@ -11852,7 +12494,6 @@ func (f FormatWriteSettings) marshalInternal(discValue string) map[string]interf
 			objectMap[key] = val
 		}
 	}
-	return objectMap
 }
 
 func (f *FormatWriteSettings) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
@@ -11898,7 +12539,8 @@ type FtpReadSettings struct {
 
 // MarshalJSON implements the json.Marshaller interface for type FtpReadSettings.
 func (f FtpReadSettings) MarshalJSON() ([]byte, error) {
-	objectMap := f.StoreReadSettings.marshalInternal("FtpReadSettings")
+	objectMap := make(map[string]interface{})
+	f.StoreReadSettings.marshalInternal(objectMap, "FtpReadSettings")
 	populate(objectMap, "recursive", f.Recursive)
 	populate(objectMap, "useBinaryTransfer", f.UseBinaryTransfer)
 	populate(objectMap, "wildcardFileName", f.WildcardFileName)
@@ -11932,7 +12574,10 @@ func (f *FtpReadSettings) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return f.StoreReadSettings.unmarshalInternal(rawMsg)
+	if err := f.StoreReadSettings.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // FtpServerLinkedService - A FTP server Linked Service.
@@ -11944,7 +12589,8 @@ type FtpServerLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type FtpServerLinkedService.
 func (f FtpServerLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := f.LinkedService.marshalInternal("FtpServer")
+	objectMap := make(map[string]interface{})
+	f.LinkedService.marshalInternal(objectMap, "FtpServer")
 	populate(objectMap, "typeProperties", f.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -11966,7 +12612,10 @@ func (f *FtpServerLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return f.LinkedService.unmarshalInternal(rawMsg)
+	if err := f.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // FtpServerLinkedServiceTypeProperties - Properties specific to this linked service type.
@@ -12061,7 +12710,8 @@ type FtpServerLocation struct {
 
 // MarshalJSON implements the json.Marshaller interface for type FtpServerLocation.
 func (f FtpServerLocation) MarshalJSON() ([]byte, error) {
-	objectMap := f.DatasetLocation.marshalInternal("FtpServerLocation")
+	objectMap := make(map[string]interface{})
+	f.DatasetLocation.marshalInternal(objectMap, "FtpServerLocation")
 	return json.Marshal(objectMap)
 }
 
@@ -12080,7 +12730,8 @@ type GetMetadataActivity struct {
 
 // MarshalJSON implements the json.Marshaller interface for type GetMetadataActivity.
 func (g GetMetadataActivity) MarshalJSON() ([]byte, error) {
-	objectMap := g.ExecutionActivity.marshalInternal("GetMetadata")
+	objectMap := make(map[string]interface{})
+	g.ExecutionActivity.marshalInternal(objectMap, "GetMetadata")
 	populate(objectMap, "typeProperties", g.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -12102,7 +12753,10 @@ func (g *GetMetadataActivity) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return g.ExecutionActivity.unmarshalInternal(rawMsg)
+	if err := g.ExecutionActivity.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // GetMetadataActivityTypeProperties - GetMetadata activity properties.
@@ -12152,7 +12806,8 @@ type GoogleAdWordsLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type GoogleAdWordsLinkedService.
 func (g GoogleAdWordsLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := g.LinkedService.marshalInternal("GoogleAdWords")
+	objectMap := make(map[string]interface{})
+	g.LinkedService.marshalInternal(objectMap, "GoogleAdWords")
 	populate(objectMap, "typeProperties", g.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -12174,7 +12829,10 @@ func (g *GoogleAdWordsLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return g.LinkedService.unmarshalInternal(rawMsg)
+	if err := g.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // GoogleAdWordsLinkedServiceTypeProperties - Google AdWords service linked service properties.
@@ -12292,7 +12950,8 @@ type GoogleAdWordsObjectDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type GoogleAdWordsObjectDataset.
 func (g GoogleAdWordsObjectDataset) MarshalJSON() ([]byte, error) {
-	objectMap := g.Dataset.marshalInternal("GoogleAdWordsObject")
+	objectMap := make(map[string]interface{})
+	g.Dataset.marshalInternal(objectMap, "GoogleAdWordsObject")
 	populate(objectMap, "typeProperties", g.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -12314,7 +12973,10 @@ func (g *GoogleAdWordsObjectDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return g.Dataset.unmarshalInternal(rawMsg)
+	if err := g.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // GoogleAdWordsSource - A copy activity Google AdWords service source.
@@ -12326,7 +12988,8 @@ type GoogleAdWordsSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type GoogleAdWordsSource.
 func (g GoogleAdWordsSource) MarshalJSON() ([]byte, error) {
-	objectMap := g.TabularSource.marshalInternal("GoogleAdWordsSource")
+	objectMap := make(map[string]interface{})
+	g.TabularSource.marshalInternal(objectMap, "GoogleAdWordsSource")
 	populate(objectMap, "query", g.Query)
 	return json.Marshal(objectMap)
 }
@@ -12348,7 +13011,10 @@ func (g *GoogleAdWordsSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return g.TabularSource.unmarshalInternal(rawMsg)
+	if err := g.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // GoogleBigQueryDatasetTypeProperties - Google BigQuery Dataset Properties
@@ -12372,7 +13038,8 @@ type GoogleBigQueryLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type GoogleBigQueryLinkedService.
 func (g GoogleBigQueryLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := g.LinkedService.marshalInternal("GoogleBigQuery")
+	objectMap := make(map[string]interface{})
+	g.LinkedService.marshalInternal(objectMap, "GoogleBigQuery")
 	populate(objectMap, "typeProperties", g.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -12394,7 +13061,10 @@ func (g *GoogleBigQueryLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return g.LinkedService.unmarshalInternal(rawMsg)
+	if err := g.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // GoogleBigQueryLinkedServiceTypeProperties - Google BigQuery service linked service properties.
@@ -12520,7 +13190,8 @@ type GoogleBigQueryObjectDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type GoogleBigQueryObjectDataset.
 func (g GoogleBigQueryObjectDataset) MarshalJSON() ([]byte, error) {
-	objectMap := g.Dataset.marshalInternal("GoogleBigQueryObject")
+	objectMap := make(map[string]interface{})
+	g.Dataset.marshalInternal(objectMap, "GoogleBigQueryObject")
 	populate(objectMap, "typeProperties", g.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -12542,7 +13213,10 @@ func (g *GoogleBigQueryObjectDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return g.Dataset.unmarshalInternal(rawMsg)
+	if err := g.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // GoogleBigQuerySource - A copy activity Google BigQuery service source.
@@ -12554,7 +13228,8 @@ type GoogleBigQuerySource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type GoogleBigQuerySource.
 func (g GoogleBigQuerySource) MarshalJSON() ([]byte, error) {
-	objectMap := g.TabularSource.marshalInternal("GoogleBigQuerySource")
+	objectMap := make(map[string]interface{})
+	g.TabularSource.marshalInternal(objectMap, "GoogleBigQuerySource")
 	populate(objectMap, "query", g.Query)
 	return json.Marshal(objectMap)
 }
@@ -12576,7 +13251,10 @@ func (g *GoogleBigQuerySource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return g.TabularSource.unmarshalInternal(rawMsg)
+	if err := g.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // GoogleCloudStorageLinkedService - Linked service for Google Cloud Storage.
@@ -12588,7 +13266,8 @@ type GoogleCloudStorageLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type GoogleCloudStorageLinkedService.
 func (g GoogleCloudStorageLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := g.LinkedService.marshalInternal("GoogleCloudStorage")
+	objectMap := make(map[string]interface{})
+	g.LinkedService.marshalInternal(objectMap, "GoogleCloudStorage")
 	populate(objectMap, "typeProperties", g.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -12610,7 +13289,10 @@ func (g *GoogleCloudStorageLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return g.LinkedService.unmarshalInternal(rawMsg)
+	if err := g.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // GoogleCloudStorageLinkedServiceTypeProperties - Google Cloud Storage linked service properties.
@@ -12682,7 +13364,8 @@ type GoogleCloudStorageLocation struct {
 
 // MarshalJSON implements the json.Marshaller interface for type GoogleCloudStorageLocation.
 func (g GoogleCloudStorageLocation) MarshalJSON() ([]byte, error) {
-	objectMap := g.DatasetLocation.marshalInternal("GoogleCloudStorageLocation")
+	objectMap := make(map[string]interface{})
+	g.DatasetLocation.marshalInternal(objectMap, "GoogleCloudStorageLocation")
 	populate(objectMap, "bucketName", g.BucketName)
 	populate(objectMap, "version", g.Version)
 	return json.Marshal(objectMap)
@@ -12708,7 +13391,10 @@ func (g *GoogleCloudStorageLocation) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return g.DatasetLocation.unmarshalInternal(rawMsg)
+	if err := g.DatasetLocation.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // GoogleCloudStorageReadSettings - Google Cloud Storage read settings.
@@ -12738,7 +13424,8 @@ type GoogleCloudStorageReadSettings struct {
 
 // MarshalJSON implements the json.Marshaller interface for type GoogleCloudStorageReadSettings.
 func (g GoogleCloudStorageReadSettings) MarshalJSON() ([]byte, error) {
-	objectMap := g.StoreReadSettings.marshalInternal("GoogleCloudStorageReadSettings")
+	objectMap := make(map[string]interface{})
+	g.StoreReadSettings.marshalInternal(objectMap, "GoogleCloudStorageReadSettings")
 	populate(objectMap, "enablePartitionDiscovery", g.EnablePartitionDiscovery)
 	populate(objectMap, "modifiedDatetimeEnd", g.ModifiedDatetimeEnd)
 	populate(objectMap, "modifiedDatetimeStart", g.ModifiedDatetimeStart)
@@ -12784,7 +13471,10 @@ func (g *GoogleCloudStorageReadSettings) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return g.StoreReadSettings.unmarshalInternal(rawMsg)
+	if err := g.StoreReadSettings.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // GreenplumDatasetTypeProperties - Greenplum Dataset Properties
@@ -12808,7 +13498,8 @@ type GreenplumLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type GreenplumLinkedService.
 func (g GreenplumLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := g.LinkedService.marshalInternal("Greenplum")
+	objectMap := make(map[string]interface{})
+	g.LinkedService.marshalInternal(objectMap, "Greenplum")
 	populate(objectMap, "typeProperties", g.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -12830,7 +13521,10 @@ func (g *GreenplumLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return g.LinkedService.unmarshalInternal(rawMsg)
+	if err := g.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // GreenplumLinkedServiceTypeProperties - Greenplum Database linked service properties.
@@ -12855,7 +13549,8 @@ type GreenplumSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type GreenplumSource.
 func (g GreenplumSource) MarshalJSON() ([]byte, error) {
-	objectMap := g.TabularSource.marshalInternal("GreenplumSource")
+	objectMap := make(map[string]interface{})
+	g.TabularSource.marshalInternal(objectMap, "GreenplumSource")
 	populate(objectMap, "query", g.Query)
 	return json.Marshal(objectMap)
 }
@@ -12877,7 +13572,10 @@ func (g *GreenplumSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return g.TabularSource.unmarshalInternal(rawMsg)
+	if err := g.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // GreenplumTableDataset - Greenplum Database dataset.
@@ -12889,7 +13587,8 @@ type GreenplumTableDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type GreenplumTableDataset.
 func (g GreenplumTableDataset) MarshalJSON() ([]byte, error) {
-	objectMap := g.Dataset.marshalInternal("GreenplumTable")
+	objectMap := make(map[string]interface{})
+	g.Dataset.marshalInternal(objectMap, "GreenplumTable")
 	populate(objectMap, "typeProperties", g.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -12911,7 +13610,10 @@ func (g *GreenplumTableDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return g.Dataset.unmarshalInternal(rawMsg)
+	if err := g.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // HBaseLinkedService - HBase server linked service.
@@ -12923,7 +13625,8 @@ type HBaseLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type HBaseLinkedService.
 func (h HBaseLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := h.LinkedService.marshalInternal("HBase")
+	objectMap := make(map[string]interface{})
+	h.LinkedService.marshalInternal(objectMap, "HBase")
 	populate(objectMap, "typeProperties", h.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -12945,7 +13648,10 @@ func (h *HBaseLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return h.LinkedService.unmarshalInternal(rawMsg)
+	if err := h.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // HBaseLinkedServiceTypeProperties - HBase server linked service properties.
@@ -13063,7 +13769,8 @@ type HBaseObjectDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type HBaseObjectDataset.
 func (h HBaseObjectDataset) MarshalJSON() ([]byte, error) {
-	objectMap := h.Dataset.marshalInternal("HBaseObject")
+	objectMap := make(map[string]interface{})
+	h.Dataset.marshalInternal(objectMap, "HBaseObject")
 	populate(objectMap, "typeProperties", h.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -13085,7 +13792,10 @@ func (h *HBaseObjectDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return h.Dataset.unmarshalInternal(rawMsg)
+	if err := h.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // HBaseSource - A copy activity HBase server source.
@@ -13097,7 +13807,8 @@ type HBaseSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type HBaseSource.
 func (h HBaseSource) MarshalJSON() ([]byte, error) {
-	objectMap := h.TabularSource.marshalInternal("HBaseSource")
+	objectMap := make(map[string]interface{})
+	h.TabularSource.marshalInternal(objectMap, "HBaseSource")
 	populate(objectMap, "query", h.Query)
 	return json.Marshal(objectMap)
 }
@@ -13119,7 +13830,10 @@ func (h *HBaseSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return h.TabularSource.unmarshalInternal(rawMsg)
+	if err := h.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // HDInsightHiveActivity - HDInsight Hive activity type.
@@ -13131,7 +13845,8 @@ type HDInsightHiveActivity struct {
 
 // MarshalJSON implements the json.Marshaller interface for type HDInsightHiveActivity.
 func (h HDInsightHiveActivity) MarshalJSON() ([]byte, error) {
-	objectMap := h.ExecutionActivity.marshalInternal("HDInsightHive")
+	objectMap := make(map[string]interface{})
+	h.ExecutionActivity.marshalInternal(objectMap, "HDInsightHive")
 	populate(objectMap, "typeProperties", h.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -13153,7 +13868,10 @@ func (h *HDInsightHiveActivity) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return h.ExecutionActivity.unmarshalInternal(rawMsg)
+	if err := h.ExecutionActivity.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // HDInsightHiveActivityTypeProperties - HDInsight Hive activity properties.
@@ -13206,7 +13924,8 @@ type HDInsightLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type HDInsightLinkedService.
 func (h HDInsightLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := h.LinkedService.marshalInternal("HDInsight")
+	objectMap := make(map[string]interface{})
+	h.LinkedService.marshalInternal(objectMap, "HDInsight")
 	populate(objectMap, "typeProperties", h.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -13228,7 +13947,10 @@ func (h *HDInsightLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return h.LinkedService.unmarshalInternal(rawMsg)
+	if err := h.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // HDInsightLinkedServiceTypeProperties - HDInsight linked service properties.
@@ -13323,7 +14045,8 @@ type HDInsightMapReduceActivity struct {
 
 // MarshalJSON implements the json.Marshaller interface for type HDInsightMapReduceActivity.
 func (h HDInsightMapReduceActivity) MarshalJSON() ([]byte, error) {
-	objectMap := h.ExecutionActivity.marshalInternal("HDInsightMapReduce")
+	objectMap := make(map[string]interface{})
+	h.ExecutionActivity.marshalInternal(objectMap, "HDInsightMapReduce")
 	populate(objectMap, "typeProperties", h.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -13345,7 +14068,10 @@ func (h *HDInsightMapReduceActivity) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return h.ExecutionActivity.unmarshalInternal(rawMsg)
+	if err := h.ExecutionActivity.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // HDInsightMapReduceActivityTypeProperties - HDInsight MapReduce activity properties.
@@ -13398,7 +14124,8 @@ type HDInsightOnDemandLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type HDInsightOnDemandLinkedService.
 func (h HDInsightOnDemandLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := h.LinkedService.marshalInternal("HDInsightOnDemand")
+	objectMap := make(map[string]interface{})
+	h.LinkedService.marshalInternal(objectMap, "HDInsightOnDemand")
 	populate(objectMap, "typeProperties", h.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -13420,7 +14147,10 @@ func (h *HDInsightOnDemandLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return h.LinkedService.unmarshalInternal(rawMsg)
+	if err := h.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // HDInsightOnDemandLinkedServiceTypeProperties - HDInsight ondemand linked service properties.
@@ -13695,7 +14425,8 @@ type HDInsightPigActivity struct {
 
 // MarshalJSON implements the json.Marshaller interface for type HDInsightPigActivity.
 func (h HDInsightPigActivity) MarshalJSON() ([]byte, error) {
-	objectMap := h.ExecutionActivity.marshalInternal("HDInsightPig")
+	objectMap := make(map[string]interface{})
+	h.ExecutionActivity.marshalInternal(objectMap, "HDInsightPig")
 	populate(objectMap, "typeProperties", h.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -13717,7 +14448,10 @@ func (h *HDInsightPigActivity) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return h.ExecutionActivity.unmarshalInternal(rawMsg)
+	if err := h.ExecutionActivity.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // HDInsightPigActivityTypeProperties - HDInsight Pig activity properties.
@@ -13762,7 +14496,8 @@ type HDInsightSparkActivity struct {
 
 // MarshalJSON implements the json.Marshaller interface for type HDInsightSparkActivity.
 func (h HDInsightSparkActivity) MarshalJSON() ([]byte, error) {
-	objectMap := h.ExecutionActivity.marshalInternal("HDInsightSpark")
+	objectMap := make(map[string]interface{})
+	h.ExecutionActivity.marshalInternal(objectMap, "HDInsightSpark")
 	populate(objectMap, "typeProperties", h.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -13784,7 +14519,10 @@ func (h *HDInsightSparkActivity) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return h.ExecutionActivity.unmarshalInternal(rawMsg)
+	if err := h.ExecutionActivity.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // HDInsightSparkActivityTypeProperties - HDInsight spark activity properties.
@@ -13837,7 +14575,8 @@ type HDInsightStreamingActivity struct {
 
 // MarshalJSON implements the json.Marshaller interface for type HDInsightStreamingActivity.
 func (h HDInsightStreamingActivity) MarshalJSON() ([]byte, error) {
-	objectMap := h.ExecutionActivity.marshalInternal("HDInsightStreaming")
+	objectMap := make(map[string]interface{})
+	h.ExecutionActivity.marshalInternal(objectMap, "HDInsightStreaming")
 	populate(objectMap, "typeProperties", h.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -13859,7 +14598,10 @@ func (h *HDInsightStreamingActivity) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return h.ExecutionActivity.unmarshalInternal(rawMsg)
+	if err := h.ExecutionActivity.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // HDInsightStreamingActivityTypeProperties - HDInsight streaming activity properties.
@@ -13928,7 +14670,8 @@ type HTTPLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type HTTPLinkedService.
 func (h HTTPLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := h.LinkedService.marshalInternal("HttpServer")
+	objectMap := make(map[string]interface{})
+	h.LinkedService.marshalInternal(objectMap, "HttpServer")
 	populate(objectMap, "typeProperties", h.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -13950,7 +14693,10 @@ func (h *HTTPLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return h.LinkedService.unmarshalInternal(rawMsg)
+	if err := h.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // HTTPLinkedServiceTypeProperties - Properties specific to this linked service type.
@@ -14058,7 +14804,8 @@ type HTTPReadSettings struct {
 
 // MarshalJSON implements the json.Marshaller interface for type HTTPReadSettings.
 func (h HTTPReadSettings) MarshalJSON() ([]byte, error) {
-	objectMap := h.StoreReadSettings.marshalInternal("HttpReadSettings")
+	objectMap := make(map[string]interface{})
+	h.StoreReadSettings.marshalInternal(objectMap, "HttpReadSettings")
 	populate(objectMap, "additionalHeaders", h.AdditionalHeaders)
 	populate(objectMap, "requestBody", h.RequestBody)
 	populate(objectMap, "requestMethod", h.RequestMethod)
@@ -14092,7 +14839,10 @@ func (h *HTTPReadSettings) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return h.StoreReadSettings.unmarshalInternal(rawMsg)
+	if err := h.StoreReadSettings.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // HTTPServerLocation - The location of http server.
@@ -14104,7 +14854,8 @@ type HTTPServerLocation struct {
 
 // MarshalJSON implements the json.Marshaller interface for type HTTPServerLocation.
 func (h HTTPServerLocation) MarshalJSON() ([]byte, error) {
-	objectMap := h.DatasetLocation.marshalInternal("HttpServerLocation")
+	objectMap := make(map[string]interface{})
+	h.DatasetLocation.marshalInternal(objectMap, "HttpServerLocation")
 	populate(objectMap, "relativeUrl", h.RelativeURL)
 	return json.Marshal(objectMap)
 }
@@ -14126,7 +14877,10 @@ func (h *HTTPServerLocation) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return h.DatasetLocation.unmarshalInternal(rawMsg)
+	if err := h.DatasetLocation.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // HTTPSource - A copy activity source for an HTTP file.
@@ -14140,7 +14894,8 @@ type HTTPSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type HTTPSource.
 func (h HTTPSource) MarshalJSON() ([]byte, error) {
-	objectMap := h.CopySource.marshalInternal("HttpSource")
+	objectMap := make(map[string]interface{})
+	h.CopySource.marshalInternal(objectMap, "HttpSource")
 	populate(objectMap, "httpRequestTimeout", h.HTTPRequestTimeout)
 	return json.Marshal(objectMap)
 }
@@ -14162,7 +14917,10 @@ func (h *HTTPSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return h.CopySource.unmarshalInternal(rawMsg)
+	if err := h.CopySource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // HdfsLinkedService - Hadoop Distributed File System (HDFS) linked service.
@@ -14174,7 +14932,8 @@ type HdfsLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type HdfsLinkedService.
 func (h HdfsLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := h.LinkedService.marshalInternal("Hdfs")
+	objectMap := make(map[string]interface{})
+	h.LinkedService.marshalInternal(objectMap, "Hdfs")
 	populate(objectMap, "typeProperties", h.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -14196,7 +14955,10 @@ func (h *HdfsLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return h.LinkedService.unmarshalInternal(rawMsg)
+	if err := h.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // HdfsLinkedServiceTypeProperties - HDFS linked service properties.
@@ -14268,7 +15030,8 @@ type HdfsLocation struct {
 
 // MarshalJSON implements the json.Marshaller interface for type HdfsLocation.
 func (h HdfsLocation) MarshalJSON() ([]byte, error) {
-	objectMap := h.DatasetLocation.marshalInternal("HdfsLocation")
+	objectMap := make(map[string]interface{})
+	h.DatasetLocation.marshalInternal(objectMap, "HdfsLocation")
 	return json.Marshal(objectMap)
 }
 
@@ -14299,7 +15062,8 @@ type HdfsReadSettings struct {
 
 // MarshalJSON implements the json.Marshaller interface for type HdfsReadSettings.
 func (h HdfsReadSettings) MarshalJSON() ([]byte, error) {
-	objectMap := h.StoreReadSettings.marshalInternal("HdfsReadSettings")
+	objectMap := make(map[string]interface{})
+	h.StoreReadSettings.marshalInternal(objectMap, "HdfsReadSettings")
 	populate(objectMap, "distcpSettings", h.DistcpSettings)
 	populate(objectMap, "enablePartitionDiscovery", h.EnablePartitionDiscovery)
 	populate(objectMap, "modifiedDatetimeEnd", h.ModifiedDatetimeEnd)
@@ -14345,7 +15109,10 @@ func (h *HdfsReadSettings) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return h.StoreReadSettings.unmarshalInternal(rawMsg)
+	if err := h.StoreReadSettings.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // HdfsSource - A copy activity HDFS source.
@@ -14360,7 +15127,8 @@ type HdfsSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type HdfsSource.
 func (h HdfsSource) MarshalJSON() ([]byte, error) {
-	objectMap := h.CopySource.marshalInternal("HdfsSource")
+	objectMap := make(map[string]interface{})
+	h.CopySource.marshalInternal(objectMap, "HdfsSource")
 	populate(objectMap, "distcpSettings", h.DistcpSettings)
 	populate(objectMap, "recursive", h.Recursive)
 	return json.Marshal(objectMap)
@@ -14386,7 +15154,10 @@ func (h *HdfsSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return h.CopySource.unmarshalInternal(rawMsg)
+	if err := h.CopySource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // HiveDatasetTypeProperties - Hive Properties
@@ -14410,7 +15181,8 @@ type HiveLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type HiveLinkedService.
 func (h HiveLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := h.LinkedService.marshalInternal("Hive")
+	objectMap := make(map[string]interface{})
+	h.LinkedService.marshalInternal(objectMap, "Hive")
 	populate(objectMap, "typeProperties", h.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -14432,7 +15204,10 @@ func (h *HiveLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return h.LinkedService.unmarshalInternal(rawMsg)
+	if err := h.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // HiveLinkedServiceTypeProperties - Hive Server linked service properties.
@@ -14592,7 +15367,8 @@ type HiveObjectDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type HiveObjectDataset.
 func (h HiveObjectDataset) MarshalJSON() ([]byte, error) {
-	objectMap := h.Dataset.marshalInternal("HiveObject")
+	objectMap := make(map[string]interface{})
+	h.Dataset.marshalInternal(objectMap, "HiveObject")
 	populate(objectMap, "typeProperties", h.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -14614,7 +15390,10 @@ func (h *HiveObjectDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return h.Dataset.unmarshalInternal(rawMsg)
+	if err := h.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // HiveSource - A copy activity Hive Server source.
@@ -14626,7 +15405,8 @@ type HiveSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type HiveSource.
 func (h HiveSource) MarshalJSON() ([]byte, error) {
-	objectMap := h.TabularSource.marshalInternal("HiveSource")
+	objectMap := make(map[string]interface{})
+	h.TabularSource.marshalInternal(objectMap, "HiveSource")
 	populate(objectMap, "query", h.Query)
 	return json.Marshal(objectMap)
 }
@@ -14648,7 +15428,10 @@ func (h *HiveSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return h.TabularSource.unmarshalInternal(rawMsg)
+	if err := h.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // HubspotLinkedService - Hubspot Service linked service.
@@ -14660,7 +15443,8 @@ type HubspotLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type HubspotLinkedService.
 func (h HubspotLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := h.LinkedService.marshalInternal("Hubspot")
+	objectMap := make(map[string]interface{})
+	h.LinkedService.marshalInternal(objectMap, "Hubspot")
 	populate(objectMap, "typeProperties", h.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -14682,7 +15466,10 @@ func (h *HubspotLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return h.LinkedService.unmarshalInternal(rawMsg)
+	if err := h.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // HubspotLinkedServiceTypeProperties - Hubspot Service linked service properties.
@@ -14778,7 +15565,8 @@ type HubspotObjectDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type HubspotObjectDataset.
 func (h HubspotObjectDataset) MarshalJSON() ([]byte, error) {
-	objectMap := h.Dataset.marshalInternal("HubspotObject")
+	objectMap := make(map[string]interface{})
+	h.Dataset.marshalInternal(objectMap, "HubspotObject")
 	populate(objectMap, "typeProperties", h.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -14800,7 +15588,10 @@ func (h *HubspotObjectDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return h.Dataset.unmarshalInternal(rawMsg)
+	if err := h.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // HubspotSource - A copy activity Hubspot Service source.
@@ -14812,7 +15603,8 @@ type HubspotSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type HubspotSource.
 func (h HubspotSource) MarshalJSON() ([]byte, error) {
-	objectMap := h.TabularSource.marshalInternal("HubspotSource")
+	objectMap := make(map[string]interface{})
+	h.TabularSource.marshalInternal(objectMap, "HubspotSource")
 	populate(objectMap, "query", h.Query)
 	return json.Marshal(objectMap)
 }
@@ -14834,7 +15626,10 @@ func (h *HubspotSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return h.TabularSource.unmarshalInternal(rawMsg)
+	if err := h.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // IfConditionActivity - This activity evaluates a boolean expression and executes either the activities under the ifTrueActivities property or the ifFalseActivities
@@ -14847,7 +15642,8 @@ type IfConditionActivity struct {
 
 // MarshalJSON implements the json.Marshaller interface for type IfConditionActivity.
 func (i IfConditionActivity) MarshalJSON() ([]byte, error) {
-	objectMap := i.ControlActivity.marshalInternal("IfCondition")
+	objectMap := make(map[string]interface{})
+	i.ControlActivity.marshalInternal(objectMap, "IfCondition")
 	populate(objectMap, "typeProperties", i.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -14869,7 +15665,10 @@ func (i *IfConditionActivity) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return i.ControlActivity.unmarshalInternal(rawMsg)
+	if err := i.ControlActivity.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // IfConditionActivityTypeProperties - IfCondition activity properties.
@@ -14943,7 +15742,8 @@ type ImpalaLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type ImpalaLinkedService.
 func (i ImpalaLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := i.LinkedService.marshalInternal("Impala")
+	objectMap := make(map[string]interface{})
+	i.LinkedService.marshalInternal(objectMap, "Impala")
 	populate(objectMap, "typeProperties", i.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -14965,7 +15765,10 @@ func (i *ImpalaLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return i.LinkedService.unmarshalInternal(rawMsg)
+	if err := i.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // ImpalaLinkedServiceTypeProperties - Impala server linked service properties.
@@ -15083,7 +15886,8 @@ type ImpalaObjectDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type ImpalaObjectDataset.
 func (i ImpalaObjectDataset) MarshalJSON() ([]byte, error) {
-	objectMap := i.Dataset.marshalInternal("ImpalaObject")
+	objectMap := make(map[string]interface{})
+	i.Dataset.marshalInternal(objectMap, "ImpalaObject")
 	populate(objectMap, "typeProperties", i.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -15105,7 +15909,10 @@ func (i *ImpalaObjectDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return i.Dataset.unmarshalInternal(rawMsg)
+	if err := i.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // ImpalaSource - A copy activity Impala server source.
@@ -15117,7 +15924,8 @@ type ImpalaSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type ImpalaSource.
 func (i ImpalaSource) MarshalJSON() ([]byte, error) {
-	objectMap := i.TabularSource.marshalInternal("ImpalaSource")
+	objectMap := make(map[string]interface{})
+	i.TabularSource.marshalInternal(objectMap, "ImpalaSource")
 	populate(objectMap, "query", i.Query)
 	return json.Marshal(objectMap)
 }
@@ -15139,7 +15947,10 @@ func (i *ImpalaSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return i.TabularSource.unmarshalInternal(rawMsg)
+	if err := i.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // InformixLinkedService - Informix linked service.
@@ -15151,7 +15962,8 @@ type InformixLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type InformixLinkedService.
 func (i InformixLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := i.LinkedService.marshalInternal("Informix")
+	objectMap := make(map[string]interface{})
+	i.LinkedService.marshalInternal(objectMap, "Informix")
 	populate(objectMap, "typeProperties", i.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -15173,7 +15985,10 @@ func (i *InformixLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return i.LinkedService.unmarshalInternal(rawMsg)
+	if err := i.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // InformixLinkedServiceTypeProperties - Informix linked service properties.
@@ -15255,7 +16070,8 @@ type InformixSink struct {
 
 // MarshalJSON implements the json.Marshaller interface for type InformixSink.
 func (i InformixSink) MarshalJSON() ([]byte, error) {
-	objectMap := i.CopySink.marshalInternal("InformixSink")
+	objectMap := make(map[string]interface{})
+	i.CopySink.marshalInternal(objectMap, "InformixSink")
 	populate(objectMap, "preCopyScript", i.PreCopyScript)
 	return json.Marshal(objectMap)
 }
@@ -15277,7 +16093,10 @@ func (i *InformixSink) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return i.CopySink.unmarshalInternal(rawMsg)
+	if err := i.CopySink.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // InformixSource - A copy activity source for Informix.
@@ -15289,7 +16108,8 @@ type InformixSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type InformixSource.
 func (i InformixSource) MarshalJSON() ([]byte, error) {
-	objectMap := i.TabularSource.marshalInternal("InformixSource")
+	objectMap := make(map[string]interface{})
+	i.TabularSource.marshalInternal(objectMap, "InformixSource")
 	populate(objectMap, "query", i.Query)
 	return json.Marshal(objectMap)
 }
@@ -15311,7 +16131,10 @@ func (i *InformixSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return i.TabularSource.unmarshalInternal(rawMsg)
+	if err := i.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // InformixTableDataset - The Informix table dataset.
@@ -15323,7 +16146,8 @@ type InformixTableDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type InformixTableDataset.
 func (i InformixTableDataset) MarshalJSON() ([]byte, error) {
-	objectMap := i.Dataset.marshalInternal("InformixTable")
+	objectMap := make(map[string]interface{})
+	i.Dataset.marshalInternal(objectMap, "InformixTable")
 	populate(objectMap, "typeProperties", i.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -15345,7 +16169,10 @@ func (i *InformixTableDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return i.Dataset.unmarshalInternal(rawMsg)
+	if err := i.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // InformixTableDatasetTypeProperties - Informix table dataset properties.
@@ -15458,7 +16285,8 @@ type IntegrationRuntimeResource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type IntegrationRuntimeResource.
 func (i IntegrationRuntimeResource) MarshalJSON() ([]byte, error) {
-	objectMap := i.SubResource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	i.SubResource.marshalInternal(objectMap)
 	populate(objectMap, "properties", i.Properties)
 	return json.Marshal(objectMap)
 }
@@ -15480,7 +16308,10 @@ func (i *IntegrationRuntimeResource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return i.SubResource.unmarshalInternal(rawMsg)
+	if err := i.SubResource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // IntegrationRuntimesGetOptions contains the optional parameters for the IntegrationRuntimes.Get method.
@@ -15502,7 +16333,8 @@ type JSONDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type JSONDataset.
 func (j JSONDataset) MarshalJSON() ([]byte, error) {
-	objectMap := j.Dataset.marshalInternal("Json")
+	objectMap := make(map[string]interface{})
+	j.Dataset.marshalInternal(objectMap, "Json")
 	populate(objectMap, "typeProperties", j.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -15524,7 +16356,10 @@ func (j *JSONDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return j.Dataset.unmarshalInternal(rawMsg)
+	if err := j.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // JSONDatasetTypeProperties - Json dataset properties.
@@ -15603,7 +16438,8 @@ type JSONFormat struct {
 
 // MarshalJSON implements the json.Marshaller interface for type JSONFormat.
 func (j JSONFormat) MarshalJSON() ([]byte, error) {
-	objectMap := j.DatasetStorageFormat.marshalInternal("JsonFormat")
+	objectMap := make(map[string]interface{})
+	j.DatasetStorageFormat.marshalInternal(objectMap, "JsonFormat")
 	populate(objectMap, "encodingName", j.EncodingName)
 	populate(objectMap, "filePattern", j.FilePattern)
 	populate(objectMap, "jsonNodeReference", j.JSONNodeReference)
@@ -15641,7 +16477,10 @@ func (j *JSONFormat) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return j.DatasetStorageFormat.unmarshalInternal(rawMsg)
+	if err := j.DatasetStorageFormat.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // JSONSink - A copy activity Json sink.
@@ -15656,7 +16495,8 @@ type JSONSink struct {
 
 // MarshalJSON implements the json.Marshaller interface for type JSONSink.
 func (j JSONSink) MarshalJSON() ([]byte, error) {
-	objectMap := j.CopySink.marshalInternal("JsonSink")
+	objectMap := make(map[string]interface{})
+	j.CopySink.marshalInternal(objectMap, "JsonSink")
 	populate(objectMap, "formatSettings", j.FormatSettings)
 	populate(objectMap, "storeSettings", j.StoreSettings)
 	return json.Marshal(objectMap)
@@ -15682,7 +16522,10 @@ func (j *JSONSink) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return j.CopySink.unmarshalInternal(rawMsg)
+	if err := j.CopySink.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // JSONSource - A copy activity Json source.
@@ -15694,7 +16537,8 @@ type JSONSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type JSONSource.
 func (j JSONSource) MarshalJSON() ([]byte, error) {
-	objectMap := j.CopySource.marshalInternal("JsonSource")
+	objectMap := make(map[string]interface{})
+	j.CopySource.marshalInternal(objectMap, "JsonSource")
 	populate(objectMap, "storeSettings", j.StoreSettings)
 	return json.Marshal(objectMap)
 }
@@ -15716,7 +16560,10 @@ func (j *JSONSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return j.CopySource.unmarshalInternal(rawMsg)
+	if err := j.CopySource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // JSONWriteSettings - Json write settings.
@@ -15728,7 +16575,8 @@ type JSONWriteSettings struct {
 
 // MarshalJSON implements the json.Marshaller interface for type JSONWriteSettings.
 func (j JSONWriteSettings) MarshalJSON() ([]byte, error) {
-	objectMap := j.FormatWriteSettings.marshalInternal("JsonWriteSettings")
+	objectMap := make(map[string]interface{})
+	j.FormatWriteSettings.marshalInternal(objectMap, "JsonWriteSettings")
 	populate(objectMap, "filePattern", j.FilePattern)
 	return json.Marshal(objectMap)
 }
@@ -15750,7 +16598,10 @@ func (j *JSONWriteSettings) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return j.FormatWriteSettings.unmarshalInternal(rawMsg)
+	if err := j.FormatWriteSettings.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // JiraLinkedService - Jira Service linked service.
@@ -15762,7 +16613,8 @@ type JiraLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type JiraLinkedService.
 func (j JiraLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := j.LinkedService.marshalInternal("Jira")
+	objectMap := make(map[string]interface{})
+	j.LinkedService.marshalInternal(objectMap, "Jira")
 	populate(objectMap, "typeProperties", j.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -15784,7 +16636,10 @@ func (j *JiraLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return j.LinkedService.unmarshalInternal(rawMsg)
+	if err := j.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // JiraLinkedServiceTypeProperties - Jira Service linked service properties.
@@ -15881,7 +16736,8 @@ type JiraObjectDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type JiraObjectDataset.
 func (j JiraObjectDataset) MarshalJSON() ([]byte, error) {
-	objectMap := j.Dataset.marshalInternal("JiraObject")
+	objectMap := make(map[string]interface{})
+	j.Dataset.marshalInternal(objectMap, "JiraObject")
 	populate(objectMap, "typeProperties", j.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -15903,7 +16759,10 @@ func (j *JiraObjectDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return j.Dataset.unmarshalInternal(rawMsg)
+	if err := j.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // JiraSource - A copy activity Jira Service source.
@@ -15915,7 +16774,8 @@ type JiraSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type JiraSource.
 func (j JiraSource) MarshalJSON() ([]byte, error) {
-	objectMap := j.TabularSource.marshalInternal("JiraSource")
+	objectMap := make(map[string]interface{})
+	j.TabularSource.marshalInternal(objectMap, "JiraSource")
 	populate(objectMap, "query", j.Query)
 	return json.Marshal(objectMap)
 }
@@ -15937,7 +16797,10 @@ func (j *JiraSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return j.TabularSource.unmarshalInternal(rawMsg)
+	if err := j.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // LibraryAppendOptions contains the optional parameters for the Library.Append method.
@@ -16129,7 +16992,8 @@ type LibraryResource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type LibraryResource.
 func (l LibraryResource) MarshalJSON() ([]byte, error) {
-	objectMap := l.SubResource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	l.SubResource.marshalInternal(objectMap)
 	populate(objectMap, "properties", l.Properties)
 	return json.Marshal(objectMap)
 }
@@ -16151,7 +17015,10 @@ func (l *LibraryResource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return l.SubResource.unmarshalInternal(rawMsg)
+	if err := l.SubResource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // LibraryResourceInfo - Library resource info
@@ -16269,8 +17136,7 @@ func (l *LinkedService) UnmarshalJSON(data []byte) error {
 	return l.unmarshalInternal(rawMsg)
 }
 
-func (l LinkedService) marshalInternal(discValue string) map[string]interface{} {
-	objectMap := make(map[string]interface{})
+func (l LinkedService) marshalInternal(objectMap map[string]interface{}, discValue string) {
 	populate(objectMap, "annotations", l.Annotations)
 	populate(objectMap, "connectVia", l.ConnectVia)
 	populate(objectMap, "description", l.Description)
@@ -16282,7 +17148,6 @@ func (l LinkedService) marshalInternal(discValue string) map[string]interface{} 
 			objectMap[key] = val
 		}
 	}
-	return objectMap
 }
 
 func (l *LinkedService) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
@@ -16347,7 +17212,8 @@ type LinkedServiceDebugResource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type LinkedServiceDebugResource.
 func (l LinkedServiceDebugResource) MarshalJSON() ([]byte, error) {
-	objectMap := l.SubResourceDebugResource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	l.SubResourceDebugResource.marshalInternal(objectMap)
 	populate(objectMap, "properties", l.Properties)
 	return json.Marshal(objectMap)
 }
@@ -16369,7 +17235,10 @@ func (l *LinkedServiceDebugResource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return l.SubResourceDebugResource.unmarshalInternal(rawMsg)
+	if err := l.SubResourceDebugResource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // LinkedServiceGetLinkedServiceOptions contains the optional parameters for the LinkedService.GetLinkedService method.
@@ -16431,7 +17300,8 @@ type LinkedServiceResource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type LinkedServiceResource.
 func (l LinkedServiceResource) MarshalJSON() ([]byte, error) {
-	objectMap := l.SubResource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	l.SubResource.marshalInternal(objectMap)
 	populate(objectMap, "properties", l.Properties)
 	return json.Marshal(objectMap)
 }
@@ -16453,7 +17323,10 @@ func (l *LinkedServiceResource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return l.SubResource.unmarshalInternal(rawMsg)
+	if err := l.SubResource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // LogStorageSettings - Log storage settings.
@@ -16523,7 +17396,8 @@ type LookupActivity struct {
 
 // MarshalJSON implements the json.Marshaller interface for type LookupActivity.
 func (l LookupActivity) MarshalJSON() ([]byte, error) {
-	objectMap := l.ExecutionActivity.marshalInternal("Lookup")
+	objectMap := make(map[string]interface{})
+	l.ExecutionActivity.marshalInternal(objectMap, "Lookup")
 	populate(objectMap, "typeProperties", l.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -16545,7 +17419,10 @@ func (l *LookupActivity) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return l.ExecutionActivity.unmarshalInternal(rawMsg)
+	if err := l.ExecutionActivity.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // LookupActivityTypeProperties - Lookup activity properties.
@@ -16604,7 +17481,8 @@ type MagentoLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type MagentoLinkedService.
 func (m MagentoLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := m.LinkedService.marshalInternal("Magento")
+	objectMap := make(map[string]interface{})
+	m.LinkedService.marshalInternal(objectMap, "Magento")
 	populate(objectMap, "typeProperties", m.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -16626,7 +17504,10 @@ func (m *MagentoLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return m.LinkedService.unmarshalInternal(rawMsg)
+	if err := m.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // MagentoLinkedServiceTypeProperties - Magento server linked service properties.
@@ -16708,7 +17589,8 @@ type MagentoObjectDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type MagentoObjectDataset.
 func (m MagentoObjectDataset) MarshalJSON() ([]byte, error) {
-	objectMap := m.Dataset.marshalInternal("MagentoObject")
+	objectMap := make(map[string]interface{})
+	m.Dataset.marshalInternal(objectMap, "MagentoObject")
 	populate(objectMap, "typeProperties", m.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -16730,7 +17612,10 @@ func (m *MagentoObjectDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return m.Dataset.unmarshalInternal(rawMsg)
+	if err := m.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // MagentoSource - A copy activity Magento server source.
@@ -16742,7 +17627,8 @@ type MagentoSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type MagentoSource.
 func (m MagentoSource) MarshalJSON() ([]byte, error) {
-	objectMap := m.TabularSource.marshalInternal("MagentoSource")
+	objectMap := make(map[string]interface{})
+	m.TabularSource.marshalInternal(objectMap, "MagentoSource")
 	populate(objectMap, "query", m.Query)
 	return json.Marshal(objectMap)
 }
@@ -16764,7 +17650,10 @@ func (m *MagentoSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return m.TabularSource.unmarshalInternal(rawMsg)
+	if err := m.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // ManagedIdentity - The workspace managed identity
@@ -16809,7 +17698,8 @@ type MappingDataFlow struct {
 
 // MarshalJSON implements the json.Marshaller interface for type MappingDataFlow.
 func (m MappingDataFlow) MarshalJSON() ([]byte, error) {
-	objectMap := m.DataFlow.marshalInternal("MappingDataFlow")
+	objectMap := make(map[string]interface{})
+	m.DataFlow.marshalInternal(objectMap, "MappingDataFlow")
 	populate(objectMap, "typeProperties", m.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -16831,7 +17721,10 @@ func (m *MappingDataFlow) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return m.DataFlow.unmarshalInternal(rawMsg)
+	if err := m.DataFlow.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // MappingDataFlowTypeProperties - Mapping data flow type properties.
@@ -16868,7 +17761,8 @@ type MariaDBLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type MariaDBLinkedService.
 func (m MariaDBLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := m.LinkedService.marshalInternal("MariaDB")
+	objectMap := make(map[string]interface{})
+	m.LinkedService.marshalInternal(objectMap, "MariaDB")
 	populate(objectMap, "typeProperties", m.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -16890,7 +17784,10 @@ func (m *MariaDBLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return m.LinkedService.unmarshalInternal(rawMsg)
+	if err := m.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // MariaDBLinkedServiceTypeProperties - MariaDB server linked service properties.
@@ -16915,7 +17812,8 @@ type MariaDBSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type MariaDBSource.
 func (m MariaDBSource) MarshalJSON() ([]byte, error) {
-	objectMap := m.TabularSource.marshalInternal("MariaDBSource")
+	objectMap := make(map[string]interface{})
+	m.TabularSource.marshalInternal(objectMap, "MariaDBSource")
 	populate(objectMap, "query", m.Query)
 	return json.Marshal(objectMap)
 }
@@ -16937,7 +17835,10 @@ func (m *MariaDBSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return m.TabularSource.unmarshalInternal(rawMsg)
+	if err := m.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // MariaDBTableDataset - MariaDB server dataset.
@@ -16949,7 +17850,8 @@ type MariaDBTableDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type MariaDBTableDataset.
 func (m MariaDBTableDataset) MarshalJSON() ([]byte, error) {
-	objectMap := m.Dataset.marshalInternal("MariaDBTable")
+	objectMap := make(map[string]interface{})
+	m.Dataset.marshalInternal(objectMap, "MariaDBTable")
 	populate(objectMap, "typeProperties", m.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -16971,7 +17873,10 @@ func (m *MariaDBTableDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return m.Dataset.unmarshalInternal(rawMsg)
+	if err := m.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // MarketoLinkedService - Marketo server linked service.
@@ -16983,7 +17888,8 @@ type MarketoLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type MarketoLinkedService.
 func (m MarketoLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := m.LinkedService.marshalInternal("Marketo")
+	objectMap := make(map[string]interface{})
+	m.LinkedService.marshalInternal(objectMap, "Marketo")
 	populate(objectMap, "typeProperties", m.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -17005,7 +17911,10 @@ func (m *MarketoLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return m.LinkedService.unmarshalInternal(rawMsg)
+	if err := m.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // MarketoLinkedServiceTypeProperties - Marketo server linked service properties.
@@ -17094,7 +18003,8 @@ type MarketoObjectDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type MarketoObjectDataset.
 func (m MarketoObjectDataset) MarshalJSON() ([]byte, error) {
-	objectMap := m.Dataset.marshalInternal("MarketoObject")
+	objectMap := make(map[string]interface{})
+	m.Dataset.marshalInternal(objectMap, "MarketoObject")
 	populate(objectMap, "typeProperties", m.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -17116,7 +18026,10 @@ func (m *MarketoObjectDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return m.Dataset.unmarshalInternal(rawMsg)
+	if err := m.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // MarketoSource - A copy activity Marketo server source.
@@ -17128,7 +18041,8 @@ type MarketoSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type MarketoSource.
 func (m MarketoSource) MarshalJSON() ([]byte, error) {
-	objectMap := m.TabularSource.marshalInternal("MarketoSource")
+	objectMap := make(map[string]interface{})
+	m.TabularSource.marshalInternal(objectMap, "MarketoSource")
 	populate(objectMap, "query", m.Query)
 	return json.Marshal(objectMap)
 }
@@ -17150,7 +18064,10 @@ func (m *MarketoSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return m.TabularSource.unmarshalInternal(rawMsg)
+	if err := m.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // MicrosoftAccessLinkedService - Microsoft Access linked service.
@@ -17162,7 +18079,8 @@ type MicrosoftAccessLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type MicrosoftAccessLinkedService.
 func (m MicrosoftAccessLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := m.LinkedService.marshalInternal("MicrosoftAccess")
+	objectMap := make(map[string]interface{})
+	m.LinkedService.marshalInternal(objectMap, "MicrosoftAccess")
 	populate(objectMap, "typeProperties", m.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -17184,7 +18102,10 @@ func (m *MicrosoftAccessLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return m.LinkedService.unmarshalInternal(rawMsg)
+	if err := m.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // MicrosoftAccessLinkedServiceTypeProperties - Microsoft Access linked service properties.
@@ -17266,7 +18187,8 @@ type MicrosoftAccessSink struct {
 
 // MarshalJSON implements the json.Marshaller interface for type MicrosoftAccessSink.
 func (m MicrosoftAccessSink) MarshalJSON() ([]byte, error) {
-	objectMap := m.CopySink.marshalInternal("MicrosoftAccessSink")
+	objectMap := make(map[string]interface{})
+	m.CopySink.marshalInternal(objectMap, "MicrosoftAccessSink")
 	populate(objectMap, "preCopyScript", m.PreCopyScript)
 	return json.Marshal(objectMap)
 }
@@ -17288,7 +18210,10 @@ func (m *MicrosoftAccessSink) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return m.CopySink.unmarshalInternal(rawMsg)
+	if err := m.CopySink.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // MicrosoftAccessSource - A copy activity source for Microsoft Access.
@@ -17300,7 +18225,8 @@ type MicrosoftAccessSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type MicrosoftAccessSource.
 func (m MicrosoftAccessSource) MarshalJSON() ([]byte, error) {
-	objectMap := m.CopySource.marshalInternal("MicrosoftAccessSource")
+	objectMap := make(map[string]interface{})
+	m.CopySource.marshalInternal(objectMap, "MicrosoftAccessSource")
 	populate(objectMap, "query", m.Query)
 	return json.Marshal(objectMap)
 }
@@ -17322,7 +18248,10 @@ func (m *MicrosoftAccessSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return m.CopySource.unmarshalInternal(rawMsg)
+	if err := m.CopySource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // MicrosoftAccessTableDataset - The Microsoft Access table dataset.
@@ -17334,7 +18263,8 @@ type MicrosoftAccessTableDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type MicrosoftAccessTableDataset.
 func (m MicrosoftAccessTableDataset) MarshalJSON() ([]byte, error) {
-	objectMap := m.Dataset.marshalInternal("MicrosoftAccessTable")
+	objectMap := make(map[string]interface{})
+	m.Dataset.marshalInternal(objectMap, "MicrosoftAccessTable")
 	populate(objectMap, "typeProperties", m.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -17356,7 +18286,10 @@ func (m *MicrosoftAccessTableDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return m.Dataset.unmarshalInternal(rawMsg)
+	if err := m.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // MicrosoftAccessTableDatasetTypeProperties - Microsoft Access table dataset properties.
@@ -17374,7 +18307,8 @@ type MongoDbCollectionDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type MongoDbCollectionDataset.
 func (m MongoDbCollectionDataset) MarshalJSON() ([]byte, error) {
-	objectMap := m.Dataset.marshalInternal("MongoDbCollection")
+	objectMap := make(map[string]interface{})
+	m.Dataset.marshalInternal(objectMap, "MongoDbCollection")
 	populate(objectMap, "typeProperties", m.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -17396,7 +18330,10 @@ func (m *MongoDbCollectionDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return m.Dataset.unmarshalInternal(rawMsg)
+	if err := m.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // MongoDbCollectionDatasetTypeProperties - MongoDB database dataset properties.
@@ -17491,7 +18428,8 @@ type MongoDbLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type MongoDbLinkedService.
 func (m MongoDbLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := m.LinkedService.marshalInternal("MongoDb")
+	objectMap := make(map[string]interface{})
+	m.LinkedService.marshalInternal(objectMap, "MongoDb")
 	populate(objectMap, "typeProperties", m.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -17513,7 +18451,10 @@ func (m *MongoDbLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return m.LinkedService.unmarshalInternal(rawMsg)
+	if err := m.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // MongoDbLinkedServiceTypeProperties - MongoDB linked service properties.
@@ -17623,7 +18564,8 @@ type MongoDbSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type MongoDbSource.
 func (m MongoDbSource) MarshalJSON() ([]byte, error) {
-	objectMap := m.CopySource.marshalInternal("MongoDbSource")
+	objectMap := make(map[string]interface{})
+	m.CopySource.marshalInternal(objectMap, "MongoDbSource")
 	populate(objectMap, "query", m.Query)
 	return json.Marshal(objectMap)
 }
@@ -17645,7 +18587,10 @@ func (m *MongoDbSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return m.CopySource.unmarshalInternal(rawMsg)
+	if err := m.CopySource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // MongoDbV2CollectionDataset - The MongoDB database dataset.
@@ -17657,7 +18602,8 @@ type MongoDbV2CollectionDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type MongoDbV2CollectionDataset.
 func (m MongoDbV2CollectionDataset) MarshalJSON() ([]byte, error) {
-	objectMap := m.Dataset.marshalInternal("MongoDbV2Collection")
+	objectMap := make(map[string]interface{})
+	m.Dataset.marshalInternal(objectMap, "MongoDbV2Collection")
 	populate(objectMap, "typeProperties", m.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -17679,7 +18625,10 @@ func (m *MongoDbV2CollectionDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return m.Dataset.unmarshalInternal(rawMsg)
+	if err := m.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // MongoDbV2CollectionDatasetTypeProperties - MongoDB database dataset properties.
@@ -17697,7 +18646,8 @@ type MongoDbV2LinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type MongoDbV2LinkedService.
 func (m MongoDbV2LinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := m.LinkedService.marshalInternal("MongoDbV2")
+	objectMap := make(map[string]interface{})
+	m.LinkedService.marshalInternal(objectMap, "MongoDbV2")
 	populate(objectMap, "typeProperties", m.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -17719,7 +18669,10 @@ func (m *MongoDbV2LinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return m.LinkedService.unmarshalInternal(rawMsg)
+	if err := m.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // MongoDbV2LinkedServiceTypeProperties - MongoDB linked service properties.
@@ -17752,7 +18705,8 @@ type MongoDbV2Source struct {
 
 // MarshalJSON implements the json.Marshaller interface for type MongoDbV2Source.
 func (m MongoDbV2Source) MarshalJSON() ([]byte, error) {
-	objectMap := m.CopySource.marshalInternal("MongoDbV2Source")
+	objectMap := make(map[string]interface{})
+	m.CopySource.marshalInternal(objectMap, "MongoDbV2Source")
 	populate(objectMap, "batchSize", m.BatchSize)
 	populate(objectMap, "cursorMethods", m.CursorMethods)
 	populate(objectMap, "filter", m.Filter)
@@ -17786,7 +18740,10 @@ func (m *MongoDbV2Source) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return m.CopySource.unmarshalInternal(rawMsg)
+	if err := m.CopySource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // MultiplePipelineTriggerClassification provides polymorphic access to related types.
@@ -17811,7 +18768,8 @@ func (m *MultiplePipelineTrigger) GetMultiplePipelineTrigger() *MultiplePipeline
 
 // MarshalJSON implements the json.Marshaller interface for type MultiplePipelineTrigger.
 func (m MultiplePipelineTrigger) MarshalJSON() ([]byte, error) {
-	objectMap := m.marshalInternal("MultiplePipelineTrigger")
+	objectMap := make(map[string]interface{})
+	m.marshalInternal(objectMap, "MultiplePipelineTrigger")
 	return json.Marshal(objectMap)
 }
 
@@ -17824,10 +18782,9 @@ func (m *MultiplePipelineTrigger) UnmarshalJSON(data []byte) error {
 	return m.unmarshalInternal(rawMsg)
 }
 
-func (m MultiplePipelineTrigger) marshalInternal(discValue string) map[string]interface{} {
-	objectMap := m.Trigger.marshalInternal(discValue)
+func (m MultiplePipelineTrigger) marshalInternal(objectMap map[string]interface{}, discValue string) {
+	m.Trigger.marshalInternal(objectMap, discValue)
 	populate(objectMap, "pipelines", m.Pipelines)
-	return objectMap
 }
 
 func (m *MultiplePipelineTrigger) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
@@ -17842,7 +18799,10 @@ func (m *MultiplePipelineTrigger) unmarshalInternal(rawMsg map[string]json.RawMe
 			return err
 		}
 	}
-	return m.Trigger.unmarshalInternal(rawMsg)
+	if err := m.Trigger.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // MySQLLinkedService - Linked service for MySQL data source.
@@ -17854,7 +18814,8 @@ type MySQLLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type MySQLLinkedService.
 func (m MySQLLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := m.LinkedService.marshalInternal("MySql")
+	objectMap := make(map[string]interface{})
+	m.LinkedService.marshalInternal(objectMap, "MySql")
 	populate(objectMap, "typeProperties", m.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -17876,7 +18837,10 @@ func (m *MySQLLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return m.LinkedService.unmarshalInternal(rawMsg)
+	if err := m.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // MySQLLinkedServiceTypeProperties - MySQL linked service properties.
@@ -17901,7 +18865,8 @@ type MySQLSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type MySQLSource.
 func (m MySQLSource) MarshalJSON() ([]byte, error) {
-	objectMap := m.TabularSource.marshalInternal("MySqlSource")
+	objectMap := make(map[string]interface{})
+	m.TabularSource.marshalInternal(objectMap, "MySqlSource")
 	populate(objectMap, "query", m.Query)
 	return json.Marshal(objectMap)
 }
@@ -17923,7 +18888,10 @@ func (m *MySQLSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return m.TabularSource.unmarshalInternal(rawMsg)
+	if err := m.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // MySQLTableDataset - The MySQL table dataset.
@@ -17935,7 +18903,8 @@ type MySQLTableDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type MySQLTableDataset.
 func (m MySQLTableDataset) MarshalJSON() ([]byte, error) {
-	objectMap := m.Dataset.marshalInternal("MySqlTable")
+	objectMap := make(map[string]interface{})
+	m.Dataset.marshalInternal(objectMap, "MySqlTable")
 	populate(objectMap, "typeProperties", m.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -17957,7 +18926,10 @@ func (m *MySQLTableDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return m.Dataset.unmarshalInternal(rawMsg)
+	if err := m.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // MySQLTableDatasetTypeProperties - MySql table dataset properties.
@@ -17975,7 +18947,8 @@ type NetezzaLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type NetezzaLinkedService.
 func (n NetezzaLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := n.LinkedService.marshalInternal("Netezza")
+	objectMap := make(map[string]interface{})
+	n.LinkedService.marshalInternal(objectMap, "Netezza")
 	populate(objectMap, "typeProperties", n.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -17997,7 +18970,10 @@ func (n *NetezzaLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return n.LinkedService.unmarshalInternal(rawMsg)
+	if err := n.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // NetezzaLinkedServiceTypeProperties - Netezza linked service properties.
@@ -18042,7 +19018,8 @@ type NetezzaSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type NetezzaSource.
 func (n NetezzaSource) MarshalJSON() ([]byte, error) {
-	objectMap := n.TabularSource.marshalInternal("NetezzaSource")
+	objectMap := make(map[string]interface{})
+	n.TabularSource.marshalInternal(objectMap, "NetezzaSource")
 	populate(objectMap, "partitionOption", n.PartitionOption)
 	populate(objectMap, "partitionSettings", n.PartitionSettings)
 	populate(objectMap, "query", n.Query)
@@ -18072,7 +19049,10 @@ func (n *NetezzaSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return n.TabularSource.unmarshalInternal(rawMsg)
+	if err := n.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // NetezzaTableDataset - Netezza dataset.
@@ -18084,7 +19064,8 @@ type NetezzaTableDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type NetezzaTableDataset.
 func (n NetezzaTableDataset) MarshalJSON() ([]byte, error) {
-	objectMap := n.Dataset.marshalInternal("NetezzaTable")
+	objectMap := make(map[string]interface{})
+	n.Dataset.marshalInternal(objectMap, "NetezzaTable")
 	populate(objectMap, "typeProperties", n.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -18106,7 +19087,10 @@ func (n *NetezzaTableDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return n.Dataset.unmarshalInternal(rawMsg)
+	if err := n.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // NetezzaTableDatasetTypeProperties - Netezza dataset properties.
@@ -18583,7 +19567,8 @@ type ODataLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type ODataLinkedService.
 func (o ODataLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := o.LinkedService.marshalInternal("OData")
+	objectMap := make(map[string]interface{})
+	o.LinkedService.marshalInternal(objectMap, "OData")
 	populate(objectMap, "typeProperties", o.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -18605,7 +19590,10 @@ func (o *ODataLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return o.LinkedService.unmarshalInternal(rawMsg)
+	if err := o.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // ODataLinkedServiceTypeProperties - OData linked service properties.
@@ -18729,7 +19717,8 @@ type ODataResourceDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type ODataResourceDataset.
 func (o ODataResourceDataset) MarshalJSON() ([]byte, error) {
-	objectMap := o.Dataset.marshalInternal("ODataResource")
+	objectMap := make(map[string]interface{})
+	o.Dataset.marshalInternal(objectMap, "ODataResource")
 	populate(objectMap, "typeProperties", o.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -18751,7 +19740,10 @@ func (o *ODataResourceDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return o.Dataset.unmarshalInternal(rawMsg)
+	if err := o.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // ODataResourceDatasetTypeProperties - OData dataset properties.
@@ -18769,7 +19761,8 @@ type ODataSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type ODataSource.
 func (o ODataSource) MarshalJSON() ([]byte, error) {
-	objectMap := o.CopySource.marshalInternal("ODataSource")
+	objectMap := make(map[string]interface{})
+	o.CopySource.marshalInternal(objectMap, "ODataSource")
 	populate(objectMap, "query", o.Query)
 	return json.Marshal(objectMap)
 }
@@ -18791,7 +19784,10 @@ func (o *ODataSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return o.CopySource.unmarshalInternal(rawMsg)
+	if err := o.CopySource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // OdbcLinkedService - Open Database Connectivity (ODBC) linked service.
@@ -18803,7 +19799,8 @@ type OdbcLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type OdbcLinkedService.
 func (o OdbcLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := o.LinkedService.marshalInternal("Odbc")
+	objectMap := make(map[string]interface{})
+	o.LinkedService.marshalInternal(objectMap, "Odbc")
 	populate(objectMap, "typeProperties", o.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -18825,7 +19822,10 @@ func (o *OdbcLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return o.LinkedService.unmarshalInternal(rawMsg)
+	if err := o.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // OdbcLinkedServiceTypeProperties - ODBC linked service properties.
@@ -18907,7 +19907,8 @@ type OdbcSink struct {
 
 // MarshalJSON implements the json.Marshaller interface for type OdbcSink.
 func (o OdbcSink) MarshalJSON() ([]byte, error) {
-	objectMap := o.CopySink.marshalInternal("OdbcSink")
+	objectMap := make(map[string]interface{})
+	o.CopySink.marshalInternal(objectMap, "OdbcSink")
 	populate(objectMap, "preCopyScript", o.PreCopyScript)
 	return json.Marshal(objectMap)
 }
@@ -18929,7 +19930,10 @@ func (o *OdbcSink) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return o.CopySink.unmarshalInternal(rawMsg)
+	if err := o.CopySink.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // OdbcSource - A copy activity source for ODBC databases.
@@ -18941,7 +19945,8 @@ type OdbcSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type OdbcSource.
 func (o OdbcSource) MarshalJSON() ([]byte, error) {
-	objectMap := o.TabularSource.marshalInternal("OdbcSource")
+	objectMap := make(map[string]interface{})
+	o.TabularSource.marshalInternal(objectMap, "OdbcSource")
 	populate(objectMap, "query", o.Query)
 	return json.Marshal(objectMap)
 }
@@ -18963,7 +19968,10 @@ func (o *OdbcSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return o.TabularSource.unmarshalInternal(rawMsg)
+	if err := o.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // OdbcTableDataset - The ODBC table dataset.
@@ -18975,7 +19983,8 @@ type OdbcTableDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type OdbcTableDataset.
 func (o OdbcTableDataset) MarshalJSON() ([]byte, error) {
-	objectMap := o.Dataset.marshalInternal("OdbcTable")
+	objectMap := make(map[string]interface{})
+	o.Dataset.marshalInternal(objectMap, "OdbcTable")
 	populate(objectMap, "typeProperties", o.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -18997,7 +20006,10 @@ func (o *OdbcTableDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return o.Dataset.unmarshalInternal(rawMsg)
+	if err := o.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // OdbcTableDatasetTypeProperties - ODBC table dataset properties.
@@ -19015,7 +20027,8 @@ type Office365Dataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type Office365Dataset.
 func (o Office365Dataset) MarshalJSON() ([]byte, error) {
-	objectMap := o.Dataset.marshalInternal("Office365Table")
+	objectMap := make(map[string]interface{})
+	o.Dataset.marshalInternal(objectMap, "Office365Table")
 	populate(objectMap, "typeProperties", o.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -19037,7 +20050,10 @@ func (o *Office365Dataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return o.Dataset.unmarshalInternal(rawMsg)
+	if err := o.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // Office365DatasetTypeProperties - Office365 dataset properties.
@@ -19058,7 +20074,8 @@ type Office365LinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type Office365LinkedService.
 func (o Office365LinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := o.LinkedService.marshalInternal("Office365")
+	objectMap := make(map[string]interface{})
+	o.LinkedService.marshalInternal(objectMap, "Office365")
 	populate(objectMap, "typeProperties", o.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -19080,7 +20097,10 @@ func (o *Office365LinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return o.LinkedService.unmarshalInternal(rawMsg)
+	if err := o.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // Office365LinkedServiceTypeProperties - Office365 linked service properties.
@@ -19170,7 +20190,8 @@ type Office365Source struct {
 
 // MarshalJSON implements the json.Marshaller interface for type Office365Source.
 func (o Office365Source) MarshalJSON() ([]byte, error) {
-	objectMap := o.CopySource.marshalInternal("Office365Source")
+	objectMap := make(map[string]interface{})
+	o.CopySource.marshalInternal(objectMap, "Office365Source")
 	populate(objectMap, "allowedGroups", o.AllowedGroups)
 	populate(objectMap, "dateFilterColumn", o.DateFilterColumn)
 	populate(objectMap, "endTime", o.EndTime)
@@ -19212,7 +20233,10 @@ func (o *Office365Source) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return o.CopySource.unmarshalInternal(rawMsg)
+	if err := o.CopySource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // OperationResult - Operation status for the operation
@@ -19233,7 +20257,8 @@ type OracleLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type OracleLinkedService.
 func (o OracleLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := o.LinkedService.marshalInternal("Oracle")
+	objectMap := make(map[string]interface{})
+	o.LinkedService.marshalInternal(objectMap, "Oracle")
 	populate(objectMap, "typeProperties", o.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -19255,7 +20280,10 @@ func (o *OracleLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return o.LinkedService.unmarshalInternal(rawMsg)
+	if err := o.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // OracleLinkedServiceTypeProperties - Oracle database linked service properties.
@@ -19297,7 +20325,8 @@ type OracleServiceCloudLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type OracleServiceCloudLinkedService.
 func (o OracleServiceCloudLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := o.LinkedService.marshalInternal("OracleServiceCloud")
+	objectMap := make(map[string]interface{})
+	o.LinkedService.marshalInternal(objectMap, "OracleServiceCloud")
 	populate(objectMap, "typeProperties", o.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -19319,7 +20348,10 @@ func (o *OracleServiceCloudLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return o.LinkedService.unmarshalInternal(rawMsg)
+	if err := o.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // OracleServiceCloudLinkedServiceTypeProperties - Oracle Service Cloud linked service properties.
@@ -19410,7 +20442,8 @@ type OracleServiceCloudObjectDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type OracleServiceCloudObjectDataset.
 func (o OracleServiceCloudObjectDataset) MarshalJSON() ([]byte, error) {
-	objectMap := o.Dataset.marshalInternal("OracleServiceCloudObject")
+	objectMap := make(map[string]interface{})
+	o.Dataset.marshalInternal(objectMap, "OracleServiceCloudObject")
 	populate(objectMap, "typeProperties", o.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -19432,7 +20465,10 @@ func (o *OracleServiceCloudObjectDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return o.Dataset.unmarshalInternal(rawMsg)
+	if err := o.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // OracleServiceCloudSource - A copy activity Oracle Service Cloud source.
@@ -19444,7 +20480,8 @@ type OracleServiceCloudSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type OracleServiceCloudSource.
 func (o OracleServiceCloudSource) MarshalJSON() ([]byte, error) {
-	objectMap := o.TabularSource.marshalInternal("OracleServiceCloudSource")
+	objectMap := make(map[string]interface{})
+	o.TabularSource.marshalInternal(objectMap, "OracleServiceCloudSource")
 	populate(objectMap, "query", o.Query)
 	return json.Marshal(objectMap)
 }
@@ -19466,7 +20503,10 @@ func (o *OracleServiceCloudSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return o.TabularSource.unmarshalInternal(rawMsg)
+	if err := o.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // OracleSink - A copy activity Oracle sink.
@@ -19478,7 +20518,8 @@ type OracleSink struct {
 
 // MarshalJSON implements the json.Marshaller interface for type OracleSink.
 func (o OracleSink) MarshalJSON() ([]byte, error) {
-	objectMap := o.CopySink.marshalInternal("OracleSink")
+	objectMap := make(map[string]interface{})
+	o.CopySink.marshalInternal(objectMap, "OracleSink")
 	populate(objectMap, "preCopyScript", o.PreCopyScript)
 	return json.Marshal(objectMap)
 }
@@ -19500,7 +20541,10 @@ func (o *OracleSink) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return o.CopySink.unmarshalInternal(rawMsg)
+	if err := o.CopySink.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // OracleSource - A copy activity Oracle source.
@@ -19521,7 +20565,8 @@ type OracleSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type OracleSource.
 func (o OracleSource) MarshalJSON() ([]byte, error) {
-	objectMap := o.CopySource.marshalInternal("OracleSource")
+	objectMap := make(map[string]interface{})
+	o.CopySource.marshalInternal(objectMap, "OracleSource")
 	populate(objectMap, "oracleReaderQuery", o.OracleReaderQuery)
 	populate(objectMap, "partitionOption", o.PartitionOption)
 	populate(objectMap, "partitionSettings", o.PartitionSettings)
@@ -19555,7 +20600,10 @@ func (o *OracleSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return o.CopySource.unmarshalInternal(rawMsg)
+	if err := o.CopySource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // OracleTableDataset - The on-premises Oracle database dataset.
@@ -19567,7 +20615,8 @@ type OracleTableDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type OracleTableDataset.
 func (o OracleTableDataset) MarshalJSON() ([]byte, error) {
-	objectMap := o.Dataset.marshalInternal("OracleTable")
+	objectMap := make(map[string]interface{})
+	o.Dataset.marshalInternal(objectMap, "OracleTable")
 	populate(objectMap, "typeProperties", o.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -19589,7 +20638,10 @@ func (o *OracleTableDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return o.Dataset.unmarshalInternal(rawMsg)
+	if err := o.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // OracleTableDatasetTypeProperties - On-premises Oracle dataset properties.
@@ -19613,7 +20665,8 @@ type OrcDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type OrcDataset.
 func (o OrcDataset) MarshalJSON() ([]byte, error) {
-	objectMap := o.Dataset.marshalInternal("Orc")
+	objectMap := make(map[string]interface{})
+	o.Dataset.marshalInternal(objectMap, "Orc")
 	populate(objectMap, "typeProperties", o.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -19635,7 +20688,10 @@ func (o *OrcDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return o.Dataset.unmarshalInternal(rawMsg)
+	if err := o.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // OrcDatasetTypeProperties - ORC dataset properties.
@@ -19683,7 +20739,8 @@ type OrcFormat struct {
 
 // MarshalJSON implements the json.Marshaller interface for type OrcFormat.
 func (o OrcFormat) MarshalJSON() ([]byte, error) {
-	objectMap := o.DatasetStorageFormat.marshalInternal("OrcFormat")
+	objectMap := make(map[string]interface{})
+	o.DatasetStorageFormat.marshalInternal(objectMap, "OrcFormat")
 	return json.Marshal(objectMap)
 }
 
@@ -19696,7 +20753,8 @@ type OrcSink struct {
 
 // MarshalJSON implements the json.Marshaller interface for type OrcSink.
 func (o OrcSink) MarshalJSON() ([]byte, error) {
-	objectMap := o.CopySink.marshalInternal("OrcSink")
+	objectMap := make(map[string]interface{})
+	o.CopySink.marshalInternal(objectMap, "OrcSink")
 	populate(objectMap, "storeSettings", o.StoreSettings)
 	return json.Marshal(objectMap)
 }
@@ -19718,7 +20776,10 @@ func (o *OrcSink) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return o.CopySink.unmarshalInternal(rawMsg)
+	if err := o.CopySink.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // OrcSource - A copy activity ORC source.
@@ -19730,7 +20791,8 @@ type OrcSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type OrcSource.
 func (o OrcSource) MarshalJSON() ([]byte, error) {
-	objectMap := o.CopySource.marshalInternal("OrcSource")
+	objectMap := make(map[string]interface{})
+	o.CopySource.marshalInternal(objectMap, "OrcSource")
 	populate(objectMap, "storeSettings", o.StoreSettings)
 	return json.Marshal(objectMap)
 }
@@ -19752,7 +20814,10 @@ func (o *OrcSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return o.CopySource.unmarshalInternal(rawMsg)
+	if err := o.CopySource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // ParameterSpecification - Definition of a single parameter for an entity.
@@ -19773,7 +20838,8 @@ type ParquetDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type ParquetDataset.
 func (p ParquetDataset) MarshalJSON() ([]byte, error) {
-	objectMap := p.Dataset.marshalInternal("Parquet")
+	objectMap := make(map[string]interface{})
+	p.Dataset.marshalInternal(objectMap, "Parquet")
 	populate(objectMap, "typeProperties", p.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -19795,7 +20861,10 @@ func (p *ParquetDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return p.Dataset.unmarshalInternal(rawMsg)
+	if err := p.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // ParquetDatasetTypeProperties - Parquet dataset properties.
@@ -19843,7 +20912,8 @@ type ParquetFormat struct {
 
 // MarshalJSON implements the json.Marshaller interface for type ParquetFormat.
 func (p ParquetFormat) MarshalJSON() ([]byte, error) {
-	objectMap := p.DatasetStorageFormat.marshalInternal("ParquetFormat")
+	objectMap := make(map[string]interface{})
+	p.DatasetStorageFormat.marshalInternal(objectMap, "ParquetFormat")
 	return json.Marshal(objectMap)
 }
 
@@ -19856,7 +20926,8 @@ type ParquetSink struct {
 
 // MarshalJSON implements the json.Marshaller interface for type ParquetSink.
 func (p ParquetSink) MarshalJSON() ([]byte, error) {
-	objectMap := p.CopySink.marshalInternal("ParquetSink")
+	objectMap := make(map[string]interface{})
+	p.CopySink.marshalInternal(objectMap, "ParquetSink")
 	populate(objectMap, "storeSettings", p.StoreSettings)
 	return json.Marshal(objectMap)
 }
@@ -19878,7 +20949,10 @@ func (p *ParquetSink) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return p.CopySink.unmarshalInternal(rawMsg)
+	if err := p.CopySink.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // ParquetSource - A copy activity Parquet source.
@@ -19890,7 +20964,8 @@ type ParquetSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type ParquetSource.
 func (p ParquetSource) MarshalJSON() ([]byte, error) {
-	objectMap := p.CopySource.marshalInternal("ParquetSource")
+	objectMap := make(map[string]interface{})
+	p.CopySource.marshalInternal(objectMap, "ParquetSource")
 	populate(objectMap, "storeSettings", p.StoreSettings)
 	return json.Marshal(objectMap)
 }
@@ -19912,7 +20987,10 @@ func (p *ParquetSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return p.CopySource.unmarshalInternal(rawMsg)
+	if err := p.CopySource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // PaypalLinkedService - Paypal Service linked service.
@@ -19924,7 +21002,8 @@ type PaypalLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type PaypalLinkedService.
 func (p PaypalLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := p.LinkedService.marshalInternal("Paypal")
+	objectMap := make(map[string]interface{})
+	p.LinkedService.marshalInternal(objectMap, "Paypal")
 	populate(objectMap, "typeProperties", p.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -19946,7 +21025,10 @@ func (p *PaypalLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return p.LinkedService.unmarshalInternal(rawMsg)
+	if err := p.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // PaypalLinkedServiceTypeProperties - Paypal Service linked service properties.
@@ -20035,7 +21117,8 @@ type PaypalObjectDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type PaypalObjectDataset.
 func (p PaypalObjectDataset) MarshalJSON() ([]byte, error) {
-	objectMap := p.Dataset.marshalInternal("PaypalObject")
+	objectMap := make(map[string]interface{})
+	p.Dataset.marshalInternal(objectMap, "PaypalObject")
 	populate(objectMap, "typeProperties", p.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -20057,7 +21140,10 @@ func (p *PaypalObjectDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return p.Dataset.unmarshalInternal(rawMsg)
+	if err := p.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // PaypalSource - A copy activity Paypal Service source.
@@ -20069,7 +21155,8 @@ type PaypalSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type PaypalSource.
 func (p PaypalSource) MarshalJSON() ([]byte, error) {
-	objectMap := p.TabularSource.marshalInternal("PaypalSource")
+	objectMap := make(map[string]interface{})
+	p.TabularSource.marshalInternal(objectMap, "PaypalSource")
 	populate(objectMap, "query", p.Query)
 	return json.Marshal(objectMap)
 }
@@ -20091,7 +21178,10 @@ func (p *PaypalSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return p.TabularSource.unmarshalInternal(rawMsg)
+	if err := p.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // PhoenixDatasetTypeProperties - Phoenix Dataset Properties
@@ -20115,7 +21205,8 @@ type PhoenixLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type PhoenixLinkedService.
 func (p PhoenixLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := p.LinkedService.marshalInternal("Phoenix")
+	objectMap := make(map[string]interface{})
+	p.LinkedService.marshalInternal(objectMap, "Phoenix")
 	populate(objectMap, "typeProperties", p.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -20137,7 +21228,10 @@ func (p *PhoenixLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return p.LinkedService.unmarshalInternal(rawMsg)
+	if err := p.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // PhoenixLinkedServiceTypeProperties - Phoenix server linked service properties.
@@ -20262,7 +21356,8 @@ type PhoenixObjectDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type PhoenixObjectDataset.
 func (p PhoenixObjectDataset) MarshalJSON() ([]byte, error) {
-	objectMap := p.Dataset.marshalInternal("PhoenixObject")
+	objectMap := make(map[string]interface{})
+	p.Dataset.marshalInternal(objectMap, "PhoenixObject")
 	populate(objectMap, "typeProperties", p.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -20284,7 +21379,10 @@ func (p *PhoenixObjectDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return p.Dataset.unmarshalInternal(rawMsg)
+	if err := p.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // PhoenixSource - A copy activity Phoenix server source.
@@ -20296,7 +21394,8 @@ type PhoenixSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type PhoenixSource.
 func (p PhoenixSource) MarshalJSON() ([]byte, error) {
-	objectMap := p.TabularSource.marshalInternal("PhoenixSource")
+	objectMap := make(map[string]interface{})
+	p.TabularSource.marshalInternal(objectMap, "PhoenixSource")
 	populate(objectMap, "query", p.Query)
 	return json.Marshal(objectMap)
 }
@@ -20318,7 +21417,10 @@ func (p *PhoenixSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return p.TabularSource.unmarshalInternal(rawMsg)
+	if err := p.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // Pipeline - A workspace pipeline.
@@ -20490,7 +21592,8 @@ type PipelineResource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type PipelineResource.
 func (p PipelineResource) MarshalJSON() ([]byte, error) {
-	objectMap := p.SubResource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	p.SubResource.marshalInternal(objectMap)
 	populate(objectMap, "properties", p.Properties)
 	if p.AdditionalProperties != nil {
 		for key, val := range p.AdditionalProperties {
@@ -20806,7 +21909,8 @@ type PostgreSQLLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type PostgreSQLLinkedService.
 func (p PostgreSQLLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := p.LinkedService.marshalInternal("PostgreSql")
+	objectMap := make(map[string]interface{})
+	p.LinkedService.marshalInternal(objectMap, "PostgreSql")
 	populate(objectMap, "typeProperties", p.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -20828,7 +21932,10 @@ func (p *PostgreSQLLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return p.LinkedService.unmarshalInternal(rawMsg)
+	if err := p.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // PostgreSQLLinkedServiceTypeProperties - PostgreSQL linked service properties.
@@ -20853,7 +21960,8 @@ type PostgreSQLSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type PostgreSQLSource.
 func (p PostgreSQLSource) MarshalJSON() ([]byte, error) {
-	objectMap := p.TabularSource.marshalInternal("PostgreSqlSource")
+	objectMap := make(map[string]interface{})
+	p.TabularSource.marshalInternal(objectMap, "PostgreSqlSource")
 	populate(objectMap, "query", p.Query)
 	return json.Marshal(objectMap)
 }
@@ -20875,7 +21983,10 @@ func (p *PostgreSQLSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return p.TabularSource.unmarshalInternal(rawMsg)
+	if err := p.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // PostgreSQLTableDataset - The PostgreSQL table dataset.
@@ -20887,7 +21998,8 @@ type PostgreSQLTableDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type PostgreSQLTableDataset.
 func (p PostgreSQLTableDataset) MarshalJSON() ([]byte, error) {
-	objectMap := p.Dataset.marshalInternal("PostgreSqlTable")
+	objectMap := make(map[string]interface{})
+	p.Dataset.marshalInternal(objectMap, "PostgreSqlTable")
 	populate(objectMap, "typeProperties", p.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -20909,7 +22021,10 @@ func (p *PostgreSQLTableDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return p.Dataset.unmarshalInternal(rawMsg)
+	if err := p.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // PostgreSQLTableDatasetTypeProperties - PostgreSQL table dataset properties.
@@ -20945,7 +22060,8 @@ type PrestoLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type PrestoLinkedService.
 func (p PrestoLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := p.LinkedService.marshalInternal("Presto")
+	objectMap := make(map[string]interface{})
+	p.LinkedService.marshalInternal(objectMap, "Presto")
 	populate(objectMap, "typeProperties", p.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -20967,7 +22083,10 @@ func (p *PrestoLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return p.LinkedService.unmarshalInternal(rawMsg)
+	if err := p.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // PrestoLinkedServiceTypeProperties - Presto server linked service properties.
@@ -21107,7 +22226,8 @@ type PrestoObjectDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type PrestoObjectDataset.
 func (p PrestoObjectDataset) MarshalJSON() ([]byte, error) {
-	objectMap := p.Dataset.marshalInternal("PrestoObject")
+	objectMap := make(map[string]interface{})
+	p.Dataset.marshalInternal(objectMap, "PrestoObject")
 	populate(objectMap, "typeProperties", p.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -21129,7 +22249,10 @@ func (p *PrestoObjectDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return p.Dataset.unmarshalInternal(rawMsg)
+	if err := p.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // PrestoSource - A copy activity Presto server source.
@@ -21141,7 +22264,8 @@ type PrestoSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type PrestoSource.
 func (p PrestoSource) MarshalJSON() ([]byte, error) {
-	objectMap := p.TabularSource.marshalInternal("PrestoSource")
+	objectMap := make(map[string]interface{})
+	p.TabularSource.marshalInternal(objectMap, "PrestoSource")
 	populate(objectMap, "query", p.Query)
 	return json.Marshal(objectMap)
 }
@@ -21163,7 +22287,10 @@ func (p *PrestoSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return p.TabularSource.unmarshalInternal(rawMsg)
+	if err := p.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // PrivateEndpoint - Private endpoint details
@@ -21181,9 +22308,33 @@ type PrivateEndpointConnection struct {
 
 // MarshalJSON implements the json.Marshaller interface for type PrivateEndpointConnection.
 func (p PrivateEndpointConnection) MarshalJSON() ([]byte, error) {
-	objectMap := p.ProxyResource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	p.ProxyResource.marshalInternal(objectMap)
 	populate(objectMap, "properties", p.Properties)
 	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type PrivateEndpointConnection.
+func (p *PrivateEndpointConnection) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "properties":
+			err = unpopulate(val, &p.Properties)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	if err := p.ProxyResource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // PrivateEndpointConnectionProperties - Properties of a private endpoint connection.
@@ -21215,9 +22366,15 @@ type ProxyResource struct {
 	Resource
 }
 
-func (p ProxyResource) marshalInternal() map[string]interface{} {
-	objectMap := p.Resource.marshalInternal()
-	return objectMap
+func (p ProxyResource) marshalInternal(objectMap map[string]interface{}) {
+	p.Resource.marshalInternal(objectMap)
+}
+
+func (p *ProxyResource) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
+	if err := p.Resource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // PurviewConfiguration - Purview Configuration
@@ -21252,7 +22409,8 @@ type QuickBooksLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type QuickBooksLinkedService.
 func (q QuickBooksLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := q.LinkedService.marshalInternal("QuickBooks")
+	objectMap := make(map[string]interface{})
+	q.LinkedService.marshalInternal(objectMap, "QuickBooks")
 	populate(objectMap, "typeProperties", q.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -21274,7 +22432,10 @@ func (q *QuickBooksLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return q.LinkedService.unmarshalInternal(rawMsg)
+	if err := q.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // QuickBooksLinkedServiceTypeProperties - QuickBooks server linked service properties.
@@ -21369,7 +22530,8 @@ type QuickBooksObjectDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type QuickBooksObjectDataset.
 func (q QuickBooksObjectDataset) MarshalJSON() ([]byte, error) {
-	objectMap := q.Dataset.marshalInternal("QuickBooksObject")
+	objectMap := make(map[string]interface{})
+	q.Dataset.marshalInternal(objectMap, "QuickBooksObject")
 	populate(objectMap, "typeProperties", q.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -21391,7 +22553,10 @@ func (q *QuickBooksObjectDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return q.Dataset.unmarshalInternal(rawMsg)
+	if err := q.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // QuickBooksSource - A copy activity QuickBooks server source.
@@ -21403,7 +22568,8 @@ type QuickBooksSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type QuickBooksSource.
 func (q QuickBooksSource) MarshalJSON() ([]byte, error) {
-	objectMap := q.TabularSource.marshalInternal("QuickBooksSource")
+	objectMap := make(map[string]interface{})
+	q.TabularSource.marshalInternal(objectMap, "QuickBooksSource")
 	populate(objectMap, "query", q.Query)
 	return json.Marshal(objectMap)
 }
@@ -21425,7 +22591,10 @@ func (q *QuickBooksSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return q.TabularSource.unmarshalInternal(rawMsg)
+	if err := q.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // RecurrenceSchedule - The recurrence schedule.
@@ -21647,7 +22816,8 @@ type RelationalSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type RelationalSource.
 func (r RelationalSource) MarshalJSON() ([]byte, error) {
-	objectMap := r.CopySource.marshalInternal("RelationalSource")
+	objectMap := make(map[string]interface{})
+	r.CopySource.marshalInternal(objectMap, "RelationalSource")
 	populate(objectMap, "query", r.Query)
 	return json.Marshal(objectMap)
 }
@@ -21669,7 +22839,10 @@ func (r *RelationalSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return r.CopySource.unmarshalInternal(rawMsg)
+	if err := r.CopySource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // RelationalTableDataset - The relational table dataset.
@@ -21681,7 +22854,8 @@ type RelationalTableDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type RelationalTableDataset.
 func (r RelationalTableDataset) MarshalJSON() ([]byte, error) {
-	objectMap := r.Dataset.marshalInternal("RelationalTable")
+	objectMap := make(map[string]interface{})
+	r.Dataset.marshalInternal(objectMap, "RelationalTable")
 	populate(objectMap, "typeProperties", r.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -21703,7 +22877,10 @@ func (r *RelationalTableDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return r.Dataset.unmarshalInternal(rawMsg)
+	if err := r.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // RelationalTableDatasetTypeProperties - Relational table dataset properties.
@@ -21738,7 +22915,8 @@ type RerunTriggerResource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type RerunTriggerResource.
 func (r RerunTriggerResource) MarshalJSON() ([]byte, error) {
-	objectMap := r.SubResource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	r.SubResource.marshalInternal(objectMap)
 	populate(objectMap, "properties", r.Properties)
 	return json.Marshal(objectMap)
 }
@@ -21760,7 +22938,10 @@ func (r *RerunTriggerResource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return r.SubResource.unmarshalInternal(rawMsg)
+	if err := r.SubResource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // RerunTumblingWindowTrigger - Trigger that schedules pipeline reruns for all fixed time interval windows from a requested start time to requested end
@@ -21773,7 +22954,8 @@ type RerunTumblingWindowTrigger struct {
 
 // MarshalJSON implements the json.Marshaller interface for type RerunTumblingWindowTrigger.
 func (r RerunTumblingWindowTrigger) MarshalJSON() ([]byte, error) {
-	objectMap := r.Trigger.marshalInternal("RerunTumblingWindowTrigger")
+	objectMap := make(map[string]interface{})
+	r.Trigger.marshalInternal(objectMap, "RerunTumblingWindowTrigger")
 	populate(objectMap, "typeProperties", r.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -21795,7 +22977,10 @@ func (r *RerunTumblingWindowTrigger) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return r.Trigger.unmarshalInternal(rawMsg)
+	if err := r.Trigger.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // RerunTumblingWindowTriggerActionParameters - Rerun tumbling window trigger Parameters.
@@ -21921,7 +23106,8 @@ type Resource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type Resource.
 func (r Resource) MarshalJSON() ([]byte, error) {
-	objectMap := r.marshalInternal()
+	objectMap := make(map[string]interface{})
+	r.marshalInternal(objectMap)
 	return json.Marshal(objectMap)
 }
 
@@ -21934,12 +23120,10 @@ func (r *Resource) UnmarshalJSON(data []byte) error {
 	return r.unmarshalInternal(rawMsg)
 }
 
-func (r Resource) marshalInternal() map[string]interface{} {
-	objectMap := make(map[string]interface{})
+func (r Resource) marshalInternal(objectMap map[string]interface{}) {
 	populate(objectMap, "id", r.ID)
 	populate(objectMap, "name", r.Name)
 	populate(objectMap, "type", r.Type)
-	return objectMap
 }
 
 func (r *Resource) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
@@ -21972,7 +23156,8 @@ type ResponsysLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type ResponsysLinkedService.
 func (r ResponsysLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := r.LinkedService.marshalInternal("Responsys")
+	objectMap := make(map[string]interface{})
+	r.LinkedService.marshalInternal(objectMap, "Responsys")
 	populate(objectMap, "typeProperties", r.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -21994,7 +23179,10 @@ func (r *ResponsysLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return r.LinkedService.unmarshalInternal(rawMsg)
+	if err := r.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // ResponsysLinkedServiceTypeProperties - Responsys linked service properties.
@@ -22085,7 +23273,8 @@ type ResponsysObjectDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type ResponsysObjectDataset.
 func (r ResponsysObjectDataset) MarshalJSON() ([]byte, error) {
-	objectMap := r.Dataset.marshalInternal("ResponsysObject")
+	objectMap := make(map[string]interface{})
+	r.Dataset.marshalInternal(objectMap, "ResponsysObject")
 	populate(objectMap, "typeProperties", r.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -22107,7 +23296,10 @@ func (r *ResponsysObjectDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return r.Dataset.unmarshalInternal(rawMsg)
+	if err := r.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // ResponsysSource - A copy activity Responsys source.
@@ -22119,7 +23311,8 @@ type ResponsysSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type ResponsysSource.
 func (r ResponsysSource) MarshalJSON() ([]byte, error) {
-	objectMap := r.TabularSource.marshalInternal("ResponsysSource")
+	objectMap := make(map[string]interface{})
+	r.TabularSource.marshalInternal(objectMap, "ResponsysSource")
 	populate(objectMap, "query", r.Query)
 	return json.Marshal(objectMap)
 }
@@ -22141,7 +23334,10 @@ func (r *ResponsysSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return r.TabularSource.unmarshalInternal(rawMsg)
+	if err := r.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // RestResourceDataset - A Rest service dataset.
@@ -22153,7 +23349,8 @@ type RestResourceDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type RestResourceDataset.
 func (r RestResourceDataset) MarshalJSON() ([]byte, error) {
-	objectMap := r.Dataset.marshalInternal("RestResource")
+	objectMap := make(map[string]interface{})
+	r.Dataset.marshalInternal(objectMap, "RestResource")
 	populate(objectMap, "typeProperties", r.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -22175,7 +23372,10 @@ func (r *RestResourceDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return r.Dataset.unmarshalInternal(rawMsg)
+	if err := r.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // RestResourceDatasetTypeProperties - Properties specific to this dataset type.
@@ -22205,7 +23405,8 @@ type RestServiceLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type RestServiceLinkedService.
 func (r RestServiceLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := r.LinkedService.marshalInternal("RestService")
+	objectMap := make(map[string]interface{})
+	r.LinkedService.marshalInternal(objectMap, "RestService")
 	populate(objectMap, "typeProperties", r.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -22227,7 +23428,10 @@ func (r *RestServiceLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return r.LinkedService.unmarshalInternal(rawMsg)
+	if err := r.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // RestServiceLinkedServiceTypeProperties - Rest Service linked service properties.
@@ -22354,7 +23558,8 @@ type RestSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type RestSource.
 func (r RestSource) MarshalJSON() ([]byte, error) {
-	objectMap := r.CopySource.marshalInternal("RestSource")
+	objectMap := make(map[string]interface{})
+	r.CopySource.marshalInternal(objectMap, "RestSource")
 	populate(objectMap, "additionalHeaders", r.AdditionalHeaders)
 	populate(objectMap, "httpRequestTimeout", r.HTTPRequestTimeout)
 	populate(objectMap, "paginationRules", r.PaginationRules)
@@ -22396,7 +23601,10 @@ func (r *RestSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return r.CopySource.unmarshalInternal(rawMsg)
+	if err := r.CopySource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // RetryPolicy - Execution policy for an activity.
@@ -22601,7 +23809,8 @@ type SQLDWSink struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SQLDWSink.
 func (s SQLDWSink) MarshalJSON() ([]byte, error) {
-	objectMap := s.CopySink.marshalInternal("SqlDWSink")
+	objectMap := make(map[string]interface{})
+	s.CopySink.marshalInternal(objectMap, "SqlDWSink")
 	populate(objectMap, "allowCopyCommand", s.AllowCopyCommand)
 	populate(objectMap, "allowPolyBase", s.AllowPolyBase)
 	populate(objectMap, "copyCommandSettings", s.CopyCommandSettings)
@@ -22643,7 +23852,10 @@ func (s *SQLDWSink) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.CopySink.unmarshalInternal(rawMsg)
+	if err := s.CopySink.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SQLDWSource - A copy activity SQL Data Warehouse source.
@@ -22663,7 +23875,8 @@ type SQLDWSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SQLDWSource.
 func (s SQLDWSource) MarshalJSON() ([]byte, error) {
-	objectMap := s.TabularSource.marshalInternal("SqlDWSource")
+	objectMap := make(map[string]interface{})
+	s.TabularSource.marshalInternal(objectMap, "SqlDWSource")
 	populate(objectMap, "sqlReaderQuery", s.SQLReaderQuery)
 	populate(objectMap, "sqlReaderStoredProcedureName", s.SQLReaderStoredProcedureName)
 	populate(objectMap, "storedProcedureParameters", s.StoredProcedureParameters)
@@ -22693,7 +23906,10 @@ func (s *SQLDWSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.TabularSource.unmarshalInternal(rawMsg)
+	if err := s.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SQLMISink - A copy activity Azure SQL Managed Instance sink.
@@ -22720,7 +23936,8 @@ type SQLMISink struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SQLMISink.
 func (s SQLMISink) MarshalJSON() ([]byte, error) {
-	objectMap := s.CopySink.marshalInternal("SqlMISink")
+	objectMap := make(map[string]interface{})
+	s.CopySink.marshalInternal(objectMap, "SqlMISink")
 	populate(objectMap, "preCopyScript", s.PreCopyScript)
 	populate(objectMap, "sqlWriterStoredProcedureName", s.SQLWriterStoredProcedureName)
 	populate(objectMap, "sqlWriterTableType", s.SQLWriterTableType)
@@ -22762,7 +23979,10 @@ func (s *SQLMISink) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.CopySink.unmarshalInternal(rawMsg)
+	if err := s.CopySink.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SQLMISource - A copy activity Azure SQL Managed Instance source.
@@ -22784,7 +24004,8 @@ type SQLMISource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SQLMISource.
 func (s SQLMISource) MarshalJSON() ([]byte, error) {
-	objectMap := s.TabularSource.marshalInternal("SqlMISource")
+	objectMap := make(map[string]interface{})
+	s.TabularSource.marshalInternal(objectMap, "SqlMISource")
 	populate(objectMap, "produceAdditionalTypes", s.ProduceAdditionalTypes)
 	populate(objectMap, "sqlReaderQuery", s.SQLReaderQuery)
 	populate(objectMap, "sqlReaderStoredProcedureName", s.SQLReaderStoredProcedureName)
@@ -22818,7 +24039,10 @@ func (s *SQLMISource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.TabularSource.unmarshalInternal(rawMsg)
+	if err := s.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SQLPool - A SQL Analytics pool
@@ -22833,10 +24057,37 @@ type SQLPool struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SQLPool.
 func (s SQLPool) MarshalJSON() ([]byte, error) {
-	objectMap := s.TrackedResource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	s.TrackedResource.marshalInternal(objectMap)
 	populate(objectMap, "properties", s.Properties)
 	populate(objectMap, "sku", s.SKU)
 	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type SQLPool.
+func (s *SQLPool) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "properties":
+			err = unpopulate(val, &s.Properties)
+			delete(rawMsg, key)
+		case "sku":
+			err = unpopulate(val, &s.SKU)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	if err := s.TrackedResource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SQLPoolInfoListResult - List of SQL pools
@@ -22968,7 +24219,8 @@ type SQLPoolStoredProcedureActivity struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SQLPoolStoredProcedureActivity.
 func (s SQLPoolStoredProcedureActivity) MarshalJSON() ([]byte, error) {
-	objectMap := s.Activity.marshalInternal("SqlPoolStoredProcedure")
+	objectMap := make(map[string]interface{})
+	s.Activity.marshalInternal(objectMap, "SqlPoolStoredProcedure")
 	populate(objectMap, "sqlPool", s.SQLPool)
 	populate(objectMap, "typeProperties", s.TypeProperties)
 	return json.Marshal(objectMap)
@@ -22994,7 +24246,10 @@ func (s *SQLPoolStoredProcedureActivity) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.Activity.unmarshalInternal(rawMsg)
+	if err := s.Activity.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SQLPoolStoredProcedureActivityTypeProperties - SQL stored procedure activity properties.
@@ -23277,7 +24532,8 @@ type SQLServerLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SQLServerLinkedService.
 func (s SQLServerLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := s.LinkedService.marshalInternal("SqlServer")
+	objectMap := make(map[string]interface{})
+	s.LinkedService.marshalInternal(objectMap, "SqlServer")
 	populate(objectMap, "typeProperties", s.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -23299,7 +24555,10 @@ func (s *SQLServerLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.LinkedService.unmarshalInternal(rawMsg)
+	if err := s.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SQLServerLinkedServiceTypeProperties - SQL Server linked service properties.
@@ -23381,7 +24640,8 @@ type SQLServerSink struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SQLServerSink.
 func (s SQLServerSink) MarshalJSON() ([]byte, error) {
-	objectMap := s.CopySink.marshalInternal("SqlServerSink")
+	objectMap := make(map[string]interface{})
+	s.CopySink.marshalInternal(objectMap, "SqlServerSink")
 	populate(objectMap, "preCopyScript", s.PreCopyScript)
 	populate(objectMap, "sqlWriterStoredProcedureName", s.SQLWriterStoredProcedureName)
 	populate(objectMap, "sqlWriterTableType", s.SQLWriterTableType)
@@ -23423,7 +24683,10 @@ func (s *SQLServerSink) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.CopySink.unmarshalInternal(rawMsg)
+	if err := s.CopySink.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SQLServerSource - A copy activity SQL server source.
@@ -23445,7 +24708,8 @@ type SQLServerSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SQLServerSource.
 func (s SQLServerSource) MarshalJSON() ([]byte, error) {
-	objectMap := s.TabularSource.marshalInternal("SqlServerSource")
+	objectMap := make(map[string]interface{})
+	s.TabularSource.marshalInternal(objectMap, "SqlServerSource")
 	populate(objectMap, "produceAdditionalTypes", s.ProduceAdditionalTypes)
 	populate(objectMap, "sqlReaderQuery", s.SQLReaderQuery)
 	populate(objectMap, "sqlReaderStoredProcedureName", s.SQLReaderStoredProcedureName)
@@ -23479,7 +24743,10 @@ func (s *SQLServerSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.TabularSource.unmarshalInternal(rawMsg)
+	if err := s.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SQLServerStoredProcedureActivity - SQL stored procedure activity type.
@@ -23491,7 +24758,8 @@ type SQLServerStoredProcedureActivity struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SQLServerStoredProcedureActivity.
 func (s SQLServerStoredProcedureActivity) MarshalJSON() ([]byte, error) {
-	objectMap := s.ExecutionActivity.marshalInternal("SqlServerStoredProcedure")
+	objectMap := make(map[string]interface{})
+	s.ExecutionActivity.marshalInternal(objectMap, "SqlServerStoredProcedure")
 	populate(objectMap, "typeProperties", s.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -23513,7 +24781,10 @@ func (s *SQLServerStoredProcedureActivity) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.ExecutionActivity.unmarshalInternal(rawMsg)
+	if err := s.ExecutionActivity.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SQLServerStoredProcedureActivityTypeProperties - SQL stored procedure activity properties.
@@ -23542,7 +24813,8 @@ type SQLServerTableDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SQLServerTableDataset.
 func (s SQLServerTableDataset) MarshalJSON() ([]byte, error) {
-	objectMap := s.Dataset.marshalInternal("SqlServerTable")
+	objectMap := make(map[string]interface{})
+	s.Dataset.marshalInternal(objectMap, "SqlServerTable")
 	populate(objectMap, "typeProperties", s.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -23564,7 +24836,10 @@ func (s *SQLServerTableDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.Dataset.unmarshalInternal(rawMsg)
+	if err := s.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SQLServerTableDatasetTypeProperties - On-premises SQL Server dataset properties.
@@ -23603,7 +24878,8 @@ type SQLSink struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SQLSink.
 func (s SQLSink) MarshalJSON() ([]byte, error) {
-	objectMap := s.CopySink.marshalInternal("SqlSink")
+	objectMap := make(map[string]interface{})
+	s.CopySink.marshalInternal(objectMap, "SqlSink")
 	populate(objectMap, "preCopyScript", s.PreCopyScript)
 	populate(objectMap, "sqlWriterStoredProcedureName", s.SQLWriterStoredProcedureName)
 	populate(objectMap, "sqlWriterTableType", s.SQLWriterTableType)
@@ -23645,7 +24921,10 @@ func (s *SQLSink) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.CopySink.unmarshalInternal(rawMsg)
+	if err := s.CopySink.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SQLSource - A copy activity SQL source.
@@ -23664,7 +24943,8 @@ type SQLSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SQLSource.
 func (s SQLSource) MarshalJSON() ([]byte, error) {
-	objectMap := s.TabularSource.marshalInternal("SqlSource")
+	objectMap := make(map[string]interface{})
+	s.TabularSource.marshalInternal(objectMap, "SqlSource")
 	populate(objectMap, "sqlReaderQuery", s.SQLReaderQuery)
 	populate(objectMap, "sqlReaderStoredProcedureName", s.SQLReaderStoredProcedureName)
 	populate(objectMap, "storedProcedureParameters", s.StoredProcedureParameters)
@@ -23694,7 +24974,10 @@ func (s *SQLSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.TabularSource.unmarshalInternal(rawMsg)
+	if err := s.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SSISAccessCredential - SSIS access credential.
@@ -23903,7 +25186,8 @@ type SalesforceLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SalesforceLinkedService.
 func (s SalesforceLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := s.LinkedService.marshalInternal("Salesforce")
+	objectMap := make(map[string]interface{})
+	s.LinkedService.marshalInternal(objectMap, "Salesforce")
 	populate(objectMap, "typeProperties", s.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -23925,7 +25209,10 @@ func (s *SalesforceLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.LinkedService.unmarshalInternal(rawMsg)
+	if err := s.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SalesforceLinkedServiceTypeProperties - Salesforce linked service properties.
@@ -24001,7 +25288,8 @@ type SalesforceMarketingCloudLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SalesforceMarketingCloudLinkedService.
 func (s SalesforceMarketingCloudLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := s.LinkedService.marshalInternal("SalesforceMarketingCloud")
+	objectMap := make(map[string]interface{})
+	s.LinkedService.marshalInternal(objectMap, "SalesforceMarketingCloud")
 	populate(objectMap, "typeProperties", s.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -24023,7 +25311,10 @@ func (s *SalesforceMarketingCloudLinkedService) UnmarshalJSON(data []byte) error
 			return err
 		}
 	}
-	return s.LinkedService.unmarshalInternal(rawMsg)
+	if err := s.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SalesforceMarketingCloudLinkedServiceTypeProperties - Salesforce Marketing Cloud linked service properties.
@@ -24107,7 +25398,8 @@ type SalesforceMarketingCloudObjectDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SalesforceMarketingCloudObjectDataset.
 func (s SalesforceMarketingCloudObjectDataset) MarshalJSON() ([]byte, error) {
-	objectMap := s.Dataset.marshalInternal("SalesforceMarketingCloudObject")
+	objectMap := make(map[string]interface{})
+	s.Dataset.marshalInternal(objectMap, "SalesforceMarketingCloudObject")
 	populate(objectMap, "typeProperties", s.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -24129,7 +25421,10 @@ func (s *SalesforceMarketingCloudObjectDataset) UnmarshalJSON(data []byte) error
 			return err
 		}
 	}
-	return s.Dataset.unmarshalInternal(rawMsg)
+	if err := s.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SalesforceMarketingCloudSource - A copy activity Salesforce Marketing Cloud source.
@@ -24141,7 +25436,8 @@ type SalesforceMarketingCloudSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SalesforceMarketingCloudSource.
 func (s SalesforceMarketingCloudSource) MarshalJSON() ([]byte, error) {
-	objectMap := s.TabularSource.marshalInternal("SalesforceMarketingCloudSource")
+	objectMap := make(map[string]interface{})
+	s.TabularSource.marshalInternal(objectMap, "SalesforceMarketingCloudSource")
 	populate(objectMap, "query", s.Query)
 	return json.Marshal(objectMap)
 }
@@ -24163,7 +25459,10 @@ func (s *SalesforceMarketingCloudSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.TabularSource.unmarshalInternal(rawMsg)
+	if err := s.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SalesforceObjectDataset - The Salesforce object dataset.
@@ -24175,7 +25474,8 @@ type SalesforceObjectDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SalesforceObjectDataset.
 func (s SalesforceObjectDataset) MarshalJSON() ([]byte, error) {
-	objectMap := s.Dataset.marshalInternal("SalesforceObject")
+	objectMap := make(map[string]interface{})
+	s.Dataset.marshalInternal(objectMap, "SalesforceObject")
 	populate(objectMap, "typeProperties", s.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -24197,7 +25497,10 @@ func (s *SalesforceObjectDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.Dataset.unmarshalInternal(rawMsg)
+	if err := s.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SalesforceObjectDatasetTypeProperties - Salesforce object dataset properties.
@@ -24215,7 +25518,8 @@ type SalesforceServiceCloudLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SalesforceServiceCloudLinkedService.
 func (s SalesforceServiceCloudLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := s.LinkedService.marshalInternal("SalesforceServiceCloud")
+	objectMap := make(map[string]interface{})
+	s.LinkedService.marshalInternal(objectMap, "SalesforceServiceCloud")
 	populate(objectMap, "typeProperties", s.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -24237,7 +25541,10 @@ func (s *SalesforceServiceCloudLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.LinkedService.unmarshalInternal(rawMsg)
+	if err := s.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SalesforceServiceCloudLinkedServiceTypeProperties - Salesforce Service Cloud linked service properties.
@@ -24320,7 +25627,8 @@ type SalesforceServiceCloudObjectDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SalesforceServiceCloudObjectDataset.
 func (s SalesforceServiceCloudObjectDataset) MarshalJSON() ([]byte, error) {
-	objectMap := s.Dataset.marshalInternal("SalesforceServiceCloudObject")
+	objectMap := make(map[string]interface{})
+	s.Dataset.marshalInternal(objectMap, "SalesforceServiceCloudObject")
 	populate(objectMap, "typeProperties", s.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -24342,7 +25650,10 @@ func (s *SalesforceServiceCloudObjectDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.Dataset.unmarshalInternal(rawMsg)
+	if err := s.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SalesforceServiceCloudObjectDatasetTypeProperties - Salesforce Service Cloud object dataset properties.
@@ -24370,7 +25681,8 @@ type SalesforceServiceCloudSink struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SalesforceServiceCloudSink.
 func (s SalesforceServiceCloudSink) MarshalJSON() ([]byte, error) {
-	objectMap := s.CopySink.marshalInternal("SalesforceServiceCloudSink")
+	objectMap := make(map[string]interface{})
+	s.CopySink.marshalInternal(objectMap, "SalesforceServiceCloudSink")
 	populate(objectMap, "externalIdFieldName", s.ExternalIDFieldName)
 	populate(objectMap, "ignoreNullValues", s.IgnoreNullValues)
 	populate(objectMap, "writeBehavior", s.WriteBehavior)
@@ -24400,7 +25712,10 @@ func (s *SalesforceServiceCloudSink) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.CopySink.unmarshalInternal(rawMsg)
+	if err := s.CopySink.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SalesforceServiceCloudSource - A copy activity Salesforce Service Cloud source.
@@ -24415,7 +25730,8 @@ type SalesforceServiceCloudSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SalesforceServiceCloudSource.
 func (s SalesforceServiceCloudSource) MarshalJSON() ([]byte, error) {
-	objectMap := s.CopySource.marshalInternal("SalesforceServiceCloudSource")
+	objectMap := make(map[string]interface{})
+	s.CopySource.marshalInternal(objectMap, "SalesforceServiceCloudSource")
 	populate(objectMap, "query", s.Query)
 	populate(objectMap, "readBehavior", s.ReadBehavior)
 	return json.Marshal(objectMap)
@@ -24441,7 +25757,10 @@ func (s *SalesforceServiceCloudSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.CopySource.unmarshalInternal(rawMsg)
+	if err := s.CopySource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SalesforceSink - A copy activity Salesforce sink.
@@ -24463,7 +25782,8 @@ type SalesforceSink struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SalesforceSink.
 func (s SalesforceSink) MarshalJSON() ([]byte, error) {
-	objectMap := s.CopySink.marshalInternal("SalesforceSink")
+	objectMap := make(map[string]interface{})
+	s.CopySink.marshalInternal(objectMap, "SalesforceSink")
 	populate(objectMap, "externalIdFieldName", s.ExternalIDFieldName)
 	populate(objectMap, "ignoreNullValues", s.IgnoreNullValues)
 	populate(objectMap, "writeBehavior", s.WriteBehavior)
@@ -24493,7 +25813,10 @@ func (s *SalesforceSink) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.CopySink.unmarshalInternal(rawMsg)
+	if err := s.CopySink.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SalesforceSource - A copy activity Salesforce source.
@@ -24508,7 +25831,8 @@ type SalesforceSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SalesforceSource.
 func (s SalesforceSource) MarshalJSON() ([]byte, error) {
-	objectMap := s.TabularSource.marshalInternal("SalesforceSource")
+	objectMap := make(map[string]interface{})
+	s.TabularSource.marshalInternal(objectMap, "SalesforceSource")
 	populate(objectMap, "query", s.Query)
 	populate(objectMap, "readBehavior", s.ReadBehavior)
 	return json.Marshal(objectMap)
@@ -24534,7 +25858,10 @@ func (s *SalesforceSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.TabularSource.unmarshalInternal(rawMsg)
+	if err := s.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SapBWLinkedService - SAP Business Warehouse Linked Service.
@@ -24546,7 +25873,8 @@ type SapBWLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SapBWLinkedService.
 func (s SapBWLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := s.LinkedService.marshalInternal("SapBW")
+	objectMap := make(map[string]interface{})
+	s.LinkedService.marshalInternal(objectMap, "SapBW")
 	populate(objectMap, "typeProperties", s.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -24568,7 +25896,10 @@ func (s *SapBWLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.LinkedService.unmarshalInternal(rawMsg)
+	if err := s.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SapBWLinkedServiceTypeProperties - Properties specific to this linked service type.
@@ -24648,7 +25979,8 @@ type SapBwCubeDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SapBwCubeDataset.
 func (s SapBwCubeDataset) MarshalJSON() ([]byte, error) {
-	objectMap := s.Dataset.marshalInternal("SapBwCube")
+	objectMap := make(map[string]interface{})
+	s.Dataset.marshalInternal(objectMap, "SapBwCube")
 	return json.Marshal(objectMap)
 }
 
@@ -24661,7 +25993,8 @@ type SapBwSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SapBwSource.
 func (s SapBwSource) MarshalJSON() ([]byte, error) {
-	objectMap := s.TabularSource.marshalInternal("SapBwSource")
+	objectMap := make(map[string]interface{})
+	s.TabularSource.marshalInternal(objectMap, "SapBwSource")
 	populate(objectMap, "query", s.Query)
 	return json.Marshal(objectMap)
 }
@@ -24683,7 +26016,10 @@ func (s *SapBwSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.TabularSource.unmarshalInternal(rawMsg)
+	if err := s.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SapCloudForCustomerLinkedService - Linked service for SAP Cloud for Customer.
@@ -24695,7 +26031,8 @@ type SapCloudForCustomerLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SapCloudForCustomerLinkedService.
 func (s SapCloudForCustomerLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := s.LinkedService.marshalInternal("SapCloudForCustomer")
+	objectMap := make(map[string]interface{})
+	s.LinkedService.marshalInternal(objectMap, "SapCloudForCustomer")
 	populate(objectMap, "typeProperties", s.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -24717,7 +26054,10 @@ func (s *SapCloudForCustomerLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.LinkedService.unmarshalInternal(rawMsg)
+	if err := s.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SapCloudForCustomerLinkedServiceTypeProperties - SAP Cloud for Customer linked service properties.
@@ -24786,7 +26126,8 @@ type SapCloudForCustomerResourceDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SapCloudForCustomerResourceDataset.
 func (s SapCloudForCustomerResourceDataset) MarshalJSON() ([]byte, error) {
-	objectMap := s.Dataset.marshalInternal("SapCloudForCustomerResource")
+	objectMap := make(map[string]interface{})
+	s.Dataset.marshalInternal(objectMap, "SapCloudForCustomerResource")
 	populate(objectMap, "typeProperties", s.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -24808,7 +26149,10 @@ func (s *SapCloudForCustomerResourceDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.Dataset.unmarshalInternal(rawMsg)
+	if err := s.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SapCloudForCustomerResourceDatasetTypeProperties - Sap Cloud For Customer OData resource dataset properties.
@@ -24826,7 +26170,8 @@ type SapCloudForCustomerSink struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SapCloudForCustomerSink.
 func (s SapCloudForCustomerSink) MarshalJSON() ([]byte, error) {
-	objectMap := s.CopySink.marshalInternal("SapCloudForCustomerSink")
+	objectMap := make(map[string]interface{})
+	s.CopySink.marshalInternal(objectMap, "SapCloudForCustomerSink")
 	populate(objectMap, "writeBehavior", s.WriteBehavior)
 	return json.Marshal(objectMap)
 }
@@ -24848,7 +26193,10 @@ func (s *SapCloudForCustomerSink) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.CopySink.unmarshalInternal(rawMsg)
+	if err := s.CopySink.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SapCloudForCustomerSource - A copy activity source for SAP Cloud for Customer source.
@@ -24860,7 +26208,8 @@ type SapCloudForCustomerSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SapCloudForCustomerSource.
 func (s SapCloudForCustomerSource) MarshalJSON() ([]byte, error) {
-	objectMap := s.TabularSource.marshalInternal("SapCloudForCustomerSource")
+	objectMap := make(map[string]interface{})
+	s.TabularSource.marshalInternal(objectMap, "SapCloudForCustomerSource")
 	populate(objectMap, "query", s.Query)
 	return json.Marshal(objectMap)
 }
@@ -24882,7 +26231,10 @@ func (s *SapCloudForCustomerSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.TabularSource.unmarshalInternal(rawMsg)
+	if err := s.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SapEccLinkedService - Linked service for SAP ERP Central Component(SAP ECC).
@@ -24894,7 +26246,8 @@ type SapEccLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SapEccLinkedService.
 func (s SapEccLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := s.LinkedService.marshalInternal("SapEcc")
+	objectMap := make(map[string]interface{})
+	s.LinkedService.marshalInternal(objectMap, "SapEcc")
 	populate(objectMap, "typeProperties", s.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -24916,7 +26269,10 @@ func (s *SapEccLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.LinkedService.unmarshalInternal(rawMsg)
+	if err := s.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SapEccLinkedServiceTypeProperties - SAP ECC linked service properties.
@@ -24985,7 +26341,8 @@ type SapEccResourceDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SapEccResourceDataset.
 func (s SapEccResourceDataset) MarshalJSON() ([]byte, error) {
-	objectMap := s.Dataset.marshalInternal("SapEccResource")
+	objectMap := make(map[string]interface{})
+	s.Dataset.marshalInternal(objectMap, "SapEccResource")
 	populate(objectMap, "typeProperties", s.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -25007,7 +26364,10 @@ func (s *SapEccResourceDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.Dataset.unmarshalInternal(rawMsg)
+	if err := s.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SapEccResourceDatasetTypeProperties - Sap ECC OData resource dataset properties.
@@ -25025,7 +26385,8 @@ type SapEccSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SapEccSource.
 func (s SapEccSource) MarshalJSON() ([]byte, error) {
-	objectMap := s.TabularSource.marshalInternal("SapEccSource")
+	objectMap := make(map[string]interface{})
+	s.TabularSource.marshalInternal(objectMap, "SapEccSource")
 	populate(objectMap, "query", s.Query)
 	return json.Marshal(objectMap)
 }
@@ -25047,7 +26408,10 @@ func (s *SapEccSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.TabularSource.unmarshalInternal(rawMsg)
+	if err := s.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SapHanaLinkedService - SAP HANA Linked Service.
@@ -25059,7 +26423,8 @@ type SapHanaLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SapHanaLinkedService.
 func (s SapHanaLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := s.LinkedService.marshalInternal("SapHana")
+	objectMap := make(map[string]interface{})
+	s.LinkedService.marshalInternal(objectMap, "SapHana")
 	populate(objectMap, "typeProperties", s.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -25081,7 +26446,10 @@ func (s *SapHanaLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.LinkedService.unmarshalInternal(rawMsg)
+	if err := s.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SapHanaLinkedServiceProperties - Properties specific to this linked service type.
@@ -25177,7 +26545,8 @@ type SapHanaSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SapHanaSource.
 func (s SapHanaSource) MarshalJSON() ([]byte, error) {
-	objectMap := s.TabularSource.marshalInternal("SapHanaSource")
+	objectMap := make(map[string]interface{})
+	s.TabularSource.marshalInternal(objectMap, "SapHanaSource")
 	populate(objectMap, "packetSize", s.PacketSize)
 	populate(objectMap, "partitionOption", s.PartitionOption)
 	populate(objectMap, "partitionSettings", s.PartitionSettings)
@@ -25211,7 +26580,10 @@ func (s *SapHanaSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.TabularSource.unmarshalInternal(rawMsg)
+	if err := s.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SapHanaTableDataset - SAP HANA Table properties.
@@ -25223,7 +26595,8 @@ type SapHanaTableDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SapHanaTableDataset.
 func (s SapHanaTableDataset) MarshalJSON() ([]byte, error) {
-	objectMap := s.Dataset.marshalInternal("SapHanaTable")
+	objectMap := make(map[string]interface{})
+	s.Dataset.marshalInternal(objectMap, "SapHanaTable")
 	populate(objectMap, "typeProperties", s.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -25245,7 +26618,10 @@ func (s *SapHanaTableDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.Dataset.unmarshalInternal(rawMsg)
+	if err := s.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SapHanaTableDatasetTypeProperties - SAP HANA Table properties.
@@ -25266,7 +26642,8 @@ type SapOpenHubLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SapOpenHubLinkedService.
 func (s SapOpenHubLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := s.LinkedService.marshalInternal("SapOpenHub")
+	objectMap := make(map[string]interface{})
+	s.LinkedService.marshalInternal(objectMap, "SapOpenHub")
 	populate(objectMap, "typeProperties", s.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -25288,7 +26665,10 @@ func (s *SapOpenHubLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.LinkedService.unmarshalInternal(rawMsg)
+	if err := s.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SapOpenHubLinkedServiceTypeProperties - Properties specific to SAP Business Warehouse Open Hub Destination linked service type.
@@ -25383,7 +26763,8 @@ type SapOpenHubSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SapOpenHubSource.
 func (s SapOpenHubSource) MarshalJSON() ([]byte, error) {
-	objectMap := s.TabularSource.marshalInternal("SapOpenHubSource")
+	objectMap := make(map[string]interface{})
+	s.TabularSource.marshalInternal(objectMap, "SapOpenHubSource")
 	populate(objectMap, "baseRequestId", s.BaseRequestID)
 	populate(objectMap, "excludeLastRequest", s.ExcludeLastRequest)
 	return json.Marshal(objectMap)
@@ -25409,7 +26790,10 @@ func (s *SapOpenHubSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.TabularSource.unmarshalInternal(rawMsg)
+	if err := s.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SapOpenHubTableDataset - Sap Business Warehouse Open Hub Destination Table properties.
@@ -25421,7 +26805,8 @@ type SapOpenHubTableDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SapOpenHubTableDataset.
 func (s SapOpenHubTableDataset) MarshalJSON() ([]byte, error) {
-	objectMap := s.Dataset.marshalInternal("SapOpenHubTable")
+	objectMap := make(map[string]interface{})
+	s.Dataset.marshalInternal(objectMap, "SapOpenHubTable")
 	populate(objectMap, "typeProperties", s.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -25443,7 +26828,10 @@ func (s *SapOpenHubTableDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.Dataset.unmarshalInternal(rawMsg)
+	if err := s.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SapOpenHubTableDatasetTypeProperties - Sap Business Warehouse Open Hub Destination Table properties.
@@ -25469,7 +26857,8 @@ type SapTableLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SapTableLinkedService.
 func (s SapTableLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := s.LinkedService.marshalInternal("SapTable")
+	objectMap := make(map[string]interface{})
+	s.LinkedService.marshalInternal(objectMap, "SapTable")
 	populate(objectMap, "typeProperties", s.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -25491,7 +26880,10 @@ func (s *SapTableLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.LinkedService.unmarshalInternal(rawMsg)
+	if err := s.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SapTableLinkedServiceTypeProperties - Properties specific to this linked service type.
@@ -25662,7 +27054,8 @@ type SapTableResourceDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SapTableResourceDataset.
 func (s SapTableResourceDataset) MarshalJSON() ([]byte, error) {
-	objectMap := s.Dataset.marshalInternal("SapTableResource")
+	objectMap := make(map[string]interface{})
+	s.Dataset.marshalInternal(objectMap, "SapTableResource")
 	populate(objectMap, "typeProperties", s.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -25684,7 +27077,10 @@ func (s *SapTableResourceDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.Dataset.unmarshalInternal(rawMsg)
+	if err := s.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SapTableResourceDatasetTypeProperties - SAP Table Resource properties.
@@ -25724,7 +27120,8 @@ type SapTableSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SapTableSource.
 func (s SapTableSource) MarshalJSON() ([]byte, error) {
-	objectMap := s.TabularSource.marshalInternal("SapTableSource")
+	objectMap := make(map[string]interface{})
+	s.TabularSource.marshalInternal(objectMap, "SapTableSource")
 	populate(objectMap, "batchSize", s.BatchSize)
 	populate(objectMap, "customRfcReadTableFunctionModule", s.CustomRFCReadTableFunctionModule)
 	populate(objectMap, "partitionOption", s.PartitionOption)
@@ -25774,7 +27171,10 @@ func (s *SapTableSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.TabularSource.unmarshalInternal(rawMsg)
+	if err := s.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // ScheduleTrigger - Trigger that creates pipeline runs periodically, on schedule.
@@ -25786,7 +27186,8 @@ type ScheduleTrigger struct {
 
 // MarshalJSON implements the json.Marshaller interface for type ScheduleTrigger.
 func (s ScheduleTrigger) MarshalJSON() ([]byte, error) {
-	objectMap := s.MultiplePipelineTrigger.marshalInternal("ScheduleTrigger")
+	objectMap := make(map[string]interface{})
+	s.MultiplePipelineTrigger.marshalInternal(objectMap, "ScheduleTrigger")
 	populate(objectMap, "typeProperties", s.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -25808,7 +27209,10 @@ func (s *ScheduleTrigger) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.MultiplePipelineTrigger.unmarshalInternal(rawMsg)
+	if err := s.MultiplePipelineTrigger.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // ScheduleTriggerRecurrence - The workflow trigger recurrence.
@@ -25949,11 +27353,9 @@ func (s *SecretBase) UnmarshalJSON(data []byte) error {
 	return s.unmarshalInternal(rawMsg)
 }
 
-func (s SecretBase) marshalInternal(discValue string) map[string]interface{} {
-	objectMap := make(map[string]interface{})
+func (s SecretBase) marshalInternal(objectMap map[string]interface{}, discValue string) {
 	s.Type = &discValue
 	objectMap["type"] = s.Type
-	return objectMap
 }
 
 func (s *SecretBase) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
@@ -25980,7 +27382,8 @@ type SecureString struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SecureString.
 func (s SecureString) MarshalJSON() ([]byte, error) {
-	objectMap := s.SecretBase.marshalInternal("SecureString")
+	objectMap := make(map[string]interface{})
+	s.SecretBase.marshalInternal(objectMap, "SecureString")
 	populate(objectMap, "value", s.Value)
 	return json.Marshal(objectMap)
 }
@@ -26002,7 +27405,10 @@ func (s *SecureString) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.SecretBase.unmarshalInternal(rawMsg)
+	if err := s.SecretBase.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SelfDependencyTumblingWindowTriggerReference - Self referenced tumbling window trigger dependency.
@@ -26017,7 +27423,8 @@ type SelfDependencyTumblingWindowTriggerReference struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SelfDependencyTumblingWindowTriggerReference.
 func (s SelfDependencyTumblingWindowTriggerReference) MarshalJSON() ([]byte, error) {
-	objectMap := s.DependencyReference.marshalInternal("SelfDependencyTumblingWindowTriggerReference")
+	objectMap := make(map[string]interface{})
+	s.DependencyReference.marshalInternal(objectMap, "SelfDependencyTumblingWindowTriggerReference")
 	populate(objectMap, "offset", s.Offset)
 	populate(objectMap, "size", s.Size)
 	return json.Marshal(objectMap)
@@ -26043,7 +27450,10 @@ func (s *SelfDependencyTumblingWindowTriggerReference) UnmarshalJSON(data []byte
 			return err
 		}
 	}
-	return s.DependencyReference.unmarshalInternal(rawMsg)
+	if err := s.DependencyReference.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // ServiceNowLinkedService - ServiceNow server linked service.
@@ -26055,7 +27465,8 @@ type ServiceNowLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type ServiceNowLinkedService.
 func (s ServiceNowLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := s.LinkedService.marshalInternal("ServiceNow")
+	objectMap := make(map[string]interface{})
+	s.LinkedService.marshalInternal(objectMap, "ServiceNow")
 	populate(objectMap, "typeProperties", s.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -26077,7 +27488,10 @@ func (s *ServiceNowLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.LinkedService.unmarshalInternal(rawMsg)
+	if err := s.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // ServiceNowLinkedServiceTypeProperties - ServiceNow server linked service properties.
@@ -26187,7 +27601,8 @@ type ServiceNowObjectDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type ServiceNowObjectDataset.
 func (s ServiceNowObjectDataset) MarshalJSON() ([]byte, error) {
-	objectMap := s.Dataset.marshalInternal("ServiceNowObject")
+	objectMap := make(map[string]interface{})
+	s.Dataset.marshalInternal(objectMap, "ServiceNowObject")
 	populate(objectMap, "typeProperties", s.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -26209,7 +27624,10 @@ func (s *ServiceNowObjectDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.Dataset.unmarshalInternal(rawMsg)
+	if err := s.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // ServiceNowSource - A copy activity ServiceNow server source.
@@ -26221,7 +27639,8 @@ type ServiceNowSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type ServiceNowSource.
 func (s ServiceNowSource) MarshalJSON() ([]byte, error) {
-	objectMap := s.TabularSource.marshalInternal("ServiceNowSource")
+	objectMap := make(map[string]interface{})
+	s.TabularSource.marshalInternal(objectMap, "ServiceNowSource")
 	populate(objectMap, "query", s.Query)
 	return json.Marshal(objectMap)
 }
@@ -26243,7 +27662,10 @@ func (s *ServiceNowSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.TabularSource.unmarshalInternal(rawMsg)
+	if err := s.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SetVariableActivity - Set value for a Variable.
@@ -26255,7 +27677,8 @@ type SetVariableActivity struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SetVariableActivity.
 func (s SetVariableActivity) MarshalJSON() ([]byte, error) {
-	objectMap := s.ControlActivity.marshalInternal("SetVariable")
+	objectMap := make(map[string]interface{})
+	s.ControlActivity.marshalInternal(objectMap, "SetVariable")
 	populate(objectMap, "typeProperties", s.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -26277,7 +27700,10 @@ func (s *SetVariableActivity) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.ControlActivity.unmarshalInternal(rawMsg)
+	if err := s.ControlActivity.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SetVariableActivityTypeProperties - SetVariable activity properties.
@@ -26296,7 +27722,8 @@ type SftpLocation struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SftpLocation.
 func (s SftpLocation) MarshalJSON() ([]byte, error) {
-	objectMap := s.DatasetLocation.marshalInternal("SftpLocation")
+	objectMap := make(map[string]interface{})
+	s.DatasetLocation.marshalInternal(objectMap, "SftpLocation")
 	return json.Marshal(objectMap)
 }
 
@@ -26321,7 +27748,8 @@ type SftpReadSettings struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SftpReadSettings.
 func (s SftpReadSettings) MarshalJSON() ([]byte, error) {
-	objectMap := s.StoreReadSettings.marshalInternal("SftpReadSettings")
+	objectMap := make(map[string]interface{})
+	s.StoreReadSettings.marshalInternal(objectMap, "SftpReadSettings")
 	populate(objectMap, "modifiedDatetimeEnd", s.ModifiedDatetimeEnd)
 	populate(objectMap, "modifiedDatetimeStart", s.ModifiedDatetimeStart)
 	populate(objectMap, "recursive", s.Recursive)
@@ -26359,7 +27787,10 @@ func (s *SftpReadSettings) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.StoreReadSettings.unmarshalInternal(rawMsg)
+	if err := s.StoreReadSettings.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SftpServerLinkedService - A linked service for an SSH File Transfer Protocol (SFTP) server.
@@ -26371,7 +27802,8 @@ type SftpServerLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SftpServerLinkedService.
 func (s SftpServerLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := s.LinkedService.marshalInternal("Sftp")
+	objectMap := make(map[string]interface{})
+	s.LinkedService.marshalInternal(objectMap, "Sftp")
 	populate(objectMap, "typeProperties", s.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -26393,7 +27825,10 @@ func (s *SftpServerLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.LinkedService.unmarshalInternal(rawMsg)
+	if err := s.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SftpServerLinkedServiceTypeProperties - Properties specific to this linked service type.
@@ -26515,7 +27950,8 @@ type SftpWriteSettings struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SftpWriteSettings.
 func (s SftpWriteSettings) MarshalJSON() ([]byte, error) {
-	objectMap := s.StoreWriteSettings.marshalInternal("SftpWriteSettings")
+	objectMap := make(map[string]interface{})
+	s.StoreWriteSettings.marshalInternal(objectMap, "SftpWriteSettings")
 	populate(objectMap, "operationTimeout", s.OperationTimeout)
 	return json.Marshal(objectMap)
 }
@@ -26537,7 +27973,10 @@ func (s *SftpWriteSettings) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.StoreWriteSettings.unmarshalInternal(rawMsg)
+	if err := s.StoreWriteSettings.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // ShopifyLinkedService - Shopify Service linked service.
@@ -26549,7 +27988,8 @@ type ShopifyLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type ShopifyLinkedService.
 func (s ShopifyLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := s.LinkedService.marshalInternal("Shopify")
+	objectMap := make(map[string]interface{})
+	s.LinkedService.marshalInternal(objectMap, "Shopify")
 	populate(objectMap, "typeProperties", s.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -26571,7 +28011,10 @@ func (s *ShopifyLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.LinkedService.unmarshalInternal(rawMsg)
+	if err := s.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // ShopifyLinkedServiceTypeProperties - Shopify Service linked service properties.
@@ -26653,7 +28096,8 @@ type ShopifyObjectDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type ShopifyObjectDataset.
 func (s ShopifyObjectDataset) MarshalJSON() ([]byte, error) {
-	objectMap := s.Dataset.marshalInternal("ShopifyObject")
+	objectMap := make(map[string]interface{})
+	s.Dataset.marshalInternal(objectMap, "ShopifyObject")
 	populate(objectMap, "typeProperties", s.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -26675,7 +28119,10 @@ func (s *ShopifyObjectDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.Dataset.unmarshalInternal(rawMsg)
+	if err := s.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // ShopifySource - A copy activity Shopify Service source.
@@ -26687,7 +28134,8 @@ type ShopifySource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type ShopifySource.
 func (s ShopifySource) MarshalJSON() ([]byte, error) {
-	objectMap := s.TabularSource.marshalInternal("ShopifySource")
+	objectMap := make(map[string]interface{})
+	s.TabularSource.marshalInternal(objectMap, "ShopifySource")
 	populate(objectMap, "query", s.Query)
 	return json.Marshal(objectMap)
 }
@@ -26709,7 +28157,10 @@ func (s *ShopifySource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.TabularSource.unmarshalInternal(rawMsg)
+	if err := s.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 type SparkBatchJob struct {
@@ -27031,7 +28482,8 @@ type SparkJobDefinitionResource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SparkJobDefinitionResource.
 func (s SparkJobDefinitionResource) MarshalJSON() ([]byte, error) {
-	objectMap := s.SubResource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	s.SubResource.marshalInternal(objectMap)
 	populate(objectMap, "properties", s.Properties)
 	return json.Marshal(objectMap)
 }
@@ -27053,7 +28505,10 @@ func (s *SparkJobDefinitionResource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.SubResource.unmarshalInternal(rawMsg)
+	if err := s.SubResource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SparkJobDefinitionsListResponse - A list of spark job definitions resources.
@@ -27217,7 +28672,8 @@ type SparkLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SparkLinkedService.
 func (s SparkLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := s.LinkedService.marshalInternal("Spark")
+	objectMap := make(map[string]interface{})
+	s.LinkedService.marshalInternal(objectMap, "Spark")
 	populate(objectMap, "typeProperties", s.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -27239,7 +28695,10 @@ func (s *SparkLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.LinkedService.unmarshalInternal(rawMsg)
+	if err := s.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SparkLinkedServiceTypeProperties - Spark Server linked service properties.
@@ -27378,7 +28837,8 @@ type SparkObjectDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SparkObjectDataset.
 func (s SparkObjectDataset) MarshalJSON() ([]byte, error) {
-	objectMap := s.Dataset.marshalInternal("SparkObject")
+	objectMap := make(map[string]interface{})
+	s.Dataset.marshalInternal(objectMap, "SparkObject")
 	populate(objectMap, "typeProperties", s.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -27400,7 +28860,10 @@ func (s *SparkObjectDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.Dataset.unmarshalInternal(rawMsg)
+	if err := s.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 type SparkRequest struct {
@@ -27582,7 +29045,8 @@ type SparkSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SparkSource.
 func (s SparkSource) MarshalJSON() ([]byte, error) {
-	objectMap := s.TabularSource.marshalInternal("SparkSource")
+	objectMap := make(map[string]interface{})
+	s.TabularSource.marshalInternal(objectMap, "SparkSource")
 	populate(objectMap, "query", s.Query)
 	return json.Marshal(objectMap)
 }
@@ -27604,7 +29068,10 @@ func (s *SparkSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.TabularSource.unmarshalInternal(rawMsg)
+	if err := s.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SquareLinkedService - Square Service linked service.
@@ -27616,7 +29083,8 @@ type SquareLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SquareLinkedService.
 func (s SquareLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := s.LinkedService.marshalInternal("Square")
+	objectMap := make(map[string]interface{})
+	s.LinkedService.marshalInternal(objectMap, "Square")
 	populate(objectMap, "typeProperties", s.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -27638,7 +29106,10 @@ func (s *SquareLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.LinkedService.unmarshalInternal(rawMsg)
+	if err := s.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SquareLinkedServiceTypeProperties - Square Service linked service properties.
@@ -27734,7 +29205,8 @@ type SquareObjectDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SquareObjectDataset.
 func (s SquareObjectDataset) MarshalJSON() ([]byte, error) {
-	objectMap := s.Dataset.marshalInternal("SquareObject")
+	objectMap := make(map[string]interface{})
+	s.Dataset.marshalInternal(objectMap, "SquareObject")
 	populate(objectMap, "typeProperties", s.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -27756,7 +29228,10 @@ func (s *SquareObjectDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.Dataset.unmarshalInternal(rawMsg)
+	if err := s.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SquareSource - A copy activity Square Service source.
@@ -27768,7 +29243,8 @@ type SquareSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SquareSource.
 func (s SquareSource) MarshalJSON() ([]byte, error) {
-	objectMap := s.TabularSource.marshalInternal("SquareSource")
+	objectMap := make(map[string]interface{})
+	s.TabularSource.marshalInternal(objectMap, "SquareSource")
 	populate(objectMap, "query", s.Query)
 	return json.Marshal(objectMap)
 }
@@ -27790,7 +29266,10 @@ func (s *SquareSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.TabularSource.unmarshalInternal(rawMsg)
+	if err := s.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SsisObjectMetadataStatusResponse - The status of the operation.
@@ -27951,8 +29430,7 @@ func (s *StoreReadSettings) UnmarshalJSON(data []byte) error {
 	return s.unmarshalInternal(rawMsg)
 }
 
-func (s StoreReadSettings) marshalInternal(discValue string) map[string]interface{} {
-	objectMap := make(map[string]interface{})
+func (s StoreReadSettings) marshalInternal(objectMap map[string]interface{}, discValue string) {
 	populate(objectMap, "maxConcurrentConnections", s.MaxConcurrentConnections)
 	s.Type = &discValue
 	objectMap["type"] = s.Type
@@ -27961,7 +29439,6 @@ func (s StoreReadSettings) marshalInternal(discValue string) map[string]interfac
 			objectMap[key] = val
 		}
 	}
-	return objectMap
 }
 
 func (s *StoreReadSettings) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
@@ -28029,8 +29506,7 @@ func (s *StoreWriteSettings) UnmarshalJSON(data []byte) error {
 	return s.unmarshalInternal(rawMsg)
 }
 
-func (s StoreWriteSettings) marshalInternal(discValue string) map[string]interface{} {
-	objectMap := make(map[string]interface{})
+func (s StoreWriteSettings) marshalInternal(objectMap map[string]interface{}, discValue string) {
 	populate(objectMap, "copyBehavior", s.CopyBehavior)
 	populate(objectMap, "maxConcurrentConnections", s.MaxConcurrentConnections)
 	s.Type = &discValue
@@ -28040,7 +29516,6 @@ func (s StoreWriteSettings) marshalInternal(discValue string) map[string]interfa
 			objectMap[key] = val
 		}
 	}
-	return objectMap
 }
 
 func (s *StoreWriteSettings) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
@@ -28088,13 +29563,15 @@ type SubResource struct {
 	AzureEntityResource
 }
 
-func (s SubResource) marshalInternal() map[string]interface{} {
-	objectMap := s.AzureEntityResource.marshalInternal()
-	return objectMap
+func (s SubResource) marshalInternal(objectMap map[string]interface{}) {
+	s.AzureEntityResource.marshalInternal(objectMap)
 }
 
 func (s *SubResource) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
-	return s.AzureEntityResource.unmarshalInternal(rawMsg)
+	if err := s.AzureEntityResource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SubResourceDebugResource - Azure Synapse nested debug resource.
@@ -28105,7 +29582,8 @@ type SubResourceDebugResource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SubResourceDebugResource.
 func (s SubResourceDebugResource) MarshalJSON() ([]byte, error) {
-	objectMap := s.marshalInternal()
+	objectMap := make(map[string]interface{})
+	s.marshalInternal(objectMap)
 	return json.Marshal(objectMap)
 }
 
@@ -28118,10 +29596,8 @@ func (s *SubResourceDebugResource) UnmarshalJSON(data []byte) error {
 	return s.unmarshalInternal(rawMsg)
 }
 
-func (s SubResourceDebugResource) marshalInternal() map[string]interface{} {
-	objectMap := make(map[string]interface{})
+func (s SubResourceDebugResource) marshalInternal(objectMap map[string]interface{}) {
 	populate(objectMap, "name", s.Name)
-	return objectMap
 }
 
 func (s *SubResourceDebugResource) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
@@ -28149,7 +29625,8 @@ type SwitchActivity struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SwitchActivity.
 func (s SwitchActivity) MarshalJSON() ([]byte, error) {
-	objectMap := s.ControlActivity.marshalInternal("Switch")
+	objectMap := make(map[string]interface{})
+	s.ControlActivity.marshalInternal(objectMap, "Switch")
 	populate(objectMap, "typeProperties", s.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -28171,7 +29648,10 @@ func (s *SwitchActivity) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.ControlActivity.unmarshalInternal(rawMsg)
+	if err := s.ControlActivity.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SwitchActivityTypeProperties - Switch activity properties.
@@ -28272,7 +29752,8 @@ type SybaseLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SybaseLinkedService.
 func (s SybaseLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := s.LinkedService.marshalInternal("Sybase")
+	objectMap := make(map[string]interface{})
+	s.LinkedService.marshalInternal(objectMap, "Sybase")
 	populate(objectMap, "typeProperties", s.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -28294,7 +29775,10 @@ func (s *SybaseLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.LinkedService.unmarshalInternal(rawMsg)
+	if err := s.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SybaseLinkedServiceTypeProperties - Sybase linked service properties.
@@ -28382,7 +29866,8 @@ type SybaseSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SybaseSource.
 func (s SybaseSource) MarshalJSON() ([]byte, error) {
-	objectMap := s.TabularSource.marshalInternal("SybaseSource")
+	objectMap := make(map[string]interface{})
+	s.TabularSource.marshalInternal(objectMap, "SybaseSource")
 	populate(objectMap, "query", s.Query)
 	return json.Marshal(objectMap)
 }
@@ -28404,7 +29889,10 @@ func (s *SybaseSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.TabularSource.unmarshalInternal(rawMsg)
+	if err := s.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SybaseTableDataset - The Sybase table dataset.
@@ -28416,7 +29904,8 @@ type SybaseTableDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SybaseTableDataset.
 func (s SybaseTableDataset) MarshalJSON() ([]byte, error) {
-	objectMap := s.Dataset.marshalInternal("SybaseTable")
+	objectMap := make(map[string]interface{})
+	s.Dataset.marshalInternal(objectMap, "SybaseTable")
 	populate(objectMap, "typeProperties", s.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -28438,7 +29927,10 @@ func (s *SybaseTableDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.Dataset.unmarshalInternal(rawMsg)
+	if err := s.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SybaseTableDatasetTypeProperties - Sybase table dataset properties.
@@ -28456,7 +29948,8 @@ type SynapseNotebookActivity struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SynapseNotebookActivity.
 func (s SynapseNotebookActivity) MarshalJSON() ([]byte, error) {
-	objectMap := s.ExecutionActivity.marshalInternal("SynapseNotebook")
+	objectMap := make(map[string]interface{})
+	s.ExecutionActivity.marshalInternal(objectMap, "SynapseNotebook")
 	populate(objectMap, "typeProperties", s.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -28478,7 +29971,10 @@ func (s *SynapseNotebookActivity) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.ExecutionActivity.unmarshalInternal(rawMsg)
+	if err := s.ExecutionActivity.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SynapseNotebookActivityTypeProperties - Execute Synapse notebook activity properties.
@@ -28522,7 +30018,8 @@ type SynapseSparkJobDefinitionActivity struct {
 
 // MarshalJSON implements the json.Marshaller interface for type SynapseSparkJobDefinitionActivity.
 func (s SynapseSparkJobDefinitionActivity) MarshalJSON() ([]byte, error) {
-	objectMap := s.ExecutionActivity.marshalInternal("SparkJob")
+	objectMap := make(map[string]interface{})
+	s.ExecutionActivity.marshalInternal(objectMap, "SparkJob")
 	populate(objectMap, "typeProperties", s.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -28544,7 +30041,10 @@ func (s *SynapseSparkJobDefinitionActivity) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return s.ExecutionActivity.unmarshalInternal(rawMsg)
+	if err := s.ExecutionActivity.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SynapseSparkJobReference - Synapse spark job reference type.
@@ -28585,7 +30085,8 @@ func (t *TabularSource) GetTabularSource() *TabularSource { return t }
 
 // MarshalJSON implements the json.Marshaller interface for type TabularSource.
 func (t TabularSource) MarshalJSON() ([]byte, error) {
-	objectMap := t.marshalInternal("TabularSource")
+	objectMap := make(map[string]interface{})
+	t.marshalInternal(objectMap, "TabularSource")
 	return json.Marshal(objectMap)
 }
 
@@ -28598,10 +30099,9 @@ func (t *TabularSource) UnmarshalJSON(data []byte) error {
 	return t.unmarshalInternal(rawMsg)
 }
 
-func (t TabularSource) marshalInternal(discValue string) map[string]interface{} {
-	objectMap := t.CopySource.marshalInternal(discValue)
+func (t TabularSource) marshalInternal(objectMap map[string]interface{}, discValue string) {
+	t.CopySource.marshalInternal(objectMap, discValue)
 	populate(objectMap, "queryTimeout", t.QueryTimeout)
-	return objectMap
 }
 
 func (t *TabularSource) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
@@ -28616,7 +30116,10 @@ func (t *TabularSource) unmarshalInternal(rawMsg map[string]json.RawMessage) err
 			return err
 		}
 	}
-	return t.CopySource.unmarshalInternal(rawMsg)
+	if err := t.CopySource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // TabularTranslator - A copy activity tabular translator.
@@ -28647,7 +30150,8 @@ type TabularTranslator struct {
 
 // MarshalJSON implements the json.Marshaller interface for type TabularTranslator.
 func (t TabularTranslator) MarshalJSON() ([]byte, error) {
-	objectMap := t.CopyTranslator.marshalInternal("TabularTranslator")
+	objectMap := make(map[string]interface{})
+	t.CopyTranslator.marshalInternal(objectMap, "TabularTranslator")
 	populate(objectMap, "collectionReference", t.CollectionReference)
 	populate(objectMap, "columnMappings", t.ColumnMappings)
 	populate(objectMap, "mapComplexValuesToString", t.MapComplexValuesToString)
@@ -28685,7 +30189,10 @@ func (t *TabularTranslator) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return t.CopyTranslator.unmarshalInternal(rawMsg)
+	if err := t.CopyTranslator.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // TeradataLinkedService - Linked service for Teradata data source.
@@ -28697,7 +30204,8 @@ type TeradataLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type TeradataLinkedService.
 func (t TeradataLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := t.LinkedService.marshalInternal("Teradata")
+	objectMap := make(map[string]interface{})
+	t.LinkedService.marshalInternal(objectMap, "Teradata")
 	populate(objectMap, "typeProperties", t.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -28719,7 +30227,10 @@ func (t *TeradataLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return t.LinkedService.unmarshalInternal(rawMsg)
+	if err := t.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // TeradataLinkedServiceTypeProperties - Teradata linked service properties.
@@ -28820,7 +30331,8 @@ type TeradataSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type TeradataSource.
 func (t TeradataSource) MarshalJSON() ([]byte, error) {
-	objectMap := t.TabularSource.marshalInternal("TeradataSource")
+	objectMap := make(map[string]interface{})
+	t.TabularSource.marshalInternal(objectMap, "TeradataSource")
 	populate(objectMap, "partitionOption", t.PartitionOption)
 	populate(objectMap, "partitionSettings", t.PartitionSettings)
 	populate(objectMap, "query", t.Query)
@@ -28850,7 +30362,10 @@ func (t *TeradataSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return t.TabularSource.unmarshalInternal(rawMsg)
+	if err := t.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // TeradataTableDataset - The Teradata database dataset.
@@ -28862,7 +30377,8 @@ type TeradataTableDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type TeradataTableDataset.
 func (t TeradataTableDataset) MarshalJSON() ([]byte, error) {
-	objectMap := t.Dataset.marshalInternal("TeradataTable")
+	objectMap := make(map[string]interface{})
+	t.Dataset.marshalInternal(objectMap, "TeradataTable")
 	populate(objectMap, "typeProperties", t.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -28884,7 +30400,10 @@ func (t *TeradataTableDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return t.Dataset.unmarshalInternal(rawMsg)
+	if err := t.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // TeradataTableDatasetTypeProperties - Teradata dataset properties.
@@ -28933,7 +30452,8 @@ type TextFormat struct {
 
 // MarshalJSON implements the json.Marshaller interface for type TextFormat.
 func (t TextFormat) MarshalJSON() ([]byte, error) {
-	objectMap := t.DatasetStorageFormat.marshalInternal("TextFormat")
+	objectMap := make(map[string]interface{})
+	t.DatasetStorageFormat.marshalInternal(objectMap, "TextFormat")
 	populate(objectMap, "columnDelimiter", t.ColumnDelimiter)
 	populate(objectMap, "encodingName", t.EncodingName)
 	populate(objectMap, "escapeChar", t.EscapeChar)
@@ -28987,7 +30507,10 @@ func (t *TextFormat) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return t.DatasetStorageFormat.unmarshalInternal(rawMsg)
+	if err := t.DatasetStorageFormat.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // TrackedResource - The resource model definition for an Azure Resource Manager tracked top level resource which has 'tags' and a 'location'
@@ -29002,15 +30525,45 @@ type TrackedResource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type TrackedResource.
 func (t TrackedResource) MarshalJSON() ([]byte, error) {
-	objectMap := t.marshalInternal()
+	objectMap := make(map[string]interface{})
+	t.marshalInternal(objectMap)
 	return json.Marshal(objectMap)
 }
 
-func (t TrackedResource) marshalInternal() map[string]interface{} {
-	objectMap := t.Resource.marshalInternal()
+// UnmarshalJSON implements the json.Unmarshaller interface for type TrackedResource.
+func (t *TrackedResource) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	return t.unmarshalInternal(rawMsg)
+}
+
+func (t TrackedResource) marshalInternal(objectMap map[string]interface{}) {
+	t.Resource.marshalInternal(objectMap)
 	populate(objectMap, "location", t.Location)
 	populate(objectMap, "tags", t.Tags)
-	return objectMap
+}
+
+func (t *TrackedResource) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "location":
+			err = unpopulate(val, &t.Location)
+			delete(rawMsg, key)
+		case "tags":
+			err = unpopulate(val, &t.Tags)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	if err := t.Resource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // Transformation - A data flow transformation.
@@ -29062,8 +30615,7 @@ func (t *Trigger) UnmarshalJSON(data []byte) error {
 	return t.unmarshalInternal(rawMsg)
 }
 
-func (t Trigger) marshalInternal(discValue string) map[string]interface{} {
-	objectMap := make(map[string]interface{})
+func (t Trigger) marshalInternal(objectMap map[string]interface{}, discValue string) {
 	populate(objectMap, "annotations", t.Annotations)
 	populate(objectMap, "description", t.Description)
 	populate(objectMap, "runtimeState", t.RuntimeState)
@@ -29074,7 +30626,6 @@ func (t Trigger) marshalInternal(discValue string) map[string]interface{} {
 			objectMap[key] = val
 		}
 	}
-	return objectMap
 }
 
 func (t *Trigger) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
@@ -29175,7 +30726,8 @@ func (t *TriggerDependencyReference) GetTriggerDependencyReference() *TriggerDep
 
 // MarshalJSON implements the json.Marshaller interface for type TriggerDependencyReference.
 func (t TriggerDependencyReference) MarshalJSON() ([]byte, error) {
-	objectMap := t.marshalInternal("TriggerDependencyReference")
+	objectMap := make(map[string]interface{})
+	t.marshalInternal(objectMap, "TriggerDependencyReference")
 	return json.Marshal(objectMap)
 }
 
@@ -29188,10 +30740,9 @@ func (t *TriggerDependencyReference) UnmarshalJSON(data []byte) error {
 	return t.unmarshalInternal(rawMsg)
 }
 
-func (t TriggerDependencyReference) marshalInternal(discValue string) map[string]interface{} {
-	objectMap := t.DependencyReference.marshalInternal(discValue)
+func (t TriggerDependencyReference) marshalInternal(objectMap map[string]interface{}, discValue string) {
+	t.DependencyReference.marshalInternal(objectMap, discValue)
 	populate(objectMap, "referenceTrigger", t.ReferenceTrigger)
-	return objectMap
 }
 
 func (t *TriggerDependencyReference) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
@@ -29206,7 +30757,10 @@ func (t *TriggerDependencyReference) unmarshalInternal(rawMsg map[string]json.Ra
 			return err
 		}
 	}
-	return t.DependencyReference.unmarshalInternal(rawMsg)
+	if err := t.DependencyReference.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // TriggerGetEventSubscriptionStatusOptions contains the optional parameters for the Trigger.GetEventSubscriptionStatus method.
@@ -29278,7 +30832,8 @@ type TriggerResource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type TriggerResource.
 func (t TriggerResource) MarshalJSON() ([]byte, error) {
-	objectMap := t.SubResource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	t.SubResource.marshalInternal(objectMap)
 	populate(objectMap, "properties", t.Properties)
 	return json.Marshal(objectMap)
 }
@@ -29300,7 +30855,10 @@ func (t *TriggerResource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return t.SubResource.unmarshalInternal(rawMsg)
+	if err := t.SubResource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // TriggerRun - Trigger runs.
@@ -29459,7 +31017,8 @@ type TumblingWindowTrigger struct {
 
 // MarshalJSON implements the json.Marshaller interface for type TumblingWindowTrigger.
 func (t TumblingWindowTrigger) MarshalJSON() ([]byte, error) {
-	objectMap := t.Trigger.marshalInternal("TumblingWindowTrigger")
+	objectMap := make(map[string]interface{})
+	t.Trigger.marshalInternal(objectMap, "TumblingWindowTrigger")
 	populate(objectMap, "pipeline", t.Pipeline)
 	populate(objectMap, "typeProperties", t.TypeProperties)
 	return json.Marshal(objectMap)
@@ -29485,7 +31044,10 @@ func (t *TumblingWindowTrigger) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return t.Trigger.unmarshalInternal(rawMsg)
+	if err := t.Trigger.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // TumblingWindowTriggerDependencyReference - Referenced tumbling window trigger dependency.
@@ -29500,7 +31062,8 @@ type TumblingWindowTriggerDependencyReference struct {
 
 // MarshalJSON implements the json.Marshaller interface for type TumblingWindowTriggerDependencyReference.
 func (t TumblingWindowTriggerDependencyReference) MarshalJSON() ([]byte, error) {
-	objectMap := t.TriggerDependencyReference.marshalInternal("TumblingWindowTriggerDependencyReference")
+	objectMap := make(map[string]interface{})
+	t.TriggerDependencyReference.marshalInternal(objectMap, "TumblingWindowTriggerDependencyReference")
 	populate(objectMap, "offset", t.Offset)
 	populate(objectMap, "size", t.Size)
 	return json.Marshal(objectMap)
@@ -29526,7 +31089,10 @@ func (t *TumblingWindowTriggerDependencyReference) UnmarshalJSON(data []byte) er
 			return err
 		}
 	}
-	return t.TriggerDependencyReference.unmarshalInternal(rawMsg)
+	if err := t.TriggerDependencyReference.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // TumblingWindowTriggerTypeProperties - Tumbling Window Trigger properties.
@@ -29626,7 +31192,8 @@ type UntilActivity struct {
 
 // MarshalJSON implements the json.Marshaller interface for type UntilActivity.
 func (u UntilActivity) MarshalJSON() ([]byte, error) {
-	objectMap := u.ControlActivity.marshalInternal("Until")
+	objectMap := make(map[string]interface{})
+	u.ControlActivity.marshalInternal(objectMap, "Until")
 	populate(objectMap, "typeProperties", u.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -29648,7 +31215,10 @@ func (u *UntilActivity) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return u.ControlActivity.unmarshalInternal(rawMsg)
+	if err := u.ControlActivity.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // UntilActivityTypeProperties - Until activity properties.
@@ -29718,7 +31288,8 @@ type ValidationActivity struct {
 
 // MarshalJSON implements the json.Marshaller interface for type ValidationActivity.
 func (v ValidationActivity) MarshalJSON() ([]byte, error) {
-	objectMap := v.ControlActivity.marshalInternal("Validation")
+	objectMap := make(map[string]interface{})
+	v.ControlActivity.marshalInternal(objectMap, "Validation")
 	populate(objectMap, "typeProperties", v.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -29740,7 +31311,10 @@ func (v *ValidationActivity) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return v.ControlActivity.unmarshalInternal(rawMsg)
+	if err := v.ControlActivity.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // ValidationActivityTypeProperties - Validation activity properties.
@@ -29796,7 +31370,8 @@ type VerticaLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type VerticaLinkedService.
 func (v VerticaLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := v.LinkedService.marshalInternal("Vertica")
+	objectMap := make(map[string]interface{})
+	v.LinkedService.marshalInternal(objectMap, "Vertica")
 	populate(objectMap, "typeProperties", v.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -29818,7 +31393,10 @@ func (v *VerticaLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return v.LinkedService.unmarshalInternal(rawMsg)
+	if err := v.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // VerticaLinkedServiceTypeProperties - Vertica linked service properties.
@@ -29843,7 +31421,8 @@ type VerticaSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type VerticaSource.
 func (v VerticaSource) MarshalJSON() ([]byte, error) {
-	objectMap := v.TabularSource.marshalInternal("VerticaSource")
+	objectMap := make(map[string]interface{})
+	v.TabularSource.marshalInternal(objectMap, "VerticaSource")
 	populate(objectMap, "query", v.Query)
 	return json.Marshal(objectMap)
 }
@@ -29865,7 +31444,10 @@ func (v *VerticaSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return v.TabularSource.unmarshalInternal(rawMsg)
+	if err := v.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // VerticaTableDataset - Vertica dataset.
@@ -29877,7 +31459,8 @@ type VerticaTableDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type VerticaTableDataset.
 func (v VerticaTableDataset) MarshalJSON() ([]byte, error) {
-	objectMap := v.Dataset.marshalInternal("VerticaTable")
+	objectMap := make(map[string]interface{})
+	v.Dataset.marshalInternal(objectMap, "VerticaTable")
 	populate(objectMap, "typeProperties", v.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -29899,7 +31482,10 @@ func (v *VerticaTableDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return v.Dataset.unmarshalInternal(rawMsg)
+	if err := v.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // VirtualNetworkProfile - Virtual Network Profile
@@ -29917,7 +31503,8 @@ type WaitActivity struct {
 
 // MarshalJSON implements the json.Marshaller interface for type WaitActivity.
 func (w WaitActivity) MarshalJSON() ([]byte, error) {
-	objectMap := w.ControlActivity.marshalInternal("Wait")
+	objectMap := make(map[string]interface{})
+	w.ControlActivity.marshalInternal(objectMap, "Wait")
 	populate(objectMap, "typeProperties", w.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -29939,7 +31526,10 @@ func (w *WaitActivity) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return w.ControlActivity.unmarshalInternal(rawMsg)
+	if err := w.ControlActivity.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // WaitActivityTypeProperties - Wait activity properties.
@@ -29957,7 +31547,8 @@ type WebActivity struct {
 
 // MarshalJSON implements the json.Marshaller interface for type WebActivity.
 func (w WebActivity) MarshalJSON() ([]byte, error) {
-	objectMap := w.ExecutionActivity.marshalInternal("WebActivity")
+	objectMap := make(map[string]interface{})
+	w.ExecutionActivity.marshalInternal(objectMap, "WebActivity")
 	populate(objectMap, "typeProperties", w.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -29979,7 +31570,10 @@ func (w *WebActivity) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return w.ExecutionActivity.unmarshalInternal(rawMsg)
+	if err := w.ExecutionActivity.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // WebActivityAuthentication - Web activity authentication properties.
@@ -30094,7 +31688,8 @@ type WebAnonymousAuthentication struct {
 
 // MarshalJSON implements the json.Marshaller interface for type WebAnonymousAuthentication.
 func (w WebAnonymousAuthentication) MarshalJSON() ([]byte, error) {
-	objectMap := w.WebLinkedServiceTypeProperties.marshalInternal(WebAuthenticationTypeAnonymous)
+	objectMap := make(map[string]interface{})
+	w.WebLinkedServiceTypeProperties.marshalInternal(objectMap, WebAuthenticationTypeAnonymous)
 	return json.Marshal(objectMap)
 }
 
@@ -30110,7 +31705,8 @@ type WebBasicAuthentication struct {
 
 // MarshalJSON implements the json.Marshaller interface for type WebBasicAuthentication.
 func (w WebBasicAuthentication) MarshalJSON() ([]byte, error) {
-	objectMap := w.WebLinkedServiceTypeProperties.marshalInternal(WebAuthenticationTypeBasic)
+	objectMap := make(map[string]interface{})
+	w.WebLinkedServiceTypeProperties.marshalInternal(objectMap, WebAuthenticationTypeBasic)
 	populate(objectMap, "password", w.Password)
 	populate(objectMap, "username", w.Username)
 	return json.Marshal(objectMap)
@@ -30136,7 +31732,10 @@ func (w *WebBasicAuthentication) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return w.WebLinkedServiceTypeProperties.unmarshalInternal(rawMsg)
+	if err := w.WebLinkedServiceTypeProperties.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // WebClientCertificateAuthentication - A WebLinkedService that uses client certificate based authentication to communicate with an HTTP endpoint. This
@@ -30153,7 +31752,8 @@ type WebClientCertificateAuthentication struct {
 
 // MarshalJSON implements the json.Marshaller interface for type WebClientCertificateAuthentication.
 func (w WebClientCertificateAuthentication) MarshalJSON() ([]byte, error) {
-	objectMap := w.WebLinkedServiceTypeProperties.marshalInternal(WebAuthenticationTypeClientCertificate)
+	objectMap := make(map[string]interface{})
+	w.WebLinkedServiceTypeProperties.marshalInternal(objectMap, WebAuthenticationTypeClientCertificate)
 	populate(objectMap, "password", w.Password)
 	populate(objectMap, "pfx", w.Pfx)
 	return json.Marshal(objectMap)
@@ -30179,7 +31779,10 @@ func (w *WebClientCertificateAuthentication) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return w.WebLinkedServiceTypeProperties.unmarshalInternal(rawMsg)
+	if err := w.WebLinkedServiceTypeProperties.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // WebHookActivity - WebHook activity.
@@ -30191,7 +31794,8 @@ type WebHookActivity struct {
 
 // MarshalJSON implements the json.Marshaller interface for type WebHookActivity.
 func (w WebHookActivity) MarshalJSON() ([]byte, error) {
-	objectMap := w.ControlActivity.marshalInternal("WebHook")
+	objectMap := make(map[string]interface{})
+	w.ControlActivity.marshalInternal(objectMap, "WebHook")
 	populate(objectMap, "typeProperties", w.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -30213,7 +31817,10 @@ func (w *WebHookActivity) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return w.ControlActivity.unmarshalInternal(rawMsg)
+	if err := w.ControlActivity.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // WebHookActivityTypeProperties - WebHook activity type properties.
@@ -30254,7 +31861,8 @@ type WebLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type WebLinkedService.
 func (w WebLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := w.LinkedService.marshalInternal("Web")
+	objectMap := make(map[string]interface{})
+	w.LinkedService.marshalInternal(objectMap, "Web")
 	populate(objectMap, "typeProperties", w.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -30276,7 +31884,10 @@ func (w *WebLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return w.LinkedService.unmarshalInternal(rawMsg)
+	if err := w.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // WebLinkedServiceTypePropertiesClassification provides polymorphic access to related types.
@@ -30312,12 +31923,10 @@ func (w *WebLinkedServiceTypeProperties) UnmarshalJSON(data []byte) error {
 	return w.unmarshalInternal(rawMsg)
 }
 
-func (w WebLinkedServiceTypeProperties) marshalInternal(discValue WebAuthenticationType) map[string]interface{} {
-	objectMap := make(map[string]interface{})
+func (w WebLinkedServiceTypeProperties) marshalInternal(objectMap map[string]interface{}, discValue WebAuthenticationType) {
 	w.AuthenticationType = &discValue
 	objectMap["authenticationType"] = w.AuthenticationType
 	populate(objectMap, "url", w.URL)
-	return objectMap
 }
 
 func (w *WebLinkedServiceTypeProperties) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
@@ -30345,7 +31954,8 @@ type WebSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type WebSource.
 func (w WebSource) MarshalJSON() ([]byte, error) {
-	objectMap := w.CopySource.marshalInternal("WebSource")
+	objectMap := make(map[string]interface{})
+	w.CopySource.marshalInternal(objectMap, "WebSource")
 	return json.Marshal(objectMap)
 }
 
@@ -30358,7 +31968,8 @@ type WebTableDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type WebTableDataset.
 func (w WebTableDataset) MarshalJSON() ([]byte, error) {
-	objectMap := w.Dataset.marshalInternal("WebTable")
+	objectMap := make(map[string]interface{})
+	w.Dataset.marshalInternal(objectMap, "WebTable")
 	populate(objectMap, "typeProperties", w.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -30380,7 +31991,10 @@ func (w *WebTableDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return w.Dataset.unmarshalInternal(rawMsg)
+	if err := w.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // WebTableDatasetTypeProperties - Web table dataset properties.
@@ -30404,10 +32018,37 @@ type Workspace struct {
 
 // MarshalJSON implements the json.Marshaller interface for type Workspace.
 func (w Workspace) MarshalJSON() ([]byte, error) {
-	objectMap := w.TrackedResource.marshalInternal()
+	objectMap := make(map[string]interface{})
+	w.TrackedResource.marshalInternal(objectMap)
 	populate(objectMap, "identity", w.Identity)
 	populate(objectMap, "properties", w.Properties)
 	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type Workspace.
+func (w *Workspace) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "identity":
+			err = unpopulate(val, &w.Identity)
+			delete(rawMsg, key)
+		case "properties":
+			err = unpopulate(val, &w.Properties)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	if err := w.TrackedResource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // WorkspaceGetOptions contains the optional parameters for the Workspace.Get method.
@@ -30573,7 +32214,8 @@ type XeroLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type XeroLinkedService.
 func (x XeroLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := x.LinkedService.marshalInternal("Xero")
+	objectMap := make(map[string]interface{})
+	x.LinkedService.marshalInternal(objectMap, "Xero")
 	populate(objectMap, "typeProperties", x.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -30595,7 +32237,10 @@ func (x *XeroLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return x.LinkedService.unmarshalInternal(rawMsg)
+	if err := x.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // XeroLinkedServiceTypeProperties - Xero Service linked service properties.
@@ -30685,7 +32330,8 @@ type XeroObjectDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type XeroObjectDataset.
 func (x XeroObjectDataset) MarshalJSON() ([]byte, error) {
-	objectMap := x.Dataset.marshalInternal("XeroObject")
+	objectMap := make(map[string]interface{})
+	x.Dataset.marshalInternal(objectMap, "XeroObject")
 	populate(objectMap, "typeProperties", x.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -30707,7 +32353,10 @@ func (x *XeroObjectDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return x.Dataset.unmarshalInternal(rawMsg)
+	if err := x.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // XeroSource - A copy activity Xero Service source.
@@ -30719,7 +32368,8 @@ type XeroSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type XeroSource.
 func (x XeroSource) MarshalJSON() ([]byte, error) {
-	objectMap := x.TabularSource.marshalInternal("XeroSource")
+	objectMap := make(map[string]interface{})
+	x.TabularSource.marshalInternal(objectMap, "XeroSource")
 	populate(objectMap, "query", x.Query)
 	return json.Marshal(objectMap)
 }
@@ -30741,7 +32391,10 @@ func (x *XeroSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return x.TabularSource.unmarshalInternal(rawMsg)
+	if err := x.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // ZohoLinkedService - Zoho server linked service.
@@ -30753,7 +32406,8 @@ type ZohoLinkedService struct {
 
 // MarshalJSON implements the json.Marshaller interface for type ZohoLinkedService.
 func (z ZohoLinkedService) MarshalJSON() ([]byte, error) {
-	objectMap := z.LinkedService.marshalInternal("Zoho")
+	objectMap := make(map[string]interface{})
+	z.LinkedService.marshalInternal(objectMap, "Zoho")
 	populate(objectMap, "typeProperties", z.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -30775,7 +32429,10 @@ func (z *ZohoLinkedService) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return z.LinkedService.unmarshalInternal(rawMsg)
+	if err := z.LinkedService.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // ZohoLinkedServiceTypeProperties - Zoho server linked service properties.
@@ -30857,7 +32514,8 @@ type ZohoObjectDataset struct {
 
 // MarshalJSON implements the json.Marshaller interface for type ZohoObjectDataset.
 func (z ZohoObjectDataset) MarshalJSON() ([]byte, error) {
-	objectMap := z.Dataset.marshalInternal("ZohoObject")
+	objectMap := make(map[string]interface{})
+	z.Dataset.marshalInternal(objectMap, "ZohoObject")
 	populate(objectMap, "typeProperties", z.TypeProperties)
 	return json.Marshal(objectMap)
 }
@@ -30879,7 +32537,10 @@ func (z *ZohoObjectDataset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return z.Dataset.unmarshalInternal(rawMsg)
+	if err := z.Dataset.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // ZohoSource - A copy activity Zoho server source.
@@ -30891,7 +32552,8 @@ type ZohoSource struct {
 
 // MarshalJSON implements the json.Marshaller interface for type ZohoSource.
 func (z ZohoSource) MarshalJSON() ([]byte, error) {
-	objectMap := z.TabularSource.marshalInternal("ZohoSource")
+	objectMap := make(map[string]interface{})
+	z.TabularSource.marshalInternal(objectMap, "ZohoSource")
 	populate(objectMap, "query", z.Query)
 	return json.Marshal(objectMap)
 }
@@ -30913,7 +32575,10 @@ func (z *ZohoSource) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return z.TabularSource.unmarshalInternal(rawMsg)
+	if err := z.TabularSource.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 func populate(m map[string]interface{}, k string, v interface{}) {

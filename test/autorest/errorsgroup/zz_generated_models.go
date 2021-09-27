@@ -41,7 +41,10 @@ func (a *AnimalNotFound) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return a.NotFoundErrorBase.unmarshalInternal(rawMsg)
+	if err := a.NotFoundErrorBase.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 type BaseError struct {
@@ -95,7 +98,10 @@ func (l *LinkNotFound) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return l.NotFoundErrorBase.unmarshalInternal(rawMsg)
+	if err := l.NotFoundErrorBase.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // NotFoundErrorBaseClassification provides polymorphic access to related types.
@@ -151,7 +157,10 @@ func (n *NotFoundErrorBase) unmarshalInternal(rawMsg map[string]json.RawMessage)
 			return err
 		}
 	}
-	return n.BaseError.unmarshalInternal(rawMsg)
+	if err := n.BaseError.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 type Pet struct {
@@ -244,7 +253,10 @@ func (p *PetActionError) unmarshalInternal(rawMsg map[string]json.RawMessage) er
 			return err
 		}
 	}
-	return p.PetAction.unmarshalInternal(rawMsg)
+	if err := p.PetAction.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // PetDoSomethingOptions contains the optional parameters for the Pet.DoSomething method.
@@ -287,7 +299,10 @@ func (p *PetHungryOrThirstyError) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	return p.PetSadError.unmarshalInternal(rawMsg)
+	if err := p.PetSadError.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 // PetSadErrorClassification provides polymorphic access to related types.
@@ -331,7 +346,10 @@ func (p *PetSadError) unmarshalInternal(rawMsg map[string]json.RawMessage) error
 			return err
 		}
 	}
-	return p.PetActionError.unmarshalInternal(rawMsg)
+	if err := p.PetActionError.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
 }
 
 func populate(m map[string]interface{}, k string, v interface{}) {

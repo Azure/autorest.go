@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 const exec = require('child_process').exec;
+const execSync = require('child_process').execSync;
 const fs = require('fs');
 
 // limit to 8 concurrent builds
@@ -110,6 +111,12 @@ generateFromReadme("aztables", tables, 'package-2019-02', 'test/tables/2019-02-0
 const keyvault = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/1e2c9f3ec93078da8078389941531359e274f32a/specification/keyvault/data-plane/readme.md';
 generateFromReadme("azkeyvault", keyvault, 'package-7.2', 'test/keyvault/7.2/azkeyvault', '--security=AADToken --security-scopes="https://vault.azure.net/.default" --module=azkeyvault --openapi-type="data-plane" --export-clients');
 
+const consumption = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/3865f04d22e82db481be0727b406021d29cd2b70/specification/consumption/resource-manager/readme.md';
+generateFromReadme("armconsumption", consumption, 'package-2019-10', 'test/consumption/2019-10-01/armconsumption', '--module=armconsumption --azure-arm=true');
+
+const databoxedge = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/3865f04d22e82db481be0727b406021d29cd2b70/specification/databoxedge/resource-manager/readme.md';
+generateFromReadme("armdataboxedge", databoxedge, 'package-2021-02-01', 'test/databoxedge/2021-02-01/armdataboxedge', '--module=armdataboxedge ---azure-arm=true');
+
 generate("azalias", 'test/swagger/alias.json', 'test/maps/azalias', '--security=AzureKey --module="azalias" --openapi-type="data-plane"');
 
 function should_generate(name) {
@@ -120,6 +127,11 @@ function should_generate(name) {
     return true
 }
 
+function fullPath(outputDir) {
+    const root = execSync('git rev-parse --show-toplevel').toString().trim();
+    return root + '/' + outputDir;
+}
+
 // helper to log the package being generated before invocation
 function generate(name, inputFile, outputDir, additionalArgs) {
     if (!should_generate(name)) {
@@ -127,6 +139,7 @@ function generate(name, inputFile, outputDir, additionalArgs) {
     }
     sem.take(function() {
         console.log('generating ' + inputFile);
+        outputDir = fullPath(outputDir);
         cleanGeneratedFiles(outputDir);
         exec('autorest --use=. --file-prefix="zz_generated_" --modelerfour.lenient-model-deduplication --license-header=MICROSOFT_MIT_NO_VERSION --module-version=0.1.0 --input-file=' + inputFile + ' --output-folder=' + outputDir + ' ' + additionalArgs + ' ' + switches.join(' '), autorestCallback(outputDir, inputFile));
     });
@@ -138,6 +151,7 @@ function generateFromReadme(name, readme, tag, outputDir, additionalArgs) {
     }
     sem.take(function() {
         console.log('generating ' + readme);
+        outputDir = fullPath(outputDir);
         cleanGeneratedFiles(outputDir);
         exec('autorest --use=. ' + readme + ' --tag=' + tag + ' --file-prefix="zz_generated_" --modelerfour.lenient-model-deduplication --license-header=MICROSOFT_MIT_NO_VERSION --module-version=0.1.0 --output-folder=' + outputDir + ' ' + additionalArgs + ' ' + switches.join(' '), autorestCallback(outputDir, readme));
     });
