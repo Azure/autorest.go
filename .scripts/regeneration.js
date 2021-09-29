@@ -14,6 +14,7 @@ const goMappings = {
     'arraygroup': ['body-array.json'],
     'azurereportgroup': ['azure-report.json'],
     'azurespecialsgroup': ['azure-special-properties.json', '--head-as-boolean'],
+    'binarygroup': ['body-binary.json'],
     'booleangroup': ['body-boolean.json'],
     'bytegroup': ['body-byte.json'],
     'complexgroup': ['body-complex.json'],
