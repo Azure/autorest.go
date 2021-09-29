@@ -54,8 +54,8 @@ function generateContent(session: Session<CodeModel>, imports: ImportManager): s
   text += `// ${connectionOptions} contains configuration settings for the connection's pipeline.\n`;
   text += '// All zero-value fields will be initialized with their default values.\n';
   text += `type ${connectionOptions} struct {\n`;
-  text += '\t// HTTPClient sets the transport for making HTTP requests.\n';
-  text += '\tHTTPClient policy.Transporter\n';
+  text += '\t// Transport sets the transport for making HTTP requests.\n';
+  text += '\tTransport policy.Transporter\n';
   text += '\t// Retry configures the built-in retry policy behavior.\n';
   text += '\tRetry policy.RetryOptions\n';
   text += '\t// Telemetry configures the built-in telemetry policy behavior.\n';
@@ -167,7 +167,7 @@ function generateContent(session: Session<CodeModel>, imports: ImportManager): s
     text += `\t\tpolicies = append(policies, cred.NewAuthenticationPolicy(runtime.AuthenticationOptions{TokenRequest: policy.TokenRequestOptions{${scopes}}}))\n`;
   }
   text += '\tpolicies = append(policies, runtime.NewLogPolicy(&options.Logging))\n';
-  const pipeline = 'runtime.NewPipeline(options.HTTPClient, policies...)';
+  const pipeline = 'runtime.NewPipeline(options.Transport, policies...)';
   if (!session.model.language.go!.complexHostParams) {
     // simple case, construct the full host here
     var hostURL: string;

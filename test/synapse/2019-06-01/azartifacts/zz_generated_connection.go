@@ -19,8 +19,8 @@ var scopes = []string{"https://dev.azuresynapse.net/.default"}
 // connectionOptions contains configuration settings for the connection's pipeline.
 // All zero-value fields will be initialized with their default values.
 type connectionOptions struct {
-	// HTTPClient sets the transport for making HTTP requests.
-	HTTPClient policy.Transporter
+	// Transport sets the transport for making HTTP requests.
+	Transport policy.Transporter
 	// Retry configures the built-in retry policy behavior.
 	Retry policy.RetryOptions
 	// Telemetry configures the built-in telemetry policy behavior.
@@ -55,7 +55,7 @@ func newConnection(endpoint string, cred azcore.Credential, options *connectionO
 	policies = append(policies, options.PerRetryPolicies...)
 	policies = append(policies, cred.NewAuthenticationPolicy(runtime.AuthenticationOptions{TokenRequest: policy.TokenRequestOptions{Scopes: scopes}}))
 	policies = append(policies, runtime.NewLogPolicy(&options.Logging))
-	return &connection{u: endpoint, p: runtime.NewPipeline(options.HTTPClient, policies...)}
+	return &connection{u: endpoint, p: runtime.NewPipeline(options.Transport, policies...)}
 }
 
 // Endpoint returns the connection's endpoint.

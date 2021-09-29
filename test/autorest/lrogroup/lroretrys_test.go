@@ -16,7 +16,7 @@ import (
 func newLRORetrysClient() *LRORetrysClient {
 	options := ConnectionOptions{}
 	options.Retry.RetryDelay = 10 * time.Millisecond
-	options.HTTPClient = httpClientWithCookieJar()
+	options.Transport = httpClientWithCookieJar()
 	return NewLRORetrysClient(NewDefaultConnection(&options))
 }
 

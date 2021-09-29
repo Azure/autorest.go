@@ -18,7 +18,7 @@ import (
 func newPagingClient() *PagingClient {
 	options := ConnectionOptions{}
 	options.Retry.RetryDelay = 10 * time.Millisecond
-	options.HTTPClient = httpClientWithCookieJar()
+	options.Transport = httpClientWithCookieJar()
 	return NewPagingClient(NewDefaultConnection(&options))
 }
 

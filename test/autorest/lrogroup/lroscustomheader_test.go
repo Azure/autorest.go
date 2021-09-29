@@ -17,7 +17,7 @@ import (
 func newLrOSCustomHeaderClient() *LROsCustomHeaderClient {
 	options := ConnectionOptions{}
 	options.Retry.RetryDelay = 10 * time.Millisecond
-	options.HTTPClient = httpClientWithCookieJar()
+	options.Transport = httpClientWithCookieJar()
 	return NewLROsCustomHeaderClient(NewDefaultConnection(&options))
 }
 

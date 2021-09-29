@@ -18,8 +18,8 @@ import (
 // connectionOptions contains configuration settings for the connection's pipeline.
 // All zero-value fields will be initialized with their default values.
 type connectionOptions struct {
-	// HTTPClient sets the transport for making HTTP requests.
-	HTTPClient policy.Transporter
+	// Transport sets the transport for making HTTP requests.
+	Transport policy.Transporter
 	// Retry configures the built-in retry policy behavior.
 	Retry policy.RetryOptions
 	// Telemetry configures the built-in telemetry policy behavior.
@@ -61,7 +61,7 @@ func newConnection(geography *Geography, cred azcore.Credential, options *connec
 		geography = &defaultValue
 	}
 	hostURL = strings.ReplaceAll(hostURL, "{geography}", string(*geography))
-	return &connection{u: hostURL, p: runtime.NewPipeline(options.HTTPClient, policies...)}
+	return &connection{u: hostURL, p: runtime.NewPipeline(options.Transport, policies...)}
 }
 
 // Endpoint returns the connection's endpoint.
