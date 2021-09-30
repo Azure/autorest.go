@@ -13,7 +13,7 @@ import (
 func newLrosaDsClient() *LROSADsClient {
 	options := ConnectionOptions{}
 	options.Retry.RetryDelay = 10 * time.Millisecond
-	options.HTTPClient = httpClientWithCookieJar()
+	options.Transport = httpClientWithCookieJar()
 	return NewLROSADsClient(NewDefaultConnection(&options))
 }
 

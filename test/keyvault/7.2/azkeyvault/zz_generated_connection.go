@@ -19,8 +19,8 @@ var scopes = []string{"https://vault.azure.net/.default"}
 // ConnectionOptions contains configuration settings for the connection's pipeline.
 // All zero-value fields will be initialized with their default values.
 type ConnectionOptions struct {
-	// HTTPClient sets the transport for making HTTP requests.
-	HTTPClient policy.Transporter
+	// Transport sets the transport for making HTTP requests.
+	Transport policy.Transporter
 	// Retry configures the built-in retry policy behavior.
 	Retry policy.RetryOptions
 	// Telemetry configures the built-in telemetry policy behavior.
@@ -56,7 +56,7 @@ func NewConnection(cred azcore.Credential, options *ConnectionOptions) *Connecti
 	policies = append(policies, cred.NewAuthenticationPolicy(runtime.AuthenticationOptions{TokenRequest: policy.TokenRequestOptions{Scopes: scopes}}))
 	policies = append(policies, runtime.NewLogPolicy(&options.Logging))
 	client := &Connection{
-		p: runtime.NewPipeline(options.HTTPClient, policies...),
+		p: runtime.NewPipeline(options.Transport, policies...),
 	}
 	return client
 }
