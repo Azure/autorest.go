@@ -3,6 +3,15 @@
     "configurations": [
         {
             "type": "node",
+            "request": "attach",
+            "name": "Attach",
+            "address": "127.0.0.1",
+            "port": 9229,
+            "smartStep" : true,
+            "skipFiles": ["<node_internals/**/*.js"]
+        },
+        {
+            "type": "node",
             "request": "launch",
             "name": "Launch via NPM",
             "runtimeExecutable": "npm",
