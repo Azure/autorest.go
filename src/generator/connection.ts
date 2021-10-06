@@ -5,14 +5,14 @@
 
 import { Session } from '@autorest/extension-base';
 import { AADTokenSecurityScheme, ChoiceSchema, ChoiceValue, CodeModel, Parameter, SchemaType, SealedChoiceSchema } from '@autorest/codemodel';
-import { values } from '@azure-tools/linq';
+import { length, values } from '@azure-tools/linq';
 import { contentPreamble, formatParameterTypeName } from './helpers';
 import { ImportManager } from './imports';
 
 // generates content for connection.go
 export async function generateConnection(session: Session<CodeModel>): Promise<string> {
-  if (<boolean>session.model.language.go!.azureARM) {
-    // use the Connection type in arm instead of generating one
+  // use the Connection type in arm instead of generating one
+  if (length(session.model.operationGroups) === 0 || <boolean>session.model.language.go!.azureARM) {
     return '';
   }
   // the list of packages to import

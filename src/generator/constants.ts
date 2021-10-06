@@ -6,12 +6,16 @@
 import { Session } from '@autorest/extension-base';
 import { comment } from '@azure-tools/codegen';
 import { CodeModel, ChoiceValue, Schemas } from '@autorest/codemodel';
-import { values } from '@azure-tools/linq';
+import { length, values } from '@azure-tools/linq';
 import { contentPreamble, hasDescription, sortAscending } from './helpers';
 import { commentLength } from '../common/helpers';
 
 // Creates the content in constants.go
 export async function generateConstants(session: Session<CodeModel>, version: string): Promise<string> {
+  // lack of operation groups indicates model-only mode.
+  if (length(session.model.operationGroups) === 0) {
+    return '';
+  }
   let text = await contentPreamble(session);
   text += `const (\n`;
   text += `\tmodule = "${session.model.language.go!.packageName}"\n`;

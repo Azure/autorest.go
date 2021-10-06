@@ -39,6 +39,7 @@ const goMappings = {
     //'modelflatteninggroup': ['model-flattening.json'],
     'morecustombaseurigroup': ['custom-baseUrl-more-options.json'],
     'nonstringenumgroup': ['non-string-enum.json'],
+    'noopsgroup': ['no-operations.json'],
     'numbergroup': ['body-number.json'],
     'objectgroup': ['object-type.json'],
     'optionalgroup': ['required-optional.json'],
