@@ -37,7 +37,9 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/policy');
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
     if (<boolean>session.model.language.go!.azureARM) {
+      imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/arm');
+      imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime', 'armruntime');
     }
 
     let opText = '';
@@ -62,11 +64,9 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     }
     // stitch it all together
     let text = await contentPreamble(session);
-    let connection = 'Connection';
     let clientName = group.language.go!.clientName;
-    if (<boolean>session.model.language.go!.azureARM) {
-      connection = 'arm.Connection';
-    } else if (!forceExports) {
+    let connection = 'Connection';
+    if (!forceExports) {
       connection = connection.uncapitalize();
     }
     const clientCtor = group.language.go!.clientCtorName;
@@ -93,17 +93,12 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     if (isARM || forceExports) {
       const connectionLiterals = new Array<string>();
       const methodParams = new Array<string>();
-      if (<boolean>session.model.language.go!.azureARM) {
-        // real ARM doesn't need to deal with parameterized host (yay)
-        connectionLiterals.push('ep: string(con.Endpoint())');
-        connectionLiterals.push('pl: con.NewPipeline(module, version)');
-        methodParams.push('con *arm.Connection');
-      } else {
-        // operation client constructor
+      // add client params to the operation client constructor
+      if (!<boolean>session.model.language.go!.azureARM) {
+        // non-ARM clients ctors take a connection param before client params pending alignment with ARM API
         connectionLiterals.push('con: con');
         methodParams.push(`con *${connection}`);
       }
-      // add client params to the operation client constructor
       if (group.language.go!.clientParams) {
         const clientParams = <Array<Parameter>>group.language.go!.clientParams;
         clientParams.sort(sortParametersByRequired);
@@ -112,8 +107,24 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
           methodParams.push(`${clientParam.language.go!.name} ${formatParameterTypeName(clientParam)}`);
         }
       }
+      if (<boolean>session.model.language.go!.azureARM) {
+        // real ARM doesn't need to deal with parameterized host (yay)
+        connectionLiterals.push('ep: string(cp.Host)');
+        connectionLiterals.push('pl: armruntime.NewPipeline(module, version, credential, &cp)');
+        methodParams.push('credential azcore.TokenCredential');
+        methodParams.push('options *arm.ClientOptions');
+      }
       text += `// ${clientCtor} creates a new instance of ${clientName} with the specified values.\n`;
       text += `func ${clientCtor}(${methodParams.join(', ')}) *${clientName} {\n`;
+      if (<boolean>session.model.language.go!.azureARM) {
+        text += '\tcp := arm.ClientOptions{}\n';
+        text += '\tif options != nil {\n';
+        text += '\t\tcp = *options\n';
+        text += '\t}\n';
+        text += '\tif len(cp.Host) == 0 {\n';
+        text += '\t\tcp.Host = arm.AzurePublicCloud\n';
+        text += '\t}\n';
+      }
       text += `\treturn &${clientName}{${connectionLiterals.join(', ')}}\n`;
       text += '}\n\n';
     }

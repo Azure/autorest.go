@@ -11,7 +11,7 @@ import { ImportManager } from './imports';
 
 // generates content for connection.go
 export async function generateConnection(session: Session<CodeModel>): Promise<string> {
-  // use the Connection type in arm instead of generating one
+  // ARM doesn't use a Connection type
   if (length(session.model.operationGroups) === 0 || <boolean>session.model.language.go!.azureARM) {
     return '';
   }
