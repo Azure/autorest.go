@@ -95,7 +95,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       const methodParams = new Array<string>();
       if (<boolean>session.model.language.go!.azureARM) {
         // real ARM doesn't need to deal with parameterized host (yay)
-        connectionLiterals.push('ep: con.Endpoint()');
+        connectionLiterals.push('ep: string(con.Endpoint())');
         connectionLiterals.push('pl: con.NewPipeline(module, version)');
         methodParams.push('con *arm.Connection');
       } else {
