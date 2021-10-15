@@ -604,7 +604,7 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
     if (op.requests![0].protocol.http!.mediaTypes.length > 1) {
       for (const param of values(op.requests![0].parameters)) {
         // If a request defined more than one possible media type, then the param is expected to be synthesized from modelerfour
-        // and should be a SealedChoice schema type that account for the acceptable media types defined in the swagger. 
+        // and should be a SealedChoice schema type that account for the acceptable media types defined in the swagger.
         if (param.origin === 'modelerfour:synthesized/content-type' && param.schema.type === SchemaType.SealedChoice) {
           contentType = `string(${param.language.go!.name})`;
         }
@@ -1080,4 +1080,3 @@ function generateLROBeginMethod(op: Operation, imports: ImportManager, isARM: bo
   text += '}\n\n';
   return text;
 }
-
