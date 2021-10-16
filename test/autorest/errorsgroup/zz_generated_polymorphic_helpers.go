@@ -58,6 +58,25 @@ func unmarshalNotFoundErrorBaseClassificationArray(rawMsg json.RawMessage) ([]No
 	return fArray, nil
 }
 
+func unmarshalNotFoundErrorBaseClassificationMap(rawMsg json.RawMessage) (map[string]NotFoundErrorBaseClassification, error) {
+	if rawMsg == nil {
+		return nil, nil
+	}
+	var rawMessages map[string]json.RawMessage
+	if err := json.Unmarshal(rawMsg, &rawMessages); err != nil {
+		return nil, err
+	}
+	fMap := make(map[string]NotFoundErrorBaseClassification, len(rawMessages))
+	for key, rawMessage := range rawMessages {
+		f, err := unmarshalNotFoundErrorBaseClassification(rawMessage)
+		if err != nil {
+			return nil, err
+		}
+		fMap[key] = f
+	}
+	return fMap, nil
+}
+
 type petActionError struct {
 	wrapped PetActionErrorClassification
 }
@@ -106,6 +125,25 @@ func unmarshalPetActionErrorClassificationArray(rawMsg json.RawMessage) ([]PetAc
 	return fArray, nil
 }
 
+func unmarshalPetActionErrorClassificationMap(rawMsg json.RawMessage) (map[string]PetActionErrorClassification, error) {
+	if rawMsg == nil {
+		return nil, nil
+	}
+	var rawMessages map[string]json.RawMessage
+	if err := json.Unmarshal(rawMsg, &rawMessages); err != nil {
+		return nil, err
+	}
+	fMap := make(map[string]PetActionErrorClassification, len(rawMessages))
+	for key, rawMessage := range rawMessages {
+		f, err := unmarshalPetActionErrorClassification(rawMessage)
+		if err != nil {
+			return nil, err
+		}
+		fMap[key] = f
+	}
+	return fMap, nil
+}
+
 func unmarshalPetSadErrorClassification(rawMsg json.RawMessage) (PetSadErrorClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
@@ -141,4 +179,23 @@ func unmarshalPetSadErrorClassificationArray(rawMsg json.RawMessage) ([]PetSadEr
 		fArray[index] = f
 	}
 	return fArray, nil
+}
+
+func unmarshalPetSadErrorClassificationMap(rawMsg json.RawMessage) (map[string]PetSadErrorClassification, error) {
+	if rawMsg == nil {
+		return nil, nil
+	}
+	var rawMessages map[string]json.RawMessage
+	if err := json.Unmarshal(rawMsg, &rawMessages); err != nil {
+		return nil, err
+	}
+	fMap := make(map[string]PetSadErrorClassification, len(rawMessages))
+	for key, rawMessage := range rawMessages {
+		f, err := unmarshalPetSadErrorClassification(rawMessage)
+		if err != nil {
+			return nil, err
+		}
+		fMap[key] = f
+	}
+	return fMap, nil
 }
