@@ -2,10 +2,8 @@ package azalias
 
 import (
 	"encoding/json"
+	"reflect"
 	"testing"
-
-	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 )
 
 func TestGeoObjectNamedCollectionRoundTrip(t *testing.T) {
@@ -87,11 +85,17 @@ func TestGeoObjectNamedCollectionRoundTrip(t *testing.T) {
 	}} {
 		t.Run(testcase.name, func(t *testing.T) {
 			b, err := json.Marshal(testcase.input)
-			require.NoError(t, err)
+			if err != nil {
+				t.Fatalf("unexpected err: %v", err)
+			}
 			var output GeoJSONObjectNamedCollection
 			err = json.Unmarshal(b, &output)
-			require.NoError(t, err)
-			assert.Equal(t, testcase.expected, output)
+			if err != nil {
+				t.Fatalf("unexpected err: %v", err)
+			}
+			if !reflect.DeepEqual(testcase.expected, output) {
+				t.Errorf("expected %#v, saw %#v", testcase.expected, output)
+			}
 		})
 	}
 }
