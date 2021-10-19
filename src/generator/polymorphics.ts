@@ -90,6 +90,26 @@ export async function generatePolymorphicHelpers(session: Session<CodeModel>): P
     text += '\t}\n';
     text += '\treturn fArray, nil\n';
     text += '}\n\n';
+
+    // map unmarshaller
+    text += `func unmarshal${discName}Map(rawMsg json.RawMessage) (map[string]${discName}, error) {\n`;
+    text += '\tif rawMsg == nil {\n';
+    text += '\t\treturn nil, nil\n';
+    text += '\t}\n';
+    text += '\tvar rawMessages map[string]json.RawMessage\n';
+    text += '\tif err := json.Unmarshal(rawMsg, &rawMessages); err != nil {\n';
+    text += '\t\treturn nil, err\n';
+    text += '\t}\n';
+    text += `\tfMap := make(map[string]${discName}, len(rawMessages))\n`;
+    text += '\tfor key, rawMessage := range rawMessages {\n';
+    text += `\t\tf, err := unmarshal${discName}(rawMessage)\n`;
+    text += '\t\tif err != nil {\n';
+    text += '\t\t\treturn nil, err\n';
+    text += '\t\t}\n';
+    text += '\t\tfMap[key] = f\n';
+    text += '\t}\n';
+    text += '\treturn fMap, nil\n';
+    text += '}\n\n';
   }
   return text;
 }

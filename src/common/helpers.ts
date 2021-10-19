@@ -16,7 +16,7 @@ export function aggregateParameters(op: Operation): Array<Parameter> {
     params = params.concat(op.parameters);
   }
   // Loop through each request in an operation to account for all parameters in the initial naming transform.
-  // After the transform stage, operations will only have one request and the loop will always traverse only 
+  // After the transform stage, operations will only have one request and the loop will always traverse only
   // one request per operation.
   for (const req of values(op.requests)) {
     if (req.parameters) {
@@ -84,6 +84,10 @@ export function hasPolymorphicField(obj: ObjectSchema): boolean {
         return true;
       }
     } else if (isArraySchema(prop.schema) && isObjectSchema(prop.schema.elementType)) {
+      if (prop.schema.elementType.discriminator !== undefined) {
+        return true;
+      }
+    } else if (isDictionarySchema(prop.schema) && isObjectSchema(prop.schema.elementType)) {
       if (prop.schema.elementType.discriminator !== undefined) {
         return true;
       }

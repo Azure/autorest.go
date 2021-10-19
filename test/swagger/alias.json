@@ -306,6 +306,22 @@
         }
       }
     },
+    "GeoJsonObjectNamedCollection": {
+      "description": "A named collection of `GeoJSON` object",
+      "type": "object",
+      "properties": {
+        "collectionName": {
+          "description": "Name of the collection",
+          "type": "string"
+        },
+        "objects": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/GeoJsonObject"
+          }
+        }
+      }
+    },
     "GeoJsonObject": {
       "description": "A valid `GeoJSON` object. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3) for details.",
       "type": "object",

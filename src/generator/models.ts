@@ -7,7 +7,7 @@ import { Session } from '@autorest/extension-base';
 import { comment } from '@azure-tools/codegen';
 import { ByteArraySchema, CodeModel, ComplexSchema, DictionarySchema, GroupProperty, ObjectSchema, Language, SchemaType, Parameter, Property } from '@autorest/codemodel';
 import { length, values } from '@azure-tools/linq';
-import { isArraySchema, isObjectSchema, hasAdditionalProperties, hasPolymorphicField, commentLength } from '../common/helpers';
+import { isArraySchema, isDictionarySchema, isObjectSchema, hasAdditionalProperties, hasPolymorphicField, commentLength } from '../common/helpers';
 import { contentPreamble, sortAscending } from './helpers';
 import { ImportManager } from './imports';
 import { generateStruct, getXMLSerialization, StructDef, StructMethod } from './structs';
@@ -502,6 +502,8 @@ function generateJSONUnmarshallerBody(obj: ObjectSchema, structDef: StructDef, i
         unmarshalBody += `\t\t\t\t${receiver}.${prop.language.go!.name}, err = unmarshal${prop.schema.language.go!.discriminatorInterface}(val)\n`;
       } else if (isArraySchema(prop.schema) && prop.schema.elementType.language.go!.discriminatorInterface) {
         unmarshalBody += `\t\t\t\t${receiver}.${prop.language.go!.name}, err = unmarshal${prop.schema.elementType.language.go!.discriminatorInterface}Array(val)\n`;
+      } else if (isDictionarySchema(prop.schema) && prop.schema.elementType.language.go!.discriminatorInterface) {
+        unmarshalBody += `\t\t\t\t${receiver}.${prop.language.go!.name}, err = unmarshal${prop.schema.elementType.language.go!.discriminatorInterface}Map(val)\n`;
       } else if (prop.schema.language.go!.internalTimeType) {
         unmarshalBody += `\t\t\t\tvar aux ${prop.schema.language.go!.internalTimeType}\n`;
         unmarshalBody += '\t\t\t\terr = unpopulate(val, &aux)\n';
