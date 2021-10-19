@@ -140,6 +140,6 @@ jobs:
 
       - ${{if ne(variables['Build.Reason'], 'PullRequest')}}:
         - pwsh: |
-            npm run coverage -- publish --repo=$(Build.Repository.Name) --ref=$(Build.SourceBranch) --githubToken=$(github-token) --azStorageAccount=$(storage-coverage-user) --azStorageAccessKey=$(storage-coverage-pass) --coverageDirectory=./coverage
+            npm run coverage -- publish --repo=$(Build.Repository.Name) --ref=$(Build.SourceBranch) --githubToken=$(github-token) --azStorageAccount=$(storage-coverage-user) --azStorageAccessKey=$(storage-coverage-pass)
           displayName: 'Publish AutoRest Test Server Coverage Report'
           workingDirectory: src/node_modules/@microsoft.azure/autorest.testserver
