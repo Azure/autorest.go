@@ -10,9 +10,8 @@ package azalias
 
 import (
 	"encoding/json"
-	"reflect"
-
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"reflect"
 )
 
 // AliasCreateOptions contains the optional parameters for the Alias.Create method.
