@@ -6,7 +6,7 @@ dependencies:
   '@azure-tools/codegen': 2.7.0
   '@azure-tools/linq': 3.1.261
   '@azure-tools/tasks': 3.0.252
-  '@microsoft.azure/autorest.testserver': 3.0.41_e58605af5d62eced51e25286a407a18b
+  '@microsoft.azure/autorest.testserver': 3.1.3_e58605af5d62eced51e25286a407a18b
   '@rush-temp/go': 'file:projects/go.tgz'
   '@types/html-to-text': 5.1.2
   '@types/jest': 26.0.24
@@ -864,7 +864,7 @@ packages:
       node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0
     resolution:
       integrity: sha512-IDO2ezTxeMvQAHxzG/ZvEyA47q0aVfzT95rGFl7bZs/Go0aIucvfDbS2rmnoEdXxlLQhcolmoG/wvL/uKx4tKA==
-  /@microsoft.azure/autorest.testserver/3.0.41_e58605af5d62eced51e25286a407a18b:
+  /@microsoft.azure/autorest.testserver/3.1.3_e58605af5d62eced51e25286a407a18b:
     dependencies:
       axios: 0.21.4
       azure-storage: 2.10.3
@@ -884,7 +884,6 @@ packages:
       ts-jest: 27.0.5_feedb8eefd05ada81286a4e66b056321
       underscore: 1.13.1
       winston: 3.3.3
-      wiremock: 2.27.2
       xml2js: 0.4.23
       yargs: 17.1.1
     dev: false
@@ -895,7 +894,7 @@ packages:
       '@types/jest': '*'
       typescript: '*'
     resolution:
-      integrity: sha512-q0Bnt/B+g0oTbJjmYkb3aMa2lf+lHogRl4b1U9ocFbxO1Bu8TNNw1uasm0+M8K6d2OINtf/TG4NokMcFNbBnQg==
+      integrity: sha512-txWu6koVXjW93eUOgsy3slCATFnZZYVvAryO+ieUp20ke8llXj7KTBLEnL0tewx6cb4f/h3Kk7Ho/tcM3ZGdOg==
   /@sinonjs/commons/1.8.3:
     dependencies:
       type-detect: 4.0.8
@@ -2916,12 +2915,6 @@ packages:
       node: '>=8.0.0'
     resolution:
       integrity: sha512-JG3eIAj5V9CwcGvuOmoo6LB9kbAYT8HXffUl6memuszlwDC/qvFAJw49XJ5NROSFNPxp3iQg1GqkFhaY/CR0IA==
-  /interpret/1.4.0:
-    dev: false
-    engines:
-      node: '>= 0.10'
-    resolution:
-      integrity: sha512-agE4QfB2Lkp9uICn7BAqoscw4SZP9kTE2hxiFI3jBPmXJfdqiahTbUuKGsMoN2GtqL9AxhYioAcVvgsb1HvRbA==
   /invert-kv/2.0.0:
     dev: false
     engines:
@@ -4984,14 +4977,6 @@ packages:
       node: '>= 6'
     resolution:
       integrity: sha512-BViHy7LKeTz4oNnkcLJ+lVSL6vpiFeX6/d3oSH8zCW7UxP2onchk+vTGB143xuFjHS3deTgkKoXXymXqymiIdA==
-  /rechoir/0.6.2:
-    dependencies:
-      resolve: 1.20.0
-    dev: false
-    engines:
-      node: '>= 0.10'
-    resolution:
-      integrity: sha1-hSBLVNuoLVdC4oyWdW70OvUOM4Q=
   /regexp.prototype.flags/1.3.1:
     dependencies:
       call-bind: 1.0.2
@@ -5256,17 +5241,6 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==
-  /shelljs/0.7.8:
-    dependencies:
-      glob: 7.1.6
-      interpret: 1.4.0
-      rechoir: 0.6.2
-    dev: false
-    engines:
-      node: '>=0.11.0'
-    hasBin: true
-    resolution:
-      integrity: sha1-3svPh0sNHl+3LhSxZKloMEjprLM=
   /showdown/1.9.1:
     dependencies:
       yargs: 14.2.3
@@ -5510,7 +5484,7 @@ packages:
       integrity: sha512-DuRs1gKbBqsMKIZlrffwlug8MHkcnpjs5VPmL1PAh+mA30U0DTotfDZ0d2UUsXpPmPmMMJ6W773MaA3J+lbiWA==
   /strip-ansi/6.0.0:
     dependencies:
-      ansi-regex: 5.0.0
+      ansi-regex: 5.0.1
     dev: false
     engines:
       node: '>=8'
@@ -6058,13 +6032,6 @@ packages:
       node: '>= 6.4.0'
     resolution:
       integrity: sha512-oEXTISQnC8VlSAKf1KYSSd7J6IWuRPQqDdo8eoRNaYKLvwSb5+79Z3Yi1lrl6KDpU6/VWaxpakDAtb1oQ4n9aw==
-  /wiremock/2.27.2:
-    dependencies:
-      shelljs: 0.7.8
-    dev: false
-    hasBin: true
-    resolution:
-      integrity: sha512-vWjgG/bc731ntQz7SjSGr5Cr3RMNGfMIJDR6pfNvcWMwJyZbeXsUucAKZoxGO5NuUWv7vUi+SmHsihq379ep4g==
   /word-wrap/1.2.3:
     dev: false
     engines:
@@ -6279,7 +6246,7 @@ packages:
       '@azure-tools/codemodel': 4.13.349
       '@azure-tools/linq': 3.1.261
       '@azure-tools/tasks': 3.0.252
-      '@microsoft.azure/autorest.testserver': 3.0.41_e58605af5d62eced51e25286a407a18b
+      '@microsoft.azure/autorest.testserver': 3.1.3_e58605af5d62eced51e25286a407a18b
       '@types/html-to-text': 5.1.2
       '@types/jest': 26.0.24
       '@types/js-yaml': 3.12.1
@@ -6301,7 +6268,7 @@ packages:
     dev: false
     name: '@rush-temp/go'
     resolution:
-      integrity: sha512-wpne0kdIbpJ45HrEr4WAZyqGFoGETAVW7ZvdyzMYom44NNei8+7RT3A+PUjUiVbPJP6lpKDqQ7lnHnQmvUfxpg==
+      integrity: sha512-BNeduR0GIkZRsTRKm+c46RgpW+ztRx9B8G2iNRy58wad8QbxUsTdh+ZcU7Y+xvdwKyLfRyaHC7uOtAjWgqM4fQ==
       tarball: 'file:projects/go.tgz'
     version: 0.0.0
 registry: ''
@@ -6313,7 +6280,7 @@ specifiers:
   '@azure-tools/codegen': ~2.7.0
   '@azure-tools/linq': ~3.1.0
   '@azure-tools/tasks': ~3.0.0
-  '@microsoft.azure/autorest.testserver': 3.0.41
+  '@microsoft.azure/autorest.testserver': 3.1.3
   '@rush-temp/go': 'file:./projects/go.tgz'
   '@types/html-to-text': ^5.1.2
   '@types/jest': ~26.0.24
