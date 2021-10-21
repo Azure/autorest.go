@@ -11,12 +11,13 @@ import (
 	"testing"
 	"time"
 
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/google/go-cmp/cmp"
 )
 
 func newPagingClient() *PagingClient {
-	options := ConnectionOptions{}
+	options := azcore.ClientOptions{}
 	options.Retry.RetryDelay = 10 * time.Millisecond
 	options.Transport = httpClientWithCookieJar()
 	return NewPagingClient(NewDefaultConnection(&options))
