@@ -24,7 +24,7 @@ export async function generateResponses(session: Session<CodeModel>): Promise<st
   for (const respEnv of values(responseEnvelopes)) {
     const respType = generateStruct(imports, respEnv.language.go!, respEnv.properties);
     if (respEnv.language.go!.isLRO) {
-      generatePollUntilDoneForResponse(respType);
+      generatePollUntilDoneForResponse(respType, <boolean>session.model.language.go!.azureARM);
       generateResumeForResponse(respType, session.model.language.go!.openApiType === 'arm', imports);
     }
     structs.push(respType);
@@ -91,7 +91,7 @@ function generateUnmarshallerForResultEnvelope(structDef: StructDef) {
   structDef.Methods.push({ name: 'UnmarshalJSON', desc: `UnmarshalJSON implements the json.Unmarshaller interface for type ${structDef.Language.name}.`, text: unmarshaller });
 }
 
-function generatePollUntilDoneForResponse(structDef: StructDef) {
+function generatePollUntilDoneForResponse(structDef: StructDef, isAzure: boolean) {
   const pagedResponse = (<PollerInfo>structDef.Language.pollerInfo).op.language.go!.pageableType;
   const respType = getResponseType(<PollerInfo>structDef.Language.pollerInfo);
   let pollUntilDone = `func (l ${structDef.Language.name}) PollUntilDone(ctx context.Context, freq time.Duration) (`;
@@ -129,7 +129,14 @@ function generatePollUntilDoneForResponse(structDef: StructDef) {
   }
   pollUntilDone += '\treturn respType, nil\n';
   pollUntilDone += '}\n\n';
-  structDef.Methods.push({ name: 'PollUntilDone', desc: 'PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.', text: pollUntilDone });
+  let desc = 'PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.\nfreq: the time to wait between intervals in absence of a Retry-After header.';
+  if (isAzure) {
+    desc += '\nA good starting value is 30 seconds. Note that some resources might benefit from a different value.';
+  }
+  structDef.Methods.push({
+    name: 'PollUntilDone',
+    desc: desc,
+    text: pollUntilDone });
 }
 
 function generateResumeForResponse(structDef: StructDef, isARM: boolean, imports: ImportManager) {

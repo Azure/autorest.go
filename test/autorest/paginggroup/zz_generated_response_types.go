@@ -85,6 +85,7 @@ type PagingGetMultiplePagesLROPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
 func (l PagingGetMultiplePagesLROPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (*PagingGetMultiplePagesLROPager, error) {
 	respType := &PagingGetMultiplePagesLROPager{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.current.ProductResult)

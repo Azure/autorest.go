@@ -103,6 +103,8 @@ type ContainerServicesCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l ContainerServicesCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ContainerServicesCreateOrUpdateResponse, error) {
 	respType := ContainerServicesCreateOrUpdateResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.ContainerService)
@@ -153,6 +155,8 @@ type ContainerServicesDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l ContainerServicesDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ContainerServicesDeleteResponse, error) {
 	respType := ContainerServicesDeleteResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
@@ -299,6 +303,8 @@ type DedicatedHostsCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l DedicatedHostsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (DedicatedHostsCreateOrUpdateResponse, error) {
 	respType := DedicatedHostsCreateOrUpdateResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.DedicatedHost)
@@ -349,6 +355,8 @@ type DedicatedHostsDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l DedicatedHostsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (DedicatedHostsDeleteResponse, error) {
 	respType := DedicatedHostsDeleteResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
@@ -417,6 +425,8 @@ type DedicatedHostsUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l DedicatedHostsUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (DedicatedHostsUpdateResponse, error) {
 	respType := DedicatedHostsUpdateResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.DedicatedHost)
@@ -467,6 +477,8 @@ type DiskEncryptionSetsCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l DiskEncryptionSetsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (DiskEncryptionSetsCreateOrUpdateResponse, error) {
 	respType := DiskEncryptionSetsCreateOrUpdateResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.DiskEncryptionSet)
@@ -517,6 +529,8 @@ type DiskEncryptionSetsDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l DiskEncryptionSetsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (DiskEncryptionSetsDeleteResponse, error) {
 	respType := DiskEncryptionSetsDeleteResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
@@ -597,6 +611,8 @@ type DiskEncryptionSetsUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l DiskEncryptionSetsUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (DiskEncryptionSetsUpdateResponse, error) {
 	respType := DiskEncryptionSetsUpdateResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.DiskEncryptionSet)
@@ -647,6 +663,8 @@ type DisksCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l DisksCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (DisksCreateOrUpdateResponse, error) {
 	respType := DisksCreateOrUpdateResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Disk)
@@ -697,6 +715,8 @@ type DisksDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l DisksDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (DisksDeleteResponse, error) {
 	respType := DisksDeleteResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
@@ -753,6 +773,8 @@ type DisksGrantAccessPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l DisksGrantAccessPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (DisksGrantAccessResponse, error) {
 	respType := DisksGrantAccessResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.AccessURI)
@@ -827,6 +849,8 @@ type DisksRevokeAccessPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l DisksRevokeAccessPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (DisksRevokeAccessResponse, error) {
 	respType := DisksRevokeAccessResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
@@ -871,6 +895,8 @@ type DisksUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l DisksUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (DisksUpdateResponse, error) {
 	respType := DisksUpdateResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Disk)
@@ -921,6 +947,8 @@ type GalleriesCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l GalleriesCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (GalleriesCreateOrUpdateResponse, error) {
 	respType := GalleriesCreateOrUpdateResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Gallery)
@@ -971,6 +999,8 @@ type GalleriesDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l GalleriesDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (GalleriesDeleteResponse, error) {
 	respType := GalleriesDeleteResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
@@ -1051,6 +1081,8 @@ type GalleriesUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l GalleriesUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (GalleriesUpdateResponse, error) {
 	respType := GalleriesUpdateResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Gallery)
@@ -1101,6 +1133,8 @@ type GalleryApplicationVersionsCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l GalleryApplicationVersionsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (GalleryApplicationVersionsCreateOrUpdateResponse, error) {
 	respType := GalleryApplicationVersionsCreateOrUpdateResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.GalleryApplicationVersion)
@@ -1151,6 +1185,8 @@ type GalleryApplicationVersionsDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l GalleryApplicationVersionsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (GalleryApplicationVersionsDeleteResponse, error) {
 	respType := GalleryApplicationVersionsDeleteResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
@@ -1219,6 +1255,8 @@ type GalleryApplicationVersionsUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l GalleryApplicationVersionsUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (GalleryApplicationVersionsUpdateResponse, error) {
 	respType := GalleryApplicationVersionsUpdateResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.GalleryApplicationVersion)
@@ -1269,6 +1307,8 @@ type GalleryApplicationsCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l GalleryApplicationsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (GalleryApplicationsCreateOrUpdateResponse, error) {
 	respType := GalleryApplicationsCreateOrUpdateResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.GalleryApplication)
@@ -1319,6 +1359,8 @@ type GalleryApplicationsDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l GalleryApplicationsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (GalleryApplicationsDeleteResponse, error) {
 	respType := GalleryApplicationsDeleteResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
@@ -1387,6 +1429,8 @@ type GalleryApplicationsUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l GalleryApplicationsUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (GalleryApplicationsUpdateResponse, error) {
 	respType := GalleryApplicationsUpdateResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.GalleryApplication)
@@ -1437,6 +1481,8 @@ type GalleryImageVersionsCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l GalleryImageVersionsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (GalleryImageVersionsCreateOrUpdateResponse, error) {
 	respType := GalleryImageVersionsCreateOrUpdateResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.GalleryImageVersion)
@@ -1487,6 +1533,8 @@ type GalleryImageVersionsDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l GalleryImageVersionsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (GalleryImageVersionsDeleteResponse, error) {
 	respType := GalleryImageVersionsDeleteResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
@@ -1555,6 +1603,8 @@ type GalleryImageVersionsUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l GalleryImageVersionsUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (GalleryImageVersionsUpdateResponse, error) {
 	respType := GalleryImageVersionsUpdateResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.GalleryImageVersion)
@@ -1605,6 +1655,8 @@ type GalleryImagesCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l GalleryImagesCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (GalleryImagesCreateOrUpdateResponse, error) {
 	respType := GalleryImagesCreateOrUpdateResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.GalleryImage)
@@ -1655,6 +1707,8 @@ type GalleryImagesDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l GalleryImagesDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (GalleryImagesDeleteResponse, error) {
 	respType := GalleryImagesDeleteResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
@@ -1723,6 +1777,8 @@ type GalleryImagesUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l GalleryImagesUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (GalleryImagesUpdateResponse, error) {
 	respType := GalleryImagesUpdateResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.GalleryImage)
@@ -1773,6 +1829,8 @@ type ImagesCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l ImagesCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ImagesCreateOrUpdateResponse, error) {
 	respType := ImagesCreateOrUpdateResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Image)
@@ -1823,6 +1881,8 @@ type ImagesDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l ImagesDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ImagesDeleteResponse, error) {
 	respType := ImagesDeleteResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
@@ -1903,6 +1963,8 @@ type ImagesUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l ImagesUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ImagesUpdateResponse, error) {
 	respType := ImagesUpdateResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Image)
@@ -1953,6 +2015,8 @@ type LogAnalyticsExportRequestRateByIntervalPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l LogAnalyticsExportRequestRateByIntervalPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LogAnalyticsExportRequestRateByIntervalResponse, error) {
 	respType := LogAnalyticsExportRequestRateByIntervalResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.LogAnalyticsOperationResult)
@@ -2003,6 +2067,8 @@ type LogAnalyticsExportThrottledRequestsPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l LogAnalyticsExportThrottledRequestsPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LogAnalyticsExportThrottledRequestsResponse, error) {
 	respType := LogAnalyticsExportThrottledRequestsResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.LogAnalyticsOperationResult)
@@ -2221,6 +2287,8 @@ type SnapshotsCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l SnapshotsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (SnapshotsCreateOrUpdateResponse, error) {
 	respType := SnapshotsCreateOrUpdateResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Snapshot)
@@ -2271,6 +2339,8 @@ type SnapshotsDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l SnapshotsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (SnapshotsDeleteResponse, error) {
 	respType := SnapshotsDeleteResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
@@ -2327,6 +2397,8 @@ type SnapshotsGrantAccessPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l SnapshotsGrantAccessPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (SnapshotsGrantAccessResponse, error) {
 	respType := SnapshotsGrantAccessResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.AccessURI)
@@ -2401,6 +2473,8 @@ type SnapshotsRevokeAccessPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l SnapshotsRevokeAccessPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (SnapshotsRevokeAccessResponse, error) {
 	respType := SnapshotsRevokeAccessResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
@@ -2445,6 +2519,8 @@ type SnapshotsUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l SnapshotsUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (SnapshotsUpdateResponse, error) {
 	respType := SnapshotsUpdateResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Snapshot)
@@ -2545,6 +2621,8 @@ type VirtualMachineExtensionsCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualMachineExtensionsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualMachineExtensionsCreateOrUpdateResponse, error) {
 	respType := VirtualMachineExtensionsCreateOrUpdateResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.VirtualMachineExtension)
@@ -2595,6 +2673,8 @@ type VirtualMachineExtensionsDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualMachineExtensionsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualMachineExtensionsDeleteResponse, error) {
 	respType := VirtualMachineExtensionsDeleteResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
@@ -2663,6 +2743,8 @@ type VirtualMachineExtensionsUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualMachineExtensionsUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualMachineExtensionsUpdateResponse, error) {
 	respType := VirtualMachineExtensionsUpdateResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.VirtualMachineExtension)
@@ -2801,6 +2883,8 @@ type VirtualMachineScaleSetExtensionsCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualMachineScaleSetExtensionsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualMachineScaleSetExtensionsCreateOrUpdateResponse, error) {
 	respType := VirtualMachineScaleSetExtensionsCreateOrUpdateResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.VirtualMachineScaleSetExtension)
@@ -2851,6 +2935,8 @@ type VirtualMachineScaleSetExtensionsDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualMachineScaleSetExtensionsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualMachineScaleSetExtensionsDeleteResponse, error) {
 	respType := VirtualMachineScaleSetExtensionsDeleteResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
@@ -2919,6 +3005,8 @@ type VirtualMachineScaleSetExtensionsUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualMachineScaleSetExtensionsUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualMachineScaleSetExtensionsUpdateResponse, error) {
 	respType := VirtualMachineScaleSetExtensionsUpdateResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.VirtualMachineScaleSetExtension)
@@ -2969,6 +3057,8 @@ type VirtualMachineScaleSetRollingUpgradesCancelPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualMachineScaleSetRollingUpgradesCancelPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualMachineScaleSetRollingUpgradesCancelResponse, error) {
 	respType := VirtualMachineScaleSetRollingUpgradesCancelResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
@@ -3025,6 +3115,8 @@ type VirtualMachineScaleSetRollingUpgradesStartExtensionUpgradePollerResponse st
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualMachineScaleSetRollingUpgradesStartExtensionUpgradePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualMachineScaleSetRollingUpgradesStartExtensionUpgradeResponse, error) {
 	respType := VirtualMachineScaleSetRollingUpgradesStartExtensionUpgradeResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
@@ -3069,6 +3161,8 @@ type VirtualMachineScaleSetRollingUpgradesStartOSUpgradePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualMachineScaleSetRollingUpgradesStartOSUpgradePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualMachineScaleSetRollingUpgradesStartOSUpgradeResponse, error) {
 	respType := VirtualMachineScaleSetRollingUpgradesStartOSUpgradeResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
@@ -3113,6 +3207,8 @@ type VirtualMachineScaleSetVMExtensionsCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualMachineScaleSetVMExtensionsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualMachineScaleSetVMExtensionsCreateOrUpdateResponse, error) {
 	respType := VirtualMachineScaleSetVMExtensionsCreateOrUpdateResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.VirtualMachineExtension)
@@ -3163,6 +3259,8 @@ type VirtualMachineScaleSetVMExtensionsDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualMachineScaleSetVMExtensionsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualMachineScaleSetVMExtensionsDeleteResponse, error) {
 	respType := VirtualMachineScaleSetVMExtensionsDeleteResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
@@ -3231,6 +3329,8 @@ type VirtualMachineScaleSetVMExtensionsUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualMachineScaleSetVMExtensionsUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualMachineScaleSetVMExtensionsUpdateResponse, error) {
 	respType := VirtualMachineScaleSetVMExtensionsUpdateResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.VirtualMachineExtension)
@@ -3281,6 +3381,8 @@ type VirtualMachineScaleSetVMsDeallocatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualMachineScaleSetVMsDeallocatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualMachineScaleSetVMsDeallocateResponse, error) {
 	respType := VirtualMachineScaleSetVMsDeallocateResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
@@ -3325,6 +3427,8 @@ type VirtualMachineScaleSetVMsDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualMachineScaleSetVMsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualMachineScaleSetVMsDeleteResponse, error) {
 	respType := VirtualMachineScaleSetVMsDeleteResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
@@ -3405,6 +3509,8 @@ type VirtualMachineScaleSetVMsPerformMaintenancePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualMachineScaleSetVMsPerformMaintenancePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualMachineScaleSetVMsPerformMaintenanceResponse, error) {
 	respType := VirtualMachineScaleSetVMsPerformMaintenanceResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
@@ -3449,6 +3555,8 @@ type VirtualMachineScaleSetVMsPowerOffPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualMachineScaleSetVMsPowerOffPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualMachineScaleSetVMsPowerOffResponse, error) {
 	respType := VirtualMachineScaleSetVMsPowerOffResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
@@ -3493,6 +3601,8 @@ type VirtualMachineScaleSetVMsRedeployPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualMachineScaleSetVMsRedeployPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualMachineScaleSetVMsRedeployResponse, error) {
 	respType := VirtualMachineScaleSetVMsRedeployResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
@@ -3537,6 +3647,8 @@ type VirtualMachineScaleSetVMsReimageAllPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualMachineScaleSetVMsReimageAllPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualMachineScaleSetVMsReimageAllResponse, error) {
 	respType := VirtualMachineScaleSetVMsReimageAllResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
@@ -3581,6 +3693,8 @@ type VirtualMachineScaleSetVMsReimagePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualMachineScaleSetVMsReimagePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualMachineScaleSetVMsReimageResponse, error) {
 	respType := VirtualMachineScaleSetVMsReimageResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
@@ -3625,6 +3739,8 @@ type VirtualMachineScaleSetVMsRestartPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualMachineScaleSetVMsRestartPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualMachineScaleSetVMsRestartResponse, error) {
 	respType := VirtualMachineScaleSetVMsRestartResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
@@ -3669,6 +3785,8 @@ type VirtualMachineScaleSetVMsRunCommandPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualMachineScaleSetVMsRunCommandPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualMachineScaleSetVMsRunCommandResponse, error) {
 	respType := VirtualMachineScaleSetVMsRunCommandResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.RunCommandResult)
@@ -3725,6 +3843,8 @@ type VirtualMachineScaleSetVMsStartPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualMachineScaleSetVMsStartPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualMachineScaleSetVMsStartResponse, error) {
 	respType := VirtualMachineScaleSetVMsStartResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
@@ -3769,6 +3889,8 @@ type VirtualMachineScaleSetVMsUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualMachineScaleSetVMsUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualMachineScaleSetVMsUpdateResponse, error) {
 	respType := VirtualMachineScaleSetVMsUpdateResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.VirtualMachineScaleSetVM)
@@ -3825,6 +3947,8 @@ type VirtualMachineScaleSetsCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualMachineScaleSetsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualMachineScaleSetsCreateOrUpdateResponse, error) {
 	respType := VirtualMachineScaleSetsCreateOrUpdateResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.VirtualMachineScaleSet)
@@ -3875,6 +3999,8 @@ type VirtualMachineScaleSetsDeallocatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualMachineScaleSetsDeallocatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualMachineScaleSetsDeallocateResponse, error) {
 	respType := VirtualMachineScaleSetsDeallocateResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
@@ -3919,6 +4045,8 @@ type VirtualMachineScaleSetsDeleteInstancesPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualMachineScaleSetsDeleteInstancesPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualMachineScaleSetsDeleteInstancesResponse, error) {
 	respType := VirtualMachineScaleSetsDeleteInstancesResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
@@ -3963,6 +4091,8 @@ type VirtualMachineScaleSetsDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualMachineScaleSetsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualMachineScaleSetsDeleteResponse, error) {
 	respType := VirtualMachineScaleSetsDeleteResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
@@ -4091,6 +4221,8 @@ type VirtualMachineScaleSetsPerformMaintenancePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualMachineScaleSetsPerformMaintenancePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualMachineScaleSetsPerformMaintenanceResponse, error) {
 	respType := VirtualMachineScaleSetsPerformMaintenanceResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
@@ -4135,6 +4267,8 @@ type VirtualMachineScaleSetsPowerOffPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualMachineScaleSetsPowerOffPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualMachineScaleSetsPowerOffResponse, error) {
 	respType := VirtualMachineScaleSetsPowerOffResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
@@ -4179,6 +4313,8 @@ type VirtualMachineScaleSetsRedeployPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualMachineScaleSetsRedeployPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualMachineScaleSetsRedeployResponse, error) {
 	respType := VirtualMachineScaleSetsRedeployResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
@@ -4223,6 +4359,8 @@ type VirtualMachineScaleSetsReimageAllPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualMachineScaleSetsReimageAllPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualMachineScaleSetsReimageAllResponse, error) {
 	respType := VirtualMachineScaleSetsReimageAllResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
@@ -4267,6 +4405,8 @@ type VirtualMachineScaleSetsReimagePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualMachineScaleSetsReimagePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualMachineScaleSetsReimageResponse, error) {
 	respType := VirtualMachineScaleSetsReimageResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
@@ -4311,6 +4451,8 @@ type VirtualMachineScaleSetsRestartPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualMachineScaleSetsRestartPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualMachineScaleSetsRestartResponse, error) {
 	respType := VirtualMachineScaleSetsRestartResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
@@ -4355,6 +4497,8 @@ type VirtualMachineScaleSetsSetOrchestrationServiceStatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualMachineScaleSetsSetOrchestrationServiceStatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualMachineScaleSetsSetOrchestrationServiceStateResponse, error) {
 	respType := VirtualMachineScaleSetsSetOrchestrationServiceStateResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
@@ -4399,6 +4543,8 @@ type VirtualMachineScaleSetsStartPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualMachineScaleSetsStartPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualMachineScaleSetsStartResponse, error) {
 	respType := VirtualMachineScaleSetsStartResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
@@ -4443,6 +4589,8 @@ type VirtualMachineScaleSetsUpdateInstancesPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualMachineScaleSetsUpdateInstancesPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualMachineScaleSetsUpdateInstancesResponse, error) {
 	respType := VirtualMachineScaleSetsUpdateInstancesResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
@@ -4487,6 +4635,8 @@ type VirtualMachineScaleSetsUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualMachineScaleSetsUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualMachineScaleSetsUpdateResponse, error) {
 	respType := VirtualMachineScaleSetsUpdateResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.VirtualMachineScaleSet)
@@ -4549,6 +4699,8 @@ type VirtualMachinesCapturePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualMachinesCapturePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualMachinesCaptureResponse, error) {
 	respType := VirtualMachinesCaptureResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.VirtualMachineCaptureResult)
@@ -4599,6 +4751,8 @@ type VirtualMachinesConvertToManagedDisksPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualMachinesConvertToManagedDisksPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualMachinesConvertToManagedDisksResponse, error) {
 	respType := VirtualMachinesConvertToManagedDisksResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
@@ -4643,6 +4797,8 @@ type VirtualMachinesCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualMachinesCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualMachinesCreateOrUpdateResponse, error) {
 	respType := VirtualMachinesCreateOrUpdateResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.VirtualMachine)
@@ -4693,6 +4849,8 @@ type VirtualMachinesDeallocatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualMachinesDeallocatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualMachinesDeallocateResponse, error) {
 	respType := VirtualMachinesDeallocateResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
@@ -4737,6 +4895,8 @@ type VirtualMachinesDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualMachinesDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualMachinesDeleteResponse, error) {
 	respType := VirtualMachinesDeleteResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
@@ -4859,6 +5019,8 @@ type VirtualMachinesPerformMaintenancePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualMachinesPerformMaintenancePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualMachinesPerformMaintenanceResponse, error) {
 	respType := VirtualMachinesPerformMaintenanceResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
@@ -4903,6 +5065,8 @@ type VirtualMachinesPowerOffPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualMachinesPowerOffPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualMachinesPowerOffResponse, error) {
 	respType := VirtualMachinesPowerOffResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
@@ -4947,6 +5111,8 @@ type VirtualMachinesReapplyPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualMachinesReapplyPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualMachinesReapplyResponse, error) {
 	respType := VirtualMachinesReapplyResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
@@ -4991,6 +5157,8 @@ type VirtualMachinesRedeployPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualMachinesRedeployPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualMachinesRedeployResponse, error) {
 	respType := VirtualMachinesRedeployResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
@@ -5035,6 +5203,8 @@ type VirtualMachinesReimagePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualMachinesReimagePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualMachinesReimageResponse, error) {
 	respType := VirtualMachinesReimageResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
@@ -5079,6 +5249,8 @@ type VirtualMachinesRestartPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualMachinesRestartPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualMachinesRestartResponse, error) {
 	respType := VirtualMachinesRestartResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
@@ -5123,6 +5295,8 @@ type VirtualMachinesRunCommandPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualMachinesRunCommandPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualMachinesRunCommandResponse, error) {
 	respType := VirtualMachinesRunCommandResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.RunCommandResult)
@@ -5179,6 +5353,8 @@ type VirtualMachinesStartPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualMachinesStartPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualMachinesStartResponse, error) {
 	respType := VirtualMachinesStartResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
@@ -5223,6 +5399,8 @@ type VirtualMachinesUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header.
+// A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualMachinesUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualMachinesUpdateResponse, error) {
 	respType := VirtualMachinesUpdateResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.VirtualMachine)
