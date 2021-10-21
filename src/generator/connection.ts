@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Session } from '@autorest/extension-base';
-import { AADTokenSecurityScheme, ChoiceSchema, ChoiceValue, CodeModel, Parameter, SchemaType, SealedChoiceSchema } from '@autorest/codemodel';
+import { ChoiceSchema, ChoiceValue, CodeModel, Parameter, SchemaType, SealedChoiceSchema } from '@autorest/codemodel';
 import { length, values } from '@azure-tools/linq';
 import { contentPreamble, formatParameterTypeName } from './helpers';
 import { ImportManager } from './imports';
@@ -18,7 +18,7 @@ export async function generateConnection(session: Session<CodeModel>): Promise<s
   // the list of packages to import
   const imports = new ImportManager();
   // add standard imports
-  imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/policy');
+  imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
 
   let text = await contentPreamble(session);
@@ -31,44 +31,7 @@ export async function generateConnection(session: Session<CodeModel>): Promise<s
 
 function generateContent(session: Session<CodeModel>, imports: ImportManager): string {
   let text = '';
-  let usesScopes = false;
-  if (session.model.security.authenticationRequired) {
-    for (const scheme of values(session.model.security.schemes)) {
-      if (scheme.type === 'AADToken') {
-        const tokenScheme = <AADTokenSecurityScheme>scheme;
-        // enclose each scope in double-quotes
-        for (let i = 0; i < tokenScheme.scopes.length; ++i) {
-          tokenScheme.scopes[i] = `"${tokenScheme.scopes[i]}"`;
-        }
-        text += `var scopes = []string{${tokenScheme.scopes.join(', ')}}\n`;
-        usesScopes = true;
-        break;
-      }
-    }
-  }
   const forceExports = <boolean>session.model.language.go!.exportClients;
-  let connectionOptions = 'ConnectionOptions';
-  if (!forceExports) {
-    connectionOptions = connectionOptions.uncapitalize();
-  }
-  text += `// ${connectionOptions} contains configuration settings for the connection's pipeline.\n`;
-  text += '// All zero-value fields will be initialized with their default values.\n';
-  text += `type ${connectionOptions} struct {\n`;
-  text += '\t// Transport sets the transport for making HTTP requests.\n';
-  text += '\tTransport policy.Transporter\n';
-  text += '\t// Retry configures the built-in retry policy behavior.\n';
-  text += '\tRetry policy.RetryOptions\n';
-  text += '\t// Telemetry configures the built-in telemetry policy behavior.\n';
-  text += '\tTelemetry policy.TelemetryOptions\n';
-  text += '\t// Logging configures the built-in logging policy behavior.\n';
-  text += '\tLogging policy.LogOptions\n';
-  text += '\t// PerCallPolicies contains custom policies to inject into the pipeline.\n';
-  text += '\t// Each policy is executed once per request.\n';
-  text += '\tPerCallPolicies []policy.Policy\n';
-  text += '\t// PerRetryPolicies contains custom policies to inject into the pipeline.\n';
-  text += '\t// Each policy is executed once per request, and for each retry request.\n';
-  text += '\tPerRetryPolicies []policy.Policy\n';
-  text += '}\n\n';
 
   // Connection
   let connection = 'Connection';
@@ -100,23 +63,14 @@ function generateContent(session: Session<CodeModel>, imports: ImportManager): s
   text += `\tp runtime.Pipeline\n`;
   text += '}\n\n';
 
-  let credParam = '';
-  if (session.model.security.authenticationRequired) {
-    credParam = 'cred azcore.Credential, ';
-    imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
-  }
   const endpoint = getDefaultEndpoint(session.model.globalParameters);
   if (endpoint) {
     text += `// ${defaultEndpoint} is the default service endpoint.\n`;
     text += `const ${defaultEndpoint} = "${endpoint}"\n\n`;
     text += `// ${newDefaultConnection} creates an instance of the ${connection} type using the ${defaultEndpoint}.\n`;
     text += '// Pass nil to accept the default options; this is the same as passing a zero-value options.\n';
-    text += `func ${newDefaultConnection}(${credParam}options *${connectionOptions}) *${connection} {\n`;
-    let cred = 'cred, ';
-    if (!session.model.security.authenticationRequired) {
-      cred = '';
-    }
-    text += `\treturn ${newConnection}(${defaultEndpoint}, ${cred}options)\n`;
+    text += `func ${newDefaultConnection}(options *azcore.ClientOptions) *${connection} {\n`;
+    text += `\treturn ${newConnection}(${defaultEndpoint}, options)\n`;
     text += '}\n\n';
   }
 
@@ -148,26 +102,12 @@ function generateContent(session: Session<CodeModel>, imports: ImportManager): s
 
   text += `// ${newConnection} creates an instance of the ${connection} type with the specified endpoint.\n`;
   text += '// Pass nil to accept the default options; this is the same as passing a zero-value options.\n';
-  text += `func ${newConnection}(${ctorParamsSig}${credParam}options *${connectionOptions}) *${connection} {\n`;
-  text += '\tif options == nil {\n';
-  text += `\t\toptions = &${connectionOptions}{}\n`;
+  text += `func ${newConnection}(${ctorParamsSig}options *azcore.ClientOptions) *${connection} {\n`;
+  text += '\tcp := azcore.ClientOptions{}\n';
+  text += '\tif options != nil {\n';
+  text += '\t\tcp = *options\n';
   text += '\t}\n';
-  text += '\tpolicies := []policy.Policy{}\n';
-  text += '\tif !options.Telemetry.Disabled {\n';
-  text += '\t\tpolicies = append(policies, runtime.NewTelemetryPolicy(module, version, &options.Telemetry))\n';
-  text += '\t}\n';
-  text += '\tpolicies = append(policies, options.PerCallPolicies...)\n';
-  text += '\tpolicies = append(policies, runtime.NewRetryPolicy(&options.Retry))\n';
-  text += '\tpolicies = append(policies, options.PerRetryPolicies...)\n';
-  if (session.model.security.authenticationRequired) {
-    let scopes = '';
-    if (usesScopes) {
-      scopes = 'Scopes: scopes'
-    }
-    text += `\t\tpolicies = append(policies, cred.NewAuthenticationPolicy(runtime.AuthenticationOptions{TokenRequest: policy.TokenRequestOptions{${scopes}}}))\n`;
-  }
-  text += '\tpolicies = append(policies, runtime.NewLogPolicy(&options.Logging))\n';
-  const pipeline = 'runtime.NewPipeline(options.Transport, policies...)';
+  const pipeline = 'runtime.NewPipeline(module, version, nil, nil, &cp)';
   if (!session.model.language.go!.complexHostParams) {
     // simple case, construct the full host here
     var hostURL: string;
