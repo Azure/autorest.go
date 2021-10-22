@@ -15,7 +15,6 @@ import (
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
-	"github.com/google/go-cmp/cmp"
 )
 
 func TestAttributes(t *testing.T) {
@@ -38,7 +37,7 @@ func TestAttributes(t *testing.T) {
 	if attr2.Expires != nil {
 		t.Fatal("expected nil Created")
 	}
-	if r := cmp.Diff(attr2.NotBefore.Unix(), attr.NotBefore.Unix()); r != "" {
-		t.Fatal(r)
+	if attr2.NotBefore.Unix() != attr.NotBefore.Unix() {
+		t.Fatalf("got: %d want: %d", attr2.NotBefore.Unix(), attr.NotBefore.Unix())
 	}
 }
