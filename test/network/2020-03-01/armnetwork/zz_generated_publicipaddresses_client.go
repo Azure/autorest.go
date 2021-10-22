@@ -12,6 +12,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
@@ -30,8 +31,15 @@ type PublicIPAddressesClient struct {
 }
 
 // NewPublicIPAddressesClient creates a new instance of PublicIPAddressesClient with the specified values.
-func NewPublicIPAddressesClient(con *arm.Connection, subscriptionID string) *PublicIPAddressesClient {
-	return &PublicIPAddressesClient{ep: con.Endpoint(), pl: con.NewPipeline(module, version), subscriptionID: subscriptionID}
+func NewPublicIPAddressesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *PublicIPAddressesClient {
+	cp := arm.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	if len(cp.Host) == 0 {
+		cp.Host = arm.AzurePublicCloud
+	}
+	return &PublicIPAddressesClient{subscriptionID: subscriptionID, ep: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
 }
 
 // BeginCreateOrUpdate - Creates or updates a static or dynamic public IP address.

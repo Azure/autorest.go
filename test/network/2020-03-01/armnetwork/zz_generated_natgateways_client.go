@@ -12,6 +12,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
@@ -30,8 +31,15 @@ type NatGatewaysClient struct {
 }
 
 // NewNatGatewaysClient creates a new instance of NatGatewaysClient with the specified values.
-func NewNatGatewaysClient(con *arm.Connection, subscriptionID string) *NatGatewaysClient {
-	return &NatGatewaysClient{ep: con.Endpoint(), pl: con.NewPipeline(module, version), subscriptionID: subscriptionID}
+func NewNatGatewaysClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *NatGatewaysClient {
+	cp := arm.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	if len(cp.Host) == 0 {
+		cp.Host = arm.AzurePublicCloud
+	}
+	return &NatGatewaysClient{subscriptionID: subscriptionID, ep: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
 }
 
 // BeginCreateOrUpdate - Creates or updates a nat gateway.

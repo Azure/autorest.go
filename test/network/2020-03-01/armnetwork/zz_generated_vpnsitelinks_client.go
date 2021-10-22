@@ -12,7 +12,9 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
+	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -29,8 +31,15 @@ type VPNSiteLinksClient struct {
 }
 
 // NewVPNSiteLinksClient creates a new instance of VPNSiteLinksClient with the specified values.
-func NewVPNSiteLinksClient(con *arm.Connection, subscriptionID string) *VPNSiteLinksClient {
-	return &VPNSiteLinksClient{ep: con.Endpoint(), pl: con.NewPipeline(module, version), subscriptionID: subscriptionID}
+func NewVPNSiteLinksClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *VPNSiteLinksClient {
+	cp := arm.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	if len(cp.Host) == 0 {
+		cp.Host = arm.AzurePublicCloud
+	}
+	return &VPNSiteLinksClient{subscriptionID: subscriptionID, ep: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
 }
 
 // Get - Retrieves the details of a VPN site link.

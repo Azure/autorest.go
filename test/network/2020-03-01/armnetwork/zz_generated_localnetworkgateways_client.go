@@ -12,6 +12,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
@@ -30,8 +31,15 @@ type LocalNetworkGatewaysClient struct {
 }
 
 // NewLocalNetworkGatewaysClient creates a new instance of LocalNetworkGatewaysClient with the specified values.
-func NewLocalNetworkGatewaysClient(con *arm.Connection, subscriptionID string) *LocalNetworkGatewaysClient {
-	return &LocalNetworkGatewaysClient{ep: con.Endpoint(), pl: con.NewPipeline(module, version), subscriptionID: subscriptionID}
+func NewLocalNetworkGatewaysClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *LocalNetworkGatewaysClient {
+	cp := arm.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	if len(cp.Host) == 0 {
+		cp.Host = arm.AzurePublicCloud
+	}
+	return &LocalNetworkGatewaysClient{subscriptionID: subscriptionID, ep: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
 }
 
 // BeginCreateOrUpdate - Creates or updates a local network gateway in the specified resource group.

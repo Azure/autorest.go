@@ -12,6 +12,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
@@ -30,8 +31,15 @@ type ExpressRouteCircuitsClient struct {
 }
 
 // NewExpressRouteCircuitsClient creates a new instance of ExpressRouteCircuitsClient with the specified values.
-func NewExpressRouteCircuitsClient(con *arm.Connection, subscriptionID string) *ExpressRouteCircuitsClient {
-	return &ExpressRouteCircuitsClient{ep: con.Endpoint(), pl: con.NewPipeline(module, version), subscriptionID: subscriptionID}
+func NewExpressRouteCircuitsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *ExpressRouteCircuitsClient {
+	cp := arm.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	if len(cp.Host) == 0 {
+		cp.Host = arm.AzurePublicCloud
+	}
+	return &ExpressRouteCircuitsClient{subscriptionID: subscriptionID, ep: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
 }
 
 // BeginCreateOrUpdate - Creates or updates an express route circuit.

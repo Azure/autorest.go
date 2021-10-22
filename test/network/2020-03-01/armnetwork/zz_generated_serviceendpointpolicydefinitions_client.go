@@ -12,6 +12,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
@@ -30,8 +31,15 @@ type ServiceEndpointPolicyDefinitionsClient struct {
 }
 
 // NewServiceEndpointPolicyDefinitionsClient creates a new instance of ServiceEndpointPolicyDefinitionsClient with the specified values.
-func NewServiceEndpointPolicyDefinitionsClient(con *arm.Connection, subscriptionID string) *ServiceEndpointPolicyDefinitionsClient {
-	return &ServiceEndpointPolicyDefinitionsClient{ep: con.Endpoint(), pl: con.NewPipeline(module, version), subscriptionID: subscriptionID}
+func NewServiceEndpointPolicyDefinitionsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *ServiceEndpointPolicyDefinitionsClient {
+	cp := arm.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	if len(cp.Host) == 0 {
+		cp.Host = arm.AzurePublicCloud
+	}
+	return &ServiceEndpointPolicyDefinitionsClient{subscriptionID: subscriptionID, ep: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
 }
 
 // BeginCreateOrUpdate - Creates or updates a service endpoint policy definition in the specified service endpoint policy.

@@ -12,7 +12,9 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
+	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -29,8 +31,15 @@ type AzureFirewallFqdnTagsClient struct {
 }
 
 // NewAzureFirewallFqdnTagsClient creates a new instance of AzureFirewallFqdnTagsClient with the specified values.
-func NewAzureFirewallFqdnTagsClient(con *arm.Connection, subscriptionID string) *AzureFirewallFqdnTagsClient {
-	return &AzureFirewallFqdnTagsClient{ep: con.Endpoint(), pl: con.NewPipeline(module, version), subscriptionID: subscriptionID}
+func NewAzureFirewallFqdnTagsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *AzureFirewallFqdnTagsClient {
+	cp := arm.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	if len(cp.Host) == 0 {
+		cp.Host = arm.AzurePublicCloud
+	}
+	return &AzureFirewallFqdnTagsClient{subscriptionID: subscriptionID, ep: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
 }
 
 // ListAll - Gets all the Azure Firewall FQDN Tags in a subscription.

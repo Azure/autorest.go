@@ -12,7 +12,9 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
+	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -29,8 +31,15 @@ type AvailableResourceGroupDelegationsClient struct {
 }
 
 // NewAvailableResourceGroupDelegationsClient creates a new instance of AvailableResourceGroupDelegationsClient with the specified values.
-func NewAvailableResourceGroupDelegationsClient(con *arm.Connection, subscriptionID string) *AvailableResourceGroupDelegationsClient {
-	return &AvailableResourceGroupDelegationsClient{ep: con.Endpoint(), pl: con.NewPipeline(module, version), subscriptionID: subscriptionID}
+func NewAvailableResourceGroupDelegationsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *AvailableResourceGroupDelegationsClient {
+	cp := arm.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	if len(cp.Host) == 0 {
+		cp.Host = arm.AzurePublicCloud
+	}
+	return &AvailableResourceGroupDelegationsClient{subscriptionID: subscriptionID, ep: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
 }
 
 // List - Gets all of the available subnet delegations for this resource group in this region.

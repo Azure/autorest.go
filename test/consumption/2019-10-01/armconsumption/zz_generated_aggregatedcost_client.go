@@ -12,7 +12,9 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
+	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -28,8 +30,15 @@ type AggregatedCostClient struct {
 }
 
 // NewAggregatedCostClient creates a new instance of AggregatedCostClient with the specified values.
-func NewAggregatedCostClient(con *arm.Connection) *AggregatedCostClient {
-	return &AggregatedCostClient{ep: con.Endpoint(), pl: con.NewPipeline(module, version)}
+func NewAggregatedCostClient(credential azcore.TokenCredential, options *arm.ClientOptions) *AggregatedCostClient {
+	cp := arm.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	if len(cp.Host) == 0 {
+		cp.Host = arm.AzurePublicCloud
+	}
+	return &AggregatedCostClient{ep: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
 }
 
 // GetByManagementGroup - Provides the aggregate cost of a management group and all child management groups by current billing period.

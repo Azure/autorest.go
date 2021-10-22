@@ -12,7 +12,9 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
+	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -29,8 +31,15 @@ type LoadBalancerFrontendIPConfigurationsClient struct {
 }
 
 // NewLoadBalancerFrontendIPConfigurationsClient creates a new instance of LoadBalancerFrontendIPConfigurationsClient with the specified values.
-func NewLoadBalancerFrontendIPConfigurationsClient(con *arm.Connection, subscriptionID string) *LoadBalancerFrontendIPConfigurationsClient {
-	return &LoadBalancerFrontendIPConfigurationsClient{ep: con.Endpoint(), pl: con.NewPipeline(module, version), subscriptionID: subscriptionID}
+func NewLoadBalancerFrontendIPConfigurationsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *LoadBalancerFrontendIPConfigurationsClient {
+	cp := arm.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	if len(cp.Host) == 0 {
+		cp.Host = arm.AzurePublicCloud
+	}
+	return &LoadBalancerFrontendIPConfigurationsClient{subscriptionID: subscriptionID, ep: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
 }
 
 // Get - Gets load balancer frontend IP configuration.

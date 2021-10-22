@@ -12,7 +12,9 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
+	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -29,8 +31,15 @@ type LoadBalancerNetworkInterfacesClient struct {
 }
 
 // NewLoadBalancerNetworkInterfacesClient creates a new instance of LoadBalancerNetworkInterfacesClient with the specified values.
-func NewLoadBalancerNetworkInterfacesClient(con *arm.Connection, subscriptionID string) *LoadBalancerNetworkInterfacesClient {
-	return &LoadBalancerNetworkInterfacesClient{ep: con.Endpoint(), pl: con.NewPipeline(module, version), subscriptionID: subscriptionID}
+func NewLoadBalancerNetworkInterfacesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *LoadBalancerNetworkInterfacesClient {
+	cp := arm.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	if len(cp.Host) == 0 {
+		cp.Host = arm.AzurePublicCloud
+	}
+	return &LoadBalancerNetworkInterfacesClient{subscriptionID: subscriptionID, ep: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
 }
 
 // List - Gets associated load balancer network interfaces.

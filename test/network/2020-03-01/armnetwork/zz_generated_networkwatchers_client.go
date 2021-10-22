@@ -12,6 +12,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
@@ -30,8 +31,15 @@ type NetworkWatchersClient struct {
 }
 
 // NewNetworkWatchersClient creates a new instance of NetworkWatchersClient with the specified values.
-func NewNetworkWatchersClient(con *arm.Connection, subscriptionID string) *NetworkWatchersClient {
-	return &NetworkWatchersClient{ep: con.Endpoint(), pl: con.NewPipeline(module, version), subscriptionID: subscriptionID}
+func NewNetworkWatchersClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *NetworkWatchersClient {
+	cp := arm.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	if len(cp.Host) == 0 {
+		cp.Host = arm.AzurePublicCloud
+	}
+	return &NetworkWatchersClient{subscriptionID: subscriptionID, ep: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
 }
 
 // BeginCheckConnectivity - Verifies the possibility of establishing a direct TCP connection from a virtual machine to a given endpoint including another

@@ -12,6 +12,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
@@ -30,8 +31,15 @@ type InboundNatRulesClient struct {
 }
 
 // NewInboundNatRulesClient creates a new instance of InboundNatRulesClient with the specified values.
-func NewInboundNatRulesClient(con *arm.Connection, subscriptionID string) *InboundNatRulesClient {
-	return &InboundNatRulesClient{ep: con.Endpoint(), pl: con.NewPipeline(module, version), subscriptionID: subscriptionID}
+func NewInboundNatRulesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *InboundNatRulesClient {
+	cp := arm.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	if len(cp.Host) == 0 {
+		cp.Host = arm.AzurePublicCloud
+	}
+	return &InboundNatRulesClient{subscriptionID: subscriptionID, ep: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
 }
 
 // BeginCreateOrUpdate - Creates or updates a load balancer inbound nat rule.

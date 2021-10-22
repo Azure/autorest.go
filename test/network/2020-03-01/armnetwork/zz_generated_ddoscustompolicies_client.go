@@ -12,6 +12,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
@@ -30,8 +31,15 @@ type DdosCustomPoliciesClient struct {
 }
 
 // NewDdosCustomPoliciesClient creates a new instance of DdosCustomPoliciesClient with the specified values.
-func NewDdosCustomPoliciesClient(con *arm.Connection, subscriptionID string) *DdosCustomPoliciesClient {
-	return &DdosCustomPoliciesClient{ep: con.Endpoint(), pl: con.NewPipeline(module, version), subscriptionID: subscriptionID}
+func NewDdosCustomPoliciesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *DdosCustomPoliciesClient {
+	cp := arm.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	if len(cp.Host) == 0 {
+		cp.Host = arm.AzurePublicCloud
+	}
+	return &DdosCustomPoliciesClient{subscriptionID: subscriptionID, ep: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
 }
 
 // BeginCreateOrUpdate - Creates or updates a DDoS custom policy.

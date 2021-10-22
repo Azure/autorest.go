@@ -12,6 +12,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
@@ -30,8 +31,15 @@ type VirtualRouterPeeringsClient struct {
 }
 
 // NewVirtualRouterPeeringsClient creates a new instance of VirtualRouterPeeringsClient with the specified values.
-func NewVirtualRouterPeeringsClient(con *arm.Connection, subscriptionID string) *VirtualRouterPeeringsClient {
-	return &VirtualRouterPeeringsClient{ep: con.Endpoint(), pl: con.NewPipeline(module, version), subscriptionID: subscriptionID}
+func NewVirtualRouterPeeringsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *VirtualRouterPeeringsClient {
+	cp := arm.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	if len(cp.Host) == 0 {
+		cp.Host = arm.AzurePublicCloud
+	}
+	return &VirtualRouterPeeringsClient{subscriptionID: subscriptionID, ep: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
 }
 
 // BeginCreateOrUpdate - Creates or updates the specified Virtual Router Peering.
