@@ -402,11 +402,11 @@ function generateJSONMarshallerBody(obj: ObjectSchema, structDef: StructDef, imp
       marshaller += '\t}\n';
       marshaller += `\tpopulate(objectMap, "${prop.serializedName}", aux)\n`;
     } else {
-      let source = `${receiver}.${prop.language.go!.name}`;
+      let populate = 'populate';
       if (prop.schema.language.go!.internalTimeType) {
-        source = `(*${prop.schema.language.go!.internalTimeType})(${receiver}.${prop.language.go!.name})`;
+        populate += prop.schema.language.go!.internalTimeType.capitalize();
       }
-      marshaller += `\tpopulate(objectMap, "${prop.serializedName}", ${source})\n`;
+      marshaller += `\t${populate}(objectMap, "${prop.serializedName}", ${receiver}.${prop.language.go!.name})\n`;
     }
   }
   const addlProps = hasAdditionalProperties(obj);
@@ -505,9 +505,7 @@ function generateJSONUnmarshallerBody(obj: ObjectSchema, structDef: StructDef, i
       } else if (isDictionarySchema(prop.schema) && prop.schema.elementType.language.go!.discriminatorInterface) {
         unmarshalBody += `\t\t\t\t${receiver}.${prop.language.go!.name}, err = unmarshal${prop.schema.elementType.language.go!.discriminatorInterface}Map(val)\n`;
       } else if (prop.schema.language.go!.internalTimeType) {
-        unmarshalBody += `\t\t\t\tvar aux ${prop.schema.language.go!.internalTimeType}\n`;
-        unmarshalBody += '\t\t\t\terr = unpopulate(val, &aux)\n';
-        unmarshalBody += `\t\t\t\t${receiver}.${prop.language.go!.name} = (*time.Time)(&aux)\n`;
+        unmarshalBody += `\t\t\t\terr = unpopulate${prop.schema.language.go!.internalTimeType.capitalize()}(val, &${receiver}.${prop.language.go!.name})\n`;
       } else if (isArraySchema(prop.schema) && prop.schema.elementType.language.go!.internalTimeType) {
         unmarshalBody += `\t\t\tvar aux []*${prop.schema.elementType.language.go!.internalTimeType}\n`;
         unmarshalBody += '\t\t\terr = unpopulate(val, &aux)\n';

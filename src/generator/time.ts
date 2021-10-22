@@ -42,6 +42,9 @@ function generateRFC1123Helper(preamble: string): string {
   return `${preamble}
 
 import (
+	"encoding/json"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"reflect"
 	"strings"
 	"time"
 )
@@ -73,6 +76,30 @@ func (t *timeRFC1123) UnmarshalText(data []byte) error {
 	*t = timeRFC1123(p)
 	return err
 }
+
+func populateTimeRFC1123(m map[string]interface{}, k string, t *time.Time) {
+	if t == nil {
+		return
+	} else if azcore.IsNullValue(t) {
+		m[k] = nil
+		return
+	} else if reflect.ValueOf(t).IsNil() {
+		return
+	}
+	m[k] = (*timeRFC1123)(t)
+}
+
+func unpopulateTimeRFC1123(data json.RawMessage, t **time.Time) error {
+	if data == nil || strings.EqualFold(string(data), "null") {
+		return nil
+	}
+	var aux timeRFC1123
+	if err := json.Unmarshal(data, &aux); err != nil {
+		return err
+	}
+	*t = (*time.Time)(&aux)
+	return nil
+}
 `;
 }
 
@@ -80,6 +107,9 @@ function generateRFC3339Helper(preamble: string): string {
   return `${preamble}
 
 import (
+	"encoding/json"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"reflect"
 	"regexp"
 	"strings"
 	"time"
@@ -127,6 +157,30 @@ func (t *timeRFC3339) Parse(layout, value string) error {
 	*t = timeRFC3339(p)
 	return err
 }
+
+func populateTimeRFC3339(m map[string]interface{}, k string, t *time.Time) {
+	if t == nil {
+		return
+	} else if azcore.IsNullValue(t) {
+		m[k] = nil
+		return
+	} else if reflect.ValueOf(t).IsNil() {
+		return
+	}
+	m[k] = (*timeRFC3339)(t)
+}
+
+func unpopulateTimeRFC3339(data json.RawMessage, t **time.Time) error {
+	if data == nil || strings.EqualFold(string(data), "null") {
+		return nil
+	}
+	var aux timeRFC3339
+	if err := json.Unmarshal(data, &aux); err != nil {
+		return err
+	}
+	*t = (*time.Time)(&aux)
+	return nil
+}
 `;
 }
 
@@ -136,6 +190,9 @@ function generateUnixTimeHelper(preamble: string): string {
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"reflect"
+	"strings"
 	"time"
 )
 
@@ -157,6 +214,30 @@ func (t *timeUnix) UnmarshalJSON(data []byte) error {
 func (t timeUnix) String() string {
 	return fmt.Sprintf("%d", time.Time(t).Unix())
 }
+
+func populateTimeUnix(m map[string]interface{}, k string, t *time.Time) {
+	if t == nil {
+		return
+	} else if azcore.IsNullValue(t) {
+		m[k] = nil
+		return
+	} else if reflect.ValueOf(t).IsNil() {
+		return
+	}
+	m[k] = (*timeUnix)(t)
+}
+
+func unpopulateTimeUnix(data json.RawMessage, t **time.Time) error {
+	if data == nil || strings.EqualFold(string(data), "null") {
+		return nil
+	}
+	var aux timeUnix
+	if err := json.Unmarshal(data, &aux); err != nil {
+		return err
+	}
+	*t = (*time.Time)(&aux)
+	return nil
+}
 `;
 }
 
@@ -164,7 +245,11 @@ function generateDateHelper(preamble: string): string {
   return `${preamble}
 
 import (
+	"encoding/json"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"reflect"
+	"strings"
 	"time"
 )
 
@@ -183,6 +268,30 @@ func (d *dateType) UnmarshalJSON(data []byte) (err error) {
 	t, err := time.Parse(fullDateJSON, string(data))
 	*d = (dateType)(t)
 	return err
+}
+
+func populateDateType(m map[string]interface{}, k string, t *time.Time) {
+	if t == nil {
+		return
+	} else if azcore.IsNullValue(t) {
+		m[k] = nil
+		return
+	} else if reflect.ValueOf(t).IsNil() {
+		return
+	}
+	m[k] = (*dateType)(t)
+}
+
+func unpopulateDateType(data json.RawMessage, t **time.Time) error {
+	if data == nil || strings.EqualFold(string(data), "null") {
+		return nil
+	}
+	var aux dateType
+	if err := json.Unmarshal(data, &aux); err != nil {
+		return err
+	}
+	*t = (*time.Time)(&aux)
+	return nil
 }
 `;
 }

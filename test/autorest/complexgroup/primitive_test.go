@@ -340,3 +340,68 @@ func TestPrimitivePutDateTimeRFC1123(t *testing.T) {
 		t.Fatalf("unexpected status code %d", s)
 	}
 }
+
+func TestDatetimeWrapper(t *testing.T) {
+	now := time.Now()
+	dtw := DatetimeWrapper{
+		Field: azcore.NullValue(&time.Time{}).(*time.Time),
+		Now:   &now,
+	}
+	b, err := json.Marshal(dtw)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var dtw2 DatetimeWrapper
+	if err = json.Unmarshal(b, &dtw2); err != nil {
+		t.Fatal(err)
+	}
+	if dtw2.Field != nil {
+		t.Fatal("expected nil Field")
+	}
+	if r := cmp.Diff(dtw2.Now, dtw.Now); r != "" {
+		t.Fatal(r)
+	}
+}
+
+func TestDatetimerfc1123Wrapper(t *testing.T) {
+	now := time.Now()
+	dtw := Datetimerfc1123Wrapper{
+		Field: azcore.NullValue(&time.Time{}).(*time.Time),
+		Now:   &now,
+	}
+	b, err := json.Marshal(dtw)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var dtw2 Datetimerfc1123Wrapper
+	if err = json.Unmarshal(b, &dtw2); err != nil {
+		t.Fatal(err)
+	}
+	if dtw2.Field != nil {
+		t.Fatal("expected nil Field")
+	}
+	if r := cmp.Diff(dtw2.Now.Format(time.RFC1123), dtw.Now.Format(time.RFC1123)); r != "" {
+		t.Fatal(r)
+	}
+}
+
+func TestDateWrapper(t *testing.T) {
+	dw := DateWrapper{
+		Field: azcore.NullValue(&time.Time{}).(*time.Time),
+		Leap:  to.TimePtr(time.Date(2021, 10, 22, 0, 0, 0, 0, time.UTC)),
+	}
+	b, err := json.Marshal(dw)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var dw2 DateWrapper
+	if err = json.Unmarshal(b, &dw2); err != nil {
+		t.Fatal(err)
+	}
+	if dw2.Field != nil {
+		t.Fatal("expected nil Field")
+	}
+	if r := cmp.Diff(dw2.Leap, dw.Leap); r != "" {
+		t.Fatal(r)
+	}
+}

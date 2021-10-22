@@ -166,8 +166,8 @@ type DateWrapper struct {
 // MarshalJSON implements the json.Marshaller interface for type DateWrapper.
 func (d DateWrapper) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	populate(objectMap, "field", (*dateType)(d.Field))
-	populate(objectMap, "leap", (*dateType)(d.Leap))
+	populateDateType(objectMap, "field", d.Field)
+	populateDateType(objectMap, "leap", d.Leap)
 	return json.Marshal(objectMap)
 }
 
@@ -181,14 +181,10 @@ func (d *DateWrapper) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "field":
-			var aux dateType
-			err = unpopulate(val, &aux)
-			d.Field = (*time.Time)(&aux)
+			err = unpopulateDateType(val, &d.Field)
 			delete(rawMsg, key)
 		case "leap":
-			var aux dateType
-			err = unpopulate(val, &aux)
-			d.Leap = (*time.Time)(&aux)
+			err = unpopulateDateType(val, &d.Leap)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -206,8 +202,8 @@ type DatetimeWrapper struct {
 // MarshalJSON implements the json.Marshaller interface for type DatetimeWrapper.
 func (d DatetimeWrapper) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	populate(objectMap, "field", (*timeRFC3339)(d.Field))
-	populate(objectMap, "now", (*timeRFC3339)(d.Now))
+	populateTimeRFC3339(objectMap, "field", d.Field)
+	populateTimeRFC3339(objectMap, "now", d.Now)
 	return json.Marshal(objectMap)
 }
 
@@ -221,14 +217,10 @@ func (d *DatetimeWrapper) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "field":
-			var aux timeRFC3339
-			err = unpopulate(val, &aux)
-			d.Field = (*time.Time)(&aux)
+			err = unpopulateTimeRFC3339(val, &d.Field)
 			delete(rawMsg, key)
 		case "now":
-			var aux timeRFC3339
-			err = unpopulate(val, &aux)
-			d.Now = (*time.Time)(&aux)
+			err = unpopulateTimeRFC3339(val, &d.Now)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -246,8 +238,8 @@ type Datetimerfc1123Wrapper struct {
 // MarshalJSON implements the json.Marshaller interface for type Datetimerfc1123Wrapper.
 func (d Datetimerfc1123Wrapper) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	populate(objectMap, "field", (*timeRFC1123)(d.Field))
-	populate(objectMap, "now", (*timeRFC1123)(d.Now))
+	populateTimeRFC1123(objectMap, "field", d.Field)
+	populateTimeRFC1123(objectMap, "now", d.Now)
 	return json.Marshal(objectMap)
 }
 
@@ -261,14 +253,10 @@ func (d *Datetimerfc1123Wrapper) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "field":
-			var aux timeRFC1123
-			err = unpopulate(val, &aux)
-			d.Field = (*time.Time)(&aux)
+			err = unpopulateTimeRFC1123(val, &d.Field)
 			delete(rawMsg, key)
 		case "now":
-			var aux timeRFC1123
-			err = unpopulate(val, &aux)
-			d.Now = (*time.Time)(&aux)
+			err = unpopulateTimeRFC1123(val, &d.Now)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -1060,7 +1048,7 @@ func (s *Shark) UnmarshalJSON(data []byte) error {
 func (s Shark) marshalInternal(objectMap map[string]interface{}, discValue string) {
 	s.Fish.marshalInternal(objectMap, discValue)
 	populate(objectMap, "age", s.Age)
-	populate(objectMap, "birthday", (*timeRFC3339)(s.Birthday))
+	populateTimeRFC3339(objectMap, "birthday", s.Birthday)
 }
 
 func (s *Shark) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
@@ -1071,9 +1059,7 @@ func (s *Shark) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 			err = unpopulate(val, &s.Age)
 			delete(rawMsg, key)
 		case "birthday":
-			var aux timeRFC3339
-			err = unpopulate(val, &aux)
-			s.Birthday = (*time.Time)(&aux)
+			err = unpopulateTimeRFC3339(val, &s.Birthday)
 			delete(rawMsg, key)
 		}
 		if err != nil {
