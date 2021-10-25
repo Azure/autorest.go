@@ -11,13 +11,14 @@ import (
 	"testing"
 	"time"
 
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
 )
 
 func newPetClient() *PetClient {
-	options := ConnectionOptions{}
+	options := azcore.ClientOptions{}
 	options.Retry.MaxRetryDelay = 20 * time.Millisecond
 	client := NewConnection("http://localhost:3000", &options)
 	return NewPetClient(client)

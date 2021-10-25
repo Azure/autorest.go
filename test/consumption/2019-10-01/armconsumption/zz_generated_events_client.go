@@ -12,7 +12,9 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
+	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -27,8 +29,15 @@ type EventsClient struct {
 }
 
 // NewEventsClient creates a new instance of EventsClient with the specified values.
-func NewEventsClient(con *arm.Connection) *EventsClient {
-	return &EventsClient{ep: con.Endpoint(), pl: con.NewPipeline(module, version)}
+func NewEventsClient(credential azcore.TokenCredential, options *arm.ClientOptions) *EventsClient {
+	cp := arm.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	if len(cp.Host) == 0 {
+		cp.Host = arm.AzurePublicCloud
+	}
+	return &EventsClient{ep: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
 }
 
 // List - Lists the events by billingAccountId and billingProfileId for given start and end date.

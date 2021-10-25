@@ -9,28 +9,9 @@
 package paramgroupinggroup
 
 import (
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
-
-// ConnectionOptions contains configuration settings for the connection's pipeline.
-// All zero-value fields will be initialized with their default values.
-type ConnectionOptions struct {
-	// Transport sets the transport for making HTTP requests.
-	Transport policy.Transporter
-	// Retry configures the built-in retry policy behavior.
-	Retry policy.RetryOptions
-	// Telemetry configures the built-in telemetry policy behavior.
-	Telemetry policy.TelemetryOptions
-	// Logging configures the built-in logging policy behavior.
-	Logging policy.LogOptions
-	// PerCallPolicies contains custom policies to inject into the pipeline.
-	// Each policy is executed once per request.
-	PerCallPolicies []policy.Policy
-	// PerRetryPolicies contains custom policies to inject into the pipeline.
-	// Each policy is executed once per request, and for each retry request.
-	PerRetryPolicies []policy.Policy
-}
 
 // Connection - Test Infrastructure for AutoRest
 type Connection struct {
@@ -43,25 +24,18 @@ const DefaultEndpoint = "http://localhost:3000"
 
 // NewDefaultConnection creates an instance of the Connection type using the DefaultEndpoint.
 // Pass nil to accept the default options; this is the same as passing a zero-value options.
-func NewDefaultConnection(options *ConnectionOptions) *Connection {
+func NewDefaultConnection(options *azcore.ClientOptions) *Connection {
 	return NewConnection(DefaultEndpoint, options)
 }
 
 // NewConnection creates an instance of the Connection type with the specified endpoint.
 // Pass nil to accept the default options; this is the same as passing a zero-value options.
-func NewConnection(endpoint string, options *ConnectionOptions) *Connection {
-	if options == nil {
-		options = &ConnectionOptions{}
+func NewConnection(endpoint string, options *azcore.ClientOptions) *Connection {
+	cp := azcore.ClientOptions{}
+	if options != nil {
+		cp = *options
 	}
-	policies := []policy.Policy{}
-	if !options.Telemetry.Disabled {
-		policies = append(policies, runtime.NewTelemetryPolicy(module, version, &options.Telemetry))
-	}
-	policies = append(policies, options.PerCallPolicies...)
-	policies = append(policies, runtime.NewRetryPolicy(&options.Retry))
-	policies = append(policies, options.PerRetryPolicies...)
-	policies = append(policies, runtime.NewLogPolicy(&options.Logging))
-	return &Connection{u: endpoint, p: runtime.NewPipeline(options.Transport, policies...)}
+	return &Connection{u: endpoint, p: runtime.NewPipeline(module, version, nil, nil, &cp)}
 }
 
 // Endpoint returns the connection's endpoint.

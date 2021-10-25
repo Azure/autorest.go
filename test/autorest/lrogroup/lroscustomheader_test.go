@@ -9,13 +9,14 @@ import (
 	"testing"
 	"time"
 
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/google/go-cmp/cmp"
 )
 
 func newLrOSCustomHeaderClient() *LROsCustomHeaderClient {
-	options := ConnectionOptions{}
+	options := azcore.ClientOptions{}
 	options.Retry.RetryDelay = 10 * time.Millisecond
 	options.Transport = httpClientWithCookieJar()
 	return NewLROsCustomHeaderClient(NewDefaultConnection(&options))

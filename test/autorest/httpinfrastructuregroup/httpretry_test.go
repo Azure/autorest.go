@@ -10,11 +10,12 @@ import (
 	"testing"
 	"time"
 
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 )
 
 func newHTTPRetryClient() *HTTPRetryClient {
-	options := ConnectionOptions{}
+	options := azcore.ClientOptions{}
 	options.Retry.RetryDelay = 10 * time.Millisecond
 	options.Transport = httpClientWithCookieJar()
 	return NewHTTPRetryClient(NewDefaultConnection(&options))

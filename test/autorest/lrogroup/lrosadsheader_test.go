@@ -8,10 +8,12 @@ import (
 	"net/http"
 	"testing"
 	"time"
+
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 )
 
 func newLrosaDsClient() *LROSADsClient {
-	options := ConnectionOptions{}
+	options := azcore.ClientOptions{}
 	options.Retry.RetryDelay = 10 * time.Millisecond
 	options.Transport = httpClientWithCookieJar()
 	return NewLROSADsClient(NewDefaultConnection(&options))
