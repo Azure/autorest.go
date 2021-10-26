@@ -91,7 +91,7 @@ function generateUnmarshallerForResultEnvelope(structDef: StructDef) {
   structDef.Methods.push({ name: 'UnmarshalJSON', desc: `UnmarshalJSON implements the json.Unmarshaller interface for type ${structDef.Language.name}.`, text: unmarshaller });
 }
 
-function generatePollUntilDoneForResponse(structDef: StructDef, isAzure: boolean) {
+function generatePollUntilDoneForResponse(structDef: StructDef, isAzureARM: boolean) {
   const pagedResponse = (<PollerInfo>structDef.Language.pollerInfo).op.language.go!.pageableType;
   const respType = getResponseType(<PollerInfo>structDef.Language.pollerInfo);
   let pollUntilDone = `func (l ${structDef.Language.name}) PollUntilDone(ctx context.Context, freq time.Duration) (`;
@@ -130,7 +130,7 @@ function generatePollUntilDoneForResponse(structDef: StructDef, isAzure: boolean
   pollUntilDone += '\treturn respType, nil\n';
   pollUntilDone += '}\n\n';
   let desc = 'PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.\nfreq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.';
-  if (isAzure) {
+  if (isAzureARM) {
     desc += '\nA good starting value is 30 seconds. Note that some resources might benefit from a different value.';
   }
   structDef.Methods.push({
