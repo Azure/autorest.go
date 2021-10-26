@@ -25,7 +25,7 @@ type ApplicationGatewaysBackendHealthOnDemandPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l ApplicationGatewaysBackendHealthOnDemandPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ApplicationGatewaysBackendHealthOnDemandResponse, error) {
 	respType := ApplicationGatewaysBackendHealthOnDemandResponse{}
@@ -77,7 +77,7 @@ type ApplicationGatewaysBackendHealthPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l ApplicationGatewaysBackendHealthPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ApplicationGatewaysBackendHealthResponse, error) {
 	respType := ApplicationGatewaysBackendHealthResponse{}
@@ -129,7 +129,7 @@ type ApplicationGatewaysCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l ApplicationGatewaysCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ApplicationGatewaysCreateOrUpdateResponse, error) {
 	respType := ApplicationGatewaysCreateOrUpdateResponse{}
@@ -181,7 +181,7 @@ type ApplicationGatewaysDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l ApplicationGatewaysDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ApplicationGatewaysDeleteResponse, error) {
 	respType := ApplicationGatewaysDeleteResponse{}
@@ -350,7 +350,7 @@ type ApplicationGatewaysStartPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l ApplicationGatewaysStartPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ApplicationGatewaysStartResponse, error) {
 	respType := ApplicationGatewaysStartResponse{}
@@ -396,7 +396,7 @@ type ApplicationGatewaysStopPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l ApplicationGatewaysStopPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ApplicationGatewaysStopResponse, error) {
 	respType := ApplicationGatewaysStopResponse{}
@@ -454,7 +454,7 @@ type ApplicationSecurityGroupsCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l ApplicationSecurityGroupsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ApplicationSecurityGroupsCreateOrUpdateResponse, error) {
 	respType := ApplicationSecurityGroupsCreateOrUpdateResponse{}
@@ -506,7 +506,7 @@ type ApplicationSecurityGroupsDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l ApplicationSecurityGroupsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ApplicationSecurityGroupsDeleteResponse, error) {
 	respType := ApplicationSecurityGroupsDeleteResponse{}
@@ -696,7 +696,7 @@ type AzureFirewallsCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l AzureFirewallsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (AzureFirewallsCreateOrUpdateResponse, error) {
 	respType := AzureFirewallsCreateOrUpdateResponse{}
@@ -748,7 +748,7 @@ type AzureFirewallsDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l AzureFirewallsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (AzureFirewallsDeleteResponse, error) {
 	respType := AzureFirewallsDeleteResponse{}
@@ -830,7 +830,7 @@ type AzureFirewallsUpdateTagsPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l AzureFirewallsUpdateTagsPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (AzureFirewallsUpdateTagsResponse, error) {
 	respType := AzureFirewallsUpdateTagsResponse{}
@@ -882,7 +882,7 @@ type BastionHostsCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l BastionHostsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (BastionHostsCreateOrUpdateResponse, error) {
 	respType := BastionHostsCreateOrUpdateResponse{}
@@ -934,7 +934,7 @@ type BastionHostsDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l BastionHostsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (BastionHostsDeleteResponse, error) {
 	respType := BastionHostsDeleteResponse{}
@@ -1028,7 +1028,7 @@ type ConnectionMonitorsCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l ConnectionMonitorsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ConnectionMonitorsCreateOrUpdateResponse, error) {
 	respType := ConnectionMonitorsCreateOrUpdateResponse{}
@@ -1080,7 +1080,7 @@ type ConnectionMonitorsDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l ConnectionMonitorsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ConnectionMonitorsDeleteResponse, error) {
 	respType := ConnectionMonitorsDeleteResponse{}
@@ -1150,7 +1150,7 @@ type ConnectionMonitorsQueryPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l ConnectionMonitorsQueryPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ConnectionMonitorsQueryResponse, error) {
 	respType := ConnectionMonitorsQueryResponse{}
@@ -1202,7 +1202,7 @@ type ConnectionMonitorsStartPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l ConnectionMonitorsStartPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ConnectionMonitorsStartResponse, error) {
 	respType := ConnectionMonitorsStartResponse{}
@@ -1248,7 +1248,7 @@ type ConnectionMonitorsStopPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l ConnectionMonitorsStopPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ConnectionMonitorsStopResponse, error) {
 	respType := ConnectionMonitorsStopResponse{}
@@ -1306,7 +1306,7 @@ type DdosCustomPoliciesCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l DdosCustomPoliciesCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (DdosCustomPoliciesCreateOrUpdateResponse, error) {
 	respType := DdosCustomPoliciesCreateOrUpdateResponse{}
@@ -1358,7 +1358,7 @@ type DdosCustomPoliciesDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l DdosCustomPoliciesDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (DdosCustomPoliciesDeleteResponse, error) {
 	respType := DdosCustomPoliciesDeleteResponse{}
@@ -1428,7 +1428,7 @@ type DdosProtectionPlansCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l DdosProtectionPlansCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (DdosProtectionPlansCreateOrUpdateResponse, error) {
 	respType := DdosProtectionPlansCreateOrUpdateResponse{}
@@ -1480,7 +1480,7 @@ type DdosProtectionPlansDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l DdosProtectionPlansDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (DdosProtectionPlansDeleteResponse, error) {
 	respType := DdosProtectionPlansDeleteResponse{}
@@ -1598,7 +1598,7 @@ type ExpressRouteCircuitAuthorizationsCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l ExpressRouteCircuitAuthorizationsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ExpressRouteCircuitAuthorizationsCreateOrUpdateResponse, error) {
 	respType := ExpressRouteCircuitAuthorizationsCreateOrUpdateResponse{}
@@ -1650,7 +1650,7 @@ type ExpressRouteCircuitAuthorizationsDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l ExpressRouteCircuitAuthorizationsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ExpressRouteCircuitAuthorizationsDeleteResponse, error) {
 	respType := ExpressRouteCircuitAuthorizationsDeleteResponse{}
@@ -1720,7 +1720,7 @@ type ExpressRouteCircuitConnectionsCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l ExpressRouteCircuitConnectionsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ExpressRouteCircuitConnectionsCreateOrUpdateResponse, error) {
 	respType := ExpressRouteCircuitConnectionsCreateOrUpdateResponse{}
@@ -1772,7 +1772,7 @@ type ExpressRouteCircuitConnectionsDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l ExpressRouteCircuitConnectionsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ExpressRouteCircuitConnectionsDeleteResponse, error) {
 	respType := ExpressRouteCircuitConnectionsDeleteResponse{}
@@ -1842,7 +1842,7 @@ type ExpressRouteCircuitPeeringsCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l ExpressRouteCircuitPeeringsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ExpressRouteCircuitPeeringsCreateOrUpdateResponse, error) {
 	respType := ExpressRouteCircuitPeeringsCreateOrUpdateResponse{}
@@ -1894,7 +1894,7 @@ type ExpressRouteCircuitPeeringsDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l ExpressRouteCircuitPeeringsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ExpressRouteCircuitPeeringsDeleteResponse, error) {
 	respType := ExpressRouteCircuitPeeringsDeleteResponse{}
@@ -1964,7 +1964,7 @@ type ExpressRouteCircuitsCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l ExpressRouteCircuitsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ExpressRouteCircuitsCreateOrUpdateResponse, error) {
 	respType := ExpressRouteCircuitsCreateOrUpdateResponse{}
@@ -2016,7 +2016,7 @@ type ExpressRouteCircuitsDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l ExpressRouteCircuitsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ExpressRouteCircuitsDeleteResponse, error) {
 	respType := ExpressRouteCircuitsDeleteResponse{}
@@ -2110,7 +2110,7 @@ type ExpressRouteCircuitsListArpTablePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l ExpressRouteCircuitsListArpTablePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ExpressRouteCircuitsListArpTableResponse, error) {
 	respType := ExpressRouteCircuitsListArpTableResponse{}
@@ -2174,7 +2174,7 @@ type ExpressRouteCircuitsListRoutesTablePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l ExpressRouteCircuitsListRoutesTablePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ExpressRouteCircuitsListRoutesTableResponse, error) {
 	respType := ExpressRouteCircuitsListRoutesTableResponse{}
@@ -2226,7 +2226,7 @@ type ExpressRouteCircuitsListRoutesTableSummaryPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l ExpressRouteCircuitsListRoutesTableSummaryPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ExpressRouteCircuitsListRoutesTableSummaryResponse, error) {
 	respType := ExpressRouteCircuitsListRoutesTableSummaryResponse{}
@@ -2290,7 +2290,7 @@ type ExpressRouteConnectionsCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l ExpressRouteConnectionsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ExpressRouteConnectionsCreateOrUpdateResponse, error) {
 	respType := ExpressRouteConnectionsCreateOrUpdateResponse{}
@@ -2342,7 +2342,7 @@ type ExpressRouteConnectionsDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l ExpressRouteConnectionsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ExpressRouteConnectionsDeleteResponse, error) {
 	respType := ExpressRouteConnectionsDeleteResponse{}
@@ -2412,7 +2412,7 @@ type ExpressRouteCrossConnectionPeeringsCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l ExpressRouteCrossConnectionPeeringsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ExpressRouteCrossConnectionPeeringsCreateOrUpdateResponse, error) {
 	respType := ExpressRouteCrossConnectionPeeringsCreateOrUpdateResponse{}
@@ -2464,7 +2464,7 @@ type ExpressRouteCrossConnectionPeeringsDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l ExpressRouteCrossConnectionPeeringsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ExpressRouteCrossConnectionPeeringsDeleteResponse, error) {
 	respType := ExpressRouteCrossConnectionPeeringsDeleteResponse{}
@@ -2534,7 +2534,7 @@ type ExpressRouteCrossConnectionsCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l ExpressRouteCrossConnectionsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ExpressRouteCrossConnectionsCreateOrUpdateResponse, error) {
 	respType := ExpressRouteCrossConnectionsCreateOrUpdateResponse{}
@@ -2598,7 +2598,7 @@ type ExpressRouteCrossConnectionsListArpTablePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l ExpressRouteCrossConnectionsListArpTablePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ExpressRouteCrossConnectionsListArpTableResponse, error) {
 	respType := ExpressRouteCrossConnectionsListArpTableResponse{}
@@ -2674,7 +2674,7 @@ type ExpressRouteCrossConnectionsListRoutesTablePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l ExpressRouteCrossConnectionsListRoutesTablePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ExpressRouteCrossConnectionsListRoutesTableResponse, error) {
 	respType := ExpressRouteCrossConnectionsListRoutesTableResponse{}
@@ -2726,7 +2726,7 @@ type ExpressRouteCrossConnectionsListRoutesTableSummaryPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l ExpressRouteCrossConnectionsListRoutesTableSummaryPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ExpressRouteCrossConnectionsListRoutesTableSummaryResponse, error) {
 	respType := ExpressRouteCrossConnectionsListRoutesTableSummaryResponse{}
@@ -2790,7 +2790,7 @@ type ExpressRouteGatewaysCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l ExpressRouteGatewaysCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ExpressRouteGatewaysCreateOrUpdateResponse, error) {
 	respType := ExpressRouteGatewaysCreateOrUpdateResponse{}
@@ -2842,7 +2842,7 @@ type ExpressRouteGatewaysDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l ExpressRouteGatewaysDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ExpressRouteGatewaysDeleteResponse, error) {
 	respType := ExpressRouteGatewaysDeleteResponse{}
@@ -2948,7 +2948,7 @@ type ExpressRoutePortsCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l ExpressRoutePortsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ExpressRoutePortsCreateOrUpdateResponse, error) {
 	respType := ExpressRoutePortsCreateOrUpdateResponse{}
@@ -3000,7 +3000,7 @@ type ExpressRoutePortsDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l ExpressRoutePortsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ExpressRoutePortsDeleteResponse, error) {
 	respType := ExpressRoutePortsDeleteResponse{}
@@ -3130,7 +3130,7 @@ type FirewallPoliciesCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l FirewallPoliciesCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (FirewallPoliciesCreateOrUpdateResponse, error) {
 	respType := FirewallPoliciesCreateOrUpdateResponse{}
@@ -3182,7 +3182,7 @@ type FirewallPoliciesDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l FirewallPoliciesDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (FirewallPoliciesDeleteResponse, error) {
 	respType := FirewallPoliciesDeleteResponse{}
@@ -3264,7 +3264,7 @@ type FirewallPolicyRuleGroupsCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l FirewallPolicyRuleGroupsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (FirewallPolicyRuleGroupsCreateOrUpdateResponse, error) {
 	respType := FirewallPolicyRuleGroupsCreateOrUpdateResponse{}
@@ -3316,7 +3316,7 @@ type FirewallPolicyRuleGroupsDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l FirewallPolicyRuleGroupsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (FirewallPolicyRuleGroupsDeleteResponse, error) {
 	respType := FirewallPolicyRuleGroupsDeleteResponse{}
@@ -3386,7 +3386,7 @@ type FlowLogsCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l FlowLogsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (FlowLogsCreateOrUpdateResponse, error) {
 	respType := FlowLogsCreateOrUpdateResponse{}
@@ -3438,7 +3438,7 @@ type FlowLogsDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l FlowLogsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (FlowLogsDeleteResponse, error) {
 	respType := FlowLogsDeleteResponse{}
@@ -3532,7 +3532,7 @@ type IPAllocationsCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l IPAllocationsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (IPAllocationsCreateOrUpdateResponse, error) {
 	respType := IPAllocationsCreateOrUpdateResponse{}
@@ -3584,7 +3584,7 @@ type IPAllocationsDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l IPAllocationsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (IPAllocationsDeleteResponse, error) {
 	respType := IPAllocationsDeleteResponse{}
@@ -3678,7 +3678,7 @@ type IPGroupsCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l IPGroupsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (IPGroupsCreateOrUpdateResponse, error) {
 	respType := IPGroupsCreateOrUpdateResponse{}
@@ -3730,7 +3730,7 @@ type IPGroupsDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l IPGroupsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (IPGroupsDeleteResponse, error) {
 	respType := IPGroupsDeleteResponse{}
@@ -3824,7 +3824,7 @@ type InboundNatRulesCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l InboundNatRulesCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (InboundNatRulesCreateOrUpdateResponse, error) {
 	respType := InboundNatRulesCreateOrUpdateResponse{}
@@ -3876,7 +3876,7 @@ type InboundNatRulesDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l InboundNatRulesDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (InboundNatRulesDeleteResponse, error) {
 	respType := InboundNatRulesDeleteResponse{}
@@ -4078,7 +4078,7 @@ type LoadBalancersCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l LoadBalancersCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LoadBalancersCreateOrUpdateResponse, error) {
 	respType := LoadBalancersCreateOrUpdateResponse{}
@@ -4130,7 +4130,7 @@ type LoadBalancersDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l LoadBalancersDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LoadBalancersDeleteResponse, error) {
 	respType := LoadBalancersDeleteResponse{}
@@ -4224,7 +4224,7 @@ type LocalNetworkGatewaysCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l LocalNetworkGatewaysCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LocalNetworkGatewaysCreateOrUpdateResponse, error) {
 	respType := LocalNetworkGatewaysCreateOrUpdateResponse{}
@@ -4276,7 +4276,7 @@ type LocalNetworkGatewaysDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l LocalNetworkGatewaysDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LocalNetworkGatewaysDeleteResponse, error) {
 	respType := LocalNetworkGatewaysDeleteResponse{}
@@ -4358,7 +4358,7 @@ type NatGatewaysCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l NatGatewaysCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NatGatewaysCreateOrUpdateResponse, error) {
 	respType := NatGatewaysCreateOrUpdateResponse{}
@@ -4410,7 +4410,7 @@ type NatGatewaysDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l NatGatewaysDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NatGatewaysDeleteResponse, error) {
 	respType := NatGatewaysDeleteResponse{}
@@ -4540,7 +4540,7 @@ type NetworkInterfaceTapConfigurationsCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l NetworkInterfaceTapConfigurationsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkInterfaceTapConfigurationsCreateOrUpdateResponse, error) {
 	respType := NetworkInterfaceTapConfigurationsCreateOrUpdateResponse{}
@@ -4592,7 +4592,7 @@ type NetworkInterfaceTapConfigurationsDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l NetworkInterfaceTapConfigurationsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkInterfaceTapConfigurationsDeleteResponse, error) {
 	respType := NetworkInterfaceTapConfigurationsDeleteResponse{}
@@ -4662,7 +4662,7 @@ type NetworkInterfacesCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l NetworkInterfacesCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkInterfacesCreateOrUpdateResponse, error) {
 	respType := NetworkInterfacesCreateOrUpdateResponse{}
@@ -4714,7 +4714,7 @@ type NetworkInterfacesDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l NetworkInterfacesDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkInterfacesDeleteResponse, error) {
 	respType := NetworkInterfacesDeleteResponse{}
@@ -4760,7 +4760,7 @@ type NetworkInterfacesGetEffectiveRouteTablePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l NetworkInterfacesGetEffectiveRouteTablePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkInterfacesGetEffectiveRouteTableResponse, error) {
 	respType := NetworkInterfacesGetEffectiveRouteTableResponse{}
@@ -4860,7 +4860,7 @@ type NetworkInterfacesListEffectiveNetworkSecurityGroupsPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l NetworkInterfacesListEffectiveNetworkSecurityGroupsPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkInterfacesListEffectiveNetworkSecurityGroupsResponse, error) {
 	respType := NetworkInterfacesListEffectiveNetworkSecurityGroupsResponse{}
@@ -4984,7 +4984,7 @@ type NetworkManagementClientDeleteBastionShareableLinkPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l NetworkManagementClientDeleteBastionShareableLinkPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkManagementClientDeleteBastionShareableLinkResponse, error) {
 	respType := NetworkManagementClientDeleteBastionShareableLinkResponse{}
@@ -5042,7 +5042,7 @@ type NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePo
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofileResponse, error) {
 	respType := NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofileResponse{}
@@ -5094,7 +5094,7 @@ type NetworkManagementClientGetActiveSessionsPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l NetworkManagementClientGetActiveSessionsPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (*NetworkManagementClientGetActiveSessionsPager, error) {
 	respType := &NetworkManagementClientGetActiveSessionsPager{}
@@ -5160,7 +5160,7 @@ type NetworkManagementClientPutBastionShareableLinkPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l NetworkManagementClientPutBastionShareableLinkPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (*NetworkManagementClientPutBastionShareableLinkPager, error) {
 	respType := &NetworkManagementClientPutBastionShareableLinkPager{}
@@ -5238,7 +5238,7 @@ type NetworkProfilesDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l NetworkProfilesDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkProfilesDeleteResponse, error) {
 	respType := NetworkProfilesDeleteResponse{}
@@ -5332,7 +5332,7 @@ type NetworkSecurityGroupsCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l NetworkSecurityGroupsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkSecurityGroupsCreateOrUpdateResponse, error) {
 	respType := NetworkSecurityGroupsCreateOrUpdateResponse{}
@@ -5384,7 +5384,7 @@ type NetworkSecurityGroupsDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l NetworkSecurityGroupsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkSecurityGroupsDeleteResponse, error) {
 	respType := NetworkSecurityGroupsDeleteResponse{}
@@ -5478,7 +5478,7 @@ type NetworkVirtualAppliancesCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l NetworkVirtualAppliancesCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkVirtualAppliancesCreateOrUpdateResponse, error) {
 	respType := NetworkVirtualAppliancesCreateOrUpdateResponse{}
@@ -5530,7 +5530,7 @@ type NetworkVirtualAppliancesDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l NetworkVirtualAppliancesDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkVirtualAppliancesDeleteResponse, error) {
 	respType := NetworkVirtualAppliancesDeleteResponse{}
@@ -5624,7 +5624,7 @@ type NetworkWatchersCheckConnectivityPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l NetworkWatchersCheckConnectivityPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkWatchersCheckConnectivityResponse, error) {
 	respType := NetworkWatchersCheckConnectivityResponse{}
@@ -5688,7 +5688,7 @@ type NetworkWatchersDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l NetworkWatchersDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkWatchersDeleteResponse, error) {
 	respType := NetworkWatchersDeleteResponse{}
@@ -5734,7 +5734,7 @@ type NetworkWatchersGetAzureReachabilityReportPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l NetworkWatchersGetAzureReachabilityReportPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkWatchersGetAzureReachabilityReportResponse, error) {
 	respType := NetworkWatchersGetAzureReachabilityReportResponse{}
@@ -5786,7 +5786,7 @@ type NetworkWatchersGetFlowLogStatusPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l NetworkWatchersGetFlowLogStatusPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkWatchersGetFlowLogStatusResponse, error) {
 	respType := NetworkWatchersGetFlowLogStatusResponse{}
@@ -5838,7 +5838,7 @@ type NetworkWatchersGetNetworkConfigurationDiagnosticPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l NetworkWatchersGetNetworkConfigurationDiagnosticPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkWatchersGetNetworkConfigurationDiagnosticResponse, error) {
 	respType := NetworkWatchersGetNetworkConfigurationDiagnosticResponse{}
@@ -5890,7 +5890,7 @@ type NetworkWatchersGetNextHopPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l NetworkWatchersGetNextHopPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkWatchersGetNextHopResponse, error) {
 	respType := NetworkWatchersGetNextHopResponse{}
@@ -5966,7 +5966,7 @@ type NetworkWatchersGetTroubleshootingPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l NetworkWatchersGetTroubleshootingPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkWatchersGetTroubleshootingResponse, error) {
 	respType := NetworkWatchersGetTroubleshootingResponse{}
@@ -6018,7 +6018,7 @@ type NetworkWatchersGetTroubleshootingResultPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l NetworkWatchersGetTroubleshootingResultPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkWatchersGetTroubleshootingResultResponse, error) {
 	respType := NetworkWatchersGetTroubleshootingResultResponse{}
@@ -6070,7 +6070,7 @@ type NetworkWatchersGetVMSecurityRulesPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l NetworkWatchersGetVMSecurityRulesPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkWatchersGetVMSecurityRulesResponse, error) {
 	respType := NetworkWatchersGetVMSecurityRulesResponse{}
@@ -6134,7 +6134,7 @@ type NetworkWatchersListAvailableProvidersPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l NetworkWatchersListAvailableProvidersPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkWatchersListAvailableProvidersResponse, error) {
 	respType := NetworkWatchersListAvailableProvidersResponse{}
@@ -6198,7 +6198,7 @@ type NetworkWatchersSetFlowLogConfigurationPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l NetworkWatchersSetFlowLogConfigurationPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkWatchersSetFlowLogConfigurationResponse, error) {
 	respType := NetworkWatchersSetFlowLogConfigurationResponse{}
@@ -6262,7 +6262,7 @@ type NetworkWatchersVerifyIPFlowPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l NetworkWatchersVerifyIPFlowPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkWatchersVerifyIPFlowResponse, error) {
 	respType := NetworkWatchersVerifyIPFlowResponse{}
@@ -6326,7 +6326,7 @@ type P2SVPNGatewaysCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l P2SVPNGatewaysCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (P2SVPNGatewaysCreateOrUpdateResponse, error) {
 	respType := P2SVPNGatewaysCreateOrUpdateResponse{}
@@ -6378,7 +6378,7 @@ type P2SVPNGatewaysDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l P2SVPNGatewaysDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (P2SVPNGatewaysDeleteResponse, error) {
 	respType := P2SVPNGatewaysDeleteResponse{}
@@ -6424,7 +6424,7 @@ type P2SVPNGatewaysDisconnectP2SVPNConnectionsPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l P2SVPNGatewaysDisconnectP2SVPNConnectionsPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (P2SVPNGatewaysDisconnectP2SVPNConnectionsResponse, error) {
 	respType := P2SVPNGatewaysDisconnectP2SVPNConnectionsResponse{}
@@ -6470,7 +6470,7 @@ type P2SVPNGatewaysGenerateVPNProfilePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l P2SVPNGatewaysGenerateVPNProfilePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (P2SVPNGatewaysGenerateVPNProfileResponse, error) {
 	respType := P2SVPNGatewaysGenerateVPNProfileResponse{}
@@ -6522,7 +6522,7 @@ type P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedResponse, error) {
 	respType := P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedResponse{}
@@ -6574,7 +6574,7 @@ type P2SVPNGatewaysGetP2SVPNConnectionHealthPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l P2SVPNGatewaysGetP2SVPNConnectionHealthPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (P2SVPNGatewaysGetP2SVPNConnectionHealthResponse, error) {
 	respType := P2SVPNGatewaysGetP2SVPNConnectionHealthResponse{}
@@ -6674,7 +6674,7 @@ type PacketCapturesCreatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l PacketCapturesCreatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (PacketCapturesCreateResponse, error) {
 	respType := PacketCapturesCreateResponse{}
@@ -6726,7 +6726,7 @@ type PacketCapturesDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l PacketCapturesDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (PacketCapturesDeleteResponse, error) {
 	respType := PacketCapturesDeleteResponse{}
@@ -6784,7 +6784,7 @@ type PacketCapturesGetStatusPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l PacketCapturesGetStatusPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (PacketCapturesGetStatusResponse, error) {
 	respType := PacketCapturesGetStatusResponse{}
@@ -6848,7 +6848,7 @@ type PacketCapturesStopPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l PacketCapturesStopPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (PacketCapturesStopResponse, error) {
 	respType := PacketCapturesStopResponse{}
@@ -6918,7 +6918,7 @@ type PrivateDNSZoneGroupsCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l PrivateDNSZoneGroupsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (PrivateDNSZoneGroupsCreateOrUpdateResponse, error) {
 	respType := PrivateDNSZoneGroupsCreateOrUpdateResponse{}
@@ -6970,7 +6970,7 @@ type PrivateDNSZoneGroupsDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l PrivateDNSZoneGroupsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (PrivateDNSZoneGroupsDeleteResponse, error) {
 	respType := PrivateDNSZoneGroupsDeleteResponse{}
@@ -7040,7 +7040,7 @@ type PrivateEndpointsCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l PrivateEndpointsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (PrivateEndpointsCreateOrUpdateResponse, error) {
 	respType := PrivateEndpointsCreateOrUpdateResponse{}
@@ -7092,7 +7092,7 @@ type PrivateEndpointsDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l PrivateEndpointsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (PrivateEndpointsDeleteResponse, error) {
 	respType := PrivateEndpointsDeleteResponse{}
@@ -7174,7 +7174,7 @@ type PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupPollerRe
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupResponse, error) {
 	respType := PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupResponse{}
@@ -7226,7 +7226,7 @@ type PrivateLinkServicesCheckPrivateLinkServiceVisibilityPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l PrivateLinkServicesCheckPrivateLinkServiceVisibilityPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (PrivateLinkServicesCheckPrivateLinkServiceVisibilityResponse, error) {
 	respType := PrivateLinkServicesCheckPrivateLinkServiceVisibilityResponse{}
@@ -7278,7 +7278,7 @@ type PrivateLinkServicesCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l PrivateLinkServicesCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (PrivateLinkServicesCreateOrUpdateResponse, error) {
 	respType := PrivateLinkServicesCreateOrUpdateResponse{}
@@ -7330,7 +7330,7 @@ type PrivateLinkServicesDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l PrivateLinkServicesDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (PrivateLinkServicesDeleteResponse, error) {
 	respType := PrivateLinkServicesDeleteResponse{}
@@ -7370,7 +7370,7 @@ type PrivateLinkServicesDeletePrivateEndpointConnectionPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l PrivateLinkServicesDeletePrivateEndpointConnectionPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (PrivateLinkServicesDeletePrivateEndpointConnectionResponse, error) {
 	respType := PrivateLinkServicesDeletePrivateEndpointConnectionResponse{}
@@ -7518,7 +7518,7 @@ type PublicIPAddressesCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l PublicIPAddressesCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (PublicIPAddressesCreateOrUpdateResponse, error) {
 	respType := PublicIPAddressesCreateOrUpdateResponse{}
@@ -7570,7 +7570,7 @@ type PublicIPAddressesDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l PublicIPAddressesDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (PublicIPAddressesDeleteResponse, error) {
 	respType := PublicIPAddressesDeleteResponse{}
@@ -7700,7 +7700,7 @@ type PublicIPPrefixesCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l PublicIPPrefixesCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (PublicIPPrefixesCreateOrUpdateResponse, error) {
 	respType := PublicIPPrefixesCreateOrUpdateResponse{}
@@ -7752,7 +7752,7 @@ type PublicIPPrefixesDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l PublicIPPrefixesDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (PublicIPPrefixesDeleteResponse, error) {
 	respType := PublicIPPrefixesDeleteResponse{}
@@ -7858,7 +7858,7 @@ type RouteFilterRulesCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l RouteFilterRulesCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (RouteFilterRulesCreateOrUpdateResponse, error) {
 	respType := RouteFilterRulesCreateOrUpdateResponse{}
@@ -7910,7 +7910,7 @@ type RouteFilterRulesDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l RouteFilterRulesDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (RouteFilterRulesDeleteResponse, error) {
 	respType := RouteFilterRulesDeleteResponse{}
@@ -7980,7 +7980,7 @@ type RouteFiltersCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l RouteFiltersCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (RouteFiltersCreateOrUpdateResponse, error) {
 	respType := RouteFiltersCreateOrUpdateResponse{}
@@ -8032,7 +8032,7 @@ type RouteFiltersDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l RouteFiltersDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (RouteFiltersDeleteResponse, error) {
 	respType := RouteFiltersDeleteResponse{}
@@ -8126,7 +8126,7 @@ type RouteTablesCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l RouteTablesCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (RouteTablesCreateOrUpdateResponse, error) {
 	respType := RouteTablesCreateOrUpdateResponse{}
@@ -8178,7 +8178,7 @@ type RouteTablesDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l RouteTablesDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (RouteTablesDeleteResponse, error) {
 	respType := RouteTablesDeleteResponse{}
@@ -8272,7 +8272,7 @@ type RoutesCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l RoutesCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (RoutesCreateOrUpdateResponse, error) {
 	respType := RoutesCreateOrUpdateResponse{}
@@ -8324,7 +8324,7 @@ type RoutesDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l RoutesDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (RoutesDeleteResponse, error) {
 	respType := RoutesDeleteResponse{}
@@ -8394,7 +8394,7 @@ type SecurityPartnerProvidersCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l SecurityPartnerProvidersCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (SecurityPartnerProvidersCreateOrUpdateResponse, error) {
 	respType := SecurityPartnerProvidersCreateOrUpdateResponse{}
@@ -8446,7 +8446,7 @@ type SecurityPartnerProvidersDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l SecurityPartnerProvidersDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (SecurityPartnerProvidersDeleteResponse, error) {
 	respType := SecurityPartnerProvidersDeleteResponse{}
@@ -8540,7 +8540,7 @@ type SecurityRulesCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l SecurityRulesCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (SecurityRulesCreateOrUpdateResponse, error) {
 	respType := SecurityRulesCreateOrUpdateResponse{}
@@ -8592,7 +8592,7 @@ type SecurityRulesDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l SecurityRulesDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (SecurityRulesDeleteResponse, error) {
 	respType := SecurityRulesDeleteResponse{}
@@ -8674,7 +8674,7 @@ type ServiceEndpointPoliciesCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l ServiceEndpointPoliciesCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ServiceEndpointPoliciesCreateOrUpdateResponse, error) {
 	respType := ServiceEndpointPoliciesCreateOrUpdateResponse{}
@@ -8726,7 +8726,7 @@ type ServiceEndpointPoliciesDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l ServiceEndpointPoliciesDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ServiceEndpointPoliciesDeleteResponse, error) {
 	respType := ServiceEndpointPoliciesDeleteResponse{}
@@ -8820,7 +8820,7 @@ type ServiceEndpointPolicyDefinitionsCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l ServiceEndpointPolicyDefinitionsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ServiceEndpointPolicyDefinitionsCreateOrUpdateResponse, error) {
 	respType := ServiceEndpointPolicyDefinitionsCreateOrUpdateResponse{}
@@ -8872,7 +8872,7 @@ type ServiceEndpointPolicyDefinitionsDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l ServiceEndpointPolicyDefinitionsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ServiceEndpointPolicyDefinitionsDeleteResponse, error) {
 	respType := ServiceEndpointPolicyDefinitionsDeleteResponse{}
@@ -8954,7 +8954,7 @@ type SubnetsCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l SubnetsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (SubnetsCreateOrUpdateResponse, error) {
 	respType := SubnetsCreateOrUpdateResponse{}
@@ -9006,7 +9006,7 @@ type SubnetsDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l SubnetsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (SubnetsDeleteResponse, error) {
 	respType := SubnetsDeleteResponse{}
@@ -9076,7 +9076,7 @@ type SubnetsPrepareNetworkPoliciesPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l SubnetsPrepareNetworkPoliciesPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (SubnetsPrepareNetworkPoliciesResponse, error) {
 	respType := SubnetsPrepareNetworkPoliciesResponse{}
@@ -9122,7 +9122,7 @@ type SubnetsUnprepareNetworkPoliciesPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l SubnetsUnprepareNetworkPoliciesPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (SubnetsUnprepareNetworkPoliciesResponse, error) {
 	respType := SubnetsUnprepareNetworkPoliciesResponse{}
@@ -9180,7 +9180,7 @@ type VPNConnectionsCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VPNConnectionsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VPNConnectionsCreateOrUpdateResponse, error) {
 	respType := VPNConnectionsCreateOrUpdateResponse{}
@@ -9232,7 +9232,7 @@ type VPNConnectionsDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VPNConnectionsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VPNConnectionsDeleteResponse, error) {
 	respType := VPNConnectionsDeleteResponse{}
@@ -9302,7 +9302,7 @@ type VPNGatewaysCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VPNGatewaysCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VPNGatewaysCreateOrUpdateResponse, error) {
 	respType := VPNGatewaysCreateOrUpdateResponse{}
@@ -9354,7 +9354,7 @@ type VPNGatewaysDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VPNGatewaysDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VPNGatewaysDeleteResponse, error) {
 	respType := VPNGatewaysDeleteResponse{}
@@ -9436,7 +9436,7 @@ type VPNGatewaysResetPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VPNGatewaysResetPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VPNGatewaysResetResponse, error) {
 	respType := VPNGatewaysResetResponse{}
@@ -9512,7 +9512,7 @@ type VPNServerConfigurationsAssociatedWithVirtualWanListPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VPNServerConfigurationsAssociatedWithVirtualWanListPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VPNServerConfigurationsAssociatedWithVirtualWanListResponse, error) {
 	respType := VPNServerConfigurationsAssociatedWithVirtualWanListResponse{}
@@ -9564,7 +9564,7 @@ type VPNServerConfigurationsCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VPNServerConfigurationsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VPNServerConfigurationsCreateOrUpdateResponse, error) {
 	respType := VPNServerConfigurationsCreateOrUpdateResponse{}
@@ -9616,7 +9616,7 @@ type VPNServerConfigurationsDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VPNServerConfigurationsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VPNServerConfigurationsDeleteResponse, error) {
 	respType := VPNServerConfigurationsDeleteResponse{}
@@ -9746,7 +9746,7 @@ type VPNSitesConfigurationDownloadPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VPNSitesConfigurationDownloadPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VPNSitesConfigurationDownloadResponse, error) {
 	respType := VPNSitesConfigurationDownloadResponse{}
@@ -9792,7 +9792,7 @@ type VPNSitesCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VPNSitesCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VPNSitesCreateOrUpdateResponse, error) {
 	respType := VPNSitesCreateOrUpdateResponse{}
@@ -9844,7 +9844,7 @@ type VPNSitesDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VPNSitesDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VPNSitesDeleteResponse, error) {
 	respType := VPNSitesDeleteResponse{}
@@ -9938,7 +9938,7 @@ type VirtualHubRouteTableV2SCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualHubRouteTableV2SCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualHubRouteTableV2SCreateOrUpdateResponse, error) {
 	respType := VirtualHubRouteTableV2SCreateOrUpdateResponse{}
@@ -9990,7 +9990,7 @@ type VirtualHubRouteTableV2SDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualHubRouteTableV2SDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualHubRouteTableV2SDeleteResponse, error) {
 	respType := VirtualHubRouteTableV2SDeleteResponse{}
@@ -10060,7 +10060,7 @@ type VirtualHubsCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualHubsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualHubsCreateOrUpdateResponse, error) {
 	respType := VirtualHubsCreateOrUpdateResponse{}
@@ -10112,7 +10112,7 @@ type VirtualHubsDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualHubsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualHubsDeleteResponse, error) {
 	respType := VirtualHubsDeleteResponse{}
@@ -10206,7 +10206,7 @@ type VirtualNetworkGatewayConnectionsCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualNetworkGatewayConnectionsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkGatewayConnectionsCreateOrUpdateResponse, error) {
 	respType := VirtualNetworkGatewayConnectionsCreateOrUpdateResponse{}
@@ -10258,7 +10258,7 @@ type VirtualNetworkGatewayConnectionsDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualNetworkGatewayConnectionsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkGatewayConnectionsDeleteResponse, error) {
 	respType := VirtualNetworkGatewayConnectionsDeleteResponse{}
@@ -10340,7 +10340,7 @@ type VirtualNetworkGatewayConnectionsResetSharedKeyPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualNetworkGatewayConnectionsResetSharedKeyPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkGatewayConnectionsResetSharedKeyResponse, error) {
 	respType := VirtualNetworkGatewayConnectionsResetSharedKeyResponse{}
@@ -10392,7 +10392,7 @@ type VirtualNetworkGatewayConnectionsSetSharedKeyPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualNetworkGatewayConnectionsSetSharedKeyPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkGatewayConnectionsSetSharedKeyResponse, error) {
 	respType := VirtualNetworkGatewayConnectionsSetSharedKeyResponse{}
@@ -10444,7 +10444,7 @@ type VirtualNetworkGatewayConnectionsStartPacketCapturePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualNetworkGatewayConnectionsStartPacketCapturePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkGatewayConnectionsStartPacketCaptureResponse, error) {
 	respType := VirtualNetworkGatewayConnectionsStartPacketCaptureResponse{}
@@ -10496,7 +10496,7 @@ type VirtualNetworkGatewayConnectionsStopPacketCapturePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualNetworkGatewayConnectionsStopPacketCapturePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkGatewayConnectionsStopPacketCaptureResponse, error) {
 	respType := VirtualNetworkGatewayConnectionsStopPacketCaptureResponse{}
@@ -10548,7 +10548,7 @@ type VirtualNetworkGatewayConnectionsUpdateTagsPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualNetworkGatewayConnectionsUpdateTagsPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkGatewayConnectionsUpdateTagsResponse, error) {
 	respType := VirtualNetworkGatewayConnectionsUpdateTagsResponse{}
@@ -10600,7 +10600,7 @@ type VirtualNetworkGatewaysCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualNetworkGatewaysCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkGatewaysCreateOrUpdateResponse, error) {
 	respType := VirtualNetworkGatewaysCreateOrUpdateResponse{}
@@ -10652,7 +10652,7 @@ type VirtualNetworkGatewaysDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualNetworkGatewaysDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkGatewaysDeleteResponse, error) {
 	respType := VirtualNetworkGatewaysDeleteResponse{}
@@ -10698,7 +10698,7 @@ type VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVPNConnectionsPollerRe
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVPNConnectionsPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVPNConnectionsResponse, error) {
 	respType := VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVPNConnectionsResponse{}
@@ -10744,7 +10744,7 @@ type VirtualNetworkGatewaysGenerateVPNProfilePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualNetworkGatewaysGenerateVPNProfilePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkGatewaysGenerateVPNProfileResponse, error) {
 	respType := VirtualNetworkGatewaysGenerateVPNProfileResponse{}
@@ -10796,7 +10796,7 @@ type VirtualNetworkGatewaysGeneratevpnclientpackagePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualNetworkGatewaysGeneratevpnclientpackagePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkGatewaysGeneratevpnclientpackageResponse, error) {
 	respType := VirtualNetworkGatewaysGeneratevpnclientpackageResponse{}
@@ -10848,7 +10848,7 @@ type VirtualNetworkGatewaysGetAdvertisedRoutesPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualNetworkGatewaysGetAdvertisedRoutesPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkGatewaysGetAdvertisedRoutesResponse, error) {
 	respType := VirtualNetworkGatewaysGetAdvertisedRoutesResponse{}
@@ -10900,7 +10900,7 @@ type VirtualNetworkGatewaysGetBgpPeerStatusPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualNetworkGatewaysGetBgpPeerStatusPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkGatewaysGetBgpPeerStatusResponse, error) {
 	respType := VirtualNetworkGatewaysGetBgpPeerStatusResponse{}
@@ -10952,7 +10952,7 @@ type VirtualNetworkGatewaysGetLearnedRoutesPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualNetworkGatewaysGetLearnedRoutesPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkGatewaysGetLearnedRoutesResponse, error) {
 	respType := VirtualNetworkGatewaysGetLearnedRoutesResponse{}
@@ -11016,7 +11016,7 @@ type VirtualNetworkGatewaysGetVPNProfilePackageURLPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualNetworkGatewaysGetVPNProfilePackageURLPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkGatewaysGetVPNProfilePackageURLResponse, error) {
 	respType := VirtualNetworkGatewaysGetVPNProfilePackageURLResponse{}
@@ -11068,7 +11068,7 @@ type VirtualNetworkGatewaysGetVpnclientConnectionHealthPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualNetworkGatewaysGetVpnclientConnectionHealthPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkGatewaysGetVpnclientConnectionHealthResponse, error) {
 	respType := VirtualNetworkGatewaysGetVpnclientConnectionHealthResponse{}
@@ -11120,7 +11120,7 @@ type VirtualNetworkGatewaysGetVpnclientIPSecParametersPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualNetworkGatewaysGetVpnclientIPSecParametersPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkGatewaysGetVpnclientIPSecParametersResponse, error) {
 	respType := VirtualNetworkGatewaysGetVpnclientIPSecParametersResponse{}
@@ -11196,7 +11196,7 @@ type VirtualNetworkGatewaysResetPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualNetworkGatewaysResetPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkGatewaysResetResponse, error) {
 	respType := VirtualNetworkGatewaysResetResponse{}
@@ -11248,7 +11248,7 @@ type VirtualNetworkGatewaysResetVPNClientSharedKeyPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualNetworkGatewaysResetVPNClientSharedKeyPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkGatewaysResetVPNClientSharedKeyResponse, error) {
 	respType := VirtualNetworkGatewaysResetVPNClientSharedKeyResponse{}
@@ -11294,7 +11294,7 @@ type VirtualNetworkGatewaysSetVpnclientIPSecParametersPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualNetworkGatewaysSetVpnclientIPSecParametersPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkGatewaysSetVpnclientIPSecParametersResponse, error) {
 	respType := VirtualNetworkGatewaysSetVpnclientIPSecParametersResponse{}
@@ -11346,7 +11346,7 @@ type VirtualNetworkGatewaysStartPacketCapturePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualNetworkGatewaysStartPacketCapturePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkGatewaysStartPacketCaptureResponse, error) {
 	respType := VirtualNetworkGatewaysStartPacketCaptureResponse{}
@@ -11398,7 +11398,7 @@ type VirtualNetworkGatewaysStopPacketCapturePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualNetworkGatewaysStopPacketCapturePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkGatewaysStopPacketCaptureResponse, error) {
 	respType := VirtualNetworkGatewaysStopPacketCaptureResponse{}
@@ -11462,7 +11462,7 @@ type VirtualNetworkGatewaysUpdateTagsPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualNetworkGatewaysUpdateTagsPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkGatewaysUpdateTagsResponse, error) {
 	respType := VirtualNetworkGatewaysUpdateTagsResponse{}
@@ -11526,7 +11526,7 @@ type VirtualNetworkPeeringsCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualNetworkPeeringsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkPeeringsCreateOrUpdateResponse, error) {
 	respType := VirtualNetworkPeeringsCreateOrUpdateResponse{}
@@ -11578,7 +11578,7 @@ type VirtualNetworkPeeringsDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualNetworkPeeringsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkPeeringsDeleteResponse, error) {
 	respType := VirtualNetworkPeeringsDeleteResponse{}
@@ -11648,7 +11648,7 @@ type VirtualNetworkTapsCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualNetworkTapsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkTapsCreateOrUpdateResponse, error) {
 	respType := VirtualNetworkTapsCreateOrUpdateResponse{}
@@ -11700,7 +11700,7 @@ type VirtualNetworkTapsDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualNetworkTapsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworkTapsDeleteResponse, error) {
 	respType := VirtualNetworkTapsDeleteResponse{}
@@ -11806,7 +11806,7 @@ type VirtualNetworksCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualNetworksCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworksCreateOrUpdateResponse, error) {
 	respType := VirtualNetworksCreateOrUpdateResponse{}
@@ -11858,7 +11858,7 @@ type VirtualNetworksDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualNetworksDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualNetworksDeleteResponse, error) {
 	respType := VirtualNetworksDeleteResponse{}
@@ -11964,7 +11964,7 @@ type VirtualRouterPeeringsCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualRouterPeeringsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualRouterPeeringsCreateOrUpdateResponse, error) {
 	respType := VirtualRouterPeeringsCreateOrUpdateResponse{}
@@ -12016,7 +12016,7 @@ type VirtualRouterPeeringsDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualRouterPeeringsDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualRouterPeeringsDeleteResponse, error) {
 	respType := VirtualRouterPeeringsDeleteResponse{}
@@ -12086,7 +12086,7 @@ type VirtualRoutersCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualRoutersCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualRoutersCreateOrUpdateResponse, error) {
 	respType := VirtualRoutersCreateOrUpdateResponse{}
@@ -12138,7 +12138,7 @@ type VirtualRoutersDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualRoutersDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualRoutersDeleteResponse, error) {
 	respType := VirtualRoutersDeleteResponse{}
@@ -12220,7 +12220,7 @@ type VirtualWansCreateOrUpdatePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualWansCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualWansCreateOrUpdateResponse, error) {
 	respType := VirtualWansCreateOrUpdateResponse{}
@@ -12272,7 +12272,7 @@ type VirtualWansDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l VirtualWansDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (VirtualWansDeleteResponse, error) {
 	respType := VirtualWansDeleteResponse{}
@@ -12378,7 +12378,7 @@ type WebApplicationFirewallPoliciesDeletePollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l WebApplicationFirewallPoliciesDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (WebApplicationFirewallPoliciesDeleteResponse, error) {
 	respType := WebApplicationFirewallPoliciesDeleteResponse{}

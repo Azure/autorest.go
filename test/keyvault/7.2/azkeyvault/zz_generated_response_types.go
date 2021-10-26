@@ -37,7 +37,7 @@ type HSMSecurityDomainDownloadPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 func (l HSMSecurityDomainDownloadPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (HSMSecurityDomainDownloadResponse, error) {
 	respType := HSMSecurityDomainDownloadResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.SecurityDomainObject)
@@ -112,7 +112,7 @@ type HSMSecurityDomainUploadPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 func (l HSMSecurityDomainUploadPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (HSMSecurityDomainUploadResponse, error) {
 	respType := HSMSecurityDomainUploadResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.SecurityDomainOperationStatus)
@@ -355,7 +355,7 @@ type KeyVaultClientFullBackupPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 func (l KeyVaultClientFullBackupPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (KeyVaultClientFullBackupResponse, error) {
 	respType := KeyVaultClientFullBackupResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.FullBackupOperation)
@@ -418,7 +418,7 @@ type KeyVaultClientFullRestoreOperationPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 func (l KeyVaultClientFullRestoreOperationPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (KeyVaultClientFullRestoreOperationResponse, error) {
 	respType := KeyVaultClientFullRestoreOperationResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.RestoreOperation)
@@ -997,7 +997,7 @@ type KeyVaultClientSelectiveKeyRestoreOperationPollerResponse struct {
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 func (l KeyVaultClientSelectiveKeyRestoreOperationPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (KeyVaultClientSelectiveKeyRestoreOperationResponse, error) {
 	respType := KeyVaultClientSelectiveKeyRestoreOperationResponse{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.SelectiveKeyRestoreOperation)

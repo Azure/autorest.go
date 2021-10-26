@@ -129,7 +129,7 @@ function generatePollUntilDoneForResponse(structDef: StructDef, isAzure: boolean
   }
   pollUntilDone += '\treturn respType, nil\n';
   pollUntilDone += '}\n\n';
-  let desc = 'PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.\nfreq: the time to wait between intervals in absence of a Retry-After header.';
+  let desc = 'PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.\nfreq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.';
   if (isAzure) {
     desc += '\nA good starting value is 30 seconds. Note that some resources might benefit from a different value.';
   }
