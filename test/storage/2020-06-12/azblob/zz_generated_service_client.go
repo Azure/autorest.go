@@ -93,7 +93,7 @@ func (client *serviceClient) filterBlobsHandleResponse(resp *http.Response) (Ser
 		result.Date = &date
 	}
 	if err := runtime.UnmarshalAsXML(resp, &result.FilterBlobSegment); err != nil {
-		return ServiceFilterBlobsResponse{}, err
+		return ServiceFilterBlobsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -243,7 +243,7 @@ func (client *serviceClient) getPropertiesHandleResponse(resp *http.Response) (S
 		result.Version = &val
 	}
 	if err := runtime.UnmarshalAsXML(resp, &result.StorageServiceProperties); err != nil {
-		return ServiceGetPropertiesResponse{}, err
+		return ServiceGetPropertiesResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -320,7 +320,7 @@ func (client *serviceClient) getStatisticsHandleResponse(resp *http.Response) (S
 		result.Date = &date
 	}
 	if err := runtime.UnmarshalAsXML(resp, &result.StorageServiceStats); err != nil {
-		return ServiceGetStatisticsResponse{}, err
+		return ServiceGetStatisticsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -396,7 +396,7 @@ func (client *serviceClient) getUserDelegationKeyHandleResponse(resp *http.Respo
 		result.Date = &date
 	}
 	if err := runtime.UnmarshalAsXML(resp, &result.UserDelegationKey); err != nil {
-		return ServiceGetUserDelegationKeyResponse{}, err
+		return ServiceGetUserDelegationKeyResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -473,7 +473,7 @@ func (client *serviceClient) listContainersSegmentHandleResponse(resp *http.Resp
 		result.Version = &val
 	}
 	if err := runtime.UnmarshalAsXML(resp, &result.ListContainersSegmentResponse); err != nil {
-		return ServiceListContainersSegmentResponse{}, err
+		return ServiceListContainersSegmentResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

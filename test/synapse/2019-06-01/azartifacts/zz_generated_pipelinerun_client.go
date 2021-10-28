@@ -114,7 +114,7 @@ func (client *pipelineRunClient) getPipelineRunCreateRequest(ctx context.Context
 func (client *pipelineRunClient) getPipelineRunHandleResponse(resp *http.Response) (PipelineRunGetPipelineRunResponse, error) {
 	result := PipelineRunGetPipelineRunResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PipelineRun); err != nil {
-		return PipelineRunGetPipelineRunResponse{}, err
+		return PipelineRunGetPipelineRunResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -175,7 +175,7 @@ func (client *pipelineRunClient) queryActivityRunsCreateRequest(ctx context.Cont
 func (client *pipelineRunClient) queryActivityRunsHandleResponse(resp *http.Response) (PipelineRunQueryActivityRunsResponse, error) {
 	result := PipelineRunQueryActivityRunsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ActivityRunsQueryResponse); err != nil {
-		return PipelineRunQueryActivityRunsResponse{}, err
+		return PipelineRunQueryActivityRunsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -228,7 +228,7 @@ func (client *pipelineRunClient) queryPipelineRunsByWorkspaceCreateRequest(ctx c
 func (client *pipelineRunClient) queryPipelineRunsByWorkspaceHandleResponse(resp *http.Response) (PipelineRunQueryPipelineRunsByWorkspaceResponse, error) {
 	result := PipelineRunQueryPipelineRunsByWorkspaceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PipelineRunsQueryResponse); err != nil {
-		return PipelineRunQueryPipelineRunsByWorkspaceResponse{}, err
+		return PipelineRunQueryPipelineRunsByWorkspaceResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

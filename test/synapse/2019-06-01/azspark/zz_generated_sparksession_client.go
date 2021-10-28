@@ -97,7 +97,7 @@ func (client *sparkSessionClient) cancelSparkStatementCreateRequest(ctx context.
 func (client *sparkSessionClient) cancelSparkStatementHandleResponse(resp *http.Response) (SparkSessionCancelSparkStatementResponse, error) {
 	result := SparkSessionCancelSparkStatementResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SparkStatementCancellationResult); err != nil {
-		return SparkSessionCancelSparkStatementResponse{}, err
+		return SparkSessionCancelSparkStatementResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -151,7 +151,7 @@ func (client *sparkSessionClient) createSparkSessionCreateRequest(ctx context.Co
 func (client *sparkSessionClient) createSparkSessionHandleResponse(resp *http.Response) (SparkSessionCreateSparkSessionResponse, error) {
 	result := SparkSessionCreateSparkSessionResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SparkSession); err != nil {
-		return SparkSessionCreateSparkSessionResponse{}, err
+		return SparkSessionCreateSparkSessionResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -201,7 +201,7 @@ func (client *sparkSessionClient) createSparkStatementCreateRequest(ctx context.
 func (client *sparkSessionClient) createSparkStatementHandleResponse(resp *http.Response) (SparkSessionCreateSparkStatementResponse, error) {
 	result := SparkSessionCreateSparkStatementResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SparkStatement); err != nil {
-		return SparkSessionCreateSparkStatementResponse{}, err
+		return SparkSessionCreateSparkStatementResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -256,7 +256,7 @@ func (client *sparkSessionClient) getSparkSessionCreateRequest(ctx context.Conte
 func (client *sparkSessionClient) getSparkSessionHandleResponse(resp *http.Response) (SparkSessionGetSparkSessionResponse, error) {
 	result := SparkSessionGetSparkSessionResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SparkSession); err != nil {
-		return SparkSessionGetSparkSessionResponse{}, err
+		return SparkSessionGetSparkSessionResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -316,7 +316,7 @@ func (client *sparkSessionClient) getSparkSessionsCreateRequest(ctx context.Cont
 func (client *sparkSessionClient) getSparkSessionsHandleResponse(resp *http.Response) (SparkSessionGetSparkSessionsResponse, error) {
 	result := SparkSessionGetSparkSessionsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SparkSessionCollection); err != nil {
-		return SparkSessionGetSparkSessionsResponse{}, err
+		return SparkSessionGetSparkSessionsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -367,7 +367,7 @@ func (client *sparkSessionClient) getSparkStatementCreateRequest(ctx context.Con
 func (client *sparkSessionClient) getSparkStatementHandleResponse(resp *http.Response) (SparkSessionGetSparkStatementResponse, error) {
 	result := SparkSessionGetSparkStatementResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SparkStatement); err != nil {
-		return SparkSessionGetSparkStatementResponse{}, err
+		return SparkSessionGetSparkStatementResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -417,7 +417,7 @@ func (client *sparkSessionClient) getSparkStatementsCreateRequest(ctx context.Co
 func (client *sparkSessionClient) getSparkStatementsHandleResponse(resp *http.Response) (SparkSessionGetSparkStatementsResponse, error) {
 	result := SparkSessionGetSparkStatementsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SparkStatementCollection); err != nil {
-		return SparkSessionGetSparkStatementsResponse{}, err
+		return SparkSessionGetSparkStatementsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

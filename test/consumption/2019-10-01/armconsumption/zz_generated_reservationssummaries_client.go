@@ -90,7 +90,7 @@ func (client *ReservationsSummariesClient) listCreateRequest(ctx context.Context
 func (client *ReservationsSummariesClient) listHandleResponse(resp *http.Response) (ReservationsSummariesListResponse, error) {
 	result := ReservationsSummariesListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ReservationSummariesListResult); err != nil {
-		return ReservationsSummariesListResponse{}, err
+		return ReservationsSummariesListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -148,7 +148,7 @@ func (client *ReservationsSummariesClient) listByReservationOrderCreateRequest(c
 func (client *ReservationsSummariesClient) listByReservationOrderHandleResponse(resp *http.Response) (ReservationsSummariesListByReservationOrderResponse, error) {
 	result := ReservationsSummariesListByReservationOrderResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ReservationSummariesListResult); err != nil {
-		return ReservationsSummariesListByReservationOrderResponse{}, err
+		return ReservationsSummariesListByReservationOrderResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -210,7 +210,7 @@ func (client *ReservationsSummariesClient) listByReservationOrderAndReservationC
 func (client *ReservationsSummariesClient) listByReservationOrderAndReservationHandleResponse(resp *http.Response) (ReservationsSummariesListByReservationOrderAndReservationResponse, error) {
 	result := ReservationsSummariesListByReservationOrderAndReservationResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ReservationSummariesListResult); err != nil {
-		return ReservationsSummariesListByReservationOrderAndReservationResponse{}, err
+		return ReservationsSummariesListByReservationOrderAndReservationResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

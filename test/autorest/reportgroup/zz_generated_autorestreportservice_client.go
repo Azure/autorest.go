@@ -64,7 +64,7 @@ func (client *AutoRestReportServiceClient) getOptionalReportCreateRequest(ctx co
 func (client *AutoRestReportServiceClient) getOptionalReportHandleResponse(resp *http.Response) (AutoRestReportServiceGetOptionalReportResponse, error) {
 	result := AutoRestReportServiceGetOptionalReportResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return AutoRestReportServiceGetOptionalReportResponse{}, err
+		return AutoRestReportServiceGetOptionalReportResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -119,7 +119,7 @@ func (client *AutoRestReportServiceClient) getReportCreateRequest(ctx context.Co
 func (client *AutoRestReportServiceClient) getReportHandleResponse(resp *http.Response) (AutoRestReportServiceGetReportResponse, error) {
 	result := AutoRestReportServiceGetReportResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return AutoRestReportServiceGetReportResponse{}, err
+		return AutoRestReportServiceGetReportResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

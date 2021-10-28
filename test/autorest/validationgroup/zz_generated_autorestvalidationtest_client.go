@@ -108,7 +108,7 @@ func (client *AutoRestValidationTestClient) postWithConstantInBodyCreateRequest(
 func (client *AutoRestValidationTestClient) postWithConstantInBodyHandleResponse(resp *http.Response) (AutoRestValidationTestPostWithConstantInBodyResponse, error) {
 	result := AutoRestValidationTestPostWithConstantInBodyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Product); err != nil {
-		return AutoRestValidationTestPostWithConstantInBodyResponse{}, err
+		return AutoRestValidationTestPostWithConstantInBodyResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -172,7 +172,7 @@ func (client *AutoRestValidationTestClient) validationOfBodyCreateRequest(ctx co
 func (client *AutoRestValidationTestClient) validationOfBodyHandleResponse(resp *http.Response) (AutoRestValidationTestValidationOfBodyResponse, error) {
 	result := AutoRestValidationTestValidationOfBodyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Product); err != nil {
-		return AutoRestValidationTestValidationOfBodyResponse{}, err
+		return AutoRestValidationTestValidationOfBodyResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -234,7 +234,7 @@ func (client *AutoRestValidationTestClient) validationOfMethodParametersCreateRe
 func (client *AutoRestValidationTestClient) validationOfMethodParametersHandleResponse(resp *http.Response) (AutoRestValidationTestValidationOfMethodParametersResponse, error) {
 	result := AutoRestValidationTestValidationOfMethodParametersResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Product); err != nil {
-		return AutoRestValidationTestValidationOfMethodParametersResponse{}, err
+		return AutoRestValidationTestValidationOfMethodParametersResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

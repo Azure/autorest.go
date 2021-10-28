@@ -89,7 +89,7 @@ func (client *NetworkProfilesClient) createOrUpdateCreateRequest(ctx context.Con
 func (client *NetworkProfilesClient) createOrUpdateHandleResponse(resp *http.Response) (NetworkProfilesCreateOrUpdateResponse, error) {
 	result := NetworkProfilesCreateOrUpdateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkProfile); err != nil {
-		return NetworkProfilesCreateOrUpdateResponse{}, err
+		return NetworkProfilesCreateOrUpdateResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -233,7 +233,7 @@ func (client *NetworkProfilesClient) getCreateRequest(ctx context.Context, resou
 func (client *NetworkProfilesClient) getHandleResponse(resp *http.Response) (NetworkProfilesGetResponse, error) {
 	result := NetworkProfilesGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkProfile); err != nil {
-		return NetworkProfilesGetResponse{}, err
+		return NetworkProfilesGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -291,7 +291,7 @@ func (client *NetworkProfilesClient) listCreateRequest(ctx context.Context, reso
 func (client *NetworkProfilesClient) listHandleResponse(resp *http.Response) (NetworkProfilesListResponse, error) {
 	result := NetworkProfilesListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkProfileListResult); err != nil {
-		return NetworkProfilesListResponse{}, err
+		return NetworkProfilesListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -345,7 +345,7 @@ func (client *NetworkProfilesClient) listAllCreateRequest(ctx context.Context, o
 func (client *NetworkProfilesClient) listAllHandleResponse(resp *http.Response) (NetworkProfilesListAllResponse, error) {
 	result := NetworkProfilesListAllResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkProfileListResult); err != nil {
-		return NetworkProfilesListAllResponse{}, err
+		return NetworkProfilesListAllResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -410,7 +410,7 @@ func (client *NetworkProfilesClient) updateTagsCreateRequest(ctx context.Context
 func (client *NetworkProfilesClient) updateTagsHandleResponse(resp *http.Response) (NetworkProfilesUpdateTagsResponse, error) {
 	result := NetworkProfilesUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkProfile); err != nil {
-		return NetworkProfilesUpdateTagsResponse{}, err
+		return NetworkProfilesUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

@@ -79,7 +79,7 @@ func (client *DevicesClient) createOrUpdateCreateRequest(ctx context.Context, de
 func (client *DevicesClient) createOrUpdateHandleResponse(resp *http.Response) (DevicesCreateOrUpdateResponse, error) {
 	result := DevicesCreateOrUpdateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DataBoxEdgeDevice); err != nil {
-		return DevicesCreateOrUpdateResponse{}, err
+		return DevicesCreateOrUpdateResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -372,7 +372,7 @@ func (client *DevicesClient) generateCertificateCreateRequest(ctx context.Contex
 func (client *DevicesClient) generateCertificateHandleResponse(resp *http.Response) (DevicesGenerateCertificateResponse, error) {
 	result := DevicesGenerateCertificateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.GenerateCertResponse); err != nil {
-		return DevicesGenerateCertificateResponse{}, err
+		return DevicesGenerateCertificateResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -437,7 +437,7 @@ func (client *DevicesClient) getCreateRequest(ctx context.Context, deviceName st
 func (client *DevicesClient) getHandleResponse(resp *http.Response) (DevicesGetResponse, error) {
 	result := DevicesGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DataBoxEdgeDevice); err != nil {
-		return DevicesGetResponse{}, err
+		return DevicesGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -502,7 +502,7 @@ func (client *DevicesClient) getExtendedInformationCreateRequest(ctx context.Con
 func (client *DevicesClient) getExtendedInformationHandleResponse(resp *http.Response) (DevicesGetExtendedInformationResponse, error) {
 	result := DevicesGetExtendedInformationResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DataBoxEdgeDeviceExtendedInfo); err != nil {
-		return DevicesGetExtendedInformationResponse{}, err
+		return DevicesGetExtendedInformationResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -567,7 +567,7 @@ func (client *DevicesClient) getNetworkSettingsCreateRequest(ctx context.Context
 func (client *DevicesClient) getNetworkSettingsHandleResponse(resp *http.Response) (DevicesGetNetworkSettingsResponse, error) {
 	result := DevicesGetNetworkSettingsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkSettings); err != nil {
-		return DevicesGetNetworkSettingsResponse{}, err
+		return DevicesGetNetworkSettingsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -633,7 +633,7 @@ func (client *DevicesClient) getUpdateSummaryCreateRequest(ctx context.Context, 
 func (client *DevicesClient) getUpdateSummaryHandleResponse(resp *http.Response) (DevicesGetUpdateSummaryResponse, error) {
 	result := DevicesGetUpdateSummaryResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.UpdateSummary); err != nil {
-		return DevicesGetUpdateSummaryResponse{}, err
+		return DevicesGetUpdateSummaryResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -770,7 +770,7 @@ func (client *DevicesClient) listByResourceGroupCreateRequest(ctx context.Contex
 func (client *DevicesClient) listByResourceGroupHandleResponse(resp *http.Response) (DevicesListByResourceGroupResponse, error) {
 	result := DevicesListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DataBoxEdgeDeviceList); err != nil {
-		return DevicesListByResourceGroupResponse{}, err
+		return DevicesListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -827,7 +827,7 @@ func (client *DevicesClient) listBySubscriptionCreateRequest(ctx context.Context
 func (client *DevicesClient) listBySubscriptionHandleResponse(resp *http.Response) (DevicesListBySubscriptionResponse, error) {
 	result := DevicesListBySubscriptionResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DataBoxEdgeDeviceList); err != nil {
-		return DevicesListBySubscriptionResponse{}, err
+		return DevicesListBySubscriptionResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -968,7 +968,7 @@ func (client *DevicesClient) updateCreateRequest(ctx context.Context, deviceName
 func (client *DevicesClient) updateHandleResponse(resp *http.Response) (DevicesUpdateResponse, error) {
 	result := DevicesUpdateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DataBoxEdgeDevice); err != nil {
-		return DevicesUpdateResponse{}, err
+		return DevicesUpdateResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -1033,7 +1033,7 @@ func (client *DevicesClient) updateExtendedInformationCreateRequest(ctx context.
 func (client *DevicesClient) updateExtendedInformationHandleResponse(resp *http.Response) (DevicesUpdateExtendedInformationResponse, error) {
 	result := DevicesUpdateExtendedInformationResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DataBoxEdgeDeviceExtendedInfo); err != nil {
-		return DevicesUpdateExtendedInformationResponse{}, err
+		return DevicesUpdateExtendedInformationResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -1098,7 +1098,7 @@ func (client *DevicesClient) uploadCertificateCreateRequest(ctx context.Context,
 func (client *DevicesClient) uploadCertificateHandleResponse(resp *http.Response) (DevicesUploadCertificateResponse, error) {
 	result := DevicesUploadCertificateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.UploadCertificateResponse); err != nil {
-		return DevicesUploadCertificateResponse{}, err
+		return DevicesUploadCertificateResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

@@ -204,7 +204,7 @@ func (client *dataFlowClient) getDataFlowCreateRequest(ctx context.Context, data
 func (client *dataFlowClient) getDataFlowHandleResponse(resp *http.Response) (DataFlowGetDataFlowResponse, error) {
 	result := DataFlowGetDataFlowResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DataFlowResource); err != nil {
-		return DataFlowGetDataFlowResponse{}, err
+		return DataFlowGetDataFlowResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -254,7 +254,7 @@ func (client *dataFlowClient) getDataFlowsByWorkspaceCreateRequest(ctx context.C
 func (client *dataFlowClient) getDataFlowsByWorkspaceHandleResponse(resp *http.Response) (DataFlowGetDataFlowsByWorkspaceResponse, error) {
 	result := DataFlowGetDataFlowsByWorkspaceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DataFlowListResponse); err != nil {
-		return DataFlowGetDataFlowsByWorkspaceResponse{}, err
+		return DataFlowGetDataFlowsByWorkspaceResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

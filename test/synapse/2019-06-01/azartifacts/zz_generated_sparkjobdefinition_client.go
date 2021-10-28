@@ -336,7 +336,7 @@ func (client *sparkJobDefinitionClient) getSparkJobDefinitionCreateRequest(ctx c
 func (client *sparkJobDefinitionClient) getSparkJobDefinitionHandleResponse(resp *http.Response) (SparkJobDefinitionGetSparkJobDefinitionResponse, error) {
 	result := SparkJobDefinitionGetSparkJobDefinitionResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SparkJobDefinitionResource); err != nil {
-		return SparkJobDefinitionGetSparkJobDefinitionResponse{}, err
+		return SparkJobDefinitionGetSparkJobDefinitionResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -386,7 +386,7 @@ func (client *sparkJobDefinitionClient) getSparkJobDefinitionsByWorkspaceCreateR
 func (client *sparkJobDefinitionClient) getSparkJobDefinitionsByWorkspaceHandleResponse(resp *http.Response) (SparkJobDefinitionGetSparkJobDefinitionsByWorkspaceResponse, error) {
 	result := SparkJobDefinitionGetSparkJobDefinitionsByWorkspaceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SparkJobDefinitionsListResponse); err != nil {
-		return SparkJobDefinitionGetSparkJobDefinitionsByWorkspaceResponse{}, err
+		return SparkJobDefinitionGetSparkJobDefinitionsByWorkspaceResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

@@ -241,7 +241,7 @@ func (client *DiskEncryptionSetsClient) getCreateRequest(ctx context.Context, re
 func (client *DiskEncryptionSetsClient) getHandleResponse(resp *http.Response) (DiskEncryptionSetsGetResponse, error) {
 	result := DiskEncryptionSetsGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DiskEncryptionSet); err != nil {
-		return DiskEncryptionSetsGetResponse{}, err
+		return DiskEncryptionSetsGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -295,7 +295,7 @@ func (client *DiskEncryptionSetsClient) listCreateRequest(ctx context.Context, o
 func (client *DiskEncryptionSetsClient) listHandleResponse(resp *http.Response) (DiskEncryptionSetsListResponse, error) {
 	result := DiskEncryptionSetsListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DiskEncryptionSetList); err != nil {
-		return DiskEncryptionSetsListResponse{}, err
+		return DiskEncryptionSetsListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -353,7 +353,7 @@ func (client *DiskEncryptionSetsClient) listByResourceGroupCreateRequest(ctx con
 func (client *DiskEncryptionSetsClient) listByResourceGroupHandleResponse(resp *http.Response) (DiskEncryptionSetsListByResourceGroupResponse, error) {
 	result := DiskEncryptionSetsListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DiskEncryptionSetList); err != nil {
-		return DiskEncryptionSetsListByResourceGroupResponse{}, err
+		return DiskEncryptionSetsListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

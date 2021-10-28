@@ -244,7 +244,7 @@ func (client *VirtualRoutersClient) getCreateRequest(ctx context.Context, resour
 func (client *VirtualRoutersClient) getHandleResponse(resp *http.Response) (VirtualRoutersGetResponse, error) {
 	result := VirtualRoutersGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualRouter); err != nil {
-		return VirtualRoutersGetResponse{}, err
+		return VirtualRoutersGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -298,7 +298,7 @@ func (client *VirtualRoutersClient) listCreateRequest(ctx context.Context, optio
 func (client *VirtualRoutersClient) listHandleResponse(resp *http.Response) (VirtualRoutersListResponse, error) {
 	result := VirtualRoutersListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualRouterListResult); err != nil {
-		return VirtualRoutersListResponse{}, err
+		return VirtualRoutersListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -356,7 +356,7 @@ func (client *VirtualRoutersClient) listByResourceGroupCreateRequest(ctx context
 func (client *VirtualRoutersClient) listByResourceGroupHandleResponse(resp *http.Response) (VirtualRoutersListByResourceGroupResponse, error) {
 	result := VirtualRoutersListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualRouterListResult); err != nil {
-		return VirtualRoutersListByResourceGroupResponse{}, err
+		return VirtualRoutersListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

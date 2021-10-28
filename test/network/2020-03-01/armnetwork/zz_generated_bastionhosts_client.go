@@ -241,7 +241,7 @@ func (client *BastionHostsClient) getCreateRequest(ctx context.Context, resource
 func (client *BastionHostsClient) getHandleResponse(resp *http.Response) (BastionHostsGetResponse, error) {
 	result := BastionHostsGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BastionHost); err != nil {
-		return BastionHostsGetResponse{}, err
+		return BastionHostsGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -295,7 +295,7 @@ func (client *BastionHostsClient) listCreateRequest(ctx context.Context, options
 func (client *BastionHostsClient) listHandleResponse(resp *http.Response) (BastionHostsListResponse, error) {
 	result := BastionHostsListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BastionHostListResult); err != nil {
-		return BastionHostsListResponse{}, err
+		return BastionHostsListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -353,7 +353,7 @@ func (client *BastionHostsClient) listByResourceGroupCreateRequest(ctx context.C
 func (client *BastionHostsClient) listByResourceGroupHandleResponse(resp *http.Response) (BastionHostsListByResourceGroupResponse, error) {
 	result := BastionHostsListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BastionHostListResult); err != nil {
-		return BastionHostsListByResourceGroupResponse{}, err
+		return BastionHostsListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

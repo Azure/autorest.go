@@ -401,7 +401,7 @@ func (client *ApplicationGatewaysClient) getCreateRequest(ctx context.Context, r
 func (client *ApplicationGatewaysClient) getHandleResponse(resp *http.Response) (ApplicationGatewaysGetResponse, error) {
 	result := ApplicationGatewaysGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ApplicationGateway); err != nil {
-		return ApplicationGatewaysGetResponse{}, err
+		return ApplicationGatewaysGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -462,7 +462,7 @@ func (client *ApplicationGatewaysClient) getSSLPredefinedPolicyCreateRequest(ctx
 func (client *ApplicationGatewaysClient) getSSLPredefinedPolicyHandleResponse(resp *http.Response) (ApplicationGatewaysGetSSLPredefinedPolicyResponse, error) {
 	result := ApplicationGatewaysGetSSLPredefinedPolicyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ApplicationGatewaySSLPredefinedPolicy); err != nil {
-		return ApplicationGatewaysGetSSLPredefinedPolicyResponse{}, err
+		return ApplicationGatewaysGetSSLPredefinedPolicyResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -520,7 +520,7 @@ func (client *ApplicationGatewaysClient) listCreateRequest(ctx context.Context, 
 func (client *ApplicationGatewaysClient) listHandleResponse(resp *http.Response) (ApplicationGatewaysListResponse, error) {
 	result := ApplicationGatewaysListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ApplicationGatewayListResult); err != nil {
-		return ApplicationGatewaysListResponse{}, err
+		return ApplicationGatewaysListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -574,7 +574,7 @@ func (client *ApplicationGatewaysClient) listAllCreateRequest(ctx context.Contex
 func (client *ApplicationGatewaysClient) listAllHandleResponse(resp *http.Response) (ApplicationGatewaysListAllResponse, error) {
 	result := ApplicationGatewaysListAllResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ApplicationGatewayListResult); err != nil {
-		return ApplicationGatewaysListAllResponse{}, err
+		return ApplicationGatewaysListAllResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -631,7 +631,7 @@ func (client *ApplicationGatewaysClient) listAvailableRequestHeadersCreateReques
 func (client *ApplicationGatewaysClient) listAvailableRequestHeadersHandleResponse(resp *http.Response) (ApplicationGatewaysListAvailableRequestHeadersResponse, error) {
 	result := ApplicationGatewaysListAvailableRequestHeadersResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StringArray); err != nil {
-		return ApplicationGatewaysListAvailableRequestHeadersResponse{}, err
+		return ApplicationGatewaysListAvailableRequestHeadersResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -688,7 +688,7 @@ func (client *ApplicationGatewaysClient) listAvailableResponseHeadersCreateReque
 func (client *ApplicationGatewaysClient) listAvailableResponseHeadersHandleResponse(resp *http.Response) (ApplicationGatewaysListAvailableResponseHeadersResponse, error) {
 	result := ApplicationGatewaysListAvailableResponseHeadersResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StringArray); err != nil {
-		return ApplicationGatewaysListAvailableResponseHeadersResponse{}, err
+		return ApplicationGatewaysListAvailableResponseHeadersResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -745,7 +745,7 @@ func (client *ApplicationGatewaysClient) listAvailableSSLOptionsCreateRequest(ct
 func (client *ApplicationGatewaysClient) listAvailableSSLOptionsHandleResponse(resp *http.Response) (ApplicationGatewaysListAvailableSSLOptionsResponse, error) {
 	result := ApplicationGatewaysListAvailableSSLOptionsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ApplicationGatewayAvailableSSLOptions); err != nil {
-		return ApplicationGatewaysListAvailableSSLOptionsResponse{}, err
+		return ApplicationGatewaysListAvailableSSLOptionsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -799,7 +799,7 @@ func (client *ApplicationGatewaysClient) listAvailableSSLPredefinedPoliciesCreat
 func (client *ApplicationGatewaysClient) listAvailableSSLPredefinedPoliciesHandleResponse(resp *http.Response) (ApplicationGatewaysListAvailableSSLPredefinedPoliciesResponse, error) {
 	result := ApplicationGatewaysListAvailableSSLPredefinedPoliciesResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ApplicationGatewayAvailableSSLPredefinedPolicies); err != nil {
-		return ApplicationGatewaysListAvailableSSLPredefinedPoliciesResponse{}, err
+		return ApplicationGatewaysListAvailableSSLPredefinedPoliciesResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -856,7 +856,7 @@ func (client *ApplicationGatewaysClient) listAvailableServerVariablesCreateReque
 func (client *ApplicationGatewaysClient) listAvailableServerVariablesHandleResponse(resp *http.Response) (ApplicationGatewaysListAvailableServerVariablesResponse, error) {
 	result := ApplicationGatewaysListAvailableServerVariablesResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StringArray); err != nil {
-		return ApplicationGatewaysListAvailableServerVariablesResponse{}, err
+		return ApplicationGatewaysListAvailableServerVariablesResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -913,7 +913,7 @@ func (client *ApplicationGatewaysClient) listAvailableWafRuleSetsCreateRequest(c
 func (client *ApplicationGatewaysClient) listAvailableWafRuleSetsHandleResponse(resp *http.Response) (ApplicationGatewaysListAvailableWafRuleSetsResponse, error) {
 	result := ApplicationGatewaysListAvailableWafRuleSetsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ApplicationGatewayAvailableWafRuleSetsResult); err != nil {
-		return ApplicationGatewaysListAvailableWafRuleSetsResponse{}, err
+		return ApplicationGatewaysListAvailableWafRuleSetsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -1130,7 +1130,7 @@ func (client *ApplicationGatewaysClient) updateTagsCreateRequest(ctx context.Con
 func (client *ApplicationGatewaysClient) updateTagsHandleResponse(resp *http.Response) (ApplicationGatewaysUpdateTagsResponse, error) {
 	result := ApplicationGatewaysUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ApplicationGateway); err != nil {
-		return ApplicationGatewaysUpdateTagsResponse{}, err
+		return ApplicationGatewaysUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

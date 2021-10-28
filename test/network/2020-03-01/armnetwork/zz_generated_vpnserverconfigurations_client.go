@@ -241,7 +241,7 @@ func (client *VPNServerConfigurationsClient) getCreateRequest(ctx context.Contex
 func (client *VPNServerConfigurationsClient) getHandleResponse(resp *http.Response) (VPNServerConfigurationsGetResponse, error) {
 	result := VPNServerConfigurationsGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VPNServerConfiguration); err != nil {
-		return VPNServerConfigurationsGetResponse{}, err
+		return VPNServerConfigurationsGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -295,7 +295,7 @@ func (client *VPNServerConfigurationsClient) listCreateRequest(ctx context.Conte
 func (client *VPNServerConfigurationsClient) listHandleResponse(resp *http.Response) (VPNServerConfigurationsListResponse, error) {
 	result := VPNServerConfigurationsListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListVPNServerConfigurationsResult); err != nil {
-		return VPNServerConfigurationsListResponse{}, err
+		return VPNServerConfigurationsListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -353,7 +353,7 @@ func (client *VPNServerConfigurationsClient) listByResourceGroupCreateRequest(ct
 func (client *VPNServerConfigurationsClient) listByResourceGroupHandleResponse(resp *http.Response) (VPNServerConfigurationsListByResourceGroupResponse, error) {
 	result := VPNServerConfigurationsListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListVPNServerConfigurationsResult); err != nil {
-		return VPNServerConfigurationsListByResourceGroupResponse{}, err
+		return VPNServerConfigurationsListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -418,7 +418,7 @@ func (client *VPNServerConfigurationsClient) updateTagsCreateRequest(ctx context
 func (client *VPNServerConfigurationsClient) updateTagsHandleResponse(resp *http.Response) (VPNServerConfigurationsUpdateTagsResponse, error) {
 	result := VPNServerConfigurationsUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VPNServerConfiguration); err != nil {
-		return VPNServerConfigurationsUpdateTagsResponse{}, err
+		return VPNServerConfigurationsUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

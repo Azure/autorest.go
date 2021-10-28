@@ -253,7 +253,7 @@ func (client *FirewallPolicyRuleGroupsClient) getCreateRequest(ctx context.Conte
 func (client *FirewallPolicyRuleGroupsClient) getHandleResponse(resp *http.Response) (FirewallPolicyRuleGroupsGetResponse, error) {
 	result := FirewallPolicyRuleGroupsGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.FirewallPolicyRuleGroup); err != nil {
-		return FirewallPolicyRuleGroupsGetResponse{}, err
+		return FirewallPolicyRuleGroupsGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -315,7 +315,7 @@ func (client *FirewallPolicyRuleGroupsClient) listCreateRequest(ctx context.Cont
 func (client *FirewallPolicyRuleGroupsClient) listHandleResponse(resp *http.Response) (FirewallPolicyRuleGroupsListResponse, error) {
 	result := FirewallPolicyRuleGroupsListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.FirewallPolicyRuleGroupListResult); err != nil {
-		return FirewallPolicyRuleGroupsListResponse{}, err
+		return FirewallPolicyRuleGroupsListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

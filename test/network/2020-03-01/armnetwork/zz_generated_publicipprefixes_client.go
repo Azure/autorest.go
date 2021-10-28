@@ -244,7 +244,7 @@ func (client *PublicIPPrefixesClient) getCreateRequest(ctx context.Context, reso
 func (client *PublicIPPrefixesClient) getHandleResponse(resp *http.Response) (PublicIPPrefixesGetResponse, error) {
 	result := PublicIPPrefixesGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PublicIPPrefix); err != nil {
-		return PublicIPPrefixesGetResponse{}, err
+		return PublicIPPrefixesGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -302,7 +302,7 @@ func (client *PublicIPPrefixesClient) listCreateRequest(ctx context.Context, res
 func (client *PublicIPPrefixesClient) listHandleResponse(resp *http.Response) (PublicIPPrefixesListResponse, error) {
 	result := PublicIPPrefixesListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PublicIPPrefixListResult); err != nil {
-		return PublicIPPrefixesListResponse{}, err
+		return PublicIPPrefixesListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -356,7 +356,7 @@ func (client *PublicIPPrefixesClient) listAllCreateRequest(ctx context.Context, 
 func (client *PublicIPPrefixesClient) listAllHandleResponse(resp *http.Response) (PublicIPPrefixesListAllResponse, error) {
 	result := PublicIPPrefixesListAllResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PublicIPPrefixListResult); err != nil {
-		return PublicIPPrefixesListAllResponse{}, err
+		return PublicIPPrefixesListAllResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -421,7 +421,7 @@ func (client *PublicIPPrefixesClient) updateTagsCreateRequest(ctx context.Contex
 func (client *PublicIPPrefixesClient) updateTagsHandleResponse(resp *http.Response) (PublicIPPrefixesUpdateTagsResponse, error) {
 	result := PublicIPPrefixesUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PublicIPPrefix); err != nil {
-		return PublicIPPrefixesUpdateTagsResponse{}, err
+		return PublicIPPrefixesUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

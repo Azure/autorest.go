@@ -253,7 +253,7 @@ func (client *VirtualHubRouteTableV2SClient) getCreateRequest(ctx context.Contex
 func (client *VirtualHubRouteTableV2SClient) getHandleResponse(resp *http.Response) (VirtualHubRouteTableV2SGetResponse, error) {
 	result := VirtualHubRouteTableV2SGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualHubRouteTableV2); err != nil {
-		return VirtualHubRouteTableV2SGetResponse{}, err
+		return VirtualHubRouteTableV2SGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -315,7 +315,7 @@ func (client *VirtualHubRouteTableV2SClient) listCreateRequest(ctx context.Conte
 func (client *VirtualHubRouteTableV2SClient) listHandleResponse(resp *http.Response) (VirtualHubRouteTableV2SListResponse, error) {
 	result := VirtualHubRouteTableV2SListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListVirtualHubRouteTableV2SResult); err != nil {
-		return VirtualHubRouteTableV2SListResponse{}, err
+		return VirtualHubRouteTableV2SListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

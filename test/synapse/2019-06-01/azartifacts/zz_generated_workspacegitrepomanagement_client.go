@@ -58,7 +58,7 @@ func (client *workspaceGitRepoManagementClient) getGitHubAccessTokenCreateReques
 func (client *workspaceGitRepoManagementClient) getGitHubAccessTokenHandleResponse(resp *http.Response) (WorkspaceGitRepoManagementGetGitHubAccessTokenResponse, error) {
 	result := WorkspaceGitRepoManagementGetGitHubAccessTokenResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.GitHubAccessTokenResponse); err != nil {
-		return WorkspaceGitRepoManagementGetGitHubAccessTokenResponse{}, err
+		return WorkspaceGitRepoManagementGetGitHubAccessTokenResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

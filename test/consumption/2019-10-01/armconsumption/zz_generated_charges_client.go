@@ -87,7 +87,7 @@ func (client *ChargesClient) listCreateRequest(ctx context.Context, scope string
 func (client *ChargesClient) listHandleResponse(resp *http.Response) (ChargesListResponse, error) {
 	result := ChargesListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ChargesListResult); err != nil {
-		return ChargesListResponse{}, err
+		return ChargesListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

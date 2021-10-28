@@ -59,7 +59,7 @@ func (client *ByteClient) getEmptyCreateRequest(ctx context.Context, options *By
 func (client *ByteClient) getEmptyHandleResponse(resp *http.Response) (ByteGetEmptyResponse, error) {
 	result := ByteGetEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsByteArray(resp, &result.Value, runtime.Base64StdFormat); err != nil {
-		return ByteGetEmptyResponse{}, err
+		return ByteGetEmptyResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -109,7 +109,7 @@ func (client *ByteClient) getInvalidCreateRequest(ctx context.Context, options *
 func (client *ByteClient) getInvalidHandleResponse(resp *http.Response) (ByteGetInvalidResponse, error) {
 	result := ByteGetInvalidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsByteArray(resp, &result.Value, runtime.Base64StdFormat); err != nil {
-		return ByteGetInvalidResponse{}, err
+		return ByteGetInvalidResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -159,7 +159,7 @@ func (client *ByteClient) getNonASCIICreateRequest(ctx context.Context, options 
 func (client *ByteClient) getNonASCIIHandleResponse(resp *http.Response) (ByteGetNonASCIIResponse, error) {
 	result := ByteGetNonASCIIResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsByteArray(resp, &result.Value, runtime.Base64StdFormat); err != nil {
-		return ByteGetNonASCIIResponse{}, err
+		return ByteGetNonASCIIResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -209,7 +209,7 @@ func (client *ByteClient) getNullCreateRequest(ctx context.Context, options *Byt
 func (client *ByteClient) getNullHandleResponse(resp *http.Response) (ByteGetNullResponse, error) {
 	result := ByteGetNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsByteArray(resp, &result.Value, runtime.Base64StdFormat); err != nil {
-		return ByteGetNullResponse{}, err
+		return ByteGetNullResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

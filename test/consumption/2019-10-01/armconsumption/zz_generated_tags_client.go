@@ -75,7 +75,7 @@ func (client *TagsClient) getCreateRequest(ctx context.Context, scope string, op
 func (client *TagsClient) getHandleResponse(resp *http.Response) (TagsGetResponse, error) {
 	result := TagsGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.TagsResult); err != nil {
-		return TagsGetResponse{}, err
+		return TagsGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

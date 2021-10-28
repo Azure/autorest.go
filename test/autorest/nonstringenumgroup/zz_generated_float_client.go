@@ -59,7 +59,7 @@ func (client *FloatClient) getCreateRequest(ctx context.Context, options *FloatG
 func (client *FloatClient) getHandleResponse(resp *http.Response) (FloatGetResponse, error) {
 	result := FloatGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return FloatGetResponse{}, err
+		return FloatGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -111,7 +111,7 @@ func (client *FloatClient) putCreateRequest(ctx context.Context, options *FloatP
 func (client *FloatClient) putHandleResponse(resp *http.Response) (FloatPutResponse, error) {
 	result := FloatPutResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return FloatPutResponse{}, err
+		return FloatPutResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

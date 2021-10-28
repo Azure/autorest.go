@@ -253,7 +253,7 @@ func (client *NetworkInterfaceTapConfigurationsClient) getCreateRequest(ctx cont
 func (client *NetworkInterfaceTapConfigurationsClient) getHandleResponse(resp *http.Response) (NetworkInterfaceTapConfigurationsGetResponse, error) {
 	result := NetworkInterfaceTapConfigurationsGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkInterfaceTapConfiguration); err != nil {
-		return NetworkInterfaceTapConfigurationsGetResponse{}, err
+		return NetworkInterfaceTapConfigurationsGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -315,7 +315,7 @@ func (client *NetworkInterfaceTapConfigurationsClient) listCreateRequest(ctx con
 func (client *NetworkInterfaceTapConfigurationsClient) listHandleResponse(resp *http.Response) (NetworkInterfaceTapConfigurationsListResponse, error) {
 	result := NetworkInterfaceTapConfigurationsListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkInterfaceTapConfigurationListResult); err != nil {
-		return NetworkInterfaceTapConfigurationsListResponse{}, err
+		return NetworkInterfaceTapConfigurationsListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

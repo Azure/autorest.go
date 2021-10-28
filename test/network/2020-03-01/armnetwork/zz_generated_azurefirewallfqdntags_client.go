@@ -78,7 +78,7 @@ func (client *AzureFirewallFqdnTagsClient) listAllCreateRequest(ctx context.Cont
 func (client *AzureFirewallFqdnTagsClient) listAllHandleResponse(resp *http.Response) (AzureFirewallFqdnTagsListAllResponse, error) {
 	result := AzureFirewallFqdnTagsListAllResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AzureFirewallFqdnTagListResult); err != nil {
-		return AzureFirewallFqdnTagsListAllResponse{}, err
+		return AzureFirewallFqdnTagsListAllResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

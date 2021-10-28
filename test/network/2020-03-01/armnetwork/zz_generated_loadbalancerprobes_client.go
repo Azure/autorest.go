@@ -93,7 +93,7 @@ func (client *LoadBalancerProbesClient) getCreateRequest(ctx context.Context, re
 func (client *LoadBalancerProbesClient) getHandleResponse(resp *http.Response) (LoadBalancerProbesGetResponse, error) {
 	result := LoadBalancerProbesGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Probe); err != nil {
-		return LoadBalancerProbesGetResponse{}, err
+		return LoadBalancerProbesGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -155,7 +155,7 @@ func (client *LoadBalancerProbesClient) listCreateRequest(ctx context.Context, r
 func (client *LoadBalancerProbesClient) listHandleResponse(resp *http.Response) (LoadBalancerProbesListResponse, error) {
 	result := LoadBalancerProbesListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.LoadBalancerProbeListResult); err != nil {
-		return LoadBalancerProbesListResponse{}, err
+		return LoadBalancerProbesListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

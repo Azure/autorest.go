@@ -93,7 +93,7 @@ func (client *LoadBalancerBackendAddressPoolsClient) getCreateRequest(ctx contex
 func (client *LoadBalancerBackendAddressPoolsClient) getHandleResponse(resp *http.Response) (LoadBalancerBackendAddressPoolsGetResponse, error) {
 	result := LoadBalancerBackendAddressPoolsGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BackendAddressPool); err != nil {
-		return LoadBalancerBackendAddressPoolsGetResponse{}, err
+		return LoadBalancerBackendAddressPoolsGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -155,7 +155,7 @@ func (client *LoadBalancerBackendAddressPoolsClient) listCreateRequest(ctx conte
 func (client *LoadBalancerBackendAddressPoolsClient) listHandleResponse(resp *http.Response) (LoadBalancerBackendAddressPoolsListResponse, error) {
 	result := LoadBalancerBackendAddressPoolsListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.LoadBalancerBackendAddressPoolListResult); err != nil {
-		return LoadBalancerBackendAddressPoolsListResponse{}, err
+		return LoadBalancerBackendAddressPoolsListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

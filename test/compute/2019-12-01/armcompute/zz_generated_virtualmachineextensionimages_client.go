@@ -97,7 +97,7 @@ func (client *VirtualMachineExtensionImagesClient) getCreateRequest(ctx context.
 func (client *VirtualMachineExtensionImagesClient) getHandleResponse(resp *http.Response) (VirtualMachineExtensionImagesGetResponse, error) {
 	result := VirtualMachineExtensionImagesGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineExtensionImage); err != nil {
-		return VirtualMachineExtensionImagesGetResponse{}, err
+		return VirtualMachineExtensionImagesGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -161,7 +161,7 @@ func (client *VirtualMachineExtensionImagesClient) listTypesCreateRequest(ctx co
 func (client *VirtualMachineExtensionImagesClient) listTypesHandleResponse(resp *http.Response) (VirtualMachineExtensionImagesListTypesResponse, error) {
 	result := VirtualMachineExtensionImagesListTypesResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineExtensionImageArray); err != nil {
-		return VirtualMachineExtensionImagesListTypesResponse{}, err
+		return VirtualMachineExtensionImagesListTypesResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -238,7 +238,7 @@ func (client *VirtualMachineExtensionImagesClient) listVersionsCreateRequest(ctx
 func (client *VirtualMachineExtensionImagesClient) listVersionsHandleResponse(resp *http.Response) (VirtualMachineExtensionImagesListVersionsResponse, error) {
 	result := VirtualMachineExtensionImagesListVersionsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineExtensionImageArray); err != nil {
-		return VirtualMachineExtensionImagesListVersionsResponse{}, err
+		return VirtualMachineExtensionImagesListVersionsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

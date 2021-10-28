@@ -201,7 +201,7 @@ func (client *triggerClient) getEventSubscriptionStatusCreateRequest(ctx context
 func (client *triggerClient) getEventSubscriptionStatusHandleResponse(resp *http.Response) (TriggerGetEventSubscriptionStatusResponse, error) {
 	result := TriggerGetEventSubscriptionStatusResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.TriggerSubscriptionOperationStatus); err != nil {
-		return TriggerGetEventSubscriptionStatusResponse{}, err
+		return TriggerGetEventSubscriptionStatusResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -261,7 +261,7 @@ func (client *triggerClient) getTriggerCreateRequest(ctx context.Context, trigge
 func (client *triggerClient) getTriggerHandleResponse(resp *http.Response) (TriggerGetTriggerResponse, error) {
 	result := TriggerGetTriggerResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.TriggerResource); err != nil {
-		return TriggerGetTriggerResponse{}, err
+		return TriggerGetTriggerResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -311,7 +311,7 @@ func (client *triggerClient) getTriggersByWorkspaceCreateRequest(ctx context.Con
 func (client *triggerClient) getTriggersByWorkspaceHandleResponse(resp *http.Response) (TriggerGetTriggersByWorkspaceResponse, error) {
 	result := TriggerGetTriggersByWorkspaceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.TriggerListResponse); err != nil {
-		return TriggerGetTriggersByWorkspaceResponse{}, err
+		return TriggerGetTriggersByWorkspaceResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

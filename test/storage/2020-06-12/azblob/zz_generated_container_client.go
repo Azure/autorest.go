@@ -572,7 +572,7 @@ func (client *containerClient) getAccessPolicyHandleResponse(resp *http.Response
 		result.Date = &date
 	}
 	if err := runtime.UnmarshalAsXML(resp, &result); err != nil {
-		return ContainerGetAccessPolicyResponse{}, err
+		return ContainerGetAccessPolicyResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -870,7 +870,7 @@ func (client *containerClient) listBlobFlatSegmentHandleResponse(resp *http.Resp
 		result.Date = &date
 	}
 	if err := runtime.UnmarshalAsXML(resp, &result.ListBlobsFlatSegmentResponse); err != nil {
-		return ContainerListBlobFlatSegmentResponse{}, err
+		return ContainerListBlobFlatSegmentResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -959,7 +959,7 @@ func (client *containerClient) listBlobHierarchySegmentHandleResponse(resp *http
 		result.Date = &date
 	}
 	if err := runtime.UnmarshalAsXML(resp, &result.ListBlobsHierarchySegmentResponse); err != nil {
-		return ContainerListBlobHierarchySegmentResponse{}, err
+		return ContainerListBlobHierarchySegmentResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

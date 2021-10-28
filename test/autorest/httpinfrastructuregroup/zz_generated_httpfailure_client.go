@@ -60,7 +60,7 @@ func (client *HTTPFailureClient) getEmptyErrorCreateRequest(ctx context.Context,
 func (client *HTTPFailureClient) getEmptyErrorHandleResponse(resp *http.Response) (HTTPFailureGetEmptyErrorResponse, error) {
 	result := HTTPFailureGetEmptyErrorResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return HTTPFailureGetEmptyErrorResponse{}, err
+		return HTTPFailureGetEmptyErrorResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -110,7 +110,7 @@ func (client *HTTPFailureClient) getNoModelEmptyCreateRequest(ctx context.Contex
 func (client *HTTPFailureClient) getNoModelEmptyHandleResponse(resp *http.Response) (HTTPFailureGetNoModelEmptyResponse, error) {
 	result := HTTPFailureGetNoModelEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return HTTPFailureGetNoModelEmptyResponse{}, err
+		return HTTPFailureGetNoModelEmptyResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -159,7 +159,7 @@ func (client *HTTPFailureClient) getNoModelErrorCreateRequest(ctx context.Contex
 func (client *HTTPFailureClient) getNoModelErrorHandleResponse(resp *http.Response) (HTTPFailureGetNoModelErrorResponse, error) {
 	result := HTTPFailureGetNoModelErrorResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return HTTPFailureGetNoModelErrorResponse{}, err
+		return HTTPFailureGetNoModelErrorResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

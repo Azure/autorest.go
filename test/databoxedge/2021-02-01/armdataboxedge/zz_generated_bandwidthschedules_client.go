@@ -243,7 +243,7 @@ func (client *BandwidthSchedulesClient) getCreateRequest(ctx context.Context, de
 func (client *BandwidthSchedulesClient) getHandleResponse(resp *http.Response) (BandwidthSchedulesGetResponse, error) {
 	result := BandwidthSchedulesGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BandwidthSchedule); err != nil {
-		return BandwidthSchedulesGetResponse{}, err
+		return BandwidthSchedulesGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -305,7 +305,7 @@ func (client *BandwidthSchedulesClient) listByDataBoxEdgeDeviceCreateRequest(ctx
 func (client *BandwidthSchedulesClient) listByDataBoxEdgeDeviceHandleResponse(resp *http.Response) (BandwidthSchedulesListByDataBoxEdgeDeviceResponse, error) {
 	result := BandwidthSchedulesListByDataBoxEdgeDeviceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BandwidthSchedulesList); err != nil {
-		return BandwidthSchedulesListByDataBoxEdgeDeviceResponse{}, err
+		return BandwidthSchedulesListByDataBoxEdgeDeviceResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

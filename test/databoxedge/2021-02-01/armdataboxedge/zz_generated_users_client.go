@@ -243,7 +243,7 @@ func (client *UsersClient) getCreateRequest(ctx context.Context, deviceName stri
 func (client *UsersClient) getHandleResponse(resp *http.Response) (UsersGetResponse, error) {
 	result := UsersGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.User); err != nil {
-		return UsersGetResponse{}, err
+		return UsersGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -308,7 +308,7 @@ func (client *UsersClient) listByDataBoxEdgeDeviceCreateRequest(ctx context.Cont
 func (client *UsersClient) listByDataBoxEdgeDeviceHandleResponse(resp *http.Response) (UsersListByDataBoxEdgeDeviceResponse, error) {
 	result := UsersListByDataBoxEdgeDeviceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.UserList); err != nil {
-		return UsersListByDataBoxEdgeDeviceResponse{}, err
+		return UsersListByDataBoxEdgeDeviceResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

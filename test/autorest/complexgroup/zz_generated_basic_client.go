@@ -59,7 +59,7 @@ func (client *BasicClient) getEmptyCreateRequest(ctx context.Context, options *B
 func (client *BasicClient) getEmptyHandleResponse(resp *http.Response) (BasicGetEmptyResponse, error) {
 	result := BasicGetEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Basic); err != nil {
-		return BasicGetEmptyResponse{}, err
+		return BasicGetEmptyResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -109,7 +109,7 @@ func (client *BasicClient) getInvalidCreateRequest(ctx context.Context, options 
 func (client *BasicClient) getInvalidHandleResponse(resp *http.Response) (BasicGetInvalidResponse, error) {
 	result := BasicGetInvalidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Basic); err != nil {
-		return BasicGetInvalidResponse{}, err
+		return BasicGetInvalidResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -159,7 +159,7 @@ func (client *BasicClient) getNotProvidedCreateRequest(ctx context.Context, opti
 func (client *BasicClient) getNotProvidedHandleResponse(resp *http.Response) (BasicGetNotProvidedResponse, error) {
 	result := BasicGetNotProvidedResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Basic); err != nil {
-		return BasicGetNotProvidedResponse{}, err
+		return BasicGetNotProvidedResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -209,7 +209,7 @@ func (client *BasicClient) getNullCreateRequest(ctx context.Context, options *Ba
 func (client *BasicClient) getNullHandleResponse(resp *http.Response) (BasicGetNullResponse, error) {
 	result := BasicGetNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Basic); err != nil {
-		return BasicGetNullResponse{}, err
+		return BasicGetNullResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -259,7 +259,7 @@ func (client *BasicClient) getValidCreateRequest(ctx context.Context, options *B
 func (client *BasicClient) getValidHandleResponse(resp *http.Response) (BasicGetValidResponse, error) {
 	result := BasicGetValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Basic); err != nil {
-		return BasicGetValidResponse{}, err
+		return BasicGetValidResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

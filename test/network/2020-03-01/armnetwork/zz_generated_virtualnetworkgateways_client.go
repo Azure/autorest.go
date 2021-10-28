@@ -471,7 +471,7 @@ func (client *VirtualNetworkGatewaysClient) getCreateRequest(ctx context.Context
 func (client *VirtualNetworkGatewaysClient) getHandleResponse(resp *http.Response) (VirtualNetworkGatewaysGetResponse, error) {
 	result := VirtualNetworkGatewaysGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualNetworkGateway); err != nil {
-		return VirtualNetworkGatewaysGetResponse{}, err
+		return VirtualNetworkGatewaysGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -997,7 +997,7 @@ func (client *VirtualNetworkGatewaysClient) listCreateRequest(ctx context.Contex
 func (client *VirtualNetworkGatewaysClient) listHandleResponse(resp *http.Response) (VirtualNetworkGatewaysListResponse, error) {
 	result := VirtualNetworkGatewaysListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualNetworkGatewayListResult); err != nil {
-		return VirtualNetworkGatewaysListResponse{}, err
+		return VirtualNetworkGatewaysListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -1059,7 +1059,7 @@ func (client *VirtualNetworkGatewaysClient) listConnectionsCreateRequest(ctx con
 func (client *VirtualNetworkGatewaysClient) listConnectionsHandleResponse(resp *http.Response) (VirtualNetworkGatewaysListConnectionsResponse, error) {
 	result := VirtualNetworkGatewaysListConnectionsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualNetworkGatewayListConnectionsResult); err != nil {
-		return VirtualNetworkGatewaysListConnectionsResponse{}, err
+		return VirtualNetworkGatewaysListConnectionsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -1512,7 +1512,7 @@ func (client *VirtualNetworkGatewaysClient) supportedVPNDevicesCreateRequest(ctx
 func (client *VirtualNetworkGatewaysClient) supportedVPNDevicesHandleResponse(resp *http.Response) (VirtualNetworkGatewaysSupportedVPNDevicesResponse, error) {
 	result := VirtualNetworkGatewaysSupportedVPNDevicesResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return VirtualNetworkGatewaysSupportedVPNDevicesResponse{}, err
+		return VirtualNetworkGatewaysSupportedVPNDevicesResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -1653,7 +1653,7 @@ func (client *VirtualNetworkGatewaysClient) vpnDeviceConfigurationScriptCreateRe
 func (client *VirtualNetworkGatewaysClient) vpnDeviceConfigurationScriptHandleResponse(resp *http.Response) (VirtualNetworkGatewaysVPNDeviceConfigurationScriptResponse, error) {
 	result := VirtualNetworkGatewaysVPNDeviceConfigurationScriptResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return VirtualNetworkGatewaysVPNDeviceConfigurationScriptResponse{}, err
+		return VirtualNetworkGatewaysVPNDeviceConfigurationScriptResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

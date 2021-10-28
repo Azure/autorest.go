@@ -84,7 +84,7 @@ func (client *VirtualMachineSizesClient) listCreateRequest(ctx context.Context, 
 func (client *VirtualMachineSizesClient) listHandleResponse(resp *http.Response) (VirtualMachineSizesListResponse, error) {
 	result := VirtualMachineSizesListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineSizeListResult); err != nil {
-		return VirtualMachineSizesListResponse{}, err
+		return VirtualMachineSizesListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

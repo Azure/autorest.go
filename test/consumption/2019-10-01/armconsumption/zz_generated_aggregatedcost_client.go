@@ -83,7 +83,7 @@ func (client *AggregatedCostClient) getByManagementGroupCreateRequest(ctx contex
 func (client *AggregatedCostClient) getByManagementGroupHandleResponse(resp *http.Response) (AggregatedCostGetByManagementGroupResponse, error) {
 	result := AggregatedCostGetByManagementGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ManagementGroupAggregatedCostResult); err != nil {
-		return AggregatedCostGetByManagementGroupResponse{}, err
+		return AggregatedCostGetByManagementGroupResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -144,7 +144,7 @@ func (client *AggregatedCostClient) getForBillingPeriodByManagementGroupCreateRe
 func (client *AggregatedCostClient) getForBillingPeriodByManagementGroupHandleResponse(resp *http.Response) (AggregatedCostGetForBillingPeriodByManagementGroupResponse, error) {
 	result := AggregatedCostGetForBillingPeriodByManagementGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ManagementGroupAggregatedCostResult); err != nil {
-		return AggregatedCostGetForBillingPeriodByManagementGroupResponse{}, err
+		return AggregatedCostGetForBillingPeriodByManagementGroupResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

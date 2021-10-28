@@ -244,7 +244,7 @@ func (client *NatGatewaysClient) getCreateRequest(ctx context.Context, resourceG
 func (client *NatGatewaysClient) getHandleResponse(resp *http.Response) (NatGatewaysGetResponse, error) {
 	result := NatGatewaysGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.NatGateway); err != nil {
-		return NatGatewaysGetResponse{}, err
+		return NatGatewaysGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -302,7 +302,7 @@ func (client *NatGatewaysClient) listCreateRequest(ctx context.Context, resource
 func (client *NatGatewaysClient) listHandleResponse(resp *http.Response) (NatGatewaysListResponse, error) {
 	result := NatGatewaysListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.NatGatewayListResult); err != nil {
-		return NatGatewaysListResponse{}, err
+		return NatGatewaysListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -356,7 +356,7 @@ func (client *NatGatewaysClient) listAllCreateRequest(ctx context.Context, optio
 func (client *NatGatewaysClient) listAllHandleResponse(resp *http.Response) (NatGatewaysListAllResponse, error) {
 	result := NatGatewaysListAllResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.NatGatewayListResult); err != nil {
-		return NatGatewaysListAllResponse{}, err
+		return NatGatewaysListAllResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -421,7 +421,7 @@ func (client *NatGatewaysClient) updateTagsCreateRequest(ctx context.Context, re
 func (client *NatGatewaysClient) updateTagsHandleResponse(resp *http.Response) (NatGatewaysUpdateTagsResponse, error) {
 	result := NatGatewaysUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.NatGateway); err != nil {
-		return NatGatewaysUpdateTagsResponse{}, err
+		return NatGatewaysUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

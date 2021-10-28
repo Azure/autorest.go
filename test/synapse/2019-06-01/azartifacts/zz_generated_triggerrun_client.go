@@ -110,7 +110,7 @@ func (client *triggerRunClient) queryTriggerRunsByWorkspaceCreateRequest(ctx con
 func (client *triggerRunClient) queryTriggerRunsByWorkspaceHandleResponse(resp *http.Response) (TriggerRunQueryTriggerRunsByWorkspaceResponse, error) {
 	result := TriggerRunQueryTriggerRunsByWorkspaceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.TriggerRunsQueryResponse); err != nil {
-		return TriggerRunQueryTriggerRunsByWorkspaceResponse{}, err
+		return TriggerRunQueryTriggerRunsByWorkspaceResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

@@ -86,7 +86,7 @@ func (client *NetworkManagementClient) checkDNSNameAvailabilityCreateRequest(ctx
 func (client *NetworkManagementClient) checkDNSNameAvailabilityHandleResponse(resp *http.Response) (NetworkManagementClientCheckDNSNameAvailabilityResponse, error) {
 	result := NetworkManagementClientCheckDNSNameAvailabilityResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DNSNameAvailabilityResult); err != nil {
-		return NetworkManagementClientCheckDNSNameAvailabilityResponse{}, err
+		return NetworkManagementClientCheckDNSNameAvailabilityResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -224,7 +224,7 @@ func (client *NetworkManagementClient) disconnectActiveSessionsCreateRequest(ctx
 func (client *NetworkManagementClient) disconnectActiveSessionsHandleResponse(resp *http.Response) (NetworkManagementClientDisconnectActiveSessionsResponse, error) {
 	result := NetworkManagementClientDisconnectActiveSessionsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BastionSessionDeleteResult); err != nil {
-		return NetworkManagementClientDisconnectActiveSessionsResponse{}, err
+		return NetworkManagementClientDisconnectActiveSessionsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -388,7 +388,7 @@ func (client *NetworkManagementClient) getActiveSessionsCreateRequest(ctx contex
 func (client *NetworkManagementClient) getActiveSessionsHandleResponse(resp *http.Response) (NetworkManagementClientGetActiveSessionsResponse, error) {
 	result := NetworkManagementClientGetActiveSessionsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BastionActiveSessionListResult); err != nil {
-		return NetworkManagementClientGetActiveSessionsResponse{}, err
+		return NetworkManagementClientGetActiveSessionsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -450,7 +450,7 @@ func (client *NetworkManagementClient) getBastionShareableLinkCreateRequest(ctx 
 func (client *NetworkManagementClient) getBastionShareableLinkHandleResponse(resp *http.Response) (NetworkManagementClientGetBastionShareableLinkResponse, error) {
 	result := NetworkManagementClientGetBastionShareableLinkResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BastionShareableLinkListResult); err != nil {
-		return NetworkManagementClientGetBastionShareableLinkResponse{}, err
+		return NetworkManagementClientGetBastionShareableLinkResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -536,7 +536,7 @@ func (client *NetworkManagementClient) putBastionShareableLinkCreateRequest(ctx 
 func (client *NetworkManagementClient) putBastionShareableLinkHandleResponse(resp *http.Response) (NetworkManagementClientPutBastionShareableLinkResponse, error) {
 	result := NetworkManagementClientPutBastionShareableLinkResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BastionShareableLinkListResult); err != nil {
-		return NetworkManagementClientPutBastionShareableLinkResponse{}, err
+		return NetworkManagementClientPutBastionShareableLinkResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -601,7 +601,7 @@ func (client *NetworkManagementClient) supportedSecurityProvidersCreateRequest(c
 func (client *NetworkManagementClient) supportedSecurityProvidersHandleResponse(resp *http.Response) (NetworkManagementClientSupportedSecurityProvidersResponse, error) {
 	result := NetworkManagementClientSupportedSecurityProvidersResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualWanSecurityProviders); err != nil {
-		return NetworkManagementClientSupportedSecurityProvidersResponse{}, err
+		return NetworkManagementClientSupportedSecurityProvidersResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

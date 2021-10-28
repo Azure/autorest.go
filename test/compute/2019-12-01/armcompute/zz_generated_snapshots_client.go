@@ -237,7 +237,7 @@ func (client *SnapshotsClient) getCreateRequest(ctx context.Context, resourceGro
 func (client *SnapshotsClient) getHandleResponse(resp *http.Response) (SnapshotsGetResponse, error) {
 	result := SnapshotsGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Snapshot); err != nil {
-		return SnapshotsGetResponse{}, err
+		return SnapshotsGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -365,7 +365,7 @@ func (client *SnapshotsClient) listCreateRequest(ctx context.Context, options *S
 func (client *SnapshotsClient) listHandleResponse(resp *http.Response) (SnapshotsListResponse, error) {
 	result := SnapshotsListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SnapshotList); err != nil {
-		return SnapshotsListResponse{}, err
+		return SnapshotsListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -422,7 +422,7 @@ func (client *SnapshotsClient) listByResourceGroupCreateRequest(ctx context.Cont
 func (client *SnapshotsClient) listByResourceGroupHandleResponse(resp *http.Response) (SnapshotsListByResourceGroupResponse, error) {
 	result := SnapshotsListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SnapshotList); err != nil {
-		return SnapshotsListByResourceGroupResponse{}, err
+		return SnapshotsListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

@@ -241,7 +241,7 @@ func (client *VirtualHubsClient) getCreateRequest(ctx context.Context, resourceG
 func (client *VirtualHubsClient) getHandleResponse(resp *http.Response) (VirtualHubsGetResponse, error) {
 	result := VirtualHubsGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualHub); err != nil {
-		return VirtualHubsGetResponse{}, err
+		return VirtualHubsGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -295,7 +295,7 @@ func (client *VirtualHubsClient) listCreateRequest(ctx context.Context, options 
 func (client *VirtualHubsClient) listHandleResponse(resp *http.Response) (VirtualHubsListResponse, error) {
 	result := VirtualHubsListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListVirtualHubsResult); err != nil {
-		return VirtualHubsListResponse{}, err
+		return VirtualHubsListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -353,7 +353,7 @@ func (client *VirtualHubsClient) listByResourceGroupCreateRequest(ctx context.Co
 func (client *VirtualHubsClient) listByResourceGroupHandleResponse(resp *http.Response) (VirtualHubsListByResourceGroupResponse, error) {
 	result := VirtualHubsListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListVirtualHubsResult); err != nil {
-		return VirtualHubsListByResourceGroupResponse{}, err
+		return VirtualHubsListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -418,7 +418,7 @@ func (client *VirtualHubsClient) updateTagsCreateRequest(ctx context.Context, re
 func (client *VirtualHubsClient) updateTagsHandleResponse(resp *http.Response) (VirtualHubsUpdateTagsResponse, error) {
 	result := VirtualHubsUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualHub); err != nil {
-		return VirtualHubsUpdateTagsResponse{}, err
+		return VirtualHubsUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

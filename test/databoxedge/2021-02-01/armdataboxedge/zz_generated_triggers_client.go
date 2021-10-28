@@ -243,7 +243,7 @@ func (client *TriggersClient) getCreateRequest(ctx context.Context, deviceName s
 func (client *TriggersClient) getHandleResponse(resp *http.Response) (TriggersGetResponse, error) {
 	result := TriggersGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result); err != nil {
-		return TriggersGetResponse{}, err
+		return TriggersGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -308,7 +308,7 @@ func (client *TriggersClient) listByDataBoxEdgeDeviceCreateRequest(ctx context.C
 func (client *TriggersClient) listByDataBoxEdgeDeviceHandleResponse(resp *http.Response) (TriggersListByDataBoxEdgeDeviceResponse, error) {
 	result := TriggersListByDataBoxEdgeDeviceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.TriggerList); err != nil {
-		return TriggersListByDataBoxEdgeDeviceResponse{}, err
+		return TriggersListByDataBoxEdgeDeviceResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

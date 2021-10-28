@@ -82,7 +82,7 @@ func (client *OperationsStatusClient) getCreateRequest(ctx context.Context, devi
 func (client *OperationsStatusClient) getHandleResponse(resp *http.Response) (OperationsStatusGetResponse, error) {
 	result := OperationsStatusGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Job); err != nil {
-		return OperationsStatusGetResponse{}, err
+		return OperationsStatusGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

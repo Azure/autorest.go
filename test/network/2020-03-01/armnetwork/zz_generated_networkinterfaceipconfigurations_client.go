@@ -93,7 +93,7 @@ func (client *NetworkInterfaceIPConfigurationsClient) getCreateRequest(ctx conte
 func (client *NetworkInterfaceIPConfigurationsClient) getHandleResponse(resp *http.Response) (NetworkInterfaceIPConfigurationsGetResponse, error) {
 	result := NetworkInterfaceIPConfigurationsGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkInterfaceIPConfiguration); err != nil {
-		return NetworkInterfaceIPConfigurationsGetResponse{}, err
+		return NetworkInterfaceIPConfigurationsGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -155,7 +155,7 @@ func (client *NetworkInterfaceIPConfigurationsClient) listCreateRequest(ctx cont
 func (client *NetworkInterfaceIPConfigurationsClient) listHandleResponse(resp *http.Response) (NetworkInterfaceIPConfigurationsListResponse, error) {
 	result := NetworkInterfaceIPConfigurationsListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkInterfaceIPConfigurationListResult); err != nil {
-		return NetworkInterfaceIPConfigurationsListResponse{}, err
+		return NetworkInterfaceIPConfigurationsListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

@@ -241,7 +241,7 @@ func (client *VPNGatewaysClient) getCreateRequest(ctx context.Context, resourceG
 func (client *VPNGatewaysClient) getHandleResponse(resp *http.Response) (VPNGatewaysGetResponse, error) {
 	result := VPNGatewaysGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VPNGateway); err != nil {
-		return VPNGatewaysGetResponse{}, err
+		return VPNGatewaysGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -295,7 +295,7 @@ func (client *VPNGatewaysClient) listCreateRequest(ctx context.Context, options 
 func (client *VPNGatewaysClient) listHandleResponse(resp *http.Response) (VPNGatewaysListResponse, error) {
 	result := VPNGatewaysListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListVPNGatewaysResult); err != nil {
-		return VPNGatewaysListResponse{}, err
+		return VPNGatewaysListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -353,7 +353,7 @@ func (client *VPNGatewaysClient) listByResourceGroupCreateRequest(ctx context.Co
 func (client *VPNGatewaysClient) listByResourceGroupHandleResponse(resp *http.Response) (VPNGatewaysListByResourceGroupResponse, error) {
 	result := VPNGatewaysListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListVPNGatewaysResult); err != nil {
-		return VPNGatewaysListByResourceGroupResponse{}, err
+		return VPNGatewaysListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -494,7 +494,7 @@ func (client *VPNGatewaysClient) updateTagsCreateRequest(ctx context.Context, re
 func (client *VPNGatewaysClient) updateTagsHandleResponse(resp *http.Response) (VPNGatewaysUpdateTagsResponse, error) {
 	result := VPNGatewaysUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VPNGateway); err != nil {
-		return VPNGatewaysUpdateTagsResponse{}, err
+		return VPNGatewaysUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

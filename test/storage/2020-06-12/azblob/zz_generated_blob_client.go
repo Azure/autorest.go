@@ -1772,7 +1772,7 @@ func (client *blobClient) getTagsHandleResponse(resp *http.Response) (BlobGetTag
 		result.Date = &date
 	}
 	if err := runtime.UnmarshalAsXML(resp, &result.BlobTags); err != nil {
-		return BlobGetTagsResponse{}, err
+		return BlobGetTagsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

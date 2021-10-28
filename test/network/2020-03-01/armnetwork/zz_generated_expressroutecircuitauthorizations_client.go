@@ -253,7 +253,7 @@ func (client *ExpressRouteCircuitAuthorizationsClient) getCreateRequest(ctx cont
 func (client *ExpressRouteCircuitAuthorizationsClient) getHandleResponse(resp *http.Response) (ExpressRouteCircuitAuthorizationsGetResponse, error) {
 	result := ExpressRouteCircuitAuthorizationsGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRouteCircuitAuthorization); err != nil {
-		return ExpressRouteCircuitAuthorizationsGetResponse{}, err
+		return ExpressRouteCircuitAuthorizationsGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -315,7 +315,7 @@ func (client *ExpressRouteCircuitAuthorizationsClient) listCreateRequest(ctx con
 func (client *ExpressRouteCircuitAuthorizationsClient) listHandleResponse(resp *http.Response) (ExpressRouteCircuitAuthorizationsListResponse, error) {
 	result := ExpressRouteCircuitAuthorizationsListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AuthorizationListResult); err != nil {
-		return ExpressRouteCircuitAuthorizationsListResponse{}, err
+		return ExpressRouteCircuitAuthorizationsListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

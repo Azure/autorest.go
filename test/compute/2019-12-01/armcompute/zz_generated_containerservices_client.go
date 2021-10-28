@@ -245,7 +245,7 @@ func (client *ContainerServicesClient) getCreateRequest(ctx context.Context, res
 func (client *ContainerServicesClient) getHandleResponse(resp *http.Response) (ContainerServicesGetResponse, error) {
 	result := ContainerServicesGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ContainerService); err != nil {
-		return ContainerServicesGetResponse{}, err
+		return ContainerServicesGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -300,7 +300,7 @@ func (client *ContainerServicesClient) listCreateRequest(ctx context.Context, op
 func (client *ContainerServicesClient) listHandleResponse(resp *http.Response) (ContainerServicesListResponse, error) {
 	result := ContainerServicesListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ContainerServiceListResult); err != nil {
-		return ContainerServicesListResponse{}, err
+		return ContainerServicesListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -359,7 +359,7 @@ func (client *ContainerServicesClient) listByResourceGroupCreateRequest(ctx cont
 func (client *ContainerServicesClient) listByResourceGroupHandleResponse(resp *http.Response) (ContainerServicesListByResourceGroupResponse, error) {
 	result := ContainerServicesListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ContainerServiceListResult); err != nil {
-		return ContainerServicesListByResourceGroupResponse{}, err
+		return ContainerServicesListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

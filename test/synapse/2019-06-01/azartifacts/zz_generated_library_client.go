@@ -320,7 +320,7 @@ func (client *libraryClient) getCreateRequest(ctx context.Context, libraryName s
 func (client *libraryClient) getHandleResponse(resp *http.Response) (LibraryGetResponse, error) {
 	result := LibraryGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.LibraryResource); err != nil {
-		return LibraryGetResponse{}, err
+		return LibraryGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -380,13 +380,13 @@ func (client *libraryClient) getOperationResultHandleResponse(resp *http.Respons
 	case http.StatusOK:
 		var val LibraryResource
 		if err := runtime.UnmarshalAsJSON(resp, &val); err != nil {
-			return LibraryGetOperationResultResponse{}, err
+			return LibraryGetOperationResultResponse{}, runtime.NewResponseError(err, resp)
 		}
 		result.Value = val
 	case http.StatusAccepted:
 		var val OperationResult
 		if err := runtime.UnmarshalAsJSON(resp, &val); err != nil {
-			return LibraryGetOperationResultResponse{}, err
+			return LibraryGetOperationResultResponse{}, runtime.NewResponseError(err, resp)
 		}
 		result.Value = val
 	default:
@@ -440,7 +440,7 @@ func (client *libraryClient) listCreateRequest(ctx context.Context, options *Lib
 func (client *libraryClient) listHandleResponse(resp *http.Response) (LibraryListResponseEnvelope, error) {
 	result := LibraryListResponseEnvelope{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.LibraryListResponse); err != nil {
-		return LibraryListResponseEnvelope{}, err
+		return LibraryListResponseEnvelope{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

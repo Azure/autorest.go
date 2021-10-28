@@ -244,7 +244,7 @@ func (client *RouteFiltersClient) getCreateRequest(ctx context.Context, resource
 func (client *RouteFiltersClient) getHandleResponse(resp *http.Response) (RouteFiltersGetResponse, error) {
 	result := RouteFiltersGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RouteFilter); err != nil {
-		return RouteFiltersGetResponse{}, err
+		return RouteFiltersGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -298,7 +298,7 @@ func (client *RouteFiltersClient) listCreateRequest(ctx context.Context, options
 func (client *RouteFiltersClient) listHandleResponse(resp *http.Response) (RouteFiltersListResponse, error) {
 	result := RouteFiltersListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RouteFilterListResult); err != nil {
-		return RouteFiltersListResponse{}, err
+		return RouteFiltersListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -356,7 +356,7 @@ func (client *RouteFiltersClient) listByResourceGroupCreateRequest(ctx context.C
 func (client *RouteFiltersClient) listByResourceGroupHandleResponse(resp *http.Response) (RouteFiltersListByResourceGroupResponse, error) {
 	result := RouteFiltersListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RouteFilterListResult); err != nil {
-		return RouteFiltersListByResourceGroupResponse{}, err
+		return RouteFiltersListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -421,7 +421,7 @@ func (client *RouteFiltersClient) updateTagsCreateRequest(ctx context.Context, r
 func (client *RouteFiltersClient) updateTagsHandleResponse(resp *http.Response) (RouteFiltersUpdateTagsResponse, error) {
 	result := RouteFiltersUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RouteFilter); err != nil {
-		return RouteFiltersUpdateTagsResponse{}, err
+		return RouteFiltersUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

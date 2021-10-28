@@ -86,7 +86,7 @@ func (client *LoadBalancerNetworkInterfacesClient) listCreateRequest(ctx context
 func (client *LoadBalancerNetworkInterfacesClient) listHandleResponse(resp *http.Response) (LoadBalancerNetworkInterfacesListResponse, error) {
 	result := LoadBalancerNetworkInterfacesListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkInterfaceListResult); err != nil {
-		return LoadBalancerNetworkInterfacesListResponse{}, err
+		return LoadBalancerNetworkInterfacesListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

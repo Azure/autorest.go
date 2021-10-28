@@ -253,7 +253,7 @@ func (client *VirtualNetworkPeeringsClient) getCreateRequest(ctx context.Context
 func (client *VirtualNetworkPeeringsClient) getHandleResponse(resp *http.Response) (VirtualNetworkPeeringsGetResponse, error) {
 	result := VirtualNetworkPeeringsGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualNetworkPeering); err != nil {
-		return VirtualNetworkPeeringsGetResponse{}, err
+		return VirtualNetworkPeeringsGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -315,7 +315,7 @@ func (client *VirtualNetworkPeeringsClient) listCreateRequest(ctx context.Contex
 func (client *VirtualNetworkPeeringsClient) listHandleResponse(resp *http.Response) (VirtualNetworkPeeringsListResponse, error) {
 	result := VirtualNetworkPeeringsListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualNetworkPeeringListResult); err != nil {
-		return VirtualNetworkPeeringsListResponse{}, err
+		return VirtualNetworkPeeringsListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

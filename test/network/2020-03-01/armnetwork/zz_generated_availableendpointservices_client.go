@@ -82,7 +82,7 @@ func (client *AvailableEndpointServicesClient) listCreateRequest(ctx context.Con
 func (client *AvailableEndpointServicesClient) listHandleResponse(resp *http.Response) (AvailableEndpointServicesListResponse, error) {
 	result := AvailableEndpointServicesListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.EndpointServicesListResult); err != nil {
-		return AvailableEndpointServicesListResponse{}, err
+		return AvailableEndpointServicesListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

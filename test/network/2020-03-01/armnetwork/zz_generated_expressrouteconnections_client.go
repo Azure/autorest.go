@@ -253,7 +253,7 @@ func (client *ExpressRouteConnectionsClient) getCreateRequest(ctx context.Contex
 func (client *ExpressRouteConnectionsClient) getHandleResponse(resp *http.Response) (ExpressRouteConnectionsGetResponse, error) {
 	result := ExpressRouteConnectionsGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRouteConnection); err != nil {
-		return ExpressRouteConnectionsGetResponse{}, err
+		return ExpressRouteConnectionsGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -318,7 +318,7 @@ func (client *ExpressRouteConnectionsClient) listCreateRequest(ctx context.Conte
 func (client *ExpressRouteConnectionsClient) listHandleResponse(resp *http.Response) (ExpressRouteConnectionsListResponse, error) {
 	result := ExpressRouteConnectionsListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRouteConnectionList); err != nil {
-		return ExpressRouteConnectionsListResponse{}, err
+		return ExpressRouteConnectionsListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

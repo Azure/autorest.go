@@ -244,7 +244,7 @@ func (client *IPGroupsClient) getCreateRequest(ctx context.Context, resourceGrou
 func (client *IPGroupsClient) getHandleResponse(resp *http.Response) (IPGroupsGetResponse, error) {
 	result := IPGroupsGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.IPGroup); err != nil {
-		return IPGroupsGetResponse{}, err
+		return IPGroupsGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -298,7 +298,7 @@ func (client *IPGroupsClient) listCreateRequest(ctx context.Context, options *IP
 func (client *IPGroupsClient) listHandleResponse(resp *http.Response) (IPGroupsListResponse, error) {
 	result := IPGroupsListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.IPGroupListResult); err != nil {
-		return IPGroupsListResponse{}, err
+		return IPGroupsListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -356,7 +356,7 @@ func (client *IPGroupsClient) listByResourceGroupCreateRequest(ctx context.Conte
 func (client *IPGroupsClient) listByResourceGroupHandleResponse(resp *http.Response) (IPGroupsListByResourceGroupResponse, error) {
 	result := IPGroupsListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.IPGroupListResult); err != nil {
-		return IPGroupsListByResourceGroupResponse{}, err
+		return IPGroupsListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -421,7 +421,7 @@ func (client *IPGroupsClient) updateGroupsCreateRequest(ctx context.Context, res
 func (client *IPGroupsClient) updateGroupsHandleResponse(resp *http.Response) (IPGroupsUpdateGroupsResponse, error) {
 	result := IPGroupsUpdateGroupsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.IPGroup); err != nil {
-		return IPGroupsUpdateGroupsResponse{}, err
+		return IPGroupsUpdateGroupsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

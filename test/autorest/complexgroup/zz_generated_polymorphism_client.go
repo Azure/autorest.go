@@ -59,7 +59,7 @@ func (client *PolymorphismClient) getComplicatedCreateRequest(ctx context.Contex
 func (client *PolymorphismClient) getComplicatedHandleResponse(resp *http.Response) (PolymorphismGetComplicatedResponse, error) {
 	result := PolymorphismGetComplicatedResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result); err != nil {
-		return PolymorphismGetComplicatedResponse{}, err
+		return PolymorphismGetComplicatedResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -111,7 +111,7 @@ func (client *PolymorphismClient) getComposedWithDiscriminatorCreateRequest(ctx 
 func (client *PolymorphismClient) getComposedWithDiscriminatorHandleResponse(resp *http.Response) (PolymorphismGetComposedWithDiscriminatorResponse, error) {
 	result := PolymorphismGetComposedWithDiscriminatorResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DotFishMarket); err != nil {
-		return PolymorphismGetComposedWithDiscriminatorResponse{}, err
+		return PolymorphismGetComposedWithDiscriminatorResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -163,7 +163,7 @@ func (client *PolymorphismClient) getComposedWithoutDiscriminatorCreateRequest(c
 func (client *PolymorphismClient) getComposedWithoutDiscriminatorHandleResponse(resp *http.Response) (PolymorphismGetComposedWithoutDiscriminatorResponse, error) {
 	result := PolymorphismGetComposedWithoutDiscriminatorResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DotFishMarket); err != nil {
-		return PolymorphismGetComposedWithoutDiscriminatorResponse{}, err
+		return PolymorphismGetComposedWithoutDiscriminatorResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -213,7 +213,7 @@ func (client *PolymorphismClient) getDotSyntaxCreateRequest(ctx context.Context,
 func (client *PolymorphismClient) getDotSyntaxHandleResponse(resp *http.Response) (PolymorphismGetDotSyntaxResponse, error) {
 	result := PolymorphismGetDotSyntaxResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result); err != nil {
-		return PolymorphismGetDotSyntaxResponse{}, err
+		return PolymorphismGetDotSyntaxResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -263,7 +263,7 @@ func (client *PolymorphismClient) getValidCreateRequest(ctx context.Context, opt
 func (client *PolymorphismClient) getValidHandleResponse(resp *http.Response) (PolymorphismGetValidResponse, error) {
 	result := PolymorphismGetValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result); err != nil {
-		return PolymorphismGetValidResponse{}, err
+		return PolymorphismGetValidResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -354,7 +354,7 @@ func (client *PolymorphismClient) putMissingDiscriminatorCreateRequest(ctx conte
 func (client *PolymorphismClient) putMissingDiscriminatorHandleResponse(resp *http.Response) (PolymorphismPutMissingDiscriminatorResponse, error) {
 	result := PolymorphismPutMissingDiscriminatorResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result); err != nil {
-		return PolymorphismPutMissingDiscriminatorResponse{}, err
+		return PolymorphismPutMissingDiscriminatorResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
