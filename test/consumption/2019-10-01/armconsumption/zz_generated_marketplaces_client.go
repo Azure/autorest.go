@@ -10,7 +10,6 @@ package armconsumption
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
@@ -58,9 +57,6 @@ func (client *MarketplacesClient) List(scope string, options *MarketplacesListOp
 // listCreateRequest creates the List request.
 func (client *MarketplacesClient) listCreateRequest(ctx context.Context, scope string, options *MarketplacesListOptions) (*policy.Request, error) {
 	urlPath := "/{scope}/providers/Microsoft.Consumption/marketplaces"
-	if scope == "" {
-		return nil, errors.New("parameter scope cannot be empty")
-	}
 	urlPath = strings.ReplaceAll(urlPath, "{scope}", scope)
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
 	if err != nil {

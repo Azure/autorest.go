@@ -10,7 +10,6 @@ package armconsumption
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
@@ -60,9 +59,6 @@ func (client *UsageDetailsClient) List(scope string, options *UsageDetailsListOp
 // listCreateRequest creates the List request.
 func (client *UsageDetailsClient) listCreateRequest(ctx context.Context, scope string, options *UsageDetailsListOptions) (*policy.Request, error) {
 	urlPath := "/{scope}/providers/Microsoft.Consumption/usageDetails"
-	if scope == "" {
-		return nil, errors.New("parameter scope cannot be empty")
-	}
 	urlPath = strings.ReplaceAll(urlPath, "{scope}", scope)
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
 	if err != nil {

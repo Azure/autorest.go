@@ -58,9 +58,6 @@ func (client *ReservationsDetailsClient) List(scope string, options *Reservation
 // listCreateRequest creates the List request.
 func (client *ReservationsDetailsClient) listCreateRequest(ctx context.Context, scope string, options *ReservationsDetailsListOptions) (*policy.Request, error) {
 	urlPath := "/{scope}/providers/Microsoft.Consumption/reservationDetails"
-	if scope == "" {
-		return nil, errors.New("parameter scope cannot be empty")
-	}
 	urlPath = strings.ReplaceAll(urlPath, "{scope}", scope)
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
 	if err != nil {
